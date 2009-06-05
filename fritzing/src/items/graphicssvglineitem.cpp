@@ -31,8 +31,6 @@ $Date$
 // note: copied most of this code directly from Qt's QGraphicsLineItem code
 // so it may need updated with new versions > 4.4.0
 
-static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier);
-
 ////////////////////////////////////////
 
 GraphicsSvgLineItem::GraphicsSvgLineItem( QGraphicsItem * parent ) 
@@ -160,6 +158,11 @@ QPainterPath GraphicsSvgLineItem::shape() const
 	    path.lineTo(m_line.p2());
 	    return qt_graphicsItem_shapeFromPath(path, m_pen, 1);
     }
+
+
+	if (!m_shape.isEmpty()) {
+		return m_shape;
+	}
     
     return QGraphicsSvgItem::shape();
 }
@@ -187,9 +190,7 @@ const QLineF & GraphicsSvgLineItem::getPaintLine() {
 	return m_line;
 }
 
-/////////////////////////////////
-
-QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier)
+QPainterPath GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier)
 {
     // We unfortunately need this hack as QPainterPathStroker will set a width of 1.0
     // if we pass a value of 0.0 to QPainterPathStroker::setWidth()
@@ -296,3 +297,6 @@ bool GraphicsSvgLineItem::hasLine() {
 	return m_hasLine;
 }
 
+void GraphicsSvgLineItem::setShape(QPainterPath & pp) {
+	m_shape = qt_graphicsItem_shapeFromPath(pp, pen(), 1);
+}

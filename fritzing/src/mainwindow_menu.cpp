@@ -2683,7 +2683,18 @@ void MainWindow::groundFill()
 		if (modelPart != NULL) {
 			ViewGeometry vg;
 			vg.setLoc(board->pos());
-			new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
+			long newID = ItemBase::getNextID();
+			new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, newID, false, -1, -1, parentCommand);
+
+			QString xmlName = ViewLayer::viewLayerXmlNameFromID(ViewLayer::GroundPlane);
+			SvgFileSplitter	splitter;
+			bool result = splitter.split(gpg.newSvgPath(newPartPath), xmlName);
+			if (result) {
+				QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), xmlName);
+				if (!painterPath.isEmpty()) {
+					new PainterPathHackCommand(m_currentGraphicsView, newID, "connector0", painterPath, parentCommand);
+				}
+			}
 		}
 	}
 

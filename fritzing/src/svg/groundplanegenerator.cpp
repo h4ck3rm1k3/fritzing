@@ -139,15 +139,14 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 		out3 << pFzp;
 		file3.close();
 
-		QFile file2(svgFolder.absoluteFilePath(QString("%1.svg").arg(moduleID)));
+		QString newSvgPath = svgFolder.absoluteFilePath(QString("%1.svg").arg(moduleID));
+		QFile file2(newSvgPath);
 		file2.open(QIODevice::WriteOnly);
 		QTextStream out2(&file2);
 		out2 << pSvg;
 		file2.close();
 
-		m_newPartPaths.append(newPartPath);
-
-
+		m_newPartPaths.insert(newPartPath, newSvgPath);
 
 		/*
 		QFile file4("testPoly.svg");
@@ -455,7 +454,7 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, int res, q
 		pSvg += QString("<polygon fill='#ffbf00' points='\n");
 		int space = 0;
 		foreach (QPoint p, poly) {
-			pSvg += QString("%1,%2%3").arg(p.x()).arg(p.y()).arg((++space % 8 == 0) ?  "\n" : " ");
+			pSvg += QString("%1,%2 %3").arg(p.x()).arg(p.y()).arg((++space % 8 == 0) ?  "\n" : "");
 		}
 		pSvg += "'/>\n";
 	}
@@ -522,6 +521,10 @@ QString GroundPlaneGenerator::makePolyFzp(QList<QPolygon> & polygons, const QStr
 	return newFzp;
 }
 
-QStringList & GroundPlaneGenerator::newPartPaths() {
-	return m_newPartPaths;
+const QList<QString> GroundPlaneGenerator::newPartPaths() {
+	return m_newPartPaths.keys();
+}
+
+const QString GroundPlaneGenerator::newSvgPath(const QString & newPartPath) {
+	return m_newPartPaths.value(newPartPath, "");
 }

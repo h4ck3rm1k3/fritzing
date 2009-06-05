@@ -31,6 +31,7 @@ $Date$
 
 #include <QUndoCommand>
 #include <QHash>
+#include <QPainterPath>
 
 #include "viewgeometry.h"
 #include "utils/misc.h"
@@ -601,5 +602,22 @@ protected:
 	qreal m_newHeight;
 	long m_itemID;
 };
+
+class PainterPathHackCommand : public BaseCommand
+{
+public:
+	PainterPathHackCommand(class SketchWidget *, long itemID, const QString & connectorID, QPainterPath &, QUndoCommand * parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QPainterPath m_painterPath;
+	QString m_connectorID;
+	long m_itemID;
+};
+
 
 #endif // COMMANDS_H

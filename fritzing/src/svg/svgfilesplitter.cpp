@@ -130,6 +130,8 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	// if there are translations, we're fucked
 
 	QDomElement root = m_domDocument.documentElement();
+	if (root.isNull()) return false;
+
 	QString swidthStr = root.attribute("width");
 	if (swidthStr.isEmpty()) return false;
 
@@ -180,6 +182,117 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 
 	return true;
 }
+
+QPainterPath SvgFileSplitter::painterPath(qreal dpi, const QString & elementID)
+{
+	QPainterPath ppath;
+
+	bool result = normalize(dpi, elementID, false);
+	if (!result) return ppath;
+
+	QDomElement root = m_domDocument.documentElement();
+	if (root.isNull()) return ppath;
+
+	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	if (mainElement.isNull()) return ppath;
+
+	QDomElement childElement = mainElement.firstChildElement();
+	while (!childElement.isNull()) {
+		painterPathChild(childElement, ppath);
+		childElement = childElement.nextSiblingElement();
+	}
+
+	return ppath;
+}
+
+void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppath)
+{
+	// only partially implemented
+
+	if (element.nodeName().compare("circle") == 0) {
+		qreal cx = element.attribute("cx").toDouble();
+		qreal cy = element.attribute("cy").toDouble();
+		qreal r = element.attribute("r").toDouble();
+		qreal stroke = element.attribute("stroke-width").toDouble();
+		ppath.addEllipse(QRectF(cx - r - (stroke / 2), cy - r - (stroke / 2), (r * 2) + stroke, (r * 2) + stroke));
+	}
+	else if (element.nodeName().compare("line") == 0) {
+
+		/*
+		qreal x1 = element.attribute("x1").toDouble();
+		qreal y1 = element.attribute("y1").toDouble();
+		qreal x2 = element.attribute("x2").toDouble();
+		qreal y2 = element.attribute("y2").toDouble();
+		qreal stroke = element.attribute("stroke-width").toDouble();
+
+		// treat as parallel lines stroke width apart?
+		*/
+	}
+	else if (element.nodeName().compare("rect") == 0) {
+		qreal width = element.attribute("width").toDouble();
+		qreal height = element.attribute("height").toDouble();
+		qreal x = element.attribute("x").toDouble();
+		qreal y = element.attribute("y").toDouble();
+		qreal stroke = element.attribute("stroke-width").toDouble();
+		qreal rx = element.attribute("rx").toDouble();
+		qreal ry = element.attribute("ry").toDouble();
+		if (rx != 0 || ry != 0) { 
+			ppath.addRoundedRect(x - (stroke / 2), y - (stroke / 2), width + stroke, height + stroke, rx, ry);
+		}
+		else {
+			ppath.addRect(x - (stroke / 2), y - (stroke / 2), width + stroke, height + stroke);
+		}
+	}
+	else if (element.nodeName().compare("ellipse") == 0) {
+		qreal cx = element.attribute("cx").toDouble();
+		qreal cy = element.attribute("cy").toDouble();
+		qreal rx = element.attribute("rx").toDouble();
+		qreal ry = element.attribute("ry").toDouble();
+		qreal stroke = element.attribute("stroke-width").toDouble();
+		ppath.addEllipse(QRectF(cx - rx - (stroke / 2), cy - ry - (stroke / 2), (rx * 2) + stroke, (ry * 2) + stroke));
+	}
+	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
+		QString data = element.attribute("points");
+		if (!data.isEmpty()) {
+			data.prepend("M");		// pretend it's a path so we can use the path parser
+			data.append("Z");
+			const char * slot = SLOT(painterPathCommandSlot(QChar, bool, QList<double> &, void *));
+			PathUserData pathUserData;
+			pathUserData.painterPath = &ppath;
+            if (parsePath(data, slot, pathUserData, this)) {
+				pathUserData.string.remove(0, 1);			// get rid of the "M"
+				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
+			}
+		}
+	}
+	else if (element.nodeName().compare("path") == 0) {
+		/*
+		QString data = element.attribute("d");
+		if (!data.isEmpty()) {
+			if (!data.endsWith('z', Qt::CaseInsensitive)) {
+				data.append("Z");
+			}
+			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
+			PathUserData pathUserData;
+			pathUserData.sNewHeight = sNewHeight;
+			pathUserData.sNewWidth = sNewWidth;
+			pathUserData.vbHeight = vbHeight;
+			pathUserData.vbWidth = vbWidth;
+            if (parsePath(data, slot, pathUserData, this)) {
+				element.setAttribute("d", pathUserData.string);
+			}
+		}
+		*/
+	}
+	else {
+		QDomElement childElement = element.firstChildElement();
+		while (!childElement.isNull()) {
+			painterPathChild(childElement, ppath);
+			childElement = childElement.nextSiblingElement();
+		}
+	}
+}
+
 
 void SvgFileSplitter::normalizeChild(QDomElement & element,
 									 qreal sNewWidth, qreal sNewHeight,
@@ -246,7 +359,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			pathUserData.sNewWidth = sNewWidth;
 			pathUserData.vbHeight = vbHeight;
 			pathUserData.vbWidth = vbWidth;
-                        if (parsePath(data, slot, pathUserData, this)) {
+            if (parsePath(data, slot, pathUserData, this)) {
 				pathUserData.string.remove(0, 1);			// get rid of the "M"
 				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
 				element.setAttribute("points", pathUserData.string);
@@ -269,7 +382,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			pathUserData.sNewWidth = sNewWidth;
 			pathUserData.vbHeight = vbHeight;
 			pathUserData.vbWidth = vbWidth;
-                        if (parsePath(data, slot, pathUserData, this)) {
+            if (parsePath(data, slot, pathUserData, this)) {
 				element.setAttribute("d", pathUserData.string);
 			}
 		}
@@ -355,7 +468,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 			PathUserData pathUserData;
 			pathUserData.x = x;
 			pathUserData.y = y;
-                        if (parsePath(data, slot, pathUserData, this)) {
+            if (parsePath(data, slot, pathUserData, this)) {
 				pathUserData.string.remove(0, 1);			// get rid of the "M"
 				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
 				element.setAttribute("points", pathUserData.string);
@@ -369,7 +482,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 			PathUserData pathUserData;
 			pathUserData.x = x;
 			pathUserData.y = y;
-                        if (parsePath(data, slot, pathUserData, this)) {
+            if (parsePath(data, slot, pathUserData, this)) {
 				element.setAttribute("d", pathUserData.string);
 			}
 		}
@@ -436,6 +549,29 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 	}
 }
 
+void SvgFileSplitter::painterPathCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
+
+	Q_UNUSED(relative);			// just normalizing here, so relative is not used
+	Q_UNUSED(command)			// note: painterPathCommandSlot is only partially implemented
+
+	PathUserData * pathUserData = (PathUserData *) userData;
+
+	double dx, dy;
+	for (int i = 0; i < args.count(); i += 2) {
+		dx = args[i];
+		dy = args[i + 1];
+		if (i == 0) {
+			pathUserData->painterPath->moveTo(dx, dy);
+		}
+		else {
+			pathUserData->painterPath->lineTo(dx, dy);
+		}
+	}
+	pathUserData->painterPath->closeSubpath();
+
+
+}
+
 void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
 
 	Q_UNUSED(relative);			// just normalizing here, so relative is not used
@@ -492,7 +628,7 @@ bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUse
 	}
 
 	SVGPathRunner svgPathRunner;
-        connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)), slotTarget, slot, Qt::DirectConnection);
+    connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)), slotTarget, slot, Qt::DirectConnection);
 	return svgPathRunner.runPath(parser.symStack(), &pathUserData);
 }
 

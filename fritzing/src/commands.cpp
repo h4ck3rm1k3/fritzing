@@ -1142,3 +1142,29 @@ QString TransformItemCommand::getParamString() const {
 		QString(" id:%1")
 		.arg(m_itemID);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+PainterPathHackCommand::PainterPathHackCommand(class SketchWidget * sketchWidget, long itemID, const QString & connectorID, QPainterPath & painterPath, QUndoCommand * parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = itemID;
+    m_connectorID = connectorID;
+    m_painterPath = painterPath;
+}
+
+void PainterPathHackCommand::undo()
+{
+}
+
+void PainterPathHackCommand::redo()
+{
+    m_sketchWidget->painterPathHack(m_itemID, m_connectorID, m_painterPath);
+}
+
+QString PainterPathHackCommand::getParamString() const {
+	return QString("PainterPathHackCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 connectorid:%2")
+		.arg(m_itemID).arg(m_connectorID);
+}

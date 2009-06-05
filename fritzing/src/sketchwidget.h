@@ -212,6 +212,7 @@ public:
 	virtual void createTrace();
 	void selectAllWires(ViewGeometry::WireFlag);
 	virtual void tidyWires();
+	void painterPathHack(long itemID, const QString & connectorID, QPainterPath &);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

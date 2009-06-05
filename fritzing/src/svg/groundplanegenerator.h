@@ -43,7 +43,8 @@ public:
 	~GroundPlaneGenerator();
 
 	bool start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, const QString &suffix, const QString & baseName, QStringList & exceptions, QGraphicsItem * board); 
-	QStringList & newPartPaths();
+	const QList<QString> newPartPaths();
+	const QString newSvgPath(const QString & newPartPath);
 
 protected:
 	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects);
@@ -53,7 +54,8 @@ protected:
 	QString makePolySvg(QList<QPolygon> & polygons, int res, qreal bWidth, qreal bHeight);
 
 protected:
-	QStringList m_newPartPaths;
+	QHash<QString, QString> m_newPartPaths;
+	
 };
 
 #endif

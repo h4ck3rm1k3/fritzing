@@ -62,6 +62,10 @@ QRectF PaletteItemBase::boundingRect() const
 
 QPainterPath PaletteItemBase::shape() const
 {
+	if (!m_shape.isEmpty()) {
+		return ItemBase::shape();
+	}
+
 	// TODO: figure out real shape of svg
     QPainterPath path;
 

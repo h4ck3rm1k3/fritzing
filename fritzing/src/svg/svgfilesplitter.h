@@ -33,16 +33,18 @@ $Date$
 #include <QDomElement>
 #include <QObject>
 #include <QMatrix>
+#include <QPainterPath>
 
 struct PathUserData {
 	QString string;
-        QMatrix transform;
+    QMatrix transform;
 	qreal sNewWidth;
 	qreal sNewHeight;
 	qreal vbWidth; 
 	qreal vbHeight;
 	qreal x;
 	qreal y;
+	QPainterPath * painterPath;
 };
 
 class SvgFileSplitter : public QObject {
@@ -58,6 +60,7 @@ public:
 	QString shift(qreal x, qreal y, const QString & elementID);
 	QString elementString(const QString & elementID);
     virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget);
+	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
 
 public:
 	static bool getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox);
@@ -76,6 +79,7 @@ protected:
 	void fixStyleAttribute(QDomElement & element);
 	void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
 	void killSodipodi(QDomElement & element);
+	void painterPathChild(QDomElement & element, QPainterPath & ppath);			// note: only partially implemented
 
 protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta);
@@ -86,6 +90,7 @@ protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
 	void shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
     virtual void rotateCommandSlot(QChar, bool, QList<double> &, void *){}
+	void painterPathCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
 
 protected:
 	QByteArray m_byteArray;

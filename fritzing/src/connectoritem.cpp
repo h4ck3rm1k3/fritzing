@@ -359,6 +359,11 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 			painter->drawEllipse(rect());
 		}
 	}
+	else if (!m_shape.isEmpty()) {
+		painter->setBrush(brush());
+		painter->setPen(pen());
+		painter->drawPath(m_shape);
+	}
 	else {
 		QGraphicsRectItem::paint(painter, option, widget);
 	}
@@ -913,4 +918,23 @@ void ConnectorItem::clearEqualPotentialDisplay() {
 		connectorItem->showEqualPotential(false);
 	}
 	m_equalPotentialDisplayItems.clear();
+}
+
+
+QPainterPath ConnectorItem::shape() const
+{
+	if (m_circular) {
+		QPainterPath path;
+		path.addEllipse(rect());
+		return GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, pen(), 1);
+	}
+	else if (!m_shape.isEmpty()) {
+		return m_shape;
+	}
+
+	return QGraphicsRectItem::shape();
+}
+
+void ConnectorItem::setShape(QPainterPath & pp) {
+	m_shape = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(pp, pen(), 1);
 }

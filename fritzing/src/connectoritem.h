@@ -95,6 +95,7 @@ public:
 	qreal strokeWidth();
 	void restoreColor();
 	void showEqualPotential(bool show);
+	void setShape(QPainterPath &);
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -117,6 +118,7 @@ protected:
 	bool ConnectorItem::wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
 
 	virtual void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
+	QPainterPath shape() const;
 
 protected:
 	Connector * m_connector;
@@ -137,6 +139,7 @@ protected:
 	qreal m_radius;
 	qreal m_strokeWidth;
 	int m_negativePenWidth;
+	QPainterPath m_shape;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

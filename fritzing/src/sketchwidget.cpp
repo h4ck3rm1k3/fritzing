@@ -5433,3 +5433,14 @@ void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 
 void SketchWidget::tidyWires() {
 }
+
+void SketchWidget::painterPathHack(long itemID, const QString & connectorID, QPainterPath & painterPath) {
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return;
+
+	ConnectorItem * connectorItem = item->findConnectorItemNamed(connectorID);
+	if (connectorItem == NULL) return;
+
+	connectorItem->setShape(painterPath);
+	item->setShape(painterPath);
+}    
