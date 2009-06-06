@@ -2618,7 +2618,7 @@ void MainWindow::groundFill()
 	//		what about leftover temp files from crashes?
 	//		clear ground plane when anything changes
 	//		some polygons can be combined
-	//		make connector aware of true shape
+	//		ground plane item should return to being a rectangle so it can be dragged?
 	//		remove old ground plane modules from paletteModel and database
 
 	FileProgressDialog fileProgress("Generating ground plane...", 0, this);

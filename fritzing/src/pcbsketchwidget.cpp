@@ -483,7 +483,14 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 
 	bool result = false;
 
-	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && 
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(fromConnectorItem);
+	ConnectorItem::collectEqualPotential(connectorItems);
+	if (connectorItems.contains(toConnectorItem)) {
+		// don't generate a wire in bb view if the connectors are already connected
+		result = true;
+	}
+	else if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && 
 		toConnectorItem->attachedToItemType() == ModelPart::Wire)
 	{
 		ConnectorItem * originalFromConnectorItem = fromConnectorItem;
