@@ -689,6 +689,9 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	m_currentGraphicsView->updateInfoView();
 
+	// update issue with 4.5.1?
+	m_currentGraphicsView->updateConnectors();
+
 	// obsolete: when there are 3 navigators and 3 zoom boxes, no need to update when current view changes
 	//m_miniViewContainer0->setView(widget);
 	//setZoomComboBoxValue(m_currentWidget->currentZoom());

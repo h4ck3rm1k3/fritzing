@@ -38,7 +38,9 @@ BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifi
 
 void BreadboardSketchWidget::setWireVisible(Wire * wire)
 {
-	wire->setVisible(!wire->getVirtual());
+	bool visible = !wire->getVirtual();
+	wire->setVisible(visible);
+	wire->setEverVisible(visible);
 	//wire->setVisible(true);					// for debugging
 }
 

@@ -93,7 +93,7 @@ public:
 	void setRadius(qreal radius, qreal strokeWidth);
 	qreal radius();
 	qreal strokeWidth();
-	void restoreColor();
+	void restoreColor(bool doBuses, int busConnectedCount);
 	void showEqualPotential(bool show);
 	void setShape(QPainterPath &);
 
@@ -116,9 +116,8 @@ protected:
 	bool sceneEvent(QEvent *event);
 	class Wire * ConnectorItem::wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
 	bool ConnectorItem::wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
-
-	virtual void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
 	QPainterPath shape() const;
+	bool isEverVisible();
 
 protected:
 	Connector * m_connector;

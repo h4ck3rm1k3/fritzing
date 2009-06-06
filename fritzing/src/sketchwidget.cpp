@@ -5444,3 +5444,13 @@ void SketchWidget::painterPathHack(long itemID, const QString & connectorID, QPa
 	connectorItem->setShape(painterPath);
 	item->setShape(painterPath);
 }    
+
+void SketchWidget::updateConnectors() {
+	// update issue with 4.5.0?
+	foreach (QGraphicsItem* item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+
+		connectorItem->restoreColor(false, -1);
+	}
+}

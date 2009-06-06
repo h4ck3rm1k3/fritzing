@@ -213,6 +213,7 @@ public:
 	void selectAllWires(ViewGeometry::WireFlag);
 	virtual void tidyWires();
 	void painterPathHack(long itemID, const QString & connectorID, QPainterPath &);
+	void updateConnectors();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

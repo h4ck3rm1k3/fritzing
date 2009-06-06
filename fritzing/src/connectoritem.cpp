@@ -54,7 +54,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	if (connector != NULL) {
 		connector->addViewItem(this);
 	}
-	restoreColor();
+	restoreColor(false, -1);
     setAcceptsHoverEvents(true);
     this->setCursor(Qt::CrossCursor);
 
@@ -98,7 +98,7 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 		return;
 	}
 
-	restoreColor();
+	restoreColor(false, -1);
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveConnectorItem(event, this);
@@ -115,7 +115,7 @@ ItemBase * ConnectorItem::attachedTo() {
 
 void ConnectorItem::clearConnectorHover() {
 	m_connectorHovering = false;
-	restoreColor();
+	restoreColor(false, -1);
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->clearConnectorHover();
 	}
@@ -124,10 +124,10 @@ void ConnectorItem::clearConnectorHover() {
 void ConnectorItem::connectorHover(ItemBase * itemBase, bool hovering) {
 	m_connectorHovering = hovering;
 	if (hovering) {
-		setHoverColor();
+		setHoverColor();			// could make this light up buses as well
 	}
 	else {
-		restoreColor();
+		restoreColor(false, -1);
 	}
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->connectorHover(this, itemBase, hovering);
@@ -143,7 +143,7 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 
 	m_connectedTo.append(connected);
 	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPartShared()->title()).arg(m_connectedTo.count()) );
-	restoreColor();
+	restoreColor(true, -1);
 	if (m_attachedTo != NULL) {
 		m_attachedTo->connectionChange(this);
 	}
@@ -155,23 +155,65 @@ void ConnectorItem::tempConnectTo(ConnectorItem * item, bool applyColor) {
 	m_connectedTo.append(item);
 	updateTooltip();
 
-	if(applyColor) restoreColor();
+	if(applyColor) restoreColor(true, -1);
 }
 
 void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 	m_connectedTo.removeOne(item);
 	updateTooltip();
 
-	if(applyColor) restoreColor();
+	if(applyColor) restoreColor(true, -1);
 }
 
-void ConnectorItem::restoreColor() {
+void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount) {
+	
 	if (m_chosen) {
 		setChosenColor();
 		return;
 	}
 
-	if (m_connectedTo.count() <= 0) {
+	QList<ConnectorItem *> busConnectedItems;
+	if (attachedToItemType() == ModelPart::Wire) {
+		doBuses = false;
+		busConnectionCount = 0;
+	}
+	else {
+		if (busConnectionCount < 0) {
+			busConnectionCount = 0;
+			Bus * b = bus();
+			if (b != NULL) {
+				attachedTo()->busConnectorItems(b, busConnectedItems);
+				foreach (ConnectorItem * busConnectorItem, busConnectedItems) {
+					foreach (ConnectorItem * toConnectorItem, busConnectorItem->connectedToItems()) {
+						if (toConnectorItem->isEverVisible()) {
+							busConnectionCount = 1;
+							break;
+						}
+					}
+					if (busConnectionCount > 0) break;
+				}
+			}
+		}
+	}
+
+	if (doBuses) {
+		Bus * b = bus();
+		if (b != NULL) {
+			foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
+				busConnectedItem->restoreColor(false, busConnectionCount);
+			}
+		}
+	}
+
+	int connectedToCount = 0;
+	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
+		if (toConnectorItem->attachedTo()->isEverVisible()) {
+			connectedToCount = 1;
+			break;
+		}
+	}
+
+	if (connectedToCount + busConnectionCount <= 0) {
 		if (connectorType() == Connector::Female) {
 			setNormalColor();
 			return;
@@ -235,20 +277,22 @@ void ConnectorItem::setHoverColor() {
 void ConnectorItem::setChosen(bool chosen)
 {
 	m_chosen = chosen;
-	restoreColor();
+	restoreColor(false, -1);
 }
 
 
 void ConnectorItem::setColorAux(QBrush brush, QPen pen, bool paint) {
+	m_paint = paint;
 	this->setBrush(brush);
 	this->setPen(pen);
-	m_paint = paint;
+	update();
 }
 
 void ConnectorItem::setColorAux(const QColor &color, bool paint) {
+	m_paint = paint;
 	this->setBrush(QBrush(color));
 	this->setPen(QPen(color));
-	m_paint = paint;
+	update();
 }
 
 void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
@@ -307,7 +351,7 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 			if (m_attachedTo != NULL) {
 				m_attachedTo->connectionChange(this);
 			}
-			restoreColor();
+			restoreColor(true, -1);
 			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
 				.arg((long) this, 0, 16)
 				.arg(itemBase->modelPartShared()->title())
@@ -324,7 +368,7 @@ void ConnectorItem::removeConnection(ConnectorItem * connectedItem, bool emitCha
 	if (connectedItem == NULL) return;
 
 	m_connectedTo.removeOne(connectedItem);
-	restoreColor();
+	restoreColor(true, -1);
 	if (emitChange) {
 		m_attachedTo->connectionChange(this);
 	}
@@ -743,12 +787,6 @@ void ConnectorItem::setBaseTooltip(const QString & tooltip) {
 	setToolTip(tooltip);
 }
 
-void ConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
-	qreal width = x2-x1;
-	qreal height = y2-y1;
-	setRect(x1,y1,width,height);
-}
-
 void ConnectorItem::clearConnector() {
 	m_connector = NULL;
 }
@@ -901,7 +939,7 @@ qreal ConnectorItem::strokeWidth() {
 
 void ConnectorItem::showEqualPotential(bool show) {
 	if (!show) {
-		restoreColor();
+		restoreColor(false, -1);
 		return;
 	}
 
@@ -937,4 +975,8 @@ QPainterPath ConnectorItem::shape() const
 
 void ConnectorItem::setShape(QPainterPath & pp) {
 	m_shape = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(pp, pen(), 1);
+}
+
+bool ConnectorItem::isEverVisible() {
+	return m_attachedTo->isEverVisible();
 }

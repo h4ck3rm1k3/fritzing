@@ -151,6 +151,8 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 
+	m_everVisible = true;
+
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;
@@ -1331,4 +1333,12 @@ void ItemBase::slamZ(qreal newZ) {
 	qreal z = floor(m_viewGeometry.z()) + newZ;
 	m_viewGeometry.setZ(z);
 	setZValue(z);
+}
+
+bool ItemBase::isEverVisible() {
+	return m_everVisible;
+}
+
+void ItemBase::setEverVisible(bool v) {
+	m_everVisible = v;
 }

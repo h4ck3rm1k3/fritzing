@@ -166,6 +166,8 @@ public:
 	virtual void figureHover();
 	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	virtual void slamZ(qreal newZ);
+	bool isEverVisible();
+	void setEverVisible(bool);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
@@ -253,6 +255,7 @@ protected:
 	class PartLabel * m_partLabel;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
+	bool m_everVisible;
 
 protected:
 	static long nextID;

@@ -93,7 +93,9 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
 {
-	wire->setVisible(wire->getRatsnest() || wire->getTrace() || wire->getJumper());
+	bool visible = wire->getRatsnest() || wire->getTrace() || wire->getJumper();
+	wire->setVisible(visible);
+	wire->setEverVisible(visible);
 }
 
 void PCBSketchWidget::addViewLayers() {
@@ -665,6 +667,7 @@ void PCBSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 		// don't need to see the breadboard in the other views
 		// but it's there so connections can be more easily synched between views
 		itemBase->setVisible(false);
+		itemBase->setEverVisible(false);
 	}
 }
 
