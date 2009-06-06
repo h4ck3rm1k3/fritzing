@@ -44,7 +44,7 @@ QString Version::m_versionString;
 QString Version::m_year;
 QStringList Version::m_modifiers;
 
-Version * Version::m_singleton = new Version();
+Version * Version::m_singleton = new Version();		
 
 QString Version::FirstVersionWithDetachedUserData = "0.3.1b.05.26.3016";
 
