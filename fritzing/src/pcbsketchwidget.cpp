@@ -597,6 +597,10 @@ void PCBSketchWidget::setClipEnds(VirtualWire * vw) {
 	vw->setClipEnds(true);
 }
 
+ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID() {
+	return ViewLayer::Copper0Trace;
+}
+
 ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
 	if (viewGeometry.getJumper()) {
 		return ViewLayer::Jumperwires;

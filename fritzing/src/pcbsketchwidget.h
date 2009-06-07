@@ -85,6 +85,7 @@ protected:
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void setClipEnds(class VirtualWire *);
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+	ViewLayer::ViewLayerID getDragWireViewLayerID();
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);

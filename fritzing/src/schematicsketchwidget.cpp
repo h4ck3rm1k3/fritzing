@@ -47,6 +47,10 @@ void SchematicSketchWidget::addViewLayers() {
 	addSchematicViewLayers();
 }
 
+ViewLayer::ViewLayerID SchematicSketchWidget::getDragWireViewLayerID() {
+	return ViewLayer::SchematicTrace;
+}
+
 ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
 	if (viewGeometry.getTrace()) {
 		return ViewLayer::SchematicTrace;

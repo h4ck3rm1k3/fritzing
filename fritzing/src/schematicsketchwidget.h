@@ -40,6 +40,7 @@ public:
 
 	void addViewLayers();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+	ViewLayer::ViewLayerID getDragWireViewLayerID();
 	void initWire(Wire *, int penWidth);
 	bool autorouteNeedsBounds();
 	bool autorouteCheckWires();

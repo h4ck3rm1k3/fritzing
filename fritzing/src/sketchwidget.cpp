@@ -3023,6 +3023,10 @@ void SketchWidget::changeZ(QHash<long, RealPair * > triplets, qreal (*pairAccess
 	}
 }
 
+ViewLayer::ViewLayerID SketchWidget::getDragWireViewLayerID() {
+	return m_wireViewLayerID;
+}
+
 ViewLayer::ViewLayerID SketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
 	Q_UNUSED(viewGeometry);
 	return m_wireViewLayerID;
@@ -3059,7 +3063,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	clearHoldingSelectItem();
 
 	// make sure wire layer is visible
-	ViewLayer::ViewLayerID viewLayerID = getWireViewLayerID(connectorItem->attachedTo()->getViewGeometry());
+	ViewLayer::ViewLayerID viewLayerID = getDragWireViewLayerID();
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer != NULL && !viewLayer->visible()) {
 		setLayerVisible(viewLayer, true);
@@ -4293,7 +4297,7 @@ void SketchWidget::addBreadboardViewLayers() {
 }
 
 void SketchWidget::addSchematicViewLayers() {
-	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
+	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicTrace, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicJumper << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
@@ -4302,7 +4306,7 @@ void SketchWidget::addSchematicViewLayers() {
 }
 
 void SketchWidget::addPcbViewLayers() {
-	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
+	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::Board << ViewLayer::GroundPlane << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
