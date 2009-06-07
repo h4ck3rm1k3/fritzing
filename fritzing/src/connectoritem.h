@@ -57,7 +57,7 @@ public:
 	virtual void setTerminalPoint(QPointF);
 	QPointF terminalPoint();
 	QPointF adjustedTerminalPoint();
-	QPointF sceneAdjustedTerminalPoint();
+	QPointF sceneAdjustedTerminalPoint(ConnectorItem * anchor);
 	bool connectedTo(ConnectorItem *);
 	const QList<ConnectorItem *> & connectedToItems();
 	void setHidden(bool hidden);

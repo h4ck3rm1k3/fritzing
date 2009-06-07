@@ -606,6 +606,10 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 		return ViewLayer::Copper0Trace;
 	}
 
+	if (viewGeometry.getRatsnest()) {
+		return ViewLayer::Ratsnest;
+	}
+
 	return SketchWidget::getWireViewLayerID(viewGeometry);
 }
 
@@ -646,6 +650,7 @@ PCBSketchWidget::CleanType PCBSketchWidget::cleanType() {
 void PCBSketchWidget::ensureTraceLayersVisible() {
 	ensureLayerVisible(ViewLayer::Copper0);
 	ensureLayerVisible(ViewLayer::Copper0Trace);
+	ensureLayerVisible(ViewLayer::GroundPlane);
 	ensureLayerVisible(ViewLayer::Jumperwires);
 }
 
@@ -984,9 +989,9 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 
 void PCBSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest) 
 {
-	QPointF fromPos = source->sceneAdjustedTerminalPoint();
+	QPointF fromPos = source->sceneAdjustedTerminalPoint(NULL);
 	viewGeometry.setLoc(fromPos);
-	QPointF toPos = dest->sceneAdjustedTerminalPoint();
+	QPointF toPos = dest->sceneAdjustedTerminalPoint(NULL);
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 	viewGeometry.setLine(line);
 	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);

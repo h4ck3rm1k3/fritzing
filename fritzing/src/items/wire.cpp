@@ -490,23 +490,23 @@ void Wire::simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to)
 void Wire::calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2) {
 	// to is this wire, from is something else
 	if (to == m_connector0) {
-		p1 = from->sceneAdjustedTerminalPoint();
+		p1 = from->sceneAdjustedTerminalPoint(to);
 		ConnectorItem * otherFrom = m_connector1->firstConnectedToIsh();
 		if (otherFrom == NULL) {
 			p2 = m_connector1->mapToScene(m_connector1->rect().center());
 		}
 		else {
-			p2 = otherFrom->sceneAdjustedTerminalPoint();
+			p2 = otherFrom->sceneAdjustedTerminalPoint(m_connector1);
 		}
 	}
 	else {
-		p2 = from->sceneAdjustedTerminalPoint();
+		p2 = from->sceneAdjustedTerminalPoint(to);
 		ConnectorItem * otherFrom = m_connector0->firstConnectedToIsh();
 		if (otherFrom == NULL) {
 			p1 = m_connector0->mapToScene(m_connector0->rect().center());
 		}
 		else {
-			p1 = otherFrom->sceneAdjustedTerminalPoint();
+			p1 = otherFrom->sceneAdjustedTerminalPoint(m_connector0);
 		}
 
 	}
@@ -534,11 +534,11 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	if (chained) {
 		// move both ends
 		if (to == m_connector0) {
-			p1 = from->sceneAdjustedTerminalPoint();
+			p1 = from->sceneAdjustedTerminalPoint(m_connector0);
 			p2 = this->line().p2() + p1;
 		}
 		else {
-			p2 = from->sceneAdjustedTerminalPoint();
+			p2 = from->sceneAdjustedTerminalPoint(m_connector1);
 			p1 = p2 - this->line().p2();
 		}
 	}

@@ -1041,9 +1041,9 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
-	QPointF fromPos = from->sceneAdjustedTerminalPoint();
+	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
 	viewGeometry.setLoc(fromPos);
-	QPointF toPos = to->sceneAdjustedTerminalPoint();
+	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 	viewGeometry.setLine(line);
 	viewGeometry.setWireFlags(wireFlags);
@@ -1722,7 +1722,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 
 			ItemBase * stuckTo = ct->wire->stuckTo();
 			if (stuckTo != NULL) {
-				QPointF p = from.at(i)->sceneAdjustedTerminalPoint();
+				QPointF p = from.at(i)->sceneAdjustedTerminalPoint(NULL);
 				if (stuckTo->contains(stuckTo->mapFromScene(p))) {
 					ct->status[i] = m_savedItems.contains(stuckTo) ? IN : OUT;
 					changed = true;
@@ -3158,11 +3158,11 @@ void SketchWidget::rotateX(qreal degrees)
 		}
 		else {
 			Wire * wire = qobject_cast<Wire *>(item);
-			QPointF p0 = wire->connector0()->sceneAdjustedTerminalPoint();
+			QPointF p0 = wire->connector0()->sceneAdjustedTerminalPoint(NULL);
 			QPointF d0 = p0 - center;
 			QPointF d0t = rotation.map(d0);
 
-			QPointF p1 = wire->connector1()->sceneAdjustedTerminalPoint();
+			QPointF p1 = wire->connector1()->sceneAdjustedTerminalPoint(NULL);
 			QPointF d1 = p1 - center;
 			QPointF d1t = rotation.map(d1);
 
@@ -3175,11 +3175,11 @@ void SketchWidget::rotateX(qreal degrees)
 		ViewGeometry vg2(vg1);
 
 		ConnectorItem * rotater = m_savedWires.value(wire);
-		QPointF p0 = rotater->sceneAdjustedTerminalPoint();
+		QPointF p0 = rotater->sceneAdjustedTerminalPoint(NULL);
 		QPointF d0 = p0 - center;
 		QPointF d0t = rotation.map(d0);
 
-		QPointF p1 = wire->otherConnector(rotater)->sceneAdjustedTerminalPoint();
+		QPointF p1 = wire->otherConnector(rotater)->sceneAdjustedTerminalPoint(NULL);
 		if (rotater == wire->connector0()) {
 			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), p1 - (d0t + center)), vg1.loc(), d0t + center, true, parentCommand);
 		}
@@ -3363,26 +3363,27 @@ void SketchWidget::sketchWidget_wireConnected(long fromID, QString fromConnector
 
 	QPointF p1(0,0), p2, pos;
 
+	ConnectorItem * other = wire->otherConnector(fromConnectorItem);
 	if (fromConnectorItem == wire->connector0()) {
-		pos = toConnectorItem->sceneAdjustedTerminalPoint();
-		ConnectorItem * toConnector1 = wire->otherConnector(fromConnectorItem)->firstConnectedToIsh();
+		pos = toConnectorItem->sceneAdjustedTerminalPoint(fromConnectorItem);
+		ConnectorItem * toConnector1 = other->firstConnectedToIsh();
 		if (toConnector1 == NULL) {
-			p2 = wire->otherConnector(fromConnectorItem)->mapToScene(wire->otherConnector(fromConnectorItem)->pos()) - pos;
+			p2 = other->mapToScene(other->pos()) - pos;
 		}
 		else {
-			p2 = toConnector1->sceneAdjustedTerminalPoint();
+			p2 = toConnector1->sceneAdjustedTerminalPoint(other);
 		}
 	}
 	else {
 		pos = wire->pos();
-		ConnectorItem * toConnector0 = wire->otherConnector(fromConnectorItem)->firstConnectedToIsh();
+		ConnectorItem * toConnector0 = other->firstConnectedToIsh();
 		if (toConnector0 == NULL) {
 			pos = wire->pos();
 		}
 		else {
-			pos = toConnector0->sceneAdjustedTerminalPoint();
+			pos = toConnector0->sceneAdjustedTerminalPoint(other);
 		}
-		p2 = toConnectorItem->sceneAdjustedTerminalPoint() - pos;
+		p2 = toConnectorItem->sceneAdjustedTerminalPoint(fromConnectorItem) - pos;
 	}
 	wire->setLineAnd(QLineF(p1, p2), pos, true);
 
@@ -3657,7 +3658,7 @@ ItemBase * SketchWidget::overSticky(ItemBase * itemBase) {
 	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem != NULL) {
-			QPointF p = connectorItem->sceneAdjustedTerminalPoint();
+			QPointF p = connectorItem->sceneAdjustedTerminalPoint(NULL);
 			foreach (QGraphicsItem * item,  this->scene()->items(p)) {
 				ItemBase * s = dynamic_cast<ItemBase *>(item);
 				if (s == NULL) continue;

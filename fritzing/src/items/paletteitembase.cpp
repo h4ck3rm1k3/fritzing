@@ -351,8 +351,8 @@ void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 
 	// female connectors are equivalent to sticky
 
-	QPointF fromTerminalPoint = from->sceneAdjustedTerminalPoint();
-	QPointF toTerminalPoint = to->sceneAdjustedTerminalPoint();
+	QPointF fromTerminalPoint = from->sceneAdjustedTerminalPoint(to);
+	QPointF toTerminalPoint = to->sceneAdjustedTerminalPoint(from);
 
 	this->setPos(this->pos() + fromTerminalPoint - toTerminalPoint);
 	updateConnections();

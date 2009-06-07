@@ -56,6 +56,10 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 		return ViewLayer::SchematicJumper;
 	}
 
+	if (viewGeometry.getRatsnest()) {
+		return ViewLayer::SchematicWire;
+	}
+
 	return SketchWidget::getWireViewLayerID(viewGeometry);
 }
 

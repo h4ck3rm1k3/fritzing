@@ -464,8 +464,8 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 					// if connections are on the same bus on a given part
 				}
 				else {
-					QPointF pi = ci->sceneAdjustedTerminalPoint();
-					QPointF pj = cj->sceneAdjustedTerminalPoint();
+					QPointF pi = ci->sceneAdjustedTerminalPoint(NULL);
+					QPointF pj = cj->sceneAdjustedTerminalPoint(NULL);
 					double px = pi.x() - pj.x();
 					double py = pi.y() - pj.y();
 					d = (px * px) + (py * py);
@@ -525,8 +525,8 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		DebugDialog::debug(QString("\t%1 %2 %3 %4")
 				.arg(connectorItem->attachedToTitle())
 				.arg(connectorItem->connectorSharedID())
-				.arg(connectorItem->sceneAdjustedTerminalPoint().x())
-				.arg(connectorItem->sceneAdjustedTerminalPoint().y()) );
+				.arg(connectorItem->sceneAdjustedTerminalPoint(NULL).x())
+				.arg(connectorItem->sceneAdjustedTerminalPoint(NULL).y()) );
 		*/
 	}
 
@@ -534,8 +534,8 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
  bool Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {
 
-	QPointF fromPos = from->sceneAdjustedTerminalPoint();
-	QPointF toPos = to->sceneAdjustedTerminalPoint();
+	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
+	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
 
 	m_drawingNet = NULL;
 	foreach (QList<ConnectorItem *> * connectorItems, m_allPartConnectorItems) {
@@ -610,8 +610,8 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 }
 
  void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds) {
-	QPointF fromPos = from->sceneAdjustedTerminalPoint();
-	QPointF toPos = to->sceneAdjustedTerminalPoint();
+	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
+	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
  	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(fromPos);
@@ -768,10 +768,10 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					Wire * candidateWire = qobject_cast<Wire *>(candidateItemBase);
 					if (!m_cleanWires.contains(candidateWire)) continue;
 
-					QPointF fromPos0 = traceWire->connector0()->sceneAdjustedTerminalPoint();
-					QPointF fromPos1 = traceWire->connector1()->sceneAdjustedTerminalPoint();
-					QPointF toPos0 = candidateWire->connector0()->sceneAdjustedTerminalPoint();
-					QPointF toPos1 = candidateWire->connector1()->sceneAdjustedTerminalPoint();
+					QPointF fromPos0 = traceWire->connector0()->sceneAdjustedTerminalPoint(NULL);
+					QPointF fromPos1 = traceWire->connector1()->sceneAdjustedTerminalPoint(NULL);
+					QPointF toPos0 = candidateWire->connector0()->sceneAdjustedTerminalPoint(NULL);
+					QPointF toPos1 = candidateWire->connector1()->sceneAdjustedTerminalPoint(NULL);
 
 					if (sameY(fromPos0, fromPos1, toPos0, toPos1)) {
 						// if we're going in the same direction it's an obstacle
@@ -1275,8 +1275,8 @@ void Autorouter1::reduceColinearWires(QList<Wire *> & wires)
 		Wire * w0 = wires[i];
 		Wire * w1 = wires[i + 1];
 
-		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint();
-		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint();
+		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint(NULL);
+		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint(NULL);
 
 		if (qAbs(fromPos.y() - toPos.y()) < .001 || qAbs(fromPos.x() - toPos.x()) < .001) {
 			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5);
@@ -1300,8 +1300,8 @@ void Autorouter1::reduceWires(QList<Wire *> & wires, ConnectorItem * from, Conne
 		Wire * w0 = wires[i];
 		Wire * w1 = wires[i + 1];
 
-		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint();
-		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint();
+		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint(NULL);
+		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint(NULL);
 
 		Wire * traceWire = reduceWiresAux(wires, from, to, fromPos, toPos, boundingPoly);
 		if (traceWire == NULL) continue;
@@ -1387,7 +1387,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 }
 
 QPointF Autorouter1::calcPrimePoint(ConnectorItem * connectorItem) {
-	QPointF c = connectorItem->sceneAdjustedTerminalPoint();
+	QPointF c = connectorItem->sceneAdjustedTerminalPoint(NULL);
 	QLineF lh(QPointF(c.x() - 999999, c.y()), QPointF(c.x() + 99999, c.y()));
 	QLineF lv(QPointF(c.x(), c.y() - 999999), QPointF(c.x(), c.y() + 999999));
 	QRectF r = connectorItem->attachedTo()->boundingRect();
@@ -1486,7 +1486,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 	QList<Wire *> newWires;
 	// 1. draw wire from FROM to just outside its nearest part border
 	QPointF fromPrime = calcPrimePoint(from);
-	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(), fromPrime, StandardTraceWidth + 1);
+	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(NULL), fromPrime, StandardTraceWidth + 1);
 	if (fromWire == NULL) return false;
 
 	if (hitsObstacle(fromWire, from->attachedTo())) {
@@ -1496,7 +1496,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 
 	// 2. draw wire from TO to just outside its nearest part border
 	QPointF toPrime = calcPrimePoint(to);
-	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(), StandardTraceWidth + 1);
+	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(NULL), StandardTraceWidth + 1);
 	if (toWire == NULL) {
 		m_sketchWidget->deleteItem(fromWire, true, false, false);
 		return false;
@@ -1520,8 +1520,8 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 			oldWires.append(w);
 			if (w != toWire && w != fromWire) {
 				m_cleanWires.append(w);
-				QPointF p0 = w->connector0()->sceneAdjustedTerminalPoint();
-				QPointF p1 = w->connector1()->sceneAdjustedTerminalPoint();
+				//QPointF p0 = w->connector0()->sceneAdjustedTerminalPoint(NULL);
+				//QPointF p1 = w->connector1()->sceneAdjustedTerminalPoint(NULL);
 				//DebugDialog::debug(QString("adding clean %1 (%2,%3) (%4,%5)")
 					//.arg(w->id())
 					//.arg(p0.x()).arg(p0.y())

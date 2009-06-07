@@ -29,6 +29,8 @@ $Date$
 #include <QBrush>
 #include <QPen>
 #include <QColor>
+#include <math.h>
+#include <limits>
 
 #include "infographicsview.h"
 #include "debugdialog.h"
@@ -37,6 +39,53 @@ $Date$
 #include "modelpart.h"
 
 QList<ConnectorItem *>  ConnectorItem::m_equalPotentialDisplayItems;
+
+static double MAX_DOUBLE = std::numeric_limits<double>::max();
+
+void distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 
+					  double & dx, double & dy, double &distanceSegment)
+{
+
+	// http://www.codeguru.com/forum/showthread.php?t=194400
+
+	//
+	// find the distance from the point (cx,cy) to the line
+	// determined by the points (ax,ay) and (bx,by)
+	//
+
+	double r_numerator = (cx-ax)*(bx-ax) + (cy-ay)*(by-ay);
+	double r_denomenator = (bx-ax)*(bx-ax) + (by-ay)*(by-ay);
+	double r = r_numerator / r_denomenator;
+     
+	if ( (r >= 0) && (r <= 1) )
+	{
+		dx = ax + r*(bx-ax);
+		dy = ay + r*(by-ay);
+		distanceSegment = (cx-dx)*(cx-dx) + (cy-dy)*(cy-dy);
+	}
+	else
+	{
+		double dist1 = (cx-ax)*(cx-ax) + (cy-ay)*(cy-ay);
+		double dist2 = (cx-bx)*(cx-bx) + (cy-by)*(cy-by);
+		if (dist1 < dist2)
+		{
+			dx = ax;
+			dy = ay;
+			distanceSegment = dist1;
+		}
+		else
+		{
+			dx = bx;
+			dy = by;
+			distanceSegment = dist2;
+		}
+	}
+
+	return;
+}
+
+/////////////////////////////////////////////////////////
+
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
@@ -426,7 +475,42 @@ QPointF ConnectorItem::adjustedTerminalPoint() {
 	return m_terminalPoint + this->rect().topLeft();
 }
 
-QPointF ConnectorItem::sceneAdjustedTerminalPoint() {
+QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
+
+	if ((connectee != NULL) && !m_circular && !m_shape.isEmpty() && (connectee->attachedToItemType() == ModelPart::Wire)) {
+		Wire * wire = dynamic_cast<Wire *>(connectee->attachedTo());
+		if ((wire != NULL) && !wire->getVirtual()) {
+			QPointF anchor = wire->otherConnector(connectee)->sceneAdjustedTerminalPoint(NULL);
+			double newX, newY, newDistance = MAX_DOUBLE;
+			int count = m_shape.elementCount();
+
+			QPointF prev;
+			for (int i = 0; i < count; i++) {
+				QPainterPath::Element el = m_shape.elementAt(i);
+				if (el.isMoveTo()) {
+					prev = this->mapToScene(QPointF(el));
+				}
+				else {
+					QPointF current = this->mapToScene(QPointF(el));
+					double candidateX, candidateY, candidateDistance;
+					distanceFromLine(anchor.x(), anchor.y(), prev.x(), prev.y(), current.x(), current.y(), 
+										candidateX, candidateY, candidateDistance);
+					if (candidateDistance < newDistance) {
+						newX = candidateX;
+						newY = candidateY;
+						newDistance = candidateDistance;
+						DebugDialog::debug(QString("anchor:%1,%2; new:%3,%4; %5").arg(anchor.x()).arg(anchor.y()).arg(newX).arg(newY).arg(newDistance));
+					}
+
+					prev = current;
+				}
+			}
+
+			DebugDialog::debug(QString("anchor:%1,%2; new:%3,%4; %5\n\n").arg(anchor.x()).arg(anchor.y()).arg(newX).arg(newY).arg(newDistance));
+			return QPointF(newX, newY);
+		}
+	}
+
 	return this->mapToScene(m_terminalPoint + this->rect().topLeft());
 }
 

@@ -537,7 +537,7 @@ void ItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent *  ) {
 ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, ConnectorItem * lastUnderConnector, bool useTerminalPoint)
 {
 	QList<QGraphicsItem *> items = useTerminalPoint
-		? this->scene()->items(connectorItemOver->sceneAdjustedTerminalPoint())
+		? this->scene()->items(connectorItemOver->sceneAdjustedTerminalPoint(NULL))
 		: this->scene()->items(mapToScene(connectorItemOver->rect()));
 	QList<ConnectorItem *> candidates;
 	// for the moment, take the topmost ConnectorItem that doesn't belong to me
