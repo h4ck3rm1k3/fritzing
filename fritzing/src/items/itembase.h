@@ -168,6 +168,7 @@ public:
 	virtual void slamZ(qreal newZ);
 	bool isEverVisible();
 	void setEverVisible(bool);
+	virtual bool connectionIsAllowed(ConnectorItem *);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);

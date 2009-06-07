@@ -1042,3 +1042,10 @@ void Wire::setPenWidth(int w) {
 void Wire::getColor(QColor & color, const QString & name) {
 	color.setNamedColor(colors.value(name));
 }
+
+bool Wire::connectionIsAllowed(ConnectorItem * to) {
+	Wire * w = dynamic_cast<Wire *>(to->attachedTo());
+	if (w == NULL) return true;
+
+	return !w->getVirtual();
+}

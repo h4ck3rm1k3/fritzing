@@ -2397,6 +2397,12 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	}
 
 	clearDragWireTempCommand();
+	if ((to != NULL) && from->connectedToItems().contains(to)) {
+		// there's no change: the wire was dragged back to its original connection
+		from->attachedTo()->updateConnections(to);
+		return;
+	}
+
 	QUndoCommand * parentCommand = new QUndoCommand();
 
 	long fromID = wire->id();
@@ -2411,6 +2417,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	if (to != NULL) {
 		toID = to->attachedToID();
 		toConnectorID = to->connectorSharedID();
+
 	}
 
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);

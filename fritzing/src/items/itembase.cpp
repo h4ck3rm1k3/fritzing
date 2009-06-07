@@ -536,7 +536,6 @@ void ItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent *  ) {
 
 ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, ConnectorItem * lastUnderConnector, bool useTerminalPoint)
 {
-
 	QList<QGraphicsItem *> items = useTerminalPoint
 		? this->scene()->items(connectorItemOver->sceneAdjustedTerminalPoint())
 		: this->scene()->items(mapToScene(connectorItemOver->rect()));
@@ -545,14 +544,14 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 	foreach (QGraphicsItem * item, items) {
 		ConnectorItem * connectorItemUnder = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItemUnder == NULL) continue;
-		if (connectorItemUnder->connector() == NULL) continue;			// for now; this is probably a busConnectorItem
-		if (childItems().contains(connectorItemUnder)) continue;
+		if (connectorItemUnder->connector() == NULL) continue;			// shouldn't happen
+		if (childItems().contains(connectorItemUnder)) continue;		// don't use own connectors
 		if (!connectorItemOver->connectionIsAllowed(connectorItemUnder)) {
 			continue;
 		}
-		if (connectorItemUnder->connectedToItems().contains(connectorItemOver)) {
-			continue;		// already connected
-		}
+		//if (connectorItemUnder->connectedToItems().contains(connectorItemOver)) {
+			//continue;		// already connected
+		//}
 
 		candidates.append(connectorItemUnder);
 	}
@@ -1341,4 +1340,8 @@ bool ItemBase::isEverVisible() {
 
 void ItemBase::setEverVisible(bool v) {
 	m_everVisible = v;
+}
+
+bool ItemBase::connectionIsAllowed(ConnectorItem *) {
+	return true;
 }

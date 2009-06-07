@@ -883,8 +883,8 @@ void ConnectorItem::setIgnoreAncestorFlagIfExternal(bool ignore) {
 }
 
 bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
-	bool result = connector()->connectionIsAllowed(other->connector());
-	if (!result) return false;
+	if (!connector()->connectionIsAllowed(other->connector())) return false;
+	if (!m_attachedTo->connectionIsAllowed(other)) return false;
 
 	if (other->attachedTo()->parentItem() != NULL) {
 		// other's part is in a group

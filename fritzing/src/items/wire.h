@@ -141,6 +141,7 @@ protected:
 	void collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
+	bool connectionIsAllowed(ConnectorItem *);
 
 protected:
 	QPointF m_wireDragOrigin;
