@@ -736,7 +736,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					continue;
 				}
 
-				if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+				if (!sameEffectiveLayer(candidateConnectorItem->attachedTo()->viewLayerID(), traceWire->viewLayerID())) {
 					// needs to be on the same layer
 					continue;
 				}
@@ -1368,7 +1368,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 				continue;
 			}
 
-			if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+			if (!sameEffectiveLayer(candidateConnectorItem->attachedTo()->viewLayerID(), traceWire->viewLayerID())) {
 				// needs to be on the same layer
 				continue;
 			}
@@ -1751,4 +1751,10 @@ bool Autorouter1::sameX(const QPointF & fromPos0, const QPointF & fromPos1, cons
 			qAbs(toPos0.x() - toPos1.x()) < 1.0;
 }
 
-						
+bool Autorouter1::sameEffectiveLayer(ViewLayer::ViewLayerID viewLayerID1, ViewLayer::ViewLayerID viewLayerID2) {
+	Q_UNUSED(viewLayerID2);
+
+	if (viewLayerID1 == ViewLayer::Copper0) return true;
+
+	return false;
+}

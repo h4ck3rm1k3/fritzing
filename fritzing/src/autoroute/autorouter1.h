@@ -38,6 +38,7 @@ $Date$
 #include <QUndoCommand>
 
 #include "../viewgeometry.h"
+#include "../viewlayer.h"
 
 class Autorouter1 : public QObject
 {
@@ -81,6 +82,7 @@ protected:
 	void reduceColinearWires(QList<Wire *> &);
 	bool sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	bool sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
+	bool sameEffectiveLayer(ViewLayer::ViewLayerID viewLayerID1, ViewLayer::ViewLayerID viewLayerID2);
 
 public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
