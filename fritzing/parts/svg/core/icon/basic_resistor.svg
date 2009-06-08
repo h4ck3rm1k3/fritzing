@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
    baseProfile="tiny"
    x="0px"
@@ -14,49 +7,13 @@
    width="32"
    height="32"
    xml:space="preserve"
-   id="svg2"
-   sodipodi:version="0.32"
-   inkscape:version="0.46"
-   sodipodi:docname="basic_resistor.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"><metadata
-   id="metadata24"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-   id="defs22"><inkscape:perspective
-     sodipodi:type="inkscape:persp3d"
-     inkscape:vp_x="0 : 6.3000002 : 1"
-     inkscape:vp_y="0 : 1000 : 0"
-     inkscape:vp_z="44.100002 : 6.3000002 : 1"
-     inkscape:persp3d-origin="22.050001 : 4.2000001 : 1"
-     id="perspective26" /></defs><sodipodi:namedview
-   inkscape:window-height="726"
-   inkscape:window-width="872"
-   inkscape:pageshadow="2"
-   inkscape:pageopacity="0.0"
-   guidetolerance="10.0"
-   gridtolerance="10.0"
-   objecttolerance="10.0"
-   borderopacity="1.0"
-   bordercolor="#666666"
-   pagecolor="#ffffff"
-   id="base"
-   showgrid="false"
-   inkscape:zoom="12.3356"
-   inkscape:cx="22.050001"
-   inkscape:cy="12.785295"
-   inkscape:window-x="251"
-   inkscape:window-y="25"
-   inkscape:current-layer="svg2" />
-
+   id="svg2">
 <g
    id="icon"
    transform="matrix(0.7456253,0,0,0.7456,0,12.294)">  <!-- needed an id so fritzing could extract the element for either icon or breadboard view -->
 <g
    id="breadboard"
    style="display:inline">
-
-
-
 <rect
    y="3.5899999"
    width="2.5"
@@ -71,9 +28,6 @@
    height="2.9100001"
    id="connector1pin"
    style="fill:#868584" />
-
-
-
 <rect
    y="3.5899999"
    width="42.917"

@@ -2,17 +2,8 @@
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1"
-	 id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" sodipodi:docname="basic_pbutton_2leg_horizon.svg" inkscape:version="0.46" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:dc="http://purl.org/dc/elements/1.1/" sodipodi:version="0.32" xmlns:cc="http://creativecommons.org/ns#" inkscape:output_extension="org.inkscape.output.svg.inkscape"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px"
+	 id="svg2" x="0px" y="0px" width="32px" height="32px"
 	 viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-<defs>
-	
-	
-		<inkscape:perspective  inkscape:persp3d-origin="12.6 : 11.1 : 1" inkscape:vp_z="25.200001 : 16.65 : 1" inkscape:vp_x="0 : 16.65 : 1" sodipodi:type="inkscape:persp3d" inkscape:vp_y="0 : 1000 : 0" id="perspective59">
-		</inkscape:perspective>
-</defs>
-<sodipodi:namedview  units="in" inkscape:current-layer="g9" inkscape:window-y="22" inkscape:window-x="4" inkscape:cy="12.548575" inkscape:cx="12.6" inkscape:zoom="14.954955" showgrid="false" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" objecttolerance="10.0" gridtolerance="10.0" guidetolerance="10.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:window-width="1440" inkscape:window-height="852" id="base">
-	</sodipodi:namedview>
 <rect id="connector0pin" x="26.565" y="14.234" fill="#8C8C8C" width="5.421" height="2.9"/>
 <rect id="connector1pin" x="0.076" y="14.275" fill="#8C8C8C" width="5.744" height="2.901"/>
 <path id="path21_8_" fill="#474747" d="M5.264,20.832c-1.101,0-1.521-0.391-1.524-0.869v-5.312

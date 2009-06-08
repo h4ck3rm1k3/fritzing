@@ -1,55 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.2"
    baseProfile="tiny"
    id="svg2"
    x="0px"
    y="0px"
    width="32px"
-   height="32px"
-   sodipodi:version="0.32"
-   inkscape:version="0.46"
-   sodipodi:docname="555timericon.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
-  <metadata
-     id="metadata2613">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <defs
-     id="defs2611" />
-  <sodipodi:namedview
-     inkscape:window-height="728"
-     inkscape:window-width="1025"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     guidetolerance="10.0"
-     gridtolerance="10.0"
-     objecttolerance="10.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
-     pagecolor="#ffffff"
-     id="base"
-     showgrid="false"
-     inkscape:zoom="10.915961"
-     inkscape:cx="-0.077375231"
-     inkscape:cy="16"
-     inkscape:window-x="100"
-     inkscape:window-y="25"
-     inkscape:current-layer="svg2" />
+   height="32px">
   <g
      id="icon"
      transform="matrix(0.8,0,0,0.8,0,2.8)">
@@ -211,11 +168,7 @@
        cy="23.469999"
        r="2.0599999"
        id="circle2600"
-       style="fill:url(#SVGID_2_)"
-       sodipodi:cx="6.5"
-       sodipodi:cy="23.469999"
-       sodipodi:rx="2.0599999"
-       sodipodi:ry="2.0599999" />
+       style="fill:url(#SVGID_2_)" />
     <g
        id="g2602">
       <path
