@@ -108,6 +108,108 @@ bool DistancePointLine( QPointF *Point, QPointF *LineStart, QPointF *LineEnd, fl
     return true;
 }
 
+/////////////////////////////////////////////////////////
+
+#define CONVEX
+
+/* ======= Crossings algorithm ============================================ */
+
+// from: http://tog.acm.org/GraphicsGems//gemsiv/ptpoly_haines/ptinpoly.c
+
+#define XCOORD	0
+#define YCOORD	1
+
+/* Shoot a test ray along +X axis.  The strategy, from MacMartin, is to
+ * compare vertex Y values to the testing point's Y and quickly discard
+ * edges which are entirely to one side of the test ray.
+ *
+ * Input 2D polygon _pgon_ with _numverts_ number of vertices and test point
+ * _point_, returns 1 if inside, 0 if outside.	WINDING and CONVEX can be
+ * defined for this test.
+ */
+int CrossingsTest( double pgon[][2], int numverts, double point[2] )
+{
+#ifdef	WINDING
+register int	crossings ;
+#endif
+register int	j, yflag0, yflag1, inside_flag, xflag0 ;
+register double ty, tx, *vtx0, *vtx1 ;
+#ifdef	CONVEX
+register int	line_flag ;
+#endif
+
+    tx = point[XCOORD] ;
+    ty = point[YCOORD] ;
+
+    vtx0 = pgon[numverts-1] ;
+    /* get test bit for above/below X axis */
+    yflag0 = ( vtx0[YCOORD] >= ty ) ;
+    vtx1 = pgon[0] ;
+
+#ifdef	WINDING
+    crossings = 0 ;
+#else
+    inside_flag = 0 ;
+#endif
+#ifdef	CONVEX
+    line_flag = 0 ;
+#endif
+    for ( j = numverts+1 ; --j ; ) {
+
+	yflag1 = ( vtx1[YCOORD] >= ty ) ;
+	/* check if endpoints straddle (are on opposite sides) of X axis
+	 * (i.e. the Y's differ); if so, +X ray could intersect this edge.
+	 */
+	if ( yflag0 != yflag1 ) {
+	    xflag0 = ( vtx0[XCOORD] >= tx ) ;
+	    /* check if endpoints are on same side of the Y axis (i.e. X's
+	     * are the same); if so, it's easy to test if edge hits or misses.
+	     */
+	    if ( xflag0 == ( vtx1[XCOORD] >= tx ) ) {
+
+		/* if edge's X values both right of the point, must hit */
+#ifdef	WINDING
+		if ( xflag0 ) crossings += ( yflag0 ? -1 : 1 ) ;
+#else
+		if ( xflag0 ) inside_flag = !inside_flag ;
+#endif
+	    } else {
+		/* compute intersection of pgon segment with +X ray, note
+		 * if >= point's X; if so, the ray hits it.
+		 */
+		if ( (vtx1[XCOORD] - (vtx1[YCOORD]-ty)*
+		     ( vtx0[XCOORD]-vtx1[XCOORD])/(vtx0[YCOORD]-vtx1[YCOORD])) >= tx ) {
+#ifdef	WINDING
+		    crossings += ( yflag0 ? -1 : 1 ) ;
+#else
+		    inside_flag = !inside_flag ;
+#endif
+		}
+	    }
+#ifdef	CONVEX
+	    /* if this is second edge hit, then done testing */
+	    if ( line_flag ) goto Exit ;
+
+	    /* note that one edge has been hit by the ray's line */
+	    line_flag = TRUE ;
+#endif
+	}
+
+	/* move to next pair of vertices, retaining info as possible */
+	yflag0 = yflag1 ;
+	vtx0 = vtx1 ;
+	vtx1 += 2 ;
+    }
+#ifdef	CONVEX
+    Exit: ;
+#endif
+#ifdef	WINDING
+    /* test if crossings is not zero */
+    inside_flag = (crossings != 0) ;
+#endif
+
+    return( inside_flag ) ;
+}
 
 
 /////////////////////////////////////////////////////////
@@ -115,6 +217,7 @@ bool DistancePointLine( QPointF *Point, QPointF *LineStart, QPointF *LineEnd, fl
 ClipableWire::ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
+	m_justFilteredEvent = NULL;
 	m_cachedOriginalLine.setPoints(QPointF(-99999,-99999), QPointF(-99999,-99999));
 }
 
@@ -207,7 +310,48 @@ QPointF ClipableWire::findIntersection(ConnectorItem * connectorItem, QPointF or
 }
 
 qreal ClipableWire::calcClipRadius(ConnectorItem * connectorItem) {
-	return connectorItem->radius() - (connectorItem->strokeWidth() / 2) + (m_pen.width() * 0.5);
+	return connectorItem->radius() - (connectorItem->strokeWidth() / 2.0) + (m_pen.width() / 2.0);
 }
 
+bool ClipableWire::filterMousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	m_justFilteredEvent = NULL;
 
+	if (!m_clipEnds) return false;
+
+	ConnectorItem * to = NULL;
+	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+			to = toConnectorItem;
+			break;
+		}
+	}
+	if (to == NULL) return false;
+
+	qreal rad = to->radius();
+	if (rad <= 0) return false;
+
+	rad -= (to->strokeWidth() / 2);
+
+	QRectF r = connectorItem->rect();
+	QPointF c = r.center();
+	QPointF p = event->pos();
+	if ( (p.x() - c.x()) * (p.x() - c.x()) + (p.y() - c.y()) * (p.y() - c.y())  < rad * rad ) {
+		// inside the inner circle, so ignore the event
+		m_justFilteredEvent = event;
+		return true;
+	}
+
+
+
+	return false;
+}
+
+void ClipableWire::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+	if ((long) event == (long) m_justFilteredEvent) {
+		event->ignore();
+		return;
+	}
+
+	Wire::mousePressEvent(event);
+}

@@ -86,3 +86,17 @@ void VirtualWire::tempRemoveAllConnections() {
 qreal VirtualWire::calcClipRadius(ConnectorItem * connectorItem) {
 	return connectorItem->radius() + (connectorItem->strokeWidth() / 2.0) + (m_pen.width() / 2.0);
 }
+
+void VirtualWire::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+	// ignore clicks where our connectors are supposed to be
+	// so the click can percolate to some other graphicsitem that can use it
+
+	QList<QGraphicsItem *> items = scene()->items(event->scenePos());
+	if (items.contains(m_connector0) || items.contains(m_connector1)) {
+		event->ignore();
+		return;
+	}
+
+	ClipableWire::mousePressEvent(event);
+}

@@ -415,6 +415,10 @@ void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
 void ItemBase::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
+bool ItemBase::filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return false;
+}
+
 bool ItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 	return true;
 }

@@ -198,6 +198,7 @@ public:
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void connectorHover(ConnectorItem *, ItemBase *, bool hovering);
 	void clearConnectorHover();
+	virtual bool filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void connectionChange(ConnectorItem *);

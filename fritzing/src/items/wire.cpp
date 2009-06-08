@@ -1067,5 +1067,7 @@ bool Wire::connectionIsAllowed(ConnectorItem * to) {
 	Wire * w = dynamic_cast<Wire *>(to->attachedTo());
 	if (w == NULL) return true;
 
-	return !w->getVirtual();
+	if (w->getVirtual()) return false;
+
+	return m_viewIdentifier != ViewIdentifierClass::BreadboardView;
 }

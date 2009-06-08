@@ -351,6 +351,11 @@ void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	if (m_attachedTo->filterMousePressConnectorEvent(this, event)) {
+		event->ignore();
+		return;
+	}
+
 	clearEqualPotentialDisplay();
 
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);

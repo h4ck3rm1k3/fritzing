@@ -37,6 +37,8 @@ public:
 	
 	void setClipEnds(bool);
 	const QLineF & getPaintLine();	
+	bool filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 protected:
 	QPointF findIntersection(ConnectorItem * connectorItem, QPointF original);
@@ -46,6 +48,7 @@ protected:
 	bool m_clipEnds;
 	QLineF m_cachedLine;
 	QLineF m_cachedOriginalLine;
+	QGraphicsSceneMouseEvent * m_justFilteredEvent;
 };
 
 #endif
