@@ -104,7 +104,7 @@ void GroupItemBase::findConnectorsUnder() {
 		}
 
 		connectorItem->setOverConnectorItem(
-				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true));
+				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true, false));
 
 	}
 }

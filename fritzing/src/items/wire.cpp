@@ -281,7 +281,7 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 	if (!chained) {
 		whichConnectorItem->setOverConnectorItem(
-					findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false));
+					findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true));
 	}
 }
 
@@ -637,7 +637,7 @@ void Wire::findConnectorsUnder() {
 		if (connectorItem == NULL) continue;
 
 		connectorItem->setOverConnectorItem(
-				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true));
+				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true, false));
 	}
 }
 

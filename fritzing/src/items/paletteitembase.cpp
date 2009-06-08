@@ -214,7 +214,7 @@ void PaletteItemBase::findConnectorsUnder() {
 		}
 
 		connectorItem->setOverConnectorItem(
-				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true));
+				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true, false));
 
 	}
 }
