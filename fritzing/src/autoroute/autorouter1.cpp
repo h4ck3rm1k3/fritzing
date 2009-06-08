@@ -553,8 +553,6 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	}
 
 	if (m_cancelTrace || m_stopTrace) {
-		// clear the cancel flag so the next trace can proceed
-		m_cancelTrace = false;
 	}
 	else if (!result) {
 		//DebugDialog::debug("backwards?");
@@ -567,6 +565,9 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	if (m_cancelled) {
 		return false;
 	}
+
+	// clear the cancel flag if it's been set so the next trace can proceed
+	m_cancelTrace = false;
 
 	if (result) {
 		if (backwards) {
