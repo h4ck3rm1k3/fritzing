@@ -11,7 +11,9 @@
   {{ entry.title }}
 {% endblock %}
 
-{% block teaser %}{{ entry.content|safe }}{% endblock %}
+{% block teaser %}
+	<p class="documentDescription">{{ entry.content|safe }}</p>
+{% endblock %}
 
 {% block content %}
 <div class="content first-content">
