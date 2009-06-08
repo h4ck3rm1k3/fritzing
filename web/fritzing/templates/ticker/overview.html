@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="content first-content">
-    {% autopaginate entry_list per_page %}
+    {% autopaginate entry_list %}
     <dl>
     {% for entry in entry_list %}
       {% include "ticker/entry.html" %}

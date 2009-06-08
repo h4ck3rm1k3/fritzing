@@ -147,7 +147,7 @@ INSTALLED_APPS = (
     'ticker',
     'tinymce',
     'markitup',
-    'south',
+    #'south',
     'licenses',
     'dregni',
     # internal (for now)

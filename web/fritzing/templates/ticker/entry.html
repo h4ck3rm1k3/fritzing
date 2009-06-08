@@ -1,5 +1,4 @@
 {% load i18n %}
-{% load ticker_tags %}
 
 {% if is_detail %}
   <div class="more">
@@ -9,7 +8,7 @@
   </div>
   {% if entry.source_url %}
   <p class="source">
-      {% trans "Source" %}: <a href="{{ entry.source_url }}">{{ entry.source_url|truncurl:"50" }}</a>
+      {% trans "Source" %}: <a href="{{ entry.source_url }}">{{ entry.source_url }}</a>
   </p>
   {% endif %}
 {% else %}
