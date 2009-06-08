@@ -81,8 +81,10 @@ void DockManager::createDockWindows()
 	widget->setMinimumHeight(0);
 	widget->setMaximumHeight(0);
 	FDockWidget * dock = makeDock(tr("View Switcher"), widget, 0,  0, Qt::RightDockWidgetArea, makeViewSwitcherDock);
-	static_cast<ViewSwitcherDockWidget *>(dock)->setViewSwitcher(m_mainWindow->m_viewSwitcher);
-	connect(m_mainWindow, SIGNAL(mainWindowMoved(QWidget *)), dock, SLOT(windowMoved(QWidget *)));
+	ViewSwitcherDockWidget * vsd = static_cast<ViewSwitcherDockWidget *>(dock);
+	vsd->setViewSwitcher(m_mainWindow->m_viewSwitcher);
+	m_mainWindow->m_viewSwitcherDock = vsd;
+	connect(m_mainWindow, SIGNAL(mainWindowMoved(QWidget *)), vsd, SLOT(windowMoved(QWidget *)));
 
 #ifndef QT_NO_DEBUG
 	//dock->setStyleSheet("background-color: red;");

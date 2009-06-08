@@ -29,6 +29,7 @@ $Date$
 #include <QRgb>
 #include <QFontMetrics>
 #include <QPainter>
+#include <QSettings>
 
 #include "viewswitcher.h"
 #include "../debugdialog.h"
@@ -418,16 +419,3 @@ void ViewSwitcher::resizeEvent(QResizeEvent * event)
 	QFrame::resizeEvent(event);
 }
 
-/////////////////////////////////////////
-
-/*
-ViewSwitcher::ViewSwitcher(QWidget *parent) : QGraphicsProxyWidget()
-{
-	ViewSwitcherPrivate *d = new ViewSwitcherPrivate();
-	connect(d, SIGNAL(viewSwitched(int)), parent, SLOT(viewSwitchedTo(int)));
-	connect(parent, SIGNAL(viewSwitched(int)), d, SLOT(viewSwitchedTo(int)));
-	setFlags(QGraphicsItem::ItemIgnoresTransformations);
-	setWidget(d);
-	setZValue(10000);
-}
-*/

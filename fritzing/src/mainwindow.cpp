@@ -68,6 +68,7 @@ $Date$
 #include "fsizegrip.h"
 #include "expandinglabel.h"
 #include "viewswitcher/viewswitcher.h"
+#include "viewswitcher/viewswitcherdockwidget.h"
 
 #include "utils/autoclosemessagebox.h"
 #include "utils/fileprogressdialog.h"
@@ -80,6 +81,7 @@ int MainWindow::CascadeFactorY = 19;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_viewSwitcherDock = NULL;
 	m_checkForUpdatesAct = NULL;
 	m_fileProgressDialog = NULL;
 	m_currentGraphicsView = NULL;
@@ -123,28 +125,17 @@ void MainWindow::init() {
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
-	//m_tabWidget->addTab(m_breadboardWidget, tr("breadboard"));
-	//m_breadViewSwitcher = new ViewSwitcher(this);
-	//connectSwitcherToView(m_breadViewSwitcher,m_breadboardGraphicsView);
 	m_tabWidget->addWidget(m_breadboardWidget);
 
 	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
-	//m_tabWidget->addTab(m_schematicWidget, tr("schematic"));
-	//m_schemViewSwitcher = new ViewSwitcher(this);
-	//connectSwitcherToView(m_schemViewSwitcher,m_schematicGraphicsView);
 	m_tabWidget->addWidget(m_schematicWidget);
 
 	m_pcbGraphicsView = new PCBSketchWidget(ViewIdentifierClass::PCBView, this);
 	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
-	//m_tabWidget->addTab(m_pcbWidget, tr("pcb"));
-	//m_pcbViewSwitcher = new ViewSwitcher(this);
-	//connectSwitcherToView(m_pcbViewSwitcher,m_pcbGraphicsView);
 	m_tabWidget->addWidget(m_pcbWidget);
-
-	//m_schematicGraphicsView->addRatnestTarget(m_pcbGraphicsView);
 
     m_undoView = new QUndoView();
     m_undoGroup = new QUndoGroup(this);
@@ -243,10 +234,12 @@ void MainWindow::init() {
 	this->installEventFilter(this);
 
 	QSettings settings;
+	m_viewSwitcherDock->prestorePreference();
 	if(!settings.value("main/state").isNull()) {
 		restoreState(settings.value("main/state").toByteArray());
 		restoreGeometry(settings.value("main/geometry").toByteArray());
 	}
+	m_viewSwitcherDock->restorePreference();
 
 	setMinimumSize(0,0);
 	m_tabWidget->setMinimumWidth(500);

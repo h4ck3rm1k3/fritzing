@@ -70,3 +70,4 @@ void FDockWidget::moveEvent(QMoveEvent *event) {
 	QDockWidget::moveEvent(event);
 	emit positionChanged();
 }
+

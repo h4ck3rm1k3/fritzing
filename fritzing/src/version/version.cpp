@@ -40,7 +40,7 @@ QString Version::m_svnDate("$Date$");
 QString Version::m_revision;
 QString Version::m_date;
 QString Version::m_shortDate;
-QString Version::m_versionString;
+QString Version::m_versionString;			
 QString Version::m_year;
 QStringList Version::m_modifiers;
 

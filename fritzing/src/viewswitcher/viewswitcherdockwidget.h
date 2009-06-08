@@ -40,28 +40,29 @@ public:
 	~ViewSwitcherDockWidget();
 	
 	void setViewSwitcher(class ViewSwitcher *);
+	void setVisible(bool visible);
+	void restorePreference();
+	void prestorePreference();
 
 public slots:
 	void windowMoved(QWidget *);
 	void topLevelChangedSlot(bool topLevel);
 
+protected slots:
+	void savePreference();
+
 protected:
 	void calcWithin();
-	//void enterEvent(QEvent *event);
-	//void leaveEvent(QEvent *event);
 	bool event(QEvent *event);
 	void resizeEvent(QResizeEvent * event);
-
+	void topLevelChangedSlotAux(bool topLevel);
 
 protected:
-	//int m_viewIndex;
 	class ViewSwitcher * m_viewSwitcher;
 	QPoint m_offsetFromParent;
 	bool m_within;
 	QBitmap * m_bitmap;
 
-protected slots:
-	//void viewSwitched(int);
 };
 
 #endif

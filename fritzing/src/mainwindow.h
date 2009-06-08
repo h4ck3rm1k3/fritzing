@@ -529,6 +529,7 @@ protected:
 	friend class DockManager;
 
 	class ViewSwitcher * m_viewSwitcher;
+	class ViewSwitcherDockWidget * m_viewSwitcherDock;
 
 	Helper *m_helper;
 	QTimer m_setUpDockManagerTimer;

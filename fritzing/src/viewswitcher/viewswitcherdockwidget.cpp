@@ -46,8 +46,6 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	m_viewSwitcher = NULL;
 	m_within = true;
 
-	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(topLevelChangedSlot(bool)));
-
 	bool floatFlag = true;
 	QPoint initial(10,50);
 
@@ -76,6 +74,10 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	setFloating(floatFlag);
 	m_offsetFromParent.setX(initial.x());
 	m_offsetFromParent.setY(initial.y());
+
+	// connect last so they doesn't trigger during construction
+	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(topLevelChangedSlot(bool)));
+	connect(toggleViewAction(), SIGNAL(triggered()), this, SLOT(savePreference()), Qt::DirectConnection);
 }
 
 ViewSwitcherDockWidget::~ViewSwitcherDockWidget() {
@@ -128,42 +130,20 @@ void ViewSwitcherDockWidget::setViewSwitcher(ViewSwitcher * viewSwitcher)
 {
 	m_viewSwitcher = viewSwitcher;
 	setTitleBarWidget(viewSwitcher);
-	topLevelChangedSlot(isFloating());
+	topLevelChangedSlotAux(isFloating());
 }
 
 void ViewSwitcherDockWidget::resizeEvent(QResizeEvent * event)
 {
 	FDockWidget::resizeEvent(event);
-
-	/*
-	if (!isFloating()) {
-		this->clearMask();
-		return;
-	}
-
-	if (m_viewSwitcher == NULL) return;
-
-	const QBitmap * mask = m_viewSwitcher->getMask();
-	if (mask == NULL) return;
-
-	QSize maskSize = mask->size();
-
-	QSize sz = event->size();
-	QBitmap * bitmap = new QBitmap(sz);
-	bitmap->fill(Qt::white);
-
-	QPainter painter(bitmap);
-	QPointF p((sz.width() - maskSize.width()) / 2.0, (sz.height() - maskSize.height()) / 2.0);
-	painter.drawPixmap(p, *mask);
-	painter.end();
-
-	//this->setMask(*bitmap);
-	if (m_bitmap) delete m_bitmap;
-	m_bitmap = bitmap;
-*/
 }
 
 void ViewSwitcherDockWidget::topLevelChangedSlot(bool topLevel) {
+	topLevelChangedSlotAux(topLevel);
+	savePreference();
+}
+
+void ViewSwitcherDockWidget::topLevelChangedSlotAux(bool topLevel) {
 	if (m_viewSwitcher == NULL) return;
 
 	if (!topLevel) {
@@ -186,24 +166,46 @@ void ViewSwitcherDockWidget::topLevelChangedSlot(bool topLevel) {
 	this->setMask(*mask);
 }
 
-/*
+void ViewSwitcherDockWidget::setVisible(bool visible) {
+	FDockWidget::setVisible(visible);
+}
 
-void TabWindow::viewSwitched(int index) {
-	if (index != m_viewIndex) {
-		m_viewIndex = index;
+
+void ViewSwitcherDockWidget::prestorePreference() {
+	disconnect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(topLevelChangedSlot(bool)));
+}
+
+void ViewSwitcherDockWidget::restorePreference() {
+	QSettings settings;
+	QVariant value = settings.value("viewswitcher/state");
+	if (!value.isNull()) {
+		// override visibility setting because if you close an inactive mainwindow
+		// the viewswitcher will be hidden, but that's not really the true state:
+		// the viewswitcher would be visible if the window were active
+		int v = value.toInt();
+		//DebugDialog::debug(QString("loading viewswitcher pref %1").arg(v));
+		bool vis = (v & 2) != 0;
+		if ((v & 1) == 1) {
+			// floating, so use m_state
+			setVisible(vis);
+#ifndef Q_WS_X11
+			// until the dock activation bug is fixed
+			setFloating(true);
+#endif
+		}
+		else {
+			setVisible(vis);
+			setFloating(false);
+		}
 	}
+	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(topLevelChangedSlot(bool)));
 }
 
-void TabWindow::enterEvent(QEvent *event) {
-	QWidget::enterEvent(event);
-	setWindowOpacity(m_docked ? activeOpacity : 1.0);
+void ViewSwitcherDockWidget::savePreference() {
+	QSettings settings;
+	int v = isVisible() ? 2 : 0;
+	v += isFloating() ? 1 : 0;
+	//DebugDialog::debug(QString("saving viewswitcher pref (1):%1").arg(v));
+	settings.setValue("viewswitcher/state", v);
 }
-
-void TabWindow::leaveEvent(QEvent *event) {
-	QWidget::leaveEvent(event);
-	setWindowOpacity(m_docked ? inactiveOpacity : 1.0);
-}
-
-*/
-
 
