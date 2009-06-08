@@ -207,7 +207,7 @@ void Autorouter1::start()
 	// TODO: for each edge, determine a measure of pin density, and use that, weighted with length, as the sort order
 	qSort(edges.begin(), edges.end(), edgeGreaterThan);
 
-	QPolygonF boundsPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-50, -50, 50, 50));
+	QPolygonF boundingPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-200, -200, 200, 200));
 
 	int edgesDone = 0;
 	int jumperCount = 0;
@@ -290,7 +290,7 @@ void Autorouter1::start()
 
 				wires.clear();
 				if (!m_sketchWidget->autorouteNeedsBounds()) {
-					routedFlag = drawTrace(from, to, boundsPoly, wires);
+					routedFlag = drawTrace(from, to, boundingPoly, wires);
 				}
 				else if (partForBounds) {
 					QRectF boundingRect = partForBounds->boundingRect();
@@ -1740,15 +1740,15 @@ bool Autorouter1::drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire
 }
 
 bool Autorouter1::sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1) {
-	return  qAbs(toPos1.y() - fromPos1.y()) < .001 &&
-		    qAbs(toPos0.y() - fromPos0.y()) < .001 &&
-			qAbs(toPos0.y() - toPos1.y()) < .001;
+	return  qAbs(toPos1.y() - fromPos1.y()) < 1.0 &&
+		    qAbs(toPos0.y() - fromPos0.y()) < 1.0 &&
+			qAbs(toPos0.y() - toPos1.y()) < 1.0;
 }
 
 bool Autorouter1::sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1) {
-	return  qAbs(toPos1.x() - fromPos1.x()) < .001 &&
-		    qAbs(toPos0.x() - fromPos0.x()) < .001 &&
-			qAbs(toPos0.x() - toPos1.x()) < .001;
+	return  qAbs(toPos1.x() - fromPos1.x()) < 1.0 &&
+		    qAbs(toPos0.x() - fromPos0.x()) < 1.0 &&
+			qAbs(toPos0.x() - toPos1.x()) < 1.0;
 }
 
 						
