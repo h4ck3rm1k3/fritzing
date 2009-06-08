@@ -56,7 +56,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="ground" >
+  <connector type="male" id="connector1" name="GND" >
    <description>ground</description>
    <views>
     <breadboardView>
