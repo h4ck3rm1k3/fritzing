@@ -330,7 +330,7 @@ bool ClipableWire::filterMousePressConnectorEvent(ConnectorItem * connectorItem,
 	qreal rad = to->radius();
 	if (rad <= 0) return false;
 
-	rad -= (to->strokeWidth() / 2);
+	rad -= ((to->strokeWidth() / 2) + 0.5);			// shrink it a little bit
 
 	QRectF r = connectorItem->rect();
 	QPointF c = r.center();
@@ -341,9 +341,27 @@ bool ClipableWire::filterMousePressConnectorEvent(ConnectorItem * connectorItem,
 		return true;
 	}
 
+	QLineF normal = m_cachedOriginalLine.normalVector();
+	normal.setLength(m_pen.width() / 2.0);
+	double parallelogram[4][2];
+	parallelogram[0][XCOORD] = normal.p2().x();
+	parallelogram[0][YCOORD] = normal.p2().y();
+	parallelogram[1][XCOORD] = normal.p1().x() - normal.dx();
+	parallelogram[1][YCOORD] = normal.p1().y() - normal.dy();
+	parallelogram[2][XCOORD] = parallelogram[1][XCOORD] + m_cachedOriginalLine.dx();
+	parallelogram[2][YCOORD] = parallelogram[1][YCOORD] + m_cachedOriginalLine.dy();
+	parallelogram[3][XCOORD] = parallelogram[0][XCOORD] + m_cachedOriginalLine.dx();
+	parallelogram[3][YCOORD] = parallelogram[0][YCOORD] + m_cachedOriginalLine.dy();
+	QPointF mp = mapFromScene(event->scenePos());
+	double point[2];
+	point[XCOORD] = mp.x();
+	point[YCOORD] = mp.y();
+	if (CrossingsTest(parallelogram, 4, point)) {
+		return false;
+	}
 
-
-	return false;
+	event->ignore();
+	return true;
 }
 
 void ClipableWire::mousePressEvent(QGraphicsSceneMouseEvent *event)

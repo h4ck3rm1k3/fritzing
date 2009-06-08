@@ -31,8 +31,12 @@ VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
 	if (!getRatsnest()) {
+		// this branch should no longer be possible
 		setAcceptedMouseButtons(Qt::NoButton);
 		setFlag(QGraphicsItem::ItemIsSelectable, false);
+	}
+	else {
+		m_clipEnds = true;
 	}
 }
 
