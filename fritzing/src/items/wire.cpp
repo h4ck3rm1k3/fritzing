@@ -255,6 +255,7 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	}
 
 	ConnectorItem * whichConnectorItem;
+	ConnectorItem * otherConnectorItem;
 	QPointF q = event->pos();
 	if (m_drag0) {
 		QPointF r = this->mapToScene(q);
@@ -262,11 +263,12 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		this->setLine(0, 0, m_wireDragOrigin.x() - r.x() + m_viewGeometry.loc().x(),
 							m_wireDragOrigin.y() - r.y() + m_viewGeometry.loc().y() );
 		whichConnectorItem = m_connector0;
-
+		otherConnectorItem = m_connector1;
 	}
 	else {
 		this->setLine(m_wireDragOrigin.x(), m_wireDragOrigin.y(), q.x(), q.y());
 		whichConnectorItem = m_connector1;
+		otherConnectorItem = m_connector0;
 	}
 	setConnector1Rect();
 
@@ -280,8 +282,26 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	}
 
 	if (!chained) {
+		// don't allow wire to connect back to something the other end is already directly connected to
+		QList<Wire *> wires;
+		QList<ConnectorItem *> ends;
+		collectChained(otherConnectorItem, wires, ends);
+		for (int i = 0; i < wires.count(); i++) {
+			Wire * w = wires[i];
+			collectChained(w->m_connector1, wires, ends);
+			collectChained(w->m_connector0, wires, ends);
+		}
+		ends.append(otherConnectorItem);
+		foreach (Wire * w, wires) {
+			ends.append(w->connector0());
+			ends.append(w->connector1());
+		}
+		foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
+			ends.removeOne(toConnectorItem);
+		}
+
 		whichConnectorItem->setOverConnectorItem(
-					findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true));
+					findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true, ends));
 	}
 }
 
@@ -637,7 +657,7 @@ void Wire::findConnectorsUnder() {
 		if (connectorItem == NULL) continue;
 
 		connectorItem->setOverConnectorItem(
-				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true, false));
+				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true, false, ConnectorItem::emptyConnectorItemList));
 	}
 }
 

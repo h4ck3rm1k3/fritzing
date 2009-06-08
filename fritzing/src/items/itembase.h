@@ -222,7 +222,7 @@ public:
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event );
-	ConnectorItem * findConnectorUnder(ConnectorItem* , ConnectorItem * lastUnderConnector, bool useTerminalPoint, bool allowAlready);
+	ConnectorItem * findConnectorUnder(ConnectorItem* , ConnectorItem * lastUnderConnector, bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);

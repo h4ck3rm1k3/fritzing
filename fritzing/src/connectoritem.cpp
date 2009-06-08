@@ -39,6 +39,7 @@ $Date$
 #include "modelpart.h"
 
 QList<ConnectorItem *>  ConnectorItem::m_equalPotentialDisplayItems;
+const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
 
 static double MAX_DOUBLE = std::numeric_limits<double>::max();
 

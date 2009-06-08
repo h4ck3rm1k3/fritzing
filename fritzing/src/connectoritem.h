@@ -148,6 +148,9 @@ public:
 	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
 	static void clearEqualPotentialDisplay();
+
+public:
+	static const QList<ConnectorItem *> emptyConnectorItemList;
 };
 
 #endif

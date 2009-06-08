@@ -534,7 +534,7 @@ void ItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent *  ) {
 	//DebugDialog::debug(QString("hover move %1 %2").arg(instanceTitle()).arg(QTime::currentTime().msec()));
 }
 
-ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, ConnectorItem * lastUnderConnector, bool useTerminalPoint, bool allowAlready)
+ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, ConnectorItem * lastUnderConnector, bool useTerminalPoint, bool allowAlready, const QList<ConnectorItem *> & exclude)
 {
 	QList<QGraphicsItem *> items = useTerminalPoint
 		? this->scene()->items(connectorItemOver->sceneAdjustedTerminalPoint(NULL))
@@ -554,6 +554,7 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 				continue;		// already connected
 			}
 		}
+		if (exclude.contains(connectorItemUnder)) continue;
 
 		candidates.append(connectorItemUnder);
 	}
