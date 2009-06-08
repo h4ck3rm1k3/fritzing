@@ -1369,10 +1369,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumpersAct);
-
-#ifndef QT_NO_DEBUG
 	m_pcbTraceMenu->addAction(m_groundFillAct);
-#endif
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
