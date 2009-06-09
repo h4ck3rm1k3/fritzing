@@ -317,6 +317,7 @@ bool ClipableWire::filterMousePressConnectorEvent(ConnectorItem * connectorItem,
 	m_justFilteredEvent = NULL;
 
 	if (!m_clipEnds) return false;
+	if (m_viewIdentifier != ViewIdentifierClass::PCBView) return false;
 
 	ConnectorItem * to = NULL;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
@@ -330,7 +331,7 @@ bool ClipableWire::filterMousePressConnectorEvent(ConnectorItem * connectorItem,
 	qreal rad = to->radius();
 	if (rad <= 0) return false;
 
-	rad -= ((to->strokeWidth() / 2) + 0.5);			// shrink it a little bit
+	rad -= ((to->strokeWidth() / 2.0));			// shrink it a little bit
 
 	QRectF r = connectorItem->rect();
 	QPointF c = r.center();

@@ -35,9 +35,6 @@ VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 		setAcceptedMouseButtons(Qt::NoButton);
 		setFlag(QGraphicsItem::ItemIsSelectable, false);
 	}
-	else {
-		m_clipEnds = true;
-	}
 }
 
 void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {	
