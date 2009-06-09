@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2879 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-04-30 12:26:40 +0200 (Thu, 30 Apr 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -39,16 +39,26 @@ public:
 	const QLineF & getPaintLine();	
 	bool filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
+	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
+	void hoverMoveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 
 protected:
 	QPointF findIntersection(ConnectorItem * connectorItem, QPointF original);
 	virtual qreal calcClipRadius(ConnectorItem *);
+	bool insideInnerCircle(ConnectorItem * connectorItem, QPointF localPos);
+	bool insideSpoke(ClipableWire * wire, QPointF scenePos); 
+	void dispatchHover(QPointF scenePos);
+	void dispatchHoverAux(bool inInner, Wire * inWire);
 
 protected:
 	bool m_clipEnds;
 	QLineF m_cachedLine;
 	QLineF m_cachedOriginalLine;
 	QGraphicsSceneMouseEvent * m_justFilteredEvent;
+	class ConnectorItem * m_trackHoverItem;
+	class ConnectorItem * m_trackHoverLastItem;
+	Wire * m_trackHoverLastWireItem;
 };
 
 #endif

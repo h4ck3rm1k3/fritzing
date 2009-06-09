@@ -375,6 +375,11 @@ void ItemBase::removeLayerKin() {
 
 void ItemBase::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
 	//DebugDialog::debug(QString("hover enter c %1").arg(instanceTitle()));
+	hoverEnterConnectorItem();
+}
+
+void ItemBase::hoverEnterConnectorItem() {
+	//DebugDialog::debug(QString("hover enter c %1").arg(instanceTitle()));
 	m_connectorHoverCount++;
 	if (itemType() != ModelPart::Breadboard) {
 		this->update();
@@ -382,6 +387,13 @@ void ItemBase::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * , ConnectorIte
 }
 
 void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
+	hoverLeaveConnectorItem();
+}
+
+void ItemBase::hoverMoveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
+}
+
+void ItemBase::hoverLeaveConnectorItem() {
 	//DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
 	m_connectorHoverCount--;
 	if (itemType() != ModelPart::Breadboard) {

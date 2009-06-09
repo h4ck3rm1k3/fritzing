@@ -196,6 +196,9 @@ protected:
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual void hoverMoveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
+	void hoverEnterConnectorItem();
+	void hoverLeaveConnectorItem();
 	virtual void connectorHover(ConnectorItem *, ItemBase *, bool hovering);
 	void clearConnectorHover();
 	virtual bool filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

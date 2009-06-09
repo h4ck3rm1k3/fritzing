@@ -153,6 +153,20 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveConnectorItem(event, this);
 	}
+	if (this->m_attachedTo != NULL) {
+		m_attachedTo->hoverLeaveConnectorItem(event, this);
+	}
+}
+
+void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
+	if (m_hoverEnterSpaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
+	if (this->m_attachedTo != NULL) {
+		m_attachedTo->hoverMoveConnectorItem(event, this);
+	}
 }
 
 Connector * ConnectorItem::connector() {

@@ -54,7 +54,7 @@ public:
 	ConnectorItem * removeConnection(ItemBase *);
 	void removeConnection(ConnectorItem *, bool emitChange);
 	ConnectorItem * firstConnectedToIsh();
-	virtual void setTerminalPoint(QPointF);
+	void setTerminalPoint(QPointF);
 	QPointF terminalPoint();
 	QPointF adjustedTerminalPoint();
 	QPointF sceneAdjustedTerminalPoint(ConnectorItem * anchor);
@@ -96,11 +96,12 @@ public:
 	void restoreColor(bool doBuses, int busConnectedCount);
 	void showEqualPotential(bool show);
 	void setShape(QPainterPath &);
+	void setHoverColor();
 
 protected:
-	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
-	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
-	void setHoverColor();
+	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
 	void setNormalColor();
 	void setConnectedColor();
 	void setUnconnectedColor();

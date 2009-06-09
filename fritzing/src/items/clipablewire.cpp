@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2964 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-05-19 07:03:39 +0200 (Tue, 19 May 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -217,6 +217,7 @@ register int	line_flag ;
 ClipableWire::ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
+	m_trackHoverItem = NULL;
 	m_justFilteredEvent = NULL;
 	m_cachedOriginalLine.setPoints(QPointF(-99999,-99999), QPointF(-99999,-99999));
 }
@@ -328,41 +329,13 @@ bool ClipableWire::filterMousePressConnectorEvent(ConnectorItem * connectorItem,
 	}
 	if (to == NULL) return false;
 
-	qreal rad = to->radius();
-	if (rad <= 0) return false;
-
-	rad -= ((to->strokeWidth() / 2.0));			// shrink it a little bit
-
-	QRectF r = connectorItem->rect();
-	QPointF c = r.center();
-	QPointF p = event->pos();
-	if ( (p.x() - c.x()) * (p.x() - c.x()) + (p.y() - c.y()) * (p.y() - c.y())  < rad * rad ) {
-		// inside the inner circle, so ignore the event
+	if (insideInnerCircle(to, event->scenePos()) || !insideSpoke(this, event->scenePos())) {
 		m_justFilteredEvent = event;
+		event->ignore();
 		return true;
 	}
 
-	QLineF normal = m_cachedOriginalLine.normalVector();
-	normal.setLength(m_pen.width() / 2.0);
-	double parallelogram[4][2];
-	parallelogram[0][XCOORD] = normal.p2().x();
-	parallelogram[0][YCOORD] = normal.p2().y();
-	parallelogram[1][XCOORD] = normal.p1().x() - normal.dx();
-	parallelogram[1][YCOORD] = normal.p1().y() - normal.dy();
-	parallelogram[2][XCOORD] = parallelogram[1][XCOORD] + m_cachedOriginalLine.dx();
-	parallelogram[2][YCOORD] = parallelogram[1][YCOORD] + m_cachedOriginalLine.dy();
-	parallelogram[3][XCOORD] = parallelogram[0][XCOORD] + m_cachedOriginalLine.dx();
-	parallelogram[3][YCOORD] = parallelogram[0][YCOORD] + m_cachedOriginalLine.dy();
-	QPointF mp = mapFromScene(event->scenePos());
-	double point[2];
-	point[XCOORD] = mp.x();
-	point[YCOORD] = mp.y();
-	if (CrossingsTest(parallelogram, 4, point)) {
-		return false;
-	}
-
-	event->ignore();
-	return true;
+	return false;
 }
 
 void ClipableWire::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -373,4 +346,157 @@ void ClipableWire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 
 	Wire::mousePressEvent(event);
+}
+
+void ClipableWire::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event , ConnectorItem * item) {
+
+	//Wire::hoverEnterConnectorItem(event, item);
+
+	// track mouse move events for hover redirecting
+
+	ConnectorItem * to = NULL;
+	foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
+		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+			to = toConnectorItem;
+			break;
+		}
+	}
+
+	if (to) {
+		m_trackHoverItem = to;
+		m_trackHoverLastWireItem = NULL;
+		m_trackHoverLastItem = NULL;
+		dispatchHover(event->scenePos());
+	}
+}
+
+void ClipableWire::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
+	Q_UNUSED(item);
+	Q_UNUSED(event);
+	dispatchHoverAux(false, NULL);
+	m_trackHoverItem = NULL;
+	//Wire::hoverLeaveConnectorItem(event, item);
+}
+
+void ClipableWire::hoverMoveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
+	if (m_trackHoverItem) {
+		dispatchHover(event->scenePos());
+	}
+
+	Wire::hoverMoveConnectorItem(event, item);
+}
+
+void ClipableWire::dispatchHover(QPointF scenePos) {
+	bool inInner = false;
+	ClipableWire * inWire = NULL;
+	if (insideInnerCircle(m_trackHoverItem, scenePos)) {
+		DebugDialog::debug("got inner circle");
+		inInner = true;
+	}
+	else {
+		foreach (ConnectorItem * toConnectorItem, m_trackHoverItem->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
+
+			ClipableWire * w = dynamic_cast<ClipableWire *>(toConnectorItem->attachedTo());
+			if (w == NULL) continue;
+			if (w->getVirtual()) continue;									// is there a better way to check this?
+
+			if (insideSpoke(w, scenePos)) {
+				DebugDialog::debug("got inside spoke");
+				inWire = w;
+				break;
+			}
+		}
+	}
+
+	dispatchHoverAux(inInner, inWire);
+}
+
+void ClipableWire::dispatchHoverAux(bool inInner, Wire * inWire)
+{
+	if (inInner) {
+		if (m_trackHoverLastItem == m_trackHoverItem) {
+			// no change
+			return;
+		}
+		if (m_trackHoverLastWireItem) {
+			((ItemBase *) m_trackHoverLastWireItem)->hoverLeaveConnectorItem();
+			m_trackHoverLastWireItem = NULL;
+		}
+
+		m_trackHoverLastItem = m_trackHoverItem;
+		m_trackHoverLastItem->setHoverColor();
+		m_trackHoverLastItem->attachedTo()->hoverEnterConnectorItem();
+	}
+	else if (inWire) {
+		if (m_trackHoverLastWireItem == inWire) {
+			// no change
+			return;
+		}
+		if (m_trackHoverLastItem) {
+			m_trackHoverLastItem->restoreColor(false, -1);
+			m_trackHoverLastItem->attachedTo()->hoverLeaveConnectorItem();
+			m_trackHoverLastItem = NULL;
+		}
+		if (m_trackHoverLastWireItem) {
+			((ItemBase *) m_trackHoverLastWireItem)->hoverLeaveConnectorItem();
+		}
+		m_trackHoverLastWireItem = inWire;
+		((ItemBase *) m_trackHoverLastWireItem)->hoverEnterConnectorItem();
+	}
+	else {
+		DebugDialog::debug("got none");
+		if (m_trackHoverLastItem != NULL) {
+			m_trackHoverLastItem->restoreColor(false, -1);
+			m_trackHoverLastItem->attachedTo()->hoverLeaveConnectorItem();
+			m_trackHoverLastItem = NULL;
+		}
+		if (m_trackHoverLastWireItem != NULL) {
+			((ItemBase *) m_trackHoverLastWireItem)->hoverLeaveConnectorItem();
+			m_trackHoverLastWireItem = NULL;
+		}
+	}
+}
+
+bool ClipableWire::insideInnerCircle(ConnectorItem * connectorItem, QPointF scenePos) 
+{
+	QPointF localPos = connectorItem->mapFromScene(scenePos);
+	qreal rad = connectorItem->radius();
+	if (rad <= 0) return false;
+
+	rad -= ((connectorItem->strokeWidth() / 2.0));			// shrink it a little bit
+
+	QRectF r = connectorItem->rect();
+	QPointF c = r.center();
+	if ( (localPos.x() - c.x()) * (localPos.x() - c.x()) + (localPos.y() - c.y()) * (localPos.y() - c.y())  < rad * rad ) {
+		// inside the inner circle
+		return true;
+	}
+
+	return false;
+}
+
+bool ClipableWire::insideSpoke(ClipableWire * wire, QPointF scenePos) 
+{
+	QLineF l = wire->line();
+	QLineF normal = l.normalVector();
+	normal.setLength(wire->width() / 2.0);
+	double parallelogram[4][2];
+	parallelogram[0][XCOORD] = normal.p2().x();
+	parallelogram[0][YCOORD] = normal.p2().y();
+	parallelogram[1][XCOORD] = normal.p1().x() - normal.dx();
+	parallelogram[1][YCOORD] = normal.p1().y() - normal.dy();
+	parallelogram[2][XCOORD] = parallelogram[1][XCOORD] + l.dx();
+	parallelogram[2][YCOORD] = parallelogram[1][YCOORD] + l.dy();
+	parallelogram[3][XCOORD] = parallelogram[0][XCOORD] + l.dx();
+	parallelogram[3][YCOORD] = parallelogram[0][YCOORD] + l.dy();
+	QPointF mp = wire->mapFromScene(scenePos);
+	double point[2];
+	point[XCOORD] = mp.x();
+	point[YCOORD] = mp.y();
+	if (CrossingsTest(parallelogram, 4, point)) {
+		return true;
+	}
+
+	return false;
 }
