@@ -32,7 +32,7 @@
 	width: 16em;
 }
 
-.header .description {
+.event .description {
 	margin-top: 0.3em;
 }
 
@@ -42,4 +42,12 @@
 
 .event .datetext {
 	font-size: smaller;
+}
+
+.event .event_body {
+	margin-top: 0.9em;
+}
+
+#icalLink {
+	border-bottom: none !important;
 }

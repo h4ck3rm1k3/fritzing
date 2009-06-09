@@ -1,91 +1,22 @@
 {% extends "site_base.html" %}
 {% load i18n %}
 {% load pagination_tags %}
-{% load comments %}
 
-{% block title %}{% blocktrans with entry.title as entry_title %}
-    News: {{ entry_title }}
+{% block extra_script %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/events.css" type="text/css" media="screen" charset="utf-8">
+{% endblock %}
+
+{% block title %}{% blocktrans with event.title as event_title %}
+    Events: {{ event_title }}
 {% endblocktrans %}{% endblock %}
 
 {% block page_title %}
-  {{ entry.title }}
+  {{ event.title }}
 {% endblock %}
 
-{% block teaser %}{{ entry.content|safe }}{% endblock %}
+{% block teaser %}{{ event.content|safe }}{% endblock %}
 
 {% block content %}
 <div class="content first-content">
     {% include "events/event.html" %}
-    <div class="newsentry-content">
-        {% get_comment_list for entry as comment_list %}
-        {% if comment_list %}
-        <h2>{% trans "Comments" %}</h2>
-        <ol class="comments">
-        {% for comment in comment_list %}
-            <li id="c{{ comment.id }}" class="{% cycle 'odd' 'even' %}">
-                <p class="title">
-                    <span class="author">
-                        {% if comment.website %}
-                          <a href="{{ comment.website }}">{{ comment.name }}</a>
-                        {% else %}
-                          {{ comment.name }}
-                        {% endif %}
-                    </span>
-                    <span class="date" id="c{{ comment.id }}">
-                        <a href="#c{{ comment.id }}">#</a> {{ comment.submit_date|date:_("DATETIME_FORMAT") }}
-                    </span>
-                </p>
-                {{ comment.comment }}
-            </li>
-        {% endfor %}
-        </ol>
-        {% endif %}
-        <br />
-        {% get_comment_form for entry as comment_form %}
-        <h3>{% trans "Add comment" %}</h3>
-        <fieldset class="shinyform">
-        {% render_comment_form for entry %}
-        <input type="hidden" name="next" value="{{ request.META.PATH_INFO }}" />
-        </fieldset>
-    </div>
-</div>
-{% endblock %}
-
-{% block content-related %}
-
-    <p>
-    <span class="prevnext">
-        {% if entry.get_prev %}
-        &larr; <a href="{{ entry.get_prev.get_absolute_url }}" title="{% blocktrans with entry.get_prev.title as previous_entry_title %}Previous entry: {{ previous_entry_title }}{% endblocktrans %}">
-            {% trans "Previous" %}
-        </a>
-        {% endif %}
-        {% if entry.get_prev and entry.get_next %}&nbsp;~&nbsp;{% endif %}
-        {% if entry.get_next %}
-        <a href="{{ entry.get_next.get_absolute_url }}" title="{% blocktrans with entry.get_next.title as previous_entry_title %}Next entry: {{ previous_entry_title }}{% endblocktrans %}">
-            {% trans "Next" %}
-        </a> &rarr;
-        {% endif %}
-    </span>
-    </p>
-
-    {% if entry.get_tags %}
-    <h2 class="first">{% trans "Tags for this entry" %}</h2>
-    <p class="tagsizelist" style="line-height: 2em;">
-    {% for tag in entry.get_tags %}
-        <a href="{% url ticker_archive_details tag.name|urlencode %}" class="tag">{{ tag.name }}</a>
-    {% endfor %}
-    </p>
-    {% endif %}
-
-    {% if entry.get_related %}
-    <h2>{% trans "Related tags" %}</h2>
-    <ul class="linklist">
-    {% for rel in entry.get_related|slice:":5" %}
-        <li><a href="{{ rel.get_absolute_url }}">{{ rel.title }}</a></li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-
-    {{ super.block }}
 {% endblock %}

@@ -45,6 +45,7 @@ django-markitup
 django-db-log
 django-licenses
 django-filter
+vobject
 
 #-e svn+http://svn.pinaxproject.com/pinax/trunk@1612#egg=Pinax
 -e git+git://github.com/pinax/pinax.git@0.7beta2#egg=Pinax

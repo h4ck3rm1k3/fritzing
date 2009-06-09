@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/events.css" type="text/css" media="screen" charset="utf-8">
 {% endblock %}
 
+{% block title %}{% trans "Events" %}{% endblock %}
 {% block page_title %}{% trans "Events" %}{% endblock %}
-
 {% block teaser %}Meet and Greet{% endblock %}
 
 {% block content %}
@@ -24,4 +24,12 @@
     	</div>
 </div>
 {% paginate %}
+{% endblock %}
+
+{% block metalinks %}
+	<a id="icalLink" title="Download this event in iCal format" href="{% url event_icalendar %}">
+	<img width="16" height="16" title="iCal export" alt="" src="{{ MEDIA_URL }}fritzing/img/icon_export_ical.png"/>
+	<span>iCal</span>
+	</a>
+	{{ block.super }}
 {% endblock %}

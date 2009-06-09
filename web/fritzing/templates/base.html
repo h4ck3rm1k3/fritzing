@@ -138,6 +138,27 @@
                         </div>
                         {% endif %}
                         {% endcache %}
+                        
+                        {% get_latest_objects events.event 10 as latest_events %}
+                        {% if latest_events %}
+                        <div class="portletWrapper">
+                            <dl class="portlet portletNews">
+                                <dt class="portletHeader">
+                                    <a href="/news/" class="tile">Upcoming Events</a>
+                                </dt>
+                                {% for event in latest_events %}
+                                <dd class="portletItem {% cycle 'odd' 'even' %}">
+                                    <a href="{% url event_details event.slug %}" class="tile" title="{{ event.title }}">{{ event.title }} <span class="portletItemDetails">{{ event.start_date|date:"M d" }}</span></a>
+                                </dd>
+                                {% endfor %}
+                                <dd class="portletFooter">
+                                    <a href="/events/">All events…</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        {% endif %}
+
+                        
                         {% cache 600 sidebar_forum %}
                         {% get_latest_objects_with_relatives forum.thread 5 order_by -latest_post_time as latest_forum_threads %}
                         <div class="portletWrapper">

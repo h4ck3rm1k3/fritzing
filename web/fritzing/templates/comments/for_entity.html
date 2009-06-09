@@ -1,0 +1,71 @@
+<div class="newsentity-content">
+        {% get_comment_list for entity as comment_list %}
+        {% if comment_list %}
+        <h2>{% trans "Comments" %}</h2>
+        <ol class="comments">
+        {% for comment in comment_list %}
+            <li id="c{{ comment.id }}" class="{% cycle 'odd' 'even' %}">
+                <p class="title">
+                    <span class="author">
+                        {% if comment.website %}
+                          <a href="{{ comment.website }}">{{ comment.name }}</a>
+                        {% else %}
+                          {{ comment.name }}
+                        {% endif %}
+                    </span>
+                    <span class="date" id="c{{ comment.id }}">
+                        <a href="#c{{ comment.id }}">#</a> {{ comment.submit_date|date:_("DATETIME_FORMAT") }}
+                    </span>
+                </p>
+                {{ comment.comment }}
+            </li>
+        {% endfor %}
+        </ol>
+        {% endif %}
+        <br />
+        {% get_comment_form for entity as comment_form %}
+        <h3>{% trans "Add comment" %}</h3>
+        <fieldset class="shinyform">
+        {% render_comment_form for entity %}
+        <input type="hidden" name="next" value="{{ request.META.PATH_INFO }}" />
+        </fieldset>
+    </div>
+</div>
+
+{% block content-related %}
+    <p>
+    <span class="prevnext">
+        {% if entity.get_prev %}
+        &larr; <a href="{{ entity.get_prev.get_absolute_url }}" title="{% blocktrans with entity.get_prev.title as previous_entity_title %}Previous entity: {{ previous_entity_title }}{% endblocktrans %}">
+            {% trans "Previous" %}
+        </a>
+        {% endif %}
+        {% if entity.get_prev and entity.get_next %}&nbsp;~&nbsp;{% endif %}
+        {% if entity.get_next %}
+        <a href="{{ entity.get_next.get_absolute_url }}" title="{% blocktrans with entity.get_next.title as previous_entity_title %}Next entity: {{ previous_entity_title }}{% endblocktrans %}">
+            {% trans "Next" %}
+        </a> &rarr;
+        {% endif %}
+    </span>
+    </p>
+
+    {% if entity.get_tags %}
+    <h2 class="first">{% trans "Tags for this entity" %}</h2>
+    <p class="tagsizelist" style="line-height: 2em;">
+    {% for tag in entity.get_tags %}
+        <a href="{% url ticker_archive_details tag.name|urlencode %}" class="tag">{{ tag.name }}</a>
+    {% endfor %}
+    </p>
+    {% endif %}
+
+    {% if entity.get_related %}
+    <h2>{% trans "Related tags" %}</h2>
+    <ul class="linklist">
+    {% for rel in entity.get_related|slice:":5" %}
+        <li><a href="{{ rel.get_absolute_url }}">{{ rel.title }}</a></li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+    {{ super.block }}
+{% endblock %}

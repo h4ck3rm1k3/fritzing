@@ -8,8 +8,8 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = models.Event
         
-    body = forms.CharField(widget=TinyMCE(attrs={'cols': 20, 'rows': 60}))
-    description = forms.CharField(max_length=100,widget=forms.Textarea(attrs={'cols': 80, 'rows': 2}))
+    body = forms.CharField(widget=TinyMCE(attrs={'cols': 30, 'rows': 30}))
+    description = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size': 94}))
 
 class EventAdmin(dregni.admin.EventAdmin):
     form = EventForm
