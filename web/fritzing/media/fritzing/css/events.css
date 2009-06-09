@@ -13,7 +13,7 @@
 	margin-left: 1em;
 }
 
-.event .date {
+.event .date { /* stolen from mozilla.org */
 	position: relative;
 	background:#FAF4C8 none repeat scroll 0 0;
 	border-bottom:1px solid #E3DE9F;
@@ -36,3 +36,10 @@
 	margin-top: 0.3em;
 }
 
+.event .title {
+	font-weight: bold;
+}
+
+.event .datetext {
+	font-size: smaller;
+}

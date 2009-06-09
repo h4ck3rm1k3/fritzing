@@ -3,7 +3,7 @@
 <div class="event" >
 	<div class="date">{{ event.start_date|date:"M d" }}</div>
 	<div class="header">
-		<a class="state-published url" href="{% url events_details event.slug %}">
+		<a class="state-published url title" href="{% url events_details event.slug %}">
 		{{ event.title }}
 		</a>
 		{% for md in event.metadata.all %}
@@ -13,11 +13,11 @@
 		{% endfor %}
 		
 		<div>
-			<abbr class="dtstart" title="{{ event.start_date }}{%if event.start_time %} {{ event.start_time }}{% endif %}">
-			{{ event.start_date|date:"M d" }}{%if event.start_time %} {{ event.start_time|time:"H:i" }}{% endif %}</abbr>
+			<abbr class="datetext" title="{{ event.start_date }}{%if event.start_time %} {{ event.start_time }}{% endif %}">
+			{{ event.start_date|date:"M d" }}{%if event.start_time %}, {{ event.start_time|time:"H:i" }}{% endif %}</abbr>
 			{% if event.end_date %} -
-			<abbr class="dtend" title="{{ event.end_date }}{%if event.end_time %} {{ event.end_time }}{% endif %}">
-			{{ event.end_date|date:"M d" }}{%if event.end_time %} {{ event.end_time|time:"H:i" }}{% endif %}</abbr>
+			<abbr class="datetext" title="{{ event.end_date }}{%if event.end_time %} {{ event.end_time }}{% endif %}">
+			{{ event.end_date|date:"M d" }}{%if event.end_time %}, {{ event.end_time|time:"H:i" }}{% endif %}</abbr>
 			{% endif %}
 		</div>		
 		<div class="description">{{ event.description }}</div>

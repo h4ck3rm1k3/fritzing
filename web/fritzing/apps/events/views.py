@@ -1,11 +1,12 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
+from datetime import *
 
 from fritzing.apps.events.models import Event
 
 def overview(request, num_latest=10, template_name='events/overview.html', extra_context={}):
     """Show the 10 latest events"""
-    event_list = Event.objects.all()[:num_latest]
+    event_list = Event.objects.filter(start_date__gte=date.today())[:num_latest]
     template_context = {
         'event_list': event_list,
     }
