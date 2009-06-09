@@ -1,23 +1,26 @@
 {% load i18n %}
 
-<dt>
-<a class="state-published url" href="{% url events_details event.slug %}">
-{{ event.title }}
-</a>
-({% for md in event.metadata.all %}
-	{% ifequal md.type.title "where" %}
-		<span class="location"><a target="_blank" href="{{ md.url }}">{{ md.text }}</a></span>, 
-	{% endifequal %}
-{% endfor %}
-
-{% if event.end_date %}from{% else %}at{% endif %}
-<abbr class="dtstart" title="{{ event.start_date }}{%if event.start_time %} {{ event.start_time }}{% endif %}">
-{{ event.start_date|date:"M d, Y" }}{%if event.start_time %} {{ event.start_time|time:"H:i A" }}{% endif %}</abbr>
-{% if event.end_date %} to
-<abbr class="dtend" title="{{ event.end_date }}{%if event.end_time %} {{ event.end_time }}{% endif %}">
-{{ event.end_date|date:"M d, Y" }}{%if event.end_time %} {{ event.end_time|time:"H:i A" }}{% endif %}</abbr>
-{% endif %})
-</dt>
-<dd>
-{{ event.description }}
-</dd>
+<div class="event" >
+	<div class="date">{{ event.start_date|date:"M d" }}</div>
+	<div class="header">
+		<a class="state-published url" href="{% url events_details event.slug %}">
+		{{ event.title }}
+		</a>
+		{% for md in event.metadata.all %}
+			{% ifequal md.type.title "where" %}
+				(<span class="location"><a target="_blank" href="{{ md.url }}">{{ md.text }}</a></span>) 
+			{% endifequal %}
+		{% endfor %}
+		
+		<div>
+			<abbr class="dtstart" title="{{ event.start_date }}{%if event.start_time %} {{ event.start_time }}{% endif %}">
+			{{ event.start_date|date:"M d" }}{%if event.start_time %} {{ event.start_time|time:"H:i" }}{% endif %}</abbr>
+			{% if event.end_date %} -
+			<abbr class="dtend" title="{{ event.end_date }}{%if event.end_time %} {{ event.end_time }}{% endif %}">
+			{{ event.end_date|date:"M d" }}{%if event.end_time %} {{ event.end_time|time:"H:i" }}{% endif %}</abbr>
+			{% endif %}
+		</div>		
+		<div class="description">{{ event.description }}</div>
+	</div>	
+	
+</div>

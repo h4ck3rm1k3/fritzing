@@ -1,0 +1,38 @@
+.events_row {
+	float:left;
+	padding:0 0 0 2px;
+}
+
+.not_first {
+	margin-top: 2em;
+}
+
+.events_row .event {
+	float:left;
+	width:19em;
+	margin-left: 1em;
+}
+
+.event .date {
+	position: relative;
+	background:#FAF4C8 none repeat scroll 0 0;
+	border-bottom:1px solid #E3DE9F;
+	border-right:1px solid #E3DE9F;
+	color:#A19D68;
+	float:left;
+	line-height:1.1em;
+	margin:0 0.5em 1em 0;
+	padding:2px 1px 5px;
+	text-align:center;
+	width:2.2em;
+}
+
+.event .header {
+	float: left;
+	width: 16em;
+}
+
+.header .description {
+	margin-top: 0.3em;
+}
+

@@ -2,6 +2,10 @@
 {% load i18n %}
 {% load pagination_tags %}
 
+{% block extra_script %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/events.css" type="text/css" media="screen" charset="utf-8">
+{% endblock %}
+
 {% block page_title %}{% trans "Events" %}{% endblock %}
 
 {% block teaser %}Meet and Greet{% endblock %}
@@ -9,11 +13,15 @@
 {% block content %}
 <div class="content first-content">
     {% autopaginate event_list %}
-    <dl>
+    	<div class="events_row">
     {% for event in event_list %}
-      {% include "events/event.html" %}
+	    {% if forloop.counter|divisibleby:"4" %}
+	    </div>
+	    <div class="events_row not_first">
+	    {% endif %}
+		{% include "events/event.html" %}
     {% endfor %}
-    </dl>
+    	</div>
 </div>
 {% paginate %}
 {% endblock %}
