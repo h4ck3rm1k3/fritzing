@@ -414,6 +414,8 @@ void ClipableWire::dispatchHover(QPointF scenePos) {
 
 void ClipableWire::dispatchHoverAux(bool inInner, Wire * inWire)
 {
+	if (m_trackHoverItem == NULL) return;
+
 	if (inInner) {
 		if (m_trackHoverLastItem == m_trackHoverItem) {
 			// no change
