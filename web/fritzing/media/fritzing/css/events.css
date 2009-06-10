@@ -15,16 +15,26 @@
 
 .event .date { /* stolen from mozilla.org */
 	position: relative;
-	background:#FAF4C8 none repeat scroll 0 0;
-	border-bottom:1px solid #E3DE9F;
-	border-right:1px solid #E3DE9F;
-	color:#A19D68;
 	float:left;
 	line-height:1.1em;
 	margin:0 0.5em 1em 0;
 	padding:2px 1px 5px;
 	text-align:center;
 	width:2.2em;
+}
+
+.event .future {
+	color:#A19D68;
+	background:#FAF4C8 none repeat scroll 0 0;
+	border-bottom:1px solid #E3DE9F;
+	border-right:1px solid #E3DE9F;
+}
+
+.event .past {
+	color: #A16898;
+	background:#FAC8F1 none repeat scroll 0 0;
+	border-bottom:1px solid #E39FDD;
+	border-right:1px solid #E39FDD;
 }
 
 .event .header {

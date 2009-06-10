@@ -6,11 +6,10 @@
 		<span id="parent-fieldname-description" class=""> {{ event.description }}</span>
 	</p>
 	
-	{% for md in event.metadata.all %}
-		{% ifequal md.type.title "where" %}
-			<span class="location"><a target="_blank" href="{{ md.url }}">{{ md.text }}</a></span> 
-		{% endifequal %}
-	{% endfor %}
+	{% if event.where %}
+			<span class="location"><a target="_blank" href="{{ event.where.url }}">{{ event.where.text }}</a></span>
+	{% endif %} 
+
 	
 	<div>
 		{% if event.end_date %} From {% else %} On {% endif %}
@@ -26,16 +25,12 @@
 		{{ event.body|safe }}
 	</div>
 {% else %}
-		<div class="date">{{ event.start_date|date:"M d" }}</div>
+		<div class="date {% if event.has_past %}past{% else %}future{% endif %}">{{ event.start_date|date:"M d" }}</div>
 		<div class="header">
-			<a class="state-published url title" href="{% url event_details event.slug %}">
-			{{ event.title }}
-			</a>
-			{% for md in event.metadata.all %}
-				{% ifequal md.type.title "where" %}
-					(<span class="location"><a target="_blank" href="{{ md.url }}">{{ md.text }}</a></span>) 
-				{% endifequal %}
-			{% endfor %}
+			<a class="state-published url title" href="{% url event_details event.slug %}">{{ event.title }}</a>
+			{% if event.where %}
+					(<span class="location"><a target="_blank" href="{{ event.where.url }}">{{ event.where.text }}</a></span>)
+			{% endif %} 
 			<div>
 				<abbr class="datetext" title="{{ event.start_date }}{%if event.start_time %} {{ event.start_time }}{% endif %}">
 				{{ event.start_date|date:"M d" }}{%if event.start_time %}, {{ event.start_time|time:"H:i" }}{% endif %}</abbr>

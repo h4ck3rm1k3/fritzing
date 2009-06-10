@@ -5,9 +5,12 @@ from dregni import views
 
 from fritzing.apps.events.models import Event
 
-def overview(request, num_latest=10, template_name='events/overview.html', extra_context={}):
-    """Show the 10 latest events"""
-    event_list = Event.objects.filter(start_date__gte=date.today())[:num_latest]
+def overview(request, num_latest=-1, template_name='events/overview.html', extra_context={}):
+    """Show the <num_latest> latest events ordered by start_date"""
+    if(num_latest > 0):
+        event_list = Event.objects.all().order_by('-start_date','-start_time')[:num_latest]
+    else:
+        event_list = Event.objects.all().order_by('-start_date','-start_time')
     template_context = {
         'event_list': event_list,
     }
