@@ -1377,7 +1377,6 @@ void MainWindow::createMenus()
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
-	m_schematicTraceMenu->addAction(m_selectAllJumpersAct);
 
 #ifndef QT_NO_DEBUG
 	m_schematicTraceMenu->addAction(m_tidyWiresAct);

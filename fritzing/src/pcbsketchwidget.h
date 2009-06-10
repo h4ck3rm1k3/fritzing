@@ -57,11 +57,13 @@ public:
 	virtual bool autorouteCheckParts();
 	const QString & traceColor();
 	const QString & jumperColor();
+	int jumperWidth();
 	virtual void ensureTraceLayersVisible();
 	virtual void ensureTraceLayerVisible();
 	virtual void ensureJumperLayerVisible();
 	bool canChainMultiple();
 	void setNewPartVisible(ItemBase *);
+	virtual void setJumperFlags(ViewGeometry & vg);
 
 public:
 	enum CleanType {
@@ -132,6 +134,7 @@ protected:
 	bool m_addBoard;
 	ItemBase * m_addedBoard;
 	QString m_jumperColor;
+	int m_jumperWidth;
 	QString m_traceColor;
 	CleanType m_cleanType;
 };

@@ -49,7 +49,6 @@ public:
 		Schematic,
 		SchematicWire,
 		SchematicTrace,
-		SchematicJumper,
 		SchematicLabel,
 		SchematicNote,
 		SchematicRuler,

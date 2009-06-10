@@ -4300,7 +4300,7 @@ void SketchWidget::addSchematicViewLayers() {
 	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicTrace, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicJumper << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
+	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
 
 	addViewLayersAux(layers);
 }

@@ -39,7 +39,8 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 {
 	m_viewName = QObject::tr("Schematic View");
 	m_traceColor = "black";
-	m_jumperColor = "black";			
+	m_jumperColor = "black";	
+	m_jumperWidth = 2;
 	m_cleanType = ninetyClean;
 }
 
@@ -54,10 +55,6 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getDragWireViewLayerID() {
 ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
 	if (viewGeometry.getTrace()) {
 		return ViewLayer::SchematicTrace;
-	}
-
-	if (viewGeometry.getJumper()) {
-		return ViewLayer::SchematicJumper;
 	}
 
 	if (viewGeometry.getRatsnest()) {
@@ -108,7 +105,6 @@ void SchematicSketchWidget::tidyWires() {
 
 void SchematicSketchWidget::ensureTraceLayersVisible() {
 	ensureLayerVisible(ViewLayer::SchematicTrace);
-	ensureLayerVisible(ViewLayer::SchematicJumper);
 }
 
 void SchematicSketchWidget::ensureTraceLayerVisible() {
@@ -117,9 +113,13 @@ void SchematicSketchWidget::ensureTraceLayerVisible() {
 
 void SchematicSketchWidget::ensureJumperLayerVisible() {
 	ensureLayerVisible(ViewLayer::SchematicTrace);
-	ensureLayerVisible(ViewLayer::SchematicJumper);
 }
 
 qreal SchematicSketchWidget::getRatsnestOpacity(Wire * wire) {
 	return (wire->getRouted() ? 0.1 : 0.7);
 }
+
+void SchematicSketchWidget::setJumperFlags(ViewGeometry & vg) {
+	vg.setTrace(true);
+}
+

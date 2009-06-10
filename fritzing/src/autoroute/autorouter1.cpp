@@ -52,7 +52,6 @@ static int keepOut = 4;
 static int boundingKeepOut = 4;
 
 static const int StandardTraceWidth = 3;
-static const int StandardJumperWidth = 3;
 
 ////////////////////////////////////////////////////////////////////
 
@@ -618,7 +617,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	viewGeometry.setLoc(fromPos);
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 	viewGeometry.setLine(line);
-	viewGeometry.setJumper(true);
+	m_sketchWidget->setJumperFlags(viewGeometry);
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
@@ -630,7 +629,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
 	jumperWire->setColorString(m_sketchWidget->jumperColor(), Wire::UNROUTED_OPACITY);
-	jumperWire->setWidth(StandardJumperWidth);
+	jumperWire->setWidth(m_sketchWidget->jumperWidth());
 	jumperWire->setSelected(false);
 
 	from->tempConnectTo(jumperWire->connector0(), false);

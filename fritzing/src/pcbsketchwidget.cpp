@@ -88,6 +88,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 	m_traceColor = "trace";
 	m_jumperColor = "jumper";
+	m_jumperWidth = 3;
 	m_cleanType = noClean;
 }
 
@@ -645,6 +646,10 @@ const QString & PCBSketchWidget::traceColor() {
 
 const QString & PCBSketchWidget::jumperColor() {
 	return m_jumperColor;
+}
+
+int PCBSketchWidget::jumperWidth() {
+	return m_jumperWidth;
 }
 
 PCBSketchWidget::CleanType PCBSketchWidget::cleanType() {
@@ -1335,5 +1340,9 @@ int PCBSketchWidget::calcDistance(Wire * wire, ConnectorItem * end, int distance
 
 	fromConnector0 = false;
 	return d1;
+}
+
+void PCBSketchWidget::setJumperFlags(ViewGeometry & vg) {
+	vg.setJumper(true);
 }
 
