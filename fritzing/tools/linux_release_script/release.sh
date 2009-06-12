@@ -2,24 +2,21 @@
 svn export http://fritzing.googlecode.com/svn/trunk/fritzing compile_folder
 
 #let's define some variables that we'll need to in the future
-arch_aux=`uname -m`
-if [ "$arch_aux" == 'x86_64' ]
-	then arch='AMD64'
-	else arch='i386'
-fi
 date=`date +%Y.%m.%d`
-
-# only creates the source tarball, when running on the 64 platform
-if [ "$arch"=='AMD64' ] ; then
+arch_aux=`uname -m`
+if [ "$arch_aux" == 'x86_64' ] ; then
+	arch='AMD64'
+	# only creates the source tarball, when running on the 64 platform
 	tarball_folder="fritzing.$date.source"
 	cp -rf compile_folder $tarball_folder
 	echo "making source tarball: $tarball_folder"
 	tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
 	rm -rf $tarball_folder
+
+	else arch='i386'
 fi
 
 cd compile_folder
-
 QT_HOME="/usr/local/Trolltech/Qt-4.5.1"
 
 $QT_HOME/bin/qmake CONFIG+=release -unix
@@ -50,11 +47,11 @@ cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetw
 # seems not to be needed anymore
 # if is i368 copy the libaudio
 #if [ $arch == 'i386' ]
-#	then 
-#	    cp /usr/lib/libaudio.so /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 .
-#	    echo "copying libaudio files"
-#	else
-#	    echo "skipping libaudio files"
+#    then
+#        cp /usr/lib/libaudio.so /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 .
+#        echo "copying libaudio files"
+#    else
+#        echo "skipping libaudio files"
 #fi
 
 echo "copying plugins"
