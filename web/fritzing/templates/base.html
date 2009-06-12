@@ -152,7 +152,7 @@
                                     <a href="{% url event_details event.slug %}" class="tile" title="{{ event.title }}">
                                     	{{ event.title }}
                                     	<span class="portletItemDetails">
-                                    	{{ event.where }} - {{ event.start_date|date:"M d" }}
+                                    	{% if event.where %}{{ event.where.text }} -{% endif %} {{ event.start_date|date:"M d" }}
                                     	</span>
                                     </a>
                                 </dd>
