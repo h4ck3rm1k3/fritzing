@@ -3,17 +3,20 @@ svn export http://fritzing.googlecode.com/svn/trunk/fritzing compile_folder
 
 #let's define some variables that we'll need to in the future
 arch_aux=`uname -m`
-if [ $arch_aux == 'x86_64' ]
+if [ "$arch_aux" == 'x86_64' ]
 	then arch='AMD64'
 	else arch='i386'
 fi
 date=`date +%Y.%m.%d`
 
-tarball_folder="fritzing.$date.source"
-cp -rf compile_folder $tarball_folder
-echo "making source tarball: $tarball_folder"
-tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
-rm -rf $tarball_folder
+# only creates the source tarball, when running on the 64 platform
+if [ "$arch"=='AMD64' ] ; then
+	tarball_folder="fritzing.$date.source"
+	cp -rf compile_folder $tarball_folder
+	echo "making source tarball: $tarball_folder"
+	tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
+	rm -rf $tarball_folder
+fi
 
 cd compile_folder
 
