@@ -366,11 +366,13 @@ bool PartsEditorView::ensureFilePath(const QString &filePath) {
 }
 
 ViewLayer::ViewLayerID PartsEditorView::connectorLayerId() {
-	Q_ASSERT(m_item);
-	ViewLayer::ViewLayerID viewLayerID =
-		ViewLayer::viewLayerIDFromXmlString(
+	//Q_ASSERT(m_item);
+	ViewLayer::ViewLayerID viewLayerID = ViewLayer::UnknownLayer;
+	if (m_item != NULL) {
+		viewLayerID = ViewLayer::viewLayerIDFromXmlString(
 			findConnectorLayerId(m_item->svgDom())
 		);
+	}
 	if(viewLayerID == ViewLayer::UnknownLayer) {
 		return SketchWidget::defaultConnectorLayer(m_viewIdentifier);
 	} else {
@@ -379,7 +381,10 @@ ViewLayer::ViewLayerID PartsEditorView::connectorLayerId() {
 }
 
 QString PartsEditorView::terminalIdForConnector(const QString &connId) {
-	Q_ASSERT(m_item);
+	//Q_ASSERT(m_item)
+	
+	if (m_item == NULL) return "";
+
 	QString result = "";
 	QDomElement elem = m_item->svgDom()->documentElement();
 	if(terminalIdForConnectorIdAux(result, connId, elem)) {
@@ -890,6 +895,10 @@ bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &
 }
 
 QString PartsEditorView::svgIdForConnector(const QString &connId) {
+	//Q_ASSERT(m_item)
+	
+	if (m_item == NULL) return "";
+
 	foreach(Connector* conn, m_item->connectors()) {
 		QString svgId = svgIdForConnector(conn, connId);
 		if(connId != svgId) {

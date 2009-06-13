@@ -492,6 +492,20 @@ Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
 }
 
 void ConnectorsInfoWidget::addConnector() {
+
+	if (m_views->breadboardView()->myItem() == NULL ||
+		m_views->schematicView()->myItem() == NULL ||
+		m_views->pcbView()->myItem() == NULL) 
+	{
+		QMessageBox::warning(
+			parentWidget(),
+			tr("Couldn't add connector"),
+			tr("Please, first load an image in each view,\nbefore adding any connectors")
+		);
+		
+		return;
+	}
+
 	QString connId = QString("connector%1").arg(nextConnId());
 	emit drawConnector(addConnectorInfo(connId));
 

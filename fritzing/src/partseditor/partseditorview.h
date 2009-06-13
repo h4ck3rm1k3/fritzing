@@ -70,6 +70,7 @@ class PartsEditorView : public SketchWidget {
 		bool showingTerminalPoints();
 
 		QString svgIdForConnector(const QString &connId);
+		PartsEditorConnectorsPaletteItem *myItem();
 
 	public slots:
 		// general
@@ -155,7 +156,6 @@ class PartsEditorView : public SketchWidget {
 		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId);
 		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);
 
-		PartsEditorConnectorsPaletteItem *myItem();
 
 
 		PartsEditorPaletteItem *m_item; // just one item per view
