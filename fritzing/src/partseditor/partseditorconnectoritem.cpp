@@ -34,6 +34,13 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector *conn, ItemBase *at
 
 }
 
+PartsEditorConnectorItem::~PartsEditorConnectorItem() {
+	if (m_connector) {
+		delete m_connector;
+		m_connector = NULL;
+	}
+}
+
 void PartsEditorConnectorItem::removeFromModel() {
 	m_connector->removeViewItem(this);
 }

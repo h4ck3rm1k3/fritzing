@@ -37,6 +37,8 @@ $Date$
 class PartsEditorConnectorItem: public ConnectorItem {
 	public:
 		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo);
+		~PartsEditorConnectorItem();
+
 		void removeFromModel();
 
 	protected:
