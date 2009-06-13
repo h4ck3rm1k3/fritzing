@@ -26,7 +26,7 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 #include "terminalpointitem.h"
 #include "../partseditor/partseditorconnectorsconnectoritem.h"
-#include "../partseditor/partseditorview.h"
+#include "../ZoomableGraphicsView.h"
 #include "../debugdialog.h"
 
 QHash<ConnectorRectangle::State, QPixmap> TerminalPointItem::m_pixmapHash;
@@ -96,9 +96,9 @@ void TerminalPointItem::setMovable(bool movable) {
 
 qreal TerminalPointItem::currentScale() {
 	if(scene()) {
-		PartsEditorView* view = dynamic_cast<PartsEditorView*>(scene()->parent());
-		if(view) {
-			return view->currentZoom()/100;
+		ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(scene()->parent());
+		if(sw) {
+			return sw->currentZoom()/100;
 		}
 	}
 	return 1;

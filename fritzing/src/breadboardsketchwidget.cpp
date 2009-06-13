@@ -44,8 +44,8 @@ void BreadboardSketchWidget::setWireVisible(Wire * wire)
 	//wire->setVisible(true);					// for debugging
 }
 
-void BreadboardSketchWidget::collectFemaleConnectees(ItemBase * itemBase) {
-	itemBase->collectFemaleConnectees(m_savedItems);
+void BreadboardSketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<ItemBase *> & items) {
+	itemBase->collectFemaleConnectees(items);
 }
 
 void BreadboardSketchWidget::findConnectorsUnder(ItemBase * item) {

@@ -1615,10 +1615,16 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 void SketchWidget::prepMove() {
 	QSet<Wire *> wires;
+	QList<ItemBase *> items;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
 		ItemBase *itemBase = dynamic_cast<ItemBase *>(gitem);
 		if (itemBase == NULL) continue;
 
+		items.append(itemBase);
+	}
+
+	for (int i = 0; i < items.count(); i++) {
+		ItemBase * itemBase = items[i];
 		if (itemBase->itemType() == ModelPart::Wire) {
 			if (itemBase->isVisible()) {
 				wires.insert(dynamic_cast<Wire *>(itemBase));
@@ -1636,12 +1642,21 @@ void SketchWidget::prepMove() {
 					}
 					else {
 						m_savedItems.insert(sitemBase);
+						if (!items.contains(sitemBase)) {
+							items.append(sitemBase);
+						}
 					}
 				}
 			}
 		}
 
-		collectFemaleConnectees(chief);
+		QSet<ItemBase *> set;
+		collectFemaleConnectees(chief, set);
+		foreach (ItemBase * sitemBase, set) {
+			if (!items.contains(sitemBase)) {
+				items.append(sitemBase);
+			}
+		}
 		chief->collectWireConnectees(wires);
 	}
 
@@ -1907,8 +1922,9 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 }
 
 
-void SketchWidget::collectFemaleConnectees(ItemBase * itemBase) {
+void SketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<ItemBase *> & items) {
 	Q_UNUSED(itemBase);
+	Q_UNUSED(items);
 }
 
 bool SketchWidget::draggingWireEnd() {

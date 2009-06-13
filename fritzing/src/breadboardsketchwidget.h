@@ -46,7 +46,7 @@ protected slots:
 
 protected:
 	void setWireVisible(Wire * wire);
-	void collectFemaleConnectees(ItemBase *);
+	void collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
 	void findConnectorsUnder(ItemBase * item);
 	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
