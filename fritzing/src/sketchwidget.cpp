@@ -4996,7 +4996,7 @@ void SketchWidget::init() {
 	}
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart)
+QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi)
 {
 	qreal width =  scene()->width();
 	qreal height =  scene()->height();
@@ -5046,7 +5046,6 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 	qreal trueWidth = width / printerScale;
 	qreal trueHeight = height / printerScale;
-	qreal dpi = 1000;
 
 	QString outputSVG;
 	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "

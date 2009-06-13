@@ -202,7 +202,7 @@ public:
 	void noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize);
 	void resizeNote(long itemID, const QSizeF & );
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
-	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart);
+	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi);
 	bool spaceBarIsPressed();
 	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
 	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
