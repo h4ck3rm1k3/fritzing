@@ -227,6 +227,7 @@ protected slots:
 	void reportBug();
 	void tidyWires();
 	void groundFill();
+	void changeWireColor(bool checked);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -296,6 +297,7 @@ protected:
 	QMenu *pcbItemMenu();
 	QMenu *pcbWireMenu();
 	QMenu *schematicWireMenu();
+	QMenu *breadboardWireMenu();
 
 	QMenu *viewItemMenuAux(QMenu* menu);
 
@@ -506,6 +508,10 @@ protected:
     QAction *m_aboutQtAct;
     QAction *m_reportBugAct;
     QAction *m_importFilesFromPrevInstallAct;
+
+	// Wire Color Menu
+	QMenu * m_wireColorMenu;
+
 
     // Dot icons
     QIcon m_dotIcon;

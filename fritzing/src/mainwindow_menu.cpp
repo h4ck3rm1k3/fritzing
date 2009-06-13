@@ -1420,8 +1420,6 @@ void MainWindow::updateLayerMenu() {
 }
 
 void MainWindow::updateWireMenu() {
-	if (m_currentGraphicsView == m_breadboardGraphicsView) return;
-
 	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
 	m_addBendpointAct->setEnabled(false);
 	if (items.count() == 1) {
@@ -1456,6 +1454,17 @@ void MainWindow::updateWireMenu() {
 				excludeOK = true;
 				m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
 			}
+		}
+	}
+
+	if (wire == NULL || items.count() != 1) {
+		m_wireColorMenu->setEnabled(false);
+	}
+	else {
+		m_wireColorMenu->setEnabled(true);
+		foreach (QAction * action, m_wireColorMenu->actions()) {
+			QString colorName = action->data().toString();
+			action->setChecked(colorName.compare(wire->colorString()) == 0);
 		}
 	}
 
@@ -2740,5 +2749,148 @@ void MainWindow::clearGroundPlanes() {
 
 	m_groundPlaneSuffixes.clear();
 
+}
+
+QMenu *MainWindow::breadboardItemMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Part"), this);
+	menu->addAction(m_rotate90cwAct);
+	menu->addAction(m_rotate180Act);
+	menu->addAction(m_rotate90ccwAct);
+	menu->addAction(m_flipHorizontalAct);
+	menu->addAction(m_flipVerticalAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
+	return viewItemMenuAux(menu);
+}
+
+QMenu *MainWindow::schematicItemMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Part"), this);
+	menu->addAction(m_rotate90cwAct);
+	menu->addAction(m_rotate180Act);
+	menu->addAction(m_rotate90ccwAct);
+	menu->addAction(m_flipHorizontalAct);
+	menu->addAction(m_flipVerticalAct);
+	return viewItemMenuAux(menu);
+}
+
+QMenu *MainWindow::pcbItemMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Part"), this);
+	menu->addAction(m_rotate90cwAct);
+	menu->addAction(m_rotate180Act);
+	menu->addAction(m_rotate90ccwAct);
+	menu = viewItemMenuAux(menu);
+	return menu;
+}
+
+QMenu *MainWindow::breadboardWireMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	menu->addMenu(m_zOrderMenu);
+	menu->addSeparator();
+	m_wireColorMenu = menu->addMenu(tr("&Wire Color"));
+	foreach(QString colorName, Wire::colorNames) {
+		QString colorValue = Wire::colorTrans.value(colorName);
+		QAction * action = new QAction(colorName, this);
+		m_wireColorMenu->addAction(action);
+		action->setData(colorValue);
+		action->setCheckable(true);
+		connect(action, SIGNAL(triggered(bool)), this, SLOT(changeWireColor(bool)));
+	}
+	menu->addSeparator();
+	menu->addAction(m_deleteAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_infoViewOnHoverAction);
+#endif
+
+    connect( menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
+
+	return menu;
+}
+
+
+
+QMenu *MainWindow::pcbWireMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	menu->addMenu(m_zOrderMenu);
+	menu->addSeparator();
+	menu->addAction(m_createTraceAct);
+	menu->addAction(m_createJumperAct);
+	menu->addAction(m_excludeFromAutorouteAct);
+	menu->addSeparator();
+	menu->addAction(m_deleteAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_infoViewOnHoverAction);
+#endif
+
+    connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
+
+	return menu;
+}
+
+QMenu *MainWindow::schematicWireMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	menu->addMenu(m_zOrderMenu);
+	menu->addSeparator();
+	menu->addAction(m_createTraceAct);
+	menu->addAction(m_excludeFromAutorouteAct);
+	menu->addSeparator();
+	menu->addAction(m_deleteAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_infoViewOnHoverAction);
+#endif
+
+    connect( menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
+
+	return menu;
+}
+
+QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
+	menu->addSeparator();
+	menu->addMenu(m_zOrderMenu);
+	menu->addSeparator();
+	menu->addAction(m_copyAct);
+	menu->addAction(m_duplicateAct);
+	menu->addAction(m_deleteAct);
+	menu->addSeparator();
+	menu->addAction(m_openInPartsEditorAct);
+	menu->addMenu(m_addToBinMenu);
+	menu->addSeparator();
+	menu->addAction(m_showPartLabelAct);
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_infoViewOnHoverAction);
+#endif
+
+    connect(
+    	menu,
+    	SIGNAL(aboutToShow()),
+    	this,
+    	SLOT(updatePartMenu())
+    );
+
+    return menu;
+}
+
+void MainWindow::changeWireColor(bool checked) {
+	if (checked == false) {
+		// choosing the same color again (assuming this action can only apply to a single wire at a time)
+		return;
+	}
+
+	QAction * action = qobject_cast<QAction *>(sender());
+	if (action == NULL) return;
+
+	QString colorName = action->data().toString();
+	if (colorName.isEmpty()) return;
+
+	m_currentGraphicsView->changeWireColor(colorName);
 }
 

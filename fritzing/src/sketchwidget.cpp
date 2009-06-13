@@ -2068,7 +2068,8 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		// remove again (may not have been removed earlier)
 		if (m_connectorDragWire->scene() != NULL) {
 			this->scene()->removeItem(m_connectorDragWire);
-			m_infoView->unregisterCurrentItem();
+			//m_infoView->unregisterCurrentItem();
+			updateInfoView();
 
 		}
 
@@ -4049,6 +4050,16 @@ void SketchWidget::updateInfoView() {
 }
 
 void SketchWidget::updateInfoViewSlot() {
+	foreach (QGraphicsItem * item, scene()->selectedItems())
+	{
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		ItemBase * chief = itemBase->layerKinChief();
+		InfoGraphicsView::viewItemInfo(chief);
+		return;
+	}
+
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
@@ -4274,6 +4285,7 @@ void SketchWidget::changeWireColor(long wireId, const QString& color, qreal opac
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
 		wire->setColorString(color, opacity);
+		updateInfoView();
 	}
 }
 
@@ -4282,6 +4294,7 @@ void SketchWidget::changeWireWidth(long wireId, int width) {
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
 		wire->setWidth(width);
+		updateInfoView();
 	}
 }
 

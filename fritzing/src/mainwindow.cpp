@@ -81,6 +81,7 @@ int MainWindow::CascadeFactorY = 19;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_wireColorMenu = NULL;
 	m_viewSwitcherDock = NULL;
 	m_checkForUpdatesAct = NULL;
 	m_fileProgressDialog = NULL;
@@ -200,9 +201,8 @@ void MainWindow::init() {
 		setStyleSheet(styleSheet.readAll()+platformDependantStyle);
 	}
 
-	QMenu *breadItemMenu = breadboardItemMenu();
-    m_breadboardGraphicsView->setItemMenu(breadItemMenu);
-    m_breadboardGraphicsView->setWireMenu(breadItemMenu);
+    m_breadboardGraphicsView->setItemMenu(breadboardItemMenu());
+    m_breadboardGraphicsView->setWireMenu(breadboardWireMenu());
 
     m_pcbGraphicsView->setWireMenu(pcbWireMenu());
     m_pcbGraphicsView->setItemMenu(pcbItemMenu());
@@ -1252,104 +1252,6 @@ void MainWindow::clearRoutingSlot(SketchWidget * sketchWidget, QUndoCommand * pa
 	m_pcbGraphicsView->clearRouting(parentCommand);
 }
 
-QMenu *MainWindow::breadboardItemMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Part"), this);
-	menu->addAction(m_rotate90cwAct);
-	menu->addAction(m_rotate180Act);
-	menu->addAction(m_rotate90ccwAct);
-	menu->addAction(m_flipHorizontalAct);
-	menu->addAction(m_flipVerticalAct);
-	menu->addSeparator();
-	menu->addAction(m_addBendpointAct);
-	return viewItemMenuAux(menu);
-}
-
-QMenu *MainWindow::schematicItemMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Part"), this);
-	menu->addAction(m_rotate90cwAct);
-	menu->addAction(m_rotate180Act);
-	menu->addAction(m_rotate90ccwAct);
-	menu->addAction(m_flipHorizontalAct);
-	menu->addAction(m_flipVerticalAct);
-	return viewItemMenuAux(menu);
-}
-
-QMenu *MainWindow::pcbItemMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Part"), this);
-	menu->addAction(m_rotate90cwAct);
-	menu->addAction(m_rotate180Act);
-	menu->addAction(m_rotate90ccwAct);
-	menu = viewItemMenuAux(menu);
-	return menu;
-}
-
-QMenu *MainWindow::pcbWireMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
-	menu->addMenu(m_zOrderMenu);
-	menu->addSeparator();
-	menu->addAction(m_createTraceAct);
-	menu->addAction(m_createJumperAct);
-	menu->addAction(m_excludeFromAutorouteAct);
-	menu->addSeparator();
-	menu->addAction(m_deleteAct);
-	menu->addSeparator();
-	menu->addAction(m_addBendpointAct);
-#ifndef QT_NO_DEBUG
-	menu->addSeparator();
-	menu->addAction(m_infoViewOnHoverAction);
-#endif
-
-    connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
-
-	return menu;
-}
-
-QMenu *MainWindow::schematicWireMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
-	menu->addMenu(m_zOrderMenu);
-	menu->addSeparator();
-	menu->addAction(m_createTraceAct);
-	menu->addAction(m_excludeFromAutorouteAct);
-	menu->addSeparator();
-	menu->addAction(m_deleteAct);
-	menu->addSeparator();
-	menu->addAction(m_addBendpointAct);
-#ifndef QT_NO_DEBUG
-	menu->addSeparator();
-	menu->addAction(m_infoViewOnHoverAction);
-#endif
-
-    connect( menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
-
-	return menu;
-}
-
-QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
-	menu->addSeparator();
-	menu->addMenu(m_zOrderMenu);
-	menu->addSeparator();
-	menu->addAction(m_copyAct);
-	menu->addAction(m_duplicateAct);
-	menu->addAction(m_deleteAct);
-	menu->addSeparator();
-	menu->addAction(m_openInPartsEditorAct);
-	menu->addMenu(m_addToBinMenu);
-	menu->addSeparator();
-	menu->addAction(m_showPartLabelAct);
-#ifndef QT_NO_DEBUG
-	menu->addSeparator();
-	menu->addAction(m_infoViewOnHoverAction);
-#endif
-
-    connect(
-    	menu,
-    	SIGNAL(aboutToShow()),
-    	this,
-    	SLOT(updatePartMenu())
-    );
-
-    return menu;
-}
 
 void MainWindow::applyReadOnlyChange(bool isReadOnly) {
 	Q_UNUSED(isReadOnly);
