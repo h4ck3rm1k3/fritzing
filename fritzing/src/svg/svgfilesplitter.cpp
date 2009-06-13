@@ -387,6 +387,14 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			}
 		}
 	}
+	else if (element.nodeName().compare("text") == 0) {
+		killSodipodi(element);
+		fixStyleAttribute(element);
+		normalizeAttribute(element, "x", sNewWidth, vbWidth);
+		normalizeAttribute(element, "y", sNewHeight, vbHeight);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
+		setStrokeOrFill(element, blackOnly);
+	}
 	else {
 		QDomElement childElement = element.firstChildElement();
 		while (!childElement.isNull()) {
@@ -456,6 +464,10 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 		shiftAttribute(element, "y2", y);
 	}
 	else if (element.nodeName().compare("rect") == 0) {
+		shiftAttribute(element, "x", x);
+		shiftAttribute(element, "y", y);
+	}
+	else if (element.nodeName().compare("text") == 0) {
 		shiftAttribute(element, "x", x);
 		shiftAttribute(element, "y", y);
 	}
