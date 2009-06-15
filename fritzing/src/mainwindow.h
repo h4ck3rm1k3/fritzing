@@ -327,6 +327,7 @@ protected:
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
 	void clearGroundPlanes();
+	QString constructFileName(const QString & differentiator, const QString & extension);
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);

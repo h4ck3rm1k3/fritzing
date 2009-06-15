@@ -37,6 +37,7 @@ static QColor schematicColor;
 SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSketchWidget(viewIdentifier, parent)
 {
+	m_shortName = QObject::tr("schem");
 	m_viewName = QObject::tr("Schematic View");
 	m_traceColor = "black";
 	m_jumperColor = "black";	

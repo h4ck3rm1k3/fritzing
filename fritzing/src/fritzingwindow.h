@@ -75,6 +75,9 @@ class FritzingWindow : public QMainWindow {
 		QDir m_tempDir;
 		QStatusBar *m_statusBar;
 
+protected:
+		static QStringList OtherKnownExtensions;
+
 	public:
 		// TODO: these probably belong in some separate file i/o class
 		static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);

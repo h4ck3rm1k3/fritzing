@@ -48,6 +48,7 @@ $Date$
 QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");
 const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin" + FritzingBinExtension;
 static QString ___fritzingTitle___;
+QStringList FritzingWindow::OtherKnownExtensions;
 
 FritzingWindow::FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent, Qt::WFlags f)
 	: QMainWindow(parent, f)
@@ -141,7 +142,6 @@ bool FritzingWindow::saveAs() {
 	FileProgressDialog progress("Saving...", 0, this);
 
     if(!alreadyHasExtension(fileName, fileExtension())) {
-		//fileExt = getExtFromFileDialog(fileExt);
 		fileName += fileExtension();
 	}
 
@@ -186,11 +186,11 @@ bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString 
 		foreach (QString extension, fritzingExtensions()) {
 			if (fileName.endsWith(extension)) return true;
 		}
-
-		return fileName.endsWith(".pdf")
-			|| fileName.endsWith(".ps")
-			|| fileName.endsWith(".png")
-			|| fileName.endsWith(".jpg");
+		foreach (QString extension, OtherKnownExtensions) {
+			if (fileName.endsWith(extension)) return true;
+		}
+		
+		return false;
 	}
 }
 

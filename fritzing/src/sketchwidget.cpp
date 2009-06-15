@@ -5494,3 +5494,7 @@ void SketchWidget::updateConnectors() {
 		connectorItem->restoreColor(false, -1);
 	}
 }
+
+const QString & SketchWidget::getShortName() {
+	return m_shortName;
+}

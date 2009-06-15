@@ -33,6 +33,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
+	m_shortName = QObject::tr("bb");
 	m_viewName = QObject::tr("Breadboard View");
 }
 

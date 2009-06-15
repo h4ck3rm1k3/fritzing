@@ -396,9 +396,8 @@ bool PartsBinPaletteWidget::saveAs() {
 
     if (fileName.isEmpty()) return false; // Cancel pressed
 
-    if(!FritzingWindow::alreadyHasExtension(fileName)) {
-		fileExt = FritzingWindow::getExtFromFileDialog(fileExt);
-		fileName += fileExt;
+    if(!FritzingWindow::alreadyHasExtension(fileName, FritzingBinExtension)) {
+		fileName += FritzingBinExtension;
 	}
     saveAsAux(fileName);
     return true;

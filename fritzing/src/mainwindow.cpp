@@ -909,9 +909,8 @@ void MainWindow::saveBundledSketch() {
 
 	FileProgressDialog progress("Saving...", 0, this);
 
-	if(!alreadyHasExtension(bundledFileName)) {
-		fileExt = getExtFromFileDialog(fileExt);
-		bundledFileName += fileExt;
+	if(!alreadyHasExtension(bundledFileName, FritzingBundleExtension)) {
+		bundledFileName += FritzingBundleExtension;
 	}
 
 	QApplication::processEvents();
@@ -1051,9 +1050,8 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 
 	if (bundledFileName.isEmpty()) return; // Cancel pressed
 
-	if(!alreadyHasExtension(bundledFileName)) {
-		fileExt = getExtFromFileDialog(fileExt);
-		bundledFileName += fileExt;
+	if(!alreadyHasExtension(bundledFileName, FritzingBundledPartExtension)) {
+		bundledFileName += FritzingBundledPartExtension;
 	}
 
 	QDir destFolder = QDir::temp();

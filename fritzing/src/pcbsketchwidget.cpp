@@ -83,13 +83,14 @@ bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
-	m_addBoard = false;
 	m_viewName = QObject::tr("PCB View");
+	m_viewName = QObject::tr("pcb");
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 	m_traceColor = "trace";
 	m_jumperColor = "jumper";
 	m_jumperWidth = 3;
 	m_cleanType = noClean;
+	m_addBoard = false;
 }
 
 void PCBSketchWidget::setWireVisible(Wire * wire)

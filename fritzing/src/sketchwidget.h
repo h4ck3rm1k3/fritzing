@@ -214,6 +214,7 @@ public:
 	virtual void tidyWires();
 	void painterPathHack(long itemID, const QString & connectorID, QPainterPath &);
 	void updateConnectors();
+	const QString & getShortName();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -476,6 +477,7 @@ protected:
 	QPointF m_resizingBoardPos;
 	ConnectorItem * m_lastHoverEnterConnectorItem;
 	ItemBase * m_lastHoverEnterItem;
+	QString m_shortName;
 
 protected:
 	QString m_viewName;

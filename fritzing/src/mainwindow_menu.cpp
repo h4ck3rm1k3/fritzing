@@ -78,6 +78,8 @@ bool sortPartList(ItemBase * b1, ItemBase * b2){
 
 void MainWindow::initExportConstants()
 {
+	OtherKnownExtensions << jpgActionType << psActionType << pdfActionType << pngActionType << svgActionType << bomActionType;
+
 	filePrintFormats[pdfActionType] = QPrinter::PdfFormat;
 	filePrintFormats[psActionType] = QPrinter::PostScriptFormat;
 
@@ -132,9 +134,10 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
 	QString fileExt;
 	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
+	QString suffix = (wantPDF) ? pdfActionType : svgActionType;
 	QString fileName = FApplication::getSaveFileName(this,
 		tr("Export Etchable for DIY..."),
-		path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
+		path+"/"+constructFileName("etch", suffix),
 		extFmt,
 		&fileExt
 	);
@@ -146,10 +149,9 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
 	DebugDialog::debug(fileExt+" selected to export");
-	fileExt = getExtFromFileDialog(fileExt);
 	#ifdef Q_WS_X11
 		if(!alreadyHasExtension(fileName)) {
-			fileName += fileExt;
+			fileName += suffix;
 		}
 	#endif
 
@@ -292,7 +294,7 @@ void MainWindow::doExport() {
 		DebugDialog::debug(QString("file export string %1").arg(extFmt));
 		QString fileName = FApplication::getSaveFileName(this,
 			tr("Export..."),
-			path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
+			path+"/"+constructFileName("", actionType),
 			extFmt,
 			&fileExt
 		);
@@ -301,11 +303,10 @@ void MainWindow::doExport() {
 			return; //Cancel pressed
 		} else {
 			FileProgressDialog * fileProgressDialog = exportProgress();
-			fileExt = getExtFromFileDialog(extFmt);
 			DebugDialog::debug(fileExt+" selected to export");
 			#ifdef Q_WS_X11
 				if(!alreadyHasExtension(fileName)) {
-					fileName += fileExt;
+					fileName += actionType;
 				}
 			#endif
 
@@ -2255,7 +2256,7 @@ void MainWindow::exportSvg() {
 	QString fileExt;
 	QString fileName = FApplication::getSaveFileName(this,
 		tr("Export SVG..."),
-		path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+svgActionType,
+		path+"/"+constructFileName("", svgActionType),
 		fileExtFormats[svgActionType],
 		&fileExt
 		);
@@ -2342,7 +2343,7 @@ void MainWindow::exportBOM() {
 
     QString fileExt;
     QString extFmt = fileExtFormats.value(bomActionType);
-    QString fname = path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
+    QString fname = path+"/"+constructFileName("bom", bomActionType);
     DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
     QString fileName = FApplication::getSaveFileName(this,
@@ -2358,12 +2359,11 @@ void MainWindow::exportBOM() {
 
 	FileProgressDialog * fileProgressDialog = exportProgress();
     DebugDialog::debug(fileExt+" selected to export");
-    //fileExt = getExtFromFileDialog(fileExt);
-    //#ifdef Q_WS_X11
-//                if(!alreadyHasExtension(fileName)) {
-//                        fileName += fileExt;
-//                }
-//        #endif
+    #ifdef Q_WS_X11
+        if(!alreadyHasExtension(fileName)) {
+			fileName += bomActionType;
+        }
+    #endif
 
     QFile fp( fileName );
     fp.open(QIODevice::WriteOnly);
@@ -2894,3 +2894,8 @@ void MainWindow::changeWireColor(bool checked) {
 	m_currentGraphicsView->changeWireColor(colorName);
 }
 
+QString MainWindow::constructFileName(const QString & differentiator, const QString & suffix) {
+	QString filename = QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension);
+	filename += "_" + (differentiator.isEmpty() ? m_currentGraphicsView->getShortName() : differentiator);
+	return filename + suffix;
+}
