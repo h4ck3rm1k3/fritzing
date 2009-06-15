@@ -167,8 +167,11 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart
 PartsEditorMainWindow::~PartsEditorMainWindow()
 {
 	if (m_sketchModel) {
+		// memory leak here, but delete or deleteLater causes a crash if you're editing an already existing part;  a new part seems ok
 		//delete m_sketchModel;
 		//delete m_paletteModel;
+		//m_sketchModel->deleteLater();
+		//m_paletteModel->deleteLater();
 	}
 }
 

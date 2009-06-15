@@ -260,13 +260,13 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,StringPair*>
 }
 
 const QHash<QString,StringPair*> PartsEditorView::getConnectorIds(const QString &path) {
-	QDomDocument *dom = new QDomDocument();
+	QDomDocument dom ;
 	QFile file(path);
-	dom->setContent(&file);
+	dom.setContent(&file);
 	file.close();
 
 	QHash<QString,StringPair*> retval;
-	QDomElement docElem = dom->documentElement();
+	QDomElement docElem = dom.documentElement();
 	getConnectorIdsAux(retval, docElem);
 
 	return retval;
@@ -299,13 +299,13 @@ void PartsEditorView::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair
 }
 
 const QStringList PartsEditorView::getLayers(const QString &path) {
-	QDomDocument *dom = new QDomDocument();
+	QDomDocument dom;
 	QFile file(path);
-	dom->setContent(&file);
+	dom.setContent(&file);
 	file.close();
 
 	QStringList retval;
-	QDomElement docElem = dom->documentElement();
+	QDomElement docElem = dom.documentElement();
 
 	QDomNode n = docElem.firstChild();
 	while(!n.isNull()) {
@@ -836,10 +836,10 @@ void PartsEditorView::setMismatching(ViewIdentifierClass::ViewIdentifier viewId,
 
 void PartsEditorView::aboutToSave() {
 	if(m_item) {
-		FSvgRenderer *renderer = new FSvgRenderer();
-		if(renderer->load(m_item->flatSvgFilePath(), false)) {
-			QRectF svgViewBox = renderer->viewBoxF();
-			QSizeF sceneViewBox = renderer->defaultSizeF();
+		FSvgRenderer renderer;
+		if(renderer.load(m_item->flatSvgFilePath(), false)) {
+			QRectF svgViewBox = renderer.viewBoxF();
+			QSizeF sceneViewBox = renderer.defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
 
 			QString connectorsLayerId = findConnectorLayerId(svgDom);
