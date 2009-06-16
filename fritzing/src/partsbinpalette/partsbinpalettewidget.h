@@ -35,6 +35,7 @@ $Date$
 #include "../modelpart.h"
 #include "../waitpushundostack.h"
 #include "../abstractimagebutton.h"
+#include "../utils/bundler.h"
 
 class ImageButton : public AbstractImageButton {
 public:
@@ -49,7 +50,7 @@ protected:
 	}
 };
 
-class PartsBinPaletteWidget : public QFrame {
+class PartsBinPaletteWidget : public QFrame, public Bundler {
 	Q_OBJECT
 
 	public:
@@ -104,6 +105,7 @@ class PartsBinPaletteWidget : public QFrame {
 		void toListView();
 		bool removeSelected();
 		bool saveAs();
+		void saveBundledBin();
 		void undoStackCleanChanged(bool isClean);
 		void newBin();
 		void openCoreBin();
@@ -150,6 +152,8 @@ class PartsBinPaletteWidget : public QFrame {
 		QToolButton* newToolButton(const QString& btnObjName, const QString& imgPath = ___emptyString___, const QString &text = ___emptyString___);
 		QAction* newTitleAction(const QString &text);
 
+		void loadBundledAux(QDir &unzipDir);
+
 	protected:
 		PaletteModel *m_model;
 		ReferenceModel *m_refModel;
@@ -162,6 +166,7 @@ class PartsBinPaletteWidget : public QFrame {
 
 		//class SimpleEditableLabelWidget *m_binTitle;
 		QString m_title;
+		bool m_isDirty;
 
 		PartsBinView *m_currentView;
 		class PartsBinIconView *m_iconView;
@@ -180,6 +185,7 @@ class PartsBinPaletteWidget : public QFrame {
 		QAction *m_closeBinAction;
 		QAction *m_saveAction;
 		QAction *m_saveAsAction;
+		QAction *m_saveAsBundledAction;
 		QAction *m_renameAction;
 
 		QAction *m_addPartToMeAction;

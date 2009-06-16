@@ -240,7 +240,7 @@ void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 		int tabIdx = tw->indexOf(w);
 		tw->setTabText(tabIdx, w->title()+(dirty? " *": ""));
 	} else {
-		qWarning() << tr("Couldn't set the bin '%1' as dirty").arg(w->title());
+		qWarning() << tr("BinManager::setDirtyTab: Couldn't set the bin '%1' as dirty").arg(w->title());
 	}
 }
 
@@ -267,7 +267,9 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 				this,
 				tr("Select a Fritzing file to open"),
 				m_defaultSaveFolder,
-				tr("Fritzing Bin (*%1)").arg(FritzingBinExtension) );
+				tr("Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)")
+				.arg(FritzingBinExtension).arg(FritzingBundledBinExtension)
+		);
 		if (fileName.isNull()) return false;
 	}
 	PartsBinPaletteWidget* bin = NULL;
@@ -528,4 +530,8 @@ QList<QAction*> BinManager::openedBinsActions(const QString &moduleId) {
 
 void BinManager::openBin(const QString &filename) {
 	m_tabWidgets.keys()[0]->openNewBin(filename);
+}
+
+MainWindow* BinManager::mainWindow() {
+	return m_mainWindow;
 }

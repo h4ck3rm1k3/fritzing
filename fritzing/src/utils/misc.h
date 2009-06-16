@@ -83,6 +83,7 @@ bool isParent(QObject * candidateParent, QObject * candidateChild);
 
 static const QString FritzingSketchExtension(".fz");
 static const QString FritzingBinExtension(".fzb");
+static const QString FritzingBundledBinExtension(".fzbz");
 static const QString FritzingPartExtension(".fzp");
 static const QString FritzingBundledPartExtension(".fzpz");
 static const QString FritzingModuleExtension(".fzm");

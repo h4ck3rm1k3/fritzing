@@ -895,13 +895,23 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 #define ZIP_SVG  QString("svg.")
 
 void MainWindow::saveBundledSketch() {
+	bool wasModified = isWindowModified();
+	saveBundledSketchOrBin(
+		m_fileName, FritzingBundleExtension, this,
+		m_sketchModel->root()->getAllNonCoreParts()
+	);
+	setWindowModified(wasModified);
+	setTitle();
+}
+
+void MainWindow::saveBundledSketchOrBin(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave) {
 	QString fileExt;
-	QString path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName()+"z";
+	QString path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName()+"z";
 	QString bundledFileName = FApplication::getSaveFileName(
 			this,
 			tr("Specify a file name"),
 			path,
-			tr("Fritzing (*%1)").arg(FritzingBundleExtension),
+			tr("Fritzing (*%1)").arg(extension),
 			&fileExt
 		  );
 
@@ -909,8 +919,8 @@ void MainWindow::saveBundledSketch() {
 
 	FileProgressDialog progress("Saving...", 0, this);
 
-	if(!alreadyHasExtension(bundledFileName, FritzingBundleExtension)) {
-		bundledFileName += FritzingBundleExtension;
+	if(!alreadyHasExtension(bundledFileName, extension)) {
+		bundledFileName += extension;
 	}
 
 	QApplication::processEvents();
@@ -922,17 +932,13 @@ void MainWindow::saveBundledSketch() {
 	QString aux = QFileInfo(bundledFileName).fileName();
 	QString destSketchPath = // remove the last "z" from the extension
 			destFolder.path()+"/"+aux.left(aux.size()-1);
-	DebugDialog::debug("saving sketch temporarily to "+destSketchPath);
+	DebugDialog::debug("saving entity temporarily to "+destSketchPath);
 
-	bool wasModified = isWindowModified();
-	QString prevFileName = m_fileName;
+	QString prevFileName = filename;
 	QApplication::processEvents();
-	saveAsAux(destSketchPath);
-	m_fileName = prevFileName;
-	setWindowModified(wasModified);
-	setTitle();
+	bundler->saveAsAux(destSketchPath);
+	filename = prevFileName;
 
-	QList<ModelPart*> partsToSave = m_sketchModel->root()->getAllNonCoreParts();
 	foreach(ModelPart* mp, partsToSave) {
 		saveBundledAux(mp, destFolder);
 	}
@@ -943,7 +949,7 @@ void MainWindow::saveBundledSketch() {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
-			tr("Unable to export %1 to shareable sketch").arg(bundledFileName)
+			tr("Unable to export %1 as shareable").arg(bundledFileName)
 		);
 	}
 
@@ -951,6 +957,10 @@ void MainWindow::saveBundledSketch() {
 }
 
 void MainWindow::loadBundledSketch(const QString &fileName) {
+	loadBundledSketchOrBin(fileName, this, /*addToBin*/true);
+}
+
+void MainWindow::loadBundledSketchOrBin(const QString &fileName, Bundler* bundler, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
 	createFolderAnCdIntoIt(destFolder, getRandText());
@@ -960,7 +970,7 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
-			tr("Unable to open shareable sketch %1").arg(fileName)
+			tr("Unable to open shareable %1").arg(fileName)
 		);
 
 		// gotta return now, or loadBundledSketchAux will crash
@@ -969,11 +979,23 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 
 	QDir unzipDir(unzipDirPath);
 
-	moveToPartsFolder(unzipDir,this);
-	// the sketch itself
-	loadBundledSketchAux(unzipDir, this);
+	moveToPartsFolder(unzipDir,this,addToBin);
+	// the bundled itself
+	bundler->loadBundledAux(unzipDir);
 
 	rmdir(unzipDirPath);
+}
+
+void MainWindow::loadBundledAux(QDir &unzipDir) {
+	QStringList namefilters;
+	namefilters << "*"+FritzingSketchExtension;
+
+	this->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false);
+	this->setWindowModified(true);
+
+	m_alienPartsMsg = tr("Do you want to keep the parts that were loaded with this shareable sketch %1?");
+
+	closeIfEmptySketch(this);
 }
 
 void MainWindow::loadBundledPartFromWeb() {
@@ -1118,18 +1140,6 @@ QList<ModelPart*> MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw, 
 	}
 
 	return retval;
-}
-
-void MainWindow::loadBundledSketchAux(QDir &unzipDir, MainWindow* mw) {
-	QStringList namefilters;
-	namefilters << "*"+FritzingSketchExtension;
-
-	mw->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false);
-	mw->setWindowModified(true);
-
-	m_alienPartsMsg = tr("Do you want to keep the parts that were loaded with this shareable sketch %1?");
-
-	closeIfEmptySketch(mw);
 }
 
 void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolder) {

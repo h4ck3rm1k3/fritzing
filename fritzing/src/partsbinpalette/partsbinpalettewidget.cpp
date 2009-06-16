@@ -299,6 +299,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	m_closeBinAction = new QAction(tr("Close"),this);
 	m_saveAction = new QAction(tr("Save"),this);
 	m_saveAsAction = new QAction(tr("Save As..."),this);
+	m_saveAsBundledAction = new QAction(tr("Save As Shareable..."),this);
 	m_renameAction = new QAction(tr("Rename..."),this);
 
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBin()));
@@ -307,6 +308,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	connect(m_closeBinAction, SIGNAL(triggered()),this, SLOT(closeBin()));
 	connect(m_saveAction, SIGNAL(triggered()),this, SLOT(save()));
 	connect(m_saveAsAction, SIGNAL(triggered()),this, SLOT(saveAs()));
+	connect(m_saveAsBundledAction, SIGNAL(triggered()),this, SLOT(saveBundledBin()));
 	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
 
 	QMenu *menu = new QMenu(this);
@@ -318,6 +320,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	menu->addAction(m_closeBinAction);
 	menu->addAction(m_saveAction);
 	menu->addAction(m_saveAsAction);
+	menu->addAction(m_saveAsBundledAction);
 	menu->addAction(m_renameAction);
 	m_binMenuButton->setMenu(menu);
 }
@@ -403,6 +406,25 @@ bool PartsBinPaletteWidget::saveAs() {
     return true;
 }
 
+void PartsBinPaletteWidget::saveBundledBin() {
+	bool wasModified = m_isDirty;
+	m_manager->mainWindow()->saveBundledSketchOrBin(
+		m_fileName, FritzingBundledBinExtension, this,
+		m_model->root()->getAllNonCoreParts()
+	);
+	setDirty(wasModified);
+	saveAsLastBin();
+}
+
+void PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir) {
+	QStringList namefilters;
+	namefilters << "*"+FritzingBinExtension;
+
+	this->load(unzipDir.entryInfoList(namefilters)[0].filePath());
+	setDirty(true);
+}
+
+
 bool PartsBinPaletteWidget::open(QString fileName) {
 	QFile file(fileName);
 	if (!file.exists()) {
@@ -422,8 +444,13 @@ bool PartsBinPaletteWidget::open(QString fileName) {
 
     file.close();
 
-    load(fileName);
-    saveAsLastBin();
+    if(fileName.endsWith(FritzingBinExtension)) {
+    	load(fileName);
+    	saveAsLastBin();
+    	m_isDirty = false;
+    } else if(fileName.endsWith(FritzingBundledBinExtension)) {
+    	m_manager->mainWindow()->loadBundledSketchOrBin(fileName,this,false);
+    }
 
     return true;
 }
@@ -469,8 +496,8 @@ bool PartsBinPaletteWidget::beforeClosing() {
 		QMessageBox::StandardButton reply;
 		QMessageBox messageBox(
 				tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
-				tr("Do you want to save the changes you made in this bin \"%1\"?")
-					.arg(QFileInfo(m_fileName).baseName()),
+				tr("Do you want to save the changes you made in the bin \"%1\"?")
+					.arg(title()),
 				QMessageBox::Warning,
 				QMessageBox::Yes,
 				QMessageBox::No,
@@ -488,8 +515,7 @@ bool PartsBinPaletteWidget::beforeClosing() {
      		retval = save();
     	} else if (reply == QMessageBox::No) {
     		retval = true;
-        }
-     	else {
+        } else {
          	retval = false;
         }
 	} else {
@@ -668,6 +694,7 @@ void PartsBinPaletteWidget::itemMoved() {
 
 void PartsBinPaletteWidget::setDirty(bool dirty) {
 	m_manager->setDirtyTab(this,dirty);
+	m_isDirty = dirty;
 }
 
 const QString &PartsBinPaletteWidget::fileName() {

@@ -22,7 +22,8 @@ src/utils/autoclosemessagebox.h \
 src/utils/resizehandle.h \
 src/utils/bendpointaction.h \
 src/utils/fileprogressdialog.h \
-src/utils/misc.h 
+src/utils/misc.h \
+src/utils/bundler.h
  
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \

@@ -35,8 +35,9 @@ $Date$
 
 #include "waitpushundostack.h"
 #include "utils/misc.h"
+#include "utils/bundler.h"
 
-class FritzingWindow : public QMainWindow {
+class FritzingWindow : public QMainWindow, public Bundler {
 	Q_OBJECT
 	public:
 		FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent = 0, Qt::WFlags f = 0);

@@ -64,8 +64,6 @@ struct SketchDescriptor {
 	QString src;
 };
 
-
-
 #define SketchIndex QHash<QString /*id*/, SketchDescriptor*>
 
 bool sortPartList(ItemBase * b1, ItemBase * b2);
@@ -95,6 +93,9 @@ public:
 	void clearFileProgressDialog();
 
 	const QString &selectedModuleID();
+
+	void saveBundledSketchOrBin(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
+	void loadBundledSketchOrBin(const QString &filename, Bundler *bundler, bool addToBin);
 
 public:
 	static void initExportConstants();
@@ -282,7 +283,7 @@ protected:
 	void hideShowTraceMenu();
 
 	QList<ModelPart*> moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin=true);
-	void loadBundledSketchAux(QDir &unzipDir, MainWindow* mw);
+	void loadBundledAux(QDir &unzipDir);
 	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 	ModelPart* copyToPartsFolder(const QFileInfo& file, bool addToBin=true, const QString &destFolder="contrib");
 

@@ -80,6 +80,8 @@ class BinManager : public QFrame {
 		const QString &getSelectedModuleIDFromSketch();
 		QList<QAction*> openedBinsActions(const QString &moduleId);
 
+		MainWindow* mainWindow();
+
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
 		void widgetChangedTabParent(
