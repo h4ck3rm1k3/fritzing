@@ -1013,9 +1013,8 @@ ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	}
 
 	QDir unzipDir(unzipDirPath);
-	MainWindow *mw = this;
 
-	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,mw,addToBin);
+	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
 	Q_ASSERT(mps.count()==1); // if this fails, that means that the bundled was wrong
 
 	rmdir(unzipDirPath);
@@ -1101,20 +1100,21 @@ void MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
 
 QList<ModelPart*> MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin) {
 	QStringList namefilters;
+	QList<ModelPart*> retval;
 
 	Q_ASSERT(mw);
+	if(mw) {
+		namefilters << ZIP_SVG+"*";
+		foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // svg files
+			mw->copyToSvgFolder(file);
+		}
 
-	namefilters << ZIP_SVG+"*";
-	foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // svg files
-		mw->copyToSvgFolder(file);
-	}
+		namefilters.clear();
+		namefilters << ZIP_PART+"*";
 
-	namefilters.clear();
-	namefilters << ZIP_PART+"*";
-
-	QList<ModelPart*> retval;
-	foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // part files
-		retval << mw->copyToPartsFolder(file,addToBin);
+		foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // part files
+			retval << mw->copyToPartsFolder(file,addToBin);
+		}
 	}
 
 	return retval;

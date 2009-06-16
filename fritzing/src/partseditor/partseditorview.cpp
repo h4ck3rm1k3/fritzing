@@ -115,32 +115,33 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 	}
 	PartsEditorPaletteItem *paletteItem = dynamic_cast<PartsEditorPaletteItem*>(paletteItemAux);
 	Q_ASSERT(paletteItem);
+	if(paletteItem) {
+		modelPart->initConnectors();    // is a no-op if connectors already in place
 
-	modelPart->initConnectors();    // is a no-op if connectors already in place
+		QString layerFileName = getLayerFileName(modelPart);
+		if(layerFileName != ___emptyString___) {
+			if(paletteItem->createSvgPath(modelPart->modelPartShared()->path(), layerFileName)) {
+				paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
+				ViewLayer::ViewLayerID viewLayerID =
+					ViewLayer::viewLayerIDFromXmlString(
+						findConnectorLayerId(paletteItem->svgDom())
+					);
+				if(viewLayerID == ViewLayer::UnknownLayer) {
+					viewLayerID = getViewLayerID(modelPart);
+				}
+				addDefaultLayers();
 
-	QString layerFileName = getLayerFileName(modelPart);
-	if(layerFileName != ___emptyString___) {
-		if(paletteItem->createSvgPath(modelPart->modelPartShared()->path(), layerFileName)) {
-			paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
-			ViewLayer::ViewLayerID viewLayerID =
-				ViewLayer::viewLayerIDFromXmlString(
-					findConnectorLayerId(paletteItem->svgDom())
-				);
-			if(viewLayerID == ViewLayer::UnknownLayer) {
-				viewLayerID = getViewLayerID(modelPart);
-			}
-			addDefaultLayers();
-
-			if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
-				addToScene(paletteItemAux, paletteItemAux->viewLayerID());
-				// layers are not needed on the parts editor (so far)
-				/*paletteItem->loadLayerKin(m_viewLayers);
-				for (int i = 0; i < paletteItem->layerKin().count(); i++) {
-					LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
-					this->scene()->addItem(lkpi);
-					lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
-				}*/
-				return paletteItemAux;
+				if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+					addToScene(paletteItemAux, paletteItemAux->viewLayerID());
+					// layers are not needed on the parts editor (so far)
+					/*paletteItem->loadLayerKin(m_viewLayers);
+					for (int i = 0; i < paletteItem->layerKin().count(); i++) {
+						LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
+						this->scene()->addItem(lkpi);
+						lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+					}*/
+					return paletteItemAux;
+				}
 			}
 		}
 	}
@@ -340,7 +341,6 @@ QString PartsEditorView::getOrCreateViewFolderInTemp() {
 	QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 
 	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
-		//DebugDialog::debug("<<<< "+m_tempFolder.absolutePath()+"/"+viewFolder);
 		Q_ASSERT(m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder));
 	}
 
@@ -382,7 +382,7 @@ ViewLayer::ViewLayerID PartsEditorView::connectorLayerId() {
 
 QString PartsEditorView::terminalIdForConnector(const QString &connId) {
 	//Q_ASSERT(m_item)
-	
+
 	if (m_item == NULL) return "";
 
 	QString result = "";
@@ -896,7 +896,7 @@ bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &
 
 QString PartsEditorView::svgIdForConnector(const QString &connId) {
 	//Q_ASSERT(m_item)
-	
+
 	if (m_item == NULL) return "";
 
 	foreach(Connector* conn, m_item->connectors()) {
@@ -987,13 +987,21 @@ void PartsEditorView::addNewTerminalPoints(
 		QString connId = citem->connector()->connectorSharedID();
 		TerminalPointItem *tp = citem->terminalPointItem();
 		Q_ASSERT(tp);
-		QRectF tpointRect(tp->mappedPoint(), QPointF(0,0));
-		QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
+		if(tp) {
+			QRectF tpointRect(tp->mappedPoint(), QPointF(0,0));
+			QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
 
-		qreal halfTPSize = 0.001; // a tiny rectangle
-		svgTpRect.setSize(QSizeF(halfTPSize*2,halfTPSize*2));
+			qreal halfTPSize = 0.001; // a tiny rectangle
+			svgTpRect.setSize(QSizeF(halfTPSize*2,halfTPSize*2));
 
-		addRectToSvg(svgDom,connId+"terminal",svgTpRect, connectorsLayerId);
+			addRectToSvg(svgDom,connId+"terminal",svgTpRect, connectorsLayerId);
+		} else {
+			qWarning() << tr(
+				"Parts Editor: couldn't save terminal "
+				"point for connector %1 in %2 view")
+				.arg(citem->connector()->connectorSharedID())
+				.arg(ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier));
+		}
 	}
 }
 
