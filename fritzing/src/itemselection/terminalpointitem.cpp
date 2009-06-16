@@ -185,6 +185,7 @@ void TerminalPointItemPrivate::hoverEnterEvent(QGraphicsSceneHoverEvent *event) 
 	if(isVisible()) {
 		if(m_editable) {
 			setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Hover]);
+			setCursor(QCursor(Qt::SizeAllCursor));
 		} else {
 			setCursor(QCursor(Qt::ForbiddenCursor));
 		}

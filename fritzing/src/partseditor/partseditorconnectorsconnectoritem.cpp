@@ -33,12 +33,15 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 qreal PartsEditorConnectorsConnectorItem::MinWidth = 1;
 qreal PartsEditorConnectorsConnectorItem::MinHeight = MinWidth;
 
+#define NON_DEFINED_TERMINAL_POINT QPointF(-1,-1)
+
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint)
 	: PartsEditorConnectorItem(conn, attachedTo)
 {
 	init(true);
 
 	m_inFileDefined = true;
+	m_terminalPoint = NON_DEFINED_TERMINAL_POINT;
 	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
 }
@@ -55,11 +58,9 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 
 	m_inFileDefined = false;
 	m_centerHasChanged = false;
-	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
-
-	m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint);
-	m_terminalPointItem->updatePoint();
+	m_terminalPoint = NON_DEFINED_TERMINAL_POINT;
+	m_terminalPointItem = newTerminalPointItem();
 }
 
 PartsEditorConnectorsConnectorItem::~PartsEditorConnectorsConnectorItem()
@@ -67,6 +68,14 @@ PartsEditorConnectorsConnectorItem::~PartsEditorConnectorsConnectorItem()
 	if (m_handlers) {
 		delete m_handlers;
 	}
+}
+
+TerminalPointItem* PartsEditorConnectorsConnectorItem::newTerminalPointItem() {
+	TerminalPointItem * terminalPointItem = m_terminalPoint == NON_DEFINED_TERMINAL_POINT?
+			new TerminalPointItem(this,m_showingTerminalPoint):
+			new TerminalPointItem(this,m_showingTerminalPoint,m_terminalPoint);
+	terminalPointItem->updatePoint();
+	return terminalPointItem;
 }
 
 void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
@@ -101,7 +110,7 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 		// isResizableSignal MUST be connected with Qt::DirectConnection
 		connect(m_handlers, SIGNAL(isResizableSignal(bool &)),
 				this, SLOT(isResizableSlot(bool &)),
-				Qt::DirectConnection);						
+				Qt::DirectConnection);
 	} else {
 		m_handlers = NULL;
 	}
@@ -225,14 +234,14 @@ void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 			m_centerHasChanged = false;
 		}
 		m_terminalPointItem->doSetVisible(show);
+	} else {
+		m_terminalPointItem = newTerminalPointItem();
 	}
 
-	// if we're showing the rerminal points, then the connector
+	// if we're showing the terminal points, then the connector
 	// is not movable
 	setFlag(QGraphicsItem::ItemIsMovable,!show);
-	if (m_terminalPointItem) {
-		m_terminalPointItem->setMovable(show);
-	}
+	m_terminalPointItem->setMovable(show);
 }
 
 bool PartsEditorConnectorsConnectorItem::isShowingTerminalPoint() {
@@ -293,7 +302,9 @@ void PartsEditorConnectorsConnectorItem::doPrepareGeometryChange() {
 
 void PartsEditorConnectorsConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
 	Q_UNUSED(event);
-	setCursor(QCursor(Qt::SizeAllCursor));
+	if(!m_showingTerminalPoint) {
+		setCursor(QCursor(Qt::SizeAllCursor));
+	}
 }
 
 void PartsEditorConnectorsConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {

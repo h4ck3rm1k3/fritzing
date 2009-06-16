@@ -86,6 +86,7 @@ protected:
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 	void paintErrorIcon(QPainter *painter);
+	TerminalPointItem* newTerminalPointItem();
 
 	bool m_showErrorIcon;
 	bool m_showingTerminalPoint; // important only if m_showsTerminalPoints == true
