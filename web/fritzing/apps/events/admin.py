@@ -23,20 +23,21 @@ class EventWhereInLineForm(forms.ModelForm):
 
 class EventWhereInline(admin.TabularInline):
     model = models.EventWhere
-    #form = EventWhereInLineForm
     
+class EventLinkInline(admin.TabularInline):
+    model = models.EventLink
 
 class EventForm(forms.ModelForm):
     class Meta:
         model = models.Event
         
     body = forms.CharField(widget=TinyMCE(attrs={'cols': 30, 'rows': 30}))
-    description = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'size': 94}))
+    description = forms.CharField(widget=forms.TextInput(attrs={'size': 94}))
 
 
 class EventAdmin(dregni.admin.EventAdmin):
     form = EventForm
-    inlines = [EventWhereInline]
+    inlines = [EventWhereInline, EventLinkInline]
     fieldsets = (
         (None, {
             'fields': (('title', 'slug'), 'description', 'body', 'tags'),

@@ -7,9 +7,10 @@
 	</p>
 	
 	{% if event.where %}
-			<span class="location"><a target="_blank" href="{{ event.where.url }}">{{ event.where.text }}</a></span>
+	<span class="location">
+		{% if event.where.url %}<a target="_blank" href="{{ event.where.url }}">{% endif %}{{ event.where.text }}{% if event.where.url %}</a>{% endif %}
+	</span>
 	{% endif %} 
-
 	
 	<div>
 		{% if event.end_date %} From {% else %} On {% endif %}
@@ -21,6 +22,12 @@
 		{% endif %}
 	</div>
 	
+	{% if event.link %}
+	<div>
+		<a target="_blank" href="{{ event.link.url }}">{{ event.link.text }}</a>
+	</div>
+	{% endif %}
+	
 	<div id="parent-fieldname-text" class="event_body">
 		{{ event.body|safe }}
 	</div>
@@ -28,9 +35,11 @@
 		<div class="date {% if event.has_past %}past{% else %}future{% endif %}">{{ event.start_date|date:"M d" }}</div>
 		<div class="header">
 			<a class="state-published url title" href="{% url event_details event.slug %}">{{ event.title }}</a>
-			{% if event.where %}
-					(<span class="location"><a target="_blank" href="{{ event.where.url }}">{{ event.where.text }}</a></span>)
-			{% endif %} 
+				{% if event.where %}
+						<span class="location">
+							({% if event.where.url %}<a target="_blank" href="{{ event.where.url }}">{% endif %}{{ event.where.text }}{% if event.where.url %}</a>{% endif %})
+						</span>
+				{% endif %} 
 			<div>
 				<abbr class="datetext" title="{{ event.start_date }}{%if event.start_time %} {{ event.start_time }}{% endif %}">
 				{{ event.start_date|date:"M d" }}{%if event.start_time %}, {{ event.start_time|time:"H:i" }}{% endif %}</abbr>
@@ -38,7 +47,7 @@
 				<abbr class="datetext" title="{{ event.end_date }}{%if event.end_time %} {{ event.end_time }}{% endif %}">
 				{{ event.end_date|date:"M d" }}{%if event.end_time %}, {{ event.end_time|time:"H:i" }}{% endif %}</abbr>
 				{% endif %}
-			</div>		
+			</div>
 			<div class="description">{{ event.description }}</div>
 		</div>	
 {% endif %}
