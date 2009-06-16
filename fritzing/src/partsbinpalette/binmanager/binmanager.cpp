@@ -29,6 +29,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QtDebug>
 
 #include "binmanager.h"
 #include "stacktabwidget.h"
@@ -235,9 +236,12 @@ void BinManager::load(const QString& filename) {
 void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 	w->setWindowModified(dirty);
 	QTabWidget* tw = m_tabWidgets[w];
-	Q_ASSERT(tw);
-	int tabIdx = tw->indexOf(w);
-	tw->setTabText(tabIdx, w->title()+(dirty? " *": ""));
+	if(tw) {
+		int tabIdx = tw->indexOf(w);
+		tw->setTabText(tabIdx, w->title()+(dirty? " *": ""));
+	} else {
+		qWarning() << tr("Couldn't set the bin '%1' as dirty").arg(w->title());
+	}
 }
 
 void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) {
@@ -326,24 +330,26 @@ void BinManager::currentChanged(StackTabWidget *tw, int index) {
 }
 
 void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
-	Q_ASSERT(bin);
-
-	if(m_currentBin != bin) {
-		QString style = m_mainWindow->styleSheet();
-		StackTabBar *currTabBar = NULL;
-		if(m_currentBin && m_tabWidgets[m_currentBin]) {
-			currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
-			currTabBar->setProperty("current","false");
-			currTabBar->setStyleSheet("");
-			currTabBar->setStyleSheet(style);
+	if(bin) {
+		if(m_currentBin != bin) {
+			QString style = m_mainWindow->styleSheet();
+			StackTabBar *currTabBar = NULL;
+			if(m_currentBin && m_tabWidgets[m_currentBin]) {
+				currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
+				currTabBar->setProperty("current","false");
+				currTabBar->setStyleSheet("");
+				currTabBar->setStyleSheet(style);
+			}
+			if(m_tabWidgets[bin]) {
+				m_currentBin = bin;
+				currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
+				currTabBar->setProperty("current","true");
+				currTabBar->setStyleSheet("");
+				currTabBar->setStyleSheet(style);
+			}
 		}
-		if(m_tabWidgets[bin]) {
-			m_currentBin = bin;
-			currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
-			currTabBar->setProperty("current","true");
-			currTabBar->setStyleSheet("");
-			currTabBar->setStyleSheet(style);
-		}
+	} else {
+		qWarning() << tr("Cannot set a NULL bin as the current one");
 	}
 }
 

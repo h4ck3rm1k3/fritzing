@@ -111,7 +111,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 
 }
 
-bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & modelParts) 
+bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & modelParts)
 {
    	QHash<long, ModelPart *> partHash;
    	QDomElement instance = instances.firstChildElement("instance");
@@ -189,9 +189,9 @@ ModelPart * ModelBase::addPart(QString newPartPath, bool addToReference) {
 
 // TODO Mariano: this function should never get called. Make pure virtual
 bool ModelBase::addPart(ModelPart * modelPart, bool update) {
-        Q_UNUSED(modelPart);
-        Q_UNUSED(update);
-        Q_ASSERT(false);
+	Q_UNUSED(modelPart);
+	Q_UNUSED(update);
+	Q_ASSERT(false);
 	return false;
 }
 
@@ -226,7 +226,7 @@ void ModelBase::save(QXmlStreamWriter & streamWriter, bool asPart) {
     }
 }
 
-bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QList<long> *, QString > * externalConnectors) 
+bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QList<long> *, QString > * externalConnectors)
 {
 	m_referenceModel = refModel;
 
@@ -271,7 +271,7 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 	return loadInstances(instances, modelParts);
 }
 
-void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew) 
+void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew)
 {
 	QDomElement instance = parentElement.firstChildElement(childName);
 	while (!instance.isNull()) {
@@ -319,7 +319,7 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 }
 
 
-void ModelBase::renewExternalIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QList<long> *, QString > * externalConnectors) 
+void ModelBase::renewExternalIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QList<long> *, QString > * externalConnectors)
 {
 	QDomElement instance = parentElement.firstChildElement(childName);
 	while (!instance.isNull()) {

@@ -78,8 +78,8 @@ void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
 bool ConnectorRectangle::isResizable() {
 	bool resizable;
 	emit isResizableSignal(resizable);				// must be connected via Qt::DirectConnection
-	return resizable;  
-	
+	return resizable;
+
 }
 
 void ConnectorRectangle::paint(QPainter *painter) {
@@ -147,7 +147,7 @@ QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 		case Qt::BottomLeftCorner:
 			cornerPoint=rect.bottomLeft();
 			break;
-		default: Q_ASSERT(false);
+		default: Q_ASSERT(false); // this should not happen
 	}
 	return QRectF(cornerPoint-offset,cornerPoint+offset);
 }

@@ -26,6 +26,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 
 #include <QSizeGrip>
 #include <QStatusBar>
+#include <QtDebug>
 
 #include "dockmanager.h"
 #include "navigator/triplenavigator.h"
@@ -242,11 +243,13 @@ void DockManager::addBottomMargin(FDockWidget* dock) {
 
 
 void DockManager::dockMarginAux(FDockWidget* dock, const QString &name, const QString &style) {
-	Q_ASSERT(dock);
-
-	dock->widget()->setObjectName(name);
-	dock->widget()->setStyleSheet(style);
-	dock->setStyleSheet(dock->styleSheet());
+	if(dock) {
+		dock->widget()->setObjectName(name);
+		dock->widget()->setStyleSheet(style);
+		dock->setStyleSheet(dock->styleSheet());
+	} else {
+		qWarning() << tr("Couldn't get the dock widget");
+	}
 
 }
 

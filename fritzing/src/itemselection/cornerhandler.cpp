@@ -155,7 +155,7 @@ Qt::CursorShape CornerHandler::cursorForCorner(Qt::Corner corner) {
 		case Qt::BottomLeftCorner:
 			cursorShape = Qt::SizeBDiagCursor;
 			break;
-		default: Q_ASSERT(false);
+		default: Q_ASSERT(false); // this should not happen
 	}
 	return cursorShape;
 }

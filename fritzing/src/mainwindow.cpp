@@ -1016,7 +1016,7 @@ ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	MainWindow *mw = this;
 
 	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,mw,addToBin);
-	Q_ASSERT(mps.count()==1);
+	Q_ASSERT(mps.count()==1); // if this fails, that means that the bundled was wrong
 
 	rmdir(unzipDirPath);
 

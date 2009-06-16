@@ -93,9 +93,12 @@ void StackTabBar::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 bool StackTabBar::mimeIsAction(const QMimeData* m, const QString& action) {
-	Q_ASSERT(m);
-	QStringList formats = m->formats();
-	return formats.contains("action") && (m->data("action") == action);
+	if(m) {
+		QStringList formats = m->formats();
+		return formats.contains("action") && (m->data("action") == action);
+	} else {
+		return false;
+	}
 }
 
 void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
