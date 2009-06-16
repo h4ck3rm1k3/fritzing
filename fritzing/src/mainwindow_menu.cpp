@@ -149,11 +149,9 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	FileProgressDialog * fileProgressDialog = exportProgress();
 
 	DebugDialog::debug(fileExt+" selected to export");
-	#ifdef Q_WS_X11
-		if(!alreadyHasExtension(fileName)) {
-			fileName += suffix;
-		}
-	#endif
+	if(!alreadyHasExtension(fileName, suffix)) {
+		fileName += suffix;
+	}
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
@@ -304,11 +302,10 @@ void MainWindow::doExport() {
 		} else {
 			FileProgressDialog * fileProgressDialog = exportProgress();
 			DebugDialog::debug(fileExt+" selected to export");
-			#ifdef Q_WS_X11
-				if(!alreadyHasExtension(fileName)) {
-					fileName += actionType;
-				}
-			#endif
+			if(!alreadyHasExtension(fileName, actionType)) {
+				fileName += actionType;
+			}
+
 
 			if(filePrintFormats.contains(fileExt)) { // PDF or PS
 				QPrinter printer(QPrinter::HighResolution);
@@ -2359,11 +2356,9 @@ void MainWindow::exportBOM() {
 
 	FileProgressDialog * fileProgressDialog = exportProgress();
     DebugDialog::debug(fileExt+" selected to export");
-    #ifdef Q_WS_X11
-        if(!alreadyHasExtension(fileName)) {
-			fileName += bomActionType;
-        }
-    #endif
+    if(!alreadyHasExtension(fileName, bomActionType)) {
+		fileName += bomActionType;
+    }
 
     QFile fp( fileName );
     fp.open(QIODevice::WriteOnly);
