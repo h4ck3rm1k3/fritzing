@@ -639,6 +639,8 @@ void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
 		m_undoStack->push(new QUndoCommand("Parts bin: part removed"));
 		removePart(moduleID);
 	}
+
+	setDirty();
 }
 
 void PartsBinPaletteWidget::newBin() {
