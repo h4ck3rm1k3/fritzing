@@ -416,12 +416,17 @@ void PartsBinPaletteWidget::saveBundledBin() {
 	saveAsLastBin();
 }
 
-void PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir) {
+void PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
 	QStringList namefilters;
 	namefilters << "*"+FritzingBinExtension;
 
 	this->load(unzipDir.entryInfoList(namefilters)[0].filePath());
-	setDirty(true);
+	foreach(ModelPart* mp, mps) {
+		if(mp->isAlien()) { // double check
+			m_alienParts << mp->moduleID();
+		}
+	}
+	m_fileName = ___emptyString___;
 }
 
 

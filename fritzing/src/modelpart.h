@@ -104,6 +104,7 @@ public:
 
 	bool isValid();
 
+	QList<ModelPart*> getAllParts();
 	QList<ModelPart*> getAllNonCoreParts();
 	QList<SvgAndPartFilePath> getAvailableViewFiles();
 	bool hasViewID(long id);

@@ -979,14 +979,16 @@ void MainWindow::loadBundledSketchOrBin(const QString &fileName, Bundler* bundle
 
 	QDir unzipDir(unzipDirPath);
 
-	moveToPartsFolder(unzipDir,this,addToBin);
+	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
 	// the bundled itself
-	bundler->loadBundledAux(unzipDir);
+	bundler->loadBundledAux(unzipDir,mps);
 
 	rmdir(unzipDirPath);
 }
 
-void MainWindow::loadBundledAux(QDir &unzipDir) {
+void MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
+	Q_UNUSED(mps);
+
 	QStringList namefilters;
 	namefilters << "*"+FritzingSketchExtension;
 

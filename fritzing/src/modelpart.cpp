@@ -454,6 +454,18 @@ bool ModelPart::isValid() {
 	return m_valid;
 }
 
+QList<ModelPart*> ModelPart::getAllParts() {
+	QList<ModelPart*> retval;
+	QList<QObject *>::const_iterator i;
+	for (i = children().constBegin(); i != children().constEnd(); ++i) {
+		ModelPart* mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+		retval << mp;
+	}
+
+	return retval;
+}
+
 QList<ModelPart*> ModelPart::getAllNonCoreParts() {
 	QList<ModelPart*> retval;
 	QList<QObject *>::const_iterator i;

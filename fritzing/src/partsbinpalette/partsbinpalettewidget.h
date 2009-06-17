@@ -152,7 +152,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QToolButton* newToolButton(const QString& btnObjName, const QString& imgPath = ___emptyString___, const QString &text = ___emptyString___);
 		QAction* newTitleAction(const QString &text);
 
-		void loadBundledAux(QDir &unzipDir);
+		void loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 	protected:
 		PaletteModel *m_model;
