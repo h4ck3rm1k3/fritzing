@@ -273,15 +273,31 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 		if (fileName.isNull()) return false;
 	}
 	PartsBinPaletteWidget* bin = NULL;
+	bool createNewOne = false;
 	if(m_openedBins.contains(fileName)) {
 		bin = m_openedBins[fileName];
-		m_tabWidgets[bin]->setCurrentWidget(bin);
+		if(m_tabWidgets[bin]) {
+			m_tabWidgets[bin]->setCurrentWidget(bin);
+		} else {
+			m_openedBins.remove(fileName);
+			createNewOne = true;
+		}
 	} else {
+		createNewOne = true;
+	}
+
+	if(createNewOne) {
 		bin = newBin();
 		if(bin->open(fileName)) {
 			m_openedBins[fileName] = bin;
 			insertBin(bin, tb->currentIndex()+1, tb);
-			bin->saveAsLastBin();
+
+			// to force the user to take a decision of what to do with the imported parts
+			if(fileName.endsWith(FritzingBundledBinExtension)) {
+				setDirtyTab(bin);
+			} else {
+				bin->saveAsLastBin();
+			}
 		}
 	}
 	setAsCurrentBin(bin);
