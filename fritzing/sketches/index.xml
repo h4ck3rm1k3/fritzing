@@ -22,6 +22,8 @@
         <sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator_7800series.fz"/>
         <sketch id="VoltageRegulatorSwitch" name="Voltage Regulator with Switch" src="core/VoltageRegulator_with_switch.fz"/>
         <sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
+        <sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fz"/>
+        <sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fz"/>
 	</sketches>
 	<categories>
 		<category name="Digital">
@@ -40,6 +42,7 @@
 				<sketch id="AnalogInputPot"/>
 				<sketch id="AnalogInputFSR"/>
 				<sketch id="Knock"/>
+                    <sketch id="Touch_Switch"/>
 	            <sketch id="Photocell"/>
 	            <sketch id="AnalogInputThermistor"/>
 	            <sketch id="AnalogInputOutput"/>
@@ -68,6 +71,7 @@
 			</category>
 	        <category name="Touch">
 				<sketch id="555TouchSwitch"/>
+                                <sketch id="Touch_Switch"/>
 			</category>
 		</category>
 	    <category name="Light">
@@ -95,6 +99,7 @@
 	    </category>
 	    <category name="Power">
 				<sketch id="npnPowerTransistor"/>
+                                <sketch id="Op-Amp"/>
 	      <sketch id="Optocoupler"/>
         <sketch id="VoltageRegulator"/>
         <sketch id="VoltageRegulatorSwitch"/>
