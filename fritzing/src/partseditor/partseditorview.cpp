@@ -486,6 +486,9 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 				.arg(destFile));
 		tempFile.copy(destFile);
 		tempFile.close();
+
+		// update the item info, to point to this file
+		m_svgFilePath->setAbsolutePath(destFile);
 	}
 }
 
@@ -570,13 +573,9 @@ void PartsEditorView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePat
 	QString userSvgFolderPath = getUserDataStorePath("parts")+"/svg";
 	QString coreSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg";
 
-	DebugDialog::debug("<<<<<<<<<"+filePathOrig->absolutePath());
-	DebugDialog::debug("<<<<<<<<<"+userSvgFolderPath);
-	DebugDialog::debug("<<<<<<<<<"+coreSvgFolderPath);
-	if(!
-		(filePathOrig->absolutePath().startsWith(userSvgFolderPath)
+	if(!(filePathOrig->absolutePath().startsWith(userSvgFolderPath)
 		|| filePathOrig->absolutePath().startsWith(coreSvgFolderPath))
-	) { // it's outside the parts folder
+		) { // it's outside the parts folder
 		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
 		QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 
