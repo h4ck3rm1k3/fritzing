@@ -94,10 +94,6 @@
    r="1.8329999"
    id="circle14"
    style="fill:none;stroke:#f1f1f1;stroke-opacity:1"
-   sodipodi:cx="-10.687"
-   sodipodi:cy="14.434"
-   sodipodi:rx="1.8329999"
-   sodipodi:ry="1.8329999"
    transform="translate(-0.3249337,0.1083112)" />
 	<line
    x1="-9.4289341"
@@ -119,10 +115,6 @@
    r="1.25"
    id="circle20"
    style="fill:#b3b3b3"
-   sodipodi:cx="-20.635"
-   sodipodi:cy="0.212"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    transform="translate(-0.3249337,0.1083112)" />
 	<circle
    cx="-10.552"
@@ -130,10 +122,6 @@
    r="1.25"
    id="circle22"
    style="fill:#b3b3b3"
-   sodipodi:cx="-10.552"
-   sodipodi:cy="0.212"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    transform="translate(-0.3249337,0.1083112)" />
 	<circle
    cx="-20.635"
@@ -141,10 +129,6 @@
    r="1.25"
    id="circle24"
    style="fill:#b3b3b3"
-   sodipodi:cx="-20.635"
-   sodipodi:cy="30.532"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    transform="translate(-0.3249337,0.1083112)" />
 	<circle
    cx="-10.552"
@@ -152,10 +136,6 @@
    r="1.25"
    id="circle26"
    style="fill:#b3b3b3"
-   sodipodi:cx="-10.552"
-   sodipodi:cy="30.532"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    transform="translate(-0.3249337,0.1083112)" />
 	<circle
    cx="29.437"
@@ -163,10 +143,6 @@
    r="1.25"
    id="circle28"
    style="fill:#b3b3b3"
-   sodipodi:cx="29.437"
-   sodipodi:cy="0.212"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    transform="translate(-0.3249337,0.1083112)" />
 	<circle
    cx="29.437"
@@ -174,10 +150,6 @@
    r="1.25"
    id="circle30"
    style="fill:#b3b3b3"
-   sodipodi:cx="29.437"
-   sodipodi:cy="30.532"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    transform="translate(-0.3249337,0.1083112)" />
 </g>
 <circle
@@ -185,10 +157,6 @@
    cx="9.6459999"
    cy="6.73"
    r="1.25"
-   sodipodi:cx="9.6459999"
-   sodipodi:cy="6.73"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    style="fill:#666666"
    transform="translate(-5.090628,-3.5742708)" />
 <circle
@@ -196,10 +164,6 @@
    cx="19.73"
    cy="6.73"
    r="1.25"
-   sodipodi:cx="19.73"
-   sodipodi:cy="6.73"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    style="fill:#666666"
    transform="translate(-5.090628,-3.5742708)" />
 <circle
@@ -207,10 +171,6 @@
    cx="9.6459999"
    cy="37.049999"
    r="1.25"
-   sodipodi:cx="9.6459999"
-   sodipodi:cy="37.049999"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    style="fill:#666666"
    transform="translate(-5.090628,-3.5742708)" />
 <circle
@@ -218,10 +178,6 @@
    cx="19.73"
    cy="37.049999"
    r="1.25"
-   sodipodi:cx="19.73"
-   sodipodi:cy="37.049999"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    style="fill:#666666"
    transform="translate(-5.090628,-3.5742708)" />
 <circle
@@ -229,10 +185,6 @@
    cx="59.719002"
    cy="6.73"
    r="1.25"
-   sodipodi:cx="59.719002"
-   sodipodi:cy="6.73"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    style="fill:#666666"
    transform="translate(-5.090628,-3.5742708)" />
 <circle
@@ -240,10 +192,6 @@
    cx="59.719002"
    cy="37.049999"
    r="1.25"
-   sodipodi:cx="59.719002"
-   sodipodi:cy="37.049999"
-   sodipodi:rx="1.25"
-   sodipodi:ry="1.25"
    style="fill:#666666"
    transform="translate(-5.090628,-3.5742708)" />
 </svg>
