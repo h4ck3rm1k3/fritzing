@@ -61,13 +61,8 @@
   <g
      id="schematic">
     <path
-       sodipodi:type="arc"
        style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path2400"
-       sodipodi:cx="5"
-       sodipodi:cy="20"
-       sodipodi:rx="2.1042509"
-       sodipodi:ry="2.1042509"
        d="M 7.1042509,20 A 2.1042509,2.1042509 0 1 1 2.8957491,20 A 2.1042509,2.1042509 0 1 1 7.1042509,20 z" />
     <line
        id="line2398"
@@ -95,13 +90,8 @@
        style="fill:none;stroke:#000000;stroke-width:2.20000005;stroke-linecap:round" />
     <path
        d="M 27.104251,20 A 2.1042509,2.1042509 0 1 1 22.895749,20 A 2.1042509,2.1042509 0 1 1 27.104251,20 z"
-       sodipodi:ry="2.1042509"
-       sodipodi:rx="2.1042509"
-       sodipodi:cy="20"
-       sodipodi:cx="25"
        id="path2402"
-       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       sodipodi:type="arc" />
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        id="connector1terminal"
        x="16.128"
