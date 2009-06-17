@@ -37,6 +37,7 @@
    <label/>
    <layers image="pcb/pcb-arduino-diecimila-fp.svg" >
     <layer layerId="copper0" />
+    <layer layerId="silkscreen" />
    </layers>
   </pcbView>
  </views>
