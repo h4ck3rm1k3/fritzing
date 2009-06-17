@@ -1,6 +1,6 @@
 <fritzing-sketches>
 	<sketches>
-		    <sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
+		<sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
         <sketch id="AnalogInputFSR" name="FSR" src="core/AnalogInputFSR.fz"/>
         <sketch id="AnalogInputOutput" name="Analog Input / Output" src="core/AnalogInputOutput.fz"/>
         <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
@@ -42,7 +42,7 @@
 				<sketch id="AnalogInputPot"/>
 				<sketch id="AnalogInputFSR"/>
 				<sketch id="Knock"/>
-                    <sketch id="Touch_Switch"/>
+                <sketch id="Touch_Switch"/>
 	            <sketch id="Photocell"/>
 	            <sketch id="AnalogInputThermistor"/>
 	            <sketch id="AnalogInputOutput"/>
@@ -71,7 +71,7 @@
 			</category>
 	        <category name="Touch">
 				<sketch id="555TouchSwitch"/>
-                                <sketch id="Touch_Switch"/>
+                <sketch id="Touch_Switch"/>
 			</category>
 		</category>
 	    <category name="Light">
@@ -99,11 +99,11 @@
 	    </category>
 	    <category name="Power">
 				<sketch id="npnPowerTransistor"/>
-                                <sketch id="Op-Amp"/>
-	      <sketch id="Optocoupler"/>
-        <sketch id="VoltageRegulator"/>
-        <sketch id="VoltageRegulatorSwitch"/>
-      </category>
+                <sketch id="Op_Amp"/>
+                <sketch id="Optocoupler"/>
+				<sketch id="VoltageRegulator"/>
+				<sketch id="VoltageRegulatorSwitch"/>
+		</category>
 	    <category name="Processing">
 				<sketch id="Arduino-no-FTDI"/>
 	    </category>
