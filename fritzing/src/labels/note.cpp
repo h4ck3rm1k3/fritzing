@@ -414,15 +414,7 @@ void Note::contentsChangedSlot() {
 
 		QSizeF oldSize = m_rect.size();
 		QSizeF newSize = oldSize;
-		QSizeF gripSize = m_resizeGrip->boundingRect().size();
-		QSizeF size = m_graphicsTextItem->document()->size();
-		if (size.height() + gripSize.height() + gripSize.height() > m_rect.height()) {
-			prepareGeometryChange();
-			m_rect.setHeight(size.height() + gripSize.height() + gripSize.height());
-			newSize.setHeight(m_rect.height());
-			positionGrip();
-			this->update();
-		}
+		checkSize(newSize);
 
 		infoGraphicsView->partLabelChanged(this, oldText, m_graphicsTextItem->document()->toHtml(), oldSize, newSize, false);
 	}
@@ -431,18 +423,34 @@ void Note::contentsChangedSlot() {
 	}
 }
 
-void Note::setText(const QString & text) {
+void Note::checkSize(QSizeF & newSize) {
+	QSizeF gripSize = m_resizeGrip->boundingRect().size();
+	QSizeF size = m_graphicsTextItem->document()->size();
+	if (size.height() + gripSize.height() + gripSize.height() > m_rect.height()) {
+		prepareGeometryChange();
+		m_rect.setHeight(size.height() + gripSize.height() + gripSize.height());
+		newSize.setHeight(m_rect.height());
+		positionGrip();
+		this->update();
+	}
+}
+
+void Note::setText(const QString & text, bool check) {
 	// disconnect the signal so it doesn't fire recursively
 	disconnect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 			this, SLOT(contentsChangedSlot()));
 
 	QString oldText = text;
 	m_graphicsTextItem->document()->setHtml(text);
+	if (check) {
+		QSizeF newSize;
+		checkSize(newSize);
+	}
 
 	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
-
 }
+
 
 QString Note::text() {
 	return m_graphicsTextItem->document()->toHtml();
@@ -454,15 +462,6 @@ void Note::setSize(const QSizeF & size)
 	m_rect.setWidth(size.width());
 	m_rect.setHeight(size.height());
 	positionGrip();
-}
-
-void Note::setText(const QDomElement & textElement)
-{
-	QString t = textElement.text();
-	if (t.isEmpty()) {
-		t = initialTextString;
-	}
-	setText(t);
 }
 
 void Note::setHidden(bool hide)

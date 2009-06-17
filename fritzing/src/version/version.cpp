@@ -27,7 +27,7 @@ $Date$
 #include "version.h"
 
 #include <QString>
-#include <QStringList>
+#include <QStringList>					
 			
 #include "../debugdialog.h"
 

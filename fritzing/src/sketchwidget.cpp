@@ -246,7 +246,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				}
 				else if (strcmp(className, "Note") == 0) {
 					Note * note = dynamic_cast<Note *>(item);
-					note->setText(mp->instanceText());
+					note->setText(mp->instanceText(), true);
 				}
 				else if (strcmp(className, "GroupItem") == 0) {
 					GroupItem * groupItem = dynamic_cast<GroupItem *>(item);
@@ -4918,7 +4918,7 @@ void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool i
 		if (!isLabel) {
 			Note * note = dynamic_cast<Note *>(itemBase);
 			if (note != NULL) {
-				note->setText(newText);
+				note->setText(newText, false);
 				return;
 			}
 		}

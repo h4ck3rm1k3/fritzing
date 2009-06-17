@@ -51,8 +51,7 @@ public:
 	void saveInstanceLocation(QXmlStreamWriter &);
 	void moveItem(ViewGeometry &);
 	void findConnectorsUnder();
-	void setText(const QString & text);
-	void setText(const QDomElement & textElement);
+	void setText(const QString & text, bool checkSize);
 	QString text();
 	void setSize(const QSizeF & size);
 	void setHidden(bool hide) ;
@@ -66,6 +65,7 @@ protected:
 	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
 	bool eventFilter(QObject * object, QEvent * event);
+	void checkSize(QSizeF & newSize);
 
 protected slots:
 	void contentsChangedSlot();
