@@ -29,6 +29,7 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 #include <QtDebug>
 #include <QSvgGenerator>
 #include <QGraphicsProxyWidget>
+#include <QVarLengthArray>
 
 #include "partseditorview.h"
 #include "partseditorconnectoritem.h"
@@ -1136,4 +1137,34 @@ void PartsEditorView::addFixedToBottomRight(QWidget *widget) {
 
 bool PartsEditorView::imageLoaded() {
 	return m_item != NULL;
+}
+
+void PartsEditorView::drawBackground(QPainter *painter, const QRectF &rect) {
+	SketchWidget::drawBackground(painter,rect);
+
+	// 10mm spacing grid
+	/*const int gridSize = 10*width()/widthMM();
+
+	QRectF itemRect = m_item->mapToScene(m_item->boundingRect()).boundingRect();
+	painter->drawRect(itemRect);
+	qreal itemTop = itemRect.top();
+	qreal itemLeft = itemRect.left();
+
+	QVarLengthArray<QLineF, 100> lines;
+
+	for (qreal x = itemLeft; x < rect.right(); x += gridSize) {
+		lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+	}
+	for (qreal x = itemLeft-gridSize; x > rect.left(); x -= gridSize) {
+		lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+	}
+
+	for (qreal y = itemTop; y < rect.bottom(); y += gridSize) {
+		lines.append(QLineF(rect.left(), y, rect.right(), y));
+	}
+	for (qreal y = itemTop-gridSize; y > rect.top(); y -= gridSize) {
+		lines.append(QLineF(rect.left(), y, rect.right(), y));
+	}
+
+	painter->drawLines(lines.data(), lines.size());*/
 }

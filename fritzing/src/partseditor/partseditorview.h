@@ -105,6 +105,7 @@ class PartsEditorView : public SketchWidget {
 		void addDefaultLayers();
 
 		void wheelEvent(QWheelEvent* event);
+		void drawBackground(QPainter *painter, const QRectF &rect);
 
 		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* paletteItem, bool doConnectors);
 
