@@ -896,7 +896,7 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 
 void MainWindow::saveBundledSketch() {
 	bool wasModified = isWindowModified();
-	saveBundledSketchOrBin(
+	saveBundledNonAtomicEntity(
 		m_fileName, FritzingBundleExtension, this,
 		m_sketchModel->root()->getAllNonCoreParts()
 	);
@@ -904,7 +904,7 @@ void MainWindow::saveBundledSketch() {
 	setTitle();
 }
 
-void MainWindow::saveBundledSketchOrBin(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave) {
+void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave) {
 	QString fileExt;
 	QString path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName()+"z";
 	QString bundledFileName = FApplication::getSaveFileName(
@@ -957,10 +957,10 @@ void MainWindow::saveBundledSketchOrBin(QString &filename, const QString &extens
 }
 
 void MainWindow::loadBundledSketch(const QString &fileName) {
-	loadBundledSketchOrBin(fileName, this, /*addToBin*/true);
+	loadBundledNonAtomicEntity(fileName, this, /*addToBin*/true);
 }
 
-void MainWindow::loadBundledSketchOrBin(const QString &fileName, Bundler* bundler, bool addToBin) {
+void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
 	createFolderAnCdIntoIt(destFolder, getRandText());

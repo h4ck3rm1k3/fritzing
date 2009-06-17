@@ -567,9 +567,16 @@ void PartsEditorView::loadFromModel(PaletteModel *paletteModel, ModelPart * mode
 
 void PartsEditorView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePathOrig) {
 	m_originalSvgFilePath = filePathOrig->absolutePath();
-	QString svgFolderPath = getUserDataStorePath("parts")+"/svg";
+	QString userSvgFolderPath = getUserDataStorePath("parts")+"/svg";
+	QString coreSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg";
 
-	if(!filePathOrig->absolutePath().startsWith(svgFolderPath)) { // it's outside the parts folder
+	DebugDialog::debug("<<<<<<<<<"+filePathOrig->absolutePath());
+	DebugDialog::debug("<<<<<<<<<"+userSvgFolderPath);
+	DebugDialog::debug("<<<<<<<<<"+coreSvgFolderPath);
+	if(!
+		(filePathOrig->absolutePath().startsWith(userSvgFolderPath)
+		|| filePathOrig->absolutePath().startsWith(coreSvgFolderPath))
+	) { // it's outside the parts folder
 		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
 		QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 

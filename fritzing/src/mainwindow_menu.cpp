@@ -542,7 +542,10 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
     } else if(fileName.endsWith(FritzingBundleExtension)) {
     	loadBundledSketch(fileName);
 		result = true;
-    } else if (fileName.endsWith(FritzingBinExtension)) {
+    } else if (
+    		fileName.endsWith(FritzingBinExtension)
+    		|| fileName.endsWith(FritzingBundledBinExtension)
+    	) {
 		m_paletteWidget->load(fileName);
 		result = true;
 	} else if (fileName.endsWith(FritzingPartExtension)) {
@@ -868,13 +871,17 @@ void MainWindow::populateMenuWithIndex(const SketchIndex &index, QMenu * parentM
 			if(e.nodeName() == "sketch") {
 				QString id = e.attribute("id");
 				if(!id.isNull() && !id.isEmpty()) {
-					SketchDescriptor elem = *index[id];
-					if(QFileInfo(elem.src).exists()) {
-						actionsTracker << elem.name;
-						QAction * currAction = new QAction(elem.name, this);
-						currAction->setData(elem.src);
-						connect(currAction,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
-						parentMenu->addAction(currAction);
+					if(index[id]) {
+						SketchDescriptor elem = *index[id];
+						if(QFileInfo(elem.src).exists()) {
+							actionsTracker << elem.name;
+							QAction * currAction = new QAction(elem.name, this);
+							currAction->setData(elem.src);
+							connect(currAction,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
+							parentMenu->addAction(currAction);
+						}
+					} else {
+						qWarning() << tr("MainWindow::populateMenuWithIndex: couldn't load example with id='%1'").arg(id);
 					}
 				}
 			} else if(e.nodeName() == "category") {
@@ -2630,7 +2637,7 @@ void MainWindow::groundFill()
 	clearGroundPlanes();
 
 	QString suffix = getRandText();
-	
+
 	ItemBase * board = NULL;
     foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
         board = dynamic_cast<ItemBase *>(childItem);

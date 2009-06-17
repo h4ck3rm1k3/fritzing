@@ -94,8 +94,11 @@ public:
 
 	const QString &selectedModuleID();
 
-	void saveBundledSketchOrBin(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
-	void loadBundledSketchOrBin(const QString &filename, Bundler *bundler, bool addToBin);
+	// if we consider a part as the smallest ("atomic") entity inside
+	// fritzing, then this functions may help with the bundle tasks
+	// on the complex entities: sketches, bins, modules (?)
+	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
+	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
 
 public:
 	static void initExportConstants();

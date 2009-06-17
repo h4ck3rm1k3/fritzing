@@ -408,7 +408,7 @@ bool PartsBinPaletteWidget::saveAs() {
 
 void PartsBinPaletteWidget::saveBundledBin() {
 	bool wasModified = m_isDirty;
-	m_manager->mainWindow()->saveBundledSketchOrBin(
+	m_manager->mainWindow()->saveBundledNonAtomicEntity(
 		m_fileName, FritzingBundledBinExtension, this,
 		m_model->root()->getAllNonCoreParts()
 	);
@@ -454,7 +454,7 @@ bool PartsBinPaletteWidget::open(QString fileName) {
     	saveAsLastBin();
     	m_isDirty = false;
     } else if(fileName.endsWith(FritzingBundledBinExtension)) {
-    	m_manager->mainWindow()->loadBundledSketchOrBin(fileName,this,false);
+    	m_manager->mainWindow()->loadBundledNonAtomicEntity(fileName,this,false);
     }
 
     return true;
