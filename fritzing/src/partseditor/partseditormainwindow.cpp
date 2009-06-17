@@ -354,10 +354,10 @@ void PartsEditorMainWindow::createFooter() {
 	connect(m_saveAsNewPartButton, SIGNAL(clicked()), this, SLOT(saveAs()));
 	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 
-	m_cancelButton = new QPushButton(tr("cancel"));
-	m_cancelButton->setObjectName("cancelButton");
-	m_cancelButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_cancelButton, SIGNAL(clicked()), this, SLOT(close()));
+	m_cancelCloseButton = new QPushButton(tr("cancel"));
+	m_cancelCloseButton->setObjectName("cancelButton");
+	m_cancelCloseButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_cancelCloseButton, SIGNAL(clicked()), this, SLOT(close()));
 
 	QHBoxLayout *footerLayout = new QHBoxLayout;
 
@@ -368,7 +368,7 @@ void PartsEditorMainWindow::createFooter() {
 	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
 	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_cancelButton);
+	footerLayout->addWidget(m_cancelCloseButton);
 	footerLayout->addSpacerItem(new QSpacerItem(40,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	m_footerFrame->setLayout(footerLayout);
 }
@@ -533,6 +533,7 @@ bool PartsEditorMainWindow::saveAs() {
 
 		m_updateEnabled = true;
 		updateSaveButton();
+		updateButtons();
 
 		return true;
 	} else {
@@ -675,6 +676,11 @@ const QString PartsEditorMainWindow::defaultSaveFolder() {
 
 void PartsEditorMainWindow::updateSaveButton() {
 	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
+}
+
+void PartsEditorMainWindow::updateButtons() {
+	m_saveAsNewPartButton->setEnabled(false);
+	m_cancelCloseButton->setText(tr("close"));
 }
 
 bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {

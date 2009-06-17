@@ -90,6 +90,7 @@ protected:
 	const QString defaultSaveFolder();
 
 	void updateSaveButton();
+	void updateButtons();
 	const QString fritzingTitle();
 
 	void cleanUp();
@@ -126,7 +127,7 @@ protected:
 
 	QPushButton *m_saveAsNewPartButton;
 	QPushButton *m_saveButton;
-	QPushButton *m_cancelButton;
+	QPushButton *m_cancelCloseButton;
 
 	QTabWidget *m_tabWidget;
 
