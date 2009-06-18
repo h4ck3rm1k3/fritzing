@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.2b.06.08.3107">
+<module fritzingVersion="0.3.2b.06.17.3155">
     <instances>
         <instance moduleIdRef="WireModuleID" modelIndex="5799" path=":/resources/parts/core/wire.fzp">
             <title>Wire1</title>
@@ -365,7 +365,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24" modelIndex="6163" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/LED-red-5mm.fzp">
+        <instance moduleIdRef="1234ABDC24" modelIndex="6163" path="C:/fritzing2/phoenix/parts/core/LED-red-5mm.fzp">
             <title>LED1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -573,7 +573,7 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="BreadboardModuleID" modelIndex="9293" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/breadboard.fzp">
+        <instance moduleIdRef="BreadboardModuleID" modelIndex="9293" path="C:/fritzing2/phoenix/parts/core/breadboard.fzp">
             <title>Breadboard1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -773,7 +773,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="3234DFDC00" modelIndex="27593" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/big_pot.fzp">
+        <instance moduleIdRef="3234DFDC00" modelIndex="27593" path="C:/fritzing2/phoenix/parts/core/big_pot.fzp">
             <title>R1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -871,7 +871,7 @@
             <title>Wire26</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50014" x="190.148" y="264.453" x1="0" y1="0" x2="95.9651" y2="219.414" wireFlags="19"/>
+                    <geometry z="2.50011" x="190.148" y="264.453" x1="0" y1="0" x2="95.9651" y2="219.414" wireFlags="19"/>
                     <wireExtras width="2" color="#7d7d7d" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -917,7 +917,7 @@
             <title>Wire24</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50017" x="336.559" y="472.014" x1="0" y1="0" x2="-3.16001" y2="-53.1562" wireFlags="19"/>
+                    <geometry z="2.50012" x="336.559" y="472.014" x1="0" y1="0" x2="-3.16001" y2="-53.1562" wireFlags="19"/>
                     <wireExtras width="2" color="#7d7d7d" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1032,7 +1032,7 @@
             <title>Wire27</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50018" x="275.925" y="472.018" x1="0" y1="0" x2="27.5016" y2="-53.1598" wireFlags="19"/>
+                    <geometry z="2.50013" x="275.925" y="472.018" x1="0" y1="0" x2="27.5016" y2="-53.1598" wireFlags="19"/>
                     <wireExtras width="2" color="#7d7d7d" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1191,18 +1191,18 @@
         </instance>
         <instance moduleIdRef="NoteModuleID" modelIndex="29985" path=":/resources/parts/core/note.fzp">
             <title>Note1</title>
-            <text>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+            <text>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;In this example, potentiometer values are read in through an 'Analog In' pin. The values are then used to control the blinking rate of an LED. Related example: &lt;a href=&quot;http://arduino.cc/en/Tutorial/AnalogInput&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://arduino.cc/en/Tutorial/AnalogInput&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</text>
             <views>
                 <breadboardView layer="breadboardNote">
-                    <geometry z="5.50001" x="314.948" y="101.993" width="205.276" height="78.557"/>
+                    <geometry z="5.50001" x="314.948" y="101.993" width="241.276" height="133"/>
                 </breadboardView>
             </views>
         </instance>
-        <instance moduleIdRef="4321DEAB24_ST" modelIndex="46234" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/arduino_diecimila_new.fzp">
+        <instance moduleIdRef="4321DEAB24_ST" modelIndex="46234" path="C:/fritzing2/phoenix/parts/core/arduino_diecimila_new.fzp">
             <title>Arduino2</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -1345,7 +1345,7 @@ p, li { white-space: pre-wrap; }
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="423120090505" modelIndex="46238" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/pcb-arduino-shield.fzp">
+        <instance moduleIdRef="423120090505" modelIndex="46238" path="C:/fritzing2/phoenix/parts/core/pcb-arduino-shield.fzp">
             <title>PCB2</title>
             <views>
                 <pcbView layer="silkscreen">
@@ -1403,7 +1403,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire29</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.5004" x="333.398" y="418.858" x1="0" y1="0" x2="0" y2="6.14206" wireFlags="36"/>
+                    <geometry z="3.50014" x="333.398" y="418.858" x1="0" y1="0" x2="0" y2="6.14206" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1426,7 +1426,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire30</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50041" x="342.029" y="472.014" x1="0" y1="0" x2="-5.47033" y2="0" wireFlags="36"/>
+                    <geometry z="3.50015" x="342.029" y="472.014" x1="0" y1="0" x2="-5.47033" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1449,7 +1449,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire31</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50043" x="333.398" y="425" x1="0" y1="0" x2="8.63054" y2="0" wireFlags="36"/>
+                    <geometry z="3.50016" x="333.398" y="425" x1="0" y1="0" x2="8.63054" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1472,7 +1472,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire32</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50044" x="342.029" y="425" x1="0" y1="0" x2="0" y2="47.0138" wireFlags="36"/>
+                    <geometry z="3.50017" x="342.029" y="425" x1="0" y1="0" x2="0" y2="47.0138" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1495,7 +1495,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire34</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50046" x="303.427" y="418.858" x1="0" y1="0" x2="0" y2="6.14206" wireFlags="36"/>
+                    <geometry z="3.50018" x="303.427" y="418.858" x1="0" y1="0" x2="0" y2="6.14206" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1518,7 +1518,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire35</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50047" x="271.029" y="472.018" x1="0" y1="0" x2="4.89639" y2="0" wireFlags="36"/>
+                    <geometry z="3.50019" x="271.029" y="472.018" x1="0" y1="0" x2="4.89639" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1541,7 +1541,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire36</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50049" x="303.427" y="425" x1="0" y1="0" x2="-32.398" y2="0" wireFlags="36"/>
+                    <geometry z="3.5002" x="303.427" y="425" x1="0" y1="0" x2="-32.398" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1564,7 +1564,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire37</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.5005" x="271.029" y="425" x1="0" y1="0" x2="0" y2="47.0177" wireFlags="36"/>
+                    <geometry z="3.50021" x="271.029" y="425" x1="0" y1="0" x2="0" y2="47.0177" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1587,7 +1587,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire40</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50053" x="500.784" y="107.235" x1="0" y1="0" x2="0" y2="4.99951" wireFlags="36"/>
+                    <geometry z="3.50022" x="500.784" y="107.235" x1="0" y1="0" x2="0" y2="4.99951" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1610,7 +1610,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire42</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50055" x="273.456" y="107.235" x1="0" y1="0" x2="227.329" y2="0" wireFlags="36"/>
+                    <geometry z="3.50023" x="273.456" y="107.235" x1="0" y1="0" x2="227.329" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1633,7 +1633,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire43</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50056" x="273.456" y="133.143" x1="0" y1="0" x2="0" y2="-25.9078" wireFlags="36"/>
+                    <geometry z="3.50024" x="273.456" y="133.143" x1="0" y1="0" x2="0" y2="-25.9078" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1656,7 +1656,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire45</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50058" x="190.148" y="264.453" x1="0" y1="0" x2="-6.14795" y2="0" wireFlags="36"/>
+                    <geometry z="3.50025" x="190.148" y="264.453" x1="0" y1="0" x2="-6.14795" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1679,7 +1679,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire46</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50059" x="286.113" y="489.735" x1="0" y1="0" x2="0" y2="-5.86799" wireFlags="36"/>
+                    <geometry z="3.50026" x="286.113" y="489.735" x1="0" y1="0" x2="0" y2="-5.86799" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1702,7 +1702,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire47</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.5006" x="184" y="264.453" x1="0" y1="0" x2="0" y2="225.282" wireFlags="36"/>
+                    <geometry z="3.50027" x="184" y="264.453" x1="0" y1="0" x2="0" y2="225.282" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1725,7 +1725,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire48</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50061" x="184" y="489.735" x1="0" y1="0" x2="102.113" y2="0" wireFlags="36"/>
+                    <geometry z="3.50028" x="184" y="489.735" x1="0" y1="0" x2="102.113" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1748,7 +1748,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire55</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.5007" x="336.559" y="472.014" x1="0" y1="0" x2="164.241" y2="0" wireFlags="36"/>
+                    <geometry z="3.50029" x="336.559" y="472.014" x1="0" y1="0" x2="164.241" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">
@@ -1771,7 +1771,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire56</title>
             <views>
                 <schematicView layer="schematicTrace">
-                    <geometry z="3.50071" x="500.8" y="472.014" x1="0" y1="0" x2="0" y2="-299.879" wireFlags="36"/>
+                    <geometry z="3.5003" x="500.8" y="472.014" x1="0" y1="0" x2="0" y2="-299.879" wireFlags="36"/>
                     <wireExtras width="3" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicTrace">

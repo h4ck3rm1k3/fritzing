@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.2b.06.08.3107">
+<module fritzingVersion="0.3.2b.06.17.3155">
     <instances>
-        <instance moduleIdRef="BreadboardModuleID" modelIndex="24432" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/breadboard.fzp">
+        <instance moduleIdRef="BreadboardModuleID" modelIndex="24432" path="C:/fritzing2/phoenix/parts/core/breadboard.fzp">
             <title>Breadboard1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -278,7 +278,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="1002ACDC0FA" modelIndex="24435" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/basic_thermistor.fzp">
+        <instance moduleIdRef="1002ACDC0FA" modelIndex="24435" path="C:/fritzing2/phoenix/parts/core/basic_thermistor.fzp">
             <title>R1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -514,7 +514,7 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="9e3a8702-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="24440" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/resistor_1k.fzp">
+        <instance moduleIdRef="9e3a8702-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="24440" path="C:/fritzing2/phoenix/parts/core/resistor_1k.fzp">
             <title>R2</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -831,7 +831,7 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="1900ABDC24" modelIndex="30015" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/LED-blue-5mm.fzp">
+        <instance moduleIdRef="1900ABDC24" modelIndex="30015" path="C:/fritzing2/phoenix/parts/core/LED-blue-5mm.fzp">
             <title>LED1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -1047,17 +1047,17 @@
             <text>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;In this example, thermistor values are read in through an 'Analog In' pin. The values are then used to control the blinking rate of an LED. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Using a multimeter, check the min and max resistance of the thermistor in different light conditions. Then calculate the resistor's value with the Axel-Benz formula: Rref = sqrt(Rmin*Rmax)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Related example:  &lt;/span&gt;&lt;a href=&quot;http://arduino.cc/en/Tutorial/AnalogInput&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://arduino.cc/en/Tutorial/AnalogInput&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</text>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;In this example, thermistor values are read in through an 'Analog In' pin. The values are then used to control the blinking rate of an LED.   Using a multimeter, check the min and max resistance of the thermistor in different light conditions. Then calculate the resistor's value with the Axel-Benz formula: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Rref = sqrt(Rmin*Rmax)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Related example:  &lt;/span&gt;&lt;a href=&quot;http://arduino.cc/en/Tutorial/AnalogInput&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://arduino.cc/en/Tutorial/AnalogInput&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</text>
             <views>
                 <breadboardView layer="breadboardNote">
-                    <geometry z="5.50002" x="325.867" y="112.1" width="195.267" height="118"/>
+                    <geometry z="5.50002" x="325.867" y="112.1" width="323.267" height="149"/>
                 </breadboardView>
             </views>
         </instance>
-        <instance moduleIdRef="4321DEAB24_ST" modelIndex="46718" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/arduino_diecimila_new.fzp">
+        <instance moduleIdRef="4321DEAB24_ST" modelIndex="46718" path="C:/fritzing2/phoenix/parts/core/arduino_diecimila_new.fzp">
             <title>Arduino2</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -1216,7 +1216,7 @@ p, li { white-space: pre-wrap; }
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="423120090505" modelIndex="46722" path="/Users/omeryosha/Documents/Fritzing/phoenix/parts/core/pcb-arduino-shield.fzp">
+        <instance moduleIdRef="423120090505" modelIndex="46722" path="C:/fritzing2/phoenix/parts/core/pcb-arduino-shield.fzp">
             <title>PCB2</title>
             <views>
                 <pcbView layer="silkscreen">
