@@ -299,7 +299,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	m_closeBinAction = new QAction(tr("Close"),this);
 	m_saveAction = new QAction(tr("Save"),this);
 	m_saveAsAction = new QAction(tr("Save As..."),this);
-	m_saveAsBundledAction = new QAction(tr("Save As Shareable..."),this);
+	m_saveAsBundledAction = new QAction(tr("Export..."),this);
 	m_renameAction = new QAction(tr("Rename..."),this);
 
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBin()));

@@ -307,15 +307,15 @@ void MainWindow::doExport() {
 			}
 
 
-			if(filePrintFormats.contains(fileExt)) { // PDF or PS
+			if(filePrintFormats.contains(actionType)) { // PDF or PS
 				QPrinter printer(QPrinter::HighResolution);
-				printer.setOutputFormat(filePrintFormats[fileExt]);
+				printer.setOutputFormat(filePrintFormats[actionType]);
 				printer.setOutputFileName(fileName);
 				printAux(printer,tr("Exporting..."));
 				m_statusBar->showMessage(tr("Sketch exported"), 2000);
 			} else { // PNG...
-				DebugDialog::debug(QString("format: %1 %2").arg(fileExt).arg(fileExportFormats[fileExt]));
-				exportAux(fileName,fileExportFormats[fileExt]);
+				DebugDialog::debug(QString("format: %1 %2").arg(fileExt).arg(fileExportFormats[actionType]));
+				exportAux(fileName,fileExportFormats[actionType]);
 			}
 			delete fileProgressDialog;
 
