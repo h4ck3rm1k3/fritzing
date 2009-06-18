@@ -72,17 +72,17 @@
     <message>
         <location filename="../src/autoroute/autorouteprogressdialog.cpp" line="54"/>
         <source>Skip current trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahn überspringen</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autorouteprogressdialog.cpp" line="61"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/autoroute/autorouteprogressdialog.cpp" line="62"/>
         <source>Stop Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Anhalten</translation>
     </message>
 </context>
 <context>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="243"/>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
-        <translation type="unfinished"></translation>
+        <translation>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="258"/>
@@ -110,12 +110,12 @@
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="270"/>
         <source>Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing-Sortimente (*%1 *%2);;Fritzing-Sortiment (*%1);;Fritzing-Sortiment-Paket (*%2)</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="370"/>
         <source>Cannot set a NULL bin as the current one</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot set a NULL bin as the current one</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="503"/>
@@ -148,13 +148,14 @@
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="502"/>
         <source>Couldn&apos;t add connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Verbindung konnte nicht hinzugefügt werden</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="503"/>
         <source>Please, first load an image in each view,
 before adding any connectors</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte vor dem Erstellen von Verbindungen
+erst ein Bild für jede Ansicht laden.</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="601"/>
@@ -270,7 +271,7 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/dockmanager.cpp" line="251"/>
         <source>Couldn&apos;t get the dock widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Couldn&apos;t get the dock widget</translation>
     </message>
 </context>
 <context>
@@ -278,24 +279,26 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/fapplication.cpp" line="476"/>
         <source>Import files from previous version?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateien aus der alten Version importieren?</translation>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="477"/>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest Du Deine selbst erstellten Bauteile und Sortimente aus der alten Fritzing-Version importieren?
+
+Hinweis: Du kannst sie auch später noch über das Hilfe-Menü importieren.</translation>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="483"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importieren</translation>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="484"/>
         <source>Do not import now</source>
-        <translation type="unfinished"></translation>
+        <translation>Jetzt nicht</translation>
     </message>
 </context>
 <context>
@@ -333,12 +336,12 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/fritzingwindow.cpp" line="165"/>
         <source>Copying file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei %1 wird kopiert</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="175"/>
         <source>File %1 already exists: it won&apos;t be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei %1 existiert bereits: Sie wird nicht überschrieben.</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="222"/>
@@ -606,12 +609,12 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow.cpp" line="952"/>
         <source>Unable to export %1 as shareable</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei %1 konnte nicht als Paket exportiert werden.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="973"/>
         <source>Unable to open shareable %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Paket %1 konnte nicht geöffnet werden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1070"/>
@@ -830,12 +833,12 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="126"/>
         <source>Proceed</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsetzen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="127"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="139"/>
@@ -961,7 +964,7 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="884"/>
         <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="973"/>
@@ -1097,12 +1100,12 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1063"/>
         <source>&amp;Add to bin...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zum Sortiment &amp;hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1064"/>
         <source>Add selected part to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewähltes Bauteil zum Sortiment hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1071"/>
@@ -1453,12 +1456,12 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1262"/>
         <source>&amp;Import parts and bins from old version...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateien aus alter Version importieren...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1263"/>
         <source>Import parts and bins from previous installation</source>
-        <translation type="unfinished"></translation>
+        <translation>Selbst erstellte Bauteile und Sortimente aus einer früheren Installation importieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1269"/>
@@ -1473,7 +1476,7 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1383"/>
         <source>&amp;Diagram</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Diagramm</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2262"/>
@@ -1483,23 +1486,23 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2417"/>
         <source>Tidy Wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungen aufräumen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2418"/>
         <source>Tidy selected wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Verbindungen aufräumen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2421"/>
         <location filename="../src/mainwindow_menu.cpp" line="2690"/>
         <source>Ground Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Füllen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2422"/>
         <source>Fill up the ground plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Freie Flächen auffüllen (für einen schnelleren Produktionsprozess)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2543"/>
@@ -1509,42 +1512,42 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2578"/>
         <source>Please choose the previous Fritzing folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wähle den Ort der früheren Fritzing-Installation...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2585"/>
         <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Im Ordner &quot;%1&quot; befindet sich keine Fritzing-Installation</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2619"/>
         <source>You will have to restart Fritzing in order to use the imported parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Du musst Fritzing neustarten, um die importierten Bauteile nutzen zu können.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2656"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to fill the ground plane.</source>
-        <translation type="unfinished"></translation>
+        <translation>In Deinem Entwurf fehlt die Platine! Bitte füge eine Platine (PCB) hinzu, um sie auffüllen zu können.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2666"/>
         <source>Fritzing error: unable to render board svg (1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: Die Platinen-SVG konnte nicht gerendert werden (1).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2675"/>
         <source>Fritzing error: unable to render copper svg (1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: Die Kupfer-SVG konnte nicht gerendert werden (1).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2686"/>
         <source>Fritzing error: unable to write ground plane.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: Die Ground-Ebene konnte nicht geschrieben werden.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2791"/>
         <source>&amp;Wire Color</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Kabelfarbe</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1058"/>
@@ -2208,7 +2211,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="302"/>
         <source>Save As Shareable...</source>
-        <translation type="unfinished">Speichern als Paket...</translation>
+        <translation>Exportieren...</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="303"/>
@@ -2253,7 +2256,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="504"/>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest Du die Änderungen am Sortiment &quot;%1&quot; speichern?</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="513"/>
@@ -2405,7 +2408,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="683"/>
         <source>close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="707"/>
@@ -2490,7 +2493,7 @@ Bitte gib einen anderen Dateinamen an.</translation>
     <message>
         <location filename="../src/partseditor/partseditorview.cpp" line="1006"/>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
-        <translation type="unfinished"></translation>
+        <translation>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</translation>
     </message>
 </context>
 <context>
@@ -2566,12 +2569,12 @@ Ansicht aus?</translation>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="87"/>
         <source>pcb</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterplatte</translation>
     </message>
     <message>
         <location filename="../src/breadboardsketchwidget.cpp" line="36"/>
         <source>bb</source>
-        <translation type="unfinished"></translation>
+        <translation>Steckplatine</translation>
     </message>
     <message>
         <location filename="../src/breadboardsketchwidget.cpp" line="37"/>
@@ -2769,7 +2772,7 @@ Ansicht aus?</translation>
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="40"/>
         <source>schem</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltplan</translation>
     </message>
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="41"/>
@@ -2869,7 +2872,7 @@ Ansicht aus?</translation>
     <message>
         <location filename="../src/viewlayer.cpp" line="70"/>
         <source>Ground Plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdung</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="71"/>
@@ -2879,7 +2882,7 @@ Ansicht aus?</translation>
     <message>
         <location filename="../src/viewlayer.cpp" line="72"/>
         <source>Copper 0 Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Kupfer 0 Leiterbahnen</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="73"/>
@@ -3088,12 +3091,12 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/autoroute/autorouteprogressdialog.cpp" line="47"/>
         <source>Autorouting Progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouting...</translation>
     </message>
     <message>
         <location filename="../src/utils/fileprogressdialog.cpp" line="52"/>
         <source>File Progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateifortschritt...</translation>
     </message>
 </context>
 <context>
@@ -3185,7 +3188,7 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="261"/>
         <source>Proceed</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsetzen</translation>
     </message>
 </context>
 <context>
@@ -3292,7 +3295,7 @@ im Sortiment.</translation>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3133"/>
         <source>Rotate %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotieren %2 (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3265"/>
