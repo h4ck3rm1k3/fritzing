@@ -215,6 +215,7 @@ public:
 	void painterPathHack(long itemID, const QString & connectorID, QPainterPath &);
 	void updateConnectors();
 	const QString & getShortName();
+	virtual void setClipEnds(class ClipableWire *, bool);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -326,7 +327,6 @@ protected:
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
 	bool rotationAllowed(ItemBase *);
 	virtual bool allowFemaleRotation(ItemBase *);
-	virtual void setClipEnds(class VirtualWire *);
 	void prepDragBendpoint(Wire *, QPoint eventPos);
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);

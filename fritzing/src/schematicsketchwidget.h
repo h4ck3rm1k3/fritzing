@@ -51,6 +51,7 @@ public:
 	void ensureTraceLayerVisible();
 	void ensureJumperLayerVisible();
 	void setJumperFlags(ViewGeometry & vg);
+	void setClipEnds(ClipableWire * vw, bool);
 
 protected:
 	qreal getRatsnestOpacity(Wire *);

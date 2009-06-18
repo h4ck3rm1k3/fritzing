@@ -64,6 +64,8 @@ public:
 	bool canChainMultiple();
 	void setNewPartVisible(ItemBase *);
 	virtual void setJumperFlags(ViewGeometry & vg);
+	void setClipEnds(class ClipableWire *, bool);
+
 
 public:
 	enum CleanType {
@@ -85,7 +87,6 @@ protected:
 	const QColor & getLabelTextColor();
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
-	void setClipEnds(class VirtualWire *);
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	ViewLayer::ViewLayerID getDragWireViewLayerID();
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 

@@ -595,8 +595,8 @@ void PCBSketchWidget::setCurrent(bool current) {
 	}
 }
 
-void PCBSketchWidget::setClipEnds(VirtualWire * vw) {
-	vw->setClipEnds(true);
+void PCBSketchWidget::setClipEnds(ClipableWire * vw, bool clipEnds) {
+	vw->setClipEnds(clipEnds);
 }
 
 ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID() {

@@ -217,13 +217,14 @@ register int	line_flag ;
 ClipableWire::ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
+	m_clipEnds = false;
 	m_trackHoverItem = NULL;
 	m_justFilteredEvent = NULL;
 	m_cachedOriginalLine.setPoints(QPointF(-99999,-99999), QPointF(-99999,-99999));
 }
 
 const QLineF & ClipableWire::getPaintLine() {	
-	if (!m_clipEnds || (m_viewIdentifier == ViewIdentifierClass::SchematicView)) {
+	if (!m_clipEnds) {
 		return Wire::getPaintLine();
 	}
 

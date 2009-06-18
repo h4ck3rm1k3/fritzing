@@ -625,7 +625,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			Wire * wire = NULL;
 			if (virtualWire) {
 				VirtualWire * vw = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
-				setClipEnds(vw);
+				setClipEnds(vw, true);
 				wire = vw;
              	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
 				
@@ -633,7 +633,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			}
 			else {
 				if (viewGeometry.getTrace()) {
-					wire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+					TraceWire * traceWire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+					setClipEnds(traceWire, true);
+					wire = traceWire;
 				}
 				else {
 					wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
@@ -5421,8 +5423,8 @@ LayerHash & SketchWidget::viewLayers() {
 	return m_viewLayers;
 }
 
-void SketchWidget::setClipEnds(VirtualWire * vw) {
-	Q_UNUSED(vw);
+void SketchWidget::setClipEnds(ClipableWire * vw, bool) {
+	vw->setClipEnds(false);
 }
 
 void SketchWidget::createTrace() {

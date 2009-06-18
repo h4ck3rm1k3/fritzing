@@ -32,7 +32,6 @@ $Date$
 TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
-	m_clipEnds = true;
 	m_canChainMultiple = true;
 }
 

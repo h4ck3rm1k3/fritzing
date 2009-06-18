@@ -1222,7 +1222,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire != NULL) {
-			wire->setClipEnds(true);
+			m_sketchWidget->setClipEnds(wire, true);
 			wire->update();
 			if (wire->getAutoroutable()) {
 				wire->setWidth(StandardTraceWidth);
@@ -1453,7 +1453,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width)
 	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
-	traceWire->setClipEnds(false);
+	m_sketchWidget->setClipEnds(traceWire, false);
 	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
 	traceWire->setWidth(width);
 
