@@ -196,14 +196,14 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 		m_iconViewImage->loadFromModel(m_paletteModel, modelPart);
 	}
 
-	QString linkStyle = "font-size: 10px; color: white; text-decoration: none;";
+	QString linkStyle = "font-size: 10px; color: #7070ff;";
 	QLabel *button = new QLabel(
 						QString("<a style='%2' href='#'>%1</a>")
-							.arg(tr("image ..."))
+							.arg(tr("Load icon.."))
 							.arg(linkStyle),
 						this);
 	button->setObjectName("iconBrowseButton");
-	button->setFixedWidth(iconViewSize);
+	//button->setFixedWidth(iconViewSize);
 	button->setFixedHeight(20);
 	//m_iconViewImage->addFixedToBottomRight(button);
 	connect(button, SIGNAL(linkActivated(const QString&)), m_iconViewImage, SLOT(loadFile()));
@@ -215,8 +215,8 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 
 	QGridLayout *headerLayout = new QGridLayout();
 	headerLayout->addWidget(m_iconViewImage,0,0);
-	headerLayout->addWidget(button,1,0);
 	headerLayout->addWidget(m_title,0,1);
+	headerLayout->addWidget(button,1,0,1,2);
 	headerLayout->setVerticalSpacing(0);
 	headerLayout->setMargin(0);
 	m_headerFrame->setLayout(headerLayout);

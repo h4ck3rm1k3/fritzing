@@ -263,7 +263,7 @@ QWidget *PartsEditorViewsWidget::addZoomControlsAndBrowseButton(PartsEditorView 
 	lo1->setSpacing(1);
 	lo1->setMargin(0);
 
-	QLabel *button = new QLabel(QString("<a style='color:black; text-decoration: none;' href='#'>%1</a>").arg(tr("image ...")), this);
+	QLabel *button = new QLabel(QString("<a href='#'>%1</a>").arg(tr("Load image..")), this);
 	button->setObjectName("browseButton");
 	button->setMinimumWidth(85);
 	button->setMaximumWidth(85);
