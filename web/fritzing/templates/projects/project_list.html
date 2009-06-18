@@ -1,5 +1,5 @@
 {% extends "site_base.html" %}
-
+{% load i18n %}
 {% block title %}
   Projects
 {% endblock %}
@@ -38,10 +38,12 @@
                     <li>
                       <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
                     </li>
-                    <li>by {{ project.author }}</li>
+                    <li>{{ project.created|date:_("DATETIME_FORMAT") }}</li>
+                    <li>by {{ project.author }}
                     {% if project.difficulty %}
-                    <li>for {{ project.get_difficulty }}</li>
+                    for {{ project.get_difficulty }}
                     {% endif %}
+                    </li>
                   </ul>
                 </div>
             </td>

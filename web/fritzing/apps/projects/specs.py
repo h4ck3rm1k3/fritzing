@@ -9,7 +9,7 @@ class SidebarThumbnail(processors.Resize):
     height = 75
 
 class OverviewThumbnail(processors.Resize):
-    width = 300
+    width = 150
 
 class EnhanceSmall(processors.Adjustment):
     contrast = 1.2
