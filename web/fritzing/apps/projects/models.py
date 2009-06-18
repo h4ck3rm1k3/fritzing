@@ -10,6 +10,8 @@ from fritzing.apps.tools.models import TitleSlugDescriptionModel
 from imagekit.models import ImageModel
 from template_utils.markup import formatter
 from licenses.fields import LicenseField
+from vcstorage.fields import VcFileField
+from vcstorage.storage import MercurialStorage
 import mptt
 
 
@@ -151,7 +153,7 @@ class Image(ImageModel):
 
     title = models.CharField(max_length=255, blank=True, null=True,
         help_text=_('leave empty to populate with filename'))
-    image = models.ImageField(upload_to=project_images_path)
+    image = models.ImageField(upload_to=project_images_path, max_length=512)
     project = models.ForeignKey(Project, related_name='images')
     user = models.ForeignKey(User, blank=True,
         null=True, related_name='project_images')
@@ -168,11 +170,6 @@ class Image(ImageModel):
         if not self.pk and not self.title:
             self.title = self.image.name
         super(Image, self).save(force_insert, force_update)
-
-# from vcstorage.fields import VcFileField
-# from vcstorage.storage import VcStorage
-#
-# attachment_storage = VcStorage(location='/Users/Jannis/repos')
 
 class Attachment(models.Model):
     FRITZING_TYPE = 'fritzing'
@@ -193,8 +190,8 @@ class Attachment(models.Model):
 
     title = models.CharField(_('title'), max_length=255, blank=True,
         null=True, help_text=_('Leave empty to populate with filename'))
-    attachment = models.FileField(upload_to=project_attachment_path)
-    #attachment = VcFileField(upload_to=project_attachment_path, storage=attachment_storage)
+    #attachment = models.FileField(upload_to=project_attachment_path)
+    attachment = VcFileField(upload_to=project_attachment_path, storage=MercurialStorage(), max_length=512)
     project = models.ForeignKey(Project,
         verbose_name=_('project'), related_name='attachments')
     user = models.ForeignKey(User,

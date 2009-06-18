@@ -246,6 +246,7 @@ MARKITUP_SET = 'markitup/sets/markdown'
 MARKITUP_PREVIEW_FILTER = ('markdown.markdown', {'safe_mode': True})
 
 EVENT_URL_FORMAT = ''
+VCSTORAGE_DEFAULT_BACKEND = 'git'
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

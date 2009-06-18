@@ -46,6 +46,7 @@ django-db-log
 django-licenses
 django-filter
 vobject
+django-vcstorage
 
 #-e svn+http://svn.pinaxproject.com/pinax/trunk@1612#egg=Pinax
 -e git+git://github.com/pinax/pinax.git@0.7beta2#egg=Pinax
@@ -62,3 +63,4 @@ vobject
 -e svn+http://django-emailthis.googlecode.com/svn/trunk#egg=django-emailthis
 -e svn+http://django-treemenus.googlecode.com/svn/trunk#egg=django-treemenus
 -e hg+http://bitbucket.org/ubernostrum/django-contact-form/#egg=django-contact-form
+-e hg+http://bitbucket.org/RonnyPfannschmidt/anyvc/@cb95607c3f51#egg=anyvc
