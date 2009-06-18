@@ -223,7 +223,7 @@ ClipableWire::ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIden
 }
 
 const QLineF & ClipableWire::getPaintLine() {	
-	if (!m_clipEnds) {
+	if (!m_clipEnds || (m_viewIdentifier == ViewIdentifierClass::SchematicView)) {
 		return Wire::getPaintLine();
 	}
 
