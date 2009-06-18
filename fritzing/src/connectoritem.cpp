@@ -501,7 +501,7 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
 		Wire * wire = dynamic_cast<Wire *>(connectee->attachedTo());
 		if ((wire != NULL) && !wire->getVirtual()) {
 			QPointF anchor = wire->otherConnector(connectee)->sceneAdjustedTerminalPoint(NULL);
-			double newX, newY, newDistance = MAX_DOUBLE;
+			double newX = 0, newY = 0, newDistance = MAX_DOUBLE;
 			int count = m_shape.elementCount();
 
 			QPointF prev;
