@@ -1,0 +1,44 @@
+Howto update on the server
+==========================
+
+
+1. Use Fabric:
+
+  Update the Subversion checkout on the server by running:
+  
+  fab svn_update
+
+  Then check if the update succeeded by inspecting the svn status:
+  
+  fab svn_status
+
+  If there are any new requiremnts, install them (or update) by running:
+  
+  fab req_update
+  
+  Fix any conflicts if neccesary. Restart the Python process by running:
+  
+  fab django_restart
+
+2. Or manually:
+
+  Use SSH to login on the server (ssh fritzing@fritzing.org). Change the 
+  work directory ~/virtualenv and activate the virtualenv by running:
+
+  source ~/virtualenv/bin/activate
+  
+  To update the source code in the fritzing checkout and see potential
+  conflicts:
+  
+  cd ~/virtualenv/src/fritzing
+  svn update
+  svn status
+  
+  Make sure there are no conflicts and any changes in requirements are met by
+  running:
+  
+  pip install --requirement ~/virtualenv/src/fritzing/fritzing/requirements.txt
+  
+  Then, if you think everything works correctly, restart the server process:
+  
+  touch ~/virtualenv/src/fritzing/fritzing/deploy/fritzing.wsgi

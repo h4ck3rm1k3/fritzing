@@ -54,6 +54,7 @@ django-vcstorage
 -e git+git://github.com/jezdez/dregni.git#egg=dregni
 -e git+git://github.com/simonw/django-openid.git#egg=django-openid
 -e git+git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
+#-e git+git://github.com/bitprophet/fabric.git@0.9a3#egg=fabric
 -e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
 -e svn+http://django-app-plugins.googlecode.com/svn/trunk#egg=django-app-plugins
 -e svn+http://django-tagging.googlecode.com/svn/trunk#egg=django-tagging
@@ -64,3 +65,5 @@ django-vcstorage
 -e svn+http://django-treemenus.googlecode.com/svn/trunk#egg=django-treemenus
 -e hg+http://bitbucket.org/ubernostrum/django-contact-form/#egg=django-contact-form
 -e hg+http://bitbucket.org/RonnyPfannschmidt/anyvc/@cb95607c3f51#egg=anyvc
+
+http://github.com/bitprophet/fabric/zipball/0.9a3#egg=fabric
