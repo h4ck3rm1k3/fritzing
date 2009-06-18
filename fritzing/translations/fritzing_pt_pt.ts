@@ -56,6 +56,21 @@
     </message>
 </context>
 <context>
+    <name>AutorouteProgressDialog</name>
+    <message>
+        <source>Skip current trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BinManager</name>
     <message>
         <source>Parts</source>
@@ -70,15 +85,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fritzing Bin (*%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select a part to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>External Part (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot set a NULL bin as the current one</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -103,6 +126,15 @@
     <message>
         <source>Please, first load an image in each view,
 in order to fix this connector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t add connector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please, first load an image in each view,
+before adding any connectors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -186,6 +218,31 @@ in order to fix this connector</source>
         <source>Navigator</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Couldn&apos;t get the dock widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FApplication</name>
+    <message>
+        <source>Import files from previous version?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
+
+Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not import now</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FritzingWindow</name>
@@ -243,6 +300,14 @@ in order to fix this connector</source>
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copying file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File %1 already exists: it won&apos;t be overwritten</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -412,10 +477,6 @@ in order to fix this connector</source>
     </message>
     <message>
         <source>Unable to export %1 to shareable sketch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to open shareable sketch %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1293,14 +1354,6 @@ Quantity	Part
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Skip this trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel autorouting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;About Qt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1411,6 +1464,94 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
     <message>
         <source>Export SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to export %1 as shareable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to open shareable %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proceed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add to bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add selected part to bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import parts and bins from old version...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import parts and bins from previous installation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Diagram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tidy Wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tidy selected wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground Fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill up the ground plane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose the previous Fritzing folder...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You will have to restart Fritzing in order to use the imported parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to fill the ground plane.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render board svg (1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render copper svg (1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to write ground plane.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Wire Color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1668,7 +1809,11 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to save the changes you made in this bin &quot;%1&quot;?</source>
+        <source>Save As Shareable...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1801,6 +1946,10 @@ Please, specify a new filename</source>
         <source>image ...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>close</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PartsEditorView</name>
@@ -1810,6 +1959,10 @@ Please, specify a new filename</source>
     </message>
     <message>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2235,6 +2388,34 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Autorouting Progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pcb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground Plane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper 0 Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuaZipFile</name>
@@ -2304,15 +2485,8 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Do you want to proceed anyway?</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>SchematicSketchWidget</name>
     <message>
-        <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
+        <source>Proceed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2451,6 +2625,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Resize Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
