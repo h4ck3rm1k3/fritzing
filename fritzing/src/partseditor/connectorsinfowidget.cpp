@@ -130,10 +130,7 @@ void ConnectorsInfoWidget::selectionChanged(AbstractConnectorInfoWidget* selecte
 	}
 	m_selected = selected;
 
-	QTimer *timer = new QTimer(this);
-	timer->setSingleShot(true);
-	connect(timer, SIGNAL(timeout()), this, SLOT(emitPaintNeeded()));
-	timer->start(20);
+	QTimer::singleShot(20, this, SLOT(emitPaintNeeded()));
 }
 
 void ConnectorsInfoWidget::setSelected(AbstractConnectorInfoWidget * newSelected) {

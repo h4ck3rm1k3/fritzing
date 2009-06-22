@@ -206,10 +206,7 @@ void Helper::viewSwitched() {
 	if(m_stillWaitingFirstViewSwitch) {
 		m_stillWaitingFirstViewSwitch = false;
 
-		//QTimer *timer = new QTimer(this);
-		//timer->setSingleShot(true);
-		//connect(timer, SIGNAL(timeout()), this, SLOT(removeSwitchButtonsHelp()));
-		//timer->start(400);
+		// QTimer::singleShot(400, this, SLOT(removeSwitchButtonsHelp()));
 	} else {
 		//disconnect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	}

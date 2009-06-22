@@ -2476,10 +2476,7 @@ void MainWindow::selectAllJumpers() {
 void MainWindow::notClosableForAWhile() {
 	m_dontClose = true;
 
-	QTimer *timer = new QTimer(this);
-	timer->setSingleShot(true);
-	connect(timer,SIGNAL(timeout()),this,SLOT(ensureClosable()));
-	timer->start(500);
+	QTimer::singleShot(500, this, SLOT(ensureClosable()));
 }
 
 void MainWindow::ensureClosable() {

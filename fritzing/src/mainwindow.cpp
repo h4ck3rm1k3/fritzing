@@ -1301,10 +1301,7 @@ void MainWindow::raiseAndActivate() {
 		showNormal();
 	}
 	raise();
-	QTimer *timer = new QTimer(this);
-	timer->setSingleShot(true);
-	connect(timer, SIGNAL(timeout()), this, SLOT(activateWindowAux()));
-	timer->start(20);
+	QTimer::singleShot(20, this, SLOT(activateWindowAux()));
 }
 
 void MainWindow::activateWindowAux() {

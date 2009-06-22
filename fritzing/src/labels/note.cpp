@@ -34,7 +34,6 @@ $Date$
 #include <QTextFrame>
 #include <QTextFrameFormat>
 #include <QApplication>
-#include <QFontDatabase>
 #include <QTextDocumentFragment>
 #include <QTimer>
 #include <QFormLayout>
@@ -205,19 +204,9 @@ QString LinkDialog::url() {
 Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	m_charsAdded = 0;
 	if (initialTextString.isEmpty()) {
 		initialTextString = tr("[write your note here]");
-
-		/*
-		// font test hack
-		int ix = QFontDatabase::addApplicationFont ("C:/fritzing2/Isabella.ttf/Isabella.ttf");
-		int ix = QFontDatabase::addApplicationFont ("/home/merun/desktop/isabella/Isabella.ttf");
-		QFontDatabase database;
-		QStringList families = database.families (  );
-		foreach (QString string, families) {
-			DebugDialog::debug(string);			// should print out the name of the font you loaded
-		}
-		*/
 	}
 
 	m_inResize = NULL;
@@ -241,6 +230,9 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	connect(m_resizeGrip, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
 
 	m_graphicsTextItem = new NoteGraphicsTextItem();
+	QFont font("Droid Sans", 9, QFont::Normal);
+	m_graphicsTextItem->setFont(font);
+	m_graphicsTextItem->document()->setDefaultFont(font);
 	m_graphicsTextItem->setParentItem(this);
 	m_graphicsTextItem->setVisible(true);
 	m_graphicsTextItem->setPlainText(initialTextString);
@@ -248,15 +240,8 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	m_graphicsTextItem->setCursor(Qt::IBeamCursor);
 	m_graphicsTextItem->setOpenExternalLinks(true);
 
-	/*
-	// hack for testing embedded fonts
-	// set the font here
-	QFont font("Isabella");
-	m_graphicsTextItem->setFont(font);
-	*/
 
-	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
-		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
+	connectSlots();
 
 	positionGrip();
 
@@ -404,7 +389,57 @@ void Note::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	ItemBase::mouseReleaseEvent(event);
 }
 
+void Note::contentsChangeSlot(int position, int charsRemoved, int charsAdded) {
+	Q_UNUSED(charsRemoved);
+
+	m_charsAdded = charsAdded;
+	m_charsPosition = position;
+}
+
 void Note::contentsChangedSlot() {
+	if (m_charsAdded > 0) {
+
+		disconnectSlots();
+		QTextCursor textCursor = m_graphicsTextItem->textCursor();
+
+		QTextCharFormat f;
+		QFont font("Droid Sans", 9, QFont::Normal);
+
+		f.setFont(font);
+		f.setFontFamily("Droid Sans");
+		f.setFontPointSize(9);
+
+		int cc = m_graphicsTextItem->document()->characterCount();
+		textCursor.setPosition(m_charsPosition, QTextCursor::MoveAnchor);
+		if (m_charsPosition + m_charsAdded >= cc) {
+			m_charsAdded--;
+		}
+		textCursor.setPosition(m_charsPosition + m_charsAdded, QTextCursor::KeepAnchor);
+
+		//textCursor.setCharFormat(f);
+		textCursor.mergeCharFormat(f);
+		//DebugDialog::debug(QString("setting font tc:%1,%2 params:%3,%4")
+			//.arg(textCursor.anchor()).arg(textCursor.position())
+			//.arg(m_charsPosition).arg(m_charsPosition + m_charsAdded));
+
+		/*
+		textCursor = m_graphicsTextItem->textCursor();
+		for (int i = 0; i < m_charsAdded; i++) {
+			textCursor.setPosition(m_charsPosition + i, QTextCursor::MoveAnchor);
+			f = textCursor.charFormat();
+			DebugDialog::debug(QString("1format %1 %2 %3").arg(f.fontPointSize()).arg(f.fontFamily()).arg(f.fontWeight()));
+			//f.setFont(font);
+			//f.setFontPointSize(9);
+			//f.setFontWeight(QFont::Normal);
+			//textCursor.setCharFormat(f);
+			//QTextCharFormat g = textCursor.charFormat();
+			//DebugDialog::debug(QString("2format %1 %2 %3").arg(g.fontPointSize()).arg(g.fontFamily()).arg(g.fontWeight()));
+		}
+		*/
+
+		connectSlots();
+	}
+
 	InfoGraphicsView *infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		QString oldText;
@@ -435,10 +470,24 @@ void Note::checkSize(QSizeF & newSize) {
 	}
 }
 
-void Note::setText(const QString & text, bool check) {
-	// disconnect the signal so it doesn't fire recursively
+void Note::disconnectSlots() {
 	disconnect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 			this, SLOT(contentsChangedSlot()));
+	disconnect(m_graphicsTextItem->document(), SIGNAL(contentsChange(int, int, int)),
+			this, SLOT(contentsChangeSlot(int, int, int)));
+}
+
+void Note::connectSlots() {
+	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
+		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
+	connect(m_graphicsTextItem->document(), SIGNAL(contentsChange(int, int, int)),
+		this, SLOT(contentsChangeSlot(int, int, int)), Qt::DirectConnection);
+
+}
+
+void Note::setText(const QString & text, bool check) {
+	// disconnect the signal so it doesn't fire recursively
+	disconnectSlots();
 
 	QString oldText = text;
 	m_graphicsTextItem->document()->setHtml(text);
@@ -446,9 +495,7 @@ void Note::setText(const QString & text, bool check) {
 		QSizeF newSize;
 		checkSize(newSize);
 	}
-
-	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
-		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
+	connectSlots();
 }
 
 

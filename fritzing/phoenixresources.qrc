@@ -132,14 +132,16 @@ $Date$
     <file>resources/images/icons/noteResizeGrip.png</file>
     <file>resources/styles/fritzing.qss</file>
     <file>resources/styles/partseditor.qss</file>
-    <!-- Platform dependan styles -->
+    <file>resources/styles/inviewhelp.qss</file>
+    <file>resources/styles/infoview.css</file>
+  
+    <!-- Platform dependent styles -->
     <file>resources/styles/linux.qss</file>
     <file>resources/styles/linux-kde-oxygen.qss</file>
     <file>resources/styles/linux-gnome.qss</file>
     <file>resources/styles/win.qss</file>
     <file>resources/styles/mac.qss</file>
-    <file>resources/styles/inviewhelp.qss</file>
-    <file>resources/styles/infoview.css</file>
+  
     <file>resources/styles/updatedialog.css</file>
     <file>resources/js/infoview.js</file>
     <file>resources/bins/bin.fzb</file>
@@ -192,5 +194,9 @@ $Date$
     <file>resources/images/itemselection/selectionRingTop.png</file>
     <file>resources/images/itemselection/selectionRingTopLeft.png</file>
     <file>resources/images/itemselection/selectionRingTopRight.png</file>
+
+    <file>resources/fonts/DroidSans.ttf</file>
+    <file>resources/fonts/DroidSans-Bold.ttf</file>
+    <file>resources/fonts/Notice</file>
 </qresource>
 </RCC>

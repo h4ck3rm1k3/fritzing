@@ -135,10 +135,7 @@ void SketchMainHelpPrivate::enterEvent(QEvent * event) {
 void SketchMainHelpPrivate::enterEventAux() {
 	if(m_shouldGetTransparent) {
 		setWindowOpacity(1.0);
-		QTimer *timer = new QTimer(this);
-		timer->setSingleShot(true);
-		connect(timer, SIGNAL(timeout()), this, SLOT(setTransparent()));
-		timer->start(2000);
+		QTimer::singleShot(2000, this, SLOT(setTransparent()));
 	}
 	m_closeButton->doShow();
 }

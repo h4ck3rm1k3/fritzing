@@ -113,6 +113,10 @@ PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * par
 	m_owner = owner;
 	m_spaceBarWasPressed = false;
 
+	QFont font("Droid Sans");
+	font.setPointSize(9);
+	setFont(font);
+
 	PartLabelTextDocument * doc = PartLabelTextDocument::AllTextDocuments.value(owner->id());
 	if (doc == NULL) {
 		doc = new PartLabelTextDocument(owner->id(), NULL);

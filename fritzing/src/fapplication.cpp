@@ -55,6 +55,7 @@ $Date$
 #include <QThread>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QFontDatabase>
 
 bool FApplication::m_spaceBarIsPressed = false;
 bool FApplication::m_mousePressed = false;
@@ -323,6 +324,14 @@ int FApplication::startup(int & argc, char ** argv)
 	PartsEditorMainWindow::initText();
 	BinManager::MyPartsBinLocation = getUserDataStorePath("bins")+"/my_parts.fzb";
 	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
+
+	int fix = QFontDatabase::addApplicationFont (":/resources/fonts/DroidSans.ttf");
+	fix = QFontDatabase::addApplicationFont (":/resources/fonts/DroidSans-Bold.ttf");
+	QFontDatabase database;
+	QStringList families = database.families (  );
+	foreach (QString string, families) {
+		DebugDialog::debug(string);			// should print out the name of the font you loaded
+	}
 
 	splash.showProgress(progressIndex, 0.085);
 	processEvents();

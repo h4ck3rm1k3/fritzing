@@ -150,10 +150,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     );
 
 
-	QTimer *timer = new QTimer(this);
-	timer->setSingleShot(true);
-	connect(timer, SIGNAL(timeout()), this, SLOT(ensureFixedItemsPositions()));
-	timer->start(400);
+	QTimer::singleShot(400, this, SLOT(ensureFixedItemsPositions()));
 }
 
 SketchWidget::~SketchWidget() {
@@ -4045,10 +4042,7 @@ void SketchWidget::setInfoViewOnHover(bool infoViewOnHover) {
 }
 
 void SketchWidget::updateInfoView() {
-	QTimer *timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(updateInfoViewSlot()));
-	timer->setSingleShot(true);
-	timer->start(50);
+	QTimer::singleShot(50, this,  SLOT(updateInfoViewSlot()));
 }
 
 void SketchWidget::updateInfoViewSlot() {

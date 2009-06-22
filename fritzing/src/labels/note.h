@@ -66,8 +66,11 @@ protected:
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
 	bool eventFilter(QObject * object, QEvent * event);
 	void checkSize(QSizeF & newSize);
+	void connectSlots();
+	void disconnectSlots();
 
 protected slots:
+	void contentsChangeSlot(int position, int charsAdded, int charsRemoved);
 	void contentsChangedSlot();
 	void linkDialog();
 	void handleZoomChangedSlot(qreal scale);
@@ -87,6 +90,8 @@ protected:
 	class ResizeHandle * m_resizeGrip;
 	class ResizeHandle * m_inResize;
 	QGraphicsTextItem * m_graphicsTextItem;
+	int m_charsAdded;
+	int m_charsPosition;
 
 };
 
