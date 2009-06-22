@@ -68,6 +68,7 @@ protected:
 	void checkSize(QSizeF & newSize);
 	void connectSlots();
 	void disconnectSlots();
+	void forceFormat(int position, int charsAdded);
 
 protected slots:
 	void contentsChangeSlot(int position, int charsAdded, int charsRemoved);

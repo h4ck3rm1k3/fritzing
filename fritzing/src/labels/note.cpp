@@ -396,48 +396,51 @@ void Note::contentsChangeSlot(int position, int charsRemoved, int charsAdded) {
 	m_charsPosition = position;
 }
 
+void Note::forceFormat(int position, int charsAdded) {
+	disconnectSlots();
+	QTextCursor textCursor = m_graphicsTextItem->textCursor();
+
+	QTextCharFormat f;
+	QFont font("Droid Sans", 9, QFont::Normal);
+
+	f.setFont(font);
+	f.setFontFamily("Droid Sans");
+	f.setFontPointSize(9);
+
+	int cc = m_graphicsTextItem->document()->characterCount();
+	textCursor.setPosition(position, QTextCursor::MoveAnchor);
+	if (position + charsAdded >= cc) {
+		charsAdded--;
+	}
+	textCursor.setPosition(position + charsAdded, QTextCursor::KeepAnchor);
+
+	//textCursor.setCharFormat(f);
+	textCursor.mergeCharFormat(f);
+	//DebugDialog::debug(QString("setting font tc:%1,%2 params:%3,%4")
+		//.arg(textCursor.anchor()).arg(textCursor.position())
+		//.arg(position).arg(position + charsAdded));
+
+	/*
+	textCursor = m_graphicsTextItem->textCursor();
+	for (int i = 0; i < charsAdded; i++) {
+		textCursor.setPosition(position + i, QTextCursor::MoveAnchor);
+		f = textCursor.charFormat();
+		DebugDialog::debug(QString("1format %1 %2 %3").arg(f.fontPointSize()).arg(f.fontFamily()).arg(f.fontWeight()));
+		//f.setFont(font);
+		//f.setFontPointSize(9);
+		//f.setFontWeight(QFont::Normal);
+		//textCursor.setCharFormat(f);
+		//QTextCharFormat g = textCursor.charFormat();
+		//DebugDialog::debug(QString("2format %1 %2 %3").arg(g.fontPointSize()).arg(g.fontFamily()).arg(g.fontWeight()));
+	}
+	*/
+
+	connectSlots();
+}
+
 void Note::contentsChangedSlot() {
 	if (m_charsAdded > 0) {
-
-		disconnectSlots();
-		QTextCursor textCursor = m_graphicsTextItem->textCursor();
-
-		QTextCharFormat f;
-		QFont font("Droid Sans", 9, QFont::Normal);
-
-		f.setFont(font);
-		f.setFontFamily("Droid Sans");
-		f.setFontPointSize(9);
-
-		int cc = m_graphicsTextItem->document()->characterCount();
-		textCursor.setPosition(m_charsPosition, QTextCursor::MoveAnchor);
-		if (m_charsPosition + m_charsAdded >= cc) {
-			m_charsAdded--;
-		}
-		textCursor.setPosition(m_charsPosition + m_charsAdded, QTextCursor::KeepAnchor);
-
-		//textCursor.setCharFormat(f);
-		textCursor.mergeCharFormat(f);
-		//DebugDialog::debug(QString("setting font tc:%1,%2 params:%3,%4")
-			//.arg(textCursor.anchor()).arg(textCursor.position())
-			//.arg(m_charsPosition).arg(m_charsPosition + m_charsAdded));
-
-		/*
-		textCursor = m_graphicsTextItem->textCursor();
-		for (int i = 0; i < m_charsAdded; i++) {
-			textCursor.setPosition(m_charsPosition + i, QTextCursor::MoveAnchor);
-			f = textCursor.charFormat();
-			DebugDialog::debug(QString("1format %1 %2 %3").arg(f.fontPointSize()).arg(f.fontFamily()).arg(f.fontWeight()));
-			//f.setFont(font);
-			//f.setFontPointSize(9);
-			//f.setFontWeight(QFont::Normal);
-			//textCursor.setCharFormat(f);
-			//QTextCharFormat g = textCursor.charFormat();
-			//DebugDialog::debug(QString("2format %1 %2 %3").arg(g.fontPointSize()).arg(g.fontFamily()).arg(g.fontWeight()));
-		}
-		*/
-
-		connectSlots();
+		forceFormat(m_charsPosition, m_charsAdded);
 	}
 
 	InfoGraphicsView *infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
@@ -488,14 +491,15 @@ void Note::connectSlots() {
 void Note::setText(const QString & text, bool check) {
 	// disconnect the signal so it doesn't fire recursively
 	disconnectSlots();
-
 	QString oldText = text;
 	m_graphicsTextItem->document()->setHtml(text);
+	connectSlots();
+
 	if (check) {
 		QSizeF newSize;
 		checkSize(newSize);
+		forceFormat(0, m_graphicsTextItem->document()->characterCount());
 	}
-	connectSlots();
 }
 
 
