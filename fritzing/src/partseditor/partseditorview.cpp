@@ -531,6 +531,10 @@ void PartsEditorView::updateModelPart(const QString& origPath) {
 }
 
 void PartsEditorView::loadSvgFile(const QString& origPath) {
+	// back to an empty state
+	m_drawnConns.clear();
+	m_removedConnIds.clear();
+
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
 
 	setSvgFilePath(origPath);
