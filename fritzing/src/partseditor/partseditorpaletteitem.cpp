@@ -108,22 +108,28 @@ bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, c
 	}
 	m_shouldDeletePath = true;
 
-	StringPair tempPath;
-	tempPath.first  = "%1/" + ItemBase::SvgFilesDir;
-	tempPath.second = "%2/" + layerFileName;
+	if(QFileInfo(layerFileName).exists()) {
+		m_svgStrings = new SvgAndPartFilePath();
+		m_svgStrings->setAbsolutePath(layerFileName);
+		return true; // nothing to do
+	} else {
+		StringPair tempPath;
+		tempPath.first  = "%1/" + ItemBase::SvgFilesDir;
+		tempPath.second = "%2/" + layerFileName;
 
-	QStringList possibleRootFolders;
-	possibleRootFolders << getApplicationSubFolderPath("parts") << getUserDataStorePath("parts");
-	QStringList possibleFolders;
-	possibleFolders << "core" << "contrib" << "user";
-	foreach(QString rootFolder, possibleRootFolders) {
-		foreach(QString folder, possibleFolders) {
-			if (QFileInfo( tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder) ).exists()) {
-				m_svgStrings = new SvgAndPartFilePath();
-				m_svgStrings->setAbsolutePath(tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder));
-				m_svgStrings->setRelativePath(tempPath.second.arg(folder));
-				m_svgStrings->setCoreContribOrUser(folder);
-				return true;
+		QStringList possibleRootFolders;
+		possibleRootFolders << getApplicationSubFolderPath("parts") << getUserDataStorePath("parts");
+		QStringList possibleFolders;
+		possibleFolders << "core" << "contrib" << "user";
+		foreach(QString rootFolder, possibleRootFolders) {
+			foreach(QString folder, possibleFolders) {
+				if (QFileInfo( tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder) ).exists()) {
+					m_svgStrings = new SvgAndPartFilePath();
+					m_svgStrings->setAbsolutePath(tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder));
+					m_svgStrings->setRelativePath(tempPath.second.arg(folder));
+					m_svgStrings->setCoreContribOrUser(folder);
+					return true;
+				}
 			}
 		}
 	}

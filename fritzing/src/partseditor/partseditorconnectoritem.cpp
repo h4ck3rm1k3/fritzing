@@ -35,10 +35,10 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector *conn, ItemBase *at
 }
 
 PartsEditorConnectorItem::~PartsEditorConnectorItem() {
-	if (m_connector) {
+	/*if (m_connector) {
 		delete m_connector;
 		m_connector = NULL;
-	}
+	}*/
 }
 
 void PartsEditorConnectorItem::removeFromModel() {
