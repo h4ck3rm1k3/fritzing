@@ -1352,11 +1352,12 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 		TraceWire * trace = dynamic_cast<TraceWire *>(item);
 		if (trace == NULL) continue;
 
-		QList<ConnectorItem *> ends;
-		QList<ConnectorItem *> uniqueEnds;
-		QList<Wire *> wires;
-		trace->collectChained(wires, ends, uniqueEnds);
-		foreach (ConnectorItem * end, ends) {
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(trace->connector0());
+		connectorItems.append(trace->connector1());
+		ConnectorItem::collectEqualPotential(connectorItems, ViewGeometry::NoFlag);
+
+		foreach (ConnectorItem * end, connectorItems) {
 			QString name = end->connectorSharedName();
 			if ((name.compare("ground", Qt::CaseInsensitive) == 0) || (name.compare("gnd", Qt::CaseInsensitive) == 0)) {
 				trace->setVisible(show);
