@@ -198,7 +198,7 @@ $Date$
     <!-- fonts-->
     <file>resources/fonts/DroidSans.ttf</file>
     <file>resources/fonts/DroidSans-Bold.ttf</file>
-    <file>resources/fonts/Notice</file>
+    <file>resources/fonts/NOTICE</file>
     <file>resources/fonts/README</file>
     <file>resources/fonts/ocra10.ttf</file>
 </qresource>
