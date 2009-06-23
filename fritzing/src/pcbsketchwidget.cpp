@@ -18,7 +18,7 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1617 $:
+$Revision$:
 $Author$:
 $Date$
 
