@@ -1,0 +1,54 @@
+Really free OCR A
+
+This font is the one that's supposed to be used for the human-readable
+numbers in the bar code labels on consumer products, including book ISBN
+labels.  It's also quite similar, but not identical, to the font used for
+the embossed numerals on credit cards.
+
+A freely distributable version seems to be sorely needed.  Until now, it's
+been very difficult to find the font in computer-usable format except by
+paying a high fee to a commercial font vendor.  Even many serious commercial
+publishers have so much trouble getting it right that they just go ahead and
+use Helvetica instead, or even (shudder) Arial.  Since the OCR A font is
+required by an international standard, it seems like it ought to be free. 
+So here it is.  The font in this package is not a "ripped", pirated, or
+shadily reverse engineered version; every effort has been made to ensure
+that it genuinely derives from free sources and all the creators involved
+have actually intended it for free public use.
+
+Converted by Matthew Skala from Metafont format to Postscript and TrueType
+formats, July 27, 2006, using mftrace 1.2.4 by Paul Vojta, which is
+available from
+   http://www.xs4all.nl/~hanwen/mftrace/
+and Autotrace 0.31.1 available from
+   http://autotrace.sourceforge.net/
+
+The mftrace output was edited slightly to add a "space" character, which
+seemed to be missing.
+
+The Metafont files (included) were coded by Richard B. Wales in 1988 and
+1989, based on an earlier version by Tor Lillqvist, in turn based on ANSI
+Standard X3.17-1977, approved January 20, 1977 by the American National
+Standards Institute, Inc.
+
+PLEASE NOTE:  The copyright notice by Richard Wales in ocra.mf forbids
+charging more than "a reasonable copying or communications charge" for this
+font.  As far as I (Matthew Skala) am concerned, in this day and age
+Internet communication is so cheap that any fee at all is more than the
+reasonable cost of providing a download.  If you post this font on a
+so-called "free fonts" Web site that charges any fee whatsoever, or one that
+purportedly provides the font for free but makes the visitor jump through
+hoops to actually get the free font, and also offers a more convenient
+download for a fee, then I will consider you to be in violation of the
+copyright and may take action against you.  Free fonts are rare treasures,
+and OCR A in particular is extremely difficult to find in the non-commercial
+world despite being an international standard that ought to be free if
+anything is.  It took a lot of effort - hours of work valued at far more
+than the cost of just paying one of those commercial vendors for the font -
+and my unique expertise in obsolete computer systems, which didn't come
+cheap either - to get a really free version that I could share with everyone
+at no charge.  So let's keep it really free, eh?
+
+Matthew Skala
+mskala@ansuz.sooke.bc.ca
+http://ansuz.sooke.bc.ca/

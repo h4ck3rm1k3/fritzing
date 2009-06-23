@@ -195,8 +195,11 @@ $Date$
     <file>resources/images/itemselection/selectionRingTopLeft.png</file>
     <file>resources/images/itemselection/selectionRingTopRight.png</file>
 
+    <!-- fonts-->
     <file>resources/fonts/DroidSans.ttf</file>
     <file>resources/fonts/DroidSans-Bold.ttf</file>
     <file>resources/fonts/Notice</file>
+    <file>resources/fonts/README</file>
+    <file>resources/fonts/ocra10.ttf</file>
 </qresource>
 </RCC>
