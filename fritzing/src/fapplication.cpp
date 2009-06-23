@@ -327,6 +327,7 @@ int FApplication::startup(int & argc, char ** argv)
 
 	int fix = QFontDatabase::addApplicationFont (":/resources/fonts/DroidSans.ttf");
 	fix = QFontDatabase::addApplicationFont (":/resources/fonts/DroidSans-Bold.ttf");
+	fix = QFontDatabase::addApplicationFont (":/resources/fonts/ocra10.ttf");
 	QFontDatabase database;
 	QStringList families = database.families (  );
 	foreach (QString string, families) {
