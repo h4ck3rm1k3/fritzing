@@ -37,6 +37,7 @@ $Date$
 #include <QHash>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsItem>
+#include <QPointer>
 
 #include "../viewgeometry.h"
 #include "../viewlayer.h"
@@ -221,7 +222,7 @@ public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
-	static class FSvgRenderer * setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
+	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -243,7 +244,7 @@ protected:
  	QSizeF m_size;
 	qint64 m_id;
 	ViewGeometry m_viewGeometry;
-	class ModelPart* m_modelPart;
+	QPointer<ModelPart> m_modelPart;
 	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	int m_connectorHoverCount;
@@ -257,7 +258,7 @@ protected:
 	bool m_canFlipHorizontal;
 	bool m_canFlipVertical;
 	bool m_zUninitialized;
-	class PartLabel * m_partLabel;
+	QPointer<class PartLabel> m_partLabel;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_everVisible;

@@ -38,7 +38,7 @@ class GroupItemBase : public ItemBase
 	Q_OBJECT
 
 public:
-	GroupItemBase(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
+	GroupItemBase(class ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
 	void addToGroup(ItemBase *);
 	virtual void syncKinMoved(GroupItemBase *, QPointF newPos);

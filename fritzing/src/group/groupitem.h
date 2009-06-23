@@ -34,7 +34,7 @@ class GroupItem : public GroupItemBase
 	Q_OBJECT
 
 public:
-	GroupItem(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
+	GroupItem(class ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
 	void doneAdding(const LayerHash &, ViewLayer::ViewLayerID);
 	const QList<ItemBase *> & layerKin();

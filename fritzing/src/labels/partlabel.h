@@ -35,6 +35,7 @@ $Date$
 #include <QDomElement>
 #include <QTextDocument>
 #include <QKeyEvent>
+#include <QPointer>
 
 #include "../viewlayer.h"
 
@@ -99,7 +100,7 @@ protected slots:
 	void contentsChangedSlot();
 
 protected:
-	class ItemBase * m_owner;
+	QPointer<class ItemBase> m_owner;
 	bool m_initialized;
 	bool m_spaceBarWasPressed;
 	bool m_doDrag;
