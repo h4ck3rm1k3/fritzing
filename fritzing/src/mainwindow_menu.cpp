@@ -2658,7 +2658,7 @@ void MainWindow::groundFill()
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Board;
 	QSizeF boardImageSize;
-    QString boardSvg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, StandardFritzingDPI);
+    QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, StandardFritzingDPI);
 	if (boardSvg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return;
@@ -2667,15 +2667,19 @@ void MainWindow::groundFill()
 	viewLayerIDs.clear();
 	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF copperImageSize;
-    QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, StandardFritzingDPI);
+
+	m_pcbGraphicsView->showGroundTraces(false);
+
+    QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, StandardFritzingDPI);
 	if (svg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 		return;
 	}
 
+	m_pcbGraphicsView->showGroundTraces(true);
 
 	QStringList exceptions;
-	exceptions << m_currentGraphicsView->background().name();    // the color of holes in the board
+	exceptions << m_pcbGraphicsView->background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
 	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, suffix, ItemBase::groundPlaneModuleIDName, exceptions, board);
@@ -2692,7 +2696,7 @@ void MainWindow::groundFill()
 			ViewGeometry vg;
 			vg.setLoc(board->pos());
 			long newID = ItemBase::getNextID();
-			new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, newID, false, -1, -1, parentCommand);
+			new AddItemCommand(m_pcbGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, newID, false, -1, -1, parentCommand);
 
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(ViewLayer::GroundPlane);
 			SvgFileSplitter	splitter;
@@ -2700,7 +2704,7 @@ void MainWindow::groundFill()
 			if (result) {
 				QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), xmlName);
 				if (!painterPath.isEmpty()) {
-					new PainterPathHackCommand(m_currentGraphicsView, newID, "connector0", painterPath, parentCommand);
+					new PainterPathHackCommand(m_pcbGraphicsView, newID, "connector0", painterPath, parentCommand);
 				}
 			}
 		}

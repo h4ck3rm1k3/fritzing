@@ -65,6 +65,7 @@ public:
 	void setNewPartVisible(ItemBase *);
 	virtual void setJumperFlags(ViewGeometry & vg);
 	void setClipEnds(class ClipableWire *, bool);
+	void showGroundTraces(bool show);
 
 
 public:

@@ -1347,3 +1347,21 @@ void PCBSketchWidget::setJumperFlags(ViewGeometry & vg) {
 	vg.setJumper(true);
 }
 
+void PCBSketchWidget::showGroundTraces(bool show) {
+	foreach (QGraphicsItem * item, scene()->items()) {
+		TraceWire * trace = dynamic_cast<TraceWire *>(item);
+		if (trace == NULL) continue;
+
+		QList<ConnectorItem *> ends;
+		QList<ConnectorItem *> uniqueEnds;
+		QList<Wire *> wires;
+		trace->collectChained(wires, ends, uniqueEnds);
+		foreach (ConnectorItem * end, ends) {
+			QString name = end->connectorSharedName();
+			if ((name.compare("ground", Qt::CaseInsensitive) == 0) || (name.compare("gnd", Qt::CaseInsensitive) == 0)) {
+				trace->setVisible(show);
+				break;
+			}
+		}
+	}
+}
