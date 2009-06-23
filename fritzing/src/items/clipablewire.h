@@ -29,6 +29,8 @@ $Date$
 
 #include "wire.h"
 
+#include <QPointer>
+
 class ClipableWire : public Wire
 {
 
@@ -56,9 +58,9 @@ protected:
 	QLineF m_cachedLine;
 	QLineF m_cachedOriginalLine;
 	QGraphicsSceneMouseEvent * m_justFilteredEvent;
-	class ConnectorItem * m_trackHoverItem;
-	class ConnectorItem * m_trackHoverLastItem;
-	Wire * m_trackHoverLastWireItem;
+	ConnectorItem * m_trackHoverItem;
+	ConnectorItem * m_trackHoverLastItem;
+	QPointer<Wire> m_trackHoverLastWireItem;
 };
 
 #endif

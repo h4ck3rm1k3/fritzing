@@ -32,6 +32,7 @@ $Date$
 #include <QPen>
 #include <QBrush>
 #include <QXmlStreamWriter>
+#include <QPointer>
 
 #include "connector.h"
 #include "items/itembase.h"
@@ -122,7 +123,7 @@ protected:
 
 protected:
 	Connector * m_connector;
-	ItemBase * m_attachedTo;
+	QPointer<ItemBase> m_attachedTo;
 	QList<ConnectorItem *> m_connectedTo;
 	QPointF m_terminalPoint;
 	bool m_hidden;
