@@ -60,7 +60,7 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 protected:
-	PaletteItemBase * m_layerKinChief;
+	QPointer<PaletteItemBase> m_layerKinChief;
 	bool m_ok;
 };
 

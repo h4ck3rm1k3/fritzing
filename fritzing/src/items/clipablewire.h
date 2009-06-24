@@ -58,8 +58,8 @@ protected:
 	QLineF m_cachedLine;
 	QLineF m_cachedOriginalLine;
 	QGraphicsSceneMouseEvent * m_justFilteredEvent;
-	ConnectorItem * m_trackHoverItem;
-	ConnectorItem * m_trackHoverLastItem;
+	QPointer<ConnectorItem> m_trackHoverItem;
+	QPointer<ConnectorItem> m_trackHoverLastItem;
 	QPointer<Wire> m_trackHoverLastWireItem;
 };
 

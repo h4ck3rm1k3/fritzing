@@ -37,8 +37,9 @@ $Date$
 #include "connector.h"
 #include "items/itembase.h"
 
-class ConnectorItem : public QGraphicsRectItem
+class ConnectorItem : public QObject, public QGraphicsRectItem
 {
+Q_OBJECT
 
 public:
 	ConnectorItem(Connector *, ItemBase* attachedTo);
@@ -129,7 +130,7 @@ protected:
 	bool m_hidden;
 	bool m_paint;
 	bool m_chosen;
-	ConnectorItem * m_overConnectorItem;
+	QPointer<ConnectorItem> m_overConnectorItem;
 	qreal m_opacity;
 	bool m_circular;
 	QString m_baseTooltip;

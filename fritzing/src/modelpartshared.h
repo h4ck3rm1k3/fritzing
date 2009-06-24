@@ -35,9 +35,9 @@ $Date$
 #include <QDate>
 
 
-class ModelPartShared
+class ModelPartShared : public QObject
 {
-
+Q_OBJECT
 public:
 	ModelPartShared();
 	ModelPartShared(QDomDocument *, const QString & path);

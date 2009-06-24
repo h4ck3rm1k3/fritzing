@@ -48,8 +48,9 @@ struct SvgIdLayer {
 };
 
 
-class ConnectorShared
+class ConnectorShared : public QObject
 {
+Q_OBJECT
 
 public:
 	ConnectorShared();

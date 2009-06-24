@@ -37,6 +37,7 @@ $Date$
 #include <QXmlStreamWriter>
 #include <QHash>
 #include <QList>
+#include <QPointer>
 
 #include "items/itembase.h"
 #include "modelpartshared.h"
@@ -145,7 +146,7 @@ protected:
 	QList<ItemBase *> m_viewItems;
 
 	ItemType m_type;
-	ModelPartShared *m_modelPartShared;
+	QPointer<ModelPartShared> m_modelPartShared;
 	QHash<QString, Connector *> m_connectorHash;
 	QHash<QString, class Bus *> m_busHash;
 	long m_index;						// only used at save time to identify model parts in the xml

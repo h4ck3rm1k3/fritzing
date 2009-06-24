@@ -33,6 +33,7 @@ $Date$
 #include <QXmlStreamWriter>
 #include <QGraphicsScene>
 #include <QSvgRenderer>
+#include <QPointer>
 
 #include "viewidentifierclass.h"
 #include "viewlayer.h"
@@ -86,10 +87,10 @@ protected:
 							  const QRectF & connectorRect, struct SvgIdLayer *, bool ignoreTerminalPoint, const QRectF & viewBox);
 
 protected:
-	class ConnectorShared * m_connectorShared;
+	QPointer<class ConnectorShared> m_connectorShared;
 	QList<class ConnectorItem *> m_connectorItems;
 	QList<Connector *> m_toConnectors;
-	class ModelPart * m_modelPart;
+	QPointer<class ModelPart> m_modelPart;
 	class Bus * m_bus;
 	bool m_external;
 

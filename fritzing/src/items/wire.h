@@ -147,9 +147,9 @@ protected:
 	QPointF m_wireDragOrigin;
 	bool m_dragEnd;
 	bool m_drag0;
-	class ConnectorItem *m_connectorHover;
-	class ConnectorItem *m_connector0;
-	class ConnectorItem *m_connector1;
+	QPointer<class ConnectorItem> m_connectorHover;
+	QPointer<class ConnectorItem> m_connector0;
+	QPointer<class ConnectorItem> m_connector1;
 	QString m_colorName;
 	QPen m_shadowPen;
 	QBrush m_shadowBrush;

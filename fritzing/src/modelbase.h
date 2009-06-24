@@ -54,8 +54,8 @@ protected:
 	bool loadInstances(QDomElement & root, QList<ModelPart *> & modelParts);
 
 protected:
-	ModelPart * m_root;
-	ModelBase * m_referenceModel;
+	QPointer<ModelPart> m_root;
+	QPointer<ModelBase> m_referenceModel;
 
 };
 

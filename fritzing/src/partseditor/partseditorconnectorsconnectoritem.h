@@ -30,7 +30,7 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 
 #include "partseditorconnectoritem.h"
 
-class PartsEditorConnectorsConnectorItem : public QObject, public PartsEditorConnectorItem {
+class PartsEditorConnectorsConnectorItem : public PartsEditorConnectorItem {
 	Q_OBJECT
 
 friend class ConnectorRectangle;

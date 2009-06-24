@@ -33,6 +33,7 @@ $Date$
 #include <QList>
 #include <QXmlStreamWriter>
 #include <QGraphicsScene>
+#include <QPointer>
 
 class Bus {
 	
@@ -58,7 +59,7 @@ protected:
 	QList<class Connector *> m_connectors;
 	BusShared * m_busShared;
 	class Connector * m_busConnector;
-	class ModelPart * m_modelPart;
+	QPointer<class ModelPart> m_modelPart;
 };
 
 

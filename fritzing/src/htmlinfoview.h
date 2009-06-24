@@ -102,8 +102,8 @@ protected:
 	QString m_includes;
 	bool m_alreadyset;
 
-	ReferenceModel *m_refModel;
-	ItemBase *m_currentItem;
+	QPointer<ReferenceModel> m_refModel;
+	QPointer<ItemBase> m_currentItem;
 	bool m_currentSwappingEnabled;
 	int m_maxPropCount;
 	QMutex m_setContentMutex;

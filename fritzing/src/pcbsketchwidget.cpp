@@ -590,7 +590,7 @@ void PCBSketchWidget::setCurrent(bool current) {
 			p += QPointF(10, 30);
 
 			m_addedBoard->setPos(p);
-			dynamic_cast<ResizableBoard *>(m_addedBoard)->resizePixels(110, helpsize.height() - 30 - 30, m_viewLayers);
+			qobject_cast<ResizableBoard *>(m_addedBoard)->resizePixels(110, helpsize.height() - 30 - 30, m_viewLayers);
 		}
 	}
 }

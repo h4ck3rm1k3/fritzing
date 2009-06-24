@@ -410,22 +410,22 @@ public slots:
 	void resizeBoard(long id, qreal w, qreal h);
 
 protected:
-	PaletteModel* m_paletteModel;
-	class ReferenceModel* m_refModel;
-	SketchModel * m_sketchModel;
+	QPointer<PaletteModel> m_paletteModel;
+	QPointer<class ReferenceModel> m_refModel;
+	QPointer<SketchModel> m_sketchModel;
 	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
 	class WaitPushUndoStack * m_undoStack;
 	class SelectItemCommand * m_holdingSelectItemCommand;
 	class SelectItemCommand * m_tempDragWireCommand;
 	LayerHash m_viewLayers;
 	QHash<ViewLayer::ViewLayerID, bool> m_viewLayerVisibility;
-	Wire * m_connectorDragWire;
-	Wire * m_bendpointWire;
+	QPointer<Wire> m_connectorDragWire;
+	QPointer<Wire> m_bendpointWire;
 	ViewGeometry m_bendpointVG;
-	ConnectorItem * m_connectorDragConnector;
+	QPointer<ConnectorItem> m_connectorDragConnector;
 	bool m_droppingWire;
 	QPointF m_droppingOffset;
-	ItemBase * m_droppingItem;
+	QPointer<ItemBase> m_droppingItem;
 	int m_moveEventCount;
 	QList<QGraphicsItem *> m_lastSelected;
 	ViewLayer::ViewLayerID m_wireViewLayerID;
@@ -442,7 +442,7 @@ protected:
 	volatile int m_autoScrollY;
 	QPoint m_globalPos;
 
-	PaletteItem *m_lastPaletteItemSelected;
+	QPointer<PaletteItem> m_lastPaletteItemSelected;
 
 	int m_pasteCount;
 
@@ -472,11 +472,11 @@ protected:
 	bool m_spaceBarIsPressed;
 	bool m_spaceBarWasPressed;
 
-	class ResizableBoard * m_resizingBoard;
+	QPointer<class ResizableBoard> m_resizingBoard;
 	QSizeF m_resizingBoardSize;
 	QPointF m_resizingBoardPos;
-	ConnectorItem * m_lastHoverEnterConnectorItem;
-	ItemBase * m_lastHoverEnterItem;
+	QPointer<ConnectorItem> m_lastHoverEnterConnectorItem;
+	QPointer<ItemBase> m_lastHoverEnterItem;
 	QString m_shortName;
 
 protected:

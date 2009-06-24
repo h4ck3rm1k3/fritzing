@@ -134,7 +134,7 @@ protected:
 	int m_connectorsLeftToRoute;
 	int m_jumperCount;
 	bool m_addBoard;
-	ItemBase * m_addedBoard;
+	QPointer<ItemBase> m_addedBoard;
 	QString m_jumperColor;
 	int m_jumperWidth;
 	QString m_traceColor;
