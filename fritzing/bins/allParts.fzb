@@ -303,6 +303,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="1a7828b6466fac9fd042221e931124c4" path="parts/core/74HC595.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1900ABDC24" modelIndex="383" path="parts/core/LED-blue-5mm.fzp">
             <views>
                 <iconView layer="icon">

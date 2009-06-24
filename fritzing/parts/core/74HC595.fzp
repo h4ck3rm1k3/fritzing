@@ -9,7 +9,7 @@
         <tag>Shift Register</tag>
     </tags>
     <properties>
-        <property name="family">IC</property>
+        <property name="family">Logic IC</property>
         <property name="Logic Family">74xx</property>
     </properties>
     <description>8-bit parallel-load shift registers</description>

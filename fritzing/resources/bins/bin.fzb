@@ -184,14 +184,21 @@
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="3a761a45-f1ff-11dd-b332-001a4d5c439f" path="parts/core/mystery_part3.fzp">
+		<instance moduleIdRef="1a7828b6466fac9fd042221e931124c4" path="parts/core/74HC595.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+		<instance moduleIdRef="a59353bd0db0225dc22770e292c622f3" path="parts/core/lm358.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="a59353bd0db0225dc22770e292c622f3" path="parts/core/lm358.fzp">
+		<instance moduleIdRef="3a761a45-f1ff-11dd-b332-001a4d5c439f" path="parts/core/mystery_part3.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
