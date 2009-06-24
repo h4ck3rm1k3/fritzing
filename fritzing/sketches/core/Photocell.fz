@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.2b.06.17.3155">
+<module fritzingVersion="0.3.4b.06.23.3185">
     <instances>
-        <instance moduleIdRef="BreadboardModuleID" modelIndex="64144" path="C:/fritzing2/phoenix/parts/core/breadboard.fzp">
+        <instance moduleIdRef="BreadboardModuleID" modelIndex="64144" path="/Applications/fritzing/parts/core/breadboard.fzp">
             <title>Breadboard1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
-                    <geometry z="1.50004" x="108.588" y="261.596"/>
+                    <geometry z="1.50004" x="54.588" y="319.596"/>
                     <connectors>
                         <connector connectorId="Z29" layer="breadboardbreadboard">
                             <geometry x="0" y="0"/>
@@ -435,12 +435,12 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="1000ABDD10012" modelIndex="64148" path="C:/fritzing2/phoenix/parts/core/basic_ldr.fzp">
+        <instance moduleIdRef="1000ABDD10012" modelIndex="64148" path="/Applications/fritzing/parts/core/basic_ldr.fzp">
             <title>R 1</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.50003" x="255.887" y="312.618"/>
-                    <titleGeometry visible="true" x="259.644" y="285.103" z="4.50001" xOffset="3.7571" yOffset="-27.5143" textColor="#000000"/>
+                    <geometry z="2.50003" x="201.887" y="370.619"/>
+                    <titleGeometry visible="true" x="205.644" y="343.104" z="4.50001" xOffset="3.7571" yOffset="-27.5143" textColor="#000000"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"/>
@@ -512,7 +512,7 @@
             <title>Wire6</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50002" x="419.236" y="270.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
+                    <geometry z="3.50002" x="365.236" y="328.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
                     <wireExtras width="2" color="#cc1414" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -571,7 +571,7 @@
             <title>Wire7</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50005" x="419.236" y="279.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
+                    <geometry z="3.50005" x="365.236" y="337.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
                     <wireExtras width="2" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -630,7 +630,7 @@
             <title>Wire8</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50006" x="419.236" y="432.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
+                    <geometry z="3.50006" x="365.236" y="490.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
                     <wireExtras width="2" color="#cc1414" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -689,7 +689,7 @@
             <title>Wire9</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50007" x="419.236" y="441.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
+                    <geometry z="3.50007" x="365.236" y="499.596" x1="0" y1="0" x2="-26.9999" y2="0" wireFlags="64"/>
                     <wireExtras width="2" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -748,7 +748,7 @@
             <title>Wire10</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50008" x="662.235" y="441.596" x1="0" y1="0" x2="0" y2="-162" wireFlags="64"/>
+                    <geometry z="3.50008" x="608.235" y="499.596" x1="0" y1="0" x2="0" y2="-162" wireFlags="64"/>
                     <wireExtras width="2" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -807,7 +807,7 @@
             <title>Wire11</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50009" x="671.235" y="432.596" x1="0" y1="0" x2="0" y2="-162" wireFlags="64"/>
+                    <geometry z="3.50009" x="617.235" y="490.596" x1="0" y1="0" x2="0" y2="-162" wireFlags="64"/>
                     <wireExtras width="2" color="#cc1414" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -862,11 +862,11 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24" modelIndex="64246" path="C:/fritzing2/phoenix/parts/core/LED-red-5mm.fzp">
+        <instance moduleIdRef="1234ABDC24" modelIndex="64246" path="/Applications/fritzing/parts/core/LED-red-5mm.fzp">
             <title>LED1</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.50001" x="206.599" y="-8.34484"/>
+                    <geometry z="2.50001" x="152.599" y="49.6552"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"/>
@@ -932,11 +932,11 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="4321DEAB24_ST" modelIndex="71201" path="C:/fritzing2/phoenix/parts/core/arduino_diecimila_new.fzp">
+        <instance moduleIdRef="4321DEAB24_ST" modelIndex="71201" path="/Applications/fritzing/parts/core/arduino_diecimila_new.fzp">
             <title>Arduino1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
-                    <geometry z="1.5" x="98.2737" y="51.8105"/>
+                    <geometry z="1.5" x="44.2737" y="109.81"/>
                     <connectors>
                         <connector connectorId="connector18" layer="breadboardbreadboard">
                             <geometry x="0" y="0"/>
@@ -1151,7 +1151,7 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="423120090505" modelIndex="71239" path="C:/fritzing2/phoenix/parts/core/pcb-arduino-shield.fzp">
+        <instance moduleIdRef="423120090505" modelIndex="71239" path="/Applications/fritzing/parts/core/pcb-arduino-shield.fzp">
             <title>PCB2</title>
             <views>
                 <pcbView layer="silkscreen">
@@ -1171,7 +1171,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</text>
             <views>
                 <breadboardView layer="breadboardNote">
-                    <geometry z="5.50013" x="391.797" y="54.5724" width="295" height="178"/>
+                    <geometry z="5.50013" x="337.797" y="112.572" width="295" height="178"/>
                 </breadboardView>
             </views>
         </instance>
@@ -1363,7 +1363,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire12</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50011" x="257.237" y="270.596" x1="0" y1="0" x2="0.0734922" y2="-40.9438" wireFlags="64"/>
+                    <geometry z="3.50011" x="203.237" y="328.596" x1="0" y1="0" x2="0.0734779" y2="-40.9443" wireFlags="64"/>
                     <wireExtras width="2" color="#cc1414" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -1422,7 +1422,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire13</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50012" x="266.237" y="279.596" x1="0" y1="0" x2="0.0454179" y2="-49.9438" wireFlags="64"/>
+                    <geometry z="3.50012" x="212.237" y="337.596" x1="0" y1="0" x2="0.0454036" y2="-49.9443" wireFlags="64"/>
                     <wireExtras width="2" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -1481,7 +1481,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire14</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50014" x="257.237" y="306.596" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"/>
+                    <geometry z="3.50014" x="203.237" y="364.596" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"/>
                     <wireExtras width="2" color="#cc1414" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -1770,7 +1770,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire15</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50015" x="320.237" y="279.596" x1="0" y1="0" x2="0" y2="27" wireFlags="64"/>
+                    <geometry z="3.50015" x="266.237" y="337.596" x1="0" y1="0" x2="0" y2="27" wireFlags="64"/>
                     <wireExtras width="2" color="#404040" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -2059,7 +2059,7 @@ p, li { white-space: pre-wrap; }
             <title>Wire16</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50016" x="320.253" y="229.652" x1="0" y1="0" x2="-36.0158" y2="76.9438" wireFlags="64"/>
+                    <geometry z="3.50016" x="266.253" y="287.652" x1="0" y1="0" x2="-36.0158" y2="76.9443" wireFlags="64"/>
                     <wireExtras width="2" color="#ff7033" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -2206,11 +2206,11 @@ p, li { white-space: pre-wrap; }
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="9e3bbe56-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="77764" path="C:/fritzing2/phoenix/parts/core/resistor_10k.fzp">
+        <instance moduleIdRef="9e3bbe56-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="77764" path="/Applications/fritzing/parts/core/resistor_10k.fzp">
             <title>R3</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.5001" x="283.113" y="338.055"/>
+                    <geometry z="2.5001" x="228.751" y="396.055"/>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"/>
