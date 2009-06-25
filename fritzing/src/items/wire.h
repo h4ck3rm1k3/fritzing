@@ -110,6 +110,7 @@ public:
 	bool canChangeColor();
 	bool canChangeWidth();
 	void collectDirectWires(QList<Wire *> & wires);
+	bool isGrounded();
 
 public:
 	static const qreal ROUTED_OPACITY;

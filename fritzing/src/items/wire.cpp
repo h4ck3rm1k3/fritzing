@@ -1071,3 +1071,7 @@ bool Wire::connectionIsAllowed(ConnectorItem * to) {
 
 	return m_viewIdentifier != ViewIdentifierClass::BreadboardView;
 }
+
+bool Wire::isGrounded() {
+	return ConnectorItem::isGrounded(connector0(), connector1());
+}

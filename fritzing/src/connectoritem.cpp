@@ -1084,3 +1084,20 @@ void ConnectorItem::setShape(QPainterPath & pp) {
 bool ConnectorItem::isEverVisible() {
 	return m_attachedTo->isEverVisible();
 }
+
+bool ConnectorItem::isGrounded(ConnectorItem * c1, ConnectorItem * c2) {
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(c1);
+	connectorItems.append(c2);
+	collectEqualPotential(connectorItems, ViewGeometry::NoFlag);
+
+	foreach (ConnectorItem * end, connectorItems) {
+		QString name = end->connectorSharedName();
+		if ((name.compare("ground", Qt::CaseInsensitive) == 0) || (name.compare("gnd", Qt::CaseInsensitive) == 0)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+

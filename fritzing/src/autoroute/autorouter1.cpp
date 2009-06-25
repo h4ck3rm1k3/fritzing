@@ -42,10 +42,14 @@ struct Edge {
 	double distance;
 };
 
+bool edgeLessThan(Edge * e1, Edge * e2)
+{
+	return e1->distance < e2->distance;
+}
+
 bool edgeGreaterThan(Edge * e1, Edge * e2)
 {
-	//return e1->distance > e2->distance;
-	return e1->distance < e2->distance;
+	return e1->distance > e2->distance;
 }
 
 static int keepOut = 4;
@@ -202,9 +206,9 @@ void Autorouter1::start()
 	emit setMaximumProgress(edges.count());
 	QApplication::processEvents(); // to keep the app  from freezing
 
-	// sort the edges by distance (bigger distances first)
+	// sort the edges by distance
 	// TODO: for each edge, determine a measure of pin density, and use that, weighted with length, as the sort order
-	qSort(edges.begin(), edges.end(), edgeGreaterThan);
+	qSort(edges.begin(), edges.end(), edgeLessThan);
 
 	QPolygonF boundingPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-200, -200, 200, 200));
 
@@ -212,21 +216,24 @@ void Autorouter1::start()
 	int jumperCount = 0;
 	foreach (Edge * edge, edges) {
 		QList<ConnectorItem *> fromConnectorItems;
-		Bus * bus = edge->from->bus();
-		if (bus == NULL) {
-			fromConnectorItems.append(edge->from);
-		}
-		else {
-			edge->from->attachedTo()->busConnectorItems(bus, fromConnectorItems);
-		}
+		expand(edge->from, fromConnectorItems, false);
 		QList<ConnectorItem *> toConnectorItems;
-		bus = edge->to->bus();
-		if (bus == NULL) {
-			toConnectorItems.append(edge->to);
+		expand(edge->to, toConnectorItems, true);
+
+		QList<Edge *> subedges;
+		foreach (ConnectorItem * from, fromConnectorItems) {
+			QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
+			foreach (ConnectorItem * to, toConnectorItems) {
+				QPointF p2 = to->sceneAdjustedTerminalPoint(NULL);
+				Edge * subedge = new Edge;
+				subedge->from = from;
+				subedge->to = to;
+				subedge->distance = (p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y());		
+				subedges.append(subedge);
+			}
 		}
-		else {
-			edge->to->attachedTo()->busConnectorItems(bus, toConnectorItems);
-		}	
+		
+		qSort(subedges.begin(), subedges.end(), edgeLessThan);
 
 		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
 			.arg(edge->from->attachedToTitle())
@@ -260,55 +267,59 @@ void Autorouter1::start()
 
 		bool routedFlag = false;
 		QList<Wire *> wires;
-		foreach (ConnectorItem * from, fromConnectorItems) {
+		foreach (Edge * subedge, subedges) {
 			if (m_cancelled || m_stopTrace) break;
 			if (routedFlag) break;
-			foreach (ConnectorItem * to, toConnectorItems) {
-				if (m_cancelled || m_stopTrace) break;	
-				if (routedFlag) break;
 
-				// find the ratsnest connecting the two connectors
-				Wire * ratsnest = NULL;
-				foreach (ConnectorItem * fromToConnectorItem, from->connectedToItems()) {
-					Wire * wire = dynamic_cast<Wire *>(fromToConnectorItem->attachedTo());
-					if (wire == NULL) continue;
-					if (!wire->getRatsnest()) continue;
+			ConnectorItem * from = subedge->from;
+			ConnectorItem * to = subedge->to;
 
-					ConnectorItem * otherConnectorItem = wire->otherConnector(fromToConnectorItem);
-					if (otherConnectorItem->connectedToItems().contains(to)) {
-						ratsnest = wire;
-						break;
-					}
-				}
+			// find the ratsnest connecting the two connectors
+			Wire * ratsnest = NULL;
+			foreach (ConnectorItem * fromToConnectorItem, from->connectedToItems()) {
+				Wire * wire = dynamic_cast<Wire *>(fromToConnectorItem->attachedTo());
+				if (wire == NULL) continue;
+				if (!wire->getRatsnest()) continue;
 
-				int ratsnestWidth = 0;
-				if (ratsnest) {
-					ratsnestWidth = ratsnest->width();
-					ratsnest->setWidth(5);
-				};
-
-				wires.clear();
-				if (!m_sketchWidget->autorouteNeedsBounds()) {
-					routedFlag = drawTrace(from, to, boundingPoly, wires);
-				}
-				else if (partForBounds) {
-					QRectF boundingRect = partForBounds->boundingRect();
-					boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
-					routedFlag = drawTrace(from, to, partForBounds->mapToScene(boundingRect), wires);
-					if (routedFlag) {
-						foreach (Wire * wire, wires) {
-							wire->addSticky(partForBounds, true);
-							partForBounds->addSticky(wire, true);
-							//DebugDialog::debug(QString("added wire %1").arg(wire->id()));
-						}
-					}
-				}
-				
-				if (ratsnest) {
-					ratsnest->setWidth(ratsnestWidth);
+				ConnectorItem * otherConnectorItem = wire->otherConnector(fromToConnectorItem);
+				if (otherConnectorItem->connectedToItems().contains(to)) {
+					ratsnest = wire;
+					break;
 				}
 			}
+
+			int ratsnestWidth = 0;
+			if (ratsnest) {
+				ratsnestWidth = ratsnest->width();
+				ratsnest->setWidth(5);
+			};
+
+			wires.clear();
+			if (!m_sketchWidget->autorouteNeedsBounds()) {
+				routedFlag = drawTrace(from, to, boundingPoly, wires);
+			}
+			else if (partForBounds) {
+				QRectF boundingRect = partForBounds->boundingRect();
+				boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
+				routedFlag = drawTrace(from, to, partForBounds->mapToScene(boundingRect), wires);
+				if (routedFlag) {
+					foreach (Wire * wire, wires) {
+						wire->addSticky(partForBounds, true);
+						partForBounds->addSticky(wire, true);
+						//DebugDialog::debug(QString("added wire %1").arg(wire->id()));
+					}
+				}
+			}
+			
+			if (ratsnest) {
+				ratsnest->setWidth(ratsnestWidth);
+			}
 		}
+
+		foreach (Edge * subedge, subedges) {
+			delete subedge;
+		}
+		subedges.clear();
 
 		if (!routedFlag && !m_stopTrace) {
 			drawJumper(edge->from, edge->to, partForBounds);
@@ -360,6 +371,40 @@ void Autorouter1::start()
 	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
 	m_sketchWidget->pushCommand(parentCommand);
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
+}
+
+void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus) {
+	Bus * bus = originalConnectorItem->bus();
+	if (bus == NULL) {
+		connectorItems.append(originalConnectorItem);
+	}
+	else {
+		originalConnectorItem->attachedTo()->busConnectorItems(bus, connectorItems);
+	}
+	if (onlyBus) return;
+
+	QList<Wire *> visited;
+	for (int i = 0; i < connectorItems.count(); i++) { 
+		ConnectorItem * fromConnectorItem = connectorItems[i];
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			TraceWire * traceWire = dynamic_cast<TraceWire *>(toConnectorItem->attachedTo());
+			if (traceWire == NULL) continue;
+			if (visited.contains(traceWire)) continue;
+
+			QList<Wire *> wires;
+			QList<ConnectorItem *> uniqueEnds;
+			QList<ConnectorItem *> ends;
+			traceWire->collectChained(wires, ends, uniqueEnds);
+			foreach (Wire * wire, wires) {
+				visited.append(wire);
+			}
+			foreach (ConnectorItem * end, ends) {
+				if (!connectorItems.contains(end)) {
+					connectorItems.append(end);
+				}
+			}
+		}
+	}
 }
 
 void Autorouter1::cleanUp() {
@@ -546,6 +591,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 	bool shortcut = false;
 	bool backwards = false;
+	m_autobail = 0;
 	bool result = drawTrace(fromPos, toPos, from, to, wires, boundingPoly, 0, toPos, true, shortcut);
 	if (m_cancelled) {
 		return false;
@@ -555,6 +601,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	}
 	else if (!result) {
 		//DebugDialog::debug("backwards?");
+		m_autobail = 0;
 		result = drawTrace(toPos, fromPos, to, from, wires, boundingPoly, 0, fromPos, true, shortcut);
 		if (result) {
 			backwards = true;
@@ -645,6 +692,10 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool recurse, bool & shortcut)
 {
+	if (++m_autobail > 300) {
+		return false;
+	}
+
 	QApplication::processEvents();
 	DebugDialog::debug(QString("%5 drawtrace from:%1 %2, to:%3 %4")
 		.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );

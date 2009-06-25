@@ -151,6 +151,7 @@ public:
 	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
 	static void clearEqualPotentialDisplay();
+	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);
 
 public:
 	static const QList<ConnectorItem *> emptyConnectorItemList;

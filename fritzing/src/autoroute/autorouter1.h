@@ -83,6 +83,7 @@ protected:
 	bool sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	bool sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	bool sameEffectiveLayer(ViewLayer::ViewLayerID viewLayerID1, ViewLayer::ViewLayerID viewLayerID2);
+	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus);
 
 public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
@@ -108,6 +109,7 @@ protected:
 	bool m_cancelled;
 	bool m_cancelTrace;
 	bool m_stopTrace;
+	int m_autobail;
 	QGraphicsItem * m_nearestObstacle;
 	QList<Wire *> m_cleanWires;
 };

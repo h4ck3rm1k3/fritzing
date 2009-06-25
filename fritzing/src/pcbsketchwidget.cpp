@@ -1352,17 +1352,9 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 		TraceWire * trace = dynamic_cast<TraceWire *>(item);
 		if (trace == NULL) continue;
 
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(trace->connector0());
-		connectorItems.append(trace->connector1());
-		ConnectorItem::collectEqualPotential(connectorItems, ViewGeometry::NoFlag);
-
-		foreach (ConnectorItem * end, connectorItems) {
-			QString name = end->connectorSharedName();
-			if ((name.compare("ground", Qt::CaseInsensitive) == 0) || (name.compare("gnd", Qt::CaseInsensitive) == 0)) {
-				trace->setVisible(show);
-				break;
-			}
+		if (trace->isGrounded()) {
+			trace->setVisible(show);
 		}
 	}
 }
+

@@ -164,7 +164,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		newR.setRect(0, 0, newX - oldX1, oldY2 - newY);
 		QRectF tempR = newR;
 		tempR.moveTopLeft(p);
-		DebugDialog::debug(QString("new rect %1 %2 %3").arg(newY).arg(newR.height()).arg(newY + newR.height()));
+		//DebugDialog::debug(QString("new rect %1 %2 %3").arg(newY).arg(newR.height()).arg(newY + newR.height()));
 	}
 	else if (m_inResize == m_resizeGripBL) {
 		oldX2 = m_originalRect.left() + m_originalRect.width();
