@@ -255,6 +255,16 @@ void Autorouter1::start()
 			}
 		}
 
+		QList<ConnectorItem *> drawingNet(fromConnectorItems);
+		drawingNet.append(toConnectorItems);
+		foreach (QList<ConnectorItem *> * pconnectorItems, m_allPartConnectorItems) {
+			if (pconnectorItems->contains(edge->from)) {
+				drawingNet.append(*pconnectorItems);
+				break;
+			}
+		}
+		m_drawingNet = &drawingNet;
+
 		foreach (Wire * wire, fromTraces) {
 			bool useConnector0 = true;
 			bool useConnector1 = true;
@@ -375,6 +385,8 @@ void Autorouter1::start()
 						break;
 					}
 				}
+
+
 
 				if (ratsnest) {
 					ratsnestWidth = ratsnest->width();
@@ -694,14 +706,6 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
 	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
-
-	m_drawingNet = NULL;
-	foreach (QList<ConnectorItem *> * connectorItems, m_allPartConnectorItems) {
-		if (connectorItems->contains(from)) {
-			m_drawingNet = connectorItems;
-			break;
-		}
-	}
 
 	bool shortcut = false;
 	bool backwards = false;
