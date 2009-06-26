@@ -35,6 +35,8 @@ $Date$
 #include <QApplication>
 
 static int kExtraLength = 1000000;
+static int kAutoBailMax = 250;
+
 
 struct Edge {
 	ConnectorItem * from;
@@ -42,7 +44,30 @@ struct Edge {
 	double distance;
 };
 
+struct Subedge {
+	ConnectorItem * from;
+	ConnectorItem * to;
+	Wire * wire;
+	QPointF point;
+	double distance;
+};
+
+Subedge * makeSubedge(QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to) 
+{
+	Subedge * subedge = new Subedge;
+	subedge->from = from;
+	subedge->to = to;
+	subedge->wire = NULL;
+	subedge->distance = (p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y());		
+	return subedge;
+}
+
 bool edgeLessThan(Edge * e1, Edge * e2)
+{
+	return e1->distance < e2->distance;
+}
+
+bool subedgeLessThan(Subedge * e1, Subedge * e2)
 {
 	return e1->distance < e2->distance;
 }
@@ -216,24 +241,74 @@ void Autorouter1::start()
 	int jumperCount = 0;
 	foreach (Edge * edge, edges) {
 		QList<ConnectorItem *> fromConnectorItems;
-		expand(edge->from, fromConnectorItems, false);
+		QSet<Wire *> fromTraces;
+		expand(edge->from, fromConnectorItems, false, fromTraces);
 		QList<ConnectorItem *> toConnectorItems;
-		expand(edge->to, toConnectorItems, true);
+		QSet<Wire *> toTraces;
+		expand(edge->to, toConnectorItems, true, toTraces);
 
-		QList<Edge *> subedges;
+		QList<Subedge *> subedges;
 		foreach (ConnectorItem * from, fromConnectorItems) {
 			QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
 			foreach (ConnectorItem * to, toConnectorItems) {
+				subedges.append(makeSubedge(p1, from, to->sceneAdjustedTerminalPoint(NULL), to));
+			}
+		}
+
+		foreach (Wire * wire, fromTraces) {
+			bool useConnector0 = true;
+			bool useConnector1 = true;
+			foreach (ConnectorItem * to, wire->connector0()->connectedToItems()) {
+				if (to->attachedToItemType() != ModelPart::Wire) {
+					useConnector0 = false;
+					break;
+				}
+			}
+			foreach (ConnectorItem * to, wire->connector1()->connectedToItems()) {
+				if (to->attachedToItemType() != ModelPart::Wire) {
+					useConnector1 = false;
+					break;
+				}
+			}
+
+			QPointF connector0p;
+			QPointF connector1p;
+
+			if (useConnector0) {
+				connector0p = wire->connector0()->sceneAdjustedTerminalPoint(NULL);
+			}
+			if (useConnector1) {
+				connector1p = wire->connector1()->sceneAdjustedTerminalPoint(NULL);
+			}
+
+			foreach (ConnectorItem * to, toConnectorItems) {
 				QPointF p2 = to->sceneAdjustedTerminalPoint(NULL);
-				Edge * subedge = new Edge;
-				subedge->from = from;
-				subedge->to = to;
-				subedge->distance = (p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y());		
-				subedges.append(subedge);
+				if (useConnector0) {
+					subedges.append(makeSubedge(connector0p, wire->connector0(), p2, to));
+				}
+				if (useConnector1) {
+					subedges.append(makeSubedge(connector1p, wire->connector1(), p2, to));
+				}
+
+				bool atEndpoint;
+				double distance, dx, dy;
+				QPointF p = wire->pos();
+				QPointF pp = wire->line().p2() + p;
+				distanceFromLine(p2.x(), p2.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
+				if (!atEndpoint) {
+					Subedge * subedge = new Subedge;
+					subedge->from = NULL;
+					subedge->wire = wire;
+					subedge->to = to;
+					subedge->distance = distance;
+					subedge->point.setX(dx);
+					subedge->point.setY(dy);
+					subedges.append(subedge);
+				}
 			}
 		}
 		
-		qSort(subedges.begin(), subedges.end(), edgeLessThan);
+		qSort(subedges.begin(), subedges.end(), subedgeLessThan);
 
 		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
 			.arg(edge->from->attachedToTitle())
@@ -267,32 +342,45 @@ void Autorouter1::start()
 
 		bool routedFlag = false;
 		QList<Wire *> wires;
-		foreach (Edge * subedge, subedges) {
+		foreach (Subedge * subedge, subedges) {
 			if (m_cancelled || m_stopTrace) break;
 			if (routedFlag) break;
 
+			Wire * ratsnest = NULL;
+			int ratsnestWidth = 0;
+
 			ConnectorItem * from = subedge->from;
 			ConnectorItem * to = subedge->to;
-
-			// find the ratsnest connecting the two connectors
-			Wire * ratsnest = NULL;
-			foreach (ConnectorItem * fromToConnectorItem, from->connectedToItems()) {
-				Wire * wire = dynamic_cast<Wire *>(fromToConnectorItem->attachedTo());
-				if (wire == NULL) continue;
-				if (!wire->getRatsnest()) continue;
-
-				ConnectorItem * otherConnectorItem = wire->otherConnector(fromToConnectorItem);
-				if (otherConnectorItem->connectedToItems().contains(to)) {
-					ratsnest = wire;
-					break;
-				}
+			TraceWire * splitWire = NULL;
+			QLineF originalLine;
+			if (from == NULL) {
+				// split the trace at subedge->point then restore it later
+				originalLine = subedge->wire->line();
+				QLineF newLine(QPointF(0,0), subedge->point - subedge->wire->pos());
+				subedge->wire->setLine(newLine);
+				splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), StandardTraceWidth + 1);
+				from = splitWire->connector0();
+				QApplication::processEvents();
 			}
+			else {
+				// find the ratsnest connecting the two connectors
+				foreach (ConnectorItem * fromToConnectorItem, from->connectedToItems()) {
+					Wire * wire = dynamic_cast<Wire *>(fromToConnectorItem->attachedTo());
+					if (wire == NULL) continue;
+					if (!wire->getRatsnest()) continue;
 
-			int ratsnestWidth = 0;
-			if (ratsnest) {
-				ratsnestWidth = ratsnest->width();
-				ratsnest->setWidth(5);
-			};
+					ConnectorItem * otherConnectorItem = wire->otherConnector(fromToConnectorItem);
+					if (otherConnectorItem->connectedToItems().contains(to)) {
+						ratsnest = wire;
+						break;
+					}
+				}
+
+				if (ratsnest) {
+					ratsnestWidth = ratsnest->width();
+					ratsnest->setWidth(5);
+				};
+			}
 
 			wires.clear();
 			if (!m_sketchWidget->autorouteNeedsBounds()) {
@@ -314,9 +402,35 @@ void Autorouter1::start()
 			if (ratsnest) {
 				ratsnest->setWidth(ratsnestWidth);
 			}
+
+			if (subedge->wire != NULL) {
+				if (routedFlag) {
+					// hook up the split trace
+					ConnectorItem * connector1 = subedge->wire->connector1();
+					ConnectorItem * newConnector1 = splitWire->connector1();
+					foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
+						connector1->tempRemove(toConnectorItem, false);
+						toConnectorItem->tempRemove(connector1, false);
+						newConnector1->tempConnectTo(toConnectorItem, false);
+						toConnectorItem->tempConnectTo(newConnector1, false);
+						if (partForBounds) {
+							splitWire->addSticky(partForBounds, true);
+							partForBounds->addSticky(splitWire, true);
+						}
+					}
+
+					connector1->tempConnectTo(splitWire->connector0(), false);
+					splitWire->connector0()->tempConnectTo(connector1, false);
+				}
+				else {
+					// restore the old trace
+					subedge->wire->setLine(originalLine);
+					m_sketchWidget->deleteItem(splitWire, true, false, false);
+				}
+			}
 		}
 
-		foreach (Edge * subedge, subedges) {
+		foreach (Subedge * subedge, subedges) {
 			delete subedge;
 		}
 		subedges.clear();
@@ -373,7 +487,8 @@ void Autorouter1::start()
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
-void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus) {
+void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited) 
+{
 	Bus * bus = originalConnectorItem->bus();
 	if (bus == NULL) {
 		connectorItems.append(originalConnectorItem);
@@ -383,7 +498,6 @@ void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorI
 	}
 	if (onlyBus) return;
 
-	QList<Wire *> visited;
 	for (int i = 0; i < connectorItems.count(); i++) { 
 		ConnectorItem * fromConnectorItem = connectorItems[i];
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
@@ -396,7 +510,7 @@ void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorI
 			QList<ConnectorItem *> ends;
 			traceWire->collectChained(wires, ends, uniqueEnds);
 			foreach (Wire * wire, wires) {
-				visited.append(wire);
+				visited.insert(wire);
 			}
 			foreach (ConnectorItem * end, ends) {
 				if (!connectorItems.contains(end)) {
@@ -692,7 +806,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool recurse, bool & shortcut)
 {
-	if (++m_autobail > 300) {
+	if (++m_autobail > kAutoBailMax) {
 		return false;
 	}
 

@@ -329,13 +329,13 @@ int FApplication::startup(int & argc, char ** argv)
 	fix = QFontDatabase::addApplicationFont (":/resources/fonts/DroidSans-Bold.ttf");
 	fix = QFontDatabase::addApplicationFont (":/resources/fonts/ocra10.ttf");
 
-	/*
+	
 	QFontDatabase database;
 	QStringList families = database.families (  );
 	foreach (QString string, families) {
 		DebugDialog::debug(string);			// should print out the name of the font you loaded
 	}
-	*/
+	
 
 	splash.showProgress(progressIndex, 0.085);
 	processEvents();

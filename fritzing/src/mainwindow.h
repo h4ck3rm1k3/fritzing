@@ -262,7 +262,7 @@ protected:
 	void closeEvent(QCloseEvent * event);
 	void saveAsAux(const QString & fileName);
 	void printAux(QPrinter &printer, const QString & message, bool removeBackground=true);
-	void exportAux(QString fileName, QImage::Format format);
+	void exportAux(QString fileName, QImage::Format format, bool removeBackground);
 	void notYetImplemented(QString action);
 	void setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox = NULL);
 	void setCurrentFile(const QString &fileName, bool addToRecent=true);

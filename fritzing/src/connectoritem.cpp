@@ -43,50 +43,9 @@ const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
 
 static double MAX_DOUBLE = std::numeric_limits<double>::max();
 
-void distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 
-					  double & dx, double & dy, double &distanceSegment)
-{
 
-	// http://www.codeguru.com/forum/showthread.php?t=194400
-
-	//
-	// find the distance from the point (cx,cy) to the line
-	// determined by the points (ax,ay) and (bx,by)
-	//
-
-	double r_numerator = (cx-ax)*(bx-ax) + (cy-ay)*(by-ay);
-	double r_denomenator = (bx-ax)*(bx-ax) + (by-ay)*(by-ay);
-	double r = r_numerator / r_denomenator;
-     
-	if ( (r >= 0) && (r <= 1) )
-	{
-		dx = ax + r*(bx-ax);
-		dy = ay + r*(by-ay);
-		distanceSegment = (cx-dx)*(cx-dx) + (cy-dy)*(cy-dy);
-	}
-	else
-	{
-		double dist1 = (cx-ax)*(cx-ax) + (cy-ay)*(cy-ay);
-		double dist2 = (cx-bx)*(cx-bx) + (cy-by)*(cy-by);
-		if (dist1 < dist2)
-		{
-			dx = ax;
-			dy = ay;
-			distanceSegment = dist1;
-		}
-		else
-		{
-			dx = bx;
-			dy = by;
-			distanceSegment = dist2;
-		}
-	}
-
-	return;
-}
 
 /////////////////////////////////////////////////////////
-
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
@@ -513,8 +472,9 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
 				else {
 					QPointF current = this->mapToScene(QPointF(el));
 					double candidateX, candidateY, candidateDistance;
+					bool atEndpoint;
 					distanceFromLine(anchor.x(), anchor.y(), prev.x(), prev.y(), current.x(), current.y(), 
-										candidateX, candidateY, candidateDistance);
+										candidateX, candidateY, candidateDistance, atEndpoint);
 					if (candidateDistance < newDistance) {
 						newX = candidateX;
 						newY = candidateY;

@@ -84,7 +84,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
     : SketchWidget(viewIdentifier, parent)
 {
 	m_viewName = QObject::tr("PCB View");
-	m_viewName = QObject::tr("pcb");
+	m_shortName = QObject::tr("pcb");
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 	m_traceColor = "trace";
 	m_jumperColor = "jumper";

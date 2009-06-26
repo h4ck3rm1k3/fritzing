@@ -315,7 +315,7 @@ void MainWindow::doExport() {
 				m_statusBar->showMessage(tr("Sketch exported"), 2000);
 			} else { // PNG...
 				DebugDialog::debug(QString("format: %1 %2").arg(fileExt).arg(fileExportFormats[actionType]));
-				exportAux(fileName,fileExportFormats[actionType]);
+				exportAux(fileName,fileExportFormats[actionType], true);
 			}
 			delete fileProgressDialog;
 
@@ -323,7 +323,7 @@ void MainWindow::doExport() {
 	#endif
 }
 
-void MainWindow::exportAux(QString fileName, QImage::Format format) {
+void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeBackground) {
 	int width = m_currentGraphicsView->width();
 	if (m_currentGraphicsView->verticalScrollBar()->isVisible()) {
 		width -= m_currentGraphicsView->verticalScrollBar()->width();
@@ -338,22 +338,21 @@ void MainWindow::exportAux(QString fileName, QImage::Format format) {
 	image.setDotsPerMeterY(1200*254);
 	QPainter painter;
 
-	//QColor color;
-	//if(true) {
-		//color = m_currentWidget->background();
-		//m_currentWidget->setBackground(QColor::fromRgb(255,255,255,255));
-	//}
+
+	QColor color;
+	if (removeBackground) {
+		color = m_currentGraphicsView->background();
+		m_currentGraphicsView->setBackground(QColor::fromRgb(255,255,255,255));
+	}
 
 	painter.begin(&image);
 	m_currentGraphicsView->render(&painter);
 	painter.end();
 
-	//if (true) {
-		//m_currentWidget->setBackground(color);
-	//}
+	if (removeBackground) {
+		m_currentGraphicsView->setBackground(color);
+	}
 
-	//QImage bw = image->createHeuristicMask();  // image->createMaskFromColor (Wire::getRgb("trace"), Qt::MaskOutColor );
-	//bool result = bw.save(fileName);
 	bool result = image.save(fileName);
 	if (!result) {
 		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save %1").arg(fileName) );

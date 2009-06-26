@@ -80,6 +80,9 @@ qreal convertToInches(const QString & string, bool * ok);
 
 bool isParent(QObject * candidateParent, QObject * candidateChild);
 
+void distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 
+					  double & dx, double & dy, double &distanceSegment, bool & atEndpoint);
+
 
 static const QString FritzingSketchExtension(".fz");
 static const QString FritzingBinExtension(".fzb");
