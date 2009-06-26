@@ -99,6 +99,7 @@ public:
 	void showEqualPotential(bool show);
 	void setShape(QPainterPath &);
 	void setHoverColor();
+	bool isGrounded();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

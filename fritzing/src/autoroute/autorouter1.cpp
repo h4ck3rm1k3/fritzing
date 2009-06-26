@@ -42,6 +42,7 @@ struct Edge {
 	ConnectorItem * from;
 	ConnectorItem * to;
 	double distance;
+	bool ground;
 };
 
 struct Subedge {
@@ -64,7 +65,11 @@ Subedge * makeSubedge(QPointF p1, ConnectorItem * from, QPointF p2, ConnectorIte
 
 bool edgeLessThan(Edge * e1, Edge * e2)
 {
-	return e1->distance < e2->distance;
+	if (e1->ground == e2->ground) {
+		return e1->distance < e2->distance;
+	}
+
+	return e2->ground;
 }
 
 bool subedgeLessThan(Subedge * e1, Subedge * e2)
@@ -202,11 +207,19 @@ void Autorouter1::start()
 	foreach (QList<ConnectorItem *>* partConnectorItems, m_allPartConnectorItems) {
 		// dijkstra will reorder *partConnectorItems
 		dijkstra(*partConnectorItems, indexer, adjacency, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
+		bool ground = false;
+		foreach (ConnectorItem * pci, *partConnectorItems) {
+			if (pci->isGrounded()) {
+				ground = true;
+				break;
+			}
+		}
 		for (int i = 0; i < partConnectorItems->count() - 1; i++) {
 			Edge * edge = new Edge;
 			edge->from = partConnectorItems->at(i);
 			edge->to = partConnectorItems->at(i + 1);
 			edge->distance = (*adjacency[indexer.value(edge->from)])[indexer.value(edge->to)];
+			edge->ground = ground;
 			if (edge->distance == 0) {
 				// do not autoroute this edge
 				delete edge;

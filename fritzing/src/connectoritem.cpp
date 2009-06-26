@@ -1047,17 +1047,25 @@ bool ConnectorItem::isEverVisible() {
 
 bool ConnectorItem::isGrounded(ConnectorItem * c1, ConnectorItem * c2) {
 	QList<ConnectorItem *> connectorItems;
-	connectorItems.append(c1);
-	connectorItems.append(c2);
+	if (c1 != NULL) {
+		connectorItems.append(c1);
+	}
+	if (c2 != NULL) {
+		connectorItems.append(c2);
+	}
 	collectEqualPotential(connectorItems, ViewGeometry::NoFlag);
 
 	foreach (ConnectorItem * end, connectorItems) {
-		QString name = end->connectorSharedName();
-		if ((name.compare("ground", Qt::CaseInsensitive) == 0) || (name.compare("gnd", Qt::CaseInsensitive) == 0)) {
-			return true;
-		}
+		if (end->isGrounded()) return true;
+
 	}
 
 	return false;
+}
+
+bool ConnectorItem::isGrounded() {
+	QString name = connectorSharedName();
+	return ((name.compare("gnd", Qt::CaseInsensitive) == 0) || 
+			(name.compare("ground", Qt::CaseInsensitive) == 0));
 }
 
