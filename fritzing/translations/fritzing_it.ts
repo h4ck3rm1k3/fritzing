@@ -1828,10 +1828,6 @@ Quantità	Componente
         <translation>Rinomina cesto</translation>
     </message>
     <message>
-        <source>Save As Shareable...</source>
-        <translation type="unfinished">Salva come Condivisibile...</translation>
-    </message>
-    <message>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1965,11 +1961,11 @@ Specifica un nuovo nome</translation>
         <translation>Seleziona una icona per questo componente</translation>
     </message>
     <message>
-        <source>image ...</source>
-        <translation>Immagine...</translation>
+        <source>close</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>close</source>
+        <source>Load icon..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2015,13 +2011,13 @@ questo componente
 sullo schema?</translation>
     </message>
     <message>
-        <source>image ...</source>
-        <translation>immagine ...</translation>
-    </message>
-    <message>
         <source>What does this
 part look like in
 the PCB view?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load image..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2626,14 +2622,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>Ribalta</translation>
     </message>
     <message>
-        <source>Shift-click to add a bend point to the wire</source>
-        <translation>Shift-click per aggiungere un punto di curvatura al filo</translation>
-    </message>
-    <message>
-        <source>Shift-click to delete this bend point</source>
-        <translation>Shift-click per eliminare questo punto di curvatura</translation>
-    </message>
-    <message>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Cambia etichetta da %1 a &apos;%2&apos;</translation>
     </message>
@@ -2667,6 +2655,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Rotate %2 (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-click to add a bend point to the wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-click to delete this bend point</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2723,6 +2719,10 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>Hindi - %1</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Hungarian - %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

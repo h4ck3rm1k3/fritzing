@@ -1809,10 +1809,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save As Shareable...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1943,11 +1939,11 @@ Please, specify a new filename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>image ...</source>
+        <source>close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>close</source>
+        <source>Load icon..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1989,13 +1985,13 @@ a schematic view?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>image ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>What does this
 part look like in
 the PCB view?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load image..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2588,14 +2584,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Shift-click to add a bend point to the wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shift-click to delete this bend point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2629,6 +2617,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Rotate %2 (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-click to add a bend point to the wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-click to delete this bend point</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2684,6 +2680,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Portuguese (Brazilian) - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
