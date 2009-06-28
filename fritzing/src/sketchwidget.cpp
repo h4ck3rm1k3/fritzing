@@ -76,6 +76,7 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_dragBendpointWire = NULL;
 	m_lastHoverEnterItem = NULL;
 	m_lastHoverEnterConnectorItem = NULL;
 	m_resizingBoard = NULL;
@@ -1520,6 +1521,7 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
+	m_dragBendpointWire = NULL;
 	m_spaceBarWasPressed = m_spaceBarIsPressed;
 	if (m_spaceBarIsPressed) {
 		InfoGraphicsView::mousePressEvent(event);
@@ -1534,6 +1536,9 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	m_moveEventCount = 0;
 	m_holdingSelectItemCommand = stackSelectionState(false, NULL);
 	m_mousePressScenePos = mapToScene(event->pos());
+	m_mousePressShiftModifier = (event->modifiers() & Qt::ShiftModifier) != 0;
+	m_mousePressGlobalPos = event->globalPos();
+	m_dragConstraint = NO_CONSTRAINT;
 
 	QList<QGraphicsItem *> items = this->items(event->pos());
 	QGraphicsItem* wasItem = NULL;
@@ -1601,7 +1606,8 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 				return;
 			}
 			else {
-				prepDragBendpoint(wire, event->pos());
+				m_dragBendpointWire = wire;
+				m_dragBendpointPos = event->pos();
 				return;	
 			}
 		}
@@ -1887,7 +1893,7 @@ void SketchWidget::prepDragWire(Wire * wire)
 	setupAutoscroll(true);
 }
 
-void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos) 
+void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool shiftModifier) 
 {
 	m_bendpointWire = wire;
 	wire->saveGeometry();
@@ -1895,9 +1901,9 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	QPointF newPos = mapToScene(eventPos); 
 	QPointF oldPos = wire->pos();
 	QLineF oldLine = wire->line();
-	DebugDialog::debug(QString("oldpos"), oldPos);
-	DebugDialog::debug(QString("oldline p1"), oldLine.p1());
-	DebugDialog::debug(QString("oldline p2"), oldLine.p2());
+	//DebugDialog::debug(QString("oldpos"), oldPos);
+	//DebugDialog::debug(QString("oldline p1"), oldLine.p1());
+	//DebugDialog::debug(QString("oldline p2"), oldLine.p2());
 	QLineF newLine(oldLine.p1(), newPos - oldPos);
 	wire->setLine(newLine);
 	vg.setLoc(newPos);
@@ -1916,7 +1922,7 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	oldConnector1->tempConnectTo(m_connectorDragWire->connector0(), false);
 	m_connectorDragWire->connector0()->tempConnectTo(oldConnector1, false);
 	m_connectorDragConnector = oldConnector1;
-	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
+	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), newPos, shiftModifier);
 	m_connectorDragWire->grabMouse();
 }
 
@@ -1929,8 +1935,15 @@ void SketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<ItemBase *>
 bool SketchWidget::draggingWireEnd() {
 	if (m_connectorDragWire != NULL) return true;
 
-	Wire * wire = dynamic_cast<Wire *>( scene()->mouseGrabberItem());
-	if (wire == NULL) return false;
+	QGraphicsItem * mouseGrabberItem = scene()->mouseGrabberItem();
+	Wire * wire = dynamic_cast<Wire *>(mouseGrabberItem);
+	if (wire == NULL) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(mouseGrabberItem);
+		if (connectorItem == NULL) return false;
+		if (connectorItem->attachedToItemType() != ModelPart::Wire) return false;
+
+		wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
+	}
 
 	return wire->draggingEnd();
 }
@@ -1938,6 +1951,12 @@ bool SketchWidget::draggingWireEnd() {
 void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// if its just dragging a wire end do default
 	// otherwise handle all move action here
+
+	if (m_dragBendpointWire != NULL) {
+		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos, (event->modifiers() & Qt::ShiftModifier) != 0);
+		m_dragBendpointWire = NULL;
+		return;
+	}
 
 	if (m_spaceBarWasPressed) {
 		InfoGraphicsView::mouseMoveEvent(event);
@@ -1947,7 +1966,13 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	if (m_savedItems.count() > 0) {
 		if ((event->buttons() & Qt::LeftButton) && !draggingWireEnd()) {
 			m_globalPos = event->globalPos();
-			moveItems(event->globalPos());
+			if (m_mousePressShiftModifier) {
+				QPointF p = calcConstraint(m_dragConstraint, m_mousePressGlobalPos, m_globalPos);
+				m_globalPos.setX(p.x());
+				m_globalPos.setY(p.y());
+			}
+
+			moveItems(m_globalPos);
 		}
 	}
 
@@ -2028,6 +2053,7 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
+	m_dragBendpointWire = NULL;
 	ConnectorItem::clearEqualPotentialDisplay();
 
 	if (m_spaceBarWasPressed) {
@@ -3102,7 +3128,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	// give connector item the mouse, so wire doesn't get mouse moved events
 	m_connectorDragWire->setVisible(true);
 	m_connectorDragWire->grabMouse();
-	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
+	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), event->scenePos(), (event->modifiers() & Qt::ShiftModifier) != 0);
 	m_connectorDragConnector->tempConnectTo(m_connectorDragWire->connector1(), false);
 	m_connectorDragWire->connector1()->tempConnectTo(m_connectorDragConnector, false);
 	if (!m_lastColorSelected.isEmpty()) {
@@ -3895,7 +3921,7 @@ void SketchWidget::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 	}
 
 	if (canChainWire(dynamic_cast<Wire *>(item))) {
-		statusMessage(tr("Shift-click to add a bend point to the wire"));
+		statusMessage(tr("Double-click to add a bend point to the wire"));
 		m_lastHoverEnterItem = item;
 	}
 }
@@ -3952,7 +3978,7 @@ const QString & SketchWidget::hoverEnterWireConnectorMessage(QGraphicsSceneHover
 	Q_UNUSED(event);
 	Q_UNUSED(item);
 
-	static QString message = tr("Shift-click to delete this bend point");
+	static QString message = tr("Double-click to delete this bend point");
 	return message;
 }
 

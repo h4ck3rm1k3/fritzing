@@ -83,6 +83,14 @@ bool isParent(QObject * candidateParent, QObject * candidateChild);
 void distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 
 					  double & dx, double & dy, double &distanceSegment, bool & atEndpoint);
 
+enum Constraint {
+	NO_CONSTRAINT,
+	HORIZONTAL_CONSTRAINT,
+	VERTICAL_CONSTRAINT,
+	FORTY_FIVE_CONSTRAINT
+};
+
+QPointF calcConstraint(Constraint & constraint, QPointF initial, QPointF current);
 
 static const QString FritzingSketchExtension(".fz");
 static const QString FritzingBinExtension(".fzb");

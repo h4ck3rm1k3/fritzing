@@ -320,7 +320,31 @@ void ConnectorItem::setColorAux(const QColor &color, bool paint) {
 
 void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	clearEqualPotentialDisplay();
+
+	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseReleaseConnectorEvent(this, event)) {
+		m_attachedTo->mouseReleaseConnectorEvent(this, event);
+		return;
+	}
+
 	QGraphicsRectItem::mouseReleaseEvent(event);
+}
+
+void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseDoubleClickConnectorEvent(this, event)) {
+		m_attachedTo->mouseDoubleClickConnectorEvent(this, event);
+		return;
+	}
+
+	QGraphicsRectItem::mouseDoubleClickEvent(event);
+}
+
+void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseMoveConnectorEvent(this, event)) {
+		m_attachedTo->mouseMoveConnectorEvent(this, event);
+		return;
+	}
+
+	QGraphicsRectItem::mouseMoveEvent(event);
 }
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {

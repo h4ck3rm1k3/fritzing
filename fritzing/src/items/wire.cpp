@@ -206,18 +206,20 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 	painter->restore();
 }
 
+void Wire::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+	//DebugDialog::debug("checking press event");
+	emit wireSplitSignal(this, event->scenePos(), this->pos(), this->line());
+}
+
 void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	ItemBase::mousePressEvent(event);
-	if (m_spaceBarWasPressed) return;
-
-	//DebugDialog::debug("checking press event");
-	if (event->modifiers() & Qt::ShiftModifier) {
-		emit wireSplitSignal(this, event->scenePos(), this->pos(), this->line());
-	}
 }
 
-void Wire::initDragEnd(ConnectorItem * connectorItem) {
+void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos, bool shiftModifier) {
+	m_dragEndInitialPos = scenePos;
+	m_dragEndShiftModifier = shiftModifier;
+	m_dragEndConstraint = NO_CONSTRAINT;
 	saveGeometry();
 	QLineF line = this->line();
 	m_drag0 = (connectorItem == m_connector0);
@@ -244,9 +246,24 @@ void Wire::initDragEnd(ConnectorItem * connectorItem) {
 	}
 }
 
+
+void Wire::mouseReleaseConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	Q_UNUSED(event);
+	Q_UNUSED(connectorItem);
+	releaseDrag();
+}
+
+void Wire::mouseMoveConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	mouseMoveEventAux(this->mapFromItem(connectorItem, event->pos()));
+}
+
+
 void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+	mouseMoveEventAux(event->pos());
+}
+
+void Wire::mouseMoveEventAux(QPointF eventPos) {
 	if (m_spaceBarWasPressed) {
-		event->ignore();
 		return;
 	}
 
@@ -254,11 +271,15 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		return;
 	}
 
+	if (m_dragEndShiftModifier) {
+		QPointF initialPos = mapFromScene(m_dragEndInitialPos);
+		eventPos = calcConstraint(m_dragEndConstraint, initialPos, eventPos);
+	}
+
 	ConnectorItem * whichConnectorItem;
 	ConnectorItem * otherConnectorItem;
-	QPointF q = event->pos();
 	if (m_drag0) {
-		QPointF r = this->mapToScene(q);
+		QPointF r = this->mapToScene(eventPos);
 		this->setPos(r.x(), r.y());
 		this->setLine(0, 0, m_wireDragOrigin.x() - r.x() + m_viewGeometry.loc().x(),
 							m_wireDragOrigin.y() - r.y() + m_viewGeometry.loc().y() );
@@ -266,7 +287,7 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		otherConnectorItem = m_connector1;
 	}
 	else {
-		this->setLine(m_wireDragOrigin.x(), m_wireDragOrigin.y(), q.x(), q.y());
+		this->setLine(m_wireDragOrigin.x(), m_wireDragOrigin.y(), eventPos.x(), eventPos.y());
 		whichConnectorItem = m_connector1;
 		otherConnectorItem = m_connector0;
 	}
@@ -322,43 +343,41 @@ void Wire::setConnector1Rect() {
 
 void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if (m_spaceBarWasPressed) {
-		event->ignore();
 		return;
 	}
 
-	if (this->scene()->mouseGrabberItem() == this) {
-		this->ungrabMouse();
-	}
-
-	ConnectorItem * from = (m_drag0) ? m_connector0 : m_connector1;
-	ConnectorItem * to = NULL;
-	if (m_dragEnd == true) {
-		m_dragEnd = false;
-
-		to = from->overConnectorItem();
-		if (to != NULL) {
-			to->connectorHover(this, false);
-
-			// clean up
-			from->setOverConnectorItem(NULL);
-			from->clearConnectorHover();
-		}
-
-
-		QLineF newLine = this->line();
-		QLineF oldLine = m_viewGeometry.line();
-		QPointF oldPos = m_viewGeometry.loc();
-		QPointF newPos = this->pos();
-		if (newLine != oldLine || oldPos != newPos) {
-			emit wireChangedSignal(this, oldLine, newLine, oldPos, newPos, from, to);
-		}
-
-		// don't call base class, since the base class will try to do a move
-		return;
-	}
+	if (releaseDrag()) return;
 
 	ItemBase::mouseReleaseEvent(event);
 }
+
+bool Wire::releaseDrag() {
+	if (m_dragEnd == false) return false;
+
+	m_dragEnd = false;
+
+	ConnectorItem * from = (m_drag0) ? m_connector0 : m_connector1;
+	ConnectorItem * to = from->overConnectorItem();
+	if (to != NULL) {
+		to->connectorHover(this, false);
+
+		// clean up
+		from->setOverConnectorItem(NULL);
+		from->clearConnectorHover();
+	}
+
+
+	QLineF newLine = this->line();
+	QLineF oldLine = m_viewGeometry.line();
+	QPointF oldPos = m_viewGeometry.loc();
+	QPointF newPos = this->pos();
+	if (newLine != oldLine || oldPos != newPos) {
+		emit wireChangedSignal(this, oldLine, newLine, oldPos, newPos, from, to);
+	}
+
+	return true;
+}
+
 
 void Wire::saveInstanceLocation(QXmlStreamWriter & streamWriter)
 {
@@ -436,21 +455,25 @@ void Wire::connectionChange(ConnectorItem * ) {
 	}
 }
 
-void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	//DebugDialog::debug("checking press connector event");
-	if (event->modifiers() & Qt::ShiftModifier) {
-		int chained = 0;
-		foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
-			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				chained++;
-			}
+void Wire::mouseDoubleClickConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	Q_UNUSED(event);
+	int chained = 0;
+	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			chained++;
 		}
-
-		if (chained == 1) {
-			emit wireJoinSignal(this, connectorItem);
+		else {
 			return;
 		}
 	}
+
+	if (chained == 1) {
+		emit wireJoinSignal(this, connectorItem);
+	}
+}
+
+void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	//DebugDialog::debug("checking press connector event");
 
 	if (m_canChainMultiple && event->modifiers() == Qt::AltModifier) {
 		// dragging a wire out of a bendpoint
@@ -464,10 +487,8 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 
 
 	connectorItem->setOverConnectorItem(NULL);
-	initDragEnd(connectorItem);
+	initDragEnd(connectorItem, event->scenePos(), (event->modifiers() & Qt::ShiftModifier) != 0);
 
-	// connector item currently has the mouse, so call grab mouse to get mouse events to wire
-	this->grabMouse();
 }
 
 void Wire::simpleConnectedMoved(ConnectorItem * to) {
@@ -1074,4 +1095,16 @@ bool Wire::connectionIsAllowed(ConnectorItem * to) {
 
 bool Wire::isGrounded() {
 	return ConnectorItem::isGrounded(connector0(), connector1());
+}
+
+bool Wire::acceptsMouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return true;
+}
+
+bool Wire::acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return true;
+}
+
+bool Wire::acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return true;
 }

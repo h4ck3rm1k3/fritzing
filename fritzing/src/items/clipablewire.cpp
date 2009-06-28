@@ -391,7 +391,7 @@ void ClipableWire::dispatchHover(QPointF scenePos) {
 	bool inInner = false;
 	ClipableWire * inWire = NULL;
 	if (insideInnerCircle(m_trackHoverItem, scenePos)) {
-		DebugDialog::debug("got inner circle");
+		//DebugDialog::debug("got inner circle");
 		inInner = true;
 	}
 	else {
@@ -403,7 +403,7 @@ void ClipableWire::dispatchHover(QPointF scenePos) {
 			if (w->getVirtual()) continue;									// is there a better way to check this?
 
 			if (insideSpoke(w, scenePos)) {
-				DebugDialog::debug("got inside spoke");
+				//DebugDialog::debug("got inside spoke");
 				inWire = w;
 				break;
 			}
@@ -448,7 +448,7 @@ void ClipableWire::dispatchHoverAux(bool inInner, Wire * inWire)
 		((ItemBase *) m_trackHoverLastWireItem)->hoverEnterConnectorItem();
 	}
 	else {
-		DebugDialog::debug("got none");
+		//DebugDialog::debug("got none");
 		if (m_trackHoverLastItem != NULL) {
 			m_trackHoverLastItem->restoreColor(false, -1);
 			m_trackHoverLastItem->attachedTo()->hoverLeaveConnectorItem();

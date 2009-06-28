@@ -55,7 +55,7 @@ public:
 	void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 
-	void initDragEnd(ConnectorItem * dragEnd);
+	void initDragEnd(ConnectorItem * dragEnd, QPointF scenePos, bool shiftModifier);
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setLineAnd(QLineF line, QPointF pos, bool useLine);
 	void setLine(QLineF line);				// helpful for debugging
@@ -124,14 +124,22 @@ public:
 	static void getColor(QColor & color, const QString & name);
 
 protected:
+	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEventAux(QPointF eventPos);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
 	void connectionChange(ConnectorItem *);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	bool acceptsMouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	bool acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	bool acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	virtual class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	void collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained, QList<ConnectorItem *> & ends);
 	void setConnector0Rect();
@@ -143,6 +151,8 @@ protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
 	bool connectionIsAllowed(ConnectorItem *);
+	bool releaseDrag();
+
 
 protected:
 	QPointF m_wireDragOrigin;
@@ -158,6 +168,9 @@ protected:
 	int m_bendpointWidth;
 	qreal m_opacity;
 	bool m_canChainMultiple;
+	QPointF m_dragEndInitialPos;
+	bool m_dragEndShiftModifier;
+	Constraint m_dragEndConstraint;
 
 public:
 	static QList<QString> colorNames;

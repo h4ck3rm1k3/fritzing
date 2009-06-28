@@ -202,3 +202,45 @@ void distanceFromLine(double cx, double cy, double ax, double ay, double bx, dou
 
 	return;
 }
+
+QPointF calcConstraint(Constraint& constraint, QPointF initial, QPointF current) {
+	if (constraint == NO_CONSTRAINT) {
+		qreal dx = qAbs(current.x() - initial.x());
+		qreal dy = qAbs(current.y() - initial.y());
+
+		if (dx <= 2 && dy <= 2) return initial;
+
+		if (dy == 0) constraint = VERTICAL_CONSTRAINT;
+		else if (dx == 0) constraint = HORIZONTAL_CONSTRAINT;
+		else if ((dx / dy) < 2.0 && (dx / dy) > .5) constraint = FORTY_FIVE_CONSTRAINT;
+		else if (dx > dy) constraint = HORIZONTAL_CONSTRAINT;
+		else constraint = VERTICAL_CONSTRAINT;
+	}
+
+	QPointF result;
+	if (constraint == VERTICAL_CONSTRAINT) {
+		result.setY(initial.y());
+		result.setX(current.x());
+	}
+	else if (constraint == HORIZONTAL_CONSTRAINT) {
+		result.setX(initial.x());
+		result.setY(current.y());
+	}
+	else {
+		qreal dx = current.x() - initial.x();
+		qreal ax = qAbs(dx);
+		qreal dy = current.y() - initial.y();
+		qreal ay = qAbs(dy);
+		qreal d = qMin(ax, ay);					// qmax?
+		if (dx == 0) {
+			ax = dx = 1;
+		}
+		if (dy == 0) {
+			ay = dy = 1;
+		}
+		result.setX(initial.x() + (d * ax / dx));
+		result.setY(initial.y() + (d * ay / dy));
+	}
+
+	return result;
+}

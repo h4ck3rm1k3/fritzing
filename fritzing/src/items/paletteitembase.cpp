@@ -168,13 +168,6 @@ bool PaletteItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphics
 	//if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
 		return true;
 	//}
-
-	//if ((event->modifiers() & Qt::ShiftModifier) == 0) {
-		// force a shift-click to drag out a wire in pcb view
-		//return false;
-	//}
-
-	//return true;
 }
 
 

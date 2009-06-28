@@ -427,12 +427,33 @@ void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
 void ItemBase::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
+void ItemBase::mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+}
+
+void ItemBase::mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+}
+
+void ItemBase::mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+}
+
 bool ItemBase::filterMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 	return false;
 }
 
 bool ItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 	return true;
+}
+
+bool ItemBase::acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return false;
+}
+
+bool ItemBase::acceptsMouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return false;
+}
+
+bool ItemBase::acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return false;
 }
 
 void ItemBase::connectionChange(ConnectorItem *) {
