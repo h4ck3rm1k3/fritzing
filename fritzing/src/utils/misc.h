@@ -74,6 +74,7 @@ QString getApplicationSubFolderPath(QString);
 QString getUserDataStorePath(QString folder=___emptyString___);
 QStringList getUserDataStoreFolders();
 bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
+bool containsText(const QString &filepath, const QString &searchText);
 
 QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 

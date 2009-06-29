@@ -31,6 +31,7 @@ $Date$
 #include <QCoreApplication>
 #include <QDir>
 #include <QSettings>
+#include <QTextStream>
 
 static QList<QString> ___fritzingExtensions___;
 
@@ -243,4 +244,19 @@ QPointF calcConstraint(Constraint& constraint, QPointF initial, QPointF current)
 	}
 
 	return result;
+}
+
+// this function searches by regexp
+bool containsText(const QString &filepath, const QString &searchText) {
+	QRegExp re(searchText);
+	if(!re.isValid()) return false;
+
+    QFile file(filepath);
+    if(!file.open(QIODevice::ReadOnly )) return false;
+
+	QTextStream stream(&file);
+	QString content = stream.readAll();
+	file.close();
+
+	return re.indexIn(content) != -1;
 }

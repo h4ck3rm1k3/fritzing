@@ -537,10 +537,104 @@ void PartsEditorView::loadSvgFile(const QString& origPath) {
 
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
 
+	fixPixelDimensionsIn(origPath);
+
 	setSvgFilePath(origPath);
 
 	ModelPart * mp = createFakeModelPart(m_svgFilePath);
 	loadSvgFile(mp);
+}
+
+void PartsEditorView::fixPixelDimensionsIn(const QString &filename) {
+	if(m_viewIdentifier == ViewIdentifierClass::IconView) return;
+
+	/*
+	 * QString illustratorHeader =
+	 * "<!-- Generator: Adobe Illustrator [\\d\\.]*, SVG Export Plug-In.*  -->";
+	 */
+
+
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly )) {
+    	QMessageBox::warning(
+    		this,
+    		tr("Couldn't open svg file"),
+    		tr(
+    		"The file couldn't be opened. If this file defines its dimensions \n"
+    		"in non-real-world units (e.g. pixels), then they won't be translated \n"
+    		"into real life ones")
+    	);
+        return;
+    }
+
+    //tr("The file couldn't be opened. If this file defines its dimensions in a non-real-world unit, they won't be translated into real life ones, because it's not writable. Check your permissions and try again")
+
+    //if(containsText(filename,illustratorHeader)) {
+		QDomDocument *svgDom = new QDomDocument();
+
+		QString *errorMsg = new QString("");
+		int *errorLine = new int(0);
+		int *errorCol = new int(0);
+		if(!svgDom->setContent(&file, true, errorMsg, errorLine, errorCol)) {
+			qWarning() << QString("PartsEditorView::fixPixelDimensionsIn(filename) couldn't load svg: %1 (line %2, col %3)")
+							.arg(*errorMsg).arg(*errorLine).arg(*errorCol);
+			file.close();
+			return;
+		}
+		delete errorMsg;
+		delete errorLine;
+		delete errorCol;
+
+		QDomElement elem = svgDom->firstChildElement("svg");
+		bool fileHasChanged = pxToInches(elem,"width",filename);
+		fileHasChanged |= pxToInches(elem,"height",filename);
+
+		if(fileHasChanged) {
+			file.close();
+			if(!file.open(QIODevice::WriteOnly )) {
+				QMessageBox::warning(
+					this,
+					tr("Couldn't write into file"),
+					tr(
+					"This file defines at least one of its dimensions on pixels, and\n"
+					"they couldn't be translated.\n"
+					"Fritzing is not compatible with this kind of svg files. Please \n"
+					"check your permissions, and try again.\n\n"
+
+					"More information at http://fritzing.org/using-svg-images-new-parts/"
+					)
+				);
+				delete svgDom;
+				return;
+			}
+
+			QTextStream out(&file);
+			out << svgDom->toString();
+		}
+
+		delete svgDom;
+    //}
+
+    file.close();
+}
+
+bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, const QString &filename) {
+	QString attrValue = elem.attribute(attrName);
+	if(attrValue.endsWith("px")) {
+		bool ok;
+		qreal value = attrValue.remove("px").toDouble(&ok);
+		if(ok) {
+			QString newValue = QString("%1in").arg(value/72);
+			elem.setAttribute(attrName,newValue);
+			DebugDialog::debug(
+				QString("translating svg attribute '%1' from '%2px' to '%3' in file '%4'")
+					.arg(attrName).arg(attrValue).arg(newValue).arg(filename)
+			);
+
+			return true;
+		}
+	}
+	return false;
 }
 
 void PartsEditorView::loadSvgFile(ModelPart * modelPart) {

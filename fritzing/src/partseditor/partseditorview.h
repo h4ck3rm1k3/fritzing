@@ -123,6 +123,8 @@ class PartsEditorView : public SketchWidget {
 		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
 		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem);
 		QString getLayerFileName(ModelPart * modelPart);
+		void fixPixelDimensionsIn(const QString &filename);
+		bool pxToInches(QDomElement &elem, const QString &attrName, const QString &filename);
 
 
 		// specs
