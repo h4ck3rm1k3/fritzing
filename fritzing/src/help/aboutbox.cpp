@@ -35,8 +35,8 @@ $Date$
 #include <QScrollBar>
 
 #include "aboutbox.h"
-#include "debugdialog.h"
-#include "version/version.h"
+#include "../debugdialog.h"
+#include "../version/version.h"
 
 AboutBox* AboutBox::singleton = NULL;
 

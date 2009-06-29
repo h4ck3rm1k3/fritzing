@@ -126,6 +126,7 @@ protected slots:
 	void exportEtchable();
 	void exportEtchableSvg();
     void about();
+	void tipsAndTricks();
     void copy();
     void cut();
     void paste();
@@ -390,6 +391,7 @@ protected:
     // Fritzing Menu
     QMenu *m_fritzingMenu;
     QAction *m_aboutAct;
+    QAction *m_tipsAndTricksAct;
     QAction *m_preferencesAct;
     QAction *m_quitAct;
 

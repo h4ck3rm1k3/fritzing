@@ -33,7 +33,7 @@ $Date$
 #include "waitpushundostack.h"
 //#include "partseditor/mainpartseditorwindow.h"
 #include "partseditor/partseditormainwindow.h"
-#include "aboutbox.h"
+#include "help/aboutbox.h"
 #include "autoroute/autorouter1.h"
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
@@ -54,6 +54,7 @@ $Date$
 #include "svg/svgfilesplitter.h"
 #include "version/version.h"
 #include "svg/groundplanegenerator.h"
+#include "help/tipsandtricks.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -696,6 +697,11 @@ void MainWindow::about()
 	AboutBox::showAbout();
 }
 
+void MainWindow::tipsAndTricks()
+{
+	TipsAndTricks::showTipsAndTricks();
+}
+
 void MainWindow::createActions()
 {
 	m_raiseWindowAct = new QAction(m_fileName, this);
@@ -1250,6 +1256,10 @@ void MainWindow::createHelpMenuActions() {
 	connect(m_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 	m_aboutAct->setMenuRole(QAction::AboutRole);
 
+	m_tipsAndTricksAct = new QAction(tr("Tips and Tricks"), this);
+	m_tipsAndTricksAct->setStatusTip(tr("Display some handy Fritzing tips and tricks"));
+	connect(m_tipsAndTricksAct, SIGNAL(triggered()), this, SLOT(tipsAndTricks()));
+
 	m_aboutQtAct = new QAction(tr("&About Qt"), this);
 	m_aboutQtAct->setStatusTip(tr("Show Qt's about box"));
 	connect(m_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -1408,6 +1418,7 @@ void MainWindow::createMenus()
 	m_helpMenu->addAction(m_reportBugAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
+	m_helpMenu->addAction(m_tipsAndTricksAct);
 #ifndef QT_NO_DEBUG
 	m_helpMenu->addAction(m_aboutQtAct);
 #endif

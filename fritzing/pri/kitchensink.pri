@@ -17,7 +17,6 @@
 # $Date$
 # ********************************************************************/
 HEADERS += \
-    src/aboutbox.h \
     src/abstractimagebutton.h \
     src/abstractstatesbutton.h \
     src/breadboardsketchwidget.h \
@@ -65,7 +64,6 @@ HEADERS += \
     src/zoomcombobox.h 
     
 SOURCES += \
-    src/aboutbox.cpp \
     src/breadboardsketchwidget.cpp \
     src/bus.cpp \
     src/busshared.cpp \

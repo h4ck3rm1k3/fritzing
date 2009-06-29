@@ -19,7 +19,12 @@
 HEADERS += src/help/inotseeninminiview.h \
     src/help/toolhelp.h \
     src/help/sketchmainhelp.h \
-    src/help/helper.h
+    src/help/helper.h \
+    src/help/aboutbox.h \
+    src/help/tipsandtricks.h
+    
 SOURCES += src/help/toolhelp.cpp \
     src/help/sketchmainhelp.cpp \
-    src/help/helper.cpp
+    src/help/helper.cpp \
+    src/help/aboutbox.cpp \
+    src/help/tipsandtricks.cpp
