@@ -77,6 +77,7 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
     setFlag(QGraphicsItem::ItemIsSelectable, true );
 	m_connectorHover = NULL;
 	m_opacity = UNROUTED_OPACITY;
+	m_ignoreSelectionChange = false;
 
 	//DebugDialog::debug(QString("aix line %1 %2 %3 %4").arg(this->viewGeometry().line().x1())
 													//.arg(this->viewGeometry().line().y1())
@@ -899,6 +900,7 @@ void Wire::initNames() {
     colors.insert("jumper", "#6699cc");
 	colors.insert("trace",  "#ffbf00");
 	colors.insert("unrouted", "#000000");
+	colors.insert("blackblack", "#000000");
 	colors.insert("schematicGrey", "#9d9d9d");
 	colors.insert("purple", "#b673e6");
 	colors.insert("brown", "#8c3b00");
@@ -1036,7 +1038,32 @@ void Wire::collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wir
 QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if (change == ItemSelectedChange) {
-		if (m_partLabel) m_partLabel->update();
+		if (m_partLabel) {
+			m_partLabel->update();
+		}
+
+		if (!m_ignoreSelectionChange) {
+			QList<Wire *> chained;
+			QList<ConnectorItem *> ends;
+			QList<ConnectorItem *> uniqueEnds;
+			collectChained(chained, ends, uniqueEnds);
+			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+			if (infoGraphicsView) {
+				infoGraphicsView->setIgnoreSelectionChangeEvents(true);
+			}
+			DebugDialog::debug(QString("original wire selected %1 %2").arg(value.toBool()).arg(this->id()));
+			foreach (Wire * wire, chained) {
+				if (wire != this ) {
+					wire->setIgnoreSelectionChange(true);
+					wire->setSelected(value.toBool());
+					wire->setIgnoreSelectionChange(false);
+					DebugDialog::debug(QString("wire selected %1 %2").arg(value.toBool()).arg(wire->id()));
+				}
+			}
+			if (infoGraphicsView) {
+				infoGraphicsView->setIgnoreSelectionChangeEvents(false);
+			}
+		}
     }
     return ItemBase::itemChange(change, value);
 }
@@ -1107,4 +1134,8 @@ bool Wire::acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEv
 
 bool Wire::acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 	return true;
+}
+
+void Wire::setIgnoreSelectionChange(bool ignore) {
+	m_ignoreSelectionChange = ignore;
 }

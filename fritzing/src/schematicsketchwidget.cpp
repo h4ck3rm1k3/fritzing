@@ -39,8 +39,8 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 {
 	m_shortName = QObject::tr("schem");
 	m_viewName = QObject::tr("Schematic View");
-	m_traceColor = "black";
-	m_jumperColor = "black";	
+	m_traceColor = "blackblack";
+	m_jumperColor = "blackblack";	
 	m_jumperWidth = 2;
 	m_cleanType = ninetyClean;
 }
@@ -73,7 +73,7 @@ void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	}
 	else {
 		wire->setPenWidth(2);
-		wire->setColorString("black", Wire::UNROUTED_OPACITY);
+		wire->setColorString("blackblack", Wire::UNROUTED_OPACITY);
 	}
 }
 

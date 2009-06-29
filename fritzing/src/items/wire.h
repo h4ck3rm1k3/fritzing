@@ -152,6 +152,7 @@ protected:
 	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
 	bool connectionIsAllowed(ConnectorItem *);
 	bool releaseDrag();
+	void setIgnoreSelectionChange(bool);
 
 
 protected:
@@ -171,6 +172,7 @@ protected:
 	QPointF m_dragEndInitialPos;
 	bool m_dragEndShiftModifier;
 	Constraint m_dragEndConstraint;
+	bool m_ignoreSelectionChange;
 
 public:
 	static QList<QString> colorNames;

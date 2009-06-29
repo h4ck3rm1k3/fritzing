@@ -83,7 +83,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 	m_fixedToCenterItem = NULL;
 	m_spaceBarWasPressed = m_spaceBarIsPressed = false;
 	m_current = false;
-	m_ignoreSelectionChangeEvents = false;
+	m_ignoreSelectionChangeEvents = 0;
 	m_droppingItem = NULL;
 	m_chainDrag = false;
 	m_bendpointWire = m_connectorDragWire = NULL;
@@ -203,7 +203,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 	}
 
 	QHash<long, ItemBase *> newItems;
-	m_ignoreSelectionChangeEvents = true;
+	setIgnoreSelectionChangeEvents(true);
 
 	QString viewName = ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier);
 	QMultiMap<qreal, ItemBase *> zmap;
@@ -345,7 +345,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		}
 	}
 
-	m_ignoreSelectionChangeEvents = false;
+	setIgnoreSelectionChangeEvents(false);
 }
 
 void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand)
@@ -2276,7 +2276,7 @@ void SketchWidget::sketchWidget_itemDeleted(long id) {
 }
 
 void SketchWidget::scene_selectionChanged() {
-	if (m_ignoreSelectionChangeEvents) {
+	if (m_ignoreSelectionChangeEvents > 0) {
 		return;
 	}
 
@@ -2622,6 +2622,10 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 										m_connectorDragConnector->attachedToID(), m_connectorDragConnector->connectorSharedID(),
 										wire->id(), wire->connector0()->connectorSharedID(),
 										true, true, parentCommand);
+
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->addRedo(m_bendpointWire->id());
+
 		m_bendpointWire = NULL;			// signal that we're done
 
 	}
@@ -3846,8 +3850,11 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
 
+	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+	selectItemCommand->addRedo(newID);
 
 	new CleanUpWiresCommand(this, false, parentCommand);
+
 	m_undoStack->push(parentCommand);
 }
 
@@ -4395,7 +4402,12 @@ void SketchWidget::addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers,
 }
 
 void SketchWidget::setIgnoreSelectionChangeEvents(bool ignore) {
-	m_ignoreSelectionChangeEvents = ignore;
+	if (ignore) {
+		m_ignoreSelectionChangeEvents++;
+	}
+	else {
+		m_ignoreSelectionChangeEvents--;
+	}
 }
 
 void SketchWidget::hideConnectors(bool hide) {

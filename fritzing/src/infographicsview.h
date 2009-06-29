@@ -69,6 +69,8 @@ public:
 
 	QVariant evaluateJavascript(const QString &);
 
+	virtual void setIgnoreSelectionChangeEvents(bool) {}
+
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);
 

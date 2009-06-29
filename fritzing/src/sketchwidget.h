@@ -458,7 +458,7 @@ protected:
 	QSet<ItemBase *> m_savedItems;
 	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
-	bool m_ignoreSelectionChangeEvents;
+	int m_ignoreSelectionChangeEvents;
 	bool m_current;
 
 	QList<QGraphicsItem*> m_fixedToTopLeftItems;
