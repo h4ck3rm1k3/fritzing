@@ -1536,9 +1536,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	m_moveEventCount = 0;
 	m_holdingSelectItemCommand = stackSelectionState(false, NULL);
 	m_mousePressScenePos = mapToScene(event->pos());
-	m_mousePressShiftModifier = (event->modifiers() & Qt::ShiftModifier) != 0;
 	m_mousePressGlobalPos = event->globalPos();
-	m_dragConstraint = NO_CONSTRAINT;
 
 	QList<QGraphicsItem *> items = this->items(event->pos());
 	QGraphicsItem* wasItem = NULL;
@@ -1893,7 +1891,7 @@ void SketchWidget::prepDragWire(Wire * wire)
 	setupAutoscroll(true);
 }
 
-void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool shiftModifier) 
+void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos) 
 {
 	m_bendpointWire = wire;
 	wire->saveGeometry();
@@ -1922,7 +1920,7 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos, bool shiftMod
 	oldConnector1->tempConnectTo(m_connectorDragWire->connector0(), false);
 	m_connectorDragWire->connector0()->tempConnectTo(oldConnector1, false);
 	m_connectorDragConnector = oldConnector1;
-	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), newPos, shiftModifier);
+	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), newPos);
 	m_connectorDragWire->grabMouse();
 }
 
@@ -1953,7 +1951,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// otherwise handle all move action here
 
 	if (m_dragBendpointWire != NULL) {
-		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos, (event->modifiers() & Qt::ShiftModifier) != 0);
+		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos);
 		m_dragBendpointWire = NULL;
 		return;
 	}
@@ -1966,8 +1964,8 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	if (m_savedItems.count() > 0) {
 		if ((event->buttons() & Qt::LeftButton) && !draggingWireEnd()) {
 			m_globalPos = event->globalPos();
-			if (m_mousePressShiftModifier) {
-				QPointF p = calcConstraint(m_dragConstraint, m_mousePressGlobalPos, m_globalPos);
+			if ((event->modifiers() & Qt::ShiftModifier) != 0) {
+				QPointF p = calcConstraint(m_mousePressGlobalPos, m_globalPos);
 				m_globalPos.setX(p.x());
 				m_globalPos.setY(p.y());
 			}
@@ -3132,7 +3130,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	// give connector item the mouse, so wire doesn't get mouse moved events
 	m_connectorDragWire->setVisible(true);
 	m_connectorDragWire->grabMouse();
-	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), event->scenePos(), (event->modifiers() & Qt::ShiftModifier) != 0);
+	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), event->scenePos());
 	m_connectorDragConnector->tempConnectTo(m_connectorDragWire->connector1(), false);
 	m_connectorDragWire->connector1()->tempConnectTo(m_connectorDragConnector, false);
 	if (!m_lastColorSelected.isEmpty()) {
@@ -3927,9 +3925,16 @@ void SketchWidget::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 		InfoGraphicsView::hoverEnterItem(event, item);
 	}
 
-	if (canChainWire(dynamic_cast<Wire *>(item))) {
-		statusMessage(tr("Double-click to add a bend point to the wire"));
-		m_lastHoverEnterItem = item;
+	Wire * wire = dynamic_cast<Wire *>(item);
+	if (wire != NULL) {
+		if (canChainWire(wire)) {	
+			bool segment = wire->connector0()->chained() && wire->connector1()->chained();
+			bool disconnected = wire->connector0()->connectionsCount() == 0 &&  wire->connector1()->connectionsCount() == 0;
+			statusMessage(QString("%1 to add a bendpoint %2")
+				.arg(disconnected ? tr("Double-click") : tr("Drag or double-click"))
+				.arg(segment ? tr("or alt-drag to move the segment") : tr("")));
+			m_lastHoverEnterItem = item;
+		}
 	}
 }
 

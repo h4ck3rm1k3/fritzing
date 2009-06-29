@@ -55,7 +55,7 @@ public:
 	void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 
-	void initDragEnd(ConnectorItem * dragEnd, QPointF scenePos, bool shiftModifier);
+	void initDragEnd(ConnectorItem * dragEnd, QPointF scenePos);
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setLineAnd(QLineF line, QPointF pos, bool useLine);
 	void setLine(QLineF line);				// helpful for debugging
@@ -127,7 +127,7 @@ protected:
 	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void mouseMoveEventAux(QPointF eventPos);
+	void mouseMoveEventAux(QPointF eventPos, bool shiftModifier);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
@@ -169,9 +169,6 @@ protected:
 	int m_bendpointWidth;
 	qreal m_opacity;
 	bool m_canChainMultiple;
-	QPointF m_dragEndInitialPos;
-	bool m_dragEndShiftModifier;
-	Constraint m_dragEndConstraint;
 	bool m_ignoreSelectionChange;
 
 public:

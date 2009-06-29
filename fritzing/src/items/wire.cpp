@@ -217,10 +217,8 @@ void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	ItemBase::mousePressEvent(event);
 }
 
-void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos, bool shiftModifier) {
-	m_dragEndInitialPos = scenePos;
-	m_dragEndShiftModifier = shiftModifier;
-	m_dragEndConstraint = NO_CONSTRAINT;
+void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
+	Q_UNUSED(scenePos);
 	saveGeometry();
 	QLineF line = this->line();
 	m_drag0 = (connectorItem == m_connector0);
@@ -255,15 +253,15 @@ void Wire::mouseReleaseConnectorEvent(ConnectorItem * connectorItem, QGraphicsSc
 }
 
 void Wire::mouseMoveConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	mouseMoveEventAux(this->mapFromItem(connectorItem, event->pos()));
+	mouseMoveEventAux(this->mapFromItem(connectorItem, event->pos()), (event->modifiers() & Qt::ShiftModifier) != 0);
 }
 
 
 void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	mouseMoveEventAux(event->pos());
+	mouseMoveEventAux(event->pos(), (event->modifiers() & Qt::ShiftModifier) != 0);
 }
 
-void Wire::mouseMoveEventAux(QPointF eventPos) {
+void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 	if (m_spaceBarWasPressed) {
 		return;
 	}
@@ -272,25 +270,67 @@ void Wire::mouseMoveEventAux(QPointF eventPos) {
 		return;
 	}
 
-	if (m_dragEndShiftModifier) {
-		QPointF initialPos = mapFromScene(m_dragEndInitialPos);
-		eventPos = calcConstraint(m_dragEndConstraint, initialPos, eventPos);
-	}
-
 	ConnectorItem * whichConnectorItem;
 	ConnectorItem * otherConnectorItem;
+	if (m_drag0) {
+		whichConnectorItem = m_connector0;
+		otherConnectorItem = m_connector1;
+	}
+	else {
+		whichConnectorItem = m_connector1;
+		otherConnectorItem = m_connector0;
+	}
+
+	if (shiftModifier) {
+		QPointF initialPos = mapFromScene(otherConnectorItem->sceneAdjustedTerminalPoint(NULL));  
+		bool bendpoint = whichConnectorItem->connectionsCount() > 0;
+		if (bendpoint) {
+			foreach (ConnectorItem * ci, whichConnectorItem->connectedToItems()) {
+				if (ci->attachedToItemType() != ModelPart::Wire) {
+					bendpoint = false;
+					break;
+				}
+			}
+		}
+		if (bendpoint) {
+			bendpoint = false;
+			foreach (ConnectorItem * ci, whichConnectorItem->connectedToItems()) {
+				Wire * w = dynamic_cast<Wire *>(ci->attachedTo());
+				ConnectorItem * oci = w->otherConnector(ci);
+				QPointF otherInitialPos = mapFromScene(oci->sceneAdjustedTerminalPoint(NULL));
+				QPointF p1(initialPos.x(), otherInitialPos.y());
+				qreal d = ((p1.x() - eventPos.x()) * (p1.x() - eventPos.x())) +  ((p1.y() - eventPos.y()) * (p1.y() - eventPos.y()));
+				if (d <= 144) {
+					bendpoint = true;
+					eventPos = p1;
+					break;
+				}
+				p1.setX(otherInitialPos.x());
+				p1.setY(initialPos.y());
+				d = ((p1.x() - eventPos.x()) * (p1.x() - eventPos.x())) +  ((p1.y() - eventPos.y()) * (p1.y() - eventPos.y()));
+				if (d <= 144) {
+					bendpoint = true;
+					eventPos = p1;
+					break;
+				}				
+
+			}
+		}
+
+		if (!bendpoint) {
+			eventPos = calcConstraint(initialPos, eventPos);
+		}
+
+	}
+
 	if (m_drag0) {
 		QPointF r = this->mapToScene(eventPos);
 		this->setPos(r.x(), r.y());
 		this->setLine(0, 0, m_wireDragOrigin.x() - r.x() + m_viewGeometry.loc().x(),
 							m_wireDragOrigin.y() - r.y() + m_viewGeometry.loc().y() );
-		whichConnectorItem = m_connector0;
-		otherConnectorItem = m_connector1;
 	}
 	else {
 		this->setLine(m_wireDragOrigin.x(), m_wireDragOrigin.y(), eventPos.x(), eventPos.y());
-		whichConnectorItem = m_connector1;
-		otherConnectorItem = m_connector0;
 	}
 	setConnector1Rect();
 
@@ -488,7 +528,7 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 
 
 	connectorItem->setOverConnectorItem(NULL);
-	initDragEnd(connectorItem, event->scenePos(), (event->modifiers() & Qt::ShiftModifier) != 0);
+	initDragEnd(connectorItem, event->scenePos());
 
 }
 

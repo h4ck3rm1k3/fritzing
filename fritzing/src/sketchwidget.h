@@ -327,7 +327,7 @@ protected:
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
 	bool rotationAllowed(ItemBase *);
 	virtual bool allowFemaleRotation(ItemBase *);
-	void prepDragBendpoint(Wire *, QPoint eventPos, bool shiftModifier);
+	void prepDragBendpoint(Wire *, QPoint eventPos);
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
@@ -437,9 +437,7 @@ protected:
 	QList<QGraphicsItem *> m_temporaries;
 	bool m_chainDrag;
 	QPointF m_mousePressScenePos;
-	bool m_mousePressShiftModifier;
 	QPointF m_mousePressGlobalPos;
-	Constraint m_dragConstraint;
 	QTimer m_autoScrollTimer;
 	volatile int m_autoScrollX;
 	volatile int m_autoScrollY;

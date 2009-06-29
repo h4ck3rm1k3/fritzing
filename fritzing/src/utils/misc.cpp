@@ -204,45 +204,54 @@ void distanceFromLine(double cx, double cy, double ax, double ay, double bx, dou
 	return;
 }
 
-QPointF calcConstraint(Constraint& constraint, QPointF initial, QPointF current) {
-	if (constraint == NO_CONSTRAINT) {
-		qreal dx = qAbs(current.x() - initial.x());
-		qreal dy = qAbs(current.y() - initial.y());
+struct PD {
+	QPointF p;
+	qreal d;
+};
 
-		if (dx <= 2 && dy <= 2) return initial;
+bool pdLessThan(PD* pd1, PD* pd2) {
+	return pd1->d < pd2->d;
+}
 
-		if (dy == 0) constraint = VERTICAL_CONSTRAINT;
-		else if (dx == 0) constraint = HORIZONTAL_CONSTRAINT;
-		else if ((dx / dy) < 2.0 && (dx / dy) > .5) constraint = FORTY_FIVE_CONSTRAINT;
-		else if (dx > dy) constraint = HORIZONTAL_CONSTRAINT;
-		else constraint = VERTICAL_CONSTRAINT;
-	}
+QPointF calcConstraint(QPointF initial, QPointF current) {
+	QList<PD *> pds;
 
-	QPointF result;
-	if (constraint == VERTICAL_CONSTRAINT) {
-		result.setY(initial.y());
-		result.setX(current.x());
-	}
-	else if (constraint == HORIZONTAL_CONSTRAINT) {
-		result.setX(initial.x());
-		result.setY(current.y());
-	}
-	else {
-		qreal dx = current.x() - initial.x();
-		qreal ax = qAbs(dx);
-		qreal dy = current.y() - initial.y();
-		qreal ay = qAbs(dy);
-		qreal d = qMin(ax, ay);					// qmax?
-		if (dx == 0) {
-			ax = dx = 1;
-		}
-		if (dy == 0) {
-			ay = dy = 1;
-		}
-		result.setX(initial.x() + (d * ax / dx));
-		result.setY(initial.y() + (d * ay / dy));
-	}
+	PD * pd = new PD;
+	pd->p.setX(current.x());
+	pd->p.setY(initial.y());
+	pd->d = (current.y() - initial.y()) * (current.y() - initial.y());
+	pds.append(pd);
 
+	pd = new PD;
+	pd->p.setX(initial.x());
+	pd->p.setY(current.y());
+	pd->d = (current.x() - initial.x()) * (current.x() - initial.x());
+	pds.append(pd);
+
+	qreal dx, dy, d;
+	bool atEndpoint;
+
+	QLineF plus45(initial.x() - 10000, initial.y() - 10000, initial.x() + 10000, initial.y() + 10000);
+	distanceFromLine(current.x(), current.y(), plus45.p1().x(), plus45.p1().y(), plus45.p2().x(), plus45.p2().y(), dx, dy, d, atEndpoint);
+	pd = new PD;
+	pd->p.setX(dx);
+	pd->p.setY(dy);
+	pd->d = d;
+	pds.append(pd);
+		
+	QLineF minus45(initial.x() + 10000, initial.y() - 10000, initial.x() - 10000, initial.y() + 10000);
+	distanceFromLine(current.x(), current.y(), minus45.p1().x(), minus45.p1().y(), minus45.p2().x(), minus45.p2().y(), dx, dy, d, atEndpoint);
+	pd = new PD;
+	pd->p.setX(dx);
+	pd->p.setY(dy);
+	pd->d = d;
+	pds.append(pd);
+
+	qSort(pds.begin(), pds.end(), pdLessThan);
+	QPointF result = pds[0]->p;
+	foreach (PD* pd, pds) {
+		delete pd;
+	}
 	return result;
 }
 
