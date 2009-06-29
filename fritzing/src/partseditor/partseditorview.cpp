@@ -623,7 +623,9 @@ void PartsEditorView::setSvgFilePath(const QString &filePath) {
 	ensureFilePath(filePath);
 	m_originalSvgFilePath = filePath;
 
-	QString svgFolder = getUserDataStorePath("parts")+"/svg";
+	QString userSvgFolder = getUserDataStorePath("parts")+"/svg";
+	QString coreSvgFolder = getApplicationSubFolderPath("parts")+"/svg";
+
 	QString tempFolder = m_tempFolder.absolutePath();
 
 	QString relative;
@@ -635,8 +637,9 @@ void PartsEditorView::setSvgFilePath(const QString &filePath) {
 	// but the file dialog returns a string beginning with "C:"
 	cs = Qt::CaseInsensitive;
 #endif
-	if(filePath.contains(svgFolder, cs)) {
-		// is core file
+	if(filePath.contains(userSvgFolder, cs) || filePath.contains(coreSvgFolder, cs)) {
+		QString svgFolder = filePath.contains(userSvgFolder,cs)? userSvgFolder: coreSvgFolder;
+		// is core/user file
 		relative = filePathAux.remove(svgFolder+"/", cs);
 		//Mariano: I don't like this folder thing anymore
 		relative = relative.mid(filePathAux.indexOf("/")+1); // remove core/user/contrib
