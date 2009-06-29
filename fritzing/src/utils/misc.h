@@ -54,6 +54,7 @@ $Date$
 #include <QStringList>
 #include <QPair>
 #include <QList>
+#include <QPointF>
 
 #define ALLMOUSEBUTTONS (Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2)
 
