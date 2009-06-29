@@ -390,7 +390,7 @@ bool PartsBinPaletteWidget::saveAs() {
     QString fileName = QFileDialog::getSaveFileName(
 		this,
 		tr("Specify a file name"),
-		(m_fileName.isNull() || m_fileName.isEmpty())?
+		(m_fileName.isNull() || m_fileName.isEmpty() || /* it's a resource */ m_fileName.startsWith(":"))?
 				m_defaultSaveFolder+"/"+title()+FritzingBinExtension:
 				m_fileName,
 		tr("Fritzing Bin (*%1)").arg(FritzingBinExtension),
