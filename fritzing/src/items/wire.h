@@ -97,10 +97,10 @@ public:
 	qreal opacity();
 	void setOpacity(qreal opacity);
 	const QColor * color();
-	void setWidth(int);
-	void setPenWidth(int width);
+	void setWireWidth(int, InfoGraphicsView *);
+	void setPenWidth(int width, InfoGraphicsView *);
 	int width();
-	void setExtras(QDomElement &);
+	void setExtras(QDomElement &, InfoGraphicsView *);
 	void setColor(QDomElement & element);
 	Wire * findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
 	bool draggingEnd();
@@ -166,7 +166,9 @@ protected:
 	QPen m_shadowPen;
 	QBrush m_shadowBrush;
 	QPen m_bendpointPen;
+	QPen m_bendpoint2Pen;
 	int m_bendpointWidth;
+	int m_bendpoint2Width;
 	qreal m_opacity;
 	bool m_canChainMultiple;
 	bool m_ignoreSelectionChange;

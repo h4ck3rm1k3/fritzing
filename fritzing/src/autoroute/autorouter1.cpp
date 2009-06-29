@@ -403,7 +403,7 @@ void Autorouter1::start()
 
 				if (ratsnest) {
 					ratsnestWidth = ratsnest->width();
-					ratsnest->setWidth(5);
+					ratsnest->setWireWidth(5, m_sketchWidget);
 				};
 			}
 
@@ -425,7 +425,7 @@ void Autorouter1::start()
 			}
 			
 			if (ratsnest) {
-				ratsnest->setWidth(ratsnestWidth);
+				ratsnest->setWireWidth(ratsnestWidth, m_sketchWidget);
 			}
 
 			if (subedge->wire != NULL) {
@@ -807,7 +807,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
 	jumperWire->setColorString(m_sketchWidget->jumperColor(), Wire::UNROUTED_OPACITY);
-	jumperWire->setWidth(m_sketchWidget->jumperWidth());
+	jumperWire->setWireWidth(m_sketchWidget->jumperWidth(), m_sketchWidget);
 	jumperWire->setSelected(false);
 
 	from->tempConnectTo(jumperWire->connector0(), false);
@@ -1407,7 +1407,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 			m_sketchWidget->setClipEnds(wire, true);
 			wire->update();
 			if (wire->getAutoroutable()) {
-				wire->setWidth(StandardTraceWidth);
+				wire->setWireWidth(StandardTraceWidth, m_sketchWidget);
 			}
 			addToUndo(wire, parentCommand);
 			wires.append(wire);
@@ -1564,7 +1564,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 		return NULL;
 	}
 
-	traceWire->setWidth(StandardTraceWidth);									// restore normal width
+	traceWire->setWireWidth(StandardTraceWidth, m_sketchWidget);									// restore normal width
 	return traceWire;
 }
 
@@ -1637,7 +1637,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width)
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	m_sketchWidget->setClipEnds(traceWire, false);
 	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
-	traceWire->setWidth(width);
+	traceWire->setWireWidth(width, m_sketchWidget);
 
 	return traceWire;
 }

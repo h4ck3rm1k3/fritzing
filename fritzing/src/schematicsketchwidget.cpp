@@ -68,11 +68,11 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
 	if (wire->getRatsnest()) {
-		wire->setPenWidth(1);
+		wire->setPenWidth(1, this);
 		wire->setColorString("schematicGrey", 0.7);
 	}
 	else {
-		wire->setPenWidth(2);
+		wire->setPenWidth(2, this);
 		wire->setColorString("blackblack", Wire::UNROUTED_OPACITY);
 	}
 }
@@ -127,4 +127,10 @@ void SchematicSketchWidget::setJumperFlags(ViewGeometry & vg) {
 void SchematicSketchWidget::setClipEnds(ClipableWire * vw, bool) {
 	vw->setClipEnds(false);
 }
+
+void SchematicSketchWidget::getBendpointWidths(Wire * wire, int width, int & bendpointWidth, int & bendpoint2Width) {
+	SketchWidget::getBendpointWidths(wire, width, bendpointWidth, bendpoint2Width);
+	bendpoint2Width = width + 3;
+}
+
 

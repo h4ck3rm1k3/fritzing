@@ -240,7 +240,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				else if (strcmp(className, "Wire") == 0) {
 					Wire * wire = dynamic_cast<Wire *>(item);
 					QDomElement extras = view.firstChildElement("wireExtras");
-					wire->setExtras(extras);
+					wire->setExtras(extras, this);
 				}
 				else if (strcmp(className, "Note") == 0) {
 					Note * note = dynamic_cast<Note *>(item);
@@ -4327,7 +4327,7 @@ void SketchWidget::changeWireWidth(long wireId, int width) {
 	ItemBase *item = findItem(wireId);
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
-		wire->setWidth(width);
+		wire->setWireWidth(width, this);
 		updateInfoView();
 	}
 }
@@ -5537,3 +5537,9 @@ void SketchWidget::updateConnectors() {
 const QString & SketchWidget::getShortName() {
 	return m_shortName;
 }
+
+void SketchWidget::getBendpointWidths(Wire * wire, int width, int & bendpointWidth, int & bendpoint2Width) {
+	int dwidth = (wire->getTrace() && (width > 1)) ? 4 : 3;
+	bendpoint2Width = bendpointWidth = (width - dwidth);
+}
+

@@ -329,6 +329,6 @@ bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
 
 
 void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
-	wire->setPenWidth(penWidth - 2);
+	wire->setPenWidth(penWidth - 2, this);
 	wire->setColorString("blue", Wire::UNROUTED_OPACITY);
 }

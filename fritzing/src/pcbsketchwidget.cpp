@@ -622,7 +622,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
 	wire->setColorString("unrouted", Wire::UNROUTED_OPACITY);
-	wire->setPenWidth(1);
+	wire->setPenWidth(1, this);
 }
 
 bool PCBSketchWidget::autorouteNeedsBounds() {

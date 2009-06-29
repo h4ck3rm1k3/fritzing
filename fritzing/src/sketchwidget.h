@@ -216,6 +216,8 @@ public:
 	void updateConnectors();
 	const QString & getShortName();
 	virtual void setClipEnds(class ClipableWire *, bool);
+	void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

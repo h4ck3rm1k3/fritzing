@@ -442,14 +442,14 @@ void Wire::writeGeometry(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeEndElement();
 }
 
-void Wire::setExtras(QDomElement & element)
+void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 {
 	if (element.isNull()) return;
 
 	bool ok;
 	int w = element.attribute("width").toInt(&ok);
 	if (ok) {
-		setWidth(w);
+		setWireWidth(w, infoGraphicsView);
 	}
 
 	setColor(element);
@@ -837,6 +837,7 @@ void Wire::setShadowColor(QColor & color) {
 	m_shadowBrush = QBrush(color);
 	m_shadowPen.setBrush(m_shadowBrush);
 	m_bendpointPen.setBrush(m_shadowBrush);
+	m_bendpoint2Pen.setBrush(m_shadowBrush);
 	if (m_connector0) m_connector0->restoreColor(false, 0);
 	if (m_connector0) m_connector1->restoreColor(false, 0);
 	this->update();
@@ -846,11 +847,11 @@ const QColor * Wire::color() {
 	return &m_pen.brush().color();
 }
 
-void Wire::setWidth(int width) {
+void Wire::setWireWidth(int width, InfoGraphicsView * infoGraphicsView) {
 	if (m_pen.width() == width) return;
 
 	prepareGeometryChange();
-	setPenWidth(width);
+	setPenWidth(width, infoGraphicsView);
 	if (m_connector0) m_connector0->restoreColor(false, 0);
 	if (m_connector1) m_connector1->restoreColor(false, 0);
 	update();
@@ -1133,17 +1134,24 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 		return;
 	}
 
-	pen = &m_bendpointPen;
 	brush = &m_shadowBrush;
 	opacity = 1.0;
-	negativePenWidth = m_bendpointWidth;
+	if (count > 1) {
+		pen = &m_bendpoint2Pen;
+		negativePenWidth = m_bendpoint2Width;
+	}
+	else {
+		negativePenWidth = m_bendpointWidth;
+		pen = &m_bendpointPen;
+
+	}
 }
 
-void Wire::setPenWidth(int w) {
+void Wire::setPenWidth(int w, InfoGraphicsView * infoGraphicsView) {
 	m_pen.setWidth(w);
-	int dw = (getTrace() && (w > 1)) ? 4 : 3;
-	m_bendpointPen.setWidth(qAbs(w - dw));
-	m_bendpointWidth = (w - dw);
+	infoGraphicsView->getBendpointWidths(this, w, m_bendpointWidth, m_bendpoint2Width);
+	m_bendpointPen.setWidth(qAbs(m_bendpointWidth));
+	m_bendpoint2Pen.setWidth(qAbs(m_bendpoint2Width));
 	m_shadowPen.setWidth(w + 2);
 }
 

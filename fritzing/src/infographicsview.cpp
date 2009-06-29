@@ -162,3 +162,10 @@ InfoGraphicsView * InfoGraphicsView::getInfoGraphicsView(QGraphicsItem * item)
 void InfoGraphicsView::initWire(Wire *, int penWidth) {
 	Q_UNUSED(penWidth);
 }
+
+
+void InfoGraphicsView::getBendpointWidths(class Wire *, int w, int & w1, int & w2) {
+	Q_UNUSED(w);
+	Q_UNUSED(w1);
+	Q_UNUSED(w2);
+}

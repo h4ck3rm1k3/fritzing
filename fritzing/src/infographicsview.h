@@ -70,6 +70,7 @@ public:
 	QVariant evaluateJavascript(const QString &);
 
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
+	virtual void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);
