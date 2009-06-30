@@ -1,5 +1,6 @@
 {% load i18n %}
 
+{% if projects %}
 <table class="plain project">
     <tbody>
         <tr>
@@ -37,3 +38,6 @@
         </tr>
     </tbody>
 </table>
+{% else %}
+<p>{% trans "This user has no projects" %}</p>
+{% endif %}

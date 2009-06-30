@@ -70,8 +70,8 @@ def detail(request, slug):
     }, context_instance=RequestContext(request))
     
 def by_user(request, user_id):
-    #projects = Project.published.filter(author=user_id)
-    projects = Project.published.all()
+    projects = Project.published.filter(author=user_id)
+    #projects = Project.published.all()
     return render_to_response("projects/projects_for_user.html", {
         'projects': projects,
     }, context_instance=RequestContext(request))
