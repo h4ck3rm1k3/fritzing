@@ -151,18 +151,20 @@ INSTALLED_APPS = (
     'licenses',
     'dregni',
     # internal (for now)
-    'basic_profiles',
+    #'basic_profiles',
+    'uni_form',
     'account',
     'misc',
     'imagekit',
     'fritzing.apps.*',
+    'fritzing.apps.user_profile',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/%s/" % o.username,
 }
 
-AUTH_PROFILE_MODULE = 'basic_profiles.Profile'
+AUTH_PROFILE_MODULE = 'user_profile.Profile'
 NOTIFICATION_LANGUAGE_MODULE = 'account.Account'
 
 EMAIL_CONFIRMATION_DAYS = 2
