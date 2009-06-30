@@ -1,5 +1,5 @@
 from django.core.management.base import NoArgsCommand
-from fritzing.apps.user_profile.models import Profile
+from fritzing.apps.profiles.models import Profile
 from django.contrib.auth.models import User
 from django.conf import settings
 

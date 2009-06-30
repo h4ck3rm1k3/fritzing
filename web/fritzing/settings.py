@@ -157,14 +157,14 @@ INSTALLED_APPS = (
     'misc',
     'imagekit',
     'fritzing.apps.*',
-    'fritzing.apps.user_profile',
+    'fritzing.apps.profiles',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/%s/" % o.username,
 }
 
-AUTH_PROFILE_MODULE = 'user_profile.Profile'
+AUTH_PROFILE_MODULE = 'profiles.Profile'
 NOTIFICATION_LANGUAGE_MODULE = 'account.Account'
 
 EMAIL_CONFIRMATION_DAYS = 2

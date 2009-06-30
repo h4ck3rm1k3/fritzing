@@ -1,0 +1,16 @@
+.profile {
+}
+
+#profile_info {
+	float: left;
+	width: 55%
+}
+
+#user_projects {
+	float: right;
+	width: 40%
+}
+
+.edit {
+	clear: both;
+}

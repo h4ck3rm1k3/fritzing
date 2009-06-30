@@ -10,7 +10,7 @@ yolk==0.4.1
 python-memcached
 Cheetah
 
-django-dbtemplates==0.5.6
+django-dbtemplates==0.5.8
 django-templatesadmin==0.5.5
 django-reversion==1.1
 django-ajax-validation
@@ -19,7 +19,7 @@ django-avatar==1.0.1
 django-microblogging==0.1.0
 django-notification
 django-pagination==1.0.5
-django-robots==0.6.0
+django-robots==0.6.1
 django-messages==0.4.1
 django-wikiapp==0.1.2
 django-tinymce==1.5
@@ -31,7 +31,7 @@ django-page-cms
 django-bookmarks
 South
 django-email-confirmation
-django-flag==0.1.0
+django-flag==0.1.1
 django-friends
 django-gravatar
 django-mailer

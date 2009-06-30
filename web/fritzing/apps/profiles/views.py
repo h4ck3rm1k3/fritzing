@@ -7,20 +7,20 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from fritzing.apps.user_profile.models import Profile
-from fritzing.apps.user_profile.forms import ProfileForm
+from fritzing.apps.profiles.models import Profile
+from fritzing.apps.profiles.forms import ProfileForm
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
 else:
     notification = None
 
-def profiles(request, template_name="user_profile/profiles.html"):
+def profiles(request, template_name="profiles/profiles.html"):
     return render_to_response(template_name, {
         "users": User.objects.all().order_by("-date_joined"),
     }, context_instance=RequestContext(request))
 
-def profile(request, username, template_name="user_profile/profile.html"):
+def profile(request, username, template_name="profiles/profile.html"):
     other_user = get_object_or_404(User, username=username)
     if request.user.is_authenticated():
         if request.user == other_user:

@@ -1,0 +1,104 @@
+{% extends "profiles/base.html" %}
+
+{% load i18n %}
+{% load uni_form %}
+
+{% block title %}
+	{% trans "Profile" %}: {{ other_user }}{{ block.super }}
+{% endblock %}
+
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/profiles.css" type="text/css" media="screen" charset="utf-8">
+	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script>
+	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.query.js"></script>
+{% endblock %}
+
+
+{% block head_title %}{% blocktrans %}{{ other_user }}{% endblocktrans %}{% endblock %}
+
+{% block body %}
+<div class="profile">
+    <h1>{% blocktrans %}{{ other_user }}{% endblocktrans %}</h1>
+    {% if other_user.first_name or other_user.last_name %}
+    	<h2>
+    		{% if other_user.first_name %}
+    			{{ other_user.first_name }}
+    		{% endif %}
+    		{% if other_user.last_name %}
+    			{{ other_user.last_name }}
+    		{% endif %}
+    		
+    		{% if other_user.get_profile.location%}
+	       		</span>({{ other_user.get_profile.location }})</span>
+	       	{% endif %}
+    	</h2>
+    {% endif %}
+    
+    <div id="profile_info">
+        {% if other_user.get_profile.name %}
+        	<p><b>{% trans "Name" %}</b>: {{ other_user.get_profile.name }}</p>
+        {% endif %}
+        {% if other_user.get_profile.about %}
+        	<p><b>{% trans "About" %}</b>: {{ other_user.get_profile.about }}</p>
+        {% endif %}
+        {% if other_user.get_profile.website %}
+        	<p>
+        		<b>{% trans "Website" %}</b>:
+        		<a href="{{ other_user.get_profile.website }}">{{ other_user.get_profile.website }}</a>
+        	</p>
+        {% endif %}
+    </div>
+    
+    <div id="user_projects">
+    	<h3 style="margin-bottom:  10px;">{% trans "Projects" %}</h3>
+	    {% if user.is_authenticated %}
+	        {% if is_me %}
+		    	<form action="{% url projects-create %}">
+					<input type="submit" value="{% trans "Create New Project..." %}"></input>
+				</form>
+	        {% endif %}
+	    {% endif %}		
+    </div>
+</div>
+    
+    
+    {% if user.is_authenticated %}
+        {% if is_me %}
+	        <div class="edit">
+	            <p><a href="#" onclick="$('#profile_form').toggle(); return false;">{% trans "Edit profile" %}</a></p>
+	
+	            <form class="uniForm" id="profile_form" method="POST" action="" style="display: none;">
+	                <fieldset class="inlineLabels">  
+	                    {{ profile_form|as_uni_form }}
+	                    <div class="form_block">
+	                    <input type="hidden" name="action" value="update" />
+	                    <input type="submit" value="{% trans "update" %}"/>
+	                    </div>
+	                </fieldset>
+	            </form>
+	         </div>
+        {% endif %}
+    {% endif %}
+    
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    $.get('{% url projects-for-user other_user.id %}', function(data, textStatus) {
+	  	  	var projs = $("#user_projects")
+	  	  	projs.html(projs.html()+data)
+	  	});
+	});
+	</script>
+
+{% endblock %}
+
+{% block extra_body %}
+    <script type="text/javascript">
+        $().ready(function() {
+            {% if profile_form.errors %}
+                $('#profile_form').show();
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+

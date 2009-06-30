@@ -7,7 +7,7 @@
 <ul id="portal-personaltools" class="visualInline">
     {% if user.is_authenticated %}
     <li>
-        <a href="{% url acct_email %}">{{ user.username }}</a> <a href="/openid/logout/?next={% url acct_logout %}" class="logout-link">{% trans "Logout" %}</a>
+        <a href="{% url profile_detail user.username %}">{{ user.username }}</a> <a href="/openid/logout/?next={% url acct_logout %}" class="logout-link">{% trans "Logout" %}</a>
     </li>
     {% else %}
     <li>

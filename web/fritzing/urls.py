@@ -9,7 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^account/', include('account.urls')),
     (r'^openid/(.*)', PinaxConsumer()),
-    (r'^profiles/', include('fritzing.apps.user_profile.urls')),
+    (r'^profiles/', include('fritzing.apps.profiles.urls')),
     (r'^notices/', include('notification.urls')),
     (r'^announcements/', include('announcements.urls')),
     (r'^admin/filebrowser/', include('filebrowser.urls')),
