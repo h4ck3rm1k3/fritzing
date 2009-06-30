@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.4b.06.23.3185">
     <instances>
-        <instance moduleIdRef="4321DEAB24_ST" modelIndex="45290" path="/Applications/fritzing/parts/core/arduino_diecimila_new.fzp">
+        <instance moduleIdRef="4321DEAB24_ST" modelIndex="45290" path="/home/mute/fritzing/fritzing/fritzing/parts/core/arduino_diecimila_new.fzp">
             <title>Arduino1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -133,7 +133,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="HalfBreadboardModuleID" modelIndex="45298" path="/Applications/fritzing/parts/core/halfBreadboard.fzp">
+        <instance moduleIdRef="HalfBreadboardModuleID" modelIndex="45298" path="/home/mute/fritzing/fritzing/fritzing/parts/core/halfBreadboard.fzp">
             <title>Bread1</title>
             <views>
                 <breadboardView layer="breadboardbreadboard">
@@ -933,7 +933,7 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="a59353bd0db0225dc22770e292c622f3" modelIndex="45319" path="/Applications/fritzing/parts/core/lm358.fzp">
+        <instance moduleIdRef="a59353bd0db0225dc22770e292c622f3" modelIndex="45319" path="/home/mute/fritzing/fritzing/fritzing/parts/core/lm358.fzp">
             <title>U1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -2161,7 +2161,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="9e3b8ad0-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="45534" path="/Applications/fritzing/parts/core/resistor_6_8k.fzp">
+        <instance moduleIdRef="9e3b8ad0-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="45534" path="/home/mute/fritzing/fritzing/fritzing/parts/core/resistor_6_8k.fzp">
             <title>R2</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -2241,7 +2241,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="423120090505" modelIndex="49671" path="/Applications/fritzing/parts/core/pcb-arduino-shield.fzp">
+        <instance moduleIdRef="423120090505" modelIndex="49671" path="/home/mute/fritzing/fritzing/fritzing/parts/core/pcb-arduino-shield.fzp">
             <title>PCB2</title>
             <views>
                 <pcbView layer="silkscreen">
@@ -2416,7 +2416,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Droid Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;In this example, an LM 358 Dual Operation Amplifier is used to get a stronger and more stable signal from an FSR. You can basically use this configuration with any resistive sensor. Feel free to place a small ceramic cap between PIN1 on the Opamp and GND to smooth the signal even better.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;In this example, an LM 358 Dual Operational Amplifier is used to get a stronger, more stable signal from an FSR. You can use this configuration with any resistive sensor. Feel free to place a small ceramic cap between PIN1 on the Opamp and GND to make the signal smoother.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://itp.nyu.edu/physcomp/sensors/Schematics/LM358OpAmp&quot;&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;http://itp.nyu.edu/physcomp/sensors/Schematics/LM358OpAmp&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</text>
             <views>
                 <breadboardView layer="breadboardNote">
@@ -2424,7 +2424,7 @@ p, li { white-space: pre-wrap; }
                 </breadboardView>
             </views>
         </instance>
-        <instance moduleIdRef="1000ABDD10011" modelIndex="50078" path="/Applications/fritzing/parts/core/basic_fsr.fzp">
+        <instance moduleIdRef="1000ABDD10011" modelIndex="50078" path="/home/mute/fritzing/fritzing/fritzing/parts/core/basic_fsr.fzp">
             <title>J1</title>
             <views>
                 <breadboardView layer="breadboard">
