@@ -68,6 +68,7 @@ QList<QString> FApplication::m_filesToLoad;
 QString FApplication::m_libPath;
 QString FApplication::m_translationPath;
 UpdateDialog * FApplication::m_updateDialog = NULL;
+QSet<QString> FApplication::InstalledFonts;
 
 
 static int kBottomOfAlpha = 204;
@@ -325,9 +326,16 @@ int FApplication::startup(int & argc, char ** argv)
 	BinManager::MyPartsBinLocation = getUserDataStorePath("bins")+"/my_parts.fzb";
 	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
 
-	int fix = QFontDatabase::addApplicationFont (":/resources/fonts/DroidSans.ttf");
-	fix = QFontDatabase::addApplicationFont (":/resources/fonts/DroidSans-Bold.ttf");
-	fix = QFontDatabase::addApplicationFont (":/resources/fonts/ocra10.ttf");
+	QList<int> fontIds;
+	registerFont(":/resources/fonts/DroidSans.ttf", fontIds);
+	registerFont(":/resources/fonts/DroidSans-Bold.ttf", fontIds);
+	registerFont(":/resources/fonts/ocra10.ttf", fontIds);
+
+	foreach(int id, fontIds) {
+		foreach(QString ff, QFontDatabase::applicationFontFamilies(id)) {
+			InstalledFonts << ff;
+		}
+	}
 
 	
 	QFontDatabase database;
@@ -521,6 +529,13 @@ int FApplication::startup(int & argc, char ** argv)
 	return 0;
 }
 
+void FApplication::registerFont(const QString &fontFile, QList<int> fontIds) {
+	int id = QFontDatabase::addApplicationFont(fontFile);
+	if(id > -1) {
+		fontIds << id;
+	}
+}
+
 void FApplication::finish()
 {
 	QString currVersion = Version::versionString();
@@ -708,7 +723,8 @@ void FApplication::createUserDataStoreFolderStructure() {
 	if(!QFileInfo(BinManager::MyPartsBinLocation).exists()) {
 		// this copy action, is not working on windows, because is a resources file
 		if(!QFile(BinManager::MyPartsBinTemplateLocation).copy(BinManager::MyPartsBinLocation)) {
-#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN // may not be needed from qt 4.5.2 on
+			DebugDialog::debug("Failed to copy a file from the resources");
 			QApplication::processEvents();
 			QDir binsFolder = QFileInfo(BinManager::MyPartsBinLocation).dir().absolutePath();
 			QStringList binFiles = binsFolder.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);

@@ -70,6 +70,7 @@ protected:
 	void loadNew(QString path);
 	void loadOne(class MainWindow *, QString path, int loaded);
 	void initSplash(class FSplashScreen & splash, int & progressIndex, QPixmap & pixmap);
+	void registerFont(const QString &fontFile, QList<int> fontIds);
 
 protected:
 	static bool m_spaceBarIsPressed;
@@ -84,6 +85,8 @@ protected:
 	static QString m_translationPath;
 	static class UpdateDialog * m_updateDialog;
 
+public:
+	static QSet<QString> InstalledFonts;
 
 };
 
