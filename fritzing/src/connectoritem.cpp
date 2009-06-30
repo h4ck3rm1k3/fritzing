@@ -348,6 +348,11 @@ void ConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	if (event->button() != Qt::LeftButton) {
+		QGraphicsRectItem::mousePressEvent(event);
+		return;
+	}
+
 	if (m_attachedTo->filterMousePressConnectorEvent(this, event)) {
 		event->ignore();
 		return;
