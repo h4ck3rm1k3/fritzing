@@ -769,7 +769,7 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 }
 
 void FApplication::updateActivation() {
-	//DebugDialog::debug("updating activation");
+	DebugDialog::debug("updating activation");
 	m_changeActivationMutex.lock();
 	bool gotOne = false;
 	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
@@ -785,13 +785,14 @@ void FApplication::updateActivation() {
 		MainWindow * prior = m_lastTopmostWindow;
 		m_lastTopmostWindow = mainWindow;
 
-		//DebugDialog::debug(QString("last:%1, new:%2").arg((long) m_lastTopmostWindow.data(), 0, 16).arg((long) mainWindow, 0, 16));
+		DebugDialog::debug(QString("last:%1, new:%2").arg((long) prior, 0, 16).arg((long) mainWindow, 0, 16));
 
 		if (prior != NULL) {			
 			prior->saveDocks();
 		}
-		if (m_lastTopmostWindow) {
+		if (m_lastTopmostWindow->isActiveWindow()) {
 			m_lastTopmostWindow->restoreDocks();
+			DebugDialog::debug("restoring active window");
 		}
 
 		gotOne = true;
