@@ -483,9 +483,6 @@ QVariant PartLabel::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
 				setPlainText(m_owner->instanceTitle());
 			}
 			break;
-		case QGraphicsItem::ItemVisibleChange:
-			DebugDialog::debug("visibility change");
-			break;
 		default:
 			break;
 	}
