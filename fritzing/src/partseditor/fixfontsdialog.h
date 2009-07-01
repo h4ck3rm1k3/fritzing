@@ -42,7 +42,7 @@ public:
 	static FixedFontsHash fixFonts(QWidget *parent, const QSet<QString> fontsTofix, bool &cancelPressed);
 
 protected:
-	void createLine(QLayout* layout, const QString &brokenFont, const QStringList &items);
+	void createLine(QLayout* layout, const QString &brokenFont, const QStringList &items, int defaultIdx);
 
 	QSet<QString> m_fontsToFix;
 	QList<class FixedFontComboBox *> m_fixedFonts;

@@ -57,10 +57,10 @@ protected:
 FixFontsDialog::FixFontsDialog(QWidget *parent, const QSet<QString> fontsTofix)
 	: QDialog(parent)
 {
-	setWindowTitle(tr("Fonts fixer"));
+	setWindowTitle(tr("Unavailable fonts"));
 
-	QScrollArea *container = new QScrollArea(this);
-	container->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QFrame *container = new QFrame(this);
+	container->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
 	QVBoxLayout *layout = new QVBoxLayout(container);
 	layout->setSpacing(1);
 	layout->setMargin(1);
@@ -69,10 +69,13 @@ FixFontsDialog::FixFontsDialog(QWidget *parent, const QSet<QString> fontsTofix)
 	QStringList availFonts = FApplication::InstalledFonts.toList();
 	qSort(availFonts);
 	availFonts.insert(0,tr("-- ignore --"));
+	int defaultIdx = availFonts.indexOf("Droid Sans");
 
-	foreach(QString ftf, m_fontsToFix) {
+	QStringList fontsToFixList = m_fontsToFix.toList();
+	qSort(fontsToFixList);
+	foreach(QString ftf, fontsToFixList) {
 		DebugDialog::debug("font not found: "+ftf);
-		createLine(layout,ftf,availFonts);
+		createLine(layout,ftf,availFonts,defaultIdx);
 	}
 	layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Minimum,QSizePolicy::Expanding));
 
@@ -81,27 +84,41 @@ FixFontsDialog::FixFontsDialog(QWidget *parent, const QSet<QString> fontsTofix)
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
 	QVBoxLayout *mainLO = new QVBoxLayout(this);
-	mainLO->setMargin(2);
+	mainLO->setMargin(8);
 	mainLO->setSpacing(2);
 
-	mainLO->addWidget(new QLabel(tr(
-		"One or more fonts defined in the SVG file, couldn't be recognized.\n"
-		"If you want, use these controls to fixed them."
-		),this));
+	QLabel *msgLabel = new QLabel(tr(
+			"One or more fonts used in this SVG file are not available in Fritzing.\n"
+			"Please select one of the Fritzing fonts to replace them:"
+			),this);
+	msgLabel->setWordWrap(true);
+	mainLO->addWidget(msgLabel);
 	mainLO->addWidget(container);
+
+	mainLO->addSpacerItem(new QSpacerItem(0,5));
+	QLabel *infoLabel = new QLabel(
+		"For more information, please refer to the "
+		"<a href='http://fritzing.org/learning/tutorials/creating-custom-parts/'>part creation guidelines</a>."
+	, this);
+	infoLabel->setOpenExternalLinks(true);
+	infoLabel->setWordWrap(true);
+	mainLO->addWidget(infoLabel);
+	mainLO->addSpacerItem(new QSpacerItem(0,5));
+
 	QHBoxLayout *btnLayout = new QHBoxLayout();
 	btnLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
 	btnLayout->addWidget(buttonBox);
 	mainLO->addLayout(btnLayout);
-	setMinimumSize(400,200);
+
+
+	setMinimumWidth(100);
 }
 
 FixFontsDialog::~FixFontsDialog() {
-	// TODO Auto-generated destructor stub
 }
 
 // assumes that the first item in items, is a default value
-void FixFontsDialog::createLine(QLayout* layout, const QString &brokenFont, const QStringList &items) {
+void FixFontsDialog::createLine(QLayout* layout, const QString &brokenFont, const QStringList &items, int defaultIdx) {
 	FixedFontComboBox *cb = new FixedFontComboBox(this,brokenFont);
 
 	int fontValue = -1;
@@ -109,13 +126,17 @@ void FixFontsDialog::createLine(QLayout* layout, const QString &brokenFont, cons
 		cb->addItem(font, fontValue);
 		fontValue++;
 	}
+	cb->setCurrentIndex(defaultIdx);
 	m_fixedFonts << cb;
 
 	QFrame *line = new QFrame(this);
+	line->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
 	QHBoxLayout *lineLO = new QHBoxLayout(line);
 	lineLO->setSpacing(0);
 	lineLO->setMargin(1);
-	lineLO->addWidget(new QLabel(tr("Replace '%1' with ").arg(brokenFont), line));
+	lineLO->addWidget(new QLabel(tr("Replace "),line));
+	lineLO->addWidget(new QLabel(QString("<b>%1<b> ").arg(brokenFont),line));
+	lineLO->addWidget(new QLabel(tr("with "),line));
 	lineLO->addWidget(cb);
 
 	layout->addWidget(line);
