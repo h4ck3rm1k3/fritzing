@@ -72,6 +72,7 @@ QSet<QString> FApplication::InstalledFonts;
 QPointer<MainWindow> FApplication::m_lastTopmostWindow = NULL;
 QTimer FApplication::m_activationTimer;
 QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
+QMutex FApplication::m_changeActivationMutex;
 
 
 static int kBottomOfAlpha = 204;
@@ -750,6 +751,10 @@ void FApplication::createUserDataStoreFolderStructure() {
 }
 
 void FApplication::changeActivation(bool activate, QWidget * originator) {
+	if (!m_changeActivationMutex.tryLock()) return;
+
+	m_changeActivationMutex.unlock();
+
 	m_orderedTopLevelWidgets.removeOne(originator);
 	if (activate) {
 		m_orderedTopLevelWidgets.push_front(originator);
@@ -764,31 +769,42 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 
 void FApplication::updateActivation() {
 	//DebugDialog::debug("updating activation");
+	m_changeActivationMutex.lock();
+	bool gotOne = false;
 	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
 		MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
 		if (mainWindow == NULL) {
 			mainWindow = qobject_cast<MainWindow *>(widget->parent());
 		}
 		if (mainWindow == m_lastTopmostWindow) {
-			return;
+			gotOne = true;
+			break;
 		}
+
+		MainWindow * prior = m_lastTopmostWindow;
+		m_lastTopmostWindow = mainWindow;
 
 		//DebugDialog::debug(QString("last:%1, new:%2").arg((long) m_lastTopmostWindow.data(), 0, 16).arg((long) mainWindow, 0, 16));
 
-		if (m_lastTopmostWindow != NULL) {
-			m_lastTopmostWindow->saveDocks();
+		if (prior != NULL) {			
+			prior->saveDocks();
 		}
-		m_lastTopmostWindow = mainWindow;
 		if (m_lastTopmostWindow) {
 			m_lastTopmostWindow->restoreDocks();
 		}
-		return;
+
+		gotOne = true;
+		break;
 	}
 
-	if (m_lastTopmostWindow) {
-		m_lastTopmostWindow->saveDocks();
-		m_lastTopmostWindow = NULL;
+	if (!gotOne) {
+		if (m_lastTopmostWindow) {
+			m_lastTopmostWindow->saveDocks();
+			m_lastTopmostWindow = NULL;
+		}
 	}
+
+	m_changeActivationMutex.unlock();
 }
 
 void FApplication::topLevelWidgetDestroyed(QObject * object) {

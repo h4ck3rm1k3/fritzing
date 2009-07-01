@@ -33,6 +33,7 @@ $Date$
 #include <QFileDialog>
 #include <QPointer>
 #include <QWidget>
+#include <QMutex>
 
 class FApplication :
 	public QApplication
@@ -93,6 +94,7 @@ protected:
 	static QTimer m_activationTimer;
 	static QPointer<class MainWindow> m_lastTopmostWindow;
 	static QList<QWidget *> m_orderedTopLevelWidgets;
+	static QMutex m_changeActivationMutex;
 
 public:
 	static QSet<QString> InstalledFonts;
