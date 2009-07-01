@@ -764,6 +764,14 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 		m_orderedTopLevelWidgets.push_back(originator);
 	}
 
+	MainWindow * mainWindow = qobject_cast<MainWindow *>(originator);
+	if (mainWindow == NULL) {
+		mainWindow = qobject_cast<MainWindow *>(originator->parent());
+	}
+	if (mainWindow != NULL) {
+		mainWindow->setActive(activate);
+	}
+
 	m_activationTimer.stop();
 	m_activationTimer.start();
 }
@@ -790,7 +798,7 @@ void FApplication::updateActivation() {
 		if (prior != NULL) {			
 			prior->saveDocks();
 		}
-		if (m_lastTopmostWindow->isActiveWindow()) {
+		if (m_lastTopmostWindow->active()) {
 			m_lastTopmostWindow->restoreDocks();
 			DebugDialog::debug("restoring active window");
 		}

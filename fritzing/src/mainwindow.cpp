@@ -81,6 +81,7 @@ int MainWindow::CascadeFactorY = 19;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_active = false;
 	m_wireColorMenu = NULL;
 	m_viewSwitcherDock = NULL;
 	m_checkForUpdatesAct = NULL;
@@ -109,7 +110,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	//setAttribute(Qt::WA_QuitOnClose, false);					// restoring this temporarily (2008.12.19)
 #endif
     m_dontClose = m_closing = false;
-	m_savedState = NeverSaved;
 
 	m_paletteModel = paletteModel;
 	m_refModel = refModel;
@@ -803,57 +803,6 @@ void MainWindow::restoreDocks() {
 	}
 }
 
-
-void MainWindow::changeActivation(bool activate, QWidget * originator) {
-	Q_UNUSED(originator);
-	// tried using this->saveState() and this->restoreState() but couldn't get it to work
-
-	//DebugDialog::debug(QString("change activation:%2 %1").arg(this->windowTitle()).arg(activate));
-
-	QWidget * activeWindow = QApplication::activeWindow ();
-	//DebugDialog::debug(QString("active %1").arg(activeWindow == NULL ? "NULL" : activeWindow->windowTitle()));
-
-	if (activate) {
-		if (m_savedState == Saved) {
-			m_savedState = Restored;
-			//DebugDialog::debug("restore state");
-			//restoreState(m_savedStateData, 0);
-			for (int i = 0; i < children().count(); i++) {
-				FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
-				if (dock == NULL) continue;
-
-				dock->restoreStateSoon();
-				//DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
-			}
-
-		}
-	} else {
-		if ((activeWindow != NULL) && (activeWindow == this || activeWindow->parent() == this)) {
-			//DebugDialog::debug("skipping save");
-			return;
-		}
-
-		if (!(m_savedState == Saved)) {
-
-			//m_savedStateData = saveState(0);
-			m_savedState = Saved;
-
-			//DebugDialog::debug("save state");
-			for (int i = 0; i < children().count(); i++) {
-				FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
-				if (dock == NULL) continue;
-
-				dock->saveState();
-				//DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
-
-				if (dock->isFloating() && dock->isVisible()) {
-					//DebugDialog::debug(QString("hiding dock %1").arg(dock->windowTitle()));
-					dock->hide();
-				}
-			}
-		}
-	}
-}
 
 ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath) {
 	return ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
@@ -1969,4 +1918,12 @@ const QString &MainWindow::selectedModuleID() {
 	} else {
 		return ___emptyString___;
 	}
+}
+
+void MainWindow::setActive(bool active) {
+	m_active = active;
+}
+
+bool MainWindow::active() {
+	return m_active;
 }

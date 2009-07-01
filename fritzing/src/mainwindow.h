@@ -96,6 +96,8 @@ public:
 
 	void saveDocks();
 	void restoreDocks();
+	void setActive(bool active);
+	bool active();
 
 	// if we consider a part as the smallest ("atomic") entity inside
 	// fritzing, then this functions may help with the bundle tasks
@@ -116,7 +118,6 @@ signals:
 
 public slots:
 	void ensureClosable();
-	void changeActivation(bool activate, QWidget * originator);
 	void swapSelected(const QVariant & currProps, const QString &family, const QString & name);
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 	void partsEditorClosed(long id);
@@ -345,12 +346,8 @@ protected:
 
 
 protected:
-    enum SavedState {
-    	NeverSaved,
-    	Saved,
-    	Restored
-   	};
 
+	bool m_active;
 	QUndoGroup *m_undoGroup;
 	QUndoView *m_undoView;
 
@@ -379,7 +376,6 @@ protected:
     QHash <long,class PartsBinPaletteWidget*> m_binsWithPartsEditorRequests;
 
     class Console * m_consoleView;
-    SavedState m_savedState;
     bool m_closing;
 	bool m_dontClose;
     bool m_firstOpen;
