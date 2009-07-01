@@ -537,7 +537,7 @@ void PartsEditorView::loadSvgFile(const QString& origPath) {
 
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
 
-	fixPixelDimensionsIn(origPath);
+	beforeSVGLoading(origPath);
 
 	setSvgFilePath(origPath);
 
@@ -545,15 +545,7 @@ void PartsEditorView::loadSvgFile(const QString& origPath) {
 	loadSvgFile(mp);
 }
 
-void PartsEditorView::fixPixelDimensionsIn(const QString &filename) {
-	if(m_viewIdentifier == ViewIdentifierClass::IconView) return;
-
-	/*
-	 * QString illustratorHeader =
-	 * "<!-- Generator: Adobe Illustrator [\\d\\.]*, SVG Export Plug-In.*  -->";
-	 */
-
-
+void PartsEditorView::beforeSVGLoading(const QString &filename) {
     QFile file(filename);
     if(!file.open(QIODevice::ReadOnly )) {
     	QMessageBox::warning(
@@ -562,60 +554,102 @@ void PartsEditorView::fixPixelDimensionsIn(const QString &filename) {
     		tr(
     		"The file couldn't be opened. If this file defines its dimensions \n"
     		"in non-real-world units (e.g. pixels), then they won't be translated \n"
-    		"into real life ones")
+    		"into real life ones.\n"
+    		"Malformed font-family definitions won't be fixed either.")
     	);
         return;
     }
 
-    //tr("The file couldn't be opened. If this file defines its dimensions in a non-real-world unit, they won't be translated into real life ones, because it's not writable. Check your permissions and try again")
+    QString fileContent(file.readAll());
+	bool fileHasChanged = fixPixelDimensionsIn(fileContent,filename);
+	fileHasChanged |= fixFonts(fileContent,filename);
 
-    //if(containsText(filename,illustratorHeader)) {
-		QDomDocument *svgDom = new QDomDocument();
+	if(fileHasChanged) {
+		file.close();
+		if(!file.open(QIODevice::WriteOnly )) {
+			QMessageBox::warning(
+				this,
+				tr("Couldn't write into file"),
+				tr(
+				"This file needs to be fixed to fit fritzing needs, but it couldn't\n"
+				"be written.\n"
+				"Fritzing is not compatible with this kind of svg files. Please \n"
+				"check your permissions, and try again.\n\n"
 
-		QString *errorMsg = new QString("");
-		int *errorLine = new int(0);
-		int *errorCol = new int(0);
-		if(!svgDom->setContent(&file, true, errorMsg, errorLine, errorCol)) {
-			qWarning() << QString("PartsEditorView::fixPixelDimensionsIn(filename) couldn't load svg: %1 (line %2, col %3)")
-							.arg(*errorMsg).arg(*errorLine).arg(*errorCol);
-			file.close();
-			return;
-		}
-		delete errorMsg;
-		delete errorLine;
-		delete errorCol;
-
-		QDomElement elem = svgDom->firstChildElement("svg");
-		bool fileHasChanged = pxToInches(elem,"width",filename);
-		fileHasChanged |= pxToInches(elem,"height",filename);
-
-		if(fileHasChanged) {
-			file.close();
-			if(!file.open(QIODevice::WriteOnly )) {
-				QMessageBox::warning(
-					this,
-					tr("Couldn't write into file"),
-					tr(
-					"This file defines at least one of its dimensions on pixels, and\n"
-					"they couldn't be translated.\n"
-					"Fritzing is not compatible with this kind of svg files. Please \n"
-					"check your permissions, and try again.\n\n"
-
-					"More information at http://fritzing.org/using-svg-images-new-parts/"
-					)
-				);
-				delete svgDom;
-				return;
-			}
-
+				"More information at http://fritzing.org/using-svg-images-new-parts/"
+				)
+			);
+		} else {
 			QTextStream out(&file);
-			out << svgDom->toString();
+			out << fileContent;
+			file.close();
 		}
+	}
 
-		delete svgDom;
-    //}
+}
 
-    file.close();
+bool PartsEditorView::fixFonts(QString &fileContent, const QString &filename) {
+	bool changed = removeFontFamilySingleQuotes(fileContent, filename);
+	changed |= fixUnavailableFontFamilies(fileContent, filename);
+
+	return changed;
+}
+
+bool PartsEditorView::removeFontFamilySingleQuotes(QString &fileContent, const QString &filename) {
+	QRegExp re("font-family=\"('.*')\"");
+	QSet<QString> wrongFontFamilies;
+	int pos = 0;
+
+	while ((pos = re.indexIn(fileContent, pos)) != -1) {
+		wrongFontFamilies << re.cap(1);
+		pos += re.matchedLength();
+	}
+
+	foreach(QString ff, wrongFontFamilies) {
+		QString wrongFF = ff;
+		QString fixedFF = ff.remove('\'');
+		fileContent.replace(wrongFF,fixedFF);
+		DebugDialog::debug(
+			QString("fixing font-family from \"%1\" to \"%2\" in file '%3'")
+				.arg(wrongFF).arg(fixedFF).arg(filename)
+		);
+	}
+
+	return wrongFontFamilies.size() > 0;
+}
+
+bool PartsEditorView::fixUnavailableFontFamilies(QString &fileContent, const QString &filename) {
+	return false;
+}
+
+bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &filename) {
+	if(m_viewIdentifier == ViewIdentifierClass::IconView) return false;
+
+	QDomDocument *svgDom = new QDomDocument();
+
+	QString *errorMsg = new QString("");
+	int *errorLine = new int(0);
+	int *errorCol = new int(0);
+	if(!svgDom->setContent(fileContent, true, errorMsg, errorLine, errorCol)) {
+		qWarning() << QString("PartsEditorView::fixPixelDimensionsIn(filename) couldn't load svg: %1 (line %2, col %3)")
+						.arg(*errorMsg).arg(*errorLine).arg(*errorCol);
+		return false;
+	}
+	delete errorMsg;
+	delete errorLine;
+	delete errorCol;
+
+	QDomElement elem = svgDom->firstChildElement("svg");
+	bool fileHasChanged = pxToInches(elem,"width",filename);
+	fileHasChanged |= pxToInches(elem,"height",filename);
+
+	if(fileHasChanged) {
+		fileContent = svgDom->toString();
+	}
+
+	delete svgDom;
+
+	return fileHasChanged;
 }
 
 bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, const QString &filename) {

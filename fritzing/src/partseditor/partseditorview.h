@@ -123,7 +123,13 @@ class PartsEditorView : public SketchWidget {
 		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
 		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem);
 		QString getLayerFileName(ModelPart * modelPart);
-		void fixPixelDimensionsIn(const QString &filename);
+
+
+		void beforeSVGLoading(const QString &filename);
+		bool fixPixelDimensionsIn(QString &fileContent, const QString &filename);
+		bool fixFonts(QString &fileContent, const QString &filename);
+		bool removeFontFamilySingleQuotes(QString &fileContent, const QString &filename);
+		bool fixUnavailableFontFamilies(QString &fileContent, const QString &filename);
 		bool pxToInches(QDomElement &elem, const QString &attrName, const QString &filename);
 
 
