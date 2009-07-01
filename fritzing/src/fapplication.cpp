@@ -72,8 +72,6 @@ QSet<QString> FApplication::InstalledFonts;
 QPointer<MainWindow> FApplication::m_lastTopmostWindow = NULL;
 QTimer FApplication::m_activationTimer;
 QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
-QMutex FApplication::m_changeActivationMutex;
-QHash<QWidget *, bool> FApplication::m_topLevelActive;
 
 
 static int kBottomOfAlpha = 204;
@@ -753,19 +751,16 @@ void FApplication::createUserDataStoreFolderStructure() {
 }
 
 void FApplication::changeActivation(bool activate, QWidget * originator) {
-	if (!m_changeActivationMutex.tryLock()) return;
+	if (!activate) return;
 
-	m_changeActivationMutex.unlock();
-
-	m_orderedTopLevelWidgets.removeOne(originator);
-	if (activate) {
-		m_orderedTopLevelWidgets.push_front(originator);
+	MainWindow * mainWindow = qobject_cast<MainWindow *>(originator);
+	if (mainWindow == NULL) {
+		mainWindow = qobject_cast<MainWindow *>(originator->parent());
 	}
-	else {
-		m_orderedTopLevelWidgets.push_back(originator);
-	}
+	if (mainWindow == NULL) return;
 
-	m_topLevelActive.insert(originator, activate);
+	m_orderedTopLevelWidgets.removeOne(mainWindow);
+	m_orderedTopLevelWidgets.push_front(mainWindow);
 
 	m_activationTimer.stop();
 	m_activationTimer.start();
@@ -773,62 +768,30 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 
 void FApplication::updateActivation() {
 	DebugDialog::debug("updating activation");
-	m_changeActivationMutex.lock();
-	bool gotOne = false;
-	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
-		MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
-		if (mainWindow == NULL) {
-			mainWindow = qobject_cast<MainWindow *>(widget->parent());
-		}
-		if (mainWindow == NULL) continue;
 
-		bool active = m_topLevelActive.value(mainWindow, false);
-		if (!active) {
-			// if any of mainWindow's docks are active, mainWindow is active
-			foreach (QWidget * child, m_orderedTopLevelWidgets) {
-				if (child->parent() == mainWindow && m_topLevelActive.value(child, false)) {
-					active = true;
-					break;
-				}
-			}
-		}
-
-		MainWindow * prior = m_lastTopmostWindow;
-		m_lastTopmostWindow = active ? mainWindow : NULL;
-		if (prior == m_lastTopmostWindow) {
-			gotOne = true;
-			break;
-		}
-
-		DebugDialog::debug(QString("last:%1, new:%2").arg((long) prior, 0, 16).arg((long) m_lastTopmostWindow.data(), 0, 16));
-
-		if (prior != NULL) {			
-			prior->saveDocks();
-		}
-		if (m_lastTopmostWindow != NULL) {
-			m_lastTopmostWindow->restoreDocks();
-			DebugDialog::debug("restoring active window");
-		}
-
-		gotOne = true;
-		break;
+	MainWindow * prior = m_lastTopmostWindow; 
+	m_lastTopmostWindow = NULL;
+	if (m_orderedTopLevelWidgets.count() > 0) {
+		m_lastTopmostWindow = qobject_cast<MainWindow *>(m_orderedTopLevelWidgets.at(0));
 	}
 
-	if (!gotOne) {
-		if (m_lastTopmostWindow) {
-			m_lastTopmostWindow->saveDocks();
-			m_lastTopmostWindow = NULL;
-		}
-	}
+	if (prior == m_lastTopmostWindow) return;
 
-	m_changeActivationMutex.unlock();
+	DebugDialog::debug(QString("last:%1, new:%2").arg((long) prior, 0, 16).arg((long) m_lastTopmostWindow.data(), 0, 16));
+
+	if (prior != NULL) {			
+		prior->saveDocks();
+	}
+	if (m_lastTopmostWindow != NULL) {
+		m_lastTopmostWindow->restoreDocks();
+		DebugDialog::debug("restoring active window");
+	}
 }
 
 void FApplication::topLevelWidgetDestroyed(QObject * object) {
 	QWidget * widget = qobject_cast<QWidget *>(object);
 	if (widget) {
 		m_orderedTopLevelWidgets.removeOne(widget);
-		m_topLevelActive.remove(widget);
 	}
 }
 
