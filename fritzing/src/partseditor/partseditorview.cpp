@@ -33,11 +33,13 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 
 #include "partseditorview.h"
 #include "partseditorconnectoritem.h"
+#include "fixfontsdialog.h"
 #include "../items/layerkinpaletteitem.h"
 #include "../layerattributes.h"
 #include "../fritzingwindow.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
+#include "../fapplication.h"
 
 
 int PartsEditorView::ConnDefaultWidth = 5;
@@ -535,17 +537,19 @@ void PartsEditorView::loadSvgFile(const QString& origPath) {
 	m_drawnConns.clear();
 	m_removedConnIds.clear();
 
-	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
+	bool canceled = false;
+	beforeSVGLoading(origPath, canceled);
 
-	beforeSVGLoading(origPath);
+	if(!canceled) {
+		m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
+		setSvgFilePath(origPath);
 
-	setSvgFilePath(origPath);
-
-	ModelPart * mp = createFakeModelPart(m_svgFilePath);
-	loadSvgFile(mp);
+		ModelPart * mp = createFakeModelPart(m_svgFilePath);
+		loadSvgFile(mp);
+	}
 }
 
-void PartsEditorView::beforeSVGLoading(const QString &filename) {
+void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) {
     QFile file(filename);
     if(!file.open(QIODevice::ReadOnly )) {
     	QMessageBox::warning(
@@ -562,7 +566,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename) {
 
     QString fileContent(file.readAll());
 	bool fileHasChanged = fixPixelDimensionsIn(fileContent,filename);
-	fileHasChanged |= fixFonts(fileContent,filename);
+	fileHasChanged |= fixFonts(fileContent,filename,canceled);
 
 	if(fileHasChanged) {
 		file.close();
@@ -588,29 +592,23 @@ void PartsEditorView::beforeSVGLoading(const QString &filename) {
 
 }
 
-bool PartsEditorView::fixFonts(QString &fileContent, const QString &filename) {
+bool PartsEditorView::fixFonts(QString &fileContent, const QString &filename, bool &canceled) {
 	bool changed = removeFontFamilySingleQuotes(fileContent, filename);
-	changed |= fixUnavailableFontFamilies(fileContent, filename);
+	changed |= fixUnavailableFontFamilies(fileContent, filename, canceled);
 
 	return changed;
 }
 
 bool PartsEditorView::removeFontFamilySingleQuotes(QString &fileContent, const QString &filename) {
-	QRegExp re("font-family=\"('.*')\"");
-	QSet<QString> wrongFontFamilies;
-	int pos = 0;
-
-	while ((pos = re.indexIn(fileContent, pos)) != -1) {
-		wrongFontFamilies << re.cap(1);
-		pos += re.matchedLength();
-	}
+	QString pattern = "font-family=\"('.*')\"";
+	QSet<QString> wrongFontFamilies = getRegexpCaptures(pattern,fileContent);
 
 	foreach(QString ff, wrongFontFamilies) {
 		QString wrongFF = ff;
 		QString fixedFF = ff.remove('\'');
 		fileContent.replace(wrongFF,fixedFF);
 		DebugDialog::debug(
-			QString("fixing font-family from \"%1\" to \"%2\" in file '%3'")
+			QString("removing font-family single quotes: \"%1\" to \"%2\" in file '%3'")
 				.arg(wrongFF).arg(fixedFF).arg(filename)
 		);
 	}
@@ -618,8 +616,52 @@ bool PartsEditorView::removeFontFamilySingleQuotes(QString &fileContent, const Q
 	return wrongFontFamilies.size() > 0;
 }
 
-bool PartsEditorView::fixUnavailableFontFamilies(QString &fileContent, const QString &filename) {
-	return false;
+bool PartsEditorView::fixUnavailableFontFamilies(QString &fileContent, const QString &filename, bool &canceled) {
+	QSet<QString> definedFFs;
+	definedFFs.unite(getAttrFontFamilies(fileContent));
+	definedFFs.unite(getFontFamiliesInsideStyleTag(fileContent));
+
+	FixedFontsHash fixedFonts = FixFontsDialog::fixFonts(this,definedFFs,canceled);
+
+	if(!canceled) {
+		foreach(QString oldF, fixedFonts.keys()) {
+			QString newF = fixedFonts[oldF];
+			fileContent.replace(oldF,newF);
+			DebugDialog::debug(
+				QString("replacing font-family: \"%1\" to \"%2\" in file '%3'")
+					.arg(oldF).arg(newF).arg(filename)
+			);
+		}
+	}
+
+	return !canceled && fixedFonts.size() > 0;
+}
+
+QSet<QString> PartsEditorView::getAttrFontFamilies(const QString &fileContent) {
+	/*
+	 * font-family defined as attr example:
+
+<text xmlns="http://www.w3.org/2000/svg" font-family="DroidSans"
+id="text2732" transform="matrix(1 0 0 1 32.2012 236.969)"
+font-size="9.9771" >A0</text>
+
+	 */
+
+	QString pattern = "font-family\\s*=\\s*\"(.|[^\"]*)\\s*\"";
+	return getRegexpCaptures(pattern,fileContent);
+}
+
+QSet<QString> PartsEditorView::getFontFamiliesInsideStyleTag(const QString &fileContent) {
+	/*
+	 * font-family defined in a style attr example:
+
+style="font-size:9;-inkscape-font-specification:Droid Sans;font-family:Droid
+Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+
+	 */
+
+	QString pattern = "font-family\\s*:\\s*(.|[^;]*).*\"";
+	return getRegexpCaptures(pattern,fileContent);
 }
 
 bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &filename) {

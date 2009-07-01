@@ -125,12 +125,15 @@ class PartsEditorView : public SketchWidget {
 		QString getLayerFileName(ModelPart * modelPart);
 
 
-		void beforeSVGLoading(const QString &filename);
+		// SVG fixing
+		void beforeSVGLoading(const QString &filename, bool &canceled);
 		bool fixPixelDimensionsIn(QString &fileContent, const QString &filename);
-		bool fixFonts(QString &fileContent, const QString &filename);
+		bool fixFonts(QString &fileContent, const QString &filename, bool &canceled);
 		bool removeFontFamilySingleQuotes(QString &fileContent, const QString &filename);
-		bool fixUnavailableFontFamilies(QString &fileContent, const QString &filename);
+		bool fixUnavailableFontFamilies(QString &fileContent, const QString &filename, bool &canceled);
 		bool pxToInches(QDomElement &elem, const QString &attrName, const QString &filename);
+		QSet<QString> getAttrFontFamilies(const QString &fileContent);
+		QSet<QString> getFontFamiliesInsideStyleTag(const QString &fileContent);
 
 
 		// specs

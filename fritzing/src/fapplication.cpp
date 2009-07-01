@@ -343,6 +343,7 @@ int FApplication::startup(int & argc, char ** argv)
 	foreach(int id, fontIds) {
 		foreach(QString ff, QFontDatabase::applicationFontFamilies(id)) {
 			InstalledFonts << ff;
+			DebugDialog::debug("installing font family: "+ff);
 		}
 	}
 
@@ -538,7 +539,7 @@ int FApplication::startup(int & argc, char ** argv)
 	return 0;
 }
 
-void FApplication::registerFont(const QString &fontFile, QList<int> fontIds) {
+void FApplication::registerFont(const QString &fontFile, QList<int> &fontIds) {
 	int id = QFontDatabase::addApplicationFont(fontFile);
 	if(id > -1) {
 		fontIds << id;

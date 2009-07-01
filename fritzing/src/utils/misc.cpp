@@ -32,6 +32,7 @@ $Date$
 #include <QDir>
 #include <QSettings>
 #include <QTextStream>
+#include <QSet>
 
 static QList<QString> ___fritzingExtensions___;
 
@@ -268,4 +269,17 @@ bool containsText(const QString &filepath, const QString &searchText) {
 	file.close();
 
 	return re.indexIn(content) != -1;
+}
+
+QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn) {
+	QRegExp re(pattern);
+	QSet<QString> captures;
+	int pos = 0;
+
+	while ((pos = re.indexIn(textToSearchIn, pos)) != -1) {
+		captures << re.cap(1);
+		pos += re.matchedLength();
+	}
+
+	return captures;
 }
