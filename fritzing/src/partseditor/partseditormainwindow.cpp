@@ -162,6 +162,10 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart
 	}
 
 	installEventFilter(this);
+
+	connect(this, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
+    connect(this, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)));
+
 }
 
 PartsEditorMainWindow::~PartsEditorMainWindow()

@@ -763,7 +763,7 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 }
 
 void FApplication::updateActivation() {
-	DebugDialog::debug("updating activation");
+	//DebugDialog::debug("updating activation");
 	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
 		MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
 		if (mainWindow == NULL) {
@@ -773,7 +773,7 @@ void FApplication::updateActivation() {
 			return;
 		}
 
-		DebugDialog::debug(QString("last:%1, new:%2").arg((long) m_lastTopmostWindow.data(), 0, 16).arg((long) mainWindow, 0, 16));
+		//DebugDialog::debug(QString("last:%1, new:%2").arg((long) m_lastTopmostWindow.data(), 0, 16).arg((long) mainWindow, 0, 16));
 
 		if (m_lastTopmostWindow != NULL) {
 			m_lastTopmostWindow->saveDocks();
