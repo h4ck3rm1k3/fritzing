@@ -71,6 +71,7 @@ public:
 
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
 	virtual void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
+	virtual void getLabelFont(QFont &, QColor &);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

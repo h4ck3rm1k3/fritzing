@@ -220,7 +220,7 @@ public:
 	virtual void setInstanceTitle(const QString &title);
 
 public slots:
-	void showPartLabel(bool show, ViewLayer *, const QColor & textColor);
+	void showPartLabel(bool show, ViewLayer *);
 	void partLabelChanged(const QString &newText);
 	qint64 id();
 

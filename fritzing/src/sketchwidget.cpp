@@ -70,7 +70,6 @@ $Date$
 #include "items/resizableboard.h"
 #include "fsvgrenderer.h"
 
-static const QColor labelTextColor = Qt::black;
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
@@ -4978,12 +4977,8 @@ void SketchWidget::showPartLabel(long itemID, bool showIt) {
 
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase != NULL) {
-		itemBase->showPartLabel(showIt, m_viewLayers.value(getLabelViewLayerID()), getLabelTextColor());
+		itemBase->showPartLabel(showIt, m_viewLayers.value(getLabelViewLayerID()));
 	}
-}
-
-const QColor & SketchWidget::getLabelTextColor() {
-	return labelTextColor;
 }
 
 void SketchWidget::collectParts(QList<ItemBase *> & partList) {
@@ -5036,7 +5031,7 @@ void SketchWidget::showPartLabels(bool show)
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
 		if (itemBase == NULL) continue;
 
-		itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()), getLabelTextColor());
+		itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()));
 	}
 }
 

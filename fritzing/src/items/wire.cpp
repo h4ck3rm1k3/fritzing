@@ -72,7 +72,7 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_connector0 = m_connector1 = NULL;
-	m_partLabel = new PartLabel(this, "", NULL);
+	m_partLabel = new PartLabel(this, NULL);
 	m_canChainMultiple = false;
     setFlag(QGraphicsItem::ItemIsSelectable, true );
 	m_connectorHover = NULL;

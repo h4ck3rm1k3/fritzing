@@ -38,8 +38,6 @@ $Date$
 
 #include <limits>
 
-static QColor labelTextColor = Qt::white;
-
 static int MAX_INT = std::numeric_limits<int>::max();
 
 struct DistanceThing {
@@ -432,10 +430,6 @@ void PCBSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCoun
 	m_connectorsLeftToRoute = connectorsLeftToRoute;
 	m_jumperCount = jumperCount;
 	SketchWidget::forwardRoutingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
-}
-
-const QColor & PCBSketchWidget::getLabelTextColor() {
-	return labelTextColor;
 }
 
 void PCBSketchWidget::selectAllExcludedTraces() 
@@ -1358,3 +1352,9 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 	}
 }
 
+void PCBSketchWidget::getLabelFont(QFont & font, QColor & color) {
+	font.setFamily("ocra10");
+	font.setPointSize(9);
+	color.setAlpha(255);
+	color.setRgb(0xffffff);
+}

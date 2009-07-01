@@ -332,3 +332,10 @@ void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setPenWidth(penWidth - 2, this);
 	wire->setColorString("blue", Wire::UNROUTED_OPACITY);
 }
+
+void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color) {
+	font.setFamily("Droid Sans");
+	font.setPointSize(9);
+	color.setAlpha(255);
+	color.setRgb(0);
+}

@@ -316,7 +316,6 @@ protected:
 	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	virtual const QColor & getLabelTextColor();
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize, bool isLabel);
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);

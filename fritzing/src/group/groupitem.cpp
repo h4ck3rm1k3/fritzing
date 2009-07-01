@@ -109,7 +109,7 @@ GroupItem::GroupItem( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier 
 	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_blockSyncKinMoved = false;
-	m_partLabel = new PartLabel(this, "", NULL);
+	m_partLabel = new PartLabel(this, NULL);
 }
 
 const QList<ItemBase *> & GroupItem::layerKin() {

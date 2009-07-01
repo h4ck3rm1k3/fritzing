@@ -169,3 +169,6 @@ void InfoGraphicsView::getBendpointWidths(class Wire *, int w, int & w1, int & w
 	Q_UNUSED(w1);
 	Q_UNUSED(w2);
 }
+
+void InfoGraphicsView::getLabelFont(QFont &, QColor &) {
+}

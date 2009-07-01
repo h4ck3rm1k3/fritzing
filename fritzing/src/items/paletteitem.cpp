@@ -51,7 +51,7 @@ PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 {
 	m_blockSyncKinMoved = false;
 	if(doLabel) {
-		m_partLabel = new PartLabel(this, "", NULL);
+		m_partLabel = new PartLabel(this, NULL);
 		m_partLabel->setVisible(false);
 	} else {
 		m_partLabel = NULL;

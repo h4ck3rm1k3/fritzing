@@ -85,7 +85,6 @@ protected:
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
 								QUndoCommand * & parentCommand, const QString & commandString, const QString & colorString);
-	const QColor & getLabelTextColor();
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
@@ -120,7 +119,7 @@ protected:
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
 	ConnectorItem * findEmptyBus(ItemBase * breadboard);
 	bool bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems, QList<Wire *> & visited);
-
+	void getLabelFont(QFont &, QColor &);
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);

@@ -944,9 +944,9 @@ void ItemBase::clearModelPart() {
 	m_modelPart = NULL;
 }
 
-void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer, const QColor & textColor) {
+void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer) {
 	if (m_partLabel) {
-		m_partLabel->showLabel(showIt, viewLayer, textColor);
+		m_partLabel->showLabel(showIt, viewLayer);
 	}
 }
 

@@ -39,35 +39,15 @@ $Date$
 
 #include "../viewlayer.h"
 
-class PartLabelTextDocument : public QTextDocument
-{
-public:
-	PartLabelTextDocument(long id, QObject * parent = 0);
-
-	void addRef();
-	void decRef();
-
-protected:
-	int m_refCount;
-	long m_id;
-
-protected:
-	static QHash<long, PartLabelTextDocument *> AllTextDocuments;
-
-
-	friend class PartLabel;
-};
-
-
 class PartLabel : public QGraphicsTextItem
 {
  Q_OBJECT
 
 public:
-	PartLabel(class ItemBase * owner, const QString & text, QGraphicsItem * parent = 0 );   // itembase is not the parent
+	PartLabel(class ItemBase * owner, QGraphicsItem * parent = 0 );   // itembase is not the parent
 	~PartLabel();
 
-	void showLabel(bool showIt, ViewLayer *, const QColor & textColor);
+	void showLabel(bool showIt, ViewLayer *);
 	QRectF boundingRect() const;
 	QPainterPath shape() const;
 	void setPlainText(const QString & text);
@@ -81,6 +61,7 @@ public:
 	void moveLabel(QPointF newPos, QPointF newOffset);
 	class ItemBase * owner();
 	void rotateFlipLabel(qreal degrees, Qt::Orientations orientation);
+	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
 protected:
 	void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
@@ -94,7 +75,7 @@ protected:
 	void focusInEvent(QFocusEvent * event);
 	void focusOutEvent(QFocusEvent * event);
 	bool eventFilter(QObject * object, QEvent * event);
-
+	void setUpText();
 
 protected slots:
 	void contentsChangedSlot();

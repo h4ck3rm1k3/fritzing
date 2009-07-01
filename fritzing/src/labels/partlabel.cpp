@@ -86,46 +86,17 @@ enum PartLabelTransformation {
 
 /////////////////////////////////////////////
 
-PartLabelTextDocument::PartLabelTextDocument(long id, QObject * parent) : QTextDocument(parent) 
-{
-	m_id = id;
-	m_refCount = 0;
-}
-
-void PartLabelTextDocument::addRef() {
-	m_refCount++;
-}
-
-void PartLabelTextDocument::decRef() {
-	if (--m_refCount <= 0) {
-		AllTextDocuments.remove(m_id);
-		deleteLater();
-	}
-}
-
-QHash<long, PartLabelTextDocument *> PartLabelTextDocument::AllTextDocuments;
+static QMultiHash<long, PartLabel *> AllPartLabels;
 
 ///////////////////////////////////////////
 
-PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * parent)
-	: QGraphicsTextItem(text, parent)
+PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
+	: QGraphicsTextItem(parent)
 {
 	m_owner = owner;
 	m_spaceBarWasPressed = false;
 
-	QFont font("Droid Sans");
-	font.setPointSize(9);
-	setFont(font);
-
-	PartLabelTextDocument * doc = PartLabelTextDocument::AllTextDocuments.value(owner->id());
-	if (doc == NULL) {
-		doc = new PartLabelTextDocument(owner->id(), NULL);
-		PartLabelTextDocument::AllTextDocuments.insert(owner->id(), doc);
-		doc->setUndoRedoEnabled(true);							
-	}
-	doc->addRef();
-	setDocument(doc);
-	connect(doc, SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
+	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 
 	m_hidden = m_initialized = false;
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -134,25 +105,24 @@ PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * par
 	setVisible(false);
 	m_viewLayerID = ViewLayer::UnknownLayer;
 	setAcceptHoverEvents(true);
+	AllPartLabels.insert(m_owner->id(), this);
 }
 
 PartLabel::~PartLabel() 
 {
-	PartLabelTextDocument * doc = dynamic_cast<PartLabelTextDocument *>(document());
-	if (doc) {
-		doc->decRef();
-	}
+	AllPartLabels.remove(m_owner->id(), this);
 	if (m_owner) {
 		m_owner->clearPartLabel();
 	}
 }
 
-void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer, const QColor & textColor) {
+void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 	if (showIt == this->isVisible()) return;
 
 	if (showIt && !m_initialized) {
 		if (m_owner == NULL) return;
 		if (m_owner->scene() == NULL) return;
+
 		m_owner->scene()->addItem(this);
 		this->setZValue(viewLayer->nextZ());
 		m_viewLayerID = viewLayer->viewLayerID();
@@ -160,7 +130,6 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer, const QColor & tex
 		QPointF initial = m_owner->pos() + QPointF(br.width(), -QGraphicsTextItem::boundingRect().height());
 		this->setPos(initial);
 		m_offset = initial - m_owner->pos();
-		setDefaultTextColor(textColor);
 		m_initialized = true;
 	}
 
@@ -250,7 +219,13 @@ void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void PartLabel::contentsChangedSlot() {
 	if (m_owner) {
-		m_owner->partLabelChanged(document()->toPlainText());
+		QString text = document()->toPlainText();
+		m_owner->partLabelChanged(text);
+		foreach (PartLabel * p, AllPartLabels.values(m_owner->id())) {
+			if (p == this) continue;
+
+			p->setPlainText(text);
+		}
 	}
 }
 
@@ -259,9 +234,9 @@ void PartLabel::setPlainText(const QString & text)
 	// prevent unnecessary contentsChanged signals
 	if (text.compare(document()->toPlainText()) == 0) return;
 
-	document()->blockSignals(true);
+	disconnect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()));
 	QGraphicsTextItem::setPlainText(text);
-	document()->blockSignals(false);
+	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 }
 
 bool PartLabel::initialized() {
@@ -411,8 +386,6 @@ void PartLabel::temporaryMenuEvent(QGraphicsSceneMouseEvent * event) {
 
 	//menu.addSeparator();
 
-
-	
 	QAction *selectedAction = menu.exec(event->screenPos());
 	if (selectedAction == NULL) return;
 
@@ -488,4 +461,34 @@ bool PartLabel::eventFilter(QObject * object, QEvent * event)
 		}
 	}
 	return false;
+}
+
+void PartLabel::setUpText() {
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infographics != NULL) {
+		QFont font;
+		QColor color;
+		infographics->getLabelFont(font, color);
+		setDefaultTextColor(color);
+		setFont(font);
+	}
+}
+
+QVariant PartLabel::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
+{
+	switch (change) {
+		case QGraphicsItem::ItemSceneHasChanged:
+			if (this->scene()) {
+				setUpText();
+				setPlainText(m_owner->instanceTitle());
+			}
+			break;
+		case QGraphicsItem::ItemVisibleChange:
+			DebugDialog::debug("visibility change");
+			break;
+		default:
+			break;
+	}
+
+	return QGraphicsTextItem::itemChange(change, value);
 }
