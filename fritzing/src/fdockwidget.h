@@ -50,7 +50,7 @@ protected:
 	void moveEvent(QMoveEvent *);
 
 signals:
-	void dockChangeActivationSignal(bool activate);
+	void dockChangeActivationSignal(bool activate, QWidget * originator);
 	void positionChanged();
 
 protected:

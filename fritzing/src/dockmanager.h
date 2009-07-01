@@ -46,7 +46,7 @@ class DockManager : public QObject {
 		void keepMargins();
 
 	protected slots:
-		void dockChangeActivation(bool activate);
+		void dockChangeActivation(bool activate, QWidget * originator);
 
 	protected:
 		class FDockWidget * makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea, DockFactory dockFactory = NULL);

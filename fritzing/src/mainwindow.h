@@ -94,6 +94,9 @@ public:
 
 	const QString &selectedModuleID();
 
+	void saveDocks();
+	void restoreDocks();
+
 	// if we consider a part as the smallest ("atomic") entity inside
 	// fritzing, then this functions may help with the bundle tasks
 	// on the complex entities: sketches, bins, modules (?)
@@ -109,10 +112,11 @@ signals:
 	void aboutToClose();
 	void viewSwitched(int);
 	void mainWindowMoved(QWidget *);
+	void changeActivationSignal(bool activate, QWidget * originator);
 
 public slots:
 	void ensureClosable();
-	void changeActivation(bool activate);
+	void changeActivation(bool activate, QWidget * originator);
 	void swapSelected(const QVariant & currProps, const QString &family, const QString & name);
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 	void partsEditorClosed(long id);

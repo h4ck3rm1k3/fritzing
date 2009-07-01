@@ -69,6 +69,9 @@ QString FApplication::m_libPath;
 QString FApplication::m_translationPath;
 UpdateDialog * FApplication::m_updateDialog = NULL;
 QSet<QString> FApplication::InstalledFonts;
+QPointer<MainWindow> FApplication::m_lastTopmostWindow = NULL;
+QTimer FApplication::m_activationTimer;
+QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
 
 
 static int kBottomOfAlpha = 204;
@@ -117,6 +120,11 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
 	m_started = false;
 	m_updateDialog = NULL;
+	m_lastTopmostWindow = NULL;
+
+	connect(&m_activationTimer, SIGNAL(timeout()), this, SLOT(updateActivation()));
+	m_activationTimer.setInterval(10);
+	m_activationTimer.setSingleShot(true);
 
 	QCoreApplication::setOrganizationName("Fritzing");
 	QCoreApplication::setOrganizationDomain("fritzing.org");
@@ -740,3 +748,51 @@ void FApplication::createUserDataStoreFolderStructure() {
 		}
 	}
 }
+
+void FApplication::changeActivation(bool activate, QWidget * originator) {
+	m_orderedTopLevelWidgets.removeOne(originator);
+	if (activate) {
+		m_orderedTopLevelWidgets.push_front(originator);
+	}
+	else {
+		m_orderedTopLevelWidgets.push_back(originator);
+	}
+
+	m_activationTimer.stop();
+	m_activationTimer.start();
+}
+
+void FApplication::updateActivation() {
+	DebugDialog::debug("updating activation");
+	foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+		MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
+		if (mainWindow == NULL) {
+			mainWindow = qobject_cast<MainWindow *>(widget->parent());
+		}
+		if (mainWindow == m_lastTopmostWindow) {
+			return;
+		}
+
+		DebugDialog::debug(QString("last:%1, new:%2").arg((long) m_lastTopmostWindow.data(), 0, 16).arg((long) mainWindow, 0, 16));
+
+		if (m_lastTopmostWindow != NULL) {
+			m_lastTopmostWindow->saveDocks();
+		}
+		m_lastTopmostWindow = mainWindow;
+		if (m_lastTopmostWindow) {
+			m_lastTopmostWindow->restoreDocks();
+		}
+		return;
+	}
+
+	if (m_lastTopmostWindow) {
+		m_lastTopmostWindow->saveDocks();
+		m_lastTopmostWindow = NULL;
+	}
+}
+
+void FApplication::topLevelWidgetDestroyed(QObject * object) {
+	m_orderedTopLevelWidgets.removeOne(qobject_cast<QWidget *>(object));
+}
+
+

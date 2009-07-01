@@ -27,6 +27,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #include <QSizeGrip>
 #include <QStatusBar>
 #include <QtDebug>
+#include <QApplication>
 
 #include "dockmanager.h"
 #include "navigator/triplenavigator.h"
@@ -56,9 +57,10 @@ DockManager::DockManager(MainWindow *mainWindow)
 	m_oldBottomDockStyle = ___emptyString___;
 }
 
-void DockManager::dockChangeActivation(bool activate) {
+void DockManager::dockChangeActivation(bool activate, QWidget * originator) {
+	Q_UNUSED(activate);
+	Q_UNUSED(originator);
 	if (!m_mainWindow->m_closing) {
-		m_mainWindow->changeActivation(activate);
 		m_mainWindow->m_sizeGrip->rearrange();
 	}
 
@@ -156,7 +158,9 @@ FDockWidget *DockManager::dockIt(FDockWidget* dock, int dockMinHeight, int dockD
     dock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	dock->setMinimumSize(DockMinWidth, dockMinHeight);
 	dock->resize(DockDefaultWidth, dockDefaultHeight);
-    connect(dock, SIGNAL(dockChangeActivationSignal(bool)), this, SLOT(dockChangeActivation(bool)));
+    connect(dock, SIGNAL(dockChangeActivationSignal(bool, QWidget *)), this, SLOT(dockChangeActivation(bool, QWidget *)));
+	connect(dock, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
+    connect(dock, SIGNAL(dockChangeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)));
 
     m_docks << dock;
 

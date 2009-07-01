@@ -31,6 +31,8 @@ $Date$
 #include <QTranslator>
 #include <QPixmap>
 #include <QFileDialog>
+#include <QPointer>
+#include <QWidget>
 
 class FApplication :
 	public QApplication
@@ -62,6 +64,10 @@ public slots:
 	void checkForUpdates(bool atUserRequest);
 	void enableCheckUpdates(bool enabled);
 	void createUserDataStoreFolderStructure();
+	void changeActivation(bool activate, QWidget * originator);
+	void updateActivation();
+	void topLevelWidgetDestroyed(QObject *);
+
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -84,6 +90,9 @@ protected:
 	static QString m_libPath;
 	static QString m_translationPath;
 	static class UpdateDialog * m_updateDialog;
+	static QTimer m_activationTimer;
+	static QPointer<class MainWindow> m_lastTopmostWindow;
+	static QList<QWidget *> m_orderedTopLevelWidgets;
 
 public:
 	static QSet<QString> InstalledFonts;

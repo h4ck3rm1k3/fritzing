@@ -1859,7 +1859,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
 
 	connect(this, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
-	connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), this, SLOT(changeActivation(bool)));
+	connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)));
 
 	m_partsEditorWindows.insert(id, mainPartsEditorWindow);
 	if(requester) m_binsWithPartsEditorRequests.insert(id,requester);

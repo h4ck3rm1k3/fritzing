@@ -59,7 +59,7 @@ public:
 signals:
 	void partUpdated(const QString &filename, long myId);
 	void closed(long id);
-	void changeActivationSignal(bool activate);
+	void changeActivationSignal(bool activate, QWidget * originator);
 
 public slots:
 	void parentAboutToClose();

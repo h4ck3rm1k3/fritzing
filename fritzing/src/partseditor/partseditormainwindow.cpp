@@ -710,10 +710,10 @@ const QString PartsEditorMainWindow::fritzingTitle() {
 bool PartsEditorMainWindow::event(QEvent * e) {
 	switch (e->type()) {
 		case QEvent::WindowActivate:
-			emit changeActivationSignal(true);
+			emit changeActivationSignal(true, this);
 			break;
 		case QEvent::WindowDeactivate:
-			emit changeActivationSignal(false);
+			emit changeActivationSignal(false, this);
 			break;
 		default:
 			break;

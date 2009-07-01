@@ -119,10 +119,14 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_tabWidget->setObjectName("sketch_tabs");
 
 	setCentralWidget(m_tabWidget);
+
+	connect(this, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)));
+	connect(this, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
 }
 
 void MainWindow::init() {
-		// all this belongs in viewLayer.xml
+
+	// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
@@ -773,7 +777,35 @@ void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
 	zoomComboBox->setEditText(tr("%1%").arg(value,0,'f',2));
 }
 
-void MainWindow::changeActivation(bool activate) {
+void MainWindow::saveDocks()
+{
+	for (int i = 0; i < children().count(); i++) {
+		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
+		if (dock == NULL) continue;
+
+		dock->saveState();
+		//DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
+
+		if (dock->isFloating() && dock->isVisible()) {
+			//DebugDialog::debug(QString("hiding dock %1").arg(dock->windowTitle()));
+			dock->hide();
+		}
+	}
+}
+
+void MainWindow::restoreDocks() {
+	for (int i = 0; i < children().count(); i++) {
+		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
+		if (dock == NULL) continue;
+
+		dock->restoreState();
+		//DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
+	}
+}
+
+
+void MainWindow::changeActivation(bool activate, QWidget * originator) {
+	Q_UNUSED(originator);
 	// tried using this->saveState() and this->restoreState() but couldn't get it to work
 
 	//DebugDialog::debug(QString("change activation:%2 %1").arg(this->windowTitle()).arg(activate));
@@ -1340,10 +1372,10 @@ void MainWindow::moveEvent(QMoveEvent * event) {
 bool MainWindow::event(QEvent * e) {
 	switch (e->type()) {
 		case QEvent::WindowActivate:
-			changeActivation(true);
+			emit changeActivationSignal(true, this);
 			break;
 		case QEvent::WindowDeactivate:
-			changeActivation(false);
+			emit changeActivationSignal(false, this);
 			break;
 		default:
 			break;
