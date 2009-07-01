@@ -81,7 +81,6 @@ int MainWindow::CascadeFactorY = 19;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
-	m_active = false;
 	m_wireColorMenu = NULL;
 	m_viewSwitcherDock = NULL;
 	m_checkForUpdatesAct = NULL;
@@ -1920,10 +1919,3 @@ const QString &MainWindow::selectedModuleID() {
 	}
 }
 
-void MainWindow::setActive(bool active) {
-	m_active = active;
-}
-
-bool MainWindow::active() {
-	return m_active;
-}

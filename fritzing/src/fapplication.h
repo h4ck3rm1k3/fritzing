@@ -95,6 +95,7 @@ protected:
 	static QPointer<class MainWindow> m_lastTopmostWindow;
 	static QList<QWidget *> m_orderedTopLevelWidgets;
 	static QMutex m_changeActivationMutex;
+	static QHash<QWidget *, bool> m_topLevelActive;
 
 public:
 	static QSet<QString> InstalledFonts;

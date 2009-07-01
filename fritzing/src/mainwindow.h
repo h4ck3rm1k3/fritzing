@@ -96,8 +96,6 @@ public:
 
 	void saveDocks();
 	void restoreDocks();
-	void setActive(bool active);
-	bool active();
 
 	// if we consider a part as the smallest ("atomic") entity inside
 	// fritzing, then this functions may help with the bundle tasks
@@ -347,7 +345,6 @@ protected:
 
 protected:
 
-	bool m_active;
 	QUndoGroup *m_undoGroup;
 	QUndoView *m_undoView;
 
