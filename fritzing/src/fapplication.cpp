@@ -41,6 +41,7 @@ $Date$
 #include "viewswitcher/viewswitcher.h"
 #include "items/wire.h"
 #include "partsbinpalette/binmanager/binmanager.h"
+#include "help/tipsandtricks.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -183,6 +184,7 @@ FApplication::~FApplication(void)
 	ViewSwitcher::cleanup();
 	ItemDrag::cleanup();
 	Version::cleanup();
+	TipsAndTricks::cleanup();
 
 }
 
