@@ -56,6 +56,7 @@ tr("<li>Use shift-drag on a wire end or bendpoint to constrain its wire segment 
 tr("<li>In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.</li>") +
 tr("<li>To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.</li>") +
 tr("<li>If you're having trouble selecting a part or a wire (segment), try selecting the part that's in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).</li>") +
+tr("<li>When you export images from Fritzing, you can choose which layers are exported. Before you choose 'Export...', go into the 'View' menu and hide the layers you don't want to be visible.</li>") +
 tr("</ul>") +
 tr("</body></html>") 
 ;
