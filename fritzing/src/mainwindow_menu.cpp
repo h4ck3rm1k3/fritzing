@@ -2281,6 +2281,8 @@ void MainWindow::exportSvg() {
 	FileProgressDialog * fileProgressDialog = exportProgress();
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	foreach (ViewLayer * viewLayer, m_currentGraphicsView->viewLayers()) {
+		if (viewLayer == NULL) continue;
+
 		viewLayerIDs << viewLayer->viewLayerID();
 	}
 

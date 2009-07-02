@@ -155,6 +155,8 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 
 SketchWidget::~SketchWidget() {
 	foreach (ViewLayer * viewLayer, m_viewLayers.values()) {
+		if (viewLayer == NULL) continue;
+
 		delete viewLayer;
 	}
 	m_viewLayers.clear();
@@ -2800,14 +2802,14 @@ ItemCount SketchWidget::calcItemCount() {
 }
 
 bool SketchWidget::layerIsVisible(ViewLayer::ViewLayerID viewLayerID) {
-	ViewLayer * viewLayer = m_viewLayers[viewLayerID];
+	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer == NULL) return false;
 
 	return viewLayer->visible();
 }
 
 void SketchWidget::setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool vis) {
-	ViewLayer * viewLayer = m_viewLayers[viewLayerID];
+	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer) {
 		setLayerVisible(viewLayer, vis);
 	}
