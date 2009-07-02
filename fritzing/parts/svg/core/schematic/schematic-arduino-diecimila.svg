@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.2" baseProfile="tiny" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="2.98in" height="5.63in" viewBox="0 0 215.053 405.811" xml:space="preserve">
+ <g id="schematic">
 <rect id="connector0pin" x="1.247" y="85.099" fill="none" width="10.5" height="2.102"/>
 <rect id="connector1pin" x="106.475" y="394.335" fill="none" width="2.101" height="10.5"/>
 <rect id="connector2pin" x="203.338" y="63.627" fill="none" width="10.5" height="2.101"/>
@@ -152,5 +153,6 @@
 	<text transform="matrix(1 0 0 1 96.9829 373.375)" font-family="'DroidSans'" font-size="10">GND</text>
 	<polygon points="206.521,311.545 211.232,314.266 206.521,316.986 	"/>
 	<polygon points="211.232,337.619 206.521,334.896 211.232,332.178 	"/>
+</g>
 </g>
 </svg>

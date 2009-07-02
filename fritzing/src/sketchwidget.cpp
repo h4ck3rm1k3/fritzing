@@ -5070,6 +5070,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 		if (!itemBase->isVisible()) continue;
+		if (itemBase->hidden()) continue;
 
 		switch (itemBase->itemType()) {
 			case ModelPart::Wire:
