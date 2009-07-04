@@ -1,205 +1,174 @@
-<!--
-/*******************************************************************
-
-Part of the Fritzing project - http://fritzing.org
-Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
-
-Fritzing is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Fritzing is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
-
-********************************************************************
-
-$Revision$:
-$Author$:
-$Date$
-
-********************************************************************/
--->
-
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file>resources/images/splash_2010.png</file>
-    <file>resources/images/fhp_logo_small.png</file>
-    <file>resources/images/splash_progressbar.png</file>
-    <file>resources/images/AboutBoxLogoShield.png</file>
-    <file>resources/images/aboutbox_CC.png</file>
-    <file>resources/images/aboutbox_FHP.png</file>
-    <file>resources/images/aboutbox_scrollfade.png</file>
-    <file>resources/images/new.png</file>
-    <file>resources/images/print.png</file>
-    <file>resources/images/save.png</file>
-    <file>resources/images/undo.png</file> 
-    <file>resources/images/add.png</file>
-    <file>resources/images/remove.png</file>
-    <file>resources/images/document-print.png</file>
-    <file>resources/images/applications-accessories.png</file>
-    <file>resources/images/dot.png</file>
-    <file>resources/images/fritzing_icon.png</file>
-    <file>resources/images/breadboard_icon.png</file>
-    <file>resources/images/schematic_icon.png</file>
-    <file>resources/images/pcb_icon.png</file>
-    <file>resources/images/icon_icon.png</file>
-    <file>resources/images/error_x_small.png</file>
-    <file>resources/images/error_x_mini.png</file>
-    <file>resources/images/error_x_mini.svg</file>
-    <file>resources/images/remove_prop_enter.png</file>
-    <file>resources/images/remove_prop_leave.png</file>
-    <file>resources/zoomfactors.txt</file>
-    <file>resources/ratsnestcolors.txt</file>
-    <file>resources/resizableBoard_boardLayerTemplate.txt</file>
-    <file>resources/resizableBoard_silkscreenLayerTemplate.txt</file>
-    <file>resources/custom_pcb_fzp_template.txt</file>
-    <file>resources/parts/core/wire.fzp</file>
-    <file>resources/parts/core/cmRuler.fzp</file>
-    <file>resources/parts/core/tinyBreadboard.fzp</file>
-    <file>resources/parts/core/note.fzp</file>
-    <file>resources/parts/core/group.fzp</file>
-    <file>resources/parts/core/rectangle_pcb.fzp</file>
-    <file>resources/parts/svg/core/icon/wireicon.svg</file>
-    <file>resources/parts/svg/core/icon/tinyBreadboardIcon.svg</file>
-    <file>resources/parts/svg/core/icon/rulericon.svg</file>
-    <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
-    <file>resources/parts/svg/core/breadboard/ruler.svg</file>
-    <file>resources/parts/svg/core/breadboard/tinyBreadboard.svg</file>
-    <file>resources/parts/svg/core/breadboard/wire.svg</file>
-    <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
-    <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
-    <file>resources/images/icons/partsBinOpenPressed_icon.png</file>
-    <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>
-    <file>resources/images/icons/partsBinSaveDisabled_icon.png</file>
-    <file>resources/images/icons/partsBinSavePressed_icon.png</file>
-    <file>resources/images/icons/partsBinCoreEnabled_icon.png</file>
-    <file>resources/images/icons/partsBinCorePressed_icon.png</file>
-    <file>resources/images/icons/partsBinDeleteEnabled_icon.png</file>
-    <file>resources/images/icons/partsBinDeletePressed_icon.png</file>
-    <file>resources/images/icons/partsBinIconViewEnabled_icon.png</file>
-    <file>resources/images/icons/partsBinIconViewDisabled_icon.png</file>
-    <file>resources/images/icons/partsBinIconViewPressed_icon.png</file>
-    <file>resources/images/icons/partsBinListViewEnabled_icon.png</file>
-    <file>resources/images/icons/partsBinListViewDisabled_icon.png</file>
-    <file>resources/images/icons/partsBinListViewPressed_icon.png</file>
-    <file>resources/images/icons/partsBinMenu_icon.png</file>
-    <file>resources/images/icons/partsBinMenuPressed_icon.png</file>
-    <file>resources/images/icons/partsBinAddPart_icon.png</file>
-    <file>resources/images/icons/partsBinAddPartPressed_icon.png</file>
-    <file>resources/images/icons/partsBinToolButtonArrow.png</file>
-    <file>resources/images/icons/partsBinExportPartEnabled_icon.png</file>
-    <file>resources/images/icons/partsBinExportPartDisabled_icon.png</file>
-    <file>resources/images/icons/partsBinExportPartPressed_icon.png</file>
-    <file>resources/images/icons/toolbarExport_gbr_icon.png</file>
-    <file>resources/images/icons/toolbarExport_gbx_icon.png</file>
-    <file>resources/images/icons/toolbarExport_jpeg_icon.png</file>
-    <file>resources/images/icons/toolbarExport_pdf_icon.png</file>
-    <file>resources/images/icons/toolbarExport_png_icon.png</file>
-    <file>resources/images/icons/toolbarExport_ps_icon.png</file>
-    <file>resources/images/icons/toolbarOrder_icon.png</file>
-    <file>resources/images/icons/toolbarAutorouteEnabled_icon.png</file>
-    <file>resources/images/icons/toolbarAutorouteDisabled_icon.png</file>
-    <file>resources/images/icons/toolbarAutoroutePressed_icon.png</file>
-    <file>resources/images/icons/toolbarDiyEnabled_icon.png</file>
-    <file>resources/images/icons/toolbarDiyDisabled_icon.png</file>
-    <file>resources/images/icons/toolbarDiyPressed_icon.png</file>
-    <file>resources/images/icons/toolbarNotesEnabled_icon.png</file>
-    <file>resources/images/icons/toolbarNotesDisabled_icon.png</file>
-    <file>resources/images/icons/toolbarNotesPressed_icon.png</file>
-    <file>resources/images/icons/toolbarRotateEnabled_icon.png</file>
-    <file>resources/images/icons/toolbarRotateDisabled_icon.png</file>
-    <file>resources/images/icons/toolbarRotatePressed_icon.png</file>
-    <file>resources/images/icons/toolbarFlipEnabled_icon.png</file>
-    <file>resources/images/icons/toolbarFlipDisabled_icon.png</file>
-    <file>resources/images/icons/toolbarFlipPressed_icon.png</file>
-    <file>resources/images/icons/toolbar_separator.png</file>
-    <file>resources/images/icons/dockWidgetEmpty_icon.png</file>
-    <file>resources/images/icons/dockWidgetCloseNormal_icon.png</file>
-    <file>resources/images/icons/dockWidgetCloseHover_icon.png</file>
-    <file>resources/images/icons/dockWidgetClosePressed_icon.png</file>
-    <file>resources/images/icons/dockWidgetFloatNormal_icon.png</file>
-    <file>resources/images/icons/dockWidgetFloatHover_icon.png</file>
-    <file>resources/images/icons/dockWidgetFloatPressed_icon.png</file>
-    <file>resources/images/icons/dockWidgetCollapseNormal_icon.png</file>
-    <file>resources/images/icons/dockWidgetCollapseHover_icon.png</file>
-    <file>resources/images/icons/dockWidgetCollapsePressed_icon.png</file>
-    <file>resources/images/icons/noteResizeGrip.png</file>
-    <file>resources/styles/fritzing.qss</file>
-    <file>resources/styles/partseditor.qss</file>
-    <file>resources/styles/inviewhelp.qss</file>
-    <file>resources/styles/infoview.css</file>
-  
-    <!-- Platform dependent styles -->
-    <file>resources/styles/linux.qss</file>
-    <file>resources/styles/linux-kde-oxygen.qss</file>
-    <file>resources/styles/linux-gnome.qss</file>
-    <file>resources/styles/win.qss</file>
-    <file>resources/styles/mac.qss</file>
-  
-    <file>resources/styles/updatedialog.css</file>
-    <file>resources/js/infoview.js</file>
-    <file>resources/bins/bin.fzb</file>
-    <file>resources/bins/my_parts.fzb</file>
-    <file>resources/images/helpImageBreadboard.png</file>
-    <file>resources/images/helpImageSchematic.png</file>
-    <file>resources/images/helpImagePCB.png</file>
-    <file>resources/images/inViewHelpCloseButtonBreadboard.png</file>
-    <file>resources/images/inViewHelpCloseButtonSchematic.png</file>
-    <file>resources/images/inViewHelpCloseButtonPCB.png</file>
-    <file>resources/images/inViewHelpPartsBinArrow.png</file>
-    <file>resources/images/inViewHelpAutorouteArrow.png</file>
-    <file>resources/images/inViewHelpSwitchButtonsArrow.png</file>
-    <file>resources/images/icons/segmentedSwitcherXActiveDimmed.png</file>
-    <file>resources/images/icons/segmentedSwitcherXActiveFocus.png</file>
-    <file>resources/images/icons/segmentedSwitcherXActiveFocusHover.png</file>
-    <file>resources/images/icons/segmentedSwitcherXInactiveDimmed.png</file>
-    <file>resources/images/icons/segmentedSwitcherXInactiveFocus.png</file>
-    <file>resources/images/icons/segmentedSwitcherXInactiveFocusHover.png</file>
-    <file>resources/images/icons/partsEditorZoomInVerButton.png</file>
-    <file>resources/images/icons/partsEditorZoomOutVerButton.png</file>
-    <file>resources/images/icons/partsEditorZoomInHorButton.png</file>
-    <file>resources/images/icons/partsEditorZoomOutHorButton.png</file>
-    <file>resources/images/icons/partsEditorConnectorAddEnabled_icon.png</file>
-    <file>resources/images/icons/partsEditorConnectorAddDisabled_icon.png</file>
-    <file>resources/images/icons/partsEditorConnectorAddPressed_icon.png</file>
-    <file>resources/images/icons/partsEditorConnectorRemoveEnabled_icon.png</file>
-    <file>resources/images/icons/partsEditorConnectorRemoveDisabled_icon.png</file>
-    <file>resources/images/icons/partsEditorConnectorRemovePressed_icon.png</file>
-    <file>resources/images/icons/binRearrangeTabs.png</file>
-    <file>resources/images/icons/binRearrangeSeparator.png</file>
-    
-    <!-- Item Selection images -->
-    <file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
-    <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
-    <file>resources/images/itemselection/cornerHandlerActiveTopLeft.png</file>
-    <file>resources/images/itemselection/cornerHandlerActiveTopRight.png</file>
-    <file>resources/images/itemselection/cornerHandlerDarkBottomLeft.png</file>
-    <file>resources/images/itemselection/cornerHandlerDarkBottomRight.png</file>
-    <file>resources/images/itemselection/cornerHandlerDarkTopLeft.png</file>
-    <file>resources/images/itemselection/cornerHandlerDarkTopRight.png</file>
-    <file>resources/images/itemselection/crosshairHandlerActive.png</file>
-    <file>resources/images/itemselection/crosshairHandlerHover.png</file>
-    <file>resources/images/itemselection/crosshairHandlerNormal.png</file>
-    <file>resources/images/itemselection/selectionRingBottom.png</file>
-    <file>resources/images/itemselection/selectionRingBottomLeft.png</file>
-    <file>resources/images/itemselection/selectionRingBottomRight.png</file>
-    <file>resources/images/itemselection/selectionRingLeft.png</file>
-    <file>resources/images/itemselection/selectionRingRight.png</file>
-    <file>resources/images/itemselection/selectionRingTop.png</file>
-    <file>resources/images/itemselection/selectionRingTopLeft.png</file>
-    <file>resources/images/itemselection/selectionRingTopRight.png</file>
-
-    <!-- fonts-->
-    <file>resources/fonts/DroidSans.ttf</file>
-    <file>resources/fonts/DroidSans-Bold.ttf</file>
-    <file>resources/fonts/NOTICE</file>
-    <file>resources/fonts/README</file>
-    <file>resources/fonts/ocra10.ttf</file>
-</qresource>
+<RCC>
+    <qresource prefix="/" >
+        <file>resources/images/splash_2010.png</file>
+        <file>resources/images/fhp_logo_small.png</file>
+        <file>resources/images/splash_progressbar.png</file>
+        <file>resources/images/AboutBoxLogoShield.png</file>
+        <file>resources/images/aboutbox_CC.png</file>
+        <file>resources/images/aboutbox_FHP.png</file>
+        <file>resources/images/aboutbox_scrollfade.png</file>
+        <file>resources/images/new.png</file>
+        <file>resources/images/print.png</file>
+        <file>resources/images/save.png</file>
+        <file>resources/images/undo.png</file>
+        <file>resources/images/add.png</file>
+        <file>resources/images/remove.png</file>
+        <file>resources/images/document-print.png</file>
+        <file>resources/images/applications-accessories.png</file>
+        <file>resources/images/dot.png</file>
+        <file>resources/images/fritzing_icon.png</file>
+        <file>resources/images/breadboard_icon.png</file>
+        <file>resources/images/schematic_icon.png</file>
+        <file>resources/images/pcb_icon.png</file>
+        <file>resources/images/icon_icon.png</file>
+        <file>resources/images/error_x_small.png</file>
+        <file>resources/images/error_x_mini.png</file>
+        <file>resources/images/error_x_mini.svg</file>
+        <file>resources/images/remove_prop_enter.png</file>
+        <file>resources/images/remove_prop_leave.png</file>
+        <file>resources/zoomfactors.txt</file>
+        <file>resources/ratsnestcolors.txt</file>
+        <file>resources/resizableBoard_boardLayerTemplate.txt</file>
+        <file>resources/resizableBoard_silkscreenLayerTemplate.txt</file>
+        <file>resources/custom_pcb_fzp_template.txt</file>
+        <file>resources/parts/core/wire.fzp</file>
+        <file>resources/parts/core/cmRuler.fzp</file>
+        <file>resources/parts/core/tinyBreadboard.fzp</file>
+        <file>resources/parts/core/note.fzp</file>
+        <file>resources/parts/core/group.fzp</file>
+        <file>resources/parts/core/rectangle_pcb.fzp</file>
+        <file>resources/parts/svg/core/icon/wireicon.svg</file>
+        <file>resources/parts/svg/core/icon/tinyBreadboardIcon.svg</file>
+        <file>resources/parts/svg/core/icon/rulericon.svg</file>
+        <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
+        <file>resources/parts/svg/core/breadboard/ruler.svg</file>
+        <file>resources/parts/svg/core/breadboard/tinyBreadboard.svg</file>
+        <file>resources/parts/svg/core/breadboard/wire.svg</file>
+        <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
+        <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
+        <file>resources/images/icons/partsBinOpenPressed_icon.png</file>
+        <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>
+        <file>resources/images/icons/partsBinSaveDisabled_icon.png</file>
+        <file>resources/images/icons/partsBinSavePressed_icon.png</file>
+        <file>resources/images/icons/partsBinCoreEnabled_icon.png</file>
+        <file>resources/images/icons/partsBinCorePressed_icon.png</file>
+        <file>resources/images/icons/partsBinDeleteEnabled_icon.png</file>
+        <file>resources/images/icons/partsBinDeletePressed_icon.png</file>
+        <file>resources/images/icons/partsBinIconViewEnabled_icon.png</file>
+        <file>resources/images/icons/partsBinIconViewDisabled_icon.png</file>
+        <file>resources/images/icons/partsBinIconViewPressed_icon.png</file>
+        <file>resources/images/icons/partsBinListViewEnabled_icon.png</file>
+        <file>resources/images/icons/partsBinListViewDisabled_icon.png</file>
+        <file>resources/images/icons/partsBinListViewPressed_icon.png</file>
+        <file>resources/images/icons/partsBinMenu_icon.png</file>
+        <file>resources/images/icons/partsBinMenuPressed_icon.png</file>
+        <file>resources/images/icons/partsBinAddPart_icon.png</file>
+        <file>resources/images/icons/partsBinAddPartPressed_icon.png</file>
+        <file>resources/images/icons/partsBinToolButtonArrow.png</file>
+        <file>resources/images/icons/partsBinExportPartEnabled_icon.png</file>
+        <file>resources/images/icons/partsBinExportPartDisabled_icon.png</file>
+        <file>resources/images/icons/partsBinExportPartPressed_icon.png</file>
+        <file>resources/images/icons/toolbarExport_gbr_icon.png</file>
+        <file>resources/images/icons/toolbarExport_gbx_icon.png</file>
+        <file>resources/images/icons/toolbarExport_jpeg_icon.png</file>
+        <file>resources/images/icons/toolbarExport_pdf_icon.png</file>
+        <file>resources/images/icons/toolbarExport_png_icon.png</file>
+        <file>resources/images/icons/toolbarExport_ps_icon.png</file>
+        <file>resources/images/icons/toolbarOrder_icon.png</file>
+        <file>resources/images/icons/toolbarAutorouteEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarAutorouteDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarAutoroutePressed_icon.png</file>
+        <file>resources/images/icons/toolbarDiyEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarDiyDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarDiyPressed_icon.png</file>
+        <file>resources/images/icons/toolbarNotesEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarNotesDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarNotesPressed_icon.png</file>
+        <file>resources/images/icons/toolbarRotateEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarRotateDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarRotatePressed_icon.png</file>
+        <file>resources/images/icons/toolbarFlipEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarFlipDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarFlipPressed_icon.png</file>
+        <file>resources/images/icons/toolbar_separator.png</file>
+        <file>resources/images/icons/dockWidgetEmpty_icon.png</file>
+        <file>resources/images/icons/dockWidgetCloseNormal_icon.png</file>
+        <file>resources/images/icons/dockWidgetCloseHover_icon.png</file>
+        <file>resources/images/icons/dockWidgetClosePressed_icon.png</file>
+        <file>resources/images/icons/dockWidgetFloatNormal_icon.png</file>
+        <file>resources/images/icons/dockWidgetFloatHover_icon.png</file>
+        <file>resources/images/icons/dockWidgetFloatPressed_icon.png</file>
+        <file>resources/images/icons/dockWidgetCollapseNormal_icon.png</file>
+        <file>resources/images/icons/dockWidgetCollapseHover_icon.png</file>
+        <file>resources/images/icons/dockWidgetCollapsePressed_icon.png</file>
+        <file>resources/images/icons/noteResizeGrip.png</file>
+        <file>resources/styles/fritzing.qss</file>
+        <file>resources/styles/partseditor.qss</file>
+        <file>resources/styles/inviewhelp.qss</file>
+        <file>resources/styles/infoview.css</file>
+        <file>resources/styles/linux.qss</file>
+        <file>resources/styles/linux-kde-oxygen.qss</file>
+        <file>resources/styles/linux-gnome.qss</file>
+        <file>resources/styles/win.qss</file>
+        <file>resources/styles/mac.qss</file>
+        <file>resources/styles/updatedialog.css</file>
+        <file>resources/js/infoview.js</file>
+        <file>resources/bins/bin.fzb</file>
+        <file>resources/bins/my_parts.fzb</file>
+        <file>resources/images/helpImageBreadboard.png</file>
+        <file>resources/images/helpImageSchematic.png</file>
+        <file>resources/images/helpImagePCB.png</file>
+        <file>resources/images/inViewHelpCloseButtonBreadboard.png</file>
+        <file>resources/images/inViewHelpCloseButtonSchematic.png</file>
+        <file>resources/images/inViewHelpCloseButtonPCB.png</file>
+        <file>resources/images/inViewHelpPartsBinArrow.png</file>
+        <file>resources/images/inViewHelpAutorouteArrow.png</file>
+        <file>resources/images/inViewHelpSwitchButtonsArrow.png</file>
+        <file>resources/images/icons/segmentedSwitcherXActiveDimmed.png</file>
+        <file>resources/images/icons/segmentedSwitcherXActiveFocus.png</file>
+        <file>resources/images/icons/segmentedSwitcherXActiveFocusHover.png</file>
+        <file>resources/images/icons/segmentedSwitcherXInactiveDimmed.png</file>
+        <file>resources/images/icons/segmentedSwitcherXInactiveFocus.png</file>
+        <file>resources/images/icons/segmentedSwitcherXInactiveFocusHover.png</file>
+        <file>resources/images/icons/partsEditorZoomInVerButton.png</file>
+        <file>resources/images/icons/partsEditorZoomOutVerButton.png</file>
+        <file>resources/images/icons/partsEditorZoomInHorButton.png</file>
+        <file>resources/images/icons/partsEditorZoomOutHorButton.png</file>
+        <file>resources/images/icons/partsEditorConnectorAddEnabled_icon.png</file>
+        <file>resources/images/icons/partsEditorConnectorAddDisabled_icon.png</file>
+        <file>resources/images/icons/partsEditorConnectorAddPressed_icon.png</file>
+        <file>resources/images/icons/partsEditorConnectorRemoveEnabled_icon.png</file>
+        <file>resources/images/icons/partsEditorConnectorRemoveDisabled_icon.png</file>
+        <file>resources/images/icons/partsEditorConnectorRemovePressed_icon.png</file>
+        <file>resources/images/icons/binRearrangeTabs.png</file>
+        <file>resources/images/icons/binRearrangeSeparator.png</file>
+        <file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
+        <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
+        <file>resources/images/itemselection/cornerHandlerActiveTopLeft.png</file>
+        <file>resources/images/itemselection/cornerHandlerActiveTopRight.png</file>
+        <file>resources/images/itemselection/cornerHandlerDarkBottomLeft.png</file>
+        <file>resources/images/itemselection/cornerHandlerDarkBottomRight.png</file>
+        <file>resources/images/itemselection/cornerHandlerDarkTopLeft.png</file>
+        <file>resources/images/itemselection/cornerHandlerDarkTopRight.png</file>
+        <file>resources/images/itemselection/crosshairHandlerActive.png</file>
+        <file>resources/images/itemselection/crosshairHandlerHover.png</file>
+        <file>resources/images/itemselection/crosshairHandlerNormal.png</file>
+        <file>resources/images/itemselection/selectionRingBottom.png</file>
+        <file>resources/images/itemselection/selectionRingBottomLeft.png</file>
+        <file>resources/images/itemselection/selectionRingBottomRight.png</file>
+        <file>resources/images/itemselection/selectionRingLeft.png</file>
+        <file>resources/images/itemselection/selectionRingRight.png</file>
+        <file>resources/images/itemselection/selectionRingTop.png</file>
+        <file>resources/images/itemselection/selectionRingTopLeft.png</file>
+        <file>resources/images/itemselection/selectionRingTopRight.png</file>
+        <file>resources/fonts/DroidSans.ttf</file>
+        <file>resources/fonts/DroidSans-Bold.ttf</file>
+        <file>resources/fonts/NOTICE</file>
+        <file>resources/fonts/README</file>
+        <file>resources/fonts/ocra10.ttf</file>
+        <file>resources/images/icons/arrowButtonUp.png</file>
+        <file>resources/images/icons/arrowButtonDown.png</file>
+        <file>resources/images/icons/arrowButtonLeft.png</file>
+        <file>resources/images/icons/arrowButtonRight.png</file>
+    </qresource>
 </RCC>

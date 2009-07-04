@@ -26,6 +26,7 @@ $Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
 
 #include "autorouteprogressdialog.h"
 #include "../debugdialog.h"
+#include "../partseditor/zoomcontrols.h"
 
 #include <QFormLayout>
 #include <QLabel>
@@ -34,10 +35,33 @@ $Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
 #include <QLocale>
 #include <QDialogButtonBox>
 #include <QGroupBox>
+#include <QScrollBar>
+
+static const int ScrollAmount = 40;
+
+ArrowButton::ArrowButton(int scrollX, int scrollY, ZoomableGraphicsView * view, const QString & path) : QLabel() {
+	m_scrollX = scrollX;
+	m_scrollY = scrollY;
+	m_view = view;
+	setPixmap(QPixmap(path));
+}
+
+void ArrowButton::mousePressEvent(QMouseEvent *event) {
+	Q_UNUSED(event);
+	if (m_scrollX != 0) {
+		QScrollBar * scrollBar = m_view->horizontalScrollBar();
+		scrollBar->setValue(scrollBar->value() + m_scrollX);
+	}
+	else if (m_scrollY != 0) {
+		QScrollBar * scrollBar = m_view->verticalScrollBar();
+		scrollBar->setValue(scrollBar->value() + m_scrollY);
+	}
+}
+
 
 /////////////////////////////////////
 
-AutorouteProgressDialog::AutorouteProgressDialog(QWidget *parent) : QDialog(parent) 
+AutorouteProgressDialog::AutorouteProgressDialog(ZoomableGraphicsView * view, QWidget *parent) : QDialog(parent) 
 {
 	Qt::WindowFlags flags = windowFlags();
 	flags ^= Qt::WindowCloseButtonHint;
@@ -50,6 +74,34 @@ AutorouteProgressDialog::AutorouteProgressDialog(QWidget *parent) : QDialog(pare
 
 	m_progressBar = new QProgressBar(this);
 	vLayout->addWidget(m_progressBar);
+
+	QGroupBox * groupBox = new QGroupBox(tr("zoom and pan"));
+	QHBoxLayout *lo2 = new QHBoxLayout(groupBox);
+	lo2->setSpacing(1);
+	lo2->setMargin(0);
+	lo2->addWidget(new ZoomControls(view, groupBox));
+
+	lo2->addSpacerItem(new QSpacerItem ( 10, 0, QSizePolicy::Expanding));
+
+	QFrame * frame = new QFrame();
+	QGridLayout *gridLayout = new QGridLayout(frame);
+
+	QString imgPath = ":/resources/images/icons/arrowButton%1.png";
+	ArrowButton * label = new ArrowButton(0, ScrollAmount, view, imgPath.arg("Up"));
+	gridLayout->addWidget(label, 0, 1);
+
+	label = new ArrowButton(ScrollAmount, 0, view, imgPath.arg("Left"));
+	gridLayout->addWidget(label, 1, 0);
+
+	label = new ArrowButton(-ScrollAmount, 0, view, imgPath.arg("Right"));
+	gridLayout->addWidget(label, 1, 2);
+
+	label = new ArrowButton(0, -ScrollAmount, view, imgPath.arg("Down"));
+	gridLayout->addWidget(label, 2, 1);
+
+	lo2->addWidget(frame);
+
+	vLayout->addWidget(groupBox);
 
 	QPushButton * button = new QPushButton(tr("Skip current trace"), this);
 	connect(button, SIGNAL(clicked()), this, SLOT(sendSkip()));

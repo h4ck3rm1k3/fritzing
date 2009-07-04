@@ -30,13 +30,14 @@ $Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
 
 #include <QDialog>
 #include <QProgressBar>
+#include <QLabel>
 
 class AutorouteProgressDialog : public QDialog
 {
 Q_OBJECT
 
 public:
-	AutorouteProgressDialog(QWidget *parent = 0);
+	AutorouteProgressDialog(class ZoomableGraphicsView * view, QWidget *parent = 0);
 	~AutorouteProgressDialog();
 
 protected:
@@ -59,6 +60,21 @@ signals:
 
 protected:
 	QProgressBar * m_progressBar;	
+};
+
+class ArrowButton : public QLabel {
+	Q_OBJECT
+
+public:
+	ArrowButton(int scrollX, int scrollY, ZoomableGraphicsView * view, const QString & path);
+
+protected:
+	void mousePressEvent(QMouseEvent *event);
+
+protected:
+	int m_scrollX;
+	int m_scrollY;
+	ZoomableGraphicsView * m_view;
 };
 
 

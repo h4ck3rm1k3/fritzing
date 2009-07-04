@@ -2442,7 +2442,7 @@ void MainWindow::autoroute() {
 
 	dynamic_cast<SketchAreaWidget *>(pcbSketchWidget->parent())->routingStatusLabel()->setText(tr("Autorouting..."));
 
-	AutorouteProgressDialog progress(this);
+	AutorouteProgressDialog progress(pcbSketchWidget, this);
 	progress.setModal(true);
 	progress.show();
 
