@@ -86,6 +86,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="1238DBDC00-toggle-switch" path="parts/core/basic-toggle-switch.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="d206ca0d70364191f0b3fd30d5e53c5d" modelIndex="434" path="parts/core/Tilt switch.fzp">
             <views>
                 <iconView layer="icon">
