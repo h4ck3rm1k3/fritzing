@@ -210,17 +210,12 @@ void MainWindow::init() {
     m_pcbGraphicsView->setWireMenu(pcbWireMenu());
     m_pcbGraphicsView->setItemMenu(pcbItemMenu());
 
-    QMenu *schemItemMenu = schematicItemMenu();
-    m_schematicGraphicsView->setItemMenu(schemItemMenu);
+    m_schematicGraphicsView->setItemMenu(schematicItemMenu());
     m_schematicGraphicsView->setWireMenu(schematicWireMenu());
 
     m_breadboardGraphicsView->setInfoView(m_infoView);
     m_pcbGraphicsView->setInfoView(m_infoView);
     m_schematicGraphicsView->setInfoView(m_infoView);
-
-    m_breadboardGraphicsView->setBackground(QColor(204,204,204));
-    m_schematicGraphicsView->setBackground(QColor(255,255,255));
-    m_pcbGraphicsView->setBackground(QColor(160,168,179));							// QColor(137,144,153)
 
 	// make sure to set the connections after the views have been created
 	connect(m_tabWidget, SIGNAL(currentChanged ( int )),

@@ -13,48 +13,35 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public Licensetriple
+You should have received a copy of the GNU General Public License
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2672 $:
+$Revision: 2676 $:
 $Author: cohen@irascible.com $:
-$Date: 2009-03-19 19:31:37 +0100 (Thu, 19 Mar 2009) $
+$Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 
 ********************************************************************/
 
+#ifndef CLICKABLELABEL_H
+#define CLICKABLELABEL_H
+
+#include <QLabel>
 
 
-#ifndef VIEWIDENTIFIERCLASS_H
-#define VIEWIDENTIFIERCLASS_H
-
-
-#include <QHash>
-
-class ViewIdentifierClass
-{
+class ClickableLabel : public QLabel {
+Q_OBJECT
 
 public:
-   enum ViewIdentifier {
-    	IconView,
-    	BreadboardView,
-    	SchematicView,
-    	PCBView,
-    	AllViews,
-		UnknownView,
-    	ViewCount
-   	};
-
-	static QString & viewIdentifierName(ViewIdentifier);
-	static QString & viewIdentifierXmlName(ViewIdentifier);
-	static QString & viewIdentifierNaturalName(ViewIdentifier);
-	static ViewIdentifier idFromXmlName(const QString & name);
-	static void initNames();
-	static void cleanup();
+	ClickableLabel(const QString & text = "", QWidget * parent = NULL);
 
 protected:
-	static QHash <ViewIdentifier, class NameTriple * > names;
+	void mousePressEvent(QMouseEvent * e);
 
+signals:
+	void clicked();
 };
+
+
 #endif

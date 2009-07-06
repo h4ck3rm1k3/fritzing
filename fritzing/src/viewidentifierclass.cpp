@@ -88,6 +88,15 @@ void ViewIdentifierClass::initNames() {
 	}
 }
 
+ViewIdentifierClass::ViewIdentifier ViewIdentifierClass::idFromXmlName(const QString & name) {
+	foreach (ViewIdentifier id, names.keys()) {
+		NameTriple * nameTriple = names.value(id);
+		if (name.compare(nameTriple->xmlName()) == 0) return id;
+	}
+
+	return UnknownView;
+}
+
 void ViewIdentifierClass::cleanup() {
 	foreach (NameTriple * nameTriple, names) {
 		delete nameTriple;

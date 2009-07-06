@@ -1168,3 +1168,32 @@ QString PainterPathHackCommand::getParamString() const {
 		QString(" id:%1 connectorid:%2")
 		.arg(m_itemID).arg(m_connectorID);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SketchBackgroundColorChangeCommand::SketchBackgroundColorChangeCommand(SketchWidget* sketchWidget, const QString &oldColor, const QString &newColor, QUndoCommand *parent)
+: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_oldColor = oldColor;
+	m_newColor = newColor;
+}
+
+void SketchBackgroundColorChangeCommand::undo() {
+	QColor color;
+	color.setNamedColor(m_oldColor);
+	m_sketchWidget->setBackground(color);
+}
+
+void SketchBackgroundColorChangeCommand::redo() {
+	QColor color;
+	color.setNamedColor(m_newColor);
+	m_sketchWidget->setBackground(color);
+}
+
+QString SketchBackgroundColorChangeCommand::getParamString() const {
+	return QString("SketchBackgroundColorChangeCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" viewid:%1 oldcolor:%2 newcolor:%3" ) 
+			.arg(m_sketchWidget->viewIdentifier()).arg(m_oldColor).arg(m_newColor);
+
+}

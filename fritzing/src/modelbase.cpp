@@ -94,6 +94,9 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 		this->root()->modelPartShared()->setTitle(title.text());
 	}
 
+    QDomElement views = root.firstChildElement("views");
+	emit loadedViews(this, views);
+
 	QDomElement instances = root.firstChildElement("instances");
 	if (instances.isNull()) {
         QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file (3).").arg(fileName));

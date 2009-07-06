@@ -19,16 +19,18 @@
 
 HEADERS += \
 src/utils/autoclosemessagebox.h \
-src/utils/resizehandle.h \
 src/utils/bendpointaction.h \
+src/utils/bundler.h \
+src/utils/clickablelabel.h \
 src/utils/fileprogressdialog.h \
 src/utils/misc.h \
-src/utils/bundler.h
+src/utils/resizehandle.h 
  
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \
-src/utils/resizehandle.cpp \
 src/utils/bendpointaction.cpp \
+src/utils/clickablelabel.cpp \
 src/utils/fileprogressdialog.cpp \
-src/utils/misc.cpp
+src/utils/misc.cpp \
+src/utils/resizehandle.cpp 
 

@@ -329,7 +329,6 @@ int FApplication::startup(int & argc, char ** argv)
     ViewLayer::initNames();
     ModelPart::initNames();
     Connector::initNames();
-    SketchWidget::init();
     ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
@@ -769,7 +768,7 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 }
 
 void FApplication::updateActivation() {
-	DebugDialog::debug("updating activation");
+	//DebugDialog::debug("updating activation");
 
 	MainWindow * prior = m_lastTopmostWindow; 
 	m_lastTopmostWindow = NULL;
@@ -779,14 +778,14 @@ void FApplication::updateActivation() {
 
 	if (prior == m_lastTopmostWindow) return;
 
-	DebugDialog::debug(QString("last:%1, new:%2").arg((long) prior, 0, 16).arg((long) m_lastTopmostWindow.data(), 0, 16));
+	//DebugDialog::debug(QString("last:%1, new:%2").arg((long) prior, 0, 16).arg((long) m_lastTopmostWindow.data(), 0, 16));
 
 	if (prior != NULL) {			
 		prior->saveDocks();
 	}
 	if (m_lastTopmostWindow != NULL) {
 		m_lastTopmostWindow->restoreDocks();
-		DebugDialog::debug("restoring active window");
+		//DebugDialog::debug("restoring active window");
 	}
 }
 

@@ -117,6 +117,7 @@ public:
  	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	void setBackground(QColor);
  	const QColor& background();
+	const QColor& standardBackground();
  	void setItemMenu(QMenu*);
  	void setWireMenu(QMenu*);
 	void changeConnection(long fromID,
@@ -333,6 +334,7 @@ protected:
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
 	void prepMove();
+	void initBackgroundColor();
 
 protected:
 	static bool lessThan(int a, int b);
@@ -482,12 +484,12 @@ protected:
 	QString m_shortName;
 	Wire * m_dragBendpointWire;
 	QPoint m_dragBendpointPos;
+	QColor m_standardBackgroundColor;
 
 protected:
 	QString m_viewName;
 
 public:
-	static void init();
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);
 
 protected:

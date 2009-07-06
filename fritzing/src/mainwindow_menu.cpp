@@ -55,6 +55,7 @@ $Date$
 #include "version/version.h"
 #include "svg/groundplanegenerator.h"
 #include "help/tipsandtricks.h"
+#include "setcolordialog.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -458,8 +459,14 @@ void MainWindow::saveAsAux(const QString & fileName) {
     //FritzingWindow::saveAsAux(fileName);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-	m_sketchModel->save(fileName);
-    QApplication::restoreOverrideCursor();
+	connect(m_sketchModel->root(), SIGNAL(startSaveInstances(ModelPart *, QXmlStreamWriter &)),
+		this, SLOT(startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
+
+	m_sketchModel->save(fileName, false);
+
+	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(ModelPart *, QXmlStreamWriter &)),
+			   this, SLOT(startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &)));
+	QApplication::restoreOverrideCursor();
 
     m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
     setCurrentFile(fileName);
@@ -585,7 +592,12 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 
 	QList<ModelPart *> modelParts;
+
+	connect(m_sketchModel, SIGNAL(loadedViews(ModelBase *, QDomElement &)),
+		this, SLOT(loadedViewsSlot(ModelBase *, QDomElement &)), Qt::DirectConnection);
 	m_sketchModel->load(fileName, m_paletteModel, modelParts);
+	disconnect(m_sketchModel, SIGNAL(loadedViews(ModelBase *, QDomElement &)),
+		this, SLOT(loadedViewsSlot(ModelBase *, QDomElement &)));
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -1187,6 +1199,10 @@ void MainWindow::createViewMenuActions() {
 	m_actualSizeAct->setStatusTip(tr("Actual size"));
 	connect(m_actualSizeAct, SIGNAL(triggered()), this, SLOT(actualSize()));
 
+	m_setBackgroundColorAct = new QAction(tr("Set Background Color ..."), this);
+	m_setBackgroundColorAct->setStatusTip(tr("Set the background color for the current view"));
+	connect(m_setBackgroundColorAct, SIGNAL(triggered()), this, SLOT(setBackgroundColor()));
+
 	m_showBreadboardAct = new QAction(tr("&Show Breadboard"), this);
 	m_showBreadboardAct->setShortcut(tr("Ctrl+1"));
 	m_showBreadboardAct->setStatusTip(tr("Show the breadboard view"));
@@ -1364,6 +1380,8 @@ void MainWindow::createMenus()
     m_viewMenu->addAction(m_zoomOutAct);
     m_viewMenu->addAction(m_fitInWindowAct);
     m_viewMenu->addAction(m_actualSizeAct);
+	m_viewMenu->addSeparator();
+    m_viewMenu->addAction(m_setBackgroundColorAct);
     m_viewMenu->addSeparator();
     m_viewMenu->addAction(m_showBreadboardAct);
     m_viewMenu->addAction(m_showSchematicAct);
@@ -2914,4 +2932,70 @@ QString MainWindow::constructFileName(const QString & differentiator, const QStr
 	QString filename = QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension);
 	filename += "_" + (differentiator.isEmpty() ? m_currentGraphicsView->getShortName() : differentiator);
 	return filename + suffix;
+}
+
+void MainWindow::setBackgroundColor() {
+	if (m_currentGraphicsView == NULL) return;
+
+	QColor bc = m_currentGraphicsView->background();
+	QColor sc = m_currentGraphicsView->standardBackground();
+	SetColorDialog setColorDialog(m_currentGraphicsView->viewName(), bc, sc, this);
+	int result = setColorDialog.exec();
+	if (result == QDialog::Rejected) return;
+
+	if (setColorDialog.isPrefsColor()) {
+		QSettings settings;
+		settings.setValue(QString("%1BackgroundColor").arg(m_currentGraphicsView->getShortName()), setColorDialog.selectedColor().name());
+	}
+	
+	QString oldColor = m_currentGraphicsView->background().name();
+	QString newColor = setColorDialog.selectedColor().name();
+
+	SketchBackgroundColorChangeCommand * cmd = 
+		new SketchBackgroundColorChangeCommand(m_currentGraphicsView, oldColor, newColor);
+	cmd->setText(tr("Change background color for %1 from %2 to %3").arg(m_currentGraphicsView->viewName()).arg(oldColor).arg(newColor));
+	m_undoStack->push(cmd);
+}
+
+void MainWindow::startSaveInstancesSlot(ModelPart *, QXmlStreamWriter & streamWriter) {
+	streamWriter.writeStartElement("views");
+	QList<SketchWidget *> views;
+	views << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView;
+	foreach  (SketchWidget * sketchWidget, views) {
+		streamWriter.writeStartElement("view");
+		streamWriter.writeAttribute("name", ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+		streamWriter.writeAttribute("backgroundColor", sketchWidget->background().name());
+		streamWriter.writeEndElement();
+	}
+	streamWriter.writeEndElement();
+}
+
+void MainWindow::loadedViewsSlot(ModelBase *, QDomElement & views) {
+	if (views.isNull()) return;
+
+	QDomElement view = views.firstChildElement("view");
+	while (!view.isNull()) {
+		QString name = view.attribute("name");
+		ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::idFromXmlName(name);
+		QString colorName = view.attribute("backgroundColor");
+		QColor color;
+		color.setNamedColor(colorName);
+		if (color.isValid()) {
+			switch (viewIdentifier) {
+				case ViewIdentifierClass::BreadboardView:
+					m_breadboardGraphicsView->setBackground(color);
+					break;
+				case ViewIdentifierClass::SchematicView:
+					m_schematicGraphicsView->setBackground(color);
+					break;
+				case ViewIdentifierClass::PCBView:
+					m_pcbGraphicsView->setBackground(color);
+					break;
+				default:
+					break;
+			}
+		}
+
+		view = view.nextSiblingElement("view");
+	}
 }

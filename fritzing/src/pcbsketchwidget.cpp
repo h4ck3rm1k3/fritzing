@@ -83,6 +83,9 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 {
 	m_viewName = QObject::tr("PCB View");
 	m_shortName = QObject::tr("pcb");
+	m_standardBackgroundColor = QColor(160,168,179);
+	initBackgroundColor();
+
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 	m_traceColor = "trace";
 	m_jumperColor = "jumper";

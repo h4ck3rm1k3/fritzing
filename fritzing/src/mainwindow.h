@@ -144,6 +144,7 @@ protected slots:
     void zoomOut(int steps);
     void fitInWindow();
     void actualSize();
+	void setBackgroundColor();
     void showBreadboardView();
     void showSchematicView();
     void showPCBView();
@@ -236,6 +237,9 @@ protected slots:
 	void tidyWires();
 	void groundFill();
 	void changeWireColor(bool checked);
+
+	void startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &);
+	void loadedViewsSlot(ModelBase *, QDomElement & views);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -472,6 +476,7 @@ protected:
     QAction *m_zoomOutAct;
     QAction *m_fitInWindowAct;
     QAction *m_actualSizeAct;
+    QAction *m_setBackgroundColorAct;
     QAction *m_showBreadboardAct;
     QAction *m_showSchematicAct;
     QAction *m_showPCBAct;

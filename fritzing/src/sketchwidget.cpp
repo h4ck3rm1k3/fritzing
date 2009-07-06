@@ -41,6 +41,7 @@ $Date$
 #include <QMainWindow>
 #include <QApplication>
 #include <QDomElement>
+#include <QSettings>
 
 #include "items/paletteitem.h"
 #include "items/wire.h"
@@ -5053,14 +5054,6 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 	note->setSize(size);
 }
 
-void SketchWidget::init() {
-	if(m_bgcolors.isEmpty()) {
-		m_bgcolors[ViewIdentifierClass::BreadboardView] = QColor(204,204,204);
-		m_bgcolors[ViewIdentifierClass::SchematicView] = QColor(255,255,255);
-		m_bgcolors[ViewIdentifierClass::PCBView] = QColor(160,168,179); // QColor(137,144,153)
-	}
-}
-
 QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi)
 {
 	qreal width =  scene()->width();
@@ -5541,3 +5534,19 @@ void SketchWidget::getBendpointWidths(Wire * wire, int width, int & bendpointWid
 	bendpoint2Width = bendpointWidth = (width - dwidth);
 }
 
+const QColor & SketchWidget::standardBackground() {
+	return m_standardBackgroundColor;
+}
+
+void SketchWidget::initBackgroundColor() {
+	m_bgcolors[m_viewIdentifier] = m_standardBackgroundColor;
+	setBackground(m_standardBackgroundColor);
+
+	QSettings settings;
+	QString colorName = settings.value(QString("%1BackgroundColor").arg(getShortName())).toString();
+	if (colorName.isEmpty()) return;
+
+	QColor color;
+	color.setNamedColor(colorName);
+	setBackground(color);
+}

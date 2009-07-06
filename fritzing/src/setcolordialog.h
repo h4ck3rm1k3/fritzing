@@ -18,61 +18,53 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2597 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
 
 ********************************************************************/
 
 
-#ifndef AUTOROUTEPROGRESSDIALOG_H
-#define AUTOROUTEPROGRESSDIALOG_H
+#ifndef SETCOLORDIALOG_H
+#define SETCOLORDIALOG_H
 
 #include <QDialog>
-#include <QProgressBar>
+#include <QColorDialog>
 #include <QLabel>
+#include <QCheckBox>
 
-class AutorouteProgressDialog : public QDialog
+class SetColorDialog : public QDialog
 {
 Q_OBJECT
 
 public:
-	AutorouteProgressDialog(class ZoomableGraphicsView * view, QWidget *parent = 0);
-	~AutorouteProgressDialog();
+	SetColorDialog(const QString & viewName, QColor & currentColor, QColor & standardColor, QWidget *parent = 0);
+	~SetColorDialog();
+
+	const QColor & selectedColor();
+	bool isPrefsColor();
 
 protected:
-	void closeEvent(QCloseEvent *);
+	void setColor(const QColor &);
+	void setCustomColor(const QColor &);
 
-public slots:
-	void setMinimum(int);
-	void setMaximum(int);
-	void setValue(int);
-	void sendSkip();
-	void sendCancel();
-	void sendStop();
+protected slots:
+	void selectCurrent();
+	void selectCustom();
+	void selectLastCustom();
+	void selectStandard();
 
-signals:
-	void skip();
-	void cancel();
-	void stop();
 
 protected:
-	QProgressBar * m_progressBar;	
-};
-
-class ArrowButton : public QLabel {
-	Q_OBJECT
-
-public:
-	ArrowButton(int scrollX, int scrollY, ZoomableGraphicsView * view, const QString & path);
-
-protected:
-	void mousePressEvent(QMouseEvent *event);
-
-protected:
-	int m_scrollX;
-	int m_scrollY;
-	ZoomableGraphicsView * m_view;
+	QColor m_currentColor;	
+	QColor m_standardColor;
+	QColor m_selectedColor;
+	QColor m_customColor;
+	QLabel * m_currentColorLabel;
+	QLabel * m_standardColorLabel;
+	QLabel * m_customColorLabel;
+	QLabel * m_selectedColorLabel;
+	QCheckBox * m_prefsCheckBox;
 };
 
 

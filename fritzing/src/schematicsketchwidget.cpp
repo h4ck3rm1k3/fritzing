@@ -39,6 +39,9 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 {
 	m_shortName = QObject::tr("schem");
 	m_viewName = QObject::tr("Schematic View");
+	m_standardBackgroundColor = QColor(255,255,255);
+	initBackgroundColor();
+
 	m_traceColor = "blackblack";
 	m_jumperColor = "blackblack";	
 	m_jumperWidth = 2;

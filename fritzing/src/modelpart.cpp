@@ -172,6 +172,9 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		if(!title.isNull() && !title.isEmpty()) {
 			streamWriter.writeTextElement("title",title);
 		}
+		
+		emit startSaveInstances(this, streamWriter);
+
 		streamWriter.writeStartElement("instances");
 	}
 

@@ -132,6 +132,8 @@ public:
 	static void updateIndex(long index);
 	static const int indexMultiplier;
 
+signals:
+	void startSaveInstances(ModelPart *, QXmlStreamWriter &);
 
 protected:
 	void writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue);

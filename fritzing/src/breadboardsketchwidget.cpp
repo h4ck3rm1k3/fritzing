@@ -35,6 +35,8 @@ BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifi
 {
 	m_shortName = QObject::tr("bb");
 	m_viewName = QObject::tr("Breadboard View");
+	m_standardBackgroundColor = QColor(204,204,204);
+	initBackgroundColor();
 }
 
 void BreadboardSketchWidget::setWireVisible(Wire * wire)

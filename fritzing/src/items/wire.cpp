@@ -958,6 +958,7 @@ void Wire::initNames() {
 	shadowColors.insert("trace",	"#d69b00");
 	shadowColors.insert("unrouted", "#000000");
 	shadowColors.insert("schematicGrey", "#1d1d1d");
+	shadowColors.insert("blackblack", "#000000");
 
 	netColorIndex.insert(ViewIdentifierClass::BreadboardView, 0);
 	netColorIndex.insert(ViewIdentifierClass::SchematicView, 0);

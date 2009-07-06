@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2597 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -107,8 +107,6 @@ AutorouteProgressDialog::AutorouteProgressDialog(ZoomableGraphicsView * view, QW
 	connect(button, SIGNAL(clicked()), this, SLOT(sendSkip()));
 	vLayout->addWidget(button);
 
-	// TODO: eventually allow zooming and panning during dialog
-
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Stop Now"));
@@ -152,19 +150,5 @@ void AutorouteProgressDialog::closeEvent(QCloseEvent *event)
 {
 	sendCancel();
 	QDialog::closeEvent(event);
-}
-
-void AutorouteProgressDialog::wheelEvent(QWheelEvent *event)
-{
-	// pass it to the sketch?
-	DebugDialog::debug("got wheel event");
-	QDialog::wheelEvent(event);
-}
-
-void AutorouteProgressDialog::mouseMoveEvent(QMouseEvent *event)
-{
-	// pass it to the sketch?
-	DebugDialog::debug("got mouse move event");
-	QDialog::mouseMoveEvent(event);
 }
 

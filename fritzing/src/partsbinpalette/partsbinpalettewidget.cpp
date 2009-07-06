@@ -199,7 +199,7 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	if(m_orderHasChanged) {
 		m_model->setOrdererChildren(m_iconView->orderedChildren());
 	}
-	m_model->save(filename);
+	m_model->save(filename, false);
 	if(m_orderHasChanged) {
 		m_model->setOrdererChildren(QList<QObject*>());
 		m_orderHasChanged = false;
