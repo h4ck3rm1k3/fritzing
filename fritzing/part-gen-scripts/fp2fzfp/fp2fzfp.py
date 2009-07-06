@@ -1,7 +1,7 @@
 #pcb object reader - loads gEDA PCB files into python tree structure
 # caveats:
 #   1. comments are escaped except for the case where the # characer appears 
-#       in a quoted string... need to fix the regex 
+#       in a quoted string... probably need to fix the regex 
 #   2. currently this parser assumes proper line breaks - this may choke on 
 #      some poorly formatted files - need to use a different tokenizer than string.splitlines()
 
