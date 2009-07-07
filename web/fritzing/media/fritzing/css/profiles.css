@@ -29,3 +29,26 @@
 .edit {
 	clear: both;
 }
+
+.form_links {
+	float: left; 
+}
+
+.form_links ul {
+	margin-left: 0px !important;
+}
+
+.form_links li {
+	float: left;
+	margin-right: 8px;
+	list-style-type: none;
+}
+
+.form_buttons {
+	float: right;
+	margin-right: 5%;
+}
+
+.form_footer {
+	margin-top: 10px;
+}
