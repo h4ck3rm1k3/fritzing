@@ -119,6 +119,9 @@ protected:
 	ConnectorItem * findEmptyBus(ItemBase * breadboard);
 	bool bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems, QList<Wire *> & visited);
 	void getLabelFont(QFont &, QColor &);
+	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
+	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
+
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);

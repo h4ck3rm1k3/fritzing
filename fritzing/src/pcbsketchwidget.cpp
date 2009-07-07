@@ -491,34 +491,43 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 		// don't generate a wire in bb view if the connectors are already connected
 		result = true;
 	}
-	else if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && 
-		toConnectorItem->attachedToItemType() == ModelPart::Wire)
-	{
-		ConnectorItem * originalFromConnectorItem = fromConnectorItem;
-		ConnectorItem * originalToConnectorItem = toConnectorItem;
-		ConnectorItem * newFromConnectorItem = lookForBreadboardConnection(fromConnectorItem);
-		ConnectorItem * newToConnectorItem = lookForBreadboardConnection(toConnectorItem);
-		if (newFromConnectorItem->attachedToItemType() == ModelPart::Breadboard &&
-			newToConnectorItem->attachedToItemType() == ModelPart::Breadboard)
+	else {
+		if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol ||
+			toConnectorItem->attachedToItemType() == ModelPart::Symbol) 
 		{
-			// connection can be made with one wire
-			makeModifiedWire(newFromConnectorItem, newToConnectorItem, BaseCommand::CrossView, 0, parentCommand);
+			// set up extra connection for breadboard view (for now; won't be necessary if breadboard gets ratsnest)
+			connectSymbols(fromConnectorItem, toConnectorItem, parentCommand);
 		}
-		else if (newToConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-			makeTwoWires(originalToConnectorItem, newToConnectorItem, originalFromConnectorItem, newFromConnectorItem, parentCommand);
+
+		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && 
+			toConnectorItem->attachedToItemType() == ModelPart::Wire)
+		{
+			ConnectorItem * originalFromConnectorItem = fromConnectorItem;
+			ConnectorItem * originalToConnectorItem = toConnectorItem;
+			ConnectorItem * newFromConnectorItem = lookForBreadboardConnection(fromConnectorItem);
+			ConnectorItem * newToConnectorItem = lookForBreadboardConnection(toConnectorItem);
+			if (newFromConnectorItem->attachedToItemType() == ModelPart::Breadboard &&
+				newToConnectorItem->attachedToItemType() == ModelPart::Breadboard)
+			{
+				// connection can be made with one wire
+				makeModifiedWire(newFromConnectorItem, newToConnectorItem, BaseCommand::CrossView, 0, parentCommand);
+			}
+			else if (newToConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
+				makeTwoWires(originalToConnectorItem, newToConnectorItem, originalFromConnectorItem, newFromConnectorItem, parentCommand);
+			}
+			else {
+				makeTwoWires(originalFromConnectorItem, newFromConnectorItem, originalToConnectorItem, newToConnectorItem, parentCommand);
+			}
+			result = true;
 		}
-		else {
-			makeTwoWires(originalFromConnectorItem, newFromConnectorItem, originalToConnectorItem, newToConnectorItem, parentCommand);
+		else if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			modifyNewWireConnectionsAux(fromConnectorItem, toConnectorItem, parentCommand);
+			result = true;
 		}
-		result = true;
-	}
-	else if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		modifyNewWireConnectionsAux(fromConnectorItem, toConnectorItem, parentCommand);
-		result = true;
-	}
-	else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		modifyNewWireConnectionsAux(toConnectorItem, fromConnectorItem, parentCommand);
-		result = true;
+		else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			modifyNewWireConnectionsAux(toConnectorItem, fromConnectorItem, parentCommand);
+			result = true;
+		}
 	}
 
 	dragWire->connector0()->tempConnectTo(fromConnectorItem, false);
@@ -557,6 +566,62 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 	}
 
 	return result;
+}
+
+void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand) {
+	ConnectorItem * target1 = NULL;
+	ConnectorItem * target2 = NULL;
+	if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol && toConnectorItem->attachedToItemType() == ModelPart::Symbol) {
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(fromConnectorItem);
+		ConnectorItem::collectEqualPotential(connectorItems);
+		foreach (ConnectorItem * c, connectorItems) {
+			if (c->attachedToItemType() == ModelPart::Part) {
+				target1 = c; 
+				break;
+			}
+		}
+		connectorItems.clear();
+		connectorItems.append(toConnectorItem);
+		ConnectorItem::collectEqualPotential(connectorItems);
+		foreach (ConnectorItem * c, connectorItems) {
+			if (c->attachedToItemType() == ModelPart::Part) {
+				target2 = c; 
+				break;
+			}
+		}
+	}
+	else if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol) {
+		connectSymbolPrep(fromConnectorItem, toConnectorItem, target1, target2);
+	}
+	else if (toConnectorItem->attachedToItemType() == ModelPart::Symbol) {
+		connectSymbolPrep(toConnectorItem, fromConnectorItem, target1, target2);
+	}
+
+	if (target1 == NULL) return;
+	if (target2 == NULL) return;
+
+	makeModifiedWire(target1, target2, BaseCommand::CrossView, 0, parentCommand);
+}
+
+void PCBSketchWidget::connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2) {
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(fromConnectorItem);
+	ConnectorItem::collectEqualPotential(connectorItems);
+	foreach (ConnectorItem * c, connectorItems) {
+		if (c->attachedToItemType() == ModelPart::Part) {
+			target1 = c;
+			break;
+		}
+	}
+	if (target1 == NULL) return;
+
+	if (toConnectorItem->attachedToItemType() == ModelPart::Part) {
+		target2 = toConnectorItem;
+	}
+	else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		target2 = findNearestPartConnectorItem(toConnectorItem);
+	}
 }
 
 void PCBSketchWidget::addBoard() {
@@ -1214,7 +1279,6 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 		if (y > maxY) {
 			maxY = y;
 		}
-		
 	}
 
 	ConnectorItem * busConnectorItem = NULL;
