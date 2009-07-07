@@ -172,7 +172,7 @@ function resizeBoard() {
 	var w = document.getElementById("boardwidth").value;			
    	if (!reg.test(w)) {
 	    alert("board width is not a number");
-	    setLastGood();
+	    setLastGoodSize();
 	    return;
 	}
 	if (w < 3) {
@@ -183,12 +183,12 @@ function resizeBoard() {
    	var h = document.getElementById("boardheight").value;		
    	if (!reg.test(h)) {
 	    alert("board height is not a number");
-	    setLastGood();
+	    setLastGoodSize();
 	    return;
 	}	
 	if (h < 3) {
 	    alert("board width must be at least 3 mm");
-	    setLastGood();
+	    setLastGoodSize();
 	    return;
 	}
 	
@@ -209,6 +209,31 @@ function updateBoardSize(w, h) {
     if (bh) {
         bh.value = h;
     }
+}
+
+function setVoltage() {
+	var reg = /^(-{0,1}\d{1,2}$)|(-{0,1}\d{1,2}\.\d{1,2}$)/;
+	
+	var v = document.getElementById("sVoltage").value;			
+   	if (!reg.test(v)) {
+	    alert("voltage is not a number");
+	    setLastVoltage();
+	    return;
+	}
+		
+	lastGoodVoltage = v;
+	
+    sketch.setVoltage(v);
+}
+
+function setVoltageEnter(evt) {
+	evt = (evt) ? evt : window.event;	
+	if (evt.keyCode == 13) {
+	    setVoltage();
+		return false;
+	} 
+		
+	return true;
 }
 
 function resizeBoardWidth() {
@@ -239,8 +264,12 @@ function resizeBoardHeightEnter(evt) {
 	return true;
 }
 
-function setLastGood() {
+function setLastGoodSize() {
     document.getElementById("boardwidth").value = lastGoodWidth;
     document.getElementById("boardheight").value = lastGoodHeight;
+}
+
+function setLastVoltage() {
+    document.getElementById("sVoltage").value = lastGoodVoltage;
 }
 

@@ -30,7 +30,6 @@ $Date$
 #define ITEMBASE_H
 
 
-#include <QHash>
 #include <QXmlStreamWriter>
 #include <QPointF>
 #include <QSize>
@@ -63,6 +62,7 @@ public:
 	static const QString wireModuleIDName;
 	static const QString groundPlaneModuleIDName;
 	static const QString groundModuleIDName;
+	static const QString powerModuleIDName;
 
 public:
 	static const QString ITEMBASE_FONT_PREFIX;
@@ -109,7 +109,7 @@ public:
 	void collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene);
 	virtual void collectConnectors(QList<ConnectorItem *> & connectors);
 
-	void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
+	virtual void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
 	bool hidden();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
@@ -277,7 +277,6 @@ protected:
 	const static QColor connectorHoverColor;
 	const static qreal connectorHoverOpacity;
 	static QString SvgFilesDir;
-
 
 };
 #endif

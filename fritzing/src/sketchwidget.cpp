@@ -44,6 +44,7 @@ $Date$
 #include <QSettings>
 
 #include "items/paletteitem.h"
+#include "items/symbolpaletteitem.h"
 #include "items/wire.h"
 #include "commands.h"
 #include "modelpart.h"
@@ -682,6 +683,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		}
 		case ModelPart::ResizableBoard:
 			paletteItem = new ResizableBoard(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			break;
+		case ModelPart::Symbol:
+			paletteItem = new SymbolPaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		default:
 			paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);

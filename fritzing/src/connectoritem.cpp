@@ -44,7 +44,6 @@ const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
 static double MAX_DOUBLE = std::numeric_limits<double>::max();
 
 
-
 /////////////////////////////////////////////////////////
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )

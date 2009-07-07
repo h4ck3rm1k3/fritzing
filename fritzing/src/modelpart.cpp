@@ -531,33 +531,59 @@ void ModelPart::setOrderedChildren(QList<QObject*> children) {
 void ModelPart::collectExtraValues(const QString & prop, QString & value, QStringList & extraValues) {
 	Q_UNUSED(value);
 
-	if (itemType() != ModelPart::ResizableBoard) return;
+	switch (itemType()) {
+		case ModelPart::ResizableBoard:
+			if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
+				if (customShapeTranslated.isEmpty()) {
+					customShapeTranslated = tr("Import Shape...");
+				}
+				extraValues.append(customShapeTranslated);
+			}
+			break;
 
-	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		if (customShapeTranslated.isEmpty()) {
-			customShapeTranslated = tr("Import Shape...");
-		}
-		extraValues.append(customShapeTranslated);
+		case ModelPart::Symbol:
+			break;
+
+		default:
+			break;
 	}
 }
 
 QString ModelPart::collectExtraHtml(const QString & prop, const QString & value) {
-	if (itemType() != ModelPart::ResizableBoard) return  ___emptyString___;
+	switch (itemType()) {
+		case ModelPart::ResizableBoard:
+			if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
 
-	if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
+			if (value.compare(customShapeTranslated) == 0) {
+				return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
+			}
+			
+			if (this->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
+				if (m_size.width() == 0) return ___emptyString___;
 
-	if (value.compare(customShapeTranslated) == 0) {
-		return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
-	}
-	else if (this->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
-		if (m_size.width() == 0) return ___emptyString___;
+				qreal w = qRound(m_size.width() * 10) / 10.0;	// truncate to 1 decimal point
+				qreal h = qRound(m_size.height() * 10) / 10.0;  // truncate to 1 decimal point
+				return QString("&nbsp;width(mm):<input type='text' name='boardwidth' id='boardwidth' maxlength='5' value='%1' style='width:35px' onblur='resizeBoardWidth()' onkeypress='resizeBoardWidthEnter(event)' />"
+							   "&nbsp;height(mm):<input type='text' name='boardheight' id='boardheight' maxlength='5' value='%2' style='width:35px' onblur='resizeBoardHeight()' onkeypress='resizeBoardHeightEnter(event)' />"
+							   "<script language='JavaScript'>lastGoodWidth=%1;lastGoodHeight=%2;</script>"
+							   ).arg(w).arg(h);
+			}
 
-		qreal w = qRound(m_size.width() * 10) / 10.0;	// truncate to 1 decimal point
-		qreal h = qRound(m_size.height() * 10) / 10.0;  // truncate to 1 decimal point
-		return QString("&nbsp;width(mm):<input type='text' name='boardwidth' id='boardwidth' maxlength='5' value='%1' style='width:35px' onblur='resizeBoardWidth()' onkeypress='resizeBoardWidthEnter(event)' />"
-					   "&nbsp;height(mm):<input type='text' name='boardheight' id='boardheight' maxlength='5' value='%2' style='width:35px' onblur='resizeBoardHeight()' onkeypress='resizeBoardHeightEnter(event)' />"
-					   "<script language='JavaScript'>lastGoodWidth=%1;lastGoodHeight=%2;</script>"
-					   ).arg(w).arg(h);
+			break;
+		case ModelPart::Symbol:
+			if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
+
+			{
+			qreal v = qRound(properties().value("voltage").toDouble() * 100) / 100.0;	// truncate to 2 decimal places
+			return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='5' value='%1' style='width:35px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"
+						   "<script language='JavaScript'>lastGoodVoltage=%1;</script>"
+						   ).arg(v);
+			}
+
+
+			break;
+		default:
+			return  ___emptyString___;
 	}
 
 	return ___emptyString___;

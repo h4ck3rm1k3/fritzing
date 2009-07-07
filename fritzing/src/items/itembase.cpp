@@ -85,6 +85,7 @@ const QString ItemBase::noteModuleIDName = "NoteModuleID";
 const QString ItemBase::wireModuleIDName = "WireModuleID";
 const QString ItemBase::groundPlaneModuleIDName = "GroundPlaneModuleID";
 const QString ItemBase::groundModuleIDName = "GroundModuleID";
+const QString ItemBase::powerModuleIDName = "PowerModuleID";
 
 const QString ItemBase::ITEMBASE_FONT_PREFIX = "<font size='2'>";
 const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";
@@ -114,8 +115,6 @@ QBrush ItemBase::chosenBrush(QColor(255,0,0));
 QBrush ItemBase::equalPotentialBrush(QColor(255,255,0));
 
 const qreal ItemBase::normalConnectorOpacity = 0.4;
-
-
 
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {
@@ -784,10 +783,10 @@ bool ItemBase::alreadySticking(ItemBase * itemBase) {
 	return m_stickyList.contains(itemBase->layerKinChief());
 }
 
-ConnectorItem* ItemBase::newConnectorItem(Connector *connector) {
-	return new ConnectorItem(connector,this);
+ConnectorItem* ItemBase::newConnectorItem(Connector *connector) 
+{
+	return new ConnectorItem(connector, this);
 }
-
 
 ConnectorItem * ItemBase::anyConnectorItem() {
 	foreach (QGraphicsItem * childItem, childItems()) {
@@ -920,28 +919,11 @@ void ItemBase::setCanFlipVertical(bool cf) {
 
 void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
 	QList<ConnectorItem *> * busConnectorItems = m_busConnectorItems.value(bus);
-	if (busConnectorItems == NULL) return;
-/*
-
-	if (itemType() == ModelPart::Breadboard) {
-		foreach (ConnectorItem * connectorItem, *busConnectorItems) {
-			if (connectorItem->connectionsCount() > 0) {
-				items.append(connectorItem);
-			}
-		}
-	}
-	else {
+	if (busConnectorItems != NULL) {
 		foreach (ConnectorItem * connectorItem, *busConnectorItems) {
 			items.append(connectorItem);
 		}
 	}
-
-	*/
-
-	foreach (ConnectorItem * connectorItem, *busConnectorItems) {
-		items.append(connectorItem);
-	}
-
 }
 
 void ItemBase::clearModelPart() {

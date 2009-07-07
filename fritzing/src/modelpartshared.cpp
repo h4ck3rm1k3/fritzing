@@ -274,8 +274,8 @@ void ModelPartShared::initConnectors() {
 	if (!buses.isNull()) {
 		QDomElement busElement = buses.firstChildElement("bus");
 		while (!busElement.isNull()) {
-			BusShared * bus = new BusShared(busElement, m_connectorSharedHash);
-			m_buses.insert(bus->id(), bus);
+			BusShared * busShared = new BusShared(busElement, m_connectorSharedHash);
+			m_buses.insert(busShared->id(), busShared);
 
 			busElement = busElement.nextSiblingElement("bus");
 		}

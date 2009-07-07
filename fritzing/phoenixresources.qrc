@@ -172,5 +172,7 @@
         <file>resources/images/icons/arrowButtonRight.png</file>
         <file>resources/parts/core/ground.fzp</file>
         <file>resources/parts/svg/core/schematic/ground.svg</file>
+        <file>resources/parts/svg/core/schematic/cell.svg</file>
+        <file>resources/parts/core/power.fzp</file>
     </qresource>
 </RCC>

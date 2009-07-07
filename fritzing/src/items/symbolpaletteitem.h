@@ -18,48 +18,32 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 3059 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-06-02 15:49:29 +0200 (Tue, 02 Jun 2009) $
 
 ********************************************************************/
 
-#ifndef BUS_H
-#define BUS_H
 
-#include <QString>
-#include <QDomElement>
-#include <QHash>
-#include <QList>
-#include <QXmlStreamWriter>
-#include <QGraphicsScene>
-#include <QPointer>
+#ifndef SYMBOLPALETTEITEM_H
+#define SYMBOLPALETTEITEM_H
 
-class Bus {
-	
+#include "paletteitem.h"
+
+class SymbolPaletteItem : public PaletteItem 
+{
+	Q_OBJECT
+
 public:
-	Bus(class BusShared *, class ModelPart *);
-	
-	const QString & id();
-	const QList<class Connector *> & connectors();
-	void addViewItem(class ConnectorItem *);
-	void removeViewItem(class ConnectorItem *);
-	void addConnector(class Connector *);
-	class Connector * busConnector();
-	class ModelPart * modelPart();
-	
-public:
-	static QHash<QString, class Bus *> ___emptyBusList___;
+	SymbolPaletteItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
+	~SymbolPaletteItem();
 
-	
+	ConnectorItem* newConnectorItem(class Connector *connector);
+	void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
+
 protected:
+	long m_voltage;
 
-	QList<class ConnectorItem *> m_connectorItems;
-	QList<class Connector *> m_connectors;
-	BusShared * m_busShared;
-	Connector * m_busConnector;
-	QPointer<class ModelPart> m_modelPart;
 };
-
 
 #endif

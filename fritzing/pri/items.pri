@@ -27,7 +27,8 @@ HEADERS += \
     src/items/tracewire.h \
     src/items/virtualwire.h \
     src/items/wire.h \
-	src/items/resizableboard.h 
+	src/items/resizableboard.h \
+	src/items/symbolpaletteitem.h 
 
 SOURCES += \
     src/items/graphicssvglineitem.cpp \
@@ -39,4 +40,5 @@ SOURCES += \
     src/items/tracewire.cpp \
     src/items/virtualwire.cpp \
     src/items/wire.cpp \
-	src/items/resizableboard.cpp 
+	src/items/resizableboard.cpp \
+	src/items/symbolpaletteitem.cpp 

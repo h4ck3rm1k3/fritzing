@@ -1,40 +1,40 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module moduleId="GroundModuleID" >
+<module moduleId="PowerModuleID" >
  <version>1.1</version>
  <author>Brendan Howell</author>
- <title>Ground</title>
+ <title>Power</title>
  <date>2008-07-28</date>
- <label>Ground</label>
+ <label>Power</label>
  <tags>
-   <tag>ground</tag>
+   <tag>power</tag>
    <tag>symbol</tag>
    <tag>fritzing core</tag>
  </tags>
  <properties>
    <property name="family">symbol</property>
-   <property name="voltage">0.0</property>
+   <property name="voltage">5.0</property>
  </properties>
- <taxonomy>discreteParts.ground.ground.ground</taxonomy>
- <description>A generic ground symbol</description>
+ <taxonomy>discreteParts.power.power.power</taxonomy>
+ <description>A generic power symbol</description>
  <views>
   <defaultUnits>cmil</defaultUnits>
   <iconView>
-   <layers image="schematic/ground.svg" >
+   <layers image="schematic/cell.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="schematic/ground.svg" >
+   <layers image="schematic/cell.svg" >
     <layer layerId="schematic" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/ground.svg" >
+   <layers image="schematic/cell.svg" >
      <layer layerId="schematic" />
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="schematic/ground.svg" >
+   <layers image="schematic/cell.svg" >
     <layer layerId="schematic" />
    </layers>
   </pcbView>
@@ -56,7 +56,7 @@
   </connector>
  </connectors>
  <buses>
-   <bus id="groundbus" >
+   <bus id="powerbus" >
      <nodeMember connectorId="connector0" />
    </bus>
  </buses>
