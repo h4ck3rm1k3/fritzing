@@ -1,14 +1,29 @@
 .profile {
 }
 
-#profile_info {
+.profile .header {
+}
+
+.profile .header .main {
 	float: left;
-	width: 55%
+	margin-left: 15px;
+}
+
+.profile .header .image {
+	width: 150px;
+	float: left;
+}
+
+.profile_info {
+	clear: left;
+	float: left;
+	width: 55%;
+	margin-top: 10px;
 }
 
 #user_projects {
 	float: right;
-	width: 40%
+	width: 40%;
 }
 
 .edit {

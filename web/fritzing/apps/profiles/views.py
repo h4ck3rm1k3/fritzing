@@ -2,10 +2,6 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseForbidden
-
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 
 from fritzing.apps.profiles.models import Profile
 from fritzing.apps.profiles.forms import ProfileForm
@@ -36,6 +32,12 @@ def profile(request, username, template_name="profiles/profile.html"):
                 profile_form = ProfileForm(request.POST, instance=other_user.get_profile())
                 if profile_form.is_valid():
                     profile = profile_form.save(commit=False)
+                                        
+                    other_user.first_name = profile_form.cleaned_data['user_first_name']
+                    other_user.last_name = profile_form.cleaned_data['user_last_name']
+                    other_user.email = profile_form.cleaned_data['user_email']
+                    other_user.save()
+                    
                     profile.user = other_user
                     profile.save()
             else:
