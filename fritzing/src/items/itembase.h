@@ -62,6 +62,7 @@ public:
 	static const QString noteModuleIDName;
 	static const QString wireModuleIDName;
 	static const QString groundPlaneModuleIDName;
+	static const QString groundModuleIDName;
 
 public:
 	static const QString ITEMBASE_FONT_PREFIX;
@@ -211,7 +212,7 @@ public:
 	virtual bool acceptsMouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual bool acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual bool acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
-	virtual void connectionChange(ConnectorItem *);
+	virtual void connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
 	virtual void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	virtual ItemBase * layerKinChief();
 	virtual const QList<ItemBase *> & layerKin();

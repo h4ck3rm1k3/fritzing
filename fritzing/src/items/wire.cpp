@@ -478,7 +478,12 @@ void Wire::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorIt
 	ItemBase::hoverLeaveConnectorItem(event, item);
 }
 
-void Wire::connectionChange(ConnectorItem * ) {
+void Wire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
+	Q_UNUSED(onMe);
+	if (connect && !onIt->attachedTo()->isVisible()) {
+		this->setVisible(false);
+	}
+
 	bool movable = true;
 	foreach (ConnectorItem * connectedTo, m_connector0->connectedToItems()) {
 		if (connectedTo->attachedToItemType() != ModelPart::Wire) {

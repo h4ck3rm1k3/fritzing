@@ -696,11 +696,18 @@
             </views>
         </instance>
       <instance moduleIdRef="WireModuleID" modelIndex="431" path=":/resources/parts/core/wire.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="GroundModuleID" modelIndex="433" path=":/resources/parts/core/ground.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
     </instances>
 </module>

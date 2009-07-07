@@ -1363,7 +1363,7 @@ void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorIte
 		}
 
 		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
-		ConnectorItem::collectParts(connectorItems, *partConnectorItems);
+		ConnectorItem::collectParts(connectorItems, *partConnectorItems, sketchWidget->includeSymbols());
 
 		if (partConnectorItems->count() <= 1) {
 			delete partConnectorItems;

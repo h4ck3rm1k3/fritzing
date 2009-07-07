@@ -57,6 +57,7 @@ public:
 		 ResizableBoard,
 		 Module,
 		 Note,
+		 Symbol,
 		 Unknown
 	};
 
@@ -125,9 +126,6 @@ public:
 	static QString customShapeTranslated;
 
 public:
-	static const QString & itemTypeName(ModelPart::ItemType);
-	static const QString & itemTypeName(int);
-	static void initNames();
 	static long nextIndex();
 	static void updateIndex(long index);
 	static const int indexMultiplier;

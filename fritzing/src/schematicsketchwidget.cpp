@@ -143,3 +143,25 @@ void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color) {
 	color.setAlpha(255);
 	color.setRgb(0);
 }
+
+void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
+	if (itemBase->itemType() == ModelPart::Breadboard) {
+		// don't need to see the breadboard in the other views
+		// but it's there so connections can be more easily synched between views
+		itemBase->setVisible(false);
+		itemBase->setEverVisible(false);
+	}
+}
+
+bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
+	bool result = PCBSketchWidget::canDropModelPart(modelPart);
+	if (result) return result;
+
+	if (modelPart->itemType() == ModelPart::Symbol) return true;
+
+	return result;
+}
+
+bool SchematicSketchWidget::includeSymbols() {
+	return true;
+}

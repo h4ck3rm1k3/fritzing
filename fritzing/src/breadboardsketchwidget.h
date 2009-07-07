@@ -56,6 +56,7 @@ protected:
 	void translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases);
 	bool allowFemaleRotation(ItemBase *);
 	void getLabelFont(QFont &, QColor &);
+	void setNewPartVisible(ItemBase *);
 
 };
 

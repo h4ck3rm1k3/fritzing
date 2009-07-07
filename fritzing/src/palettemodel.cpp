@@ -295,6 +295,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (properties.text().contains("module", Qt::CaseInsensitive)) {
 		type = ModelPart::Module;
 	}
+	else if (properties.text().contains("symbol", Qt::CaseInsensitive)) {
+		type = ModelPart::Symbol;
+	}
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);
 	if (modelPart == NULL) return NULL;
 

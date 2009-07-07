@@ -1344,6 +1344,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
 			case ModelPart::Module:
+			case ModelPart::Symbol:
 			case ModelPart::Unknown:
 				doConnectors = false;
 				break;
@@ -4988,6 +4989,7 @@ void SketchWidget::collectParts(QList<ItemBase *> & partList) {
 	foreach (QGraphicsItem * item, scene()->items()) {
 		PaletteItem * pitem = dynamic_cast<PaletteItem *>(item);
 		if (pitem == NULL) continue;
+		if (pitem->itemType() == ModelPart::Symbol) continue;
 
 		partList.append(pitem);
 	}
@@ -5549,4 +5551,8 @@ void SketchWidget::initBackgroundColor() {
 	QColor color;
 	color.setNamedColor(colorName);
 	setBackground(color);
+}
+
+bool SketchWidget::includeSymbols() {
+	return false;
 }

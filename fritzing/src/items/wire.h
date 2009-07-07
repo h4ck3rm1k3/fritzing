@@ -132,7 +132,7 @@ protected:
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
-	void connectionChange(ConnectorItem *);
+	void connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

@@ -327,7 +327,6 @@ int FApplication::startup(int & argc, char ** argv)
 	Wire::initNames();
     ItemBase::initNames();
     ViewLayer::initNames();
-    ModelPart::initNames();
     Connector::initNames();
     ZoomComboBox::loadFactors();
 	Helper::initText();
@@ -347,13 +346,13 @@ int FApplication::startup(int & argc, char ** argv)
 		}
 	}
 
-	
+	/*
 	QFontDatabase database;
 	QStringList families = database.families (  );
 	foreach (QString string, families) {
 		DebugDialog::debug(string);			// should print out the name of the font you loaded
 	}
-	
+	*/
 
 	splash.showProgress(progressIndex, 0.085);
 	processEvents();

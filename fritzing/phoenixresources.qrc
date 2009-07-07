@@ -170,5 +170,7 @@
         <file>resources/images/icons/arrowButtonDown.png</file>
         <file>resources/images/icons/arrowButtonLeft.png</file>
         <file>resources/images/icons/arrowButtonRight.png</file>
+        <file>resources/parts/core/ground.fzp</file>
+        <file>resources/parts/svg/core/schematic/ground.svg</file>
     </qresource>
 </RCC>

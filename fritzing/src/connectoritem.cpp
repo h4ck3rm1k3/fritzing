@@ -168,7 +168,7 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPartShared()->title()).arg(m_connectedTo.count()) );
 	restoreColor(true, -1);
 	if (m_attachedTo != NULL) {
-		m_attachedTo->connectionChange(this);
+		m_attachedTo->connectionChange(this, connected, true);
 	}
 
 	updateTooltip();
@@ -406,7 +406,7 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 			ConnectorItem * removed = m_connectedTo[i];
 			m_connectedTo.removeAt(i);
 			if (m_attachedTo != NULL) {
-				m_attachedTo->connectionChange(this);
+				m_attachedTo->connectionChange(this, removed, false);
 			}
 			restoreColor(true, -1);
 			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
@@ -427,7 +427,7 @@ void ConnectorItem::removeConnection(ConnectorItem * connectedItem, bool emitCha
 	m_connectedTo.removeOne(connectedItem);
 	restoreColor(true, -1);
 	if (emitChange) {
-		m_attachedTo->connectionChange(this);
+		m_attachedTo->connectionChange(this, connectedItem, false);
 	}
 	updateTooltip();
 }
@@ -817,13 +817,13 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 	}
 }
 
-void ConnectorItem::collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags) {
+void ConnectorItem::collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags, bool includeSymbols) {
 	// collects all the connectors at the same potential
 	// which are directly reached by the given wire type
 
 	collectEqualPotential(connectorItems);
 	QList<ConnectorItem *> partConnectorItems;
-	collectParts(connectorItems, partConnectorItems);
+	collectParts(connectorItems, partConnectorItems, includeSymbols);
 	connectorItems.clear();
 	for (int i = 0; i < partConnectorItems.count() - 1; i++) {
 		ConnectorItem * ci = partConnectorItems[i];
@@ -841,11 +841,13 @@ void ConnectorItem::collectEqualPotentialParts(QList<ConnectorItem *> & connecto
 	}
 }
 
-void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors)
+void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols)
 {
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		ItemBase * candidate = connectorItem->attachedTo();
 		switch (candidate->itemType()) {
+			case ModelPart::Symbol:
+				if (!includeSymbols) break;
 			case ModelPart::Part:
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:

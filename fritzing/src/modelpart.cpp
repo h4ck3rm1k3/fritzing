@@ -33,7 +33,6 @@ $Date$
 
 #include <QDomElement>
 
-QHash<ModelPart::ItemType, QString> ModelPart::itemTypeNames;
 long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
 QString ModelPart::customShapeTranslated;
@@ -95,26 +94,6 @@ const QString & ModelPart::moduleID() {
 	if (m_modelPartShared != NULL) return m_modelPartShared->moduleID();
 
 	return ___emptyString___;
-}
-
-
-const QString & ModelPart::itemTypeName(ModelPart::ItemType itemType) {
-	return itemTypeNames[itemType];
-}
-
-const QString & ModelPart::itemTypeName(int itemType) {
-	return itemTypeNames[(ModelPart::ItemType) itemType];
-}
-
-void ModelPart::initNames() {
-	if (itemTypeNames.count() == 0) {
-		itemTypeNames.insert(ModelPart::Part, QObject::tr("part"));
-		itemTypeNames.insert(ModelPart::Wire, QObject::tr("wire"));
-		itemTypeNames.insert(ModelPart::Breadboard, QObject::tr("breadboard"));
-		itemTypeNames.insert(ModelPart::Board, QObject::tr("board"));
-		itemTypeNames.insert(ModelPart::Board, QObject::tr("resizable"));
-		itemTypeNames.insert(ModelPart::Module, QObject::tr("module"));
-	}
 }
 
 void ModelPart::setItemType(ItemType t) {

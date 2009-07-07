@@ -67,7 +67,6 @@ public:
 	void setClipEnds(class ClipableWire *, bool);
 	void showGroundTraces(bool show);
 
-
 public:
 	enum CleanType {
 		noClean,

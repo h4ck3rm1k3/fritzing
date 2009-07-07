@@ -373,7 +373,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 		// figure out how many parts are connected via jumpers or traces
 		QList<ConnectorItem *> partConnectorItems;
 		partConnectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotentialParts(partConnectorItems, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
+		ConnectorItem::collectEqualPotentialParts(partConnectorItems, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, includeSymbols());
 		foreach (ConnectorItem * jConnectorItem, partConnectorItems) {
 			foreach (ConnectorItem * kConnectorItem, jConnectorItem->connectedToItems()) {
 				if (kConnectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -675,7 +675,7 @@ bool PCBSketchWidget::canChainMultiple() {
 }
 
 void PCBSketchWidget::setNewPartVisible(ItemBase * itemBase) {
-	if (itemBase->itemType() == ModelPart::Breadboard) {
+	if (itemBase->itemType() == ModelPart::Breadboard  || itemBase->itemType() == ModelPart::Symbol) {
 		// don't need to see the breadboard in the other views
 		// but it's there so connections can be more easily synched between views
 		itemBase->setVisible(false);
@@ -688,6 +688,8 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		// can't drag and drop these parts in these views
 		return false;
 	}
+
+	if (modelPart->itemType() == ModelPart::Symbol) return false;
 
 	if (modelPart->itemType() == ModelPart::Board || modelPart->itemType() == ModelPart::ResizableBoard) {
 		return matchesLayer(modelPart);
@@ -745,7 +747,7 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 	QList<ConnectorItem *> partsConnectorItems;
 	connectorItems.append(fromConnectorItem);
 	ConnectorItem::collectEqualPotential(connectorItems);
-	ConnectorItem::collectParts(connectorItems, partsConnectorItems);
+	ConnectorItem::collectParts(connectorItems, partsConnectorItems, includeSymbols());
 
 	QList <Wire *> ratsnestWires;
 	Wire * modelWire = NULL;

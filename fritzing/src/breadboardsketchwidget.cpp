@@ -306,6 +306,8 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		return matchesLayer(modelPart);
 	}
 
+	if (modelPart->itemType() == ModelPart::Symbol) return false;
+
 	return true;
 }
 
@@ -340,4 +342,11 @@ void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color) {
 	font.setPointSize(9);
 	color.setAlpha(255);
 	color.setRgb(0);
+}
+
+void BreadboardSketchWidget::setNewPartVisible(ItemBase * itemBase) {
+	if (itemBase->itemType() == ModelPart::Symbol) {
+		itemBase->setVisible(false);
+		itemBase->setEverVisible(false);
+	}
 }

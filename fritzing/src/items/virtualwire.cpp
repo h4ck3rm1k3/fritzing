@@ -44,7 +44,11 @@ void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * op
 	Wire::paint(painter, option, widget);
 }
 
-void VirtualWire::connectionChange(ConnectorItem * ) {
+void VirtualWire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
+	Q_UNUSED(onMe);
+	//if (connect && !onIt->attachedTo()->isVisible()) {
+		//this->setVisible(false);
+	//}
 }
 
 FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {

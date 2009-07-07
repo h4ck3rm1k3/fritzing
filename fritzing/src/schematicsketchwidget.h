@@ -54,7 +54,9 @@ public:
 	void setClipEnds(ClipableWire * vw, bool);
 	void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
 	void getLabelFont(QFont &, QColor &);
-
+	void setNewPartVisible(ItemBase *);
+	bool canDropModelPart(ModelPart * modelPart); 
+	bool includeSymbols();
 
 protected:
 	qreal getRatsnestOpacity(Wire *);

@@ -84,6 +84,7 @@ const QString ItemBase::rectangleModuleIDName = "RectanglePCBModuleID";
 const QString ItemBase::noteModuleIDName = "NoteModuleID";
 const QString ItemBase::wireModuleIDName = "WireModuleID";
 const QString ItemBase::groundPlaneModuleIDName = "GroundPlaneModuleID";
+const QString ItemBase::groundModuleIDName = "GroundModuleID";
 
 const QString ItemBase::ITEMBASE_FONT_PREFIX = "<font size='2'>";
 const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";
@@ -456,7 +457,10 @@ bool ItemBase::acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMou
 	return false;
 }
 
-void ItemBase::connectionChange(ConnectorItem *) {
+void ItemBase::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
+	Q_UNUSED(onMe);
+	Q_UNUSED(onIt);
+	Q_UNUSED(connect);
 }
 
 void ItemBase::connectedMoved(ConnectorItem * /* from */, ConnectorItem * /* to */) {
