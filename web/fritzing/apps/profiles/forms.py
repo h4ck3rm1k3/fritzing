@@ -2,12 +2,14 @@ from django import forms
 
 from fritzing.apps.profiles.models import Profile
 #from django.contrib.admin import widgets
+from tinymce.widgets import TinyMCE
 
 class ProfileForm(forms.ModelForm):
     user_first_name = forms.CharField()
     user_last_name = forms.CharField()
     user_email = forms.EmailField(required=False)
     #image = forms.ImageField(widget=widgets.AdminFileWidget())
+    about = forms.CharField(required=False,widget=TinyMCE(attrs={'cols': 50, 'rows': 30}))
     
     def __init__(self, *args, **kwargs):
         forms.ModelForm.__init__(self, *args, **kwargs)
@@ -18,6 +20,6 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        exclue = ('user',)
+        exclude = ('user',)
         #fields = ('user_first_name', 'user_first_name', 'user_email', 'location', 'website', 'image')
 

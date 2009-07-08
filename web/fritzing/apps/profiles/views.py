@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from fritzing.apps.profiles.models import Profile
 from fritzing.apps.profiles.forms import ProfileForm
+from fritzing.apps.projects.models import Project
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -16,7 +17,7 @@ def profiles(request, template_name="profiles/profiles.html"):
         "users": User.objects.all().order_by("-date_joined"),
     }, context_instance=RequestContext(request))
 
-def profile(request, username, template_name="profiles/profile.html"):
+def profile(request, username, template_name="profiles/profile.html", proy_count=3):
     other_user = get_object_or_404(User, username=username)
     if request.user.is_authenticated():
         if request.user == other_user:
@@ -25,6 +26,8 @@ def profile(request, username, template_name="profiles/profile.html"):
             is_me = False
     else:
         is_me = False
+        
+    projects = Project.published.filter(author=other_user.id)[0:proy_count]
     
     if is_me:
         if request.method == "POST":
@@ -51,4 +54,5 @@ def profile(request, username, template_name="profiles/profile.html"):
         "profile_form": profile_form,
         "is_me": is_me,
         "other_user": other_user,
+        "projects" : projects,
     }, context_instance=RequestContext(request))

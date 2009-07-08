@@ -2,11 +2,17 @@
 }
 
 .profile .header {
+	float: left;
+}
+
+.profile .user_activity {
+	margin-left: 15px;
+	float: right;
+	width: 76%;
 }
 
 .profile .header .main {
-	float: left;
-	margin-left: 15px;
+	margin-top: 15px;
 }
 
 .profile .header .image {
@@ -14,16 +20,17 @@
 	float: left;
 }
 
-.profile_info {
-	clear: left;
-	float: left;
-	width: 55%;
-	margin-top: 10px;
+.profile_about {
 }
 
-#user_projects {
-	float: right;
-	width: 40%;
+.data_col {
+	width: 48%;
+	overflow: hidden;
+}
+
+.col1 {
+	clear: left;
+	float: left;
 }
 
 .edit {

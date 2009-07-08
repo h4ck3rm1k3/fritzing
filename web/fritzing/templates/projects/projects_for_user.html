@@ -7,14 +7,14 @@
             {% for project in projects %}
             <td>
                 <div class="project overview item">
-                  <span class="project overview image">
+                  <div class="project overview image">
                     {% if project.main_images %}
                         <p><a href="{{ project.get_absolute_url }}"><img
                             width="100"
                             src="{{ project.main_images.0.overview.url }}" 
                             alt="{{ project.title }}" /></a></p>
                     {% endif %}
-                  </span>
+                  </div>
                   <ul>
                     <li>
                       <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
