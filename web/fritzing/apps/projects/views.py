@@ -33,7 +33,6 @@ def create(request, form_class=ProjectForm):
                 ('examples', Attachment.EXAMPLE_TYPE),
                 ('code', Attachment.CODE_TYPE),
             )
-            print request.user
             for attachement_type in attachement_types:
                 field_name, field_type = attachement_type
                 for attachment_file in request.FILES.getlist(field_name):
@@ -43,16 +42,22 @@ def create(request, form_class=ProjectForm):
                         user=request.user,
                         kind=field_type)
 
-            if 'main_image' in request.FILES:
-                Image.objects.create(
-                    image=request.FILES['main_image'],
+            main_image = request.FILES.get('main_image')
+            if main_image:
+                # im is a not saved Image model instance
+                im = Image(
                     project=project,
                     user=request.user,
                     is_heading=True)
+                # saving the image field directly
+                im.image.save(main_image.name, main_image)
+                # saving the Image model instance
+                im.save()
 
             for resource in request.POST.getlist('resources'):
                 title, url = resource.split(RESOURCE_DELIMITER)
                 Resource.objects.create(title=title, url=url, project=project)
+            # save the project instance
             project.save()
             return HttpResponseRedirect(project.get_absolute_url())
     else:

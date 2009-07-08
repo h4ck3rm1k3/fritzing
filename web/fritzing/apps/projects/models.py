@@ -190,8 +190,7 @@ class Attachment(models.Model):
 
     title = models.CharField(_('title'), max_length=255, blank=True,
         null=True, help_text=_('Leave empty to populate with filename'))
-    #attachment = models.FileField(upload_to=project_attachment_path)
-    attachment = VcFileField(upload_to=project_attachment_path, storage=MercurialStorage(), max_length=512)
+    attachment = models.FileField(upload_to=project_attachment_path, max_length=512)
     project = models.ForeignKey(Project,
         verbose_name=_('project'), related_name='attachments')
     user = models.ForeignKey(User,
