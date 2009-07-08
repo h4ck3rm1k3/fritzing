@@ -178,7 +178,7 @@ EMAIL_SUBJECT_PREFIX = "[Fritzing] "
 ugettext = lambda s: s
 LANGUAGES = (
   ('en', u'English'),
-#  ('de', u'Deutsch'),
+  ('de', u'Deutsch'),
 )
 
 CACHE_BACKEND = "locmem:///?max_entries=3000"
@@ -193,12 +193,12 @@ FILEBROWSER_URL_FILEBROWSER_MEDIA = MEDIA_URL + '/filebrowser/'
 FILEBROWSER_PATH_FILEBROWSER_MEDIA = MEDIA_ROOT + 'filebrowser/'
 FILEBROWSER_EXTENSIONS = {
     'Folder':[''],
-    'Image':['.jpg', '.jpeg', '.gif','.png','.tif','.tiff'],
+    'Image':['.jpg', '.jpeg', '.gif','.png','.tif','.tiff','.svg'],
     'Video':['.mov','.wmv','.mpeg','.mpg','.avi','.rm'],
     'Document':['.pdf','.doc','.rtf','.txt','.xls','.csv'],
     'Sound':['.mp3','.mp4','.wav','.aiff','.midi'],
     'Code':['.html','.py','.js','.css'],
-    'Achives':['.tgz','.tar', '.zip', '.rar', '.dmg', '.gz', '.bz2'],
+    'Archives':['.tgz','.tar', '.zip', '.rar', '.dmg', '.gz', '.bz2'],
     'Fritzing':['.fz', '.fzb', '.fzp', '.ts'],
 }
 FILEBROWSER_STRICT_PIL = True
