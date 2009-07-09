@@ -18,7 +18,7 @@ else:
 
 def profiles(request, template_name="profiles/profiles.html"):
     return render_to_response(template_name, {
-        "users": User.objects.all().order_by("-date_joined"),
+        "users": User.objects.all().order_by("username"),
     }, context_instance=RequestContext(request))
 
 def profile(request, username, template_name="profiles/profile.html", project_count=3, post_count=5):

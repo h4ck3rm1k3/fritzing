@@ -4,25 +4,26 @@
 {% load pagination_tags %}
 {% load humanize %}
 
-{% block head_title %}{% blocktrans %}All Profiles{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans %}All Profiles{% endblocktrans %}{% endblock %}
 
 {% block body %}
     <h1>{% trans "Profiles" %}</h1>
     
     {% autopaginate users %}
-    
-    {% regroup users by date_joined.date as users_by_date_joined %}
-    
-    {% for date in users_by_date_joined %}
-        <h2 class="join_date">{{ date.grouper|naturalday:_("MONTH_DAY_FORMAT")|capfirst }}</h2>
         
-        {% for user in date.list %}
-            <div class="profile clearfix">
-                {# @@@ factor out style into css file #}
-                <div style="padding: 5px; margin-left: 50px;"><a href="{% url profile_detail user.username %}">{{ user }}</a></div>
-            </div>
-        {% endfor %}
+	<dl>
+    {% for user in users %}
+		<dt><a href="{% url profile_detail user.username %}">{{ user }}</a></dt>
+		{% if user.first_name or user.last_name or user.get_profile.location %}
+			<dd>
+				{{ user.first_name}} {{ user.last_name}}
+				{% if user.get_profile.location %}
+					({{ user.get_profile.location }})
+				{% endif %}
+			</dd>
+		{% endif %}                
     {% endfor %}
+    </dl>
     
     {% paginate %}
 {% endblock %}
