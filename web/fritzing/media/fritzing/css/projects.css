@@ -98,7 +98,9 @@ ul.selection {
     float:left;
 }
 .project.overview.item {
-    width: 320px;
+    width: 48%;
+    float: left;
+    margin-bottom: 8px;
 }
 
 .project.overview h3 {
@@ -112,4 +114,9 @@ ul.selection {
 .project.overview.item ul li {
     list-style: none;
     color: #333;
+}
+
+.col1 {
+	clear: left;
+	float: left;
 }

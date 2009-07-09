@@ -114,3 +114,14 @@ def do_latest_timed_objects(parser, token):
 def truncatehtml(string, length):
     return truncate_html_words(string, length)
 truncatehtml.is_safe = True
+
+@register.filter
+def truncatechars(s, num):
+    """
+    Truncates a word after a given number of chars  
+    Argument: Number of chars to truncate after
+    """
+    length = int(num)
+    dots = '...' if len(s) > length else '' 
+    return u'%s%s' % (s[:length], dots)
+

@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load uni_form %}
+{% load fritzing_tools %}
 
 {% block title %}
 	{% trans "Profile" %}: {{ other_user }}{{ block.super }}
@@ -10,9 +11,8 @@
 {% block extra_head %}
 	<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
 	<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/profiles.css" type="text/css" media="screen" charset="utf-8">
-	<!--script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script-->
-	<!--script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.query.js"></script-->
-	<script type="text/javascript" src="{{ MEDIA_URL }}tinymce/tiny_mce.js"></script>
+	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script>
+	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.query.js"></script>
 {% endblock %}
 
 
@@ -49,7 +49,7 @@
 		    
 		     {% if user.is_authenticated %}
 		        {% if is_me %}
-					<a href="#" onclick="$('#profile_form').toggle(); return false;">{% trans "Edit profile" %}</a>
+					<a href='{% url profile_edit other_user.username %}'>{% trans "Edit profile" %}</a>
 				{% endif %}
     		 {% endif %}
 	    </div>
@@ -58,11 +58,11 @@
     <div class="user_activity">
 	    <div class="profile_about">
 	        {% if other_user.get_profile.about %}
-	        	<p>{{ other_user.get_profile.about }}</p>
+	        	<p>{{ other_user.get_profile.about|safe }}</p>
 	        {% endif %}
 	    </div>
  
-	    <div class="user_projects data_col col1" style="height: 300px;">
+	    <div class="data_col col1">
 	    	<h3 style="margin-bottom:  10px;">{% trans "Projects" %}</h3>
 		    {% if user.is_authenticated %}
 		        {% if is_me %}
@@ -74,7 +74,7 @@
 		    {% if projects %}
 				<div class="plain project">
 					{% for project in projects %}
-						<div class="project overview item">
+						<div class="project overview item col1" style="width:100%">
 							<div class="project overview image">
 								{% if project.main_images %}
 									<p><a href="{{ project.get_absolute_url }}">
@@ -84,76 +84,49 @@
 									</a></p>
 								{% endif %}
 							</div>
-							<ul>
-								<li><h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3></li>
-								<li>{{ project.created|date:_("DATETIME_FORMAT") }}</li>
-								<li>by {{ project.author }}
+								<div><h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3></div>
+								<div>{{ project.created|date:_("DATETIME_FORMAT") }}</div>
+								<div>by {{ project.author }}
 									{% if project.difficulty %}
 										for {{ project.get_difficulty }}
 									{% endif %}
-								</li>
-							</ul>
+								</div>
 						</div>
 					{% endfor %}
+					<a href="{% url projects-by-user other_user.username %}">{% trans "more..." %}</a>
 				</div>
 			{% else %}
 				<p>{% trans "This user has no projects" %}</p>
 			{% endif %}
     	</div>
-    </div>    
-    
-    {% if user.is_authenticated %}
-        {% if is_me %}
-	        <div class="edit">	
-	            <form class="uniForm" id="profile_form" method="POST" action="" style="display: none;">
-	                <fieldset class="inlineLabels">  
-	                    {{ profile_form|as_uni_form }}
-	                    <div class="form_footer">
-		                    <div class="form_links">
-		                    	<ul>
-						            <li><a href="/openid/associations/" target="_blank">{% trans "OpenID Associations" %}</a></li>
-						            {% if user.password %}
-						            <li><a href="{% url acct_passwd %}" target="_blank">{% trans "Change Password" %}</a></li>
-						            {% else %}
-						            <li><a href="{% url acct_passwd_set %}" target="_blank">{% trans "Set Password" %}</a></li>
-						            {% endif %}
-						            {% if user.password and request.openids %}
-						            <li><a href="{% url acct_passwd_delete %}" target="_blank">{% trans "Delete Password" %}</a></li>
-						            {% endif %}
-						            {# <li><a href="{% url acct_language_change %}" target="_blank">{% trans "Language" %}</a></li> #}
-						            {# <li><a href="{% url acct_timezone_change %}" target="_blank">{% trans "Timezone" %}</a></li> #}
-						            <li><a href="{% url forum_subscriptions %}" target="_blank">{% trans "Forum subscriptions" %}</a></li>
-						        </ul>
-		                    </div>
-		                    <div class="form_block form_buttons">
-			                    <input type="hidden" name="action" value="update" />
-			                    <input type="submit" value="{% trans "Save" %}"/>
-			                    <input type="submit" value="{% trans "Cancel" %}" onclick="$('#profile_form').hide(); return false;"/>
-		                    </div>
-	                    </div>
-	                </fieldset>
-	            </form>
-	         </div>
-        {% endif %}
-    {% endif %}
-    
-	<script type="text/javascript">
-	/*$(document).ready(function() {
-	    $.get('{% url projects-for-user other_user.id %}', function(data, textStatus) {
-	  	  	var projs = $("#user_projects")
-	  	  	projs.html(projs.html()+data)
-	  	});
-	});*/
-	</script>
-	
-	<script type="text/javascript">
-        $().ready(function() {
-            {% if profile_form.errors %}
-                $('#profile_form').show();
-            {% endif %}
-        });
-    </script>
-
+    	
+    	<div class="data_col">
+	    	<h3 style="margin-bottom:  10px;">{% trans "Forum posts" %}</h3>
+		    {% if projects %}
+				<div class="plain project">
+					<ul>
+					{% for entry in forum_entries %}
+						<li><dd class="portletItem">
+							<div class="contenttype-ploneboardconversation">
+								{{ entry.body|truncatechars:75 }}
+								<br/>in 
+								<a href="{{ entry.thread.thread_latest_post.get_feed_url }}"
+										class="state-active tile"
+                                    title="{{ thread.title }}"
+                                 >{{ entry.thread.title }}</a>
+                                 (<a class="portletItemDetails"
+                                    href="{{ entry.thread.forum.get_absolute_url }}"
+                                 >{{ entry.thread.forum.title }}</a>)
+                             </div>
+                         </dd></li>
+					{% endfor %}
+					</ul>
+				</div>
+			{% else %}
+				<p>{% trans "This user has no projects" %}</p>
+			{% endif %}
+    	</div>
+    </div>
 {% endblock %}
 
 

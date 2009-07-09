@@ -1,0 +1,58 @@
+{% extends "profiles/base.html" %}
+
+{% load i18n %}
+{% load uni_form %}
+
+{% block title %}
+	{% trans "Profile edit" %}: {{ other_user }}{{ block.super }}
+{% endblock %}
+
+{% block extra_head %}
+	<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/profiles.css" type="text/css" media="screen" charset="utf-8">
+	<script type="text/javascript" src="{{ MEDIA_URL }}tinymce/tiny_mce.js"></script>
+{% endblock %}
+
+
+{% block head_title %}{% blocktrans %}{{ other_user }}{% endblocktrans %}{% endblock %}
+
+{% block body %}  
+    {% if user.is_authenticated %}
+        {% if is_me %}
+	        <div class="edit">
+	        	<h1>{% blocktrans %}{{ other_user }}{% endblocktrans %}</h1>	
+	            <form class="uniForm" id="profile_form" method="POST" action="" enctype="multipart/form-data">
+	                <fieldset class="inlineLabels">  
+	                    {{ profile_form|as_uni_form }}
+	                    <div class="form_footer">
+		                    <div class="form_links">
+		                    	<ul>
+						            <li><a href="/openid/associations/" target="_blank">{% trans "OpenID Associations" %}</a></li>
+						            {% if user.password %}
+						            <li><a href="{% url acct_passwd %}" target="_blank">{% trans "Change Password" %}</a></li>
+						            {% else %}
+						            <li><a href="{% url acct_passwd_set %}" target="_blank">{% trans "Set Password" %}</a></li>
+						            {% endif %}
+						            {% if user.password and request.openids %}
+						            <li><a href="{% url acct_passwd_delete %}" target="_blank">{% trans "Delete Password" %}</a></li>
+						            {% endif %}
+						            {# <li><a href="{% url acct_language_change %}" target="_blank">{% trans "Language" %}</a></li> #}
+						            {# <li><a href="{% url acct_timezone_change %}" target="_blank">{% trans "Timezone" %}</a></li> #}
+						            <li><a href="{% url forum_subscriptions %}" target="_blank">{% trans "Forum subscriptions" %}</a></li>
+						        </ul>
+		                    </div>
+		                    <div class="form_block form_buttons">
+			                    <input type="hidden" name="action" value="update" />
+			                    <input type="submit" value="{% trans "Save" %}"/>
+			                    <input type="submit" value="{% trans "Cancel" %}" onclick="$('#profile_form').hide(); return false;"/>
+		                    </div>
+	                    </div>
+	                </fieldset>
+	            </form>
+	         </div>
+        {% else %}
+        {% endif %}
+    {% else %}
+    {% endif %}
+{% endblock %}
+
+

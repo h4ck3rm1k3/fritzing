@@ -11,8 +11,11 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from fritzing.apps.projects.models import Project, Category, Image, Attachment
 from fritzing.apps.projects.forms import ProjectForm, RESOURCE_DELIMITER
 
-def overview(request):
-    projects = Project.published.all()
+def overview(request,username=None):
+    if username:
+        projects = Project.published.filter(author__username=username)
+    else:
+        projects = Project.published.all()
     return render_to_response("projects/project_list.html", {
         'projects': projects,
     }, context_instance=RequestContext(request))
@@ -72,13 +75,6 @@ def detail(request, slug):
 
     return render_to_response("projects/project_detail.html", {
         'project': project,
-    }, context_instance=RequestContext(request))
-    
-def by_user(request, user_id):
-    projects = Project.published.filter(author=user_id)
-    #projects = Project.published.all()
-    return render_to_response("projects/projects_for_user.html", {
-        'projects': projects,
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:
