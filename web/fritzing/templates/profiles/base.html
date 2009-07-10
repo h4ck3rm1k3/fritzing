@@ -4,6 +4,7 @@
 
 {% block rtab_id %}id="profile_tab"{% endblock %}
 
+{% comment %}
 {% block subnav %}
     {% if user.is_authenticated %}
         <ul>
@@ -13,3 +14,4 @@
         &nbsp;
     {% endif %}
 {% endblock %}
+{% endcomment %}
