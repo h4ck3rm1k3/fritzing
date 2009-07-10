@@ -31,6 +31,12 @@ def profile(request, username, template_name="profiles/profile.html", project_co
     else:
         is_me = False
         
+    # try to get the profile, if not, create a new one
+    try:
+        other_user.get_profile()
+    except:
+        Profile.objects.create(user=other_user)
+        
     projects = Project.published.filter(author=other_user.id)[0:project_count]
     forum_entries = Post.objects.filter(author=other_user.id).order_by('-time')[0:post_count]
     
