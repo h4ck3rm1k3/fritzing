@@ -17,6 +17,7 @@ def overview(request,username=None):
         projects = Project.published.filter(author__username=username)
     else:
         projects = Project.published.all()
+    
     return render_to_response("projects/project_list.html", {
         'projects': projects,
     }, context_instance=RequestContext(request))
@@ -47,9 +48,11 @@ def _manage_deleted_files(project_id,form):
 def _manage_save(request, form, project_id=None, edition=False):
     if form.is_valid():
         project = form.save(commit=False)
-        if project_id: project.id = project_id
         project.author = request.user
-        project.save()
+        
+        if project_id: project.id = project_id
+        else: project.save()
+
         attachment_types = (
             ('fritzing_files', Attachment.FRITZING_TYPE),
             ('examples', Attachment.EXAMPLE_TYPE),
@@ -106,7 +109,7 @@ def create(request, form_class=ProjectForm):
     if request.method == 'POST':
         form = form_class(request.POST, request.FILES)
         project = _manage_save(request, form)
-        if project: HttpResponseRedirect(project.get_absolute_url())
+        if project: return HttpResponseRedirect(project.get_absolute_url())
     else:
         form = form_class()
     #print dir(form['title'])
@@ -144,9 +147,17 @@ def edit(request, project_id, form_class=ProjectForm):
 
 def detail(request, slug):
     project = get_object_or_404(Project.published.all(), slug=slug)
+    if request.user.is_authenticated():
+        if request.user == project.author:
+            is_me = True
+        else:
+            is_me = False
+    else:
+        is_me = False
 
     return render_to_response("projects/project_detail.html", {
         'project': project,
+        'is_me': is_me
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:

@@ -1,4 +1,5 @@
 {% extends "site_base.html" %}
+{% load i18n %}
 
 {% block title %}
   Project – {{ project.title }}
@@ -96,6 +97,13 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+                
+                {% if user.is_authenticated %}
+			        {% if is_me %}
+			        	<br/><br/>
+						<a href='{% url projects-edit project.id %}'>{% trans "Edit project" %}</a>
+					{% endif %}
+	    		 {% endif %}
             </td>
         </tr>
     </tbody>

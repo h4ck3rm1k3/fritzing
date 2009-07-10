@@ -6,7 +6,6 @@ from template_utils.markup import formatter
 from django.forms.widgets import TextInput, MultiWidget, HiddenInput, FileInput
 from django.forms.models import ModelChoiceField
 from django.forms.util import ValidationError
-from apps.projects.editutils import _something_changed
 
 RESOURCE_DELIMITER = '########'
 
@@ -159,7 +158,6 @@ class ProjectForm(forms.ModelForm):
         data = self.cleaned_data[field_name]
         new_values = self.file_fields[field_name]['new_values']
         deleted_values = self.file_fields[field_name]['deleted_values']
-        print deleted_values
         prev_values = self.file_fields[field_name]['prev_values']
         
         if self._something_changed(new_values, deleted_values) \
@@ -195,5 +193,4 @@ class ProjectForm(forms.ModelForm):
             'difficulty',
             'tags',
             'license',
-            'public'
         )

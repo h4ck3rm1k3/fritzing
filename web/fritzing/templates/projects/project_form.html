@@ -152,6 +152,7 @@
 
 
             <td width="40%" class="right_col">
+              {% comment %}
               <div class="project_public">
                 {% if form.public.field.required %}
                   <label for="{{ form.public.auto_id }}" class="required">
@@ -168,6 +169,7 @@
                   <span class="error">{{ form.public.errors }}</span>
                 {% endif %}
               </div>
+              {% endcomment %}
               
               <div class="project_difficulty">
                 {% if form.difficulty.field.required %}
