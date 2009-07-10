@@ -14,8 +14,9 @@
     <div class="boardCommentComplete {% cycle 'odd' 'even' %}">
         <div class="classCommentBody">
             {{ post.body|markdown|urlize|safe }}
-            <div class='boardCommentDetails' id='post{{ post.id }}'>Posted {{ post.time|timesince }} ago 
-            by <strong>{% firstof post.author.get_full_name post.author %}</strong></div>
+            <div class='boardCommentDetails' id='post{{ post.id }}'>Posted {{ post.time|timesince }} ago by <strong>
+            	<a href="{% url profile_detail post.author.username %}">{% firstof post.author.get_full_name post.author %}</a>
+            </strong></div>
         </div>
     </div>
 {% endfor %}

@@ -39,7 +39,7 @@
                       <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
                     </div>
                     <div>{{ project.created|date:_("DATETIME_FORMAT") }}</div>
-                    <div>by {{ project.author }}
+                    <div>by <a href="{% url profile_detail project.author.username %}">{{ project.author }}</a>
                     {% if project.difficulty %}
                     	for {{ project.get_difficulty }}
                     {% endif %}
