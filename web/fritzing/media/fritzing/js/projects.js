@@ -42,17 +42,38 @@ $(document).ready(function(){
      accept: 'gif|jpeg|jpg|png',
    });
 
-  $('#id_other_files_1').MultiFile({
-    list: '#other_files_selection',
+  $('#id_code').MultiFile({
+    list: '#code_selection',
     STRING: {
-      file: '<input type="text" name="id_other_files_0" /> $file',
       remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
     },
-    accept: 'gif|jpeg|jpg|png',
+    accept: 'txt|gif|jpeg|jpg|png',
     afterFileSelect: function(element, value, master_element){
-        $(".project_other_files input[name~=id_other_files_0]").example("Name");
+        $(".project_code input[name~=id_code]").example("Name");
     },
   });
+  
+  $('#id_examples').MultiFile({
+    list: '#examples_selection',
+    STRING: {
+      remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
+    },
+    accept: 'txt|gif|jpeg|jpg|png',
+    afterFileSelect: function(element, value, master_element){
+        $(".project_examples input[name~=id_examples]").example("Name");
+    },
+  });
+  
   $('#id_description').autogrow();
   $('#id_instructions').autogrow();
 });
+
+
+function file_deleted(field_name,value,index) {
+	$('#'+field_name+"_"+index).remove()
+	var input = $('<input type="hidden"></input>')
+		.attr('name','deleted_'+field_name)
+		.attr('value',value);
+
+	$('#my_form').append(input);
+}

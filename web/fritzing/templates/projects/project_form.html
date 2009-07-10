@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post" enctype="multipart/form-data" class="uniForm">
+    <form id="my_form" action="" method="post" enctype="multipart/form-data" class="uniForm">
     <table class="plain project">
     <tbody>
         <tr>
@@ -43,6 +43,7 @@
                 {% endif %}
                 <p>{{ form.title }}</p>
               </div>
+
               <div class="project_fritzing_files">
                 {% if form.fritzing_files.field.required %}
                   <label for="{{ form.fritzing_files.auto_id }}" class="required">
@@ -58,8 +59,23 @@
                   <span class="error">{{ form.fritzing_files.errors }}</span>
                 {% endif %}
                 <p>{{ form.fritzing_files }}</p>
-                <ul id="fritzing_files_selection" class="selection"></ul>
+                <ul id="fritzing_files_selection" class="selection">
+                {% for fritzing in fritzing_attachments %}
+                	<div class="MultiFile-label">
+                		<div id="fritzing_files_{{forloop.counter}}">
+							<a class="MultiFile-remove" href="#" onclick="file_deleted('fritzing_files','{{ fritzing.attachment.url }}','{{forloop.counter}}')">
+								<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>
+							</a>
+							<a href="{{ fritzing.attachment.url }}" target="_blank">
+								<span class="MultiFile-title" title="File selected: {{ fritzing.filename }}">{{ fritzing.filename }}</span>
+							</a>
+						</div>
+						<input type="hidden" name="prev_fritzing_files" value="{{ fritzing.attachment.url }}"/>
+					</div>
+                {% endfor %}
+                </ul>
               </div>
+
               <div class="main_image">
                   {% if form.main_image.field.required %}
                     <label for="{{ form.main_image.auto_id }}" class="required">
@@ -73,10 +89,25 @@
                   </span>
                   {% if form.main_image.errors %}
                     <span class="error">{{ form.main_image.errors }}</span>
-                  {% endif %}
+                  {% endif %}examples
                   <p>{{ form.main_image }}</p>
-                  <ul id="main_image_selection" class="selection"></ul>
+                  <ul id="main_image_selection" class="selection">
+                  {% if main_image %}
+                	<div class="MultiFile-label">
+                		<div id="main_image_1">
+							<a class="MultiFile-remove" href="#" onclick="file_deleted('main_image','{{ main_image.image.url }}','1')">
+								<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>
+							</a>
+							<a href="{{ main_image.image.url }}" target="_blank">
+								<span class="MultiFile-title" title="File selected: {{ main_image.filename }}">{{ main_image.filename }}</span>
+							</a>
+						</div
+						<input type="hidden" name="prev_main_image" value="{{ main_image.image.url }}"/>
+					</div>
+                {% endif %}
+                 </ul>
               </div>
+
               <div class="project_description">
                 {% if form.description.field.required %}
                   <label for="{{ form.description.auto_id }}" class="required">
@@ -93,6 +124,7 @@
                 {% endif %}
                 <p>{{ form.description }}</p>
               </div>
+
               <div class="project_instructions">
                 {% if form.instructions.field.required %}
                   <label for="{{ form.instructions.auto_id }}" class="required">
@@ -109,12 +141,34 @@
                 {% endif %}
                 <p>{{ form.instructions }}</p>
               </div>
+
+
               <p class="submit_line">
                 <a href="{% firstof request.META.HTTP_REFFERER ".." %}">Cancel</a>
                 <input type="submit" value="Submit">
               </p>
             </td>
+
+
+
             <td width="40%" class="right_col">
+              <div class="project_public">
+                {% if form.public.field.required %}
+                  <label for="{{ form.public.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.public.auto_id }}">
+                {% endif %}
+                  {{ form.public.label }}
+                  </label>
+                  {{ form.public }}
+                <span class="help">
+                  {{ form.public.help_text }}
+                </span>
+                {% if form.public.errors %}
+                  <span class="error">{{ form.public.errors }}</span>
+                {% endif %}
+              </div>
+              
               <div class="project_difficulty">
                 {% if form.difficulty.field.required %}
                   <label for="{{ form.difficulty.auto_id }}" class="required">
@@ -131,6 +185,7 @@
                 {% endif %}
                 <p>{{ form.difficulty }}</p>
               </div>
+              
               <div class="project_license">
                 {% if form.license.field.required %}
                   <label for="{{ form.license.auto_id }}" class="required">
@@ -147,6 +202,7 @@
                 {% endif %}
                 <p>{{ form.license }}</p>
               </div>
+              
               <div class="project_category">
                 {% if form.category.field.required %}
                   <label for="{{ form.category.auto_id }}" class="required">
@@ -180,6 +236,7 @@
                 {% endif %}
                 <p>{{ form.tags }}</p>
               </div>
+
               <div class="project_other_images">
                 {% if form.other_images.field.required %}
                   <label for="{{ form.other_images.auto_id }}" class="required">
@@ -195,25 +252,92 @@
                   <span class="error">{{ form.other_images.errors }}</span>
                 {% endif %}
                 <p>{{ form.other_images }}</p>
-                <ul id="other_images_selection" class="selection"></ul>
+                <ul id="other_images_selection" class="selection">
+                	{% for other_images in other_images_attachements %}
+	                	<div class="MultiFile-label">
+	                		<div id="other_images_{{forloop.counter}}">
+								<a class="MultiFile-remove" href="#" onclick="file_deleted('other_images','{{ other_images.image.url }}','{{forloop.counter}}')">
+									<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>
+								</a>
+								<a href="{{ other_images.image.url }}" target="_blank">
+									<span class="MultiFile-title" title="File selected: {{ other_images.filename }}">{{ other_images.filename }}</span>
+								</a>
+							</div>
+							<input type="hidden" name="prev_other_images" value="{{ other_images.image.url }}"/>
+						</div>
+	                {% endfor %}
+                </ul>
               </div>
-              <div class="project_other_files">
-                {% if form.other_files.field.required %}
-                  <label for="{{ form.other_files.auto_id }}" class="required">
+
+              <div class="project_code">
+                {% if form.code.field.required %}
+                  <label for="{{ form.code.auto_id }}" class="required">
                 {% else %}
-                  <label for="{{ form.other_files.auto_id }}">
+                  <label for="{{ form.code.auto_id }}">
                 {% endif %}
-                  {{ form.other_files.label }}
+                  {{ form.code.label }}
                 </label>
                 <span class="help">
-                  {{ form.other_files.help_text }}
+                  {{ form.code.help_text }}
                 </span>
-                {% if form.other_files.errors %}
-                  <span class="error">{{ form.other_files.errors }}</span>
+                {% if form.code.errors %}
+                  <span class="error">{{ form.code.errors }}</span>
                 {% endif %}
-                <p>{{ form.other_files }}</p>
-                <ul id="other_files_selection" class="selection"></ul>
+                <p>{{ form.code }}</p>
+                <ul id="code_selection" class="selection">
+	                {% for code in code_attachments %}
+	                	<div class="MultiFile-label">
+	                		<div id="code_{{forloop.counter}}">
+								<a class="MultiFile-remove" href="#" onclick="file_deleted('code','{{ code.attachment.url }}','{{forloop.counter}}')">
+									<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>
+								</a>
+								<a href="{{ code.attachment.url }}" target="_blank">
+									<span class="MultiFile-title" title="File selected: {{ code.filename }}">{{ code.filename }}</span>
+								</a>
+							</div>
+							<input type="hidden" name="prev_code" value="{{ code.attachment.url }}"/>
+						</div>
+	                {% endfor %}
+                </ul>
+                {% if code_attachments %}
+                    <script language="javascript">
+	                $("#code_selection").show()
+	                </script>
+	            {% endif %}
               </div>
+
+              <div class="project_examples">
+                {% if form.examples.field.required %}
+                  <label for="{{ form.examples.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.examples.auto_id }}">
+                {% endif %}
+                  {{ form.examples.label }}
+                </label>
+                <span class="help">
+                  {{ form.examples.help_text }}
+                </span>
+                {% if form.examples.errors %}
+                  <span class="error">{{ form.examples.errors }}</span>
+                {% endif %}
+                <p>{{ form.examples }}</p>
+                <ul id="examples_selection" class="selection">
+                	{% for examples in examples_attachments %}
+	                	<div class="MultiFile-label">
+	                		<div id="examples_{{forloop.counter}}">
+								<a class="MultiFile-remove" href="#" onclick="file_deleted('examples','{{ examples.attachment.url }}','{{forloop.counter}}')">
+									<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>
+								</a>
+								<a href="{{ examples.attachment.url }}" target="_blank">
+									<span class="MultiFile-title" title="File selected: {{ examples.filename }}">{{ examples.filename }}</span>
+								</a>
+							</div>
+							<input type="hidden" name="prev_examples" value="{{ examples.attachment.url }}"/>
+						</div>
+	                {% endfor %}
+                </ul>
+              </div>
+
               <div class="project_links">
                 {% if form.links.field.required %}
                   <label for="{{ form.links.auto_id }}" class="required">
@@ -222,9 +346,9 @@
                 {% endif %}
                   {{ form.links.label }}
                 </label>
-                <a href="javascript:;" id="add_link" style="border:none" title="Add another link">
+                <!--a href="javascript:;" id="add_link" style="border:none" title="Add another link">
                   <img src="/media/admin/img/admin/icon_addlink.gif" />
-                </a>
+                </a-->
                 <span class="help">
                   {{ form.links.help_text }}
                 </span>

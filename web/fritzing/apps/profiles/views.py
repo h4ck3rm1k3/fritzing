@@ -2,10 +2,10 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from forum.models import Post
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from forum.models import Post
 
 from fritzing.apps.profiles.models import Profile
 from fritzing.apps.profiles.forms import ProfileForm

@@ -170,6 +170,13 @@ class Image(ImageModel):
         if not self.pk and not self.title:
             self.title = self.image.name
         super(Image, self).save(force_insert, force_update)
+        
+    @property
+    def filename(self):
+        if self.image:
+            filename = os.path.split(self.image.name)
+            return filename[1]
+        return None
 
 class Attachment(models.Model):
     FRITZING_TYPE = 'fritzing'
