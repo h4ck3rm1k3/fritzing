@@ -1371,3 +1371,17 @@ void ItemBase::setEverVisible(bool v) {
 bool ItemBase::connectionIsAllowed(ConnectorItem *) {
 	return true;
 }
+
+void ItemBase::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
+	Q_UNUSED(prop);
+	Q_UNUSED(value);
+	Q_UNUSED(extraValues);
+	ignoreValues = false;
+}
+
+QString ItemBase::collectExtraInfoHtml(const QString & prop, const QString & value) {
+	Q_UNUSED(prop);
+	Q_UNUSED(value);
+	return ___emptyString___;
+}
+

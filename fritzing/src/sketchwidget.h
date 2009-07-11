@@ -411,6 +411,8 @@ public slots:
 	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void resizeBoard(qreal w, qreal h);
 	void resizeBoard(long id, qreal w, qreal h);
+	void setVoltage(qreal voltage);
+	void setVoltage(long itemID, qreal voltage);
 
 protected:
 	QPointer<PaletteModel> m_paletteModel;

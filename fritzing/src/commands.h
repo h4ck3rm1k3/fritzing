@@ -634,4 +634,21 @@ protected:
 	QString m_newColor;
 };
 
+class SetVoltageCommand : public BaseCommand
+{
+public:
+	SetVoltageCommand(class SketchWidget *, long itemID, qreal oldVoltage, qreal newVoltage, QUndoCommand * parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	qreal m_oldVoltage;
+	qreal m_newVoltage;
+	long m_itemID;
+};
+
+
 #endif // COMMANDS_H

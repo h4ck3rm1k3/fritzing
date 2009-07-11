@@ -72,6 +72,7 @@ $Date$
 
 #include "utils/autoclosemessagebox.h"
 #include "utils/fileprogressdialog.h"
+#include "items/resizableboard.h"
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
@@ -1674,7 +1675,7 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 		foreach (QString key, currPropsMap.keys()) {
 			if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 				QString value = currPropsMap.value(key).toString();
-				if (value.compare(ModelPart::customShapeTranslated) == 0) {
+				if (value.compare(ResizableBoard::customShapeTranslated) == 0) {
 					if (!loadCustomBoardShape()) {
 						ItemBase * itemBase = m_infoView->currentItem();
 						// restores the infoview size menu
@@ -1682,6 +1683,11 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 					}
 					return;
 				}
+			}
+			if (key.compare("voltage", Qt::CaseInsensitive) == 0) {
+				QString value = currPropsMap.value(key).toString();
+				m_currentGraphicsView->setVoltage(value.toDouble());
+				return;
 			}
 		}
 

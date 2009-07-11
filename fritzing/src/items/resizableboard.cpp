@@ -34,6 +34,8 @@ static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 4;
 
+QString ResizableBoard::customShapeTranslated;
+
 #define mm2mils(mm) (mm / 25.4 * 1000)
 #define pixels2mm(p) (p / FSvgRenderer::printerScale() * 25.4)
 
@@ -276,7 +278,8 @@ void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers
 void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	if (mmW == 0 || mmH == 0) {
 		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, true);
-		modelPart()->setSize(QSizeF(0,0));
+		modelPart()->setProp("height", QVariant());
+		modelPart()->setProp("width", QVariant());
 		// do the layerkin
 		positionGrips();
 		return;
@@ -294,7 +297,8 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
 		setSharedRenderer(m_renderer);
-		modelPart()->setSize(QSizeF(mmW, mmH));
+		modelPart()->setProp("width", mmW);
+		modelPart()->setProp("height", mmH);
 
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView) {
@@ -315,7 +319,8 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
 				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
-				itemBase->modelPart()->setSize(QSizeF(mmW, mmH));
+				itemBase->modelPart()->setProp("width", mmW);
+				itemBase->modelPart()->setProp("height", mmH);
 			}
 			break;
 		}
@@ -324,31 +329,34 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 
 void ResizableBoard::loadLayerKin( const LayerHash & viewLayers) {
 	PaletteItem::loadLayerKin(viewLayers);
-	if (m_modelPart->size().width() != 0) {
-		resizeMM(m_modelPart->size().width(), m_modelPart->size().height(), viewLayers);
+	qreal w = m_modelPart->prop("width").toDouble();
+	if (w != 0) {
+		resizeMM(w, m_modelPart->prop("height").toDouble(), viewLayers);
 	}
 }
 
 void ResizableBoard::setInitialSize() {
-	QSizeF sz = modelPart()->size();
-	if (sz.width() == 0) {
+	qreal w = m_modelPart->prop("width").toDouble();
+	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
-		sz = this->boundingRect().size();
-		modelPart()->setSize(QSizeF(pixels2mm(sz.width()), pixels2mm(sz.height()))); 
+		QSizeF sz = this->boundingRect().size();
+		modelPart()->setProp("width", pixels2mm(sz.width())); 
+		modelPart()->setProp("height", pixels2mm(sz.height())); 
 	}
 }
 
 QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
-	QSizeF sz = modelPart()->size();
-	if (sz.width() != 0) {
+	qreal w = m_modelPart->prop("width").toDouble();
+	if (w != 0) {
+		qreal h = m_modelPart->prop("height").toDouble();
 		QString xml;
 		switch (viewLayerID) {
 			case ViewLayer::Board:
-				xml = makeBoardSvg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
+				xml = makeBoardSvg(w, h, mm2mils(w), mm2mils(h));
 				break;
 			case ViewLayer::Silkscreen:
-				xml = makeSilkscreenSvg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
+				xml = makeSilkscreenSvg(w, h, mm2mils(w), mm2mils(h));
 				break;
 			default:
 				break;
@@ -398,9 +406,10 @@ void ResizableBoard::rotateItem(qreal degrees) {
 			QPointF c = r.center();
 			ViewGeometry vg;
 			vg.setLoc(QPointF(c.x() - (r.height() / 2.0), c.y() - (r.width() / 2.0)));	
-			QSizeF sz = modelPart()->size();
+			qreal w = m_modelPart->prop("width").toDouble();
+			qreal h = m_modelPart->prop("height").toDouble();
 			LayerHash viewLayers;
-			resizeMM(sz.height(), sz.width(), viewLayers);
+			resizeMM(w, h, viewLayers);
 			moveItem(vg);
 		}
 	}
@@ -408,3 +417,36 @@ void ResizableBoard::rotateItem(qreal degrees) {
 		PaletteItem::rotateItem(degrees);
 	}
 }
+
+void ResizableBoard::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
+	Q_UNUSED(value);
+	ignoreValues = false;
+
+	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
+		if (customShapeTranslated.isEmpty()) {
+			customShapeTranslated = tr("Import Shape...");
+		}
+		extraValues.append(customShapeTranslated);
+	}
+}
+
+QString ResizableBoard::collectExtraInfoHtml(const QString & prop, const QString & value) {
+	if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
+
+	if (value.compare(customShapeTranslated) == 0) {
+		return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
+	}
+	
+	if (!m_modelPart->prop("height").isValid()) return ___emptyString___;
+
+	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
+	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+	return QString("&nbsp;width(mm):<input type='text' name='boardwidth' id='boardwidth' maxlength='5' value='%1' style='width:35px' onblur='resizeBoardWidth()' onkeypress='resizeBoardWidthEnter(event)' />"
+				   "&nbsp;height(mm):<input type='text' name='boardheight' id='boardheight' maxlength='5' value='%2' style='width:35px' onblur='resizeBoardHeight()' onkeypress='resizeBoardHeightEnter(event)' />"
+				   "<script language='JavaScript'>lastGoodWidth=%1;lastGoodHeight=%2;</script>"
+				   ).arg(w).arg(h);
+
+
+	return ___emptyString___;
+}
+

@@ -50,6 +50,11 @@ public:
 	void setInitialSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	void rotateItem(qreal degrees);
+	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
+	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+
+public:
+	static QString customShapeTranslated;
 
 protected slots:
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);

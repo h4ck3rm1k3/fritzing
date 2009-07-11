@@ -163,10 +163,17 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 
 		qreal w = instance.attribute("width").toDouble(&ok);
 		if (ok) {
-			qreal h = instance.attribute("height").toDouble(&ok);
-			if (ok) {
-				modelPart->setSize(QSizeF(w, h));
-			}
+			modelPart->setProp("width", w);
+		}
+
+		qreal h = instance.attribute("height").toDouble(&ok);
+		if (ok) {
+			modelPart->setProp("height", h);
+		}
+
+		qreal v = instance.attribute("voltage").toDouble(&ok);
+		if (ok) {
+			modelPart->setProp("voltage", v);
 		}
 
    		instance = instance.nextSiblingElement("instance");

@@ -79,10 +79,10 @@ protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
 	QString appendWireStuff(Wire* wire, long itemID);
 	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
-	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
+	QString appendItemStuff(ItemBase * base, ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
 
 	void prepareTitleStuff(ItemBase *base, QString &title);
-	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml);
+	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml, bool ignoreValues);
 	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	QString wireColorsSelect(Wire *wire);
 	QString wireWidthSelect(Wire *wire);

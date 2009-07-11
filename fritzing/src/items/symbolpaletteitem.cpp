@@ -30,20 +30,48 @@ $Date: 2009-07-01 18:49:09 +0200 (Wed, 01 Jul 2009) $
 
 #include <QMultiHash>
 
-static QMultiHash<long, ConnectorItem *> SchemagicBus;
+#define VOLTAGE_HASH_CONVERSION 1000000
+#define FROMVOLTAGE(v) ((long) (v * VOLTAGE_HASH_CONVERSION))
+
+static QMultiHash<long, ConnectorItem *> SchemagicBus;			// Qt doesn't do Hash keys with qreal
+static QList<qreal> Voltages;
 
 SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_voltage = modelPart->properties().value("voltage").toDouble() * 100000;
+	if (Voltages.count() == 0) {
+		Voltages.append(0.0);
+		Voltages.append(3.3);
+		Voltages.append(5.0);
+		Voltages.append(12.0);
+	}
+
+	bool ok;
+	qreal temp = modelPart->prop("voltage").toDouble(&ok);
+	if (ok) {
+		m_voltage = temp;
+	}
+	else {
+		if (modelPart->properties().value("symbol").compare("ground") == 0) {
+			m_voltage = 0;
+		}
+		else {
+			m_voltage = 5;
+		}
+		modelPart->setProp("voltage", m_voltage);
+	}
 }
 
 SymbolPaletteItem::~SymbolPaletteItem() {
+	removeMeFromBus();
+}
+
+void SymbolPaletteItem::removeMeFromBus() {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		SchemagicBus.remove(m_voltage, connectorItem);
+		SchemagicBus.remove(FROMVOLTAGE(m_voltage), connectorItem);
 	}
 }
 
@@ -52,7 +80,7 @@ ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector)
 	ConnectorItem * connectorItem = PaletteItemBase::newConnectorItem(connector);
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return connectorItem;
 
-	SchemagicBus.insert(m_voltage, connectorItem);
+	SchemagicBus.insert(FROMVOLTAGE(m_voltage), connectorItem);
 	return connectorItem;
 }
 
@@ -61,9 +89,65 @@ void SymbolPaletteItem::busConnectorItems(class Bus * bus, QList<class Connector
 
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
-	QList<ConnectorItem *> mitems = SchemagicBus.values(m_voltage);
+	QList<ConnectorItem *> mitems = SchemagicBus.values(FROMVOLTAGE(m_voltage));
 	foreach (ConnectorItem * connectorItem, mitems) {
 		items.append(connectorItem);
 	}
 }
 
+qreal SymbolPaletteItem::voltage() {
+	return m_voltage;
+}
+
+void SymbolPaletteItem::setVoltage(qreal v) {
+	removeMeFromBus();
+
+	m_voltage = v;
+	m_modelPart->setProp("voltage", v);
+	if (!Voltages.contains(v)) {
+		Voltages.append(v);
+	}
+
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (connectorItem == NULL) continue;
+
+		SchemagicBus.insert(FROMVOLTAGE(m_voltage), connectorItem);
+	}
+}
+
+void SymbolPaletteItem::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
+	ignoreValues = false;
+
+	if (prop.compare("voltage", Qt::CaseInsensitive) == 0) {
+		ignoreValues = true;
+		value = QString::number(m_voltage);
+		foreach (qreal v, Voltages) {
+			extraValues.append(QString::number(v));
+		}
+	}
+}
+
+QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QString & value) {
+	Q_UNUSED(value);
+
+	if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
+
+	qreal v = qRound(m_voltage * 100) / 100.0;	// truncate to 2 decimal places
+	return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='5' value='%1' style='width:35px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"
+				   "<script language='JavaScript'>lastGoodVoltage=%1;</script>"
+				   ).arg(v);
+
+	return ___emptyString___;
+}
+
+bool SymbolPaletteItem::canChangeVoltage() {
+	foreach (ConnectorItem * connectorItem, SchemagicBus.values(FROMVOLTAGE(m_voltage))) {
+		if (connectorItem->attachedTo() != this && connectorItem->attachedToItemType() == ModelPart::Symbol) {
+			// at least for now, don't allow swapping if another symbol is hooked up
+			return false;
+		}
+	}
+
+	return true;
+}

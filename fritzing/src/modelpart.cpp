@@ -35,12 +35,10 @@ $Date$
 
 long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
-QString ModelPart::customShapeTranslated;
 
 ModelPart::ModelPart(ItemType type)
 	: QObject()
 {
-	m_size = QSizeF(0,0);
 	m_type = type;
 	m_modelPartShared = NULL;
 	m_index = m_nextIndex++;
@@ -53,7 +51,6 @@ ModelPart::ModelPart(ItemType type)
 ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)
 	: QObject()
 {
-	m_size = QSizeF(0,0);
 	m_type = type;
 	m_modelPartShared = new ModelPartShared(domDocument, path);
 	m_originalModelPartShared = true;
@@ -164,11 +161,8 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
 			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
 			streamWriter.writeAttribute("path", m_modelPartShared->path());
-			if (m_size.width() != 0) {
-				streamWriter.writeAttribute("width", QString::number(m_size.width()));
-			}
-			if (m_size.height() != 0) {
-				streamWriter.writeAttribute("height", QString::number(m_size.height()));
+			foreach (QByteArray byteArray, dynamicPropertyNames()) {
+				streamWriter.writeAttribute(byteArray.data(), property(byteArray.data()).toString());
 			}
 		}
 		QString title = instanceTitle();
@@ -528,71 +522,10 @@ void ModelPart::setOrderedChildren(QList<QObject*> children) {
 	m_orderedChildren = children;
 }
 
-void ModelPart::collectExtraValues(const QString & prop, QString & value, QStringList & extraValues) {
-	Q_UNUSED(value);
-
-	switch (itemType()) {
-		case ModelPart::ResizableBoard:
-			if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-				if (customShapeTranslated.isEmpty()) {
-					customShapeTranslated = tr("Import Shape...");
-				}
-				extraValues.append(customShapeTranslated);
-			}
-			break;
-
-		case ModelPart::Symbol:
-			break;
-
-		default:
-			break;
-	}
+void ModelPart::setProp(const char * name, const QVariant & value) {
+	setProperty(name, value);
 }
 
-QString ModelPart::collectExtraHtml(const QString & prop, const QString & value) {
-	switch (itemType()) {
-		case ModelPart::ResizableBoard:
-			if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
-
-			if (value.compare(customShapeTranslated) == 0) {
-				return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
-			}
-			
-			if (this->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
-				if (m_size.width() == 0) return ___emptyString___;
-
-				qreal w = qRound(m_size.width() * 10) / 10.0;	// truncate to 1 decimal point
-				qreal h = qRound(m_size.height() * 10) / 10.0;  // truncate to 1 decimal point
-				return QString("&nbsp;width(mm):<input type='text' name='boardwidth' id='boardwidth' maxlength='5' value='%1' style='width:35px' onblur='resizeBoardWidth()' onkeypress='resizeBoardWidthEnter(event)' />"
-							   "&nbsp;height(mm):<input type='text' name='boardheight' id='boardheight' maxlength='5' value='%2' style='width:35px' onblur='resizeBoardHeight()' onkeypress='resizeBoardHeightEnter(event)' />"
-							   "<script language='JavaScript'>lastGoodWidth=%1;lastGoodHeight=%2;</script>"
-							   ).arg(w).arg(h);
-			}
-
-			break;
-		case ModelPart::Symbol:
-			if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
-
-			{
-			qreal v = qRound(properties().value("voltage").toDouble() * 100) / 100.0;	// truncate to 2 decimal places
-			return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='5' value='%1' style='width:35px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"
-						   "<script language='JavaScript'>lastGoodVoltage=%1;</script>"
-						   ).arg(v);
-			}
-
-
-			break;
-		default:
-			return  ___emptyString___;
-	}
-
-	return ___emptyString___;
-}
-
-void ModelPart::setSize(QSizeF sz) {
-	m_size = sz;
-}
-
-QSizeF ModelPart::size() {
-	return m_size;
+QVariant ModelPart::prop(const char * name) const {
+	return property(name);
 }

@@ -40,9 +40,17 @@ public:
 
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
+	qreal voltage();
+	void setVoltage(qreal);
+	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
+	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	bool canChangeVoltage();
 
 protected:
-	long m_voltage;
+	void removeMeFromBus();
+
+protected:
+	qreal m_voltage;
 
 };
 

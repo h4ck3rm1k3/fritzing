@@ -1197,3 +1197,31 @@ QString SketchBackgroundColorChangeCommand::getParamString() const {
 			.arg(m_sketchWidget->viewIdentifier()).arg(m_oldColor).arg(m_newColor);
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SetVoltageCommand::SetVoltageCommand(SketchWidget * sketchWidget, long itemID, qreal oldVoltage, qreal newVoltage, QUndoCommand * parent)
+: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_itemID = itemID;
+	m_oldVoltage = oldVoltage;
+	m_newVoltage = newVoltage;
+}
+
+void SetVoltageCommand::undo() {
+	m_sketchWidget->setVoltage(m_itemID, m_oldVoltage);
+}
+
+void SetVoltageCommand::redo() {
+	m_sketchWidget->setVoltage(m_itemID, m_newVoltage);
+}
+
+QString SetVoltageCommand::getParamString() const {
+
+	return QString("SetVoltageCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 ov:%2 nv:%3")
+		.arg(m_itemID)
+		.arg(m_oldVoltage)
+		.arg(m_newVoltage);
+}

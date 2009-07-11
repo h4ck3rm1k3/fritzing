@@ -117,13 +117,8 @@ public:
 	void setInstanceText(QString);
 
 	void setOrderedChildren(QList<QObject*> children);
-	void collectExtraValues(const QString & prop, QString & value, QStringList & extraValues);
-	QString collectExtraHtml(const QString & prop, const QString & value);
-	QSizeF size();
-	void setSize(QSizeF);
-
-public:
-	static QString customShapeTranslated;
+	void setProp(const char * name, const QVariant & value);
+	QVariant prop(const char * name) const;
 
 public:
 	static long nextIndex();
@@ -162,8 +157,6 @@ protected:
 	QString m_instanceText;
 
 	QList<QObject*> m_orderedChildren;
-
-	QSizeF m_size;
 
 protected:
 	static QHash<ItemType, QString> itemTypeNames;

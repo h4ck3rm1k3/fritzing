@@ -265,8 +265,10 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
 			}
 			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
-			if (mp->itemType() == ModelPart::ResizableBoard && mp->size().width() != 0) {
-				new ResizeBoardCommand(this, newID, mp->size().width(), mp->size().height(), mp->size().width(), mp->size().height(), parentCommand);
+			if (mp->itemType() == ModelPart::ResizableBoard && mp->prop("width").isValid()) {
+				qreal w = mp->prop("width").toDouble();
+				qreal h = mp->prop("height").toDouble();
+				new ResizeBoardCommand(this, newID, w, h, w, h, parentCommand);
 			}
 
 			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
@@ -1598,7 +1600,9 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	// board's child items (at the moment) are the resize grips
 	m_resizingBoard = dynamic_cast<ResizableBoard *>(item->parentItem());
 	if (m_resizingBoard != NULL) {
-		m_resizingBoardSize = m_resizingBoard->modelPart()->size();
+		qreal w = m_resizingBoard->modelPart()->prop("width").toDouble();
+		qreal h = m_resizingBoard->modelPart()->prop("height").toDouble();
+		m_resizingBoardSize = QSizeF(w, h);
 		m_resizingBoardPos = m_resizingBoard->pos();
 		return;
 	}
@@ -2067,9 +2071,10 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	}
 
 	if (m_resizingBoard != NULL) {
-		QSizeF sz = m_resizingBoard->modelPart()->size();
-		QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(sz.width()).arg(sz.height()));
-		new ResizeBoardCommand(this, m_resizingBoard->id(), m_resizingBoardSize.width(), m_resizingBoardSize.height(), sz.width(), sz.height(), parentCommand);
+		qreal w = m_resizingBoard->modelPart()->prop("width").toDouble();
+		qreal h = m_resizingBoard->modelPart()->prop("height").toDouble();
+		QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(w).arg(h));
+		new ResizeBoardCommand(this, m_resizingBoard->id(), m_resizingBoardSize.width(), m_resizingBoardSize.height(), w, h, parentCommand);
 		if (m_resizingBoardPos != m_resizingBoard->pos()) {
 			m_resizingBoard->saveGeometry();
 			ViewGeometry vg1 = m_resizingBoard->getViewGeometry();
@@ -5362,6 +5367,45 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 	setLastPaletteItemSelected(paletteItem);
 }
 
+
+// called from javascript (htmlInfoView)
+void SketchWidget::setVoltage(qreal v)
+{
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	if (item->itemType() != ModelPart::Symbol) return;
+
+	SymbolPaletteItem * sitem = qobject_cast<SymbolPaletteItem *>(item);
+	if (sitem == NULL) return;
+
+	if (!sitem->canChangeVoltage()) {
+		QMessageBox::warning(this, QObject::tr("Fritzing"),
+							  QObject::tr("Unable to change the voltage of this part, because other ground/voltage symbols are connected."));
+
+		return;
+	}
+
+	SetVoltageCommand * cmd = new SetVoltageCommand(this, item->id(), sitem->voltage(), v, NULL);
+	cmd->setText(tr("Change voltage from %1 to %2").arg(sitem->voltage()).arg(v));
+	m_undoStack->push(cmd);
+
+	// TODO: save and load
+	// TODO: fix values in info view
+}
+
+void SketchWidget::setVoltage(long itemID, qreal voltage) {
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return;
+
+	SymbolPaletteItem * sitem = qobject_cast<SymbolPaletteItem *>(item);
+	if (sitem == NULL) return;
+
+	sitem->setVoltage(voltage);
+	viewItemInfo(item);
+}
+
+
 // called from javascript (htmlInfoView) or mainWindow::setUpSwap
 void SketchWidget::resizeBoard(qreal mmW, qreal mmH)
 {
@@ -5370,23 +5414,25 @@ void SketchWidget::resizeBoard(qreal mmW, qreal mmH)
 
 	if (item->itemType() != ModelPart::ResizableBoard) return;
 
-	QSizeF sz = item->modelPart()->size();
+	qreal origw = item->modelPart()->prop("width").toDouble();
+	qreal origh = item->modelPart()->prop("width").toDouble();
 
 	if (mmH == 0 || mmW == 0) {
 		dynamic_cast<ResizableBoard *>(item)->setInitialSize();
-		if (item->modelPart()->size() == sz) {
+		qreal w = item->modelPart()->prop("width").toDouble();
+		qreal h = item->modelPart()->prop("height").toDouble();
+		if (origw == w && origh == h) {
 			// no change
 			return;
 		}
 
 		viewItemInfo(item);
-		QSizeF newSize = item->modelPart()->size();
-		mmW = newSize.width();
-		mmH = newSize.height();
+		mmW = w;
+		mmH = h;
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(mmW).arg(mmH));
-	new ResizeBoardCommand(this, item->id(), sz.width(), sz.height(), mmW, mmH, parentCommand);
+	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), true, parentCommand);
 	m_undoStack->push(parentCommand);
 }

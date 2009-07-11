@@ -12,7 +12,8 @@
  </tags>
  <properties>
    <property name="family">symbol</property>
-   <property name="voltage">5.0</property>
+   <property name="symbol">power</property>
+   <property name="voltage"></property>
  </properties>
  <taxonomy>discreteParts.power.power.power</taxonomy>
  <description>A generic power symbol</description>

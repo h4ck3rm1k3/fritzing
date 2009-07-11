@@ -149,7 +149,7 @@ QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
 void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
 	m_currentSwappingEnabled = swappingEnabled;
 	QString s = "";
-	s += appendItemStuff(modelPart, 0, swappingEnabled, "", false);
+	s += appendItemStuff(NULL, modelPart, 0, swappingEnabled, "", false);
 	setContent(s);
 }
 
@@ -239,7 +239,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnab
 	QString title;
 	prepareTitleStuff(base, title);
 
-	QString retval = appendItemStuff(base->modelPart(), id, swappingEnabled, title, base->isPartLabelVisible());
+	QString retval = appendItemStuff(base, base->modelPart(), id, swappingEnabled, title, base->isPartLabelVisible());
 	return retval;
 }
 
@@ -333,7 +333,7 @@ void HtmlInfoView::prepareTitleStuff(ItemBase *base, QString &title) {
 }
 
 
-QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, const QString title, bool labelIsVisible) {
+QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, long id, bool swappingEnabled, const QString title, bool labelIsVisible) {
 	Q_UNUSED(labelIsVisible);
 
 	if (modelPart == NULL) return "missing modelpart";
@@ -409,8 +409,13 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		QString value = properties[ key ];
 		QString translatedName = TranslatedPropertyNames.value(key.toLower(), key);
 		QStringList extraValues;
-		modelPart->collectExtraValues(key, value, extraValues);
-		QString phtml = propertyHtml(key, value, family, translatedName, swappingEnabled, extraValues,  modelPart->collectExtraHtml(key, value));
+		QString extraHtml;
+		bool ignoreValues = false;
+		if (itemBase != NULL) {
+			itemBase->collectExtraInfoValues(key, value, extraValues, ignoreValues);
+			extraHtml = itemBase->collectExtraInfoHtml(key, value);
+		}
+		QString phtml = propertyHtml(key, value, family, translatedName, swappingEnabled, extraValues, extraHtml, ignoreValues);
 		//DebugDialog::debug(phtml);
 		s += phtml;
 		rowsLeft--;
@@ -474,8 +479,11 @@ QString HtmlInfoView::wireWidthSelect(Wire *wire) {
 	return retval;
 }
 
-QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, const QString & displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml) {
-	QStringList values = m_refModel->values(family,name);
+QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, const QString & displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml, bool ignoreValues) {
+	QStringList values;
+	if (!ignoreValues) {
+		values = m_refModel->values(family,name);
+	}
 
 	if(!dynamic || name.toLower() == "id" || name.toLower() == "family" || values.size() == 1) {
 		return QString("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n").arg(displayName).arg(value);

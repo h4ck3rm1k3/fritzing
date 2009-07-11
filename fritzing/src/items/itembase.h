@@ -171,6 +171,9 @@ public:
 	bool isEverVisible();
 	void setEverVisible(bool);
 	virtual bool connectionIsAllowed(ConnectorItem *);
+	virtual void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
+	virtual QString collectExtraInfoHtml(const QString & prop, const QString & value);
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
