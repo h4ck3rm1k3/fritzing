@@ -60,6 +60,9 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 		}
 		modelPart->setProp("voltage", m_voltage);
 	}
+	if (!Voltages.contains(m_voltage)) {
+		Voltages.append(m_voltage);
+	}
 }
 
 SymbolPaletteItem::~SymbolPaletteItem() {
