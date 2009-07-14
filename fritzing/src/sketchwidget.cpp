@@ -889,6 +889,11 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		return;
 	}
 
+	deleteAux(deletedItems, undoStackMessage);
+}
+
+void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackMessage) 
+{
 	QString string;
 
 	if (deletedItems.count() == 1) {
@@ -905,7 +910,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
     stackSelectionState(false, parentCommand);
 
 	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
-
 
 	foreach (ItemBase * itemBase, deletedItems) {
 		ConnectorPairHash * connectorHash = new ConnectorPairHash;
@@ -5605,4 +5609,43 @@ void SketchWidget::initBackgroundColor() {
 
 bool SketchWidget::includeSymbols() {
 	return false;
+}
+
+void SketchWidget::disconnectAll() {
+
+	// TODO: collect all wires from separate views
+
+	QList<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		itemBase = itemBase->layerKinChief();
+		if (itemBase == NULL) continue;
+
+		itemBases.append(itemBase);
+	}
+
+	QSet<ItemBase *> wires;
+	foreach (ItemBase * itemBase, itemBases) {
+		ConnectorItem * fromConnectorItem = itemBase->rightClickedConnector();
+		if (fromConnectorItem == NULL) continue;
+
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+				QList<Wire *> chained;
+				QList<ConnectorItem *> ends;
+				QList<ConnectorItem *> uniqueEnds;
+				wire->collectChained(chained, ends, uniqueEnds);
+				foreach (Wire * w, chained) {
+					wires.insert(w);
+				}
+			}
+		}
+	}
+
+	if (wires.count() <= 0) return;
+
+	deleteAux(wires, tr("Delete all wires from part connector"));
 }

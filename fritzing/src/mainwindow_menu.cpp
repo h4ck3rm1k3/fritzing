@@ -1080,6 +1080,10 @@ void MainWindow::createPartMenuActions() {
 	m_addToBinMenu = new QMenu(tr("&Add to bin..."), this);
 	m_addToBinMenu->setStatusTip(tr("Add selected part to bin"));
 
+	m_disconnectAllAct = new QAction(tr("Disconnect All Wires"), this);
+	m_disconnectAllAct->setStatusTip(tr("Disconnect all wires connected to this connector"));
+	connect(m_disconnectAllAct, SIGNAL(triggered()), this, SLOT(disconnectAll()));
+
 	// TODO PARTS EDITOR REMOVE
 	/*m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
 	connect(m_openInOldPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInOldPartsEditor()));*/
@@ -1312,6 +1316,8 @@ void MainWindow::createMenus()
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
     connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
+
+
 
 
 	m_exportMenu->addAction(m_exportPdfAct);
@@ -1637,6 +1643,8 @@ void MainWindow::updateItemMenu() {
 	// can't open wire in parts editor
 	enabled &= selected != NULL && selected->itemType() == ModelPart::Part;
 	m_openInPartsEditorAct->setEnabled(enabled);
+
+	m_disconnectAllAct->setEnabled(enabled && (itemBase->rightClickedConnector() != NULL));
 
 }
 
@@ -2792,8 +2800,6 @@ QMenu *MainWindow::breadboardItemMenu() {
 	menu->addAction(m_rotate90ccwAct);
 	menu->addAction(m_flipHorizontalAct);
 	menu->addAction(m_flipVerticalAct);
-	menu->addSeparator();
-	menu->addAction(m_addBendpointAct);
 	return viewItemMenuAux(menu);
 }
 
@@ -2893,6 +2899,10 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addAction(m_copyAct);
 	menu->addAction(m_duplicateAct);
 	menu->addAction(m_deleteAct);
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_disconnectAllAct);
+#endif
 	menu->addSeparator();
 	menu->addAction(m_openInPartsEditorAct);
 	menu->addMenu(m_addToBinMenu);
@@ -2999,3 +3009,8 @@ void MainWindow::loadedViewsSlot(ModelBase *, QDomElement & views) {
 		view = view.nextSiblingElement("view");
 	}
 }
+
+void MainWindow::disconnectAll() {
+	m_currentGraphicsView->disconnectAll();
+}
+

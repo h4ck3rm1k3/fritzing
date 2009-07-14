@@ -219,6 +219,7 @@ public:
 	virtual void setClipEnds(class ClipableWire *, bool);
 	void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
 	virtual bool includeSymbols();
+	void disconnectAll();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -259,6 +260,7 @@ protected:
 
 
 	void cutDeleteAux(QString undoStackMessage);
+	void deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackMessage);
 	void extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,
 									   bool connect, bool seekLayerKin, QUndoCommand * parent);

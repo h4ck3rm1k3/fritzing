@@ -187,6 +187,7 @@ protected slots:
 	void hideAllLayers();
 	void showInViewHelp();
 	void addBendpoint();
+	void disconnectAll();
 
 	// TODO PARTS EDITOR REMOVE
 	void openInOldPartsEditor();
@@ -464,6 +465,7 @@ protected:
 	QAction *m_showPartLabelAct;
 	QAction *m_loadBundledPart;
 	QAction *m_saveBundledPart;
+	QAction *m_disconnectAllAct;
 
 	QAction *m_addBendpointAct;
 

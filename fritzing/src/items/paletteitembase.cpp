@@ -364,6 +364,7 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 
 void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
 	if (lowerConnectorLayerVisible(this)) {
+		// TODO: I think this is obsolete
 		DebugDialog::debug("PaletteItemBase::contextMenuEvent isn't obsolete");
 		event->ignore();
 		return;

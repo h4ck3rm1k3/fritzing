@@ -173,6 +173,7 @@ public:
 	virtual bool connectionIsAllowed(ConnectorItem *);
 	virtual void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	virtual QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	ConnectorItem * rightClickedConnector();
 
 
 public:
@@ -272,6 +273,7 @@ protected:
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_everVisible;
+	ConnectorItem * m_rightClickedConnector;
 
 protected:
 	static long nextID;

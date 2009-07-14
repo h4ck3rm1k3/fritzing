@@ -153,6 +153,8 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 
 	m_everVisible = true;
 
+	m_rightClickedConnector = NULL;
+
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;
@@ -708,6 +710,7 @@ void ItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 void ItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+	m_rightClickedConnector = NULL;
 	// calling parent class so that multiple selection will work
 	// haven't yet discovered any nasty side-effect
 	GraphicsSvgLineItem::mouseReleaseEvent(event);
@@ -885,7 +888,19 @@ void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
     scene()->clearSelection();
     setSelected(true);
+
     if (m_itemMenu != NULL) {
+		m_rightClickedConnector = NULL;
+		foreach (QGraphicsItem * item, scene()->items(event->scenePos())) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (connectorItem == NULL) continue;
+
+			if (connectorItem->attachedTo() == this) {
+				m_rightClickedConnector = connectorItem;
+				break;
+			}
+		}
+
      	m_itemMenu->exec(event->screenPos());
 	}
 }
@@ -1385,3 +1400,6 @@ QString ItemBase::collectExtraInfoHtml(const QString & prop, const QString & val
 	return ___emptyString___;
 }
 
+ConnectorItem * ItemBase::rightClickedConnector() {
+	return m_rightClickedConnector;
+}
