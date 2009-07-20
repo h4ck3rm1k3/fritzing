@@ -47,7 +47,6 @@ $(document).ready(function(){
     STRING: {
       remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
     },
-    accept: 'txt|gif|jpeg|jpg|png',
     afterFileSelect: function(element, value, master_element){
         $(".project_code input[name~=id_code]").example("Name");
     },
@@ -58,7 +57,6 @@ $(document).ready(function(){
     STRING: {
       remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
     },
-    accept: 'txt|gif|jpeg|jpg|png',
     afterFileSelect: function(element, value, master_element){
         $(".project_examples input[name~=id_examples]").example("Name");
     },

@@ -64,15 +64,13 @@
  
 	    <div class="data_col col1">
 	    	<h3 style="margin-bottom:  10px;">{% trans "Projects" %}</h3>
-	    	{% comment %}
-			    {% if user.is_authenticated %}
-			        {% if is_me %}
-				    	<form action="{% url projects-create %}">
-							<input type="submit" value="{% trans "Create New Project..." %}"></input>
-						</form>
-			        {% endif %}
-			    {% endif %}
-		    {% endcomment %}
+		    {% if user.is_authenticated %}
+		        {% if is_me %}
+			    	<form action="{% url projects-create %}">
+						<input type="submit" value="{% trans "Create New Project..." %}"></input>
+					</form>
+		        {% endif %}
+		    {% endif %}
 		    
 		    {% if projects %}
 				<div class="plain project">

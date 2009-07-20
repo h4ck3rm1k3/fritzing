@@ -64,6 +64,16 @@ class ProjectForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm,self).__init__(*args, **kwargs)
+
+        if 'instance' in kwargs:
+            instance = kwargs['instance'] 
+            if instance.category:
+                self.fields['category'].initial = instance.category.id
+            #print instance.slug
+            #if instance.slug:
+                #self.fields['slug'].initial = instance.slug
+            
+        
         file_fields_aux = ['main_image','fritzing_files','code','examples','other_images']
         for ff in file_fields_aux:
             self._init_file_field(ff)
@@ -91,10 +101,6 @@ class ProjectForm(forms.ModelForm):
 
     fritzing_files = forms.FileField(required=False)
 
-    #category = ModelChoiceField(
-    #    required=False,
-    #    queryset=Category.objects.all())
-
     code = forms.FileField(required=False)
     examples = forms.FileField(required=False)
 
@@ -103,12 +109,14 @@ class ProjectForm(forms.ModelForm):
         #     'list': '#main_image_selection',
         #     'accept': 'gif|jpeg|jpg|png'}))
 
-    #links = ResourceField(
-    #    required=False,
-    #    label=_('External links'),
-    #    fields=(
-    #        forms.CharField(),
-    #        forms.URLField()))
+    links = ResourceField(
+        required=False,
+        label=_('External links'),
+        fields=(
+            forms.CharField(),
+            forms.URLField()))
+    
+    #slug = forms.CharField(widget=forms.HiddenInput)
     
     '''
     HELP FUNCTIONS TO DEAL WITH FILES
@@ -193,4 +201,5 @@ class ProjectForm(forms.ModelForm):
             'difficulty',
             'tags',
             'license',
+            'category',
         )

@@ -50,8 +50,11 @@ def _manage_save(request, form, project_id=None, edition=False):
         project = form.save(commit=False)
         project.author = request.user
         
-        if project_id: project.id = project_id
-        else: project.save()
+        if project_id:
+            project.id = project_id
+            project.slug = Project.objects.filter(id=project_id)[0].slug
+        
+        project.save()
 
         attachment_types = (
             ('fritzing_files', Attachment.FRITZING_TYPE),
@@ -133,7 +136,7 @@ def edit(request, project_id, form_class=ProjectForm):
     main_image_aux = Image.objects.filter(project__id=project_id, is_heading=True)
     main_image = main_image_aux[0] if main_image_aux.count() >= 1 else None;
     other_images_attachements = Image.objects.filter(project__id=project_id, is_heading=False)
-    #resources = Resource.objects.
+    #resources = Resource.objects.filter(project__id=project_id)
     
     return render_to_response("projects/project_form.html", {
         'form': form,
@@ -142,6 +145,7 @@ def edit(request, project_id, form_class=ProjectForm):
         'main_image': main_image,
         'examples_attachments': examples_attachments,
         'other_images_attachements': other_images_attachements,
+        #'resources': resources
         
     }, context_instance=RequestContext(request))
 

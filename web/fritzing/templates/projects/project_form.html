@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block teaser %}
-    Lalala traalala
+    
 {% endblock %}
 
 {% block extra_head %}
@@ -89,7 +89,7 @@
                   </span>
                   {% if form.main_image.errors %}
                     <span class="error">{{ form.main_image.errors }}</span>
-                  {% endif %}examples
+                  {% endif %}
                   <p>{{ form.main_image }}</p>
                   <ul id="main_image_selection" class="selection">
                   {% if main_image %}
@@ -152,7 +152,6 @@
 
 
             <td width="40%" class="right_col">
-              {% comment %}
               <div class="project_public">
                 {% if form.public.field.required %}
                   <label for="{{ form.public.auto_id }}" class="required">
@@ -169,7 +168,6 @@
                   <span class="error">{{ form.public.errors }}</span>
                 {% endif %}
               </div>
-              {% endcomment %}
               
               <div class="project_difficulty">
                 {% if form.difficulty.field.required %}
@@ -348,9 +346,9 @@
                 {% endif %}
                   {{ form.links.label }}
                 </label>
-                <!--a href="javascript:;" id="add_link" style="border:none" title="Add another link">
+                <a href="javascript:;" id="add_link" style="border:none" title="Add another link">
                   <img src="/media/admin/img/admin/icon_addlink.gif" />
-                </a-->
+                </a>
                 <span class="help">
                   {{ form.links.help_text }}
                 </span>
