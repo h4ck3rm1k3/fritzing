@@ -168,8 +168,7 @@ class ProjectForm(forms.ModelForm):
         deleted_values = self.file_fields[field_name]['deleted_values']
         prev_values = self.file_fields[field_name]['prev_values']
         
-        if self._something_changed(new_values, deleted_values) \
-            and self._all_removed(prev_values, deleted_values) \
+        if self._all_removed(prev_values, deleted_values) \
             and not self._something_added(new_values) \
             and required:
                 raise ValidationError(self.fields[field_name].error_messages['required'])

@@ -45,11 +45,7 @@
               </div>
 
               <div class="project_fritzing_files">
-                {% if form.fritzing_files.field.required %}
                   <label for="{{ form.fritzing_files.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.fritzing_files.auto_id }}">
-                {% endif %}
                   {{ form.fritzing_files.label }}
                 </label>
                 <span class="help">
@@ -77,11 +73,7 @@
               </div>
 
               <div class="main_image">
-                  {% if form.main_image.field.required %}
                     <label for="{{ form.main_image.auto_id }}" class="required">
-                  {% else %}
-                    <label for="{{ form.main_image.auto_id }}">
-                  {% endif %}
                     {{ form.main_image.label }}
                   </label>
                   <span class="help">
