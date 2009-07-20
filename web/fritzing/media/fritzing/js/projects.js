@@ -64,6 +64,12 @@ $(document).ready(function(){
   
   $('#id_description').autogrow();
   $('#id_instructions').autogrow();
+  
+  try {
+	  if(main_image_already_loaded) {
+		  $('#id_main_image').attr('disabled', 'disabled')
+	  }
+  } catch(e) {}
 });
 
 

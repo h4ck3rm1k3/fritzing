@@ -88,7 +88,7 @@
                 	<div class="MultiFile-label">
                 		<div id="main_image_1">
 							<a class="MultiFile-remove" href="#" onclick="file_deleted('main_image','{{ main_image.image.url }}','1')">
-								<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>
+								<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X" onclick="$('#id_main_image').removeAttr('disabled')" />
 							</a>
 							<a href="{{ main_image.image.url }}" target="_blank">
 								<span class="MultiFile-title" title="File selected: {{ main_image.filename }}">{{ main_image.filename }}</span>
@@ -96,6 +96,9 @@
 						</div
 						<input type="hidden" name="prev_main_image" value="{{ main_image.image.url }}"/>
 					</div>
+					<script language="javascript">
+						main_image_already_loaded=true
+					</script>
                 {% endif %}
                  </ul>
               </div>

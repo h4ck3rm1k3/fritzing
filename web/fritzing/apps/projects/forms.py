@@ -116,8 +116,6 @@ class ProjectForm(forms.ModelForm):
             forms.CharField(),
             forms.URLField()))
     
-    #slug = forms.CharField(widget=forms.HiddenInput)
-    
     '''
     HELP FUNCTIONS TO DEAL WITH FILES
     '''
