@@ -1,11 +1,12 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from projects.models import Project, Resource, Image, Attachment, Category
+from fritzing.apps.projects.models import Project, Resource, Image, Attachment, Category
 from markitup.widgets import MarkItUpWidget
 from template_utils.markup import formatter
-from django.forms.widgets import TextInput, MultiWidget, HiddenInput, FileInput
-from django.forms.models import ModelChoiceField
+from django.forms.widgets import TextInput, HiddenInput, FileInput
 from django.forms.util import ValidationError
+from django.forms.fields import URLField
+import re, urlparse
 
 RESOURCE_DELIMITER = '########'
 
@@ -21,6 +22,13 @@ class ResourceMultiWidget(forms.MultiWidget):
 
 class ResourceField(forms.MultiValueField):
     widget=ResourceMultiWidget
+    
+    def __init__(self, *args, **kwargs):
+        fields = (
+            forms.CharField(),
+            forms.URLField(),
+        )
+        super(ResourceField, self).__init__(fields, *args, **kwargs)
 
     def compress(self, data_list):
         if data_list:
@@ -64,19 +72,23 @@ class ProjectForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm,self).__init__(*args, **kwargs)
-
+        
+        if args and u'links_title' in args[0].keys():
+            self.resources_title = args[0].getlist('links_title')
+            
+        if args and u'links_url' in args[0].keys():
+            self.resources_url = args[0].getlist('links_url')
+        
         if 'instance' in kwargs:
             instance = kwargs['instance'] 
             if instance.category:
                 self.fields['category'].initial = instance.category.id
-            #print instance.slug
-            #if instance.slug:
-                #self.fields['slug'].initial = instance.slug
-            
+                
         
         file_fields_aux = ['main_image','fritzing_files','code','examples','other_images']
         for ff in file_fields_aux:
             self._init_file_field(ff)
+
     
     file_fields = {}
         
@@ -108,14 +120,16 @@ class ProjectForm(forms.ModelForm):
         # widget=MultiFileInput({
         #     'list': '#main_image_selection',
         #     'accept': 'gif|jpeg|jpg|png'}))
-
-    links = ResourceField(
+        
+    resource = ResourceField(
         required=False,
-        label=_('External links'),
-        fields=(
-            forms.CharField(),
-            forms.URLField()))
+        label=_('External links')
+    )
     
+    resources_title = []
+    resources_url = []
+    
+        
     '''
     HELP FUNCTIONS TO DEAL WITH FILES
     '''
@@ -187,7 +201,43 @@ class ProjectForm(forms.ModelForm):
         return self._clean_file_aux('examples')
 
     def clean_other_images(self):
-        return self._clean_file_aux('other_images')    
+        return self._clean_file_aux('other_images')
+
+    
+    def clean_resource(self):
+        indexes_to_remove = []
+        
+        print self.resources_title
+        
+        # if the whole field was not binded, just remove it from the data to validate
+        for i in range(len(self.resources_url)):
+            if self.resources_url[i].strip() == u'':
+                if self.resources_title[i].strip() != u'':
+                    raise ValidationError(_('If the title is defined, the url must be defined as well'))
+                else:
+                    indexes_to_remove.append(i)
+                
+        for i in indexes_to_remove:
+            del self.resources_title[i]
+            del self.resources_url[i]
+        
+        # now, let's validate the urls
+        final_urls = []
+        for url in self.resources_url:            
+            #url = URLField(required=True,verify_exists=True).clean(url)
+            final_urls.append(URLField().clean(url))        
+        
+        # if a title was not provided, but its url was, populate it whit the same value as the url
+        final_titles = []
+        idx = 0
+        for title in self.resources_title:
+            final_titles.append(final_urls[idx] if title.strip() == u'' else title)
+            idx=idx+1
+        
+        self.resources =  [(final_titles[i],final_urls[i]) for i in range(len(final_titles))]
+        print self.resources
+        
+        return ''
 
     class Meta:
         model = Project

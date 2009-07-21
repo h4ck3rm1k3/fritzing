@@ -334,23 +334,35 @@
               </div>
 
               <div class="project_links">
-                {% if form.links.field.required %}
-                  <label for="{{ form.links.auto_id }}" class="required">
+                {% if form.resource.field.required %}
+                  <label for="{{ form.resources.auto_id }}" class="required">
                 {% else %}
-                  <label for="{{ form.links.auto_id }}">
+                  <label for="{{ form.resources.auto_id }}">
                 {% endif %}
-                  {{ form.links.label }}
+                  {{ form.resource.label }}
                 </label>
                 <a href="javascript:;" id="add_link" style="border:none" title="Add another link">
                   <img src="/media/admin/img/admin/icon_addlink.gif" />
                 </a>
                 <span class="help">
-                  {{ form.links.help_text }}
+                  {{ form.resource.help_text }}
                 </span>
-                {% if form.links.errors %}
-                  <span class="error">{{ form.links.errors }}</span>
+                {% if form.resource.errors %}
+                  <span class="error">{{ form.resource.errors }}</span>
                 {% endif %}
-                <p>{{ form.links }}</p>
+
+                {% if resources %}
+					{% for r in resources %}						
+		                <p>
+		                	<input type="text" id="id_links_title_{{forloop.counter0}}" name='links_title' value="{{ r.title }}"/>
+		                	<input type="text" id="id_links_url_{{forloop.counter0}}" name='links_url' value="{{ r.url }}"/>
+		                	<img id="links_deleter_{{forloop.counter0}}" width="10" height="10"
+		                		alt="X" src="/media/admin/img/admin/icon_deletelink.gif"/>
+		                </p>
+		            {% endfor %}
+		        {% else %}
+		        	<p>{{ form.resources }}</p>
+		        {% endif %}
               </div>
             </td>
         </tr>

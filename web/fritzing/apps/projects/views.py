@@ -1,4 +1,5 @@
 from django.forms.util import ValidationError
+from apps.projects.forms import ResourceField
 import datetime
 from django.views.generic.list_detail import object_detail, object_list
 from django.conf import settings
@@ -9,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404, get_list_or_404
 
-from fritzing.apps.projects.models import Project, Category, Image, Attachment
-from fritzing.apps.projects.forms import ProjectForm, RESOURCE_DELIMITER
+from fritzing.apps.projects.models import Project, Resource, Category, Image, Attachment
+from fritzing.apps.projects.forms import ProjectForm, ResourceField, RESOURCE_DELIMITER
 
 def overview(request,username=None):
     if username:
@@ -94,8 +95,14 @@ def _manage_save(request, form, project_id=None, edition=False):
             oim.image.save(oimage.name, oimage)
             oim.save()
 
-        for resource in request.POST.getlist('resources'):
-            title, url = resource.split(RESOURCE_DELIMITER)
+        project.resources = []
+        
+
+        for resource in Resource.objects.filter(project__id=project_id):
+            resource.delete()
+        
+        for resource in form.resources:
+            title, url = resource
             Resource.objects.create(title=title, url=url, project=project)
             
         if edition:
@@ -136,7 +143,7 @@ def edit(request, project_id, form_class=ProjectForm):
     main_image_aux = Image.objects.filter(project__id=project_id, is_heading=True)
     main_image = main_image_aux[0] if main_image_aux.count() >= 1 else None;
     other_images_attachements = Image.objects.filter(project__id=project_id, is_heading=False)
-    #resources = Resource.objects.filter(project__id=project_id)
+    resources = list(Resource.objects.filter(project__id=project_id))
     
     return render_to_response("projects/project_form.html", {
         'form': form,
@@ -145,8 +152,7 @@ def edit(request, project_id, form_class=ProjectForm):
         'main_image': main_image,
         'examples_attachments': examples_attachments,
         'other_images_attachements': other_images_attachements,
-        #'resources': resources
-        
+        'resources': resources,
     }, context_instance=RequestContext(request))
 
 def detail(request, slug):

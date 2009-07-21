@@ -1,28 +1,42 @@
-$(document).ready(function(){
-  $(".project_links input[name~=links_0]").example("Name");
-  $(".project_links input[name~=links_1]").example("URL");
+$(document).ready(function(){  
+  field_count = $(".project_links p input[type~=text]").length/2;
+  
+  if(field_count > 0) {
+	for(i=0;i<field_count;i++){
+	  $("#links_deleter_" + i).click(function() {
+        $(this).parent().remove()
+      });
+    }
+  } else {
+	$("#id_links_title_0").example("Name");
+	$("#id_links_title_0").example("URL");
+  }
+  
   $("#add_link").click(function() {
     new_link = '<p>'
-      + '<input type="text" name="links_0" id="id_links_%name%" />'
-      + '<input type="text" name="links_1" id="id_links_%url%" />'
+      + '<input type="text" name="links_title" id="id_links_title_%name%" />'
+      + '<input type="text" name="links_url" id="id_links_url_%url%" />'
       + '<img id="links_deleter_%count%" src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
       + '</p>';
-    field_count = $(".project_links"
-      ).children().filter("p").children().filter("input").length
-    link_name_count = field_count+1;
-    new_link = new_link.replace(/%name%/g, link_name_count);
-    link_url_count = field_count+2;
-    new_link = new_link.replace(/%url%/g, link_url_count);
+    field_count = $(".project_links p input[type~=text]").length/2;
+    
+    new_link = new_link.replace(/%name%/g, field_count);
+    new_link = new_link.replace(/%url%/g, field_count);
     new_link = new_link.replace(/%count%/g, field_count);
+    
     $(".project_links").append(new_link);
+    
     $("#links_deleter_" + field_count).click(function() {
       $(this).parent().remove()
     });
-    $("#id_links_" + link_name_count).example("Name");
-    $("#id_links_" + link_url_count).example("URL");
+    
+    $("#id_links_title_" + field_count).example("Name");
+    $("#id_links_url_" + field_count).example("URL");
   });
+  
   $('#id_fritzing_files').MultiFile({ 
     list: '#fritzing_files_selection',
+    accept: 'fz|fzz|fzp|fzpz|fzb|fzbz',
     STRING: {
        remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
       }
@@ -33,13 +47,14 @@ $(document).ready(function(){
     STRING: {
        remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
       }
+  	accept: 'gif|jpeg|jpg|png|tiff|tif',
    });
    $('#id_other_images').MultiFile({
      list: '#other_images_selection',
      STRING: {
        remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
      },
-     accept: 'gif|jpeg|jpg|png',
+     accept: 'gif|jpeg|jpg|png|tiff|tif',
    });
 
   $('#id_code').MultiFile({
