@@ -44,7 +44,6 @@
                 {% endfor %}
                 </div>
                 {% if  project.instructions_html %}
-                    <h2>&nbsp;<!--Instructions--></h2>
                     <div class="project detail instructions">
                         {{ project.instructions_html|safe }}
                     </div>
@@ -65,7 +64,7 @@
                     <p><strong>Difficulty:</strong> {{ project.get_difficulty }}</p>
                 {% endif %}
                 {% if project.license %}
-                    <p><strong>License:</strong> {{ license|safe }}</p>
+                    <p><strong>License:</strong>&nbsp; {{ license|safe }}</p>
                 {% endif %}
                 {% if project.members.count %}
                     <p><strong>Members:</strong> {% for member in members %}{{ member }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>

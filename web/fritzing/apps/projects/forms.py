@@ -6,6 +6,7 @@ from template_utils.markup import formatter
 from django.forms.widgets import TextInput, HiddenInput, FileInput, Textarea
 from django.forms.util import ValidationError
 from django.forms.fields import URLField
+from licenses.models import License
 import re, urlparse
 
 RESOURCE_DELIMITER = '########'
@@ -58,6 +59,12 @@ class MultiFileInput(FileInput):
         extra_attrs = {'class': 'multi'}
         extra_attrs.update(attrs)
         return super(MultiFileInput, self).render(name, None, attrs=extra_attrs)
+    
+def _get_default_license():
+    shareAlike = License.objects.filter(is_active=True,abbreviation='CC-BY-SA')
+    if(shareAlike.count() > 0):
+        return shareAlike[0].id
+    else: return 0
 
 class ProjectForm(forms.ModelForm):
     def _init_file_field(self, field_name):
@@ -151,6 +158,24 @@ class ProjectForm(forms.ModelForm):
     
     resources_title = []
     resources_url = []
+    
+    license = forms.ModelChoiceField(
+        empty_label=None,
+        initial=_get_default_license(),
+        queryset=License.objects.filter(is_active=True),
+        help_text=_("""
+Pick a license for your documentation
+(<a target="_blank" href="http://creativecommons.org/licenses/">More about CC licenses</a>)<br/>
+<ul>
+    <li><a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/">
+    Creative Commons Attribution Share-Alike (default)
+    </a></li>
+    <li><a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+    Creative Commons Attribution Non-Commercial Share-Alike
+    </a></li>
+</ul> 
+        """)
+    )
     
         
     '''

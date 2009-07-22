@@ -72,7 +72,6 @@ ul.selection {
 }
 
 #id_description {
-    min-height: 100px;
     line-height: 16px;
 }
 #id_instructions {

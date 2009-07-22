@@ -94,21 +94,7 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
         help_text=_('Select a category that fits your project'),
         blank=True, null=True)
     tags = TagField(help_text=_('Add a couple of comma-separated tags'))
-    license = LicenseField(
-        related_name='projects',
-        help_text=_("""
-Pick a license for your documentation
-(<a target="_blank" href="http://creativecommons.org/licenses/">More about CC licenses</a>)<br/>
-<ul>
-    <li><a target="_blank" href="http://creativecommons.org/licenses/">
-    Creative Commons Attribution Share-Alike (default)
-    </a></li>
-    <li><a target="_blank" href="http://creativecommons.org/licenses/">
-    Creative Commons Attribution Non-Commercial Share-Alike
-    </a></li>
-</ul> 
-        """)
-        )
+    license = LicenseField(related_name='projects')
 
     # admin stuff
     public = models.BooleanField(_('public'), default=True,
