@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from fritzing.apps.projects.models import Project, Resource, Image, Attachment, Category
 from markitup.widgets import MarkItUpWidget
 from template_utils.markup import formatter
-from django.forms.widgets import TextInput, HiddenInput, FileInput
+from django.forms.widgets import TextInput, HiddenInput, FileInput, Textarea
 from django.forms.util import ValidationError
 from django.forms.fields import URLField
 import re, urlparse
@@ -98,25 +98,35 @@ class ProjectForm(forms.ModelForm):
 
     description = forms.CharField(
         label=_('Description'),
-        widget=MarkItUpWidget(
-            attrs={'rows': '4'},
-            markitup_set='projects/sets/projects'))
+        widget=Textarea(attrs={'rows': '3'})
+    )
 
     instructions = forms.CharField(
-        label=_('Instructions'),
+        label=_('Body'),
         widget=MarkItUpWidget(
             markitup_set='projects/sets/projects'))
 
-    main_image = forms.ImageField(required=False)
-        # widget=MultiFileInput({
-        #     'maxlength': '1'}))
+    main_image = forms.ImageField(
+        required=False,
+        label=_('Head Image'),
+        widget=forms.FileInput(attrs={'size':'35'})
+    )
 
-    fritzing_files = forms.FileField(required=False)
+    fritzing_files = forms.FileField(
+        required=False,
+        widget=forms.FileInput(attrs={'size':'35'})
+    )
 
     code = forms.FileField(required=False)
-    examples = forms.FileField(required=False)
+    examples = forms.FileField(
+        label=_('Other Files'),
+        required=False
+    )
 
-    other_images = forms.ImageField(required=False)
+    other_images = forms.ImageField(
+        required=False,
+        label=_('Image Gallery')
+    )
         # widget=MultiFileInput({
         #     'list': '#main_image_selection',
         #     'accept': 'gif|jpeg|jpg|png'}))

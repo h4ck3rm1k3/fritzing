@@ -46,7 +46,7 @@ $(document).ready(function(){
     max: 1,
     STRING: {
        remove: '<img src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
-      }
+    },
   	accept: 'gif|jpeg|jpg|png|tiff|tif',
    });
    $('#id_other_images').MultiFile({

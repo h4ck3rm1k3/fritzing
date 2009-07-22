@@ -27,6 +27,9 @@
     <tbody>
         <tr>
             <td width="60%">
+            	<div class="project detail description">
+                    {{ project.description_html|safe }}
+                </div>
                 <div class="project detail header">
                 {% for image in project.main_images %}
                 <p>
@@ -39,11 +42,8 @@
                 <div class="project detail date">
                     Created at {{ project.created|date:"F j, Y, H:i" }}
                 </div>
-                <div class="project detail description">
-                    {{ project.description_html|safe }}
-                </div>
                 {% if  project.instructions_html %}
-                    <h2>Instructions</h2>
+                    <h2>&nbsp;<!--Instructions--></h2>
                     <div class="project detail instructions">
                         {{ project.instructions_html|safe }}
                     </div>
@@ -70,6 +70,11 @@
                 {% if project.sidebar_images.count %}
                 <h2>Images</h2>
                 <div class="project detail side_images">
+                	{% for image in project.main_images %}
+                	<a href="{{ image.image.url }}" rel="lightbox">
+                        <img src="{{ image.sidebar.url }}" alt="{{ image.title }}" width="{{ image.sidebar.width }}" height="{{ image.sidebar.height }}"/>
+                    </a>
+                	{% endfor %}
                     {% for image in project.sidebar_images %}
                     <a href="{{ image.image.url }}" rel="lightbox">
                         <img src="{{ image.sidebar.url }}" alt="{{ image.title }}" width="{{ image.sidebar.width }}" height="{{ image.sidebar.height }}"/>
