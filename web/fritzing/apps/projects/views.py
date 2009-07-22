@@ -132,6 +132,7 @@ def edit(request, project_id, form_class=ProjectForm):
     if request.method == 'POST':
         form = form_class(request.POST, request.FILES)
         project = _manage_save(request, form, project_id, edition=True)
+        print project
         if project: return HttpResponseRedirect(project.get_absolute_url())
     else:
         project = Project.objects.get(id=project_id)

@@ -6,11 +6,18 @@
 {% endblock %}
 
 {% block page_title %}
-    {{ project.title }}
+	<div>{{ project.title }}</div>
+    {% if user.is_authenticated %}
+		{% if is_me %}
+			<div class="edit">
+				<a href='{% url projects-edit project.id %}'>{% trans "Edit project" %}...</a>
+			</div>
+		{% endif %}
+	{% endif %}
 {% endblock %}
 
 {% block teaser %}
-    by {% firstof project.author.get_fullname project.author.username %}
+	{{ project.description }}
 {% endblock %}
 
 {% block extra_head %}
@@ -23,13 +30,10 @@
 {% endblock %}
 
 {% block content %}
-    <table class="plain project">
+    <table class="plain project" style="clear:both;">
     <tbody>
         <tr>
             <td width="60%">
-            	<div class="project detail description">
-                    {{ project.description_html|safe }}
-                </div>
                 <div class="project detail header">
                 {% for image in project.main_images %}
                 <p>
@@ -39,9 +43,6 @@
                 </p>
                 {% endfor %}
                 </div>
-                <div class="project detail date">
-                    Created at {{ project.created|date:"F j, Y, H:i" }}
-                </div>
                 {% if  project.instructions_html %}
                     <h2>&nbsp;<!--Instructions--></h2>
                     <div class="project detail instructions">
@@ -49,7 +50,13 @@
                     </div>
                 {% endif %}
             </td>
-            <td width="40%" class="right_col">
+            <td width="40%" class="right_col">				
+             	<div class="project detail date">
+			 		By <a href="{% url profile_detail project.author.username %}">{% firstof project.author.get_fullname project.author.username %}</a>
+			 		<br/>
+			    	Created at {{ project.created|date:"F j, Y, H:i" }}
+				</div>
+                
                 <div class="project detail meta">
                 {% if project.category %}
                     <p><strong>Category:</strong> {{ project.category }}</p>
@@ -83,32 +90,50 @@
                 </div>
                 {% endif %}
                 {% if project.attachments.count %}
-                <h2>Files</h2>
+                <h2>{% trans "Files" %}</h2>
                 <div class="project detail attachement">
-                    {% for attachment in project.attachments.all %}
+                	<h3>{% trans "Fritzing Files" %}</h3>
+                    {% for attachment in project.get_fritzing_attachments %}
                     <div class="project detail attachement table {% cycle "grey" "" %}">
                         <a href="{{ attachment.attachment.url }}">
                         {% firstof attachment.filename attachment.title %}
                         </a>
                     </div>
                     {% endfor %}
+                    
+                    {% if project.get_code_attachments %}
+	                    <h3>{% trans "Code Files" %}</h3>
+	                    {% for attachment in project.get_code_attachments %}
+	                    <div class="project detail attachement table {% cycle "grey" "" %}">
+	                        <a href="{{ attachment.attachment.url }}">
+	                        {% firstof attachment.filename attachment.title %}
+	                        </a>
+	                    </div>
+	                    {% endfor %}
+	                {% endif %}
+                    
+                    {% if project.get_example_attachments %}
+	                    <h3>{% trans "Other Files" %}</h3>
+	                    {% for attachment in project.get_example_attachments %}
+	                    <div class="project detail attachement table {% cycle "grey" "" %}">
+	                        <a href="{{ attachment.attachment.url }}">
+	                        {% firstof attachment.filename attachment.title %}
+	                        </a>
+	                    </div>
+	                    {% endfor %}
+	                 {% endif %}
                 </div>
                 {% endif %}
                 {% if project.resources.count %}
                 <h2>Links</h2>
                 <div class="project detail link">
                     {% for resource in project.resources.all %}
-                      <a href="{{ resource.url }}">{{ resource.title }}</a>
+						<div class="project detail attachement table {% cycle "grey" "" %}">
+	                        <a href="{{ resource.url }}">{{ resource.title }}</a>
+	                    </div>                      
                     {% endfor %}
                 </div>
                 {% endif %}
-                
-                {% if user.is_authenticated %}
-			        {% if is_me %}
-			        	<br/><br/>
-						<a href='{% url projects-edit project.id %}'>{% trans "Edit project" %}</a>
-					{% endif %}
-	    		 {% endif %}
             </td>
         </tr>
     </tbody>

@@ -14,7 +14,6 @@ from vcstorage.fields import VcFileField
 from vcstorage.storage import MercurialStorage
 import mptt
 
-
 class Category(TitleSlugDescriptionModel):
     description_html = models.TextField(editable=False, blank=True, null=True)
     parent = models.ForeignKey('self', null=True, blank=True,
@@ -86,14 +85,30 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
 
     # flags
     difficulty = models.IntegerField(_('difficulty'),
+        help_text=_('How difficult it is to build this project'),
         choices=DIFFICULTIES, blank=True, null=True)
 
     # categorization
     category = models.ForeignKey(
         Category, verbose_name=_('category'), related_name='projects',
+        help_text=_('Select a category that fits your project'),
         blank=True, null=True)
-    tags = TagField(help_text=_('Comma separated list of tags.'))
-    license = LicenseField(related_name='projects', required=False)
+    tags = TagField(help_text=_('Add a couple of comma-separated tags'))
+    license = LicenseField(
+        related_name='projects',
+        help_text=_("""
+Pick a license for your documentation
+(<a target="_blank" href="http://creativecommons.org/licenses/">More about CC licenses</a>)<br/>
+<ul>
+    <li><a target="_blank" href="http://creativecommons.org/licenses/">
+    Creative Commons Attribution Share-Alike (default)
+    </a></li>
+    <li><a target="_blank" href="http://creativecommons.org/licenses/">
+    Creative Commons Attribution Non-Commercial Share-Alike
+    </a></li>
+</ul> 
+        """)
+        )
 
     # admin stuff
     public = models.BooleanField(_('public'), default=True,
@@ -140,6 +155,21 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
             diffs = dict(self.DIFFICULTIES)
             return diffs.get(self.difficulty, None)
         return None
+    
+    def _get_attachments(self,kind):
+        return Attachment.objects.filter(project__id=self.id, kind=kind)
+    
+    @property
+    def get_fritzing_attachments(self):
+        return self._get_attachments(Attachment.FRITZING_TYPE)
+        
+    @property
+    def get_code_attachments(self):
+        return self._get_attachments(Attachment.CODE_TYPE)
+        
+    @property
+    def get_example_attachments(self):
+        return self._get_attachments(Attachment.EXAMPLE_TYPE)
 
 
 class Image(ImageModel):

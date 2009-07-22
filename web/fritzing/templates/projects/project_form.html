@@ -1,11 +1,11 @@
 {% extends "site_base.html" %}
 
 {% block title %}
-  Create project
+  Create / Edit project
 {% endblock %}
 
 {% block page_title %}
-    Create a project
+    Create / Edit a project
 {% endblock %}
 
 {% block teaser %}
@@ -23,44 +23,44 @@
 
 {% block content %}
     <form id="my_form" action="" method="post" enctype="multipart/form-data" class="uniForm">
+    <!-- {{ form.errors }} -->
     <table class="plain project">
     <tbody>
         <tr>
             <td width="60%">
               <div class="project_title">
-                {% if form.title.field.required %}
-                  <label for="{{ form.title.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.title.auto_id }}">
-                {% endif %}
-                  {{ form.title.label }}
+                <label for="{{ form.title.auto_id }}">
+                	{{ form.title.label }}
                 </label>
                 {% if form.title.field.required %}
-                	<span class="require">&bull;</span>
+                	<span class="required">&bull;</span>
                 {% endif %}
-                <span class="help">
-                  {{ form.title.help_text }}
-                </span>
+                {% if form.title.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.title.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.title.errors %}
                   <span class="error">{{ form.title.errors }}</span>
                 {% endif %}
+                {{ form.id }}
                 <p>{{ form.title }}</p>
               </div>
               
 			  <div class="project_description">
-                {% if form.description.field.required %}
-                  <label for="{{ form.description.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.description.auto_id }}">
-                {% endif %}
+                <label for="{{ form.description.auto_id }}">
                   {{ form.description.label }}
                 </label>
                 {% if form.description.field.required %}
-                	<span class="require">&bull;</span>
+                	<span class="required">&bull;</span>
                 {% endif %}
-                <span class="help">
-                  {{ form.description.help_text }}
-                </span>
+                {% if form.description.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.description.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.description.errors %}
                   <span class="error">{{ form.description.errors }}</span>
                 {% endif %}
@@ -68,13 +68,16 @@
               </div>
 
               <div class="project_fritzing_files">
-                  <label for="{{ form.fritzing_files.auto_id }}" class="required">
+                  <label for="{{ form.fritzing_files.auto_id }}">
                   {{ form.fritzing_files.label }}
                 </label>
-			    <span class="require">&bull;</span>
-                <span class="help">
-                  {{ form.fritzing_files.help_text }}
-                </span>
+			    <span class="required">&bull;</span>
+                {% if form.fritzing_files.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.fritzing_files.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.fritzing_files.errors %}
                   <span class="error">{{ form.fritzing_files.errors }}</span>
                 {% endif %}
@@ -97,13 +100,16 @@
               </div>
 
               <div class="main_image">
-                    <label for="{{ form.main_image.auto_id }}" class="required">
+                    <label for="{{ form.main_image.auto_id }}">
                     {{ form.main_image.label }}
                   </label>
-                  <span class="require">&bull;</span>
-                  <span class="help">
-                    {{ form.main_image.help_text }}
-                  </span>
+                  <span class="required">&bull;</span>
+				  {% if form.main_image.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.main_image.help_text }}
+	                </span>
+                  {% endif %}
                   {% if form.main_image.errors %}
                     <span class="error">{{ form.main_image.errors }}</span>
                   {% endif %}
@@ -129,19 +135,18 @@
               </div>
 
               <div class="project_instructions">
-                {% if form.instructions.field.required %}
-                  <label for="{{ form.instructions.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.instructions.auto_id }}">
-                {% endif %}
+                <label for="{{ form.instructions.auto_id }}">
                   {{ form.instructions.label }}
                 </label>
                 {% if form.instructions.field.required %}
-                  	<span class="require">&bull;</span>
+                  	<span class="required">&bull;</span>
                 {% endif %}
-                <span class="help">
-                  {{ form.instructions.help_text }}
-                </span>
+                {% if form.instructions.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.instructions.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.instructions.errors %}
                   <span class="error">{{ form.instructions.errors }}</span>
                 {% endif %}
@@ -150,7 +155,7 @@
 
 
               <p class="submit_line">
-                <a href="{% firstof request.META.HTTP_REFFERER ".." %}">Cancel</a>
+                <a href="{% url projects-overview %}">Cancel</a>
                 <input type="submit" value="Submit">
               </p>
             </td>
@@ -176,16 +181,15 @@
               </div-->
               
               <div class="project_difficulty">
-                {% if form.difficulty.field.required %}
-                  <label for="{{ form.difficulty.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.difficulty.auto_id }}">
-                {% endif %}
+                <label for="{{ form.difficulty.auto_id }}">
                   {{ form.difficulty.label }}
                 </label>
-                <span class="help">
-                  {{ form.difficulty.help_text }}
-                </span>
+                {% if form.difficulty.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.difficulty.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.difficulty.errors %}
                   <span class="error">{{ form.difficulty.errors }}</span>
                 {% endif %}
@@ -193,33 +197,31 @@
               </div>
               
               <div class="project_license">
-                {% if form.license.field.required %}
-                  <label for="{{ form.license.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.license.auto_id }}">
-                {% endif %}
+                <label for="{{ form.license.auto_id }}">
                   {{ form.license.label }}
                 </label>
-                <span class="help">
-                  {{ form.license.help_text }}
-                </span>
+                <span class="required">&bull;</span>
                 {% if form.license.errors %}
                   <span class="error">{{ form.license.errors }}</span>
-                {% endif %}
+                {% else %}
+                	<br/>
+                {%endif %}
+                <span class="help">
+                  {{ form.license.help_text|safe }}
+                </span>
                 <p>{{ form.license }}</p>
               </div>
               
               <div class="project_category">
-                {% if form.category.field.required %}
-                  <label for="{{ form.category.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.category.auto_id }}">
-                {% endif %}
+                <label for="{{ form.category.auto_id }}">
                   {{ form.category.label }}
                 </label>
-                <span class="help">
-                  {{ form.category.help_text }}
-                </span>
+                {% if form.category.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.category.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.category.errors %}
                   <span class="error">{{ form.category.errors }}</span>
                 {% endif %}
@@ -227,16 +229,15 @@
               </div>
 
               <div class="project_tags">
-                {% if form.tags.field.required %}
-                  <label for="{{ form.tags.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.tags.auto_id }}">
-                {% endif %}
+                <label for="{{ form.tags.auto_id }}">
                   {{ form.tags.label }}
                 </label>
-                <span class="help">
-                  {{ form.tags.help_text }}
-                </span>
+                {% if form.tags.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.tags.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.tags.errors %}
                   <span class="error">{{ form.tags.errors }}</span>
                 {% endif %}
@@ -244,16 +245,15 @@
               </div>
 
               <div class="project_other_images">
-                {% if form.other_images.field.required %}
-                  <label for="{{ form.other_images.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.other_images.auto_id }}">
-                {% endif %}
+                <label for="{{ form.other_images.auto_id }}">
                   {{ form.other_images.label }}
                 </label>
-                <span class="help">
-                  {{ form.other_images.help_text }}
-                </span>
+                {% if form.other_images.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.other_images.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.other_images.errors %}
                   <span class="error">{{ form.other_images.errors }}</span>
                 {% endif %}
@@ -276,16 +276,15 @@
               </div>
 
               <div class="project_code">
-                {% if form.code.field.required %}
-                  <label for="{{ form.code.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.code.auto_id }}">
-                {% endif %}
+                <label for="{{ form.code.auto_id }}">
                   {{ form.code.label }}
                 </label>
-                <span class="help">
-                  {{ form.code.help_text }}
-                </span>
+                {% if form.code.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.code.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.code.errors %}
                   <span class="error">{{ form.code.errors }}</span>
                 {% endif %}
@@ -313,16 +312,15 @@
               </div>
 
               <div class="project_examples">
-                {% if form.examples.field.required %}
-                  <label for="{{ form.examples.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.examples.auto_id }}">
-                {% endif %}
+                <label for="{{ form.examples.auto_id }}">
                   {{ form.examples.label }}
                 </label>
-                <span class="help">
-                  {{ form.examples.help_text }}
-                </span>
+                {% if form.examples.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.examples.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.examples.errors %}
                   <span class="error">{{ form.examples.errors }}</span>
                 {% endif %}
@@ -345,19 +343,18 @@
               </div>
 
               <div class="project_links">
-                {% if form.resource.field.required %}
-                  <label for="{{ form.resources.auto_id }}" class="required">
-                {% else %}
-                  <label for="{{ form.resources.auto_id }}">
-                {% endif %}
+                <label for="{{ form.resources.auto_id }}">
                   {{ form.resource.label }}
                 </label>
                 <a href="javascript:;" id="add_link" style="border:none" title="Add another link">
                   <img src="/media/admin/img/admin/icon_addlink.gif" />
                 </a>
-                <span class="help">
-                  {{ form.resource.help_text }}
-                </span>
+                {% if form.resource.help_text %}
+                	<br/>
+	                <span class="help">
+	                  {{ form.resource.help_text }}
+	                </span>
+                {% endif %}
                 {% if form.resource.errors %}
                   <span class="error">{{ form.resource.errors }}</span>
                 {% endif %}
@@ -365,14 +362,25 @@
                 {% if resources %}
 					{% for r in resources %}						
 		                <p>
-		                	<input type="text" id="id_links_title_{{forloop.counter0}}" name='links_title' value="{{ r.title }}"/>
-		                	<input type="text" id="id_links_url_{{forloop.counter0}}" name='links_url' value="{{ r.url }}"/>
-		                	<img id="links_deleter_{{forloop.counter0}}" width="10" height="10"
+		                	<input type="text" id="id_links_title_{{forloop.counter0}}" name='links_title' value="{{ r.title }}" class="title"/><input 
+		                		type="text" id="id_links_url_{{forloop.counter0}}" name='links_url' value="{{ r.url }}" class="url"/><img 
+		                		id="links_deleter_{{forloop.counter0}}" width="10" height="10"
 		                		alt="X" src="/media/admin/img/admin/icon_deletelink.gif"/>
 		                </p>
 		            {% endfor %}
+		            <script language="javascript">
+		            	var prev_resources = true
+		            </script>
 		        {% else %}
-		        	<p>{{ form.resources }}</p>
+		        	<p>
+		        		<input type="text" id="id_links_title_0" name='links_title' class="title"/><input
+		        			type="text" id="id_links_url_0" name='links_url' class="url"/><img
+		        			id="links_deleter_0" width="10" height="10"
+		                	alt="X" src="/media/admin/img/admin/icon_deletelink.gif"/>
+		        	</p>
+		        	<script language="javascript">
+		        		var prev_resources = false
+		            </script>
 		        {% endif %}
               </div>
             </td>

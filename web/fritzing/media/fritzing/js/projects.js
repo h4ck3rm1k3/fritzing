@@ -7,15 +7,16 @@ $(document).ready(function(){
         $(this).parent().remove()
       });
     }
-  } else {
+  }
+  if(!prev_resources) {
 	$("#id_links_title_0").example("Name");
-	$("#id_links_title_0").example("URL");
+	$("#id_links_url_0").example("URL");
   }
   
   $("#add_link").click(function() {
     new_link = '<p>'
-      + '<input type="text" name="links_title" id="id_links_title_%name%" />'
-      + '<input type="text" name="links_url" id="id_links_url_%url%" />'
+      + '<input type="text" name="links_title" id="id_links_title_%name%" class="title" />'
+      + '<input type="text" name="links_url" id="id_links_url_%url%" class="url" />'
       + '<img id="links_deleter_%count%" src="/media/admin/img/admin/icon_deletelink.gif" height="10" width="10" alt="X"/>'
       + '</p>';
     field_count = $(".project_links p input[type~=text]").length/2;

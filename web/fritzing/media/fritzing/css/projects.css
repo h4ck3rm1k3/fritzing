@@ -4,6 +4,7 @@ table.project p {
 
 table.project label {
     margin-right: 0.1em;
+    font-weight: bold;
 }
 
 table.project p {
@@ -15,9 +16,17 @@ table.project span.help {
 }
 
 div.project_links input {
-  width: 40%;
   margin-right: 1em;
 }
+
+div.project_links input.title {
+  width: 30%;
+}
+
+div.project_links input.url {
+  width: 50%;
+}
+
 div.project_other_files input[type~=text] {
   width: 50%;
   margin-right: 10px;
@@ -72,9 +81,7 @@ ul.selection {
 }
 
 .project.date.detail {
-    float: right;
-    clear: both;
-    padding: 5px;
+    padding-bottom: 5px;
     color: #666;
 }
 
@@ -130,10 +137,19 @@ ul.selection {
 	float: left;
 }
 
-span.require {
+span.required {
 	color: red;
 	font-size: medium;
 }
 
-img {
+h3 {
+	margin-top: 5px;
+}
+
+div.edit {
+	clear: both;
+	float: right;
+	text-transform: none;
+	font-size: 11px;
+	margin-top: -20px;
 }

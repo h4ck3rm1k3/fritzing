@@ -93,47 +93,60 @@ class ProjectForm(forms.ModelForm):
     file_fields = {}
         
     title = forms.CharField(
-        help_text=_('The main title to be used '),
+        help_text=_('The title of your project'),
         label=_('Title'))
+    
+    id = forms.IntegerField(
+        widget=forms.HiddenInput(),
+        required=False
+    )
 
     description = forms.CharField(
         label=_('Description'),
+        help_text=_('A very short description/subheadline of what your project is about'),
         widget=Textarea(attrs={'rows': '3'})
     )
 
     instructions = forms.CharField(
         label=_('Body'),
+        help_text=_('Give a detailed description of your project, including instructions on how to build it'),
         widget=MarkItUpWidget(
             markitup_set='projects/sets/projects'))
 
     main_image = forms.ImageField(
         required=False,
-        label=_('Head Image'),
+        label=_('Header Image'),
+        help_text=_('A representative screenshot or photograph of your project'),
         widget=forms.FileInput(attrs={'size':'35'})
     )
 
     fritzing_files = forms.FileField(
         required=False,
+        help_text=_('Upload your Fritzing sketch (.fz) and other Fritzing files here'),
         widget=forms.FileInput(attrs={'size':'35'})
     )
 
-    code = forms.FileField(required=False)
+    code = forms.FileField(
+        required=False,
+        help_text=_('Add any code that is part of your project (e.g., for the Arduino)'),
+    )
+    
     examples = forms.FileField(
         label=_('Other Files'),
-        required=False
+        required=False,
+        help_text=_('Add any other files that help documenting your project'),
     )
 
     other_images = forms.ImageField(
         required=False,
-        label=_('Image Gallery')
+        label=_('Image Gallery'),
+        help_text=_('Add a set of images and photos')
     )
-        # widget=MultiFileInput({
-        #     'list': '#main_image_selection',
-        #     'accept': 'gif|jpeg|jpg|png'}))
         
     resource = ResourceField(
         required=False,
-        label=_('External links')
+        label=_('External links'),
+        help_text=_('Some links to external websites related to your project')
     )
     
     resources_title = []
@@ -213,6 +226,23 @@ class ProjectForm(forms.ModelForm):
     def clean_other_images(self):
         return self._clean_file_aux('other_images')
 
+    def clean_title(self):
+        title = self.cleaned_data['title']        
+        proys = Project.objects.filter(title=title)
+        
+        for proy in proys:
+            if not self.data['id'] or proy.id != int(self.data['id']):
+                raise ValidationError(_('There\'s already a project with that title, please choose a new one'))
+
+        return title
+    
+    def clean_id(self):
+        # don't want this value to populate the project instance
+        return None
+    
+    def clean_tags(self):
+        return self.cleaned_data['tags'].lower()
+            
     
     def clean_resource(self):
         indexes_to_remove = []
@@ -252,6 +282,7 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields= (
+            'id',
             'title',
             'description',
             'instructions',
