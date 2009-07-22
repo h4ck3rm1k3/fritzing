@@ -165,10 +165,25 @@ def detail(request, slug):
             is_me = False
     else:
         is_me = False
+        
+    license_aux = project.license
+    license = ""
+    if license_aux.logo:
+        license = """
+        <a target="_blank" href="%(link)s" alt="%(name)s">
+        <img src="%(logo)s" alt="%(name)s" title="%(name)s"/>
+        </a>
+        """ % {'link':license_aux.url,'name':license_aux.name,'logo':license_aux.logo}
+    else:
+        license = """
+        <a target="_blank" href="%(link)s" alt="%(name)s">%(name)s</a>
+        """ % {'link':license_aux.url,'name':license_aux.name}
+        
 
     return render_to_response("projects/project_detail.html", {
         'project': project,
-        'is_me': is_me
+        'is_me': is_me,
+        'license':license
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:
