@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import patterns, url 
 from fritzing.apps.projects.views import create, detail, overview, edit
 
 urlpatterns = patterns('',

@@ -7,7 +7,7 @@ from django.forms.widgets import TextInput, HiddenInput, FileInput, Textarea
 from django.forms.util import ValidationError
 from django.forms.fields import URLField
 from licenses.models import License
-import re, urlparse
+import re, urlparse 
 
 RESOURCE_DELIMITER = '########'
 

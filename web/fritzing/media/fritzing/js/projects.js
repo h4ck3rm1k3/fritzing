@@ -1,4 +1,4 @@
-$(document).ready(function(){  
+$(document).ready(function(){
   field_count = $(".project_links p input[type~=text]").length/2;
   
   if(field_count > 0) {
