@@ -1,3 +1,4 @@
+import settings
 import os 
 from django.db import models
 from django.contrib.auth.models import User
@@ -161,11 +162,9 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
 class Image(ImageModel):
     def project_images_path(self, filename):
         slug = self.project.slug
-        filename = "%s_%s" % (slug, filename)
-        if len(slug) >= 3:
-            path = "/".join(list(slug[:3]))
-            return os.path.join("projects", path, slug, "images", filename)
-        return os.path.join("projects", slug, "images", filename)
+        username = self.project.author.username
+        path = "/".join(list(username[:3])) if len(username) >= 3 else ''
+        return os.path.join(settings.USER_FILES_FOLDER, path, username, "projects", slug, "images", filename)
 
     title = models.CharField(max_length=255, blank=True, null=True,
         help_text=_('leave empty to populate with filename'))
@@ -197,19 +196,19 @@ class Image(ImageModel):
 class Attachment(models.Model):
     FRITZING_TYPE = 'fritzing'
     CODE_TYPE = 'code'
-    EXAMPLE_TYPE = 'example'
+    EXAMPLE_TYPE = 'other_files'
     ATTACHMENT_TYPES = (
         (FRITZING_TYPE, _('fritzing file')),
         (CODE_TYPE, _('code')),
-        (EXAMPLE_TYPE, _('example')),
+        (EXAMPLE_TYPE, _('other_files')),
     )
+    
     def project_attachment_path(self, filename):
         slug = self.project.slug
-        filename = "%s_%s" % (slug, filename)
-        if len(slug) >= 3:
-            path = "/".join(list(slug[:3]))
-            return os.path.join("projects", path, slug, self.kind, filename)
-        return os.path.join("projects", slug, self.kind, filename)
+        username = self.project.author.username
+        path = "/".join(list(username[:3])) if len(username) >= 3 else ''
+        return os.path.join(settings.USER_FILES_FOLDER, path, username, "projects", slug, self.kind, filename)
+
 
     title = models.CharField(_('title'), max_length=255, blank=True,
         null=True, help_text=_('Leave empty to populate with filename'))
