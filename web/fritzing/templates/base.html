@@ -139,7 +139,7 @@
                         {% endif %}
                         {% endcache %}
                         
-                        {% cache 600 sidebar_events %}
+                        
                         {% get_latest_timed_objects events.event 5 start_date >= today as latest_events %}
                         {% if latest_events %}
                         <div class="portletWrapper">
@@ -163,7 +163,7 @@
                             </dl>
                         </div>
                         {% endif %}
-                        {% endcache %}
+
 
                         
                         {% cache 600 sidebar_forum %}
