@@ -56,6 +56,8 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
 # Example: "http://media.lawrence.com"
 MEDIA_URL = '/media/'
 
+USER_FILES_FOLDER = "fritzing-repo"
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -249,8 +251,6 @@ MARKITUP_PREVIEW_FILTER = ('markdown.markdown', {'safe_mode': True})
 
 EVENT_URL_FORMAT = ''
 VCSTORAGE_DEFAULT_BACKEND = 'git'
-
-USER_FILES_FOLDER = "fritzing-repo"
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
