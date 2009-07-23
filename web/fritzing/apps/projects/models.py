@@ -1,5 +1,5 @@
-import settings
-import os 
+import os
+from fritzing import settings 
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
