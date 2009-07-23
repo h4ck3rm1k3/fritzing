@@ -5,7 +5,9 @@
 
 {% block login %}
 <ul id="portal-personaltools" class="visualInline">
-
+	<li>
+		 <a href="{% url profile_list %}">{% trans "Members" %}</a>
+	</li>
     {% if user.is_authenticated %}
     <li>
         <a href="{% url profile_detail user.username %}">{{ user.username }}</a> <a href="/openid/logout/?next={% url acct_logout %}" class="logout-link">{% trans "Logout" %}</a>
