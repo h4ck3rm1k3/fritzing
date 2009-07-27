@@ -112,6 +112,10 @@ qreal convertToInches(const QString & s, bool * ok) {
 		divisor = 1.0;
 		string.chop(2);
 	}
+	else if (string.endsWith("px", Qt::CaseInsensitive)) {
+		divisor = 72.0;
+		string.chop(2);
+	}
 	else {
 		if (ok) *ok = false;
 		return 0;
