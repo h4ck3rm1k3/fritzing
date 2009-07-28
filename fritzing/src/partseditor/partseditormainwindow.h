@@ -60,6 +60,7 @@ signals:
 	void partUpdated(const QString &filename, long myId);
 	void closed(long id);
 	void changeActivationSignal(bool activate, QWidget * originator);
+	void saveButtonClicked();
 
 public slots:
 	void parentAboutToClose();
@@ -90,6 +91,7 @@ protected:
 	const QString defaultSaveFolder();
 
 	void updateSaveButton();
+	bool wannaSaveAfterWarning();
 	void updateButtons();
 	const QString fritzingTitle();
 

@@ -59,6 +59,8 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 	setFocusPolicy(Qt::StrongFocus);
 
 	installEventFilter(this);
+
+	m_connsChanged = false;
 }
 
 void ConnectorsInfoWidget::emitPaintNeeded() {
@@ -459,6 +461,8 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 }
 
 void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool singleShot, bool alsoDeleteFromView) {
+	m_connsChanged = true;
+
 	scrollContentLayout()->removeWidget(sci);
 	m_connsInfo.removeOne(sci);
 	m_allConnsInfo.remove(sci->connector()->connectorSharedID());
@@ -601,3 +605,6 @@ void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
 	}
 }
 
+bool ConnectorsInfoWidget::connectorsChanged() {
+	return m_connsChanged;
+}

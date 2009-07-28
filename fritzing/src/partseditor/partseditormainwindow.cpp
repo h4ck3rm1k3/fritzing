@@ -113,10 +113,10 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart
 			return;
 		}
 		m_lastOpened = this;
-		m_updateEnabled = false;
+		m_updateEnabled = true;
 	} else {
 		// user only allowed to save parts, once he has saved it as a new one
-		m_updateEnabled = modelPart->isCore()? CORE_EDITION_ENABLED: false;
+		m_updateEnabled = modelPart->isCore()? CORE_EDITION_ENABLED: true;
 		m_fileName = modelPart->modelPartShared()->path();
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough
@@ -329,7 +329,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 void PartsEditorMainWindow::connectWidgetsToSave(const QList<QWidget*> &widgets) {
 	for(int i=0; i < widgets.size(); i++) {
 		connect(m_saveAsNewPartButton,SIGNAL(clicked()),widgets[i],SLOT(informEditionCompleted()));
-		connect(m_saveButton,SIGNAL(clicked()),widgets[i],SLOT(informEditionCompleted()));
+		connect(this,SIGNAL(saveButtonClicked()),widgets[i],SLOT(informEditionCompleted()));
 	}
 }
 
@@ -470,7 +470,7 @@ void PartsEditorMainWindow::loadPcbFootprint(){
 }
 
 bool PartsEditorMainWindow::save() {
-	if(validateMinRequirements()) {
+	if(validateMinRequirements() && wannaSaveAfterWarning()) {
 		return FritzingWindow::save();
 	} else {
 		return false;
@@ -533,7 +533,7 @@ bool PartsEditorMainWindow::saveAs() {
 		saveAsAux(filename);
 
 		m_updateEnabled = true;
-		updateSaveButton();
+		wannaSaveAfterWarning();
 		updateButtons();
 
 		return true;
@@ -677,6 +677,24 @@ const QString PartsEditorMainWindow::defaultSaveFolder() {
 
 void PartsEditorMainWindow::updateSaveButton() {
 	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
+}
+
+bool PartsEditorMainWindow::wannaSaveAfterWarning() {
+	bool doEmit = true;
+	if(m_saveButton && m_connsInfo->connectorsChanged()) {
+		QMessageBox::StandardButton btn = QMessageBox::question(this,
+			tr("Updating existing part"),
+			tr("The connectors defined in this part has changed.\n"
+				"If you save it, you may break other sketches that already use it.\n"
+				"Do you really want to save it?"
+			),
+			QMessageBox::Ok|QMessageBox::Cancel
+		);
+		doEmit = (btn == QMessageBox::Ok);
+	}
+	if(doEmit) emit saveButtonClicked();
+
+	return doEmit;
 }
 
 void PartsEditorMainWindow::updateButtons() {

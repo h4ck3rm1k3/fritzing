@@ -46,6 +46,7 @@ class ConnectorsInfoWidget : public QFrame {
 		QCheckBox *showTerminalPointsCheckBox();
 		int scrollBarWidth();
 		void setViews(PartsEditorViewsWidget* connsView);
+		bool connectorsChanged();
 
 	public slots:
 		void connectorsFound(QList<Connector *>);
@@ -124,6 +125,8 @@ class ConnectorsInfoWidget : public QFrame {
 		WaitPushUndoStack *m_undoStack;
 
 		QObject *m_objToDelete;
+
+		bool m_connsChanged;
 };
 
 #endif /* CONNECTORSINFOWIDGET_H_ */
