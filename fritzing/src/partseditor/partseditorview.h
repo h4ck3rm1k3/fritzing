@@ -87,6 +87,9 @@ class PartsEditorView : public SketchWidget {
 		void informConnectorSelectionFromView(const QString& connId);
 		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
 
+	protected slots:
+		void recoverTerminalPointsState();
+
 	signals:
 		// conns
 		void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns);
@@ -183,6 +186,8 @@ class PartsEditorView : public SketchWidget {
 
 		QString m_lastSelectedConnId;
 		bool m_showingTerminalPoints;
+		bool m_showingTerminalPointsBackup;
+		QTimer *m_terminalPointsTimer;
 
 		QList<QWidget* > m_fixedWidgets;
 

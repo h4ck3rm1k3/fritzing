@@ -76,6 +76,13 @@ PartsEditorView::PartsEditorView(
 	setDragMode(QGraphicsView::ScrollHandDrag);
 
 	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	m_terminalPointsTimer = new QTimer(this);
+	connect(
+		m_terminalPointsTimer,SIGNAL(timeout()),
+		this,SLOT(recoverTerminalPointsState())
+	);
+	m_showingTerminalPointsBackup = m_showingTerminalPoints;
 }
 
 PartsEditorView::~PartsEditorView() {
@@ -913,6 +920,16 @@ QString PartsEditorView::setFriendlierSvgFileName(const QString &partFileName) {
 
 // conns
 void PartsEditorView::wheelEvent(QWheelEvent* event) {
+	if(m_showingTerminalPoints) {
+		if(!m_terminalPointsTimer->isActive()) {
+			m_showingTerminalPointsBackup = m_showingTerminalPoints;
+			showTerminalPoints(false);
+			m_terminalPointsTimer->start(50);
+		}
+	} else if(m_terminalPointsTimer->isActive()) {
+		m_terminalPointsTimer->stop();
+		m_terminalPointsTimer->start(50);
+	}
 	SketchWidget::wheelEvent(event);
 }
 
@@ -1292,6 +1309,10 @@ void PartsEditorView::showTerminalPoints(bool show) {
 		}
 	}
 	scene()->update();
+
+	/*if(!m_showingTerminalPoints) {
+		m_terminalPointsTimer->stop();
+	}*/
 }
 
 bool PartsEditorView::showingTerminalPoints() {
@@ -1344,4 +1365,9 @@ void PartsEditorView::drawBackground(QPainter *painter, const QRectF &rect) {
 	}
 
 	painter->drawLines(lines.data(), lines.size());*/
+}
+
+void PartsEditorView::recoverTerminalPointsState() {
+	showTerminalPoints(m_showingTerminalPointsBackup);
+	m_terminalPointsTimer->stop();
 }
