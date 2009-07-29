@@ -1128,13 +1128,13 @@ bool PartsEditorView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &s
 			TerminalPointItem *tp = citem->terminalPointItem();
 			QString connId = citem->connector()->connectorSharedID();
 			QString terminalId = connId+"terminal";
-			if(tp) {
+			if(tp && !tp->isInTheCenter()) {
 				if(tp->hasBeenMoved()) {
 					connsWithNewTPs << citem;
 					tpIdsToRemove << terminalId;
 					updateSvgIdLayer(connId, terminalId, connectorsLayerId);
 				}
-			} else { // if the tp is not defined, then that's because it's in the middle of the connector
+			} else {
 				tpIdsToRemove << terminalId;
 				emit removeTerminalPoint(connId, m_viewIdentifier);
 			}

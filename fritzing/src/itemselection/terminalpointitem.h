@@ -65,6 +65,7 @@ public:
 
 	void updatePoint();
 	bool hasBeenMoved();
+	bool isInTheCenter();
 
 	void setMovable(bool movable);
 	QPointF mappedPoint();
@@ -89,6 +90,7 @@ protected:
 	bool m_loadedFromFile;
 	TerminalPointItemPrivate *m_cross;
 	PartsEditorConnectorsConnectorItem *m_parent;
+	bool m_isInTheCenter;
 
 	static QHash<ConnectorRectangle::State, QPixmap> m_pixmapHash;
 };

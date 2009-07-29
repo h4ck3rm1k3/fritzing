@@ -280,7 +280,7 @@ void PartsEditorConnectorsConnectorItem::informChange() {
 			gv->inFileDefinedConnectorChanged(this);
 		}
 	}
-	m_geometryHasChanged = true;
+	//m_geometryHasChanged = true;
 }
 
 QRectF PartsEditorConnectorsConnectorItem::mappedRect() {

@@ -42,6 +42,7 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent,
 	: QGraphicsRectItem(parent)
 {
 	init(parent,visible,point,true);
+	m_isInTheCenter = false;
 }
 
 void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point, bool loadedFromFile) {
@@ -129,6 +130,11 @@ bool TerminalPointItem::hasBeenMoved() {
 	return m_cross->hasBeenMoved();
 }
 
+bool TerminalPointItem::isInTheCenter() {
+	return m_isInTheCenter;
+}
+
+
 void TerminalPointItem::reset() {
 	QRectF pRect = parentItem()->boundingRect();
 	setRect(pRect);
@@ -137,6 +143,7 @@ void TerminalPointItem::reset() {
 	m_loadedFromFile = false;
 	setCrossPos();
 	if(scene()) scene()->update();
+	m_isInTheCenter = true;
 }
 
 void TerminalPointItem::doSetVisible(bool visible) {
