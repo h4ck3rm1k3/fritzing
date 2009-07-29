@@ -57,6 +57,7 @@ class ConnectorsInfoWidget : public QFrame {
 		void addConnector();
 		void removeSelectedConnector();
 		void removeConnector(AbstractConnectorInfoWidget* connInfo);
+		void removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid);
 
 	signals:
 		void connectorSelected(const QString &);

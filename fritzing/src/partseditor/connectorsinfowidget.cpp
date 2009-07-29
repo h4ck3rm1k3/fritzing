@@ -349,6 +349,18 @@ const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsShared() {
 	return connectorsShared;
 }
 
+void ConnectorsInfoWidget::removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid) {
+	for(int i=0; i<m_connsInfo.size(); i++) {
+		SingleConnectorInfoWidget *sci = m_connsInfo[i];
+		Connector *conn = sci->connector();
+		foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(vid)) {
+			if(conn->connectorSharedID() == connId) {
+				sil->m_terminalId = ___emptyString___;
+			}
+		}
+	}
+}
+
 // If we're reloading an image, clear mismatching connectors related exclusively to that view
 void ConnectorsInfoWidget::clearMismatchingForView(ViewIdentifierClass::ViewIdentifier viewId) {
 	foreach(MismatchingConnectorWidget* mcw, m_mismatchConnsInfo) {

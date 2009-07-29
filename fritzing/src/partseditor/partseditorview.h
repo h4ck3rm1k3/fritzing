@@ -95,6 +95,7 @@ class PartsEditorView : public SketchWidget {
 		void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns);
 		void svgFileLoadNeeded(const QString &filepath);
 		void connectorSelected(const QString& connId);
+		void removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid);
 
 	protected:
 		// general

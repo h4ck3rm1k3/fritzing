@@ -49,6 +49,8 @@ Q_OBJECT
 		PartsEditorView *schematicView();
 		PartsEditorView *pcbView();
 
+		void connectTerminalRemoval(const ConnectorsInfoWidget* connsInfo);
+
 	public slots:
 		void repaint();
 		void drawConnector(Connector*);

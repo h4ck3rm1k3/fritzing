@@ -300,3 +300,18 @@ bool PartsEditorViewsWidget::imagesLoadedInAllViews() {
 		&& m_schemView->imageLoaded()
 		&& m_pcbView->imageLoaded();
 }
+
+void PartsEditorViewsWidget::connectTerminalRemoval(const ConnectorsInfoWidget* connsInfo) {
+	connect(
+		m_breadView, SIGNAL(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier)),
+		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier))
+	);
+	connect(
+		m_schemView, SIGNAL(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier)),
+		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier))
+	);
+	connect(
+		m_pcbView, SIGNAL(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier)),
+		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier))
+	);
+}

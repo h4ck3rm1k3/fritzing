@@ -302,6 +302,8 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 			m_connsInfo, SLOT(connectorSelectedInView(const QString&)));
 	m_views->showTerminalPointsCheckBox()->setChecked(false);
 
+	m_views->connectTerminalRemoval(m_connsInfo);
+
 	connect(
 		m_views, SIGNAL(connectorsFound(QList<Connector*>)),
 		m_connsInfo, SLOT(connectorsFound(QList<Connector*>))

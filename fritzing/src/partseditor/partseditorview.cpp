@@ -1126,12 +1126,17 @@ bool PartsEditorView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &s
 			dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
 		if(citem) {
 			TerminalPointItem *tp = citem->terminalPointItem();
-			if(tp && tp->hasBeenMoved()) {
-				connsWithNewTPs << citem;
-				QString connId = citem->connector()->connectorSharedID();
-				QString terminalId = connId+"terminal";
+			QString connId = citem->connector()->connectorSharedID();
+			QString terminalId = connId+"terminal";
+			if(tp) {
+				if(tp->hasBeenMoved()) {
+					connsWithNewTPs << citem;
+					tpIdsToRemove << terminalId;
+					updateSvgIdLayer(connId, terminalId, connectorsLayerId);
+				}
+			} else { // if the tp is not defined, then that's because it's in the middle of the connector
 				tpIdsToRemove << terminalId;
-				updateSvgIdLayer(connId, terminalId, connectorsLayerId);
+				emit removeTerminalPoint(connId, m_viewIdentifier);
 			}
 		}
 	}
