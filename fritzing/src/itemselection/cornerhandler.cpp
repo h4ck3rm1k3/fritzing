@@ -112,10 +112,14 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if(m_parent->isResizable()) {
-		m_parent->resizingStarted();
-		m_resizing = true;
-		setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
+	if(m_isVisible) {
+		if(m_parent->isResizable()) {
+			m_parent->resizingStarted();
+			m_resizing = true;
+			setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
+		} else {
+			QGraphicsRectItem::mousePressEvent(event);
+		}
 	} else {
 		QGraphicsRectItem::mousePressEvent(event);
 	}
