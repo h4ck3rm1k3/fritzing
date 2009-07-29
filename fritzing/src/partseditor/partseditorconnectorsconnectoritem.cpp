@@ -228,15 +228,13 @@ QPen PartsEditorConnectorsConnectorItem::drawDottedLineAux(
 
 void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 	m_showingTerminalPoint = show;
-	if(m_terminalPointItem) {
-		if(m_geometryHasChanged && show) {
-			m_terminalPointItem->reset();
-			m_centerHasChanged = false;
-		}
-		m_terminalPointItem->doSetVisible(show);
-	} else {
-		m_terminalPointItem = newTerminalPointItem();
+	if(!m_terminalPointItem) m_terminalPointItem = newTerminalPointItem();
+
+	if(m_geometryHasChanged && show) {
+		m_terminalPointItem->reset();
+		m_centerHasChanged = false;
 	}
+	m_terminalPointItem->doSetVisible(show);
 
 	// if we're showing the terminal points, then the connector
 	// is not movable
