@@ -660,14 +660,16 @@ font-size="9.9771" >A0</text>
 
 QSet<QString> PartsEditorView::getFontFamiliesInsideStyleTag(const QString &fileContent) {
 	/*
+	 * regexp: font-family\s*:\s*(.|[^;"]*).*"
 	 * font-family defined in a style attr example:
 
-style="font-size:9;-inkscape-font-specification:Droid Sans;font-family:Droid
-Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+style="font-size:9;-inkscape-font-specification:Droid Sans;font-family:Droid Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+
+style="font-size:144px;font-style:normal;font-weight:normal;line-height:100%;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" x="18.000002"
 
 	 */
 
-	QString pattern = "font-family\\s*:\\s*(.|[^;]*).*\"";
+	QString pattern = "font-family\\s*:\\s*(.|[^;\"]*).*\"";
 	return getRegexpCaptures(pattern,fileContent);
 }
 
