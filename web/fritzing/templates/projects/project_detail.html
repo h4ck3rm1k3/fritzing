@@ -37,7 +37,7 @@
                 <div class="project detail header">
                 {% for image in project.main_images %}
                 <p>
-                    <a href="{{ image.image.url }}">
+                    <a href="{{ image.image.url }}" rel="lightboxMain">
                         <img src="{{ image.header.url }}" alt="{{ image.title }}" />
                     </a>
                 </p>
