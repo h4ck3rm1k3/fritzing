@@ -136,6 +136,10 @@ ul.selection {
 	float: left;
 }
 
+.col2 {
+	float: right;
+}
+
 span.required {
 	color: red;
 	font-size: medium;

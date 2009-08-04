@@ -21,7 +21,7 @@
 {% block content %}
     <div class="plain project">
             {% for project in projects %}
-                <div class='project overview item {% if forloop.counter0|divisibleby:"2" or forloop.first %}col1{% endif %}'>
+                <div class='project overview item {% if forloop.counter0|divisibleby:"2" or forloop.first %}col1{% else %}col2{% endif %}'>
                   <div class="project overview image">
                     {% if project.main_images.0 %}
                         <!-- a href="{{ project.get_absolute_url }}"><img
