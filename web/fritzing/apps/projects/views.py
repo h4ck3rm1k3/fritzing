@@ -1,5 +1,4 @@
 from django.forms.util import ValidationError 
-from apps.projects.forms import ResourceField
 import datetime
 from django.views.generic.list_detail import object_detail, object_list
 from django.conf import settings
