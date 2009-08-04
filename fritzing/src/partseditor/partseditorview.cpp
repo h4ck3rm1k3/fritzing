@@ -1130,13 +1130,16 @@ bool PartsEditorView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &s
 			TerminalPointItem *tp = citem->terminalPointItem();
 			QString connId = citem->connector()->connectorSharedID();
 			QString terminalId = connId+"terminal";
+			Q_ASSERT(tp);
 			if(tp && !tp->isInTheCenter()) {
-				if(tp->hasBeenMoved()) {
+				if(tp->hasBeenMoved() || citem->hasBeenMoved()) {
 					connsWithNewTPs << citem;
 					tpIdsToRemove << terminalId;
+					//DebugDialog::debug("<<<< MOVED! removing terminal "+terminalId+" in view: "+ViewIdentifierClass::viewIdentifierName(m_viewIdentifier));
 					updateSvgIdLayer(connId, terminalId, connectorsLayerId);
 				}
 			} else {
+				//DebugDialog::debug("<<<< removing terminal "+terminalId+" in view: "+ViewIdentifierClass::viewIdentifierName(m_viewIdentifier));
 				tpIdsToRemove << terminalId;
 				emit removeTerminalPoint(connId, m_viewIdentifier);
 			}

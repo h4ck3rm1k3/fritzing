@@ -44,6 +44,8 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	m_terminalPoint = NON_DEFINED_TERMINAL_POINT;
 	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
+
+	QTimer::singleShot(300, this, SLOT(createTerminalPoint()));
 }
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds)
@@ -57,10 +59,9 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	setFlag(QGraphicsItem::ItemIsMovable);
 
 	m_inFileDefined = false;
-	m_centerHasChanged = false;
 	m_showingTerminalPoint = showingTerminalPoint;
 	m_terminalPoint = NON_DEFINED_TERMINAL_POINT;
-	m_terminalPointItem = newTerminalPointItem();
+	createTerminalPoint();
 }
 
 PartsEditorConnectorsConnectorItem::~PartsEditorConnectorsConnectorItem()
@@ -68,6 +69,10 @@ PartsEditorConnectorsConnectorItem::~PartsEditorConnectorsConnectorItem()
 	if (m_handlers) {
 		delete m_handlers;
 	}
+}
+
+void PartsEditorConnectorsConnectorItem::createTerminalPoint() {
+	m_terminalPointItem = newTerminalPointItem();
 }
 
 TerminalPointItem* PartsEditorConnectorsConnectorItem::newTerminalPointItem() {
@@ -82,8 +87,8 @@ void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal widt
 	setRect(x,y,width,height);
 	m_resizedRect = QRectF(x,y,width,height);
 	informChange();
-	m_centerHasChanged = true;
 	m_geometryHasChanged = true;
+	m_geometryHasChangedAlLeastOnce = true;
 	/*if(isShowingTerminalPoint()) {
 		m_terminalPointItem->updatePoint();
 	}*/
@@ -97,7 +102,9 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 	setAcceptHoverEvents(resizable);
 	m_showErrorIcon = false;
 	m_geometryHasChanged = false;
+	m_geometryHasChangedAlLeastOnce = false;
 	m_resizedRect = QRectF();
+	m_initialPos = pos();
 
 	setResizable(resizable);
 	if(m_resizable) {
@@ -232,7 +239,7 @@ void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 
 	if(m_geometryHasChanged && show) {
 		m_terminalPointItem->reset();
-		m_centerHasChanged = false;
+		m_geometryHasChanged = false;
 	}
 	m_terminalPointItem->doSetVisible(show);
 
@@ -272,7 +279,7 @@ QVariant PartsEditorConnectorsConnectorItem::itemChange(GraphicsItemChange chang
 
 
 void PartsEditorConnectorsConnectorItem::informChange() {
-	if(m_inFileDefined && !m_geometryHasChanged) {
+	if(m_inFileDefined && !m_geometryHasChangedAlLeastOnce) {
 		PartsEditorView *gv = dynamic_cast<PartsEditorView*>(scene()->parent());
 		if(gv) {
 			gv->inFileDefinedConnectorChanged(this);
@@ -323,5 +330,10 @@ void PartsEditorConnectorsConnectorItem::resizeSlot(qreal x, qreal y, qreal widt
 	resizeRect(x, y, width, height);
 }
 
+bool PartsEditorConnectorsConnectorItem::hasBeenMoved() const {
+	return m_initialPos != pos();
+}
 
-
+QPointF PartsEditorConnectorsConnectorItem::initialPos() const {
+	return m_initialPos;
+}

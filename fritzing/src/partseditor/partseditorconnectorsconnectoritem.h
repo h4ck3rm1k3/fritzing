@@ -54,9 +54,13 @@ public:
 
 	QRectF mappedRect();
 
+	bool hasBeenMoved() const;
+	QPointF initialPos() const;
+
 protected slots:
 	void isResizableSlot(bool & resizable);
 	void resizeSlot(qreal x1, qreal y1, qreal x2, qreal y2);
+	void createTerminalPoint();
 
 protected:
 	void init(bool resizable);
@@ -94,11 +98,12 @@ protected:
 
 	QRectF m_resizedRect;
 	bool m_geometryHasChanged;
+	bool m_geometryHasChangedAlLeastOnce;
 	bool m_inFileDefined;
-	bool m_centerHasChanged;
 
 	ConnectorRectangle *m_handlers;
 	bool m_resizable;
+	QPointF m_initialPos;
 
 	static qreal MinWidth;
 	static qreal MinHeight;

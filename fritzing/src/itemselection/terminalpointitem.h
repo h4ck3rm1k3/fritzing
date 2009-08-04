@@ -52,7 +52,6 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 	TerminalPointItem *m_parent;
-	bool m_hasBeenMoved;
 	bool m_pressed;
 	bool m_editable;
 };
@@ -65,6 +64,7 @@ public:
 
 	void updatePoint();
 	bool hasBeenMoved();
+	void setHasBeenMoved(bool moved);
 	bool isInTheCenter();
 
 	void setMovable(bool movable);
@@ -75,6 +75,8 @@ public:
 	void doSetVisible(bool visible);
 
 	bool isOutsideConnector();
+	bool loadedFromFile();
+	const PartsEditorConnectorsConnectorItem* parentConnectorItem();
 
 protected:
 	void init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point, bool centered);
@@ -91,6 +93,7 @@ protected:
 	TerminalPointItemPrivate *m_cross;
 	PartsEditorConnectorsConnectorItem *m_parent;
 	bool m_isInTheCenter;
+	bool m_hasBeenMoved;
 
 	static QHash<ConnectorRectangle::State, QPixmap> m_pixmapHash;
 };

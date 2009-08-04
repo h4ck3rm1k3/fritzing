@@ -50,6 +50,7 @@ void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool vi
 	m_parent = parent;
 	m_point = point;
 	m_loadedFromFile = loadedFromFile;
+	m_hasBeenMoved = false;
 
 	initPixmapHash();
 
@@ -110,8 +111,14 @@ void TerminalPointItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 }
 
 QPointF TerminalPointItem::mappedPoint() {
-	Q_ASSERT(m_cross->hasBeenMoved());
-	return m_cross->mapToItem(m_parent,transformedCrossCenter());
+	//Q_ASSERT(m_cross->hasBeenMoved());
+	QPointF p = m_cross->mapToItem(m_parent,transformedCrossCenter());
+	const PartsEditorConnectorsConnectorItem *pci = parentConnectorItem();
+	//if(pci->hasBeenMoved()) {
+		p += m_cross->mapToItem(m_parent,pci->pos())
+			-m_cross->mapToItem(m_parent,pci->initialPos());
+	//}
+	return p;
 }
 
 void TerminalPointItem::setPoint(const QPointF &point) {
@@ -126,10 +133,6 @@ QPointF TerminalPointItem::transformedCrossCenter() {
 			.map(m_cross->boundingRect().center());
 }
 
-bool TerminalPointItem::hasBeenMoved() {
-	return m_cross->hasBeenMoved();
-}
-
 bool TerminalPointItem::isInTheCenter() {
 	return m_isInTheCenter;
 }
@@ -139,7 +142,7 @@ void TerminalPointItem::reset() {
 	QRectF pRect = parentItem()->boundingRect();
 	setRect(pRect);
 	setPoint(pRect.center()-pRect.topLeft());
-	m_cross->setHasBeenMoved(m_loadedFromFile);
+	setHasBeenMoved(m_loadedFromFile);
 	m_loadedFromFile = false;
 	setCrossPos();
 	if(scene()) scene()->update();
@@ -147,7 +150,7 @@ void TerminalPointItem::reset() {
 }
 
 void TerminalPointItem::doSetVisible(bool visible) {
-	if(visible && !m_cross->hasBeenMoved()) {
+	if(visible && !hasBeenMoved()) {
 		setCrossPos();
 	}
 	setVisible(visible);
@@ -157,6 +160,22 @@ bool TerminalPointItem::isOutsideConnector() {
 	return m_cross->isOutsideConnector();
 }
 
+const PartsEditorConnectorsConnectorItem* TerminalPointItem::parentConnectorItem() {
+	return m_parent;
+}
+
+bool TerminalPointItem::loadedFromFile() {
+	return m_loadedFromFile;
+}
+
+bool TerminalPointItem::hasBeenMoved() {
+	return m_hasBeenMoved;
+}
+
+void TerminalPointItem::setHasBeenMoved(bool moved) {
+	m_hasBeenMoved = moved;
+	if(moved) m_isInTheCenter = false;
+}
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -165,7 +184,6 @@ TerminalPointItemPrivate::TerminalPointItemPrivate(TerminalPointItem *parent, bo
 {
 	m_parent = parent;
 	m_pressed = false;
-	m_hasBeenMoved = false;
 	m_editable = editable;
 	setAcceptHoverEvents(true);
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
@@ -216,7 +234,7 @@ void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		if(isOutsideConnector()) {
 			setCursor(QCursor(Qt::ForbiddenCursor));
 		} else {
-			m_hasBeenMoved = m_pressed;
+			m_parent->setHasBeenMoved(m_pressed);
 			unsetCursor();
 		}
 		QGraphicsPixmapItem::mouseMoveEvent(event);
@@ -243,13 +261,4 @@ void TerminalPointItemPrivate::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
 		}
 	}
 	QGraphicsPixmapItem::mouseReleaseEvent(event);
-}
-
-
-bool TerminalPointItemPrivate::hasBeenMoved() {
-	return m_hasBeenMoved;
-}
-
-void TerminalPointItemPrivate::setHasBeenMoved(bool moved) {
-	m_hasBeenMoved = moved;
 }
