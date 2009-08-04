@@ -19,6 +19,7 @@ SERVE_MEDIA = DEBUG
 ADMINS = (
     ('Jannis Leidel', 'jannis@leidel.info'),
     ('Andre Knoerig', 'andre.knoerig@gmail.com'),
+    ('Mariano Crowe', 'merunga@gmail.com'),
 )
 MANAGERS = ADMINS
 
