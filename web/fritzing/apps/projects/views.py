@@ -20,6 +20,7 @@ def overview(request,username=None):
     
     return render_to_response("projects/project_list.html", {
         'projects': projects,
+        'by_user': username
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:

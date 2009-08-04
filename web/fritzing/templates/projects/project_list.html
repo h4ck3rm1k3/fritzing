@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page_title %}
-    Projects
+    {% if by_user %}{{by_user}}'s {% endif %}Projects
 {% endblock %}
 
 {% block teaser %}
