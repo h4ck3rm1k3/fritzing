@@ -139,14 +139,16 @@ bool TerminalPointItem::isInTheCenter() {
 
 
 void TerminalPointItem::reset() {
-	QRectF pRect = parentItem()->boundingRect();
-	setRect(pRect);
-	setPoint(pRect.center()-pRect.topLeft());
-	setHasBeenMoved(m_loadedFromFile);
-	m_loadedFromFile = false;
-	setCrossPos();
-	if(scene()) scene()->update();
-	m_isInTheCenter = true;
+	if(!m_isInTheCenter) {
+		QRectF pRect = parentItem()->boundingRect();
+		setRect(pRect);
+		setPoint(pRect.center()-pRect.topLeft());
+		setHasBeenMoved(m_loadedFromFile);
+		m_loadedFromFile = false;
+		setCrossPos();
+		if(scene()) scene()->update();
+		m_isInTheCenter = true;
+	}
 }
 
 void TerminalPointItem::doSetVisible(bool visible) {
