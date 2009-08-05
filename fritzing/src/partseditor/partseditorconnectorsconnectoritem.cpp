@@ -89,9 +89,7 @@ void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal widt
 	informChange();
 	m_geometryHasChanged = true;
 	m_geometryHasChangedAlLeastOnce = true;
-	/*if(isShowingTerminalPoint()) {
-		m_terminalPointItem->updatePoint();
-	}*/
+	m_terminalPointItem->reset();
 	scene()->update();
 }
 
