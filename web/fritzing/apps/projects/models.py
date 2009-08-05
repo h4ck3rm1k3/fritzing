@@ -69,9 +69,9 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
     FRITZMEISTER = 4
     DIFFICULTIES = (
         (KIDS, "kids"),
-        (AMATEUR, "amateur"),
-        (MASTER, "master"),
-        (FRITZMEISTER, "fritzmeister"),
+        (AMATEUR, "amateurs"),
+        (MASTER, "masters"),
+        (FRITZMEISTER, "fritzmeisters"),
     )
     # meta data
     description_html = models.TextField(editable=False, blank=True)
@@ -157,6 +157,12 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
     @property
     def get_example_attachments(self):
         return self._get_attachments(Attachment.EXAMPLE_TYPE)
+    
+    @property
+    def get_tags(self):
+        if self.tags:
+            return [x.strip() for x in self.tags.split(',')]
+        else: return None
 
 
 class Image(ImageModel):

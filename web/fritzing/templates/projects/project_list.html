@@ -5,7 +5,17 @@
 {% endblock %}
 
 {% block page_title %}
-    {% if by_user %}{{by_user}}'s {% endif %}Projects
+    {% if by_user %}
+    	<span class="value">{{by_user}}'s</span> Projects
+    {% else %}{% if by_tag %}
+    	Projects tagged as <span class="value">{{ by_tag }}</span>
+    {% else %}{% if by_category %}
+    	Projects inside <span class="value">{{ by_category }}</span> category
+    {% else %}{% if by_difficulty %}
+    	Projects for <span class="value">{{ by_difficulty }}</span>
+    {% else %}
+    	Projects
+    {% endif %}{% endif %}{% endif %}{% endif %}
 {% endblock %}
 
 {% block teaser %}
@@ -19,6 +29,7 @@
 {% endblock %}
 
 {% block content %}
+	{% if projects %}
     <div class="plain project">
             {% for project in projects %}
                 <div class='project overview item {% if forloop.counter0|divisibleby:"2" or forloop.first %}col1{% else %}col2{% endif %}'>
@@ -47,6 +58,9 @@
                 </div>
             {% endfor %}
     </div>
+    {% else %}
+    	No projects found
+    {% endif %}
 {% endblock %}
 
 {# {% block footer_script %} #}

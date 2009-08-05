@@ -13,15 +13,30 @@ import os
 from fritzing.apps.projects.models import Project, Resource, Category, Image, Attachment
 from fritzing.apps.projects.forms import ProjectForm, ResourceField, RESOURCE_DELIMITER
 
-def overview(request,username=None):
+def overview(request,username=None,tag=None,category=None,difficulty=None):
     if username:
         projects = Project.published.filter(author__username=username)
+    elif tag:
+        projects = Project.published.filter(tags__contains=tag)
+    elif category:
+        projects = Project.published.filter(category__title=category)
+    elif difficulty:
+        dif_aux = -1
+        for dif_id, dif_name in Project.DIFFICULTIES:
+            if dif_name == difficulty:
+                dif_aux = dif_id
+                break 
+        
+        projects = Project.published.filter(difficulty=dif_aux)
     else:
         projects = Project.published.all()
     
     return render_to_response("projects/project_list.html", {
         'projects': projects,
-        'by_user': username
+        'by_user': username,
+        'by_tag': tag,
+        'by_category': category,
+        'by_difficulty': difficulty,
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:

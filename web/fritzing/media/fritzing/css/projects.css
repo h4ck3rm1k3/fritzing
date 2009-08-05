@@ -164,3 +164,7 @@ div.edit {
 	font-weight: bold;
 	color: black;
 }
+
+h1 .value {
+	font-weight: bold;
+}

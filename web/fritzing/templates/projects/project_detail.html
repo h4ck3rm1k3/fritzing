@@ -58,10 +58,20 @@
                 
                 <div class="project detail meta">
                 {% if project.category %}
-                    <p><span class="label">Category:</span> <span class="value">{{ project.category }}</span></p>
+                    <p>
+                    	<span class="label">Category:</span>
+                    	<span class="value">
+                    		<a href="{% url projects-by-category project.category %}">{{ project.category }}</a>
+                    	</span>
+                    </p>
                 {% endif %}
                 {% if project.difficulty %}
-                    <p><span class="label">Difficulty:</span> <span class="value">{{ project.get_difficulty }}</span></p>
+                    <p>
+                    	<span class="label">Difficulty:</span>
+                    	<span class="value">
+                    		<a href="{% url projects-by-difficulty project.get_difficulty %}">{{ project.get_difficulty }}</a>
+                    	</span>
+                    </p>
                 {% endif %}
                 {% if project.license %}
                     <p><span class="label">License:</span>&nbsp; {{ license|safe }}</p>
@@ -69,9 +79,15 @@
                 {% if project.members.count %}
                     <p><span class="label">Members:</span> {% for member in members %}{{ member }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                 {% endif %}
-                {% if project.tags %}
-                    {#{ tags }#}
-                    <p><span class="label">Tags:</span> <span class="value">{{ project.tags }}</span></p>
+                {% if project.get_tags %}
+                    <p>
+                    	<span class="label">Tags:</span>
+                    	<span class="value">
+                    		{% for tag in project.get_tags %}
+                    		<a href="{% url projects-by-tag tag %}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+                    		{% endfor %}
+                    	</span>
+                    </p>
                 {% endif %}
                 </div>
                 {% if project.sidebar_images.count %}
