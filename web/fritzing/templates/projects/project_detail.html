@@ -129,7 +129,7 @@
                 <div class="project detail link">
                     {% for resource in project.resources.all %}
 						<div class="project detail attachement table {% cycle "grey" "" %}">
-	                        <a href="{{ resource.url }}">{{ resource.title }}</a>
+	                        <a target="_blank" href="{{ resource.url }}">{{ resource.title }}</a>
 	                    </div>                      
                     {% endfor %}
                 </div>
