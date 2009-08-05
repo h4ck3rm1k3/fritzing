@@ -71,13 +71,20 @@ protected:
 	void loadParts();
 	void loadPartsAux(QDir & dir, QStringList & nameFilters);
 
-	void writeAllPartsBinHeader();
-	void writeAllPartsBinFooter();
-	void writeInstanceInAllPartsBin(const QString &moduleID, const QString &path);
-	void writeToAllPartsBinAux(const QString &textToWrite, QIODevice::OpenMode openMode);
+	void writeCommonBinsHeader();
+	void writeCommonBinsHeaderAux(bool &doIt, const QString &filename, const QString &binName);
+	void writeCommonBinsFooter();
+	void writeCommonBinsFooterAux(bool &doIt, const QString &filename);
+	void writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool &doIt, const QString &filename);
+	void writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool &doIt, const QString &filename);
 
 	static bool CreateAllPartsBinFile;
 	static QString AllPartsBinFilePath;
+	static bool CreateNonCorePartsBinFile;
+	static QString NonCorePartsBinFilePath;
+
+public:
+	static void initNames();
 
 };
 #endif

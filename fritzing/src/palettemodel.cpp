@@ -41,10 +41,12 @@ bool PaletteModel::CreateAllPartsBinFile = true;
 #else
 bool PaletteModel::CreateAllPartsBinFile = false;
 #endif
+bool PaletteModel::CreateNonCorePartsBinFile = true;
 
 bool JustAppendAllPartsInstances = false;
 
 QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
+QString PaletteModel::NonCorePartsBinFilePath = ___emptyString___;
 
 PaletteModel::PaletteModel() : ModelBase(true) {
 	m_loadedFromFile = false;
@@ -65,6 +67,11 @@ void PaletteModel::init() {
 	    QMessageBox::information(NULL, QObject::tr("Fritzing"),
 	                             QObject::tr("No parts found.") );
 	}
+}
+
+void PaletteModel::initNames() {
+	AllPartsBinFilePath = getApplicationSubFolderPath("bins")+"/allParts.dbg" + FritzingBinExtension;
+	NonCorePartsBinFilePath = getApplicationSubFolderPath("bins")+"/nonCoreParts" + FritzingBinExtension;
 }
 
 ModelPart * PaletteModel::retrieveModelPart(const QString & moduleID) {
@@ -95,10 +102,8 @@ void PaletteModel::loadParts() {
 	QStringList nameFilters;
 	nameFilters << "*" + FritzingPartExtension << "*" + FritzingModuleExtension;
 
-	if(CreateAllPartsBinFile) {
-		JustAppendAllPartsInstances = true;
-		writeAllPartsBinHeader();
-	}
+	JustAppendAllPartsInstances = CreateAllPartsBinFile;
+	writeCommonBinsHeader();
 
 	QDir * dir1 = getApplicationSubFolder("parts");
 	if (dir1 != NULL) {
@@ -113,29 +118,37 @@ void PaletteModel::loadParts() {
 	dir1 = new QDir(":/resources/parts");
 	loadPartsAux(*dir1, nameFilters);
 
-	if(CreateAllPartsBinFile) {
-		writeAllPartsBinFooter();
-		JustAppendAllPartsInstances = false;
-	}
+	writeCommonBinsFooter();
+	JustAppendAllPartsInstances = !CreateAllPartsBinFile;
 
 	delete dir1;
 }
 
-void PaletteModel::writeAllPartsBinHeader() {
+void PaletteModel::writeCommonBinsHeader() {
+	writeCommonBinsHeaderAux(CreateAllPartsBinFile, AllPartsBinFilePath, "All Parts");
+	writeCommonBinsHeaderAux(CreateNonCorePartsBinFile, NonCorePartsBinFilePath, "All my parts");
+}
+
+void PaletteModel::writeCommonBinsHeaderAux(bool &doIt, const QString &filename, const QString &binName) {
 	QString header =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
 		QString("<module fritzingVersion='%1'>\n").arg(Version::versionString())+
-		"\t<title>All Parts</title>\n"
+		QString("\t<title>%1</title>\n").arg(binName)+
 		"\t<instances>\n";
-	writeToAllPartsBinAux(header, QFile::WriteOnly);
+	writeToCommonBinAux(header, QFile::WriteOnly, doIt, filename);
 }
 
-void PaletteModel::writeAllPartsBinFooter() {
+void PaletteModel::writeCommonBinsFooter() {
+	writeCommonBinsFooterAux(CreateAllPartsBinFile, AllPartsBinFilePath);
+	writeCommonBinsFooterAux(CreateNonCorePartsBinFile, NonCorePartsBinFilePath);
+}
+
+void PaletteModel::writeCommonBinsFooterAux(bool &doIt, const QString &filename) {
 	QString footer = "\t</instances>\n</module>\n";
-	writeToAllPartsBinAux(footer, QFile::Append);
+	writeToCommonBinAux(footer, QFile::Append, doIt, filename);
 }
 
-void PaletteModel::writeInstanceInAllPartsBin(const QString &moduleID, const QString &path) {
+void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool &doIt, const QString &filename) {
 	QString pathAux = path;
 	pathAux.remove(getApplicationSubFolderPath("")+"/");
 
@@ -149,7 +162,7 @@ void PaletteModel::writeInstanceInAllPartsBin(const QString &moduleID, const QSt
         		"\t\t\t\t</iconView>\n"
         		"\t\t\t</views>\n"
         		"\t\t</instance>\n";
-		writeToAllPartsBinAux(instance, QFile::Append);
+		writeToCommonBinAux(instance, QFile::Append, doIt, filename);
 	}
 	else {
 		QString errorStr;
@@ -189,17 +202,16 @@ void PaletteModel::writeInstanceInAllPartsBin(const QString &moduleID, const QSt
 		geometry.setAttribute("x", "-1");
 		geometry.setAttribute("y", "-1");
 		geometry.setAttribute("z", "-1");
-		writeToAllPartsBinAux(domDocument.toString(), QFile::WriteOnly);
+		writeToCommonBinAux(domDocument.toString(), QFile::WriteOnly, doIt, filename);
 	}
 }
 
-void PaletteModel::writeToAllPartsBinAux(const QString &textToWrite, QIODevice::OpenMode openMode) {
-	if(AllPartsBinFilePath == ___emptyString___) {
-		AllPartsBinFilePath = getApplicationSubFolderPath("bins")+"/allParts.dbg" + FritzingBinExtension;
-	}
-	QFile file(AllPartsBinFilePath);
+void PaletteModel::writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool &doIt, const QString &filename) {
+	if(!doIt) return;
+
+	QFile file(filename);
 	if (!file.open(openMode | QFile::Text)) {
-		CreateAllPartsBinFile = false;
+		doIt = false;
 	} else {
 		QTextStream out(&file);
 		out << textToWrite;
@@ -327,7 +339,13 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 
     emit newPartLoaded(modelPart);
 
-    if(CreateAllPartsBinFile) writeInstanceInAllPartsBin(moduleID,path);
+    writeInstanceInCommonBin(moduleID,path,CreateAllPartsBinFile,AllPartsBinFilePath);
+
+    bool keepOnCreatingNonCorePartBins = !modelPart->isCore();
+    writeInstanceInCommonBin(moduleID,path,keepOnCreatingNonCorePartBins,NonCorePartsBinFilePath);
+    if(!modelPart->isCore()) {
+    	CreateNonCorePartsBinFile = keepOnCreatingNonCorePartBins;
+    }
 
     return modelPart;
 }

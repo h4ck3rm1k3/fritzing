@@ -333,6 +333,7 @@ int FApplication::startup(int & argc, char ** argv)
 	PartsEditorMainWindow::initText();
 	BinManager::MyPartsBinLocation = getUserDataStorePath("bins")+"/my_parts.fzb";
 	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
+	PaletteModel::initNames();
 
 	QList<int> fontIds;
 	registerFont(":/resources/fonts/DroidSans.ttf", fontIds);
