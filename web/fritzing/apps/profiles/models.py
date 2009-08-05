@@ -8,8 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 class Profile(models.Model):
     def project_images_path(self, filename):
         username = self.user.username
-        path = "/".join(list(username[:3])) if len(username) >= 3 else ''
-        return os.path.join(settings.USER_FILES_FOLDER, path, username, "profile", filename)
+        path = "/".join(['users',username[0]])
+        return os.path.join(settings.USER_FILES_FOLDER, path, username, 'images', filename)
     
     user = models.ForeignKey(User, unique=True, verbose_name=_('user'))
     #name = models.CharField(_('name'), max_length=50, null=True, blank=True)

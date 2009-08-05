@@ -51,26 +51,27 @@
             </td>
             <td width="40%" class="right_col">				
              	<div class="project detail date">
-			 		By <a href="{% url profile_detail project.author.username %}">{% firstof project.author.get_fullname project.author.username %}</a>
+			 		By <span class="value"><a href="{% url profile_detail project.author.username %}">{% firstof project.author.get_fullname project.author.username %}</a></span>
 			 		<br/>
-			    	Created at {{ project.created|date:"F j, Y, H:i" }}
+			    	Created on <span class="value">{{ project.created|date:"F j, Y, H:i" }}</span>
 				</div>
                 
                 <div class="project detail meta">
                 {% if project.category %}
-                    <p><strong>Category:</strong> {{ project.category }}</p>
+                    <p><span class="label">Category:</span> <span class="value">{{ project.category }}</span></p>
                 {% endif %}
                 {% if project.difficulty %}
-                    <p><strong>Difficulty:</strong> {{ project.get_difficulty }}</p>
+                    <p><span class="label">Difficulty:</span> <span class="value">{{ project.get_difficulty }}</span></p>
                 {% endif %}
                 {% if project.license %}
-                    <p><strong>License:</strong>&nbsp; {{ license|safe }}</p>
+                    <p><span class="label">License:</span>&nbsp; {{ license|safe }}</p>
                 {% endif %}
                 {% if project.members.count %}
-                    <p><strong>Members:</strong> {% for member in members %}{{ member }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                    <p><span class="label">Members:</span> {% for member in members %}{{ member }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                 {% endif %}
                 {% if project.tags %}
-                    {{ tags }}
+                    {#{ tags }#}
+                    <p><span class="label">Tags:</span> <span class="value">{{ project.tags }}</span></p>
                 {% endif %}
                 </div>
                 {% if project.sidebar_images.count %}

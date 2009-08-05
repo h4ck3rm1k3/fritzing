@@ -156,3 +156,11 @@ div.edit {
 	font-size: 11px;
 	margin-top: -20px;
 }
+
+.project .label {
+}
+
+.project .value {
+	font-weight: bold;
+	color: black;
+}

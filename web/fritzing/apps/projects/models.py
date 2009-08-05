@@ -162,9 +162,8 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
 class Image(ImageModel):
     def project_images_path(self, filename):
         slug = self.project.slug
-        username = self.project.author.username
-        path = "/".join(list(username[:3])) if len(username) >= 3 else ''
-        return os.path.join(settings.USER_FILES_FOLDER, path, username, "projects", slug, "images", filename)
+        path = "/".join(['projects',slug[0]])
+        return os.path.join(settings.USER_FILES_FOLDER, path, slug, 'images', filename)
 
     title = models.CharField(max_length=255, blank=True, null=True,
         help_text=_('leave empty to populate with filename'))
@@ -205,9 +204,8 @@ class Attachment(models.Model):
     
     def project_attachment_path(self, filename):
         slug = self.project.slug
-        username = self.project.author.username
-        path = "/".join(list(username[:3])) if len(username) >= 3 else ''
-        return os.path.join(settings.USER_FILES_FOLDER, path, username, "projects", slug, self.kind, filename)
+        path = "/".join(['projects',slug[0]])
+        return os.path.join(settings.USER_FILES_FOLDER, path, slug, self.kind, filename)
 
 
     title = models.CharField(_('title'), max_length=255, blank=True,
