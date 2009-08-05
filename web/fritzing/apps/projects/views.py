@@ -8,6 +8,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404, get_list_or_404
+import os
 
 from fritzing.apps.projects.models import Project, Resource, Category, Image, Attachment
 from fritzing.apps.projects.forms import ProjectForm, ResourceField, RESOURCE_DELIMITER
@@ -30,12 +31,14 @@ def _manage_attachments_saving(project_id,form, field):
     removed = [x.replace(settings.MEDIA_URL,'') for x in form.removed(field)]
     if removed:
         for at in Attachment.objects.filter(project__id=project_id,attachment__in=removed):
+            os.remove(at.attachment.path)
             at.delete()
         
 def _manage_images_saving(project_id,form, field):
     removed = [x.replace(settings.MEDIA_URL,'') for x in form.removed(field)]
     if removed:
         for im in Image.objects.filter(project__id=project_id,image__in=removed):
+            os.remove(im.image.path)
             im.delete()
     
 def _manage_deleted_files(project_id,form):
@@ -56,6 +59,9 @@ def _manage_save(request, form, project_id=None, edition=False):
             project.slug = Project.objects.filter(id=project_id)[0].slug
         
         project.save()
+        
+        if edition:
+            _manage_deleted_files(project.id,form)
 
         attachment_types = (
             ('fritzing_files', Attachment.FRITZING_TYPE),
@@ -104,9 +110,6 @@ def _manage_save(request, form, project_id=None, edition=False):
         for resource in form.resources:
             title, url = resource
             Resource.objects.create(title=title, url=url, project=project)
-            
-        if edition:
-            _manage_deleted_files(project.id,form)
             
         # save the project instance
         project.save()
