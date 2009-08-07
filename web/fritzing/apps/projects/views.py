@@ -40,7 +40,7 @@ def overview(request,username=None,tag=None,category=None,difficulty=None):
         'by_difficulty': difficulty,
         'tags': Project.all_tags(),
         'categories': sorted([t['title'] for t in Category.objects.values('title')]),
-        'difficulties' : sorted([text for id,text in Project.DIFFICULTIES]),
+        'difficulties' : [text for id,text in Project.DIFFICULTIES],
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:
