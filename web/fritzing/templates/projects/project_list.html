@@ -59,10 +59,12 @@
 			{% endfor %}
 		</div>
 		
+		{% if not showing_all %} 
 		<div class="option"><div class="header">
 			<br />
 			<a href="{% url projects-overview %}">All Projects</a>
 		</div></div>
+		{% endif %}
 	</div>
     <div id="projects "class="plain project">
             {% for project in projects %}

@@ -14,6 +14,8 @@ from fritzing.apps.projects.models import Project, Resource, Category, Image, At
 from fritzing.apps.projects.forms import ProjectForm, ResourceField, RESOURCE_DELIMITER
 
 def overview(request,username=None,tag=None,category=None,difficulty=None):
+    showing_all = False
+    
     if username:
         projects = Project.published.filter(author__username=username)
     elif tag:
@@ -30,6 +32,7 @@ def overview(request,username=None,tag=None,category=None,difficulty=None):
         projects = Project.published.filter(difficulty=dif_aux)
     else:
         projects = Project.published.all()
+        showing_all = True
         
     
     return render_to_response("projects/project_list.html", {
@@ -41,6 +44,7 @@ def overview(request,username=None,tag=None,category=None,difficulty=None):
         'tags': Project.all_tags(),
         'categories': sorted([t['title'] for t in Category.objects.values('title')]),
         'difficulties' : [text for id,text in Project.DIFFICULTIES],
+        'showing_all' : showing_all
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:
