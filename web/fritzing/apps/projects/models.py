@@ -170,7 +170,7 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
         all_tags = [t['tags'].split(',') for t in Project.published.values('tags')]
         all_tags = list(itertools.chain(*all_tags))
         all_tags = Set([t.strip() for t in all_tags])
-        return all_tags
+        return sorted(all_tags)
         
     all_tags = staticmethod(all_tags)
         
