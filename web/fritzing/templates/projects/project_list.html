@@ -30,9 +30,43 @@
 
 {% block content %}
 	{% if projects %}
-    <div class="plain project">
+	<div id="projects_meta">
+		<form action="{% url projects-create %}">
+			<input type="submit" value="{% trans "Create New..." %}"></input>
+		</form>
+		
+		<div class="option">
+			<div class="header">By category:</div>
+			{% for c in categories %}
+				<a {% ifequal c by_category %}class="current"{% endifequal %}
+					href="{% url projects-by-category c %}">{{c}}</a>
+			{% endfor %}
+		</div>
+		
+		<div class="option">
+			<div class="header">By difficulty:</div>
+			{% for d in difficulties %}
+				<a {% ifequal d by_difficulty %}class="current"{% endifequal %}
+					href="{% url projects-by-difficulty d %}">{{d}}</a>
+			{% endfor %}
+		</div>
+		
+		<div class="option">
+			<div class="header">By tag:</div>
+			{% for t in tags %}
+				<a {% ifequal t by_tag %}class="current"{% endifequal %}
+					href="{% url projects-by-tag t %}">{{t}}</a>
+			{% endfor %}
+		</div>
+		
+		<div class="option"><div class="header">
+			<br />
+			<a href="{% url projects-overview %}">All Projects</a>
+		</div></div>
+	</div>
+    <div id="projects "class="plain project">
             {% for project in projects %}
-                <div class='project overview item {% if forloop.counter0|divisibleby:"2" or forloop.first %}col1{% else %}col2{% endif %}'>
+                <div class='project overview item {% cycle 'col1' 'col2' 'col3' %}'>
                   <div class="project overview image">
                     {% if project.main_images.0 %}
                         <!-- a href="{{ project.get_absolute_url }}"><img
@@ -46,15 +80,17 @@
                             alt="{{ project.title }}" /></a>
                     {% endif %}
                   </div>
+				  <div class="project overview info"> 
                     <div>
                       <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
                     </div>
-                    <div>{{ project.created|date:_("DATETIME_FORMAT") }}</div>
+                    <div>{{ project.created|date:_("DATE_FORMAT") }}</div>
                     <div>by <a href="{% url profile_detail project.author.username %}">{{ project.author }}</a>
                     {% if project.difficulty %}
                     	for {{ project.get_difficulty }}
                     {% endif %}
                     </div>
+				  </div>
                 </div>
             {% endfor %}
     </div>

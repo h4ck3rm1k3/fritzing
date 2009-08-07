@@ -30,6 +30,7 @@ def overview(request,username=None,tag=None,category=None,difficulty=None):
         projects = Project.published.filter(difficulty=dif_aux)
     else:
         projects = Project.published.all()
+        
     
     return render_to_response("projects/project_list.html", {
         'projects': projects,
@@ -37,6 +38,9 @@ def overview(request,username=None,tag=None,category=None,difficulty=None):
         'by_tag': tag,
         'by_category': category,
         'by_difficulty': difficulty,
+        'tags': Project.all_tags(),
+        'categories': [ t['title'] for t in Category.objects.values('title')],
+        'difficulties' : [text for id,text in Project.DIFFICULTIES],
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:

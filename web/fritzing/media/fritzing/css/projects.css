@@ -104,18 +104,25 @@ ul.selection {
     background-color: #eaeaea;
 }
 
+#projects {
+	float:left;
+}
+
+#projects_meta {
+	width: 25%;
+	float: right;
+}
+
 .project.overview.image {
     float: left;
     padding: 2px 4px;
 }
 
-.project.overview.image {
-    float:left;
-}
 .project.overview.item {
-    width: 48%;label::after { content: ": "; }
+    width: 25%;
+	label::after { content: ": "; }
     float: left;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 }
 
 .project.overview h3 {
@@ -129,15 +136,6 @@ ul.selection {
 .project.overview.item ul li {
     list-style: none;
     color: #333;
-}
-
-.col1 {
-	clear: left;
-	float: left;
-}
-
-.col2 {
-	float: right;
 }
 
 span.required {
@@ -167,4 +165,34 @@ div.edit {
 
 h1 .value {
 	font-weight: bold;
+}
+
+div.option {
+	margin-bottom: 5px;
+}
+
+div.option .header {
+	font-weight: bold;
+}
+
+div.option a {
+	margin-right: 3px;
+}
+
+div.option a.current {
+	font-weight: bolder;
+}
+
+/** layout **/
+.col1 {
+	clear: left;
+	float: left;
+}
+
+.col2 {
+	float: left;
+}
+
+.col3 {
+	float: left;
 }

@@ -1,9 +1,11 @@
 import os
+import itertools
+from sets import Set
+
 from fritzing import settings 
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-
 from django_extensions.db.models import TimeStampedModel
 from tagging.fields import TagField
 from fritzing.apps.projects.managers import PublicProjectManager
@@ -163,6 +165,15 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
         if self.tags:
             return [x.strip() for x in self.tags.split(',')]
         else: return None
+        
+    def all_tags():
+        all_tags = [t['tags'].split(',') for t in Project.published.values('tags')]
+        all_tags = list(itertools.chain(*all_tags))
+        all_tags = Set([t.strip() for t in all_tags])
+        return all_tags
+        
+    all_tags = staticmethod(all_tags)
+        
 
 
 class Image(ImageModel):
