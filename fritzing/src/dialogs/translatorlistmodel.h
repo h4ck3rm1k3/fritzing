@@ -18,54 +18,39 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2597 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
 
-#ifndef SETCOLORDIALOG_H
-#define SETCOLORDIALOG_H
+#ifndef TRANSLATORLISTMODEL_H
+#define TRANSLATORLISTMODEL_H
 
-#include <QDialog>
-#include <QColorDialog>
-#include <QLabel>
-#include <QCheckBox>
+#include <QAbstractListModel>
+#include <QFileInfoList>
+#include <QLocale>
+#include <QHash>
 
-class SetColorDialog : public QDialog
+class TranslatorListModel : public  QAbstractListModel
 {
-Q_OBJECT
+	Q_OBJECT
 
 public:
-	SetColorDialog(const QString & viewName, QColor & currentColor, QColor & standardColor, QWidget *parent = 0);
-	~SetColorDialog();
+	TranslatorListModel(QFileInfoList &, QObject* parent = 0);
+	~TranslatorListModel();
 
-	const QColor & selectedColor();
-	bool isPrefsColor();
+	QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+	int rowCount ( const QModelIndex & parent = QModelIndex() ) const ;
 
-protected:
-	void setColor(const QColor &);
-	void setCustomColor(const QColor &);
-
-protected slots:
-	void selectCurrent();
-	void selectCustom();
-	void selectLastCustom();
-	void selectStandard();
-
+	const QLocale * locale(int index);
+	int findIndex(const QString & language);
 
 protected:
-	QColor m_currentColor;	
-	QColor m_standardColor;
-	QColor m_selectedColor;
-	QColor m_customColor;
-	QLabel * m_currentColorLabel;
-	QLabel * m_standardColorLabel;
-	QLabel * m_customColorLabel;
-	QLabel * m_selectedColorLabel;
-	QCheckBox * m_prefsCheckBox;
+	static QList<QLocale *> m_localeList;
+
+	static QHash<QString, QString> m_languages;
 };
-
 
 #endif 

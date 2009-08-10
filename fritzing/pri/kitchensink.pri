@@ -49,9 +49,7 @@ HEADERS += \
     src/modelpartshared.h \
     src/palettemodel.h \
     src/pcbsketchwidget.h \
-    src/prefsdialog.h \
     src/schematicsketchwidget.h \
-    src/setcolordialog.h \
     src/sketchareawidget.h \
     src/sketchmodel.h \
     src/sketchtoolbutton.h \
@@ -95,9 +93,7 @@ SOURCES += \
     src/modelpartshared.cpp \
     src/palettemodel.cpp \
     src/pcbsketchwidget.cpp \
-    src/prefsdialog.cpp \
     src/schematicsketchwidget.cpp \
-    src/setcolordialog.cpp \
     src/sketchareawidget.cpp \
     src/sketchmodel.cpp \
     src/sketchtoolbutton.cpp \

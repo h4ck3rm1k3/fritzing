@@ -24,11 +24,8 @@ $Date$
 
 ********************************************************************/
 
-
-
 #ifndef ITEMBASE_H
 #define ITEMBASE_H
-
 
 #include <QXmlStreamWriter>
 #include <QPointF>
@@ -198,6 +195,14 @@ protected:
 	static QBrush chosenBrush;
 	static QBrush equalPotentialBrush;
 	static const qreal normalConnectorOpacity;
+
+public:
+	static QColor connectedColor();
+	static QColor unconnectedColor();
+	static QColor standardConnectedColor();
+	static QColor standardUnconnectedColor();
+	static void setConnectedColor(QColor &);
+	static void setUnconnectedColor(QColor &);
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);

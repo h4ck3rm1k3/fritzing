@@ -33,6 +33,7 @@ $Date$
 #include <QPushButton>
 #include <QStackedWidget>
 #include <QSizeGrip>
+#include <QProcess>
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
@@ -40,6 +41,8 @@ $Date$
 #include "viewlayer.h"
 #include "zoomcombobox.h"
 #include "sketchtoolbutton.h"
+
+#define NAVENDU
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -242,6 +245,15 @@ protected slots:
 	void startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &);
 	void loadedViewsSlot(ModelBase *, QDomElement & views);
 
+#ifdef NAVENDU
+	void launchExternalProcess();
+	void processError(QProcess::ProcessError processError);
+	void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+	void processReadyRead();
+	void processStateChanged(QProcess::ProcessState newState);
+
+#endif
+
 protected:
 	void initSketchWidget(SketchWidget *);
 
@@ -413,6 +425,9 @@ protected:
 	QAction *m_saveAsBundledAct;
 	QAction *m_saveAsModuleAct;
 	QAction *m_editModuleAct;
+#ifdef NAVENDU
+	QAction * m_launchExternalProcessAct;
+#endif
 
 	QMenu *m_zOrderMenu;
 	QAction *m_bringToFrontAct;

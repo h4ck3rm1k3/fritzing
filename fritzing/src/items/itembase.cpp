@@ -42,6 +42,7 @@ $Date$
 #include <QTimer>
 #include <QVector>
 #include <QSet>
+#include <QSettings>
 #include <math.h>
 
 /////////////////////////////////
@@ -100,17 +101,20 @@ const qreal ItemBase::hoverOpacity = .20;
 const QColor ItemBase::connectorHoverColor(0,0,255);
 const qreal ItemBase::connectorHoverOpacity = .40;
 
+const QColor StandardConnectedColor(0, 255, 0);
+const QColor StandardUnconnectedColor(255, 0, 0);
+
 QPen ItemBase::normalPen(QColor(255,0,0));
 QPen ItemBase::hoverPen(QColor(0, 0, 255));
-QPen ItemBase::connectedPen(QColor(0, 255, 0));
-QPen ItemBase::unconnectedPen(QColor(255, 0, 0));
+QPen ItemBase::connectedPen(StandardConnectedColor);
+QPen ItemBase::unconnectedPen(StandardUnconnectedColor);
 QPen ItemBase::chosenPen(QColor(255,0,0));
 QPen ItemBase::equalPotentialPen(QColor(255,255,0));
 
 QBrush ItemBase::normalBrush(QColor(255,0,0));
 QBrush ItemBase::hoverBrush(QColor(0,0,255));
-QBrush ItemBase::connectedBrush(QColor(0,255,0));
-QBrush ItemBase::unconnectedBrush(QColor(255,0,0));
+QBrush ItemBase::connectedBrush(StandardConnectedColor);
+QBrush ItemBase::unconnectedBrush(StandardUnconnectedColor);
 QBrush ItemBase::chosenBrush(QColor(255,0,0));
 QBrush ItemBase::equalPotentialBrush(QColor(255,255,0));
 
@@ -291,6 +295,21 @@ ModelPartShared * ItemBase::modelPartShared() {
 void ItemBase::initNames() {
 	partInstanceDefaultTitle = tr("Part");
 	moduleInstanceDefaultTitle = tr("Module");
+
+	QSettings settings;
+	QString colorName = settings.value("ConnectedColor").toString();
+	if (!colorName.isEmpty()) {
+		QColor color;
+		color.setNamedColor(colorName);
+		setConnectedColor(color);
+	}
+
+	colorName = settings.value("UnconnectedColor").toString();
+	if (!colorName.isEmpty()) {
+		QColor color;
+		color.setNamedColor(colorName);
+		setUnconnectedColor(color);
+	}
 }
 
 void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
@@ -1403,3 +1422,30 @@ QString ItemBase::collectExtraInfoHtml(const QString & prop, const QString & val
 ConnectorItem * ItemBase::rightClickedConnector() {
 	return m_rightClickedConnector;
 }
+
+QColor ItemBase::connectedColor() {
+	return connectedPen.color();
+}
+
+QColor ItemBase::unconnectedColor() {
+	return unconnectedPen.color();
+}
+
+QColor ItemBase::standardConnectedColor() {
+	return StandardConnectedColor;
+}
+
+QColor ItemBase::standardUnconnectedColor() {
+	return StandardUnconnectedColor;
+}
+
+void ItemBase::setConnectedColor(QColor & c) {
+	connectedPen.setColor(c);
+	connectedBrush.setColor(c);
+}
+
+void ItemBase::setUnconnectedColor(QColor & c) {
+	unconnectedPen.setColor(c);
+	unconnectedBrush.setColor(c);
+}
+

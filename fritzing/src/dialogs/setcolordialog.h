@@ -25,59 +25,48 @@ $Date$
 ********************************************************************/
 
 
-#ifndef PREFSDIALOG_H
-#define PREFSDIALOG_H
+#ifndef SETCOLORDIALOG_H
+#define SETCOLORDIALOG_H
 
 #include <QDialog>
-#include <QFile>
-#include <QAbstractListModel>
-#include <QFileInfoList>
-#include <QLocale>
-#include <QHash>
+#include <QColorDialog>
+#include <QLabel>
+#include <QCheckBox>
 
-class TranslatorListModel : public  QAbstractListModel
+class SetColorDialog : public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 
 public:
-	TranslatorListModel(QFileInfoList &, QObject* parent = 0);
-	~TranslatorListModel();
+	SetColorDialog(const QString & message, QColor & currentColor, QColor & standardColor, bool askPrefs, QWidget *parent = 0);
+	~SetColorDialog();
 
-	QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
-	int rowCount ( const QModelIndex & parent = QModelIndex() ) const ;
-
-	const QLocale * locale(int index);
-	int findIndex(const QString & language);
+	const QColor & selectedColor();
+	bool isPrefsColor();
 
 protected:
-	static QList<QLocale *> m_localeList;
-
-	static QHash<QString, QString> m_languages;
-};
-
-class PrefsDialog : public QDialog
-{
-	Q_OBJECT
-
-public:
-	PrefsDialog(const QString & language, QFileInfoList & list, QWidget *parent = 0);
-	~PrefsDialog();
-
-	const QString & name();
-	bool cleared();
-
-protected:
-	QWidget * createLanguageForm(QFileInfoList & list);
-	QWidget* createOtherForm();
+	void setColor(const QColor &);
+	void setCustomColor(const QColor &);
 
 protected slots:
-	void changeLanguage(int);
-	void clear();
+	void selectCurrent();
+	void selectCustom();
+	void selectLastCustom();
+	void selectStandard();
+
 
 protected:
-	QString m_name;
-	TranslatorListModel * m_translatorListModel;
-	bool m_cleared;
+	QString m_message;
+	QColor m_currentColor;	
+	QColor m_standardColor;
+	QColor m_selectedColor;
+	QColor m_customColor;
+	QLabel * m_currentColorLabel;
+	QLabel * m_standardColorLabel;
+	QLabel * m_customColorLabel;
+	QLabel * m_selectedColorLabel;
+	QCheckBox * m_prefsCheckBox;
 };
+
 
 #endif 

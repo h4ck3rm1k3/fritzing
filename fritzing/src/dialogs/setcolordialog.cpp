@@ -18,15 +18,15 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2597 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
 #include "setcolordialog.h"
-#include "debugdialog.h"
-#include "utils/clickablelabel.h"
+#include "../debugdialog.h"
+#include "../utils/clickablelabel.h"
 
 #include <QLabel>
 #include <QComboBox>
@@ -42,16 +42,18 @@ static const int BUTTON_WIDTH = 110;
 
 /////////////////////////////////////
 
-SetColorDialog::SetColorDialog(const QString & viewName, QColor & currentColor, QColor & standardColor, QWidget *parent) : QDialog(parent) 
+SetColorDialog::SetColorDialog(const QString & message, QColor & currentColor, QColor & standardColor, bool askPrefs, QWidget *parent) : QDialog(parent) 
 {
+	m_prefsCheckBox = NULL;
+	m_message = message;
 	m_currentColor = m_selectedColor = currentColor;
 	m_standardColor = standardColor;
 
-	this->setWindowTitle(QObject::tr("Set Background Color..."));
+	this->setWindowTitle(tr("Set %1 Color...").arg(message));
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 
-	QLabel * label = new QLabel(tr("Choose a new background color for %1.").arg(viewName));
+	QLabel * label = new QLabel(tr("Choose a new %1 color.").arg(message.toLower()));
 	vLayout->addWidget(label);
 
 	QFrame * f1 = new QFrame();
@@ -60,7 +62,7 @@ SetColorDialog::SetColorDialog(const QString & viewName, QColor & currentColor, 
 	button1->setFixedWidth(BUTTON_WIDTH);
 	connect(button1, SIGNAL(clicked()), this, SLOT(selectCurrent()));
 	hLayout1->addWidget(button1);
-	m_currentColorLabel = new ClickableLabel(tr("current color for %1 (%2)").arg(viewName).arg(currentColor.name()), this);
+	m_currentColorLabel = new ClickableLabel(tr("current %1 color (%2)").arg(message.toLower()).arg(currentColor.name()), this);
 	connect(m_currentColorLabel, SIGNAL(clicked()), this, SLOT(selectCurrent()));
 	m_currentColorLabel->setPalette(QPalette(currentColor));
 	m_currentColorLabel->setAutoFillBackground(true);
@@ -74,7 +76,7 @@ SetColorDialog::SetColorDialog(const QString & viewName, QColor & currentColor, 
 	button2->setFixedWidth(BUTTON_WIDTH);
 	connect(button2, SIGNAL(clicked()), this, SLOT(selectStandard()));
 	hLayout2->addWidget(button2);
-	m_standardColorLabel = new ClickableLabel(tr("standard color for %1 (%2)").arg(viewName).arg(standardColor.name()), this);
+	m_standardColorLabel = new ClickableLabel(tr("standard %1 color (%2)").arg(message.toLower()).arg(standardColor.name()), this);
 	connect(m_standardColorLabel, SIGNAL(clicked()), this, SLOT(selectStandard()));
 	m_standardColorLabel->setPalette(QPalette(standardColor));
 	m_standardColorLabel->setAutoFillBackground(true);
@@ -106,11 +108,13 @@ SetColorDialog::SetColorDialog(const QString & viewName, QColor & currentColor, 
 	m_selectedColorLabel->setMargin(4);
 	vLayout->addWidget(f4);
 
-	QFrame * f5 = new QFrame();
-	QHBoxLayout * hLayout5 = new QHBoxLayout(f5);
-	m_prefsCheckBox = new QCheckBox(tr("Make this the default background color for %1").arg(viewName));
-	hLayout5->addWidget(m_prefsCheckBox);
-	vLayout->addWidget(f5);
+	if (askPrefs) {
+		QFrame * f5 = new QFrame();
+		QHBoxLayout * hLayout5 = new QHBoxLayout(f5);
+		m_prefsCheckBox = new QCheckBox(tr("Make this the default %1 color").arg(message.toLower()));
+		hLayout5->addWidget(m_prefsCheckBox);
+		vLayout->addWidget(f5);
+	}
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
@@ -143,7 +147,7 @@ void SetColorDialog::selectLastCustom() {
 }
 
 void SetColorDialog::selectCustom() {
-	QColor color = QColorDialog::getColor ( m_selectedColor, this, tr("Select custom background color")) ;
+	QColor color = QColorDialog::getColor ( m_selectedColor, this, tr("Select custom %1 color").arg(m_message.toLower()));
 	if (!color.isValid()) return;
 
 	setColor(color);
@@ -151,6 +155,8 @@ void SetColorDialog::selectCustom() {
 }
 
 bool SetColorDialog::isPrefsColor() {
+	if (m_prefsCheckBox == NULL) return false;
+
 	return m_prefsCheckBox->isChecked();
 }
 

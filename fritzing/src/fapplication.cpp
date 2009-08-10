@@ -30,7 +30,7 @@ $Date$
 #include "mainwindow.h"
 #include "fsplashscreen.h"
 #include "version/version.h"
-#include "prefsdialog.h"
+#include "dialogs/prefsdialog.h"
 #include "help/helper.h"
 #include "partseditor/partseditormainwindow.h"
 #include "layerattributes.h"

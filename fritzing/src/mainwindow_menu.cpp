@@ -55,7 +55,7 @@ $Date$
 #include "version/version.h"
 #include "svg/groundplanegenerator.h"
 #include "help/tipsandtricks.h"
-#include "setcolordialog.h"
+#include "dialogs/setcolordialog.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -826,6 +826,12 @@ void MainWindow::createFileMenuActions() {
 	m_printAct->setStatusTip(tr("Print the current view"));
 	connect(m_printAct, SIGNAL(triggered()), this, SLOT(print()));
 
+#ifdef NAVENDU
+	m_launchExternalProcessAct = new QAction(tr("Launch External Process..."), this);
+	m_launchExternalProcessAct->setStatusTip(tr("Shell launch an external application"));
+	connect(m_launchExternalProcessAct, SIGNAL(triggered()), this, SLOT(launchExternalProcess()));
+#endif
+
 	m_quitAct = new QAction(tr("&Quit"), this);
 	m_quitAct->setShortcut(tr("Ctrl+Q"));
 	m_quitAct->setStatusTip(tr("Quit the application"));
@@ -1313,6 +1319,10 @@ void MainWindow::createMenus()
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));
     //m_fileMenu->addAction(m_pageSetupAct);
     m_fileMenu->addAction(m_printAct);
+#ifdef NAVENDU
+	m_fileMenu->addSeparator();
+	m_fileMenu->addAction(m_launchExternalProcessAct);
+#endif
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
     connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
@@ -2949,7 +2959,9 @@ void MainWindow::setBackgroundColor() {
 
 	QColor bc = m_currentGraphicsView->background();
 	QColor sc = m_currentGraphicsView->standardBackground();
-	SetColorDialog setColorDialog(m_currentGraphicsView->viewName(), bc, sc, this);
+
+	QString text = tr("%1 Background").arg(m_currentGraphicsView->viewName());
+	SetColorDialog setColorDialog(text, bc, sc, true, this);
 	int result = setColorDialog.exec();
 	if (result == QDialog::Rejected) return;
 
@@ -3014,3 +3026,54 @@ void MainWindow::disconnectAll() {
 	m_currentGraphicsView->disconnectAll();
 }
 
+#ifdef NAVENDU
+
+void MainWindow::launchExternalProcess() {
+	QString path = QFileDialog::getOpenFileName(this, "launch process", QApplication::applicationFilePath());
+	if (path.isEmpty()) return;
+
+	QFileInfo f = QFileInfo(path);
+	QProcess * process = new QProcess(this);
+	process->setWorkingDirectory(f.dir().absolutePath());
+	process->setProcessChannelMode(QProcess::MergedChannels);
+	process->setReadChannel(QProcess::StandardOutput);
+
+	connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(processError(QProcess::ProcessError)));
+	connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(processFinished(int, QProcess::ExitStatus)));
+	connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(processReadyRead()));
+	connect(process, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(processStateChanged(QProcess::ProcessState)));
+
+	process->start(path);
+
+}
+
+
+void MainWindow::processError(QProcess::ProcessError processError) {
+	DebugDialog::debug(QString("process error %1").arg(processError));
+}
+
+void MainWindow::processFinished(int exitCode, QProcess::ExitStatus exitStatus) {
+	DebugDialog::debug(QString("process finished %1 %2").arg(exitCode).arg(exitStatus));
+	sender()->deleteLater();
+}
+
+void MainWindow::processReadyRead() {
+	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+	DebugDialog::debug(byteArray.data());
+}
+
+void MainWindow::processStateChanged(QProcess::ProcessState newState) {
+	switch(newState) {
+		case QProcess::Running:
+			DebugDialog::debug(QString("process running"));
+			break;
+		case QProcess::Starting:
+			DebugDialog::debug(QString("process starting"));
+			break;
+		case QProcess::NotRunning:
+			DebugDialog::debug(QString("process not running"));
+			break;
+	}
+}
+
+#endif
