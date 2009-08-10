@@ -125,3 +125,9 @@ def truncatechars(s, num):
     dots = '...' if len(s) > length else '' 
     return u'%s%s' % (s[:length], dots)
 
+@register.filter
+def contains(list, item):
+    """
+    tells if list contains item
+    """
+    return list and item in list

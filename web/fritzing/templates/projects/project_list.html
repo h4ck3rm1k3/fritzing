@@ -1,5 +1,6 @@
 {% extends "site_base.html" %}
 {% load i18n %}
+{% load fritzing_tools %}
 {% block title %}
   Projects
 {% endblock %}
@@ -24,8 +25,7 @@
 
 {% block extra_head %}
     <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
-    {# <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.lightbox.js"></script> #}
-    {# <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/jquery.lightbox.css" type="text/css" media="screen" charset="utf-8" /> #}
+	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/projects.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -35,29 +35,47 @@
 			<input type="submit" value="{% trans "Create New..." %}"></input>
 		</form>
 		
-		<div class="option">
-			<div class="header">By category:</div>
-			{% for c in categories %}
-				<a {% ifequal c by_category %}class="current"{% endifequal %}
-					href="{% url projects-by-category c %}">{{c}}</a>
-			{% endfor %}
-		</div>
-		
-		<div class="option">
-			<div class="header">By difficulty:</div>
-			{% for d in difficulties %}
-				<a {% ifequal d by_difficulty %}class="current"{% endifequal %}
-					href="{% url projects-by-difficulty d %}">{{d}}</a>
-			{% endfor %}
-		</div>
-		
-		<div class="option">
-			<div class="header">By tag:</div>
-			{% for t in tags %}
-				<a {% ifequal t by_tag %}class="current"{% endifequal %}
-					href="{% url projects-by-tag t %}">{{t}}</a>
-			{% endfor %}
-		</div>
+		<form action="{% url projects-overview %}" id="searchForm" method="get">
+			<div class="option">
+				<div class="header">By category:</div>
+				{% for c in categories %}
+					{% if selected_categories|contains:c %}
+					<a href="#" onclick="filter('selected_categories','{{c}}')">
+						<img src="/media/admin/img/admin/icon_deletelink.gif"/>
+					</a>
+					{% endif %}
+					
+					<a {% ifequal c by_category %}class="current"{% endifequal %}
+						href="javascript:filter('selected_categories','{{c}}')"
+						>{{c}}</a>
+					
+					<span class="">
+						<input name="selected_categories" id="{{c}}" type="checkbox"
+							value="{{c}}" 
+						{% if selected_categories|contains:c %}
+							checked="checked"
+						{% endif %}
+						></input>
+					</span>
+				{% endfor %}
+			</div>
+			
+			<div class="option">
+				<div class="header">By difficulty:</div>
+				{% for d in difficulties %}
+					<a {% ifequal d by_difficulty %}class="current"{% endifequal %}
+						href="{% url projects-by-difficulty d %}">{{d}}</a>
+				{% endfor %}
+			</div>
+			
+			<div class="option">
+				<div class="header">By tag:</div>
+				{% for t in tags %}
+					<a {% ifequal t by_tag %}class="current"{% endifequal %}
+						href="{% url projects-by-tag t %}">{{t}}</a>
+				{% endfor %}
+			</div>
+		</form>
 		
 		{% if not showing_all %} 
 		<div class="option"><div class="header">

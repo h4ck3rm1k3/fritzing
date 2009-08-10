@@ -196,3 +196,7 @@ div.option a.current {
 .col3 {
 	float: left;
 }
+
+.hidden {
+	visibility: hidden;
+}
