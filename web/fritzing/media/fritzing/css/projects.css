@@ -197,6 +197,10 @@ div.option a.current {
 	float: left;
 }
 
+a.filter {
+	white-space:nowrap;
+}
+
 .hidden {
-	visibility: hidden;
+	display: none;
 }

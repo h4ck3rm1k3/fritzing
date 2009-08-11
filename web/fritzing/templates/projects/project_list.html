@@ -24,12 +24,12 @@
 {% endblock %}
 
 {% block extra_head %}
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
-	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/projects.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/projects.list.js"></script>
 {% endblock %}
 
 {% block content %}
-	{% if projects %}
 	<div id="projects_meta">
 		<form action="{% url projects-create %}">
 			<input type="submit" value="{% trans "Create New..." %}"></input>
@@ -38,21 +38,19 @@
 		<form action="{% url projects-overview %}" id="searchForm" method="get">
 			<div class="option">
 				<div class="header">By category:</div>
-				{% for c in categories %}
-					{% if selected_categories|contains:c %}
-					<a href="#" onclick="filter('selected_categories','{{c}}')">
-						<img src="/media/admin/img/admin/icon_deletelink.gif"/>
-					</a>
-					{% endif %}
+				{% for c in categories %}					
+					<a class="filter{% if selected_categories|contains:c.id %} current{% endif %}"
+						href="javascript:filter('selected_categories','{{c.id}}')"
+						>
+						{% if selected_categories|contains:c.id %}
+							<img src="/media/admin/img/admin/icon_deletelink.gif"/>
+						{% endif %}
+						{{c.title}}</a>
 					
-					<a {% ifequal c by_category %}class="current"{% endifequal %}
-						href="javascript:filter('selected_categories','{{c}}')"
-						>{{c}}</a>
-					
-					<span class="">
-						<input name="selected_categories" id="{{c}}" type="checkbox"
-							value="{{c}}" 
-						{% if selected_categories|contains:c %}
+					<span class="hidden">
+						<input name="selected_categories" id="{{c.id}}" type="checkbox"
+							value="{{c.id}}" 
+						{% if selected_categories|contains:c.id %}
 							checked="checked"
 						{% endif %}
 						></input>
@@ -62,17 +60,45 @@
 			
 			<div class="option">
 				<div class="header">By difficulty:</div>
-				{% for d in difficulties %}
-					<a {% ifequal d by_difficulty %}class="current"{% endifequal %}
-						href="{% url projects-by-difficulty d %}">{{d}}</a>
+				{% for c in difficulties %}					
+					<a class="filter{% if selected_difficulties|contains:c.id %} current{% endif %}"
+						href="javascript:filter('selected_difficulties','{{c.id}}')"
+						>
+						{% if selected_difficulties|contains:c.id %}
+							<img src="/media/admin/img/admin/icon_deletelink.gif"/>
+						{% endif %}
+						{{c.title}}</a>
+					
+					<span class="hidden">
+						<input name="selected_difficulties" id="{{c.id}}" type="checkbox"
+							value="{{c.id}}" 
+						{% if selected_difficulties|contains:c.id %}
+							checked="checked"
+						{% endif %}
+						></input>
+					</span>
 				{% endfor %}
 			</div>
 			
 			<div class="option">
 				<div class="header">By tag:</div>
 				{% for t in tags %}
-					<a {% ifequal t by_tag %}class="current"{% endifequal %}
-						href="{% url projects-by-tag t %}">{{t}}</a>
+					<a class="filter{% if selected_tags|contains:t %} current{% endif %}"
+						href="javascript:filter('selected_tags','{{t}}')"
+						>
+						{% if selected_tags|contains:t %}
+							<img src="/media/admin/img/admin/icon_deletelink.gif"/>
+						{% endif %}
+						{{t}}</a>
+					
+					<span class="hidden">
+						<input name="selected_tags" id="{{t}}" type="checkbox"
+							value="{{t}}" 
+						{% if selected_tags|contains:t %}
+							checked="checked"
+						{% endif %}
+						></input>
+					</span>
 				{% endfor %}
 			</div>
 		</form>
@@ -84,6 +110,7 @@
 		</div></div>
 		{% endif %}
 	</div>
+	{% if projects %}
     <div id="projects "class="plain project">
             {% for project in projects %}
                 <div class='project overview item {% cycle 'col1' 'col2' 'col3' %}'>

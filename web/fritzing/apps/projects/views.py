@@ -8,13 +8,76 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.db.models import Q
 import os
 
 from fritzing.apps.projects.models import Project, Resource, Category, Image, Attachment
 from fritzing.apps.projects.forms import ProjectForm, ResourceField, RESOURCE_DELIMITER
 
+def _tag_query(sel_tags):
+    tags_query = Q(id=-1)
+    for t in sel_tags:
+        tags_query = tags_query | Q(tags__contains=t)
+    return tags_query 
+
+def _get_filtered_projects(sel_cats,sel_diffs,sel_tags):
+    # TODO: for sure there's a python way of doing this,
+    # but i don't know how
+    
+    tags_query = Q(tags__contains='')
+    for t in sel_tags:
+        tags_query = tags_query | Q(tags__contains=t) 
+            
+    projs = Project.published
+    if sel_cats:
+        if sel_diffs:
+            if sel_tags:
+                projects = projs.filter(
+                    _tag_query(sel_tags),
+                    category__id__in=sel_cats,
+                    difficulty__in=sel_diffs
+                )
+            else:
+                projects = projs.filter(
+                    category__id__in=sel_cats,
+                    difficulty__in=sel_diffs
+                )
+        else:
+            if sel_tags:
+                projects = projs.filter(
+                    _tag_query(sel_tags),
+                    category__id__in=sel_cats
+                )
+            else:
+                projects = projs.filter(
+                    category__id__in=sel_cats,
+                )
+    else:
+        if sel_diffs:
+            if sel_tags:
+                projects = projs.filter(
+                    _tag_query(sel_tags),
+                    difficulty__in=sel_diffs
+                )
+            else:
+                projects = projs.filter(
+                    difficulty__in=sel_diffs
+                )
+        else:
+            if sel_tags:
+                projects = projs.filter(
+                    _tag_query(sel_tags),
+                )
+                
+    return projects
+
 def overview(request,username=None,tag=None,category=None,difficulty=None):
     showing_all = False
+    projects = None
+    
+    sel_cats = None
+    sel_diffs = None
+    sel_tags = None
     
     if username:
         projects = Project.published.filter(author__username=username)
@@ -31,9 +94,20 @@ def overview(request,username=None,tag=None,category=None,difficulty=None):
         
         projects = Project.published.filter(difficulty=dif_aux)
     else:
-        projects = Project.published.all()
-        showing_all = True
-        
+        get = request.GET
+        if get and (
+                u'selected_categories' in get.keys()
+                or u'selected_difficulties' in get.keys()
+                or u'selected_tags' in get.keys()
+            ):
+            sel_cats = [int(i) for i in get.getlist('selected_categories')]
+            sel_diffs = [int(i) for i in get.getlist('selected_difficulties')]
+            sel_tags = get.getlist('selected_tags')
+            
+            projects = _get_filtered_projects(sel_cats,sel_diffs,sel_tags)
+        else:
+            projects = Project.published.all()
+            showing_all = True        
     
     return render_to_response("projects/project_list.html", {
         'projects': projects,
@@ -42,9 +116,12 @@ def overview(request,username=None,tag=None,category=None,difficulty=None):
         'by_category': category,
         'by_difficulty': difficulty,
         'tags': Project.all_tags(),
-        'categories': sorted([t['title'] for t in Category.objects.values('title')]),
-        'difficulties' : [text for id,text in Project.DIFFICULTIES],
-        'showing_all' : showing_all
+        'categories': Category.objects.values('id','title').order_by('title'),
+        'difficulties' : [ {'id':d[0],'title':d[1]} for d in Project.DIFFICULTIES ],
+        'showing_all' : showing_all,
+        'selected_categories' : sel_cats,
+        'selected_difficulties' : sel_diffs,
+        'selected_tags' : sel_tags,
     }, context_instance=RequestContext(request))
     
 if not settings.DEBUG:

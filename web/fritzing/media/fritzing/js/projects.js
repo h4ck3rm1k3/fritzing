@@ -97,14 +97,3 @@ function file_deleted(field_name,value,index) {
 
 	$('#my_form').append(input);
 }
-
-function filter(group,item) {
-	alert('[name='+group+'][id='+item+']')
-	checkbox = $('input[name='+group+'][id='+item+']');
-	if(chechbox.attr("checked")) {
-		chechbox.removeAttr("checked")
-	} else {
-		chechbox.attr("checked","checked")
-	}
-	$('searchForm').submit();
-}
