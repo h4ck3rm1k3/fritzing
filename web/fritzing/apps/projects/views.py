@@ -15,9 +15,11 @@ from fritzing.apps.projects.models import Project, Resource, Category, Image, At
 from fritzing.apps.projects.forms import ProjectForm, ResourceField, RESOURCE_DELIMITER
 
 def _tag_query(sel_tags):
-    tags_query = Q(id=-1)
+    tags_query = Q(tags__contains='')
     for t in sel_tags:
-        tags_query = tags_query | Q(tags__contains=t)
+        # TODO: bug when t is a substring of one of the defined tags
+        # for example: project.tags='tag1 tag2 tag3, tag4' and t='g2 ta'
+        tags_query = tags_query & Q(tags__contains=t)
     return tags_query 
 
 def _get_filtered_projects(sel_cats,sel_diffs,sel_tags):
