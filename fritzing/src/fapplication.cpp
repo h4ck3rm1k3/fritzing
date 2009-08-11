@@ -588,8 +588,24 @@ void FApplication::preferences() {
 			settings.clear();
 		}
 		else {
-			QString name = prefsDialog.name();
-			settings.setValue("language", name);
+			QHash<QString, QString> hash = prefsDialog.settings();
+			foreach (QString key, hash.keys()) {
+				settings.setValue(key, hash.value(key));
+				if (key.compare("connectedColor") == 0) {
+					QColor c(hash.value(key));
+					ItemBase::setConnectedColor(c);
+					foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+						((MainWindow *) widget)->redrawSketch();
+					}
+				}
+				else if (key.compare("unconnectedColor") == 0) {
+					QColor c(hash.value(key));
+					ItemBase::setUnconnectedColor(c);
+					foreach (QWidget * widget, m_orderedTopLevelWidgets) {
+						((MainWindow *) widget)->redrawSketch();
+					}
+				}
+			}
 		}
 	}
 }

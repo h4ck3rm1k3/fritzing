@@ -40,8 +40,8 @@ public:
 	PrefsDialog(const QString & language, QFileInfoList & list, QWidget *parent = 0);
 	~PrefsDialog();
 
-	const QString & name();
 	bool cleared();
+	QHash<QString, QString> & settings();
 
 protected:
 	QWidget * createLanguageForm(QFileInfoList & list);
@@ -55,6 +55,7 @@ protected slots:
 	void setUnconnectedColor();
 
 protected:
+	QHash<QString, QString> m_settings;
 	QString m_name;
 	class TranslatorListModel * m_translatorListModel;
 	bool m_cleared;

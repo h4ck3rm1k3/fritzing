@@ -1920,3 +1920,12 @@ const QString &MainWindow::selectedModuleID() {
 	}
 }
 
+void MainWindow::redrawSketch() {
+	foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
+		item->update();
+		ConnectorItem * c = dynamic_cast<ConnectorItem *>(item);
+		if (c != NULL) {
+			c->restoreColor(false, -1);
+		}
+	}
+}

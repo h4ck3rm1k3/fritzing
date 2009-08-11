@@ -38,7 +38,6 @@ $Date$
 #include <QLocale>
 #include <QDialogButtonBox>
 #include <QGroupBox>
-#include <QSettings>
 
 #define MARGIN 5
 
@@ -176,11 +175,8 @@ void PrefsDialog::changeLanguage(int index)
 	const QLocale * locale = m_translatorListModel->locale(index);
 	if (locale) {
 		m_name = locale->name();
+		m_settings.insert("language", m_name);
 	}
-}
-
-const QString & PrefsDialog::name() {
-	return m_name;
 }
 
 void PrefsDialog::clear() {
@@ -201,16 +197,11 @@ void PrefsDialog::setConnectedColor() {
 	if (result == QDialog::Rejected) return;
 
 	QColor c = setColorDialog.selectedColor();
-
-	QSettings settings;
-	settings.setValue("ConnectedColor", c.name());
-
-	ItemBase::setConnectedColor(c);
+	m_settings.insert("connectedColor", c.name());
 	ClickableLabel * cl = qobject_cast<ClickableLabel *>(sender());
 	if (cl) {
 		cl->setPalette(QPalette(c));
 	}
-
 }
 
 void PrefsDialog::setUnconnectedColor() {
@@ -222,13 +213,14 @@ void PrefsDialog::setUnconnectedColor() {
 	if (result == QDialog::Rejected) return;
 
 	QColor c = setColorDialog.selectedColor();
-
-	QSettings settings;
-	settings.setValue("UnconnectedColor", c.name());
-
-	ItemBase::setUnconnectedColor(c);
+	m_settings.insert("unconnectedColor", c.name());
 	ClickableLabel * cl = qobject_cast<ClickableLabel *>(sender());
 	if (cl) {
 		cl->setPalette(QPalette(c));
 	}
 }
+
+QHash<QString, QString> & PrefsDialog::settings() {
+	return m_settings;
+}
+
