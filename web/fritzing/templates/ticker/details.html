@@ -8,10 +8,11 @@
 {% endblocktrans %}{% endblock %}
 
 {% block page_title %}
-  {{ entry.title }}
+  {{ entry.title }} 
 {% endblock %}
 
 {% block teaser %}
+	by <a href="{% url profile_detail entry.author %}">{{ entry.author }}</a> on {{ entry.created|date:_("DATETIME_FORMAT") }}
 	<p class="documentDescription">{{ entry.content|safe }}</p>
 {% endblock %}
 
