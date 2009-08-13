@@ -573,6 +573,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
 
     QString fileContent(file.readAll());
 	bool fileHasChanged = fixPixelDimensionsIn(fileContent,filename);
+	fileHasChanged |= fixViewboxOrigin(fileContent,filename);
 	fileHasChanged |= fixFonts(fileContent,filename,canceled);
 
 	if(fileHasChanged) {
@@ -673,6 +674,10 @@ style="font-size:144px;font-style:normal;font-weight:normal;line-height:100%;fil
 	return getRegexpCaptures(pattern,fileContent);
 }
 
+bool PartsEditorView::isIllustratorFile(const QString &fileContent) {
+	return fileContent.contains("<!-- Generator: Adobe Illustrator");
+}
+
 bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &filename) {
 	if(m_viewIdentifier == ViewIdentifierClass::IconView) return false;
 
@@ -701,6 +706,52 @@ bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &
 	delete svgDom;
 
 	return fileHasChanged;
+}
+
+bool PartsEditorView::fixViewboxOrigin(QString &fileContent, const QString &filename) {
+	QDomDocument *svgDom = new QDomDocument();
+
+	bool fileHasChanged = false;
+	if(isIllustratorFile(fileContent)) {
+		QString *errorMsg = new QString("");
+		int *errorLine = new int(0);
+		int *errorCol = new int(0);
+		if(!svgDom->setContent(fileContent, true, errorMsg, errorLine, errorCol)) {
+			qWarning() << QString("PartsEditorView::fixViewboxOrigin(filename) couldn't load svg: %1 (line %2, col %3)")
+							.arg(*errorMsg).arg(*errorLine).arg(*errorCol);
+			return false;
+		}
+		delete errorMsg;
+		delete errorLine;
+		delete errorCol;
+
+		QDomElement elem = svgDom->firstChildElement("svg");
+		fileHasChanged = moveViewboxToTopLeftCorner(elem,filename);
+
+		if(fileHasChanged) {
+			fileContent = svgDom->toString();
+		}
+
+		delete svgDom;
+	}
+
+	return fileHasChanged;
+}
+
+bool PartsEditorView::moveViewboxToTopLeftCorner(QDomElement &elem, const QString &filename) {
+	QString attrName = elem.hasAttribute("viewbox")? "viewbox": "viewBox";
+	QStringList vals = elem.attribute(attrName).split(" ");
+	if(vals.length() == 4 && (vals[0] != "0" || vals[1] != "0")) {
+		QString newValue = QString("0 0 %1 %2").arg(vals[2]).arg(vals[3]);
+		elem.setAttribute(attrName,newValue);
+		DebugDialog::debug(
+			QString("translating svg viewbox origin from '(%1,%2)' to '(0,0)' in file '%3'")
+				.arg(vals[0]).arg(vals[1]).arg(filename)
+		);
+
+		return true;
+	}
+	return false;
 }
 
 bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, const QString &filename) {
