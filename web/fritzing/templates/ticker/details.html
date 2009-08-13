@@ -19,34 +19,7 @@
 {% block content %}
 <div class="content first-content">
     {% include "ticker/entry.html" %}
-    <div class="newsentry-content">
-        {% get_comment_list for entry as comment_list %}
-        {% if comment_list %}
-	        <h2>{% trans "Comments" %}</h2>
-	        <ol class="comments">
-	        {% for comment in comment_list %}
-	            <li id="c{{ comment.id }}" class="{% cycle 'odd' 'even' %}">
-	                <p class="title">
-	                    <span class="author">
-	                        {% if comment.website %}
-	                          <a href="{{ comment.website }}">{{ comment.name }}</a>
-	                        {% else %}
-	                          {{ comment.name }}
-	                        {% endif %}
-	                    </span>
-	                    <span class="date" id="c{{ comment.id }}">
-	                        <a href="#c{{ comment.id }}">#</a> {{ comment.submit_date|date:_("DATETIME_FORMAT") }}
-	                    </span>
-	                </p>
-	                {{ comment.comment }}
-	            </li>
-	        {% endfor %}
-	        </ol>
-        {% endif %}
-        <br />
-        {% include "ticker/fritzing_comment_form.html" %}
-        
-    </div>
+    {% include "ticker/fritzing_comments.html" %}
 </div>
 {% endblock %}
 

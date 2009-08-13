@@ -287,6 +287,7 @@ def detail(request, slug):
 
     return render_to_response("projects/project_detail.html", {
         'project': project,
+        'entry': project,
         'is_me': is_me,
         'license':license
     }, context_instance=RequestContext(request))
