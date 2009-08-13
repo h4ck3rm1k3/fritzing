@@ -14,7 +14,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # tells Pinax to serve media through django.views.static.serve.
-SERVE_MEDIA = DEBUG
+SERVE_MEDIA = True
 
 ADMINS = (
     ('Jannis Leidel', 'jannis@leidel.info'),
