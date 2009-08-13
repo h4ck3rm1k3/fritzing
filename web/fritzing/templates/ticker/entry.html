@@ -15,6 +15,7 @@
   <dt class="" id="{{ entry.pk|escape }}">
     <span class="contenttype-news-item summary">
       <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
+      <div style="font-size: xx-small; font-weight: normal;">by <a href="{% url profile_detail entry.author %}">{{ entry.author }}</a> on {{ entry.created|date:_("DATETIME_FORMAT") }}</div>
     </span>
   </dt>
   <dd>
