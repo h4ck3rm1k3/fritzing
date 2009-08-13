@@ -30,7 +30,6 @@
 
 		{% if user.is_authenticated %}
 			{% get_comment_form for entry as comment_form %}
-			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 			 <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/comments.js"></script>
 			 <h3>{% trans "Add comment" %}</h3>
 			 <fieldset class="shinyform">
