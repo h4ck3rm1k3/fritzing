@@ -144,7 +144,7 @@
     background. [ref to tei paper here]</para>
 
     <para>Fritzing is open-source and runs on Windows, Mac and Linux
-    platforms. It is currently built in C++ using the Qt framework [ref to Qt
+    platforms. It is implemented in C++ using the Qt framework [ref to Qt
     here]. An early version of Fritzing was written in Java on top of GEF
     [ref] and other Eclipse frameworks. Internally, all graphics were
     represented as bitmaps (even SVGs were rendered into bitmaps internally),
@@ -158,11 +158,11 @@
     class.</para>
 
     <para>For Fritzing, another important aspect of SVG is the ability to be
-    able locate elements precisely, using measurements that translate to the
-    real world. Tolerances for printed circuit boards are quite small, and if
-    you were to design a PCB in Fritzing with only approximate measurements,
-    the circuit you create could be shorted-out from cross-connections you
-    never intended to make.</para>
+    able locate elements precisely, using measurements that translate
+    accurately to the real world. Tolerances for printed circuit boards are
+    quite small, and if you were to design a PCB in Fritzing with only
+    approximate measurements, the circuit you create could be shorted-out from
+    cross-connections you never intended to make.</para>
   </section>
 
   <section>
@@ -174,14 +174,14 @@
     sketch can be visualized in three different views:
     <emphasis>Breadboard</emphasis>, <emphasis>Schematic</emphasis>, and
     <emphasis>PCB</emphasis>; in each view the parts and wires are rendered
-    differently. The breadboard view is a somewhat abstracted, but still
+    differently. The breadboard view is a somewhat abstract, but still
     immediately recognizable model of the way many of our users work: starting
     with a breadboard and parts, and wiring them together in an iterative
     fashion. Schematic view hews fairly closely to the classical electronics
-    view, and PCB view is a layered printed circuit board design model.
+    schematic, and PCB view is a layered printed circuit board design model.
     Although a typical user might start with Breadboard view and gradually
     migrate to PCB view, we have found that different users have different
-    approaches to circuit building (and therefore how he uses the three
+    approaches to circuit building (and therefore how they use the three
     views), and Fritzing is flexible enough to accommodate.</para>
 
     <figure xml:id="fig1">
@@ -203,7 +203,7 @@
     <para>The part is the main user-manipulable unit in Fritzing, and it is
     SVG-based. In a sketch, a user assembles multiple parts by dragging them
     from a parts bin, and connects them with graphical wires. Each part
-    includes a set of <emphasis>connectors</emphasis>. A connector has a
+    includes a set of <emphasis>connectors</emphasis>. Each connector has a
     particular location on a part, it has a gender (male or female) and other
     metadata, and it has a <emphasis>terminal point</emphasis>--the point at
     which wires (or, in the case of female connectors, other parts) may
@@ -227,8 +227,8 @@
     which layers are visible. For example, in PCB view, a part might have
     Copper0 and Silkscreen layers, and a user might not want to see the
     Silkscreen layer when he is wrestling with the details of Copper0 layer.
-    Similar to the previous id-correspondence schemes, a layer is identified
-    in the metadata file using a <code>layerId</code> attribute, which
+    As with the previous id-correspondence schemes, a layer is identified in
+    the metadata file using a <code>layerId</code> attribute, which
     corresponds to an element <code>id</code> in its associated view SVG file.
     One difference from the other schemes however, is that while connectors
     and terminal points tend to be fairly simple elements, layers can be quite
@@ -252,26 +252,47 @@
 
     <para>However, it is not possible to selectively hide/show individual SVG
     elements with Qt's QSvgRenderer class, So our approach to the problem is,
-    within the program, to split a single view SVG file into multiple SVG
-    files, one for each layer, at the time a given part is loaded. To generate
+    within the program, at the time a given part is loaded, split a single
+    view SVG file into multiple SVG files, one for each layer. To generate
     each SVG file, the header from the original SVG file is copied, and then
     the element identified by the layer's <code>id</code> attribute is
     extracted from the original file and pasted into the new layer SVG
     file.</para>
 
     <para>We considered having separate SVG files for each layer, but we
-    planned for users to be able to create their own parts [ref parts editor
-    section], and we thought the extra files would be more troublesome to
-    users to have to keep track of, and when they were creating parts using
-    some software like Inkscape or Illustrator, working with a single SVG
-    image would make it easier to preserve the spatial correspondence between
-    layers. We had also considered keeping everything--metadata and all the
-    view SVGs--in a single SVG file, but we thought this would also make part
-    creation more difficult.</para>
+    planned for users to be able to create their own parts <link
+    linkend="parts_editor">(see the Parts Editor section)</link>, and we
+    thought the extra files would be more troublesome for users to keep track
+    of. Also, working with a single image file would make it easier to
+    preserve the spatial correspondence between layers when users created
+    parts, using software like Inkscape or Illustrator. We had also considered
+    keeping everything--metadata and all the view SVGs--in a single SVG file,
+    but we thought this would make part creation more difficult compared to
+    keeping the files separate.</para>
   </section>
 
   <section>
-    <title>Importing and Exporting</title>
+    <title>Exporting</title>
+
+    <para>Once you've finished laying out your circuit, you need to export it
+    for purposes of production or documentation. Fritzing provides a number of
+    different export options, depending on your purpose. PDF and PostScript
+    outputs are provided by Qt, and once we figured out that Qt stored images
+    internally at 90 dpi, we were able to ensure that parts would be printed
+    at their actual real-world sizes. PNG and JPEG outputs are also provided
+    by Qt, so we simply had to set the right image resolution to ouput images
+    at the proper size.</para>
+
+    <para>Exporting to SVG proved a little more complicated, however. Qt
+    didn't provide a means to take a sketch composed of separately rendered
+    parts and wires, and render that to a single SVG file, so we had to roll
+    our own. This is a process requiring several steps. The first step is to
+    take all of the individual part SVGs and <emphasis>normalize</emphasis>
+    them. That is to say that we set up the exported SVG with a viewBox,
+    width, and height so that the coordinates will be expressed as 1000 dpi,
+    and then we go through each part, converting all the coordinates to match.
+    During this step we also translate the part coordinates to their proper
+    position within the full sketch.</para>
 
     <para>why we hate illustrator: 72 dpi, doesn't do width and height;
     doesn't deal with stroke-width element, have to export at 72 dpi so users
@@ -286,7 +307,7 @@
     <para>gerber export</para>
   </section>
 
-  <section>
+  <section xml:id="parts_editor">
     <title>Parts Editor</title>
 
     <para>choosing SVGs: familiarity to our intended user-base of artists,
@@ -305,7 +326,7 @@
   <section>
     <title>Other SVG manipulations</title>
 
-    <para>inversion</para>
+    <para>inversion for ground plane (also eventually for solder mask)</para>
   </section>
 
   <section>
