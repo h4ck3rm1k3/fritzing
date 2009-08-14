@@ -33,6 +33,7 @@ $Date: 2009-05-31 13:20:46 +0200 (Sun, 31 May 2009) $
 #define FixedFontsHash QHash<QString /*borkenFont*/, QString /*replacementFont*/>
 
 class FixFontsDialog : public QDialog {
+	Q_OBJECT
 public:
 	FixFontsDialog(QWidget *parent, const QSet<QString> fontsTofix);
 	virtual ~FixFontsDialog();

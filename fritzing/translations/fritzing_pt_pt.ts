@@ -69,6 +69,10 @@
         <source>Stop Now</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>zoom and pan</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BinManager</name>
@@ -241,6 +245,30 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     </message>
     <message>
         <source>Do not import now</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FixFontsDialog</name>
+    <message>
+        <source>Unavailable fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- ignore --</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more fonts used in this SVG file are not available in Fritzing.
+Please select one of the Fritzing fonts to replace them:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>with </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1554,6 +1582,46 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <source>&amp;Wire Color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Launch External Process...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell launch an external application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect All Wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect all wires connected to this connector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Background Color ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the background color for the current view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips and Tricks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display some handy Fritzing tips and tricks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change background color for %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1575,9 +1643,14 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
 </context>
 <context>
-    <name>ModelPart</name>
+    <name>ModelBase</name>
     <message>
-        <source>Import Shape...</source>
+        <source>File save failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t overwrite file &apos;%1&apos;.
+Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1946,6 +2019,16 @@ Please, specify a new filename</source>
         <source>Load icon..</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Updating existing part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The connectors defined in this part has changed.
+If you save it, you may break other sketches that already use it.
+Do you really want to save it?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PartsEditorView</name>
@@ -1959,6 +2042,30 @@ Please, specify a new filename</source>
     </message>
     <message>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t open svg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file couldn&apos;t be opened. If this file defines its dimensions 
+in non-real-world units (e.g. pixels), then they won&apos;t be translated 
+into real life ones.
+Malformed font-family definitions won&apos;t be fixed either.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t write into file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file needs to be fixed to fit fritzing needs, but it couldn&apos;t
+be written.
+Fritzing is not compatible with this kind of svg files. Please 
+check your permissions, and try again.
+
+More information at http://fritzing.org/using-svg-images-new-parts/</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2011,6 +2118,22 @@ the PCB view?</source>
     </message>
     <message>
         <source>Coming soon...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (click to change...)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connected Highlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unconnected Highlight</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2094,26 +2217,6 @@ the PCB view?</source>
     <message>
         <source>Cannot write file temp file:
 %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>breadboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2372,10 +2475,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>resizable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Part already in bin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2412,11 +2511,30 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Copper 0 Trace</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unconnected highlight color&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to change the voltage of this part, because other ground/voltage symbols are connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuaZipFile</name>
     <message>
         <source>ZIP/UNZIP API error %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ResizableBoard</name>
+    <message>
+        <source>Import Shape...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2483,6 +2601,49 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Proceed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetColorDialog</name>
+    <message>
+        <source>Set %1 Color...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a new %1 color.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current %1 color (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>standard %1 color (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make this the default %1 color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select custom %1 color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>custom color (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>selected color (%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2620,11 +2781,78 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Double-click to add a bend point to the wire</source>
+        <source>Double-click to delete this bend point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Double-click to delete this bend point</source>
+        <source>Double-click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag or double-click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>or alt-drag to move the segment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change voltage from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete all wires from part connector</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TipsAndTricks</name>
+    <message>
+        <source>Tips and Tricks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;body&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h3&gt;Fritzing Tips and Tricks&lt;/h3&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you&apos;re dragging will snap to make 90 degree angles with the neighboring wire segment.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;If you&apos;re having trouble selecting a part or a wire (segment), try selecting the part that&apos;s in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;When you export images from Fritzing, you can choose which layers are exported. Before you choose &apos;Export...&apos;, go into the &apos;View&apos; menu and hide the layers you don&apos;t want to be visible.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;/ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
