@@ -141,7 +141,7 @@
     employing an interface metaphor based on their typical workflow. Fritzing
     also serves as a means for documenting these prototypes, and has proven to
     be a useful tool in teaching electronics to people without an engineering
-    background. [ref to tei paper here]</para>
+    background.<xref linkend="TEI2009" /></para>
 
     <para>Fritzing is open-source and runs on Windows, Mac and Linux
     platforms. It is implemented in C++ using the Qt framework [ref to Qt
@@ -154,8 +154,8 @@
     bitmap scheme. Thus we learned the hard way that the next Fritzing
     platform should use "native" vector graphics for fast rendering and
     scaling with no degradation, and this was one of the factors that led us
-    to choose Qt, which supports SVG rendering via the QSvgRenderer
-    class.</para>
+    to choose Qt, which supports SVG rendering via the QSvgRenderer class.
+    [svg tiny, sort of...]</para>
 
     <para>For Fritzing, another important aspect of SVG is the ability to be
     able locate elements precisely, using measurements that translate
@@ -260,15 +260,14 @@
     file.</para>
 
     <para>We considered having separate SVG files for each layer, but we
-    planned for users to be able to create their own parts <link
-    linkend="parts_editor">(see the Parts Editor section)</link>, and we
-    thought the extra files would be more troublesome for users to keep track
-    of. Also, working with a single image file would make it easier to
-    preserve the spatial correspondence between layers when users created
-    parts, using software like Inkscape or Illustrator. We had also considered
-    keeping everything--metadata and all the view SVGs--in a single SVG file,
-    but we thought this would make part creation more difficult compared to
-    keeping the files separate.</para>
+    planned for users to be able to create their own parts <xref
+    linkend="PARTSEDITOR" />, and we thought the extra files would be more
+    troublesome for users to keep track of. Also, working with a single image
+    file would make it easier to preserve the spatial correspondence between
+    layers when users created parts, using software like Inkscape or
+    Illustrator. We had also considered keeping everything--metadata and all
+    the view SVGs--in a single SVG file, but we thought this would make part
+    creation more difficult compared to keeping the files separate.</para>
   </section>
 
   <section>
@@ -279,35 +278,62 @@
     different export options, depending on your purpose. PDF and PostScript
     outputs are provided by Qt, and once we figured out that Qt stored images
     internally at 90 dpi, we were able to ensure that parts would be printed
-    at their actual real-world sizes. PNG and JPEG outputs are also provided
-    by Qt, so we simply had to set the right image resolution to ouput images
-    at the proper size.</para>
+    at their true real-world sizes. PNG and JPEG outputs are also provided by
+    Qt, so we simply had to set the right image resolution to ouput images at
+    the proper size.</para>
 
     <para>Exporting to SVG proved a little more complicated, however. Qt
     didn't provide a means to take a sketch composed of separately rendered
     parts and wires, and render that to a single SVG file, so we had to roll
-    our own. This is a process requiring several steps. The first step is to
-    take all of the individual part SVGs and <emphasis>normalize</emphasis>
-    them. That is to say that we set up the exported SVG with a viewBox,
-    width, and height so that the coordinates will be expressed as 1000 dpi,
-    and then we go through each part, converting all the coordinates to match.
-    During this step we also translate the part coordinates to their proper
-    position within the full sketch.</para>
+    our own. First, we take all of the individual part SVGs and
+    <emphasis>normalize</emphasis> them. That is, we set up the to-be-exported
+    SVG with <code>width</code>, <code>height</code>, and <code>viewBox</code>
+    atrributes so that coordinates will be expressed in 1000 dpi units. Then
+    we go through each part, converting its coordinates and other selected
+    attributes (<code>radius</code>, <code>stroke-width</code>, etc) to 1000
+    dpi units. During this step we also translate the part coordinates to
+    their proper position within the full sketch. Depending on the purpose of
+    the export, we may change the value of an element's <code>stroke</code>
+    and <code>fill</code> attributes, for example, if you are exporting a PCB
+    for etching, we will set the <code>stroke</code> and <code>fill</code>
+    attributes to <code>black</code>. Subsequently, we convert all the wires
+    in the sketch to <code>line</code> elements. Again, depending on the
+    purpose of the export, only certain layers of a given part will be
+    visible, so elements belonging to the non-visible layers are
+    ignored.</para>
 
-    <para>why we hate illustrator: 72 dpi, doesn't do width and height;
-    doesn't deal with stroke-width element, have to export at 72 dpi so users
-    can easily import</para>
+    <para>We originally picked 1000dpi because it's a unit typically used in
+    professional PCB etching. However, we found that many of our users would
+    import the SVG produced by Fritzing into Adobe Illustrator. Illustrator
+    converts everything internally to 72 dpi. This would be ok if they also
+    converted the stroke-width attribute, but they don't, so our user's
+    sketches showed up in Illustrator with a special blobby style. So we now
+    export our SVGs at 72dpi to keep Illustrator happy.</para>
 
-    <para>why we hate inkscape: leaves a lot of crap around, mirrored
-    attributes confuse qt</para>
+    <para>To export to Gerber format [need a ref], we first go through the SVG
+    export process (using 1000dpi), then walk through the SVG element tree,
+    where there is a more-or-less one-to-one correspondence between Gerber
+    elements and SVG elements.... [Brendan]</para>
 
-    <para>how export works: first normalize and convert to svg, then to
-    gerber, or other formats, flatten color</para>
+    <para>There is one more manipulation we needed to perform when Fritzing
+    exports for etching (or to Gerber format): when parts and wires are
+    exported, it leaves large areas of the PCB unfilled, and removing all the
+    copper from these areas is both time consuming, and depending on the
+    etching process, more environmentally unsound. It is also the case that
+    some or all of these unfilled areas can be connected to ground, which
+    makes routing the PCB much easier. [need an image here]</para>
 
-    <para>gerber export</para>
+    <para>Our first idea for how to implement a ground plane was to once again
+    create a sketch SVG but increase each element's stroke-width attribute by
+    some percent. Then we would subtract this modified sketch shape from the
+    shape of the board. However, we couldn't find an easy way to perform this
+    subtraction directly in SVG space. So our next idea was to render the
+    fattened sketch into a bitmap, then find some way to vectorize that back
+    into an SVG. We looked at using the Potrace library [ref] for doing the
+    vectorization, but decided to roll our own again.</para>
   </section>
 
-  <section xml:id="parts_editor">
+  <section xml:id="PARTSEDITOR">
     <title>Parts Editor</title>
 
     <para>choosing SVGs: familiarity to our intended user-base of artists,
@@ -315,26 +341,76 @@
 
     <para>philosophy that people will create parts outside of fritzing, but
     using their own SVG creation tools (Inkscape and Illustrator)</para>
+
+    <para>why we hate illustrator</para>
   </section>
 
   <section>
     <title>Part Generators</title>
 
-    <para></para>
+    <para>[Brendan, Mariano]</para>
   </section>
 
   <section>
-    <title>Other SVG manipulations</title>
+    <title>Conclusion</title>
 
-    <para>inversion for ground plane (also eventually for solder mask)</para>
+    <para></para>
   </section>
 
   <section>
     <title>TBD</title>
 
-    <para>compact representation; ease of conversion to other formats; xml
-    manipulation for generation and modification;</para>
-
     <para>speculate on what a connector svg element might be like</para>
+
+    <para>why we hate inkscape: leaves a lot of crap around, mirrored
+    attributes confuse qt</para>
+
+    <para></para>
+
+    <para></para>
+
+    <para></para>
   </section>
+
+  <bibliography>
+    <biblioentry>
+      <abbrev>TEI2009</abbrev>
+
+      <authorgroup>
+        <author>
+          <personname><surname>Knörig</surname>
+          <firstname>A.</firstname></personname>
+        </author>
+
+        <author>
+          <personname><surname>Wettach</surname>
+          <firstname>R.</firstname></personname>
+        </author>
+
+        <author>
+          <personname><surname>Cohen</surname>
+          <firstname>J.</firstname></personname>
+        </author>
+      </authorgroup>
+
+      <title>Fritzing – A tool for advancing electronic prototyping for
+      designers</title>
+
+      <biblioset relation="conference">
+        <title>In Proceedings of the 3rd International Conference on Tangible
+        and Embedded Interaction</title>
+
+        <pubdate>2009</pubdate>
+
+        <confgroup>
+          <conftitle>International Conference on Tangible and Embedded
+          Interaction</conftitle>
+
+          <confdates>February 16-18, 2009</confdates>
+
+          <address>Cambridge, England</address>
+        </confgroup>
+      </biblioset>
+    </biblioentry>
+  </bibliography>
 </article>
