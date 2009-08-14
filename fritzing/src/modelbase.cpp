@@ -223,7 +223,18 @@ void ModelBase::save(const QString & fileName, bool asPart) {
 	save(streamWriter, asPart);
 	file1.close();
 	QFile original(fileName);
-	original.remove();
+	if(original.exists() && !original.remove()) {
+		file1.remove();
+		QMessageBox::warning(
+			NULL,
+			tr("File save failed!"),
+			tr("Couldn't overwrite file '%1'.\nReason: %2 (errcode %3)")
+				.arg(fileName)
+				.arg(original.errorString())
+				.arg(original.error())
+			);
+		return;
+	}
 	file1.rename(fileName);
 }
 
