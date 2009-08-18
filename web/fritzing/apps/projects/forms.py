@@ -118,7 +118,7 @@ class ProjectForm(forms.ModelForm):
         label=_('Body'),
         help_text=_('Give a detailed description of your project, including instructions on how to build it'),
         widget=MarkItUpWidget(
-            markitup_set='projects/sets/projects'))
+            markitup_set='projects/sets'))
 
     main_image = forms.ImageField(
         required=False,
