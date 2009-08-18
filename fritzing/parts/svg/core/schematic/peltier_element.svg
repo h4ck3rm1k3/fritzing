@@ -1,54 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1"
-	 id="svg2" xmlns:svg="http://www.w3.org/2000/svg" sodipodi:docname="peltier_sensor.svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" sodipodi:version="0.32" inkscape:version="0.46" inkscape:output_extension="org.inkscape.output.svg.inkscape"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="69.321px"
-	 height="60.957px" viewBox="0 0 69.321 60.957" enable-background="new 0 0 69.321 60.957" xml:space="preserve">
-<sodipodi:namedview  id="base" inkscape:pageopacity="0.0" objecttolerance="10.0" borderopacity="1.0" bordercolor="#666666" gridtolerance="10.0" inkscape:window-width="640" guidetolerance="10.0" inkscape:pageshadow="2" inkscape:current-layer="svg2" inkscape:window-height="701" showgrid="false" pagecolor="#ffffff" inkscape:zoom="3.41" inkscape:cy="55.083087" inkscape:cx="-1.6622692" inkscape:window-y="42" inkscape:window-x="20">
-	</sodipodi:namedview>
-<defs>
-	
-	
-		<inkscape:perspective  id="perspective15" inkscape:vp_x="0 : 30.478638 : 1" sodipodi:type="inkscape:persp3d" inkscape:vp_z="69.321533 : 30.478638 : 1" inkscape:persp3d-origin="34.660767 : 20.319092 : 1" inkscape:vp_y="0 : 1000 : 0">
-		</inkscape:perspective>
-</defs>
-<g id="schematic">
-	
-		<line id="connector0pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="23.25" y1="19.401" x2="1" y2="19.401"/>
-	<rect id="connector0terminal" y="18.244" fill="none" width="1" height="2"/>
-	
-		<line id="connector1pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="23.25" y1="39.4" x2="1" y2="39.4"/>
-	<rect id="connector1terminal" y="38.244" fill="none" width="1" height="2"/>
-	
-		<rect id="box" x="24.069" y="1" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="43.957" height="58.957"/>
-</g>
-<g>
-	
-		<line fill="none" stroke="#000000" stroke-width="1.2207" stroke-linecap="round" x1="58.935" y1="34.863" x2="32.892" y2="34.863"/>
-	
-		<line fill="none" stroke="#000000" stroke-width="1.2207" stroke-linecap="round" x1="45.695" y1="34.852" x2="39.243" y2="45.979"/>
-	
-		<line fill="none" stroke="#000000" stroke-width="1.2207" stroke-linecap="round" x1="45.666" y1="34.794" x2="52.453" y2="46.141"/>
-	
-		<line fill="none" stroke="#000000" stroke-width="1.2207" stroke-linecap="round" x1="54.603" y1="34.864" x2="57.595" y2="40.048"/>
-	
-		<line fill="none" stroke="#000000" stroke-width="1.2207" stroke-linecap="round" x1="34.233" y1="40.048" x2="37.224" y2="34.863"/>
-	<polyline fill="none" stroke="#000000" stroke-width="1.2207" stroke-linecap="round" points="44.561,47.572 41.569,42.389 
-		35.584,42.389 	"/>
-	<polyline fill="none" stroke="#000000" stroke-width="1.2207" stroke-linecap="round" points="56.242,42.389 50.258,42.389 
-		47.265,47.572 	"/>
-	<polygon points="39.021,19.04 40.897,14.649 42.773,19.04 	"/>
-	<path fill="none" stroke="#000000" stroke-width="1.2987" stroke-linecap="round" d="M38.62,30.916
-		c0-1.948,2.339-1.948,2.339-3.896c0-1.948-2.339-1.948-2.339-3.896c0-1.948,2.339-1.948,2.339-3.896"/>
-	<path fill="none" stroke="#000000" stroke-width="1.2987" stroke-linecap="round" d="M40.958,30.979"/>
-	<polygon points="45.07,19.04 46.946,14.649 48.823,19.04 	"/>
-	<path fill="none" stroke="#000000" stroke-width="1.2987" stroke-linecap="round" d="M44.669,30.916
-		c0-1.948,2.338-1.948,2.338-3.896c0-1.948-2.338-1.948-2.338-3.896c0-1.948,2.338-1.948,2.338-3.896"/>
-	<path fill="none" stroke="#000000" stroke-width="1.2987" stroke-linecap="round" d="M47.007,30.979"/>
-	<polygon points="51.12,19.04 52.995,14.649 54.872,19.04 	"/>
-	<path fill="none" stroke="#000000" stroke-width="1.2987" stroke-linecap="round" d="M50.719,30.916
-		c0-1.948,2.337-1.948,2.337-3.896c0-1.948-2.337-1.948-2.337-3.896c0-1.948,2.337-1.948,2.337-3.896"/>
-	<path fill="none" stroke="#000000" stroke-width="1.2987" stroke-linecap="round" d="M53.056,30.979"/>
-</g>
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg xmlns="http://www.w3.org/2000/svg" width="0.962792in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" inkscape:version="0.46" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:version="0.32" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" y="0px" height="0.846625in" viewBox="0 0 69.321 60.957" inkscape:output_extension="org.inkscape.output.svg.inkscape" docname="peltier_sensor.svg" id="svg2" enable-background="new 0 0 69.321 60.957" >
+ <sodipodi:namedview xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" objecttolerance="10.0" inkscape:cx="-1.6622692" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:pageshadow="2" inkscape:window-height="701" inkscape:cy="55.083087" bordercolor="#666666" id="base" guidetolerance="10.0" inkscape:pageopacity="0.0" inkscape:window-x="20" inkscape:window-y="42" inkscape:current-layer="svg2" pagecolor="#ffffff" showgrid="false" inkscape:zoom="3.41" inkscape:window-width="640" borderopacity="1.0" gridtolerance="10.0" />
+ <defs xmlns="http://www.w3.org/2000/svg">
+  <inkscape:perspective xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:vp_x="0 : 30.478638 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="69.321533 : 30.478638 : 1" sodipodi:type="inkscape:persp3d" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" id="perspective15" inkscape:persp3d-origin="34.660767 : 20.319092 : 1" />
+ </defs>
+ <g xmlns="http://www.w3.org/2000/svg" id="schematic" >
+  <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" id="connector0pin" stroke-linecap="round" y1="19.401" stroke-width="2" x1="23.25" y2="19.401" x2="1" />
+  <rect xmlns="http://www.w3.org/2000/svg" width="1" y="18.244" fill="none" height="2" id="connector0terminal" />
+  <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" id="connector1pin" stroke-linecap="round" y1="39.4" stroke-width="2" x1="23.25" y2="39.4" x2="1" />
+  <rect xmlns="http://www.w3.org/2000/svg" width="1" y="38.244" fill="none" height="2" id="connector1terminal" />
+  <rect xmlns="http://www.w3.org/2000/svg" width="43.957" x="24.069" y="1" fill="none" height="58.957" stroke="#000000" stroke-linejoin="round" id="box" stroke-linecap="round" stroke-width="2" />
+ </g>
+ <g xmlns="http://www.w3.org/2000/svg">
+  <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="34.863" stroke-width="1.2207" x1="58.935" y2="34.863" x2="32.892" />
+  <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="34.852" stroke-width="1.2207" x1="45.695" y2="45.979" x2="39.243" />
+  <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="34.794" stroke-width="1.2207" x1="45.666" y2="46.141" x2="52.453" />
+  <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="34.864" stroke-width="1.2207" x1="54.603" y2="40.048" x2="57.595" />
+  <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" y1="40.048" stroke-width="1.2207" x1="34.233" y2="34.863" x2="37.224" />
+  <polyline xmlns="http://www.w3.org/2000/svg" fill="none" points="44.561,47.572 41.569,42.389 &#xd;&#xa;&#x9;&#x9;35.584,42.389 &#x9;" stroke="#000000" stroke-linecap="round" stroke-width="1.2207" />
+  <polyline xmlns="http://www.w3.org/2000/svg" fill="none" points="56.242,42.389 50.258,42.389 &#xd;&#xa;&#x9;&#x9;47.265,47.572 &#x9;" stroke="#000000" stroke-linecap="round" stroke-width="1.2207" />
+  <polygon xmlns="http://www.w3.org/2000/svg" points="39.021,19.04 40.897,14.649 42.773,19.04 &#x9;" />
+  <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M38.62,30.916&#xd;&#xa;&#x9;&#x9;c0-1.948,2.339-1.948,2.339-3.896c0-1.948-2.339-1.948-2.339-3.896c0-1.948,2.339-1.948,2.339-3.896" />
+  <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M40.958,30.979" />
+  <polygon xmlns="http://www.w3.org/2000/svg" points="45.07,19.04 46.946,14.649 48.823,19.04 &#x9;" />
+  <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M44.669,30.916&#xd;&#xa;&#x9;&#x9;c0-1.948,2.338-1.948,2.338-3.896c0-1.948-2.338-1.948-2.338-3.896c0-1.948,2.338-1.948,2.338-3.896" />
+  <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M47.007,30.979" />
+  <polygon xmlns="http://www.w3.org/2000/svg" points="51.12,19.04 52.995,14.649 54.872,19.04 &#x9;" />
+  <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M50.719,30.916&#xd;&#xa;&#x9;&#x9;c0-1.948,2.337-1.948,2.337-3.896c0-1.948-2.337-1.948-2.337-3.896c0-1.948,2.337-1.948,2.337-3.896" />
+  <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="1.2987" d="M53.056,30.979" />
+ </g>
 </svg>

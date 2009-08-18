@@ -700,7 +700,7 @@ bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &
 	fileHasChanged |= pxToInches(elem,"height",filename);
 
 	if(fileHasChanged) {
-		fileContent = svgDom->toString();
+		fileContent = removeXMLEntities(svgDom->toString());
 	}
 
 	delete svgDom;
@@ -1117,14 +1117,8 @@ void PartsEditorView::aboutToSave() {
 					);*/
 				}
 				QTextStream out(&file);
-				QString svgContent = svgDom->toString();
+				out << removeXMLEntities(svgDom->toString());
 
-				// remove the html entities
-				svgContent.replace("&#xd;","");
-				svgContent.replace("&#xa;","");
-				svgContent.replace("&#x9;","");
-
-				out << svgContent;
 				file.close();
 
 				updateModelPart(tempFile);
@@ -1133,6 +1127,15 @@ void PartsEditorView::aboutToSave() {
 			DebugDialog::debug("updating part view svg file: could not load file "+m_item->flatSvgFilePath());
 		}
 	}
+}
+
+QString PartsEditorView::removeXMLEntities(QString svgContent) {
+	// remove the html entities
+	svgContent.replace("&#xd;","");
+	svgContent.replace("&#xa;","");
+	svgContent.replace("&#x9;","");
+
+	return svgContent;
 }
 
 bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {

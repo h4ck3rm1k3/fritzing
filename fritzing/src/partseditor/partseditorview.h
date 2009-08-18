@@ -141,6 +141,7 @@ class PartsEditorView : public SketchWidget {
 		bool moveViewboxToTopLeftCorner(QDomElement &elem, const QString &filename);
 		QSet<QString> getAttrFontFamilies(const QString &fileContent);
 		QSet<QString> getFontFamiliesInsideStyleTag(const QString &fileContent);
+		QString removeXMLEntities(QString svgContent);
 
 
 		// specs

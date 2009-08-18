@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.2.0.b.02.26.2493" moduleId="8abf6496b5d466c7a1893c17a296a676">
+<module fritzingVersion="0.3.6b.08.14.3340" moduleId="8abf6496b5d466c7a1893c17a296a676">
     <author>Lionel Michel</author>
     <title>Piezo Speaker</title>
     <label>J</label>
@@ -17,38 +17,37 @@
     <views>
         <iconView>
             <layers image="icon/piezo_sensor.svg">
-                <layer layerId="icon"></layer>
+                <layer layerId="icon"/>
             </layers>
         </iconView>
         <breadboardView>
             <layers image="breadboard/piezo_sensor.svg">
-                <layer layerId="breadboard"></layer>
+                <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
-        <schematicView fliphorizontal="true" flipvertical="true">
-            <layers image="schematic/piezo_sensor.svg">
-                <layer layerId="schematic"></layer>
-            </layers>
-        </schematicView>
         <pcbView>
             <layers image="pcb/jumper2.svg">
-                <layer layerId="copper0"></layer>
-                <layer layerId="silkscreen"></layer>
+                <layer layerId="copper0"/>
             </layers>
         </pcbView>
+        <schematicView>
+            <layers image="schematic/piezo_sensor.svg">
+                <layer layerId="schematic"/>
+            </layers>
+        </schematicView>
     </views>
     <connectors>
         <connector id="connector0" type="male" name="pin1">
             <description>Pin 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></p>
+                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector0pin"></p>
+                    <p layer="copper0" svgId="connector0pin"/>
                 </pcbView>
             </views>
         </connector>
@@ -56,13 +55,13 @@
             <description>Pin 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></p>
+                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></p>
+                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector1pin"></p>
+                    <p layer="copper0" svgId="connector1pin"/>
                 </pcbView>
             </views>
         </connector>
