@@ -2,18 +2,19 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 from fritzing.apps.news.models import NewsEntry as Entry
 
-def details(request, slug, template_name='ticker/details.html', extra_context={}):
+def details(request, slug, template_name='news/details.html', extra_context={}):
     """Shows a details page for the given entry"""
     entry = get_object_or_404(Entry.objects.public(), slug=slug)
     template_context = {
         'entry': entry,
         'is_detail': True
     }
+    
     template_context.update(extra_context)    
     return render_to_response(template_name, template_context, 
                               RequestContext(request))
     
-def overview(request, num_latest=10, template_name='ticker/overview.html', extra_context={}):
+def overview(request, num_latest=10, template_name='news/overview.html', extra_context={}):
     """Show the 10 latest entries"""
     entry_list = Entry.objects.public()[:num_latest]
     template_context = {
@@ -49,13 +50,3 @@ def archive_by_tag(request, tag, template_name='ticker/archive_by_tag.html', ext
     template_context.update(extra_context)
     return render_to_response(template_name, template_context, 
                               context_instance=RequestContext(request))
-
-def details(request, slug, template_name='ticker/details.html', extra_context={}):
-    """Shows a details page for the given entry"""
-    entry = get_object_or_404(Entry.objects.public(), slug=slug)
-    template_context = {
-        'entry': entry,
-    }
-    template_context.update(extra_context)    
-    return render_to_response(template_name, template_context, 
-                              RequestContext(request))
