@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block teaser %}
-	by <a href="{% url profile_detail entry.author %}">{{ entry.author }}</a> on {{ entry.created|date:_("DATETIME_FORMAT") }}
+	by <a href="{% url profile_detail entry.author %}">{{ entry.author }}</a> on {{ entry.date|date:_("DATETIME_FORMAT") }}
 	<p class="documentDescription">{{ entry.content|safe }}</p>
 {% endblock %}
 

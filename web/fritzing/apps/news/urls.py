@@ -2,8 +2,7 @@ from django.conf.urls.defaults import *
 from django.contrib.syndication.views import feed
 
 from ticker.feeds import feeds
-from ticker.views import overview, archive, archive_by_tag
-from fritzing.apps.news.views import details
+from fritzing.apps.news.views import details, overview, archive, archive_by_tag
 
 urlpatterns = patterns('',
     # The overview

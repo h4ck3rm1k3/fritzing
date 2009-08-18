@@ -118,8 +118,8 @@
                 {% block sidebar %}
                 <div id="portal-column-two">
                     <div class="visualPadding">
-                        {% cache 600 sidebar_news %}
-                        {% get_latest_objects ticker.entry 5 as latest_news %}
+                        
+                        {% get_latest_objects news.NewsEntry 5 as latest_news %}
                         {% if latest_news %}
                         <div class="portletWrapper">
                             <dl class="portlet portletNews">
@@ -128,7 +128,7 @@
                                 </dt>
                                 {% for news in latest_news %}
                                 <dd class="portletItem {% cycle 'odd' 'even' %}">
-                                    <a href="{{ news.get_absolute_url }}" class="tile" title="{{ news.title }}">{{ news.title }} <span class="portletItemDetails">{{ news.created|date:"N d, Y" }}</span></a>
+                                    <a href="{{ news.get_absolute_url }}" class="tile" title="{{ news.title }}">{{ news.title }} <span class="portletItemDetails">{{ news.date|date:"N d, Y" }}</span></a>
                                 </dd>
                                 {% endfor %}
                                 <dd class="portletFooter">
@@ -137,7 +137,7 @@
                             </dl>
                         </div>
                         {% endif %}
-                        {% endcache %}
+                        
                         
                         
                         {% get_latest_timed_objects events.event 5 start_date >= today as latest_events %}
