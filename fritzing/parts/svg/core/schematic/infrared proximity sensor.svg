@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1 Basic//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd'>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1.50881in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" version="1.1" y="0px" height="1.80482in" viewBox="0 0 108.634 129.947" baseProfile="basic" id="svg2" >
+ <rect xmlns="http://www.w3.org/2000/svg" width="9.783" x="63.699" y="22.545" height="1.895" id="connector2pin" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="0.686" x="72.758" y="23.06" height="0.867" id="connector2terminal" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="9.783" x="-32.048" y="22.549" height="1.893" id="connector0pin" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="0.688" x="-32.662" y="23.028" height="0.867" id="connector0terminal" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="9.783" x="-32.187" y="44.355" height="1.895" id="connector1pin" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="0.685" x="-32.869" y="44.904" height="0.865" id="connector1terminal" />
+ <g xmlns="http://www.w3.org/2000/svg" id="schematic" >
+  <g xmlns="http://www.w3.org/2000/svg">
+   <polyline xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" points="73.441,23.477 30.512,23.477 &#xd;&#xa;&#x9;&#x9;&#x9;28.649,26.977 24.615,19.73 20.58,26.977 16.547,19.73 12.513,26.977 8.479,19.73 6.307,23.477 -32.662,23.477 &#x9;&#x9;" stroke="#000000" stroke-linecap="round" stroke-width="2.4" />
+   <polygon xmlns="http://www.w3.org/2000/svg" points="28.141,5.613 26.053,15.648 20.793,12.76 &#x9;&#x9;" />
+   <polyline xmlns="http://www.w3.org/2000/svg" fill="none" points="25.332,10.678 6.855,45.303 &#xd;&#xa;&#x9;&#x9;&#x9;-32.792,45.297 &#x9;&#x9;" stroke="#000000" stroke-linecap="round" stroke-width="2.4" />
+  </g>
+  <rect xmlns="http://www.w3.org/2000/svg" width="63.797" x="-11.43" y="-40.134" fill="none" height="127.546" stroke="#000000" stroke-linecap="round" stroke-width="2.4" />
+  <g xmlns="http://www.w3.org/2000/svg">
+   <g xmlns="http://www.w3.org/2000/svg">
+    <g xmlns="http://www.w3.org/2000/svg" id="schematic_2_" >
+     <g xmlns="http://www.w3.org/2000/svg">
+      <polygon xmlns="http://www.w3.org/2000/svg" points="4.528,-26.695 6.171,-22.145 2.098,-24.757 3.312,-25.727 &#x9;&#x9;&#x9;&#x9;&#x9;" />
+      <path xmlns="http://www.w3.org/2000/svg" d="M0.677-24.687l2.117-1.688l1.214-0.968l0.902-0.722l2.868,7.938L0.677-24.687L0.677-24.687z" />
+      <path xmlns="http://www.w3.org/2000/svg" d="M5.049-22.221l-7.794-9.766c-0.284-0.359-0.227-0.88,0.134-1.166l0,0c0.355-0.285,0.879-0.227,1.162,0.132l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;l7.794,9.767c0.286,0.359,0.229,0.879-0.132,1.165l0,0c-0.151,0.122-0.336,0.181-0.516,0.181l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;C5.454-21.909,5.213-22.016,5.049-22.221L5.049-22.221z" />
+      <polygon xmlns="http://www.w3.org/2000/svg" points="9.881,-31.517 11.525,-26.967 7.452,-29.579 8.667,-30.548 &#x9;&#x9;&#x9;&#x9;&#x9;" />
+      <path xmlns="http://www.w3.org/2000/svg" d="M6.031-29.507l2.117-1.689l1.215-0.968l0.901-0.721l2.875,7.939L6.031-29.507L6.031-29.507z" />
+      <path xmlns="http://www.w3.org/2000/svg" d="M10.404-27.042L4.332-34.65c-0.285-0.359-0.227-0.88,0.132-1.166l0,0c0.355-0.286,0.882-0.226,1.165,0.132l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;l6.07,7.609c0.286,0.356,0.229,0.878-0.131,1.164l0,0c-0.153,0.122-0.335,0.181-0.518,0.181l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;C10.808-26.73,10.567-26.837,10.404-27.042L10.404-27.042z" />
+     </g>
+    </g>
+   </g>
+   <g xmlns="http://www.w3.org/2000/svg">
+    <polygon xmlns="http://www.w3.org/2000/svg" fill="none" points="&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;10.585,-5.889 19.882,-21.982 29.173,-5.889 &#x9;&#x9;&#x9;" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.4" />
+    <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="-21.982" stroke-width="2.4" x1="10.585" y2="-21.982" x2="29.173" />
+   </g>
+   <g xmlns="http://www.w3.org/2000/svg" id="schematic_3_" >
+    <g xmlns="http://www.w3.org/2000/svg">
+     <polygon xmlns="http://www.w3.org/2000/svg" points="40.61,75.15 42.253,79.702 38.181,77.088 39.395,76.12 &#x9;&#x9;&#x9;&#x9;" />
+     <path xmlns="http://www.w3.org/2000/svg" d="M36.76,77.159l2.116-1.688l1.215-0.969l0.902-0.724l2.868,7.938L36.76,77.159L36.76,77.159z" />
+     <path xmlns="http://www.w3.org/2000/svg" d="M41.132,79.625l-7.794-9.767c-0.284-0.358-0.227-0.881,0.134-1.166l0,0c0.355-0.284,0.879-0.228,1.162,0.132l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;l7.794,9.768c0.286,0.359,0.229,0.881-0.132,1.164l0,0c-0.151,0.123-0.336,0.184-0.516,0.184l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;C41.536,79.938,41.296,79.831,41.132,79.625L41.132,79.625z" />
+     <path xmlns="http://www.w3.org/2000/svg" d="M29.913,78.713l2.117-1.688l1.215-0.967l0.901-0.723l2.875,7.938L29.913,78.713L29.913,78.713z" />
+     <path xmlns="http://www.w3.org/2000/svg" d="M34.286,81.182l-6.071-7.609c-0.285-0.359-0.228-0.881,0.132-1.166l0,0c0.354-0.285,0.881-0.225,1.165,0.133l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;l6.068,7.609c0.287,0.354,0.229,0.877-0.131,1.162l0,0c-0.151,0.123-0.335,0.182-0.517,0.182l0,0&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;C34.69,81.491,34.449,81.385,34.286,81.182L34.286,81.182z" />
+    </g>
+   </g>
+   <g xmlns="http://www.w3.org/2000/svg">
+    <polygon xmlns="http://www.w3.org/2000/svg" fill="none" points="&#xd;&#xa;&#x9;&#x9;&#x9;&#x9;29.173,53.027 19.882,69.122 10.585,53.027 &#x9;&#x9;&#x9;" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.4" />
+    <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="round" y1="69.122" stroke-width="2.4" x1="29.173" y2="69.122" x2="10.585" />
+   </g>
+  </g>
+ </g>
+</svg>

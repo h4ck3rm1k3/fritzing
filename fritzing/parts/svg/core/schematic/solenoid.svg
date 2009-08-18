@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
+<svg version="1.1" baseProfile="basic" id="Ebene_1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.432in"
+	 height="1.108in" viewBox="0 0 31.149 79.81" xml:space="preserve">
+<rect id="connector1terminal" x="0.605" y="79.497" width="0.209" height="0.209"/>
+<rect id="connector0terminal" x="0.62" y="0.246" width="0.208" height="0.207"/>
+<rect id="connector1pin" y="67.959" width="2.4" height="11.851"/>
+<rect id="connector0pin" width="2.4" height="31.944"/>
+<g id="schematic">
+	
+		<path fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="12" d="
+		M1.218,31.198c2.593,0,4.677,2.097,4.677,4.689c0,2.588-2.084,4.69-4.677,4.69c2.593,0,4.677,2.101,4.677,4.69
+		c0,2.588-2.084,4.688-4.677,4.688c2.593,0,4.677,2.101,4.677,4.688c0,2.582-2.099,4.686-4.691,4.686
+		c2.59,0,4.691,2.103,4.691,4.689c0,2.588-2.084,4.689-4.677,4.689"/>
+	<rect x="11.479" y="3.041" width="9.96" height="21.382"/>
+	<g>
+		
+			<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="12" x1="13.102" y1="31.198" x2="13.102" y2="68.708"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="12" x1="19.817" y1="31.198" x2="19.817" y2="68.708"/>
+	</g>
+	<g>
+		<polygon points="25.966,9.355 28.557,2.936 31.148,9.355 		"/>
+		<polygon points="31.149,18.11 28.559,24.528 25.967,18.11 		"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="12" x1="28.558" y1="9.355" x2="28.558" y2="20.273"/>
+	</g>
+</g>
+</svg>
