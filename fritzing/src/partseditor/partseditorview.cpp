@@ -1010,7 +1010,7 @@ void PartsEditorView::createConnector(Connector *conn, const QSize &connSize, bo
 			? QRectF(m_item->boundingRect().center(),connSize)
 			: QRectF(scene()->itemsBoundingRect().center(),connSize);
 	PartsEditorConnectorsConnectorItem *connItem = new PartsEditorConnectorsConnectorItem(conn, m_item, m_showingTerminalPoints, bounds);
-	m_drawnConns << connItem;
+	m_drawnConns[connId] = connItem;
 	connItem->setShowTerminalPoint(showTerminalPoint);
 
 	m_undoStack->push(new QUndoCommand(
@@ -1038,7 +1038,7 @@ void PartsEditorView::removeConnector(const QString &connId) {
 		));
 
 		PartsEditorConnectorsConnectorItem *connToRemoveAux = dynamic_cast<PartsEditorConnectorsConnectorItem*>(connToRemove);
-		m_drawnConns.removeAll(connToRemoveAux);
+		m_drawnConns.remove(connToRemoveAux->connectorSharedID());
 		m_removedConnIds << connId;
 	}
 }
@@ -1117,7 +1117,14 @@ void PartsEditorView::aboutToSave() {
 					);*/
 				}
 				QTextStream out(&file);
-				out << svgDom->toString();
+				QString svgContent = svgDom->toString();
+
+				// remove the html entities
+				svgContent.replace("&#xd;","");
+				svgContent.replace("&#xa;","");
+				svgContent.replace("&#x9;","");
+
+				out << svgContent;
 				file.close();
 
 				updateModelPart(tempFile);
@@ -1134,7 +1141,7 @@ bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &
 		QRectF bounds;
 		QString connId;
 
-		foreach(PartsEditorConnectorsConnectorItem* drawnConn, m_drawnConns) {
+		foreach(PartsEditorConnectorsConnectorItem* drawnConn, m_drawnConns.values()) {
 			bounds = drawnConn->mappedRect();
 			connId = drawnConn->connector()->connectorSharedID();
 
@@ -1381,8 +1388,11 @@ bool PartsEditorView::showingTerminalPoints() {
 }
 
 void PartsEditorView::inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem) {
-	m_drawnConns << connItem;
-	m_removedConnIds << connItem->connector()->connectorSharedID();
+	QString connId = connItem->connectorSharedID();
+	m_drawnConns[connId] = connItem;
+	if(!m_removedConnIds.contains(connId)) {
+		m_removedConnIds << connId;
+	}
 }
 
 

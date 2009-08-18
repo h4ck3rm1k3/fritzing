@@ -185,7 +185,7 @@ class PartsEditorView : public SketchWidget {
 		SvgAndPartFilePath *m_svgFilePath;
 		QString m_originalSvgFilePath;
 
-		QList<PartsEditorConnectorsConnectorItem*> m_drawnConns;
+		QHash<QString /*id*/,PartsEditorConnectorsConnectorItem*> m_drawnConns;
 		QStringList m_removedConnIds;
 
 		QString m_lastSelectedConnId;
