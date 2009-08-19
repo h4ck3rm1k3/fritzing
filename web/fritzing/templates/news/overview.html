@@ -8,14 +8,14 @@
 
 {% block content %}
 <div class="content first-content">
-    {% autopaginate entry_list %}
+    {% autopaginate entry_list 10 %}
     <dl>
     {% for entry in entry_list %}
       {% include "news/entry.html" %}
     {% endfor %}
     </dl>
 </div>
-{% paginate %}
+	{% paginate %}
 {% endblock %}
 
 {% block content-related %}

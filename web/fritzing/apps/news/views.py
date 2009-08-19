@@ -14,9 +14,9 @@ def details(request, slug, template_name='news/details.html', extra_context={}):
     return render_to_response(template_name, template_context, 
                               RequestContext(request))
     
-def overview(request, num_latest=10, template_name='news/overview.html', extra_context={}):
+def overview(request, template_name='news/overview.html', extra_context={}):
     """Show the 10 latest entries"""
-    entry_list = Entry.objects.public()[:num_latest]
+    entry_list = Entry.objects.public()
     template_context = {
         'entry_list': entry_list,
     }
