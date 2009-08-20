@@ -1,450 +1,206 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?oxygen RNGSchema="http://www.docbook.org/xml/5.0/rng/docbook.rng" type="xml"?>
-<article version="5.0" xmlns="http://docbook.org/ns/docbook"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         xmlns:ns5="http://www.w3.org/2000/svg"
-         xmlns:ns4="http://www.w3.org/1999/xhtml"
-         xmlns:ns3="http://www.w3.org/1998/Math/MathML"
-         xmlns:ns="http://docbook.org/ns/docbook">
+<?xml version='1.0' encoding='UTF-8'?>
+<?oxygen RNGSchema="http://www.docbook.org/xml/5.0/rng/docbook.rng" type="xml"?><!-- This document was created with Syntext Serna Free. -->
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ns5="http://www.w3.org/2000/svg" xmlns:ns4="http://www.w3.org/1999/xhtml" xmlns:ns3="http://www.w3.org/1998/Math/MathML" xmlns:ns="http://docbook.org/ns/docbook" version="5.0">
   <info>
     <title>SVG in Fritzing</title>
-
     <subtitle>A Case Study</subtitle>
-
     <keywordset>
       <keyword>physical interaction design</keyword>
-
       <keyword>design tools</keyword>
-
       <keyword>prototyping</keyword>
+      <keyword>EDA</keyword>
     </keywordset>
-
     <authorgroup>
       <author>
-        <personname><firstname>Jonathan</firstname>
-        <surname>Cohen</surname></personname>
-
+        <personname>
+          <firstname>Jonathan</firstname>
+          <surname>Cohen</surname>
+        </personname>
         <email>jonathan@fritzing.org</email>
-
         <personblurb>
           <para>Jonathan Cohen is lead programmer on Fritzing.</para>
         </personblurb>
-
         <affiliation>
           <jobtitle>Programmer/Software Architect</jobtitle>
-
           <org>
             <orgname>Fachhochschule Potsdam</orgname>
-
             <orgdiv>Interaction Design Department</orgdiv>
-
             <address>
-                        <city>Potsdam</city>
-                        <street>Pappelallee 8-9</street>
-                        <postcode>14469</postcode>
-                        <country>Germany</country>
-                        <phone>+49 (0)331 580-00</phone>
-                        <fax>+49 (0)331 580-2999</fax>
-                    </address>
+              <city>Potsdam</city>
+              <street>Pappelallee 8-9</street>
+              <postcode>14469</postcode>
+              <country>Germany</country>
+              <phone>+49 (0)331 580-00</phone>
+              <fax>+49 (0)331 580-2999</fax>
+            </address>
           </org>
         </affiliation>
       </author>
-
       <author>
-        <personname><firstname>Mariano</firstname>
-        <surname>Crowe</surname></personname>
-
+        <personname>
+          <firstname>Mariano</firstname>
+          <surname>Crowe</surname>
+        </personname>
         <email>merunga@fritzing.org</email>
-
         <personblurb>
-          <para></para>
+          <para/>
         </personblurb>
-
         <affiliation>
-          <jobtitle></jobtitle>
-
+          <jobtitle/>
           <org>
             <orgname>Fachhochschule Potsdam</orgname>
-
             <orgdiv>Interaction Design Department</orgdiv>
-
             <address>
-                        <city>Potsdam</city>
-                        <street>Pappelallee 8-9</street>
-                        <postcode>14469</postcode>
-                        <country>Germany</country>
-                        <phone>+49 (0)331 580-00</phone>
-                        <fax>+49 (0)331 580-2999</fax>
-                    </address>
+              <city>Potsdam</city>
+              <street>Pappelallee 8-9</street>
+              <postcode>14469</postcode>
+              <country>Germany</country>
+              <phone>+49 (0)331 580-00</phone>
+              <fax>+49 (0)331 580-2999</fax>
+            </address>
           </org>
         </affiliation>
       </author>
-
       <author>
-        <personname><firstname>Brendan</firstname>
-        <surname>Howell</surname></personname>
-
+        <personname>
+          <firstname>Brendan</firstname>
+          <surname>Howell</surname>
+        </personname>
         <email>brendan@fritzing.org</email>
-
         <personblurb>
-          <para></para>
+          <para>Brendan Howell is one of the developers of Fritzing</para>
         </personblurb>
-
         <affiliation>
-          <jobtitle></jobtitle>
-
+          <jobtitle>Engineer/Programmer/Artist</jobtitle>
           <org>
             <orgname>Fachhochschule Potsdam</orgname>
-
             <orgdiv>Interaction Design Department</orgdiv>
-
             <address>
-                        <city>Potsdam</city>
-                        <street>Pappelallee 8-9</street>
-                        <postcode>14469</postcode>
-                        <country>Germany</country>
-                        <phone>+49 (0)331 580-00</phone>
-                        <fax>+49 (0)331 580-2999</fax>
-                    </address>
+              <city>Potsdam</city>
+              <street>Pappelallee 8-9</street>
+              <postcode>14469</postcode>
+              <country>Germany</country>
+              <phone>+49 (0)331 580-00</phone>
+              <fax>+49 (0)331 580-2999</fax>
+            </address>
           </org>
         </affiliation>
       </author>
     </authorgroup>
-
     <abstract>
-      <para>Fritzing (www.fritzing.org) is an open-source Electronic Design
-      Automation (EDA) tool aimed primarily at non-engineers. The approach is
-      GUI-based, using the metaphor of working with a breadboard and
-      electronic parts. Once a user finishes assembling his graphical circuit
-      board, he can export it to any of several graphics formats for either
-      “do it yourself” PCB etching, or to send to a professional PCB
-      production facility.</para>
-
-      <para>Fritzing makes use of many of the features of SVG: fast rendering;
-      scaling with no degradation; compact representation; precise real-world
-      measurements; ease of conversion to other formats; xml manipulation for
-      generation and modification; and familiarity to our intended user-base
-      of artists, designers, and hobbyists.</para>
+      <para>Fritzing (www.fritzing.org) is an open-source Electronic Design Automation (EDA) tool aimed primarily at non-engineers. The approach is GUI-based, using the metaphor of working with a breadboard and electronic parts. Once a user finishes assembling his graphical circuit board, he can export it to any of several graphics formats for either “do it yourself” PCB etching, or to send it to a professional PCB production facility.</para>
+      <para>Fritzing makes use of many of the features of SVG: fast rendering; scaling with no degradation; compact representation; precise real-world measurements; ease of conversion to other formats; xml manipulation for generation and modification; and familiarity to our intended user-base of artists, designers, and hobbyists.</para>
     </abstract>
   </info>
-
   <section>
     <title>Introduction to Fritzing</title>
-
-    <para>A growing community of DIY-practitioners, artists and designers are
-    using microcontroller-based toolkits to build hardware prototypes.
-    However, as these prototypes are generally constructed using solder-free
-    technologies, they are often fragile and unreliable. This means a huge
-    burden of care and upkeep when they are either exhibited or sold. Fritzing
-    is a software application which addresses this need by allowing artists,
-    designers and DIY-tinkerers to prepare their prototypes for production,
-    employing an interface metaphor based on their typical workflow. Fritzing
-    also serves as a means for documenting these prototypes, and has proven to
-    be a useful tool in teaching electronics to people without an engineering
-    background.<xref linkend="TEI2009" /></para>
-
-    <para>Fritzing is open-source and runs on Windows, Mac and Linux
-    platforms. It is implemented in C++ using the Qt framework [ref to Qt
-    here]. An early version of Fritzing was written in Java on top of GEF
-    [ref] and other Eclipse frameworks. Internally, all graphics were
-    represented as bitmaps (even SVGs were rendered into bitmaps internally),
-    and the performance was very slow, especially when we zoomed into a view.
-    And of course, zooming into bitmaps gave us aliasing artifacts, and we
-    expended too much energy trying to deal with that using a multi-resolution
-    bitmap scheme. Thus we learned the hard way that the next Fritzing
-    platform should use "native" vector graphics for fast rendering and
-    scaling with no degradation, and this was one of the factors that led us
-    to choose Qt, which supports SVG rendering via the QSvgRenderer class.
-    [svg tiny, sort of...]</para>
-
-    <para>For Fritzing, another important aspect of SVG is the ability to be
-    able locate elements precisely, using measurements that translate
-    accurately to the real world. Tolerances for printed circuit boards are
-    quite small, and if you were to design a PCB in Fritzing with only
-    approximate measurements, the circuit you create could be shorted-out from
-    cross-connections you never intended to make.</para>
+    <para>A growing community of DIY-practitioners, artists and designers are using microcontroller-based toolkits to build hardware prototypes. However, as these prototypes are generally constructed using solder-free technologies, they are often fragile and unreliable. This means a huge burden of care and upkeep when they are either exhibited or sold. Fritzing is a software application which addresses these problems by allowing artists, designers and DIY-tinkerers to prepare their prototypes for production, employing an interface metaphor based on their typical workflow. Fritzing also serves as a means for documenting and sharing designs, and has proven to be a useful tool in teaching electronics to people without an engineering background.<xref linkend="TEI2009"/></para>
+    <para>Fritzing is open-source and runs on Windows, Mac and Linux platforms. It is implemented in C++ using the Qt framework [ref to Qt here]. An early version of Fritzing was written in Java on top of GEF [ref] and other Eclipse frameworks. Internally, all graphics were represented as bitmaps (even SVGs were rendered into bitmaps internally), and the performance was very slow, especially when zooming into a view. In addition, zooming with bitmaps resulted in aliasing artifacts, and a large amount of code was written in order to deal with this problem using a multi-resolution bitmap scheme. Thus we learned the hard way that the next Fritzing platform should use &quot;native&quot; vector graphics for fast rendering and scaling with no degradation, and this was one of the factors that led us to choose Qt, which supports SVG rendering via the QSvgRenderer class. [svg tiny, sort of...]</para>
+    <para>For Fritzing, another important aspect of SVG is the ability to be able locate elements precisely, using measurements that translate accurately to real world units. Tolerances for printed circuit boards are quite small, and if one were to design a PCB in Fritzing with only approximate measurements, the circuit created could be produce short circuits from unintended cross-connections.</para>
   </section>
-
   <section>
     <title>Sketches and Parts</title>
-
-    <para>In Fritzing, a document (or <emphasis>sketch</emphasis>) represents
-    a circuit, which can be loosely defined as a set of
-    <emphasis>parts</emphasis> linked by <emphasis>wires</emphasis>. A single
-    sketch can be visualized in three different views:
-    <emphasis>Breadboard</emphasis>, <emphasis>Schematic</emphasis>, and
-    <emphasis>PCB</emphasis>; in each view the parts and wires are rendered
-    differently. The breadboard view is a somewhat abstract, but still
-    immediately recognizable model of the way many of our users work: starting
-    with a breadboard and parts, and wiring them together in an iterative
-    fashion. Schematic view hews fairly closely to the classical electronics
-    schematic, and PCB view is a layered printed circuit board design model.
-    Although a typical user might start with Breadboard view and gradually
-    migrate to PCB view, we have found that different users have different
-    approaches to circuit building (and therefore how they use the three
-    views), and Fritzing is flexible enough to accommodate.</para>
-
+    <para>In Fritzing, a document (or <emphasis>sketch</emphasis>) represents a circuit, which can be loosely defined as a set of <emphasis>parts</emphasis> linked by <emphasis>wires</emphasis>. A single sketch can be visualized in three different views: <emphasis>Breadboard</emphasis>, <emphasis>Schematic</emphasis>, and <emphasis>PCB</emphasis>; in each view the parts and wires are rendered differently. The breadboard view is a somewhat abstract, but still immediately recognizable model of the way many of our users work: starting with a breadboard and parts, and wiring them together in an iterative fashion. Schematic view hews fairly closely to the classical electronics engineering schematic, and PCB view is a layered printed circuit board design model. Although a typical user might start with Breadboard view and gradually migrate to PCB view, we have found that different users have different approaches to circuit building (and therefore how they use the three views), and Fritzing is flexible enough to accommodate these various use cases.</para>
     <figure xml:id="fig1">
       <title>Three views</title>
-
       <mediaobject>
         <imageobject>
-          <imagedata contentwidth="7in" fileref="bb_sch_pcb.PNG" format="PNG"
-                     width="7in"></imagedata>
+          <imagedata contentwidth="7in" fileref="bb_sch_pcb.PNG" format="PNG" width="7in"/>
         </imageobject>
       </mediaobject>
-
       <caption>
-        <para>The same sketch as shown in Breadboard view, Schematic view, and
-        PCB view.</para>
+        <para>The same sketch as shown in Breadboard view, Schematic view, and PCB view.</para>
       </caption>
     </figure>
-
-    <para>The part is the main user-manipulable unit in Fritzing, and it is
-    SVG-based. In a sketch, a user assembles multiple parts by dragging them
-    from a parts bin, and connects them with graphical wires. Each part
-    includes a set of <emphasis>connectors</emphasis>. Each connector has a
-    particular location on a part, it has a gender (male or female) and other
-    metadata, and it has a <emphasis>terminal point</emphasis>--the point at
-    which wires (or, in the case of female connectors, other parts) may
-    attach.</para>
-
-    <para>A single part is defined by multiple files: an xml-based metadata
-    file (.fzp), which refers to multiple SVG files: one for each of the three
-    views, plus one more for an icon. The metadata file also lists a part's
-    connectors, and associates each of them with an <code>svgId</code>
-    attribute. This attribute matches the <code>id</code> attribute of one
-    element in each of the SVG files. So the metadata about each connector is
-    found in the fzp file, but the shape and the location of the connector on
-    the part are found in the SVG files. Similarly, a connector's terminal
-    point has a <code>terminalId</code> attribute in the fzp file which
-    matches the <code>id</code> attribute of one element in each of the SVG
-    files. (Note: connectors and terminal points don't necessarily have to
-    appear in all views).</para>
-
-    <para>Parts can also have multiple <emphasis>layer</emphasis>s which are
-    specific to a particular view. In that view, a user can easily change
-    which layers are visible. For example, in PCB view, a part might have
-    Copper0 and Silkscreen layers, and a user might not want to see the
-    Silkscreen layer when he is wrestling with the details of Copper0 layer.
-    As with the previous id-correspondence schemes, a layer is identified in
-    the metadata file using a <code>layerId</code> attribute, which
-    corresponds to an element <code>id</code> in its associated view SVG file.
-    One difference from the other schemes however, is that while connectors
-    and terminal points tend to be fairly simple elements, layers can be quite
-    complex hierarchies of elements. So far, for example, in every part, all
-    connectors are found inside a single layer.</para>
-
+    <para>The <emphasis>part</emphasis> is the main user-manipulable unit in Fritzing, and it is SVG-based. In a sketch, a user assembles multiple parts by dragging them from a parts <emphasis>bin</emphasis>, and connects them with graphical wires. Each part includes a set of <emphasis>connectors</emphasis>. Each connector has a particular location on a part, it has a gender (male or female) and other metadata, and it has a <emphasis>terminal point</emphasis>--the point at which wires (or, in the case of female connectors, other parts) may attach.</para>
+    <para>A single part is defined by multiple files: an xml-based metadata file (.fzp), which refers to multiple SVG files: one for each of the three views, plus one more for an icon. The metadata file also lists a part&apos;s connectors, and associates each of them with an <code>svgId</code> attribute. This attribute matches the <code>id</code> attribute of one element in each of the SVG files. So the metadata about each connector is found in the fzp file, but the shape and the location of the connector on the part are found in the SVG files. Similarly, a connector&apos;s terminal point has a <code>terminalId</code> attribute in the fzp file which matches the <code>id</code> attribute of one element in each of the SVG files. (Note: connectors and terminal points don&apos;t necessarily have to appear in all views).</para>
+    <para>Parts can also have multiple <emphasis>layer</emphasis>s which are specific to a particular view. In that view, a user can easily change which layers are visible. For example, in PCB view, a part might have Copper0 and Silkscreen layers, and a user might not want to see the Silkscreen layer when he is wrestling with the details of Copper0 layer. As with the previous id-correspondence schemes, a layer is identified in the metadata file using a <code>layerId</code> attribute, which corresponds to an element <code>id</code> in its associated view SVG file. One difference from the other schemes however, is that while connectors and terminal points tend to be fairly simple elements, layers can be quite complex hierarchies of elements. So far, in every existing part, all connectors are found inside a single layer.</para>
     <figure xml:id="fig2">
       <title>Layers in a relay</title>
-
       <mediaobject>
         <imageobject>
-          <imagedata contentwidth="" fileref="relay4.svg" format="svg"></imagedata>
+          <imagedata contentwidth="" fileref="relay4.svg" format="svg"/>
         </imageobject>
       </mediaobject>
-
       <caption>
-        <para>A composite view of a relay showing, respectively, both Copper0
-        and Silkscreen layers, Copper0 only, and Silkscreen only.</para>
+        <para>A composite view of a relay showing, respectively, both Copper0 and Silkscreen layers, Copper0 only, and Silkscreen only.</para>
       </caption>
     </figure>
-
-    <para>However, it is not possible to selectively hide/show individual SVG
-    elements with Qt's QSvgRenderer class, So our approach to the problem is,
-    within the program, at the time a given part is loaded, split a single
-    view SVG file into multiple SVG files, one for each layer. To generate
-    each SVG file, the header from the original SVG file is copied, and then
-    the element identified by the layer's <code>id</code> attribute is
-    extracted from the original file and pasted into the new layer SVG
-    file.</para>
-
-    <para>We considered having separate SVG files for each layer, but we
-    planned for users to be able to create their own parts <xref
-    linkend="PARTSEDITOR" />, and we thought the extra files would be more
-    troublesome for users to keep track of. Also, working with a single image
-    file would make it easier to preserve the spatial correspondence between
-    layers when users created parts, using software like Inkscape or
-    Illustrator. We had also considered keeping everything--metadata and all
-    the view SVGs--in a single SVG file, but we thought this would make part
-    creation more difficult compared to keeping the files separate.</para>
+    <para>However, it is not possible to selectively hide/show individual SVG elements with Qt&apos;s QSvgRenderer class, So our approach to the problem is, within the program, at the time a given part is loaded, split a single view SVG file into multiple SVG files, one for each layer. To generate each SVG file, the header from the original SVG file is copied, and then the element identified by the layer&apos;s <code>id</code> attribute is extracted from the original file and pasted into the new layer SVG file.</para>
+    <para>We considered having separate SVG files for each layer, but we planned for users to be able to create their own parts <xref linkend="PARTSEDITOR"/>, and we thought the extra files would be more troublesome for users to keep track of. Also, working with a single image file would make it easier to preserve the spatial correspondence between layers when users created parts, using software like Inkscape or Illustrator. We had also considered keeping everything--metadata and all the view SVGs--in a single SVG file, but we thought this would make part creation more difficult compared to keeping the files separate.</para>
   </section>
-
   <section>
     <title>Exporting</title>
-
-    <para>Once you've finished laying out your circuit, you need to export it
-    for purposes of production or documentation. Fritzing provides a number of
-    different export options, depending on your purpose. PDF and PostScript
-    outputs are provided by Qt, and once we figured out that Qt stored images
-    internally at 90 dpi, we were able to ensure that parts would be printed
-    at their true real-world sizes. PNG and JPEG outputs are also provided by
-    Qt, so we simply had to set the right image resolution to ouput images at
-    the proper size.</para>
-
-    <para>Exporting to SVG proved a little more complicated, however. Qt
-    didn't provide a means to take a sketch composed of separately rendered
-    parts and wires, and render that to a single SVG file, so we had to roll
-    our own. First, we take all of the individual part SVGs and
-    <emphasis>normalize</emphasis> them. That is, we set up the to-be-exported
-    SVG with <code>width</code>, <code>height</code>, and <code>viewBox</code>
-    atrributes so that coordinates will be expressed in 1000 dpi units. Then
-    we go through each part, converting its coordinates and other selected
-    attributes (<code>radius</code>, <code>stroke-width</code>, etc) to 1000
-    dpi units. During this step we also translate the part coordinates to
-    their proper position within the full sketch. Depending on the purpose of
-    the export, we may change the value of an element's <code>stroke</code>
-    and <code>fill</code> attributes, for example, if you are exporting a PCB
-    for etching, we will set the <code>stroke</code> and <code>fill</code>
-    attributes to <code>black</code>. Subsequently, we convert all the wires
-    in the sketch to <code>line</code> elements. Again, depending on the
-    purpose of the export, only certain layers of a given part will be
-    visible, so elements belonging to the non-visible layers are
-    ignored.</para>
-
-    <para>We originally picked 1000dpi because it's a unit typically used in
-    professional PCB etching. However, we found that many of our users would
-    import the SVG produced by Fritzing into Adobe Illustrator. Illustrator
-    converts everything internally to 72 dpi. This would be ok if they also
-    converted the stroke-width attribute, but they don't, so our user's
-    sketches showed up in Illustrator with a special blobby style. So we now
-    export our SVGs at 72dpi to keep Illustrator happy.</para>
-
-    <para>To export to Gerber format [need a ref], we first go through the SVG
-    export process (using 1000dpi), then walk through the SVG element tree,
-    where there is a more-or-less one-to-one correspondence between Gerber
-    elements and SVG elements.... [Brendan]</para>
-
-    <para>There is one more manipulation we needed to perform when Fritzing
-    exports for etching (or to Gerber format): when parts and wires are
-    exported, it leaves large areas of the PCB unfilled, and removing all the
-    copper from these areas is both time consuming, and depending on the
-    etching process, more environmentally unsound. It is also the case that
-    some or all of these unfilled areas can be connected to ground, which
-    makes routing the PCB much easier. [need an image here]</para>
-
-    <para>Our first idea for how to implement a ground plane was to once again
-    generate a single sketch SVG but increase each element's stroke-width
-    attribute by some percent. Then we would subtract this modified sketch
-    shape from the shape of the board. However, we couldn't find an easy way
-    to perform this subtraction directly in SVG space. So our next idea was to
-    render the fattened sketch into a bitmap, then find some way to vectorize
-    that back into an SVG. It wasn't necessary to make the bitmap in extremely
-    high resolution: much more important to set the stroke-width wide enough
-    for all parts and wires to ensure we didn't create any short circuits. We
-    looked at using the Potrace library [ref] for doing the vectorization, but
-    as that seemed to be more than we needed (and because it was an
-    interesting problem), we rolled our own. The first version simply went
-    through the bitmap line-by-line and generated a horizontal
-    <code>line</code> element for each set of contiguous empty pixels moving
-    across a line. Our second version was a little cleverer and used the
-    endpoints of all the empty lines to create a set of filled
-    <code>polygon</code> elements (i.e. a polygon for each empty "island" in
-    the bitmap). We could still do some optimizing to remove redundant
-    endpoints in the polygons, but our ground plane implementation is working.
-    Shortly we will also apply a similar technique for generating a solder
-    mask layer [Brendan, is this still true?]</para>
-
+    <para>Once a user has finished laying out your circuit, they need to export it for purposes of production or documentation. Fritzing provides a number of different export options, depending on the end production technology. PDF and PostScript outputs are provided by Qt, and once we figured out that Qt stored images internally at 90 dpi, we were able to ensure that parts would be printed at their true real-world sizes. PNG and JPEG outputs are also provided by Qt, so we simply had to set the right image resolution to ouput images at the proper size.</para>
+    <para>Exporting to SVG proved a little more complicated, however. Qt does not provide a means to take a sketch composed of separately rendered parts and wires, and render that to a single SVG file, so we had to roll our own. First, we take all of the individual part SVGs and <emphasis>normalize</emphasis> them. That is, we set up the to-be-exported SVG with <code>width</code>, <code>height</code>, and <code>viewBox</code> atrributes so that coordinates are expressed in 1000 dpi units. Then we go through each part, converting its coordinates and other selected attributes (<code>radius</code>, <code>stroke-width</code>, etc) to 1000 dpi units. During this step we also translate the part coordinates to absolute coordinates within the full sketch. Depending on the purpose of the export, we may change the value of an element&apos;s <code>stroke</code> and <code>fill</code> attributes, for example, if you are exporting a PCB for DIY etching, we will set the <code>stroke</code> and <code>fill</code> attributes to <code>black</code>. Subsequently, we convert all the wires in the sketch to <code>line</code> elements. Again, depending on the purpose of the export, only certain layers of a given part will be visible, so elements belonging to the non-visible layers are ignored.</para>
+    <para>We originally picked 1/1000 in. because it&apos;s a unit typically used in professional PCB etching. However, we found that many of our users would import the SVG produced by Fritzing into Adobe Illustrator. Illustrator converts everything internally to 72 dpi. This would not be a problem if it also converted the stroke-width attribute, but Illustrator does not, so user sketches showed up in Illustrator with a special blobby style. So we now export our SVGs at 72dpi to keep Illustrator happy.</para>
+    <para>While exporing a printable graphic image is very useful and effective for home or small lab production, almost all professional PCB production houses expect files in the Gerber RS-274-X format. This format, often simply called <emphasis>Gerber</emphasis>, was created in the 1970s by the Gerber Systems Corp (now owned by Mania Technologie AG) to drive photoplotting machines. The file describes the movement of a photoplotter head with a series of commands for movement, light-on, light-off and aperture size and shape changes. This action of exposing a photo-sensitive film to light creates a film which is used to define the areas of the circuit board which will not be etched. While most modern photoplotters are actually raster based, the legacy standard lives on. </para>
+    <para>To export to Gerber format [need a ref], we first go through the SVG export process (using 1000dpi), then walk through the SVG element tree, where there is a more-or-less one-to-one correspondence between Gerber elements and SVG elements.... [Brendan]</para>
+    <para>There is one more manipulation we needed to perform when Fritzing exports for etching (or to Gerber format): when part footprints and traces are exported, it leaves large areas of the PCB unfilled, and removing all the copper from these areas is both time consuming, wasteful of etchant chemicals and depending on the production process, more environmentally unsound. It is also the case that some or all of these unfilled areas can be connected to ground, which makes routing the PCB much easier. Finally, using a ground plane in printed circuits can reduce signal noise. [need an image here]</para>
+    <para>Our first idea for how to implement a ground plane was to once again generate a single sketch SVG but increase each element&apos;s stroke-width attribute by some percent. Then we would subtract this modified sketch shape from the shape of the board. However, we couldn&apos;t find an easy way to perform this subtraction directly in SVG space. So our next idea was to render the fattened sketch into a bitmap, then find some way to vectorize that back into an SVG. It wasn&apos;t necessary to make the bitmap in extremely high resolution: much more important to set the stroke-width wide enough for all parts and wires to ensure we didn&apos;t create any short circuits. We looked at using the Potrace library [ref] for doing the vectorization, but as that seemed to be more than we needed (and because it was an interesting problem), we rolled our own. The first version simply went through the bitmap line-by-line and generated a horizontal <code>line</code> element for each set of contiguous empty pixels moving across a line. Our second version was a little more clever and used the endpoints of all the empty lines to create a set of filled <code>polygon</code> elements (i.e. a polygon for each empty &quot;island&quot; in the bitmap). There is still room for optimization by removing redundant endpoints in the polygons, but our ground plane implementation is working. Similar techniques could be used to create a more flexible solder mask layer. </para>
     <figure xml:id="fig3">
       <title>Sketch exported for etching</title>
-
       <mediaobject>
         <imageobject>
-          <imagedata fileref="gp.svg" format="svg"></imagedata>
+          <imagedata fileref="gp.svg" format="svg"/>
         </imageobject>
       </mediaobject>
-
       <caption>
-        <para>A composite view of an an exported sketch, shown, respectively,
-        without ground plane and with ground plane. We allow the ground plane
-        to intersect with ground wires.</para>
+        <para>A composite view of an an exported sketch, shown, respectively, without ground plane and with ground plane. We allow the ground plane to intersect with ground wires.</para>
       </caption>
     </figure>
   </section>
-
   <section xml:id="PARTSEDITOR">
     <title>Parts Editor</title>
-
-    <para>choosing SVGs: familiarity to our intended user-base of artists,
-    designers, and hobbyists.</para>
-
-    <para>philosophy that people will create parts outside of fritzing, but
-    using their own SVG creation tools (Inkscape and Illustrator)</para>
-
+    <para>choosing SVGs: familiarity to our intended user-base of artists, designers, and hobbyists.</para>
+    <para>philosophy that people will create parts outside of fritzing, but using their own SVG creation tools (Inkscape and Illustrator)</para>
     <para>why we hate illustrator</para>
   </section>
-
   <section>
     <title>Part Generators</title>
-
     <para>[Brendan, Mariano]</para>
   </section>
-
   <section>
     <title>TBD</title>
-
-    <para>speculate on what a connector svg element might be like (sugggested
-    by one of our reviewers)</para>
-
-    <para>why we want to create our own svg paint program: inkscape leaves a
-    lot of crap around, mirrored attributes confuse qt, it's way
-    over-complicated. Illustrator sucks in another 1000 ways.</para>
-
-    <para></para>
+    <para>speculate on what a connector svg element might be like (sugggested by one of our reviewers)</para>
+    <para>why we want to create our own svg paint program: inkscape leaves a lot of crap around, mirrored attributes confuse qt, it&apos;s way over-complicated. Illustrator sucks in another 1000 ways.</para>
+    <para/>
   </section>
-
   <section>
     <title>Conclusion</title>
-
-    <para>We have shown a number of ways in which SVG is fundamental to
-    Fritzing: scaling with no degradation; precise real-world measurements;
-    ease of conversion to other formats; and xml manipulation for generation
-    and modification. We have also discussed how our users move SVGs back and
-    forth between Fritzing and Inkscape or Illustrator (and some ways in which
-    this is difficult).. Furthermore, we have built a prior version of
-    Fritzing in which images are stored internally in bitmaps, and we can
-    confidently assert that had we not switched to SVG, Fritzing would now be
-    a much slower-running and feature-poorer program.</para>
-
-    <para></para>
+    <para>We have shown a number of ways in which SVG is fundamental to Fritzing: scaling with no degradation; precise real-world measurements; ease of conversion to other formats; and xml manipulation for generation and modification. We have also discussed how our users move SVGs back and forth between Fritzing and Inkscape or Illustrator (and some ways in which this is difficult). Furthermore, we discussed our experiences with an early version of Fritzing in which images are stored internally in bitmaps and how this led us to vector standards. Finally, we can confidently assert that chosing to use SVG in Fritzing has made our application easier to develop, more compatible with external tools and more beautiful to behold.</para>
+    <para/>
   </section>
-
   <bibliography>
     <biblioentry>
       <abbrev>TEI2009</abbrev>
-
       <authorgroup>
         <author>
-          <personname><surname>Knörig</surname>
-          <firstname>A.</firstname></personname>
+          <personname>
+            <surname>Knörig</surname>
+            <firstname>A.</firstname>
+          </personname>
         </author>
-
         <author>
-          <personname><surname>Wettach</surname>
-          <firstname>R.</firstname></personname>
+          <personname>
+            <surname>Wettach</surname>
+            <firstname>R.</firstname>
+          </personname>
         </author>
-
         <author>
-          <personname><surname>Cohen</surname>
-          <firstname>J.</firstname></personname>
+          <personname>
+            <surname>Cohen</surname>
+            <firstname>J.</firstname>
+          </personname>
         </author>
       </authorgroup>
-
-      <title>Fritzing – A tool for advancing electronic prototyping for
-      designers</title>
-
+      <title>Fritzing – A tool for advancing electronic prototyping for designers</title>
       <biblioset relation="conference">
-        <title>In Proceedings of the 3rd International Conference on Tangible
-        and Embedded Interaction</title>
-
+        <title>In Proceedings of the 3rd International Conference on Tangible and Embedded Interaction</title>
         <pubdate>2009</pubdate>
-
         <confgroup>
-          <conftitle>International Conference on Tangible and Embedded
-          Interaction</conftitle>
-
+          <conftitle>International Conference on Tangible and Embedded Interaction</conftitle>
           <confdates>February 16-18, 2009</confdates>
-
           <address>Cambridge, England</address>
         </confgroup>
       </biblioset>
