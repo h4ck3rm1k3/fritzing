@@ -1346,7 +1346,6 @@ void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorIte
 	while (allConnectors.count() > 0) {
 		
 		ConnectorItem * connectorItem = allConnectors.takeFirst();
-
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
 		ConnectorItem::collectEqualPotential(connectorItems);

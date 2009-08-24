@@ -42,7 +42,7 @@ $Date$
 #include "zoomcombobox.h"
 #include "sketchtoolbutton.h"
 
-#define NAVENDU
+//#define NAVENDU					// hack for Navendu Sinha, who we never heard from again
 
 QT_BEGIN_NAMESPACE
 class QAction;

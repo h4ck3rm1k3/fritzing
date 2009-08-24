@@ -104,7 +104,6 @@ protected:
 	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *, bool select);
 	bool doRatsnestOnCopy();
 	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
-	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 	virtual const QColor * getRatsnestColor(); 
 	virtual qreal getRatsnestOpacity(Wire *);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
@@ -121,7 +120,7 @@ protected:
 	void getLabelFont(QFont &, QColor &);
 	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
-
+	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);

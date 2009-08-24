@@ -40,6 +40,8 @@ public:
 
 	void addViewLayers();
 	void initWire(Wire *, int penWidth);
+	bool canDisconnectAll();
+	bool ignoreFemale();
 
 protected slots:
 	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
@@ -50,7 +52,6 @@ protected:
 	void findConnectorsUnder(ItemBase * item);
 	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
-	QPointF calcNewLoc(PaletteItemBase * moveBase, PaletteItemBase * detachFrom);
 	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & breadboardItemBase);
 	bool canDropModelPart(ModelPart * modelPart); 
 	void translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases);

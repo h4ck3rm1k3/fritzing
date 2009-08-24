@@ -220,6 +220,8 @@ public:
 	void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
 	virtual bool includeSymbols();
 	void disconnectAll();
+	virtual bool canDisconnectAll();
+	virtual bool ignoreFemale();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -261,6 +263,7 @@ protected:
 
 	void cutDeleteAux(QString undoStackMessage);
 	void deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackMessage);
+	bool deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
 	void extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,
 									   bool connect, bool seekLayerKin, QUndoCommand * parent);
@@ -337,6 +340,7 @@ protected:
 	void categorizeDragWires(QSet<Wire *> & wires);
 	void prepMove();
 	void initBackgroundColor();
+	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -370,6 +374,7 @@ signals:
 	void restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool doEmit);
 	void checkStickySignal(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
+	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -415,6 +420,7 @@ public slots:
 	void resizeBoard(long id, qreal w, qreal h);
 	void setVoltage(qreal voltage);
 	void setVoltage(long itemID, qreal voltage);
+	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 
 protected:
 	QPointer<PaletteModel> m_paletteModel;

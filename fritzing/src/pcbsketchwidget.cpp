@@ -839,6 +839,19 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 
 void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand * command)
 {
+	/*
+	DebugDialog::debug("----------");
+	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+		foreach (ConnectorItem * ci, *list) {
+			DebugDialog::debug(QString("%1 %2 %3")
+				.arg(ci->attachedToTitle())
+				.arg(ci->attachedTo()->instanceTitle())
+				.arg(ci->connectorSharedName()));
+		}
+		DebugDialog::debug("-----");
+	}
+	*/
+
 	QSet<Wire *> deleteWires;
 	QSet<Wire *> visitedWires;
 	foreach (QGraphicsItem * item, scene()->items()) {
@@ -858,6 +871,9 @@ void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & all
 		wire->collectChained(wires, ends, uniqueEnds);
 		foreach (Wire * w, wires) {
 			visitedWires.insert(w);
+			if (w->id() == 434350) {
+				DebugDialog::debug("what gives");
+			}
 		}
 
 		QList<Wire *> wiresCopy(wires);
@@ -1097,29 +1113,6 @@ bool PCBSketchWidget::dealWithRatsnestAux(ConnectorItem * & fromConnectorItem, C
 bool PCBSketchWidget::doRatsnestOnCopy() 
 {
 	return true;
-}
-
-void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand)
-{
-	QList<QString> alreadyList;
-	foreach (Wire * wire, wires) {
-		QList<ConnectorItem *> wireConnectorItems;
-		wireConnectorItems << wire->connector0() << wire->connector1();
-		foreach (ConnectorItem * fromConnectorItem, wireConnectorItems) {
-			foreach(ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-				QString already = ((fromConnectorItem->attachedToID() <= toConnectorItem->attachedToID()) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
-					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorSharedID())
-					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorSharedID());
-				if (alreadyList.contains(already)) continue;
-
-				alreadyList.append(already);
-				new ChangeConnectionCommand(this, BaseCommand::SingleView,
-											fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-											false, true, parentCommand);
-			}
-		}
-	}
 }
 
 const QColor * PCBSketchWidget::getRatsnestColor() 
@@ -1426,4 +1419,27 @@ void PCBSketchWidget::getLabelFont(QFont & font, QColor & color) {
 	font.setPointSize(9);
 	color.setAlpha(255);
 	color.setRgb(0xffffff);
+}
+
+void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand)
+{
+	QList<QString> alreadyList;
+	foreach (Wire * wire, wires) {
+		QList<ConnectorItem *> wireConnectorItems;
+		wireConnectorItems << wire->connector0() << wire->connector1();
+		foreach (ConnectorItem * fromConnectorItem, wireConnectorItems) {
+			foreach(ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				QString already = ((fromConnectorItem->attachedToID() <= toConnectorItem->attachedToID()) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorSharedID())
+					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorSharedID());
+				if (alreadyList.contains(already)) continue;
+
+				alreadyList.append(already);
+				new ChangeConnectionCommand(this, BaseCommand::SingleView,
+											fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+											false, true, parentCommand);
+			}
+		}
+	}
 }

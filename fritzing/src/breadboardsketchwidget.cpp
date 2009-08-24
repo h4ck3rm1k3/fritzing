@@ -245,43 +245,6 @@ void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMo
 	}
 }
 
-QPointF BreadboardSketchWidget::calcNewLoc(PaletteItemBase * moveBase, PaletteItemBase * detachFrom)
-{
-	QRectF dr = detachFrom->boundingRect();
-	dr.moveTopLeft(detachFrom->pos());
-
-	QPointF pos = moveBase->pos();
-	QRectF r = moveBase->boundingRect();
-	pos.setX(pos.x() + (r.width() / 2.0));
-	pos.setY(pos.y() + (r.height() / 2.0));
-	qreal d[4];
-	d[0] = qAbs(pos.y() - dr.top());
-	d[1] = qAbs(pos.y() - dr.bottom());
-	d[2] = qAbs(pos.x() - dr.left());
-	d[3] = qAbs(pos.x() - dr.right());
-	int ix = 0;
-	for (int i = 1; i < 4; i++) {
-		if (d[i] < d[ix]) {
-			ix = i;
-		}
-	}
-	QPointF newPos = moveBase->pos();
-	switch (ix) {
-		case 0:
-			newPos.setY(dr.top() - r.height());
-			break;
-		case 1:
-			newPos.setY(dr.bottom());
-			break;
-		case 2:
-			newPos.setX(dr.left() - r.width());
-			break;
-		case 3:
-			newPos.setX(dr.right());
-			break;
-	}
-	return newPos;
-}
 
 bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & itemBase)
 {
@@ -349,4 +312,12 @@ void BreadboardSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 		itemBase->setVisible(false);
 		itemBase->setEverVisible(false);
 	}
+}
+
+bool BreadboardSketchWidget::canDisconnectAll() {
+	return false;
+}
+
+bool BreadboardSketchWidget::ignoreFemale() {
+	return false;
 }

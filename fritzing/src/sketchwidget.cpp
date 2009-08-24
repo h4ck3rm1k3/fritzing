@@ -843,8 +843,10 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 
 	if (deleteModelPart) {
 		ModelPart * modelPart = itemBase->modelPart();
-		m_sketchModel->removeModelPart(modelPart);
-		delete modelPart;
+		if (modelPart != NULL) {
+			m_sketchModel->removeModelPart(modelPart);
+			delete modelPart;
+		}
 	}
 
 	itemBase->removeLayerKin();
@@ -909,33 +911,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackM
 
     stackSelectionState(false, parentCommand);
 
-	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
-
-	foreach (ItemBase * itemBase, deletedItems) {
-		ConnectorPairHash * connectorHash = new ConnectorPairHash;
-		itemBase->collectConnectors(*connectorHash, this->scene());
-		deletedConnections.insert(itemBase, connectorHash);
-	}
-
-	bool skipMe = reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
-
-	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values())
-	{
-		// now prepare to disconnect all the deleted item's connectors
-		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
-			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
-				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
-											  false, true, parentCommand);
-				fromConnectorItem->tempRemove(toConnectorItem, false);
-				toConnectorItem->tempRemove(fromConnectorItem, false);
-			}
-		}
-   	}
-
-	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
-	{
-		delete connectorHash;
-	}
+	bool skipMe = deleteMiddle(deletedItems, parentCommand);
 
 	foreach (ItemBase * itemBase, deletedItems) {
 		if (itemBase->itemType() == ModelPart::Module) {
@@ -981,6 +957,39 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackM
 	}
    	m_undoStack->push(parentCommand);
 }
+
+bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand) {
+	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
+
+	foreach (ItemBase * itemBase, deletedItems) {
+		ConnectorPairHash * connectorHash = new ConnectorPairHash;
+		itemBase->collectConnectors(*connectorHash, this->scene());
+		deletedConnections.insert(itemBase, connectorHash);
+	}
+
+	bool skipMe = reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
+
+	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values())
+	{
+		// now prepare to disconnect all the deleted item's connectors
+		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
+			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
+				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
+											  false, true, parentCommand);
+				fromConnectorItem->tempRemove(toConnectorItem, false);
+				toConnectorItem->tempRemove(fromConnectorItem, false);
+			}
+		}
+   	}
+
+	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
+	{
+		delete connectorHash;
+	}
+
+	return skipMe;
+}
+
 
 bool SketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
 	Q_UNUSED(parentCommand);
@@ -5615,7 +5624,7 @@ void SketchWidget::disconnectAll() {
 
 	// TODO: collect all wires from separate views
 
-	QList<ItemBase *> itemBases;
+	QSet<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
@@ -5623,29 +5632,161 @@ void SketchWidget::disconnectAll() {
 		itemBase = itemBase->layerKinChief();
 		if (itemBase == NULL) continue;
 
-		itemBases.append(itemBase);
+		itemBases.insert(itemBase);
 	}
 
-	QSet<ItemBase *> wires;
+	QList<ConnectorItem *> connectorItems;
 	foreach (ItemBase * itemBase, itemBases) {
 		ConnectorItem * fromConnectorItem = itemBase->rightClickedConnector();
 		if (fromConnectorItem == NULL) continue;
 
+		bool gotOne = false;
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				gotOne = true;
+			}
+		}
+		if (gotOne) {
+			connectorItems.append(fromConnectorItem);
+		}
+	}
+
+	if (connectorItems.count() <= 0) return;
+
+	QString string;
+	if (itemBases.count() == 1) {
+		ItemBase * firstItem = *(itemBases.begin());
+		string = tr("Disconnect all wires from %1").arg(firstItem->modelPart()->title());
+	}
+	else {
+		string = tr("Disconnect all wires from %1 items").arg(QString::number(itemBases.count()));
+	}
+
+	QUndoCommand * parentCommand = new QUndoCommand(string);
+
+	stackSelectionState(false, parentCommand);
+
+	QHash<ItemBase *, SketchWidget *> itemsToDelete;
+	disconnectAllSlot(connectorItems, itemsToDelete, parentCommand);
+	emit disconnectAllSignal(connectorItems, itemsToDelete, parentCommand);
+
+	emit ratsnestChangeSignal(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
+	foreach (ItemBase * item, itemsToDelete.keys()) {
+		itemsToDelete.value(item)->makeDeleteItemCommand(item, BaseCommand::SingleView, parentCommand);
+	}
+	m_undoStack->push(parentCommand);
+}
+
+void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand)
+{
+	QList<ConnectorItem *> myConnectorItems;
+	foreach (ConnectorItem * ci, connectorItems) {
+		ItemBase * itemBase = findItem(ci->attachedToID());
+		if (itemBase == NULL) continue;
+
+		ConnectorItem * fromConnectorItem = findConnectorItem(itemBase, ci->connectorSharedID(), true);
+		if (fromConnectorItem == NULL) continue;
+
+		myConnectorItems.append(fromConnectorItem);
+	}
+
+	QSet<ItemBase *> deleteItems;
+	foreach (ConnectorItem * fromConnectorItem, myConnectorItems) {
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 				Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
-				QList<Wire *> chained;
-				QList<ConnectorItem *> ends;
-				QList<ConnectorItem *> uniqueEnds;
-				wire->collectChained(chained, ends, uniqueEnds);
-				foreach (Wire * w, chained) {
-					wires.insert(w);
+				if (!wire->getRatsnest()) {
+					QList<Wire *> chained;
+					QList<ConnectorItem *> ends;
+					QList<ConnectorItem *> uniqueEnds;
+					wire->collectChained(chained, ends, uniqueEnds);
+					foreach (Wire * w, chained) {
+						itemsToDelete.insert(w, this);
+						deleteItems.insert(w);
+					}
+				}
+			}
+			else if (toConnectorItem->connectorType() == Connector::Female) {
+				if (ignoreFemale()) {
+					//fromConnectorItem->tempRemove(toConnectorItem, false);
+					//toConnectorItem->tempRemove(fromConnectorItem, false);
+					//extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
+				}
+				else {
+					ItemBase * detachee = fromConnectorItem->attachedTo();
+					QPointF newPos = calcNewLoc(detachee, toConnectorItem->attachedTo());
+					// delete connections
+					// add wires and connections for undisconnected connectors
+
+					detachee->saveGeometry();
+					ViewGeometry vg = detachee->getViewGeometry();
+					vg.setLoc(newPos);
+					new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
+					QSet<ItemBase *> tempItems;
+					ConnectorPairHash connectorHash;
+					disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
+					foreach (ConnectorItem * fConnectorItem, connectorHash.uniqueKeys()) {
+						if (myConnectorItems.contains(fConnectorItem)) {
+							// don't need to reconnect
+							continue;
+						}
+
+						foreach (ConnectorItem * tConnectorItem, connectorHash.values(fConnectorItem)) {
+							createWire(fConnectorItem, tConnectorItem, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+						}
+					}
 				}
 			}
 		}
 	}
 
-	if (wires.count() <= 0) return;
-
-	deleteAux(wires, tr("Delete all wires from part connector"));
+	deleteMiddle(deleteItems, parentCommand);
 }
+
+bool SketchWidget::canDisconnectAll() {
+	return true;
+}
+
+bool SketchWidget::ignoreFemale() {
+	return true;
+}
+
+QPointF SketchWidget::calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom)
+{
+	QRectF dr = detachFrom->boundingRect();
+	dr.moveTopLeft(detachFrom->pos());
+
+	QPointF pos = moveBase->pos();
+	QRectF r = moveBase->boundingRect();
+	pos.setX(pos.x() + (r.width() / 2.0));
+	pos.setY(pos.y() + (r.height() / 2.0));
+	qreal d[4];
+	d[0] = qAbs(pos.y() - dr.top());
+	d[1] = qAbs(pos.y() - dr.bottom());
+	d[2] = qAbs(pos.x() - dr.left());
+	d[3] = qAbs(pos.x() - dr.right());
+	int ix = 0;
+	for (int i = 1; i < 4; i++) {
+		if (d[i] < d[ix]) {
+			ix = i;
+		}
+	}
+	QPointF newPos = moveBase->pos();
+	switch (ix) {
+		case 0:
+			newPos.setY(dr.top() - r.height());
+			break;
+		case 1:
+			newPos.setY(dr.bottom());
+			break;
+		case 2:
+			newPos.setX(dr.left() - r.width());
+			break;
+		case 3:
+			newPos.setX(dr.right());
+			break;
+	}
+	return newPos;
+}
+

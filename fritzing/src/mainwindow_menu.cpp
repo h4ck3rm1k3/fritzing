@@ -1654,7 +1654,7 @@ void MainWindow::updateItemMenu() {
 	enabled &= selected != NULL && selected->itemType() == ModelPart::Part;
 	m_openInPartsEditorAct->setEnabled(enabled);
 
-	m_disconnectAllAct->setEnabled(enabled && (itemBase->rightClickedConnector() != NULL));
+	m_disconnectAllAct->setEnabled(enabled && m_currentGraphicsView->canDisconnectAll() && (itemBase->rightClickedConnector() != NULL));
 
 }
 
