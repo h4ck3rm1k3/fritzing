@@ -37,6 +37,7 @@ $Date$
 #include <QStyle>
 #include <QMenu>
 #include <QApplication>
+#include <QInputDialog>
 
 // TODO:
 //		** selection: coordinate with part selection: it's a layerkin
@@ -81,7 +82,8 @@ enum PartLabelTransformation {
 	PartLabelRotate180,
 	PartLabelRotate90CCW,
 	PartLabelFlipHorizontal,
-	PartLabelFlipVertical	
+	PartLabelFlipVertical,
+	PartLabelEdit
 };
 
 /////////////////////////////////////////////
@@ -91,17 +93,15 @@ static QMultiHash<long, PartLabel *> AllPartLabels;
 ///////////////////////////////////////////
 
 PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
-	: QGraphicsTextItem(parent)
+	: QGraphicsSimpleTextItem(parent)
 {
 	m_owner = owner;
 	m_spaceBarWasPressed = false;
 
-	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 
 	m_hidden = m_initialized = false;
-	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
-	setTextInteractionFlags(Qt::TextEditorInteraction);
 	setVisible(false);
 	m_viewLayerID = ViewLayer::UnknownLayer;
 	setAcceptHoverEvents(true);
@@ -127,20 +127,13 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 		this->setZValue(viewLayer->nextZ());
 		m_viewLayerID = viewLayer->viewLayerID();
 		QRectF br = m_owner->boundingRect();
-		QPointF initial = m_owner->pos() + QPointF(br.width(), -QGraphicsTextItem::boundingRect().height());
+		QPointF initial = m_owner->pos() + QPointF(br.width(), -QGraphicsSimpleTextItem::boundingRect().height());
 		this->setPos(initial);
 		m_offset = initial - m_owner->pos();
 		m_initialized = true;
 	}
 
 	setVisible(showIt);
-}
-
-QRectF PartLabel::boundingRect() const
-{
-	QRectF br = QGraphicsTextItem::boundingRect();
-	br.adjust(0, -5, 0, 0);
-	return br;
 }
 
 QPainterPath PartLabel::shape() const
@@ -153,6 +146,11 @@ QPainterPath PartLabel::shape() const
 
 void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+	if (!m_owner->isSelected()) {
+		event->ignore();
+		return;
+	}
+
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL && infographics->spaceBarIsPressed()) {
 		m_spaceBarWasPressed = true;
@@ -161,32 +159,23 @@ void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 
 	m_spaceBarWasPressed = false;
-	scene()->clearSelection();
-    m_owner->setSelected(true);
 
-	m_doDrag = false;
-
-	// don't seem to get a contextMenuEvent in the drag area of the label, so fake it for now
-	// (since this is all only temporary anyway)
-	if (event->button() == Qt::RightButton && event->pos().y() <= 0) {
-		temporaryMenuEvent(event);
-		return;
+	if (!this->isSelected()) {
+		this->setSelected(true);
 	}
 
-	QRectF br = QGraphicsTextItem::boundingRect();
-	QPointF p = event->pos();
-	if (!br.contains(p)) {
-		m_doDrag = true;
-		m_initialPosition = pos();
-		m_initialOffset = m_offset;
-		return;
-	}
-
-	QGraphicsTextItem::mousePressEvent(event);
+	m_doDrag = true;
+	m_initialPosition = pos();
+	m_initialOffset = m_offset;
 }
 
 void PartLabel::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+	if (!m_owner->isSelected()) {
+		event->ignore();
+		return;
+	}
+
 	if (m_spaceBarWasPressed) {
 		event->ignore();
 		return;
@@ -200,43 +189,36 @@ void PartLabel::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		return;
 	}
 
-	QGraphicsTextItem::mouseMoveEvent(event);
+	QGraphicsSimpleTextItem::mouseMoveEvent(event);
 }
 
 void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+	if (!m_owner->isSelected()) {
+		event->ignore();
+		return;
+	}
+
 	if (m_spaceBarWasPressed) {
 		event->ignore();
 		return;
 	}
 
+
 	if (m_doDrag) {
 		m_owner->partLabelMoved(m_initialPosition, m_initialOffset, pos(), m_offset);
 	}
 
-	QGraphicsTextItem::mouseReleaseEvent(event);
+	QGraphicsSimpleTextItem::mouseReleaseEvent(event);
 }
 
-void PartLabel::contentsChangedSlot() {
-	if (m_owner) {
-		QString text = document()->toPlainText();
-		m_owner->partLabelChanged(text);
-		foreach (PartLabel * p, AllPartLabels.values(m_owner->id())) {
-			if (p == this) continue;
-
-			p->setPlainText(text);
-		}
-	}
-}
 
 void PartLabel::setPlainText(const QString & text) 
 {
 	// prevent unnecessary contentsChanged signals
-	if (text.compare(document()->toPlainText()) == 0) return;
+	if (text.compare(this->text()) == 0) return;
 
-	disconnect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()));
-	QGraphicsTextItem::setPlainText(text);
-	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
+	QGraphicsSimpleTextItem::setText(text);
 }
 
 bool PartLabel::initialized() {
@@ -245,28 +227,6 @@ bool PartLabel::initialized() {
 
 void PartLabel::ownerMoved(QPointF newPos) {
 	this->setPos(m_offset + newPos);
-}
-
-void PartLabel::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget) 
-{
-	if (m_hidden) return;
-
-
-	if (m_owner->isSelected()) {
-		painter->save();
-		QRectF r = boundingRect();
-		QPen pen = painter->pen();
-		pen.setWidth(1);
-		pen.setColor(Qt::gray);
-		painter->drawRect(r);
-		r.setHeight(-r.top());
-		painter->fillRect(r, QBrush(Qt::gray));
-		painter->restore();
-	}
-
-	QStyleOptionGraphicsItem newOption(*option);
-	newOption.state &= ~(QStyle::State_Selected | QStyle::State_HasFocus);
-	QGraphicsTextItem::paint(painter, &newOption, widget);
 }
 
 void PartLabel::setHidden(bool hide) {
@@ -296,7 +256,7 @@ void PartLabel::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("z", QString::number(zValue()));
 	streamWriter.writeAttribute("xOffset", QString::number(m_offset.x()));
 	streamWriter.writeAttribute("yOffset", QString::number(m_offset.y()));
-	streamWriter.writeAttribute("textColor", defaultTextColor().name());
+	streamWriter.writeAttribute("textColor", brush().color().name());
 	streamWriter.writeEndElement();
 }
 
@@ -322,7 +282,7 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 
 	QColor c;
 	c.setNamedColor(labelGeometry.attribute("textColor"));
-	setDefaultTextColor(c);
+	setBrush(QBrush(c));
 }
 
 void PartLabel::moveLabel(QPointF newPos, QPointF newOffset) 
@@ -335,81 +295,35 @@ ItemBase * PartLabel::owner() {
 	return m_owner;
 }
 
-void PartLabel::keyPressEvent(QKeyEvent * event)
+void PartLabel::initMenu() 
 {
-	switch (event->key()) {
-		case Qt::Key_Return:
-		case Qt::Key_Enter:
-			event->ignore();
-			return;
-		default:
-			QGraphicsTextItem::keyPressEvent(event);
-			break;
-	}
-}
 
-void PartLabel::keyReleaseEvent(QKeyEvent * event)
-{
-	switch (event->key()) {
-		case Qt::Key_Return:
-		case Qt::Key_Enter:
-			event->ignore();
-			return;
-		default:
-			QGraphicsTextItem::keyPressEvent(event);
-			break;
-	}
-}
+    QAction *editAct = m_menu.addAction(tr("Edit"));
+	editAct->setData(QVariant(PartLabelEdit));
+	editAct->setStatusTip(tr("Edit label text"));
 
-void PartLabel::temporaryMenuEvent(QGraphicsSceneMouseEvent * event) {
+	m_menu.addSeparator();
 
-	QMenu menu;
-    QAction *rotate90cwAct = menu.addAction(tr("&Rotate 90\x00B0 Clockwise"));
+    QAction *rotate90cwAct = m_menu.addAction(tr("&Rotate 90\x00B0 Clockwise"));
 	rotate90cwAct->setData(QVariant(PartLabelRotate90CW));
-	rotate90cwAct->setStatusTip(tr("Rotate the selected parts by 90 degrees clockwise"));
+	rotate90cwAct->setStatusTip(tr("Rotate the label by 90 degrees clockwise"));
 
- 	QAction *rotate180Act = menu.addAction(tr("&Rotate 180\x00B0"));
+ 	QAction *rotate180Act = m_menu.addAction(tr("&Rotate 180\x00B0"));
 	rotate180Act->setData(QVariant(PartLabelRotate180));
-	rotate180Act->setStatusTip(tr("Rotate the selected parts by 180 degrees"));
+	rotate180Act->setStatusTip(tr("Rotate the label by 180 degrees"));
    
-	QAction *rotate90ccwAct = menu.addAction(tr("&Rotate 90\x00B0 Counter Clockwise"));
+	QAction *rotate90ccwAct = m_menu.addAction(tr("&Rotate 90\x00B0 Counter Clockwise"));
 	rotate90ccwAct->setData(QVariant(PartLabelRotate90CCW));
 	rotate90ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
 	
-	QAction *flipHorizontalAct = menu.addAction(tr("&Flip Horizontal"));
+	QAction *flipHorizontalAct = m_menu.addAction(tr("&Flip Horizontal"));
 	flipHorizontalAct->setData(QVariant(PartLabelFlipHorizontal));
-	flipHorizontalAct->setStatusTip(tr("Flip current selection horizontally"));
+	flipHorizontalAct->setStatusTip(tr("Flip label horizontally"));
 
-	QAction *flipVerticalAct = menu.addAction(tr("&Flip Vertical"));
+	QAction *flipVerticalAct = m_menu.addAction(tr("&Flip Vertical"));
 	flipVerticalAct->setData(QVariant(PartLabelFlipVertical));
-	flipVerticalAct->setStatusTip(tr("Flip current selection vertically"));
+	flipVerticalAct->setStatusTip(tr("Flip label vertically"));
 
-	//menu.addSeparator();
-
-	QAction *selectedAction = menu.exec(event->screenPos());
-	if (selectedAction == NULL) return;
-
-	Qt::Orientations orientation = 0;
-	qreal degrees = 0;
-	switch ((PartLabelTransformation) selectedAction->data().toInt()) {
-		case PartLabelRotate90CW:
-			degrees = 90;
-			break;
-		case PartLabelRotate90CCW:
-			degrees = 270;
-			break;
-		case PartLabelRotate180:
-			degrees = 180;
-			break;
-		case PartLabelFlipHorizontal:
-			orientation = Qt::Horizontal;
-			break;
-		case PartLabelFlipVertical:
-			orientation = Qt::Vertical;
-			break;
-	}
-
-	m_owner->rotateFlipPartLabel(degrees, orientation);
 }
 
 void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
@@ -440,36 +354,13 @@ void PartLabel::transformLabel(QTransform currTransf)
 	setTransform(transf);
 }
 
-void PartLabel::focusInEvent(QFocusEvent * event) {
-	QApplication::instance()->installEventFilter(this);
-	QGraphicsTextItem::focusInEvent(event);
-}
-
-void PartLabel::focusOutEvent(QFocusEvent * event) {
-	QApplication::instance()->removeEventFilter(this);
-	QGraphicsTextItem::focusOutEvent(event);
-}
-
-bool PartLabel::eventFilter(QObject * object, QEvent * event) 
-{
-	if (event->type() == QEvent::Shortcut || event->type() == QEvent::ShortcutOverride)
-	{
-		if (!object->inherits("QGraphicsView"))
-		{
-			event->accept();
-			return true;
-		}
-	}
-	return false;
-}
-
 void PartLabel::setUpText() {
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL) {
 		QFont font;
 		QColor color;
 		infographics->getLabelFont(font, color);
-		setDefaultTextColor(color);
+		setBrush(QBrush(color));
 		setFont(font);
 	}
 }
@@ -487,5 +378,81 @@ QVariant PartLabel::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
 			break;
 	}
 
-	return QGraphicsTextItem::itemChange(change, value);
+	return QGraphicsSimpleTextItem::itemChange(change, value);
+}
+
+void PartLabel::ownerSelected(bool selected) 
+{
+	Q_UNUSED(selected);
+}
+
+void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	if (m_hidden) {
+		event->ignore();
+		return;
+	}
+
+	if (!m_owner->isSelected()) {
+		event->ignore();
+		return;
+	}
+
+	if (m_menu.isEmpty()) {
+		initMenu();
+	}
+    
+	QAction *selectedAction = m_menu.exec(event->screenPos());
+	if (selectedAction == NULL) return;
+
+	Qt::Orientations orientation = 0;
+	qreal degrees = 0;
+	switch ((PartLabelTransformation) selectedAction->data().toInt()) {
+		case PartLabelRotate90CW:
+			degrees = 90;
+			break;
+		case PartLabelRotate90CCW:
+			degrees = 270;
+			break;
+		case PartLabelRotate180:
+			degrees = 180;
+			break;
+		case PartLabelFlipHorizontal:
+			orientation = Qt::Horizontal;
+			break;
+		case PartLabelFlipVertical:
+			orientation = Qt::Vertical;
+			break;
+		case PartLabelEdit:
+			partLabelEdit();
+			return;
+	}
+
+	m_owner->rotateFlipPartLabel(degrees, orientation);
+}
+
+void PartLabel::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+	if (!m_owner->isSelected()) {
+		event->ignore();
+		return;
+	}
+
+	Q_UNUSED(event);
+	m_doDrag = false;
+	partLabelEdit();
+}
+
+void PartLabel::partLabelEdit() {
+	bool ok;
+	QString oldText = this->text();
+    QString text = QInputDialog::getText((QGraphicsView *) this->scene()->parent(), tr("Set label for %1").arg(m_owner->title()),
+                                          tr("Label text:"), QLineEdit::Normal, oldText, &ok);
+	if (ok && (oldText.compare(text) != 0)) {
+		if (m_owner) {
+			m_owner->partLabelChanged(text);
+			foreach (PartLabel * p, AllPartLabels.values(m_owner->id())) {
+				p->setPlainText(text);
+			}
+		}	
+	}
 }

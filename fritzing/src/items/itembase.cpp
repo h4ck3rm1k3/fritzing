@@ -1084,6 +1084,11 @@ QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
 				setTooltip();
 			}
 			break;
+		case QGraphicsItem::ItemSelectedChange:
+			if (m_partLabel) {
+				m_partLabel->ownerSelected(value.toBool());
+			}
+			break;
 		default:
 			break;
 	}

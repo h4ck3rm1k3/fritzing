@@ -27,7 +27,7 @@ $Date$
 #ifndef PARTLABEL_H
 #define PARTLABEL_H
 
-#include <QGraphicsTextItem>
+#include <QGraphicsSimpleTextItem>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QWidget>
@@ -36,19 +36,19 @@ $Date$
 #include <QTextDocument>
 #include <QKeyEvent>
 #include <QPointer>
+#include <QTimer>
+#include <QMenu>
 
 #include "../viewlayer.h"
 
-class PartLabel : public QGraphicsTextItem
+class PartLabel : public QObject, public QGraphicsSimpleTextItem
 {
- Q_OBJECT
-
+	Q_OBJECT
 public:
 	PartLabel(class ItemBase * owner, QGraphicsItem * parent = 0 );   // itembase is not the parent
 	~PartLabel();
 
 	void showLabel(bool showIt, ViewLayer *);
-	QRectF boundingRect() const;
 	QPainterPath shape() const;
 	void setPlainText(const QString & text);
 	bool initialized();
@@ -62,23 +62,19 @@ public:
 	class ItemBase * owner();
 	void rotateFlipLabel(qreal degrees, Qt::Orientations orientation);
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
+	void ownerSelected(bool selected);
 
 protected:
-	void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
-	void keyPressEvent(QKeyEvent * event);
-	void keyReleaseEvent(QKeyEvent * event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-	void temporaryMenuEvent(QGraphicsSceneMouseEvent * event);
+	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 	void transformLabel(QTransform currTransf);
-	void focusInEvent(QFocusEvent * event);
-	void focusOutEvent(QFocusEvent * event);
-	bool eventFilter(QObject * object, QEvent * event);
 	void setUpText();
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	void initMenu();
+	void partLabelEdit();
 
-protected slots:
-	void contentsChangedSlot();
 
 protected:
 	QPointer<class ItemBase> m_owner;
@@ -90,6 +86,7 @@ protected:
 	QPointF m_offset;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	bool m_hidden;
+	QMenu m_menu;
 };
 
 #endif
