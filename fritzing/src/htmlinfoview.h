@@ -70,6 +70,7 @@ public:
 public:
 	static const int STANDARD_ICON_IMG_WIDTH;
 	static const int STANDARD_ICON_IMG_HEIGHT;
+	static QHash<QString, QString> TranslatedPropertyNames;
 
 protected slots:
 	void jsRegister();

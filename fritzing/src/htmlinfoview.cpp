@@ -50,7 +50,7 @@ static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode);
 
 static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
 static QHash<QString, qreal> NumberMatcherValues;
-static QHash<QString, QString> TranslatedPropertyNames;
+QHash<QString, QString> HtmlInfoView::TranslatedPropertyNames;
 
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;

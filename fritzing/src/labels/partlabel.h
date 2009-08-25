@@ -76,6 +76,9 @@ protected:
 	void partLabelEdit();
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void setFontSize(int action);
+	void rotateFlip(int action);
+	void displayTexts();
+	void setLabelDisplay(const QString & key);
 
 protected:
 	QPointer<class ItemBase> m_owner;
@@ -88,6 +91,8 @@ protected:
 	ViewLayer::ViewLayerID m_viewLayerID;
 	bool m_hidden;
 	QMenu m_menu;
+	QString m_text;
+	QList<QString> m_displayKeys;
 };
 
 #endif

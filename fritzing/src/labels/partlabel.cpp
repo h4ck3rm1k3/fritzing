@@ -29,6 +29,8 @@ $Date$
 #include "../viewgeometry.h"
 #include "../debugdialog.h"
 #include "../infographicsview.h"
+#include "../modelpart.h"
+#include "../htmlinfoview.h"
 
 #include <QGraphicsScene>
 #include <QTextDocument>
@@ -86,7 +88,8 @@ enum PartLabelAction {
 	PartLabelEdit,
 	PartLabelFontSizeSmall,
 	PartLabelFontSizeMedium,
-	PartLabelFontSizeLarge
+	PartLabelFontSizeLarge,
+	PartLabelDisplayLabelText,
 };
 
 enum FontSizes {
@@ -109,6 +112,7 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 	m_spaceBarWasPressed = false;
 
 	m_hidden = m_initialized = false;
+	m_displayKeys.append("");
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
 	setVisible(false);
@@ -224,8 +228,26 @@ void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void PartLabel::setPlainText(const QString & text) 
 {
-	// prevent unnecessary contentsChanged signals
-	if (text.compare(this->text()) == 0) return;
+	m_text = text;
+	displayTexts();
+}
+
+void PartLabel::displayTexts() {
+	QString text = "";
+
+	foreach (QString key, m_displayKeys) {
+		if (key.length() == 0) {
+			text += m_text;
+		}
+		else {
+			text += m_owner->modelPart()->properties().value(key);
+		}
+		text += "\n";
+	}
+
+	if (text.length() > 0) {
+		text.chop(1);
+	}
 
 	QGraphicsSimpleTextItem::setText(text);
 }
@@ -318,7 +340,6 @@ ItemBase * PartLabel::owner() {
 
 void PartLabel::initMenu() 
 {
-
     QAction *editAct = m_menu.addAction(tr("Edit"));
 	editAct->setData(QVariant(PartLabelEdit));
 	editAct->setStatusTip(tr("Edit label text"));
@@ -360,6 +381,24 @@ void PartLabel::initMenu()
     QAction *largeAct = fsmenu->addAction(tr("Large"));
 	largeAct->setData(QVariant(PartLabelFontSizeLarge));
 	largeAct->setStatusTip(tr("Set font size to large"));
+
+    QAction *labelAct = dvmenu->addAction(tr("Label text"));
+	labelAct->setData(QVariant(PartLabelDisplayLabelText));
+	labelAct->setCheckable(true);
+	labelAct->setChecked(true);
+	labelAct->setStatusTip(tr("Display the text of the label"));
+
+	dvmenu->addSeparator();
+
+	QHash<QString,QString> properties = m_owner->modelPart()->properties();
+	foreach (QString key, properties.keys()) {
+		QString translatedName = HtmlInfoView::TranslatedPropertyNames.value(key.toLower(), key);
+		QAction * action = dvmenu->addAction(translatedName);
+		action->setData(QVariant(key));
+		action->setCheckable(true);
+		action->setChecked(false);
+		action->setStatusTip(tr("Display the value of property %1").arg(translatedName));
+	}
 }
 
 void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
@@ -447,9 +486,35 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	QAction *selectedAction = m_menu.exec(event->screenPos());
 	if (selectedAction == NULL) return;
 
-	Qt::Orientations orientation = 0;
-	qreal degrees = 0;
 	PartLabelAction action = (PartLabelAction) selectedAction->data().toInt();
+	switch (action) {
+		case PartLabelRotate90CW:
+		case PartLabelRotate90CCW:
+		case PartLabelRotate180:
+		case PartLabelFlipHorizontal:
+		case PartLabelFlipVertical:
+			rotateFlip(action);
+			break;
+		case PartLabelEdit:
+			partLabelEdit();
+			break;
+		case PartLabelFontSizeSmall:
+		case PartLabelFontSizeMedium:
+		case PartLabelFontSizeLarge:
+			setFontSize(action);
+			break;
+		case PartLabelDisplayLabelText:
+			setLabelDisplay("");
+			break;
+		default:
+			setLabelDisplay(selectedAction->data().toString());
+			break;
+	}
+}
+
+void PartLabel::rotateFlip(int action) {
+	qreal degrees = 0;
+	Qt::Orientations orientation = 0;
 	switch (action) {
 		case PartLabelRotate90CW:
 			degrees = 90;
@@ -466,18 +531,13 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		case PartLabelFlipVertical:
 			orientation = Qt::Vertical;
 			break;
-		case PartLabelEdit:
-			partLabelEdit();
-			return;
-		case PartLabelFontSizeSmall:
-		case PartLabelFontSizeMedium:
-		case PartLabelFontSizeLarge:
-			setFontSize(action);
-			return;
+		default:
+			break;
 	}
 
 	m_owner->rotateFlipPartLabel(degrees, orientation);
 }
+
 
 void PartLabel::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 	if (!m_owner->isSelected()) {
@@ -492,7 +552,7 @@ void PartLabel::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 
 void PartLabel::partLabelEdit() {
 	bool ok;
-	QString oldText = this->text();
+	QString oldText = m_text;
     QString text = QInputDialog::getText((QGraphicsView *) this->scene()->parent(), tr("Set label for %1").arg(m_owner->title()),
                                           tr("Label text:"), QLineEdit::Normal, oldText, &ok);
 	if (ok && (oldText.compare(text) != 0)) {
@@ -532,4 +592,14 @@ void PartLabel::setFontSize(int action) {
 	QFont font = this->font();
 	font.setPointSize(fs);
 	setFont(font);
+}
+
+void PartLabel::setLabelDisplay(const QString & key) {
+	if (m_displayKeys.contains(key)) {
+		m_displayKeys.removeOne(key);
+	}
+	else {
+		m_displayKeys.append(key);
+	}
+	displayTexts();
 }
