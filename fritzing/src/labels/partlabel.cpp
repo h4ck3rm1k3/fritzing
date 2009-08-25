@@ -102,6 +102,7 @@ enum FontSizes {
 /////////////////////////////////////////////
 
 static QMultiHash<long, PartLabel *> AllPartLabels;
+static const QString LabelTextKey = "";
 
 ///////////////////////////////////////////
 
@@ -112,7 +113,7 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 	m_spaceBarWasPressed = false;
 
 	m_hidden = m_initialized = false;
-	m_displayKeys.append("");
+	m_displayKeys.append(LabelTextKey);
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
 	setVisible(false);
@@ -236,7 +237,7 @@ void PartLabel::displayTexts() {
 	QString text = "";
 
 	foreach (QString key, m_displayKeys) {
-		if (key.length() == 0) {
+		if (key.compare(LabelTextKey) == 0) {
 			text += m_text;
 		}
 		else {
@@ -292,6 +293,11 @@ void PartLabel::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("yOffset", QString::number(m_offset.y()));
 	streamWriter.writeAttribute("textColor", brush().color().name());
 	streamWriter.writeAttribute("fontSize", QString::number(font().pointSizeF()));
+	foreach (QString key, m_displayKeys) {
+		streamWriter.writeStartElement("displayKey");
+		streamWriter.writeAttribute("key", key);
+		streamWriter.writeEndElement();
+	}
 	streamWriter.writeEndElement();
 }
 
@@ -326,6 +332,18 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	QFont font = this->font();
 	font.setPointSizeF(fs);
 	this->setFont(font);
+
+	m_displayKeys.clear();
+	QDomElement displayKey = labelGeometry.firstChildElement("displayKey");
+	while (!displayKey.isNull()) {
+		m_displayKeys.append(displayKey.attribute("key"));
+		displayKey = displayKey.nextSiblingElement("displayKey");
+	}
+
+	if (m_displayKeys.length() == 0) {
+		m_displayKeys.append(LabelTextKey);
+	}
+
 }
 
 void PartLabel::moveLabel(QPointF newPos, QPointF newOffset) 
@@ -504,7 +522,7 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 			setFontSize(action);
 			break;
 		case PartLabelDisplayLabelText:
-			setLabelDisplay("");
+			setLabelDisplay(LabelTextKey);
 			break;
 		default:
 			setLabelDisplay(selectedAction->data().toString());

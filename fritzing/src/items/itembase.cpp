@@ -994,10 +994,10 @@ void ItemBase::clearPartLabel() {
 void ItemBase::restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID viewLayerID)
 {
 	if (m_partLabel) {
-		m_partLabel->setPlainText(m_modelPart->instanceTitle());
 		if (!labelGeometry.isNull()) {
 			m_partLabel->restoreLabel(labelGeometry, viewLayerID);
 		}
+		m_partLabel->setPlainText(m_modelPart->instanceTitle());
 	}
 }
 

@@ -1587,6 +1587,15 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	}
 
 	if (item == NULL) {
+		if (items.length() == 1) {
+			// if we unambiguously click on a partlabel whose owner is unselected, go ahead and activate it
+			PartLabel * partLabel =  dynamic_cast<PartLabel *>(items[0]);
+			if (partLabel != NULL) {
+				partLabel->owner()->setSelected(true);
+				return;
+			}
+		}
+
 		clickBackground(event);
 		return;
 	}
