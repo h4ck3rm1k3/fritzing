@@ -75,7 +75,7 @@ protected:
 	void initMenu();
 	void partLabelEdit();
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
+	void setFontSize(int action);
 
 protected:
 	QPointer<class ItemBase> m_owner;

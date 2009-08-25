@@ -77,13 +77,23 @@ $Date$
 //		-- export to svg for export diy (silkscreen layer is not exported)
 
 
-enum PartLabelTransformation {
+enum PartLabelAction {
 	PartLabelRotate90CW = 1,
 	PartLabelRotate180,
 	PartLabelRotate90CCW,
 	PartLabelFlipHorizontal,
 	PartLabelFlipVertical,
-	PartLabelEdit
+	PartLabelEdit,
+	PartLabelFontSizeSmall,
+	PartLabelFontSizeMedium,
+	PartLabelFontSizeLarge
+};
+
+enum FontSizes {
+	FontSizeSmall = 6,
+	FontSizeMedium = 9,
+	FontSizeLarge = 16,
+	FontSizeDefault = 9
 };
 
 /////////////////////////////////////////////
@@ -97,7 +107,6 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 {
 	m_owner = owner;
 	m_spaceBarWasPressed = false;
-
 
 	m_hidden = m_initialized = false;
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
@@ -260,6 +269,7 @@ void PartLabel::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("xOffset", QString::number(m_offset.x()));
 	streamWriter.writeAttribute("yOffset", QString::number(m_offset.y()));
 	streamWriter.writeAttribute("textColor", brush().color().name());
+	streamWriter.writeAttribute("fontSize", QString::number(font().pointSizeF()));
 	streamWriter.writeEndElement();
 }
 
@@ -286,6 +296,14 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	QColor c;
 	c.setNamedColor(labelGeometry.attribute("textColor"));
 	setBrush(QBrush(c));
+
+	qreal fs = labelGeometry.attribute("fontSize").toDouble(&ok);
+	if (!ok) {
+		fs = FontSizeDefault;
+	}
+	QFont font = this->font();
+	font.setPointSizeF(fs);
+	this->setFont(font);
 }
 
 void PartLabel::moveLabel(QPointF newPos, QPointF newOffset) 
@@ -307,30 +325,41 @@ void PartLabel::initMenu()
 
 	m_menu.addSeparator();
 
-	QMenu * dmenu = m_menu.addMenu(tr("Display Values"));
+	QMenu * dvmenu = m_menu.addMenu(tr("Display Values"));
 	QMenu * rlmenu = m_menu.addMenu(tr("Flip/Rotate"));
 	QMenu * fsmenu = m_menu.addMenu(tr("Font Size"));
 
-    QAction *rotate90cwAct = rlmenu->addAction(tr("&Rotate 90\x00B0 Clockwise"));
+    QAction *rotate90cwAct = rlmenu->addAction(tr("Rotate 90\x00B0 Clockwise"));
 	rotate90cwAct->setData(QVariant(PartLabelRotate90CW));
 	rotate90cwAct->setStatusTip(tr("Rotate the label by 90 degrees clockwise"));
 
- 	QAction *rotate180Act = rlmenu->addAction(tr("&Rotate 180\x00B0"));
+ 	QAction *rotate180Act = rlmenu->addAction(tr("Rotate 180\x00B0"));
 	rotate180Act->setData(QVariant(PartLabelRotate180));
 	rotate180Act->setStatusTip(tr("Rotate the label by 180 degrees"));
    
-	QAction *rotate90ccwAct = rlmenu->addAction(tr("&Rotate 90\x00B0 Counter Clockwise"));
+	QAction *rotate90ccwAct = rlmenu->addAction(tr("Rotate 90\x00B0 Counter Clockwise"));
 	rotate90ccwAct->setData(QVariant(PartLabelRotate90CCW));
 	rotate90ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
 	
-	QAction *flipHorizontalAct = rlmenu->addAction(tr("&Flip Horizontal"));
+	QAction *flipHorizontalAct = rlmenu->addAction(tr("Flip Horizontal"));
 	flipHorizontalAct->setData(QVariant(PartLabelFlipHorizontal));
 	flipHorizontalAct->setStatusTip(tr("Flip label horizontally"));
 
-	QAction *flipVerticalAct = rlmenu->addAction(tr("&Flip Vertical"));
+	QAction *flipVerticalAct = rlmenu->addAction(tr("Flip Vertical"));
 	flipVerticalAct->setData(QVariant(PartLabelFlipVertical));
 	flipVerticalAct->setStatusTip(tr("Flip label vertically"));
 
+    QAction *smallAct = fsmenu->addAction(tr("Small"));
+	smallAct->setData(QVariant(PartLabelFontSizeSmall));
+	smallAct->setStatusTip(tr("Set font size to small"));
+
+    QAction *mediumAct = fsmenu->addAction(tr("Medium"));
+	mediumAct->setData(QVariant(PartLabelFontSizeMedium));
+	mediumAct->setStatusTip(tr("Set font size to medium"));
+
+    QAction *largeAct = fsmenu->addAction(tr("Large"));
+	largeAct->setData(QVariant(PartLabelFontSizeLarge));
+	largeAct->setStatusTip(tr("Set font size to large"));
 }
 
 void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
@@ -368,7 +397,7 @@ void PartLabel::setUpText() {
 		QColor color;
 		infographics->getLabelFont(font, color);
 		setBrush(QBrush(color));
-		setFont(font);
+		setFont(font);		
 	}
 }
 
@@ -379,6 +408,7 @@ QVariant PartLabel::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
 			if (this->scene()) {
 				setUpText();
 				setPlainText(m_owner->instanceTitle());
+
 			}
 			break;
 		default:
@@ -419,7 +449,8 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 	Qt::Orientations orientation = 0;
 	qreal degrees = 0;
-	switch ((PartLabelTransformation) selectedAction->data().toInt()) {
+	PartLabelAction action = (PartLabelAction) selectedAction->data().toInt();
+	switch (action) {
 		case PartLabelRotate90CW:
 			degrees = 90;
 			break;
@@ -437,6 +468,11 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 			break;
 		case PartLabelEdit:
 			partLabelEdit();
+			return;
+		case PartLabelFontSizeSmall:
+		case PartLabelFontSizeMedium:
+		case PartLabelFontSizeLarge:
+			setFontSize(action);
 			return;
 	}
 
@@ -476,4 +512,24 @@ void PartLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     }
 
     QGraphicsSimpleTextItem::paint(painter, option, widget);
+}
+
+void PartLabel::setFontSize(int action) {
+	qreal fs = FontSizeDefault;
+	switch (action) {
+		case PartLabelFontSizeSmall:
+			fs = FontSizeSmall;
+			break;
+		case PartLabelFontSizeMedium:
+			fs = FontSizeMedium;
+			break;
+		case PartLabelFontSizeLarge:
+			fs = FontSizeLarge;
+			break;
+		default:
+			break;
+	}
+	QFont font = this->font();
+	font.setPointSize(fs);
+	setFont(font);
 }
