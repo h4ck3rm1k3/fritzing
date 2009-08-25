@@ -92,13 +92,6 @@ enum PartLabelAction {
 	PartLabelDisplayLabelText,
 };
 
-enum FontSizes {
-	FontSizeSmall = 6,
-	FontSizeMedium = 9,
-	FontSizeLarge = 16,
-	FontSizeDefault = 9
-};
-
 /////////////////////////////////////////////
 
 static QMultiHash<long, PartLabel *> AllPartLabels;
@@ -327,11 +320,17 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 
 	qreal fs = labelGeometry.attribute("fontSize").toDouble(&ok);
 	if (!ok) {
-		fs = FontSizeDefault;
+		InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
+		if (infographics != NULL) {
+			fs = infographics->getLabelFontSizeMedium();
+			ok = true;
+		}
 	}
-	QFont font = this->font();
-	font.setPointSizeF(fs);
-	this->setFont(font);
+	if (ok) {
+		QFont font = this->font();
+		font.setPointSizeF(fs);
+		this->setFont(font);
+	}
 
 	m_displayKeys.clear();
 	QDomElement displayKey = labelGeometry.firstChildElement("displayKey");
@@ -563,7 +562,6 @@ void PartLabel::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 		return;
 	}
 
-	Q_UNUSED(event);
 	m_doDrag = false;
 	partLabelEdit();
 }
@@ -593,19 +591,22 @@ void PartLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 }
 
 void PartLabel::setFontSize(int action) {
-	qreal fs = FontSizeDefault;
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infographics == NULL) return;
+
+	qreal fs = 0;
 	switch (action) {
 		case PartLabelFontSizeSmall:
-			fs = FontSizeSmall;
+			fs = infographics->getLabelFontSizeSmall();
 			break;
 		case PartLabelFontSizeMedium:
-			fs = FontSizeMedium;
+			fs = infographics->getLabelFontSizeMedium();
 			break;
 		case PartLabelFontSizeLarge:
-			fs = FontSizeLarge;
+			fs = infographics->getLabelFontSizeLarge();
 			break;
 		default:
-			break;
+			return;
 	}
 	QFont font = this->font();
 	font.setPointSize(fs);

@@ -172,3 +172,15 @@ void InfoGraphicsView::getBendpointWidths(class Wire *, int w, int & w1, int & w
 
 void InfoGraphicsView::getLabelFont(QFont &, QColor &) {
 }
+
+qreal InfoGraphicsView::getLabelFontSizeSmall() {
+	return 7;
+}
+
+qreal InfoGraphicsView::getLabelFontSizeMedium() {
+	return 9;
+}
+
+qreal InfoGraphicsView::getLabelFontSizeLarge() {
+	return 14;
+}

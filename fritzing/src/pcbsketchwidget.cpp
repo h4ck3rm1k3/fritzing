@@ -1443,3 +1443,15 @@ void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wi
 		}
 	}
 }
+
+qreal PCBSketchWidget::getLabelFontSizeSmall() {
+	return 5;
+}
+
+qreal PCBSketchWidget::getLabelFontSizeMedium() {
+	return 7;
+}
+
+qreal PCBSketchWidget::getLabelFontSizeLarge() {
+	return 12;
+}

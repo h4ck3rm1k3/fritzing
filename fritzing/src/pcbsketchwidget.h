@@ -66,6 +66,9 @@ public:
 	virtual void setJumperFlags(ViewGeometry & vg);
 	void setClipEnds(class ClipableWire *, bool);
 	void showGroundTraces(bool show);
+	virtual qreal getLabelFontSizeSmall();
+	virtual qreal getLabelFontSizeMedium();
+	virtual qreal getLabelFontSizeLarge();
 
 public:
 	enum CleanType {
