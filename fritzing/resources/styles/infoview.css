@@ -6,7 +6,9 @@ body {
 }
 
 h1 {
-	margin: 0px 3px 2px 3px;
+	border: 1px solid rgb(217,217,217);
+	margin: 2px 3px 3px 3px;
+	padding: 0px 2px;
 
 	font-size: 16px;
 	font-weight: bold;
