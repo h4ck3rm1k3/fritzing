@@ -60,11 +60,11 @@
         <email>merunga@fritzing.org</email>
 
         <personblurb>
-          <para></para>
+          <para>Mariano Crowe is one of the developers of Fritzing</para>
         </personblurb>
 
         <affiliation>
-          <jobtitle></jobtitle>
+          <jobtitle>Programmer/Software Architect</jobtitle>
 
           <org>
             <orgname>Fachhochschule Potsdam</orgname>
@@ -149,16 +149,16 @@
     <para>Fritzing is open-source and runs on Windows, Mac and Linux
     platforms. It is implemented in C++ using the Qt framework [ref to Qt
     here]. An early version of Fritzing was written in Java on top of GEF
-    [ref] and other Eclipse frameworks. Internally, all graphics were
-    represented as bitmaps (even SVGs were rendered into bitmaps internally),
-    and the performance was very slow, especially when zooming into a view. In
-    addition, zooming with bitmaps resulted in aliasing artifacts, and a large
-    amount of code was written in order to deal with this problem using a
-    multi-resolution bitmap scheme. Thus we learned the hard way that the next
-    Fritzing platform should use "native" vector graphics for fast rendering
-    and scaling with no degradation, and this was one of the factors that led
-    us to choose Qt, which supports SVG rendering via the QSvgRenderer class.
-    [svg tiny, sort of...]</para>
+    <remark>ref</remark> and other Eclipse frameworks. Internally, all
+    graphics were represented as bitmaps (even SVGs were rendered into bitmaps
+    internally), and the performance was very slow, especially when zooming
+    into a view. In addition, zooming with bitmaps resulted in aliasing
+    artifacts, and a large amount of code was written in order to deal with
+    this problem using a multi-resolution bitmap scheme. Thus we learned the
+    hard way that the next Fritzing platform should use "native" vector
+    graphics for fast rendering and scaling with no degradation, and this was
+    one of the factors that led us to choose Qt, which supports SVG rendering
+    via the QSvgRenderer class. <remark>svg tiny, sort of...</remark></para>
 
     <para>For Fritzing, another important aspect of SVG is the ability to be
     able locate elements precisely, using measurements that translate
@@ -193,7 +193,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata contentwidth="7in" fileref="bb_sch_pcb.PNG" format="PNG"
+          <imagedata contentwidth="7in" fileref="bb_sch_pcb.png" format="PNG"
                      width="7in"></imagedata>
         </imageobject>
       </mediaobject>
@@ -312,8 +312,8 @@
     Illustrator converts everything internally to 72 dpi. This would not be a
     problem if it also converted the stroke-width attribute, but Illustrator
     does not, so user sketches showed up in Illustrator with a special blobby
-    style [image here?}. So we now export our SVGs at 72dpi to keep
-    Illustrator happy.</para>
+    style <remark>[image here?]</remark>. So we now export our SVGs at 72dpi
+    to keep Illustrator happy.</para>
 
     <para>While exporing a printable graphic image is very useful and
     effective for home or small lab production, almost all professional PCB
@@ -330,7 +330,7 @@
     <para>To export to Gerber format [need a ref], we first go through the SVG
     export process (using 1000dpi), then walk through the SVG element tree,
     where there is a more-or-less one-to-one correspondence between Gerber
-    elements and SVG elements.... [Brendan]</para>
+    elements and SVG elements.... <remark>[Brendan]</remark></para>
 
     <para>There is one more manipulation we needed to perform when Fritzing
     exports for etching (or to Gerber format): when part footprints and traces
@@ -339,8 +339,8 @@
     chemicals and depending on the production process, more environmentally
     unsound. It is also the case that some or all of these unfilled areas can
     be connected to ground, which makes routing the PCB much easier. Finally,
-    using a ground plane in printed circuits can reduce signal noise. [need an
-    image here]</para>
+    using a ground plane in printed circuits can reduce signal noise.
+    <remark>[need an image here]</remark></para>
 
     <para>Our first idea for how to implement a ground plane was to once again
     generate a single sketch SVG but increase each element's stroke-width
@@ -351,10 +351,10 @@
     that back into an SVG. It wasn't necessary to make the bitmap in extremely
     high resolution: much more important to set the stroke-width wide enough
     for all parts and wires to ensure we didn't create any short circuits. We
-    looked at using the Potrace library [ref] for doing the vectorization, but
-    as that seemed to be more than we needed (and because it was an
-    interesting problem), we rolled our own. The first version simply went
-    through the bitmap line-by-line and generated a horizontal
+    looked at using the Potrace library <remark>[ref]</remark> for doing the
+    vectorization, but as that seemed to be more than we needed (and because
+    it was an interesting problem), we rolled our own. The first version
+    simply went through the bitmap line-by-line and generated a horizontal
     <code>line</code> element for each set of contiguous empty pixels moving
     across a line. Our second version was a little more clever and used the
     endpoints of all the empty lines to create a set of filled
@@ -384,19 +384,89 @@
   <section xml:id="PARTSEDITOR">
     <title>Parts Editor</title>
 
-    <para>choosing SVGs: familiarity to our intended user-base of artists,
-    designers, and hobbyists.</para>
+    <para><remark>choosing SVGs: familiarity to our intended user-base of
+    artists, designers, and</remark><remark><remark>
+    hobbyists.</remark></remark></para>
 
-    <para>philosophy that people will create parts outside of fritzing, but
-    using their own SVG creation tools (Inkscape and Illustrator)</para>
+    <para><remark><remark></remark>philosophy that people will create parts
+    outside of fritzing, but using their own SVG creation tools (Inkscape and
+    Illustrator)</remark></para>
 
-    <para>why we hate illustrator</para>
+    <para><remark>why we hate illustrator</remark></para>
+
+    <para>In fritzing we encourage users to create their own parts. As our
+    intended user-base are artists and designers, we know that they should be
+    able to create the images for the different views, inside theirs SVG
+    creation tool of choice (eg: Illustrator). For that purpose we provide a
+    Parts Editor, which allows them to stick all these images into a part
+    definition, define/edit connectors for each view, and add metadata to both
+    each connector, and the part itself.</para>
+
+    <figure xml:id="fig4">
+      <title>Parts Editor</title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="pe.png" format="svg" width="7in"></imagedata>
+        </imageobject>
+      </mediaobject>
+
+      <caption>
+        <para>A part definition consist in two kind of information:
+        specificacion and connectors</para>
+      </caption>
+    </figure>
+
+    <para>The parts editor imports an svg for each view, and allows the user
+    to attach connectors to those images, resize and place them. On saving,
+    fritzing will copy the original file and translate these ui entities into
+    fill-none <code>rect</code> objects, with a particular <code>id</code>.
+    This id is the one that relates the connector areas across views, the
+    terminal points to each connector as well as its metadata.</para>
+
+    <para>If the user import images into fritzing, that already define
+    connectors in, the parts editor will grab its geometry and create ui
+    elements representing them, so the user can still interact an change them,
+    later on. On saving, fritzing creates a new fill-none <code>rect</code>
+    object with the new user-defined geometry but with the original id,
+    leaving the element that originally represented the connector untouched,
+    but also unreferencing it from the connections section (by just removing
+    its <code>id</code> attribute).</para>
+
+    <section>
+      <title>A tool problem</title>
+
+      <para>As this application is intended for "non-technical" users, one of
+      our first principles, is to keep the user from hand editing the markup
+      file himself. So, that brought us to be thightly related to the
+      professional vector graphic tools that designers use (illustrator in
+      most cases, but also inkscape), and their ways of doing things.</para>
+
+      <para>Illustrator main flaws are its lack of real world measurement
+      units (what is completely essential in fritzing) and its "obsession" on
+      preprocessing standard svg on load, process that doesn't use an
+      homogenic approach, and tends to leave some elements and/or attributes
+      un- or mis-transformed. <remark>here I would like to say that
+      illustrator also somehow "indoctrinate" the users, and make them think
+      that the svg format is ONLY what illustrator can do, but i'm not
+      completely sure about it :)</remark></para>
+
+      <para>Even Inkscape, opposite to illustrator, as a vector graphics tools
+      which target file format IS svg, is still far from being the
+      first-choice tool for designers. And it also has its technical flaws
+      <remark>(... for developers i mean)</remark>, for example its extremely
+      verbose inkscape svg format and how it tends to define objects
+      attributes inside a huge style-attribute value, what makes the markup
+      svg nature quite useless.</para>
+    </section>
   </section>
 
   <section>
     <title>Part Generators</title>
 
-    <para>[Brendan, Mariano]</para>
+    <para><remark>Brendan</remark></para>
+
+    <para><remark>Mariano: Brendan, i'm afraid that you lead </remark></para>
   </section>
 
   <section>
@@ -409,7 +479,7 @@
     lot of crap around, mirrored attributes confuse qt, it's way
     over-complicated. Illustrator sucks in another 1000 ways.</para>
 
-    <para></para>
+    <para>A word on FONTS ???</para>
   </section>
 
   <section>
