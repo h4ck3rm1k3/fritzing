@@ -26,6 +26,7 @@ $Date$
 
 #include "fsvgrenderer.h"
 #include "debugdialog.h"
+#include "svg/svgflattener.h"
 
 #include <QPainter>
 
@@ -237,7 +238,12 @@ bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const
 			return false;
 		}
 
+		SvgFlattener flattener;
+		flattener.flattenChildren(m_svgDomDocument.documentElement());
+
+		SvgFileSplitter::fixStyleAttributeRecurse(m_svgDomDocument.documentElement());
 	}
+
 
 	QDomElement element;
 	if (m_cachedElement.isNull()) {

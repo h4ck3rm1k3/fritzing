@@ -33,9 +33,11 @@ static QRegExp findWhitespaceBefore(" ([CcMmVvTtQqSsLlVvHhZz,])");
 static QRegExp findWhitespaceAfter("([CcMmVvTtQqSsLlVvHhZz,]) ");
 static QRegExp findWhitespaceAtEnd(" $");
 
+const QString SVGPathLexer::RegexFloatDetector = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+
 SVGPathLexer::SVGPathLexer(const QString &source)
 {
-	m_floatingPointMatcher.setPattern("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");			
+	m_floatingPointMatcher.setPattern(RegexFloatDetector);			
     m_source = clean(source);
     m_chars = m_source.unicode();
     m_size = m_source.size();

@@ -662,6 +662,15 @@ void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly)
 	}
 }
 
+void SvgFileSplitter::fixStyleAttributeRecurse(QDomElement & element) {
+	fixStyleAttribute(element);
+	QDomElement childElement = element.firstChildElement();
+	while (!childElement.isNull()) {
+		fixStyleAttributeRecurse(childElement);
+		childElement = childElement.nextSiblingElement();
+	}
+}
+
 void SvgFileSplitter::fixStyleAttribute(QDomElement & element)
 {
 	QString style = element.attribute("style");

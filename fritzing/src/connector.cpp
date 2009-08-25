@@ -242,9 +242,11 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		QRectF bounds;
 		qreal rad = 0;
 		qreal sw = 0;
+		bool useRenderer = false;
 		if (!renderer->getSvgConnectorInfo(viewLayerID, connectorID, bounds, rad, sw)) {
 			//DebugDialog::debug(QString("bounds on element %1").arg(connectorID) );
 			bounds = renderer->boundsOnElement(connectorID);
+			useRenderer = true;
 		}
 
 		if (bounds.isNull()) {
@@ -258,8 +260,8 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 			return false;
 		}
 
-		QMatrix matrix0 = renderer->matrixForElement(connectorID);
 		QRectF viewBox = renderer->viewBoxF();
+		QMatrix matrix0 = renderer->matrixForElement(connectorID);
 
 		if (rad != 0) {
 			radius = svgIdLayer->m_radius = rad * defaultSizeF.width() / viewBox.width();
@@ -267,7 +269,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		}
 
 		// TODO: all parts should either have connectors with or without a matrix
-		if (matrix0.isIdentity()) {
+		if (!useRenderer || matrix0.isIdentity()) {
 			/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
 							   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
 							   .arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())

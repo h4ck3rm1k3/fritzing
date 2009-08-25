@@ -40,6 +40,8 @@ public:
 	QChar currentCommand();
 	double currentNumber();
 
+	static const QString RegexFloatDetector;
+
 protected:
     QChar next();
 	QString clean(const QString & source);

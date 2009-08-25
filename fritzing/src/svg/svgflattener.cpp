@@ -25,6 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "svgflattener.h"
+#include "svgpathlexer.h"
 #include "../debugdialog.h"
 #include <QMatrix>
 #include <QRegExp>
@@ -35,9 +36,9 @@ SvgFlattener::SvgFlattener()
 
 void SvgFlattener::flattenChildren(QDomElement &element){
     // I'm a leaf node. (NOTE: assumes no transforms)
-    if(!element.hasChildNodes()) {
-        return;
-    }
+    //if(!element.hasChildNodes()) {
+       // return;
+    //}
 
     // recurse the children
     QDomNodeList childList = element.childNodes();
@@ -155,7 +156,7 @@ bool SvgFlattener::hasRotate(QDomElement & element){
 }
 
 QList<qreal> SvgFlattener::getTransformFloats(QDomElement & element){
-    QRegExp rx("([-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?)");
+    QRegExp rx(QString("(") + SVGPathLexer::RegexFloatDetector + ")");
     QString transform = element.attribute("transform");
     QList<qreal> list;
     int pos = 0;
