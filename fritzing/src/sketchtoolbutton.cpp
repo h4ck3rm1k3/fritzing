@@ -40,6 +40,11 @@ SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QA
 {
 	setupIcons(imageName);
 
+	//DebugDialog::debug(QString("%1 %2 %3 %4 %5 %6 %7").arg(imageName)
+		//.arg(m_enabledImage.width()).arg(m_enabledImage.height())
+		//.arg(m_disabledImage.width()).arg(m_disabledImage.height())
+		//.arg(m_pressedImage.width()).arg(m_pressedImage.height()));
+
 	if(defaultAction) {
 		setDefaultAction(defaultAction);
 		setText(defaultAction->text());

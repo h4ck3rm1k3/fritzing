@@ -4,6 +4,7 @@ Part of the Fritzing project - http://fritzing.org
 Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
 
 Fritzing is free software: you can redistribute it and/or modify
+
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -523,6 +524,13 @@ SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
 	return rotateButton;
 }
 
+SketchToolButton *MainWindow::createShareButton(SketchAreaWidget *parent) {
+	SketchToolButton *shareButton = new SketchToolButton("Share",parent, m_shareOnlineAct);
+	shareButton->setText(tr("Share"));
+	shareButton->setEnabledIcon();					// seems to need this to display button icon first time
+	return shareButton;
+}
+
 SketchToolButton *MainWindow::createFlipButton(SketchAreaWidget *parent) {
 	QList<QAction*> flipMenuActions;
 	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
@@ -572,10 +580,10 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 		case ViewIdentifierClass::PCBView: parent = m_pcbWidget; break;
 		default: return retval;
 	}
-	retval << createNoteButton(parent) << createRotateButton(parent);
+	retval << createShareButton(parent) << createNoteButton(parent) << createRotateButton(parent);
 	switch (viewId) {
 		case ViewIdentifierClass::BreadboardView:
-			retval << createFlipButton(parent);
+			retval << createFlipButton(parent); 
 			break;
 		case ViewIdentifierClass::SchematicView:
 			retval << createFlipButton(parent) << createToolbarSpacer(parent) << createAutorouteButton(parent) << createRoutingStatusLabel(parent);

@@ -174,5 +174,8 @@
         <file>resources/parts/svg/core/schematic/ground.svg</file>
         <file>resources/parts/svg/core/schematic/cell.svg</file>
         <file>resources/parts/core/power.fzp</file>
+        <file>resources/images/icons/toolbarSharePressed_icon.png</file>
+        <file>resources/images/icons/toolbarShareDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarShareEnabled_icon.png</file>
     </qresource>
 </RCC>

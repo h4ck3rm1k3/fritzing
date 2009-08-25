@@ -760,6 +760,10 @@ void MainWindow::createFileMenuActions() {
 	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and its non-core parts"));
 	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
 
+	m_shareOnlineAct = new QAction(tr("Share online..."), this);
+	m_shareOnlineAct->setStatusTip(tr("Post a project to the Fritzing website"));
+	connect(m_shareOnlineAct, SIGNAL(triggered()), this, SLOT(shareOnline()));
+
 	m_saveAsModuleAct = new QAction(tr("Save As Module..."), this);
 	m_saveAsModuleAct->setStatusTip(tr("Export current sketch as a standalone module"));
 	connect(m_saveAsModuleAct, SIGNAL(triggered()), this, SLOT(saveAsModule()));
@@ -1311,6 +1315,7 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);
     m_fileMenu->addAction(m_saveAsBundledAct);
+    m_fileMenu->addAction(m_shareOnlineAct);
 #ifndef QT_NO_DEBUG
     m_fileMenu->addAction(m_saveAsModuleAct);
     m_fileMenu->addAction(m_editModuleAct);
@@ -3076,4 +3081,9 @@ void MainWindow::processStateChanged(QProcess::ProcessState newState) {
 	}
 }
 
-#endif
+#endif // NAVENDU
+
+void MainWindow::shareOnline() {
+	QDesktopServices::openUrl(QString("http://fritzing.org/projects/create"));
+}
+

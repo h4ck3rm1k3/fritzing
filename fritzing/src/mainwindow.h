@@ -219,6 +219,7 @@ protected slots:
 	void selectAllJumpers();
 
 	void saveBundledSketch();
+	void shareOnline();
 	void saveBundledPart(const QString &moduleId=___emptyString___);
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
 	void loadBundledSketch(const QString &fileName);
@@ -330,6 +331,7 @@ protected:
 
 	ZoomComboBox *createZoomOptions(SketchAreaWidget* parent);
 	SketchToolButton *createRotateButton(SketchAreaWidget *parent);
+	SketchToolButton *createShareButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
 	class ExpandingLabel * createRoutingStatusLabel(SketchAreaWidget *);
@@ -425,6 +427,7 @@ protected:
 	QAction *m_pageSetupAct;
 	QAction *m_printAct;
 	QAction *m_saveAsBundledAct;
+	QAction *m_shareOnlineAct;
 	QAction *m_saveAsModuleAct;
 	QAction *m_editModuleAct;
 #ifdef NAVENDU
