@@ -29,7 +29,7 @@
     <layer layerId="schematic" />
    </layers>
   </breadboardView>
-  <schematicView>
+   <schematicView flipvertical="true">
    <layers image="schematic/cell.svg" >
      <layer layerId="schematic" />
    </layers>

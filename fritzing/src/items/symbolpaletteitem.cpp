@@ -137,7 +137,7 @@ QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QStr
 	if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
 
 	qreal v = qRound(m_voltage * 100) / 100.0;	// truncate to 2 decimal places
-	return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='5' value='%1' style='width:35px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"
+	return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='8' value='%1' style='width:55px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"
 				   "<script language='JavaScript'>lastGoodVoltage=%1;</script>"
 				   ).arg(v);
 

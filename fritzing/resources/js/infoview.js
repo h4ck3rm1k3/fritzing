@@ -212,11 +212,11 @@ function updateBoardSize(w, h) {
 }
 
 function setVoltage() {
-	var reg = /^(-{0,1}\d{1,2}$)|(-{0,1}\d{1,2}\.\d{1,2}$)/;
+	var reg = /^(-{0,1}\d{1,4}$)|(-{0,1}\d{1,4}\.\d{1,2}$)/;
 	
 	var v = document.getElementById("sVoltage").value;			
    	if (!reg.test(v)) {
-	    alert("voltage is not a number");
+	    alert("The value '" + v + "' doesn't fit within the range of -9999.99 to 9999.99");
 	    setLastVoltage();
 	    return;
 	}
