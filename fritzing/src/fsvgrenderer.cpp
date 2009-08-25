@@ -239,9 +239,9 @@ bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const
 		}
 
 		SvgFlattener flattener;
-		flattener.flattenChildren(m_svgDomDocument.documentElement());
-
-		SvgFileSplitter::fixStyleAttributeRecurse(m_svgDomDocument.documentElement());
+		QDomElement root = m_svgDomDocument.documentElement();
+		flattener.flattenChildren(root);
+		SvgFileSplitter::fixStyleAttributeRecurse(root);
 	}
 
 
