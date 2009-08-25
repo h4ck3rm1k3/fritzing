@@ -233,6 +233,9 @@ void PartLabel::setHidden(bool hide) {
 	if (!m_initialized) return;
 
 	m_hidden = hide;
+	if (!m_owner->isSelected()) {
+		hide = true;
+	}
 	setAcceptedMouseButtons(hide ? Qt::NoButton : ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(!hide);
 	update();
@@ -304,23 +307,27 @@ void PartLabel::initMenu()
 
 	m_menu.addSeparator();
 
-    QAction *rotate90cwAct = m_menu.addAction(tr("&Rotate 90\x00B0 Clockwise"));
+	QMenu * dmenu = m_menu.addMenu(tr("Display Values"));
+	QMenu * rlmenu = m_menu.addMenu(tr("Flip/Rotate"));
+	QMenu * fsmenu = m_menu.addMenu(tr("Font Size"));
+
+    QAction *rotate90cwAct = rlmenu->addAction(tr("&Rotate 90\x00B0 Clockwise"));
 	rotate90cwAct->setData(QVariant(PartLabelRotate90CW));
 	rotate90cwAct->setStatusTip(tr("Rotate the label by 90 degrees clockwise"));
 
- 	QAction *rotate180Act = m_menu.addAction(tr("&Rotate 180\x00B0"));
+ 	QAction *rotate180Act = rlmenu->addAction(tr("&Rotate 180\x00B0"));
 	rotate180Act->setData(QVariant(PartLabelRotate180));
 	rotate180Act->setStatusTip(tr("Rotate the label by 180 degrees"));
    
-	QAction *rotate90ccwAct = m_menu.addAction(tr("&Rotate 90\x00B0 Counter Clockwise"));
+	QAction *rotate90ccwAct = rlmenu->addAction(tr("&Rotate 90\x00B0 Counter Clockwise"));
 	rotate90ccwAct->setData(QVariant(PartLabelRotate90CCW));
 	rotate90ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
 	
-	QAction *flipHorizontalAct = m_menu.addAction(tr("&Flip Horizontal"));
+	QAction *flipHorizontalAct = rlmenu->addAction(tr("&Flip Horizontal"));
 	flipHorizontalAct->setData(QVariant(PartLabelFlipHorizontal));
 	flipHorizontalAct->setStatusTip(tr("Flip label horizontally"));
 
-	QAction *flipVerticalAct = m_menu.addAction(tr("&Flip Vertical"));
+	QAction *flipVerticalAct = rlmenu->addAction(tr("&Flip Vertical"));
 	flipVerticalAct->setData(QVariant(PartLabelFlipVertical));
 	flipVerticalAct->setStatusTip(tr("Flip label vertically"));
 
@@ -383,7 +390,12 @@ QVariant PartLabel::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
 
 void PartLabel::ownerSelected(bool selected) 
 {
-	Q_UNUSED(selected);
+	bool hide = !selected;
+	if (m_hidden) {
+		hide = true;
+	}
+	setAcceptedMouseButtons(hide ? Qt::NoButton : ALLMOUSEBUTTONS);
+	setAcceptHoverEvents(!hide);
 }
 
 void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
@@ -455,4 +467,13 @@ void PartLabel::partLabelEdit() {
 			}
 		}	
 	}
+}
+
+void PartLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	if (m_owner->isSelected()) {
+		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), shape(), NULL);
+    }
+
+    QGraphicsSimpleTextItem::paint(painter, option, widget);
 }

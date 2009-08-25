@@ -74,6 +74,7 @@ protected:
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	void initMenu();
 	void partLabelEdit();
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 
 protected:
