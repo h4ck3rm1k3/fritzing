@@ -103,11 +103,11 @@ void UpdateDialog::setAvailableReleases(const QList<AvailableRelease *> & availa
 	QString text = QString("<html><head><style type='text/css'>%1</style></head><body>").arg(style);
 			
 	if (mainRelease) {
-		text += genTable("A new main release is available for downloading:", mainRelease);
+		text += genTable(tr("A new main release is available for downloading:"), mainRelease);
 		settings.setValue("lastMainVersionChecked", mainRelease->versionString);
 	}
 	if (interimRelease) {
-		text += genTable("A new interim release is available for downloading:", interimRelease);
+		text += genTable(tr("A new interim release is available for downloading:"), interimRelease);
 		settings.setValue("lastInterimVersionChecked", interimRelease->versionString);
 	}
 
