@@ -40,7 +40,7 @@ VersionChecker::VersionChecker() : QObject()
 		this, SLOT(finished(int, bool)));
 
 	m_depth = 0;
-	m_inUpdated = m_inTitle = m_inEntry = false;
+	m_inSummary = m_inUpdated = m_inTitle = m_inEntry = false;
 	m_ignoreInterimVersion.ok = m_ignoreMainVersion.ok = false;
 }
 
@@ -99,7 +99,7 @@ void VersionChecker::parseXml()
 			QString elementName = m_xml.name().toString();
 			if (elementName.compare("entry") == 0) {
 				m_inEntry = true;
-				m_inTitle = m_inUpdated = false;
+				m_inSummary = m_inTitle = m_inUpdated = false;
 				m_currentLinkHref = "";
 				m_currentCategoryTerm = "";
 				m_currentTitle = "";
@@ -118,6 +118,9 @@ void VersionChecker::parseXml()
 			}
 			else if (m_inEntry && elementName.compare("updated") == 0) {
 				m_inUpdated = true;
+			}
+			else if (m_inEntry && elementName.compare("summary") == 0) {
+				m_inSummary = true;
 			}
 
 			//DebugDialog::debug(QString("%1<%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
@@ -138,6 +141,9 @@ void VersionChecker::parseXml()
 			else if (m_inUpdated && elementName.compare("updated") == 0) {
 				m_inUpdated = false;
 			}
+			else if (m_inSummary && elementName.compare("summary") == 0) {
+				m_inSummary = false;
+			}
 			m_depth--;
 			//DebugDialog::debug(QString("%1</%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
         } 
@@ -150,7 +156,9 @@ void VersionChecker::parseXml()
 			}
 			else if (m_inUpdated) {
 				m_currentUpdated = m_xml.text().toString();
-
+			}
+			else if (m_inSummary) {
+				m_currentSummary = m_xml.text().toString();
 			}
         }
     }
@@ -217,6 +225,7 @@ void VersionChecker::parseEntry() {
 	availableRelease->versionString = m_currentTitle;
 	availableRelease->link = m_currentLinkHref;
 	availableRelease->interim = interim;
+	availableRelease->summary = m_currentSummary;
 	QStringList temp = m_currentUpdated.split('+');											// conversion is confused by the +timezone suffix from the site xml
 	availableRelease->dateTime = QDateTime::fromString(temp[0], "yyyy-MM-ddThh:mm:ss");     
 	m_availableReleases.append(availableRelease);

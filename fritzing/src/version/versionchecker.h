@@ -39,6 +39,7 @@ struct AvailableRelease {
 	bool interim;
 	QString versionString;
 	QString link;
+	QString summary;
 	QDateTime dateTime;
 };
 
@@ -79,11 +80,13 @@ protected:
 	bool m_inEntry;
 	bool m_inTitle;
 	bool m_inUpdated;
+	bool m_inSummary;
 	QList<AvailableRelease *> m_availableReleases;
 	QString m_currentLinkHref;
 	QString m_currentCategoryTerm;
 	QString m_currentTitle;
 	QString m_currentUpdated;
+	QString m_currentSummary;
 	VersionThing m_ignoreMainVersion;
 	VersionThing m_ignoreInterimVersion;
 	int m_statusCode;

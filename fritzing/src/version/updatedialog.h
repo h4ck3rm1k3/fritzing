@@ -54,6 +54,7 @@ protected slots:
 protected:
 	void setAvailableReleases(const QList<struct AvailableRelease *> & availableReleases); 
 	void handleError();
+	QString genTable(const QString & title, struct AvailableRelease *);
 
 protected:
 	class VersionChecker * m_versionChecker;

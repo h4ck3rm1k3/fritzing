@@ -103,28 +103,11 @@ void UpdateDialog::setAvailableReleases(const QList<AvailableRelease *> & availa
 	QString text = QString("<html><head><style type='text/css'>%1</style></head><body>").arg(style);
 			
 	if (mainRelease) {
-		text += QString("A new main release is available:"
-						"<table><tr>"
-						"<td>%1</td>"
-						"<td>%2<td/>"
-						"<td><a href=\"%3\">download</a></td>"
-						"</tr></table>")
-						.arg(mainRelease->versionString)
-						.arg(mainRelease->dateTime.toString(Qt::DefaultLocaleShortDate))
-						.arg(mainRelease->link);
+		text += genTable("A new main release is available for downloading:", mainRelease);
 		settings.setValue("lastMainVersionChecked", mainRelease->versionString);
 	}
 	if (interimRelease) {
-		text += QString("A new interim release is available:"
-						"<table><tr>"
-						"<td>%1</td>"
-						"<td>%2<td/>"
-						"<td><a href=\"%3\">download</a></td>"
-						"</tr></table>")
-						.arg(interimRelease->versionString)
-						.arg(interimRelease->dateTime.toString(Qt::DefaultLocaleShortDate))
-						.arg(interimRelease->link);
-
+		text += genTable("A new interim release is available for downloading:", interimRelease);
 		settings.setValue("lastInterimVersionChecked", interimRelease->versionString);
 	}
 
@@ -188,4 +171,27 @@ void UpdateDialog::setAtUserRequest(bool atUserRequest)
 void UpdateDialog::stopClose() {
 	m_versionChecker->stop();
 	this->close();
+}
+
+QString UpdateDialog::genTable(const QString & title, AvailableRelease * release) {
+	return QString(
+				"<p>"
+				"<h3><b>%1</b></h3>"
+				"<div style='margin-left:10px';margin-top:-5px'>"
+				"<table>"
+				"<tr>"
+				"<td><a href=\"%4\"><b>Version %2</b></a></td>"
+				"<td>(%3)<td/>"
+				"</tr>"
+				"</table>"
+				"<table><tr><td>%5</td></tr></table>"
+				"</div>"
+				"</p>"
+			)
+
+			.arg(title)
+			.arg(release->versionString)
+			.arg(release->dateTime.toString(Qt::DefaultLocaleShortDate))
+			.arg(release->link)
+			.arg(release->summary.replace("changelog:", "", Qt::CaseInsensitive));
 }
