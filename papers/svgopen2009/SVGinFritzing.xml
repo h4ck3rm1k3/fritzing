@@ -154,38 +154,35 @@
       <listitem>Again, depending on the purpose of the export, only certain layers of a given part will be visible, so elements belonging to the non-visible layers are ignored.</listitem>
     </itemizedlist>
     <para>We originally picked 1/1000 inch resolution because it is the most common standard unit   in professional PCB manufacturing. However, we found that many of our users import the Fritzing-exported SVGs into Adobe Illustrator, which converts everything internally to 72 dpi. This would not be a problem if Illustrator also converted the stroke-width attribute, but Illustrator does not, so user sketches showed up in Illustrator rendered dramatically incorrect. So we now export our SVGs at 72dpi as a workaround.</para>
-    <para>While exporing a printable graphic image is very useful and effective for home or small lab production, almost all professional PCB production houses expect files in the Gerber RS-274-X format. This format, often simply called <emphasis>Gerber</emphasis>, was created in the 1970s by the Gerber Systems Corp (now owned by Mania Technologie AG) to drive photoplotting machines. The file describes the movement of a photoplotter head with a series of commands: move, light-on, light-off, aperture size change and shape change. The action of exposing a photo-sensitive film to light creates a <emphasis>resist</emphasis> which is used to define the areas of the circuit board which will  be etched. While most modern photoplotters are actually raster based, the legacy standard lives on. </para>
-    <para>To export to Gerber format [need a ref], we first go through the SVG export process (using 1000dpi), then walk through the SVG element tree, where there is a more-or-less one-to-one correspondence between Gerber elements and SVG elements.... [Brendan]</para>
-    <para>There is one more manipulation we needed to perform when Fritzing exports for etching (or to Gerber format): when part footprints and traces are exported, it leaves large areas of the PCB unfilled, and removing all the copper from these areas is both time consuming, wasteful of etchant chemicals and depending on the production process, more environmentally unsound. It is also the case that some or all of these unfilled areas can be connected to ground, which makes routing the PCB much easier. Finally, using a ground plane in printed circuits can reduce signal noise. [need an image here]</para>
-    <para>Our first idea for how to implement a ground plane was to once again generate a single sketch SVG but increase each element&apos;s stroke-width attribute by some percent. Then we would subtract this modified sketch shape from the shape of the board. However, we couldn&apos;t find an easy way to perform this subtraction directly in SVG space. So our next idea was to render the fattened sketch into a bitmap, then find some way to vectorize that back into an SVG. It wasn&apos;t necessary to make the bitmap in extremely high resolution: much more important to set the stroke-width wide enough for all parts and wires to ensure we didn&apos;t create any short circuits. We looked at using the Potrace library [ref] for doing the vectorization, but as that seemed to be more than we needed (and because it was an interesting problem), we rolled our own. The first version simply went through the bitmap line-by-line and generated a horizontal <code>line</code> element for each set of contiguous empty pixels moving across a line. Our second version was a little more clever and used the endpoints of all the empty lines to create a set of filled <code>polygon</code> elements (i.e. a polygon for each empty &quot;island&quot; in the bitmap). There is still room for optimization by removing redundant endpoints in the polygons, but our ground plane implementation is working. Similar techniques could be used to create a more flexible solder mask layer. </para>
-    <figure xml:id="fig3">
-      <title>Sketch exported for etching</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="gp.svg" format="svg"/>
-        </imageobject>
-      </mediaobject>
-      <caption>
-        <para>A composite view of an an exported sketch, shown, respectively,
+    <section>
+      <title>Gerber Export</title>
+      <para>While exporing a printable graphic image is very useful and effective for home or small lab production, almost all professional PCB production houses expect files in the Gerber RS-274-X format. This format, often simply called <emphasis>Gerber</emphasis>, was created in the 1970s by the Gerber Systems Corp (now owned by Mania Technologie AG) to drive photoplotting machines. The file describes the movement of a photoplotter head with a series of commands: move, light-on, light-off, aperture size change and shape change. The action of exposing a photo-sensitive film to light creates a <emphasis>resist</emphasis> which is used to define the areas of the circuit board which will  be etched. While most modern photoplotters are actually raster based, the legacy standard lives on. </para>
+      <para>To export to Gerber format, we first go through the SVG export process (using 1000dpi), then walk through the SVG element tree, where there is a more-or-less one-to-one correspondence between Gerber elements and SVG elements.  Gerber has some limitations, however. The only curves supported in gerber are complete circles or circular arc segments, so currently there are no footprints in Fritzing with bezier curves.  While it has not yet been implemented, we have considered several algorithms to convert SVG curves to poly-lines or arc segments.  In addition there is no support in Gerber for fonts or generic text.  One possible solution is to map SVG path-based font tables to straight lines and circular arc segments. </para>
+    </section>
+    <section>
+      <title>Ground Plane Generation</title>
+      <para>There is one further manipulation  to perform when Fritzing exports for etching (or to Gerber format): when part footprints and traces are exported, it leaves large areas of the PCB unfilled, and removing all the copper from these areas is time consuming; wasteful of etchant chemicals; and depending on the production process, less environmentally sound. Furthermore, some or all of these unfilled areas can be connected to ground, which makes routing the PCB much easier. Finally, using a ground plane in printed circuits can reduce signal noise. </para>
+      <para>Our first idea for how to implement a ground plane was once again to generate a single sketch SVG but increase each element&apos;s stroke-width attribute by some percent, and then  subtract this modified sketch shape from the shape of the board. However, we couldn&apos;t find an easy way to perform subtraction directly in SVG space. So our next idea was to render the fattened sketch into a bitmap, then find some way to vectorize that back into an SVG. It is unnecessary to work with such a bitmap at a high resolution: it is much more important to set the stroke-width   on all parts and wires wide enough to avoid any short circuits. We looked at using the Potrace library [ref] for doing the vectorization, but as that seemed to be more than we needed (and because it was an interesting problem), we developed our own solution. </para>
+      <para>The first version simply went through the bitmap line-by-line and generated a horizontal <code>line</code> element for each set of contiguous horizontal empty pixels. Our second version was a little more clever and used the endpoints of all those horizontal empty lines to create a set of filled <code>polygon</code> elements (i.e. a polygon for each empty &quot;island&quot; in the bitmap). There is still room for optimization by removing redundant endpoints in the polygons, but our ground plane implementation is working. Similar techniques could be used to create a more flexible solder mask layer. </para>
+      <figure xml:id="fig3">
+        <title>Sketch exported for etching</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="gp.svg" format="svg"/>
+          </imageobject>
+        </mediaobject>
+        <caption>
+          <para>A composite view of an an exported sketch, shown, respectively,
         without ground plane and with ground plane. We allow the ground plane
         to intersect with ground wires.</para>
-      </caption>
-    </figure>
+        </caption>
+      </figure>
+    </section>
   </section>
   <section xml:id="PARTSEDITOR">
     <title>Parts Editor</title>
-    <para><remark>choosing SVGs: familiarity to our intended user-base of artists, designers, and</remark><remark>
-        <remark> hobbyists.</remark>
-      </remark></para>
-    <para><remark><remark/>philosophy that people will create parts outside of fritzing, but using their own SVG creation tools (Inkscape and Illustrator)</remark></para>
-    <para><remark>why we hate illustrator</remark></para>
-    <para>In fritzing we encourage users to create their own parts. As our
-    intended user-base are artists and designers, we know that they should be
-    able to create the images for the different views, inside theirs SVG
-    creation tool of choice (eg: Illustrator). For that purpose we provide a
-    Parts Editor, which allows them to stick all these images into a part
-    definition, define/edit connectors for each view, and add metadata to both
-    each connector, and the part itself.</para>
+    <para>While we provide a set of common and useful Core parts it is quite impossible to maintain a library that could even begin to hold every part that any user could possibly want to use.  Therefore, we encourage users to create their own parts and we provide a Parts Editor for that purpose. As many of our users are artists and designers, we know that they  have both the capacity and interest  needed to create the images for the different views. Furthermore, most of them are familiar with vector graphics tools, such as Illustrator or Inkscape. The parts editor allows them to integrate these images into a part
+    definition, define connectors for each view, and add metadata for the part and each individual connector.</para>
     <figure xml:id="fig4">
       <title>Parts Editor</title>
       <mediaobject>
@@ -194,33 +191,20 @@
         </imageobject>
       </mediaobject>
       <caption>
-        <para>A part definition consist in two kind of information:
-        specificacion and connectors</para>
+        <para>Parts Editor Window:
+        Specifications and Connectors</para>
       </caption>
     </figure>
-    <para>The parts editor imports an svg for each view, and allows the user
-    to attach connectors to those images, resize and place them. On saving,
-    fritzing will copy the original file and translate these ui entities into
-    fill-none <code>rect</code> objects, with a particular <code>id</code>.
-    This id is the one that relates the connector areas across views, the
-    terminal points to each connector as well as its metadata.</para>
-    <para>If the user import images into fritzing, that already define
-    connectors in, the parts editor will grab its geometry and create ui
-    elements representing them, so the user can still interact an change them,
-    later on. On saving, fritzing creates a new fill-none <code>rect</code>
-    object with the new user-defined geometry but with the original id,
-    leaving the element that originally represented the connector untouched,
-    but also unreferencing it from the connections section (by just removing
-    its <code>id</code> attribute).</para>
+    <para>In the  Parts Editor, the user imports an SVG for each view, and allows the user
+    to attach connectors by representing them as on-screen manipulable rectangles. 
+    The user can then move and resize the connectors.  The Parts Editor ensures that the correspondence between SVG element <code>id</code>s and their metadata references are consistent.  Since these SVGs can come from any source, it is often convenient to recycle images from existing similar parts.  If an SVG already has connectors defined, they are represented on-screen and if the user should delete any of them, the connector references are removed from the SVG file as it is saved. While maintaining this consistency has caused a lot of hair tearing for the programmers, it has proved to be a popular feature with our users.</para>
     <section>
       <title>A tool problem</title>
       <para>As this application is intended for &quot;non-technical&quot; users, one of
-      our first principles, is to keep the user from hand editing the markup
-      file himself. So, that brought us to be thightly related to the
-      professional vector graphic tools that designers use (illustrator in
-      most cases, but also inkscape), and their ways of doing things.</para>
-      <para>Illustrator main flaws are its lack of real world measurement
-      units (what is completely essential in fritzing) and its &quot;obsession&quot; on
+      our goals is to avoid forcing the user to hand-edit markup
+      files. As a result, we have come to be highly dependent on Inkscape and Illustrator and this has exposed us to a number of bugs and idiosyncracies in their respective SVG implementations.</para>
+      <para>Illustrator&apos;s main flaws are its lack of real world measurement
+      units, which are completely necessary in Fritzing and its &quot;obsession&quot; on
       preprocessing standard svg on load, process that doesn&apos;t use an
       homogenic approach, and tends to leave some elements and/or attributes
       un- or mis-transformed. <remark>here I would like to say that illustrator also somehow &quot;indoctrinate&quot; the users, and make them think that the svg format is ONLY what illustrator can do, but i&apos;m not completely sure about it :)</remark></para>
@@ -231,32 +215,27 @@
       verbose inkscape svg format and how it tends to define objects
       attributes inside a huge style-attribute value, what makes the markup
       svg nature quite useless.</para>
+      <para>applies transforms all over the place.  adds sodipodi elements that collide with svg and breaks in qt. everyone seems to have their own idea of what svg 1.2 tiny is and what they support. no validation tools.</para>
+      <para>inkscape and illustrator are both mostly overkill for our purposes</para>
+      <para>We want to make our own simplified SVG editor and make it standards compliant and have a nice ui.  but who has time!?</para>
     </section>
   </section>
   <section>
     <title>Part Generators</title>
-    <para><remark>Brendan</remark></para>
-    <para><remark>Mariano: Brendan, i&apos;m afraid that you lead </remark></para>
-  </section>
-  <section>
-    <title>TBD</title>
-    <para>speculate on what a connector svg element might be like (sugggested
-    by one of our reviewers)</para>
-    <para>why we want to create our own svg paint program: inkscape leaves a
-    lot of crap around, mirrored attributes confuse qt, it&apos;s way
-    over-complicated. Illustrator sucks in another 1000 ways.</para>
-    <para>A word on FONTS ???</para>
+    <para>The electronics industry has produced an astounding number and variation of components.  Even with Open Source crowdsourcing techniques, mirroring this diversity by hand producing  Fritzing parts is an almost futile task.  Thanks to powerful templating tools for XML we were able to create a set of scripts that enable us to quickly create large sets of similar SVG images.   We can rapidly and automatically crank out large sets of standard resistors, capacitors, ICs, etc. without having to slave over them.  Templates can be created using standard SVG tools and then modified to spit out parts with various different combinations of colors, sizes, and numbers of pins.  </para>
+    <para>While Fritzing itself is written in pure C++, our website and many of our development utilities are coded in Python.  We chose to use Cheetah&apos;s powerful templating system for our parts generators as it integrates nicely with Python.  A typical script will iterate over a range or set of variables and create the unique SVGs and XML metadata files for each part.  This process was extremely useful in the early stages of development when the file format was frequently changing. [cheetah template ref]</para>
+    <para>Finally, we have integrated these scripts into our web site so that users can simply fill out a web form to create custom parts to their specification.  These parts can be modified using the Parts Editor and SVG authoring tools, just as with parts made from scratch.  Our hope is that given a sufficient collection of these scripts, the majority of special parts could be generated and only the most exotic parts would need to be created by hand.</para>
   </section>
   <section>
     <title>Conclusion</title>
     <para>We have shown a number of ways in which SVG is fundamental to
     Fritzing: scaling with no degradation; precise real-world measurements;
     ease of conversion to other formats; and xml manipulation for generation
-    and modification. We have also discussed how our users move SVGs back and
-    forth between Fritzing and Inkscape or Illustrator (and some ways in which
-    this is difficult). Furthermore, we discussed our experiences with an
+    and modification.  We discussed our experiences with an
     early version of Fritzing in which images are stored internally in bitmaps
-    and how this led us to vector standards. Finally, we can confidently
+    and how this led us to vector standards. We have also discussed how our users move SVGs back and
+    forth between Fritzing and Inkscape or Illustrator (and some ways in which
+    the tools are lacking). Finally, we can confidently
     assert that chosing to use SVG in Fritzing has made our application easier
     to develop, more compatible with external tools and more beautiful to
     behold.</para>
