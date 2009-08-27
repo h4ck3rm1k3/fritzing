@@ -48,7 +48,7 @@ public:
     void setPen(const QPen &pen);
 
     QLineF line() const;
-    void setLine(const QLineF &line);
+    virtual void setLine(const QLineF &line);
     inline void setLine(qreal x1, qreal y1, qreal x2, qreal y2)
     	{ setLine(QLineF(x1, y1, x2, y2)); }
 

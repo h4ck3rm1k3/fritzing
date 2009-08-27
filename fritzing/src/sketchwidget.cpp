@@ -53,6 +53,7 @@ $Date$
 #include "sketchwidget.h"
 #include "connectoritem.h"
 #include "bus.h"
+#include "items/jumperitem.h"
 #include "items/virtualwire.h"
 #include "items/tracewire.h"
 #include "itemdrag.h"
@@ -622,6 +623,15 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 				return makeModule(modelPart, originalModelIndex, modelParts, viewGeometry, id);
 			}
 			break;					// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
+		case ModelPart::Jumper:
+			{
+				JumperItem * jumper = new JumperItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+				jumper->setNormal(true);
+				jumper->setUp(getViewLayerID(modelPart), m_viewLayers, this);
+				setWireVisible(jumper);
+				addToScene(jumper, jumper->viewLayerID());
+				return jumper;
+			}
 		case ModelPart::Wire:
 		{
 			bool virtualWire = viewGeometry.getVirtual();
@@ -1341,7 +1351,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 	if (!canDropModelPart(modelPart)) return false;
 
-	m_droppingWire = (modelPart->itemType() == ModelPart::Wire);
+	m_droppingWire = (modelPart->itemType() == ModelPart::Wire || modelPart->itemType() == ModelPart::Jumper);
 	m_droppingOffset = offset;
 
 	if (ItemDrag::_cache().contains(this)) {
@@ -1364,6 +1374,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::ResizableBoard:
 			case ModelPart::Module:
 			case ModelPart::Symbol:
+			case ModelPart::Jumper:
 			case ModelPart::Unknown:
 				doConnectors = false;
 				break;

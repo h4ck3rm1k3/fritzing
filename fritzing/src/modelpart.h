@@ -58,6 +58,7 @@ public:
 		 Module,
 		 Note,
 		 Symbol,
+		 Jumper,
 		 Unknown
 	};
 

@@ -270,27 +270,13 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	}
 
 	if (modelPart->itemType() == ModelPart::Symbol) return false;
+	if (modelPart->itemType() == ModelPart::Jumper) return false;
 
 	return true;
 }
 
 bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
 	Q_UNUSED(itemBase);
-	/*
-	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (fromConnectorItem == NULL) continue;
-
-		if (fromConnectorItem->connectorType() != Connector::Female) continue;
-
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			if (toConnectorItem->connectorType() == Connector::Male) {
-				return false;
-			}
-		}
-	}
-	*/
-
 	return true;
 }
 

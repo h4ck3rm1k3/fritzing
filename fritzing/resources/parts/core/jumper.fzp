@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module moduleId="JumperModuleID" >
+ <version>1.1</version>
+ <author>Brendan Howell</author>
+ <title>Jumper</title>
+ <date>2008-07-28</date>
+ <label>Jumper</label>
+ <tags>
+  <tag>jumper</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="family" >jumper</property>
+ </properties>
+ <taxonomy>discreteParts.wire.wire.jumper</taxonomy>
+ <description>A jumper</description>
+ <views>
+  <defaultUnits>cmil</defaultUnits>
+  <iconView>
+   <layers image="icon/jumpericon.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers image="pcb/jumper.svg" >
+    <layer layerId="unknown" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="pcb/jumper.svg" >
+     <layer layerId="unknown" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="pcb/jumper.svg" >
+     <layer layerId="copper0" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors>
+  <connector type="male" id="connector0" name="jumperConnector0" >
+   <description>jumper end</description>
+   <views>
+    <breadboardView>
+    </breadboardView>
+    <schematicView>
+    </schematicView>
+    <pcbView>
+      <p svgId="connector0pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="jumperConnector1" >
+   <description>the other end of the jumper</description>
+   <views>
+    <breadboardView>
+    </breadboardView>
+    <schematicView>
+    </schematicView>
+    <pcbView>
+      <p svgId="connector1pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
+ <buses>
+ </buses>
+</module>

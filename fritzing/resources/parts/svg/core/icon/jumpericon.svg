@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg width="0.39in" version="1.2" xmlns="http://www.w3.org/2000/svg" height="0.09in" viewBox="0 0 390 90" baseProfile="tiny" >
+  <desc>Jumper SVG</desc>
+  <g id="icon" >
+    <circle fill="none" cx="45" cy="45" stroke="rgb(255, 191, 0)" r="24" stroke-width="21" />
+    <circle fill="none" cx="345" cy="45" stroke="rgb(255, 191, 0)" r="24" stroke-width="21" />
+  </g>
+</svg>

@@ -324,6 +324,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="JumperModuleID" modelIndex="45247" path=":/resources/parts/core/jumper.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
 
     </instances>
 </module>

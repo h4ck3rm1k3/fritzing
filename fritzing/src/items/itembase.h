@@ -57,6 +57,7 @@ public:
 	static const QString rectangleModuleIDName;
 	static const QString noteModuleIDName;
 	static const QString wireModuleIDName;
+	static const QString jumperModuleIDName;
 	static const QString groundPlaneModuleIDName;
 	static const QString groundModuleIDName;
 	static const QString powerModuleIDName;

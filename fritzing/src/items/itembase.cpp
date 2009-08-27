@@ -84,6 +84,7 @@ const QString ItemBase::groupModuleIDName = "GroupModuleID";
 const QString ItemBase::rectangleModuleIDName = "RectanglePCBModuleID";
 const QString ItemBase::noteModuleIDName = "NoteModuleID";
 const QString ItemBase::wireModuleIDName = "WireModuleID";
+const QString ItemBase::jumperModuleIDName = "JumperModuleID";
 const QString ItemBase::groundPlaneModuleIDName = "GroundPlaneModuleID";
 const QString ItemBase::groundModuleIDName = "GroundModuleID";
 const QString ItemBase::powerModuleIDName = "PowerModuleID";

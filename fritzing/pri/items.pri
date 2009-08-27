@@ -20,6 +20,7 @@
 HEADERS += \
     src/items/graphicssvglineitem.h \
     src/items/itembase.h \
+    src/items/jumperitem.h \
     src/items/layerkinpaletteitem.h \
     src/items/paletteitem.h \
     src/items/paletteitembase.h \
@@ -33,6 +34,7 @@ HEADERS += \
 SOURCES += \
     src/items/graphicssvglineitem.cpp \
     src/items/itembase.cpp \
+    src/items/jumperitem.cpp \
     src/items/layerkinpaletteitem.cpp \
     src/items/paletteitem.cpp \
     src/items/paletteitembase.cpp \

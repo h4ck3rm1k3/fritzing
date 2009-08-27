@@ -63,7 +63,7 @@ public:
 	ConnectorItem * otherConnector(ConnectorItem *);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();
-	void setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers, class InfoGraphicsView *);
+	virtual class FSvgRenderer * setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers, class InfoGraphicsView *);
 	void findConnectorsUnder();
 	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds);
 	void collectWires(QList<Wire *> & wires);
@@ -131,7 +131,7 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
-	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
+	virtual void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
 	void connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void mouseDoubleClickConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

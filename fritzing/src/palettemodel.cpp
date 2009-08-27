@@ -289,6 +289,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	if (properties.text().contains("wire", Qt::CaseInsensitive)) {
 		type = ModelPart::Wire;
 	}
+	else if (properties.text().contains("jumper", Qt::CaseInsensitive)) {
+		type = ModelPart::Jumper;
+	}
 	else if (properties.text().contains("breadboard", Qt::CaseInsensitive)) {
 		type = ModelPart::Breadboard;
 	}

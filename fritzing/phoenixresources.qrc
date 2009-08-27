@@ -177,5 +177,9 @@
         <file>resources/images/icons/toolbarSharePressed_icon.png</file>
         <file>resources/images/icons/toolbarShareDisabled_icon.png</file>
         <file>resources/images/icons/toolbarShareEnabled_icon.png</file>
+        <file>resources/parts/core/jumper.fzp</file>
+        <file>resources/parts/svg/core/pcb/jumper.svg</file>
+        <file>resources/parts/svg/core/icon/jumpericon.svg</file>
+
     </qresource>
 </RCC>

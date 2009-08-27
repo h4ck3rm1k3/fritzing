@@ -96,7 +96,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
 {
-	bool visible = wire->getRatsnest() || wire->getTrace() || wire->getJumper();
+	bool visible = wire->getRatsnest() || wire->getTrace() || wire->getJumper() || (wire->itemType() == ModelPart::Jumper);
 	wire->setVisible(visible);
 	wire->setEverVisible(visible);
 }
@@ -749,6 +749,8 @@ void PCBSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 }
 
 bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
+	if (modelPart->itemType() == ModelPart::Jumper) return true;
+
 	if (modelPart->itemType() == ModelPart::Wire || modelPart->itemType() == ModelPart::Breadboard) {
 		// can't drag and drop these parts in these views
 		return false;

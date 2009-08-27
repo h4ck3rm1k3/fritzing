@@ -95,7 +95,7 @@ Wire::~Wire() {
 
 }
 
-void Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView ) {
+FSvgRenderer * Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView ) {
 	ItemBase::setViewLayerID(viewLayerID, viewLayers);
 	FSvgRenderer * svgRenderer = setUpConnectors(m_modelPart, m_viewIdentifier);
 	if (svgRenderer != NULL) {
@@ -103,6 +103,8 @@ void Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLaye
 		setConnectorTooltips();
 	}
 	setZValue(this->z());
+
+	return svgRenderer;
 }
 
 void Wire::saveGeometry() {
@@ -734,13 +736,15 @@ void Wire::collectChained(QList<Wire *> & chained, QList<ConnectorItem *> & ends
 		Wire * wire = chained[i];
 		collectChained(wire->m_connector1, chained, ends);
 		collectChained(wire->m_connector0, chained, ends);
-		if (wire->m_connector0->chained()) {
+		if ((wire->m_connector0 != NULL) && wire->m_connector0->chained()) {
 			uniqueEnds.append(wire->m_connector0);
 		}
 	}
 }
 
 void Wire::collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained, QList<ConnectorItem *> & ends) {
+	if (connectorItem == NULL) return;
+
 	foreach (ConnectorItem * connectedToItem, connectorItem->connectedToItems()) {
 		Wire * wire = dynamic_cast<Wire *>(connectedToItem->attachedTo());
 		if (wire == NULL) {
