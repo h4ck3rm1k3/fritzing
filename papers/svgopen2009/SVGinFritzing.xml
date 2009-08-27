@@ -154,17 +154,17 @@
     linkend="W1" /></para>
 
     <para>Fritzing runs on Windows, Mac and Linux platforms. It is implemented
-    in C++ using the Qt framework [ref to Qt here]. An early version of
-    Fritzing was written in Java on top of GEF [ref] and other Eclipse
-    frameworks. Internally, all graphics were represented as bitmaps (even
-    SVGs were rendered into bitmaps internally), and the performance was very
+    in C++ using the Qt framework.<xref linkend="W2" /> An early version of
+    Fritzing was written in Java on top of GEF<xref linkend="W3" /> and other
+    Eclipse frameworks, and all graphics were represented as bitmaps (even
+    SVGs were rendered into bitmaps, internally), and the performance was very
     slow, especially when zooming into a view. In addition, zooming with
-    bitmaps resulted in aliasing artifacts, and a large amount of code was
-    written in order work around these limitations by using a multi-resolution
-    bitmap scheme. Thus we learned the hard way that the next Fritzing
-    platform should use "native" vector graphics for fast rendering and
-    scaling with no degradation, and this was one of the factors that led us
-    to choose Qt, which supports SVG rendering.</para>
+    bitmaps resulted in aliasing artifacts, and a multi-resolution bitmap
+    scheme was written in order to work around these limitations. Thus we
+    learned the hard way that the next Fritzing platform should use "native"
+    vector graphics for fast rendering and scaling with no degradation, and
+    this was one of the factors that led us to choose Qt, which supports SVG
+    rendering.</para>
 
     <para>For Fritzing, another important advantage of SVG is the ability to
     be able locate elements precisely, using measurements that translate
@@ -321,13 +321,13 @@
         1000 dpi units. Then we go through each part, converting its
         coordinates and other scale-relative attribute values (
         <code>radius</code> , <code>stroke-width</code> , etc) to 1000 dpi
-        units. </para>
+        units.</para>
       </listitem>
 
       <listitem>
         <para>During this step we also translate the part coordinates to
         absolute coordinates within the full sketch-- this makes subsequent
-        parsing easier. </para>
+        parsing easier.</para>
       </listitem>
 
       <listitem>
@@ -335,18 +335,18 @@
         of an element's <code>stroke</code> and <code>fill</code> attributes.
         For example, if you are exporting a PCB for DIY etching, which needs a
         solid black image, we will set the <code>stroke</code> and
-        <code>fill</code> attributes to <code>black</code> . </para>
+        <code>fill</code> attributes to <code>black</code> .</para>
       </listitem>
 
       <listitem>
         <para>Next, we convert all the wires in the sketch to
-        <code>line</code> elements. </para>
+        <code>line</code> elements.</para>
       </listitem>
 
       <listitem>
         <para>Again, depending on the purpose of the export, only certain
         layers of a given part will be visible, so elements belonging to the
-        non-visible layers are ignored. </para>
+        non-visible layers are ignored.</para>
       </listitem>
     </itemizedlist>
 
@@ -409,9 +409,11 @@
       vectorize that back into an SVG. It is unnecessary to work with such a
       bitmap at a high resolution: it is much more important to set the
       stroke-width on all parts and wires wide enough to avoid any short
-      circuits. We looked at using the Potrace library [ref] for doing the
-      vectorization, but as that seemed to be more than we needed (and because
-      it was an interesting problem), we developed our own solution.</para>
+      circuits. We looked at using Potrace<xref linkend="W4" /> for doing the
+      vectorization, but as that seemed to be more than we needed, and as
+      perhaps there would be some difficulty integrating it into our codebase
+      across all three platforms (and because it was an interesting problem to
+      work on), we developed our own solution.</para>
 
       <para>The first version simply went through the bitmap line-by-line and
       generated a horizontal <code>line</code> element for each set of
@@ -536,11 +538,11 @@
 
     <para>While Fritzing itself is written in C++, our website and many of our
     development utilities are coded in Python. We chose to use Cheetah's
-    powerful templating system for our parts generators as it integrates
-    nicely with Python. A typical script will iterate over a range or set of
-    variables and create the unique SVGs and XML metadata files for each part.
-    This process was extremely useful in the early stages of development when
-    the file format was frequently changing. [cheetah template ref]</para>
+    powerful templating system<xref linkend="W5" /> for our parts generators
+    as it integrates nicely with Python. A typical script will iterate over a
+    range or set of variables and create the unique SVGs and XML metadata
+    files for each part. This process was extremely useful in the early stages
+    of development when the file format was frequently changing.</para>
 
     <para>Finally, we have integrated these scripts into our web site so that
     users can simply fill out a web form to create custom parts to their
@@ -566,7 +568,7 @@
     coordinate scheme greatly facilitates that. Further, the xml basis of SVG
     makes it straightforward to programmatically manipulate SVG images, and we
     have taken advantage of this for exporting sketches to various formats,
-    and for generating and editing parts. </para>
+    and for generating and editing parts.</para>
 
     <para>Due to our unique requirements, in which a single part is visualized
     very differently between views, we decided that SVG alone wasn't
@@ -583,8 +585,8 @@
     attempting to provide an extra insulating layer of code in fritzing to
     smooth the transition from program to program (note: going from Inkscape
     to Illustrator, or vice versa, is another frustrating exercise). It would
-    be nice if there were an Acid3 [ref] equivalent for SVG editors to help
-    guarantee interoperability.</para>
+    be nice if there were an Acid3<xref linkend="W6" /> equivalent for SVG
+    editors to help guarantee interoperability.</para>
 
     <para>Nevertheless, we can confidently assert that SVG has made our
     application easier to develop, and that without SVG our program would lack
@@ -636,6 +638,55 @@
           <address>Cambridge, England</address>
         </confgroup>
       </biblioset>
+    </biblioentry>
+
+    <biblioentry xml:id="W2">
+      <abbrev>W2</abbrev>
+
+      <title>Qt</title>
+
+      <bibliosource class="uri"><link
+      href="http://qt.nokia.com/">http://qt.nokia.com/</link></bibliosource>
+    </biblioentry>
+
+    <biblioentry xml:id="W3">
+      <abbrev>W3</abbrev>
+
+      <title>GEF: Graphical Editing Framework</title>
+
+      <bibliosource class="uri"><link
+      href="http://www.eclipse.org/gef/">http://www.eclipse.org/gef/</link></bibliosource>
+    </biblioentry>
+
+    <biblioentry xml:id="W3">
+      <abbrev>W4</abbrev>
+
+      <title>Potrace</title>
+
+      <subtitle>Transforming bitmaps into vector graphics</subtitle>
+
+      <bibliosource class="uri"><link
+      href="http://potrace.sourceforge.net/">http://potrace.sourceforge.net/</link></bibliosource>
+    </biblioentry>
+
+    <biblioentry xml:id="W3">
+      <abbrev>W5</abbrev>
+
+      <title>Cheetah</title>
+
+      <subtitle>The Python-powered template engine</subtitle>
+
+      <bibliosource class="uri"><link
+      href="http://www.cheetahtemplate.org/">http://www.cheetahtemplate.org/</link></bibliosource>
+    </biblioentry>
+
+    <biblioentry xml:id="W3">
+      <abbrev>W6</abbrev>
+
+      <title>Acid3</title>
+
+      <bibliosource class="uri"><link
+      href="http://www.webstandards.org/action/acid3">http://www.webstandards.org/action/acid3</link></bibliosource>
     </biblioentry>
   </bibliography>
 </article>
