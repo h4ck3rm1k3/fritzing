@@ -27,22 +27,32 @@ $Date: 2009-05-21 11:21:17 +0200 (Thu, 21 May 2009) $
 #ifndef JUMPERITEM_H
 #define JUMPERITEM_H
 
-#include "wire.h"
+#include "paletteitem.h"
 
-class JumperItem : public Wire
+class JumperItem : public PaletteItem
 {
 
 public:
-	JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel = true); 
 
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	class FSvgRenderer * setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers, class InfoGraphicsView *);
-    void setLine(const QLineF &line);
+ 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+	bool acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	bool acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
 protected:
-	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
+	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+
+protected:
+	ConnectorItem * m_dragItem;
+	ConnectorItem * m_otherItem;
+	ConnectorItem * m_connector0;
+	ConnectorItem * m_connector1;
+	QPointF m_dragStartPos;
+	QRectF m_originalRect;
 };
 
 #endif

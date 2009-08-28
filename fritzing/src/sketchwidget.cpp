@@ -623,15 +623,6 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 				return makeModule(modelPart, originalModelIndex, modelParts, viewGeometry, id);
 			}
 			break;					// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
-		case ModelPart::Jumper:
-			{
-				JumperItem * jumper = new JumperItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
-				jumper->setNormal(true);
-				jumper->setUp(getViewLayerID(modelPart), m_viewLayers, this);
-				setWireVisible(jumper);
-				addToScene(jumper, jumper->viewLayerID());
-				return jumper;
-			}
 		case ModelPart::Wire:
 		{
 			bool virtualWire = viewGeometry.getVirtual();
@@ -693,6 +684,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			addToScene(note, getNoteViewLayerID());
 			return note;
 		}
+		case ModelPart::Jumper:
+			paletteItem = new JumperItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			break;
 		case ModelPart::ResizableBoard:
 			paletteItem = new ResizableBoard(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
@@ -1637,6 +1631,11 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		qreal h = m_resizingBoard->modelPart()->prop("height").toDouble();
 		m_resizingBoardSize = QSizeF(w, h);
 		m_resizingBoardPos = m_resizingBoard->pos();
+		return;
+	}
+
+	JumperItem * jumperItem = dynamic_cast<JumperItem *>(item->parentItem());
+	if (jumperItem != NULL) {
 		return;
 	}
 

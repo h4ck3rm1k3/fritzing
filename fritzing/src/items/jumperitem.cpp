@@ -30,11 +30,21 @@ $Date: 2009-06-18 20:07:42 +0200 (Thu, 18 Jun 2009) $
 #include "../layerattributes.h"
 #include "../modelpart.h"
 
+static QString Copper0LayerTemplate = "";
+
 /////////////////////////////////////////////////////////
 
-JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
-	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
+JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
+	: PaletteItem(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, doLabel)
 {
+	m_dragItem = NULL;
+	if (Copper0LayerTemplate.isEmpty()) {
+		QFile file(":/resources/jumper_copper0LayerTemplate.txt");
+		if (file.open(QFile::ReadOnly)) {
+			Copper0LayerTemplate = file.readAll();
+			file.close();
+		}
+	}
 }
 
 QPainterPath JumperItem::hoverShape() const
@@ -57,58 +67,68 @@ QPainterPath JumperItem::shape() const
 	return qt_graphicsItem_shapeFromPath(path, m_pen, 1);
 }
 
-void JumperItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
 {
-    QGraphicsSvgItem::paint(painter, option, widget);
+	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
+
+	if (doConnectors) {
+		bool gotOne = false;
+		bool gotTwo = false;
+		foreach (QGraphicsItem * childItem, childItems()) {
+			ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
+			if (item == NULL) continue;
+
+			// check the name or is order good enough?
+
+			if (gotOne) {
+				gotTwo = true;
+				m_connector1 = item;
+				break;
+			}
+			else {
+				m_connector0 = item;
+				gotOne = true;
+			}
+		}
+	}
+
+	return result;
 }
 
-void JumperItem::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsView * infoGraphicsView) {
-	Q_UNUSED(defaultRect);
-	Q_UNUSED(infoGraphicsView);
 
-	bool gotOne = false;
-	bool gotTwo = false;
+void JumperItem::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	m_dragItem = connectorItem;
+	m_dragStartPos = event->scenePos();
+	m_originalRect = connectorItem->rect();
+
 	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-		if (item == NULL) continue;
+		if (childItem == connectorItem) continue;
 
-		// check the name or is order good enough?
-
-		if (gotOne) {
-			gotTwo = true;
-			m_connector1 = item;
-			break;
-		}
-		else {
-			m_connector0 = item;
-			gotOne = true;
-		}
+		m_otherItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (m_otherItem != NULL) break;
 	}
 
-	if (!gotTwo) {
-		return;
-	}
-
-	m_hasLine = false;
-	
-	prepareGeometryChange();
 }
 
-FSvgRenderer * JumperItem::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView ) {
-	
-	FSvgRenderer * renderer = Wire::setUp(viewLayerID, viewLayers, infoGraphicsView);
-	if (renderer != NULL) {
-		this->setSharedRenderer(renderer);
-	}
+void JumperItem::mouseReleaseConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	if (m_dragItem == NULL) return;
 
-	m_hasLine = false;
-
-	return renderer;
+	// undo command
 }
 
+void JumperItem::mouseMoveConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
+	if (m_dragItem == NULL) return;
 
-void JumperItem::setLine(const QLineF &line)
-{
-	Wire::setLine(line);
-	m_hasLine = false;
+	QRectF copy = m_originalRect;
+	QPointF d = event->scenePos() - m_dragStartPos;
+	copy.translate(d);
+	connectorItem->setRect(copy);
+}
+
+bool JumperItem::acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return true;
+}
+
+bool JumperItem::acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
+	return true;
 }

@@ -180,6 +180,7 @@
         <file>resources/parts/core/jumper.fzp</file>
         <file>resources/parts/svg/core/pcb/jumper.svg</file>
         <file>resources/parts/svg/core/icon/jumpericon.svg</file>
+        <file>resources/jumper_copper0LayerTemplate.txt</file>
 
     </qresource>
 </RCC>
