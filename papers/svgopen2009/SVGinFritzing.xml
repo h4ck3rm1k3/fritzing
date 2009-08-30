@@ -425,24 +425,23 @@
     create a set of scripts that enable us to quickly generate sets of similar
     SVG images, such as resistors, capacitors, and ICs. Templates can be
     created using standard SVG tools and then modified to turn out parts with
-    various combinations of colors, sizes, and numbers of pins <xref
-    linkend="W10" />.</para>
+    various combinations of colors, sizes, and numbers of pins.</para>
 
     <para>While Fritzing itself is written in C++, our website and many of our
     development utilities are coded in Python. We chose to use Cheetah's
-    powerful templating system for our parts generators as it integrates
-    nicely with Python. A typical script will iterate over a range or set of
-    variables and create the unique SVGs and XML metadata files for each part.
-    This process was extremely useful in the early stages of development when
-    the file format was frequently changing.</para>
+    powerful templating system<xref linkend="W5" /> for our parts generators
+    as it integrates nicely with Python. A typical script will iterate over a
+    range or set of variables and create the unique SVGs and XML metadata
+    files for each part. This process was extremely useful in the early stages
+    of development when the file format was frequently changing.</para>
 
     <para>Finally, we have integrated these scripts into our web site so that
     users can simply fill out a web form to create custom parts to their
-    specification. These parts can be modified using the Parts Editor and SVG
-    authoring tools, just as with parts made from scratch. Our hope is that
-    given a sufficient collection of these scripts, the majority of special
-    parts could be generated and only the most exotic parts would need to be
-    created by hand.</para>
+    specification <xref linkend="W10" />. These parts can be modified using
+    the Parts Editor and SVG authoring tools, just as with parts made from
+    scratch. Our hope is that given a sufficient collection of these scripts,
+    the majority of special parts could be generated and only the most exotic
+    parts would need to be created by hand.</para>
   </section>
 
   <section>
