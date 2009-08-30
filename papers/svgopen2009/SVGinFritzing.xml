@@ -206,8 +206,8 @@
       applications. Although a typical user might start with Breadboard view
       and gradually migrate to PCB view, we have found that different users
       have different approaches to circuit building and therefore how they use
-      the three views. Fritzing must be flexible enough to accommodate diverse
-      workflows.</para>
+      the three views. Fritzing must be flexible enough to accommodate these
+      diverse workflows.</para>
 
       <figure xml:id="fig1">
         <title>Three views</title>
@@ -261,11 +261,9 @@
       industry standard package geometries. This means that once a standard
       footprint SVG is defined, it can be reused by many parts and the part
       author will only have to make slight changes to the images for the
-      Breadboard and Schematic views. Similarly,</para>
-
-      <para>(Using a similar structure, a sketch file is yet a different
-      metadata file, which refers to external part files that make up each of
-      the views in the sketch.)</para>
+      Breadboard and Schematic views. (Going up a level from parts to
+      sketches, a sketch file is yet a different metadata file, which refers
+      to the parts contained in the sketch as external files.)</para>
 
       <para>Parts can also have multiple <emphasis>layer</emphasis>s which are
       specific to a particular view. In any given view, a user can easily
@@ -381,7 +379,7 @@
       transparency is saved in rasterized form.</para>
 
       <para>Our main trouble with Inkscape is that most users don't remember
-      to save their SVGs using the "Save As... plain SVG" option, and aside
+      to save their SVGs using the "Save As... Plain SVG" option, and aside
       from the extra verbosity of the many <code>sodipodi</code> namespace
       attributes in the "Inkscape" SVG, the mirroring of <code>sodipodi</code>
       attributes with regular SVG attributes sometimes confuses Qt's XML
@@ -626,7 +624,7 @@
     and external tools (particularly Inkscape and Illustrator). Because each
     of these tools, as well as the Qt renderer, take a slightly different tack
     with regard to SVG creation and rendering, we have found ourselves
-    attempting to provide an extra insulating layer of code in fritzing to
+    attempting to provide an extra insulating layer of code in Fritzing to
     smooth the transition from program to program (note: going from Inkscape
     to Illustrator, or vice versa, is another frustrating exercise). It would
     be nice if SVG editors would all seriously conform to the SVG Test
