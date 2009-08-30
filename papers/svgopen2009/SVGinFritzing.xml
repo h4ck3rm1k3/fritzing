@@ -167,7 +167,7 @@
           GEF<xref linkend="W3" /> and other Eclipse frameworks</para>
         </footnote>parts were implemented as bitmaps (even SVGs were
       internally rendered into bitmaps), and the resulting performance was
-      very slow, especially when zooming. In addition, zooming with bitmaps
+      very slow, especially when zooming. In addition, scaling bitmaps
       produced aliasing artifacts, and a multi-resolution bitmap scheme was
       written in an attempt to work around these limitations. Thus we learned
       the hard way that the next Fritzing platform should use "native" vector
@@ -177,10 +177,11 @@
       locate elements precisely, using measurements that translate accurately
       to real world units. Tolerances for printed circuit boards are quite
       small, and if one were to design a PCB with only approximate
-      measurements, the circuit created could be shorted from unintended
-      cross-connections. Two other important factors led us to use SVG: our
+      measurements, the circuit created could contain short circuits from unintended
+      cross-connections not to mention potential power and signal noise issues. 
+      Two other important factors led us to use SVG: our
       intended user base is familiar with SVG editing tools, and its XML-basis
-      makes it easy to parse and generate.</para>
+      makes it easy to parse and generate programmatically.</para>
     </section>
   </section>
 
@@ -205,7 +206,7 @@
       applications. Although a typical user might start with Breadboard view
       and gradually migrate to PCB view, we have found that different users
       have different approaches to circuit building and therefore how they use
-      the three views. Fritzing must be flexible enough to accommodate.</para>
+      the three views. Fritzing must be flexible enough to accommodate diverse workflows.</para>
 
       <figure xml:id="fig1">
         <title>Three views</title>
@@ -607,13 +608,13 @@
     important that the true sizes of parts and connectors are preserved
     between Fritzing and various export formats (including the printed page),
     and the <code>width</code>, <code>height</code>, <code>viewBox</code>
-    coordinate scheme greatly facilitates that. Further, the XML basis of SVG
+    coordinate scheme greatly facilitates that. Furthermore, as an XML-based standard, SVG
     makes it straightforward to programmatically manipulate SVG images, and we
     have taken advantage of this for exporting sketches to various formats,
-    and for generating and editing parts.</para>
+    as well as generating and editing parts.</para>
 
     <para>Due to our unique requirements, in which a single part is visualized
-    very differently between views, we decided that SVG alone wasn't
+    differently between views, we decided that SVG alone wasn't
     sufficient to represent a part, so we adopted a multi-file format in which
     a metadata file points to a set of SVG files. Splitting up the files this
     way gave us the advantage that individual SVG files could easily be reused
@@ -631,20 +632,19 @@
     Suite<xref linkend="W6" /> to help guarantee interoperability. It would
     also be nice to find a C++ reference library for SVG manipulation.</para>
 
-    <para>Nevertheless, we can confidently assert that SVG has made our
-    application easier to develop, and that without SVG Fritzing would lack
-    many of the features it currently has. Even with the difficulties we have
-    mentioned, we are still mostly compatible with external tools, and
-    therefore do not need to develop them ourselves. Overall, SVG makes
-    Fritzing a much more user-friendly, powerful,and speedy system to
-    use.</para>
+    <para>In the end, we can confidently assert that SVG has made our
+    application easier to develop, and has enabled many important features in Fritzing. 
+    Despite the difficulties we have mentioned, we are able to take advantage of 
+    powerful external tools for editing and creating SVG images. Overall, SVG makes
+    Fritzing more user-friendly, more powerful, faster and generally more pleasant to 
+    develop and use.</para>
   </section>
 
   <section>
     <title>Acknowledgements</title>
 
     <para>Thanks to Reto and André for initiating the Fritzing project; and to
-    Dirk, Lionel, Omer, and all the others who have struggled with our
+    Dirk, Lionel, Omer, Stefan and all the others who have struggled with our
     ever-evolving parts creation process. We gratefully thank the Brandenburg
     Ministry of Science, Research, and Culture (MWFK) for funding.</para>
   </section>
