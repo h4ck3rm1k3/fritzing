@@ -269,9 +269,6 @@ void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppa
 		/*
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
-			if (!data.endsWith('z', Qt::CaseInsensitive)) {
-				data.append("Z");
-			}
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
 			pathUserData.sNewHeight = sNewHeight;
@@ -373,9 +370,6 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly);
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
-			if (!data.endsWith('z', Qt::CaseInsensitive)) {
-				data.append("Z");
-			}
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
 			pathUserData.sNewHeight = sNewHeight;
@@ -632,10 +626,14 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 }
 
 bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData, QObject * slotTarget) {
-	SVGPathLexer lexer(data);
+	QString dataCopy(data);
+	if (!dataCopy.endsWith("z", Qt::CaseInsensitive)) {
+		dataCopy.append('Z');
+	}
+	SVGPathLexer lexer(dataCopy);
 	SVGPathParser parser;
 	if (!parser.parse(&lexer)) {
-		DebugDialog::debug(QString("svg path parse failed %1").arg(data));
+		DebugDialog::debug(QString("svg path parse failed %1").arg(dataCopy));
 		return false;
 	}
 

@@ -51,11 +51,14 @@ void SvgFlattener::flattenChildren(QDomElement &element){
     //do translate
     if(hasTranslate(element)){
         QList<qreal> params = getTransformFloats(element);
-        if(params.size() > 1)
+		if(params.size() > 1) {
             shiftChild(element, params.at(0), params.at(1));
-        else
+			DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
+		}
+		else {
             shiftChild(element, params.at(0), 0);
-        DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
+			DebugDialog::debug(QString("translating %1").arg(params.at(0)));
+		}
     }
     //do rotate
     if(hasRotate(element)){
@@ -189,16 +192,32 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
         qreal x;
         qreal y;
 
-
-        // probably will fuck things up with relative coordinates
-        for (int i = 0; i < args.count(); i=i+2) {
-            x = args[i];
-            y = args[i+1];
-            QPointF point = pathUserData->transform.map(QPointF(x,y));
-            pathUserData->string.append(QString::number(point.x()));
-            pathUserData->string.append(',');
-            pathUserData->string.append(QString::number(point.y()));
-        }
+		for (int i = 0; i < args.count(); i=i+2) {
+			switch(command.toAscii()) {
+				case 'v':
+				case 'V':
+					y = args[i];			
+					x = 0; // what is x, really?
+					DebugDialog::debug("Warning! Can't rotate path with V");
+					i++;
+					break;
+				case 'h':
+				case 'H':
+					x = args[i];
+					y = 0; // what is y, really?
+					DebugDialog::debug("Warning! Can't rotate path with H");
+					i++;
+					break;
+				default:
+					x = args[i];
+					y = args[i+1];
+					i += 2;
+					QPointF point = pathUserData->transform.map(QPointF(x,y));
+					pathUserData->string.append(QString::number(point.x()));
+					pathUserData->string.append(',');
+					pathUserData->string.append(QString::number(point.y()));
+			}
+		}
 
 
 //        switch(command.toAscii()) {

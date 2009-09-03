@@ -2501,7 +2501,6 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	if (to != NULL) {
 		toID = to->attachedToID();
 		toConnectorID = to->connectorSharedID();
-
 	}
 
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
@@ -3513,7 +3512,16 @@ void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID
 									bool connect, bool doEmit, bool seekLayerKin, bool updateConnections)
 {
 	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin, updateConnections);
+
+	// TODO: make a global NET data structure and use this to transfer connection/disconnection between views
+	// the data structure is parts (via part id) and connections (via ?)
+	// how the connection is instantiated (ratsnest, real wire, trace, etc) is view dependent
+
+	// TODO: not sure this works for bendpoints with multiple connections
+
 	if (doEmit) {
+		fromID = findWire(fromID);
+		toID = findWire(toID);
 		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect, updateConnections);
 	}
 }
@@ -4722,6 +4730,8 @@ void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID
 											bool connect, RatsnestCommand * ratsnestCommand, bool doEmit)
 {
 	if (doEmit) {
+		fromID = findWire(fromID);
+		toID = findWire(toID);
 		emit dealWithRatsnestSignal(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand);
 	}
 }
@@ -5809,3 +5819,24 @@ QPointF SketchWidget::calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom)
 	return newPos;
 }
 
+long SketchWidget::findWire(long itemID) 
+{
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return itemID;
+
+	if (item->itemType() != ModelPart::Wire) return itemID;
+
+	QList<Wire *> chained;
+	QList<ConnectorItem *> ends;
+	QList<ConnectorItem *> uniqueEnds;
+	qobject_cast<Wire *>(item)->collectChained(chained, ends, uniqueEnds);
+	if (chained.length() <= 1) return itemID;
+
+	foreach (Wire * w, chained) {
+		if (w->id() < itemID) {
+			itemID = w->id();
+		}
+	}
+
+	return itemID;
+}

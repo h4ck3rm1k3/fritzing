@@ -99,7 +99,7 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 
 BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 {
-	return BaseCommand::CrossView;
+	return BaseCommand::SingleView;
 }
 
 void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)

@@ -64,6 +64,15 @@ bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 		return false;
 	}
 
+	QByteArray contents = file.readAll();
+	file.close();
+
+	if (contents.length() <= 0) return false;
+
+	return loadAux(contents, filename, readConnectors);
+
+	/*
+
 	QXmlStreamReader xml(&file);
 	parseForWidthAndHeight(xml);
 
@@ -78,16 +87,27 @@ bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 		m_filename = filename;
 	}
 	return result;
+	*/
+
 }
 
 bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename, bool readConnectors) {
-	QXmlStreamReader xml(contents);
+	return loadAux(contents, filename, readConnectors);
+}
+
+
+bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors) {
+	QByteArray cleanContents = cleanXml(contents);
+
+	//DebugDialog::debug(cleanContents.data());
+
+	QXmlStreamReader xml(cleanContents);
 	parseForWidthAndHeight(xml);
 	if (readConnectors) {
 		m_svgXml =  contents;
 	}
 
-	bool result = QSvgRenderer::load(contents);
+	bool result = QSvgRenderer::load(cleanContents);
 	if (result) {
 		m_filename = filename;
 	}
@@ -237,13 +257,7 @@ bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const
 		if (!result) {
 			return false;
 		}
-
-		SvgFlattener flattener;
-		QDomElement root = m_svgDomDocument.documentElement();
-		flattener.flattenChildren(root);
-		SvgFileSplitter::fixStyleAttributeRecurse(root);
 	}
-
 
 	QDomElement element;
 	if (m_cachedElement.isNull()) {
@@ -276,4 +290,30 @@ bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const
 	strokeWidth = sw;
 	return true;
 
+}
+
+QByteArray FSvgRenderer::cleanXml(const QByteArray & bytes) 
+{
+	// TODO: clean sodipodi shit w/ regular expressions
+	// sodipodi:(.+?)(\s*)=(\s*)['"][^('|")]
+	// inkscape:(.+?)(\s*)=(\s*)['"][^('|")]
+
+
+	return bytes;
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	bool result = doc.setContent(bytes, &errorStr, &errorLine, &errorColumn);
+	m_svgXml.clear();
+	if (!result) {
+		return false;
+	}
+
+	SvgFlattener flattener;
+	QDomElement root = doc.documentElement();
+	flattener.flattenChildren(root);
+	SvgFileSplitter::fixStyleAttributeRecurse(root);
+	return doc.toByteArray();
 }

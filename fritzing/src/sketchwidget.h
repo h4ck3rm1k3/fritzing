@@ -341,6 +341,7 @@ protected:
 	void prepMove();
 	void initBackgroundColor();
 	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
+	long findWire(long itemID);
 
 protected:
 	static bool lessThan(int a, int b);
