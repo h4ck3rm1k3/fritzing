@@ -42,6 +42,7 @@ $Date$
 #include "items/wire.h"
 #include "partsbinpalette/binmanager/binmanager.h"
 #include "help/tipsandtricks.h"
+#include "utils/folderutils.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -119,6 +120,13 @@ void DoOnceThread::run()
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
+	QStringList args = arguments();
+	for (int i = 0; i < args.length() - 1; i++) {
+		if (args[i].compare("-f", Qt::CaseInsensitive) == 0) {
+			FolderUtils::setApplicationPath(args[i + 1]);
+			break;
+		}
+	}
 	m_started = false;
 	m_updateDialog = NULL;
 	m_lastTopmostWindow = NULL;
@@ -153,7 +161,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_translationPath = m_libPath + "/translations";
 	bool loaded = findTranslator(m_translationPath);
 	if (!loaded) {
-		m_translationPath = getApplicationSubFolderPath("translations");
+		m_translationPath = FolderUtils::getApplicationSubFolderPath("translations");
 		loaded = findTranslator(m_translationPath);
 	}
 
@@ -331,7 +339,7 @@ int FApplication::startup(int & argc, char ** argv)
     ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
-	BinManager::MyPartsBinLocation = getUserDataStorePath("bins")+"/my_parts.fzb";
+	BinManager::MyPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/my_parts.fzb";
 	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
 	PaletteModel::initNames();
 
@@ -736,9 +744,9 @@ QString FApplication::getSaveFileName( QWidget * parent, const QString & caption
 
 void FApplication::createUserDataStoreFolderStructure() {
 	// make sure that the folder structure for parts and bins, exists
-	QString userDataStorePath = getUserDataStorePath();
+	QString userDataStorePath = FolderUtils::getUserDataStorePath();
 	QDir dataStore(userDataStorePath);
-	QStringList dataFolders = getUserDataStoreFolders();
+	QStringList dataFolders = FolderUtils::getUserDataStoreFolders();
 	foreach(QString folder, dataFolders) {
 		if(!QFileInfo(dataStore.absolutePath()+folder).exists()) {
 			QString folderaux = folder.startsWith("/")? folder.remove(0,1): folder;

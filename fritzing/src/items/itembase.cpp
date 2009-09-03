@@ -37,6 +37,7 @@ $Date$
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"
 #include "../svg/svgfilesplitter.h"
+#include "../utils/folderutils.h"
 
 #include <QScrollBar>
 #include <QTimer>
@@ -1217,10 +1218,10 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 			dir.cdUp();									// lop off the filename
 			dir.cdUp();									// parts root
 			tempPath1 = dir.absolutePath() + "/" + ItemBase::SvgFilesDir +"/%1/" + layerAttributes.filename();
-			tempPath2 = getApplicationSubFolderPath("parts")+postfix;    // some svgs may still be in the fritzing parts folder, though the other svgs are in the user folder
+			tempPath2 = FolderUtils::getApplicationSubFolderPath("parts")+postfix;    // some svgs may still be in the fritzing parts folder, though the other svgs are in the user folder
 		} else { // for fake models
-			tempPath1 = getApplicationSubFolderPath("parts")+postfix;
-			tempPath2 = getUserDataStorePath("parts")+postfix;
+			tempPath1 = FolderUtils::getApplicationSubFolderPath("parts")+postfix;
+			tempPath2 = FolderUtils::getUserDataStorePath("parts")+postfix;
 		}
 
 		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));

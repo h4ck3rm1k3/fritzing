@@ -41,6 +41,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "../../waitpushundostack.h"
 #include "../../debugdialog.h"
 #include "../../partseditor/partseditormainwindow.h"
+#include "../../utils/folderutils.h"
 
 
 QString BinManager::Title;
@@ -60,7 +61,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_paletteModel = NULL;
 	m_infoView = infoView;
 	m_undoStack = undoStack;
-	m_defaultSaveFolder = getUserDataStorePath("bins");
+	m_defaultSaveFolder = FolderUtils::getUserDataStorePath("bins");
 	m_mainWindow = parent;
 	m_currentBin = NULL;
 

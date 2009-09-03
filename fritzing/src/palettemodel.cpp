@@ -35,6 +35,7 @@ $Date$
 #include "modelpart.h"
 #include "version/version.h"
 #include "layerattributes.h"
+#include "utils/folderutils.h"
 
 #ifndef QT_NO_DEBUG
 bool PaletteModel::CreateAllPartsBinFile = true;
@@ -70,8 +71,8 @@ void PaletteModel::init() {
 }
 
 void PaletteModel::initNames() {
-	AllPartsBinFilePath = getApplicationSubFolderPath("bins")+"/allParts.dbg" + FritzingBinExtension;
-	NonCorePartsBinFilePath = getApplicationSubFolderPath("bins")+"/nonCoreParts" + FritzingBinExtension;
+	AllPartsBinFilePath = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.dbg" + FritzingBinExtension;
+	NonCorePartsBinFilePath = FolderUtils::getApplicationSubFolderPath("bins")+"/nonCoreParts" + FritzingBinExtension;
 }
 
 ModelPart * PaletteModel::retrieveModelPart(const QString & moduleID) {
@@ -105,14 +106,14 @@ void PaletteModel::loadParts() {
 	JustAppendAllPartsInstances = CreateAllPartsBinFile;
 	writeCommonBinsHeader();
 
-	QDir * dir1 = getApplicationSubFolder("parts");
+	QDir * dir1 = FolderUtils::getApplicationSubFolder("parts");
 	if (dir1 != NULL) {
 		loadPartsAux(*dir1, nameFilters);
 		delete dir1;
 		dir1 = NULL;
 	}
 
-	QDir dir2(getUserDataStorePath("parts"));
+	QDir dir2(FolderUtils::getUserDataStorePath("parts"));
 	loadPartsAux(dir2, nameFilters);
 
 	dir1 = new QDir(":/resources/parts");
@@ -150,7 +151,7 @@ void PaletteModel::writeCommonBinsFooterAux(bool &doIt, const QString &filename)
 
 void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool &doIt, const QString &filename) {
 	QString pathAux = path;
-	pathAux.remove(getApplicationSubFolderPath("")+"/");
+	pathAux.remove(FolderUtils::getApplicationSubFolderPath("")+"/");
 
 	if (JustAppendAllPartsInstances) {
 		QString instance =

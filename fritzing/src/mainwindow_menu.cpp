@@ -56,6 +56,7 @@ $Date$
 #include "svg/groundplanegenerator.h"
 #include "help/tipsandtricks.h"
 #include "dialogs/setcolordialog.h"
+#include "utils/folderutils.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -846,7 +847,7 @@ void MainWindow::createFileMenuActions() {
 
 void MainWindow::createOpenExampleMenu() {
 	m_openExampleMenu = new QMenu(tr("&Open Example"), this);
-	QString folderPath = getApplicationSubFolderPath("sketches")+"/";
+	QString folderPath = FolderUtils::getApplicationSubFolderPath("sketches")+"/";
 	populateMenuFromXMLFile(m_openExampleMenu, m_openExampleActions, folderPath, "index.xml"/*, "fritzing-sketches", "sketch", "category"*/);
 }
 
@@ -2666,10 +2667,10 @@ void MainWindow::importFilesFromPrevInstall() {
 		return;
 	}
 
-	QString userDataPath = getUserDataStorePath();
+	QString userDataPath = FolderUtils::getUserDataStorePath();
 
 	// replicate dirs
-	QStringList foldersToCopy = getUserDataStoreFolders();
+	QStringList foldersToCopy = FolderUtils::getUserDataStoreFolders();
 	foreach(QString folder, foldersToCopy) {
 		replicateDir(prevInstallPath+folder, userDataPath+folder);
 	}

@@ -46,6 +46,7 @@ $Date$
 #include "../dockmanager.h"
 #include "../htmlinfoview.h"
 #include "../utils/fileprogressdialog.h"
+#include "../utils/folderutils.h"
 
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
@@ -77,7 +78,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	setObjectName("partsBinContainer");
 	toIconView();
 
-	m_defaultSaveFolder = getUserDataStorePath("bins");
+	m_defaultSaveFolder = FolderUtils::getUserDataStorePath("bins");
 	m_untitledFileName = tr("Untitled Bin");
 
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));

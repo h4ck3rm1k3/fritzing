@@ -58,6 +58,7 @@ $Date$
 #include "schematicsketchwidget.h"
 #include "pcbsketchwidget.h"
 #include "svg/svgfilesplitter.h"
+#include "utils/folderutils.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -914,7 +915,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	QApplication::processEvents();
 
 	QDir destFolder = QDir::temp();
-	createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
 	QString dirToRemove = destFolder.path();
 
 	QString aux = QFileInfo(bundledFileName).fileName();
@@ -951,7 +952,7 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
-	createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
 	QString unzipDirPath = destFolder.path();
 
 	if(!unzipTo(fileName, unzipDirPath)) {
@@ -1013,7 +1014,7 @@ void MainWindow::loadBundledPart() {
 ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
-	createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
 	QString unzipDirPath = destFolder.path();
 
 	if(!unzipTo(fileName, unzipDirPath)) {
@@ -1067,7 +1068,7 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 
 	QDir destFolder = QDir::temp();
 
-	createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
 	QString dirToRemove = destFolder.path();
 
 	QString aux = QFileInfo(bundledFileName).fileName();
@@ -1140,7 +1141,7 @@ void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolde
 	fileName.remove(viewFolder+".");
 
 	QString destFilePath =
-		getUserDataStorePath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
+		FolderUtils::getUserDataStorePath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
 
 	backupExistingFileIfExists(destFilePath);
 	if(svgfile.copy(destFilePath)) {
@@ -1152,7 +1153,7 @@ ModelPart* MainWindow::copyToPartsFolder(const QFileInfo& file, bool addToBin, c
 	QFile partfile(file.filePath());
 	// let's make sure that we remove just the suffix
 	QString destFilePath =
-		getUserDataStorePath("parts")+"/"+destFolder+"/"+file.fileName().remove(QRegExp("^"+ZIP_PART));
+		FolderUtils::getUserDataStorePath("parts")+"/"+destFolder+"/"+file.fileName().remove(QRegExp("^"+ZIP_PART));
 
 	backupExistingFileIfExists(destFilePath);
 	if(partfile.copy(destFilePath)) {
@@ -1186,7 +1187,7 @@ void MainWindow::backupExistingFileIfExists(const QString &destFilePath) {
 	if(QFileInfo(destFilePath).exists()) {
 		if(m_tempDir.path() == ".") {
 			m_tempDir = QDir::temp();
-			createFolderAnCdIntoIt(m_tempDir, getRandText());
+			FolderUtils::createFolderAnCdIntoIt(m_tempDir, getRandText());
 			DebugDialog::debug("debug folder for overwritten files: "+m_tempDir.path());
 		}
 
@@ -1516,7 +1517,7 @@ void MainWindow::saveAsModule()
 	sketchModule.removeChild(instances);
 	partModule.appendChild(instances);
 
-	QString userPartsSvgFolderPath = getUserDataStorePath("parts")+"/svg/user/";
+	QString userPartsSvgFolderPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
 	foreach (QString view, svgs.keys()) {
 		QFile file(userPartsSvgFolderPath + view + "/" + moduleID + ".svg");
 		file.open(QIODevice::WriteOnly);
@@ -1586,7 +1587,7 @@ void MainWindow::saveAsModule()
 	tempModule.removeChild(externals);
 	partModule.appendChild(externals);
 
-	QString userPartsFolderPath = getUserDataStorePath("parts")+"/user/";
+	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
 
 	QFile file2(userPartsFolderPath + moduleID + FritzingModuleExtension);
 	file2.open(QIODevice::WriteOnly);
@@ -1823,7 +1824,7 @@ bool MainWindow::loadCustomBoardShape()
 
 
 	QString moduleID = FritzingWindow::getRandText();
-	QString userPartsSvgFolderPath = getUserDataStorePath("parts")+"/svg/user/";
+	QString userPartsSvgFolderPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
 	QString newName = userPartsSvgFolderPath + "pcb" + "/" + moduleID + ".svg";
 	bool result = QFile(path).copy(newName);
 	if (result == false) {
@@ -1867,7 +1868,7 @@ bool MainWindow::loadCustomBoardShape()
 		.arg(QTime::currentTime().toString("HH:mm:ss"));
 
 
-	QString userPartsFolderPath = getUserDataStorePath("parts")+"/user/";
+	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
 	QFile file2(userPartsFolderPath + moduleID + FritzingPartExtension);
 	file2.open(QIODevice::WriteOnly);
 	QTextStream out2(&file2);

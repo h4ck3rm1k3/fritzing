@@ -30,6 +30,7 @@ $Date$
 #include "busshared.h"
 #include "bus.h"
 #include "version/version.h"
+#include "utils/folderutils.h"
 
 #include <QDomElement>
 
@@ -470,7 +471,7 @@ QList<SvgAndPartFilePath> ModelPart::getAvailableViewFiles() {
 void ModelPart::grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId) {
 	QDomElement viewElem = viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(viewId));
 	if(!viewElem.isNull()) {
-		QString partspath = getUserDataStorePath("parts")+"/svg";
+		QString partspath = FolderUtils::getUserDataStorePath("parts")+"/svg";
 		QDomElement layerElem = viewElem.firstChildElement("layers");
 		if (!layerElem.isNull()) {
 			QString imagepath = layerElem.attribute("image");

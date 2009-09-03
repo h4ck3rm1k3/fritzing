@@ -75,7 +75,7 @@ QPainterPath JumperItem::shape() const
 	path.addEllipse(rect);
 	rect = m_connector1->rect();
 	path.addEllipse(rect);
-	return qt_graphicsItem_shapeFromPath(path, m_pen, 1);
+	return qt_graphicsItem_shapeFromPath(path, m_pen, 4);
 }
 
 bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)

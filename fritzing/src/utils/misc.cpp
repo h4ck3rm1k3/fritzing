@@ -48,54 +48,6 @@ const QList<QString> & fritzingExtensions() {
 	return ___fritzingExtensions___;
 }
 
-// finds the user parts folder based on local desktop (OS) defaults
-QString getUserPartsFolder(){
-	return QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/UserCreatedParts";
-}
-
-// finds a subfolder of the application directory searching backward up the tree
-QDir * getApplicationSubFolder(QString search) {
-	QString path = QCoreApplication::applicationDirPath();
-    path += "/" + search;
-	//DebugDialog::debug(QString("path %1").arg(path) );
-    QDir* dir= new QDir(path);
-    while (!dir->exists()) {
-    	// if we're running from the debug or release folder, go up one to find things
-    	dir->cdUp();
-		dir->cdUp();
-    	if (dir->isRoot()) return NULL;   // didn't find the search folder
-
-		dir->setPath(dir->absolutePath() + "/" + search);
-   	}
-
-   	return dir;
-}
-
-QString getApplicationSubFolderPath(QString search) {
-	QDir * dir = getApplicationSubFolder(search);
-	if (dir == NULL) return "";
-
-	QString result = dir->path();
-	delete dir;
-	return result;
-}
-
-QString getUserDataStorePath(QString folder) {
-	QString settingsFile = QSettings(QSettings::IniFormat,QSettings::UserScope,"Fritzing","Fritzing").fileName();
-	return QFileInfo(settingsFile).dir()
-		.absolutePath()+(folder!=___emptyString___?"/"+folder:"");
-}
-
-QStringList getUserDataStoreFolders() {
-	QStringList folders;
-	folders << "/bins"
-		<< "/parts/user" << "/parts/contrib"
-		<< "/parts/svg/user/icon" << "/parts/svg/user/breadboard"
-		<< "/parts/svg/user/schematic" << "/parts/svg/user/pcb"
-		<< "/parts/svg/contrib/icon" << "/parts/svg/contrib/breadboard"
-		<< "/parts/svg/contrib/schematic" << "/parts/svg/contrib/pcb";
-	return folders;
-}
 
 qreal convertToInches(const QString & s, bool * ok) {
 	QString string = s;
@@ -156,13 +108,6 @@ QDomElement findElementWithAttribute(QDomElement element, const QString & attrib
      }
 
 	return ___emptyElement___;
-}
-
-bool createFolderAnCdIntoIt(QDir &dir, QString newFolder) {
-	if(!dir.mkdir(newFolder)) return false;
-	if(!dir.cd(newFolder)) return false;
-
-	return true;
 }
 
 void distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 

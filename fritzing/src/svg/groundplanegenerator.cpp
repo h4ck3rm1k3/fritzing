@@ -29,6 +29,7 @@ $Date: 2009-04-15 16:37:21 +0200 (Wed, 15 Apr 2009) $
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
 #include "../version/version.h"
+#include "../utils/folderutils.h"
 
 #include <QPainter>
 #include <QSvgRenderer>
@@ -106,14 +107,14 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bWidth > image.width()) bWidth = image.width();
 
 	QDir fzpFolder = QDir::temp();
-	createFolderAnCdIntoIt(fzpFolder, suffix);
-	createFolderAnCdIntoIt(fzpFolder, "parts");
+	FolderUtils::createFolderAnCdIntoIt(fzpFolder, suffix);
+	FolderUtils::createFolderAnCdIntoIt(fzpFolder, "parts");
 	QDir svgFolder(fzpFolder);
-	createFolderAnCdIntoIt(fzpFolder, "user");
+	FolderUtils::createFolderAnCdIntoIt(fzpFolder, "user");
 
-	createFolderAnCdIntoIt(svgFolder, "svg");
-	createFolderAnCdIntoIt(svgFolder, "user");
-	createFolderAnCdIntoIt(svgFolder, "pcb");
+	FolderUtils::createFolderAnCdIntoIt(svgFolder, "svg");
+	FolderUtils::createFolderAnCdIntoIt(svgFolder, "user");
+	FolderUtils::createFolderAnCdIntoIt(svgFolder, "pcb");
 
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects);

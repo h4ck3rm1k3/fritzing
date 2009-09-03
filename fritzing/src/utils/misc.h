@@ -68,12 +68,6 @@ static QHash<QString, QString> ___emptyStringHash___;
 static QDir ___emptyDir___;
 static QByteArray ___emptyByteArray___;
 
-QString getUserPartsFolder();
-QDir *getApplicationSubFolder(QString);
-QString getApplicationSubFolderPath(QString);
-QString getUserDataStorePath(QString folder=___emptyString___);
-QStringList getUserDataStoreFolders();
-bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 bool containsText(const QString &filepath, const QString &searchText);
 QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
 
