@@ -100,8 +100,8 @@ void SVG2gerber::renderGerber(){
     // clone it for the mask header
     m_soldermask_header = m_gerber_header;
 
-    // set inverse polarity
-    m_soldermask_header += "%IPNEG*%\n";
+    // set inverse polarity: Loch says don't do this
+    //m_soldermask_header += "%IPNEG*%\n";
 
     // setup drill file header
     m_drill_header = "M48\n";
