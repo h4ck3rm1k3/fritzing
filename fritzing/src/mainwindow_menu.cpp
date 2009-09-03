@@ -2194,6 +2194,17 @@ void MainWindow::exportToGerber() {
     QTextStream maskStream(&maskOut);
     maskStream << copper0Gerber.getSolderMask();
 
+    // contour / board outline
+    QString contourFile = exportDir + "/" +
+                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                          + "_contour.gm1";
+    QFile contourOut(contourFile);
+    if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber export: cannot open output file");
+
+    QTextStream contourStream(&maskOut);
+    contourStream << copper0Gerber.getContour();
+
     // drill file
     QString drillFile = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)

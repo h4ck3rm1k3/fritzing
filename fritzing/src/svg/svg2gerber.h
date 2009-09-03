@@ -40,6 +40,7 @@ public:
     SVG2gerber(QString svgStr, QString debugStr="dbg");
     QString getGerber();
     QString getSolderMask();
+    QString getContour();
     QString getNCDrill();
 
 protected:
@@ -48,6 +49,8 @@ protected:
     QString m_gerber_paths;
     QString m_soldermask_header;
     QString m_soldermask_paths;
+    QString m_contour_header;
+    QString m_contour_paths;
     QString m_drill_header;
     QString m_drill_paths;
 

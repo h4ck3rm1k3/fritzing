@@ -76,6 +76,10 @@ QString SVG2gerber::getSolderMask(){
     return m_soldermask_header + m_soldermask_paths;
 }
 
+QString SVG2gerber::getContour(){
+    return m_contour_header + m_contour_paths;
+}
+
 QString SVG2gerber::getNCDrill(){
     return m_drill_header + m_drill_paths;
 }
