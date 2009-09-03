@@ -106,8 +106,9 @@ void SVG2gerber::renderGerber(){
     // scale factor 1x1
     m_gerber_header += "%SFA1.0B1.0*%\n";
 
-    // clone it for the mask header
+    // clone it for the mask and contour headers
     m_soldermask_header = m_gerber_header;
+    m_contour_header = m_gerber_header;
 
     // set inverse polarity: Loch says don't do this
     //m_soldermask_header += "%IPNEG*%\n";
@@ -123,6 +124,7 @@ void SVG2gerber::renderGerber(){
     // label our layers
     m_gerber_header += "%LNCOPPER0*%\n";
     m_soldermask_header += "%LNMASK*%\n";
+    m_contour_header += "%LNCONTOUR*%\n";
 
     // rewind drill to start position
     m_drill_header += "%\n";
@@ -130,15 +132,18 @@ void SVG2gerber::renderGerber(){
     //just to be safe: G90 (absolute coords) and G70 (inches)
     m_gerber_header += "G90*\nG70*\n";
     m_soldermask_header += "G90*\nG70*\n";
+    m_contour_header += "G90*\nG70*\n";
 
     // now write the footer
     // comment to indicate end-of-sketch
-    m_gerber_paths += "G04 End of Fritzing sketch*\n";
-    m_soldermask_paths += "G04 End of Fritzing solder mask*\n";
+    m_gerber_paths += "G04 End of Copper0*\n";
+    m_soldermask_paths += "G04 End of solder mask*\n";
+    m_contour_paths += "G04 End of solder mask*\n";
 
     // write gerber end-of-program
     m_gerber_paths += "M02*";
     m_soldermask_paths += "M02*";
+    m_contour_paths += "M02*";
 
     // drill file unload tool and end of program
     m_drill_paths += "T00\n";

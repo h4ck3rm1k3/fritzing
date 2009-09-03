@@ -2194,17 +2194,6 @@ void MainWindow::exportToGerber() {
     QTextStream maskStream(&maskOut);
     maskStream << copper0Gerber.getSolderMask();
 
-    // contour / board outline
-    QString contourFile = exportDir + "/" +
-                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                          + "_contour.gm1";
-    QFile contourOut(contourFile);
-    if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text))
-        DebugDialog::debug("gerber export: cannot open output file");
-
-    QTextStream contourStream(&maskOut);
-    contourStream << copper0Gerber.getContour();
-
     // drill file
     QString drillFile = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
@@ -2253,6 +2242,35 @@ void MainWindow::exportToGerber() {
 
     QTextStream silkStream(&silk0Out);
     silkStream << silk0Gerber.getGerber();
+
+    // now do it for the outline/contour
+    QList<ViewLayer::ViewLayerID> outlineLayerIDs;
+    outlineLayerIDs << ViewLayer::Board;
+    QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, StandardFritzingDPI);
+    if (svgOutline.isEmpty()) {
+        // tell the user something reasonable
+        return;
+    }
+
+    result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
+    if (!result) {
+            // tell the user something reasonable
+            return;
+    }
+
+    // create copper0 gerber from svg
+    SVG2gerber outlineGerber(svgOutline, "board");
+
+    // contour / board outline
+    QString contourFile = exportDir + "/" +
+                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                          + "_contour.gm1";
+    QFile contourOut(contourFile);
+    if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber export: cannot open output file");
+
+    QTextStream contourStream(&contourOut);
+    contourStream << outlineGerber.getContour();
 }
 
 void MainWindow::exportToEagle() {
