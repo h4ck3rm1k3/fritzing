@@ -36,8 +36,8 @@ static const int LineThickness = 4;
 
 QString ResizableBoard::customShapeTranslated;
 
-#define mm2mils(mm) (mm / 25.4 * 1000)
-#define pixels2mm(p) (p / FSvgRenderer::printerScale() * 25.4)
+#define mm2mils(mm) ((mm) / 25.4 * 1000)
+#define pixels2mm(p) ((p) / FSvgRenderer::printerScale() * 25.4)
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)

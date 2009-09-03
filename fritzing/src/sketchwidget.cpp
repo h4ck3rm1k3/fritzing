@@ -2807,12 +2807,11 @@ ItemCount SketchWidget::calcItemCount() {
 				itemCount.selVFlipable++;
 			}
 
-			bool rotatable = true;
+			bool rotatable = rotationAllowed(itemBase);
 			switch (itemBase->itemType()) {
 				case ModelPart::Note:
 					itemCount.noteCount++;
 				default:
-					rotatable = rotationAllowed(itemBase);
 					break;
 			}
 
@@ -5497,6 +5496,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		//case ModelPart::Wire:
 		case ModelPart::Note:
 		case ModelPart::Unknown:
+		case ModelPart::Jumper:
 			return false;
 
 		case ModelPart::Board:

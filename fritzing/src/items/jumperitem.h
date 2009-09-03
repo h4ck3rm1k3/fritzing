@@ -45,14 +45,22 @@ protected:
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	void resize();
+	QString makeSvg();
 
 protected:
 	ConnectorItem * m_dragItem;
-	ConnectorItem * m_otherItem;
 	ConnectorItem * m_connector0;
 	ConnectorItem * m_connector1;
-	QPointF m_dragStartPos;
-	QRectF m_originalRect;
+	ConnectorItem * m_otherItem;
+	QPointF m_dragStartScenePos;
+	QPointF m_dragStartThisPos;
+	QPointF m_dragStartConnectorPos;
+	QPointF m_otherPos;
+	QPointF m_connectorTL;
+	QPointF m_connectorBR;
+	class FSvgRenderer * m_renderer;
+
 };
 
 #endif

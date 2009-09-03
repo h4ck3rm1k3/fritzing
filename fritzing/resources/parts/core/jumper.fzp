@@ -64,5 +64,9 @@
   </connector>
  </connectors>
  <buses>
+   <bus id="jumperbus" >
+     <nodeMember connectorId="connector0" />
+     <nodeMember connectorId="connector1" />
+   </bus>
  </buses>
 </module>
