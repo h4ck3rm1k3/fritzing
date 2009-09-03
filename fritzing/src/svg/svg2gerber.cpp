@@ -81,8 +81,13 @@ QString SVG2gerber::getNCDrill(){
 }
 
 void SVG2gerber::renderGerber(){
+    // human readable description comments
+    m_gerber_header = "G04 MADE WITH FRITZING*\n";
+    m_gerber_header += "G04 SINGLE SIDED*\n";
+    m_gerber_header += "G04 HOLES NOT PLATED*\n";
+
     // initialize axes
-    m_gerber_header = "%ASAXBY*%\n";
+    m_gerber_header += "%ASAXBY*%\n";
 
     // NOTE: this currently forces a 1 mil grid
     // format coordinates to drop leading zeros with 2,3 digits
@@ -112,7 +117,7 @@ void SVG2gerber::renderGerber(){
     allPaths2gerber();
 
     // label our layers
-    m_gerber_header += "%LNFRITZING*%\n";
+    m_gerber_header += "%LNCOPPER0*%\n";
     m_soldermask_header += "%LNMASK*%\n";
 
     // rewind drill to start position
