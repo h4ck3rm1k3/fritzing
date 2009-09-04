@@ -38,16 +38,14 @@ public:
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
  	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
-	bool acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
-	bool acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
 protected:
-	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
-	void mouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
-	void mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void resize();
 	QString makeSvg();
 	QPainterPath makePath() const;
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 protected:
 	ConnectorItem * m_dragItem;

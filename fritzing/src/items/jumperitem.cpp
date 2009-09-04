@@ -42,6 +42,11 @@ static QString Copper0LayerTemplate = "";
 //	ignore during other connections
 
 
+
+inline qreal distance2(QPointF p1, QPointF p2) {
+	return ((p1.x() - p2.x()) * (p1.x() - p2.x())) + ((p1.y() - p2.y()) * (p1.y() - p2.y()));
+}
+
 /////////////////////////////////////////////////////////
 
 JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
@@ -73,10 +78,14 @@ QPainterPath JumperItem::shape() const
 QPainterPath JumperItem::makePath() const {
 	QPainterPath path;
 	QRectF rect = m_connector0->rect();
-	rect.adjust(-3,-3,3,3);
+	qreal dx = m_connectorTL.x();
+	qreal dy = m_connectorTL.y();
+	rect.adjust(-dx, -dy, dx, dy);
 	path.addEllipse(rect);
 	rect = m_connector1->rect();
-	rect.adjust(-3,-3,3,3);
+	dx = m_connectorBR.x();
+	dy = m_connectorBR.y();
+	rect.adjust(-dx, -dy, dx, dy);
 	path.addEllipse(rect);
 	return path;
 }
@@ -105,25 +114,27 @@ bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIden
 	return result;
 }
 
+void JumperItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+	QPointF c0 = m_connector0->rect().center();
+	QPointF c1 = m_connector1->rect().center();
+	if (distance2(c0, event->pos()) <= distance2(c1, event->pos())) {
+		m_dragItem = m_connector0;
+		m_otherItem = m_connector1;
+	}
+	else {
+		m_dragItem = m_connector1;
+		m_otherItem = m_connector0;
+	}
 
-void JumperItem::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	m_dragItem = connectorItem;
 	m_dragStartScenePos = event->scenePos();
 	m_dragStartThisPos = this->pos();
-	m_dragStartConnectorPos = this->mapToScene(connectorItem->rect().topLeft());
-	m_otherItem = (connectorItem == m_connector0) ? m_connector1 : m_connector0;
+	m_dragStartConnectorPos = this->mapToScene(m_dragItem->rect().topLeft());
 	m_otherPos = this->mapToScene(m_otherItem->rect().topLeft());
 }
 
-void JumperItem::mouseReleaseConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	if (m_dragItem == NULL) return;
-
-	// undo command
-}
-
-void JumperItem::mouseMoveConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	Q_UNUSED(connectorItem);
-
+void JumperItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
 	if (m_dragItem == NULL) return;
 
 	// TODO: make sure the two connectors don't overlap
@@ -142,12 +153,8 @@ void JumperItem::mouseMoveConnectorEvent(ConnectorItem * connectorItem, QGraphic
 	resize();
 }
 
-bool JumperItem::acceptsMouseMoveConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
-	return true;
-}
-
-bool JumperItem::acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
-	return true;
+void JumperItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
 }
 
 QString JumperItem::makeSvg() 
