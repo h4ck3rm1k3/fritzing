@@ -54,7 +54,7 @@ public:
 
     QRectF boundingRect() const;
     QPainterPath shape() const;
-    QPainterPath hoverShape() const;
+    virtual QPainterPath hoverShape() const;
 	void setShape(QPainterPath &);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

@@ -60,22 +60,25 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 
 QPainterPath JumperItem::hoverShape() const
 {
-    QPainterPath path;
-	QRectF rect = m_connector0->rect();
-	path.addEllipse(rect);
-	rect = m_connector1->rect();
-	path.addEllipse(rect);
-    return qt_graphicsItem_shapeFromPath(path, m_pen, 4);
+    QPainterPath path = makePath();
+    return qt_graphicsItem_shapeFromPath(path, m_pen, 1);
 }
 
 QPainterPath JumperItem::shape() const
 {
-    QPainterPath path;
+	QPainterPath path = makePath();
+	return qt_graphicsItem_shapeFromPath(path, m_pen, 4);
+}
+
+QPainterPath JumperItem::makePath() const {
+	QPainterPath path;
 	QRectF rect = m_connector0->rect();
+	rect.adjust(-3,-3,3,3);
 	path.addEllipse(rect);
 	rect = m_connector1->rect();
+	rect.adjust(-3,-3,3,3);
 	path.addEllipse(rect);
-	return qt_graphicsItem_shapeFromPath(path, m_pen, 4);
+	return path;
 }
 
 bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)

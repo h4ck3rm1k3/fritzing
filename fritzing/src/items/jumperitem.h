@@ -47,6 +47,7 @@ protected:
 	void mouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void resize();
 	QString makeSvg();
+	QPainterPath makePath() const;
 
 protected:
 	ConnectorItem * m_dragItem;
