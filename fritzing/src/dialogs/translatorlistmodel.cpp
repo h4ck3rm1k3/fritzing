@@ -73,7 +73,9 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 		//		3. ignore the first two bytes (these are a signal that says "I'm unicode")
 		//		4. initialize an array of ushort using the rest of the byte pairs
 		//		5. don't forget to reverse the order of the bytes in each pair.
-	
+	}
+
+	if (m_localeList.count() == 0) {
 		foreach (QFileInfo fileinfo, fileInfoList) {
 			QString name = fileinfo.baseName();
 			name.replace("fritzing_", "");
@@ -89,12 +91,14 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 
 
 TranslatorListModel::~TranslatorListModel() {
+}
+
+void TranslatorListModel::cleanup() {
 	foreach (QLocale * locale, m_localeList) {
 		delete locale;
 	}
 	m_localeList.clear();
 }
-
 
 QVariant TranslatorListModel::data ( const QModelIndex & index, int role) const 
 {

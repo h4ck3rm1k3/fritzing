@@ -43,6 +43,7 @@ $Date$
 #include "partsbinpalette/binmanager/binmanager.h"
 #include "help/tipsandtricks.h"
 #include "utils/folderutils.h"
+#include "dialogs/translatorlistmodel.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -74,6 +75,7 @@ QSet<QString> FApplication::InstalledFonts;
 QPointer<MainWindow> FApplication::m_lastTopmostWindow = NULL;
 QTimer FApplication::m_activationTimer;
 QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
+QStringList FApplication::m_arguments;
 
 
 static int kBottomOfAlpha = 204;
@@ -120,10 +122,15 @@ void DoOnceThread::run()
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
-	QStringList args = arguments();
-	for (int i = 0; i < args.length() - 1; i++) {
-		if (args[i].compare("-f", Qt::CaseInsensitive) == 0) {
-			FolderUtils::setApplicationPath(args[i + 1]);
+	m_arguments = arguments();
+	for (int i = 0; i < m_arguments.length() - 1; i++) {
+		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("-folder", Qt::CaseInsensitive) == 0))
+		{
+			FolderUtils::setApplicationPath(m_arguments[i + 1]);
+			// delete these so we don't try to process them as files later
+			m_arguments.removeAt(i);
+			m_arguments.removeAt(i);
 			break;
 		}
 	}
@@ -185,6 +192,8 @@ FApplication::~FApplication(void)
 	ItemDrag::cleanup();
 	Version::cleanup();
 	TipsAndTricks::cleanup();
+	TranslatorListModel::cleanup();
+	FolderUtils::cleanup();
 
 }
 
@@ -306,7 +315,7 @@ bool FApplication::findTranslator(const QString & translationsPath) {
 	return loaded;
 }
 
-int FApplication::startup(int & argc, char ** argv)
+int FApplication::startup()
 {
 	int progressIndex;
     QPixmap pixmap(":/resources/images/splash_2010.png");
@@ -437,8 +446,11 @@ int FApplication::startup(int & argc, char ** argv)
 	processEvents();
 
 	int loaded = 0;
-	for(int i=1; i < argc; i++) {
-		loadOne(mainWindow, argv[i], loaded++);
+	for (int i = 1; i < m_arguments.length(); i++) {
+		QFileInfo fileinfo(m_arguments[i]);
+		if (fileinfo.exists() && !fileinfo.isDir()) {
+			loadOne(mainWindow, m_arguments[i], loaded++);
+		}
 	}
 
 	//DebugDialog::debug("after argc");

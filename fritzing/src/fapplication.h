@@ -45,7 +45,7 @@ public:
 	~FApplication(void);
 
 public:
-	int startup(int & argc, char ** argv);
+	int startup();
 	void finish();
 	void preloadSlowParts();
 
@@ -94,6 +94,7 @@ protected:
 	static QTimer m_activationTimer;
 	static QPointer<class MainWindow> m_lastTopmostWindow;
 	static QList<QWidget *> m_orderedTopLevelWidgets;
+	static QStringList m_arguments;
 
 public:
 	static QSet<QString> InstalledFonts;

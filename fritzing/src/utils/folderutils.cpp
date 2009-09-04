@@ -113,6 +113,13 @@ bool FolderUtils::setApplicationPath(const QString & path)
 	return singleton->setApplicationPath2(path);
 }
 
+void FolderUtils::cleanup() {
+	if (singleton) {
+		delete singleton;
+		singleton = NULL;
+	}
+}
+
 /////////////////////////////////////////////////
 
 const QString FolderUtils::getLibraryPath() 

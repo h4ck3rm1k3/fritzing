@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
 	FApplication * app = new FApplication(argc, argv);
 	//DebugDialog::setDebugLevel(DebugDialog::Error);
-	int result = app->startup(argc, argv);
+	int result = app->startup();
 	if (result == 0) {
 		result = app->exec();
 	}

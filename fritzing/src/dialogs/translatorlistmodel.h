@@ -47,6 +47,8 @@ public:
 	const QLocale * locale(int index);
 	int findIndex(const QString & language);
 
+	static void cleanup();
+
 protected:
 	static QList<QLocale *> m_localeList;
 

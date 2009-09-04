@@ -45,6 +45,7 @@ public:
 	static bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 	static bool setApplicationPath(const QString & path);
 	static const QString FolderUtils::getLibraryPath();
+	static void cleanup();
 
 protected:
 	FolderUtils();
