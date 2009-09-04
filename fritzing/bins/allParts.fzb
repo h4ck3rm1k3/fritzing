@@ -716,5 +716,19 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="BareBonesBoard-ModuleID" modelIndex="435" path=":/resources/parts/core/BareBonesBoard.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="Breadboard-RSR03MB102-ModuleID" modelIndex="435" path=":/resources/parts/core/breadboard2.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
     </instances>
 </module>
