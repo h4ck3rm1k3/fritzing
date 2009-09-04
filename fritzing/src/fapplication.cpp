@@ -141,14 +141,9 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 
 	installEventFilter(this);
 
-#ifdef Q_WS_MAC
-	QString lib = "/../lib";
-#else
-	QString lib = "/lib";
-#endif
-
-	m_libPath = QDir::cleanPath(applicationDirPath() + lib);		// applicationDirPath() doesn't work until after QApplication is instantiated
-	addLibraryPath(m_libPath);					// tell app where to search for plugins (jpeg export and sql lite)
+	// tell app where to search for plugins (jpeg export and sql lite)
+	m_libPath = FolderUtils::getLibraryPath();
+	addLibraryPath(m_libPath);	
 
 	/*QFile file("libpath.txt");
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -158,12 +153,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	}*/
 
 	// !!! translator must be installed before any widgets are created !!!
-	m_translationPath = m_libPath + "/translations";
+	m_translationPath = FolderUtils::getApplicationSubFolderPath("translations");
 	bool loaded = findTranslator(m_translationPath);
-	if (!loaded) {
-		m_translationPath = FolderUtils::getApplicationSubFolderPath("translations");
-		loaded = findTranslator(m_translationPath);
-	}
 
 	Q_INIT_RESOURCE(phoenixresources);
 }

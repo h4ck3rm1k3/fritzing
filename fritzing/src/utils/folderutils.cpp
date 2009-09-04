@@ -97,11 +97,6 @@ const QStringList & FolderUtils::getUserDataStoreFolders() {
 	return singleton->userDataStoreFolders();
 }
 
-const QStringList & FolderUtils::userDataStoreFolders() {
-	return m_folders;
-}
-
-
 bool FolderUtils::createFolderAnCdIntoIt(QDir &dir, QString newFolder) {
 	if(!dir.mkdir(newFolder)) return false;
 	if(!dir.cd(newFolder)) return false;
@@ -118,6 +113,36 @@ bool FolderUtils::setApplicationPath(const QString & path)
 	return singleton->setApplicationPath2(path);
 }
 
+/////////////////////////////////////////////////
+
+const QString FolderUtils::getLibraryPath() 
+{
+	if (singleton == NULL) {
+		singleton = new FolderUtils();
+	}
+
+	return singleton->libraryPath();
+}
+
+
+const QString FolderUtils::libraryPath() 
+{
+//#ifdef Q_WS_MAC
+	// mac plugins are always in the bundle
+	return QDir::cleanPath(QCoreApplication::applicationDirPath() + "/../lib");
+//#endif
+
+	return QDir::cleanPath(applicationDirPath() + "/lib");		
+}
+
+const QString FolderUtils::applicationDirPath() {
+	if (m_appPath.isEmpty()) {
+		return QCoreApplication::applicationDirPath();
+	}
+
+	return m_appPath;
+}
+
 bool FolderUtils::setApplicationPath2(const QString & path) 
 {
 	QDir dir(path);
@@ -127,11 +152,7 @@ bool FolderUtils::setApplicationPath2(const QString & path)
 	return true;
 }
 
-const QString FolderUtils::applicationDirPath() {
-	if (m_appPath.isEmpty()) {
-		return QCoreApplication::applicationDirPath();
-	}
-
-	return m_appPath;
+const QStringList & FolderUtils::userDataStoreFolders() {
+	return m_folders;
 }
 

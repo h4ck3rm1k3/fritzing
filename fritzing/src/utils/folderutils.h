@@ -44,6 +44,7 @@ public:
 	static const QStringList & getUserDataStoreFolders();
 	static bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 	static bool setApplicationPath(const QString & path);
+	static const QString FolderUtils::getLibraryPath();
 
 protected:
 	FolderUtils();
@@ -51,6 +52,7 @@ protected:
 	const QStringList & userDataStoreFolders();
 	bool setApplicationPath2(const QString & path);
 	const QString applicationDirPath();
+	const QString libraryPath();
 
 protected:
 	static FolderUtils* singleton;
