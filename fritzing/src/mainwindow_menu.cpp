@@ -2208,7 +2208,7 @@ void MainWindow::exportToGerber() {
 
     // now do it for silk
     QList<ViewLayer::ViewLayerID> silkLayerIDs;
-    silkLayerIDs << ViewLayer::Silkscreen;
+    silkLayerIDs << ViewLayer::Silkscreen /* TODO:  << ViewLayer::SilkscreenLabel  */;
     QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, StandardFritzingDPI);
     if (svgSilk.isEmpty()) {
         // tell the user something reasonable

@@ -4433,7 +4433,7 @@ void SketchWidget::addPcbViewLayers() {
 	ViewLayer * silkscreen = m_viewLayers.value(ViewLayer::Silkscreen);
 	ViewLayer * silkscreenLabel = m_viewLayers.value(ViewLayer::SilkscreenLabel);
 	if (silkscreen && silkscreenLabel) {
-		silkscreenLabel->setParentLayer(silkscreen);
+		//silkscreenLabel->setParentLayer(silkscreen);
 	}
 	ViewLayer * copper0 = m_viewLayers.value(ViewLayer::Copper0);
 	ViewLayer * copper0Trace = m_viewLayers.value(ViewLayer::Copper0Trace);
