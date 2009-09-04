@@ -43,7 +43,7 @@ SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
     m_SVGDom = QDomDocument("svg");
     m_SVGDom.setContent(svgStr);
 
-#ifndef QT_NO_DEBUG
+#ifdef QT_NO_DEBUG
     // dump paths SVG to tmp file for now
     QFile dump("/tmp/paths_in" + debugStr + ".svg");
     if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -55,7 +55,7 @@ SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
 
     normalizeSVG();
 
-#ifndef QT_NO_DEBUG
+#ifdef QT_NO_DEBUG
     // dump paths SVG to tmp file for now
     QFile dump2("/tmp/paths_normal" + debugStr + ".svg");
     if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -89,6 +89,7 @@ void SVG2gerber::renderGerber(){
     m_gerber_header = "G04 MADE WITH FRITZING*\n";
     m_gerber_header += "G04 SINGLE SIDED*\n";
     m_gerber_header += "G04 HOLES NOT PLATED*\n";
+    m_gerber_header += "G04 CONTOUR ON CENTER OF CONTOUR VECTOR*\n";
 
     // initialize axes
     m_gerber_header += "%ASAXBY*%\n";
@@ -138,7 +139,7 @@ void SVG2gerber::renderGerber(){
     // comment to indicate end-of-sketch
     m_gerber_paths += "G04 End of Copper0*\n";
     m_soldermask_paths += "G04 End of solder mask*\n";
-    m_contour_paths += "G04 End of solder mask*\n";
+    m_contour_paths += "G04 End of contour layer*\n";
 
     // write gerber end-of-program
     m_gerber_paths += "M02*";
@@ -317,8 +318,10 @@ void SVG2gerber::allPaths2gerber() {
 
         qreal width = rect.attribute("width").toFloat();
         qreal height = rect.attribute("height").toFloat();
-        qreal centerx = rect.attribute("x").toFloat() + (width/2);
-        qreal centery = rect.attribute("y").toFloat() + (height/2);
+        qreal x = rect.attribute("x").toFloat();
+        qreal y = rect.attribute("y").toFloat();
+        qreal centerx = x + (width/2);
+        qreal centery = y + (height/2);
         QString cx = QString::number(round(centerx));
         QString cy = QString::number(round(centery));
         QString fill = rect.attribute("fill");
@@ -358,6 +361,23 @@ void SVG2gerber::allPaths2gerber() {
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
         m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
+
+        // if this is the board outline, use it as the contour
+        if(rect.attribute("id").toLower() == "boardoutline"){
+            // add circular aperture with 0 width
+            m_contour_header += "%ADD10C,0.008*%\n";
+
+            // switch aperture
+            m_contour_paths += "G54D10*\n";
+
+            // draw 4 lines
+            m_contour_paths += "X" + QString::number(x) + "Y" + QString::number(y) + "D02*\n";
+            m_contour_paths += "X" + QString::number(x+width) + "Y" + QString::number(y) + "D01*\n";
+            m_contour_paths += "X" + QString::number(x+width) + "Y" + QString::number(y+height) + "D01*\n";
+            m_contour_paths += "X" + QString::number(x) + "Y" + QString::number(y+height) + "D01*\n";
+            m_contour_paths += "X" + QString::number(x) + "Y" + QString::number(y) + "D01*\n";
+            m_contour_paths += "D02*\n";
+        }
     }
 
     // lines - NOTE: this assumes a circular aperture
@@ -441,6 +461,20 @@ void SVG2gerber::allPaths2gerber() {
         }
 
         m_gerber_paths += pathUserData.string;
+
+        DebugDialog::debug("path id: " + path.attribute("id"));
+        // if this is the board outline, use it as the contour
+        if(path.attribute("id").toLower() == "boardoutline"){
+            DebugDialog::debug("drawing board outline");
+            // add circular aperture with 0 width
+            m_contour_header += "%ADD10C,0.008*%\n";
+
+            // switch aperture
+            m_contour_paths += "G54D10*\n";
+
+            // draw 4 lines
+            m_contour_paths += pathUserData.string;
+        }
     }
 }
 
