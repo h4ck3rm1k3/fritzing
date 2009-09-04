@@ -155,6 +155,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	// !!! translator must be installed before any widgets are created !!!
 	m_translationPath = FolderUtils::getApplicationSubFolderPath("translations");
 	bool loaded = findTranslator(m_translationPath);
+	Q_UNUSED(loaded);
 
 	Q_INIT_RESOURCE(phoenixresources);
 }
