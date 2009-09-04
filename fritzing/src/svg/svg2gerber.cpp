@@ -34,7 +34,7 @@ $Date$
 #define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))
 #endif
 
-//TODO: this assumes one layer right now (copper0)
+//TODO: currently only supports one board per sketch (i.e. multiple board outlines will mess you up)
 
 SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
 {
@@ -371,11 +371,11 @@ void SVG2gerber::allPaths2gerber() {
             m_contour_paths += "G54D10*\n";
 
             // draw 4 lines
-            m_contour_paths += "X" + QString::number(x) + "Y" + QString::number(y) + "D02*\n";
-            m_contour_paths += "X" + QString::number(x+width) + "Y" + QString::number(y) + "D01*\n";
-            m_contour_paths += "X" + QString::number(x+width) + "Y" + QString::number(y+height) + "D01*\n";
-            m_contour_paths += "X" + QString::number(x) + "Y" + QString::number(y+height) + "D01*\n";
-            m_contour_paths += "X" + QString::number(x) + "Y" + QString::number(y) + "D01*\n";
+            m_contour_paths += "X" + QString::number(round(x)) + "Y" + QString::number(round(y)) + "D02*\n";
+            m_contour_paths += "X" + QString::number(round(x+width)) + "Y" + QString::number(round(y)) + "D01*\n";
+            m_contour_paths += "X" + QString::number(round(x+width)) + "Y" + QString::number(round(y+height)) + "D01*\n";
+            m_contour_paths += "X" + QString::number(round(x)) + "Y" + QString::number(round(y+height)) + "D01*\n";
+            m_contour_paths += "X" + QString::number(round(x)) + "Y" + QString::number(round(y)) + "D01*\n";
             m_contour_paths += "D02*\n";
         }
     }
