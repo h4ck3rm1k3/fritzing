@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.1201" moduleId="$uuid">
+<module fritzingVersion="0.1.1201" moduleId="4a2459c0-9ae8-11de-8cac-0013ce8bc1d4">
     <version>1.0</version>
-    <title>$resistance Resistor</title>
+    <title>27k Resistor</title>
     <label>R</label>
-    <date>$date</date>
+    <date>2009-09-06</date>
     <author>Brendan Howell</author>
     <tags>
         <tag>Resistor</tag>
@@ -11,20 +11,20 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="Resistance">$resistance&#8486;</property>
+        <property name="Resistance">27k&#8486;</property>
         <property name="family">Resistor</property>
         <property name="Rated Power">0.25 watt</property>
     </properties>
-    <taxonomy>discreteParts.resistor.$resistance</taxonomy>
+    <taxonomy>discreteParts.resistor.27k</taxonomy>
     <description>A generic resistor (0.25W)</description>
     <views>
         <iconView>
-            <layers image="icon/resistor_icon_${resistance}.svg">
+            <layers image="icon/resistor_icon_27k.svg">
                 <layer layerId="icon" />
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/resistor_${resistance}.svg">
+            <layers image="breadboard/resistor_27k.svg">
                 <layer layerId="breadboard" />
             </layers>
         </breadboardView>

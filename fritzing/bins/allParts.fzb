@@ -548,7 +548,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="9e3891c2-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="412" path="parts/core/resistor_33.fzp">
+      <instance moduleIdRef="4a2459c0-9ae8-11de-8cac-0013ce8bc1d4" modelIndex="436" path="parts/core/resistor_27k.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3891c2-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="412" path="parts/core/resistor_33.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -723,7 +730,7 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="Breadboard-RSR03MB102-ModuleID" modelIndex="435" path=":/resources/parts/core/breadboard2.fzp">
+      <instance moduleIdRef="Breadboard-RSR03MB102-ModuleID" modelIndex="437" path=":/resources/parts/core/breadboard2.fzp">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
