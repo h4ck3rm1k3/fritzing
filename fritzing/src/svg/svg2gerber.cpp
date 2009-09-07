@@ -380,6 +380,42 @@ void SVG2gerber::allPaths2gerber() {
         }
     }
 
+    // polys - NOTE: assumes comma separated formatting
+    QDomNodeList polyList = m_SVGDom.elementsByTagName("polygon");
+
+    DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
+    for(uint p = 0; p < polyList.length(); p++){
+        QDomElement polygon = polyList.item(p).toElement();
+
+        QString points = polygon.attribute("points");
+        QStringList pointList = points.split(",");
+
+        //start poly area fill
+        m_gerber_paths += "G36*\n";
+
+        int startx = round(pointList.at(0).toFloat());
+        int starty = round(pointList.at(1).toFloat());
+        // move to start - light off
+        m_gerber_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D02*\n";
+
+        // iterate through all other points - light on
+        for(uint pt = 2; pt < pointList.length(); pt +=2){
+            int ptx = round(pointList.at(pt).toFloat());
+            int pty = round(pointList.at(pt+1).toFloat());
+            m_gerber_paths += "X" + QString::number(ptx) + "Y" + QString::number(pty) + "D01*\n";
+        }
+
+        // move back to start point
+        m_gerber_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D01*\n";
+
+
+        // stop poly fill
+        m_gerber_paths += "G37*\n";
+
+        // light off
+        m_gerber_paths += "D02*\n";
+    }
+
     // lines - NOTE: this assumes a circular aperture
     QDomNodeList lineList = m_SVGDom.elementsByTagName("line");
 
@@ -446,6 +482,7 @@ void SVG2gerber::allPaths2gerber() {
         flattener.parsePath(data, slot, pathUserData, this);
 
         // only add paths if they contained gerber-izable path commands (NO CURVES!)
+        // TODO: display some informative error for the user
         if(pathUserData.string.contains("INVALID"))
             continue;
 

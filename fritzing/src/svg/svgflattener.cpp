@@ -35,10 +35,6 @@ SvgFlattener::SvgFlattener()
 }
 
 void SvgFlattener::flattenChildren(QDomElement &element){
-    // I'm a leaf node. (NOTE: assumes no transforms)
-    //if(!element.hasChildNodes()) {
-       // return;
-    //}
 
     // recurse the children
     QDomNodeList childList = element.childNodes();
