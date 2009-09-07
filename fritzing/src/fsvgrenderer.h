@@ -59,7 +59,7 @@ public:
 
 protected:
 	void parseForWidthAndHeight(QXmlStreamReader & xml);
-	QByteArray FSvgRenderer::cleanXml(const QByteArray & contents);
+	QByteArray cleanXml(const QByteArray & contents);
 	bool loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors);
 
 protected:
