@@ -7,9 +7,6 @@
 	 xml:space="preserve">
 
 <g id="breadboard">
-<g id="icon">  <!-- needed so part generator can use the same image for the icon: 
-                    take this line out if regenerating the core parts -->
-  
 	<rect id="connector0pin" x="0" y="3.59" fill="none" width="6.5" height="2.91"/>
 	<rect id="connector1pin" x="36.417" y="3.59" fill="none" width="6.5" height="2.91"/>
 	<rect id="connector0terminal" x="0" y="3.59" fill="none" width="0" height="2.91"/>
@@ -37,7 +34,6 @@
 	<circle id="ReflexLeft" opacity="0.35" fill="#FFFFFF" cx="9.722" cy="1.578" r="0.6"/>
 	<rect id="Reflex_gold" x="30.582" y="0.588" opacity="0.5" fill="#FFFF33" width="0.976" height="2.25"/>
 	<rect id="Reflex_extra" x="30.582" y="1.088" opacity="0.5" fill="#FFFFFF" width="0.976" height="1.04"/>
-</g>
 </g>
 </svg>
 

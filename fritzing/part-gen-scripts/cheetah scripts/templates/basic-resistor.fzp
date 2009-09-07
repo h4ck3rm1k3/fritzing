@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.1.1201" moduleId="$uuid">
     <version>1.0</version>
-    <title>$resistance Resistor</title>
+    <title>$resistance &#8486; Resistor</title>
     <label>R</label>
     <date>$date</date>
     <author>Brendan Howell</author>
@@ -19,7 +19,7 @@
     <description>A generic resistor (0.25W)</description>
     <views>
         <iconView>
-            <layers image="breadboard/resistor_${resistance}.svg">   <!-- use a different icon if regenerating the core resistor parts:  image="icon/resistor_icon_${resistance}.svg" -->
+            <layers image="icon/resistor_icon_${resistance}.svg" >   
                 <layer layerId="icon" />
             </layers>
         </iconView>
