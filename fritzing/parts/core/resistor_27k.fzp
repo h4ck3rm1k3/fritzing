@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.1.1201" moduleId="4a2459c0-9ae8-11de-8cac-0013ce8bc1d4">
     <version>1.0</version>
-    <title>27k Resistor</title>
+    <title>27k &#8486; Resistor</title>
     <label>R</label>
-    <date>2009-09-06</date>
+    <date>2009-09-07</date>
     <author>Brendan Howell</author>
     <tags>
         <tag>Resistor</tag>
@@ -15,11 +15,11 @@
         <property name="family">Resistor</property>
         <property name="Rated Power">0.25 watt</property>
     </properties>
-    <taxonomy>discreteParts.resistor.27k</taxonomy>
+    <taxonomy>discreteParts.resistor.27000</taxonomy>
     <description>A generic resistor (0.25W)</description>
     <views>
         <iconView>
-            <layers image="icon/resistor_icon_27k.svg">
+            <layers image="icon/resistor_icon_27k.svg" >   
                 <layer layerId="icon" />
             </layers>
         </iconView>

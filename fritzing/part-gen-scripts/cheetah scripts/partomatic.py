@@ -17,6 +17,8 @@
 import getopt, sys, ConfigParser, uuid, os
 from datetime import date
 from Cheetah.Template import Template
+
+letterDict = { 'k': 1000, 'M': 1000000, 'G': 1000000000}
     
 def usage():
     print """
@@ -45,7 +47,17 @@ def makeUUID():
 def makeDate():
     "creates a date formatted as YYYY-MM-DD"
     return date.today().isoformat()
-    
+ 
+def makeResistance(r):
+    "multiplies out k,M,g values"
+    for letter in letterDict.keys():
+        ix = r.find(letter)
+        if (ix >= 0):
+            r = r[0:ix] + r[ix+1:]
+            return str(int(float(r) * letterDict[letter]))
+    return(r)
+	
+	   
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "ho:c:t:s:", ["help", "output="])
@@ -89,12 +101,17 @@ def main():
         outfile = open(os.path.join(outputDir, nameStub), "w")
         cfgDict = {}
         #populate the dictionary
+        resistance = ""
         for cfgItem, cfgValue in cfgParser.items(section):
             if(cfgValue == "$UUID"):
                 cfgValue = makeUUID()
             if(cfgValue == "$DATE"):
                 cfgValue = makeDate()
+            if(cfgItem == "resistance"):
+                resistance = makeResistance(cfgValue)
             cfgDict[cfgItem] = cfgValue
+        if (resistance):
+            cfgDict["RESISTANCE"] = resistance                
         print "config dict: " + str(cfgDict)
         page = Template(file=templateFile, searchList=[cfgDict])
         outfile.write(str(page))

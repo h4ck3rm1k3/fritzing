@@ -15,7 +15,7 @@
         <property name="family">Resistor</property>
         <property name="Rated Power">0.25 watt</property>
     </properties>
-    <taxonomy>discreteParts.resistor.$resistance</taxonomy>
+    <taxonomy>discreteParts.resistor.$RESISTANCE</taxonomy>
     <description>A generic resistor (0.25W)</description>
     <views>
         <iconView>

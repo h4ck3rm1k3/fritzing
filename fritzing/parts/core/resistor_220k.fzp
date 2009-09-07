@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.1.1201" moduleId="$9e3d65b2-ca08-11dd-9c4a-001f5b3a17a4">
     <version>1.0</version>
-    <title>220k Resistor</title>
+    <title>220k &#8486; Resistor</title>
     <label>R</label>
-    <date>2009-09-06</date>
+    <date>2009-09-07</date>
     <author>Brendan Howell</author>
     <tags>
         <tag>Resistor</tag>
@@ -15,11 +15,11 @@
         <property name="family">Resistor</property>
         <property name="Rated Power">0.25 watt</property>
     </properties>
-    <taxonomy>discreteParts.resistor.220k</taxonomy>
+    <taxonomy>discreteParts.resistor.220000</taxonomy>
     <description>A generic resistor (0.25W)</description>
     <views>
         <iconView>
-            <layers image="icon/resistor_icon_220k.svg">
+            <layers image="icon/resistor_icon_220k.svg" >   
                 <layer layerId="icon" />
             </layers>
         </iconView>
