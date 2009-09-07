@@ -5840,17 +5840,3 @@ long SketchWidget::findWire(long itemID)
 
 	return itemID;
 }
-
-
-void SketchWidget::renderUpdate(ModelPart *mp) {
-	//if(viewLayerID != ViewLayer::UnknownLayer) {
-		foreach(QGraphicsItem* gitem, items()) {
-			PaletteItem* item = dynamic_cast<PaletteItem*>(gitem);
-			if(item && item->modelPart()->moduleID().compare(mp->moduleID()) == 0) {
-				ViewLayer::ViewLayerID viewLayerID = getViewLayerID(mp);
-				item->renderImage(mp, m_viewIdentifier, m_viewLayers, viewLayerID, true);
-				item->loadLayerKin(m_viewLayers);
-			}
-		}
-	//}
-}

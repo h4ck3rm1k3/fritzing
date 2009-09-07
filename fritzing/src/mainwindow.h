@@ -358,8 +358,6 @@ protected:
 	void clearGroundPlanes();
 	QString constructFileName(const QString & differentiator, const QString & extension);
 
-	void renderUpdate(ModelPart*);
-
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);
 	//static qreal getSvgWidthInInches(QFile & file);
