@@ -223,6 +223,8 @@ public:
 	virtual bool canDisconnectAll();
 	virtual bool ignoreFemale();
 
+	void renderUpdate(ModelPart *mp);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
 	bool dragEnterEventAux(QDragEnterEvent *event);

@@ -52,6 +52,7 @@ public:
 	static QWidget *separator(QWidget* parent);
 	class ExpandingLabel * routingStatusLabel();
 	void setRoutingStatusLabel(ExpandingLabel *);
+	void renderUpdate(ModelPart *mp);
 
 protected:
 	void createLayout();

@@ -317,3 +317,11 @@ QByteArray FSvgRenderer::cleanXml(const QByteArray & bytes)
 	SvgFileSplitter::fixStyleAttributeRecurse(root);
 	return doc.toByteArray();
 }
+
+void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filename) {
+	DebugDialog::debug(QString("length before %1").arg(m_moduleIDRendererHash.size()));
+	m_moduleIDRendererHash.remove(moduleId);
+	DebugDialog::debug(QString("length after %1").arg(m_moduleIDRendererHash.size()));
+	m_filenameRendererHash.remove(filename);
+}
+

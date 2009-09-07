@@ -47,6 +47,7 @@ public:
 	const QString & filename();
 	QSizeF defaultSizeF();
 	bool getSvgConnectorInfo(ViewLayer::ViewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth);
+	static void removeFromHash(const QString &moduleId, const QString filename);
 
 public:
 	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);

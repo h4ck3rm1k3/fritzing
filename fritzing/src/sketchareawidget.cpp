@@ -142,3 +142,7 @@ void SketchAreaWidget::setRoutingStatusLabel(ExpandingLabel * rsl) {
 ExpandingLabel * SketchAreaWidget::routingStatusLabel() {
 	return m_routingStatusLabel;
 }
+
+void SketchAreaWidget::renderUpdate(ModelPart *mp) {
+	m_graphicsView->renderUpdate(mp);
+}

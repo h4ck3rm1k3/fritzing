@@ -1213,6 +1213,8 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		QString tempPath1;
 		QString tempPath2;
 		QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
+		DebugDialog::debug("+++++++++++ path"+modelPartShared->path());
+		DebugDialog::debug("+++++++++++ la attr "+layerAttributes.filename());
 		if(modelPartShared->path() != ___emptyString___) {
 			QDir dir(modelPartShared->path());			// is a path to a filename
 			dir.cdUp();									// lop off the filename

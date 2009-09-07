@@ -813,7 +813,11 @@ void MainWindow::restoreDocks() {
 
 
 ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath) {
-	return ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
+	ModelPart* mp = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
+	FSvgRenderer::removeFromHash(mp->moduleID(), newPartPath);
+	mp->initConnectors(true);
+	renderUpdate(mp);
+	return mp;
 }
 
 void MainWindow::loadPart(const QString &newPartPath, long partsEditorId) {
@@ -1941,4 +1945,10 @@ void MainWindow::redrawSketch() {
 			c->restoreColor(false, -1);
 		}
 	}
+}
+
+void MainWindow::renderUpdate(ModelPart* mp) {
+	m_breadboardWidget->renderUpdate(mp);
+	m_schematicWidget->renderUpdate(mp);
+	m_pcbWidget->renderUpdate(mp);
 }
