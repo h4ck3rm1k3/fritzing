@@ -50,6 +50,7 @@ Q_OBJECT
 		PartsEditorView *pcbView();
 
 		void connectTerminalRemoval(const ConnectorsInfoWidget* connsInfo);
+		bool connectorsPosOrSizeChanged();
 
 	public slots:
 		void repaint();
@@ -80,7 +81,6 @@ Q_OBJECT
 		void connectPair(PartsEditorView *v1, PartsEditorView *v2);
 		void connectToThis(PartsEditorView *v);
 
-
 		PartsEditorView *m_breadView;
 		PartsEditorView *m_schemView;
 		PartsEditorView *m_pcbView;
@@ -88,6 +88,8 @@ Q_OBJECT
 
 		QCheckBox *m_showTerminalPointsCheckBox;
 		QLabel *m_guidelines;
+
+		bool m_connsPosChanged;
 
 	protected:
 		static QString EmptyBreadViewText;

@@ -59,13 +59,19 @@ int main(int argc, char *argv[])
 #endif
 
 	FApplication * app = new FApplication(argc, argv);
-	//DebugDialog::setDebugLevel(DebugDialog::Error);
-	int result = app->startup();
-	if (result == 0) {
-		result = app->exec();
-	}
-	app->finish();
 
+	//DebugDialog::setDebugLevel(DebugDialog::Error);
+	bool firstRun = true;
+	int result = 0;
+	do {
+		result = app->startup(firstRun);
+		if (result == 0) {
+			result = app->exec();
+			firstRun = false;
+		}
+	} while(result == FApplication::RestartNeeded);
+
+	app->finish();
 	delete app;
 	return result;
 }

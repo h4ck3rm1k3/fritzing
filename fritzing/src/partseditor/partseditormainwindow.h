@@ -57,7 +57,7 @@ public:
 	bool validateMinRequirements();
 
 signals:
-	void partUpdated(const QString &filename, long myId);
+	void partUpdated(const QString &filename, long myId, bool connectorsChanged);
 	void closed(long id);
 	void changeActivationSignal(bool activate, QWidget * originator);
 	void saveButtonClicked();

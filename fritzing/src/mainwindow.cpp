@@ -812,14 +812,40 @@ void MainWindow::restoreDocks() {
 }
 
 
-ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath) {
-	ModelPart* mp = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
-	FSvgRenderer::removeFromHash(mp->moduleID(), newPartPath);
-	return mp;
+ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath, bool connectorsChanged) {
+	if(connectorsChanged && wannaRestart()) {
+//		QTimer::singleShot(1000,this,SLOT(close()));
+		FApplication::exit(FApplication::RestartNeeded);
+		return NULL;
+	} else {
+		ModelPart* mp = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
+		FSvgRenderer::removeFromHash(mp->moduleID(), newPartPath);
+		return mp;
+	}
 }
 
-void MainWindow::loadPart(const QString &newPartPath, long partsEditorId) {
-	ModelPart * modelPart = loadPartFromFile(newPartPath);
+bool MainWindow::wannaRestart() {
+	QMessageBox::StandardButton btn = QMessageBox::question(this,
+		tr("Updating existing part"),
+		tr("Some connectors have changed.\n"
+			"In order to see the changes, you have to restart fritzing.\n"
+			"Do you want to restart now?"
+		),
+		QMessageBox::Ok|QMessageBox::Cancel
+	);
+	bool result = (btn == QMessageBox::Ok);
+	if(result) {
+		close();
+		if(m_fileName != ___emptyString___) {
+			QSettings settings;
+			settings.setValue("lastOpenSketch",m_fileName);
+		}
+	}
+	return result;
+}
+
+void MainWindow::loadPart(const QString &newPartPath, long partsEditorId, bool connectorsChanged) {
+	ModelPart * modelPart = loadPartFromFile(newPartPath, connectorsChanged);
 	if(modelPart && modelPart->isValid()) {
 		if(m_binsWithPartsEditorRequests.contains(partsEditorId)) {
 			m_paletteWidget->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart);

@@ -89,7 +89,7 @@ public:
 	void enableCheckUpdates(bool enabled);
 
 	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id=-1, class PartsBinPaletteWidget* requester=NULL);
-	ModelPart *loadPartFromFile(const QString& newPartPath);
+	ModelPart *loadPartFromFile(const QString& newPartPath, bool connectorsChanged=false);
 	void addBoard();
 	void init();
 	void showFileProgressDialog(const QString & path);
@@ -205,7 +205,7 @@ protected slots:
 	void updateZoomOptionsNoMatterWhat(qreal zoom);
 	void updateViewZoom(qreal newZoom);
 
-	void loadPart(const QString &newPartPath, long partsEditorId=-1);
+	void loadPart(const QString &newPartPath, long partsEditorId=-1, bool connectorsChanged=false);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	void updateItemMenu();
@@ -357,6 +357,8 @@ protected:
 	class FileProgressDialog * exportProgress();
 	void clearGroundPlanes();
 	QString constructFileName(const QString & differentiator, const QString & extension);
+
+	bool wannaRestart();
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);

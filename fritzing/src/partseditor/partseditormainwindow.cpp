@@ -647,7 +647,11 @@ void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
 	if(beforeClosing()) {
 		cleanUp();
 		QMainWindow::closeEvent(event);
-		if(m_partUpdated) emit partUpdated(m_fileName, m_id);
+		if(m_partUpdated) {
+			emit partUpdated(m_fileName, m_id,
+				(m_connsInfo->connectorsCountChanged() || m_views->connectorsPosOrSizeChanged())
+			);
+		}
 		emit closed(m_id);
 	} else {
 		event->ignore();
@@ -684,10 +688,10 @@ void PartsEditorMainWindow::updateSaveButton() {
 
 bool PartsEditorMainWindow::wannaSaveAfterWarning() {
 	bool doEmit = true;
-	if(m_saveButton && m_connsInfo->connectorsChanged()) {
+	if(m_saveButton && m_connsInfo->connectorRemoved()) {
 		QMessageBox::StandardButton btn = QMessageBox::question(this,
 			tr("Updating existing part"),
-			tr("The connectors defined in this part has changed.\n"
+			tr("The connectors defined in this part have changed.\n"
 				"If you save it, you may break other sketches that already use it.\n"
 				"Do you really want to save it?"
 			),

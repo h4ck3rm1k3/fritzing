@@ -1446,3 +1446,17 @@ void PartsEditorView::recoverTerminalPointsState() {
 	showTerminalPoints(m_showingTerminalPointsBackup);
 	m_terminalPointsTimer->stop();
 }
+
+bool PartsEditorView::connsPosOrSizeChanged() {
+	foreach(QGraphicsItem *item, items()) {
+		PartsEditorConnectorsConnectorItem *citem =
+			dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
+		if(citem) {
+			TerminalPointItem *tp = citem->terminalPointItem();
+			if((tp && tp->hasBeenMoved()) || citem->hasBeenMoved() || citem->hasBeenResized()) {
+				return true;
+			}
+		}
+	}
+	return false;
+}

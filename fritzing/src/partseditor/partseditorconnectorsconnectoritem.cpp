@@ -84,6 +84,8 @@ TerminalPointItem* PartsEditorConnectorsConnectorItem::newTerminalPointItem() {
 }
 
 void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
+	m_resized = true;
+
 	setRect(x,y,width,height);
 	m_resizedRect = QRectF(x,y,width,height);
 	informChange();
@@ -94,6 +96,8 @@ void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal widt
 }
 
 void PartsEditorConnectorsConnectorItem::init(bool resizable) {
+	m_resized = false;
+
 	setFlag(QGraphicsItem::ItemIsMovable);
 
 	setAcceptsHoverEvents(resizable);
@@ -330,6 +334,10 @@ void PartsEditorConnectorsConnectorItem::resizeSlot(qreal x, qreal y, qreal widt
 
 bool PartsEditorConnectorsConnectorItem::hasBeenMoved() const {
 	return m_initialPos != pos();
+}
+
+bool PartsEditorConnectorsConnectorItem::hasBeenResized() const {
+	return m_resized;
 }
 
 QPointF PartsEditorConnectorsConnectorItem::initialPos() const {

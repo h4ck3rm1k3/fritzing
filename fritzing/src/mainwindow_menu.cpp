@@ -1897,7 +1897,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 
 	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(id, this, modelPart, (modelPart!=NULL));
 
-	connect(mainPartsEditorWindow, SIGNAL(partUpdated(const QString&, long)), this, SLOT(loadPart(const QString&, long)));
+	connect(mainPartsEditorWindow, SIGNAL(partUpdated(const QString&, long, bool)), this, SLOT(loadPart(const QString&, long, bool)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
 
 	connect(this, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));

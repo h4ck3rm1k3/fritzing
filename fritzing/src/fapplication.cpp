@@ -76,6 +76,7 @@ QPointer<MainWindow> FApplication::m_lastTopmostWindow = NULL;
 QTimer FApplication::m_activationTimer;
 QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
 QStringList FApplication::m_arguments;
+int FApplication::RestartNeeded = 9999;
 
 
 static int kBottomOfAlpha = 204;
@@ -315,7 +316,7 @@ bool FApplication::findTranslator(const QString & translationsPath) {
 	return loaded;
 }
 
-int FApplication::startup()
+int FApplication::startup(bool firstRun)
 {
 	int progressIndex;
     QPixmap pixmap(":/resources/images/splash_2010.png");
@@ -327,65 +328,67 @@ int FApplication::startup()
 
 	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
 
-	// so we can use ViewGeometry in a Qt::QueueConnection signal
-	qRegisterMetaType<ViewGeometry>("ViewGeometry");
+	if(firstRun) {
+		// so we can use ViewGeometry in a Qt::QueueConnection signal
+		qRegisterMetaType<ViewGeometry>("ViewGeometry");
 
-	MainWindow::initExportConstants();
-	FSvgRenderer::calcPrinterScale();
-	ViewIdentifierClass::initNames();
-	Wire::initNames();
-    ItemBase::initNames();
-    ViewLayer::initNames();
-    Connector::initNames();
-    ZoomComboBox::loadFactors();
-	Helper::initText();
-	PartsEditorMainWindow::initText();
-	BinManager::MyPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/my_parts.fzb";
-	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
-	PaletteModel::initNames();
+		MainWindow::initExportConstants();
+		FSvgRenderer::calcPrinterScale();
+		ViewIdentifierClass::initNames();
+		Wire::initNames();
+		ItemBase::initNames();
+		ViewLayer::initNames();
+		Connector::initNames();
+		ZoomComboBox::loadFactors();
+		Helper::initText();
+		PartsEditorMainWindow::initText();
+		BinManager::MyPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/my_parts.fzb";
+		BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
+		PaletteModel::initNames();
 
-	QList<int> fontIds;
-	registerFont(":/resources/fonts/DroidSans.ttf", fontIds);
-	registerFont(":/resources/fonts/DroidSans-Bold.ttf", fontIds);
-	registerFont(":/resources/fonts/ocra10.ttf", fontIds);
+		QList<int> fontIds;
+		registerFont(":/resources/fonts/DroidSans.ttf", fontIds);
+		registerFont(":/resources/fonts/DroidSans-Bold.ttf", fontIds);
+		registerFont(":/resources/fonts/ocra10.ttf", fontIds);
 
-	foreach(int id, fontIds) {
-		foreach(QString ff, QFontDatabase::applicationFontFamilies(id)) {
-			InstalledFonts << ff;
-			DebugDialog::debug("installing font family: "+ff);
+		foreach(int id, fontIds) {
+			foreach(QString ff, QFontDatabase::applicationFontFamilies(id)) {
+				InstalledFonts << ff;
+				DebugDialog::debug("installing font family: "+ff);
+			}
 		}
-	}
 
-	/*
-	QFontDatabase database;
-	QStringList families = database.families (  );
-	foreach (QString string, families) {
-		DebugDialog::debug(string);			// should print out the name of the font you loaded
-	}
-	*/
+		/*
+		QFontDatabase database;
+		QStringList families = database.families (  );
+		foreach (QString string, families) {
+			DebugDialog::debug(string);			// should print out the name of the font you loaded
+		}
+		*/
 
-	splash.showProgress(progressIndex, 0.085);
-	processEvents();
+		splash.showProgress(progressIndex, 0.085);
+		processEvents();
 
 #ifdef Q_WS_WIN
-	// associate .fz file with fritzing app on windows (xp only--vista is different)
-	// TODO: don't change settings if they're already set?
-	// TODO: only do this at install time?
-	QSettings settings1("HKEY_CLASSES_ROOT\\Fritzing", QSettings::NativeFormat);
-	settings1.setValue(".", "Fritzing Application");
-	foreach (QString extension, fritzingExtensions()) {
-		QSettings settings2("HKEY_CLASSES_ROOT\\" + extension, QSettings::NativeFormat);
-		settings2.setValue(".", "Fritzing");
-	}
-	QSettings settings3("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
-	settings3.setValue(".", QString("\"%1\" \"%2\"")
-					   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
-					   .arg("%1") );
+		// associate .fz file with fritzing app on windows (xp only--vista is different)
+		// TODO: don't change settings if they're already set?
+		// TODO: only do this at install time?
+		QSettings settings1("HKEY_CLASSES_ROOT\\Fritzing", QSettings::NativeFormat);
+		settings1.setValue(".", "Fritzing Application");
+		foreach (QString extension, fritzingExtensions()) {
+			QSettings settings2("HKEY_CLASSES_ROOT\\" + extension, QSettings::NativeFormat);
+			settings2.setValue(".", "Fritzing");
+		}
+		QSettings settings3("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
+		settings3.setValue(".", QString("\"%1\" \"%2\"")
+						   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
+						   .arg("%1") );
 #endif
-
+	}
 
 	m_referenceModel = new CurrentReferenceModel();
 	m_paletteBinModel = new PaletteModel(true, false);
+
 
 	QSettings settings;
 	QString prevVersion = settings.value("version").toString();

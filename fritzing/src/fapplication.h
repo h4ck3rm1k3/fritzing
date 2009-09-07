@@ -45,7 +45,7 @@ public:
 	~FApplication(void);
 
 public:
-	int startup();
+	int startup(bool firstRun);
 	void finish();
 	void preloadSlowParts();
 
@@ -98,6 +98,7 @@ protected:
 
 public:
 	static QSet<QString> InstalledFonts;
+	static int RestartNeeded;
 
 };
 

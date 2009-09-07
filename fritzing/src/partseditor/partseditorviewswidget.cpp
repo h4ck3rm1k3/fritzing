@@ -97,6 +97,8 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 }
 
 void PartsEditorViewsWidget::init() {
+	m_connsPosChanged = false;
+
 	if(EmptyBreadViewText == ___emptyString___) {
 		EmptyBreadViewText = tr("What does this\npart look like on\nthe breadboard?");
 	}
@@ -104,7 +106,7 @@ void PartsEditorViewsWidget::init() {
 		EmptySchemViewText = tr("What does this\npart look like in\na schematic view?");
 	}
 	if(EmptyPcbViewText == ___emptyString___) {
-                EmptyPcbViewText = tr("What does this\npart look like in\nthe PCB view?");
+		EmptyPcbViewText = tr("What does this\npart look like in\nthe PCB view?");
 	}
 }
 
@@ -314,4 +316,10 @@ void PartsEditorViewsWidget::connectTerminalRemoval(const ConnectorsInfoWidget* 
 		m_pcbView, SIGNAL(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier)),
 		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier))
 	);
+}
+
+bool PartsEditorViewsWidget::connectorsPosOrSizeChanged() {
+	return m_breadView->connsPosOrSizeChanged()
+			|| m_schemView->connsPosOrSizeChanged()
+			|| m_pcbView->connsPosOrSizeChanged();
 }

@@ -60,7 +60,8 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 
 	installEventFilter(this);
 
-	m_connsChanged = false;
+	m_connRemoved = false;
+	m_connAdded = false;
 }
 
 void ConnectorsInfoWidget::emitPaintNeeded() {
@@ -473,7 +474,7 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 }
 
 void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool singleShot, bool alsoDeleteFromView) {
-	m_connsChanged = true;
+	m_connRemoved = true;
 
 	scrollContentLayout()->removeWidget(sci);
 	m_connsInfo.removeOne(sci);
@@ -505,6 +506,7 @@ Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
 }
 
 void ConnectorsInfoWidget::addConnector() {
+	m_connAdded = true;
 
 	if (m_views->breadboardView()->myItem() == NULL ||
 		m_views->schematicView()->myItem() == NULL ||
@@ -617,6 +619,14 @@ void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
 	}
 }
 
-bool ConnectorsInfoWidget::connectorsChanged() {
-	return m_connsChanged;
+bool ConnectorsInfoWidget::connectorRemoved() {
+	return m_connRemoved;
+}
+
+bool ConnectorsInfoWidget::connectorAdded() {
+	return m_connAdded;
+}
+
+bool ConnectorsInfoWidget::connectorsCountChanged() {
+return connectorRemoved() || connectorAdded();
 }

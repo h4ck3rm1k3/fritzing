@@ -55,6 +55,7 @@ public:
 	QRectF mappedRect();
 
 	bool hasBeenMoved() const;
+	bool hasBeenResized() const;
 	QPointF initialPos() const;
 
 protected slots:
@@ -103,6 +104,7 @@ protected:
 
 	ConnectorRectangle *m_handlers;
 	bool m_resizable;
+	bool m_resized;
 	QPointF m_initialPos;
 
 	static qreal MinWidth;

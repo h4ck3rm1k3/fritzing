@@ -72,6 +72,8 @@ class PartsEditorView : public SketchWidget {
 		QString svgIdForConnector(const QString &connId);
 		PartsEditorConnectorsPaletteItem *myItem();
 
+		bool connsPosOrSizeChanged();
+
 	public slots:
 		// general
 		void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
