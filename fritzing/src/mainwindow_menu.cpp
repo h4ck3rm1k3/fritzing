@@ -479,6 +479,8 @@ void MainWindow::saveAsAux(const QString & fileName) {
 
    // mark the stack clean so we update the window dirty flag
     m_undoStack->setClean();
+
+    m_saveAct->setEnabled(true);
 }
 
 
@@ -553,6 +555,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
     	load(fileName, setAsLastOpened, addToRecent);
 		result = true;
     } else if(fileName.endsWith(FritzingBundleExtension)) {
+    	m_saveAct->setEnabled(false);
     	loadBundledSketch(fileName);
 		result = true;
     } else if (

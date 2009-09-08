@@ -911,10 +911,12 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 
 void MainWindow::saveBundledSketch() {
 	bool wasModified = isWindowModified();
+	bool prevSaveBtnState = m_saveAct->isEnabled();
 	saveBundledNonAtomicEntity(
 		m_fileName, FritzingBundleExtension, this,
 		m_sketchModel->root()->getAllNonCoreParts()
 	);
+	m_saveAct->setEnabled(prevSaveBtnState);
 	setWindowModified(wasModified);
 	setTitle();
 }
