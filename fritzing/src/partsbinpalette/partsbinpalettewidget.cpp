@@ -191,7 +191,7 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	FileProgressDialog progress("Saving...", 0, this);
 
 	QString oldFilename = m_fileName;
-	m_fileName = filename;
+	setFilename(filename);
 	QString title = this->title();
 	if(!title.isNull() && !title.isEmpty()) {
 		m_model->root()->modelPartShared()->setTitle(title);
@@ -220,7 +220,7 @@ void PartsBinPaletteWidget::loadFromModel(PaletteModel *model) {
 	m_listView->setPaletteModel(model);
 	afterModelSetted(model);
 	m_canDeleteModel = false;				// FApplication is holding this model, so don't delete it
-	m_fileName = model->loadedFrom();
+	setFilename(model->loadedFrom());
 }
 
 void PartsBinPaletteWidget::setPaletteModel(PaletteModel *model, bool clear) {
@@ -233,7 +233,7 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 	grabTitle(model);
 	m_model = model;
 	m_undoStack->setClean();
-	m_fileName = model->loadedFrom();
+	setFilename(model->loadedFrom());
 }
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
@@ -427,7 +427,7 @@ void PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 			m_alienParts << mp->moduleID();
 		}
 	}
-	m_fileName = ___emptyString___;
+	setFilename(___emptyString___);
 }
 
 
@@ -485,7 +485,7 @@ void PartsBinPaletteWidget::load(const QString &filename) {
 
 void PartsBinPaletteWidget::undoStackCleanChanged(bool isClean) {
 	if(!isClean && currentBinIsCore()) {
-		m_fileName = QString::null;
+		setFilename(QString::null);
 	}
 	setWindowModified(!isClean);
 	m_manager->setDirtyTab(this,isClean);
@@ -714,7 +714,7 @@ void PartsBinPaletteWidget::updateMenus() {
 	bool enabled = mp != NULL;
 	m_editPartAction->setEnabled(enabled);
 	m_exportPartAction->setEnabled(enabled && !mp->isCore());
-	m_removePartAction->setEnabled(enabled);
+	m_removePartAction->setEnabled(enabled && !mp->isCore());
 }
 
 bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {
@@ -781,4 +781,12 @@ void PartsBinPaletteWidget::addSketchPartToMe() {
 	if(!wasAlreadyIn) {
 		setDirty();
 	}
+}
+
+void PartsBinPaletteWidget::setFilename(const QString &filename) {
+	m_fileName = filename;
+	bool acceptIt = !currentBinIsCore();
+	setAcceptDrops(acceptIt);
+	m_iconView->setAcceptDrops(acceptIt);
+	m_listView->setAcceptDrops(acceptIt);
 }

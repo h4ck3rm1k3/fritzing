@@ -845,7 +845,8 @@ bool MainWindow::wannaRestart() {
 void MainWindow::loadPart(const QString &newPartPath, long partsEditorId, bool connectorsChanged) {
 	ModelPart * modelPart = loadPartFromFile(newPartPath, connectorsChanged);
 	if(modelPart && modelPart->isValid()) {
-		if(m_binsWithPartsEditorRequests.contains(partsEditorId)) {
+		if(m_binsWithPartsEditorRequests.contains(partsEditorId)
+		   && !m_binsWithPartsEditorRequests[partsEditorId]->currentBinIsCore()	) {
 			m_paletteWidget->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart);
 		} else {
 			m_paletteWidget->addNewPart(modelPart);

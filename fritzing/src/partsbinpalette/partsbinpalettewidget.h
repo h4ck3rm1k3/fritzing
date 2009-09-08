@@ -154,6 +154,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		void loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
+		void setFilename(const QString &filename);
+
 	protected:
 		PaletteModel *m_model;
 		ReferenceModel *m_refModel;
