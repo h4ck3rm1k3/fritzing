@@ -311,26 +311,32 @@ void PartsEditorView::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair
 }
 
 const QStringList PartsEditorView::getLayers(const QString &path) {
-	QDomDocument dom;
-	QFile file(path);
-	dom.setContent(&file);
-	file.close();
-
 	QStringList retval;
-	QDomElement docElem = dom.documentElement();
 
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement();
-		if(!e.isNull() && e.tagName() == "g") {
-			QString id = e.attribute("id");
-			retval << id;
+	if(m_viewIdentifier == ViewIdentifierClass::IconView) { // defaulting layer to icon for iconview
+		retval << ViewIdentifierClass::viewIdentifierName(m_viewIdentifier);
+	} else {
+		QDomDocument dom;
+		QFile file(path);
+		dom.setContent(&file);
+		file.close();
+
+
+		QDomElement docElem = dom.documentElement();
+
+		QDomNode n = docElem.firstChild();
+		while(!n.isNull()) {
+			QDomElement e = n.toElement();
+			if(!e.isNull() && e.tagName() == "g") {
+				QString id = e.attribute("id");
+				retval << id;
+			}
+			n = n.nextSibling();
 		}
-		n = n.nextSibling();
-	}
 
-	if(retval.isEmpty()) {
-		retval << ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
+		if(retval.isEmpty()) {
+			retval << ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
+		}
 	}
 
 	return retval;
