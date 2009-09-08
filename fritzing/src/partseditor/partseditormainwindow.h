@@ -140,6 +140,7 @@ protected:
 
     bool m_updateEnabled;
     bool m_partUpdated;
+    bool m_savedAsNewPart;
 
     static PartsEditorMainWindow *m_lastOpened;
     static int m_closedBeforeCount;

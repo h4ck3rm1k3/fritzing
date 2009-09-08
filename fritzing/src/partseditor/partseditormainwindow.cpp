@@ -99,6 +99,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart
 
 	m_id = id;
 	m_partUpdated = false;
+	m_savedAsNewPart = false;
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
@@ -474,7 +475,9 @@ void PartsEditorMainWindow::loadPcbFootprint(){
 
 bool PartsEditorMainWindow::save() {
 	if(validateMinRequirements() && wannaSaveAfterWarning()) {
-		return FritzingWindow::save();
+		bool result = FritzingWindow::save();
+		if(result) m_cancelCloseButton->setText(tr("close"));
+		return result;
 	} else {
 		return false;
 	}
@@ -535,14 +538,17 @@ bool PartsEditorMainWindow::saveAs() {
 		makeNonCore();
 		saveAsAux(filename);
 
-		m_updateEnabled = true;
-		wannaSaveAfterWarning();
-		updateButtons();
 
-		return true;
-	} else {
-		return false;
+		if(wannaSaveAfterWarning()) {
+			m_savedAsNewPart = true;
+			m_updateEnabled = true;
+			updateButtons();
+			return true;
+		}
+
 	}
+
+	return false;
 }
 
 void PartsEditorMainWindow::makeNonCore() {
@@ -648,7 +654,7 @@ void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
 		cleanUp();
 		QMainWindow::closeEvent(event);
 		if(m_partUpdated) {
-			emit partUpdated(m_fileName, m_id,
+			emit partUpdated(m_fileName, m_id, !m_savedAsNewPart &&
 				(m_connsInfo->connectorsCountChanged() || m_views->connectorsPosOrSizeChanged())
 			);
 		}

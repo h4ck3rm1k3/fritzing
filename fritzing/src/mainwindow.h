@@ -554,6 +554,7 @@ protected:
 	QList<SketchToolButton*> m_flipButtons;
 
     bool m_comboboxChanged;
+    bool m_restarting;
 
     QStringList m_alienFiles;
     QString m_alienPartsMsg;

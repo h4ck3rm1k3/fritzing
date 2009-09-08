@@ -171,14 +171,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 FApplication::~FApplication(void)
 {
 
-	if (m_paletteBinModel) {
-		m_paletteBinModel->clearPartHash();
-		delete m_paletteBinModel;
-	}
-	if (m_referenceModel) {
-		m_referenceModel->clearPartHash();
-		delete m_referenceModel;
-	}
+	clearModels();
+
 	if (m_updateDialog) {
 		delete m_updateDialog;
 	}
@@ -195,7 +189,17 @@ FApplication::~FApplication(void)
 	TipsAndTricks::cleanup();
 	TranslatorListModel::cleanup();
 	FolderUtils::cleanup();
+}
 
+void FApplication::clearModels() {
+	if (m_paletteBinModel) {
+		m_paletteBinModel->clearPartHash();
+		delete m_paletteBinModel;
+	}
+	if (m_referenceModel) {
+		m_referenceModel->clearPartHash();
+		delete m_referenceModel;
+	}
 }
 
 bool FApplication::spaceBarIsPressed() {
@@ -384,6 +388,9 @@ int FApplication::startup(bool firstRun)
 						   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
 						   .arg("%1") );
 #endif
+	} else {
+		clearModels();
+		FSvgRenderer::cleanup();
 	}
 
 	m_referenceModel = new CurrentReferenceModel();
@@ -464,7 +471,7 @@ int FApplication::startup(bool firstRun)
 
 	//DebugDialog::debug("after m_files");
 
-	if (loaded == 0)
+	if (loaded == 0 || !firstRun)
 	{
 		if(!settings.value("lastOpenSketch").isNull()) {
 			QString lastSketchPath = settings.value("lastOpenSketch").toString();

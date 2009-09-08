@@ -127,6 +127,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 }
 
 void MainWindow::init() {
+	m_restarting = false;
 
 	// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
@@ -814,7 +815,6 @@ void MainWindow::restoreDocks() {
 
 ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath, bool connectorsChanged) {
 	if(connectorsChanged && wannaRestart()) {
-//		QTimer::singleShot(1000,this,SLOT(close()));
 		FApplication::exit(FApplication::RestartNeeded);
 		return NULL;
 	} else {
@@ -831,15 +831,13 @@ bool MainWindow::wannaRestart() {
 			"In order to see the changes, you have to restart fritzing.\n"
 			"Do you want to restart now?"
 		),
-		QMessageBox::Ok|QMessageBox::Cancel
+		QMessageBox::Yes|QMessageBox::No
 	);
-	bool result = (btn == QMessageBox::Ok);
+	bool result = (btn == QMessageBox::Yes);
 	if(result) {
+		m_restarting = true;
 		close();
-		if(m_fileName != ___emptyString___) {
-			QSettings settings;
-			settings.setValue("lastOpenSketch",m_fileName);
-		}
+		m_restarting = false;
 	}
 	return result;
 }

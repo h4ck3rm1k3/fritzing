@@ -78,6 +78,7 @@ protected:
 	void loadOne(class MainWindow *, QString path, int loaded);
 	void initSplash(class FSplashScreen & splash, int & progressIndex, QPixmap & pixmap);
 	void registerFont(const QString &fontFile, QList<int> &fontIds);
+	void clearModels();
 
 protected:
 	static bool m_spaceBarIsPressed;

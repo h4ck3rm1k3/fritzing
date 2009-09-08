@@ -472,6 +472,11 @@ void MainWindow::saveAsAux(const QString & fileName) {
     m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
     setCurrentFile(fileName);
 
+	if(m_restarting && m_fileName != ___emptyString___) {
+		QSettings settings;
+		settings.setValue("lastOpenSketch",m_fileName);
+	}
+
    // mark the stack clean so we update the window dirty flag
     m_undoStack->setClean();
 }
