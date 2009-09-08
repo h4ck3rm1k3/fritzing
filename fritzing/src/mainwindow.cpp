@@ -819,6 +819,7 @@ ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath, bool connect
 		return NULL;
 	} else {
 		ModelPart* mp = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
+		m_refModel->addPart(mp,true);
 		FSvgRenderer::removeFromHash(mp->moduleID(), newPartPath);
 		return mp;
 	}
