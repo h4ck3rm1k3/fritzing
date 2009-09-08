@@ -737,5 +737,229 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="9e2d86a6-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="438" path="parts/core/resistor_10_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e393f46-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="439" path="parts/core/resistor_100_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3cfb7c-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="440" path="parts/core/resistor_100k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3bbe56-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="441" path="parts/core/resistor_10k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e38226e-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="442" path="parts/core/resistor_15_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e39792a-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="401" path="parts/core/resistor_150_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3d2fb6-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="402" path="parts/core/resistor_150k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3bfa92-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="443" path="parts/core/resistor_15k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3abb64-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="444" path="parts/core/resistor_1_5k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3a8702-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="445" path="parts/core/resistor_1k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3e33e8-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="446" path="parts/core/resistor_1M_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e385b12-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="447" path="parts/core/resistor_22_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e39adf0-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="448" path="parts/core/resistor_220_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3d65b2-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="449" path="parts/core/resistor_220k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3c2d5a-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="450" path="parts/core/resistor_22k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3aef76-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="451" path="parts/core/resistor_2_2k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="4a2459c0-9ae8-11de-8cac-0013ce8bc1d5" modelIndex="452" path="parts/core/resistor_27k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3891c2-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="453" path="parts/core/resistor_33_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e39e220-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="454" path="parts/core/resistor_330_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3d994c-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="455" path="parts/core/resistor_330k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3c61a8-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="456" path="parts/core/resistor_33k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3b2504-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="457" path="parts/core/resistor_3_3k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e38cc0a-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="458" path="parts/core/resistor_47_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3a1b46-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="459" path="parts/core/resistor_470_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3dccaa-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="460" path="parts/core/resistor_470k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3c95a6-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="461" path="parts/core/resistor_47k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3b58e4-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="462" path="parts/core/resistor_4_7k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3907b0-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="463" path="parts/core/resistor_68_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3a520a-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="464" path="parts/core/resistor_680_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3e00c6-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="465" path="parts/core/resistor_680k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3cc832-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="466" path="parts/core/resistor_68k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9e3b8ad0-ca08-11dd-9c4a-001f5b3a17a5" modelIndex="467" path="parts/core/resistor_6_8k_mini.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
     </instances>
 </module>

@@ -3,7 +3,7 @@
     <version>1.0</version>
     <title>3.3k &#8486; Resistor</title>
     <label>R</label>
-    <date>2009-09-07</date>
+    <date>2009-09-08</date>
     <author>Brendan Howell</author>
     <tags>
         <tag>Resistor</tag>
@@ -13,7 +13,8 @@
     <properties>
         <property name="Resistance">3.3k&#8486;</property>
         <property name="family">Resistor</property>
-        <property name="Rated Power">0.25 watt</property>
+      <property name="Rated Power">0.25 watt</property>
+      <property name="footprint">400 mil</property>
     </properties>
     <taxonomy>discreteParts.resistor.3300</taxonomy>
     <description>A generic resistor (0.25W)</description>

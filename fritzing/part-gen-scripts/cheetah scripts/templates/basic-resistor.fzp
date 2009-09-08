@@ -13,7 +13,8 @@
     <properties>
         <property name="Resistance">$resistance&#8486;</property>
         <property name="family">Resistor</property>
-        <property name="Rated Power">0.25 watt</property>
+      <property name="Rated Power">0.25 watt</property>
+      <property name="footprint">300 mil</property>
     </properties>
     <taxonomy>discreteParts.resistor.$RESISTANCE</taxonomy>
     <description>A generic resistor (0.25W)</description>
@@ -34,7 +35,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/resistor-025W.svg">
+            <layers image="pcb/axial_lay_300mil.svg">
                 <layer layerId="copper0" />
                 <layer layerId="keepout" />
                 <layer layerId="soldermask" />
