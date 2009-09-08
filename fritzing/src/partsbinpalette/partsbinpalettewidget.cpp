@@ -715,6 +715,7 @@ void PartsBinPaletteWidget::updateMenus() {
 	m_editPartAction->setEnabled(enabled);
 	m_exportPartAction->setEnabled(enabled && !mp->isCore());
 	m_removePartAction->setEnabled(enabled && !mp->isCore());
+	m_importPartAction->setEnabled(!currentBinIsCore());
 }
 
 bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {
