@@ -150,3 +150,5 @@ def escape_spaces(something):
         a_str = re.sub("0+ M$", " M", a_str)
     return a_str
 
+def footprintfile(footprint):
+    return 'axial_lay_300mil' if footprint=='300' else 'resistor-025W'

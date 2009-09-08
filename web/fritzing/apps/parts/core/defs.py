@@ -46,6 +46,15 @@ SCRIPTS_DEFS['resistor']['resistance'] = {
                     "valid values, but 0.01, 0.507, 113.10 k, 750000000 and 123000 are not"
 }
 
+SCRIPTS_DEFS['resistor']['footprint'] = {
+    'label': 'Choose the footprint',
+    'type' : 'enum',
+    'choices' : [
+        ('300','300 mil'),
+        ('400','400 mil'),
+    ]   
+}
+
 SCRIPTS_DEFS['mystery']['pins'] = _PINS_DICT_AUX
 SCRIPTS_DEFS['generic-male-header']['pins'] = _PINS_DICT_AUX
 SCRIPTS_DEFS['generic-female-header']['pins'] = _PINS_DICT_AUX
