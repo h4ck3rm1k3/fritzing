@@ -84,30 +84,40 @@ typedef QList<PartProperty*> PartPropertyList;
 class Part {
 public:
 	Part() {}
-	Part(qlonglong id, const QString &moduleID, const QString &family, const PartPropertyList &properties) {
+	Part(qlonglong id, const QString &moduleID, const QString &family, const PartPropertyList &properties, bool isCore) {
 		setId(id);
 		setModuleID(moduleID);
 		setFamily(family);
 		setProperties(properties);
+		setCore(isCore);
 	}
-	Part(const QString &moduleID, const QString &family, const PartPropertyList &properties) {
+	Part(const QString &moduleID, const QString &family, const PartPropertyList &properties, bool isCore) {
 		m_id = -1;
 		setModuleID(moduleID);
 		setFamily(family);
 		setProperties(properties);
+		setCore(isCore);
 	}
-	Part(const QString &family, const PartPropertyList &properties) {
+	Part(const QString &family, const PartPropertyList &properties, bool isCore) {
 		m_id = -1;
 		m_moduleID = ___emptyString___;
 		setFamily(family);
 		setProperties(properties);
+		setCore(isCore);
 	}
-	Part(const QString &family, const QString &propname, const QString &propvalue) {
+	Part(const QString &family, const QString &propname, const QString &propvalue, bool isCore) {
 		m_id = -1;
 		m_moduleID = ___emptyString___;
 		setFamily(family);
 
 		m_properties << new PartProperty(propname, propvalue, this);
+		setCore(isCore);
+	}
+	Part(const QString &family, bool isCore) {
+		m_id = -1;
+		m_moduleID = ___emptyString___;
+		setFamily(family);
+		setCore(isCore);
 	}
 	Part(const QString &family) {
 		m_id = -1;
@@ -143,6 +153,17 @@ public:
 		//Q_ASSERT(m_properties.size() > 0);
 	}
 
+	QString isCore() const {return m_isCore;}
+	void setCore(bool isCore) {
+		setCore((int)isCore);
+	}
+	void setCore(int isCore) {
+		setCore(QString("%1").arg(isCore));
+	}
+	void setCore(QString isCore) {
+		m_isCore = isCore;
+	}
+
 	void addProperty(PartProperty *property) {
 		m_properties << property;
 	}
@@ -161,8 +182,14 @@ public:
 		return part;
 	}
 
-	static Part *from(const QString &moduleID, const QString &family, const QMultiHash<QString, QString> &properties) {
+	static Part *from(const QString &family, const QMultiHash<QString,QString> &properties, bool isCore) {
 		Part *part = from(family, properties);
+		part->setCore(isCore);
+		return part;
+	}
+
+	static Part *from(const QString &moduleID, const QString &family, const QMultiHash<QString, QString> &properties, bool isCore) {
+		Part *part = from(family, properties, isCore);
 		part->setModuleID(moduleID);
 		return part;
 	}
@@ -177,7 +204,7 @@ public:
 
 		QString family = props["family"];
 		props.remove("family");
-		return from(moduleID, family,props);
+		return from(moduleID, family,props, modelPart->isCore());
 	}
 
 private:
@@ -185,6 +212,7 @@ private:
 	QString m_moduleID;
 	QString m_family;
 	PartPropertyList m_properties;
+	QString m_isCore;
 };
 
 #endif /* DAOS_H_ */

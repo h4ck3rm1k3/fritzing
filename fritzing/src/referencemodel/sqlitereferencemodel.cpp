@@ -99,7 +99,8 @@ bool SqliteReferenceModel::createConnection() {
 		query.exec("CREATE TABLE parts (\n"
 			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
 			"moduleID VARCHAR NOT NULL,\n"
-			"family VARCHAR NOT NULL"
+			"family VARCHAR NOT NULL,\n"
+			"core VARCHAR NOT NULL\n"
 		")");
 		query.exec("CREATE INDEX idx_part_id ON parts (id ASC)");
 		query.exec("CREATE INDEX idx_part_moduleID ON parts (moduleID ASC)");
@@ -191,8 +192,8 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QS
 				propertyValue = prop->value();
 			}
 		}
-		queryStr += ")";
-		queryDebug += ")";
+		queryStr += ") order by part.core desc";
+		queryDebug += ") order by part.core desc";
 
 		QSqlQuery query;
 		query.prepare(queryStr);
@@ -353,9 +354,10 @@ bool SqliteReferenceModel::addPart(Part* part) {
 
 bool SqliteReferenceModel::insertPart(Part *part) {
 	QSqlQuery query;
-	query.prepare("INSERT INTO parts(moduleID, family) VALUES (:moduleID, :family )");
+	query.prepare("INSERT INTO parts(moduleID, family, core) VALUES (:moduleID, :family, :core )");
 	query.bindValue(":moduleID", part->moduleID());
 	query.bindValue(":family", part->family());
+	query.bindValue(":core", part->isCore());
 	if(query.exec()) {
 		part->setId(query.lastInsertId().toLongLong());
 
@@ -368,7 +370,7 @@ bool SqliteReferenceModel::insertPart(Part *part) {
 	} else {
 		DebugDialog::debug(
 			"SQLITE: couldn't register part "+part->moduleID()+"\n"
-			"\t INSERT INTO parts(moduleID, family) VALUES ('"+part->moduleID()+"'"+", '"+part->family()+"')\n"
+			"\t INSERT INTO parts(moduleID, family, core) VALUES ('"+part->moduleID()+"', '"+part->family()+"', '"+part->isCore()+"')\n"
 			"\t ERROR DRIVER: "+query.lastError().driverText()+"\n"
 			"\t ERROR DB: "+query.lastError().databaseText()+"\n"
 		);
