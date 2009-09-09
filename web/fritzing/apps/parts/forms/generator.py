@@ -95,7 +95,6 @@ class %(class_name)s(forms.Form):
     
         for name in params.iterkeys():
             value = params[name]
-            print name
             src += get_field_from_obj(name,value)
         src += '''
     
