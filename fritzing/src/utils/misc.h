@@ -32,6 +32,8 @@ $Date$
 
 #ifdef Q_WS_WIN
 #ifndef QT_NO_DEBUG
+
+#ifdef _MSC_VER // just for the MS compiler
 // windows hack for finding memory leaks
 // the 'new' redefinition breaks QHash and QVector so they are included beforehand.
 #define _CRTDBG_MAP_ALLOC
@@ -39,6 +41,8 @@ $Date$
 #include <crtdbg.h>
 #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #define new DEBUG_NEW
+#endif
+
 #endif
 #endif
 
