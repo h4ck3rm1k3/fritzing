@@ -42,7 +42,7 @@ public:
     static bool hasTranslate(QDomElement & element);
     static bool hasRotate(QDomElement & element);
     static QList<qreal> getTransformFloats(QDomElement & element);
-	static QList<qreal> SvgFlattener::getTransformFloats(const QString & transform);
+	static QList<qreal> getTransformFloats(const QString & transform);
 	static QMatrix elementToMatrix(QDomElement & element);
 
 protected slots:

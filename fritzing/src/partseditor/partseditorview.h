@@ -137,6 +137,7 @@ class PartsEditorView : public SketchWidget {
 		bool fixPixelDimensionsIn(QString &fileContent, const QString &filename);
 		bool fixViewboxOrigin(QString &fileContent, const QString &filename);
 		bool fixFonts(QString &fileContent, const QString &filename, bool &canceled);
+		bool cleanXml(QString &bytes, const QString & filename);
 		bool removeFontFamilySingleQuotes(QString &fileContent, const QString &filename);
 		bool fixUnavailableFontFamilies(QString &fileContent, const QString &filename, bool &canceled);
 		bool pxToInches(QDomElement &elem, const QString &attrName, const QString &filename);

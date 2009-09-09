@@ -41,6 +41,7 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 #include "../debugdialog.h"
 #include "../fapplication.h"
 #include "../utils/folderutils.h"
+#include "../svg/svgfilesplitter.h"
 
 
 int PartsEditorView::ConnDefaultWidth = 5;
@@ -580,6 +581,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
 
     QString fileContent(file.readAll());
 	bool fileHasChanged = fixPixelDimensionsIn(fileContent,filename);
+	fileHasChanged |= cleanXml(fileContent,filename);
 	fileHasChanged |= fixViewboxOrigin(fileContent,filename);
 	fileHasChanged |= fixFonts(fileContent,filename,canceled);
 
@@ -1465,4 +1467,50 @@ bool PartsEditorView::connsPosOrSizeChanged() {
 		}
 	}
 	return false;
+}
+
+bool PartsEditorView::cleanXml(QString &content, const QString & filename)
+{
+	// clean out sodipodi stuff
+	// TODO: don't bother with the core parts
+	int l1 = content.length();
+	content.remove(SvgFileSplitter::sodipodiDetector);
+	if (content.length() != l1) {
+		DebugDialog::debug(QString("sodipodi found in %1").arg(filename));
+		/*
+		QFileInfo f(filename);
+		QString p = f.absoluteFilePath();
+		p.remove(':');
+		p.remove('/');
+		p.remove('\\');
+		QFile fi(QCoreApplication::applicationDirPath() + p);
+		bool ok = fi.open(QFile::WriteOnly);
+		if (ok) {
+			QTextStream out(&fi);
+   			out << str;
+			fi.close();
+		}
+		*/
+		return true;
+	}
+	return false;
+
+
+	/*
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	bool result = doc.setContent(bytes, &errorStr, &errorLine, &errorColumn);
+	m_svgXml.clear();
+	if (!result) {
+		return false;
+	}
+
+	SvgFlattener flattener;
+	QDomElement root = doc.documentElement();
+	flattener.flattenChildren(root);
+	SvgFileSplitter::fixStyleAttributeRecurse(root);
+	return doc.toByteArray();
+	*/
 }

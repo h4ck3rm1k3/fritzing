@@ -13,7 +13,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU General Public Licen/#demose
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
@@ -100,7 +100,7 @@ bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename,
 
 
 bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors) {
-	QByteArray cleanContents = cleanXml(contents, filename);
+	QByteArray cleanContents = contents; // if the part has been created through the parts editor, it's clean
 
 	//DebugDialog::debug(cleanContents.data());
 
@@ -292,52 +292,6 @@ bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID,
 	radius = r;
 	strokeWidth = sw;
 	return true;
-}
-
-QByteArray FSvgRenderer::cleanXml(const QByteArray & bytes, const QString & filename) 
-{
-	// clean out sodipodi stuff
-	// TODO: don't bother with the core parts
-	QString str(bytes);
-	int l1 = str.length();
-	str.remove(SvgFileSplitter::sodipodiDetector);
-	if (str.length() != l1) {
-		DebugDialog::debug(QString("sodipodi found in %1").arg(filename));
-		/*
-		QFileInfo f(filename);
-		QString p = f.absoluteFilePath();
-		p.remove(':');
-		p.remove('/');
-		p.remove('\\');
-		QFile fi(QCoreApplication::applicationDirPath() + p);
-		bool ok = fi.open(QFile::WriteOnly);
-		if (ok) {
-			QTextStream out(&fi);
-   			out << str;
-			fi.close();
-		}
-		*/
-	}
-	return str.toUtf8();
-
-
-	/*
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument doc;
-	bool result = doc.setContent(bytes, &errorStr, &errorLine, &errorColumn);
-	m_svgXml.clear();
-	if (!result) {
-		return false;
-	}
-
-	SvgFlattener flattener;
-	QDomElement root = doc.documentElement();
-	flattener.flattenChildren(root);
-	SvgFileSplitter::fixStyleAttributeRecurse(root);
-	return doc.toByteArray();
-	*/
 }
 
 void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filename) {
