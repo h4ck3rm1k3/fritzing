@@ -41,6 +41,7 @@ public:
 	double currentNumber();
 
 	static const QString RegexFloatDetector;
+	static const QRegExp floatingPointMatcher;
 
 protected:
     QChar next();
@@ -54,7 +55,6 @@ protected:
     QChar m_current;
 	QChar m_currentCommand;
 	double m_currentNumber;
-	QRegExp m_floatingPointMatcher;
 };
 
 #endif

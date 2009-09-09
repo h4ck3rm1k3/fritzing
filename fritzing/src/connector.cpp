@@ -239,16 +239,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		QString connectorID = svgIdLayer->m_svgId; // + "pin" ;
 
-		QRectF bounds;
-		qreal rad = 0;
-		qreal sw = 0;
-		bool useRenderer = false;
-		if (!renderer->getSvgConnectorInfo(viewLayerID, connectorID, bounds, rad, sw)) {
-			//DebugDialog::debug(QString("bounds on element %1").arg(connectorID) );
-			bounds = renderer->boundsOnElement(connectorID);
-			useRenderer = true;
-		}
-
+		QRectF bounds = renderer->boundsOnElement(connectorID);
 		if (bounds.isNull()) {
 			svgIdLayer->m_visible = false;
 			return false;
@@ -261,27 +252,29 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		}
 
 		QRectF viewBox = renderer->viewBoxF();
-		QMatrix matrix0 = renderer->matrixForElement(connectorID);
 
-		if (rad != 0) {
+		qreal rad = 0;
+		qreal sw = 0;
+		bool gotCircle = renderer->getSvgCircleConnectorInfo(viewLayerID, connectorID, bounds, rad, sw);		
+		if (gotCircle && (rad != 0)) {
 			radius = svgIdLayer->m_radius = rad * defaultSizeF.width() / viewBox.width();
 			strokeWidth = svgIdLayer->m_strokeWidth = sw * defaultSizeF.width() / viewBox.width();
 		}
 
-		// TODO: all parts should either have connectors with or without a matrix
-		if (!useRenderer || matrix0.isIdentity()) {
-			/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
-							   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
-							   .arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
-							   .arg(viewIdentifier)
-							   .arg(defaultSizeF.width()).arg(defaultSizeF.height())
-			);
-			*/
-			connectorRect.setRect(bounds.x() * defaultSizeF.width() / viewBox.width(), bounds.y() * defaultSizeF.height() / viewBox.height(), bounds.width() * defaultSizeF.width() / viewBox.width(), bounds.height() * defaultSizeF.height() / viewBox.height());
-		}
-		else {
-			connectorRect = matrix0.mapRect(bounds);
-		}
+		QMatrix matrix0 = renderer->matrixForElement(connectorID);
+
+		/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
+						   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
+						   .arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
+						   .arg(viewIdentifier)
+						   .arg(defaultSizeF.width()).arg(defaultSizeF.height())
+		);
+		*/
+
+		// seems to be a bug in qt's matrixForElement
+		QRectF r1 = matrix0.mapRect(bounds);
+		connectorRect.setRect(r1.x() * defaultSizeF.width() / viewBox.width(), r1.y() * defaultSizeF.height() / viewBox.height(), r1.width() * defaultSizeF.width() / viewBox.width(), r1.height() * defaultSizeF.height() / viewBox.height());
+
 		svgIdLayer->m_visible = true;
 		svgIdLayer->m_rect = connectorRect;
 		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, svgIdLayer, ignoreTerminalPoint, viewBox);

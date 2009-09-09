@@ -28,7 +28,7 @@ $Date$
 #include "svgpathlexer.h"
 #include "../debugdialog.h"
 #include <QMatrix>
-#include <QRegExp>
+#include <QRegExp>    
 
 SvgFlattener::SvgFlattener()
 {
@@ -155,20 +155,21 @@ bool SvgFlattener::hasRotate(QDomElement & element){
 }
 
 QList<qreal> SvgFlattener::getTransformFloats(QDomElement & element){
-    QRegExp rx(QString("(") + SVGPathLexer::RegexFloatDetector + ")");
-    QString transform = element.attribute("transform");
+	return getTransformFloats(element.attribute("transform"));
+}
+
+QList<qreal> SvgFlattener::getTransformFloats(const QString & transform){
     QList<qreal> list;
     int pos = 0;
 
-    while ((pos = rx.indexIn(transform, pos)) != -1) {
-        list << rx.cap(1).toFloat();
-        pos += rx.matchedLength();
-        //Debug
+	while ((pos = SVGPathLexer::floatingPointMatcher.indexIn(transform, pos)) != -1) {
+		list << transform.mid(pos, SVGPathLexer::floatingPointMatcher.matchedLength()).toDouble();
+        pos += SVGPathLexer::floatingPointMatcher.matchedLength();
     }
 
 #ifndef QT_NO_DEBUG
     QString dbg = "got transform params: \n";
-    dbg += element.attribute("transform") + "\n";
+    dbg += transform + "\n";
     for(int i=0; i < list.size(); i++){
         dbg += QString::number(list.at(i)) + " ";
     }
@@ -254,3 +255,37 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
 //                        break;
 //        }
 }
+
+QMatrix SvgFlattener::elementToMatrix(QDomElement & element) {
+	QString transform = element.attribute("transform");
+	if (transform.isEmpty()) return QMatrix();
+
+	QList<qreal> floats = getTransformFloats(transform);
+
+	if (transform.startsWith("translate")) {
+		return QMatrix().translate(floats[0], (floats.length() > 1) ? floats[1] : 0);
+	}
+	else if (transform.startsWith("rotate")) {
+		if (floats.length() == 1) {
+			return QMatrix().rotate(floats[0]);
+		}
+		else if (floats.length() == 3) {
+			return  QMatrix().translate(-floats[1], -floats[2]) * QMatrix().rotate(floats[0]) * QMatrix().translate(floats[1], floats[2]);
+		}
+	}
+	else if (transform.startsWith("matrix")) {
+        return QMatrix(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5]);
+	}
+	else if (transform.startsWith("scale")) {
+		return QMatrix().scale(floats[0], floats[1]);
+	}
+	else if (transform.startsWith("skewX")) {
+		return QMatrix().shear(floats[0], 0);
+	}
+	else if (transform.startsWith("skewY")) {
+		return QMatrix().shear(0, floats[0]);
+	}
+
+	return QMatrix();
+}
+

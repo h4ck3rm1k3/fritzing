@@ -28,16 +28,16 @@ $Date$
 #include "svgpathgrammar_p.h"
 #include <qdebug.h>
 
-static QRegExp findWhitespace("[\\s]+");
-static QRegExp findWhitespaceBefore(" ([CcMmVvTtQqSsLlVvHhZz,])");
-static QRegExp findWhitespaceAfter("([CcMmVvTtQqSsLlVvHhZz,]) ");
-static QRegExp findWhitespaceAtEnd(" $");
+static const QRegExp findWhitespace("[\\s]+");
+static const QRegExp findWhitespaceBefore(" ([CcMmVvTtQqSsLlVvHhZz,])");
+static const QRegExp findWhitespaceAfter("([CcMmVvTtQqSsLlVvHhZz,]) ");
+static const QRegExp findWhitespaceAtEnd(" $");
 
 const QString SVGPathLexer::RegexFloatDetector = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+const QRegExp SVGPathLexer::floatingPointMatcher(RegexFloatDetector);		
 
 SVGPathLexer::SVGPathLexer(const QString &source)
 {
-	m_floatingPointMatcher.setPattern(RegexFloatDetector);			
     m_source = clean(source);
     m_chars = m_source.unicode();
     m_size = m_source.size();
@@ -69,9 +69,9 @@ QString SVGPathLexer::clean(const QString & source) {
 
 int SVGPathLexer::lex()
 {
-	if (m_floatingPointMatcher.indexIn(m_source, m_pos - 1) == m_pos - 1) {
-		m_currentNumber = m_source.mid(m_pos - 1, m_floatingPointMatcher.matchedLength()).toDouble();
-		m_pos += m_floatingPointMatcher.matchedLength() - 1;
+	if (floatingPointMatcher.indexIn(m_source, m_pos - 1) == m_pos - 1) {
+		m_currentNumber = m_source.mid(m_pos - 1, floatingPointMatcher.matchedLength()).toDouble();
+		m_pos += floatingPointMatcher.matchedLength() - 1;
 		next();
 		return SVGPathGrammar::NUMBER;
 	}

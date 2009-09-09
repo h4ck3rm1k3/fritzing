@@ -34,6 +34,7 @@ $Date$
 #include <QObject>
 #include <QMatrix>
 #include <QPainterPath>
+#include <QRegExp>
 
 struct PathUserData {
 	QString string;
@@ -76,7 +77,6 @@ protected:
 	virtual void shiftChild(QDomElement & element, qreal x, qreal y);
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);
-	void killSodipodi(QDomElement & element);
 	void painterPathChild(QDomElement & element, QPainterPath & ppath);			// note: only partially implemented
 
 protected:
@@ -90,6 +90,9 @@ protected slots:
 	void shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
     virtual void rotateCommandSlot(QChar, bool, QList<double> &, void *){}
 	void painterPathCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
+
+public:
+	static const QRegExp sodipodiDetector;
 
 protected:
 	QByteArray m_byteArray;

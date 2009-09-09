@@ -26,9 +26,12 @@ $Date$
 
 #include "fsvgrenderer.h"
 #include "debugdialog.h"
-#include "svg/svgflattener.h"
+#include "svg/svgfilesplitter.h"
 
+#include <QRegExp>
+#include <QTextStream>
 #include <QPainter>
+#include <QCoreApplication>
 
 QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
 QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
@@ -97,7 +100,7 @@ bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename,
 
 
 bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors) {
-	QByteArray cleanContents = cleanXml(contents);
+	QByteArray cleanContents = cleanXml(contents, filename);
 
 	//DebugDialog::debug(cleanContents.data());
 
@@ -241,7 +244,7 @@ qreal FSvgRenderer::printerScale() {
 	return m_printerScale;
 }
 
-bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth) {
+bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth) {
 	Q_UNUSED(viewLayerID);
 	
 	if (m_svgXml.size() == 0 && m_svgDomDocument.isNull()) {
@@ -289,18 +292,36 @@ bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const
 	radius = r;
 	strokeWidth = sw;
 	return true;
-
 }
 
-QByteArray FSvgRenderer::cleanXml(const QByteArray & bytes) 
+QByteArray FSvgRenderer::cleanXml(const QByteArray & bytes, const QString & filename) 
 {
-	// TODO: clean sodipodi shit w/ regular expressions
-	// sodipodi:(.+?)(\s*)=(\s*)['"][^('|")]
-	// inkscape:(.+?)(\s*)=(\s*)['"][^('|")]
+	// clean out sodipodi stuff
+	// TODO: don't bother with the core parts
+	QString str(bytes);
+	int l1 = str.length();
+	str.remove(SvgFileSplitter::sodipodiDetector);
+	if (str.length() != l1) {
+		DebugDialog::debug(QString("sodipodi found in %1").arg(filename));
+		/*
+		QFileInfo f(filename);
+		QString p = f.absoluteFilePath();
+		p.remove(':');
+		p.remove('/');
+		p.remove('\\');
+		QFile fi(QCoreApplication::applicationDirPath() + p);
+		bool ok = fi.open(QFile::WriteOnly);
+		if (ok) {
+			QTextStream out(&fi);
+   			out << str;
+			fi.close();
+		}
+		*/
+	}
+	return str.toUtf8();
 
 
-	return bytes;
-
+	/*
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -316,6 +337,7 @@ QByteArray FSvgRenderer::cleanXml(const QByteArray & bytes)
 	flattener.flattenChildren(root);
 	SvgFileSplitter::fixStyleAttributeRecurse(root);
 	return doc.toByteArray();
+	*/
 }
 
 void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filename) {

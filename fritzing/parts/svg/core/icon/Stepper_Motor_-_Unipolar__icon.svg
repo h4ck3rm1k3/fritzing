@@ -12,15 +12,11 @@
    width="255.1181"
    height="255.1181"
    id="svg2"
-   sodipodi:version="0.32"
-   inkscape:version="0.46"
    version="1.0"
-   sodipodi:docname="StepperMotor-Bipolar_icon.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   >
   <defs
      id="defs4">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient3601">
       <stop
          style="stop-color:#808080;stop-opacity:1;"
@@ -69,14 +65,9 @@
          id="stop3223" />
     </linearGradient>
     <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 526.18109 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="744.09448 : 526.18109 : 1"
-       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        id="perspective10" />
     <linearGradient
-       inkscape:collect="always"
+       
        xlink:href="#linearGradient3219"
        id="linearGradient3285"
        gradientUnits="userSpaceOnUse"
@@ -85,7 +76,6 @@
        x2="18"
        y2="18" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3291"
        id="linearGradient3297"
        x1="36"
@@ -94,7 +84,6 @@
        y2="99"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3414"
        id="linearGradient3420"
        x1="72"
@@ -104,7 +93,6 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(0,-76.499998)" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3291"
        id="linearGradient3527"
        gradientUnits="userSpaceOnUse"
@@ -113,7 +101,6 @@
        x2="90"
        y2="99" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3601"
        id="linearGradient3607"
        x1="81"
@@ -122,7 +109,6 @@
        y2="225"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3219"
        id="linearGradient4445"
        gradientUnits="userSpaceOnUse"
@@ -131,7 +117,6 @@
        x2="18"
        y2="18" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3291"
        id="linearGradient4678"
        gradientUnits="userSpaceOnUse"
@@ -140,7 +125,6 @@
        x2="90"
        y2="99" />
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3414"
        id="linearGradient4682"
        gradientUnits="userSpaceOnUse"
@@ -157,7 +141,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2587"
        xlink:href="#linearGradient3219"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="18"
        x2="18"
@@ -166,7 +150,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2579"
        xlink:href="#linearGradient3219"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="18"
        x2="18"
@@ -175,7 +159,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2571"
        xlink:href="#linearGradient3219"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="18"
        x2="18"
@@ -184,7 +168,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2730"
        xlink:href="#linearGradient3219"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="90"
        x2="81"
@@ -194,7 +178,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2728"
        xlink:href="#linearGradient3414"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="99"
        x2="90"
@@ -203,7 +187,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2726"
        xlink:href="#linearGradient3291"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="18"
        x2="18"
@@ -212,7 +196,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2724"
        xlink:href="#linearGradient3219"
-       inkscape:collect="always" />
+        />
     <linearGradient
        gradientUnits="userSpaceOnUse"
        y2="225"
@@ -221,7 +205,7 @@
        x1="81"
        id="linearGradient2722"
        xlink:href="#linearGradient3601"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="99"
        x2="90"
@@ -230,7 +214,7 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2720"
        xlink:href="#linearGradient3291"
-       inkscape:collect="always" />
+       />
     <linearGradient
        gradientTransform="translate(0,-76.499998)"
        gradientUnits="userSpaceOnUse"
@@ -240,7 +224,7 @@
        x1="72"
        id="linearGradient2718"
        xlink:href="#linearGradient3414"
-       inkscape:collect="always" />
+        />
     <linearGradient
        gradientUnits="userSpaceOnUse"
        y2="99"
@@ -249,7 +233,7 @@
        x1="36"
        id="linearGradient2716"
        xlink:href="#linearGradient3291"
-       inkscape:collect="always" />
+        />
     <linearGradient
        y2="18"
        x2="18"
@@ -258,14 +242,10 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient2714"
        xlink:href="#linearGradient3219"
-       inkscape:collect="always" />
+        />
     <inkscape:perspective
        id="perspective2712"
-       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
-       inkscape:vp_z="744.09448 : 526.18109 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 526.18109 : 1"
-       sodipodi:type="inkscape:persp3d" />
+        />
     <linearGradient
        id="linearGradient2706">
       <stop
@@ -304,7 +284,6 @@
          style="stop-color:#9f9f9f;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient3219"
        id="linearGradient3375"
        gradientUnits="userSpaceOnUse"
@@ -321,23 +300,10 @@
      gridtolerance="10000"
      guidetolerance="10000"
      objecttolerance="10"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="2.0000001"
-     inkscape:cx="206.68035"
-     inkscape:cy="160.93807"
-     inkscape:document-units="m"
-     inkscape:current-layer="svg2"
      showgrid="false"
      units="mm"
-     inkscape:window-width="1678"
-     inkscape:window-height="1026"
-     inkscape:window-x="2"
-     inkscape:window-y="0"
-     inkscape:object-paths="false"
-     inkscape:object-nodes="true"
      showguides="true"
-     inkscape:guide-bbox="true">
+     >
     <inkscape:grid
        type="xygrid"
        id="grid2383"
@@ -367,8 +333,7 @@
        d="M 1.78125,154.78125 L 1.78125,277.90625 L 18.40625,286.21875 L 134.65625,286.21875 L 151.21875,277.90625 L 151.21875,154.78125 L 1.78125,154.78125 z"
        id="MotorHousing"
        style="fill:#4d4d4d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       inkscape:original="M 0 153 L 0 279 L 18 288 L 135.0625 288 L 153 279 L 153 153 L 0 153 z "
-       inkscape:radius="-1.767767" />
+        />
     <path
        id="MotorHousingShade"
        style="fill:#333333;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -382,8 +347,7 @@
        d="M 18.78125,1.90625 L 1.90625,18.78125 L 1.90625,134.1875 L 18.59375,151.09375 L 134.21875,151.09375 L 151.09375,134.21875 L 151.09375,18.78125 L 134.21875,1.90625 L 18.78125,1.90625 z"
        id="CapTopShade"
        style="fill:url(#linearGradient4678);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       inkscape:original="M 18.78125 1.90625 L 1.90625 18.78125 L 1.90625 134.1875 L 18.59375 151.09375 L 134.21875 151.09375 L 151.09375 134.21875 L 151.09375 18.78125 L 134.21875 1.90625 L 18.78125 1.90625 z "
-       inkscape:radius="0" />
+        />
     <path
        id="CapTopGrove"
        d="M 118.75706,40.250002 C 118.75706,51.912952 99.825897,61.378532 76.5,61.378532 C 53.174103,61.378532 34.24294,51.912952 34.24294,40.250002 C 34.24294,28.587052 53.174103,19.121472 76.5,19.121472 C 99.825897,19.121472 118.75706,28.587052 118.75706,40.250002 z"

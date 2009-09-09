@@ -11,10 +11,6 @@
    height="32"
    width="32.073341"
    id="svg2"
-   sodipodi:version="0.32"
-   inkscape:version="0.46"
-   sodipodi:docname="icon.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0">
   <metadata
      id="metadata619">
@@ -27,21 +23,7 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <defs
-     id="defs617">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 41.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="1754 : 41.5 : 1"
-       inkscape:persp3d-origin="877 : 27.666667 : 1"
-       id="perspective621" />
-  </defs>
   <sodipodi:namedview
-     inkscape:window-height="750"
-     inkscape:window-width="1279"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
      guidetolerance="10.0"
      gridtolerance="10.0"
      objecttolerance="10.0"
@@ -51,15 +33,8 @@
      id="base"
      showgrid="false"
      units="mm"
-     inkscape:document-units="mm"
-     inkscape:zoom="19.740022"
-     inkscape:cx="14.497369"
-     inkscape:cy="6.3862142"
-     inkscape:window-x="1"
-     inkscape:window-y="49"
-     inkscape:current-layer="g4"
      showguides="true"
-     inkscape:guide-bbox="true" />
+      />
   <g
      transform="translate(-150.09177,-28.043049)"
      style="fill:none;stroke:#000000;stroke-width:1px"
@@ -293,7 +268,7 @@
        y="31.926798"
        id="text2411"
        transform="scale(0.686934,1.455744)"><tspan
-         sodipodi:role="line"
+         
          x="236.47903"
          y="31.926798"
          id="tspan2415">cm</tspan></text>

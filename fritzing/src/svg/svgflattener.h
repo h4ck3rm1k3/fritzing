@@ -37,9 +37,13 @@ public:
 
     void flattenChildren(QDomElement & element);
     void unRotateChild(QDomElement & element,QMatrix transform);
-    bool hasTranslate(QDomElement & element);
-    bool hasRotate(QDomElement & element);
-    QList<qreal> getTransformFloats(QDomElement & element);
+
+public:
+    static bool hasTranslate(QDomElement & element);
+    static bool hasRotate(QDomElement & element);
+    static QList<qreal> getTransformFloats(QDomElement & element);
+	static QList<qreal> SvgFlattener::getTransformFloats(const QString & transform);
+	static QMatrix elementToMatrix(QDomElement & element);
 
 protected slots:
     void rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
