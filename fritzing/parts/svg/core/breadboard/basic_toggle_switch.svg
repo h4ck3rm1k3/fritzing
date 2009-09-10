@@ -4,6 +4,7 @@
 	 id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.36998in"
 	 height="0.37592in" viewBox="0 0 36.998 37.592" xml:space="preserve">
+  <g id="breadboard">
 <rect id="connector0terminal" x="6.033" y="35.105" fill="#8C8C8C" width="2.52" height="1.647"/>
 <rect id="connector1terminal" x="16.032" y="35.105" fill="#8C8C8C" width="2.521" height="1.647"/>
 <rect id="connector2terminal" x="26.03" y="35.105" fill="#8C8C8C" width="2.521" height="1.647"/>
@@ -23,4 +24,5 @@
 <rect id="rect49_1_" x="10.136" y="5.062" width="15.562" height="4.649"/>
 <rect id="rect27_1_" x="18.826" y="2.214" fill="#1A1A1A" width="6.664" height="7.332"/>
 <rect id="rect51_1_" x="18.826" y="-0.833" fill="#333333" width="6.664" height="3.046"/>
+    </g>
 </svg>

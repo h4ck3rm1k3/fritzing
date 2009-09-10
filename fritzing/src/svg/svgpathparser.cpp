@@ -3,7 +3,7 @@
 /*******************************************************************
 
 Part of the Fritzing project - http://fritzing.org
-Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
+Copyright (c) 2007-08 Fachhochschule Potsdam - http://fh-potsdam.de
 
 Fritzing is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -97,109 +97,111 @@ bool SVGPathParser::parse(SVGPathLexer *lexer)
  case 0: {
     qDebug() << " got path_data ";
 } break;  case 2: {
-//    qDebug() << " got moveto_drawto_command_groups ";
+    //qDebug() << " got moveto_drawto_command_groups ";
 } break;  case 4: {
-//    qDebug() << " got moveto_drawto_command_group ";
+    //qDebug() << " got moveto_drawto_command_group ";
 } break;  case 6: {
-//    qDebug() << " got drawto_commands  ";
-} break;  case 14: {
-//    qDebug() << " got drawto_command  ";
+    //qDebug() << " got drawto_commands  ";
 } break;  case 15: {
-//    qDebug() << "							got moveto ";
-} break;  case 18: {
-//    qDebug() << " got moveto_argument_sequence ";
+    //qDebug() << " got drawto_command  ";
+} break;  case 16: {
+    qDebug() << "							got moveto ";
 } break;  case 19: {
-//    qDebug() << "							got lineto ";
-} break;  case 22: {
-//    qDebug() << " got lineto_argument_sequence  ";
+    //qDebug() << " got moveto_argument_sequence ";
+} break;  case 20: {
+    qDebug() << "							got lineto ";
 } break;  case 23: {
-//    qDebug() << "							got horizontal_lineto ";
-} break;  case 26: {
-//    qDebug() << " got horizontal_lineto_argument_sequence ";
+    //qDebug() << " got lineto_argument_sequence  ";
+} break;  case 24: {
+    qDebug() << "							got horizontal_lineto ";
 } break;  case 27: {
-//    qDebug() << "							got vertical_lineto ";
-} break;  case 30: {
-//    qDebug() << " got vertical_lineto_argument_sequence ";
+    //qDebug() << " got horizontal_lineto_argument_sequence ";
+} break;  case 28: {
+    qDebug() << "							got vertical_lineto ";
 } break;  case 31: {
-//    qDebug() << "							got curveto ";
-} break;  case 34: {
-//    qDebug() << " got curveto_argument_sequence 3 ";
-} break;  case 38: {
-//    qDebug() << " got curveto_argument ";
+    //qDebug() << " got vertical_lineto_argument_sequence ";
+} break;  case 32: {
+    qDebug() << "							got curveto ";
+} break;  case 35: {
+    //qDebug() << " got curveto_argument_sequence 3 ";
 } break;  case 39: {
-//    qDebug() << "							got smooth_curveto ";
-} break;  case 42: {
-//    qDebug() << " got smooth_curveto_argument_sequence 3 ";
-} break;  case 44: {
-//    qDebug() << " got smooth_curveto_argument  ";
+    //qDebug() << " got curveto_argument ";
+} break;  case 40: {
+    qDebug() << "							got smooth_curveto ";
+} break;  case 43: {
+    //qDebug() << " got smooth_curveto_argument_sequence 3 ";
 } break;  case 45: {
-//    qDebug() << "							got quadratic_bezier_curveto ";
-} break;  case 48: {
-//    qDebug() << " got quadratic_bezier_curveto_argument ";
-} break;  case 50: {
-//    qDebug() << " got quadratic_bezier_curveto_argument ";
+    //qDebug() << " got smooth_curveto_argument  ";
+} break;  case 46: {
+    qDebug() << "							got quadratic_bezier_curveto ";
+} break;  case 49: {
+    //qDebug() << " got quadratic_bezier_curveto_argument ";
 } break;  case 51: {
-//    qDebug() << "							got smooth_quadratic_bezier_curveto ";
-} break;  case 54: {
-//    qDebug() << " got smooth_quadratic_bezier_curveto_argument_sequence 3 ";
-} break;  case 56: {
-//    qDebug() << " got coordinate_pair ";
+    //qDebug() << " got quadratic_bezier_curveto_argument ";
+} break;  case 52: {
+    qDebug() << "							got smooth_quadratic_bezier_curveto ";
+} break;  case 55: {
+    //qDebug() << " got smooth_quadratic_bezier_curveto_argument_sequence 3 ";
 } break;  case 57: {
-//    qDebug() << " got x coordinate ";
+    //qDebug() << " got coordinate_pair ";
 } break;  case 58: {
-//    qDebug() << " got y coordinate ";
-} break;  case 60: {
-//    qDebug() << " got comma_wsp 3 ";
+    //qDebug() << " got x coordinate ";
+} break;  case 59: {
+    //qDebug() << " got y coordinate ";
 } break;  case 61: {
-//    qDebug() << " got wspplus ";
+    //qDebug() << " got comma_wsp 3 ";
+} break;  case 62: {
+    //qDebug() << " got wspplus ";
 } break;  
-case 62: {
-//    qDebug() << " got coordinate ";
+case 63: {
+    //qDebug() << " got coordinate ";
     m_symStack.append(lexer->currentNumber());
 } break; 
  
-case 63: {
-//    qDebug() << "							got moveto command ";
-    m_symStack.append(lexer->currentCommand());
-} break; 
- 
 case 64: {
-//    qDebug() << "							got lineto command ";
+    //qDebug() << "							got moveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 65: {
-//    qDebug() << "							got horizontal_lineto command ";
+    //qDebug() << "							got lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 66: {
-//    qDebug() << "							got vertical_lineto command ";
+    //qDebug() << "							got horizontal_lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 67: {
-//    qDebug() << "							got curveto command ";
+    //qDebug() << "							got vertical_lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 68: {
-//    qDebug() << "							got smooth curveto command ";
+    //qDebug() << "							got curveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 69: {
-//    qDebug() << "							got quadratic_bezier_curveto_command command ";
+    //qDebug() << "							got smooth curveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 70: {
-//    qDebug() << "							got smooth_quadratic_bezier_curveto_command command ";
+    //qDebug() << "							got quadratic_bezier_curveto_command command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
- case 71: {
+ 
+case 71: {
+    //qDebug() << "							got smooth_quadratic_bezier_curveto_command command ";
+    m_symStack.append(lexer->currentCommand());
+} break; 
+ case 72: {
     qDebug() << "							got closepath ";
     m_symStack.append(lexer->currentCommand());
+} break;  case 73: {
+    qDebug() << "							got fakeclosepath ";
 } break; 
           } // switch
 

@@ -11,10 +11,7 @@
    width="108mm"
    height="9mm"
    id="svg2"
-   sodipodi:version="0.32"
-   inkscape:version="0.46"
-   sodipodi:docname="ruler_cm.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   >
   <metadata
      id="metadata619">
     <rdf:RDF>
@@ -26,39 +23,6 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <defs
-     id="defs617">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 41.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="1754 : 41.5 : 1"
-       inkscape:persp3d-origin="877 : 27.666667 : 1"
-       id="perspective621" />
-  </defs>
-  <sodipodi:namedview
-     inkscape:window-height="750"
-     inkscape:window-width="1279"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     guidetolerance="10.0"
-     gridtolerance="10.0"
-     objecttolerance="10.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
-     pagecolor="#ffffff"
-     id="base"
-     showgrid="false"
-     units="mm"
-     inkscape:document-units="mm"
-     inkscape:zoom="1.2337514"
-     inkscape:cx="322.9677"
-     inkscape:cy="-71.771795"
-     inkscape:window-x="1"
-     inkscape:window-y="49"
-     inkscape:current-layer="g4"
-     showguides="true"
-     inkscape:guide-bbox="true" />
 <g id="pcbRuler">
 <g id="schematicRuler">
   <g

@@ -27,6 +27,7 @@ $Date$
 #include "fsvgrenderer.h"
 #include "debugdialog.h"
 #include "svg/svgfilesplitter.h"
+#include "utils/textutils.h"
 
 #include <QRegExp>
 #include <QTextStream>
@@ -189,10 +190,10 @@ void FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 				QString ws = xml.attributes().value("width").toString();
 				QString hs = xml.attributes().value("height").toString();
 				bool ok;
-				qreal w = convertToInches(ws, &ok);
+				qreal w = TextUtils::convertToInches(ws, &ok);
 				if (!ok) return;
 
-				qreal h = convertToInches(hs, &ok);
+				qreal h = TextUtils::convertToInches(hs, &ok);
 				if (!ok) return;
 
 				m_defaultSizeF = QSizeF(w * m_printerScale, h * m_printerScale);
@@ -264,10 +265,10 @@ bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID,
 
 	QDomElement element;
 	if (m_cachedElement.isNull()) {
-		element = findElementWithAttribute(m_svgDomDocument.documentElement(), "id", connectorName);
+		element = TextUtils::findElementWithAttribute(m_svgDomDocument.documentElement(), "id", connectorName);
 	}
 	else {
-		element = findElementWithAttribute(m_cachedElement.parentNode().toElement(), "id", connectorName);
+		element = TextUtils::findElementWithAttribute(m_cachedElement.parentNode().toElement(), "id", connectorName);
 	}
 	if (element.isNull()) return false;
 

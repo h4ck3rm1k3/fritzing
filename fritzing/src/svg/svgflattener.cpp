@@ -205,6 +205,8 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
 					DebugDialog::debug("Warning! Can't rotate path with H");
 					i++;
 					break;
+				case SVGPathLexer::FakeClosePathChar:
+					break;
 				default:
 					x = args[i];
 					y = args[i+1];

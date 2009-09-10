@@ -29,6 +29,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../items/virtualwire.h"
 #include "../items/tracewire.h"
+#include "../utils/graphicsutils.h"
 #include "../connectoritem.h"
 
 #include <math.h>
@@ -317,7 +318,7 @@ void Autorouter1::start()
 				double distance, dx, dy;
 				QPointF p = wire->pos();
 				QPointF pp = wire->line().p2() + p;
-				distanceFromLine(p2.x(), p2.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
+				GraphicsUtils::distanceFromLine(p2.x(), p2.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
 				if (!atEndpoint) {
 					Subedge * subedge = new Subedge;
 					subedge->from = NULL;

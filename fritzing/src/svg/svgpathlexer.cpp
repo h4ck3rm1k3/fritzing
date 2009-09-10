@@ -41,7 +41,7 @@ SVGPathLexer::SVGPathLexer(const QString &source)
     m_source = clean(source);
     m_chars = m_source.unicode();
     m_size = m_source.size();
-	qDebug() << m_source;
+	//qDebug() << m_source;
     m_pos = 0;
     m_current = next();
 }
@@ -102,6 +102,11 @@ int SVGPathLexer::lex()
 		m_currentCommand = m_current;
         next();
         return SVGPathGrammar::TEE;
+    } 
+	else if (m_current == QLatin1Char(FakeClosePathChar)) {
+		m_currentCommand = m_current;
+        next();
+        return SVGPathGrammar::EKS;
     } 
 	else if (m_current == QLatin1Char('C')) {
 		m_currentCommand = m_current;

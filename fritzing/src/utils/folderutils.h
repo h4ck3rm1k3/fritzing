@@ -46,6 +46,8 @@ public:
 	static bool setApplicationPath(const QString & path);
 	static const QString getLibraryPath();
 	static void cleanup();
+	static bool containsText(const QString &filepath, const QString &searchText);
+
 
 protected:
 	FolderUtils();

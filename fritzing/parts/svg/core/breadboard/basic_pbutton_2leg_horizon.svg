@@ -4,6 +4,7 @@
 	 id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.32984in"
 	 height="0.09866in" viewBox="0 0 32.984 9.866" enable-background="new 0 0 32.984 9.866" xml:space="preserve">
+<g id="breadboard">
 <rect id="connector0pin" x="29.841" y="3.387" fill="#B3B3B3" width="3.143" height="2.998"/>
 <rect id="connector1pin" y="3.429" fill="#B3B3B3" width="3.14" height="2.999"/>
 <polygon id="polygon13" fill="#8C8C8C" points="21.49,3.304 32.981,3.304 32.981,6.52 21.49,6.52 "/>
@@ -23,5 +24,6 @@
 	</g>
 	<path id="path21_10_" fill="none" stroke="#333333" stroke-width="0.4" d="M23.008,2.433V6.44c0.003,0.354-0.353,0.795-1.168,0.795
 		H10.885c-0.817,0-1.155-0.439-1.158-0.797V2.433"/>
+</g>
 </g>
 </svg>

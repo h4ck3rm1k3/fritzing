@@ -37,6 +37,7 @@ $Date$
 #include "bus.h"
 #include "items/wire.h"
 #include "modelpart.h"
+#include "utils/graphicsutils.h"
 
 QList<ConnectorItem *>  ConnectorItem::m_equalPotentialDisplayItems;
 const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
@@ -501,7 +502,7 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
 					QPointF current = this->mapToScene(QPointF(el));
 					double candidateX, candidateY, candidateDistance;
 					bool atEndpoint;
-					distanceFromLine(anchor.x(), anchor.y(), prev.x(), prev.y(), current.x(), current.y(), 
+					GraphicsUtils::distanceFromLine(anchor.x(), anchor.y(), prev.x(), prev.y(), current.x(), current.y(), 
 										candidateX, candidateY, candidateDistance, atEndpoint);
 					if (candidateDistance < newDistance) {
 						newX = candidateX;

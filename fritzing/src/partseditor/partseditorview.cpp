@@ -41,6 +41,7 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 #include "../debugdialog.h"
 #include "../fapplication.h"
 #include "../utils/folderutils.h"
+#include "../utils/textutils.h"
 #include "../svg/svgfilesplitter.h"
 
 
@@ -618,7 +619,7 @@ bool PartsEditorView::fixFonts(QString &fileContent, const QString &filename, bo
 
 bool PartsEditorView::removeFontFamilySingleQuotes(QString &fileContent, const QString &filename) {
 	QString pattern = "font-family=\"('.*')\"";
-	QSet<QString> wrongFontFamilies = getRegexpCaptures(pattern,fileContent);
+	QSet<QString> wrongFontFamilies = TextUtils::getRegexpCaptures(pattern,fileContent);
 
 	foreach(QString ff, wrongFontFamilies) {
 		QString wrongFF = ff;
@@ -665,7 +666,7 @@ font-size="9.9771" >A0</text>
 	 */
 
 	QString pattern = "font-family\\s*=\\s*\"(.|[^\"]*)\\s*\"";
-	return getRegexpCaptures(pattern,fileContent);
+	return TextUtils::getRegexpCaptures(pattern,fileContent);
 }
 
 QSet<QString> PartsEditorView::getFontFamiliesInsideStyleTag(const QString &fileContent) {
@@ -680,7 +681,7 @@ style="font-size:144px;font-style:normal;font-weight:normal;line-height:100%;fil
 	 */
 
 	QString pattern = "font-family\\s*:\\s*(.|[^;\"]*).*\"";
-	return getRegexpCaptures(pattern,fileContent);
+	return TextUtils::getRegexpCaptures(pattern,fileContent);
 }
 
 bool PartsEditorView::isIllustratorFile(const QString &fileContent) {

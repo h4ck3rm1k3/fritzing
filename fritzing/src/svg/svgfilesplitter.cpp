@@ -27,6 +27,7 @@ $Date$
 #include "svgfilesplitter.h"
 
 #include "../utils/misc.h"
+#include "../utils/textutils.h"
 #include "../debugdialog.h"
 #include "svgpathparser.h"
 #include "svgpathlexer.h"
@@ -89,8 +90,10 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 
 	root.removeAttribute("space");
 
-	QDomElement element = findElementWithAttribute(root, "id", elementID);
-	if (element.isNull()) return false;
+	QDomElement element = TextUtils::findElementWithAttribute(root, "id", elementID);
+	if (element.isNull()) {
+		return false;
+	}
 
 	while (!root.firstChild().isNull()) {
 		root.removeChild(root.firstChild());
@@ -116,7 +119,7 @@ const QDomDocument & SvgFileSplitter::domDocument() {
 QString SvgFileSplitter::elementString(const QString & elementID) {
 	QDomElement root = m_domDocument.documentElement();
 
-	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (mainElement.isNull()) return ___emptyString___;
 
 	QDomDocument document;
@@ -143,10 +146,10 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	if (sheightStr.isEmpty()) return false;
 
 	bool ok;
-	qreal sWidth = convertToInches(swidthStr, &ok);
+	qreal sWidth = TextUtils::convertToInches(swidthStr, &ok);
 	if (!ok) return false;
 
-	qreal sHeight = convertToInches(sheightStr, &ok);
+	qreal sHeight = TextUtils::convertToInches(sheightStr, &ok);
 	if (!ok) return false;
 
 	root.setAttribute("width", QString::number(sWidth));
@@ -175,7 +178,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 
 	root.setAttribute("viewBox", QString("%1 %2 %3 %4").arg(0).arg(0).arg(vbWidth).arg(vbHeight) );
 
-	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (mainElement.isNull()) return false;
 
 	QDomElement childElement = mainElement.firstChildElement();
@@ -197,7 +200,7 @@ QPainterPath SvgFileSplitter::painterPath(qreal dpi, const QString & elementID)
 	QDomElement root = m_domDocument.documentElement();
 	if (root.isNull()) return ppath;
 
-	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (mainElement.isNull()) return ppath;
 
 	QDomElement childElement = mainElement.firstChildElement();
@@ -258,14 +261,10 @@ void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppa
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
 		QString data = element.attribute("points");
 		if (!data.isEmpty()) {
-			data.prepend("M");		// pretend it's a path so we can use the path parser
-			data.append("Z");
 			const char * slot = SLOT(painterPathCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
 			pathUserData.painterPath = &ppath;
             if (parsePath(data, slot, pathUserData, this)) {
-				pathUserData.string.remove(0, 1);			// get rid of the "M"
-				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
 			}
 		}
 	}
@@ -347,8 +346,6 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		fixStyleAttribute(element);
 		QString data = element.attribute("points");
 		if (!data.isEmpty()) {
-			data.prepend("M");		// pretend it's a path so we can use the path parser
-			data.append("Z");
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
 			pathUserData.sNewHeight = sNewHeight;
@@ -357,7 +354,6 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			pathUserData.vbWidth = vbWidth;
             if (parsePath(data, slot, pathUserData, this)) {
 				pathUserData.string.remove(0, 1);			// get rid of the "M"
-				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
 				element.setAttribute("points", pathUserData.string);
 			}
 		}
@@ -406,7 +402,7 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
 {
 	QDomElement root = m_domDocument.documentElement();
 
-	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (mainElement.isNull()) return false;
 
 	QDomElement childElement = mainElement.firstChildElement();
@@ -446,15 +442,12 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
 		QString data = element.attribute("points");
 		if (!data.isEmpty()) {
-			data.prepend("M");		// pretend it's a path so we can use the path parser
-			data.append("Z");
 			const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
 			pathUserData.x = x;
 			pathUserData.y = y;
             if (parsePath(data, slot, pathUserData, this)) {
 				pathUserData.string.remove(0, 1);			// get rid of the "M"
-				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
 				element.setAttribute("points", pathUserData.string);
 			}
 		}
@@ -515,6 +508,8 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 					pathUserData->string.append(',');
 				}
 			}
+			break;
+		case SVGPathLexer::FakeClosePathChar:
 			break;
 		default:
 			for (int i = 0; i < args.count(); i++) {
@@ -581,6 +576,8 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 			}
 			pathUserData->string.append(QString::number(d));
 			break;
+		case SVGPathLexer::FakeClosePathChar:
+			break;
 		default:
 			for (int i = 0; i < args.count(); i++) {
 				d = args[i];
@@ -605,12 +602,21 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 
 bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData, QObject * slotTarget) {
 	QString dataCopy(data);
-	if (!dataCopy.endsWith("z", Qt::CaseInsensitive)) {
-		dataCopy.append('Z');
+
+	if (!dataCopy.startsWith('M')) {
+		dataCopy.prepend('M');
+	}
+	while (dataCopy.at(dataCopy.length() - 1).isSpace()) {
+		dataCopy.remove(dataCopy.length() - 1, 1);
+	}
+	QChar last = dataCopy.at(dataCopy.length() - 1);
+	if (last != 'z' && last != 'Z' && last != SVGPathLexer::FakeClosePathChar) {
+		dataCopy.append(SVGPathLexer::FakeClosePathChar);
 	}
 	SVGPathLexer lexer(dataCopy);
 	SVGPathParser parser;
-	if (!parser.parse(&lexer)) {
+	bool result = parser.parse(&lexer);
+	if (!result) {
 		DebugDialog::debug(QString("svg path parse failed %1").arg(dataCopy));
 		return false;
 	}

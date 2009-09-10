@@ -59,6 +59,7 @@ $Date$
 #include "pcbsketchwidget.h"
 #include "svg/svgfilesplitter.h"
 #include "utils/folderutils.h"
+#include "utils/textutils.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -1832,7 +1833,7 @@ bool MainWindow::loadCustomBoardShape()
 	}
 
 	bool ok;
-	qreal w = convertToInches(wStr, &ok);
+	qreal w = TextUtils::convertToInches(wStr, &ok);
 	if (!ok) {
 		QMessageBox::warning(
 			this,
@@ -1842,7 +1843,7 @@ bool MainWindow::loadCustomBoardShape()
 		return false;
 	}
 
-	qreal h = convertToInches(hStr, &ok);
+	qreal h = TextUtils::convertToInches(hStr, &ok);
 	if (!ok) {
 		QMessageBox::warning(
 			this,

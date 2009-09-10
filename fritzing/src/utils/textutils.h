@@ -18,44 +18,27 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 3418 $:
+$Author: merunga $:
+$Date: 2009-09-07 10:55:58 +0200 (Mon, 07 Sep 2009) $
 
 ********************************************************************/
 
-#ifndef SVGPATHLEXER_H
-#define SVGPATHLEXER_H
+#ifndef TEXTUTILS_H
+#define TEXTUTILS_H
 
-#include <QtCore/QString>
-#include <QtCore/QHash>
-#include <QRegExp>
+#include <QPointF>
+#include <QDomElement>
+#include <QSet>
 
-class SVGPathLexer
+class TextUtils
 {
+
 public:
-    SVGPathLexer(const QString &source);
-    ~SVGPathLexer();
-    int lex();
-	QChar currentCommand();
-	double currentNumber();
+	static QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
+	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
+	static qreal convertToInches(const QString & string, bool * ok);
 
-	static const QString RegexFloatDetector;
-	static const QRegExp floatingPointMatcher;
-	static const char FakeClosePathChar = 'x';
-
-protected:
-    QChar next();
-	QString clean(const QString & source);
-
-protected:
-    QString m_source;
-    const QChar *m_chars;
-    int m_size;
-    int m_pos;
-    QChar m_current;
-	QChar m_currentCommand;
-	double m_currentNumber;
 };
 
 #endif

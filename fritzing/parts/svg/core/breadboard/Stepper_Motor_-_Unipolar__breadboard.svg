@@ -11,6 +11,7 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="278.70728"
    height="395.35019"
+   viewBox="0 0 278.70728 395.35019" 
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.46"
@@ -359,6 +360,7 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <g id="breadboard">
   <g
      id="StepperMotor"
      transform="translate(0,27.692843)">
@@ -663,4 +665,6 @@
      width="9"
      id="connector5pin"
      style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+  </g>
+
 </svg>

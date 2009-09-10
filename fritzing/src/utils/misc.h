@@ -72,19 +72,7 @@ static QHash<QString, QString> ___emptyStringHash___;
 static QDir ___emptyDir___;
 static QByteArray ___emptyByteArray___;
 
-bool containsText(const QString &filepath, const QString &searchText);
-QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
-
-QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
-
-qreal convertToInches(const QString & string, bool * ok);
-
 bool isParent(QObject * candidateParent, QObject * candidateChild);
-
-void distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 
-					  double & dx, double & dy, double &distanceSegment, bool & atEndpoint);
-
-QPointF calcConstraint(QPointF initial, QPointF current);
 
 static const QString FritzingSketchExtension(".fz");
 static const QString FritzingBinExtension(".fzb");
@@ -95,7 +83,5 @@ static const QString FritzingModuleExtension(".fzm");
 static const QString FritzingBundleExtension(".fzz");
 
 const QList<QString> & fritzingExtensions();
-
-static const QString QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
 
 #endif

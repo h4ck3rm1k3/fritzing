@@ -91,6 +91,9 @@ protected:
 		static void replicateDir(QDir srcDir, QDir targDir);
 		static QString getRandText();
 
+public:
+		static const QString QtFunkyPlaceholder;
+
 	public:
 		virtual void notClosableForAWhile() {}
 

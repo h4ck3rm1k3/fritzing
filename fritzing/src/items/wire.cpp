@@ -44,6 +44,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../labels/partlabel.h"
 #include "../modelpart.h"
+#include "../utils/graphicsutils.h"
 
 #include <stdlib.h>
 
@@ -320,7 +321,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 		}
 
 		if (!bendpoint) {
-			eventPos = calcConstraint(initialPos, eventPos);
+			eventPos = GraphicsUtils::calcConstraint(initialPos, eventPos);
 		}
 
 	}

@@ -4,6 +4,7 @@
 
 %token EM
 %token ZEE
+%token EKS
 %token EL
 %token AITCH
 %token VEE
@@ -181,22 +182,22 @@ path_data ::=  moveto_drawto_command_groups ;
 
 moveto_drawto_command_groups ::= moveto_drawto_command_group | moveto_drawto_command_group moveto_drawto_command_groups ;
 /. case $rule_number: {
-    qDebug() << " got moveto_drawto_command_groups ";
+    //qDebug() << " got moveto_drawto_command_groups ";
 } break; ./
 
 moveto_drawto_command_group ::= moveto drawto_commands | moveto;
 /. case $rule_number: {
-    qDebug() << " got moveto_drawto_command_group ";
+    //qDebug() << " got moveto_drawto_command_group ";
 } break; ./
 
 drawto_commands ::= drawto_command | drawto_command drawto_commands ;
 /. case $rule_number: {
-    qDebug() << " got drawto_commands  ";
+    //qDebug() << " got drawto_commands  ";
 } break; ./
 
-drawto_command ::= closepath | lineto | horizontal_lineto | vertical_lineto | curveto | smooth_curveto | quadratic_bezier_curveto | smooth_quadratic_bezier_curveto ;
+drawto_command ::= fakeclosepath | closepath | lineto | horizontal_lineto | vertical_lineto | curveto | smooth_curveto | quadratic_bezier_curveto | smooth_quadratic_bezier_curveto ;
 /. case $rule_number: {
-    qDebug() << " got drawto_command  ";
+    //qDebug() << " got drawto_command  ";
 } break; ./
 
 moveto ::= moveto_command moveto_argument_sequence ;
@@ -206,7 +207,7 @@ moveto ::= moveto_command moveto_argument_sequence ;
 
 moveto_argument_sequence ::= coordinate_pair | coordinate_pair comma_wsp moveto_argument_sequence | coordinate_pair moveto_argument_sequence ;
 /. case $rule_number: {
-    qDebug() << " got moveto_argument_sequence ";
+    //qDebug() << " got moveto_argument_sequence ";
 } break; ./
 
 lineto ::= lineto_command lineto_argument_sequence ;
@@ -216,7 +217,7 @@ lineto ::= lineto_command lineto_argument_sequence ;
 
 lineto_argument_sequence ::= coordinate_pair | coordinate_pair comma_wsp lineto_argument_sequence | coordinate_pair lineto_argument_sequence ;
 /. case $rule_number: {
-    qDebug() << " got lineto_argument_sequence  ";
+    //qDebug() << " got lineto_argument_sequence  ";
 } break; ./
 
 horizontal_lineto ::= horizontal_lineto_command horizontal_lineto_argument_sequence ;
@@ -226,7 +227,7 @@ horizontal_lineto ::= horizontal_lineto_command horizontal_lineto_argument_seque
 
 horizontal_lineto_argument_sequence ::= coordinate | coordinate comma_wsp horizontal_lineto_argument_sequence | coordinate horizontal_lineto_argument_sequence ;
 /. case $rule_number: {
-    qDebug() << " got horizontal_lineto_argument_sequence ";
+    //qDebug() << " got horizontal_lineto_argument_sequence ";
 } break; ./
 
 vertical_lineto ::= vertical_lineto_command vertical_lineto_argument_sequence ;
@@ -236,7 +237,7 @@ vertical_lineto ::= vertical_lineto_command vertical_lineto_argument_sequence ;
 
 vertical_lineto_argument_sequence ::= coordinate | coordinate comma_wsp vertical_lineto_argument_sequence | coordinate vertical_lineto_argument_sequence ;
 /. case $rule_number: {
-    qDebug() << " got vertical_lineto_argument_sequence ";
+    //qDebug() << " got vertical_lineto_argument_sequence ";
 } break; ./
 
 curveto ::= curveto_command curveto_argument_sequence ;
@@ -246,12 +247,12 @@ curveto ::= curveto_command curveto_argument_sequence ;
 
 curveto_argument_sequence ::= curveto_argument | curveto_argument curveto_argument_sequence | curveto_argument comma_wsp curveto_argument_sequence ; 
 /. case $rule_number: {
-    qDebug() << " got curveto_argument_sequence 3 ";
+    //qDebug() << " got curveto_argument_sequence 3 ";
 } break; ./  
 
 curveto_argument ::= coordinate_pair comma_wsp coordinate_pair comma_wsp coordinate_pair | coordinate_pair comma_wsp coordinate_pair coordinate_pair | coordinate_pair coordinate_pair comma_wsp coordinate_pair | coordinate_pair coordinate_pair coordinate_pair ;
 /. case $rule_number: {
-    qDebug() << " got curveto_argument ";
+    //qDebug() << " got curveto_argument ";
 } break; ./
 
 smooth_curveto ::= smooth_curveto_command smooth_curveto_argument_sequence ;
@@ -261,12 +262,12 @@ smooth_curveto ::= smooth_curveto_command smooth_curveto_argument_sequence ;
 
 smooth_curveto_argument_sequence ::= smooth_curveto_argument | smooth_curveto_argument smooth_curveto_argument_sequence | smooth_curveto_argument comma_wsp smooth_curveto_argument_sequence ;
 /. case $rule_number: {
-    qDebug() << " got smooth_curveto_argument_sequence 3 ";
+    //qDebug() << " got smooth_curveto_argument_sequence 3 ";
 } break; ./
 
 smooth_curveto_argument ::= coordinate_pair coordinate_pair | coordinate_pair comma_wsp coordinate_pair ;
 /. case $rule_number: {
-    qDebug() << " got smooth_curveto_argument  ";
+    //qDebug() << " got smooth_curveto_argument  ";
 } break; ./
 
 quadratic_bezier_curveto ::= quadratic_bezier_curveto_command quadratic_bezier_curveto_argument_sequence ;
@@ -276,12 +277,12 @@ quadratic_bezier_curveto ::= quadratic_bezier_curveto_command quadratic_bezier_c
 
 quadratic_bezier_curveto_argument_sequence ::= quadratic_bezier_curveto_argument | quadratic_bezier_curveto_argument quadratic_bezier_curveto_argument_sequence | quadratic_bezier_curveto_argument comma_wsp quadratic_bezier_curveto_argument_sequence ;
 /. case $rule_number: {
-    qDebug() << " got quadratic_bezier_curveto_argument ";
+    //qDebug() << " got quadratic_bezier_curveto_argument ";
 } break; ./
 
 quadratic_bezier_curveto_argument ::= coordinate_pair comma_wsp coordinate_pair | coordinate_pair coordinate_pair ;
 /. case $rule_number: {
-    qDebug() << " got quadratic_bezier_curveto_argument ";
+    //qDebug() << " got quadratic_bezier_curveto_argument ";
 } break; ./
 
 smooth_quadratic_bezier_curveto ::= smooth_quadratic_bezier_curveto_command smooth_quadratic_bezier_curveto_argument_sequence ;
@@ -291,38 +292,38 @@ smooth_quadratic_bezier_curveto ::= smooth_quadratic_bezier_curveto_command smoo
 
 smooth_quadratic_bezier_curveto_argument_sequence ::= coordinate_pair | coordinate_pair comma_wsp smooth_quadratic_bezier_curveto_argument_sequence | coordinate_pair smooth_quadratic_bezier_curveto_argument_sequence ; 
 /. case $rule_number: {
-    qDebug() << " got smooth_quadratic_bezier_curveto_argument_sequence 3 ";
+    //qDebug() << " got smooth_quadratic_bezier_curveto_argument_sequence 3 ";
 } break; ./
 
 coordinate_pair ::= x_coordinate comma_wsp y_coordinate | x_coordinate y_coordinate ;
 /. case $rule_number: {
-    qDebug() << " got coordinate_pair ";
+    //qDebug() << " got coordinate_pair ";
 } break; ./
 
 x_coordinate ::= coordinate;
 /. case $rule_number: {
-    qDebug() << " got x coordinate ";
+    //qDebug() << " got x coordinate ";
 } break; ./
 
 y_coordinate ::= coordinate;
 /. case $rule_number: {
-    qDebug() << " got y coordinate ";
+    //qDebug() << " got y coordinate ";
 } break; ./
 
 comma_wsp ::= wspplus | COMMA ;
 /. case $rule_number: {
-    qDebug() << " got comma_wsp 3 ";
+    //qDebug() << " got comma_wsp 3 ";
 } break; ./
 
 wspplus ::= WHITESPACE ;
 /. case $rule_number: {
-    qDebug() << " got wspplus ";
+    //qDebug() << " got wspplus ";
 } break; ./
 
 coordinate ::= NUMBER ;
 /. 
 case $rule_number: {
-    qDebug() << " got coordinate ";
+    //qDebug() << " got coordinate ";
     m_symStack.append(lexer->currentNumber());
 } break; 
 ./
@@ -330,7 +331,7 @@ case $rule_number: {
 moveto_command ::= EM ;
 /. 
 case $rule_number: {
-    qDebug() << "							got moveto command ";
+    //qDebug() << "							got moveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -338,7 +339,7 @@ case $rule_number: {
 lineto_command ::= EL ;
 /. 
 case $rule_number: {
-    qDebug() << "							got lineto command ";
+    //qDebug() << "							got lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -346,7 +347,7 @@ case $rule_number: {
 horizontal_lineto_command ::= AITCH ;
 /. 
 case $rule_number: {
-    qDebug() << "							got horizontal_lineto command ";
+    //qDebug() << "							got horizontal_lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -354,7 +355,7 @@ case $rule_number: {
 vertical_lineto_command ::= VEE ;
 /. 
 case $rule_number: {
-    qDebug() << "							got vertical_lineto command ";
+    //qDebug() << "							got vertical_lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -362,7 +363,7 @@ case $rule_number: {
 curveto_command ::= CEE ;
 /. 
 case $rule_number: {
-    qDebug() << "							got curveto command ";
+    //qDebug() << "							got curveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -370,7 +371,7 @@ case $rule_number: {
 smooth_curveto_command ::= ESS ;
 /. 
 case $rule_number: {
-    qDebug() << "							got smooth curveto command ";
+    //qDebug() << "							got smooth curveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -378,7 +379,7 @@ case $rule_number: {
 quadratic_bezier_curveto_command ::= KYU ;
 /. 
 case $rule_number: {
-    qDebug() << "							got quadratic_bezier_curveto_command command ";
+    //qDebug() << "							got quadratic_bezier_curveto_command command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -386,7 +387,7 @@ case $rule_number: {
 smooth_quadratic_bezier_curveto_command ::= TEE ;
 /. 
 case $rule_number: {
-    qDebug() << "							got smooth_quadratic_bezier_curveto_command command ";
+    //qDebug() << "							got smooth_quadratic_bezier_curveto_command command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
@@ -395,6 +396,12 @@ closepath ::= ZEE ;
 /. case $rule_number: {
     qDebug() << "							got closepath ";
     m_symStack.append(lexer->currentCommand());
+} break; ./
+
+
+fakeclosepath ::= EKS ;
+/. case $rule_number: {
+    qDebug() << "							got fakeclosepath ";
 } break; ./
 
 

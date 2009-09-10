@@ -28,6 +28,7 @@ $Date$
 #include <QDesktopServices>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QTextStream>
 
 FolderUtils* FolderUtils::singleton = NULL;
 
@@ -161,5 +162,20 @@ bool FolderUtils::setApplicationPath2(const QString & path)
 
 const QStringList & FolderUtils::userDataStoreFolders() {
 	return m_folders;
+}
+
+// this function searches by regexp
+bool FolderUtils::containsText(const QString &filepath, const QString &searchText) {
+	QRegExp re(searchText);
+	if(!re.isValid()) return false;
+
+    QFile file(filepath);
+    if(!file.open(QIODevice::ReadOnly )) return false;
+
+	QTextStream stream(&file);
+	QString content = stream.readAll();
+	file.close();
+
+	return re.indexIn(content) != -1;
 }
 

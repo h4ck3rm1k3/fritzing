@@ -25,7 +25,9 @@ src/utils/clickablelabel.h \
 src/utils/fileprogressdialog.h \
 src/utils/misc.h \
 src/utils/resizehandle.h \
-src/utils/folderutils.h
+src/utils/folderutils.h \
+src/utils/graphicsutils.h \
+src/utils/textutils.h
  
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \
@@ -34,6 +36,8 @@ src/utils/clickablelabel.cpp \
 src/utils/fileprogressdialog.cpp \
 src/utils/misc.cpp \
 src/utils/resizehandle.cpp \
-src/utils/folderutils.cpp
+src/utils/folderutils.cpp \
+src/utils/graphicsutils.cpp \
+src/utils/textutils.cpp
 
 

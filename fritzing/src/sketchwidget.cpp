@@ -71,6 +71,7 @@ $Date$
 #include "help/sketchmainhelp.h"
 #include "htmlinfoview.h"
 #include "items/resizableboard.h"
+#include "utils/graphicsutils.h"
 #include "fsvgrenderer.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -2008,7 +2009,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 		if ((event->buttons() & Qt::LeftButton) && !draggingWireEnd()) {
 			m_globalPos = event->globalPos();
 			if ((event->modifiers() & Qt::ShiftModifier) != 0) {
-				QPointF p = calcConstraint(m_mousePressGlobalPos, m_globalPos);
+				QPointF p = GraphicsUtils::calcConstraint(m_mousePressGlobalPos, m_globalPos);
 				m_globalPos.setX(p.x());
 				m_globalPos.setY(p.y());
 			}
