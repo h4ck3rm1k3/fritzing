@@ -5,13 +5,13 @@
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.2472in" height="0.33in"
 	 viewBox="0 0 24.72 33" xml:space="preserve">
 	
+<g id="breadboard">
 <rect id="connector0pin" x="0.86" y="29" fill="none" width="3" height="4"/>
 <rect id="connector1pin" x="10.86" y="0" fill="none" width="3" height="4"/>
 <rect id="connector2pin" x="20.86" y="29" fill="none" width="3" height="4"/>
 <rect id="connector0terminal" x="0.86" y="30" fill="none" width="3" height="3"/>
 <rect id="connector1terminal" x="10.86" y="0" fill="none" width="3" height="3"/>
 <rect id="connector2terminal" x="20.86" y="30" fill="none" width="3" height="3"/>
-<g id="breadboard">
 	<g id="legs">
 		<g id="pin0">
 			<rect id="rect10" x="0.86" y="27.622" fill="#8C8C8C" width="6.793" height="2"/>

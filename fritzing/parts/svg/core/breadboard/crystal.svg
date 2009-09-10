@@ -4,12 +4,12 @@
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.40in"
 	 height="0.18in" viewBox="0 0 28.871 12.855" xml:space="preserve">
 
+
+<g id="breadboard">
 	<rect id="connector0pin" x="5.824" y="9.732" fill="#919191" width="2.146" height="3.158"/>
 	<rect id="connector1pin" x="20.186" y="9.732" fill="#919191" width="2.149" height="3.158"/>
 	<rect id="connector0terminal" x="5.824" y="12.489" fill="#919191" width="2.146" height="0.403"/>
 	<rect id="connector1terminal" x="20.22" y="12.489" fill="#919191" width="2.146" height="0.403"/>
-
-<g id="breadboard">
 	<g id="g17">
 		<path id="path19" fill="#BFBFBF" d="M28.869,6.689c0,1.633-1.992,2.969-4.428,2.969H4.428C1.992,9.658,0,8.322,0,6.689
 			s1.792-2.97,4.228-2.97h20.413C27.076,3.721,28.869,5.057,28.869,6.689z"/>
