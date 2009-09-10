@@ -1607,7 +1607,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50001" x="85.8655" y="80.57"/>
+                    <geometry z="4.50001" x="46.1079" y="68.9336"/>
                     <connectors>
                         <connector connectorId="connector18" layer="copper0">
                             <geometry x="0" y="0"/>
@@ -1812,7 +1812,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50003" x="153.15" y="141.706">
+                    <geometry z="4.50003" x="113.392" y="130.07">
                         <transform m11="0" m12="-1" m13="0" m21="1" m22="0" m23="0" m31="-18" m32="55.8" m33="1"/>
                     </geometry>
                     <connectors>
@@ -2451,7 +2451,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50018" x="133.97" y="83.675" x1="0" y1="0" x2="-21.3209" y2="302.325" wireFlags="64"/>
+                    <geometry z="6.50018" x="94.2129" y="72.0386" x1="0" y1="0" x2="18.4367" y2="313.961" wireFlags="64"/>
                     <wireExtras width="1" color="#000000" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -2515,7 +2515,7 @@
             <title>Wire9</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.5" x="133.97" y="83.675" x1="0" y1="0" x2="15.5792" y2="108.431" wireFlags="19"/>
+                    <geometry z="5.5" x="94.2129" y="72.0386" x1="0" y1="0" x2="15.5795" y2="108.431" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -2613,7 +2613,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50005" x="159.862" y="108.856">
+                    <geometry z="4.50005" x="120.104" y="97.2196">
                         <transform m11="0" m12="-1" m13="0" m21="1" m22="0" m23="0" m31="-13.5" m32="26.1" m33="1"/>
                     </geometry>
                     <connectors>
@@ -2717,7 +2717,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50007" x="210.59" y="166.413">
+                    <geometry z="4.50007" x="170.832" y="154.777">
                         <transform m11="0" m12="1" m13="0" m21="-1" m22="0" m23="0" m31="23.4" m32="-2.25" m33="1"/>
                     </geometry>
                     <connectors>
@@ -2881,7 +2881,7 @@
             <title>Wire24</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50014" x="223.73" y="186.663" x1="0" y1="0" x2="-29.1803" y2="5.44282" wireFlags="19"/>
+                    <geometry z="5.50014" x="183.972" y="175.027" x1="0" y1="0" x2="-29.18" y2="5.443" wireFlags="19"/>
                     <wireExtras width="1" color="#800700" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -2927,7 +2927,7 @@
             <title>Wire25</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50017" x="134.285" y="127.786" x1="0" y1="0" x2="89.445" y2="49.877" wireFlags="19"/>
+                    <geometry z="5.50017" x="94.5274" y="116.15" x1="0" y1="0" x2="89.445" y2="49.877" wireFlags="19"/>
                     <wireExtras width="1" color="#768000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -2967,7 +2967,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50009" x="113.315" y="103.486">
+                    <geometry z="4.50009" x="73.5574" y="91.8496">
                         <transform m11="0" m12="-1" m13="0" m21="1" m22="0" m23="0" m31="14.67" m32="27.27" m33="1"/>
                     </geometry>
                     <connectors>
@@ -3039,7 +3039,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50024" x="193.649" y="278" x1="0" y1="0" x2="-53.3787" y2="-23.325" wireFlags="64"/>
+                    <geometry z="6.50024" x="193.649" y="278" x1="0" y1="0" x2="-93.1363" y2="-34.9614" wireFlags="64"/>
                     <wireExtras width="1" color="#000000" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -3098,7 +3098,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50025" x="202.649" y="287" x1="0" y1="0" x2="-53.3787" y2="-32.325" wireFlags="64"/>
+                    <geometry z="6.50025" x="202.649" y="287" x1="0" y1="0" x2="-93.1362" y2="-43.9614" wireFlags="64"/>
                     <wireExtras width="1" color="#000000" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -3244,7 +3244,7 @@
             <title>Wire28</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50021" x="149.55" y="192.106" x1="0" y1="0" x2="-15.2647" y2="-100.32" wireFlags="19"/>
+                    <geometry z="5.50021" x="109.792" y="180.47" x1="0" y1="0" x2="-15.265" y2="-100.32" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -3267,7 +3267,7 @@
             <title>Wire29</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50022" x="134.285" y="91.786" x1="0" y1="0" x2="-0.3145" y2="-8.111" wireFlags="19"/>
+                    <geometry z="5.50022" x="94.5274" y="80.1496" x1="0" y1="0" x2="-0.3145" y2="-8.111" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -3309,7 +3309,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50011" x="185.036" y="224.134"/>
+                    <geometry z="4.50011" x="145.278" y="212.498"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
                             <geometry x="0" y="0"/>
@@ -3507,7 +3507,7 @@
             <title>Wire38</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50028" x="167.55" y="192.106" x1="0" y1="0" x2="56.1803" y2="-23.4428" wireFlags="19"/>
+                    <geometry z="5.50028" x="127.792" y="180.47" x1="0" y1="0" x2="56.18" y2="-23.443" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -3612,7 +3612,7 @@
             <title>Wire41</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50031" x="176.55" y="192.106" x1="0" y1="0" x2="47.1803" y2="-23.4428" wireFlags="19"/>
+                    <geometry z="5.50031" x="136.792" y="180.47" x1="0" y1="0" x2="47.18" y2="-23.443" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -3681,7 +3681,7 @@
             <title>Wire43</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50036" x="224.006" y="230.434" x1="0" y1="0" x2="-29.4566" y2="-38.3278" wireFlags="19"/>
+                    <geometry z="5.50036" x="184.248" y="218.798" x1="0" y1="0" x2="-29.456" y2="-38.328" wireFlags="19"/>
                     <wireExtras width="1" color="#800700" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -3704,7 +3704,7 @@
             <title>Wire44</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50038" x="224.006" y="230.434" x1="0" y1="0" x2="-0.276333" y2="-43.7707" wireFlags="19"/>
+                    <geometry z="5.50038" x="184.248" y="218.798" x1="0" y1="0" x2="-0.276333" y2="-43.7707" wireFlags="19"/>
                     <wireExtras width="1" color="#800700" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -3745,7 +3745,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50032" x="157.649" y="440" x1="0" y1="0" x2="30.3569" y2="-209.566" wireFlags="64"/>
+                    <geometry z="6.50032" x="157.649" y="440" x1="0" y1="0" x2="-9.40096" y2="-221.202" wireFlags="64"/>
                     <wireExtras width="1" color="#000000" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -3809,7 +3809,7 @@
             <title>Wire45</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50041" x="188.006" y="230.434" x1="0" y1="0" x2="-47.4566" y2="-38.3278" wireFlags="19"/>
+                    <geometry z="5.50041" x="148.248" y="218.798" x1="0" y1="0" x2="-47.456" y2="-38.328" wireFlags="19"/>
                     <wireExtras width="1" color="#665252" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -3851,7 +3851,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50013" x="193.207" y="95.3261">
+                    <geometry z="4.50013" x="153.449" y="83.6897">
                         <transform m11="-1" m12="0" m13="0" m21="0" m22="-1" m23="0" m31="56.925" m32="40.05" m33="1"/>
                     </geometry>
                     <connectors>
@@ -3943,7 +3943,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50033" x="201.082" y="119.176" x1="0" y1="0" x2="-34.4327" y2="293.824" wireFlags="64"/>
+                    <geometry z="6.50033" x="161.324" y="107.54" x1="0" y1="0" x2="5.32492" y2="305.46" wireFlags="64"/>
                     <wireExtras width="1" color="#000000" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -4007,7 +4007,7 @@
             <title>Wire47</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50043" x="201.082" y="119.176" x1="0" y1="0" x2="2.46773" y2="72.9297" wireFlags="19"/>
+                    <geometry z="5.50043" x="161.324" y="107.54" x1="0" y1="0" x2="2.468" y2="72.9299" wireFlags="19"/>
                     <wireExtras width="1" color="#1c8c44" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4048,7 +4048,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50034" x="184.649" y="449" x1="0" y1="0" x2="38.0328" y2="-329.824" wireFlags="64"/>
+                    <geometry z="6.50034" x="184.649" y="449" x1="0" y1="0" x2="-1.72483" y2="-341.46" wireFlags="64"/>
                     <wireExtras width="1" color="#000000" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -4158,7 +4158,7 @@
             <title>Wire48</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50044" x="222.682" y="119.176" x1="0" y1="0" x2="1.048" y2="49.4869" wireFlags="19"/>
+                    <geometry z="5.50044" x="182.924" y="107.54" x1="0" y1="0" x2="1.048" y2="49.4869" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4181,7 +4181,7 @@
             <title>Wire49</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50045" x="222.682" y="119.176" x1="0" y1="0" x2="-55.1323" y2="72.9297" wireFlags="19"/>
+                    <geometry z="5.50045" x="182.924" y="107.54" x1="0" y1="0" x2="-55.132" y2="72.9299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4204,7 +4204,7 @@
             <title>Wire50</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50046" x="222.682" y="119.176" x1="0" y1="0" x2="-46.1323" y2="72.9297" wireFlags="19"/>
+                    <geometry z="5.50046" x="182.924" y="107.54" x1="0" y1="0" x2="-46.132" y2="72.9299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4227,7 +4227,7 @@
             <title>Wire52</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50047" x="211.882" y="102.076" x1="0" y1="0" x2="11.848" y2="66.5869" wireFlags="19"/>
+                    <geometry z="5.50047" x="172.124" y="90.4397" x1="0" y1="0" x2="11.848" y2="66.5869" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4250,7 +4250,7 @@
             <title>Wire53</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50048" x="211.882" y="102.076" x1="0" y1="0" x2="-44.3323" y2="90.0297" wireFlags="19"/>
+                    <geometry z="5.50048" x="172.124" y="90.4397" x1="0" y1="0" x2="-44.332" y2="90.0299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4273,7 +4273,7 @@
             <title>Wire54</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.5005" x="211.882" y="102.076" x1="0" y1="0" x2="-35.3323" y2="90.0297" wireFlags="19"/>
+                    <geometry z="5.5005" x="172.124" y="90.4397" x1="0" y1="0" x2="-35.332" y2="90.0299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4378,7 +4378,7 @@
             <title>Wire56</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50052" x="140.55" y="165.106" x1="0" y1="0" x2="-0.279231" y2="89.5692" wireFlags="19"/>
+                    <geometry z="5.50052" x="100.792" y="153.47" x1="0" y1="0" x2="-0.2795" y2="89.569" wireFlags="19"/>
                     <wireExtras width="1" color="#665252" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4419,7 +4419,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50037" x="124.97" y="83.675" x1="0" y1="0" x2="-12.3209" y2="230.325" wireFlags="64"/>
+                    <geometry z="6.50037" x="85.2129" y="72.0386" x1="0" y1="0" x2="27.4367" y2="241.961" wireFlags="64"/>
                     <wireExtras width="1" color="#000000" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -4483,7 +4483,7 @@
             <title>Wire58</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50055" x="124.97" y="83.675" x1="0" y1="0" x2="24.5792" y2="81.4308" wireFlags="19"/>
+                    <geometry z="5.50055" x="85.2129" y="72.0386" x1="0" y1="0" x2="24.5795" y2="81.431" wireFlags="19"/>
                     <wireExtras width="1" color="#c2a5a5" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4588,7 +4588,7 @@
             <title>Wire59</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50056" x="167.55" y="165.106" x1="0" y1="0" x2="-18.2792" y2="89.5692" wireFlags="19"/>
+                    <geometry z="5.50056" x="127.792" y="153.47" x1="0" y1="0" x2="-18.2795" y2="89.569" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4693,7 +4693,7 @@
             <title>Wire63</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50057" x="176.55" y="165.106" x1="0" y1="0" x2="-27.2792" y2="89.5692" wireFlags="19"/>
+                    <geometry z="5.50057" x="136.792" y="153.47" x1="0" y1="0" x2="-27.2792" y2="89.5692" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4798,7 +4798,7 @@
             <title>Wire67</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50058" x="203.55" y="165.106" x1="0" y1="0" x2="-63.2792" y2="89.5692" wireFlags="19"/>
+                    <geometry z="5.50058" x="163.792" y="153.47" x1="0" y1="0" x2="-63.2795" y2="89.569" wireFlags="19"/>
                     <wireExtras width="1" color="#665252" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -4844,7 +4844,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50016" x="85.5234" y="167.185">
+                    <geometry z="4.50016" x="45.7658" y="155.549">
                         <transform m11="0" m12="1" m13="0" m21="-1" m22="0" m23="0" m31="23.4" m32="-2.25" m33="1"/>
                     </geometry>
                     <connectors>
@@ -4943,7 +4943,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50019" x="86.4328" y="109.599"/>
+                    <geometry z="4.50019" x="46.6752" y="97.9626"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
                             <geometry x="0" y="0"/>
@@ -5016,7 +5016,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.5002" x="86.1057" y="92.9453"/>
+                    <geometry z="4.5002" x="46.3481" y="81.3089"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
                             <geometry x="0" y="0"/>
@@ -5221,7 +5221,7 @@
             <title>Wire109</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50064" x="140.27" y="254.675" x1="0" y1="0" x2="47.7358" y2="-24.2413" wireFlags="19"/>
+                    <geometry z="5.50064" x="100.512" y="243.039" x1="0" y1="0" x2="47.7358" y2="-24.2413" wireFlags="19"/>
                     <wireExtras width="1" color="#665252" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5244,7 +5244,7 @@
             <title>Wire110</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50065" x="140.27" y="254.675" x1="0" y1="0" x2="0.279231" y2="-62.5692" wireFlags="19"/>
+                    <geometry z="5.50065" x="100.512" y="243.039" x1="0" y1="0" x2="0.279231" y2="-62.5692" wireFlags="19"/>
                     <wireExtras width="1" color="#665252" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5267,7 +5267,7 @@
             <title>Wire111</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50066" x="188.006" y="230.434" x1="0" y1="0" x2="-47.4566" y2="-65.3278" wireFlags="19"/>
+                    <geometry z="5.50066" x="148.248" y="218.798" x1="0" y1="0" x2="-47.456" y2="-65.328" wireFlags="19"/>
                     <wireExtras width="1" color="#665252" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5290,7 +5290,7 @@
             <title>Wire112</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50067" x="188.006" y="230.434" x1="0" y1="0" x2="15.5434" y2="-65.3278" wireFlags="19"/>
+                    <geometry z="5.50067" x="148.248" y="218.798" x1="0" y1="0" x2="15.544" y2="-65.328" wireFlags="19"/>
                     <wireExtras width="1" color="#665252" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5556,7 +5556,7 @@
             <title>Wire118</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50068" x="149.27" y="254.675" x1="0" y1="0" x2="73.4115" y2="-135.499" wireFlags="19"/>
+                    <geometry z="5.50068" x="109.513" y="243.039" x1="0" y1="0" x2="73.4115" y2="-135.499" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5579,7 +5579,7 @@
             <title>Wire119</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50069" x="149.27" y="254.675" x1="0" y1="0" x2="62.6115" y2="-152.599" wireFlags="19"/>
+                    <geometry z="5.50069" x="109.513" y="243.039" x1="0" y1="0" x2="62.6115" y2="-152.599" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5602,7 +5602,7 @@
             <title>Wire120</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.5007" x="149.27" y="254.675" x1="0" y1="0" x2="74.4595" y2="-86.012" wireFlags="19"/>
+                    <geometry z="5.5007" x="109.513" y="243.039" x1="0" y1="0" x2="74.4595" y2="-86.012" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5625,7 +5625,7 @@
             <title>Wire121</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50071" x="149.27" y="254.675" x1="0" y1="0" x2="18.2792" y2="-62.5692" wireFlags="19"/>
+                    <geometry z="5.50071" x="109.513" y="243.039" x1="0" y1="0" x2="18.2795" y2="-62.569" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5648,7 +5648,7 @@
             <title>Wire122</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50072" x="149.27" y="254.675" x1="0" y1="0" x2="27.2792" y2="-62.5692" wireFlags="19"/>
+                    <geometry z="5.50072" x="109.513" y="243.039" x1="0" y1="0" x2="27.2795" y2="-62.569" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5671,7 +5671,7 @@
             <title>Wire123</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50073" x="222.682" y="119.176" x1="0" y1="0" x2="-55.1323" y2="45.9297" wireFlags="19"/>
+                    <geometry z="5.50073" x="182.924" y="107.54" x1="0" y1="0" x2="-55.132" y2="45.9299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5694,7 +5694,7 @@
             <title>Wire124</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50074" x="222.682" y="119.176" x1="0" y1="0" x2="-46.1323" y2="45.9297" wireFlags="19"/>
+                    <geometry z="5.50074" x="182.924" y="107.54" x1="0" y1="0" x2="-46.132" y2="45.9299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5717,7 +5717,7 @@
             <title>Wire126</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50075" x="167.55" y="165.106" x1="0" y1="0" x2="44.3323" y2="-63.0297" wireFlags="19"/>
+                    <geometry z="5.50075" x="127.792" y="153.47" x1="0" y1="0" x2="44.332" y2="-63.0299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5740,7 +5740,7 @@
             <title>Wire127</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50076" x="167.55" y="165.106" x1="0" y1="0" x2="56.1803" y2="3.55718" wireFlags="19"/>
+                    <geometry z="5.50076" x="127.792" y="153.47" x1="0" y1="0" x2="56.18" y2="3.557" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5763,7 +5763,7 @@
             <title>Wire128</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50077" x="176.55" y="165.106" x1="0" y1="0" x2="35.3323" y2="-63.0297" wireFlags="19"/>
+                    <geometry z="5.50077" x="136.792" y="153.47" x1="0" y1="0" x2="35.332" y2="-63.0299" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5786,7 +5786,7 @@
             <title>Wire129</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50078" x="176.55" y="165.106" x1="0" y1="0" x2="47.1803" y2="3.55718" wireFlags="19"/>
+                    <geometry z="5.50078" x="136.792" y="153.47" x1="0" y1="0" x2="47.18" y2="3.557" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5855,7 +5855,7 @@
             <title>Wire147</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50079" x="125.076" y="99.2453" x1="0" y1="0" x2="24.4741" y2="65.8606" wireFlags="19"/>
+                    <geometry z="5.50079" x="85.3181" y="87.6089" x1="0" y1="0" x2="24.4743" y2="65.8607" wireFlags="19"/>
                     <wireExtras width="1" color="#c2a5a5" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5878,7 +5878,7 @@
             <title>Wire148</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.5008" x="125.076" y="99.2453" x1="0" y1="0" x2="-0.105167" y2="-15.5703" wireFlags="19"/>
+                    <geometry z="5.5008" x="85.3181" y="87.6089" x1="0" y1="0" x2="-0.1052" y2="-15.5703" wireFlags="19"/>
                     <wireExtras width="1" color="#c2a5a5" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -5924,7 +5924,7 @@
             <title>Wire149</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50081" x="98.6634" y="178.435" x1="0" y1="0" x2="-9.58776" y2="-79.1894" wireFlags="19"/>
+                    <geometry z="5.50081" x="58.9058" y="166.799" x1="0" y1="0" x2="-9.5877" y2="-79.1897" wireFlags="19"/>
                     <wireExtras width="1" color="#1c8c44" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6167,7 +6167,7 @@
             <title>Wire150</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50082" x="98.6634" y="169.435" x1="0" y1="0" x2="124.019" y2="-50.2586" wireFlags="19"/>
+                    <geometry z="5.50082" x="58.9058" y="157.799" x1="0" y1="0" x2="124.019" y2="-50.2589" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6190,7 +6190,7 @@
             <title>Wire151</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50083" x="98.6634" y="169.435" x1="0" y1="0" x2="113.219" y2="-67.3586" wireFlags="19"/>
+                    <geometry z="5.50083" x="58.9058" y="157.799" x1="0" y1="0" x2="113.219" y2="-67.3589" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6213,7 +6213,7 @@
             <title>Wire152</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50084" x="98.6634" y="169.435" x1="0" y1="0" x2="125.067" y2="-0.7717" wireFlags="19"/>
+                    <geometry z="5.50084" x="58.9058" y="157.799" x1="0" y1="0" x2="125.067" y2="-0.772" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6236,7 +6236,7 @@
             <title>Wire153</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50085" x="98.6634" y="169.435" x1="0" y1="0" x2="68.8863" y2="22.6711" wireFlags="19"/>
+                    <geometry z="5.50085" x="58.9058" y="157.799" x1="0" y1="0" x2="68.8866" y2="22.671" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6259,7 +6259,7 @@
             <title>Wire154</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50086" x="98.6634" y="169.435" x1="0" y1="0" x2="77.8863" y2="22.6711" wireFlags="19"/>
+                    <geometry z="5.50086" x="58.9058" y="157.799" x1="0" y1="0" x2="77.8866" y2="22.671" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6282,7 +6282,7 @@
             <title>Wire155</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50087" x="98.6634" y="169.435" x1="0" y1="0" x2="50.6071" y2="85.2403" wireFlags="19"/>
+                    <geometry z="5.50087" x="58.9058" y="157.799" x1="0" y1="0" x2="50.6071" y2="85.24" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6305,7 +6305,7 @@
             <title>Wire156</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50088" x="98.6634" y="169.435" x1="0" y1="0" x2="68.8863" y2="-4.32888" wireFlags="19"/>
+                    <geometry z="5.50088" x="58.9058" y="157.799" x1="0" y1="0" x2="68.8866" y2="-4.329" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -6328,7 +6328,7 @@
             <title>Wire157</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50089" x="98.6634" y="169.435" x1="0" y1="0" x2="77.8863" y2="-4.32888" wireFlags="19"/>
+                    <geometry z="5.50089" x="58.9058" y="157.799" x1="0" y1="0" x2="77.8866" y2="-4.329" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -7023,7 +7023,7 @@
             <title>Wire160</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.5009" x="161.662" y="128.656" x1="0" y1="0" x2="23.8882" y2="63.4503" wireFlags="19"/>
+                    <geometry z="5.5009" x="121.904" y="117.02" x1="0" y1="0" x2="23.888" y2="63.45" wireFlags="19"/>
                     <wireExtras width="1" color="#803400" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -7174,7 +7174,7 @@
             <title>Wire161</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50091" x="158.55" y="192.106" x1="0" y1="0" x2="-5.88818" y2="-63.4503" wireFlags="19"/>
+                    <geometry z="5.50091" x="118.792" y="180.47" x1="0" y1="0" x2="-5.888" y2="-63.45" wireFlags="19"/>
                     <wireExtras width="1" color="#4a1380" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -7325,7 +7325,7 @@
             <title>Wire162</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50092" x="158.55" y="165.106" x1="0" y1="0" x2="12.1118" y2="-36.4503" wireFlags="19"/>
+                    <geometry z="5.50092" x="118.792" y="153.47" x1="0" y1="0" x2="12.112" y2="-36.45" wireFlags="19"/>
                     <wireExtras width="1" color="#800700" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -7476,7 +7476,7 @@
             <title>Wire165</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50093" x="185.55" y="165.106" x1="0" y1="0" x2="-5.88818" y2="-36.4503" wireFlags="19"/>
+                    <geometry z="5.50093" x="145.792" y="153.47" x1="0" y1="0" x2="-5.888" y2="-36.45" wireFlags="19"/>
                     <wireExtras width="1" color="#000000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -8521,7 +8521,7 @@
             <title>Wire167</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50094" x="194.55" y="165.106" x1="0" y1="0" x2="-95.8863" y2="22.3289" wireFlags="19"/>
+                    <geometry z="5.50094" x="154.792" y="153.47" x1="0" y1="0" x2="-95.8866" y2="22.329" wireFlags="19"/>
                     <wireExtras width="1" color="#768000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -8684,7 +8684,7 @@
             <title>Wire178</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50095" x="89.4028" y="115.899" x1="0" y1="0" x2="105.147" y2="49.2072" wireFlags="19"/>
+                    <geometry z="5.50095" x="49.6452" y="104.263" x1="0" y1="0" x2="105.147" y2="49.207" wireFlags="19"/>
                     <wireExtras width="1" color="#768000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -8707,7 +8707,7 @@
             <title>Wire179</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50096" x="89.4028" y="115.899" x1="0" y1="0" x2="9.26062" y2="71.536" wireFlags="19"/>
+                    <geometry z="5.50096" x="49.6452" y="104.263" x1="0" y1="0" x2="9.2606" y2="71.536" wireFlags="19"/>
                     <wireExtras width="1" color="#768000" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -8882,7 +8882,7 @@
             <title>Wire180</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50097" x="125.076" y="99.2453" x1="0" y1="0" x2="0.327133" y2="16.6534" wireFlags="19"/>
+                    <geometry z="5.50097" x="85.3181" y="87.6089" x1="0" y1="0" x2="0.3271" y2="16.6537" wireFlags="19"/>
                     <wireExtras width="1" color="#c2a5a5" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -8905,7 +8905,7 @@
             <title>Wire181</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50098" x="149.55" y="165.106" x1="0" y1="0" x2="-24.1469" y2="-49.2072" wireFlags="19"/>
+                    <geometry z="5.50098" x="109.792" y="153.47" x1="0" y1="0" x2="-24.1472" y2="-49.207" wireFlags="19"/>
                     <wireExtras width="1" color="#c2a5a5" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -8928,7 +8928,7 @@
             <title>Wire182</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="5.50099" x="125.403" y="115.899" x1="0" y1="0" x2="-0.4323" y2="-32.2237" wireFlags="19"/>
+                    <geometry z="5.50099" x="85.6452" y="104.263" x1="0" y1="0" x2="-0.4323" y2="-32.224" wireFlags="19"/>
                     <wireExtras width="1" color="#c2a5a5" opacity="0.2"/>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -8997,7 +8997,7 @@
             <title>PCB3</title>
             <views>
                 <pcbView layer="board">
-                    <geometry z="1.50004" x="71.8655" y="75.07"/>
+                    <geometry z="1.50004" x="32.1079" y="63.4336"/>
                 </pcbView>
             </views>
         </instance>
@@ -9005,7 +9005,7 @@
             <title>Wire183</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50109" x="133.97" y="83.675" x1="0" y1="0" x2="0.3145" y2="8.111" wireFlags="36"/>
+                    <geometry z="6.50106" x="94.2129" y="72.0386" x1="0" y1="0" x2="0.3145" y2="8.111" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9028,7 +9028,7 @@
             <title>Wire184</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.5011" x="125.076" y="99.2453" x1="0" y1="0" x2="-0.105167" y2="-15.5703" wireFlags="36"/>
+                    <geometry z="6.5011" x="85.3181" y="87.6089" x1="0" y1="0" x2="-0.1052" y2="-15.5703" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9051,7 +9051,7 @@
             <title>Wire185</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50112" x="140.55" y="192.106" x1="0" y1="0" x2="0" y2="-13.4392" wireFlags="36"/>
+                    <geometry z="6.50112" x="100.792" y="180.47" x1="0" y1="0" x2="-2.84217e-14" y2="-13.4392" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9075,7 +9075,7 @@
             <title>Wire186</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50113" x="125.076" y="99.2453" x1="0" y1="0" x2="0.327133" y2="16.6534" wireFlags="36"/>
+                    <geometry z="6.50113" x="85.3181" y="87.6089" x1="0" y1="0" x2="0.3271" y2="16.6537" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9098,7 +9098,7 @@
             <title>Wire189</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50114" x="194.883" y="186.663" x1="0" y1="0" x2="-0.333333" y2="5.44282" wireFlags="36"/>
+                    <geometry z="6.50114" x="155.125" y="175.027" x1="0" y1="0" x2="-0.333" y2="5.443" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9121,7 +9121,7 @@
             <title>Wire190</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50115" x="223.73" y="186.663" x1="0" y1="0" x2="-28.8469" y2="0" wireFlags="36"/>
+                    <geometry z="6.50115" x="183.972" y="175.027" x1="0" y1="0" x2="-28.8469" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9144,7 +9144,7 @@
             <title>Wire191</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50117" x="125.403" y="115.899" x1="0" y1="0" x2="-0.6028" y2="16.5813" wireFlags="36"/>
+                    <geometry z="6.50117" x="85.6452" y="104.263" x1="0" y1="0" x2="-0.6028" y2="16.581" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9167,7 +9167,7 @@
             <title>Wire194</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50118" x="185.55" y="165.106" x1="0" y1="0" x2="-5.88818" y2="-36.4503" wireFlags="36"/>
+                    <geometry z="6.50118" x="145.792" y="153.47" x1="0" y1="0" x2="-5.888" y2="-36.45" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9190,7 +9190,7 @@
             <title>Wire195</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50119" x="170.662" y="128.656" x1="0" y1="0" x2="-12.1118" y2="36.4503" wireFlags="36"/>
+                    <geometry z="6.50119" x="130.904" y="117.02" x1="0" y1="0" x2="-12.112" y2="36.45" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9213,7 +9213,7 @@
             <title>Wire206</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.5012" x="223.73" y="186.663" x1="0" y1="0" x2="0.276333" y2="43.7707" wireFlags="36"/>
+                    <geometry z="6.5012" x="183.972" y="175.027" x1="0" y1="0" x2="0.276333" y2="43.7707" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9236,7 +9236,7 @@
             <title>Wire207</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50122" x="89.4028" y="115.899" x1="0" y1="0" x2="-5.03916" y2="0" wireFlags="36"/>
+                    <geometry z="6.50122" x="49.6452" y="104.263" x1="0" y1="0" x2="-5.0392" y2="1.42109e-14" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9259,7 +9259,7 @@
             <title>Wire208</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50123" x="84.3636" y="187.636" x1="0" y1="0" x2="14.2998" y2="-0.201664" wireFlags="36"/>
+                    <geometry z="6.50123" x="44.606" y="176" x1="0" y1="0" x2="14.2998" y2="-0.2017" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9282,7 +9282,7 @@
             <title>Wire218</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50124" x="203.883" y="242.531" x1="0" y1="0" x2="27.0194" y2="0" wireFlags="36"/>
+                    <geometry z="6.50124" x="164.125" y="230.895" x1="0" y1="0" x2="27.0194" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9305,7 +9305,7 @@
             <title>Wire223</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50125" x="230.902" y="159.468" x1="0" y1="0" x2="-29.8205" y2="-40.292" wireFlags="36"/>
+                    <geometry z="6.50125" x="191.144" y="147.832" x1="0" y1="0" x2="-29.82" y2="-40.2919" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9328,7 +9328,7 @@
             <title>Wire231</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50126" x="203.55" y="192.106" x1="0" y1="0" x2="0.333333" y2="50.4253" wireFlags="36"/>
+                    <geometry z="6.50126" x="163.792" y="180.47" x1="0" y1="0" x2="0.333" y2="50.425" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9351,7 +9351,7 @@
             <title>Wire234</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50127" x="230.902" y="242.531" x1="0" y1="0" x2="0" y2="-83.063" wireFlags="36"/>
+                    <geometry z="6.50127" x="191.144" y="230.895" x1="0" y1="0" x2="0" y2="-83.063" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9374,7 +9374,7 @@
             <title>Wire243</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50128" x="107" y="116" x1="0" y1="0" x2="0" y2="62.4347" wireFlags="36"/>
+                    <geometry z="6.50128" x="67.2424" y="104.364" x1="0" y1="0" x2="0" y2="62.4347" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9397,7 +9397,7 @@
             <title>Wire244</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50129" x="107" y="178.435" x1="0" y1="0" x2="-8.33658" y2="0" wireFlags="36"/>
+                    <geometry z="6.50129" x="67.2424" y="166.798" x1="0" y1="0" x2="-8.3366" y2="0.0003" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9420,7 +9420,7 @@
             <title>Wire250</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.5013" x="89.0757" y="99.2453" x1="0" y1="0" x2="17.9243" y2="16.7547" wireFlags="36"/>
+                    <geometry z="6.5013" x="49.3181" y="87.6089" x1="0" y1="0" x2="17.9243" y2="16.7547" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9443,7 +9443,7 @@
             <title>Wire251</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.501" x="98.6634" y="187.435" x1="0" y1="0" x2="95.8863" y2="-22.3289" wireFlags="104"/>
+                    <geometry z="10.501" x="58.9058" y="175.799" x1="0" y1="0" x2="95.8866" y2="-22.329" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9466,7 +9466,7 @@
             <title>Wire252</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.501" x="152.662" y="128.656" x1="0" y1="0" x2="5.88818" y2="63.4503" wireFlags="104"/>
+                    <geometry z="10.501" x="112.904" y="117.02" x1="0" y1="0" x2="5.888" y2="63.45" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9489,7 +9489,7 @@
             <title>Wire253</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.501" x="185.55" y="192.106" x1="0" y1="0" x2="-23.8882" y2="-63.4503" wireFlags="104"/>
+                    <geometry z="10.501" x="145.792" y="180.47" x1="0" y1="0" x2="-23.888" y2="-63.45" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9512,7 +9512,7 @@
             <title>Wire254</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.5011" x="134.285" y="91.786" x1="0" y1="0" x2="15.2647" y2="100.32" wireFlags="104"/>
+                    <geometry z="10.5011" x="94.5274" y="80.1496" x1="0" y1="0" x2="15.265" y2="100.32" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9535,7 +9535,7 @@
             <title>Wire255</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.5011" x="223.73" y="177.663" x1="0" y1="0" x2="-89.445" y2="-49.877" wireFlags="104"/>
+                    <geometry z="10.5011" x="183.972" y="166.027" x1="0" y1="0" x2="-89.445" y2="-49.877" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9558,7 +9558,7 @@
             <title>Wire256</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50131" x="176.55" y="165.106" x1="0" y1="0" x2="-9" y2="0" wireFlags="36"/>
+                    <geometry z="6.50131" x="136.792" y="153.47" x1="0" y1="0" x2="-9" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9581,7 +9581,7 @@
             <title>Wire257</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50132" x="167.55" y="192.106" x1="0" y1="0" x2="9" y2="0" wireFlags="36"/>
+                    <geometry z="6.50132" x="127.792" y="180.47" x1="0" y1="0" x2="9" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9604,7 +9604,7 @@
             <title>Wire258</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.5011" x="167.55" y="165.106" x1="0" y1="0" x2="0" y2="27" wireFlags="104"/>
+                    <geometry z="10.5011" x="127.792" y="153.47" x1="0" y1="0" x2="0" y2="27" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9627,7 +9627,7 @@
             <title>Wire259</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.501" x="223.73" y="168.663" x1="0" y1="0" x2="-47.1803" y2="-3.55718" wireFlags="104"/>
+                    <geometry z="10.501" x="183.972" y="157.027" x1="0" y1="0" x2="-47.18" y2="-3.557" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9650,7 +9650,7 @@
             <title>Wire260</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.501" x="176.55" y="192.106" x1="0" y1="0" x2="-77.8863" y2="-22.6711" wireFlags="104"/>
+                    <geometry z="10.501" x="136.792" y="180.47" x1="0" y1="0" x2="-77.8866" y2="-22.671" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9673,7 +9673,7 @@
             <title>Wire261</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50133" x="222.682" y="119.176" x1="0" y1="0" x2="-10.9922" y2="-13.4223" wireFlags="36"/>
+                    <geometry z="6.50133" x="182.924" y="107.54" x1="0" y1="0" x2="-10.992" y2="-13.4221" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9696,7 +9696,7 @@
             <title>Wire266</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50135" x="211.69" y="105.754" x1="0" y1="0" x2="-22.6898" y2="0" wireFlags="36"/>
+                    <geometry z="6.50135" x="171.932" y="94.1176" x1="0" y1="0" x2="-22.6898" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9719,7 +9719,7 @@
             <title>Wire267</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50137" x="189" y="105.754" x1="0" y1="0" x2="0" y2="31.7462" wireFlags="36"/>
+                    <geometry z="6.50137" x="149.242" y="94.1176" x1="0" y1="0" x2="0" y2="31.7462" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9742,7 +9742,7 @@
             <title>Wire268</title>
             <views>
                 <pcbView layer="jumperwires">
-                    <geometry z="10.501" x="98.6634" y="169.435" x1="0" y1="0" x2="50.6071" y2="85.2403" wireFlags="104"/>
+                    <geometry z="10.501" x="58.9058" y="157.799" x1="0" y1="0" x2="50.6071" y2="85.24" wireFlags="104"/>
                     <wireExtras width="3" color="#6699cc" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="jumperwires">
@@ -9765,7 +9765,7 @@
             <title>Wire274</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50111" x="140.55" y="178.667" x1="0" y1="0" x2="0" y2="-13.5608" wireFlags="36"/>
+                    <geometry z="6.50111" x="100.792" y="167.03" x1="0" y1="0" x2="2.84217e-14" y2="-13.5608" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9789,7 +9789,7 @@
             <title>Wire276</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50139" x="203.55" y="165.106" x1="0" y1="0" x2="0" y2="13.5608" wireFlags="4"/>
+                    <geometry z="6.50139" x="163.792" y="153.47" x1="0" y1="0" x2="-2.84217e-14" y2="13.561" wireFlags="4"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9812,7 +9812,7 @@
             <title>Wire277</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50138" x="203.55" y="178.667" x1="0" y1="0" x2="-63" y2="0" wireFlags="4"/>
+                    <geometry z="6.50138" x="163.792" y="167.031" x1="0" y1="0" x2="-63" y2="0" wireFlags="4"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9836,7 +9836,7 @@
             <title>Wire278</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50141" x="140.55" y="192.106" x1="0" y1="0" x2="-0.216398" y2="37.8942" wireFlags="4"/>
+                    <geometry z="6.50141" x="100.792" y="180.47" x1="0" y1="0" x2="-0.217" y2="37.894" wireFlags="4"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9860,7 +9860,7 @@
             <title>Wire279</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.5014" x="140.333" y="230" x1="0" y1="0" x2="-0.0628333" y2="24.675" wireFlags="4"/>
+                    <geometry z="6.5014" x="100.575" y="218.364" x1="0" y1="0" x2="-0.0628333" y2="24.675" wireFlags="4"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9884,7 +9884,7 @@
             <title>Wire281</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50142" x="188.006" y="230.434" x1="0" y1="0" x2="-47.673" y2="-0.433667" wireFlags="4"/>
+                    <geometry z="6.50142" x="148.248" y="218.798" x1="0" y1="0" x2="-47.673" y2="-0.433667" wireFlags="4"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9908,7 +9908,7 @@
             <title>Wire282</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50116" x="124.8" y="132.48" x1="0" y1="0" x2="24.7497" y2="32.6258" wireFlags="36"/>
+                    <geometry z="6.50116" x="85.0424" y="120.844" x1="0" y1="0" x2="24.75" y2="32.626" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9931,7 +9931,7 @@
             <title>Wire283</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50134" x="211.69" y="105.754" x1="0" y1="0" x2="0" y2="0" wireFlags="36"/>
+                    <geometry z="6.50134" x="171.932" y="94.1176" x1="0" y1="0" x2="0" y2="0" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9954,7 +9954,7 @@
             <title>Wire284</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50136" x="189" y="137.5" x1="0" y1="0" x2="34.73" y2="31.163" wireFlags="36"/>
+                    <geometry z="6.50136" x="149.242" y="125.864" x1="0" y1="0" x2="34.73" y2="31.163" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
@@ -9977,7 +9977,7 @@
             <title>Wire285</title>
             <views>
                 <pcbView layer="copper0trace">
-                    <geometry z="6.50121" x="84.3636" y="115.899" x1="0" y1="0" x2="0" y2="71.7377" wireFlags="36"/>
+                    <geometry z="6.50121" x="44.606" y="104.263" x1="0" y1="0" x2="0" y2="71.7377" wireFlags="36"/>
                     <wireExtras width="3" color="#ffbf00" opacity="1"/>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0trace">
