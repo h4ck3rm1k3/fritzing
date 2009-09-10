@@ -24,7 +24,10 @@
         <sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
         <sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fz"/>
         <sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fz"/>
-	</sketches>
+	<sketch id="Relay" name="Relay" src="core/Relay.fz"/>
+<sketch id="Shift_Register" name="Shift_Register" src="core/Shift_Register.fz"/>
+<sketch id="Stepper_Motor" name="Stepper_Motor" src="core/Stepper_Motor.fz"/>
+</sketches>
 	<categories>
 		<category name="Digital">
 			<category name="Output">
@@ -88,6 +91,7 @@
 			<category name="Motors">
 				<sketch id="AnalogInputToServo"/>
 	            <sketch id="DC_motor_control"/>
+ <sketch id="Stepper_Motor"/>
 	        </category>
 	    </category>
 	    <category name="Sound">
@@ -100,6 +104,8 @@
 	    <category name="Power">
 				<sketch id="npnPowerTransistor"/>
                 <sketch id="Op_Amp"/>
+<sketch id="Relay"/>
+<sketch id="Shift_Register"/>
                 <sketch id="Optocoupler"/>
 				<sketch id="VoltageRegulator"/>
 				<sketch id="VoltageRegulatorSwitch"/>
