@@ -41,8 +41,12 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="connector0" >
-   <description>ground</description>
+  <connector type="male" id="connector0" name="V+" >
+   <description>Positive Supply Voltage</description>
+   <erc etype="VCC">
+      <param name="voltage" value="5.0" />
+      <param name="current" flow="source" valueMax="0" />
+   </erc>
    <views>
     <breadboardView>
      <p svgId="connector0pin" layer="schematic" />
