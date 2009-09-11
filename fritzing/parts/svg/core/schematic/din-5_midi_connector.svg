@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
+<svg version="1.1" baseProfile="basic" id="svg2" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1.797in"
+	 height="2.345in" viewBox="-6.414 3.546 129.4 168.88" xml:space="preserve">
+<rect id="connector1pin" x="14.812" y="3.546" fill="none" width="1.895" height="5.17"/>
+<rect id="connector1terminal" x="14.818" y="3.546" fill="none" width="1.889" height="0.685"/>
+<rect id="connector2pin" x="36.071" y="3.546" fill="none" width="1.895" height="5.17"/>
+<rect id="connector2terminal" x="36.071" y="3.546" fill="none" width="1.895" height="0.686"/>
+<rect id="connector3pin" x="57.339" y="3.546" fill="none" width="1.894" height="5.17"/>
+<rect id="connector3terminal" x="57.339" y="3.546" fill="none" width="1.894" height="0.688"/>
+<rect id="connector4pin" x="78.572" y="3.546" fill="none" width="1.895" height="5.17"/>
+<rect id="connector4terminal" x="78.572" y="3.546" fill="none" width="1.895" height="0.686"/>
+<rect id="connector5pin" x="99.84" y="3.546" fill="none" width="1.894" height="5.17"/>
+<rect id="connector5terminal" x="99.84" y="3.546" fill="none" width="1.894" height="0.688"/>
+<rect id="connector6pin" x="57.371" y="162.643" fill="none" width="1.894" height="9.783"/>
+<rect id="connector6terminal" x="57.371" y="171.738" fill="none" width="1.894" height="0.688"/>
+<rect id="connector7pin" x="57.371" y="162.643" fill="none" width="1.894" height="9.783"/>
+<rect id="connector7terminal" x="57.371" y="171.738" fill="none" width="1.894" height="0.688"/>
+<rect id="connector8pin" x="57.371" y="162.643" fill="none" width="1.894" height="9.783"/>
+<rect id="connector8terminal" x="57.371" y="171.738" fill="none" width="1.894" height="0.688"/>
+<rect id="connector9pin" x="57.371" y="162.643" fill="none" width="1.894" height="9.783"/>
+<rect id="connector9terminal" x="57.371" y="171.738" fill="none" width="1.894" height="0.688"/>
+<g id="schematic">
+	<circle fill="none" stroke="#000000" stroke-width="2.4" cx="58.286" cy="88.225" r="63.5"/>
+	<circle fill="none" stroke="#000000" stroke-width="2.4" cx="58.286" cy="39.6" r="6"/>
+	<circle fill="none" stroke="#000000" stroke-width="2.4" cx="33.974" cy="46.115" r="6"/>
+	<circle fill="none" stroke="#000000" stroke-width="2.4" cx="16.177" cy="63.912" r="6"/>
+	<path fill="none" stroke="#000000" stroke-width="2.4" d="M103.392,69.104c-2.868,1.656-6.536,0.674-8.193-2.191
+		c-1.659-2.875-0.673-6.544,2.197-8.197c2.87-1.656,6.536-0.678,8.193,2.195C107.246,63.78,106.266,67.45,103.392,69.104z"/>
+	<path fill="none" stroke="#000000" stroke-width="2.4" d="M87.79,49.113c-1.655,2.869-5.323,3.852-8.191,2.198
+		c-2.874-1.659-3.854-5.331-2.195-8.196c1.658-2.87,5.322-3.855,8.193-2.195C88.466,42.575,89.452,46.244,87.79,49.113z"/>
+	<g id="Ebene_3">
+	</g>
+	<line fill="none" stroke="#000000" stroke-width="2.4" x1="15.76" y1="57.911" x2="15.76" y2="3.546"/>
+	<line fill="none" stroke="#000000" stroke-width="2.4" x1="100.786" y1="57.911" x2="100.786" y2="3.546"/>
+	<line fill="none" stroke="#000000" stroke-width="2.4" x1="58.317" y1="33.6" x2="58.317" y2="3.546"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2.4" points="79.519,3.546 79.519,24.724 82.596,32.678 82.596,40.113 	"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2.4" points="37.018,3.546 37.018,24.724 33.941,32.678 33.941,40.113 	"/>
+	<line fill="none" stroke="#000000" stroke-width="2.4" x1="58.317" y1="151.593" x2="58.317" y2="172.426"/>
+</g>
+</svg>
