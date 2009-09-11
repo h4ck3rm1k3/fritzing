@@ -126,7 +126,7 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 		QList<QRect> newRects;
 		foreach (int i, *piece) {
 			QRect r = rects.at(i);
-			newRects.append(QRect(r.x() * MILS, r.y() * MILS, r.width() * MILS, MILS));
+			newRects.append(QRect(r.x() * MILS, r.y() * MILS, (r.width() * MILS) + 1, MILS + 1));    // + 1 is for off-by-one converting rects to polys
 		}
 		joinScanLines(newRects, polygons);
 		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight);
@@ -229,6 +229,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 
 void GroundPlaneGenerator::splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces) 
 {
+	// combines vertically adjacent scanlines into "pieces"
 	int ix = 0;
 	int prevFirst = -1;
 	int prevLast = -1;
@@ -412,6 +413,14 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 	}
 
 	foreach (QList<int> * piece, pieces) {
+		//QPolygon poly(rects.at(piece->at(0)), true);
+		//for (int i = 1; i < piece->length(); i++) {
+			//QPolygon temp(rects.at(piece->at(i)), true);
+			//poly = poly.united(temp);
+		//}
+
+		// no need to close polygon; SVG automatically closes path
+		
 		QPolygon poly;
 
 		// left side
@@ -436,6 +445,8 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 			}
 			poly.append(QPoint(r.right(), r.top()));
 		}
+
+		
 
 		polygons.append(poly);
 		delete piece;
@@ -472,13 +483,13 @@ QString GroundPlaneGenerator::makePolyFzp(QList<QPolygon> & polygons, const QStr
 	newFzp += QString("<module fritzingVersion='%1' moduleId='%2' >\n").arg(Version::versionString()).arg(moduleID);
 	newFzp += "<version>1.1</version>\n";
 	newFzp += "<author>Fritzing</author>\n";
-	newFzp += "<title>Ground Plane</title>\n";
-	newFzp += "<label>Ground Plane</label>\n";
+	newFzp += "<title>Copper Fill</title>\n";
+	newFzp += "<label>Copper Fill</label>\n";
 	newFzp += QString("<date>%1</date>\n").arg(QDate::currentDate().toString("yyyy-MM-dd"));
 	newFzp += "<properties>\n";
-	newFzp += "<property name='family'>groundplane</property>\n";
+	newFzp += "<property name='family'>copper fill</property>\n";
 	newFzp += "</properties>\n";
-	newFzp += "<description>A ground plane</description>\n";
+	newFzp += "<description>A copper fill</description>\n";
 	newFzp += "<views>\n";
 	newFzp += "<iconView>\n";
 	newFzp += QString("<layers image='pcb/%1.svg' >\n").arg(moduleID);
