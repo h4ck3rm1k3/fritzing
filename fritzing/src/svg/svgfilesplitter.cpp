@@ -502,7 +502,29 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 		case 'h':
 		case 'H':
 			for (int i = 0; i < args.count(); i++) {
-				d = args[0] * pathUserData->sNewWidth / pathUserData->vbWidth;
+				d = args[i] * pathUserData->sNewWidth / pathUserData->vbWidth;
+				pathUserData->string.append(QString::number(d));
+				if (i < args.count() - 1) {
+					pathUserData->string.append(',');
+				}
+			}
+			break;
+		case 'a':
+		case 'A':
+			for (int i = 0; i < args.count(); i++) {
+				switch (i % 7) {
+					case 0:
+					case 5:
+						d = args[i] * pathUserData->sNewWidth / pathUserData->vbWidth;
+						break;
+					case 1:
+					case 6:
+						d = args[i] * pathUserData->sNewHeight / pathUserData->vbHeight;
+						break;
+					default:
+						d = args[i];
+						break;
+				}
 				pathUserData->string.append(QString::number(d));
 				if (i < args.count() - 1) {
 					pathUserData->string.append(',');

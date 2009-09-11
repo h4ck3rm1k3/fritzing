@@ -3308,6 +3308,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		switch (itemBase->itemType()) {
 			case ModelPart::Wire:
 			case ModelPart::Note:
+			case ModelPart::CopperFill:
 			case ModelPart::Unknown:
 				continue;
 			case ModelPart::Board:
@@ -5498,6 +5499,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::Note:
 		case ModelPart::Unknown:
 		case ModelPart::Jumper:
+		case ModelPart::CopperFill:
 			return false;
 
 		case ModelPart::Board:

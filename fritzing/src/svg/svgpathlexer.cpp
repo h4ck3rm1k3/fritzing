@@ -29,8 +29,8 @@ $Date$
 #include <qdebug.h>
 
 static const QRegExp findWhitespace("[\\s]+");
-static const QRegExp findWhitespaceBefore(" ([CcMmVvTtQqSsLlVvHhZz,])");
-static const QRegExp findWhitespaceAfter("([CcMmVvTtQqSsLlVvHhZz,]) ");
+static const QRegExp findWhitespaceBefore(" ([AaCcMmVvTtQqSsLlVvHhZz,])");
+static const QRegExp findWhitespaceAfter("([AaCcMmVvTtQqSsLlVvHhZz,]) ");
 static const QRegExp findWhitespaceAtEnd(" $");
 
 const QString SVGPathLexer::RegexFloatDetector = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
@@ -167,6 +167,16 @@ int SVGPathLexer::lex()
 		m_currentCommand = m_current;
         next();
         return SVGPathGrammar::EM;
+    } 
+	else if (m_current == QLatin1Char('A')) {
+		m_currentCommand = m_current;
+        next();
+        return SVGPathGrammar::AE;
+    } 
+	else if (m_current == QLatin1Char('a')) {
+		m_currentCommand = m_current;
+        next();
+        return SVGPathGrammar::AE;
     } 
 	else if (m_current == QLatin1Char('Z')) {
 		m_currentCommand = m_current;

@@ -59,6 +59,7 @@ public:
 		 Note,
 		 Symbol,
 		 Jumper,
+		 CopperFill,
 		 Unknown
 	};
 

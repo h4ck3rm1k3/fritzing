@@ -183,7 +183,7 @@ void Autorouter1::start()
 	updateRatsnest(false, parentCommand);
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
-	collectAllNets(m_sketchWidget, indexer, m_allPartConnectorItems);
+	collectAllNets(m_sketchWidget, indexer, m_allPartConnectorItems, false);
 
 	if (m_allPartConnectorItems.count() == 0) {
 		return;
@@ -1332,7 +1332,8 @@ double Autorouter1::distanceToLine(QPointF p0, QPointF p1, QPointF p2) {
 	return qAbs((x2 - x1) * (y1 - y0) - (x1 - x0) * (y2 - y1)) / sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems) 
+
+void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons) 
 {
 	// get the set of all connectors in the sketch
 	QList<ConnectorItem *> allConnectors;
@@ -1358,14 +1359,14 @@ void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorIte
 			allConnectors.removeOne(ci);
 		}
 
-		if (connectorItems.count() <= 1) {
+		if (!includeSingletons && (connectorItems.count() <= 1)) {
 			continue;
 		}
 
 		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
 		ConnectorItem::collectParts(connectorItems, *partConnectorItems, sketchWidget->includeSymbols());
 
-		if (partConnectorItems->count() <= 1) {
+		if ((partConnectorItems->count() <= 0) || (!includeSingletons && (partConnectorItems->count() <= 1))) {
 			delete partConnectorItems;
 			continue;
 		}

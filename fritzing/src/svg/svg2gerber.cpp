@@ -617,6 +617,11 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
     PathUserData * pathUserData = (PathUserData *) userData;
 
     switch(command.toAscii()) {
+				case 'a':
+				case 'A':
+					// TODO: implement elliptical arc 
+					pathUserData->string.append("INVALID");
+					break;
                 case 'm':
                 case 'M':
                     x = args[0];

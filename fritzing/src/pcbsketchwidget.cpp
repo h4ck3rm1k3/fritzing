@@ -96,7 +96,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
 {
-	bool visible = wire->getRatsnest() || wire->getTrace() || wire->getJumper() || (wire->itemType() == ModelPart::Jumper);
+	bool visible = wire->getRatsnest() || wire->getTrace() || wire->getJumper();
 	wire->setVisible(visible);
 	wire->setEverVisible(visible);
 }
@@ -322,6 +322,8 @@ void PCBSketchWidget::makeChangeRoutedCommand(Wire * wire, bool routed, qreal op
 
 void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
 	Q_UNUSED(parentCommand);
+
+	//kill copperfill here
 	//Autorouter1::clearTraces(this, true, parentCommand);
 	//updateRatsnestStatus(NULL, parentCommand);
 }
@@ -330,7 +332,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 {
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
-	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
+	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems, false);
 	int netCount = 0;
 	int netRoutedCount = 0;
 	int connectorsLeftToRoute = 0;

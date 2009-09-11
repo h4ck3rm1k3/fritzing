@@ -849,6 +849,7 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 			case ModelPart::Symbol:
 				if (!includeSymbols) break;
 			case ModelPart::Part:
+			case ModelPart::CopperFill:
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
 				if (!partsConnectors.contains(connectorItem)) {

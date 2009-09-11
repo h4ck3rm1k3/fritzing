@@ -66,6 +66,7 @@ static QString pdfActionType = ".pdf";
 static QString pngActionType = ".png";
 static QString svgActionType = ".svg";
 static QString bomActionType = ".txt";
+static QString netlistActionType = ".xml";
 
 static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
@@ -81,7 +82,7 @@ bool sortPartList(ItemBase * b1, ItemBase * b2){
 
 void MainWindow::initExportConstants()
 {
-	OtherKnownExtensions << jpgActionType << psActionType << pdfActionType << pngActionType << svgActionType << bomActionType;
+	OtherKnownExtensions << jpgActionType << psActionType << pdfActionType << pngActionType << svgActionType << bomActionType << netlistActionType;
 
 	filePrintFormats[pdfActionType] = QPrinter::PdfFormat;
 	filePrintFormats[psActionType] = QPrinter::PostScriptFormat;
@@ -281,6 +282,11 @@ void MainWindow::doExport() {
 
 	if (actionType.compare(bomActionType) == 0) {
 		exportBOM();
+		return;
+	}
+
+	if (actionType.compare(netlistActionType) == 0) {
+		exportNetlist();
 		return;
 	}
 
@@ -806,10 +812,15 @@ void MainWindow::createFileMenuActions() {
 	m_exportSvgAct->setStatusTip(tr("Export the current sketch as an SVG image"));
 	connect(m_exportSvgAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-    m_exportBomAct = new QAction(tr("List of parts (&Bill of Materials)"), this);
+    m_exportBomAct = new QAction(tr("List of parts (&Bill of Materials)..."), this);
     m_exportBomAct->setData(bomActionType);
     m_exportBomAct->setStatusTip(tr("Save a Bill of Materials (BoM)/Shopping List as text"));
     connect(m_exportBomAct, SIGNAL(triggered()), this, SLOT(doExport()));
+
+    m_exportNetlistAct = new QAction(tr("XML Netlist..."), this);
+    m_exportNetlistAct->setData(netlistActionType);
+    m_exportNetlistAct->setStatusTip(tr("Save a netlist in XML format"));
+    connect(m_exportNetlistAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportEagleAct = new QAction(tr("to &Eagle..."), this);
 	m_exportEagleAct->setData(eagleActionType);
@@ -1355,6 +1366,7 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportEtchableSvgAct);
 	m_exportMenu->addAction(m_exportEagleAct);
 	m_exportMenu->addAction(m_exportGerberAct);
+	m_exportMenu->addAction(m_exportNetlistAct);
 
     m_editMenu = menuBar()->addMenu(tr("&Edit"));
     m_editMenu->addAction(m_undoAct);
@@ -1436,6 +1448,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumpersAct);
 	m_pcbTraceMenu->addAction(m_groundFillAct);
+	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
@@ -1716,6 +1729,7 @@ void MainWindow::updateTraceMenu() {
 	bool exChecked = true;
 	bool twEnabled = false;
 	bool gfEnabled = false;
+	bool gfrEnabled = false;
 
 	if (m_currentGraphicsView != NULL) {
 		if (m_currentGraphicsView != this->m_breadboardGraphicsView) {
@@ -1724,13 +1738,15 @@ void MainWindow::updateTraceMenu() {
 				Wire * wire = dynamic_cast<Wire *>(item);
 				if (wire == NULL) {
 					if (m_currentGraphicsView != m_pcbGraphicsView) continue;
-					if (gfEnabled) continue;
 
 					ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 					if (itemBase == NULL) continue;
 
 					if (itemBase->itemType() == ModelPart::Board ||  itemBase->itemType() == ModelPart::ResizableBoard) {
 						gfEnabled = true;
+					}
+					else if (isGroundFill(itemBase)) {
+						gfrEnabled = true;
 					}
 
 					continue;
@@ -1780,6 +1796,7 @@ void MainWindow::updateTraceMenu() {
 	m_selectAllJumpersAct->setEnabled(jEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
 	m_groundFillAct->setEnabled(gfEnabled);
+	m_removeGroundFillAct->setEnabled(gfrEnabled);
 
 }
 
@@ -2471,6 +2488,80 @@ void MainWindow::exportBOM() {
 	delete fileProgressDialog;
 }
 
+void MainWindow::exportNetlist() {
+	QHash<ConnectorItem *, int> indexer;
+	QList< QList<ConnectorItem *>* > netList;
+	Autorouter1::collectAllNets(this->m_currentGraphicsView, indexer, netList, true);
+
+	QDomDocument doc;
+	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>"));
+	QDomElement netlist = doc.createElement("netlist");
+	doc.appendChild(netlist);
+	netlist.setAttribute("sketch", QFileInfo(m_fileName).fileName());
+    netlist.setAttribute("date", QDateTime::currentDateTime().toString());
+
+	// TODO: filter out 'ignore' connectors
+
+	foreach (QList<ConnectorItem *> * net, netList) {
+		QDomElement netElement = doc.createElement("net");
+		netlist.appendChild(netElement);
+		foreach (ConnectorItem * connectorItem, *net) {
+			QDomElement connector = doc.createElement("connector");
+			netElement.appendChild(connector);
+			connector.setAttribute("id", connectorItem->connectorSharedID());
+			connector.setAttribute("name", connectorItem->connectorSharedName());
+			QDomElement part = doc.createElement("part");
+			connector.appendChild(part);
+			ItemBase * itemBase = connectorItem->attachedTo();
+			part.setAttribute("id", itemBase->id());
+			part.setAttribute("label", itemBase->instanceTitle());
+			part.setAttribute("title", itemBase->title());
+		}
+	}
+
+	foreach (QList<ConnectorItem *> * net, netList) {
+		delete net;
+	}
+	netList.clear();
+
+    QString path = defaultSaveFolder();
+
+    QString fileExt;
+    QString extFmt = fileExtFormats.value(netlistActionType);
+    QString fname = path + "/" +constructFileName("netlist", netlistActionType);
+    //DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
+
+    QString fileName = FApplication::getSaveFileName(this,
+            tr("Export Netlist..."),
+            fname,
+            extFmt,
+            &fileExt
+    );
+
+    if (fileName.isEmpty()) {
+		return; //Cancel pressed
+    }
+
+	FileProgressDialog * fileProgressDialog = exportProgress();
+    //DebugDialog::debug(fileExt + " selected to export");
+    if(!alreadyHasExtension(fileName, netlistActionType)) {
+		fileName += netlistActionType;
+    }
+
+    QFile fp( fileName );
+    fp.open(QIODevice::WriteOnly);
+    fp.write(doc.toByteArray());
+    fp.close();
+
+	QClipboard *clipboard = QApplication::clipboard();
+	if (clipboard != NULL) {
+		clipboard->setText(doc.toByteArray());
+	}
+	delete fileProgressDialog;
+
+
+}
+
 void MainWindow::hideShowTraceMenu() {
 	m_pcbTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_pcbGraphicsView);
 	m_schematicTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_schematicGraphicsView);
@@ -2510,9 +2601,14 @@ void MainWindow::createTraceMenuActions() {
 	m_tidyWiresAct->setStatusTip(tr("Tidy selected wires"));
 	connect(m_tidyWiresAct, SIGNAL(triggered()), this, SLOT(tidyWires()));
 
-	m_groundFillAct = new QAction(tr("Ground Fill"), this);
-	m_groundFillAct->setStatusTip(tr("Fill up the ground plane"));
+	m_groundFillAct = new QAction(tr("Copper Fill"), this);
+	m_groundFillAct->setStatusTip(tr("Fill empty regions of the copper layer"));
 	connect(m_groundFillAct, SIGNAL(triggered()), this, SLOT(groundFill()));
+
+	m_removeGroundFillAct = new QAction(tr("Remove Copper Fill"), this);
+	m_removeGroundFillAct->setStatusTip(tr("Remove the copper fill"));
+	connect(m_removeGroundFillAct, SIGNAL(triggered()), this, SLOT(removeGroundFill()));
+
 }
 
 void MainWindow::autoroute() {
@@ -2721,7 +2817,7 @@ void MainWindow::groundFill()
 	//		ground plane item should return to being a rectangle so it can be dragged?
 	//		remove old ground plane modules from paletteModel and database
 
-	FileProgressDialog fileProgress("Generating ground plane...", 0, this);
+	FileProgressDialog fileProgress("Generating copper fill...", 0, this);
 
 	clearGroundPlanes();
 
@@ -2742,7 +2838,7 @@ void MainWindow::groundFill()
     // barf an error if there's no board
     if (!board) {
         QMessageBox::critical(this, tr("Fritzing"),
-                   tr("Your sketch does not have a board yet!  Please add a PCB in order to fill the ground plane."));
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to use copper fill."));
         return;
     }
 
@@ -2776,11 +2872,11 @@ void MainWindow::groundFill()
 	GroundPlaneGenerator gpg;
 	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, suffix, ItemBase::groundPlaneModuleIDName, exceptions, board);
 	if (result == false) {
-        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write ground plane."));
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
 		return;
 	}
 
-	QUndoCommand * parentCommand = new QUndoCommand(tr("Ground Fill"));
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Copper Fill"));
 
 	foreach (QString newPartPath, gpg.newPartPaths()) {
 		ModelPart * modelPart = loadPartFromFile(newPartPath);
@@ -2845,6 +2941,34 @@ void MainWindow::clearGroundPlanes() {
 	m_groundPlaneSuffixes.clear();
 
 }
+
+void MainWindow::removeGroundFill() {
+	QList<ItemBase *> toDelete;
+	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		if (isGroundFill(itemBase)) {
+			toDelete.append(itemBase);
+		}
+	}
+
+	if (toDelete.length() <= 0) return;
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Remove copper fill"));
+	foreach (ItemBase * itemBase, toDelete) {
+		m_pcbGraphicsView->makeDeleteItemCommand(itemBase, BaseCommand::SingleView, parentCommand);
+	}
+
+	new CleanUpWiresCommand(m_pcbGraphicsView, false, parentCommand);
+
+	m_undoStack->push(parentCommand);
+}
+
+bool MainWindow::isGroundFill(ItemBase * itemBase) {
+	return (itemBase->itemType() == ModelPart::CopperFill);
+}
+
 
 QMenu *MainWindow::breadboardItemMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Part"), this);

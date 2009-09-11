@@ -12,6 +12,7 @@
 %token ESS
 %token KYU
 %token TEE
+%token AE
 %token COMMA
 %token NUMBER
 %token WHITESPACE
@@ -195,7 +196,7 @@ drawto_commands ::= drawto_command | drawto_command drawto_commands ;
     //qDebug() << " got drawto_commands  ";
 } break; ./
 
-drawto_command ::= fakeclosepath | closepath | lineto | horizontal_lineto | vertical_lineto | curveto | smooth_curveto | quadratic_bezier_curveto | smooth_quadratic_bezier_curveto ;
+drawto_command ::= fakeclosepath | closepath | lineto | horizontal_lineto | vertical_lineto | curveto | smooth_curveto | quadratic_bezier_curveto | smooth_quadratic_bezier_curveto | elliptical_arc;
 /. case $rule_number: {
     //qDebug() << " got drawto_command  ";
 } break; ./
@@ -285,6 +286,21 @@ quadratic_bezier_curveto_argument ::= coordinate_pair comma_wsp coordinate_pair 
     //qDebug() << " got quadratic_bezier_curveto_argument ";
 } break; ./
 
+elliptical_arc ::= elliptical_arc_command elliptical_arc_argument_sequence ;
+/. case $rule_number: {
+    qDebug() << "							got elliptical_arc ";
+} break; ./
+
+elliptical_arc_argument_sequence ::= elliptical_arc_argument | elliptical_arc_argument elliptical_arc_argument_sequence | elliptical_arc_argument comma_wsp elliptical_arc_argument_sequence ;
+/. case $rule_number: {
+    //qDebug() << " got elliptical_arc_argument_sequence ";
+} break; ./
+
+elliptical_arc_argument ::= nonnegative_number comma_wsp nonnegative_number comma_wsp number comma_wsp flag comma_wsp flag comma_wsp coordinate_pair ;
+/. case $rule_number: {
+    //qDebug() << " got elliptical_arc_argument ";
+} break; ./
+
 smooth_quadratic_bezier_curveto ::= smooth_quadratic_bezier_curveto_command smooth_quadratic_bezier_curveto_argument_sequence ;
 /. case $rule_number: {
     qDebug() << "							got smooth_quadratic_bezier_curveto ";
@@ -324,6 +340,32 @@ coordinate ::= NUMBER ;
 /. 
 case $rule_number: {
     //qDebug() << " got coordinate ";
+    m_symStack.append(lexer->currentNumber());
+} break; 
+./
+
+nonnegative_number ::= NUMBER ;
+/. 
+case $rule_number: {
+    //qDebug() << " got nonnegative_number ";
+    //not presently checking this is non-negative
+    m_symStack.append(lexer->currentNumber());
+} break; 
+./
+
+number ::= NUMBER ;
+/. 
+case $rule_number: {
+    //qDebug() << " got number ";
+    m_symStack.append(lexer->currentNumber());
+} break; 
+./
+
+flag ::= NUMBER ;
+/. 
+case $rule_number: {
+    //qDebug() << " got flag ";
+    //not presently checking this is only 0 or 1
     m_symStack.append(lexer->currentNumber());
 } break; 
 ./
@@ -391,6 +433,12 @@ case $rule_number: {
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./
+
+elliptical_arc_command ::= AE ;
+/. case $rule_number: {
+    //qDebug() << "							got elliptical_arc_command ";
+    m_symStack.append(lexer->currentCommand());
+} break; ./
 
 closepath ::= ZEE ;
 /. case $rule_number: {

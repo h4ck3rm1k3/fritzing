@@ -102,105 +102,131 @@ bool SVGPathParser::parse(SVGPathLexer *lexer)
     //qDebug() << " got moveto_drawto_command_group ";
 } break;  case 6: {
     //qDebug() << " got drawto_commands  ";
-} break;  case 15: {
-    //qDebug() << " got drawto_command  ";
 } break;  case 16: {
+    //qDebug() << " got drawto_command  ";
+} break;  case 17: {
     qDebug() << "							got moveto ";
-} break;  case 19: {
-    //qDebug() << " got moveto_argument_sequence ";
 } break;  case 20: {
+    //qDebug() << " got moveto_argument_sequence ";
+} break;  case 21: {
     qDebug() << "							got lineto ";
-} break;  case 23: {
-    //qDebug() << " got lineto_argument_sequence  ";
 } break;  case 24: {
+    //qDebug() << " got lineto_argument_sequence  ";
+} break;  case 25: {
     qDebug() << "							got horizontal_lineto ";
-} break;  case 27: {
-    //qDebug() << " got horizontal_lineto_argument_sequence ";
 } break;  case 28: {
+    //qDebug() << " got horizontal_lineto_argument_sequence ";
+} break;  case 29: {
     qDebug() << "							got vertical_lineto ";
-} break;  case 31: {
-    //qDebug() << " got vertical_lineto_argument_sequence ";
 } break;  case 32: {
+    //qDebug() << " got vertical_lineto_argument_sequence ";
+} break;  case 33: {
     qDebug() << "							got curveto ";
-} break;  case 35: {
+} break;  case 36: {
     //qDebug() << " got curveto_argument_sequence 3 ";
-} break;  case 39: {
-    //qDebug() << " got curveto_argument ";
 } break;  case 40: {
+    //qDebug() << " got curveto_argument ";
+} break;  case 41: {
     qDebug() << "							got smooth_curveto ";
-} break;  case 43: {
+} break;  case 44: {
     //qDebug() << " got smooth_curveto_argument_sequence 3 ";
-} break;  case 45: {
-    //qDebug() << " got smooth_curveto_argument  ";
 } break;  case 46: {
+    //qDebug() << " got smooth_curveto_argument  ";
+} break;  case 47: {
     qDebug() << "							got quadratic_bezier_curveto ";
-} break;  case 49: {
-    //qDebug() << " got quadratic_bezier_curveto_argument ";
-} break;  case 51: {
+} break;  case 50: {
     //qDebug() << " got quadratic_bezier_curveto_argument ";
 } break;  case 52: {
-    qDebug() << "							got smooth_quadratic_bezier_curveto ";
-} break;  case 55: {
-    //qDebug() << " got smooth_quadratic_bezier_curveto_argument_sequence 3 ";
+    //qDebug() << " got quadratic_bezier_curveto_argument ";
+} break;  case 53: {
+    qDebug() << "							got elliptical_arc ";
+} break;  case 56: {
+    //qDebug() << " got elliptical_arc_argument_sequence ";
 } break;  case 57: {
-    //qDebug() << " got coordinate_pair ";
+    //qDebug() << " got elliptical_arc_argument ";
 } break;  case 58: {
-    //qDebug() << " got x coordinate ";
-} break;  case 59: {
-    //qDebug() << " got y coordinate ";
+    qDebug() << "							got smooth_quadratic_bezier_curveto ";
 } break;  case 61: {
+    //qDebug() << " got smooth_quadratic_bezier_curveto_argument_sequence 3 ";
+} break;  case 63: {
+    //qDebug() << " got coordinate_pair ";
+} break;  case 64: {
+    //qDebug() << " got x coordinate ";
+} break;  case 65: {
+    //qDebug() << " got y coordinate ";
+} break;  case 67: {
     //qDebug() << " got comma_wsp 3 ";
-} break;  case 62: {
+} break;  case 68: {
     //qDebug() << " got wspplus ";
 } break;  
-case 63: {
+case 69: {
     //qDebug() << " got coordinate ";
     m_symStack.append(lexer->currentNumber());
 } break; 
  
-case 64: {
+case 70: {
+    //qDebug() << " got nonnegative_number ";
+    //not presently checking this is non-negative
+    m_symStack.append(lexer->currentNumber());
+} break; 
+ 
+case 71: {
+    //qDebug() << " got number ";
+    m_symStack.append(lexer->currentNumber());
+} break; 
+ 
+case 72: {
+    //qDebug() << " got flag ";
+    //not presently checking this is only 0 or 1
+    m_symStack.append(lexer->currentNumber());
+} break; 
+ 
+case 73: {
     //qDebug() << "							got moveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
-case 65: {
+case 74: {
     //qDebug() << "							got lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
-case 66: {
+case 75: {
     //qDebug() << "							got horizontal_lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
-case 67: {
+case 76: {
     //qDebug() << "							got vertical_lineto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
-case 68: {
+case 77: {
     //qDebug() << "							got curveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
-case 69: {
+case 78: {
     //qDebug() << "							got smooth curveto command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
-case 70: {
+case 79: {
     //qDebug() << "							got quadratic_bezier_curveto_command command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
-case 71: {
+case 80: {
     //qDebug() << "							got smooth_quadratic_bezier_curveto_command command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
- case 72: {
+ case 81: {
+    //qDebug() << "							got elliptical_arc_command ";
+    m_symStack.append(lexer->currentCommand());
+} break;  case 82: {
     qDebug() << "							got closepath ";
     m_symStack.append(lexer->currentCommand());
-} break;  case 73: {
+} break;  case 83: {
     qDebug() << "							got fakeclosepath ";
 } break; 
           } // switch

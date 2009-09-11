@@ -299,6 +299,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (properties.text().contains("plain vanilla pcb", Qt::CaseInsensitive)) {
 		type = ModelPart::ResizableBoard;
 	}
+	else if (properties.text().contains("copper fill", Qt::CaseInsensitive)) {
+		type = ModelPart::CopperFill;
+	}
 	else if (properties.text().contains("arduino", Qt::CaseInsensitive)) {
 		LayerAttributes la;
 		if (la.getSvgElementID(domDocument, ViewIdentifierClass::PCBView, ViewLayer::Board)) {

@@ -95,6 +95,18 @@ void SVGPathRunner::initStates() {
 	pathCommands.insert(pathCommand->command, pathCommand);
 
 	pathCommand = new PathCommand;
+	pathCommand->command = 'A';
+	pathCommand->relative = false;
+	pathCommand->argCount = 7;
+	pathCommands.insert(pathCommand->command, pathCommand);
+
+	pathCommand = new PathCommand;
+	pathCommand->command = 'a';
+	pathCommand->relative = true;
+	pathCommand->argCount = 7;
+	pathCommands.insert(pathCommand->command, pathCommand);
+
+	pathCommand = new PathCommand;
 	pathCommand->command = 'Z';
 	pathCommand->relative = false;
 	pathCommand->argCount = 0;

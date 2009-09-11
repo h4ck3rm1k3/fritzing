@@ -7,29 +7,30 @@ class SVGPathGrammar
 public:
   enum {
     EOF_SYMBOL = 0,
+    AE = 11,
     AITCH = 5,
     CEE = 7,
-    COMMA = 11,
+    COMMA = 12,
     EKS = 3,
     EL = 4,
     EM = 1,
     ESS = 8,
     KYU = 9,
-    NUMBER = 12,
+    NUMBER = 13,
     TEE = 10,
     VEE = 6,
-    WHITESPACE = 13,
+    WHITESPACE = 14,
     ZEE = 2,
 
-    ACCEPT_STATE = 104,
-    RULE_COUNT = 75,
-    STATE_COUNT = 105,
-    TERMINAL_COUNT = 14,
-    NON_TERMINAL_COUNT = 41,
+    ACCEPT_STATE = 126,
+    RULE_COUNT = 85,
+    STATE_COUNT = 127,
+    TERMINAL_COUNT = 15,
+    NON_TERMINAL_COUNT = 48,
 
-    GOTO_INDEX_OFFSET = 105,
-    GOTO_INFO_OFFSET = 29,
-    GOTO_CHECK_OFFSET = 29
+    GOTO_INDEX_OFFSET = 127,
+    GOTO_INFO_OFFSET = 44,
+    GOTO_CHECK_OFFSET = 44
   };
 
   static const char  *const spell [];

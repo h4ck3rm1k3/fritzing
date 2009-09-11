@@ -243,6 +243,7 @@ protected slots:
 	void reportBug();
 	void tidyWires();
 	void groundFill();
+	void removeGroundFill();
 	void changeWireColor(bool checked);
 
 	void startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &);
@@ -295,6 +296,7 @@ protected:
 	void exportToEagle();
 	void exportToGerber();
     void exportBOM();
+    void exportNetlist();
     void exportSvg();
 	void exportEtchable(bool wantPDF, bool wantSVG);
 
@@ -357,6 +359,8 @@ protected:
 	class FileProgressDialog * exportProgress();
 	void clearGroundPlanes();
 	QString constructFileName(const QString & differentiator, const QString & extension);
+	bool isGroundFill(ItemBase * itemBase);
+
 
 	bool wannaRestart();
 
@@ -453,6 +457,7 @@ protected:
 	QAction *m_exportEtchableAct;
 	QAction *m_exportEtchableSvgAct;
 	QAction *m_exportBomAct;
+	QAction *m_exportNetlistAct;
 	QAction *m_exportSvgAct;
 
     // Edit Menu
@@ -527,6 +532,7 @@ protected:
 	QAction *m_selectAllExcludedTracesAct;
 	QAction *m_selectAllJumpersAct;
 	QAction *m_groundFillAct;
+	QAction *m_removeGroundFillAct;
 	QAction *m_tidyWiresAct;
 
 
