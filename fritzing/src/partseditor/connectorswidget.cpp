@@ -33,7 +33,7 @@ $Date$
 #include "connectorswidget.h"
 #include "../debugdialog.h"
 #include "../modelpart.h"
-#include "../connectorshared.h"
+#include "../connectors/connectorshared.h"
 
 
 ConnectorNameComboBox::ConnectorNameComboBox(int * prevSelIdx, QWidget *parent) : QComboBox(parent) {

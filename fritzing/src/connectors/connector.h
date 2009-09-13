@@ -35,8 +35,8 @@ $Date$
 #include <QSvgRenderer>
 #include <QPointer>
 
-#include "viewidentifierclass.h"
-#include "viewlayer.h"
+#include "../viewidentifierclass.h"
+#include "../viewlayer.h"
 
 class Connector
 {
@@ -64,6 +64,7 @@ public:
 	bool connectionIsAllowed(Connector* that);
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();
+	class ErcData * connectorSharedErcData();
 	const QString & busID();
 	class Bus * bus();
 	void setBus(class Bus *);

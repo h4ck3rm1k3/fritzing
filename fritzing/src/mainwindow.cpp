@@ -45,7 +45,7 @@ $Date$
 #include "items/paletteitem.h"
 #include "mainwindow.h"
 #include "debugdialog.h"
-#include "connector.h"
+#include "connectors/connector.h"
 #include "partseditor/mainpartseditorwindow.h"
 #include "partsbinpalette/partsbinpalettewidget.h"
 #include "fdockwidget.h"

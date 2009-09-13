@@ -26,7 +26,7 @@ $Date$
 
 #include "fgraphicsscene.h"
 #include "items/paletteitembase.h"
-#include "connectoritem.h"
+#include "connectors/connectoritem.h"
 #include "infographicsview.h"
 
 #include <QToolTip>

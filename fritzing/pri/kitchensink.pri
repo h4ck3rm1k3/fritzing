@@ -20,12 +20,7 @@ HEADERS += \
     src/abstractimagebutton.h \
     src/abstractstatesbutton.h \
     src/breadboardsketchwidget.h \
-    src/bus.h \
-    src/busshared.h \
     src/commands.h \
-    src/connector.h \
-    src/connectoritem.h \
-    src/connectorshared.h \
     src/console.h \
     src/debugdialog.h \
     src/dockmanager.h \
@@ -64,12 +59,7 @@ HEADERS += \
     
 SOURCES += \
     src/breadboardsketchwidget.cpp \
-    src/bus.cpp \
-    src/busshared.cpp \
     src/commands.cpp \
-    src/connector.cpp \
-    src/connectoritem.cpp \
-    src/connectorshared.cpp \
     src/console.cpp \
     src/debugdialog.cpp \
     src/dockmanager.cpp \

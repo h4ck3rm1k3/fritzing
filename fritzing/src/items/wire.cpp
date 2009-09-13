@@ -38,8 +38,8 @@ $Date$
 
 #include "../debugdialog.h"
 #include "../infographicsview.h"
-#include "../connectoritem.h"
-#include "../connectorshared.h"
+#include "../connectors/connectoritem.h"
+#include "../connectors/connectorshared.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"
 #include "../labels/partlabel.h"

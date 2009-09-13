@@ -29,7 +29,7 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 #define PARTSEDITORVIEW_H_
 
 #include "../sketchwidget.h"
-#include "../connectorshared.h"
+#include "../connectors/connectorshared.h"
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectorspaletteitem.h"
 #include "partseditorconnectorsconnectoritem.h"

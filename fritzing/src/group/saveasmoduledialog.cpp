@@ -27,7 +27,7 @@ $Date$
 #include "saveasmoduledialog.h"
 #include "../sketchwidget.h"
 #include "../sketchmodel.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 #include "../zoomablegraphicsview.h"
 #include "../partseditor/partspecificationswidget.h"
 #include "../partseditor/partseditormainwindow.h"

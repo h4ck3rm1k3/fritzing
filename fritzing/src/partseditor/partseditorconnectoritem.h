@@ -31,7 +31,7 @@ $Date$
 
 #include <QGraphicsView>
 #include "../itemselection/terminalpointitem.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 
 
 class PartsEditorConnectorItem: public ConnectorItem {

@@ -97,8 +97,8 @@
         <connector id="connector17" type="female" name="3V3">
             <description>+3.3V DC</description>
             <erc etype="VCC">
-                <param name="voltage" value="3.3" />
-                <param name="current" flow="source" valueMax="0.1" />
+                <voltage value="3.3" />
+                <current flow="source" valueMax="0.1" />
             </erc>
             <views>
                 <breadboardView>
@@ -129,8 +129,8 @@
         <connector id="connector18" type="female" name="+5V">
             <description>+5 V Regulated DC</description>
 	    <erc etype="VCC">
-                <param name="voltage" value="5.0" />
-                <param name="current" flow="source" valueMax="0.4" />
+                <voltage value="5.0" />
+                <current flow="source" valueMax="0.4" />
             </erc>
             <views>
                 <breadboardView>
@@ -147,7 +147,7 @@
         <connector id="connector19" type="female" name="GND">
             <description>Ground</description>
 	    <erc etype="ground">
-                <param name="current" flow="sink" valueMax="0.1" />
+                <current flow="sink" valueMax="0.1" />
             </erc>
             <views>
                 <breadboardView>

@@ -40,8 +40,8 @@
     <connectors>
         <connector id="connector0" type="male" name="+">
 	    <erc etype="VCC">
-		<param name="voltage" value="3.0" />
-		<param name="current" flow="source" valueMax="0.1" />
+		<voltage value="3.0" />
+		<current flow="source" valueMax="0.1" />
 	    </erc>
             <description>+ side</description>
             <views>
@@ -57,8 +57,8 @@
             </views>
         </connector>
         <connector id="connector1" type="male" name="-">
-	    <erc etype="ground">
-                <param name="current" flow="sink" valueMax="0.1" />
+	      <erc etype="ground">
+                <current flow="sink" valueMax="0.1" />
             </erc>
             <description>- side</description>
             <views>

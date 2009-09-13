@@ -31,10 +31,10 @@ $Date$
 #include "layerkinpaletteitem.h"
 #include "../fsvgrenderer.h"
 #include "../layerattributes.h"
-#include "../connectorshared.h"
+#include "../connectors/connectorshared.h"
 #include "../labels/partlabel.h"
 #include "../commands.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 
 #include <math.h>
 

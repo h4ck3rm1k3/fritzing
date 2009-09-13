@@ -32,12 +32,13 @@ $Date$
 #include <math.h>
 #include <limits>
 
-#include "infographicsview.h"
-#include "debugdialog.h"
+#include "../infographicsview.h"
+#include "../debugdialog.h"
 #include "bus.h"
-#include "items/wire.h"
-#include "modelpart.h"
-#include "utils/graphicsutils.h"
+#include "../items/wire.h"
+#include "../modelpart.h"
+#include "../utils/graphicsutils.h"
+#include "ercdata.h"
 
 QList<ConnectorItem *>  ConnectorItem::m_equalPotentialDisplayItems;
 const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
@@ -569,6 +570,12 @@ const QString & ConnectorItem::connectorSharedID() {
 	if (m_connector == NULL) return ___emptyString___;
 
 	return m_connector->connectorSharedID();
+}
+
+ErcData * ConnectorItem::connectorSharedErcData() {
+	if (m_connector == NULL) return NULL;
+
+	return m_connector->connectorSharedErcData();
 }
 
 const QString & ConnectorItem::connectorSharedName() {

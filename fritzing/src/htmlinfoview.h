@@ -36,7 +36,7 @@ $Date$
 
 #include "items/itembase.h"
 #include "items/wire.h"
-#include "connectoritem.h"
+#include "connectors/connectoritem.h"
 #include "referencemodel/referencemodel.h"
 
 class HtmlInfoView : public QFrame

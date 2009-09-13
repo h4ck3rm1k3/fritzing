@@ -57,6 +57,7 @@ $Date$
 #include "help/tipsandtricks.h"
 #include "dialogs/setcolordialog.h"
 #include "utils/folderutils.h"
+#include "connectors/ercdata.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -2516,6 +2517,13 @@ void MainWindow::exportNetlist() {
 			part.setAttribute("id", itemBase->id());
 			part.setAttribute("label", itemBase->instanceTitle());
 			part.setAttribute("title", itemBase->title());
+			ErcData * ercData = connectorItem->connectorSharedErcData();
+			if (ercData != NULL) {
+				QDomElement erc = doc.createElement("erc");
+				if (ercData->writeToElement(erc, doc)) {
+					connector.appendChild(erc);
+				}
+			}
 		}
 	}
 

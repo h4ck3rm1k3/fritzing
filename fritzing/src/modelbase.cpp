@@ -116,7 +116,6 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 
 bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & modelParts)
 {
-   	QHash<long, ModelPart *> partHash;
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
    	while (!instance.isNull()) {
@@ -146,8 +145,6 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
    		bool ok;
    		long index = instance.attribute("modelIndex").toLong(&ok);
    		if (ok) {
-   			partHash.insert(index, modelPart);
-
 			// set the index so we can find the same model part later, as we continue loading
 			modelPart->setModelIndex(index);
   		}

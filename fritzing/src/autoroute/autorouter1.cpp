@@ -30,7 +30,7 @@ $Date$
 #include "../items/virtualwire.h"
 #include "../items/tracewire.h"
 #include "../utils/graphicsutils.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 
 #include <math.h>
 #include <QApplication>

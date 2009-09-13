@@ -35,7 +35,7 @@ $Date$
 #include <QPointer>
 
 #include "connector.h"
-#include "items/itembase.h"
+#include "../items/itembase.h"
 
 class ConnectorItem : public QObject, public QGraphicsRectItem
 {
@@ -70,6 +70,7 @@ public:
 	const QString & attachedToTitle();
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();
+	ErcData * connectorSharedErcData();
 	const QString & busID();
 	ModelPartShared * modelPartShared();
 	ModelPart * modelPart();

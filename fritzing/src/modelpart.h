@@ -41,7 +41,7 @@ $Date$
 
 #include "items/itembase.h"
 #include "modelpartshared.h"
-#include "connector.h"
+#include "connectors/connector.h"
 #include "svgandpartfilepath.h"
 
 class ModelPart : public QObject

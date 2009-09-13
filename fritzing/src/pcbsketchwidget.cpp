@@ -33,7 +33,7 @@ $Date$
 #include "items/resizableboard.h"
 #include "waitpushundostack.h"
 #include "autoroute/autorouter1.h"
-#include "connectoritem.h"
+#include "connectors/connectoritem.h"
 #include "help/sketchmainhelp.h"
 
 #include <limits>

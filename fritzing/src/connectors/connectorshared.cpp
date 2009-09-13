@@ -25,9 +25,10 @@ $Date$
 ********************************************************************/
 
 #include "connectorshared.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 #include "connector.h"
 #include "busshared.h"
+#include "ercdata.h"
 
 ConnectorShared::ConnectorShared()
 {
@@ -37,16 +38,23 @@ ConnectorShared::ConnectorShared()
 	m_type = Connector::Unknown;
 	m_description = "";
 	m_bus = NULL;
+	m_ercData = NULL;
 }
 
 ConnectorShared::ConnectorShared( const QDomElement & domElement )
 {
+	m_ercData = NULL;
 	m_id = domElement.attribute("id", "");
 	m_name = domElement.attribute("name", "");
 	//DebugDialog::debug(QString("\tname:%1 id:%2").arg(m_name).arg(m_id));
 	m_typeString = domElement.attribute("type", "");
 	m_type = Connector::connectorTypeFromName(m_typeString);
 	m_description = domElement.firstChildElement("description").text();
+	QDomElement erc = domElement.firstChildElement("erc");
+	if (!erc.isNull()) {
+		m_ercData = new ErcData(erc);
+	}
+
 	loadPins(domElement);
 	m_bus = NULL;
 }
@@ -56,6 +64,9 @@ ConnectorShared::~ConnectorShared() {
 		delete svgIdLayer;
 	}
 	 m_pins.clear();
+	 if (m_ercData) {
+		 delete m_ercData;
+	 }
 }
 
 
@@ -186,4 +197,8 @@ BusShared * ConnectorShared::bus() {
 const QString & ConnectorShared::busID() {
 	if (m_bus == NULL) return ___emptyString___;
 		return m_bus->id();
+}
+
+ErcData * ConnectorShared::ercData() {
+	return m_ercData;
 }

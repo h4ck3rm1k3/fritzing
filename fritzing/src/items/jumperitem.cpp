@@ -25,7 +25,7 @@ $Date: 2009-06-18 20:07:42 +0200 (Thu, 18 Jun 2009) $
 ********************************************************************/
 
 #include "jumperitem.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 #include "../fsvgrenderer.h"
 #include "../layerattributes.h"
 #include "../modelpart.h"

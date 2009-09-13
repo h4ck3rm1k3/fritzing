@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "clipablewire.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 #include "../modelpart.h"
 #include <math.h>
 

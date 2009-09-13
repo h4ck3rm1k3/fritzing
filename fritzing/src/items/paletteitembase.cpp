@@ -29,10 +29,10 @@ $Date$
 #include "../debugdialog.h"
 #include "../fsvgrenderer.h"
 #include "../svg/svgfilesplitter.h"
-#include "../connectorshared.h"
+#include "../connectors/connectorshared.h"
 #include "../layerattributes.h"
 #include "layerkinpaletteitem.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 #include "wire.h"
 
 #include <math.h>

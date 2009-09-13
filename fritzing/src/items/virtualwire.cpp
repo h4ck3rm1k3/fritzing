@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "virtualwire.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 
 VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)

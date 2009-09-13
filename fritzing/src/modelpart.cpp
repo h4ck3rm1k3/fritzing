@@ -26,9 +26,9 @@ $Date$
 
 #include "modelpart.h"
 #include "debugdialog.h"
-#include "connectorshared.h"
-#include "busshared.h"
-#include "bus.h"
+#include "connectors/connectorshared.h"
+#include "connectors/busshared.h"
+#include "connectors/bus.h"
 #include "version/version.h"
 #include "utils/folderutils.h"
 

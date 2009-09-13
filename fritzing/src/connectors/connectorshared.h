@@ -31,7 +31,7 @@ $Date$
 #include <QDomElement>
 #include <QMultiHash>
 
-#include "viewlayer.h"
+#include "../viewlayer.h"
 #include "connector.h"
 
 
@@ -46,7 +46,6 @@ struct SvgIdLayer {
 	qreal m_radius;
 	qreal m_strokeWidth;
 };
-
 
 class ConnectorShared : public QObject
 {
@@ -77,6 +76,7 @@ public:
 	class BusShared * bus();
 	void setBus(class BusShared *);
 	const QString & busID();
+	class ErcData * ercData();
 
 protected:
 	void loadPins(const QDomElement & domElement);
@@ -87,14 +87,11 @@ protected:
 	QString m_name;
 	QString m_typeString;
 	Connector::ConnectorType m_type;
-
-	/*
-	 * The connectorId is used to generate the attribute svgId and terminalId in the FZ file,
-	 * appending the words "pin" and "terminal" (respectively) to it
-	 */
-	QMultiHash<ViewIdentifierClass::ViewIdentifier, SvgIdLayer*> m_pins;
-
+	QString m_ercType;
+	class ErcData * m_ercData;
 	class BusShared * m_bus;
+
+	QMultiHash<ViewIdentifierClass::ViewIdentifier, SvgIdLayer*> m_pins;
 };
 
 static QList<ConnectorShared *> ___emptyConnectorSharedList___;

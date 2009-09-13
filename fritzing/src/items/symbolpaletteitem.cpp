@@ -26,7 +26,7 @@ $Date$
 
 #include "symbolpaletteitem.h"
 #include "../debugdialog.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 
 #include <QMultiHash>
 

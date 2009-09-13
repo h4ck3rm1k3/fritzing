@@ -24,60 +24,41 @@ $Date$
 
 ********************************************************************/
 
-#include "bus.h"
 #include "busshared.h"
 #include "connectorshared.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 #include "connectoritem.h"
-#include "modelpart.h"
 
-
-QHash<QString, class Bus *> Bus::___emptyBusList___;
-
-
-Bus::Bus(BusShared * busShared, ModelPart * modelPart)
+BusShared::BusShared(const QDomElement & busElement, const QHash<QString, ConnectorShared *> & connectorHash)
 {
-	m_busShared = busShared;
-	m_modelPart = modelPart;
-	m_busConnector = NULL;
-
+	m_id = busElement.attribute("id");
+	
+	QDomElement connector = busElement.firstChildElement("nodeMember");
+	while (!connector.isNull()) {
+		QString id = connector.attribute("connectorId");
+		if (id.isNull()) continue;
+		if (id.isEmpty()) continue;
+				
+		ConnectorShared * stuff = connectorHash.value(id);
+		if (stuff == NULL) continue;
+		
+		m_connectors.append(stuff);
+		stuff->setBus(this);
+		
+		connector = connector.nextSiblingElement("nodeMember");
+	}
+	
 }
 
-const QString & Bus::id() {
-	if (m_busShared == NULL) return ___emptyString___;
-
-	return m_busShared->id();
+const QString & BusShared::id() {
+	return m_id;
 }
 
 
-const QList<Connector *> & Bus::connectors() {
+const QList<ConnectorShared *> & BusShared::connectors() {
 	return m_connectors;
 }
 
-void Bus::addViewItem(ConnectorItem * item) {
-	m_connectorItems.append(item);
-}
-
-void Bus::removeViewItem(ConnectorItem * item) {
-	m_connectorItems.removeOne(item);
-}
-
-void Bus::addConnector(Connector * connector) {
-	// the list of connectors which make up the bus
-	m_connectors.append(connector);
-}
-
-Connector * Bus::busConnector() {
-	if (m_busConnector == NULL) {
-		m_busConnector = new Connector(NULL, m_modelPart);
-		m_busConnector->setBus(this);
-	}
-
-	return m_busConnector;
-}
-
-ModelPart * Bus::modelPart() {
-	return m_modelPart;
-}
 
 
+	

@@ -25,9 +25,9 @@ $Date$
 ********************************************************************/
 
 #include "modelpartshared.h"
-#include "connectorshared.h"
+#include "connectors/connectorshared.h"
 #include "debugdialog.h"
-#include "busshared.h"
+#include "connectors/busshared.h"
 
 #include <QHash>
 

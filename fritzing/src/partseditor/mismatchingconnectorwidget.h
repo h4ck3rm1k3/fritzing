@@ -31,7 +31,7 @@ $Date$
 
 #include <QLabel>
 #include "abstractconnectorinfowidget.h"
-#include "../connector.h"
+#include "../connectors/connector.h"
 
 class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 	Q_OBJECT

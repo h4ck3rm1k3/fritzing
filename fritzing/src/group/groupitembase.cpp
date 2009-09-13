@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "groupitembase.h"
-#include "../connectoritem.h"
+#include "../connectors/connectoritem.h"
 #include "../debugdialog.h"
 #include "../items/wire.h"
 #include "../modelpart.h"

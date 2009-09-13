@@ -27,11 +27,11 @@ $Date$
 #include "connector.h"
 #include "connectorshared.h"
 #include "connectoritem.h"
-#include "debugdialog.h"
-#include "modelpart.h"
+#include "../debugdialog.h"
+#include "../modelpart.h"
 #include "bus.h"
-#include "fsvgrenderer.h"
-
+#include "../fsvgrenderer.h"
+#include "ercdata.h"
 
 QHash <Connector::ConnectorType, QString > Connector::names;
 
@@ -198,6 +198,11 @@ const QString & Connector::connectorSharedName() {
 	return m_connectorShared->name();
 }
 
+ErcData * Connector::connectorSharedErcData() {
+	if (m_connectorShared == NULL) return NULL;
+
+	return m_connectorShared->ercData();
+}
 
 const QString & Connector::busID() {
 	if (m_bus == NULL) return ___emptyString___;
