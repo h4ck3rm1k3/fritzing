@@ -786,6 +786,11 @@ void FApplication::createUserDataStoreFolderStructure() {
 			}
 #endif
 		}
+		QFlags<QFile::Permission> ps = QFile::permissions(BinManager::MyPartsBinLocation);
+		QFile::setPermissions(
+			BinManager::MyPartsBinLocation,
+			QFile::WriteOwner | QFile::WriteUser | ps
+		);
 	}
 }
 
