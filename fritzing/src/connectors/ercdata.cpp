@@ -54,6 +54,7 @@ ErcData::ErcData(const QDomElement & ercElement)
 {
 	m_eType = UnknownEType;
 	m_currentFlow = UnknownFlow;
+	m_ignore = Never;
 
 	QString eType = ercElement.attribute("etype");
 	if (eType.compare("VCC", Qt::CaseInsensitive) == 0) {
@@ -63,6 +64,14 @@ ErcData::ErcData(const QDomElement & ercElement)
 		m_eType = Ground;
 	}
 
+	QString ig = ercElement.attribute("ignore");
+	if (ig.compare("ifUnconnected", Qt::CaseInsensitive) == 0) {
+		m_ignore = IfUnconnected;
+	}
+	else if (ig.compare("always", Qt::CaseInsensitive) == 0) {
+		m_ignore = Always;
+	}
+		
 	QDomElement ercChild = ercElement.firstChildElement();
 	while (!ercChild.isNull()) {
 		QString nodeName = ercChild.nodeName();
@@ -158,6 +167,13 @@ void ErcData::writeVoltage(QDomElement & parent, QDomDocument & doc) {
 	}
 }
 
+ErcData::EType ErcData::eType() {
+	return m_eType;
+}
+
+ErcData::Ignore ErcData::ignore() {
+	return m_ignore;
+}
 
 
 	

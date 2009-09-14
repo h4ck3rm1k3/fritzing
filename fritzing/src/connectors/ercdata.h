@@ -61,11 +61,19 @@ public:
 		Sink,
 		UnknownFlow
 	};
+
+	enum Ignore {
+		Never,
+		Always,
+		IfUnconnected
+	};
 	
 public:
 	ErcData(const QDomElement & ercElement);
 
 	bool writeToElement(QDomElement & ercElement, QDomDocument & doc);
+	EType eType();
+	Ignore ignore();
 
 protected:
 	void readVoltage(QDomElement &);
@@ -75,6 +83,7 @@ protected:
 	
 protected:
 	EType m_eType;
+	Ignore m_ignore;
 	ValidReal m_voltage;
 	ValidReal m_voltageMin;
 	ValidReal m_voltageMax;

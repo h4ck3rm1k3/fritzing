@@ -2496,6 +2496,33 @@ void MainWindow::exportNetlist() {
 
 	// TODO: filter out 'ignore' connectors
 
+	QList< QList<ConnectorItem *>* > deleteNets;
+	foreach (QList<ConnectorItem *> * net, netList) {
+		QList<ConnectorItem *> deleteItems;
+		foreach (ConnectorItem * connectorItem, *net) {
+			ErcData * ercData = connectorItem->connectorSharedErcData();
+			if (ercData == NULL) continue;
+
+			if (ercData->ignore() == ErcData::Always) {
+				deleteItems.append(connectorItem);
+			}
+			else if ((ercData->ignore() == ErcData::IfUnconnected) && (net->count() == 1)) {
+				deleteItems.append(connectorItem);
+			}
+		}
+
+		foreach (ConnectorItem * connectorItem, deleteItems) {
+			net->removeOne(connectorItem);
+		}
+		if (net->count() == 0) {
+			deleteNets.append(net);
+		}
+	}
+
+	foreach (QList<ConnectorItem *> * net, deleteNets) {
+		netList.removeOne(net);
+	}
+
 	foreach (QList<ConnectorItem *> * net, netList) {
 		QDomElement netElement = doc.createElement("net");
 		netlist.appendChild(netElement);
