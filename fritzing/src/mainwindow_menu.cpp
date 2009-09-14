@@ -1497,52 +1497,46 @@ void MainWindow::updateLayerMenu() {
 }
 
 void MainWindow::updateWireMenu() {
+	// assumes update wire menu is only called when right-clicking a wire
+	// so that all selected wires are chained
 	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
-	m_addBendpointAct->setEnabled(false);
-	if (items.count() == 1) {
-		enableAddBendpointAct(items[0]);
-	}
+	enableAddBendpointAct(items[0]);
 	Wire * wire = NULL;
-	bool enableAll = false;
+	bool enableAll = true;
 	bool deleteOK = false;
 	bool createTraceOK = false;
 	bool createJumperOK = false;
 	bool excludeOK = false;
 	bool enableZOK = true;
-	if (items.count() == 1) {
-		enableAll = true;
-		wire = dynamic_cast<Wire *>(items[0]);
-		if (wire != NULL) {
-			if (wire->getRatsnest()) {
-				QList<ConnectorItem *> ends;
-				Wire * jt = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
-				createJumperOK = (jt == NULL) || (!jt->getJumper());
-				createTraceOK = (jt == NULL) || (!jt->getTrace());
-			}
-			else if (wire->getJumper()) {
-				deleteOK = true;
-				createTraceOK = true;
-				excludeOK = true;
-				m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
-			}
-			else if (wire->getTrace()) {
-				deleteOK = true;
-				createJumperOK = true;
-				excludeOK = true;
-				m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
-			}
+	wire = dynamic_cast<Wire *>(items[0]);
+	if (wire != NULL) {
+		if (wire->getRatsnest()) {
+			QList<ConnectorItem *> ends;
+			Wire * jt = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
+			createJumperOK = (jt == NULL) || (!jt->getJumper());
+			createTraceOK = (jt == NULL) || (!jt->getTrace());
+		}
+		else if (wire->getJumper()) {
+			deleteOK = true;
+			createTraceOK = true;
+			excludeOK = true;
+			m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
+		}
+		else if (wire->getTrace()) {
+			deleteOK = true;
+			createJumperOK = true;
+			excludeOK = true;
+			m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
+		}
+		else {
+			deleteOK = true;
 		}
 	}
 
-	if (wire == NULL || items.count() != 1) {
-		m_wireColorMenu->setEnabled(false);
-	}
-	else {
-		m_wireColorMenu->setEnabled(true);
-		foreach (QAction * action, m_wireColorMenu->actions()) {
-			QString colorName = action->data().toString();
-			action->setChecked(colorName.compare(wire->colorString()) == 0);
-		}
+	m_wireColorMenu->setEnabled(true);
+	foreach (QAction * action, m_wireColorMenu->actions()) {
+		QString colorName = action->data().toString();
+		action->setChecked(colorName.compare(wire->colorString()) == 0);
 	}
 
 	m_bringToFrontAct->setEnabled(enableZOK);
@@ -1598,7 +1592,6 @@ void MainWindow::updatePartMenu() {
 	updateItemMenu();
 	updateEditMenu();
 
-	m_addBendpointAct->setEnabled(false);
 	if (itemCount.selCount == 1) {
 		enableAddBendpointAct(m_currentGraphicsView->scene()->selectedItems()[0]);
 	}
@@ -2719,7 +2712,7 @@ bool MainWindow::alreadyOpen(const QString & fileName) {
 }
 
 void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
-	// assumes act is disabled already
+	m_addBendpointAct->setEnabled(false);
 
 	Wire * wire = dynamic_cast<Wire *>(graphicsItem);
 	if (wire == NULL) return;

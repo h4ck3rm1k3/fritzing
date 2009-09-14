@@ -76,8 +76,10 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 ConnectorItem::~ConnectorItem() {
 	m_equalPotentialDisplayItems.removeOne(this);
 	//DebugDialog::debug(QString("deleting connectorItem %1").arg((long) this, 0, 16));
-	for (int i = 0; i < m_connectedTo.count(); i++) {
-		m_connectedTo[i]->tempRemove(this, true);
+	foreach (ConnectorItem * connectorItem, m_connectedTo) {
+		if (connectorItem != NULL) {
+			connectorItem->tempRemove(this, true);
+		}
 	}
 	if (this->connector() != NULL) {
 		this->connector()->removeViewItem(this);
@@ -528,7 +530,7 @@ bool ConnectorItem::connectedTo(ConnectorItem * connectorItem) {
 	return this->m_connectedTo.contains(connectorItem);
 }
 
-const QList<ConnectorItem *> & ConnectorItem::connectedToItems() {
+const QList< QPointer<ConnectorItem> > & ConnectorItem::connectedToItems() {
 	return m_connectedTo;
 }
 

@@ -61,7 +61,7 @@ public:
 	QPointF adjustedTerminalPoint();
 	QPointF sceneAdjustedTerminalPoint(ConnectorItem * anchor);
 	bool connectedTo(ConnectorItem *);
-	const QList<ConnectorItem *> & connectedToItems();
+	const QList< QPointer<ConnectorItem> > & connectedToItems();
 	void setHidden(bool hidden);
 	ConnectorItem * overConnectorItem();
 	void setOverConnectorItem(ConnectorItem *);
@@ -129,7 +129,7 @@ protected:
 protected:
 	Connector * m_connector;
 	QPointer<ItemBase> m_attachedTo;
-	QList<ConnectorItem *> m_connectedTo;
+	QList< QPointer<ConnectorItem> > m_connectedTo;
 	QPointF m_terminalPoint;
 	bool m_hidden;
 	bool m_paint;

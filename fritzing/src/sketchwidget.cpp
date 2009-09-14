@@ -2520,7 +2520,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		chained = true;
 	}
 
-	QList<ConnectorItem *> former = from->connectedToItems();
+	QList< QPointer<ConnectorItem> > former = from->connectedToItems();
 
 	QString prefix;
 	QString suffix;
