@@ -619,7 +619,7 @@ void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
 	}
 }
 
-bool ConnectorsInfoWidget::connectorRemoved() {
+bool ConnectorsInfoWidget::connectorsRemoved() {
 	return m_connRemoved;
 }
 
@@ -628,5 +628,9 @@ bool ConnectorsInfoWidget::connectorAdded() {
 }
 
 bool ConnectorsInfoWidget::connectorsCountChanged() {
-return connectorRemoved() || connectorAdded();
+	return connectorsRemoved() || connectorAdded();
+}
+
+bool ConnectorsInfoWidget::hasMismatchingConnectors() {
+	return m_mismatchConnsInfo.size() > 0;
 }

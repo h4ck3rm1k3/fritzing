@@ -474,7 +474,7 @@ void PartsEditorMainWindow::loadPcbFootprint(){
 }
 
 bool PartsEditorMainWindow::save() {
-	if(validateMinRequirements() && wannaSaveAfterWarning()) {
+	if(validateMinRequirements() && wannaSaveAfterWarning(false)) {
 		bool result = FritzingWindow::save();
 		if(result) m_cancelCloseButton->setText(tr("close"));
 		return result;
@@ -539,7 +539,7 @@ bool PartsEditorMainWindow::saveAs() {
 		saveAsAux(filename);
 
 
-		if(wannaSaveAfterWarning()) {
+		if(wannaSaveAfterWarning(true)) {
 			m_savedAsNewPart = true;
 			m_updateEnabled = true;
 			updateButtons();
@@ -692,19 +692,32 @@ void PartsEditorMainWindow::updateSaveButton() {
 	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
 }
 
-bool PartsEditorMainWindow::wannaSaveAfterWarning() {
+bool PartsEditorMainWindow::wannaSaveAfterWarning(bool savingAsNew) {
 	bool doEmit = true;
-	if(m_saveButton && m_connsInfo->connectorRemoved()) {
+	bool errorFound = false;
+	QString msg = "Some errors found:\n";
+	if(!m_savedAsNewPart && !savingAsNew && m_connsInfo->connectorsRemoved()) {
+		errorFound = true;
+		msg += "- The connectors defined in this part have changed.\n"
+				"If you save it, you may break other sketches that already use it.\n";
+	}
+
+	if(m_connsInfo->hasMismatchingConnectors()) {
+		errorFound = true;
+		msg += "- Some connectors are not present in all views."
+				"If you save now, they will be removed.\n";
+	}
+
+	if(errorFound) {
+		msg += "\nDo you want to save anyway?";
 		QMessageBox::StandardButton btn = QMessageBox::question(this,
 			tr("Updating existing part"),
-			tr("The connectors defined in this part have changed.\n"
-				"If you save it, you may break other sketches that already use it.\n"
-				"Do you really want to save it?"
-			),
+			msg,
 			QMessageBox::Ok|QMessageBox::Cancel
 		);
 		doEmit = (btn == QMessageBox::Ok);
 	}
+
 	if(doEmit) emit saveButtonClicked();
 
 	return doEmit;

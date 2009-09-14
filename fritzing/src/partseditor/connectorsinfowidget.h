@@ -48,8 +48,9 @@ class ConnectorsInfoWidget : public QFrame {
 		void setViews(PartsEditorViewsWidget* connsView);
 
 		bool connectorsCountChanged();
-		bool connectorRemoved();
+		bool connectorsRemoved();
 		bool connectorAdded();
+		bool hasMismatchingConnectors();
 
 	public slots:
 		void connectorsFound(QList<Connector *>);

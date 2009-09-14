@@ -91,7 +91,7 @@ protected:
 	const QString defaultSaveFolder();
 
 	void updateSaveButton();
-	bool wannaSaveAfterWarning();
+	bool wannaSaveAfterWarning(bool savingAsNew);
 	void updateButtons();
 	const QString fritzingTitle();
 
