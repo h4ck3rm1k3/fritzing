@@ -324,7 +324,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 }
 
 void PartsBinPaletteWidget::createOpenBinMenu() {
-	m_openBinMenu = new QMenu(tr("Open..."),this);
+	m_openBinMenu = new QMenu(tr("Open"),this);
 
 	m_openBinAction = new QAction(tr("From file..."),this);
 	m_openCoreBinAction = new QAction(tr("Core"),this);
