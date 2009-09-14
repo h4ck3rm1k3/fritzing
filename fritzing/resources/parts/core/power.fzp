@@ -41,24 +41,43 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="V+" >
-   <description>Positive Supply Voltage</description>
-   <erc etype="VCC">
-      <voltage value="5.0" />
-      <current flow="source" valueMax="0" />
-   </erc>
-   <views>
-    <breadboardView>
-     <p svgId="connector0pin" layer="schematic" />
-    </breadboardView>
-    <schematicView>
-      <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
-    </schematicView>
-    <pcbView>
-     <p svgId="connector0pin" layer="schematic" />
-    </pcbView>
-   </views>
-  </connector>
+   <connector type="male" id="connector0" name="V+" >
+     <description>Positive Supply Voltage</description>
+     <erc etype="VCC">
+       <voltage value="5.0" />
+       <current flow="source" valueMax="0" />
+     </erc>
+     <views>
+       <breadboardView>
+         <p svgId="connector0pin" layer="schematic" />
+       </breadboardView>
+       <schematicView>
+         <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+       </schematicView>
+       <pcbView>
+         <p svgId="connector0pin" layer="schematic" />
+       </pcbView>
+     </views>
+   </connector>
+   <connector type="male" id="connector1" name="GND" >
+     <description>Ground</description>
+     <erc etype="ground">
+       <current flow="sink" valueMax="0" />
+     </erc>
+     <views>
+       <breadboardView>
+         <p svgId="connector1pin" layer="schematic" />
+       </breadboardView>
+       <schematicView>
+         <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+       </schematicView>
+       <pcbView>
+         <p svgId="connector1pin" layer="schematic" />
+       </pcbView>
+     </views>
+   </connector>
+
+
  </connectors>
  <buses>
    <bus id="powerbus" >
