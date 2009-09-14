@@ -48,6 +48,8 @@ $Date$
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 
+bool PartsBinPaletteWidget::m_openUserBinMenuCreated = false;
+QHash<QString,QString> PartsBinPaletteWidget::m_userBinsInfo = QHash<QString,QString>();
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
@@ -293,10 +295,8 @@ QAction* PartsBinPaletteWidget::newTitleAction(const QString &text) {
 
 void PartsBinPaletteWidget::createBinMenu() {
 	m_binMenuButton = newToolButton("partsBinBinMenu");
-
+	createOpenBinMenu();
 	m_newBinAction = new QAction(tr("New..."), this);
-	m_openBinAction = new QAction(tr("Open..."),this);
-	m_openCoreBinAction = new QAction(tr("Open Core"),this);
 	m_closeBinAction = new QAction(tr("Close"),this);
 	m_saveAction = new QAction(tr("Save"),this);
 	m_saveAsAction = new QAction(tr("Save As..."),this);
@@ -304,8 +304,6 @@ void PartsBinPaletteWidget::createBinMenu() {
 	m_renameAction = new QAction(tr("Rename..."),this);
 
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBin()));
-	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openNewBin()));
-	connect(m_openCoreBinAction, SIGNAL(triggered()),this, SLOT(openCoreBin()));
 	connect(m_closeBinAction, SIGNAL(triggered()),this, SLOT(closeBin()));
 	connect(m_saveAction, SIGNAL(triggered()),this, SLOT(save()));
 	connect(m_saveAsAction, SIGNAL(triggered()),this, SLOT(saveAs()));
@@ -315,8 +313,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	QMenu *menu = new QMenu(this);
 	menu->addAction(newTitleAction(tr("Bin")));
 	menu->addAction(m_newBinAction);
-	menu->addAction(m_openBinAction);
-	menu->addAction(m_openCoreBinAction);
+	menu->addMenu(m_openBinMenu);
 	menu->addSeparator();
 	menu->addAction(m_closeBinAction);
 	menu->addAction(m_saveAction);
@@ -324,6 +321,79 @@ void PartsBinPaletteWidget::createBinMenu() {
 	menu->addAction(m_saveAsBundledAction);
 	menu->addAction(m_renameAction);
 	m_binMenuButton->setMenu(menu);
+}
+
+void PartsBinPaletteWidget::createOpenBinMenu() {
+	m_openBinMenu = new QMenu(tr("Open..."),this);
+
+	m_openBinAction = new QAction(tr("From file..."),this);
+	m_openCoreBinAction = new QAction(tr("Core"),this);
+	m_openAllBinAction = new QAction(tr("All Parts"),this);
+	m_openNonCoreBinAction = new QAction(tr("All User Parts"),this);
+
+	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openNewBin()));
+	connect(m_openCoreBinAction, SIGNAL(triggered()),this, SLOT(openCoreBin()));
+	connect(m_openAllBinAction, SIGNAL(triggered()),this, SLOT(openAllBin()));
+	connect(m_openNonCoreBinAction, SIGNAL(triggered()),this, SLOT(openNonCoreBin()));
+
+	m_openBinMenu->addAction(m_openCoreBinAction);
+	m_openBinMenu->addAction(m_openAllBinAction);
+	m_openBinMenu->addSeparator();
+
+	QHash<QString /*binFile*/, QString /*binName*/> userBins = getUserBinsInfo();
+	foreach(QString binFile, userBins.keys()) {
+		QAction *action = new QAction(userBins[binFile],this);
+		action->setData(binFile);
+		connect(action, SIGNAL(triggered()),this, SLOT(openUserBin()));
+		m_openBinMenu->addAction(action);
+	}
+
+	m_openBinMenu->addAction(m_openNonCoreBinAction);
+	m_openBinMenu->addSeparator();
+	m_openBinMenu->addAction(m_openBinAction);
+
+}
+
+QHash<QString,QString> PartsBinPaletteWidget::getUserBinsInfo() {
+	if(!m_openUserBinMenuCreated) {
+		 QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
+		 QStringList filters;
+		 filters << "*"+FritzingBinExtension;
+		 QFileInfoList files = userBinsDir.entryInfoList(filters);
+		 foreach(QFileInfo info, files) {
+			 QString binName = getBinName(info);
+			 m_userBinsInfo[info.filePath()] = binName;
+		 }
+		 m_openUserBinMenuCreated = true;
+	}
+	return m_userBinsInfo;
+}
+
+QString PartsBinPaletteWidget::getBinName(const QFileInfo &info) {
+	QString binTitle = "";
+
+	QFile binFile(info.filePath());
+	if (binFile.open(QFile::ReadOnly | QFile::Text)) {
+		QString content(binFile.readAll());
+		QRegExp regexp("<title>(.+)</title>");
+
+		if (regexp.indexIn(content) >= 0) {
+			binTitle = regexp.cap(1);
+		}
+	}
+
+	if(binTitle != ___emptyString___) {
+		return binTitle;
+	} else {
+		return info.fileName();
+	}
+}
+
+void PartsBinPaletteWidget::openUserBin() {
+	QAction *action = qobject_cast<QAction *>(sender());
+	if (action) {
+		openNewBin(action->data().toString());
+	}
 }
 
 void PartsBinPaletteWidget::createPartMenu() {
@@ -654,6 +724,14 @@ void PartsBinPaletteWidget::openNewBin(const QString &filename) {
 
 void PartsBinPaletteWidget::openCoreBin() {
 	m_manager->openCoreBinIn(m_tabWidget);
+}
+
+void PartsBinPaletteWidget::openAllBin() {
+	openNewBin(BinManager::AllPartsBinLocation);
+}
+
+void PartsBinPaletteWidget::openNonCoreBin() {
+	openNewBin(BinManager::NonCorePartsBinLocation);
 }
 
 void PartsBinPaletteWidget::closeBin() {

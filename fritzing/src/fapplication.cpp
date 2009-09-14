@@ -346,8 +346,7 @@ int FApplication::startup(bool firstRun)
 		ZoomComboBox::loadFactors();
 		Helper::initText();
 		PartsEditorMainWindow::initText();
-		BinManager::MyPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/my_parts.fzb";
-		BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
+		BinManager::initNames();
 		PaletteModel::initNames();
 
 		QList<int> fontIds;

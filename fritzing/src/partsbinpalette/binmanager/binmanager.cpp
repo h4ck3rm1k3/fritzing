@@ -47,6 +47,8 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 QString BinManager::Title;
 QString BinManager::MyPartsBinLocation;
 QString BinManager::MyPartsBinTemplateLocation;
+QString BinManager::AllPartsBinLocation;
+QString BinManager::NonCorePartsBinLocation;
 
 QString BinManager::StandardBinStyle = "background-color: gray;";
 QString BinManager::CurrentBinStyle = "background-color: black;";
@@ -551,4 +553,11 @@ void BinManager::openBin(const QString &filename) {
 
 MainWindow* BinManager::mainWindow() {
 	return m_mainWindow;
+}
+
+void BinManager::initNames() {
+	BinManager::MyPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/my_parts.fzb";
+	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
+	BinManager::AllPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.fzb";
+	BinManager::NonCorePartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/nonCoreParts.fzb";
 }

@@ -109,6 +109,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void undoStackCleanChanged(bool isClean);
 		void newBin();
 		void openCoreBin();
+		void openAllBin();
+		void openNonCoreBin();
+		void openUserBin();
 		void closeBin();
 		void newPart();
 		void importPart();
@@ -147,6 +150,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool isOverFooter(QDropEvent* event);
 
 		void createBinMenu();
+		void createOpenBinMenu();
 		void createPartMenu();
 		void createContextMenus();
 		QToolButton* newToolButton(const QString& btnObjName, const QString& imgPath = ___emptyString___, const QString &text = ___emptyString___);
@@ -155,6 +159,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 		void setFilename(const QString &filename);
+		QHash<QString,QString> getUserBinsInfo();
+		QString getBinName(const QFileInfo &info);
 
 	protected:
 		PaletteModel *m_model;
@@ -182,8 +188,11 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QMenu *m_binContextMenu;
 		QToolButton *m_binMenuButton;
 		QAction *m_newBinAction;
+		QMenu *m_openBinMenu;
 		QAction *m_openBinAction;
 		QAction *m_openCoreBinAction;
+		QAction *m_openAllBinAction;
+		QAction *m_openNonCoreBinAction;
 		QAction *m_closeBinAction;
 		QAction *m_saveAction;
 		QAction *m_saveAsAction;
@@ -205,6 +214,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		StackTabWidget *m_tabWidget;
 
 		QStringList m_alienParts;
+
+		static bool m_openUserBinMenuCreated;
+		static QHash<QString /*binFile*/, QString /*binName*/> m_userBinsInfo;
 
 	public:
 		static QString Title;
