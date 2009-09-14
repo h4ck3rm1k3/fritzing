@@ -4,14 +4,7 @@
 	 id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg" sodipodi:docname="peltier_sensor.svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" sodipodi:version="0.32" inkscape:version="0.46" inkscape:output_extension="org.inkscape.output.svg.inkscape"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.78in" height="1.19in"
 	 viewBox="0 0 56.16 85.68" xml:space="preserve">
-<defs>
-	
-	
-		<inkscape:perspective  id="perspective55" inkscape:vp_x="0 : 53.550003 : 1" sodipodi:type="inkscape:persp3d" inkscape:vp_z="70.199997 : 53.550003 : 1" inkscape:persp3d-origin="35.099998 : 35.700002 : 1" inkscape:vp_y="0 : 1000 : 0">
-		</inkscape:perspective>
-</defs>
-<sodipodi:namedview  id="base" inkscape:pageopacity="0.0" objecttolerance="10.0" borderopacity="1.0" bordercolor="#666666" gridtolerance="10.0" inkscape:window-width="640" guidetolerance="10.0" inkscape:pageshadow="2" inkscape:window-height="480" showgrid="false" pagecolor="#ffffff">
-	</sodipodi:namedview>
+
 <g id="breadboard" transform="translate(115.90235,-16.373002)">
 <rect id="connector0pin" x="-92.91935" y="93.765" fill="#8C8C8C" width="2.99" height="8.286"/>
 <rect id="connector1pin" x="-85.72835" y="93.765" fill="#8C8C8C" width="2.99" height="8.286"/>

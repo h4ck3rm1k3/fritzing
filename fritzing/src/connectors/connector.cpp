@@ -282,15 +282,14 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		svgIdLayer->m_visible = true;
 		svgIdLayer->m_rect = connectorRect;
-		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, svgIdLayer, ignoreTerminalPoint, viewBox);
+		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, ignoreTerminalPoint, viewBox);
 	}
 
 	return true;
 }
 
 QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * renderer,
-									const QRectF & connectorRect, SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint,
-									const QRectF & viewBox)
+									const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox)
 {
 	// this code is a bit more viewish than modelish...
 
@@ -318,22 +317,12 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * 
 										//arg(tBounds.height()).
 										//arg(terminalID) );
 
+
 	QMatrix tMatrix = renderer->matrixForElement(terminalId);
-	if (tMatrix.isIdentity()) {
-		QPointF c = tBounds.center();
-		QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());
-		terminalPoint = q - connectorRect.topLeft();
-		//QRectF terminalRect = tMatrix.mapRect(tBounds);
-		//QPointF tp = terminalRect.center() - connectorRect.topLeft();
-		//if (qAbs(tp.x() - terminalPoint.x()) > 1 || (qAbs(tp.y() - terminalPoint.y()) > 1)) {
-			//DebugDialog::debug("got a big difference in terminalrect");
-		//}
-	}
-	else {
-		QRectF terminalRect = tMatrix.mapRect(tBounds);
-		terminalPoint = terminalRect.center() - connectorRect.topLeft();
-	}
-	svgIdLayer->m_point = terminalPoint;
+	QRectF terminalRect = tMatrix.mapRect(tBounds);
+	QPointF c = terminalRect.center();
+	QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());
+	terminalPoint = q - connectorRect.topLeft();
 	//DebugDialog::debug(	QString("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
 										//arg(terminalPoint.y()).
 										//arg(terminalID) );

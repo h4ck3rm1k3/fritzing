@@ -85,11 +85,11 @@ protected:
 	void writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId);
 	void writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId);
 	QPointF calcTerminalPoint(const QString & terminalId, class FSvgRenderer * renderer, 
-							  const QRectF & connectorRect, struct SvgIdLayer *, bool ignoreTerminalPoint, const QRectF & viewBox);
+							  const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox);
 
 protected:
 	QPointer<class ConnectorShared> m_connectorShared;
-	QList<class ConnectorItem *> m_connectorItems;
+	QList< QPointer<class ConnectorItem> > m_connectorItems;
 	QList<Connector *> m_toConnectors;
 	QPointer<class ModelPart> m_modelPart;
 	class Bus * m_bus;
