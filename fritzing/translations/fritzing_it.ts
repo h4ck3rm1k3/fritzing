@@ -36,11 +36,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>and thanks to Gianluca Urgese&lt;br/&gt;for the Italian translation.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <source>Gianluca Urgese&lt;br/&gt;for the Italian translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -817,10 +821,6 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>come &amp;PDF...</translation>
     </message>
     <message>
-        <source>List of parts (&amp;Bill of Materials)</source>
-        <translation>Lista componenti (&amp;Bill of Materials)</translation>
-    </message>
-    <message>
         <source>to &amp;Eagle...</source>
         <translation>come &amp;Eagle...</translation>
     </message>
@@ -1561,14 +1561,6 @@ Quantità	Componente
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ground Fill</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fill up the ground plane</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please choose the previous Fritzing folder...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1581,19 +1573,11 @@ Quantità	Componente
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your sketch does not have a board yet!  Please add a PCB in order to fill the ground plane.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fritzing error: unable to render board svg (1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fritzing error: unable to render copper svg (1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to write ground plane.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1638,6 +1622,72 @@ Quantità	Componente
     </message>
     <message>
         <source>Change background color for %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Updating existing part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some connectors have changed.
+In order to see the changes, you have to restart fritzing.
+Do you want to restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share online...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a project to the Fritzing website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of parts (&amp;Bill of Materials)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XML Netlist...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save a netlist in XML format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Netlist...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty regions of the copper layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Copper Fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove the copper fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to write copper fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove copper fill</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1732,44 +1782,108 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PartLabel</name>
     <message>
-        <source>&amp;Rotate 90° Clockwise</source>
-        <translation>&amp;Ruota di 90° in Senso orario</translation>
-    </message>
-    <message>
-        <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation>Ruota i componenti selezionati di 90 gradi in senso orario</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 180°</source>
-        <translation>&amp;Ruota di 180°</translation>
-    </message>
-    <message>
-        <source>Rotate the selected parts by 180 degrees</source>
-        <translation>Ruota i componenti selezionati di 180 gradi</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate 90° Counter Clockwise</source>
-        <translation>&amp;Ruota di 90° in Senso anti-orario</translation>
-    </message>
-    <message>
         <source>Rotate current selection 90 degrees counter clockwise</source>
         <translation>Ruota la selezione corrente di 90 gradi in senso anti-orario</translation>
     </message>
     <message>
-        <source>&amp;Flip Horizontal</source>
-        <translation>&amp;Ribalta Orizontalmente</translation>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Flip current selection horizontally</source>
-        <translation>Ribalta la selezione corrente orizontalmente</translation>
+        <source>Edit label text</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Flip Vertical</source>
-        <translation>&amp;Ribalta Verticalmente</translation>
+        <source>Display Values</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Flip current selection vertically</source>
-        <translation>Ribalta la selezione corrente verticalmente</translation>
+        <source>Flip/Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 90° Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate the label by 90 degrees clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 180°</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate the label by 180 degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate 90° Counter Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip Horizontal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip label horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip Vertical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip label vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Small</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set font size to small</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set font size to medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Large</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set font size to large</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display the text of the label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display the value of property %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set label for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label text:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1815,14 +1929,6 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>New...</source>
         <translation>Nuovo...</translation>
-    </message>
-    <message>
-        <source>Open...</source>
-        <translation>Apri...</translation>
-    </message>
-    <message>
-        <source>Open Core</source>
-        <translation>Apri Core</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1902,6 +2008,26 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Core</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All User Parts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2043,12 +2169,6 @@ Specifica un nuovo nome</translation>
     </message>
     <message>
         <source>Updating existing part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The connectors defined in this part has changed.
-If you save it, you may break other sketches that already use it.
-Do you really want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2839,7 +2959,11 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete all wires from part connector</source>
+        <source>Disconnect all wires from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect all wires from %1 items</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2970,6 +3094,14 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>Sorry, unable to retrieve update info</source>
         <translation>Spiacente, non riesco a trovare aggiornamenti</translation>
+    </message>
+    <message>
+        <source>A new main release is available for downloading:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new interim release is available for downloading:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
