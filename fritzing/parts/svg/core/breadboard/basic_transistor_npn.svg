@@ -1,47 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.22955in"
-	 height="0.43464in" viewBox="0 0 22.955 43.464" enable-background="new 0 0 22.955 43.464" xml:space="preserve">
-<rect id="connector0pin" y="35.207" fill="#8C8C8C" width="3" height="8.258"/>
-<rect id="connector1pin" x="9.974" y="35.207" fill="#8C8C8C" width="3" height="8.258"/>
-<rect id="connector2pin" x="19.955" y="35.207" fill="#8C8C8C" width="3" height="8.258"/>
-<rect id="connector0terminal" y="42.906" fill="#8C8C8C" width="3" height="0.559"/>
-<rect id="connector1terminal" x="9.974" y="42.906" fill="#8C8C8C" width="3" height="0.559"/>
-<rect id="connector2terminal" x="19.955" y="42.906" fill="#8C8C8C" width="3" height="0.559"/>
-<g id="breadboard" transform="matrix(2.3972928,0,0,2.4022782,-966.56317,-155.90572)">
-	<g id="g11">
-		<g id="Transistor_legs">
-			<rect id="rect9479" x="407.348" y="78.821" fill="#8C8C8C" width="1.248" height="4.158"/>
-			<rect id="rect9481" x="403.19" y="78.821" fill="#8C8C8C" width="1.248" height="4.158"/>
-			<rect id="rect9483" x="411.507" y="78.821" fill="#8C8C8C" width="1.248" height="4.158"/>
-		</g>
-		<g id="Transistor_pins_1_">
-			<g id="g9504">
-				<rect id="rect9506" x="407.348" y="73.416" fill="#8C8C8C" width="1.248" height="5.406"/>
-			</g>
-			<g id="g9508">
-				<path id="path9510" fill="#8C8C8C" d="M405.094,73.416v1.917c0,0.245-0.453,0.612-0.694,0.824
-					c-0.594,0.515-1.21,1.052-1.21,1.73v0.936h1.248c0,0,0-0.578,0-0.699c0-0.299,0.524-0.803,0.782-1.023
-					c0.578-0.503,1.127-0.977,1.127-1.589v-2.096H405.094L405.094,73.416z"/>
-			</g>
-			<g id="g9512">
-				<path id="path9514" fill="#8C8C8C" d="M410.849,73.416v1.917c0,0.245,0.453,0.612,0.695,0.824c0.595,0.515,1.21,1.052,1.21,1.73
-					v0.936h-1.248c0,0,0-0.578,0-0.699c0-0.299-0.524-0.803-0.782-1.023c-0.578-0.503-1.127-0.977-1.127-1.589v-2.096H410.849
-					L410.849,73.416z"/>
-			</g>
-		</g>
-		<rect id="rect9553" x="404.125" y="67.593" fill="#1A1A1A" width="7.693" height="5.822"/>
-		<path id="path9555" fill="#141414" d="M411.236,67.593v1.418v4.757v1.065c0.366-0.412,0.582-0.898,0.582-1.418l0,0v-5.822H411.236
-			z"/>
-		<path id="path9557" fill="#242424" d="M404.708,67.593h-0.582v5.822l0,0c0,0.52,0.216,1.006,0.582,1.418v-1.065v-4.757V67.593z"/>
-		<path id="path9559" fill="#1F1F1F" d="M404.125,67.593L404.125,67.593c0,0.52,0.216,1.006,0.582,1.418h6.533
-			c0.366-0.412,0.582-0.898,0.582-1.418l0,0H404.125z"/>
-		<path id="path9561" fill="#141414" d="M407.972,64.899c-2.125,0-3.847,1.206-3.847,2.695h7.693
-			C411.818,66.105,410.097,64.899,407.972,64.899z"/>
-		<rect id="rect9563" x="404.708" y="69.011" width="6.533" height="5.822"/>
-	</g>
-	<path fill="#999999" d="M406.081,73.201v-3.122h1.251v0.624h0.626v0.624h0.626v-1.249h1.251V73.2h-1.251v-0.624h-0.626v-0.624
-		h-0.626v1.249H406.081z"/>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
+<svg version="1.1" baseProfile="basic" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.22954in"
+	 height="0.434625in" viewBox="0 0 16.527 31.293" xml:space="preserve">
+<g id="breadboard">
+	<rect id="connector0pin" x="0" y="25.349" fill="#8C8C8C" width="2.16" height="5.946"/>
+	<rect id="connector1pin" x="7.181" y="25.349" fill="#8C8C8C" width="2.16" height="5.946"/>
+	<rect id="connector2pin" x="14.367" y="25.349" fill="#8C8C8C" width="2.16" height="5.946"/>
+	<rect id="connector0terminal" x="0" y="30.893" fill="#8C8C8C" width="2.16" height="0.402"/>
+	<rect id="connector1terminal" x="7.181" y="30.893" fill="#8C8C8C" width="2.16" height="0.402"/>
+	<rect id="connector2terminal" x="14.367" y="30.893" fill="#8C8C8C" width="2.16" height="0.402"/>
+
+	<rect id="rect9479" x="7.178" y="24.081" fill="#8C8C8C" width="2.154" height="7.191"/>
+	<rect id="rect9481" x="0.001" y="24.081" fill="#8C8C8C" width="2.154" height="7.191"/>
+	<rect id="rect9483" x="14.357" y="24.081" fill="#8C8C8C" width="2.154" height="7.191"/>
+	<rect id="rect9506" x="7.178" y="14.731" fill="#8C8C8C" width="2.154" height="9.351"/>
+	<path id="path9510" fill="#8C8C8C" d="M3.287,14.731v3.316c0,0.424-0.782,1.059-1.198,1.425c-1.025,0.891-2.088,1.819-2.088,2.992
+		v1.619h2.154c0,0,0-1,0-1.21c0-0.517,0.904-1.389,1.35-1.769c0.997-0.87,1.945-1.69,1.945-2.749v-3.625H3.287L3.287,14.731z"/>
+	<path id="path9514" fill="#8C8C8C" d="M13.221,14.731v3.316c0,0.424,0.781,1.059,1.199,1.425c1.027,0.891,2.089,1.819,2.089,2.992
+		v1.619h-2.154c0,0,0-1,0-1.21c0-0.517-0.904-1.389-1.35-1.769c-0.998-0.87-1.945-1.69-1.945-2.749v-3.625H13.221L13.221,14.731z"/>
+	<rect id="rect9553" x="1.615" y="4.659" fill="#1A1A1A" width="13.278" height="10.07"/>
+	<path id="path9555" fill="#141414" d="M13.889,4.659v2.453v8.228v1.842c0.632-0.713,1.004-1.553,1.004-2.453l0,0V4.659H13.889z"/>
+	<path id="path9557" fill="#242424" d="M2.621,4.659H1.616v10.07l0,0c0,0.899,0.373,1.74,1.005,2.453V15.34V7.112V4.659z"/>
+	<path id="path9559" fill="#1F1F1F" d="M1.615,4.659L1.615,4.659c0,0.899,0.373,1.74,1.005,2.453h11.276
+		c0.632-0.713,1.005-1.554,1.005-2.453l0,0H1.615z"/>
+	<path id="path9561" fill="#141414" d="M8.255,0C4.587,0,1.615,2.086,1.615,4.661h13.278C14.893,2.086,11.923,0,8.255,0z"/>
+	<rect id="rect9563" x="2.621" y="7.112" width="11.276" height="10.07"/>
+	<path fill="#999999" d="M4.99,14.359v-5.4h2.16v1.079h1.08v1.08h1.081V8.958h2.159v5.4H9.312v-1.079H8.231v-1.08h-1.08v2.161H4.99z"/>
 </g>
 </svg>
