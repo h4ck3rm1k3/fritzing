@@ -121,6 +121,7 @@ class PartsEditorView : public SketchWidget {
 		const QHash<QString,StringPair*> getConnectorIds(const QString &path);
 		void getConnectorIdsAux(QHash<QString,StringPair*> &retval, QDomElement &docElem);
 		const QStringList getLayers(const QString &path);
+		const QStringList getLayers(const QDomDocument *dom, bool addDefaultIfNone=true);
 
 		QString getOrCreateViewFolderInTemp();
 		bool ensureFilePath(const QString &filePath);
@@ -129,6 +130,8 @@ class PartsEditorView : public SketchWidget {
 		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
 		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem);
 		QString getLayerFileName(ModelPart * modelPart);
+		ViewLayer::ViewLayerID defaultLayer();
+		QString defaultLayerAsStr();
 
 
 		// SVG fixing
@@ -167,6 +170,7 @@ class PartsEditorView : public SketchWidget {
 		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
 		bool removeConnectorsIfNeeded(QDomElement &docEle);
 		bool updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
+		bool addDefaultLayerIfNotIn(QDomDocument *svgDom);
 		QString svgIdForConnector(Connector* conn, const QString &connId);
 
 		void updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId);

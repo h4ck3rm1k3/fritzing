@@ -313,32 +313,34 @@ void PartsEditorView::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair
 }
 
 const QStringList PartsEditorView::getLayers(const QString &path) {
-	QStringList retval;
-
 	if(m_viewIdentifier == ViewIdentifierClass::IconView) { // defaulting layer to icon for iconview
-		retval << ViewIdentifierClass::viewIdentifierName(m_viewIdentifier);
+		QStringList retval; retval << defaultLayerAsStr();
+		return retval;
 	} else {
 		QDomDocument dom;
 		QFile file(path);
 		dom.setContent(&file);
 		file.close();
+		return getLayers(&dom);
+	}
+}
 
+const QStringList PartsEditorView::getLayers(const QDomDocument *dom, bool addDefaultIfNone) {
+	QStringList retval;
+	QDomElement docElem = dom->documentElement();
 
-		QDomElement docElem = dom.documentElement();
-
-		QDomNode n = docElem.firstChild();
-		while(!n.isNull()) {
-			QDomElement e = n.toElement();
-			if(!e.isNull() && e.tagName() == "g") {
-				QString id = e.attribute("id");
-				retval << id;
-			}
-			n = n.nextSibling();
+	QDomNode n = docElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement();
+		if(!e.isNull() && e.tagName() == "g") {
+			QString id = e.attribute("id");
+			retval << id;
 		}
+		n = n.nextSibling();
+	}
 
-		if(retval.isEmpty()) {
-			retval << ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
-		}
+	if(addDefaultIfNone && retval.isEmpty()) {
+		retval << ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 	}
 
 	return retval;
@@ -450,7 +452,7 @@ QString PartsEditorView::findConnectorLayerId(QDomDocument *svgDom) {
 		}
 		return result;
 	} else {
-		return ___emptyString___; // top level layer
+		return defaultLayerAsStr();
 	}
 }
 
@@ -1106,11 +1108,17 @@ void PartsEditorView::aboutToSave() {
 			QSizeF sceneViewBox = renderer.defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
 
+			// this may change the layers defined in the file, so
+			// let's get the connectorsLayer after it
+			bool somethingChanged = addDefaultLayerIfNotIn(svgDom);
+
 			QString connectorsLayerId = findConnectorLayerId(svgDom);
 			QDomElement elem = svgDom->documentElement();
-			bool somethingChanged = removeConnectorsIfNeeded(elem);
-			somethingChanged |= updateTerminalPoints( svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
+
+			somethingChanged |= removeConnectorsIfNeeded(elem);
+			somethingChanged |= updateTerminalPoints(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
+
 
 			if(somethingChanged) {
 				QString viewFolder = getOrCreateViewFolderInTemp();
@@ -1166,6 +1174,48 @@ bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &
 	}
 
 	return changed;
+}
+
+bool PartsEditorView::addDefaultLayerIfNotIn(QDomDocument *svgDom) {
+	QString defaultLayer = defaultLayerAsStr();
+	if( !getLayers(svgDom).contains(defaultLayer) ) {
+		QDomElement docElem = svgDom->documentElement();
+
+		QDomElement newTopLevel = svgDom->createElement("g");
+		newTopLevel.setAttribute("id",defaultLayer);
+
+		// place the child in a aux list, cause the
+		// qdomnodelist takes care of the references
+		QList<QDomNode> children;
+		for(QDomNode child=docElem.firstChild(); !child.isNull(); child=child.nextSibling()) {
+			children << child;
+		}
+
+		foreach(QDomNode child, children) {
+			newTopLevel.appendChild(child);
+		}
+
+		docElem.appendChild(newTopLevel);
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
+ViewLayer::ViewLayerID PartsEditorView::defaultLayer() {
+	switch( m_viewIdentifier ) {
+		case ViewIdentifierClass::IconView: return ViewLayer::Icon; break;
+		case ViewIdentifierClass::BreadboardView: return ViewLayer::Breadboard; break;
+		case ViewIdentifierClass::SchematicView: return ViewLayer::Schematic; break;
+		case ViewIdentifierClass::PCBView: return ViewLayer::Copper0; break;
+		default: break;
+	}
+	return ViewLayer::UnknownLayer;
+}
+
+QString PartsEditorView::defaultLayerAsStr() {
+	return ViewLayer::viewLayerXmlNameFromID(defaultLayer());
 }
 
 QString PartsEditorView::svgIdForConnector(const QString &connId) {
