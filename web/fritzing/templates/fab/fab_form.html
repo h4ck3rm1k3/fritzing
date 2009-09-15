@@ -1,0 +1,26 @@
+{% extends "site_base.html" %} 
+
+{% block title %}
+  New Fab Order
+{% endblock %}
+
+{% block page_title %}
+  New Fab Order
+{% endblock %}
+
+{% block teaser %}
+    
+{% endblock %}
+
+{% block extra_head %}
+  {{ form.media }}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}/fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.MultiFile.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.example.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.autogrow.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/projects.js"></script>
+{% endblock %}
+
+{% block content %}
+	{{ form.as_p }}
+{% endblock %}

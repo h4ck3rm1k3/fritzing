@@ -1,4 +1,4 @@
-from fritzing.apps.tools.models import TitleSlugDescriptionModel
+from fritzing.apps.tools.models import TitleSlugDescriptionModel, AbstractAttachment
 from django.contrib.auth.models import User
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
@@ -128,3 +128,21 @@ class FabOrderIntegerValueOption(models.Model):
     order = models.ForeignKey(FabOrder, related_name='intvalue_options')
     option = models.ForeignKey(IntegerValueOption)
     value = models.IntegerField()
+
+def faborder_attachment_path(filename):
+    pass
+
+# ATTACHMENTS
+class FritzingFileAttachment():
+    order = models.OneToOneField(FabOrder,
+        verbose_name=_('order'), related_name='fritzing_attachment')
+    
+    def attachment_path(self, filename):
+        return faborder_attachment_path(filename)
+
+class OtherAttachment():
+    order = models.ForeignKey(FabOrder,
+        verbose_name=_('order'), related_name='other_attachments')
+    
+    def attachment_path(self, filename):
+        return faborder_attachment_path(filename)
