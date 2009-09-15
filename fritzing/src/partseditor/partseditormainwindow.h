@@ -145,6 +145,7 @@ protected:
     static PartsEditorMainWindow *m_lastOpened;
     static int m_closedBeforeCount;
     static QString ___partsEditorName___;
+    static bool m_closeAfterSaving;
 
 public:
 	static QString TitleFreshStartText;

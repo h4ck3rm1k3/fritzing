@@ -63,6 +63,7 @@ const QString PartsEditorMainWindow::templatePath = "/docs/templates/";
 int PartsEditorMainWindow::UntitledPartIndex = 1;
 PartsEditorMainWindow *PartsEditorMainWindow::m_lastOpened = NULL;
 int PartsEditorMainWindow::m_closedBeforeCount = 0;
+bool PartsEditorMainWindow::m_closeAfterSaving = true;
 
 #ifdef QT_NO_DEBUG
 	#define CORE_EDITION_ENABLED false
@@ -476,7 +477,10 @@ void PartsEditorMainWindow::loadPcbFootprint(){
 bool PartsEditorMainWindow::save() {
 	if(validateMinRequirements() && wannaSaveAfterWarning(false)) {
 		bool result = FritzingWindow::save();
-		if(result) m_cancelCloseButton->setText(tr("close"));
+		if(result) {
+			m_cancelCloseButton->setText(tr("close"));
+			if(m_closeAfterSaving) close();
+		}
 		return result;
 	} else {
 		return false;
@@ -543,6 +547,7 @@ bool PartsEditorMainWindow::saveAs() {
 			m_savedAsNewPart = true;
 			m_updateEnabled = true;
 			updateButtons();
+			if(m_closeAfterSaving) close();
 			return true;
 		}
 
