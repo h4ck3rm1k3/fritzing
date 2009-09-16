@@ -22,5 +22,10 @@
 {% endblock %}
 
 {% block content %}
+	{% for sat in shipping_address_formset.forms %}
+		assssssss
+		{{ saf.as_table }}
+	{% endfor %}
+	{{ billing_address_formset.as_table }}
 	{{ form.as_p }}
 {% endblock %}
