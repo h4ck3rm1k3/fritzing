@@ -62,7 +62,7 @@
    <connector type="male" id="connector1" name="GND" >
      <description>Ground</description>
      <erc etype="ground">
-       <current flow="sink" valueMax="0" />
+       <current flow="sink" valueMax="0.1" />
      </erc>
      <views>
        <breadboardView>

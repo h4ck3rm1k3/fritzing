@@ -39,10 +39,10 @@
     </views>
     <connectors>
         <connector id="connector0" type="male" name="+">
-	      <erc etype="VCC">
-		      <voltage value="3.0" />
-		      <current flow="source" valueMax="0.1" />
-	      </erc>
+	          <erc etype="VCC">
+		          <voltage value="3.0" />
+		          <current flow="source" valueMax="0.1" />
+	          </erc>
             <description>+ side</description>
             <views>
                 <breadboardView>
