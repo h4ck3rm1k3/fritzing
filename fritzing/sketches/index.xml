@@ -1,6 +1,7 @@
 <fritzing-sketches>
 	<sketches>
 		<sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
+        <sketch id="USB_Minimal" name="USB_Minimal" src="core/USB_Minimal.fz"/>
         <sketch id="AnalogInputFSR" name="FSR" src="core/AnalogInputFSR.fz"/>
         <sketch id="AnalogInputOutput" name="Analog Input / Output" src="core/AnalogInputOutput.fz"/>
         <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
@@ -100,6 +101,7 @@
 	    </category>
 	    <category name="Communication">
 				<sketch id="VirtualColorMixer"/>
+                <sketch id="USB_Minimal"/>
 	    </category>
 	    <category name="Power">
 				<sketch id="npnPowerTransistor"/>
