@@ -57,7 +57,7 @@ public:
 	virtual bool autorouteCheckParts();
 	const QString & traceColor();
 	const QString & jumperColor();
-	int jumperWidth();
+	qreal jumperWidth();
 	virtual void ensureTraceLayersVisible();
 	virtual void ensureTraceLayerVisible();
 	virtual void ensureJumperLayerVisible();
@@ -139,7 +139,7 @@ protected:
 	bool m_addBoard;
 	QPointer<ItemBase> m_addedBoard;
 	QString m_jumperColor;
-	int m_jumperWidth;
+	qreal m_jumperWidth;
 	QString m_traceColor;
 	CleanType m_cleanType;
 };

@@ -52,11 +52,15 @@ QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QList<QString> Wire::colorNames;
-QHash<QString, qreal> Wire::widthTrans;
-QList<QString> Wire::widthNames;
+QHash<long, QString> Wire::widthTrans;
+QList<long> Wire::widths;
 QList<QColor *> ratsnestColors;
 const qreal Wire::ROUTED_OPACITY = 0.20;
 const qreal Wire::UNROUTED_OPACITY = 1.0;
+qreal Wire::STANDARD_TRACE_WIDTH;
+
+
+#define MILS2PIXELS(m) (FSvgRenderer::printerScale() * (m) / 1000)
 
 ////////////////////////////////////////////////////////////
 
@@ -133,7 +137,7 @@ void Wire::moveItem(ViewGeometry & viewGeometry) {
 void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsView * infoGraphicsView) {
 	bool gotOne = false;
 	bool gotTwo = false;
-	int penWidth = 1;
+	qreal penWidth = 1;
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
 		if (item == NULL) continue;
@@ -146,7 +150,7 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsVie
 			break;
 		}
 		else {
-			penWidth = (int) item->rect().width();
+			penWidth = item->rect().width();
 			m_connector0 = item;
 			gotOne = true;
 		}
@@ -439,7 +443,7 @@ void Wire::saveInstanceLocation(QXmlStreamWriter & streamWriter)
 void Wire::writeGeometry(QXmlStreamWriter & streamWriter) {
 	ItemBase::writeGeometry(streamWriter);
 	streamWriter.writeStartElement("wireExtras");
-	streamWriter.writeAttribute("width", QString::number(m_pen.width()));
+	streamWriter.writeAttribute("mils", QString::number(mils()));
 	streamWriter.writeAttribute("color", m_pen.brush().color().name());
 	streamWriter.writeAttribute("opacity", QString::number(m_opacity));
 	streamWriter.writeEndElement();
@@ -450,9 +454,15 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	if (element.isNull()) return;
 
 	bool ok;
-	int w = element.attribute("width").toInt(&ok);
+	qreal w = element.attribute("width").toDouble(&ok);
 	if (ok) {
 		setWireWidth(w, infoGraphicsView);
+	}
+	else {
+		w = element.attribute("mils").toDouble(&ok);
+		if (ok) {
+			setWireWidth(MILS2PIXELS(w), infoGraphicsView);
+		}
 	}
 
 	setColor(element);
@@ -857,8 +867,8 @@ const QColor * Wire::color() {
 	return &m_pen.brush().color();
 }
 
-void Wire::setWireWidth(int width, InfoGraphicsView * infoGraphicsView) {
-	if (m_pen.width() == width) return;
+void Wire::setWireWidth(qreal width, InfoGraphicsView * infoGraphicsView) {
+	if (m_pen.widthF() == width) return;
 
 	prepareGeometryChange();
 	setPenWidth(width, infoGraphicsView);
@@ -867,8 +877,12 @@ void Wire::setWireWidth(int width, InfoGraphicsView * infoGraphicsView) {
 	update();
 }
 
-int Wire::width() {
-	return m_pen.width();
+qreal Wire::width() {
+	return m_pen.widthF();
+}
+
+qreal Wire::mils() {
+	return 1000 * m_pen.widthF() / FSvgRenderer::printerScale();
 }
 
 void Wire::setColorString(QString colorName, qreal op) {
@@ -912,13 +926,13 @@ QString Wire::colorString() {
 void Wire::initNames() {
 	if (colors.count() > 0) return;
 
-	widthNames.append(tr("thin"));
-	widthNames.append(tr("medium"));
-	widthNames.append(tr("wide"));
+	widths << 16 << 24 << 32 << 48;
+	widthTrans.insert(widths[0], tr("thin (16 mil)"));
+	widthTrans.insert(widths[1], tr("standard (24 mil)"));
+	widthTrans.insert(widths[2], tr("thick (32 mil)"));
+	widthTrans.insert(widths[3], tr("extra thick (48 mil)"));
 
-	widthTrans.insert(tr("thin"), 1);
-	widthTrans.insert(tr("medium"), 3);
-	widthTrans.insert(tr("wide"), 5);
+	STANDARD_TRACE_WIDTH = MILS2PIXELS(widths[1]);
 
     // need a list because a hash table doesn't guarantee order
     colorNames.append(tr("blue"));
@@ -1128,7 +1142,7 @@ void Wire::cleanup() {
 	ratsnestColors.clear();
 }
 
-void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, int & negativePenWidth) {
+void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
 
 	int count = 0;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
@@ -1158,12 +1172,12 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	}
 }
 
-void Wire::setPenWidth(int w, InfoGraphicsView * infoGraphicsView) {
-	m_pen.setWidth(w);
+void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView) {
+	m_pen.setWidthF(w);
 	infoGraphicsView->getBendpointWidths(this, w, m_bendpointWidth, m_bendpoint2Width);
-	m_bendpointPen.setWidth(qAbs(m_bendpointWidth));
-	m_bendpoint2Pen.setWidth(qAbs(m_bendpoint2Width));
-	m_shadowPen.setWidth(w + 2);
+	m_bendpointPen.setWidthF(qAbs(m_bendpointWidth));
+	m_bendpoint2Pen.setWidthF(qAbs(m_bendpoint2Width));
+	m_shadowPen.setWidthF(w + 2);
 }
 
 void Wire::getColor(QColor & color, const QString & name) {

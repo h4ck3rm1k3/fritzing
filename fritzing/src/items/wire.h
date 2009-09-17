@@ -97,9 +97,10 @@ public:
 	qreal opacity();
 	void setOpacity(qreal opacity);
 	const QColor * color();
-	void setWireWidth(int, InfoGraphicsView *);
-	void setPenWidth(int width, InfoGraphicsView *);
-	int width();
+	void setWireWidth(qreal, InfoGraphicsView *);
+	void setPenWidth(qreal width, InfoGraphicsView *);
+	qreal width();
+	qreal mils();
 	void setExtras(QDomElement &, InfoGraphicsView *);
 	void setColor(QDomElement & element);
 	Wire * findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
@@ -115,6 +116,7 @@ public:
 public:
 	static const qreal ROUTED_OPACITY;
 	static const qreal UNROUTED_OPACITY;
+	static qreal STANDARD_TRACE_WIDTH;
 
 public:
 	static void initNames();
@@ -149,7 +151,7 @@ protected:
 	void calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2);
 	void collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
+	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
 	bool connectionIsAllowed(ConnectorItem *);
 	bool releaseDrag();
 	void setIgnoreSelectionChange(bool);
@@ -167,8 +169,8 @@ protected:
 	QBrush m_shadowBrush;
 	QPen m_bendpointPen;
 	QPen m_bendpoint2Pen;
-	int m_bendpointWidth;
-	int m_bendpoint2Width;
+	qreal m_bendpointWidth;
+	qreal m_bendpoint2Width;
 	qreal m_opacity;
 	bool m_canChainMultiple;
 	bool m_ignoreSelectionChange;
@@ -176,8 +178,9 @@ protected:
 public:
 	static QList<QString> colorNames;
 	static QHash<QString, QString> colorTrans;
-	static QList<QString> widthNames;
-	static QHash<QString, qreal> widthTrans;
+	static QHash<long, QString> widthTrans;
+	static QList<long> widths;
+
 
 
 protected:

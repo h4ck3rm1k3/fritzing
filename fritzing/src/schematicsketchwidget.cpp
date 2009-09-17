@@ -131,7 +131,7 @@ void SchematicSketchWidget::setClipEnds(ClipableWire * vw, bool) {
 	vw->setClipEnds(false);
 }
 
-void SchematicSketchWidget::getBendpointWidths(Wire * wire, int width, int & bendpointWidth, int & bendpoint2Width) {
+void SchematicSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) {
 	SketchWidget::getBendpointWidths(wire, width, bendpointWidth, bendpoint2Width);
 	bendpoint2Width = width + 3;
 }

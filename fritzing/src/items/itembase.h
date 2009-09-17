@@ -175,12 +175,12 @@ public:
 
 
 public:
-	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
-	virtual void getUnconnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
-	virtual void getNormalColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
-	virtual void getChosenColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
-	virtual void getHoverColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
-	virtual void getEqualPotentialColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);
+	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
+	virtual void getUnconnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
+	virtual void getNormalColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
+	virtual void getChosenColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
+	virtual void getHoverColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
+	virtual void getEqualPotentialColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
 
 protected:
 	static QPen normalPen;

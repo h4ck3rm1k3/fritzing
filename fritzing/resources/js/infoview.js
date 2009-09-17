@@ -145,8 +145,8 @@ function setWireColor(wireTitle, wireId, newColor) {
 	sketch.changeWireColor(newColor);
 }
 
-function setWireWidth(wireTitle, wireId, newWidth) {
-    sketch.changeWireWidth(newWidth);
+function setWireWidthMils(wireTitle, wireId, newWidth) {
+    sketch.changeWireWidthMils(newWidth);
 }
 
 function toggleVisibility(emitter,idToAffect) {

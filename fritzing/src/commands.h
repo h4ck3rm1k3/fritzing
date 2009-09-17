@@ -377,7 +377,7 @@ class WireWidthChangeCommand : public BaseCommand
 public:
 	WireWidthChangeCommand(
 		SketchWidget* sketchWidget,
-		long wireId, int oldWidth, int newWidth,
+		long wireId, qreal oldWidth, qreal newWidth,
 		QUndoCommand *parent);
     void undo();
     void redo();
@@ -387,8 +387,8 @@ protected:
 
 protected:
 	long m_wireId;
-	int m_oldWidth;
-	int m_newWidth;
+	qreal m_oldWidth;
+	qreal m_newWidth;
 };
 
 

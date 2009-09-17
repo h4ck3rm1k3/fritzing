@@ -713,7 +713,7 @@ const QString & PCBSketchWidget::jumperColor() {
 	return m_jumperColor;
 }
 
-int PCBSketchWidget::jumperWidth() {
+qreal PCBSketchWidget::jumperWidth() {
 	return m_jumperWidth;
 }
 

@@ -683,7 +683,7 @@ QString WireColorChangeCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-WireWidthChangeCommand::WireWidthChangeCommand(SketchWidget* sketchWidget, long wireId, int oldWidth, int newWidth, QUndoCommand *parent)
+WireWidthChangeCommand::WireWidthChangeCommand(SketchWidget* sketchWidget, long wireId, qreal oldWidth, qreal newWidth, QUndoCommand *parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_wireId = wireId;

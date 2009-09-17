@@ -4319,11 +4319,13 @@ void SketchWidget::changeWireColor(const QString newColor)
 	m_undoStack->push(parentCommand);
 }
 
-void SketchWidget::changeWireWidth(const QString newWidthStr)
+void SketchWidget::changeWireWidthMils(const QString newWidthStr)
 {
 	bool ok = false;
-	int newWidth = newWidthStr.toInt(&ok);
+	qreal newWidth = newWidthStr.toDouble(&ok);
 	if (!ok) return;
+
+	qreal trueWidth = FSvgRenderer::printerScale() * newWidth / 1000.0;
 
 	QList <Wire *> wires;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
@@ -4340,7 +4342,7 @@ void SketchWidget::changeWireWidth(const QString newWidthStr)
 	if (wires.count() == 1) {
 		commandString = tr("Change %1 width from %2 to %3")
 			.arg(wires[0]->instanceTitle())
-			.arg(wires[0]->width())
+			.arg((int) wires[0]->mils())
 			.arg(newWidth);
 	}
 	else {
@@ -4359,7 +4361,7 @@ void SketchWidget::changeWireWidth(const QString newWidthStr)
 					this,
 					subWire->id(),
 					subWire->width(),
-					newWidth,
+					trueWidth,
 					parentCommand);
 		}
 	}
@@ -4376,7 +4378,7 @@ void SketchWidget::changeWireColor(long wireId, const QString& color, qreal opac
 	}
 }
 
-void SketchWidget::changeWireWidth(long wireId, int width) {
+void SketchWidget::changeWireWidth(long wireId, qreal width) {
 	ItemBase *item = findItem(wireId);
 	Wire* wire = dynamic_cast<Wire*>(item);
 	if (wire) {
@@ -5626,7 +5628,7 @@ const QString & SketchWidget::getShortName() {
 	return m_shortName;
 }
 
-void SketchWidget::getBendpointWidths(Wire * wire, int width, int & bendpointWidth, int & bendpoint2Width) {
+void SketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) {
 	int dwidth = (wire->getTrace() && (width > 1)) ? 4 : 3;
 	bendpoint2Width = bendpointWidth = (width - dwidth);
 }

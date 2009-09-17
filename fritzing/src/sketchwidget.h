@@ -158,7 +158,7 @@ public:
 	void addBreadboardViewLayers();
 
 	void changeWireColor(long wireId, const QString& color, qreal opacity);
-	void changeWireWidth(long wireId, int width);
+	void changeWireWidth(long wireId, qreal width);
 	void changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlags);
 	void setIgnoreSelectionChangeEvents(bool);
 	void hideConnectors(bool hide);
@@ -217,7 +217,7 @@ public:
 	void updateConnectors();
 	const QString & getShortName();
 	virtual void setClipEnds(class ClipableWire *, bool);
-	void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
+	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
 	virtual bool includeSymbols();
 	void disconnectAll();
 	virtual bool canDisconnectAll();
@@ -410,7 +410,7 @@ protected slots:
 
 public slots:
 	void changeWireColor(const QString newColor);
-	void changeWireWidth(const QString newWidth);
+	void changeWireWidthMils(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);
 	void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable);
 	void showPartLabel(long id, bool showIt);

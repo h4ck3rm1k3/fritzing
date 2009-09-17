@@ -52,7 +52,7 @@ public:
 	void ensureJumperLayerVisible();
 	void setJumperFlags(ViewGeometry & vg);
 	void setClipEnds(ClipableWire * vw, bool);
-	void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
+	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
 	void getLabelFont(QFont &, QColor &);
 	void setNewPartVisible(ItemBase *);
 	bool canDropModelPart(ModelPart * modelPart); 

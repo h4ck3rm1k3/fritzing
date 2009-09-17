@@ -144,7 +144,7 @@ protected:
 	bool m_hoverEnterSpaceBarWasPressed;
 	qreal m_radius;
 	qreal m_strokeWidth;
-	int m_negativePenWidth;
+	qreal m_negativePenWidth;
 	QPainterPath m_shape;
 	
 protected:	

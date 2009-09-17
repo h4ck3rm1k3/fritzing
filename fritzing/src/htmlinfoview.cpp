@@ -467,12 +467,13 @@ QString HtmlInfoView::wireWidthSelect(Wire *wire) {
 	}
 
 	QString retval = QString("<script language='JavaScript'>var oldWidth = '%1'</script>\n").arg(wire->width());
-	retval += QString("<select onchange='setWireWidth(\"%1\",%2,this.value)'>\n")
+	retval += QString("<select onchange='setWireWidthMils(\"%1\",%2,this.value)'>\n")
 				.arg(wire->instanceTitle())
 				.arg(wire->id());
-	foreach(QString widthName, Wire::widthNames) {
-		qreal widthValue = Wire::widthTrans.value(widthName);
-		QString selected = (widthValue == wire->width()) ? " selected='selected' " : "";
+	qreal mils = wire->mils();
+	foreach(long widthValue, Wire::widths) {
+		QString widthName = Wire::widthTrans.value(widthValue);
+		QString selected = (qAbs(mils - widthValue) < .01) ? " selected='selected' " : "";
 		retval += QString("\t<option value='%2' %3>%1</option>\n").arg(widthName).arg(widthValue).arg(selected);
 	}
 	retval += "</select>\n";

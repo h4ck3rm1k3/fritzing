@@ -86,8 +86,6 @@ bool edgeGreaterThan(Edge * e1, Edge * e2)
 static int keepOut = 4;
 static int boundingKeepOut = 4;
 
-static const int StandardTraceWidth = 3;
-
 ////////////////////////////////////////////////////////////////////
 
 // tangent to polygon code adapted from http://www.geometryalgorithms.com/Archive/algorithm_0201/algorithm_0201.htm
@@ -382,7 +380,7 @@ void Autorouter1::start()
 				originalLine = subedge->wire->line();
 				QLineF newLine(QPointF(0,0), subedge->point - subedge->wire->pos());
 				subedge->wire->setLine(newLine);
-				splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), StandardTraceWidth + 1);
+				splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1);
 				from = splitWire->connector0();
 				QApplication::processEvents();
 			}
@@ -854,7 +852,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		}
 	}
 
-	TraceWire * traceWire = drawOneTrace(fromPos, toPos, StandardTraceWidth + 1);
+	TraceWire * traceWire = drawOneTrace(fromPos, toPos, Wire::STANDARD_TRACE_WIDTH + 1);
 	if (traceWire == NULL) {
 		return false;
 	}
@@ -1408,7 +1406,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 			m_sketchWidget->setClipEnds(wire, true);
 			wire->update();
 			if (wire->getAutoroutable()) {
-				wire->setWireWidth(StandardTraceWidth, m_sketchWidget);
+				wire->setWireWidth(Wire::STANDARD_TRACE_WIDTH, m_sketchWidget);
 			}
 			addToUndo(wire, parentCommand);
 			wires.append(wire);
@@ -1565,7 +1563,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 		return NULL;
 	}
 
-	traceWire->setWireWidth(StandardTraceWidth, m_sketchWidget);									// restore normal width
+	traceWire->setWireWidth(Wire::STANDARD_TRACE_WIDTH, m_sketchWidget);									// restore normal width
 	return traceWire;
 }
 
@@ -1669,7 +1667,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 	QList<Wire *> newWires;
 	// 1. draw wire from FROM to just outside its nearest part border
 	QPointF fromPrime = calcPrimePoint(from);
-	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(NULL), fromPrime, StandardTraceWidth + 1);
+	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(NULL), fromPrime, Wire::STANDARD_TRACE_WIDTH + 1);
 	if (fromWire == NULL) return false;
 
 	if (hitsObstacle(fromWire, from->attachedTo())) {
@@ -1679,7 +1677,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 
 	// 2. draw wire from TO to just outside its nearest part border
 	QPointF toPrime = calcPrimePoint(to);
-	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(NULL), StandardTraceWidth + 1);
+	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH + 1);
 	if (toWire == NULL) {
 		m_sketchWidget->deleteItem(fromWire, true, false, false);
 		return false;

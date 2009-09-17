@@ -70,7 +70,7 @@ public:
 	QVariant evaluateJavascript(const QString &);
 
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
-	virtual void getBendpointWidths(class Wire *, int w, int & w1, int & w2);
+	virtual void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
 	virtual void getLabelFont(QFont &, QColor &);
 	virtual qreal getLabelFontSizeSmall();
 	virtual qreal getLabelFontSizeMedium();
