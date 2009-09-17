@@ -1,20 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
-<svg version="1.1" baseProfile="basic"
-	 id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.42917in"
-	 height="0.10008in" viewBox="0 0 42.917 10.008" xml:space="preserve">
-<g id="breadboard">
-	<rect id="connector0pin" y="3.59" fill="#868584" width="2.5" height="2.911"/>
-	<rect id="connector1pin" x="40.417" y="3.59" fill="#868584" width="2.5" height="2.911"/>
-	<rect id="rect7" y="3.59" fill="#8C8C8C" width="42.917" height="2.911"/>
-	<path id="Body_1_" fill="#1A1A1A" d="M13.437,0h-3c-0.655,0-0.541,10,0,10h3c0.55,0,15.45,0,16.001,0h3c0.713,0,0.771-10,0-10h-3
-		C28.887,0,13.987,0,13.437,0z"/>
-	<rect id="rect16" x="14.309" opacity="0.74" fill="#FFFFFF" width="2.772" height="10"/>
-	<path id="Reflex_1_" opacity="0.4" fill="#FFFFFF" d="M10.843,0.5c1,0,1.594,0,2.594,0s15.001,0,16.001,0c0.041,0,0.312,0,0.676,0
-		c0.779,0,1.49,0,1.824,0c0.5,0,1.594,0.5-0.5,0.5c-1.5,0-1,0-2,0S14.437,1,13.437,1s-1.594,0-2.594,0
-		C10.343,1,9.843,0.5,10.843,0.5z"/>
-	<path id="Shaddow_1_" opacity="0.4" d="M32.438,10c-1,0.02-2,0-3,0c-1.26,0-17.997,0-18.997,0c-0.126,0-0.286-1-0.25-1
-		c1.798,0,2.246,0,3.246,0s15.001,0,16.001,0s2.32,0,3.32,0C32.791,9,32.643,9.997,32.438,10z"/>
-</g>
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1 Basic//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd'>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0.464917in" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" x="0px" version="1.1" y="0px" height="0.100111in" viewBox="0 0 33.474 7.208" baseProfile="basic" id="svg" >
+ <rect xmlns="http://www.w3.org/2000/svg" width="1.802" x="0" y="2.585" fill="none" height="2.097" id="connector0terminal" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="5.124" x="0" y="2.585" fill="none" height="2.097" id="connector0pin" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="1.802" x="31.669" y="2.585" fill="none" height="2.097" id="connector1terminal" />
+ <rect xmlns="http://www.w3.org/2000/svg" width="5.125" x="28.341" y="2.585" fill="none" height="2.097" id="connector1pin" />
+ <g xmlns="http://www.w3.org/2000/svg" id="breadboard" >
+  <rect xmlns="http://www.w3.org/2000/svg" width="33.467" x="0.004" y="2.585" fill="#8C8C8C" height="2.097" id="rect7" />
+  <g xmlns="http://www.w3.org/2000/svg">
+   <path xmlns="http://www.w3.org/2000/svg" fill="#1A1A1A" id="Body_1_" d="M10.939,0h-2.16c-0.475,0-0.393,7.202,0,7.202h2.16c0.396,0,11.125,0,11.521,0h2.16c0.514,0,0.557-7.202,0-7.202h-2.16C22.063,0,11.333,0,10.939,0z" />
+   <rect xmlns="http://www.w3.org/2000/svg" width="1.994" x="11.564" opacity="0.74" fill="#FFFFFF" height="7.202" id="rect16" />
+   <path xmlns="http://www.w3.org/2000/svg" opacity="0.4" fill="#FFFFFF" id="Reflex_1_" d="M9.067,0.36c0.727,0,1.146,0,1.868,0c0.72,0,10.798,0,11.521,0c0.022,0,0.227,0,0.479,0c0.562,0,1.069,0,1.312,0c0.354,0,1.146,0.36-0.356,0.36c-1.08,0-0.724,0-1.438,0c-0.717,0-10.802,0-11.521,0c-0.723,0-1.146,0-1.868,0C8.709,0.72,8.349,0.36,9.067,0.36z" />
+   <path xmlns="http://www.w3.org/2000/svg" opacity="0.4" id="Shaddow_1_" d="M24.617,7.202c-0.726,0.014-1.438,0-2.159,0c-0.906,0-12.957,0-13.683,0c-0.091,0-0.202-0.724-0.182-0.724c1.295,0,1.616,0,2.339,0c0.724,0,10.8,0,11.521,0c0.722,0,1.672,0,2.394,0C24.87,6.479,24.764,7.2,24.617,7.202z" />
+  </g>
+ </g>
 </svg>
