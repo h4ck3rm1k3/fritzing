@@ -135,10 +135,10 @@ const QString FolderUtils::getLibraryPath()
 
 const QString FolderUtils::libraryPath() 
 {
-//#ifdef Q_WS_MAC
+#ifdef Q_WS_MAC
 	// mac plugins are always in the bundle
 	return QDir::cleanPath(QCoreApplication::applicationDirPath() + "/../lib");
-//#endif
+#endif
 
 	return QDir::cleanPath(applicationDirPath() + "/lib");		
 }
