@@ -399,7 +399,7 @@ void SVG2gerber::allPaths2gerber() {
         m_gerber_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D02*\n";
 
         // iterate through all other points - light on
-        for(uint pt = 2; pt < pointList.length(); pt +=2){
+        for(int pt = 2; pt < pointList.length(); pt +=2){
             int ptx = round(pointList.at(pt).toFloat());
             int pty = round(pointList.at(pt+1).toFloat());
             m_gerber_paths += "X" + QString::number(ptx) + "Y" + QString::number(pty) + "D01*\n";
@@ -479,7 +479,7 @@ void SVG2gerber::allPaths2gerber() {
         pathUserData.string = "";
 
         SvgFlattener flattener;
-        flattener.parsePath(data, slot, pathUserData, this);
+        flattener.parsePath(data, slot, pathUserData, this, true);
 
         // only add paths if they contained gerber-izable path commands (NO CURVES!)
         // TODO: display some informative error for the user

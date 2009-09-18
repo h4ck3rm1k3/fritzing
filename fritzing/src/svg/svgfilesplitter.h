@@ -60,7 +60,7 @@ public:
 	bool normalize(qreal dpi, const QString & elementID, bool blackOnly);
 	QString shift(qreal x, qreal y, const QString & elementID);
 	QString elementString(const QString & elementID);
-    virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget);
+    virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget, bool convertHV);
 	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
 
 public:
@@ -90,6 +90,8 @@ protected slots:
 	void shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
     virtual void rotateCommandSlot(QChar, bool, QList<double> &, void *){}
 	void painterPathCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
+	void convertHVSlot(QChar command, bool relative, QList<double> & args, void * userData);
+
 
 public:
 	static const QRegExp sodipodiDetector;
