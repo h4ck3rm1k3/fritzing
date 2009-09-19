@@ -181,81 +181,53 @@ QList<qreal> SvgFlattener::getTransformFloats(const QString & transform){
 
 void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
 
-        Q_UNUSED(relative);			// just normalizing here, so relative is not used
+    Q_UNUSED(relative);			// just normalizing here, so relative is not used
 
-        PathUserData * pathUserData = (PathUserData *) userData;
+    PathUserData * pathUserData = (PathUserData *) userData;
 
-        pathUserData->string.append(command);
-        qreal x;
-        qreal y;
+    pathUserData->string.append(command);
+    qreal x;
+    qreal y;
 
-		for (int i = 0; i < args.count(); i=i+2) {
-			switch(command.toAscii()) {
-				case 'v':
-				case 'V':
-					y = args[i];			
-					x = 0; // what is x, really?
-					DebugDialog::debug("Warning! Can't rotate path with V");
-					i++;
-					break;
-				case 'h':
-				case 'H':
-					x = args[i];
-					y = 0; // what is y, really?
-					DebugDialog::debug("Warning! Can't rotate path with H");
-					i++;
-					break;
-				case SVGPathLexer::FakeClosePathChar:
-					break;
-				default:
-					x = args[i];
-					y = args[i+1];
-					i += 2;
-					QPointF point = pathUserData->transform.map(QPointF(x,y));
-					pathUserData->string.append(QString::number(point.x()));
-					pathUserData->string.append(',');
-					pathUserData->string.append(QString::number(point.y()));
-			}
+	for (int i = 0; i < args.count(); ) {
+		switch(command.toAscii()) {
+			case 'v':
+			case 'V':
+				DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+				/*
+				y = args[i];			
+				x = 0; // what is x, really?
+				DebugDialog::debug("Warning! Can't rotate path with V");
+				*/
+				i++;
+				break;
+			case 'h':
+			case 'H':
+				DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+				/*
+				x = args[i];
+				y = 0; // what is y, really?
+				DebugDialog::debug("Warning! Can't rotate path with H");
+				*/
+				i++;
+				break;
+			case SVGPathLexer::FakeClosePathChar:
+				break;
+			case 'a':
+			case 'A':
+				// TODO: handle A command
+				i += 7;
+				break;
+			default:
+				x = args[i];
+				y = args[i+1];
+				i += 2;
+				QPointF point = pathUserData->transform.map(QPointF(x,y));
+				pathUserData->string.append(QString::number(point.x()));
+				pathUserData->string.append(',');
+				pathUserData->string.append(QString::number(point.y()));
 		}
-
-
-//        switch(command.toAscii()) {
-//                case 'v':
-//                case 'V':
-//                        d = args[0];
-//                        if (!relative) {
-//                                 d += pathUserData->y;
-//                        }
-//                        pathUserData->string.append(QString::number(d));
-//                        break;
-//                case 'h':
-//                case 'H':
-//                        d = args[0];
-//                        if (!relative) {
-//                                 d += pathUserData->x;
-//                        }
-//                        pathUserData->string.append(QString::number(d));
-//                        break;
-//                default:
-//                        for (int i = 0; i < args.count(); i++) {
-//                                d = args[i];
-//                                if (i % 2 == 0) {
-//                                        if (!relative) {
-//                                                d += pathUserData->x;
-//                                        }
-//                                }
-//                                else {
-//                                        if (!relative) {
-//                                                d += pathUserData->y;
-//                                        }
-//                                }
-//                                pathUserData->string.append(QString::number(d));
-//                                if (i < args.count() - 1) {
-//                                        pathUserData->string.append(',');
-//                                }
-//                        }
-//                        break;
-//        }
+	}
 }
 
 QMatrix SvgFlattener::elementToMatrix(QDomElement & element) {

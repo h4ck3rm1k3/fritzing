@@ -639,6 +639,8 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
                     break;
                 case 'v':
                 case 'V':
+					DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+					/*
                     y = args[0];
                     if (relative) {
                         y += pathUserData->y;
@@ -646,9 +648,12 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
                     gerb = "Y" + QString::number(y) + "D01*\n";
                     pathUserData->y = y;
                     pathUserData->string.append(gerb);
+					*/
                     break;
                 case 'h':
                 case 'H':
+					DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+					/*
                     x = args[0];
                     if (relative) {
                         x += pathUserData->x;
@@ -656,6 +661,7 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
                     gerb = "X" + QString::number(x) + "D01*\n";
                     pathUserData->x = x;
                     pathUserData->string.append(gerb);
+					*/
                     break;
                 case 'l':
                 case 'L':

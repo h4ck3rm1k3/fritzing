@@ -105,35 +105,35 @@ bool SVGPathParser::parse(SVGPathLexer *lexer)
 } break;  case 16: {
     //qDebug() << " got drawto_command  ";
 } break;  case 17: {
-    qDebug() << "							got moveto ";
+    //qDebug() << "							got moveto ";
 } break;  case 20: {
     //qDebug() << " got moveto_argument_sequence ";
 } break;  case 21: {
-    qDebug() << "							got lineto ";
+    //qDebug() << "							got lineto ";
 } break;  case 24: {
     //qDebug() << " got lineto_argument_sequence  ";
 } break;  case 25: {
-    qDebug() << "							got horizontal_lineto ";
+    //qDebug() << "							got horizontal_lineto ";
 } break;  case 28: {
     //qDebug() << " got horizontal_lineto_argument_sequence ";
 } break;  case 29: {
-    qDebug() << "							got vertical_lineto ";
+    //qDebug() << "							got vertical_lineto ";
 } break;  case 32: {
     //qDebug() << " got vertical_lineto_argument_sequence ";
 } break;  case 33: {
-    qDebug() << "							got curveto ";
+    //qDebug() << "							got curveto ";
 } break;  case 36: {
     //qDebug() << " got curveto_argument_sequence 3 ";
 } break;  case 40: {
     //qDebug() << " got curveto_argument ";
 } break;  case 41: {
-    qDebug() << "							got smooth_curveto ";
+    //qDebug() << "							got smooth_curveto ";
 } break;  case 44: {
     //qDebug() << " got smooth_curveto_argument_sequence 3 ";
 } break;  case 46: {
     //qDebug() << " got smooth_curveto_argument  ";
 } break;  case 47: {
-    qDebug() << "							got quadratic_bezier_curveto ";
+    //qDebug() << "							got quadratic_bezier_curveto ";
 } break;  case 50: {
     //qDebug() << " got quadratic_bezier_curveto_argument ";
 } break;  case 52: {
@@ -145,7 +145,7 @@ bool SVGPathParser::parse(SVGPathLexer *lexer)
 } break;  case 57: {
     //qDebug() << " got elliptical_arc_argument ";
 } break;  case 58: {
-    qDebug() << "							got smooth_quadratic_bezier_curveto ";
+    //qDebug() << "							got smooth_quadratic_bezier_curveto ";
 } break;  case 61: {
     //qDebug() << " got smooth_quadratic_bezier_curveto_argument_sequence 3 ";
 } break;  case 63: {
@@ -224,10 +224,10 @@ case 80: {
     //qDebug() << "							got elliptical_arc_command ";
     m_symStack.append(lexer->currentCommand());
 } break;  case 82: {
-    qDebug() << "							got closepath ";
+    //qDebug() << "							got closepath ";
     m_symStack.append(lexer->currentCommand());
 } break;  case 83: {
-    qDebug() << "							got fakeclosepath ";
+    //qDebug() << "							got fakeclosepath ";
 } break; 
           } // switch
 

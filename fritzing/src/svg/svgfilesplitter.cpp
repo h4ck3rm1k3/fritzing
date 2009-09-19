@@ -42,10 +42,10 @@ const QRegExp SvgFileSplitter::sodipodiDetector("((inkscape)|(sodipodi)):[^=\\s]
 
 
 struct HVConvertData {
-	long x;
-	long y;
-	long subX;
-	long subY;
+	qreal x;
+	qreal y;
+	qreal subX;
+	qreal subY;
 	QString path;
 };
 
@@ -509,6 +509,8 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 	switch(command.toAscii()) {
 		case 'v':
 		case 'V':
+			DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+			/*
 			for (int i = 0; i < args.count(); i++) {
 				d = args[i] * pathUserData->sNewHeight / pathUserData->vbHeight;
 				pathUserData->string.append(QString::number(d));
@@ -516,9 +518,12 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 					pathUserData->string.append(',');
 				}
 			}
+			*/
 			break;
 		case 'h':
 		case 'H':
+			DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+			/*
 			for (int i = 0; i < args.count(); i++) {
 				d = args[i] * pathUserData->sNewWidth / pathUserData->vbWidth;
 				pathUserData->string.append(QString::number(d));
@@ -526,6 +531,7 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 					pathUserData->string.append(',');
 				}
 			}
+			*/
 			break;
 		case 'a':
 		case 'A':
@@ -602,19 +608,25 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 	switch(command.toAscii()) {
 		case 'v':
 		case 'V':
+			DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+			/*
 			d = args[0];
 			if (!relative) {
 				 d += pathUserData->y;
 			}
 			pathUserData->string.append(QString::number(d));
+			*/
 			break;
 		case 'h':
 		case 'H':
+			DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+			/*
 			d = args[0];
 			if (!relative) {
 				 d += pathUserData->x;
 			}
 			pathUserData->string.append(QString::number(d));
+			*/
 			break;
 		case SVGPathLexer::FakeClosePathChar:
 			break;
@@ -663,7 +675,6 @@ bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUse
 	}
 
 	if (convertHV) {
-		/*
 		SVGPathRunner svgPathRunner;
 		HVConvertData data;
 		data.x = data.y = data.subX = data.subY = 0;
@@ -672,13 +683,7 @@ bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUse
 				this, SLOT(convertHVSlot(QChar, bool, QList<double> &, void *)), 
 				Qt::DirectConnection);
 		svgPathRunner.runPath(parser.symStack(), &data);
-		if (data.path.compare(dataCopy) != 0) {
-			DebugDialog::debug("hv removed...");
-			DebugDialog::debug(data.path);
-			DebugDialog::debug(dataCopy);
-			return parsePath(data.path, slot, pathUserData, slotTarget, false);
-		}
-		*/
+		return parsePath(data.path, slot, pathUserData, slotTarget, false);
 	}
 
 	SVGPathRunner svgPathRunner;
@@ -690,6 +695,7 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 	Q_UNUSED(relative);
 	HVConvertData * data = (HVConvertData *) userData;
 
+	qreal x, y;
 	switch(command.toAscii()) {
 		case 'M':
 			data->path.append(command);
@@ -702,9 +708,11 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 			break;
 		case 'm':
 			data->path.append(command);
+			x = data->x;
+			y = data->y;
 			for (int i = 0; i < args.count(); i += 2) {
-				data->x = (data->subX += args[i]);
-				data->y = (data->subY += args[i + 1]);
+				data->subX = data->x = (x + args[i]);
+				data->subY = data->y = (y + args[i + 1]);
 				appendPair(data->path, args[i], args[i + 1]);
 			}
 			data->path.chop(1);
@@ -722,42 +730,12 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 		case 'l':
 		case 't':
 			data->path.append(command);
+			x = data->x;
+			y = data->y;
 			for (int i = 0; i < args.count(); i += 2) {
-				data->x += args[i];
-				data->y += args[i + 1];
+				data->x = x + args[i];
+				data->y = y + args[i + 1];
 				appendPair(data->path, args[i], args[i + 1]);
-			}
-			data->path.chop(1);
-			break;
-		case 'V':
-			data->path.append('L');
-			for (int i = 0; i < args.count(); i++) {
-				data->y = args[i];
-				appendPair(data->path, data->x, args[i]);
-			}
-			data->path.chop(1);
-			break;
-		case 'v':
-			data->path.append('l');
-			for (int i = 0; i < args.count(); i++) {
-				data->y += args[i];
-				appendPair(data->path, 0, args[i]);
-			}
-			data->path.chop(1);
-			break;
-		case 'H':
-			data->path.append('L');
-			for (int i = 0; i < args.count(); i++) {
-				data->x = args[i];
-				appendPair(data->path, args[i], data->y);
-			}
-			data->path.chop(1);
-			break;
-		case 'h':
-			data->path.append('l');
-			for (int i = 0; i < args.count(); i++) {
-				data->x += args[i];
-				appendPair(data->path, args[i], 0);
 			}
 			data->path.chop(1);
 			break;
@@ -774,9 +752,11 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 			break;
 		case 'c':
 			data->path.append(command);
+			x = data->x;
+			y = data->y;
 			for (int i = 0; i < args.count(); i += 6) {
-				data->x += args[i + 4];
-				data->y += args[i + 5];
+				data->x = x + args[i + 4];
+				data->y = y + args[i + 5];
 				appendPair(data->path, args[i], args[i + 1]);
 				appendPair(data->path, args[i + 2], args[i + 3]);
 				appendPair(data->path, args[i + 4], args[i + 5]);
@@ -797,9 +777,11 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 		case 's':
 		case 'q':
 			data->path.append(command);
+			x = data->x;
+			y = data->y;
 			for (int i = 0; i < args.count(); i += 4) {
-				data->x += args[i + 2];
-				data->y += args[i + 3];
+				data->x = x + args[i + 2];
+				data->y = y + args[i + 3];
 				appendPair(data->path, args[i], args[i + 1]);
 				appendPair(data->path, args[i + 2], args[i + 3]);
 			}
@@ -829,10 +811,12 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 			break;
 		case 'a':
 			data->path.append(command);
+			x = data->x;
+			y = data->y;
 			for (int i = 0; i < args.count(); i += 7) {
 				data->path.append(command);
-				data->x += args[i + 5];
-				data->y += args[i + 6];
+				data->x = x + args[i + 5];
+				data->y = y + args[i + 6];
 				appendPair(data->path, args[i], args[i + 1]);
 				appendPair(data->path, args[i + 2], args[i + 3]);
 				appendPair(data->path, args[i + 4], args[i + 5]);
@@ -841,7 +825,42 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 			}
 			data->path.chop(1);
 			break;
+		case 'v':
+			data->path.append('l');
+			y = data->y;
+			for (int i = 0; i < args.count(); i++) {
+				data->y = y + args[i];
+				appendPair(data->path, 0, args[i]);
+			}
+			data->path.chop(1);
+			break;
+		case 'h':
+			data->path.append('l');
+			x = data->x;
+			for (int i = 0; i < args.count(); i++) {
+				data->x = x + args[i];
+				appendPair(data->path, args[i], 0);
+			}
+			data->path.chop(1);
+			break;
+		case 'H':
+			data->path.append('L');
+			for (int i = 0; i < args.count(); i++) {
+				data->x = args[i];
+				appendPair(data->path, args[i], data->y);
+			}
+			data->path.chop(1);
+			break;
+		case 'V':
+			data->path.append('L');
+			for (int i = 0; i < args.count(); i++) {
+				data->y = args[i];
+				appendPair(data->path, data->x, args[i]);
+			}
+			data->path.chop(1);
+			break;
 		default:
+			DebugDialog::debug(QString("unknown path command %1").arg(command));
 			data->path.append(command);
 			for (int i = 0; i < args.count(); i++) {
 				data->path.append(QString::number(args[i]));
