@@ -1,119 +1,149 @@
 <fritzing-sketches>
-	<sketches>
-		<sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
-        <sketch id="USB_Minimal" name="USB_Minimal" src="core/USB_Minimal.fz"/>
-        <sketch id="AnalogInputFSR" name="FSR" src="core/AnalogInputFSR.fz"/>
-        <sketch id="AnalogInputOutput" name="Analog Input / Output" src="core/AnalogInputOutput.fz"/>
-        <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
-        <sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
-        <sketch id="AnalogInputToServo" name="Servo" src="core/AnalogInputToServo.fz"/>
-        <sketch id="Arduino-no-FTDI" name="Barebones Arduino" src="core/Arduino-no-FTDI.fz"/>
-        <sketch id="Blink" name="Blink" src="core/Blink.fz"/>
-        <sketch id="Button" name="Button" src="core/Button.fz"/>
-        <sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fz"/>
-        <sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fz"/>
-        <sketch id="Loop" name="Loop" src="core/Loop.fz"/>
-        <sketch id="Melody" name="Melody" src="core/Melody.fz"/>
-        <sketch id="npnPowerTransistor" name="NPN Power Transistor" src="core/npnPowerTransistor.fz"/>
-        <sketch id="Optocoupler" name="Optocoupler" src="core/Optocoupler.fz"/>
-        <sketch id="Photocell" name="Photocell" src="core/Photocell.fz"/>
-        <sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fz"/>
-        <sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fz"/>
-        <sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fz"/>
-        <sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator_7800series.fz"/>
-        <sketch id="VoltageRegulatorSwitch" name="Voltage Regulator with Switch" src="core/VoltageRegulator_with_switch.fz"/>
-        <sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
-        <sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fz"/>
-        <sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fz"/>
-	<sketch id="Relay" name="Relay" src="core/Relay.fz"/>
-<sketch id="Shift_Register" name="Shift_Register" src="core/Shift_Register.fz"/>
-<sketch id="Stepper_Motor" name="Stepper_Motor" src="core/Stepper_Motor.fz"/>
-</sketches>
-	<categories>
-		<category name="Digital">
-			<category name="Output">
-				<sketch id="Blink"/>
-				<sketch id="Loop"/>
-				<sketch id="TrafficLight"/>
-			</category>
-	        <category name="Input">
-				<sketch id="Button"/>
-				<sketch id="TiltSwitch"/>
-			</category>
-		</category>
-		<category name="Analog">
-			<category name="Input">
-				<sketch id="AnalogInputPot"/>
-				<sketch id="AnalogInputFSR"/>
-				<sketch id="Knock"/>
-                <sketch id="Touch_Switch"/>
-	            <sketch id="Photocell"/>
-	            <sketch id="AnalogInputThermistor"/>
-	            <sketch id="AnalogInputOutput"/>
-			</category>
-	        <category name="Output">
-				<sketch id="AnalogInputOutput"/>
-				<sketch id="Melody"/>
-	            <sketch id="Window_Alarm"/>
-			</category>
-		</category>
-	    <category name="Sensors">
-			<category name="Rotary">
-				<sketch id="AnalogInputPot"/>
-			</category>
-	        <category name="Light">
-				<sketch id="Photocell"/>
-			</category>
-	        <category name="Temperature">
-				<sketch id="AnalogInputThermistor"/>
-			</category>
-	        <category name="Sound">
-				<sketch id="Knock"/>
-			</category>
-	        <category name="Force">
-				<sketch id="AnalogInputFSR"/>
-			</category>
-	        <category name="Touch">
-				<sketch id="555TouchSwitch"/>
-                <sketch id="Touch_Switch"/>
-			</category>
-		</category>
-	    <category name="Light">
-			<category name="LED">
-				<sketch id="Blink"/>
-	            <sketch id="Loop"/>
-	            <sketch id="TrafficLight"/>
-	            <sketch id="AnalogInputOutput"/>
-			</category>
-	        <category name="Display">
-			</category>
-	    </category>
-	    <category name="Motion">
-			<category name="Motors">
-				<sketch id="AnalogInputToServo"/>
-	            <sketch id="DC_motor_control"/>
- <sketch id="Stepper_Motor"/>
-	        </category>
-	    </category>
-	    <category name="Sound">
-				<sketch id="Window_Alarm"/>
-	            <sketch id="Melody"/>
-	    </category>
-	    <category name="Communication">
-				<sketch id="VirtualColorMixer"/>
-                <sketch id="USB_Minimal"/>
-	    </category>
-	    <category name="Power">
-				<sketch id="npnPowerTransistor"/>
-                <sketch id="Op_Amp"/>
-<sketch id="Relay"/>
-<sketch id="Shift_Register"/>
-                <sketch id="Optocoupler"/>
-				<sketch id="VoltageRegulator"/>
-				<sketch id="VoltageRegulatorSwitch"/>
-		</category>
-	    <category name="Processing">
-				<sketch id="Arduino-no-FTDI"/>
-	    </category>
-	</categories>
+  <sketches>
+    <sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
+    <sketch id="AnalogInputFSR" name="FSR" src="core/AnalogInputFSR.fz"/>
+    <sketch id="AnalogInputOutput" name="Analog Input / Output" src="core/AnalogInputOutput.fz"/>
+    <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
+    <sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
+    <sketch id="AnalogInputToServo" name="Servo" src="core/AnalogInputToServo.fz"/>
+    <sketch id="Arduino-no-FTDI" name="Barebones Arduino" src="core/Arduino-no-FTDI.fz"/>
+    <sketch id="Blink" name="Blink" src="core/Blink.fz"/>
+    <sketch id="Button" name="Button" src="core/Button.fz"/>
+    <sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fz"/>
+    <sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fz"/>
+    <sketch id="Loop" name="Loop" src="core/Loop.fz"/>
+    <sketch id="Melody" name="Melody" src="core/Melody.fz"/>
+    <sketch id="npnPowerTransistor" name="NPN Power Transistor" src="core/npnPowerTransistor.fz"/>
+    <sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fz"/>
+    <sketch id="Optocoupler" name="Optocoupler" src="core/Optocoupler.fz"/>
+    <sketch id="Photocell" name="Photocell" src="core/Photocell.fz"/>
+    <sketch id="Relay" name="Relay" src="core/Relay.fz"/>
+    <sketch id="Shift_Register" name="Shift_Register" src="core/Shift_Register.fz"/>
+    <sketch id="Stepper_Motor" name="Stepper_Motor" src="core/Stepper_Motor.fz"/>
+    <sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fz"/>
+    <sketch id="Touch_Switch" name="Touch Switch" src="core/TouchSwitch.fz"/>
+    <sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fz"/>
+    <sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fz"/>
+    <sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator_7800series.fz"/>
+    <sketch id="VoltageRegulatorSwitch" name="Voltage Regulator with Switch" src="core/VoltageRegulator_with_switch.fz"/>
+    <sketch id="USB_Minimal" name="USB_Minimal" src="core/USB_Minimal.fz"/>
+    <sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
+  </sketches>
+  <categories>
+    <category name="Digital">
+      <category name="Output">
+        <sketch id="Blink"/>
+        <sketch id="Loop"/>
+        <sketch id="TrafficLight"/>
+      </category>
+      <category name="Input">
+        <sketch id="Button"/>
+        <sketch id="TiltSwitch"/>
+      </category>
+    </category>
+    <category name="Analog">
+      <category name="Input">
+        <sketch id="AnalogInputPot"/>
+        <sketch id="AnalogInputFSR"/>
+        <sketch id="Knock"/>
+        <sketch id="Touch_Switch"/>
+        <sketch id="Photocell"/>
+        <sketch id="AnalogInputThermistor"/>
+        <sketch id="AnalogInputOutput"/>
+      </category>
+      <category name="Output">
+        <sketch id="AnalogInputOutput"/>
+        <sketch id="Melody"/>
+        <sketch id="Window_Alarm"/>
+      </category>
+    </category>
+    <category name="Sensors">
+      <category name="Rotary">
+        <sketch id="AnalogInputPot"/>
+      </category>
+      <category name="Light">
+        <sketch id="Photocell"/>
+      </category>
+      <category name="Temperature">
+        <sketch id="AnalogInputThermistor"/>
+      </category>
+      <category name="Sound">
+        <sketch id="Knock"/>
+      </category>
+      <category name="Force">
+        <sketch id="AnalogInputFSR"/>
+      </category>
+      <category name="Touch">
+        <sketch id="555TouchSwitch"/>
+        <sketch id="Touch_Switch"/>
+      </category>
+    </category>
+    <category name="Light">
+      <category name="LED">
+        <sketch id="Blink"/>
+        <sketch id="Loop"/>
+        <sketch id="TrafficLight"/>
+        <sketch id="AnalogInputOutput"/>
+      </category>
+      <category name="Display">
+      </category>
+    </category>
+    <category name="Motion">
+      <category name="Motors">
+        <sketch id="AnalogInputToServo"/>
+        <sketch id="DC_motor_control"/>
+        <sketch id="Stepper_Motor"/>
+      </category>
+    </category>
+    <category name="Sound">
+      <sketch id="Window_Alarm"/>
+      <sketch id="Melody"/>
+    </category>
+    <category name="Communication">
+      <sketch id="VirtualColorMixer"/>
+      <sketch id="USB_Minimal"/>
+    </category>
+    <category name="Power">
+      <sketch id="npnPowerTransistor"/>
+      <sketch id="Op_Amp"/>
+      <sketch id="Relay"/>
+      <sketch id="Shift_Register"/>
+      <sketch id="Optocoupler"/>
+      <sketch id="VoltageRegulator"/>
+      <sketch id="VoltageRegulatorSwitch"/>
+    </category>
+    <category name="Processing">
+      <sketch id="Arduino-no-FTDI"/>
+    </category>
+    <category name="All">
+      <sketch id="555TouchSwitch" />
+      <sketch id="AnalogInputFSR" />
+      <sketch id="AnalogInputOutput" />
+      <sketch id="AnalogInputPot" />
+      <sketch id="AnalogInputThermistor" />
+      <sketch id="AnalogInputToServo" />
+      <sketch id="Arduino-no-FTDI" />
+      <sketch id="Blink" />
+      <sketch id="Button" />
+      <sketch id="DC_motor_control" />
+      <sketch id="Knock" />
+      <sketch id="Loop" />
+      <sketch id="Melody" />
+      <sketch id="npnPowerTransistor" />
+      <sketch id="Op_Amp" />
+      <sketch id="Optocoupler" />
+      <sketch id="Photocell" />
+      <sketch id="Relay" />
+      <sketch id="Shift_Register" />
+      <sketch id="Stepper_Motor" />
+      <sketch id="TiltSwitch" />
+      <sketch id="Touch_Switch" />
+      <sketch id="TrafficLight" />
+      <sketch id="VirtualColorMixer" />
+      <sketch id="VoltageRegulator" />
+      <sketch id="VoltageRegulatorSwitch" />
+      <sketch id="USB_Minimal" />
+      <sketch id="Window_Alarm" />
+    </category>
+  </categories>
 </fritzing-sketches>
