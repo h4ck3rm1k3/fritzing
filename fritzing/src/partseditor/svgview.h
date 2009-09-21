@@ -28,7 +28,6 @@ $Date$
 #define SVGVIEW_H
 //
 #include <QFrame>
-#include <qmath.h>
 #include <QDomDocument>
 #include <QSvgRenderer>
 #include <QSvgWidget>

@@ -25,8 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "svgdomdocument.h"
-#include <qmath.h>
-//
+
 SVGDomDocument::SVGDomDocument(  ) 
 	: QDomDocument()
 {

@@ -35,7 +35,6 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "wire.h"
 
-#include <math.h>
 #include <QBrush>
 #include <QPen>
 #include <QColor>

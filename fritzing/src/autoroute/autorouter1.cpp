@@ -29,10 +29,11 @@ $Date$
 #include "../debugdialog.h"
 #include "../items/virtualwire.h"
 #include "../items/tracewire.h"
+#include "../items/jumperitem.h"
 #include "../utils/graphicsutils.h"
 #include "../connectors/connectoritem.h"
 
-#include <math.h>
+#include <qmath.h>
 #include <QApplication>
 
 static int kExtraLength = 1000000;
@@ -786,7 +787,35 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	return false;
 }
 
- void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds) {
+ void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds) 
+ {
+	 {
+
+		 long newID = ItemBase::getNextID();
+		 ViewGeometry viewGeometry;
+		 ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::jumperModuleIDName), 
+													BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+		 if (temp == NULL) {
+			// we're in trouble
+			 return;
+		 }
+
+		 JumperItem * jumperItem = dynamic_cast<JumperItem *>(temp);
+		 QSizeF jsz = jumperItem->footprintSize();
+		 m_sketchWidget->deleteItem(jumperItem, true, false, false);
+
+		 QRectF r0 = from->rect();
+		 qreal jr = sqrt((jsz.width() * jsz.width()) + (jsz.height() * jsz.height()));
+		 qreal fr = sqrt((r0.width() * r0.width()) + (r0.height() * r0.height()));
+	 }
+
+
+
+
+
+
+
+
 	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
 	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
  	long newID = ItemBase::getNextID();
@@ -797,14 +826,14 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	m_sketchWidget->setJumperFlags(viewGeometry);
 	viewGeometry.setAutoroutable(true);
 
-	ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
+	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
 												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
-	if (jumper == NULL) {
+	if (itemBase == NULL) {
 		// we're in trouble
 		return;
 	}
 
-	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
+	Wire * jumperWire = dynamic_cast<Wire *>(itemBase);
 	jumperWire->setColorString(m_sketchWidget->jumperColor(), Wire::UNROUTED_OPACITY);
 	jumperWire->setWireWidth(m_sketchWidget->jumperWidth(), m_sketchWidget);
 	jumperWire->setSelected(false);
@@ -1327,7 +1356,7 @@ double Autorouter1::distanceToLine(QPointF p0, QPointF p1, QPointF p2) {
 	double y1 = p1.y();
 	double x2 = p2.x();
 	double y2 = p2.y();
-	return qAbs((x2 - x1) * (y1 - y0) - (x1 - x0) * (y2 - y1)) / sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+	return qAbs((x2 - x1) * (y1 - y0) - (x1 - x0) * (y2 - y1)) / qSqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
 

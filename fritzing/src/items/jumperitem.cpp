@@ -30,12 +30,11 @@ $Date: 2009-06-18 20:07:42 +0200 (Thu, 18 Jun 2009) $
 #include "../layerattributes.h"
 #include "../modelpart.h"
 #include "../utils/graphicsutils.h"
+#include "../svg/svgfilesplitter.h"
 
 static QString Copper0LayerTemplate = "";
 
 // TODO: 
-//	save and load
-//	undo
 //	ignore during autoroute?
 //	ignore during other connections?
 //	don't let footprints overlap during dragging
@@ -163,10 +162,6 @@ void JumperItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	resize();
 }
 
-void JumperItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-}
-
 QString JumperItem::makeSvg() 
 {
 	QRectF r0 = m_connector0->rect();
@@ -223,7 +218,6 @@ void JumperItem::resize(QPointF p, QPointF nc0, QPointF nc1) {
 	setPos(p);
 }
 
-
 void JumperItem::resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y) {
 	QRectF r0 = m_connector0->rect();
 	QRectF r1 = m_connector1->rect();
@@ -236,4 +230,27 @@ void JumperItem::resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y) {
 	resize();
 }
 
+QSizeF JumperItem::footprintSize() {
+	QRectF r0 = m_connector0->rect();
+	return r0.size();
+}
 
+QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+{
+	if (viewLayerID == ViewLayer::Copper0) {
+		QString xml = makeSvg();
+		QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+		SvgFileSplitter splitter;
+		bool result = splitter.splitString(xml, xmlName);
+		if (!result) {
+			return ___emptyString___;
+		}
+		result = splitter.normalize(dpi, xmlName, blackOnly);
+		if (!result) {
+			return ___emptyString___;
+		}
+		return splitter.elementString(xmlName);
+	}
+
+	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+}

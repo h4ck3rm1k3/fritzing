@@ -27,7 +27,7 @@ $Date$
 #include "clipablewire.h"
 #include "../connectors/connectoritem.h"
 #include "../modelpart.h"
-#include <math.h>
+#include <qmath.h>
 
 static double connectorRectClipInset = 0.5;
 /*
@@ -61,8 +61,8 @@ bool RaySphere(QPointF p1,QPointF p2,QPointF sc,double r,double *mu1,double *mu2
       return false;
    }
 
-   *mu1 = (-b + sqrt(bb4ac)) / (2 * a);
-   *mu2 = (-b - sqrt(bb4ac)) / (2 * a);
+   *mu1 = (-b + qSqrt(bb4ac)) / (2 * a);
+   *mu2 = (-b - qSqrt(bb4ac)) / (2 * a);
 
    return true;
 }
@@ -74,7 +74,7 @@ float Magnitude( QPointF *Point1, QPointF *Point2 )
     Vector.setX(Point2->x() - Point1->x());
     Vector.setY(Point2->y() - Point1->y());
 
-    return (float)sqrt( Vector.x() * Vector.x() + Vector.y() * Vector.y());
+    return (float) qSqrt( Vector.x() * Vector.x() + Vector.y() * Vector.y());
 }
 
 bool DistancePointLine( QPointF *Point, QPointF *LineStart, QPointF *LineEnd, float *Distance )

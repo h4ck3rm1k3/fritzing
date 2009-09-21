@@ -31,8 +31,6 @@ $Date$
 
 #include <QMessageBox>
 
-#include <math.h>
-
 InfoGraphicsView::InfoGraphicsView( QWidget * parent )
 	: ZoomableGraphicsView(parent)
 {

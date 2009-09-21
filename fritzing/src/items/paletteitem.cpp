@@ -36,7 +36,6 @@ $Date$
 #include "../commands.h"
 #include "../connectors/connectoritem.h"
 
-#include <math.h>
 
 #include <QGraphicsSceneMouseEvent>
 #include <QSvgRenderer>

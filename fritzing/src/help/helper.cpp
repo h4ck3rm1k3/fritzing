@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 #include <QScrollBar>
-#include <math.h>
 
 #include "helper.h"
 #include "../debugdialog.h"

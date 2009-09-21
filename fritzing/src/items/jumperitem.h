@@ -41,12 +41,13 @@ public:
 	void saveParams();
 	void getParams(QPointF & pos, QPointF & c0, QPointF & c1);
 	void resize(QPointF pos, QPointF c0, QPointF c1);
+	QSizeF footprintSize();
+	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 
 protected:
 	void resize();
 	QString makeSvg();
 	QPainterPath makePath() const;
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y);

@@ -28,11 +28,7 @@ $Date$
 #include "../debugdialog.h"
 #include "svgflattener.h"
 #include <QTextStream>
-#include <math.h>
-
-#ifdef Q_WS_WIN
-#define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))
-#endif
+#include <qmath.h>
 
 //TODO: currently only supports one board per sketch (i.e. multiple board outlines will mess you up)
 
@@ -259,10 +255,10 @@ void SVG2gerber::allPaths2gerber() {
 
         qreal centerx = circle.attribute("cx").toFloat();
         qreal centery = circle.attribute("cy").toFloat();
-        QString cx = QString::number(round(centerx));
-        QString cy = QString::number(round(centery));
-        QString drill_cx = QString::number(round(centerx)*10);
-        QString drill_cy = QString::number(round(centery)*10);
+        QString cx = QString::number(qRound(centerx));
+        QString cy = QString::number(qRound(centery));
+        QString drill_cx = QString::number(qRound(centerx)*10);
+        QString drill_cy = QString::number(qRound(centery)*10);
         qreal r = circle.attribute("r").toFloat();
         QString fill = circle.attribute("fill");
         qreal stroke_width = circle.attribute("stroke-width").toFloat();
@@ -322,8 +318,8 @@ void SVG2gerber::allPaths2gerber() {
         qreal y = rect.attribute("y").toFloat();
         qreal centerx = x + (width/2);
         qreal centery = y + (height/2);
-        QString cx = QString::number(round(centerx));
-        QString cy = QString::number(round(centery));
+        QString cx = QString::number(qRound(centerx));
+        QString cy = QString::number(qRound(centery));
         QString fill = rect.attribute("fill");
         qreal stroke_width = rect.attribute("stroke-width").toFloat();
 
@@ -371,11 +367,11 @@ void SVG2gerber::allPaths2gerber() {
             m_contour_paths += "G54D10*\n";
 
             // draw 4 lines
-            m_contour_paths += "X" + QString::number(round(x)) + "Y" + QString::number(round(y)) + "D02*\n";
-            m_contour_paths += "X" + QString::number(round(x+width)) + "Y" + QString::number(round(y)) + "D01*\n";
-            m_contour_paths += "X" + QString::number(round(x+width)) + "Y" + QString::number(round(y+height)) + "D01*\n";
-            m_contour_paths += "X" + QString::number(round(x)) + "Y" + QString::number(round(y+height)) + "D01*\n";
-            m_contour_paths += "X" + QString::number(round(x)) + "Y" + QString::number(round(y)) + "D01*\n";
+            m_contour_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D02*\n";
+            m_contour_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y)) + "D01*\n";
+            m_contour_paths += "X" + QString::number(qRound(x+width)) + "Y" + QString::number(qRound(y+height)) + "D01*\n";
+            m_contour_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y+height)) + "D01*\n";
+            m_contour_paths += "X" + QString::number(qRound(x)) + "Y" + QString::number(qRound(y)) + "D01*\n";
             m_contour_paths += "D02*\n";
         }
     }
@@ -393,15 +389,15 @@ void SVG2gerber::allPaths2gerber() {
         //start poly area fill
         m_gerber_paths += "G36*\n";
 
-        int startx = round(pointList.at(0).toFloat());
-        int starty = round(pointList.at(1).toFloat());
+        int startx = qRound(pointList.at(0).toFloat());
+        int starty = qRound(pointList.at(1).toFloat());
         // move to start - light off
         m_gerber_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D02*\n";
 
         // iterate through all other points - light on
         for(int pt = 2; pt < pointList.length(); pt +=2){
-            int ptx = round(pointList.at(pt).toFloat());
-            int pty = round(pointList.at(pt+1).toFloat());
+            int ptx = qRound(pointList.at(pt).toFloat());
+            int pty = qRound(pointList.at(pt+1).toFloat());
             m_gerber_paths += "X" + QString::number(ptx) + "Y" + QString::number(pty) + "D01*\n";
         }
 
@@ -424,10 +420,10 @@ void SVG2gerber::allPaths2gerber() {
         QDomElement line = lineList.item(k).toElement();
         QString aperture;
 
-        int x1 = round(line.attribute("x1").toFloat());
-        int y1 = round(line.attribute("y1").toFloat());
-        int x2 = round(line.attribute("x2").toFloat());
-        int y2 = round(line.attribute("y2").toFloat());
+        int x1 = qRound(line.attribute("x1").toFloat());
+        int y1 = qRound(line.attribute("y1").toFloat());
+        int x2 = qRound(line.attribute("x2").toFloat());
+        int y2 = qRound(line.attribute("y2").toFloat());
         qreal stroke_width = line.attribute("stroke-width").toFloat();
 
         aperture = QString("C,%1").arg(stroke_width/1000);
@@ -540,7 +536,7 @@ QDomElement SVG2gerber::circle2path(QDomElement circleElement){
     float r = circleElement.attribute("r").toFloat();
 
     // approximate midpoint
-    float k = r * (sqrt(2.0f) -1) * 4/3;
+    float k = r * (qSqrt(2.0f) -1) * 4/3;
 
 //    d="m 0,1                      // translate(radius) from center
 //    C 0.552,1   1,0.552   1,0    // 1st quarter

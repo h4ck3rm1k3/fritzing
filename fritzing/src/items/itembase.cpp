@@ -44,7 +44,7 @@ $Date$
 #include <QVector>
 #include <QSet>
 #include <QSettings>
-#include <math.h>
+#include <qmath.h>
 
 /////////////////////////////////
 

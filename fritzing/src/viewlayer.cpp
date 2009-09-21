@@ -26,7 +26,7 @@ $Date$
 
 #include "viewlayer.h"
 #include "debugdialog.h"
-#include <math.h>
+#include <qmath.h>
 
 qreal ViewLayer::zIncrement = 0.00001;  // 0.000000001;
 

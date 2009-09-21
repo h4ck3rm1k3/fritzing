@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 #include "svgview.h"
-#include <qmath.h>
 #include <QtGui>
 //
 SVGView::SVGView(const QString &name, QWidget *parent)

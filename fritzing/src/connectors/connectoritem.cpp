@@ -29,7 +29,6 @@ $Date$
 #include <QBrush>
 #include <QPen>
 #include <QColor>
-#include <math.h>
 #include <limits>
 
 #include "../infographicsview.h"
