@@ -25,7 +25,7 @@ $Date: 2009-09-04 12:26:26 +0200 (Fri, 04 Sep 2009) $
 ********************************************************************/
 
 #include "graphicsutils.h"
-#include "../FSvgRenderer.h"
+#include "../fsvgrenderer.h"
 
 #include <QList>
 #include <QLineF>
