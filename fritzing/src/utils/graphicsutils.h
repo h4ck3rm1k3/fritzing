@@ -37,6 +37,14 @@ public:
 								 double & dx, double & dy, double &distanceSegment, bool & atEndpoint);
 	static QPointF calcConstraint(QPointF initial, QPointF current);
 
+	static qreal GraphicsUtils::pixels2mils(qreal p);
+	static qreal GraphicsUtils::pixels2ins(qreal p);
+	static qreal GraphicsUtils::distance2(QPointF p1, QPointF p2);
+
+	static qreal mm2mils(qreal mm);
+	static qreal pixels2mm(qreal p);
+	static qreal mils2pixels(qreal m);
+
 };
 
 #endif

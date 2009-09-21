@@ -38,6 +38,9 @@ public:
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
  	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+	void saveParams();
+	void getParams(QPointF & pos, QPointF & c0, QPointF & c1);
+	void resize(QPointF pos, QPointF c0, QPointF c1);
 
 protected:
 	void resize();
@@ -46,6 +49,7 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y);
 
 protected:
 	ConnectorItem * m_dragItem;
@@ -58,6 +62,9 @@ protected:
 	QPointF m_otherPos;
 	QPointF m_connectorTL;
 	QPointF m_connectorBR;
+	QPointF m_itemPos;
+	QPointF m_itemC0;
+	QPointF m_itemC1;
 	class FSvgRenderer * m_renderer;
 
 };

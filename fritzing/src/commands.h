@@ -650,5 +650,26 @@ protected:
 	long m_itemID;
 };
 
+class ResizeJumperItemCommand : public BaseCommand
+{
+public:
+	ResizeJumperItemCommand(class SketchWidget *, long itemID, QPointF oldPos, QPointF oldC0, QPointF oldC1, QPointF newPos, QPointF newC0, QPointF newC1, QUndoCommand * parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QPointF m_oldPos;
+	QPointF m_oldC0;
+	QPointF m_oldC1;
+	QPointF m_newPos;
+	QPointF m_newC0;
+	QPointF m_newC1;
+	long m_itemID;
+};
+
+
 
 #endif // COMMANDS_H

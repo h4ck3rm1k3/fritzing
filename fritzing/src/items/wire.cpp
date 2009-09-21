@@ -59,9 +59,6 @@ const qreal Wire::ROUTED_OPACITY = 0.20;
 const qreal Wire::UNROUTED_OPACITY = 1.0;
 qreal Wire::STANDARD_TRACE_WIDTH;
 
-
-#define MILS2PIXELS(m) (FSvgRenderer::printerScale() * (m) / 1000)
-
 ////////////////////////////////////////////////////////////
 
 static QHash<ViewIdentifierClass::ViewIdentifier, int> netColorIndex;
@@ -461,7 +458,7 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	else {
 		w = element.attribute("mils").toDouble(&ok);
 		if (ok) {
-			setWireWidth(MILS2PIXELS(w), infoGraphicsView);
+			setWireWidth(GraphicsUtils::mils2pixels(w), infoGraphicsView);
 		}
 	}
 
@@ -932,7 +929,7 @@ void Wire::initNames() {
 	widthTrans.insert(widths[2], tr("thick (32 mil)"));
 	widthTrans.insert(widths[3], tr("extra thick (48 mil)"));
 
-	STANDARD_TRACE_WIDTH = MILS2PIXELS(widths[1]);
+	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[1]);
 
     // need a list because a hash table doesn't guarantee order
     colorNames.append(tr("blue"));

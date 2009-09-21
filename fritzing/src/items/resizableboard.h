@@ -52,9 +52,12 @@ public:
 	void rotateItem(qreal degrees);
 	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	void saveParams();
+	void getParams(QPointF &, QSizeF &);
 
 public:
 	static QString customShapeTranslated;
+
 
 protected slots:
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
@@ -76,6 +79,8 @@ protected:
 	class ResizeHandle * m_inResize;
 	class FSvgRenderer * m_renderer;
 	class FSvgRenderer * m_silkscreenRenderer;
+	QSizeF m_boardSize;
+	QPointF m_boardPos;
 	QRectF m_originalRect;
 };
 

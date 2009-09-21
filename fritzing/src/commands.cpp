@@ -1225,3 +1225,41 @@ QString SetVoltageCommand::getParamString() const {
 		.arg(m_oldVoltage)
 		.arg(m_newVoltage);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ResizeJumperItemCommand::ResizeJumperItemCommand(SketchWidget * sketchWidget, long itemID, QPointF oldPos, QPointF oldC0, QPointF oldC1, QPointF newPos, QPointF newC0, QPointF newC1, QUndoCommand * parent)
+: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_itemID = itemID;
+	m_oldPos = oldPos;
+	m_newPos = newPos;
+	m_oldC0 = oldC0;
+	m_newC0 = newC0;
+	m_oldC1 = oldC1;
+	m_newC1 = newC1;
+}
+
+void ResizeJumperItemCommand::undo() {
+	m_sketchWidget->resizeJumperItem(m_itemID, m_oldPos, m_oldC0, m_oldC1);
+}
+
+void ResizeJumperItemCommand::redo() {
+	m_sketchWidget->resizeJumperItem(m_itemID, m_newPos, m_newC0, m_newC1);
+}
+
+QString ResizeJumperItemCommand::getParamString() const {
+
+	return QString("ResizeJumperItemCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 op:%2,%3 oc0:%4,%5 oc1:%6,%7 np:%8,%9 nc0:%10,%11 nc1:%12,%13")
+		.arg(m_itemID)
+		.arg(m_oldPos.x()).arg(m_oldPos.y())
+		.arg(m_oldC0.x()).arg(m_oldC0.y())
+		.arg(m_oldC1.x()).arg(m_oldC1.y())
+		.arg(m_newPos.x()).arg(m_newPos.y())
+		.arg(m_newC0.x()).arg(m_newC0.y())
+		.arg(m_newC1.x()).arg(m_newC1.y())
+		;
+}
+

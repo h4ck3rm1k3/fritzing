@@ -29,23 +29,17 @@ $Date: 2009-06-18 20:07:42 +0200 (Thu, 18 Jun 2009) $
 #include "../fsvgrenderer.h"
 #include "../layerattributes.h"
 #include "../modelpart.h"
+#include "../utils/graphicsutils.h"
 
 static QString Copper0LayerTemplate = "";
-
-#define pixels2mils(p) ((p) * 1000.0 / FSvgRenderer::printerScale())
-#define pixels2ins(p) ((p) / FSvgRenderer::printerScale())
 
 // TODO: 
 //	save and load
 //	undo
-//	ignore during autoroute
-//	ignore during other connections
+//	ignore during autoroute?
+//	ignore during other connections?
+//	don't let footprints overlap during dragging
 
-
-
-inline qreal distance2(QPointF p1, QPointF p2) {
-	return ((p1.x() - p2.x()) * (p1.x() - p2.x())) + ((p1.y() - p2.y()) * (p1.y() - p2.y()));
-}
 
 /////////////////////////////////////////////////////////
 
@@ -109,6 +103,22 @@ bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIden
 				m_connectorBR = boundingRect().bottomRight() - m_connector1->rect().bottomRight();
 			}
 		}
+
+		bool ok;
+		qreal r0x = m_modelPart->prop("r0x").toDouble(&ok);
+		if (ok) {
+			qreal r0y = m_modelPart->prop("r0y").toDouble(&ok);
+			if (ok) {
+				qreal r1x = m_modelPart->prop("r1x").toDouble(&ok);
+				if (ok) {
+					qreal r1y = m_modelPart->prop("r1y").toDouble(&ok);
+					if (ok) {
+						resizeAux(GraphicsUtils::mils2pixels(r0x), GraphicsUtils::mils2pixels(r0y),
+									GraphicsUtils::mils2pixels(r1x), GraphicsUtils::mils2pixels(r1y));
+					}
+				}
+			}
+		}
 	}
 
 	return result;
@@ -118,7 +128,7 @@ void JumperItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	QPointF c0 = m_connector0->rect().center();
 	QPointF c1 = m_connector1->rect().center();
-	if (distance2(c0, event->pos()) <= distance2(c1, event->pos())) {
+	if (GraphicsUtils::distance2(c0, event->pos()) <= GraphicsUtils::distance2(c1, event->pos())) {
 		m_dragItem = m_connector0;
 		m_otherItem = m_connector1;
 	}
@@ -162,13 +172,23 @@ QString JumperItem::makeSvg()
 	QRectF r0 = m_connector0->rect();
 	QRectF r1 = m_connector1->rect();
 	QRectF r = r0.united(r1);
-	qreal w = pixels2ins(r.width() + m_connectorTL.x() + m_connectorBR.x());
-	qreal h = pixels2ins(r.height() + m_connectorTL.y() + m_connectorBR.y());
+	qreal w = GraphicsUtils::pixels2ins(r.width() + m_connectorTL.x() + m_connectorBR.x());
+	qreal h = GraphicsUtils::pixels2ins(r.height() + m_connectorTL.y() + m_connectorBR.y());
+
+	qreal r0x = GraphicsUtils::pixels2mils(r0.center().x());
+	qreal r0y = GraphicsUtils::pixels2mils(r0.center().y());
+	qreal r1x = GraphicsUtils::pixels2mils(r1.center().x());
+	qreal r1y = GraphicsUtils::pixels2mils(r1.center().y());
+
+	modelPart()->setProp("r0x", r0x);
+	modelPart()->setProp("r0y", r0y);
+	modelPart()->setProp("r1x", r1x);
+	modelPart()->setProp("r1y", r1y);
+
 	return Copper0LayerTemplate
 		.arg(w).arg(h)
 		.arg(w * 1000).arg(h * 1000)			
-		.arg(pixels2mils(r0.center().x())).arg(pixels2mils(r0.center().y()))
-		.arg(pixels2mils(r1.center().x())).arg(pixels2mils(r1.center().y()));
+		.arg(r0x).arg(r0y).arg(r1x).arg(r1y);
 }
 
 
@@ -177,7 +197,7 @@ void JumperItem::resize() {
 		m_renderer = new FSvgRenderer(this);
 	}
 	QString s = makeSvg();
-	DebugDialog::debug(s);
+	//DebugDialog::debug(s);
 
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
@@ -185,4 +205,35 @@ void JumperItem::resize() {
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 }
+
+void JumperItem::saveParams() {
+	m_itemPos = pos();
+	m_itemC0 = m_connector0->rect().center();
+	m_itemC1 = m_connector1->rect().center();
+}
+
+void JumperItem::getParams(QPointF & p, QPointF & c0, QPointF & c1) {
+	p = m_itemPos;
+	c0 = m_itemC0;
+	c1 = m_itemC1;
+}
+
+void JumperItem::resize(QPointF p, QPointF nc0, QPointF nc1) {
+	resizeAux(nc0.x(), nc0.y(), nc1.x(), nc1.y());								
+	setPos(p);
+}
+
+
+void JumperItem::resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y) {
+	QRectF r0 = m_connector0->rect();
+	QRectF r1 = m_connector1->rect();
+	QPointF c0 = r0.center();
+	QPointF c1 = r1.center();
+	r0.translate(r0x - c0.x(), r0y - c0.y());
+	r1.translate(r1x - c1.x(), r1y - c1.y());
+	m_connector0->setRect(r0);
+	m_connector1->setRect(r1);
+	resize();
+}
+
 

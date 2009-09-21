@@ -26,18 +26,17 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 #include "resizableboard.h"
 #include "../utils/resizehandle.h"
+#include "../utils/graphicsutils.h"
 #include "../fsvgrenderer.h"
 #include "../infographicsview.h"
 #include "../svg/svgfilesplitter.h"
+#include "../commands.h"
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 4;
 
 QString ResizableBoard::customShapeTranslated;
-
-#define mm2mils(mm) ((mm) / 25.4 * 1000)
-#define pixels2mm(p) ((p) / FSvgRenderer::printerScale() * 25.4)
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -272,7 +271,7 @@ bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::View
 }
 
 void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers) {
-	resizeMM(pixels2mm(w), pixels2mm(h), viewLayers);
+	resizeMM(GraphicsUtils::pixels2mm(w), GraphicsUtils::pixels2mm(h), viewLayers);
 }
 
 void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
@@ -289,8 +288,8 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	qreal milsW = mm2mils(mmW);
-	qreal milsH = mm2mils(mmH);
+	qreal milsW = GraphicsUtils::mm2mils(mmW);
+	qreal milsH = GraphicsUtils::mm2mils(mmH);
 
 	QString s = makeBoardSvg(mmW, mmH, milsW, milsH);
 
@@ -340,8 +339,8 @@ void ResizableBoard::setInitialSize() {
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		QSizeF sz = this->boundingRect().size();
-		modelPart()->setProp("width", pixels2mm(sz.width())); 
-		modelPart()->setProp("height", pixels2mm(sz.height())); 
+		modelPart()->setProp("width", GraphicsUtils::pixels2mm(sz.width())); 
+		modelPart()->setProp("height", GraphicsUtils::pixels2mm(sz.height())); 
 	}
 }
 
@@ -353,10 +352,10 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 		QString xml;
 		switch (viewLayerID) {
 			case ViewLayer::Board:
-				xml = makeBoardSvg(w, h, mm2mils(w), mm2mils(h));
+				xml = makeBoardSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
 				break;
 			case ViewLayer::Silkscreen:
-				xml = makeSilkscreenSvg(w, h, mm2mils(w), mm2mils(h));
+				xml = makeSilkscreenSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
 				break;
 			default:
 				break;
@@ -450,3 +449,14 @@ QString ResizableBoard::collectExtraInfoHtml(const QString & prop, const QString
 	return ___emptyString___;
 }
 
+void ResizableBoard::saveParams() {
+	qreal w = modelPart()->prop("width").toDouble();
+	qreal h = modelPart()->prop("height").toDouble();
+	m_boardSize = QSizeF(w, h);
+	m_boardPos = pos();
+}
+
+void ResizableBoard::getParams(QPointF & p, QSizeF & s) {
+	p = m_boardPos;
+	s = m_boardSize;
+}

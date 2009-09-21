@@ -83,6 +83,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 	m_lastHoverEnterItem = NULL;
 	m_lastHoverEnterConnectorItem = NULL;
 	m_resizingBoard = NULL;
+	m_resizingJumperItem = NULL;
 	m_fixedToCenterItem = NULL;
 	m_spaceBarWasPressed = m_spaceBarIsPressed = false;
 	m_current = false;
@@ -267,10 +268,15 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
 			}
 			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
-			if (mp->itemType() == ModelPart::ResizableBoard && mp->prop("width").isValid()) {
-				qreal w = mp->prop("width").toDouble();
-				qreal h = mp->prop("height").toDouble();
-				new ResizeBoardCommand(this, newID, w, h, w, h, parentCommand);
+			if (mp->itemType() == ModelPart::ResizableBoard) {
+				bool ok;
+				qreal w = mp->prop("width").toDouble(&ok);
+				if (ok) {
+					qreal h = mp->prop("height").toDouble(&ok);
+					if (ok) {
+						new ResizeBoardCommand(this, newID, w, h, w, h, parentCommand);
+					}
+				}
 			}
 
 			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
@@ -1628,15 +1634,13 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	// board's child items (at the moment) are the resize grips
 	m_resizingBoard = dynamic_cast<ResizableBoard *>(item->parentItem());
 	if (m_resizingBoard != NULL) {
-		qreal w = m_resizingBoard->modelPart()->prop("width").toDouble();
-		qreal h = m_resizingBoard->modelPart()->prop("height").toDouble();
-		m_resizingBoardSize = QSizeF(w, h);
-		m_resizingBoardPos = m_resizingBoard->pos();
+		m_resizingBoard->saveParams();
 		return;
 	}
 
-	JumperItem * jumperItem = dynamic_cast<JumperItem *>(item->parentItem());
-	if (jumperItem != NULL) {
+	m_resizingJumperItem = dynamic_cast<JumperItem *>(item);
+	if (m_resizingJumperItem != NULL) {
+		m_resizingJumperItem->saveParams();
 		return;
 	}
 
@@ -2104,22 +2108,13 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	}
 
 	if (m_resizingBoard != NULL) {
-		qreal w = m_resizingBoard->modelPart()->prop("width").toDouble();
-		qreal h = m_resizingBoard->modelPart()->prop("height").toDouble();
-		QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(w).arg(h));
-		new ResizeBoardCommand(this, m_resizingBoard->id(), m_resizingBoardSize.width(), m_resizingBoardSize.height(), w, h, parentCommand);
-		if (m_resizingBoardPos != m_resizingBoard->pos()) {
-			m_resizingBoard->saveGeometry();
-			ViewGeometry vg1 = m_resizingBoard->getViewGeometry();
-			ViewGeometry vg2 = vg1;
-			vg1.setLoc(m_resizingBoardPos);
-			vg2.setLoc(m_resizingBoard->pos());
-			ViewGeometry vg21 = m_resizingBoard->getViewGeometry();
-			new MoveItemCommand(this, m_resizingBoard->id(), vg1, vg2, parentCommand);
-		}
-		new CheckStickyCommand(this, BaseCommand::SingleView, m_resizingBoard->id(), true, parentCommand);
-		m_undoStack->waitPush(parentCommand, 10);
-		m_resizingBoard = NULL;
+		resizeBoard();
+		InfoGraphicsView::mouseReleaseEvent(event);
+		return;
+	}
+
+	if (m_resizingJumperItem != NULL) {
+		resizeJumperItem();
 		InfoGraphicsView::mouseReleaseEvent(event);
 		return;
 	}
@@ -3654,10 +3649,36 @@ void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass:
 }
 
 void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) {
-	if (itemBase->itemType() == ModelPart::Wire) {
-		Wire * wire = dynamic_cast<Wire *>(itemBase);
-		new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
+	switch (itemBase->itemType()) {
+		case ModelPart::Wire:
+			{
+			Wire * wire = dynamic_cast<Wire *>(itemBase);
+			new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
+			new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
+			}
+			break;
+		case ModelPart::ResizableBoard:
+			{
+			ResizableBoard * rb = dynamic_cast<ResizableBoard *>(itemBase);
+			rb->saveParams();
+			QPointF p;
+			QSizeF sz;
+			rb->getParams(p, sz);
+			new ResizeBoardCommand(this, rb->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+			}
+			break;
+		case ModelPart::Jumper:
+			{
+			JumperItem * jumper = dynamic_cast<JumperItem *>(itemBase);
+			jumper->saveParams();
+			QPointF p;
+			QPointF c0, c1;
+			jumper->getParams(p, c0, c1);
+			new ResizeJumperItemCommand(this, jumper->id(), p, c0, c1, p, c0, c1, parentCommand);
+			}
+			break;
+		default:
+			break;
 	}
 
 	rememberSticky(itemBase->id(), parentCommand);
@@ -5845,3 +5866,50 @@ long SketchWidget::findWire(long itemID)
 
 	return itemID;
 }
+
+void SketchWidget::resizeBoard() {
+	QSizeF oldSize;
+	QPointF oldPos;
+	m_resizingBoard->getParams(oldPos, oldSize);
+	QSizeF newSize;
+	QPointF newPos;
+	m_resizingBoard->saveParams();
+	m_resizingBoard->getParams(newPos, newSize);
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(newSize.width()).arg(newSize.height()));
+	new ResizeBoardCommand(this, m_resizingBoard->id(), oldSize.width(), oldSize.height(), newSize.width(), newSize.height(), parentCommand);
+	if (oldPos != newPos) {
+		m_resizingBoard->saveGeometry();
+		ViewGeometry vg1 = m_resizingBoard->getViewGeometry();
+		ViewGeometry vg2 = vg1;
+		vg1.setLoc(oldPos);
+		vg2.setLoc(newPos);
+		new MoveItemCommand(this, m_resizingBoard->id(), vg1, vg2, parentCommand);
+	}
+	new CheckStickyCommand(this, BaseCommand::SingleView, m_resizingBoard->id(), true, parentCommand);
+	m_undoStack->waitPush(parentCommand, 10);
+	m_resizingBoard = NULL;
+}
+
+void SketchWidget::resizeJumperItem() {
+	QPointF oldC0, oldC1;
+	QPointF oldPos;
+	m_resizingJumperItem->getParams(oldPos, oldC0, oldC1);
+	QPointF newC0, newC1;
+	QPointF newPos;
+	m_resizingJumperItem->saveParams();
+	m_resizingJumperItem->getParams(newPos, newC0, newC1);
+	QUndoCommand * cmd = new ResizeJumperItemCommand(this, m_resizingJumperItem->id(), oldPos, oldC0, oldC1, newPos, newC0, newC1, NULL);
+	cmd->setText("Resize Jumper");
+	m_undoStack->waitPush(cmd, 10);
+	m_resizingJumperItem = NULL;
+}
+
+void SketchWidget::resizeJumperItem(long itemID, QPointF pos, QPointF c0, QPointF c1) {
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return;
+
+	if (item->itemType() != ModelPart::Jumper) return;
+
+	dynamic_cast<JumperItem *>(item)->resize(pos, c0, c1);
+}
+

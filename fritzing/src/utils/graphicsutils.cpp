@@ -25,6 +25,7 @@ $Date: 2009-09-04 12:26:26 +0200 (Fri, 04 Sep 2009) $
 ********************************************************************/
 
 #include "graphicsutils.h"
+#include "../FSvgRenderer.h"
 
 #include <QList>
 #include <QLineF>
@@ -123,3 +124,29 @@ QPointF GraphicsUtils::calcConstraint(QPointF initial, QPointF current) {
 	}
 	return result;
 }
+
+qreal GraphicsUtils::pixels2mils(qreal p) {
+	return p * 1000.0 / FSvgRenderer::printerScale();
+}
+
+qreal GraphicsUtils::pixels2ins(qreal p) {
+	return p / FSvgRenderer::printerScale();
+}
+
+qreal GraphicsUtils::distance2(QPointF p1, QPointF p2) {
+	return ((p1.x() - p2.x()) * (p1.x() - p2.x())) + ((p1.y() - p2.y()) * (p1.y() - p2.y()));
+}
+
+
+qreal GraphicsUtils::mm2mils(qreal mm) {
+	return (mm / 25.4 * 1000);
+}
+
+qreal GraphicsUtils::pixels2mm(qreal p) {
+	return (p / FSvgRenderer::printerScale() * 25.4);
+}
+
+qreal GraphicsUtils::mils2pixels(qreal m) {
+	return (FSvgRenderer::printerScale() * m / 1000);
+}
+

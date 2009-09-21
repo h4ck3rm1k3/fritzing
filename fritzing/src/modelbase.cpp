@@ -158,19 +158,18 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 			modelPart->setOriginalModelIndex(index);
 		}
 
-		qreal w = instance.attribute("width").toDouble(&ok);
-		if (ok) {
-			modelPart->setProp("width", w);
-		}
+		QDomNamedNodeMap map = instance.attributes();
+		for (int m = 0; m < map.count(); m++) {
+			QDomNode node = map.item(m);
+			QString nodeName = node.nodeName();
 
-		qreal h = instance.attribute("height").toDouble(&ok);
-		if (ok) {
-			modelPart->setProp("height", h);
-		}
+			if (nodeName.isEmpty()) continue;
+			if (nodeName.compare("moduleIdRef") == 0) continue;
+			if (nodeName.compare("modelIndex") == 0) continue;
+			if (nodeName.compare("originalModelIndex") == 0) continue;
+			if (nodeName.compare("path") == 0) continue;
 
-		qreal v = instance.attribute("voltage").toDouble(&ok);
-		if (ok) {
-			modelPart->setProp("voltage", v);
+			modelPart->setProp(nodeName.toUtf8().constData(), node.nodeValue().toDouble());
 		}
 
    		instance = instance.nextSiblingElement("instance");

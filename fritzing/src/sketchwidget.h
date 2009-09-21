@@ -342,6 +342,8 @@ protected:
 	void initBackgroundColor();
 	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
 	long findWire(long itemID);
+	void resizeBoard();
+	void resizeJumperItem();
 
 protected:
 	static bool lessThan(int a, int b);
@@ -419,6 +421,7 @@ public slots:
 	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void resizeBoard(qreal w, qreal h);
 	void resizeBoard(long id, qreal w, qreal h);
+	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
 	void setVoltage(qreal voltage);
 	void setVoltage(long itemID, qreal voltage);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
@@ -488,8 +491,7 @@ protected:
 	bool m_spaceBarWasPressed;
 
 	QPointer<class ResizableBoard> m_resizingBoard;
-	QSizeF m_resizingBoardSize;
-	QPointF m_resizingBoardPos;
+	QPointer<class JumperItem> m_resizingJumperItem;
 	QPointer<ConnectorItem> m_lastHoverEnterConnectorItem;
 	QPointer<ItemBase> m_lastHoverEnterItem;
 	QString m_shortName;
