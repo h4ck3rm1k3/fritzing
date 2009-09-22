@@ -31,6 +31,7 @@
         <pcbView>
             <layers image="pcb/DIP28N.svg">
                 <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
             </layers>
         </pcbView>
         <schematicView>

@@ -27,6 +27,7 @@
         <pcbView>
             <layers image="pcb/DIP16N.svg">
                 <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
             </layers>
         </pcbView>
         <schematicView>
