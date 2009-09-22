@@ -956,14 +956,14 @@ JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * t
 
 bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, const QPolygonF & boundingPoly, QPointF & candidate) 
 {
-	QList<ConnectorItem *> equipotential;
-	equipotential.append(from);
-	ConnectorItem::collectEqualPotential(equipotential);
+	//QList<ConnectorItem *> equipotential;
+	//equipotential.append(from);
+	//ConnectorItem::collectEqualPotential(equipotential);
 
 	QSizeF jsz = jumperItem->footprintSize();
 	QRectF fromR = from->rect();
 	QPointF c = from->mapToScene(from->rect().center());
-	qreal minRadius = (jsz.width() / 2) + (qSqrt((fromR.width() * fromR.width()) + (fromR.height() * fromR.height())) / 4);
+	qreal minRadius = (jsz.width() / 2) + (qSqrt((fromR.width() * fromR.width()) + (fromR.height() * fromR.height())) / 4) + 1;
 	qreal maxRadius = minRadius * 4;
 
 	QGraphicsEllipseItem * ellipse = NULL;
@@ -1083,10 +1083,27 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 					continue;
 				}
 
-				if (!equipotential.contains(traceWire->connector0())) {
+				QList<Wire *> chainedWires;
+				QList<ConnectorItem *> ends;
+				QList<ConnectorItem *> uniqueEnds;
+				traceWire->collectChained(chainedWires, ends, uniqueEnds);
+				
+				if (!ends.contains(from)) {
 					intersected = true;
 					break;
 				}
+				else {
+					DebugDialog::debug("has trace");
+				}
+
+				// not sure why equipotential isn't working...
+				//if (!equipotential.contains(traceWire->connector0())) {
+					//intersected = true;
+					//break;
+				//}
+				//else {
+					//DebugDialog::debug("has trace");
+				//}
 			}
 			
 			if (!intersected) {
