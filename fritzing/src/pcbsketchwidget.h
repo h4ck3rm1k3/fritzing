@@ -64,6 +64,7 @@ public:
 	bool canChainMultiple();
 	void setNewPartVisible(ItemBase *);
 	virtual void setJumperFlags(ViewGeometry & vg);
+	virtual bool usesJumperItem();
 	void setClipEnds(class ClipableWire *, bool);
 	void showGroundTraces(bool show);
 	virtual qreal getLabelFontSizeSmall();

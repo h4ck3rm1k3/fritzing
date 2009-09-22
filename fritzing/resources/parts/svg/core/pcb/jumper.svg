@@ -5,4 +5,5 @@
     <circle fill="none" cx="66" cy="66" stroke="rgb(255, 191, 0)" r="24" id="connector0pad" stroke-width="21" />
     <circle fill="none" cx="366" cy="66" stroke="rgb(255, 191, 0)" r="24" id="connector1pad" stroke-width="21" />
   </g>
+  <line id="jumperwires" style="stroke-linecap: round" stroke="#6699cc" x1="66" y1="66" x2="366" y2="66" stroke-width="21" />
 </svg>

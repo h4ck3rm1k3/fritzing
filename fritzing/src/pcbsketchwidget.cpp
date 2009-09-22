@@ -1407,6 +1407,10 @@ void PCBSketchWidget::setJumperFlags(ViewGeometry & vg) {
 	vg.setJumper(true);
 }
 
+bool PCBSketchWidget::usesJumperItem() {
+	return true;
+}
+
 void PCBSketchWidget::showGroundTraces(bool show) {
 	foreach (QGraphicsItem * item, scene()->items()) {
 		TraceWire * trace = dynamic_cast<TraceWire *>(item);

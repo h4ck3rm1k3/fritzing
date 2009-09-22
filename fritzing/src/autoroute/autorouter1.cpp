@@ -363,6 +363,13 @@ void Autorouter1::start()
 			}
 		}
 
+
+		if (m_sketchWidget->autorouteNeedsBounds() && (partForBounds != NULL)) {
+			QRectF boundingRect = partForBounds->boundingRect();
+			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
+			boundingPoly = partForBounds->mapToScene(boundingRect);
+		}
+
 		bool routedFlag = false;
 		QList<Wire *> wires;
 		foreach (Subedge * subedge, subedges) {
@@ -408,13 +415,11 @@ void Autorouter1::start()
 			}
 
 			wires.clear();
-			if (!m_sketchWidget->autorouteNeedsBounds()) {
+			if (!m_sketchWidget->autorouteNeedsBounds() || (partForBounds == NULL)) {
 				routedFlag = drawTrace(from, to, boundingPoly, wires);
 			}
-			else if (partForBounds) {
-				QRectF boundingRect = partForBounds->boundingRect();
-				boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
-				routedFlag = drawTrace(from, to, partForBounds->mapToScene(boundingRect), wires);
+			else {
+				routedFlag = drawTrace(from, to, boundingPoly, wires);
 				if (routedFlag) {
 					foreach (Wire * wire, wires) {
 						wire->addSticky(partForBounds, true);
@@ -461,7 +466,7 @@ void Autorouter1::start()
 		subedges.clear();
 
 		if (!routedFlag && !m_stopTrace) {
-			drawJumper(edge->from, edge->to, partForBounds);
+			drawJumper(edge->from, edge->to, partForBounds, boundingPoly);
 			jumperCount++;
 		}
 
@@ -787,34 +792,44 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	return false;
 }
 
- void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds) 
- {
-	 {
-
-		 long newID = ItemBase::getNextID();
-		 ViewGeometry viewGeometry;
-		 ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::jumperModuleIDName), 
+void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds, const QPolygonF & boundingPoly) 
+{
+	if (m_sketchWidget->usesJumperItem()) {
+		long newID = ItemBase::getNextID();
+		ViewGeometry viewGeometry;
+		ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::jumperModuleIDName), 
 													BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
-		 if (temp == NULL) {
+		if (temp == NULL) {
 			// we're in trouble
-			 return;
-		 }
+			return;
+		}
 
-		 JumperItem * jumperItem = dynamic_cast<JumperItem *>(temp);
-		 QSizeF jsz = jumperItem->footprintSize();
-		 m_sketchWidget->deleteItem(jumperItem, true, false, false);
+		JumperItem * jumperItem = dynamic_cast<JumperItem *>(temp);
+		QSizeF jsz = jumperItem->footprintSize();
+		m_sketchWidget->deleteItem(jumperItem, true, false, false);
 
-		 QRectF r0 = from->rect();
-		 qreal jr = sqrt((jsz.width() * jsz.width()) + (jsz.height() * jsz.height()));
-		 qreal fr = sqrt((r0.width() * r0.width()) + (r0.height() * r0.height()));
-	 }
+		QRectF r0 = from->rect();
+		qreal jr = sqrt((jsz.width() * jsz.width()) + (jsz.height() * jsz.height()));
+		qreal fr = sqrt((r0.width() * r0.width()) + (r0.height() * r0.height()));
+		qreal l = (fr + jr) / 2;
 
+		QPointF candidate1;
+		bool ok = findSpaceFor(to, jsz, l, boundingPoly, candidate1);
+		if (!ok) {
+			// notify user
+			// return;
+		}
 
+		QPointF candidate0;
+		ok = findSpaceFor(from, jsz, l, boundingPoly, candidate0);
+		if (!ok) {
+			// notify user
+			// return;
+		}
 
+		// return;
 
-
-
-
+	}
 
 	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
 	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
@@ -848,6 +863,65 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		partForBounds->addSticky(jumperWire, true);
 	}
  }
+
+bool Autorouter1::findSpaceFor(ConnectorItem * from, QSizeF jsz, qreal l, const QPolygonF & boundingPoly, QPointF & candidate) 
+{
+	// TODO:  this fails if the target is in a v-shape, because the footprint would fit further away, and the trace could intersect another equipotential trace
+	// so the real test would be to first find room for the jumper's footprint (slightly expanded)
+	// then try a trace from there to the connector (which could intersect other equipotential traces)
+	// should the trace be normal width?
+
+	QPointF c = from->mapToScene(from->rect().center());
+	for (int i = 0; i < 360; i += 5) {
+		qreal rad = i / (2 * 3.141592654);
+		candidate.setX(l * cos(rad));
+		candidate.setY(l * sin(rad));
+		if (!boundingPoly.isEmpty()) {
+			if (!boundingPoly.containsPoint(c + candidate, Qt::OddEvenFill)) {
+				continue;
+			}
+
+			bool inBounds = true;
+			QPointF nearestBoundsIntersection;
+			double nearestBoundsIntersectionDistance;
+			QLineF l1(c, c + candidate);
+			findNearestIntersection(l1, c, boundingPoly, inBounds, nearestBoundsIntersection, nearestBoundsIntersectionDistance);
+			if (!inBounds) {
+				continue;
+			}
+		}
+
+		TraceWire * traceWire = drawOneTrace(c, c + candidate, jsz.width());
+		QApplication::processEvents();
+		bool intersected = false;
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(traceWire)) {
+			if (item == from) continue;
+			if (item == traceWire) continue;
+
+			TraceWire * candidateWire = dynamic_cast<TraceWire *>(item);
+			if (candidateWire != NULL) {
+				intersected = true;
+				break;
+			}
+
+			ConnectorItem * candidateConnectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (candidateConnectorItem != NULL) {
+				if (candidateConnectorItem->attachedTo() == traceWire) continue;
+
+				ViewLayer::ViewLayerID vid = candidateConnectorItem->attachedTo()->viewLayerID();
+				if (vid == ViewLayer::Copper0 || vid == ViewLayer::Copper0Trace) {
+					intersected = true;
+					break;
+				}
+			}
+		}
+		m_sketchWidget->deleteItem(traceWire, true, false, false);
+
+		if (!intersected) return true;
+	}
+
+	return false;
+}
 
 bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool recurse, bool & shortcut)
 {

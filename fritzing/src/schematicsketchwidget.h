@@ -51,6 +51,7 @@ public:
 	void ensureTraceLayerVisible();
 	void ensureJumperLayerVisible();
 	void setJumperFlags(ViewGeometry & vg);
+	bool usesJumperItem();
 	void setClipEnds(ClipableWire * vw, bool);
 	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
 	void getLabelFont(QFont &, QColor &);

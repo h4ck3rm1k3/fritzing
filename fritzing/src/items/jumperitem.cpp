@@ -33,6 +33,7 @@ $Date: 2009-06-18 20:07:42 +0200 (Thu, 18 Jun 2009) $
 #include "../svg/svgfilesplitter.h"
 
 static QString Copper0LayerTemplate = "";
+static QString JumperWireLayerTemplate = "";
 
 // TODO: 
 //	ignore during autoroute?
@@ -46,11 +47,19 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 	: PaletteItem(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, doLabel)
 {
 	m_renderer = NULL;
+	m_jumperwiresRenderer = NULL;
 	m_connector0 = m_connector1 = m_dragItem = NULL;
 	if (Copper0LayerTemplate.isEmpty()) {
 		QFile file(":/resources/jumper_copper0LayerTemplate.txt");
 		if (file.open(QFile::ReadOnly)) {
 			Copper0LayerTemplate = file.readAll();
+			file.close();
+		}
+	}
+	if (JumperWireLayerTemplate.isEmpty()) {
+		QFile file(":/resources/jumper_jumperwiresLayerTemplate.txt");
+		if (file.open(QFile::ReadOnly)) {
+			JumperWireLayerTemplate = file.readAll();
 			file.close();
 		}
 	}
@@ -162,7 +171,7 @@ void JumperItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	resize();
 }
 
-QString JumperItem::makeSvg() 
+QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID) 
 {
 	QRectF r0 = m_connector0->rect();
 	QRectF r1 = m_connector1->rect();
@@ -180,10 +189,20 @@ QString JumperItem::makeSvg()
 	modelPart()->setProp("r1x", r1x);
 	modelPart()->setProp("r1y", r1y);
 
-	return Copper0LayerTemplate
-		.arg(w).arg(h)
-		.arg(w * 1000).arg(h * 1000)			
-		.arg(r0x).arg(r0y).arg(r1x).arg(r1y);
+	if (viewLayerID == ViewLayer::Copper0) {
+		return Copper0LayerTemplate
+			.arg(w).arg(h)
+			.arg(w * 1000).arg(h * 1000)			
+			.arg(r0x).arg(r0y).arg(r1x).arg(r1y);
+	}
+	else if (viewLayerID == ViewLayer::Jumperwires) {
+		return JumperWireLayerTemplate
+			.arg(w).arg(h)
+			.arg(w * 1000).arg(h * 1000)			
+			.arg(r0x).arg(r0y).arg(r1x).arg(r1y);
+	}
+
+	return ___emptyString___;
 }
 
 
@@ -191,13 +210,29 @@ void JumperItem::resize() {
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}
-	QString s = makeSvg();
+	QString s = makeSvg(ViewLayer::Copper0);
 	//DebugDialog::debug(s);
 
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
 		setSharedRenderer(m_renderer);
 	}
+
+	foreach (ItemBase * itemBase, m_layerKin) {
+		if (itemBase->viewLayerID() == ViewLayer::Jumperwires) {
+			if (m_jumperwiresRenderer == NULL) {
+				m_jumperwiresRenderer = new FSvgRenderer(itemBase);
+			}
+
+			s = makeSvg(ViewLayer::Jumperwires);
+			bool result = m_jumperwiresRenderer->fastLoad(s.toUtf8());
+			if (result) {
+				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_jumperwiresRenderer);
+			}
+			break;
+		}
+	}
+
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 }
 
@@ -237,8 +272,15 @@ QSizeF JumperItem::footprintSize() {
 
 QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
+	QString xml = "";
 	if (viewLayerID == ViewLayer::Copper0) {
-		QString xml = makeSvg();
+		xml = makeSvg(ViewLayer::Copper0);
+	}
+	else if (viewLayerID = ViewLayer::Jumperwires) {
+		xml = makeSvg(ViewLayer::Jumperwires);
+	}
+
+	if (!xml.isEmpty()) {
 		QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 		SvgFileSplitter splitter;
 		bool result = splitter.splitString(xml, xmlName);
@@ -251,6 +293,7 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 		}
 		return splitter.elementString(xmlName);
 	}
+
 
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }

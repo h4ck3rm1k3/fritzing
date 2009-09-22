@@ -127,6 +127,10 @@ void SchematicSketchWidget::setJumperFlags(ViewGeometry & vg) {
 	vg.setTrace(true);
 }
 
+bool SchematicSketchWidget::usesJumperItem() {
+	return false;
+}
+
 void SchematicSketchWidget::setClipEnds(ClipableWire * vw, bool) {
 	vw->setClipEnds(false);
 }

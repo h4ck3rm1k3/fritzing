@@ -46,7 +46,7 @@ public:
 
 protected:
 	void resize();
-	QString makeSvg();
+	QString makeSvg(ViewLayer::ViewLayerID);
 	QPainterPath makePath() const;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -67,6 +67,7 @@ protected:
 	QPointF m_itemC0;
 	QPointF m_itemC1;
 	class FSvgRenderer * m_renderer;
+	class FSvgRenderer * m_jumperwiresRenderer;
 
 };
 
