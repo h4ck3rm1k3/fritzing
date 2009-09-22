@@ -40,12 +40,12 @@ static QString JumperWireLayerTemplate = "";
 //	ignore during other connections?
 //	don't let footprints overlap during dragging
 
-
 /////////////////////////////////////////////////////////
 
 JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
 	: PaletteItem(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, doLabel)
 {
+	m_autoroutable = true;
 	m_renderer = NULL;
 	m_jumperwiresRenderer = NULL;
 	m_connector0 = m_connector1 = m_dragItem = NULL;
@@ -205,6 +205,12 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	return ___emptyString___;
 }
 
+void JumperItem::resize(QPointF p0, QPointF p1) {
+	QRectF r0 = m_connector0->rect();
+	QPointF p(p0.x() - (r0.width() / 2) - m_connectorTL.x(), 
+			  p0.y() - (r0.height() / 2) - m_connectorTL.y());
+	resize(p, p0 - p, p1 - p);
+}
 
 void JumperItem::resize() {
 	if (m_renderer == NULL) {
@@ -296,4 +302,20 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 
 
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+}
+
+bool JumperItem::autoroutable() {
+	return m_autoroutable;
+}
+
+void JumperItem::setAutoroutable(bool autoroutable) {
+	m_autoroutable = autoroutable;
+}
+
+ConnectorItem * JumperItem::connector0() {
+	return m_connector0;
+}
+
+ConnectorItem * JumperItem::connector1() {
+	return m_connector1;
 }

@@ -41,8 +41,13 @@ public:
 	void saveParams();
 	void getParams(QPointF & pos, QPointF & c0, QPointF & c1);
 	void resize(QPointF pos, QPointF c0, QPointF c1);
+	void resize(QPointF p0, QPointF p1);
 	QSizeF footprintSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	bool autoroutable();
+	void setAutoroutable(bool);
+	class ConnectorItem * connector0();
+	class ConnectorItem * connector1();
 
 protected:
 	void resize();
@@ -68,6 +73,7 @@ protected:
 	QPointF m_itemC1;
 	class FSvgRenderer * m_renderer;
 	class FSvgRenderer * m_jumperwiresRenderer;
+	bool m_autoroutable;
 
 };
 

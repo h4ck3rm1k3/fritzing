@@ -64,7 +64,8 @@ protected:
 	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint, bool adjust);
 	void cleanUp();
 	void updateRatsnest(bool routed, QUndoCommand * parentCommand);
-	void drawJumper(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
+	Wire * drawJumper(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
+	class JumperItem * drawJumperItem(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand);
@@ -84,7 +85,12 @@ protected:
 	bool sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	bool sameEffectiveLayer(ViewLayer::ViewLayerID viewLayerID1, ViewLayer::ViewLayerID viewLayerID2);
 	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited);
-	bool findSpaceFor(ConnectorItem * from, QSizeF jsz, qreal l, const QPolygonF & boundingPoly, QPointF & candidate); 
+	bool findSpaceFor(ConnectorItem * from, class JumperItem *, const QPolygonF & boundingPoly, QPointF & candidate); 
+	void dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<int> & netCounters, QList<struct Edge *> & edges);
+	void addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<struct Subedge *> & subedges);
+	bool traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase * partForBounds, const QPolygonF & boundingPoly, QGraphicsLineItem *);
+	ItemBase * getPartForBounds(struct Edge *);
+	void fixupJumperItems(QList<struct JumperItemStruct *> &);
 
 public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);

@@ -39,10 +39,9 @@ $Date$
 static int kExtraLength = 1000000;
 static int kAutoBailMax = 250;
 
-
 struct Edge {
-	ConnectorItem * from;
-	ConnectorItem * to;
+	class ConnectorItem * from;
+	class ConnectorItem * to;
 	double distance;
 	bool ground;
 };
@@ -53,6 +52,14 @@ struct Subedge {
 	Wire * wire;
 	QPointF point;
 	double distance;
+};
+
+struct JumperItemStruct {
+	ConnectorItem * from;
+	ConnectorItem * to;
+	ItemBase * partForBounds;
+	QPolygonF boundingPoly;
+	Wire * jumperWire;
 };
 
 Subedge * makeSubedge(QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to) 
@@ -188,19 +195,362 @@ void Autorouter1::start()
 		return;
 	}
 
+	QList<Edge *> edges;
+	QVector<int> netCounters(m_allPartConnectorItems.count());
+	dijkstraNets(indexer, netCounters, edges);
+
+	if (m_cancelled || m_stopTrace) {
+		restoreOriginalState(parentCommand);
+		cleanUp();
+		return;
+	}
+
+	emit setMaximumProgress(edges.count());
+	QApplication::processEvents(); // to keep the app  from freezing
+
+	// sort the edges by distance
+	// TODO: for each edge, determine a measure of pin density, and use that, weighted with length, as the sort order
+	qSort(edges.begin(), edges.end(), edgeLessThan);
+
+	QPolygonF boundingPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-200, -200, 200, 200));
+
+	QGraphicsLineItem * lineItem = new QGraphicsLineItem(0, 0, 0, 0, NULL, m_sketchWidget->scene());
+	QPen pen = lineItem->pen();
+	pen.setColor(QColor(255, 200, 200));
+	pen.setWidthF(5);
+	pen.setCapStyle(Qt::RoundCap);
+	lineItem->setPen(pen);
+	lineItem->setZValue(m_sketchWidget->viewLayers().value(ViewLayer::Ratsnest)->nextZ());
+	lineItem->setOpacity(0.8);
+
+	QList<Wire *> jumpers;
+	QList<JumperItemStruct *> jumperItemStructs;
+	int edgesDone = 0;
+	foreach (Edge * edge, edges) {
+		QList<ConnectorItem *> fromConnectorItems;
+		QSet<Wire *> fromTraces;
+		expand(edge->from, fromConnectorItems, false, fromTraces);
+		QList<ConnectorItem *> toConnectorItems;
+		QSet<Wire *> toTraces;
+		expand(edge->to, toConnectorItems, true, toTraces);
+
+		QPointF fp = edge->from->sceneAdjustedTerminalPoint(NULL);
+		QPointF tp = edge->to->sceneAdjustedTerminalPoint(NULL);
+		lineItem->setLine(fp.x(), fp.y(), tp.x(), tp.y());
+
+		QList<Subedge *> subedges;
+		foreach (ConnectorItem * from, fromConnectorItems) {
+			QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
+			foreach (ConnectorItem * to, toConnectorItems) {
+				subedges.append(makeSubedge(p1, from, to->sceneAdjustedTerminalPoint(NULL), to));
+			}
+		}
+
+		QList<ConnectorItem *> drawingNet(fromConnectorItems);
+		drawingNet.append(toConnectorItems);
+		foreach (QList<ConnectorItem *> * pconnectorItems, m_allPartConnectorItems) {
+			if (pconnectorItems->contains(edge->from)) {
+				drawingNet.append(*pconnectorItems);
+				break;
+			}
+		}
+		m_drawingNet = &drawingNet;
+
+		foreach (Wire * wire, fromTraces) {
+			addSubedge(wire, toConnectorItems, subedges);
+		}
+		qSort(subedges.begin(), subedges.end(), subedgeLessThan);
+
+		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
+			.arg(edge->from->attachedToTitle())
+			.arg(edge->from->attachedToID())
+			.arg(edge->from->connectorSharedID())
+			.arg(edge->to->attachedToTitle())
+			.arg(edge->to->attachedToID())
+			.arg(edge->to->connectorSharedID())
+			.arg(edge->distance) );
+
+		// if both connections are stuck to or attached to the same part
+		// then use that part's boundary to constrain the path
+		ItemBase * partForBounds = getPartForBounds(edge);
+		if (m_sketchWidget->autorouteNeedsBounds() && (partForBounds != NULL)) {
+			QRectF boundingRect = partForBounds->boundingRect();
+			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
+			boundingPoly = partForBounds->mapToScene(boundingRect);
+		}
+
+		bool routedFlag = false;
+		QList<Wire *> wires;
+		foreach (Subedge * subedge, subedges) {
+			if (m_cancelled || m_stopTrace) break;
+			if (routedFlag) break;
+
+			routedFlag = traceSubedge(subedge, wires, partForBounds, boundingPoly, lineItem);
+		}
+
+		lineItem->setLine(0, 0, 0, 0);
+
+		foreach (Subedge * subedge, subedges) {
+			delete subedge;
+		}
+		subedges.clear();
+
+		if (!routedFlag && !m_stopTrace) {
+			Wire * jumperWire = drawJumper(edge->from, edge->to, partForBounds, boundingPoly);
+			jumpers.append(jumperWire);
+			if (m_sketchWidget->usesJumperItem()) {
+				JumperItemStruct * jumperItemStruct = new JumperItemStruct();
+				jumperItemStruct->from = edge->from;
+				jumperItemStruct->to = edge->to;
+				jumperItemStruct->partForBounds = partForBounds;
+				jumperItemStruct->boundingPoly = boundingPoly;
+				jumperItemStruct->jumperWire = jumperWire;
+				jumperItemStructs.append(jumperItemStruct);
+			}
+		}
+
+		emit setProgressValue(++edgesDone);
+
+		for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
+			if (m_allPartConnectorItems[i]->contains(edge->from)) {
+				netCounters[i] -= 2;
+				break;
+			}
+		}
+
+		int netsDone = 0;
+		foreach (int c, netCounters) {
+			if (c <= 0) {
+				netsDone++;
+			}
+		}
+		m_sketchWidget->forwardRoutingStatusSignal(m_allPartConnectorItems.count(), netsDone, edges.count() + 1 - edgesDone, jumpers.count());
+
+		QApplication::processEvents();
+
+		if (m_cancelled) {
+			delete lineItem;
+			clearTraces(m_sketchWidget, false, NULL);
+			restoreOriginalState(parentCommand);
+			cleanUp();
+			return;
+		}
+
+		if (m_stopTrace) {
+			break;
+		}
+	}
+
+	delete lineItem;
+
+
+	fixupJumperItems(jumperItemStructs);
+
+	cleanUp();
+	foreach (Edge * edge, edges) {
+		delete edge;
+	}
+	edges.clear();
+
+	addToUndo(parentCommand);
+
+	emit setProgressValue(edgesDone);
+	
+	updateRatsnest(!m_stopTrace, parentCommand);
+	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
+	m_sketchWidget->pushCommand(parentCommand);
+	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
+}
+
+void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
+	if (jumperItemStructs.count() <= 0) return;
+
+	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
+		ConnectorItem * from = jumperItemStruct->from;
+		ConnectorItem * to = jumperItemStruct->to;
+		JumperItem * jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
+		if (jumperItem == NULL) {
+			// notify user?
+			delete jumperItemStruct;
+			continue;
+		}
+
+		m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
+		delete jumperItemStruct;
+
+		m_sketchWidget->scene()->addItem(jumperItem);
+
+		TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH);
+		traceWire->connector0()->tempConnectTo(jumperItem->connector0(), true);
+		jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
+		traceWire->connector1()->tempConnectTo(from, true);
+		from->tempConnectTo(traceWire->connector1(), true);
+
+		traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH);
+		traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
+		jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
+		traceWire->connector1()->tempConnectTo(to, true);
+		to->tempConnectTo(traceWire->connector1(), true);
+	}
+
+	jumperItemStructs.clear();
+}
+
+
+ItemBase * Autorouter1::getPartForBounds(Edge * edge) {
+	if (m_sketchWidget->autorouteNeedsBounds()) {
+		if (edge->from->attachedTo()->stuckTo() != NULL && edge->from->attachedTo()->stuckTo() == edge->to->attachedTo()->stuckTo()) {
+			return edge->from->attachedTo()->stuckTo();
+		}
+		else if (edge->from->attachedTo()->sticky() && edge->from->attachedTo() == edge->to->attachedTo()->stuckTo()) {
+			return edge->from->attachedTo();
+		}
+		else if (edge->to->attachedTo()->sticky() && edge->to->attachedTo() == edge->from->attachedTo()->stuckTo()) {
+			return edge->to->attachedTo();
+		}
+		else if (edge->to->attachedTo() == edge->from->attachedTo()) {
+			return edge->from->attachedTo();
+		}
+		else {
+			// TODO:  if we're stuck on two boards, use the union as the constraint?
+		}
+	}
+
+	return NULL;
+}
+
+bool Autorouter1::traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase * partForBounds, const QPolygonF & boundingPoly, QGraphicsLineItem * lineItem) 
+{
+	bool routedFlag = false;
+
+	ConnectorItem * from = subedge->from;
+	ConnectorItem * to = subedge->to;
+	TraceWire * splitWire = NULL;
+	QLineF originalLine;
+	if (from == NULL) {
+		// split the trace at subedge->point then restore it later
+		originalLine = subedge->wire->line();
+		QLineF newLine(QPointF(0,0), subedge->point - subedge->wire->pos());
+		subedge->wire->setLine(newLine);
+		splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1);
+		from = splitWire->connector0();
+		QApplication::processEvents();
+	}
+	
+	if (from != NULL && to != NULL) {
+		QPointF fp = from->sceneAdjustedTerminalPoint(NULL);
+		QPointF tp = to->sceneAdjustedTerminalPoint(NULL);
+		lineItem->setLine(fp.x(), fp.y(), tp.x(), tp.y());
+	}
+
+	wires.clear();
+	if (!m_sketchWidget->autorouteNeedsBounds() || (partForBounds == NULL)) {
+		routedFlag = drawTrace(from, to, boundingPoly, wires);
+	}
+	else {
+		routedFlag = drawTrace(from, to, boundingPoly, wires);
+		if (routedFlag) {
+			foreach (Wire * wire, wires) {
+				wire->addSticky(partForBounds, true);
+				partForBounds->addSticky(wire, true);
+				//DebugDialog::debug(QString("added wire %1").arg(wire->id()));
+			}
+		}
+	}
+	
+
+	if (subedge->wire != NULL) {
+		if (routedFlag) {
+			// hook up the split trace
+			ConnectorItem * connector1 = subedge->wire->connector1();
+			ConnectorItem * newConnector1 = splitWire->connector1();
+			foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
+				connector1->tempRemove(toConnectorItem, false);
+				toConnectorItem->tempRemove(connector1, false);
+				newConnector1->tempConnectTo(toConnectorItem, false);
+				toConnectorItem->tempConnectTo(newConnector1, false);
+				if (partForBounds) {
+					splitWire->addSticky(partForBounds, true);
+					partForBounds->addSticky(splitWire, true);
+				}
+			}
+
+			connector1->tempConnectTo(splitWire->connector0(), false);
+			splitWire->connector0()->tempConnectTo(connector1, false);
+		}
+		else {
+			// restore the old trace
+			subedge->wire->setLine(originalLine);
+			m_sketchWidget->deleteItem(splitWire, true, false, false);
+		}
+	}
+
+	return routedFlag;
+}
+
+
+void Autorouter1::addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<Subedge *> & subedges) {
+	bool useConnector0 = true;
+	bool useConnector1 = true;
+	foreach (ConnectorItem * to, wire->connector0()->connectedToItems()) {
+		if (to->attachedToItemType() != ModelPart::Wire) {
+			useConnector0 = false;
+			break;
+		}
+	}
+	foreach (ConnectorItem * to, wire->connector1()->connectedToItems()) {
+		if (to->attachedToItemType() != ModelPart::Wire) {
+			useConnector1 = false;
+			break;
+		}
+	}
+
+	QPointF connector0p;
+	QPointF connector1p;
+
+	if (useConnector0) {
+		connector0p = wire->connector0()->sceneAdjustedTerminalPoint(NULL);
+	}
+	if (useConnector1) {
+		connector1p = wire->connector1()->sceneAdjustedTerminalPoint(NULL);
+	}
+
+	foreach (ConnectorItem * to, toConnectorItems) {
+		QPointF p2 = to->sceneAdjustedTerminalPoint(NULL);
+		if (useConnector0) {
+			subedges.append(makeSubedge(connector0p, wire->connector0(), p2, to));
+		}
+		if (useConnector1) {
+			subedges.append(makeSubedge(connector1p, wire->connector1(), p2, to));
+		}
+
+		bool atEndpoint;
+		double distance, dx, dy;
+		QPointF p = wire->pos();
+		QPointF pp = wire->line().p2() + p;
+		GraphicsUtils::distanceFromLine(p2.x(), p2.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
+		if (!atEndpoint) {
+			Subedge * subedge = new Subedge;
+			subedge->from = NULL;
+			subedge->wire = wire;
+			subedge->to = to;
+			subedge->distance = distance;
+			subedge->point.setX(dx);
+			subedge->point.setY(dy);
+			subedges.append(subedge);
+		}
+	}
+}
+
+void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<int> & netCounters, QList<Edge *> & edges) {
+	long count = indexer.count();
 	// want adjacency[count][count] but some C++ compilers don't like it
-	int count = indexer.count();
 	QVector< QVector<double> *> adjacency(count);
 	for (int i = 0; i < count; i++) {
 		QVector<double> * row = new QVector<double>(count);
 		adjacency[i] = row;
 	}
 
-	QList<Edge *> edges;
-
-	// run dykstra over each net
-
-	QVector<int> netCounters(m_allPartConnectorItems.count());
 	for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
 		netCounters[i] = (m_allPartConnectorItems[i]->count() - 1) * 2;			// since we use two connectors at a time on a net
 	}
@@ -229,293 +579,13 @@ void Autorouter1::start()
 			}
 		}
 	}
-
 	foreach (QVector<double> * row, adjacency) {
 		delete row;
 	}
 	adjacency.clear();
 
-	if (m_cancelled || m_stopTrace) {
-		restoreOriginalState(parentCommand);
-		cleanUp();
-		return;
-	}
-
-	emit setMaximumProgress(edges.count());
-	QApplication::processEvents(); // to keep the app  from freezing
-
-	// sort the edges by distance
-	// TODO: for each edge, determine a measure of pin density, and use that, weighted with length, as the sort order
-	qSort(edges.begin(), edges.end(), edgeLessThan);
-
-	QPolygonF boundingPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-200, -200, 200, 200));
-
-	int edgesDone = 0;
-	int jumperCount = 0;
-	foreach (Edge * edge, edges) {
-		QList<ConnectorItem *> fromConnectorItems;
-		QSet<Wire *> fromTraces;
-		expand(edge->from, fromConnectorItems, false, fromTraces);
-		QList<ConnectorItem *> toConnectorItems;
-		QSet<Wire *> toTraces;
-		expand(edge->to, toConnectorItems, true, toTraces);
-
-		QList<Subedge *> subedges;
-		foreach (ConnectorItem * from, fromConnectorItems) {
-			QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
-			foreach (ConnectorItem * to, toConnectorItems) {
-				subedges.append(makeSubedge(p1, from, to->sceneAdjustedTerminalPoint(NULL), to));
-			}
-		}
-
-		QList<ConnectorItem *> drawingNet(fromConnectorItems);
-		drawingNet.append(toConnectorItems);
-		foreach (QList<ConnectorItem *> * pconnectorItems, m_allPartConnectorItems) {
-			if (pconnectorItems->contains(edge->from)) {
-				drawingNet.append(*pconnectorItems);
-				break;
-			}
-		}
-		m_drawingNet = &drawingNet;
-
-		foreach (Wire * wire, fromTraces) {
-			bool useConnector0 = true;
-			bool useConnector1 = true;
-			foreach (ConnectorItem * to, wire->connector0()->connectedToItems()) {
-				if (to->attachedToItemType() != ModelPart::Wire) {
-					useConnector0 = false;
-					break;
-				}
-			}
-			foreach (ConnectorItem * to, wire->connector1()->connectedToItems()) {
-				if (to->attachedToItemType() != ModelPart::Wire) {
-					useConnector1 = false;
-					break;
-				}
-			}
-
-			QPointF connector0p;
-			QPointF connector1p;
-
-			if (useConnector0) {
-				connector0p = wire->connector0()->sceneAdjustedTerminalPoint(NULL);
-			}
-			if (useConnector1) {
-				connector1p = wire->connector1()->sceneAdjustedTerminalPoint(NULL);
-			}
-
-			foreach (ConnectorItem * to, toConnectorItems) {
-				QPointF p2 = to->sceneAdjustedTerminalPoint(NULL);
-				if (useConnector0) {
-					subedges.append(makeSubedge(connector0p, wire->connector0(), p2, to));
-				}
-				if (useConnector1) {
-					subedges.append(makeSubedge(connector1p, wire->connector1(), p2, to));
-				}
-
-				bool atEndpoint;
-				double distance, dx, dy;
-				QPointF p = wire->pos();
-				QPointF pp = wire->line().p2() + p;
-				GraphicsUtils::distanceFromLine(p2.x(), p2.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
-				if (!atEndpoint) {
-					Subedge * subedge = new Subedge;
-					subedge->from = NULL;
-					subedge->wire = wire;
-					subedge->to = to;
-					subedge->distance = distance;
-					subedge->point.setX(dx);
-					subedge->point.setY(dy);
-					subedges.append(subedge);
-				}
-			}
-		}
-		
-		qSort(subedges.begin(), subedges.end(), subedgeLessThan);
-
-		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
-			.arg(edge->from->attachedToTitle())
-			.arg(edge->from->attachedToID())
-			.arg(edge->from->connectorSharedID())
-			.arg(edge->to->attachedToTitle())
-			.arg(edge->to->attachedToID())
-			.arg(edge->to->connectorSharedID())
-			.arg(edge->distance) );
-
-		// if both connections are stuck to or attached to the same part
-		// then use that part's boundary to constrain the path
-		ItemBase * partForBounds = NULL;
-		if (m_sketchWidget->autorouteNeedsBounds()) {
-			if (edge->from->attachedTo()->stuckTo() != NULL && edge->from->attachedTo()->stuckTo() == edge->to->attachedTo()->stuckTo()) {
-				partForBounds = edge->from->attachedTo()->stuckTo();
-			}
-			else if (edge->from->attachedTo()->sticky() && edge->from->attachedTo() == edge->to->attachedTo()->stuckTo()) {
-				partForBounds = edge->from->attachedTo();
-			}
-			else if (edge->to->attachedTo()->sticky() && edge->to->attachedTo() == edge->from->attachedTo()->stuckTo()) {
-				partForBounds = edge->to->attachedTo();
-			}
-			else if (edge->to->attachedTo() == edge->from->attachedTo()) {
-				partForBounds = edge->from->attachedTo();
-			}
-			else {
-				// TODO:  if we're stuck on two boards, use the union as the constraint?
-			}
-		}
-
-
-		if (m_sketchWidget->autorouteNeedsBounds() && (partForBounds != NULL)) {
-			QRectF boundingRect = partForBounds->boundingRect();
-			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
-			boundingPoly = partForBounds->mapToScene(boundingRect);
-		}
-
-		bool routedFlag = false;
-		QList<Wire *> wires;
-		foreach (Subedge * subedge, subedges) {
-			if (m_cancelled || m_stopTrace) break;
-			if (routedFlag) break;
-
-			Wire * ratsnest = NULL;
-			int ratsnestWidth = 0;
-
-			ConnectorItem * from = subedge->from;
-			ConnectorItem * to = subedge->to;
-			TraceWire * splitWire = NULL;
-			QLineF originalLine;
-			if (from == NULL) {
-				// split the trace at subedge->point then restore it later
-				originalLine = subedge->wire->line();
-				QLineF newLine(QPointF(0,0), subedge->point - subedge->wire->pos());
-				subedge->wire->setLine(newLine);
-				splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1);
-				from = splitWire->connector0();
-				QApplication::processEvents();
-			}
-			else {
-				// find the ratsnest connecting the two connectors
-				foreach (ConnectorItem * fromToConnectorItem, from->connectedToItems()) {
-					Wire * wire = dynamic_cast<Wire *>(fromToConnectorItem->attachedTo());
-					if (wire == NULL) continue;
-					if (!wire->getRatsnest()) continue;
-
-					ConnectorItem * otherConnectorItem = wire->otherConnector(fromToConnectorItem);
-					if (otherConnectorItem->connectedToItems().contains(to)) {
-						ratsnest = wire;
-						break;
-					}
-				}
-
-
-
-				if (ratsnest) {
-					ratsnestWidth = ratsnest->width();
-					ratsnest->setWireWidth(5, m_sketchWidget);
-				};
-			}
-
-			wires.clear();
-			if (!m_sketchWidget->autorouteNeedsBounds() || (partForBounds == NULL)) {
-				routedFlag = drawTrace(from, to, boundingPoly, wires);
-			}
-			else {
-				routedFlag = drawTrace(from, to, boundingPoly, wires);
-				if (routedFlag) {
-					foreach (Wire * wire, wires) {
-						wire->addSticky(partForBounds, true);
-						partForBounds->addSticky(wire, true);
-						//DebugDialog::debug(QString("added wire %1").arg(wire->id()));
-					}
-				}
-			}
-			
-			if (ratsnest) {
-				ratsnest->setWireWidth(ratsnestWidth, m_sketchWidget);
-			}
-
-			if (subedge->wire != NULL) {
-				if (routedFlag) {
-					// hook up the split trace
-					ConnectorItem * connector1 = subedge->wire->connector1();
-					ConnectorItem * newConnector1 = splitWire->connector1();
-					foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
-						connector1->tempRemove(toConnectorItem, false);
-						toConnectorItem->tempRemove(connector1, false);
-						newConnector1->tempConnectTo(toConnectorItem, false);
-						toConnectorItem->tempConnectTo(newConnector1, false);
-						if (partForBounds) {
-							splitWire->addSticky(partForBounds, true);
-							partForBounds->addSticky(splitWire, true);
-						}
-					}
-
-					connector1->tempConnectTo(splitWire->connector0(), false);
-					splitWire->connector0()->tempConnectTo(connector1, false);
-				}
-				else {
-					// restore the old trace
-					subedge->wire->setLine(originalLine);
-					m_sketchWidget->deleteItem(splitWire, true, false, false);
-				}
-			}
-		}
-
-		foreach (Subedge * subedge, subedges) {
-			delete subedge;
-		}
-		subedges.clear();
-
-		if (!routedFlag && !m_stopTrace) {
-			drawJumper(edge->from, edge->to, partForBounds, boundingPoly);
-			jumperCount++;
-		}
-
-		emit setProgressValue(++edgesDone);
-
-		for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
-			if (m_allPartConnectorItems[i]->contains(edge->from)) {
-				netCounters[i] -= 2;
-				break;
-			}
-		}
-
-		int netsDone = 0;
-		foreach (int c, netCounters) {
-			if (c <= 0) {
-				netsDone++;
-			}
-		}
-		m_sketchWidget->forwardRoutingStatusSignal(m_allPartConnectorItems.count(), netsDone, edges.count() + 1 - edgesDone, jumperCount);
-
-		QApplication::processEvents();
-
-		if (m_cancelled) {
-			clearTraces(m_sketchWidget, false, NULL);
-			restoreOriginalState(parentCommand);
-			cleanUp();
-			return;
-		}
-
-		if (m_stopTrace) {
-			break;
-		}
-	}
-
-	cleanUp();
-	foreach (Edge * edge, edges) {
-		delete edge;
-	}
-	edges.clear();
-
-	addToUndo(parentCommand);
-
-	emit setProgressValue(edgesDone);
-	
-	updateRatsnest(!m_stopTrace, parentCommand);
-	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
-	m_sketchWidget->pushCommand(parentCommand);
-	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
+
 
 void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited) 
 {
@@ -568,21 +638,31 @@ void Autorouter1::clearLastDrawTraces() {
 
 void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand) {
 	QList<Wire *> oldTraces;
+	QList<JumperItem *> oldJumperItems;
 	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		
-		if (wire->getTrace() || wire->getJumper()) {
-			if (deleteAll || wire->getAutoroutable()) {
-				oldTraces.append(wire);
+		if (wire != NULL) {		
+			if (wire->getTrace() || wire->getJumper()) {
+				if (deleteAll || wire->getAutoroutable()) {
+					oldTraces.append(wire);
+				}
 			}
+			else if (wire->getRatsnest()) {
+				if (parentCommand) {
+					sketchWidget->makeChangeRoutedCommand(wire, false, Wire::UNROUTED_OPACITY, parentCommand);
+				}
+				wire->setRouted(false);
+				wire->setOpacity(Wire::UNROUTED_OPACITY);	
+			}
+			continue;
 		}
-		else if (wire->getRatsnest()) {
-			if (parentCommand) {
-				sketchWidget->makeChangeRoutedCommand(wire, false, Wire::UNROUTED_OPACITY, parentCommand);
+
+		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+		if (jumperItem != NULL) {
+			if (deleteAll || jumperItem->autoroutable()) {
+				oldJumperItems.append(jumperItem);
 			}
-			wire->setRouted(false);
-			wire->setOpacity(Wire::UNROUTED_OPACITY);	
+			continue;
 		}
 	}
 
@@ -592,11 +672,17 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 		foreach (Wire * wire, oldTraces) {
 			sketchWidget->makeDeleteItemCommand(wire, BaseCommand::SingleView, parentCommand);
 		}
+		foreach (JumperItem * jumperItem, oldJumperItems) {
+			sketchWidget->makeDeleteItemCommand(jumperItem, BaseCommand::SingleView, parentCommand);
+		}
 	}
 
 	
 	foreach (Wire * wire, oldTraces) {
 		sketchWidget->deleteItem(wire, true, false, false);
+	}
+	foreach (JumperItem * jumperItem, oldJumperItems) {
+		sketchWidget->deleteItem(jumperItem, true, false, false);
 	}
 }
 
@@ -792,44 +878,9 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	return false;
 }
 
-void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds, const QPolygonF & boundingPoly) 
+Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds, const QPolygonF & boundingPoly) 
 {
-	if (m_sketchWidget->usesJumperItem()) {
-		long newID = ItemBase::getNextID();
-		ViewGeometry viewGeometry;
-		ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::jumperModuleIDName), 
-													BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
-		if (temp == NULL) {
-			// we're in trouble
-			return;
-		}
-
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(temp);
-		QSizeF jsz = jumperItem->footprintSize();
-		m_sketchWidget->deleteItem(jumperItem, true, false, false);
-
-		QRectF r0 = from->rect();
-		qreal jr = sqrt((jsz.width() * jsz.width()) + (jsz.height() * jsz.height()));
-		qreal fr = sqrt((r0.width() * r0.width()) + (r0.height() * r0.height()));
-		qreal l = (fr + jr) / 2;
-
-		QPointF candidate1;
-		bool ok = findSpaceFor(to, jsz, l, boundingPoly, candidate1);
-		if (!ok) {
-			// notify user
-			// return;
-		}
-
-		QPointF candidate0;
-		ok = findSpaceFor(from, jsz, l, boundingPoly, candidate0);
-		if (!ok) {
-			// notify user
-			// return;
-		}
-
-		// return;
-
-	}
+	Q_UNUSED(boundingPoly);
 
 	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
 	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
@@ -845,7 +896,7 @@ void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase 
 												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (itemBase == NULL) {
 		// we're in trouble
-		return;
+		return NULL;
 	}
 
 	Wire * jumperWire = dynamic_cast<Wire *>(itemBase);
@@ -862,64 +913,192 @@ void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase 
 		jumperWire->addSticky(partForBounds, true);
 		partForBounds->addSticky(jumperWire, true);
 	}
+
+	return jumperWire;
  }
 
-bool Autorouter1::findSpaceFor(ConnectorItem * from, QSizeF jsz, qreal l, const QPolygonF & boundingPoly, QPointF & candidate) 
+JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds, const QPolygonF & boundingPoly) 
 {
-	// TODO:  this fails if the target is in a v-shape, because the footprint would fit further away, and the trace could intersect another equipotential trace
-	// so the real test would be to first find room for the jumper's footprint (slightly expanded)
-	// then try a trace from there to the connector (which could intersect other equipotential traces)
-	// should the trace be normal width?
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::jumperModuleIDName), 
+												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+	if (temp == NULL) {
+		// we're in trouble
+		return NULL;
+	}
 
+	JumperItem * jumperItem = dynamic_cast<JumperItem *>(temp);
+
+	QPointF candidate1;
+	bool ok = findSpaceFor(to, jumperItem, boundingPoly, candidate1);
+	if (!ok) {
+		m_sketchWidget->deleteItem(jumperItem, true, false, false);
+		return NULL;
+	}
+
+	QPointF candidate0;
+	ok = findSpaceFor(from, jumperItem, boundingPoly, candidate0);
+	if (!ok) {
+		m_sketchWidget->deleteItem(jumperItem, true, false, false);
+		return NULL;
+	}
+
+	jumperItem->resize(candidate0, candidate1);
+
+	if (partForBounds) {
+		jumperItem->addSticky(partForBounds, true);
+		partForBounds->addSticky(jumperItem, true);
+	}
+
+	return jumperItem;
+}
+
+bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, const QPolygonF & boundingPoly, QPointF & candidate) 
+{
+	QList<ConnectorItem *> equipotential;
+	equipotential.append(from);
+	ConnectorItem::collectEqualPotential(equipotential);
+
+	QSizeF jsz = jumperItem->footprintSize();
+	QRectF fromR = from->rect();
 	QPointF c = from->mapToScene(from->rect().center());
-	for (int i = 0; i < 360; i += 5) {
-		qreal rad = i / (2 * 3.141592654);
-		candidate.setX(l * cos(rad));
-		candidate.setY(l * sin(rad));
-		if (!boundingPoly.isEmpty()) {
-			if (!boundingPoly.containsPoint(c + candidate, Qt::OddEvenFill)) {
-				continue;
+	qreal minRadius = (jsz.width() / 2) + (qSqrt((fromR.width() * fromR.width()) + (fromR.height() * fromR.height())) / 4);
+	qreal maxRadius = minRadius * 4;
+
+	QGraphicsEllipseItem * ellipse = NULL;
+	QGraphicsLineItem * lineItem = NULL;
+
+	for (qreal radius = minRadius; radius <= maxRadius; radius += (minRadius / 2)) {
+		for (int angle = 0; angle < 360; angle += 10) {
+			if (m_cancelled || m_cancelTrace || m_stopTrace) {
+				if (ellipse) delete ellipse;
+				if (lineItem) delete lineItem;
+				return false;
 			}
 
-			bool inBounds = true;
-			QPointF nearestBoundsIntersection;
-			double nearestBoundsIntersectionDistance;
-			QLineF l1(c, c + candidate);
-			findNearestIntersection(l1, c, boundingPoly, inBounds, nearestBoundsIntersection, nearestBoundsIntersectionDistance);
-			if (!inBounds) {
-				continue;
-			}
-		}
+			bool intersected = false;
+			qreal radians = angle * 2 * 3.141592654 / 360.0;
+			candidate.setX(radius * cos(radians));
+			candidate.setY(radius * sin(radians));
+			candidate += c;
+			if (!boundingPoly.isEmpty()) {
+				if (!boundingPoly.containsPoint(candidate, Qt::OddEvenFill)) {
+					continue;
+				}
 
-		TraceWire * traceWire = drawOneTrace(c, c + candidate, jsz.width());
-		QApplication::processEvents();
-		bool intersected = false;
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(traceWire)) {
-			if (item == from) continue;
-			if (item == traceWire) continue;
-
-			TraceWire * candidateWire = dynamic_cast<TraceWire *>(item);
-			if (candidateWire != NULL) {
-				intersected = true;
-				break;
+				bool inBounds = true;
+				QPointF nearestBoundsIntersection;
+				double nearestBoundsIntersectionDistance;
+				QLineF l1(c, candidate);
+				findNearestIntersection(l1, c, boundingPoly, inBounds, nearestBoundsIntersection, nearestBoundsIntersectionDistance);
+				if (!inBounds) {
+					continue;
+				}
 			}
 
-			ConnectorItem * candidateConnectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (candidateConnectorItem != NULL) {
-				if (candidateConnectorItem->attachedTo() == traceWire) continue;
+			// first look for a circular space
+			if (ellipse == NULL) {
+				ellipse = new QGraphicsEllipseItem(candidate.x() - (jsz.width() / 2), 
+												   candidate.y() - (jsz.height() / 2), 
+												   jsz.width(), jsz.height(), 
+												   NULL, m_sketchWidget->scene());
+			}
+			else {
+				ellipse->setRect(candidate.x() - (jsz.width() / 2), 
+								 candidate.y() - (jsz.height() / 2), 
+								 jsz.width(), jsz.height());
+			}
+			QApplication::processEvents();
+			foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(ellipse)) {
+				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+				if (connectorItem != NULL) {
+					if (connectorItem->attachedTo() == jumperItem) continue;
 
-				ViewLayer::ViewLayerID vid = candidateConnectorItem->attachedTo()->viewLayerID();
-				if (vid == ViewLayer::Copper0 || vid == ViewLayer::Copper0Trace) {
+					ItemBase * itemBase = connectorItem->attachedTo();
+					ViewLayer::ViewLayerID vid = itemBase->viewLayerID();
+					if (vid == ViewLayer::Copper0 || vid == ViewLayer::Copper0Trace) {
+						Wire * wire = dynamic_cast<Wire *>(itemBase);
+						if (wire != NULL) {
+							// handle this elsewhere
+							continue;
+						}
+
+						intersected = true;
+						break;
+					}
+					else {
+						continue;
+					}
+				}
+
+				TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
+				if (traceWire != NULL) {
 					intersected = true;
 					break;
 				}
 			}
-		}
-		m_sketchWidget->deleteItem(traceWire, true, false, false);
 
-		if (!intersected) return true;
+			if (intersected) {
+				continue;
+			}
+
+			if (lineItem == NULL) {
+				lineItem = new QGraphicsLineItem(c.x(), c.y(), candidate.x(), candidate.y(), NULL, m_sketchWidget->scene());
+				QPen pen = lineItem->pen();
+				pen.setWidthF(Wire::STANDARD_TRACE_WIDTH + 1);
+				pen.setCapStyle(Qt::RoundCap);
+				lineItem->setPen(pen);
+			}
+			else {
+				lineItem->setLine(c.x(), c.y(), candidate.x(), candidate.y());
+			}
+			QApplication::processEvents();
+			foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(lineItem)) {
+				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+				if (connectorItem != NULL) {
+					if (connectorItem == from) continue;
+					if (connectorItem->attachedTo() == jumperItem) continue;
+
+					ItemBase * itemBase = connectorItem->attachedTo();
+					ViewLayer::ViewLayerID vid = itemBase->viewLayerID();
+					if (vid == ViewLayer::Copper0 || vid == ViewLayer::Copper0Trace) {
+						Wire * wire = dynamic_cast<Wire *>(itemBase);
+						if (wire != NULL) {
+							// handle this elsewhere
+							continue;
+						}
+
+						intersected = true;
+						break;
+					}
+					else {
+						continue;
+					}
+				}
+
+
+				TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
+				if (traceWire == NULL) {
+					continue;
+				}
+
+				if (!equipotential.contains(traceWire->connector0())) {
+					intersected = true;
+					break;
+				}
+			}
+			
+			if (!intersected) {
+				if (ellipse) delete ellipse;
+				if (lineItem) delete lineItem;
+				return true;
+			}
+		}
 	}
 
+	if (ellipse) delete ellipse;
+	if (lineItem) delete lineItem;
 	return false;
 }
 
@@ -1513,13 +1692,30 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 			}
 			addToUndo(wire, parentCommand);
 			wires.append(wire);
+			continue;
 		}
-		else {
-			Wire * w = dynamic_cast<Wire *>(item);
-			if (w != NULL && w->getJumper()) {
+
+		Wire * w = dynamic_cast<Wire *>(item);
+		if (w != NULL) {
+			if (w->getJumper()) {
 				addToUndo(w, parentCommand);
 				wires.append(w);
 			}
+			continue;
+		}
+
+		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+		if (jumperItem != NULL) {
+			if (!jumperItem->autoroutable()) continue;
+
+			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ItemBase::jumperModuleIDName, jumperItem->getViewGeometry(), jumperItem->id(), false, -1, -1, parentCommand);
+			jumperItem->saveParams();
+			QPointF pos, c0, c1;
+			jumperItem->getParams(pos, c0, c1);
+			new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
+			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, parentCommand);
+			addItemCommand->turnOffFirstRedo();			
+			continue;
 		}
 	}
 
