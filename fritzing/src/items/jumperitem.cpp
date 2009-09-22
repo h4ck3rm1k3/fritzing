@@ -207,8 +207,8 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 
 void JumperItem::resize(QPointF p0, QPointF p1) {
 	QRectF r0 = m_connector0->rect();
-	QPointF p(p0.x() - (r0.width() / 2) - m_connectorTL.x(), 
-			  p0.y() - (r0.height() / 2) - m_connectorTL.y());
+	QPointF p(qMin(p0.x(), p1.x()) - (r0.width() / 2) - m_connectorTL.x(), 
+			  qMin(p0.y(), p1.y()) - (r0.height() / 2) - m_connectorTL.y());
 	resize(p, p0 - p, p1 - p);
 }
 
