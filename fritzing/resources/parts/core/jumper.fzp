@@ -23,12 +23,12 @@
   </iconView>
   <breadboardView>
    <layers image="pcb/jumper.svg" >
-    <layer layerId="unknown" />
+    <layer layerId="copper0" />
    </layers>
   </breadboardView>
   <schematicView>
    <layers image="pcb/jumper.svg" >
-     <layer layerId="unknown" />
+     <layer layerId="copper0" />
    </layers>
   </schematicView>
   <pcbView>
@@ -43,8 +43,10 @@
    <description>jumper end</description>
    <views>
     <breadboardView>
+      <p svgId="connector0pad" layer="copper0" />
     </breadboardView>
     <schematicView>
+      <p svgId="connector0pad" layer="copper0" />
     </schematicView>
     <pcbView>
       <p svgId="connector0pad" layer="copper0" />
@@ -55,8 +57,10 @@
    <description>the other end of the jumper</description>
    <views>
     <breadboardView>
+      <p svgId="connector1pad" layer="copper0" />
     </breadboardView>
     <schematicView>
+      <p svgId="connector1pad" layer="copper0" />
     </schematicView>
     <pcbView>
       <p svgId="connector1pad" layer="copper0" />

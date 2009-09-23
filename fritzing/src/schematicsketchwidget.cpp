@@ -149,7 +149,7 @@ void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color) {
 }
 
 void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
-	if (itemBase->itemType() == ModelPart::Breadboard) {
+	if (itemBase->itemType() == ModelPart::Breadboard || itemBase->itemType() == ModelPart::Jumper) {
 		// don't need to see the breadboard in the other views
 		// but it's there so connections can be more easily synched between views
 		itemBase->setVisible(false);

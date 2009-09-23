@@ -258,7 +258,7 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 
 	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, Wire::UNROUTED_OPACITY, Wire::UNROUTED_OPACITY, parentCommand);
-	new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
+	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 	Wire* rat = NULL;
 	if (wire->getRatsnest()) {
 		rat = wire;
@@ -501,8 +501,10 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 			connectSymbols(fromConnectorItem, toConnectorItem, parentCommand);
 		}
 
-		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && 
-			toConnectorItem->attachedToItemType() == ModelPart::Wire)
+		bool fromWire = fromConnectorItem->attachedToItemType() == ModelPart::Wire;
+		bool toWire = toConnectorItem->attachedToItemType() == ModelPart::Wire;
+
+		if (fromWire && toWire)
 		{
 			ConnectorItem * originalFromConnectorItem = fromConnectorItem;
 			ConnectorItem * originalToConnectorItem = toConnectorItem;
@@ -522,11 +524,11 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 			}
 			result = true;
 		}
-		else if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		else if (fromWire) {
 			modifyNewWireConnectionsAux(fromConnectorItem, toConnectorItem, parentCommand);
 			result = true;
 		}
-		else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		else if (toWire) {
 			modifyNewWireConnectionsAux(toConnectorItem, fromConnectorItem, parentCommand);
 			result = true;
 		}
@@ -542,7 +544,7 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 	if (jumperOrTrace == NULL) {
 		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, ViewGeometry::TraceFlag, parentCommand);
 		new WireColorChangeCommand(this, newID, m_traceColor, m_traceColor, Wire::UNROUTED_OPACITY, Wire::UNROUTED_OPACITY, parentCommand);
-		new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
+		new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			foreach (ConnectorItem * connectorItem, fromConnectorItem->connectedToItems()) {
 				if (connectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -1131,15 +1133,16 @@ qreal PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
 ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * connectorItem) 
 {
 	Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
-
 	QList<ConnectorItem *> ends;
-	QList<ConnectorItem *> uniqueEnds;
-	QList<Wire *> wires;
-	wire->collectChained(wires, ends, uniqueEnds);
-	foreach (ConnectorItem * end, ends) {
-		foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
-			if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-				return findEmptyBusConnectorItem(toConnectorItem);
+	if (wire != NULL) {
+		QList<ConnectorItem *> uniqueEnds;
+		QList<Wire *> wires;
+		wire->collectChained(wires, ends, uniqueEnds);
+		foreach (ConnectorItem * end, ends) {
+			foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
+				if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
+					return findEmptyBusConnectorItem(toConnectorItem);
+				}
 			}
 		}
 	}

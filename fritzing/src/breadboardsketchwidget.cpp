@@ -294,7 +294,7 @@ void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color) {
 }
 
 void BreadboardSketchWidget::setNewPartVisible(ItemBase * itemBase) {
-	if (itemBase->itemType() == ModelPart::Symbol) {
+	if (itemBase->itemType() == ModelPart::Symbol || itemBase->itemType() == ModelPart::Jumper) {
 		itemBase->setVisible(false);
 		itemBase->setEverVisible(false);
 	}
