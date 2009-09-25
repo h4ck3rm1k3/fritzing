@@ -3086,6 +3086,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Hungarian - %1</source>
         <translation>Húngaro - %1</translation>
     </message>
+    <message>
+        <source>Chinese Simp. - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>
@@ -3132,18 +3136,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
 <context>
     <name>Wire</name>
     <message>
-        <source>thin</source>
-        <translation>fino</translation>
-    </message>
-    <message>
-        <source>medium</source>
-        <translation>médio</translation>
-    </message>
-    <message>
-        <source>wide</source>
-        <translation>largo</translation>
-    </message>
-    <message>
         <source>blue</source>
         <translation>azul</translation>
     </message>
@@ -3174,6 +3166,22 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>orange</source>
         <translation>laranja</translation>
+    </message>
+    <message>
+        <source>thin (16 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>standard (24 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>thick (32 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>extra thick (48 mil)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

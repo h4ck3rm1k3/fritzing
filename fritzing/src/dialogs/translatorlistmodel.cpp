@@ -59,8 +59,8 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
         m_languages.insert("hindi", tr("Hindi - %1").arg(QString::fromUtf16(t5)));
 
 		// TODO: not yet sure how to deal with scripts (as opposed to languages)
-		//ushort t6[] = { 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7b80, 0x4f53, 0x0029, 0 };
-        //m_languages.insert("chinese-simplified", tr("Chinese Simp. - %1").arg(QString::fromUtf16(t6)));
+		ushort t6[] = { 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7b80, 0x4f53, 0x0029, 0 };
+        m_languages.insert("chinese-simplified", tr("Chinese Simp. - %1").arg(QString::fromUtf16(t6)));
 		//ushort t7[] = { 0x6b63, 0x9ad4, 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7e41, 0x9ad4, 0x0029, 0 };		
 		//m_languages.insert("chinese-traditional", tr("Chinese Trad. - %1").arg(QString::fromUtf16(t7)));
 

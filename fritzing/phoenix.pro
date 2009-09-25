@@ -84,5 +84,7 @@ TRANSLATIONS += translations/fritzing_de.ts \
 	translations/fritzing_pt_br.ts \
 	translations/fritzing_pt_pt.ts \
 	translations/fritzing_it.ts \
+	translations/fritzing_ru.ts \
+	translations/fritzing_zh.ts \
 	translations/fritzing_hu.ts
 	

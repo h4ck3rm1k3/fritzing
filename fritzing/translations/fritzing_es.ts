@@ -423,32 +423,32 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>Helper</name>
     <message>
-        <location filename="../src/help/helper.cpp" line="45"/>
+        <location filename="../src/help/helper.cpp" line="44"/>
         <source>Drag out your &lt;br&gt; parts from here</source>
         <translation>Arrastra &lt;br&gt; Tus partes desde aquí</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="46"/>
+        <location filename="../src/help/helper.cpp" line="45"/>
         <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
         <translation>Cuando termines de acomodar los componentes, &lt;br&gt; utiliza la funcion de Autoruteo para crear&lt;br&gt; las lineas de cobre</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="47"/>
+        <location filename="../src/help/helper.cpp" line="46"/>
         <source>Use these buttons to &lt;br&gt; toggle between views</source>
         <translation>Utiliza estos botones para &lt;br&gt; cambiar entre vistas</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="49"/>
+        <location filename="../src/help/helper.cpp" line="48"/>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
         <translation>La &lt;b&gt; vista de Protoboard (Placa de prototipos) &lt;/b&gt; esta diseñada para verse como una &lt;i&gt;protoboard real&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Comienza arrastrando una parte desde el compartimiento de partes, el cual se encuentra en el extremo superior derecho. Continúa agregando partes y conectándolas haciendo click en los conectores y arrastrando los cables. El proceso es similar a cómo lo harías en la vida real.&lt;br/&gt;&lt;br/&gt;Una vez que termines tu prototipo/bosquejo en la Protoboard(placa de prototipos), prueba las otras vistas, a las cuales puedes acceder haciendo click sobre el cambiador de vistas o en el navegador que se encuentra en el extremo inferior derecho. Como cada vista tiene un propósito diferente, las partes se veran distintas, dependiendo de la vista elegida.</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="59"/>
+        <location filename="../src/help/helper.cpp" line="58"/>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
         <translation>Bienvenido a la &lt;b&gt;Vista de Esquema&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Este es una forma mas abstracta de ver los componentes y las conexiones, comparada con la vista de Protoboard (placa de prototipos). Tienes los mismos elementos que utilizaste en tu protoboard, sólo que se ven diferentes. Esta representacion es similar a los diagramas utilizados por los ingenieros.&lt;br/&gt;&lt;br/&gt;Puedes presionar &amp;lt;Shift&amp;gt;-click con el ratón para crear dobleces dando un mejor aspecto a tus conexiones.Esta vista puede ayudarte a verificar que los componentes esten correctamente conectados, de igual forma puedes imprimir el esquema para documentar el proyecto.</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="69"/>
+        <location filename="../src/help/helper.cpp" line="68"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;The first thing you will need is a board &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; to place your parts on. To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
         <translation>La&lt;b&gt;Vista de PCB&lt;/b&gt;(Placa de circuito impreso) es donde tu diseñas como los componentes van a ser acomodados en la placa de circuito impreso&lt;br/&gt;&lt;br/&gt;Las placas de circuito impreso o PCB puede fabricarse en casa o en un pequeño laboratorio utilizando procesos básicos de grabado. De igual forma pueden ser envidados los diseños a un fabricante profesional de circuitos para un acabado más preciso&lt;br/&gt;Lo primero que necesitas es una placa&lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; para colocar las partes. Para ordenar tu PCB reacomoda todos los componentes de tal manera que quepan ordenadamente en la placa. Entonces intenta girándolos para reducir la longitud y complejidad de las conexiones. También puedes cambiar el tamaño de las placas rectangulares. Una vez que las partes se encuentren bien acomodadas puedes utilizar el clic derecho del ratón para crear una conexión individual o utilizar el proceso de Autoruteo para generar las líneas de cobre entre las partes. El botón de Autoruteo &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; se encuentra en la parte inferior izquierda.</translation>
     </message>
@@ -2155,12 +2155,12 @@ Estamos trabajando para evitar este mesaje y permitirte seleccionar propiedades 
 <context>
     <name>ModelBase</name>
     <message>
-        <location filename="../src/modelbase.cpp" line="227"/>
+        <location filename="../src/modelbase.cpp" line="226"/>
         <source>File save failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/modelbase.cpp" line="228"/>
+        <location filename="../src/modelbase.cpp" line="227"/>
         <source>Couldn&apos;t overwrite file &apos;%1&apos;.
 Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
@@ -2554,171 +2554,171 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PartsEditorMainWindow</name>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="75"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="76"/>
         <source>Please find a name for me!</source>
         <translation>¡Por favor dame un nombre!</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="76"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="77"/>
         <source>Please provide a label</source>
         <translation>Por favor provee una etiqueta </translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="77"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="78"/>
         <source>You could tell a little bit about this part</source>
         <translation>Podrías dar una breve descripción sobre esta parte</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="80"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="81"/>
         <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
         <translation>&lt;i&gt;creada por&lt;/i&gt; %1 &lt;i&gt;el&lt;/i&gt; %2</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="81"/>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="110"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="82"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="111"/>
         <source>Parts Editor</source>
         <translation>Editor de Partes</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="111"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="112"/>
         <source>Error! Cannot create part file.
 </source>
         <translation>Error! Imposible crear el archivo de esta parte.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="205"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="206"/>
         <source>Load icon..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="242"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="243"/>
         <source>Label</source>
         <translation>Etiqueta</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="245"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="246"/>
         <source>Description</source>
         <translation>Descripción</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="264"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="265"/>
         <source>Properties</source>
         <translation>Propiedades</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="267"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="268"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="272"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="273"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="279"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="280"/>
         <source>Created/Updated on</source>
         <translation>Creada/Actualizada el</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="316"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="317"/>
         <source>Specifications</source>
         <translation>Especificaciones</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="317"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="318"/>
         <source>Connectors</source>
         <translation>Conectores</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="345"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="346"/>
         <source>save as new part</source>
         <translation>Guardar como parte nueva</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="349"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="350"/>
         <source>save</source>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="362"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="363"/>
         <source>cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="458"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="459"/>
         <source>Open Image</source>
         <translation>Abrir Imagen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="458"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="459"/>
         <source>SVG Files (*.fzfp)</source>
         <translation>Archivos SVG (*.fzfp)</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="507"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="511"/>
         <source>Save as new part</source>
         <translation>Guardar como parte nueva</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="563"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="568"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="564"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="569"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>No se puede escribir el Archivo %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="585"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="590"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>Guardado &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="714"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="719"/>
         <source>Updating existing part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="479"/>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="728"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="481"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="733"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="752"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="757"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="74"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="75"/>
         <source>Untitled Part</source>
         <translation>Parte Sin Nombre</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="773"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="778"/>
         <source>Icon needed</source>
         <translation>Se necesita un icono</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="773"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="778"/>
         <source>Please, provide an icon image for this part</source>
         <translation>Por favor provee un icono para esta parte</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="78"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="79"/>
         <source>Please classify this part</source>
         <translation>Por favor clasifica esta parte</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="79"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="80"/>
         <source>You can add your tags to make searching easier</source>
         <translation>Puedes agreagar tus etiquetas para hacer la busqueda más sencilla</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="508"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="512"/>
         <source>There&apos;s already a file with this name.
 Please, specify a new filename</source>
         <translation>Ya existe un archivo con este nombre
@@ -2728,22 +2728,22 @@ por favor indica un nombre distinto</translation>
 <context>
     <name>PartsEditorView</name>
     <message>
-        <location filename="../src/partseditor/partseditorview.cpp" line="516"/>
+        <location filename="../src/partseditor/partseditorview.cpp" line="518"/>
         <source>Open Image</source>
         <translation>Abrir Imagen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorview.cpp" line="518"/>
+        <location filename="../src/partseditor/partseditorview.cpp" line="520"/>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
         <translation>Archivos de imagen (%1 %2 %3);;Archivos SVG (%1);;Archivos JPEG (%2);;Archivos PNG(%3)</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorview.cpp" line="573"/>
+        <location filename="../src/partseditor/partseditorview.cpp" line="575"/>
         <source>Couldn&apos;t open svg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorview.cpp" line="574"/>
+        <location filename="../src/partseditor/partseditorview.cpp" line="576"/>
         <source>The file couldn&apos;t be opened. If this file defines its dimensions 
 in non-real-world units (e.g. pixels), then they won&apos;t be translated 
 into real life ones.
@@ -2751,12 +2751,12 @@ Malformed font-family definitions won&apos;t be fixed either.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorview.cpp" line="594"/>
+        <location filename="../src/partseditor/partseditorview.cpp" line="596"/>
         <source>Couldn&apos;t write into file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorview.cpp" line="595"/>
+        <location filename="../src/partseditor/partseditorview.cpp" line="597"/>
         <source>This file needs to be fixed to fit fritzing needs, but it couldn&apos;t
 be written.
 Fritzing is not compatible with this kind of svg files. Please 
@@ -2766,7 +2766,7 @@ More information at http://fritzing.org/using-svg-images-new-parts/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorview.cpp" line="1281"/>
+        <location filename="../src/partseditor/partseditorview.cpp" line="1331"/>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2896,19 +2896,19 @@ the PCB view?</source>
         <location filename="../src/modelbase.cpp" line="83"/>
         <location filename="../src/modelbase.cpp" line="88"/>
         <location filename="../src/modelbase.cpp" line="102"/>
-        <location filename="../src/modelbase.cpp" line="213"/>
+        <location filename="../src/modelbase.cpp" line="212"/>
         <location filename="../src/palettemodel.cpp" line="68"/>
         <location filename="../src/palettemodel.cpp" line="246"/>
         <location filename="../src/palettemodel.cpp" line="260"/>
         <location filename="../src/palettemodel.cpp" line="327"/>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="545"/>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="209"/>
-        <location filename="../src/partseditor/svgview.cpp" line="109"/>
-        <location filename="../src/partseditor/svgview.cpp" line="120"/>
-        <location filename="../src/partseditor/svgview.cpp" line="131"/>
-        <location filename="../src/partseditor/svgview.cpp" line="136"/>
-        <location filename="../src/sketchwidget.cpp" line="777"/>
-        <location filename="../src/sketchwidget.cpp" line="5426"/>
+        <location filename="../src/partseditor/svgview.cpp" line="108"/>
+        <location filename="../src/partseditor/svgview.cpp" line="119"/>
+        <location filename="../src/partseditor/svgview.cpp" line="130"/>
+        <location filename="../src/partseditor/svgview.cpp" line="135"/>
+        <location filename="../src/sketchwidget.cpp" line="783"/>
+        <location filename="../src/sketchwidget.cpp" line="5449"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
@@ -2960,7 +2960,7 @@ the PCB view?</source>
     <message>
         <location filename="../src/modelbase.cpp" line="60"/>
         <location filename="../src/palettemodel.cpp" line="247"/>
-        <location filename="../src/partseditor/svgview.cpp" line="110"/>
+        <location filename="../src/partseditor/svgview.cpp" line="109"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Imposible leer archivo %1:%2.</translation>
@@ -2985,7 +2985,7 @@ the PCB view?</source>
         <translation>Este Archivo %1 no es un archivo valido de Fritzing (3).</translation>
     </message>
     <message>
-        <location filename="../src/modelbase.cpp" line="214"/>
+        <location filename="../src/modelbase.cpp" line="213"/>
         <source>Cannot write file temp file:
 %1.</source>
         <translation>No se puede escribir el archivo temporal:%1.</translation>
@@ -3045,30 +3045,30 @@ the PCB view?</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/svgdomdocument.cpp" line="90"/>
+        <location filename="../src/partseditor/svgdomdocument.cpp" line="89"/>
         <source>Parts Editor</source>
         <translation>Editor de Partes</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/svgdomdocument.cpp" line="91"/>
+        <location filename="../src/partseditor/svgdomdocument.cpp" line="90"/>
         <source>Cannot write to file %1:
 %2.</source>
         <translation>No se puede escribir el Archivo %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/svgview.cpp" line="121"/>
+        <location filename="../src/partseditor/svgview.cpp" line="120"/>
         <source>Parse error (3) at line %1, column %2:
 %3
 %4</source>
         <translation>Error de Parseo (3) en la línea %1, columna %2: %3 %4</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/svgview.cpp" line="131"/>
+        <location filename="../src/partseditor/svgview.cpp" line="130"/>
         <source>The file %1 is not a Fritzing file (12).</source>
         <translation>Este Archivo %1 no es un archivo valido de Fritzing(12).</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/svgview.cpp" line="136"/>
+        <location filename="../src/partseditor/svgview.cpp" line="135"/>
         <source>The file %1 is not a Fritzing Footprint XML file.</source>
         <translation>El archivo %1 no es un archivo de huella XML de Fritzing.</translation>
     </message>
@@ -3127,43 +3127,43 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="778"/>
+        <location filename="../src/sketchwidget.cpp" line="784"/>
         <source>The file %1 is not a Fritzing file (1).</source>
         <translation>El archivo %1 no es un archivo valido de Fritzing(1).</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2545"/>
+        <location filename="../src/sketchwidget.cpp" line="2540"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2691"/>
+        <location filename="../src/sketchwidget.cpp" line="2686"/>
         <source>%1 Layer</source>
         <translation>%1 Capa</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2901"/>
-        <location filename="../src/sketchwidget.cpp" line="2918"/>
+        <location filename="../src/sketchwidget.cpp" line="2896"/>
+        <location filename="../src/sketchwidget.cpp" line="2913"/>
         <source>Bring forward</source>
         <translation>Traer hacia adelante</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2910"/>
+        <location filename="../src/sketchwidget.cpp" line="2905"/>
         <source>Send backward</source>
         <translation>Enviar hacia atrás</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2927"/>
+        <location filename="../src/sketchwidget.cpp" line="2922"/>
         <source>Bring to front</source>
         <translation>Traer al frente</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3868"/>
+        <location filename="../src/sketchwidget.cpp" line="3889"/>
         <source>Split Wire</source>
         <translation>Separar Cable</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3919"/>
+        <location filename="../src/sketchwidget.cpp" line="3940"/>
         <source>Join Wire</source>
         <translation>Unir Cable</translation>
     </message>
@@ -3257,7 +3257,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <translation>Mantente fuera</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5581"/>
+        <location filename="../src/sketchwidget.cpp" line="5604"/>
         <location filename="../src/viewlayer.cpp" line="78"/>
         <source>Jumper wires</source>
         <translation>Cables Jumper</translation>
@@ -3306,17 +3306,17 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <translation>Agregar conector</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5584"/>
+        <location filename="../src/sketchwidget.cpp" line="5607"/>
         <source>Trace wires</source>
         <translation>Trazas</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5587"/>
+        <location filename="../src/sketchwidget.cpp" line="5610"/>
         <source>Ratsnest wires</source>
         <translation>Cables del Nido de Ratas</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5589"/>
+        <location filename="../src/sketchwidget.cpp" line="5612"/>
         <source>Select all %1</source>
         <translation>Seleccionar todos los %1</translation>
     </message>
@@ -3378,7 +3378,7 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5427"/>
+        <location filename="../src/sketchwidget.cpp" line="5450"/>
         <source>Unable to change the voltage of this part, because other ground/voltage symbols are connected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3394,7 +3394,7 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
 <context>
     <name>ResizableBoard</name>
     <message>
-        <location filename="../src/items/resizableboard.cpp" line="427"/>
+        <location filename="../src/items/resizableboard.cpp" line="426"/>
         <source>Import Shape...</source>
         <translation type="unfinished">Importar Forma...</translation>
     </message>
@@ -3402,24 +3402,24 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
 <context>
     <name>SVGView</name>
     <message>
+        <location filename="../src/partseditor/svgview.cpp" line="73"/>
         <location filename="../src/partseditor/svgview.cpp" line="74"/>
-        <location filename="../src/partseditor/svgview.cpp" line="75"/>
         <source>Print</source>
         <translation>Imprimir</translation>
     </message>
     <message>
+        <location filename="../src/partseditor/svgview.cpp" line="78"/>
         <location filename="../src/partseditor/svgview.cpp" line="79"/>
-        <location filename="../src/partseditor/svgview.cpp" line="80"/>
         <source>Import XML</source>
         <translation>Importar XML</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/svgview.cpp" line="105"/>
+        <location filename="../src/partseditor/svgview.cpp" line="104"/>
         <source>Select Footprint XML File</source>
         <translation>Selecciona Archivo de huella XML</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/svgview.cpp" line="106"/>
+        <location filename="../src/partseditor/svgview.cpp" line="105"/>
         <source>Fritzing Footprint XML Files (*.fzfp);;All Files (*)</source>
         <translation>Arcivos de huella XML de Fritzing (*.fzfp);;All Files (*)</translation>
     </message>
@@ -3552,190 +3552,190 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
 <context>
     <name>SketchWidget</name>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="484"/>
+        <location filename="../src/sketchwidget.cpp" line="490"/>
         <source>loading part</source>
         <translation>cargando parte</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="491"/>
+        <location filename="../src/sketchwidget.cpp" line="497"/>
         <source>done loading</source>
         <translation>carga terminada</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="908"/>
+        <location filename="../src/sketchwidget.cpp" line="914"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="911"/>
+        <location filename="../src/sketchwidget.cpp" line="917"/>
         <source>%1 %2 items</source>
         <translation>%1 %2 items</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1197"/>
+        <location filename="../src/sketchwidget.cpp" line="1203"/>
         <source>Select All</source>
         <translation>Seleccionar Todo</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1197"/>
+        <location filename="../src/sketchwidget.cpp" line="1203"/>
         <source>Deselect</source>
         <translation>Deseleccionar</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1459"/>
+        <location filename="../src/sketchwidget.cpp" line="1465"/>
         <source>Add %1</source>
         <translation>Agregar %1</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2109"/>
-        <location filename="../src/sketchwidget.cpp" line="5477"/>
+        <location filename="../src/sketchwidget.cpp" line="5500"/>
+        <location filename="../src/sketchwidget.cpp" line="5878"/>
         <source>Resize board to %1 %2</source>
         <translation>Cambiar el tamaño de la placa a %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2206"/>
+        <location filename="../src/sketchwidget.cpp" line="2201"/>
         <source>Move %2 (%1)</source>
         <translation>Mover %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2209"/>
+        <location filename="../src/sketchwidget.cpp" line="2204"/>
         <source>Move %2 items (%1)</source>
         <translation>Mover %2 items (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2359"/>
+        <location filename="../src/sketchwidget.cpp" line="2354"/>
         <source>Select %1</source>
         <translation>Selecionar %1</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2362"/>
+        <location filename="../src/sketchwidget.cpp" line="2357"/>
         <source>Select %1 items</source>
         <translation>Selecionar %1 items</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2529"/>
+        <location filename="../src/sketchwidget.cpp" line="2524"/>
         <source>Disconnect</source>
         <translation>Desconectar</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2537"/>
+        <location filename="../src/sketchwidget.cpp" line="2532"/>
         <source>Change</source>
         <translation>Cambiar</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2541"/>
+        <location filename="../src/sketchwidget.cpp" line="2536"/>
         <source>Connect</source>
         <translation>Conectar</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2542"/>
+        <location filename="../src/sketchwidget.cpp" line="2537"/>
         <source>to %1</source>
         <translation>a %1</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2598"/>
+        <location filename="../src/sketchwidget.cpp" line="2593"/>
         <source>Create and connect wire</source>
         <translation>Crear y conectar Cable</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3203"/>
+        <location filename="../src/sketchwidget.cpp" line="3198"/>
         <source>Rotate %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3336"/>
+        <location filename="../src/sketchwidget.cpp" line="3331"/>
         <source>%3 %2 (%1)</source>
         <translation>%3 %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3339"/>
-        <location filename="../src/sketchwidget.cpp" line="5072"/>
+        <location filename="../src/sketchwidget.cpp" line="3334"/>
+        <location filename="../src/sketchwidget.cpp" line="5095"/>
         <source>Rotate</source>
         <translation>Girar</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3339"/>
-        <location filename="../src/sketchwidget.cpp" line="5072"/>
+        <location filename="../src/sketchwidget.cpp" line="3334"/>
+        <location filename="../src/sketchwidget.cpp" line="5095"/>
         <source>Flip</source>
         <translation>Invertir</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3987"/>
+        <location filename="../src/sketchwidget.cpp" line="4008"/>
         <source>Double-click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3987"/>
+        <location filename="../src/sketchwidget.cpp" line="4008"/>
         <source>Drag or double-click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3988"/>
+        <location filename="../src/sketchwidget.cpp" line="4009"/>
         <source>or alt-drag to move the segment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4291"/>
+        <location filename="../src/sketchwidget.cpp" line="4312"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>Cambiar el color de %1 de %2 a %3</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4297"/>
+        <location filename="../src/sketchwidget.cpp" line="4318"/>
         <source>Change color of %1 wires to %2</source>
         <translation>Cambiar color de %1 cables a %2</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5433"/>
+        <location filename="../src/sketchwidget.cpp" line="5456"/>
         <source>Change voltage from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5691"/>
+        <location filename="../src/sketchwidget.cpp" line="5714"/>
         <source>Disconnect all wires from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5694"/>
+        <location filename="../src/sketchwidget.cpp" line="5717"/>
         <source>Disconnect all wires from %1 items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4127"/>
+        <location filename="../src/sketchwidget.cpp" line="4148"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Cambiar la etiqueta %1 a &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4046"/>
+        <location filename="../src/sketchwidget.cpp" line="4067"/>
         <source>Double-click to delete this bend point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5065"/>
+        <location filename="../src/sketchwidget.cpp" line="5088"/>
         <source>Move label &apos;%1&apos;</source>
         <translation>Mover etiqueta &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5072"/>
+        <location filename="../src/sketchwidget.cpp" line="5095"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation>%1 etiqueta &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1541"/>
+        <location filename="../src/sketchwidget.cpp" line="1547"/>
         <source>Selection</source>
         <translation>Selección</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="5098"/>
+        <location filename="../src/sketchwidget.cpp" line="5121"/>
         <source>Resize Note</source>
         <translation>Cambiar tamaño de la Nota</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4341"/>
+        <location filename="../src/sketchwidget.cpp" line="4364"/>
         <source>Change %1 width from %2 to %3</source>
         <translation>Cambiar el ancho de %1 de %2 a %3</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4347"/>
+        <location filename="../src/sketchwidget.cpp" line="4370"/>
         <source>Change width of %1 wires to %2</source>
         <translation>Cambiar el ancho de %1 cables a %2</translation>
     </message>
@@ -3846,6 +3846,11 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
         <translation>Italiano- %1</translation>
     </message>
     <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="63"/>
+        <source>Chinese Simp. - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="44"/>
         <source>Japanese - %1</source>
         <translation>Japonés - %1</translation>
@@ -3933,70 +3938,72 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
 <context>
     <name>Wire</name>
     <message>
-        <location filename="../src/items/wire.cpp" line="924"/>
-        <location filename="../src/items/wire.cpp" line="934"/>
+        <location filename="../src/items/wire.cpp" line="927"/>
+        <source>thin (16 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/wire.cpp" line="928"/>
+        <source>standard (24 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/wire.cpp" line="929"/>
+        <source>thick (32 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/wire.cpp" line="930"/>
+        <source>extra thick (48 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/items/wire.cpp" line="935"/>
+        <location filename="../src/items/wire.cpp" line="945"/>
         <source>blue</source>
         <translation>azul</translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="925"/>
-        <location filename="../src/items/wire.cpp" line="935"/>
+        <location filename="../src/items/wire.cpp" line="936"/>
+        <location filename="../src/items/wire.cpp" line="946"/>
         <source>red</source>
         <translation>rojo</translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="926"/>
-        <location filename="../src/items/wire.cpp" line="936"/>
+        <location filename="../src/items/wire.cpp" line="937"/>
+        <location filename="../src/items/wire.cpp" line="947"/>
         <source>black</source>
         <translation>negro</translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="927"/>
-        <location filename="../src/items/wire.cpp" line="937"/>
+        <location filename="../src/items/wire.cpp" line="938"/>
+        <location filename="../src/items/wire.cpp" line="948"/>
         <source>yellow</source>
         <translation>amarillo</translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="928"/>
-        <location filename="../src/items/wire.cpp" line="938"/>
+        <location filename="../src/items/wire.cpp" line="939"/>
+        <location filename="../src/items/wire.cpp" line="949"/>
         <source>green</source>
         <translation>verde</translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="929"/>
-        <location filename="../src/items/wire.cpp" line="939"/>
+        <location filename="../src/items/wire.cpp" line="940"/>
+        <location filename="../src/items/wire.cpp" line="950"/>
         <source>grey</source>
         <translation>gris</translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="930"/>
-        <location filename="../src/items/wire.cpp" line="940"/>
+        <location filename="../src/items/wire.cpp" line="941"/>
+        <location filename="../src/items/wire.cpp" line="951"/>
         <source>white</source>
         <translation>blanco</translation>
     </message>
     <message>
-        <location filename="../src/items/wire.cpp" line="931"/>
-        <location filename="../src/items/wire.cpp" line="941"/>
+        <location filename="../src/items/wire.cpp" line="942"/>
+        <location filename="../src/items/wire.cpp" line="952"/>
         <source>orange</source>
         <translation>naranja</translation>
-    </message>
-    <message>
-        <location filename="../src/items/wire.cpp" line="915"/>
-        <location filename="../src/items/wire.cpp" line="919"/>
-        <source>thin</source>
-        <translation>delgado</translation>
-    </message>
-    <message>
-        <location filename="../src/items/wire.cpp" line="916"/>
-        <location filename="../src/items/wire.cpp" line="920"/>
-        <source>medium</source>
-        <translation>medio</translation>
-    </message>
-    <message>
-        <location filename="../src/items/wire.cpp" line="917"/>
-        <location filename="../src/items/wire.cpp" line="921"/>
-        <source>wide</source>
-        <translation>ancho</translation>
     </message>
 </context>
 </TS>

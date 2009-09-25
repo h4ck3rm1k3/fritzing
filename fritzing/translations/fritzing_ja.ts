@@ -3048,6 +3048,10 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Hungarian - %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Chinese Simp. - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>
@@ -3094,18 +3098,6 @@ is already there, we won&apos;t add it again, right?</source>
 <context>
     <name>Wire</name>
     <message>
-        <source>thin</source>
-        <translation type="unfinished">細い</translation>
-    </message>
-    <message>
-        <source>medium</source>
-        <translation type="unfinished">素材</translation>
-    </message>
-    <message>
-        <source>wide</source>
-        <translation>ワイド</translation>
-    </message>
-    <message>
         <source>blue</source>
         <translation>ブルー</translation>
     </message>
@@ -3136,6 +3128,22 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>orange</source>
         <translation>オレンジ</translation>
+    </message>
+    <message>
+        <source>thin (16 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>standard (24 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>thick (32 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>extra thick (48 mil)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

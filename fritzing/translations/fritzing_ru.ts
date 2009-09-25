@@ -28,15 +28,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;p&gt;Thanks to Kurt Badelt&lt;br/&gt;for the Spanish translation,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -45,6 +37,14 @@
     </message>
     <message>
         <source>and to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -62,6 +62,10 @@
 <context>
     <name>AutorouteProgressDialog</name>
     <message>
+        <source>zoom and pan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Skip current trace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -73,15 +77,15 @@
         <source>Stop Now</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>zoom and pan</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BinManager</name>
     <message>
         <source>Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -93,23 +97,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select a part to import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot set a NULL bin as the current one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a part to import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External Part (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -128,21 +128,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t fix connector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please, first load an image in each view,
-in order to fix this connector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add connector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please, first load an image in each view,
 before adding any connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t fix connector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please, first load an image in each view,
+in order to fix this connector</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -303,6 +303,14 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Copying file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File %1 already exists: it won&apos;t be overwritten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Save &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -332,14 +340,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copying file %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File %1 already exists: it won&apos;t be overwritten</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -372,6 +372,18 @@ Please select one of the Fritzing fonts to replace them:</source>
 </context>
 <context>
     <name>HtmlInfoView</name>
+    <message>
+        <source>family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Connections</source>
         <translation type="unfinished"></translation>
@@ -419,23 +431,11 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>resistance</source>
+        <source>Tags</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -468,6 +468,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Flip</source>
         <translation type="unfinished"></translation>
     </message>
@@ -496,7 +500,13 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
+        <source>Updating existing part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some connectors have changed.
+In order to see the changes, you have to restart fritzing.
+Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -512,11 +522,39 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to export %1 to shareable sketch</source>
+        <source>Unable to export %1 as shareable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to open shareable %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a part to import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External Part (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to open shareable part %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fritzing Part (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to export %1 to shareable sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to keep the imported parts?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -541,6 +579,27 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>%1 - [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Before you can save a sketch as a module, all traces must be routed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No part with those characteristics.
+We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swapped %1 with module %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -572,6 +631,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>PDF (*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -597,6 +660,26 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Printing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All traces have not yet been routed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to proceed anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proceed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Etchable for DIY...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -630,6 +713,10 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Select a Fritzing File to Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -686,18 +773,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Open Recent Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Open Example</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export Etchable for DIY...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -730,7 +805,35 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Share online...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a project to the Fritzing website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save As Module...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export current sketch as a standalone module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Module as Sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open selected module as a sketch (for editing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>to &amp;JPG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a JPG image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -738,11 +841,47 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Export the visible area of the current sketch as a PNG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>to Post&amp;Script...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Export the visible area of the current sketch as a PostScript image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>to &amp;PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a PDF image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to &amp;SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch as an SVG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of parts (&amp;Bill of Materials)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XML Netlist...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save a netlist in XML format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -790,6 +929,14 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Launch External Process...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell launch an external application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -799,6 +946,18 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Quit the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open Example</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open Recent Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -910,11 +1069,31 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ctrl+Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open the old parts editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add to bin...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add selected part to bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect All Wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect all wires connected to this connector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1058,11 +1237,23 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Import a part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Export...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Export selected part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a bendpoint to the selected wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1118,6 +1309,14 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Set Background Color ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the background color for the current view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Show Breadboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1170,6 +1369,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Online Tutorials</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ctrl+?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1178,7 +1381,15 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Online Projects Gallery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Open Fritzing examples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online Parts Reference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1206,6 +1417,38 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Tips and Tricks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display some handy Fritzing tips and tricks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Qt&apos;s about box</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Report a bug...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Report a but you&apos;ve found in Fritzing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import parts and bins from old version...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import parts and bins from previous installation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1214,27 +1457,11 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Online Tutorials</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Online Projects Gallery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Online Parts Reference</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Report a bug...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raise and Lower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1250,6 +1477,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Diagram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1259,6 +1490,22 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a folder for exporting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export SVG...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1290,6 +1537,10 @@ Quantity	Part
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Export Netlist...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Autoroute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1314,6 +1565,10 @@ Quantity	Part
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Don&apos;t Autoroute This Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>When autorouting, do not rip up this wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1326,6 +1581,14 @@ Quantity	Part
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all trace wires excluded from autorouting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Select All Jumper Wires</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1334,314 +1597,11 @@ Quantity	Part
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Autorouting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save As Module...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export current sketch as a standalone module</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select all trace wires excluded from autorouting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Don&apos;t Autoroute This Trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a part to import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External Part (*%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to open shareable part %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to keep the imported parts?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import a part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Qt&apos;s about box</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Report a but you&apos;ve found in Fritzing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Before you can save a sketch as a module, all traces must be routed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sorry!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No part with those characteristics.
-We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swapped %1 with module %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All traces have not yet been routed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to proceed anyway?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Module as Sketch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open selected module as a sketch (for editing)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Raise and Lower</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Bendpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add a bendpoint to the selected wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove Bendpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose a folder for exporting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the visible area of the current sketch as a JPG image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the visible area of the current sketch as a PNG image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the visible area of the current sketch as a PostScript image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the visible area of the current sketch as a PDF image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>to &amp;SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch as an SVG image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to export %1 as shareable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to open shareable %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proceed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Add to bin...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add selected part to bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Import parts and bins from old version...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import parts and bins from previous installation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Diagram</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tidy Wires</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tidy selected wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please choose the previous Fritzing folder...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You will have to restart Fritzing in order to use the imported parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to render board svg (1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing error: unable to render copper svg (1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Wire Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch External Process...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shell launch an external application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disconnect All Wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disconnect all wires connected to this connector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Background Color ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set the background color for the current view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tips and Tricks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display some handy Fritzing tips and tricks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 Background</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change background color for %1 from %2 to %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Updating existing part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some connectors have changed.
-In order to see the changes, you have to restart fritzing.
-Do you want to restart now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Share online...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Post a project to the Fritzing website</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>List of parts (&amp;Bill of Materials)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>XML Netlist...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save a netlist in XML format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export Netlist...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1661,7 +1621,35 @@ Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Autorouting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose the previous Fritzing folder...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You will have to restart Fritzing in order to use the imported parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render board svg (1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing error: unable to render copper svg (1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1672,9 +1660,25 @@ Do you want to restart now?</source>
         <source>Remove copper fill</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Wire Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change background color for %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
+    <message>
+        <source>fix this!</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>In </source>
         <translation type="unfinished"></translation>
@@ -1685,10 +1689,6 @@ Do you want to restart now?</source>
     </message>
     <message>
         <source>view only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fix this!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1764,10 +1764,6 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PartLabel</name>
     <message>
-        <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1805,6 +1801,10 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Rotate 90° Counter Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate current selection 90 degrees counter clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1883,7 +1883,75 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>New...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save As...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Core</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All User Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Specify a file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing Bin (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1904,51 +1972,7 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save As...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fritzing Bin (*%1)</source>
+        <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1980,35 +2004,11 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please choose a name for the bin:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rename bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>From file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Core</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All Parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All User Parts</source>
+        <source>Please choose a name for the bin:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2031,6 +2031,14 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Please classify this part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can add your tags to make searching easier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2041,6 +2049,10 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Error! Cannot create part file.
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load icon..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2096,7 +2108,16 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Save as new part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There&apos;s already a file with this name.
+Please, specify a new filename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2113,6 +2134,10 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Updating existing part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2124,31 +2149,6 @@ Reason: %2 (errcode %3)</source>
         <source>Please, provide an icon image for this part</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Please classify this part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can add your tags to make searching easier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>There&apos;s already a file with this name.
-Please, specify a new filename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load icon..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Updating existing part</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PartsEditorView</name>
@@ -2158,10 +2158,6 @@ Please, specify a new filename</source>
     </message>
     <message>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2186,6 +2182,10 @@ Fritzing is not compatible with this kind of svg files. Please
 check your permissions, and try again.
 
 More information at http://fritzing.org/using-svg-images-new-parts/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2237,15 +2237,15 @@ the PCB view?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Coming soon...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 (click to change...)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coming soon...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2260,7 +2260,48 @@ the PCB view?</source>
 <context>
     <name>QObject</name>
     <message>
+        <source>Autorouting Progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Breadboard View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Language&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unconnected highlight color&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
+Please stay tuned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all saved settings and close this dialog (debug mode only).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2284,19 +2325,15 @@ the PCB view?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>icon view</source>
+        <source>Save as Module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>breadboard view</source>
+        <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>schematic view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pcb view</source>
+        <source>Edit link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2323,6 +2360,10 @@ the PCB view?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The file %1 is not a Fritzing file (4).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The file %1 is not a Fritzing file (3).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2343,6 +2384,15 @@ the PCB view?</source>
     </message>
     <message>
         <source>The part &apos;%1&apos; at &apos;%2&apos; does not have a unique module id &apos;%3&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part already in bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The part that you have just added,
+is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2405,44 +2455,11 @@ the PCB view?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Jumper wires</source>
+        <source>pcb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Trace wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ratsnest wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select all %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Language&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
-Please stay tuned.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear all saved settings and close this dialog (debug mode only).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
+        <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2452,6 +2469,10 @@ Please stay tuned.</source>
     <message>
         <source>Sorry, we have a problem with the swapping mechanism.
 Fritzing still works, but you won&apos;t be able to change parts properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2495,7 +2516,47 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Unable to change the voltage of this part, because other ground/voltage symbols are connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jumper wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trace wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratsnest wires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icon view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>breadboard view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pcb view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2547,7 +2608,15 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ground Plane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Copper 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper 0 Trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2572,75 +2641,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Unknown Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save as Module</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file %1 is not a Fritzing file (4).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Part already in bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The part that you have just added,
-is already there, we won&apos;t add it again, right?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Autorouting Progress...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pcb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>schem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File Progress...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ground Plane</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copper 0 Trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Unconnected highlight color&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to change the voltage of this part, because other ground/voltage symbols are connected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2680,14 +2680,6 @@ is already there, we won&apos;t add it again, right?</source>
 <context>
     <name>SaveAsModuleDialog</name>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Label</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2709,6 +2701,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Created/Updated on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2813,10 +2813,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resize board to %1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2853,6 +2849,10 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Rotate %2 (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%3 %2 (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2862,6 +2862,22 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Flip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag or double-click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>or alt-drag to move the segment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-click to delete this bend point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2897,27 +2913,11 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rotate %2 (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Double-click to delete this bend point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Double-click</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drag or double-click</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>or alt-drag to move the segment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change voltage from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resize board to %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2999,31 +2999,7 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dutch - %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Russian - %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian - %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Japanese - %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hebrew - %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arabic - %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hindi - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3036,6 +3012,30 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Hungarian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dutch - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hindi - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3054,19 +3054,19 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Checking...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sorry, unable to retrieve update info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A new main release is available for downloading:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A new interim release is available for downloading:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checking...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, unable to retrieve update info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3087,6 +3087,22 @@ is already there, we won&apos;t add it again, right?</source>
 </context>
 <context>
     <name>Wire</name>
+    <message>
+        <source>thin (16 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>standard (24 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>thick (32 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>extra thick (48 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>blue</source>
         <translation type="unfinished"></translation>
@@ -3117,22 +3133,6 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>orange</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>thin (16 mil)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>standard (24 mil)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>thick (32 mil)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>extra thick (48 mil)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
