@@ -220,7 +220,11 @@ void Autorouter1::start()
 	pen.setWidthF(5);
 	pen.setCapStyle(Qt::RoundCap);
 	lineItem->setPen(pen);
-	lineItem->setZValue(m_sketchWidget->viewLayers().value(ViewLayer::Ratsnest)->nextZ());
+
+	ViewGeometry vg;
+	vg.setRatsnest(true);
+	ViewLayer::ViewLayerID viewLayerID = m_sketchWidget->getWireViewLayerID(vg);
+	lineItem->setZValue(m_sketchWidget->viewLayers().value(viewLayerID)->nextZ());
 	lineItem->setOpacity(0.8);
 
 	QList<Wire *> jumpers;

@@ -60,7 +60,7 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 
 		// TODO: not yet sure how to deal with scripts (as opposed to languages)
 		ushort t6[] = { 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7b80, 0x4f53, 0x0029, 0 };
-        m_languages.insert("chinese-simplified", tr("Chinese Simp. - %1").arg(QString::fromUtf16(t6)));
+        m_languages.insert("chinese-simplified", tr("Chinese (Simplified) - %1").arg(QString::fromUtf16(t6)));
 		//ushort t7[] = { 0x6b63, 0x9ad4, 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7e41, 0x9ad4, 0x0029, 0 };		
 		//m_languages.insert("chinese-traditional", tr("Chinese Trad. - %1").arg(QString::fromUtf16(t7)));
 
@@ -114,7 +114,17 @@ QVariant TranslatorListModel::data ( const QModelIndex & index, int role) const
 		if (trLanguageString.isEmpty()) {
 			trLanguageString = m_languages.value(languageString.toLower() + "_" + countryString.toLower(), "");
 		}
-		if (trLanguageString.isEmpty()) return languageString;
+
+		if (trLanguageString.isEmpty()) {
+			// TODO: this won't distinguish between Chinese (simplified) and Chinese (traditional)
+			foreach (QString key, m_languages.keys()) {
+				if (key.startsWith(languageString.toLower())) {
+					return m_languages.value(key);
+				}
+			}
+
+			return languageString;
+		}
 
 		return trLanguageString;
 	}
@@ -140,6 +150,7 @@ const QLocale * TranslatorListModel::locale( int index)
 int TranslatorListModel::findIndex(const QString & language) {
 	int ix = 0;
 	foreach (QLocale * locale, m_localeList) {
+		//DebugDialog::debug(QString("find index %1 %2").arg(language).arg(locale->name()));
 		if (language.compare(locale->name()) == 0) return ix;
 		ix++;
 	}

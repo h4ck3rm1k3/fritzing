@@ -70,6 +70,7 @@ public:
 	virtual qreal getLabelFontSizeSmall();
 	virtual qreal getLabelFontSizeMedium();
 	virtual qreal getLabelFontSizeLarge();
+	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 
 public:
 	enum CleanType {
@@ -90,7 +91,6 @@ protected:
 								QUndoCommand * & parentCommand, const QString & commandString, const QString & colorString);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
-	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	ViewLayer::ViewLayerID getDragWireViewLayerID();
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,

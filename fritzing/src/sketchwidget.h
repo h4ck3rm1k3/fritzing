@@ -222,6 +222,7 @@ public:
 	void disconnectAll();
 	virtual bool canDisconnectAll();
 	virtual bool ignoreFemale();
+	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -241,7 +242,6 @@ protected:
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
 	void continueZChangeMax(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
 	void continueZChangeAux(QList<ItemBase *> & bases, const QString & text);
-	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	virtual ViewLayer::ViewLayerID getDragWireViewLayerID();
 	ViewLayer::ViewLayerID getPartViewLayerID();
 	ViewLayer::ViewLayerID getRulerViewLayerID();
