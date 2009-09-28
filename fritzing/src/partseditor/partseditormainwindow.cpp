@@ -718,9 +718,9 @@ bool PartsEditorMainWindow::wannaSaveAfterWarning(bool savingAsNew) {
 		QMessageBox::StandardButton btn = QMessageBox::question(this,
 			tr("Updating existing part"),
 			msg,
-			QMessageBox::Ok|QMessageBox::Cancel
+			QMessageBox::Yes|QMessageBox::No
 		);
-		doEmit = (btn == QMessageBox::Ok);
+		doEmit = (btn == QMessageBox::Yes);
 	}
 
 	if(doEmit) emit saveButtonClicked();
