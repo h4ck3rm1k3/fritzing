@@ -650,6 +650,24 @@ protected:
 	long m_itemID;
 };
 
+class SetResistanceCommand : public BaseCommand
+{
+public:
+	SetResistanceCommand(class SketchWidget *, long itemID, QString oldResistance, QString newResistance, QString oldFootprint, QString newFootprint, QUndoCommand * parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QString m_oldResistance;
+	QString m_newResistance;
+	QString m_oldFootprint;
+	QString m_newFootprint;
+	long m_itemID;
+};
+
 class ResizeJumperItemCommand : public BaseCommand
 {
 public:

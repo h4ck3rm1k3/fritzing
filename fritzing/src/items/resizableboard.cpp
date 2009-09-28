@@ -42,13 +42,13 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (BoardLayerTemplate.isEmpty()) {
-		QFile file(":/resources/resizableBoard_boardLayerTemplate.txt");
+		QFile file(":/resources/templates/resizableBoard_boardLayerTemplate.txt");
 		file.open(QFile::ReadOnly);
 		BoardLayerTemplate = file.readAll();
 		file.close();
 	}
 	if (SilkscreenLayerTemplate.isEmpty()) {
-		QFile file(":/resources/resizableBoard_silkscreenLayerTemplate.txt");
+		QFile file(":/resources/templates/resizableBoard_silkscreenLayerTemplate.txt");
 		file.open(QFile::ReadOnly);
 		SilkscreenLayerTemplate = file.readAll();
 		file.close();

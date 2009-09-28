@@ -61,6 +61,7 @@ public:
 	static const QString groundPlaneModuleIDName;
 	static const QString groundModuleIDName;
 	static const QString powerModuleIDName;
+	static const QString resistorModuleIDName;
 
 public:
 	static const QString ITEMBASE_FONT_PREFIX;

@@ -1228,6 +1228,36 @@ QString SetVoltageCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+SetResistanceCommand::SetResistanceCommand(SketchWidget * sketchWidget, long itemID, QString oldResistance, QString newResistance, QString oldFootprint, QString newFootprint, QUndoCommand * parent)
+: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_itemID = itemID;
+	m_oldResistance = oldResistance;
+	m_newResistance = newResistance;
+	m_oldFootprint = oldFootprint;
+	m_newFootprint = newFootprint;
+}
+
+void SetResistanceCommand::undo() {
+	m_sketchWidget->setResistance(m_itemID, m_oldResistance, m_oldFootprint);
+}
+
+void SetResistanceCommand::redo() {
+	m_sketchWidget->setResistance(m_itemID, m_newResistance, m_newFootprint);
+}
+
+QString SetResistanceCommand::getParamString() const {
+
+	return QString("SetResistanceCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 ov:%2 nv:%3")
+		.arg(m_itemID)
+		.arg(m_oldResistance)
+		.arg(m_newResistance);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ResizeJumperItemCommand::ResizeJumperItemCommand(SketchWidget * sketchWidget, long itemID, QPointF oldPos, QPointF oldC0, QPointF oldC1, QPointF newPos, QPointF newC0, QPointF newC1, QUndoCommand * parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {

@@ -73,6 +73,7 @@ $Date$
 #include "items/resizableboard.h"
 #include "utils/graphicsutils.h"
 #include "fsvgrenderer.h"
+#include "items/resistor.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
@@ -701,7 +702,12 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			paletteItem = new SymbolPaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		default:
-			paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			if (modelPart->moduleID().compare(ItemBase::resistorModuleIDName) == 0) {
+				paletteItem = new Resistor(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			}
+			else {
+				paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			}
 			break;
 	}
 
@@ -5455,9 +5461,6 @@ void SketchWidget::setVoltage(qreal v)
 	SetVoltageCommand * cmd = new SetVoltageCommand(this, item->id(), sitem->voltage(), v, NULL);
 	cmd->setText(tr("Change voltage from %1 to %2").arg(sitem->voltage()).arg(v));
 	m_undoStack->push(cmd);
-
-	// TODO: save and load
-	// TODO: fix values in info view
 }
 
 void SketchWidget::setVoltage(long itemID, qreal voltage) {
@@ -5471,6 +5474,42 @@ void SketchWidget::setVoltage(long itemID, qreal voltage) {
 	viewItemInfo(item);
 }
 
+// called from javascript (htmlInfoView)
+void SketchWidget::setResistance(QString resistance, QString footprint)
+{
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	ModelPart * modelPart = item->modelPart();
+
+	if (modelPart->moduleID().compare(ItemBase::resistorModuleIDName) != 0) return;
+
+	Resistor * resistor = dynamic_cast<Resistor *>(item);
+	if (resistor == NULL) return;
+
+	if (resistance.isEmpty()) {
+		resistance = resistor->resistance();
+	}
+
+	if (footprint.isEmpty()) {
+		footprint = resistor->footprint();
+	}
+
+	SetResistanceCommand * cmd = new SetResistanceCommand(this, item->id(), resistor->resistance(), resistance, resistor->footprint(), footprint, NULL);
+	cmd->setText(tr("Change Resistance from %1 to %2").arg(resistor->resistance()).arg(resistance));
+	m_undoStack->push(cmd);
+}
+
+void SketchWidget::setResistance(long itemID, QString resistance, QString footprint) {
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return;
+
+	Resistor * ritem = dynamic_cast<Resistor *>(item);
+	if (ritem == NULL) return;
+
+	ritem->setResistance(resistance, footprint);
+	viewItemInfo(item);
+}
 
 // called from javascript (htmlInfoView) or mainWindow::setUpSwap
 void SketchWidget::resizeBoard(qreal mmW, qreal mmH)

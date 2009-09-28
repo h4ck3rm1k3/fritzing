@@ -1716,6 +1716,7 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	bool exactMatch = m_refModel->lastWasExactMatch();
 
 	if(moduleID == ___emptyString___) {
+		QString footprint, resistance;
 		foreach (QString key, currPropsMap.keys()) {
 			if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 				QString value = currPropsMap.value(key).toString();
@@ -1733,6 +1734,19 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 				m_currentGraphicsView->setVoltage(value.toDouble());
 				return;
 			}
+			if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
+				resistance = currPropsMap.value(key).toString();
+				continue;
+			}
+			if (key.compare("footprint", Qt::CaseInsensitive) == 0) {
+				footprint = currPropsMap.value(key).toString();
+				continue;
+			}
+		}
+
+		if (!resistance.isEmpty() || !footprint.isEmpty()) {
+			m_currentGraphicsView->setResistance(resistance, footprint);
+			return;
 		}
 
 		QMessageBox::information(
@@ -1867,7 +1881,7 @@ bool MainWindow::loadCustomBoardShape()
 		return false;
 	}
 
-	QFile file(":/resources/custom_pcb_fzp_template.txt");
+	QFile file(":/resources/templates/resizableBoard_fzpTemplate.txt");
 	file.open(QFile::ReadOnly);
 	QString fzpTemplate = file.readAll();
 	file.close();

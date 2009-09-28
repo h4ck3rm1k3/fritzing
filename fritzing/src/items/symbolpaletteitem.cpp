@@ -33,7 +33,7 @@ $Date$
 #define VOLTAGE_HASH_CONVERSION 1000000
 #define FROMVOLTAGE(v) ((long) (v * VOLTAGE_HASH_CONVERSION))
 
-static QMultiHash<long, ConnectorItem *> SchemagicBus;			// Qt doesn't do Hash keys with qreal
+static QMultiHash<long, ConnectorItem *> localVoltages;			// Qt doesn't do Hash keys with qreal
 static QList<qreal> Voltages;
 
 SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -74,7 +74,7 @@ void SymbolPaletteItem::removeMeFromBus() {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		SchemagicBus.remove(FROMVOLTAGE(m_voltage), connectorItem);
+		localVoltages.remove(FROMVOLTAGE(m_voltage), connectorItem);
 	}
 }
 
@@ -83,7 +83,7 @@ ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector)
 	ConnectorItem * connectorItem = PaletteItemBase::newConnectorItem(connector);
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return connectorItem;
 
-	SchemagicBus.insert(FROMVOLTAGE(m_voltage), connectorItem);
+	localVoltages.insert(FROMVOLTAGE(m_voltage), connectorItem);
 	return connectorItem;
 }
 
@@ -92,7 +92,7 @@ void SymbolPaletteItem::busConnectorItems(class Bus * bus, QList<class Connector
 
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
-	QList<ConnectorItem *> mitems = SchemagicBus.values(FROMVOLTAGE(m_voltage));
+	QList<ConnectorItem *> mitems = localVoltages.values(FROMVOLTAGE(m_voltage));
 	foreach (ConnectorItem * connectorItem, mitems) {
 		items.append(connectorItem);
 	}
@@ -115,7 +115,7 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		SchemagicBus.insert(FROMVOLTAGE(m_voltage), connectorItem);
+		localVoltages.insert(FROMVOLTAGE(m_voltage), connectorItem);
 	}
 }
 
@@ -145,7 +145,7 @@ QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QStr
 }
 
 bool SymbolPaletteItem::canChangeVoltage() {
-	foreach (ConnectorItem * connectorItem, SchemagicBus.values(FROMVOLTAGE(m_voltage))) {
+	foreach (ConnectorItem * connectorItem, localVoltages.values(FROMVOLTAGE(m_voltage))) {
 		if (connectorItem->attachedTo() != this && connectorItem->attachedToItemType() == ModelPart::Symbol) {
 			// at least for now, don't allow swapping if another symbol is hooked up
 			return false;

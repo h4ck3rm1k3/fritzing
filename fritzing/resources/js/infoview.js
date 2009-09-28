@@ -3,6 +3,7 @@
 var changing = false;
 var lastGoodWidth = 0;
 var lastGoodHeight = 0;
+var lastGoodResistance = 0;
 
 function fieldEnter(field,evt,idfld) {
 	evt = (evt) ? evt : window.event;
@@ -236,6 +237,36 @@ function setVoltageEnter(evt) {
 	return true;
 }
 
+function setResistance() {
+	var reg = /^(\d{1,3}[kMG]{0,1}$)|(\d{1,3}\.\d[kMG]{0,1}$)/;
+	
+	var r = document.getElementById("sResistance").value;
+	var s = r;			
+   	if (!reg.test(r) || (s < 0) || (s > 9900000000)) {
+	    alert("The value '" + r + "' doesn't fit within the range of 1.0 to 9.9G");
+	    setLastResistance();
+	    return;
+	}
+		
+	lastGoodResistance = r;
+	
+    sketch.setResistance(r, "");
+}
+
+function setFootprint() {
+    setResistance();
+}
+
+function setResistanceEnter(evt) {
+	evt = (evt) ? evt : window.event;	
+	if (evt.keyCode == 13) {
+	    setResistance();
+		return false;
+	} 
+		
+	return true;
+}
+
 function resizeBoardWidth() {
     resizeBoard();
 }
@@ -271,5 +302,9 @@ function setLastGoodSize() {
 
 function setLastVoltage() {
     document.getElementById("sVoltage").value = lastGoodVoltage;
+}
+
+function setLastResistance() {
+    document.getElementById("sResistance").value = lastGoodResistance;
 }
 

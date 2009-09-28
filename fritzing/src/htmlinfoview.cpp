@@ -511,6 +511,9 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 			else if (unit.contains('M')) {
 				n *= 1000000;
 			}
+			else if (unit.contains('G')) {
+				n *= 1000000000;
+			}
 			else if (unit.contains('p')) {
 				n *= 0.000000000001;
 			}

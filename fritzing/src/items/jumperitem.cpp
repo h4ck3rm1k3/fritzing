@@ -50,14 +50,14 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 	m_jumperwiresRenderer = NULL;
 	m_connector0 = m_connector1 = m_dragItem = NULL;
 	if (Copper0LayerTemplate.isEmpty()) {
-		QFile file(":/resources/jumper_copper0LayerTemplate.txt");
+		QFile file(":/resources/templates/jumper_copper0LayerTemplate.txt");
 		if (file.open(QFile::ReadOnly)) {
 			Copper0LayerTemplate = file.readAll();
 			file.close();
 		}
 	}
 	if (JumperWireLayerTemplate.isEmpty()) {
-		QFile file(":/resources/jumper_jumperwiresLayerTemplate.txt");
+		QFile file(":/resources/templates/jumper_jumperwiresLayerTemplate.txt");
 		if (file.open(QFile::ReadOnly)) {
 			JumperWireLayerTemplate = file.readAll();
 			file.close();

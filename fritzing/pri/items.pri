@@ -28,6 +28,7 @@ HEADERS += \
     src/items/tracewire.h \
     src/items/virtualwire.h \
     src/items/wire.h \
+	src/items/resistor.h \
 	src/items/resizableboard.h \
 	src/items/symbolpaletteitem.h 
 
@@ -42,5 +43,6 @@ SOURCES += \
     src/items/tracewire.cpp \
     src/items/virtualwire.cpp \
     src/items/wire.cpp \
+	src/items/resistor.cpp \
 	src/items/resizableboard.cpp \
 	src/items/symbolpaletteitem.cpp 

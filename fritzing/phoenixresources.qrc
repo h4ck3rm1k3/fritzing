@@ -28,9 +28,6 @@
         <file>resources/images/remove_prop_leave.png</file>
         <file>resources/zoomfactors.txt</file>
         <file>resources/ratsnestcolors.txt</file>
-        <file>resources/resizableBoard_boardLayerTemplate.txt</file>
-        <file>resources/resizableBoard_silkscreenLayerTemplate.txt</file>
-        <file>resources/custom_pcb_fzp_template.txt</file>
         <file>resources/parts/core/wire.fzp</file>
         <file>resources/parts/core/cmRuler.fzp</file>
         <file>resources/parts/core/tinyBreadboard.fzp</file>
@@ -180,8 +177,13 @@
         <file>resources/parts/core/jumper.fzp</file>
         <file>resources/parts/svg/core/pcb/jumper.svg</file>
         <file>resources/parts/svg/core/icon/jumpericon.svg</file>
-        <file>resources/jumper_copper0LayerTemplate.txt</file>
-	  <file>resources/jumper_jumperwiresLayerTemplate.txt</file>
+        <file>resources/templates/jumper_copper0LayerTemplate.txt</file>
+	  <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
+        <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
+        <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
+        <file>resources/templates/resizableBoard_fzpTemplate.txt</file>
+        <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
+        <file>resources/parts/core/resistor.fzp</file>
 
     </qresource>
 </RCC>
