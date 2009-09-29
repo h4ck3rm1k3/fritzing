@@ -129,7 +129,7 @@ public:
 	virtual bool stickyEnabled(ItemBase * stickTo);
 	ConnectorItem * anyConnectorItem();
 	bool isConnectedTo(ItemBase * other);
-	QString instanceTitle();
+	virtual QString instanceTitle();
 	QString label();
 	virtual void updateTooltip();
 	void setTooltip();

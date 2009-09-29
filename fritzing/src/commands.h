@@ -653,7 +653,7 @@ protected:
 class SetResistanceCommand : public BaseCommand
 {
 public:
-	SetResistanceCommand(class SketchWidget *, long itemID, QString oldResistance, QString newResistance, QString oldFootprint, QString newFootprint, QUndoCommand * parent);
+	SetResistanceCommand(class SketchWidget *, long itemID, QString oldResistance, QString newResistance, QString oldPinSpacing, QString newPinSpacing, QUndoCommand * parent);
 	void undo();
 	void redo();
 
@@ -663,8 +663,8 @@ protected:
 protected:
 	QString m_oldResistance;
 	QString m_newResistance;
-	QString m_oldFootprint;
-	QString m_newFootprint;
+	QString m_oldPinSpacing;
+	QString m_newPinSpacing;
 	long m_itemID;
 };
 

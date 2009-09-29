@@ -169,7 +169,7 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 			if (nodeName.compare("originalModelIndex") == 0) continue;
 			if (nodeName.compare("path") == 0) continue;
 
-			modelPart->setProp(nodeName.toUtf8().constData(), node.nodeValue().toDouble());
+			modelPart->setProp(nodeName.toUtf8().constData(), node.nodeValue());
 		}
 
    		instance = instance.nextSiblingElement("instance");

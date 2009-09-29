@@ -238,7 +238,7 @@ function setVoltageEnter(evt) {
 }
 
 function setResistance() {
-	var reg = /^(\d{1,3}[kMG]{0,1}$)|(\d{1,3}\.\d[kMG]{0,1}$)/;
+	var reg = /^((\d{1,3})|(\d{1,3}\.\d))[kMG]{0,1}[\u03A9]{0,1}$/;
 	
 	var r = document.getElementById("sResistance").value;
 	var s = r;			
@@ -251,10 +251,6 @@ function setResistance() {
 	lastGoodResistance = r;
 	
     sketch.setResistance(r, "");
-}
-
-function setFootprint() {
-    setResistance();
 }
 
 function setResistanceEnter(evt) {

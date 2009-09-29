@@ -1716,7 +1716,7 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	bool exactMatch = m_refModel->lastWasExactMatch();
 
 	if(moduleID == ___emptyString___) {
-		QString footprint, resistance;
+		QString pinSpacing, resistance;
 		foreach (QString key, currPropsMap.keys()) {
 			if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 				QString value = currPropsMap.value(key).toString();
@@ -1738,14 +1738,14 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 				resistance = currPropsMap.value(key).toString();
 				continue;
 			}
-			if (key.compare("footprint", Qt::CaseInsensitive) == 0) {
-				footprint = currPropsMap.value(key).toString();
+			if (key.compare("pin spacing", Qt::CaseInsensitive) == 0) {
+				pinSpacing = currPropsMap.value(key).toString();
 				continue;
 			}
 		}
 
-		if (!resistance.isEmpty() || !footprint.isEmpty()) {
-			m_currentGraphicsView->setResistance(resistance, footprint);
+		if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
+			m_currentGraphicsView->setResistance(resistance, pinSpacing);
 			return;
 		}
 

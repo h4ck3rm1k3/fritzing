@@ -35,24 +35,35 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 static QString BreadboardLayerTemplate = "";
 static QList<QString> Resistances;
-static QList<QString> Footprints;
+static QList<QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
+static QChar OhmSymbol(0x03A9);
+
+
+// TODO
+//	save into parts bin
+//	pcb view
+//	undo
+//	wattage
+//	tooltip
+
 
 Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (Resistances.count() == 0) {
 		Resistances 
-		 << "10" << "15" << "22" << "33" << "47" << "68"
-		 << "100" << "150" << "220" << "330" << "470" << "680"
-		 << "1k" << "1.5k" << "2.2k" << "3.3k" << "4.7k" << "6.8k"
-		 << "10k" << "15k" << "22k" << "33k" << "47k" << "68k"
-		 << "100k" << "150k" << "220k" << "330k" << "470k" << "680k"
-		 << "1M";
+		 << QString("1") + OhmSymbol << QString("1.5") + OhmSymbol << QString("2.2") + OhmSymbol << QString("3.3") + OhmSymbol << QString("4.7") + OhmSymbol << QString("6.8") + OhmSymbol
+		 << QString("10") + OhmSymbol << QString("15") + OhmSymbol << QString("22") + OhmSymbol << QString("33") + OhmSymbol << QString("47") + OhmSymbol << QString("68") + OhmSymbol
+		 << QString("100") + OhmSymbol << QString("150") + OhmSymbol << QString("220") + OhmSymbol << QString("330") + OhmSymbol << QString("470") + OhmSymbol << QString("680") + OhmSymbol
+		 << QString("1k") + OhmSymbol << QString("1.5k") + OhmSymbol << QString("2.2k") + OhmSymbol << QString("3.3k") + OhmSymbol << QString("4.7k") + OhmSymbol << QString("6.8k") + OhmSymbol
+		 << QString("10k") + OhmSymbol << QString("15k") + OhmSymbol << QString("22k") + OhmSymbol << QString("33k") + OhmSymbol << QString("47k") + OhmSymbol << QString("68k") + OhmSymbol
+		 << QString("100k") + OhmSymbol << QString("150k") + OhmSymbol << QString("220k") + OhmSymbol << QString("330k") + OhmSymbol << QString("470k") + OhmSymbol << QString("680k") + OhmSymbol
+		 << QString("1M") + OhmSymbol;
 	}
 
-	if (Footprints.count() == 0) {
-		Footprints << "300 mil" << "400 mil";
+	if (PinSpacings.count() == 0) {
+		PinSpacings << "300 mil" << "400 mil";
 	}
 
 	if (ColorBands.count() == 0) {
@@ -82,18 +93,26 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		m_ohms = modelPart->properties().value("Resistance", "220");
 		modelPart->setProp("resistance", m_ohms);
 	}
-	m_footprint = modelPart->prop("footprint").toString();
-	if (m_footprint.isEmpty()) {
-		m_footprint = modelPart->properties().value("footprint", "400 mil");
-		modelPart->setProp("footprint", m_footprint);
+
+	m_pinSpacing = modelPart->prop("pinspacing").toString();
+	if (m_pinSpacing.isEmpty()) {
+		m_pinSpacing = modelPart->properties().value("Pin Spacing", "400 mil");
+		modelPart->setProp("pinspacing", m_pinSpacing);
 	}
+
 	m_renderer = NULL;
+
+	updateResistances(m_ohms);
 }
 
 Resistor::~Resistor() {
 }
 
-void Resistor::setResistance(QString resistance, QString footprint) {
+void Resistor::setResistance(QString resistance, QString pinSpacing) {
+	if (resistance.endsWith(OhmSymbol)) {
+		resistance.chop(1);
+	}
+
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
 			{
@@ -117,9 +136,11 @@ void Resistor::setResistance(QString resistance, QString footprint) {
 	}
 
 	m_ohms = resistance;
-	m_footprint = footprint;
+	m_pinSpacing = pinSpacing;
 	modelPart()->setProp("resistance", resistance);
-	modelPart()->setProp("footprint", footprint);
+	modelPart()->setProp("pinspacing", pinSpacing);
+
+	updateResistances(m_ohms);
 }
 
 
@@ -168,7 +189,7 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 	int firstband = sohms.at(0).toAscii() - '0';
 	int secondband = sohms.at(2).toAscii() - '0';
 	int temp = (firstband * 10) + secondband;
-	int thirdband = log10(ohms / temp);
+	int thirdband = (temp == 0) ? 0 : log10(ohms / temp);
 	return BreadboardLayerTemplate
 		.arg(ColorBands.value(firstband, Qt::black).name())
 		.arg(ColorBands.value(secondband, Qt::black).name())
@@ -181,16 +202,16 @@ void Resistor::collectExtraInfoValues(const QString & prop, QString & value, QSt
 
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		ignoreValues = true;
-		value = m_ohms;
+		value = m_ohms + OhmSymbol;
 		foreach (QString r, Resistances) {
 			extraValues.append(r);
 		}
 		return;
 	}
-	if (prop.compare("footprint", Qt::CaseInsensitive) == 0) {
+	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
 		ignoreValues = true;
-		value = m_footprint;
-		foreach (QString f, Footprints) {
+		value = m_pinSpacing;
+		foreach (QString f, PinSpacings) {
 			extraValues.append(f);
 		}
 		return;
@@ -203,7 +224,7 @@ QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & val
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		return QString("&nbsp;<input type='text' name='sResistance' id='sResistance' maxlength='8' value='%1' style='width:55px' onblur='setResistance()' onkeypress='setResistanceEnter(event)' />"
 					   "<script language='JavaScript'>lastGoodResistance=%1;</script>"
-					   ).arg(m_ohms);
+					   ).arg(m_ohms + OhmSymbol);
 	}
 
 	return ___emptyString___;
@@ -213,8 +234,8 @@ QString Resistor::resistance() {
 	return m_ohms;
 }
 
-QString Resistor::footprint() {
-	return m_footprint;
+QString Resistor::pinSpacing() {
+	return m_pinSpacing;
 }
 
 qreal Resistor::toOhms(const QString & ohms) 
@@ -235,4 +256,29 @@ qreal Resistor::toOhms(const QString & ohms)
 	}
 	temp = temp.trimmed();
 	return temp.toDouble() * multiplier;
+}
+
+QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	switch (change) {
+		case ItemSceneHasChanged:
+			if (this->scene()) {
+				setResistance(m_ohms, m_pinSpacing);
+			}
+			break;
+		default:
+			break;
+   	}
+
+    return PaletteItem::itemChange(change, value);
+}
+
+QString Resistor::instanceTitle() {
+	return QString("%1 %2 Resistor").arg(m_ohms).arg(OhmSymbol);
+}
+
+void Resistor::updateResistances(QString r) {
+	if (!Resistances.contains(r + OhmSymbol)) {
+		Resistances.append(r + OhmSymbol);
+	}
 }

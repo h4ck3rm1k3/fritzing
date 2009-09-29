@@ -224,7 +224,7 @@ public:
 	virtual bool ignoreFemale();
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	void setVoltage(long itemID, qreal voltage);
-	void setResistance(long itemID, QString resistance, QString footprint);
+	void setResistance(long itemID, QString resistance, QString pinSpacing);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -425,7 +425,7 @@ public slots:
 	void resizeBoard(long id, qreal w, qreal h);
 	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
 	void setVoltage(qreal voltage);
-	void setResistance(QString resistance, QString footprint);
+	void setResistance(QString resistance, QString pinSpacing);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 
 protected:

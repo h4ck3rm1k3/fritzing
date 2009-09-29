@@ -5475,7 +5475,7 @@ void SketchWidget::setVoltage(long itemID, qreal voltage) {
 }
 
 // called from javascript (htmlInfoView)
-void SketchWidget::setResistance(QString resistance, QString footprint)
+void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 {
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
@@ -5491,23 +5491,23 @@ void SketchWidget::setResistance(QString resistance, QString footprint)
 		resistance = resistor->resistance();
 	}
 
-	if (footprint.isEmpty()) {
-		footprint = resistor->footprint();
+	if (pinSpacing.isEmpty()) {
+		pinSpacing = resistor->pinSpacing();
 	}
 
-	SetResistanceCommand * cmd = new SetResistanceCommand(this, item->id(), resistor->resistance(), resistance, resistor->footprint(), footprint, NULL);
+	SetResistanceCommand * cmd = new SetResistanceCommand(this, item->id(), resistor->resistance(), resistance, resistor->pinSpacing(), pinSpacing, NULL);
 	cmd->setText(tr("Change Resistance from %1 to %2").arg(resistor->resistance()).arg(resistance));
 	m_undoStack->push(cmd);
 }
 
-void SketchWidget::setResistance(long itemID, QString resistance, QString footprint) {
+void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpacing) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
 	Resistor * ritem = dynamic_cast<Resistor *>(item);
 	if (ritem == NULL) return;
 
-	ritem->setResistance(resistance, footprint);
+	ritem->setResistance(resistance, pinSpacing);
 	viewItemInfo(item);
 }
 

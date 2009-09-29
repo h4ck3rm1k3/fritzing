@@ -220,9 +220,9 @@ void ItemBase::clearBusConnectorItems()
 
 void ItemBase::setTooltip() {
 	if(m_modelPart) {
-		QString title = m_modelPart->instanceTitle();
+		QString title = instanceTitle();
 		if(!title.isNull() && !title.isEmpty()) {
-			setInstanceTitleTooltip(m_modelPart->instanceTitle());
+			setInstanceTitleTooltip(title);
 		} else {
 			setDefaultTooltip();
 		}
@@ -824,7 +824,7 @@ ConnectorItem * ItemBase::anyConnectorItem() {
 
 
 QString ItemBase::instanceTitle() {
-	if(m_modelPart) {
+	if (m_modelPart) {
 		return m_modelPart->instanceTitle();
 	}
 	return ___emptyString___;
@@ -878,7 +878,7 @@ void ItemBase::setDefaultTooltip() {
 			}
 		}
 		ensureUniqueTitle(title);
-		setInstanceTitleTooltip(m_modelPart->instanceTitle());
+		setInstanceTitleTooltip(instanceTitle());
 	}
 }
 
@@ -1000,7 +1000,7 @@ void ItemBase::restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLaye
 		if (!labelGeometry.isNull()) {
 			m_partLabel->restoreLabel(labelGeometry, viewLayerID);
 		}
-		m_partLabel->setPlainText(m_modelPart->instanceTitle());
+		m_partLabel->setPlainText(instanceTitle());
 	}
 }
 
