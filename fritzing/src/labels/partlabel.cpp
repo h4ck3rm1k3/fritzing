@@ -30,7 +30,6 @@ $Date$
 #include "../debugdialog.h"
 #include "../infographicsview.h"
 #include "../modelpart.h"
-#include "../htmlinfoview.h"
 
 #include <QGraphicsScene>
 #include <QTextDocument>
@@ -234,7 +233,7 @@ void PartLabel::displayTexts() {
 			text += m_text;
 		}
 		else {
-			text += m_owner->modelPart()->properties().value(key);
+			text += m_owner->getProperty(key);
 		}
 		text += "\n";
 	}
@@ -409,7 +408,7 @@ void PartLabel::initMenu()
 
 	QHash<QString,QString> properties = m_owner->modelPart()->properties();
 	foreach (QString key, properties.keys()) {
-		QString translatedName = HtmlInfoView::TranslatedPropertyNames.value(key.toLower(), key);
+		QString translatedName = ItemBase::translatePropertyName(key);
 		QAction * action = dvmenu->addAction(translatedName);
 		action->setData(QVariant(key));
 		action->setCheckable(true);

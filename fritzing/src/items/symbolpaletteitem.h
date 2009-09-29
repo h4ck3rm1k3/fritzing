@@ -44,6 +44,7 @@ public:
 	void setVoltage(qreal);
 	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	QString getProperty(const QString & key);
 	bool canChangeVoltage();
 
 protected:

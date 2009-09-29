@@ -917,7 +917,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackM
 
 	if (deletedItems.count() == 1) {
 		ItemBase * firstItem = *(deletedItems.begin());
-		string = tr("%1 %2").arg(undoStackMessage).arg(firstItem->modelPart()->title());
+		string = tr("%1 %2").arg(undoStackMessage).arg(firstItem->title());
 	}
 	else {
 		string = tr("%1 %2 items").arg(undoStackMessage).arg(QString::number(deletedItems.count()));
@@ -1468,7 +1468,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
     	if (modelPart == NULL) return;
     	if (modelPart->modelPartShared() == NULL) return;
 
-		QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(modelPart->title()));
+		QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(m_droppingItem->title()));
     	stackSelectionState(false, parentCommand);
 
 		m_droppingItem->saveGeometry();
@@ -2204,7 +2204,7 @@ bool SketchWidget::checkMoved()
 	QString viewName = ViewIdentifierClass::viewIdentifierName(m_viewIdentifier);
 
 	if (moveCount == 1) {
-		moveString = tr("Move %2 (%1)").arg(viewName).arg(saveBase->modelPart()->title());
+		moveString = tr("Move %2 (%1)").arg(viewName).arg(saveBase->title());
 	}
 	else {
 		moveString = tr("Move %2 items (%1)").arg(viewName).arg(QString::number(moveCount));
@@ -2357,7 +2357,7 @@ void SketchWidget::scene_selectionChanged() {
 	 		selCount++;
 	    }
 		if (selCount == 1) {
-			selString = tr("Select %1").arg(saveBase->modelPart()->title());
+			selString = tr("Select %1").arg(saveBase->title());
 		}
 		else {
 			selString = tr("Select %1 items").arg(QString::number(selCount));
@@ -2540,10 +2540,10 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	}
 	else {
 		prefix = tr("Connect");
-		suffix = tr("to %1").arg(to->attachedTo()->modelPart()->title());
+		suffix = tr("to %1").arg(to->attachedTo()->title());
 	}
 
-	parentCommand->setText(QObject::tr("%1 %2 %3").arg(prefix).arg(wire->modelPart()->title()).arg(suffix) );
+	parentCommand->setText(QObject::tr("%1 %2 %3").arg(prefix).arg(wire->title()).arg(suffix) );
 
 	bool doEmit = false;
 	if (!chained) {
@@ -2615,7 +2615,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 						   .arg(m_connectorDragConnector->connectorSharedID())
 						   .arg(fromOnWire->connectorSharedID())
 						   .arg((to == NULL) ? "null" : to->connectorSharedID())
-						   .arg(m_connectorDragConnector->attachedTo()->modelPart()->title()) );
+						   .arg(m_connectorDragConnector->attachedTo()->title()) );
 
 
 		// create a new wire with the same id as the temporary wire
@@ -3203,7 +3203,7 @@ void SketchWidget::rotateX(qreal degrees)
 
 	QString string = tr("Rotate %2 (%1)")
 			.arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
-			.arg((m_savedItems.count() == 1) ? m_savedItems.values()[0]->modelPart()->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
+			.arg((m_savedItems.count() == 1) ? m_savedItems.values()[0]->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
 	foreach (ItemBase * item, m_savedItems) {
@@ -3336,7 +3336,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	QString string = tr("%3 %2 (%1)")
 			.arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
-			.arg((targets.count() == 1) ? targets[0]->modelPart()->title() : QString::number(targets.count()) + " items" )
+			.arg((targets.count() == 1) ? targets[0]->title() : QString::number(targets.count()) + " items" )
 			.arg((degrees != 0) ? tr("Rotate") : tr("Flip"));
 
 	QUndoCommand * parentCommand = new QUndoCommand(string);
@@ -5750,7 +5750,7 @@ void SketchWidget::disconnectAll() {
 	QString string;
 	if (itemBases.count() == 1) {
 		ItemBase * firstItem = *(itemBases.begin());
-		string = tr("Disconnect all wires from %1").arg(firstItem->modelPart()->title());
+		string = tr("Disconnect all wires from %1").arg(firstItem->title());
 	}
 	else {
 		string = tr("Disconnect all wires from %1 items").arg(QString::number(itemBases.count()));

@@ -46,6 +46,9 @@ static QChar OhmSymbol(0x03A9);
 //	undo
 //	wattage
 //	tooltip
+//	other pin spacings
+//	other manifestations of "220"
+//	export
 
 
 Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
@@ -63,7 +66,7 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	}
 
 	if (PinSpacings.count() == 0) {
-		PinSpacings << "300 mil" << "400 mil";
+		PinSpacings << "300 mil" << "400 mil" << "500 mil" << "600 mil" << "800 mil";
 	}
 
 	if (ColorBands.count() == 0) {
@@ -230,6 +233,18 @@ QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & val
 	return ___emptyString___;
 }
 
+QString Resistor::getProperty(const QString & key) {
+	if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
+		return m_ohms + OhmSymbol;
+	}
+
+	if (key.compare("pin spacing", Qt::CaseInsensitive) == 0) {
+		return m_pinSpacing;
+	}
+
+	return PaletteItem::getProperty(key);
+}
+
 QString Resistor::resistance() {
 	return m_ohms;
 }
@@ -274,7 +289,12 @@ QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
 }
 
 QString Resistor::instanceTitle() {
-	return QString("%1 %2 Resistor").arg(m_ohms).arg(OhmSymbol);
+	return QString("%1%2 Resistor").arg(m_ohms).arg(OhmSymbol);
+}
+
+const QString & Resistor::title() {
+	m_title = instanceTitle();
+	return m_title;
 }
 
 void Resistor::updateResistances(QString r) {

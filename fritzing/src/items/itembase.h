@@ -66,6 +66,7 @@ public:
 public:
 	static const QString ITEMBASE_FONT_PREFIX;
 	static const QString ITEMBASE_FONT_SUFFIX;
+	static QHash<QString, QString> TranslatedPropertyNames;
 
 public:
 	static void initNames();
@@ -74,7 +75,7 @@ public:
 	static QString partInstanceDefaultTitle;
 	static QString moduleInstanceDefaultTitle;
 	static QList<ItemBase *> emptyList;
-
+	static QString translatePropertyName(const QString & key);
 
 public:
 	ItemBase(class ModelPart*, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
@@ -114,7 +115,7 @@ public:
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
 	void updateConnections(ConnectorItem *);
 	virtual void updateConnections();
-	const QString & title();
+	virtual const QString & title();
 	bool getVirtual();
 	const QHash<QString, class Bus *> & buses();
 	void addBusConnectorItem(class Bus *, ConnectorItem *);
@@ -172,8 +173,8 @@ public:
 	virtual bool connectionIsAllowed(ConnectorItem *);
 	virtual void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	virtual QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	virtual QString getProperty(const QString & key);
 	ConnectorItem * rightClickedConnector();
-
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

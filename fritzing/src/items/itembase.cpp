@@ -94,6 +94,8 @@ const QString ItemBase::resistorModuleIDName = "ResistorModuleID";
 const QString ItemBase::ITEMBASE_FONT_PREFIX = "<font size='2'>";
 const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";
 
+QHash<QString, QString> ItemBase::TranslatedPropertyNames;
+
 QString ItemBase::partInstanceDefaultTitle;
 QString ItemBase::moduleInstanceDefaultTitle;
 QList<ItemBase *> ItemBase::emptyList;
@@ -296,6 +298,16 @@ ModelPartShared * ItemBase::modelPartShared() {
 }
 
 void ItemBase::initNames() {
+	if (TranslatedPropertyNames.count() == 0) {
+		TranslatedPropertyNames.insert("family", tr("family"));
+		TranslatedPropertyNames.insert("color", tr("color"));
+		TranslatedPropertyNames.insert("resistance", tr("resistance"));
+		TranslatedPropertyNames.insert("voltage", tr("voltage"));
+		TranslatedPropertyNames.insert("pin spacing", tr("pin spacing"));
+		TranslatedPropertyNames.insert("rated power", tr("rated power"));
+		// TODO: translate more known property names from fzp files
+	}
+
 	partInstanceDefaultTitle = tr("Part");
 	moduleInstanceDefaultTitle = tr("Module");
 
@@ -391,7 +403,7 @@ void ItemBase::setViewLayerID(ViewLayer::ViewLayerID viewLayerID, const LayerHas
   		}
   	}
 
-    //DebugDialog::debug(QString("using z: %1 z:%2 lid:%3").arg(modelPart()->modelPartShared()->title()).arg(m_viewGeometry.z()).arg(m_viewLayerID) );
+    //DebugDialog::debug(QString("using z: %1 z:%2 lid:%3").arg(title()).arg(m_viewGeometry.z()).arg(m_viewLayerID) );
 }
 
 void ItemBase::removeLayerKin() {
@@ -862,7 +874,7 @@ void ItemBase::updateTooltip() {
 }
 
 void ItemBase::setInstanceTitleTooltip(const QString &text) {
-	setToolTip("<b>"+text+"</b><br></br>" + ITEMBASE_FONT_PREFIX + modelPartShared()->title()+ ITEMBASE_FONT_SUFFIX);
+	setToolTip("<b>"+text+"</b><br></br>" + ITEMBASE_FONT_PREFIX + title()+ ITEMBASE_FONT_SUFFIX);
 }
 
 void ItemBase::setDefaultTooltip() {
@@ -1427,6 +1439,12 @@ QString ItemBase::collectExtraInfoHtml(const QString & prop, const QString & val
 	return ___emptyString___;
 }
 
+QString ItemBase::getProperty(const QString & key) {
+	if (m_modelPart == NULL) return "";
+
+	return m_modelPart->properties().value(key, "");
+}
+
 ConnectorItem * ItemBase::rightClickedConnector() {
 	return m_rightClickedConnector;
 }
@@ -1455,5 +1473,9 @@ void ItemBase::setConnectedColor(QColor & c) {
 void ItemBase::setUnconnectedColor(QColor & c) {
 	unconnectedPen.setColor(c);
 	unconnectedBrush.setColor(c);
+}
+
+QString ItemBase::translatePropertyName(const QString & key) {
+	return TranslatedPropertyNames.value(key.toLower(), key);
 }
 

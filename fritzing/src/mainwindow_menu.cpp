@@ -2326,7 +2326,7 @@ void MainWindow::exportToEagle() {
 
 	for(int i=0; i < partList.size(); i++){
 		QString label = partList.at(i)->instanceTitle();
-		QString desc = partList.at(i)->modelPartShared()->title();
+		QString desc = partList.at(i)->title();
 
 		QHash<QString,QString> properties = partList.at(i)->modelPartShared()->properties();
 		QString package = properties["package"];
@@ -2436,7 +2436,7 @@ void MainWindow::exportBOM() {
 
         spacer += QString(maxLabelWidth - label.length(), QChar(' '));
         bom += label + spacer +
-               partList.at(i)->modelPartShared()->title() + "\n";
+               partList.at(i)->title() + "\n";
     }
 
     bom += tr("\n\nShopping List\n\nQuantity\tPart\n\n");

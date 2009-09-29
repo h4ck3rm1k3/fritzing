@@ -39,7 +39,7 @@ LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * mo
 
 void LayerKinPaletteItem::init(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers) {
 	m_ok = setUpImage(m_modelPart, m_viewIdentifier, viewLayers, viewLayerID, true);
-	//DebugDialog::debug(QString("lk accepts hover %1 %2 %3 %4 %5").arg(m_modelPart->title()).arg(m_viewIdentifier).arg(m_id).arg(viewLayerID).arg(this->acceptHoverEvents()));
+	//DebugDialog::debug(QString("lk accepts hover %1 %2 %3 %4 %5").arg(title()).arg(m_viewIdentifier).arg(m_id).arg(viewLayerID).arg(this->acceptHoverEvents()));
 }
 
 QVariant LayerKinPaletteItem::itemChange(GraphicsItemChange change, const QVariant &value)

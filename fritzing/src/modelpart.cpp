@@ -145,7 +145,7 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
 		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
-		QString title = this->modelPartShared()->title();
+		QString title = this->title();
 		if(!title.isNull() && !title.isEmpty()) {
 			streamWriter.writeTextElement("title",title);
 		}
@@ -246,7 +246,7 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 		streamWriter.writeAttribute("moduleId", m_modelPartShared->moduleID());
     	writeTag(streamWriter,"version",m_modelPartShared->version());
     	writeTag(streamWriter,"author",m_modelPartShared->author());
-    	writeTag(streamWriter,"title",m_modelPartShared->title());
+    	writeTag(streamWriter,"title",title());
     	writeTag(streamWriter,"label",m_modelPartShared->label());
     	writeTag(streamWriter,"date",m_modelPartShared->dateAsStr());
 

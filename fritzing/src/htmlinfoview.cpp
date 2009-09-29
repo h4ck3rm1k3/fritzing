@@ -50,7 +50,6 @@ static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode);
 
 static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
 static QHash<QString, qreal> NumberMatcherValues;
-QHash<QString, QString> HtmlInfoView::TranslatedPropertyNames;
 
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
@@ -65,13 +64,6 @@ bool valueLessThan(QString v1, QString v2)
 
 HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) 
 {
-	if (TranslatedPropertyNames.count() == 0) {
-		TranslatedPropertyNames.insert("family", tr("family"));
-		TranslatedPropertyNames.insert("color", tr("color"));
-		TranslatedPropertyNames.insert("resistance", tr("resistance"));
-		// TODO: translate more known property names from fzp files
-	}
-
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(0);
 	lo->setSpacing(0);
@@ -387,7 +379,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	*/
 
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
-	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartShared()->title())
+	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg((itemBase) ? itemBase->title() : modelPart->title())
 											   .arg("&nbsp;"+modelPart->modelPartShared()->version());
 	s += 		"</div>\n";
 
@@ -406,8 +398,8 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	int rowsLeft = m_maxPropCount;
 	for(int i=0; i < properties.keys().size(); i++) {
 		QString key = properties.keys()[i];
-		QString value = properties[ key ];
-		QString translatedName = TranslatedPropertyNames.value(key.toLower(), key);
+		QString value = properties.value(key,"");
+		QString translatedName = ItemBase::translatePropertyName(key);
 		QStringList extraValues;
 		QString extraHtml;
 		bool ignoreValues = false;

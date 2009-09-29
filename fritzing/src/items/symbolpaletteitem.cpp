@@ -144,6 +144,14 @@ QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QStr
 	return ___emptyString___;
 }
 
+QString SymbolPaletteItem::getProperty(const QString & key) {
+	if (key.compare("voltage", Qt::CaseInsensitive) == 0) {
+		return QString::number(m_voltage);
+	}
+
+	return PaletteItem::getProperty(key);
+}
+
 bool SymbolPaletteItem::canChangeVoltage() {
 	foreach (ConnectorItem * connectorItem, localVoltages.values(FROMVOLTAGE(m_voltage))) {
 		if (connectorItem->attachedTo() != this && connectorItem->attachedToItemType() == ModelPart::Symbol) {

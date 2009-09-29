@@ -114,7 +114,7 @@ void SketchModel::walk(ModelPart * modelPart, int indent)
 		.arg(modelPart->modelIndex())
 		.arg(modelPart->originalModelIndex())
 		.arg(modelPart->moduleID())
-		.arg(modelPart->modelPartShared()->title()) );
+		.arg(modelPart->title()) );
 
 	foreach (QObject * child, modelPart->children()) {
 		walk(dynamic_cast<ModelPart *>(child), indent + 1);

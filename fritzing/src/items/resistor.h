@@ -46,10 +46,12 @@ public:
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	QString getProperty(const QString & key);
 	void setResistance(QString resistance, QString pinSpacing);
 	QString resistance();
 	QString pinSpacing();
 	QString instanceTitle();
+	const QString & title();
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);
@@ -63,6 +65,7 @@ protected:
 	class FSvgRenderer * m_renderer;
 	QString m_ohms;
 	QString m_pinSpacing;
+	QString m_title;
 };
 
 #endif
