@@ -30,6 +30,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include "../infographicsview.h"
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
+#include "../layerattributes.h"
 
 #include <qmath.h>
 
@@ -39,21 +40,15 @@ static QList<QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
 static QChar OhmSymbol(0x03A9);
 
-
 // TODO
 //	save into parts bin
-//	pcb view
-//	undo
-//	wattage
-//	tooltip
-//	other pin spacings
-//	other manifestations of "220"
-//	export
+//	other manifestations of "220"?
 
-
-Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel, LayerHash & layers)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_changingPinSpacing = false;
+	m_layers = layers;
 	if (Resistances.count() == 0) {
 		Resistances 
 		 << QString("1") + OhmSymbol << QString("1.5") + OhmSymbol << QString("2.2") + OhmSymbol << QString("3.3") + OhmSymbol << QString("4.7") + OhmSymbol << QString("6.8") + OhmSymbol
@@ -111,19 +106,19 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 Resistor::~Resistor() {
 }
 
-void Resistor::setResistance(QString resistance, QString pinSpacing) {
+void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash & layers, bool force) {
 	if (resistance.endsWith(OhmSymbol)) {
 		resistance.chop(1);
 	}
 
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
-			{
+			if (force || resistance.compare(m_ohms) != 0) {
 				if (m_renderer == NULL) {
 					m_renderer = new FSvgRenderer(this);
 				}
 				QString svg = makeBreadboardSvg(resistance);
-				DebugDialog::debug(svg);
+				//DebugDialog::debug(svg);
 				bool result = m_renderer->fastLoad(svg.toUtf8());
 				if (result) {
 					setSharedRenderer(m_renderer);
@@ -131,11 +126,39 @@ void Resistor::setResistance(QString resistance, QString pinSpacing) {
 			}
 			break;
 		case ViewIdentifierClass::PCBView:
-			// hack the dom element and call setUpImage?
-			foreach (ItemBase * itemBase, m_layerKin) {
+			if (force || pinSpacing.compare(m_pinSpacing) != 0) {
+				// hack the dom element and call setUpImage
+				FSvgRenderer::removeFromHash(this->modelPart()->moduleID(), "");
+				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->modelPartShared()->domDocument(), m_viewIdentifier);
+				if (element.isNull()) break;
+
+				QString filename = element.attribute("image");
+				if (filename.isEmpty()) break;
+
+				QRegExp digits("(\\d)+");
+				if (pinSpacing.indexOf(digits) < 0) break;
+
+				QString newSpacing = digits.cap(0);		
+				filename.replace(digits, newSpacing);
+				element.setAttribute("image", filename);
+
+				foreach (Connector * connector, modelPart()->connectors()) {
+					connector->unprocess(this->viewIdentifier(), this->viewLayerID());
+				}
+
+				m_changingPinSpacing = true;
+				this->setUpImage(modelPart(), this->viewIdentifier(), layers, this->viewLayerID(), true);
+				m_changingPinSpacing = false;
+				
+				foreach (ItemBase * itemBase, m_layerKin) {
+					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), layers, itemBase->viewLayerID(), true);
+				}
+
+				updateConnections();
 			}
+			break;
 		default:
-			return;
+			break;
 	}
 
 	m_ohms = resistance;
@@ -144,46 +167,28 @@ void Resistor::setResistance(QString resistance, QString pinSpacing) {
 	modelPart()->setProp("pinspacing", pinSpacing);
 
 	updateResistances(m_ohms);
+	updateTooltip();
 }
-
 
 QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
-
-	/*
-	qreal w = m_modelPart->prop("width").toDouble();
-	if (w != 0) {
-		qreal h = m_modelPart->prop("height").toDouble();
-		QString xml;
-		switch (viewLayerID) {
-			case ViewLayer::Board:
-				xml = makeBoardSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
-				break;
-			case ViewLayer::Silkscreen:
-				xml = makeSilkscreenSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
-				break;
-			default:
-				break;
-		}
-
-		if (!xml.isEmpty()) {
-			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-			SvgFileSplitter splitter;
-			bool result = splitter.splitString(xml, xmlName);
-			if (!result) {
-				return "";
-			}
-			result = splitter.normalize(dpi, xmlName, blackOnly);
-			if (!result) {
-				return "";
-			}
-			return splitter.elementString(xmlName);
-		}
+	if (viewLayerID != ViewLayer::Breadboard) {
+		return PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
-	*/
+	QString svg = makeBreadboardSvg(m_ohms);
 
-	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+	SvgFileSplitter splitter;
+	bool result = splitter.splitString(svg, xmlName);
+	if (!result) {
+		return "";
+	}
+	result = splitter.normalize(dpi, xmlName, blackOnly);
+	if (!result) {
+		return "";
+	}
+	return splitter.elementString(xmlName);
 }
 
 QString Resistor::makeBreadboardSvg(const QString & resistance) {
@@ -278,7 +283,7 @@ QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
 	switch (change) {
 		case ItemSceneHasChanged:
 			if (this->scene()) {
-				setResistance(m_ohms, m_pinSpacing);
+				setResistance(m_ohms, m_pinSpacing, m_layers, true);
 			}
 			break;
 		default:
@@ -288,12 +293,8 @@ QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
     return PaletteItem::itemChange(change, value);
 }
 
-QString Resistor::instanceTitle() {
-	return QString("%1%2 Resistor").arg(m_ohms).arg(OhmSymbol);
-}
-
 const QString & Resistor::title() {
-	m_title = instanceTitle();
+	m_title = QString("%1%2 Resistor").arg(m_ohms).arg(OhmSymbol);
 	return m_title;
 }
 
@@ -301,4 +302,12 @@ void Resistor::updateResistances(QString r) {
 	if (!Resistances.contains(r + OhmSymbol)) {
 		Resistances.append(r + OhmSymbol);
 	}
+}
+
+ConnectorItem* Resistor::newConnectorItem(Connector *connector) {
+	if (m_changingPinSpacing) {
+		return connector->connectorItem(this->scene());
+	}
+
+	return PaletteItem::newConnectorItem(connector);
 }

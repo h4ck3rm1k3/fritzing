@@ -40,23 +40,23 @@ class Resistor : public PaletteItem
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	Resistor(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
+	Resistor(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel, LayerHash &);
 	~Resistor();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);
 	QString getProperty(const QString & key);
-	void setResistance(QString resistance, QString pinSpacing);
+	void setResistance(QString resistance, QString pinSpacing, LayerHash &, bool force);
 	QString resistance();
 	QString pinSpacing();
-	QString instanceTitle();
 	const QString & title();
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateResistances(QString r);
+	ConnectorItem* newConnectorItem(class Connector *connector);
 
 public:
 	static qreal toOhms(const QString & ohmsString);
@@ -66,6 +66,8 @@ protected:
 	QString m_ohms;
 	QString m_pinSpacing;
 	QString m_title;
+	LayerHash m_layers;
+	bool m_changingPinSpacing;
 };
 
 #endif

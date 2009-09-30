@@ -703,7 +703,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			break;
 		default:
 			if (modelPart->moduleID().compare(ItemBase::resistorModuleIDName) == 0) {
-				paletteItem = new Resistor(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+				paletteItem = new Resistor(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true, m_viewLayers);
 			}
 			else {
 				paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
@@ -5500,15 +5500,19 @@ void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 	m_undoStack->push(cmd);
 }
 
-void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpacing) {
+void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
 	Resistor * ritem = dynamic_cast<Resistor *>(item);
 	if (ritem == NULL) return;
 
-	ritem->setResistance(resistance, pinSpacing);
+	ritem->setResistance(resistance, pinSpacing, m_viewLayers, false);
 	viewItemInfo(item);
+
+	if (doEmit) {
+		emit setResistanceSignal(itemID, resistance, pinSpacing, false);
+	}
 }
 
 // called from javascript (htmlInfoView) or mainWindow::setUpSwap

@@ -224,7 +224,6 @@ public:
 	virtual bool ignoreFemale();
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	void setVoltage(long itemID, qreal voltage);
-	void setResistance(long itemID, QString resistance, QString pinSpacing);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -380,6 +379,7 @@ signals:
 	void checkStickySignal(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
+	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -427,6 +427,7 @@ public slots:
 	void setVoltage(qreal voltage);
 	void setResistance(QString resistance, QString pinSpacing);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
+	void setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 
 protected:
 	QPointer<PaletteModel> m_paletteModel;

@@ -218,6 +218,13 @@ void Connector::setBus(Bus * bus) {
 	m_bus = bus;
 }
 
+void Connector::unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	SvgIdLayer * svgIdLayer = m_connectorShared->fullPinInfo(viewIdentifier, viewLayerID);
+	if (svgIdLayer != NULL) {
+		svgIdLayer->m_processed = false;
+	}
+}
+
 bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, qreal & radius, qreal & strokeWidth, bool ignoreTerminalPoint) {
 	// this code is a bit more viewish than modelish...
 

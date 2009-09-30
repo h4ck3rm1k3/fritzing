@@ -1229,7 +1229,7 @@ QString SetVoltageCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 SetResistanceCommand::SetResistanceCommand(SketchWidget * sketchWidget, long itemID, QString oldResistance, QString newResistance, QString oldPinSpacing, QString newPinSpacing, QUndoCommand * parent)
-: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
 	m_itemID = itemID;
 	m_oldResistance = oldResistance;
@@ -1239,11 +1239,11 @@ SetResistanceCommand::SetResistanceCommand(SketchWidget * sketchWidget, long ite
 }
 
 void SetResistanceCommand::undo() {
-	m_sketchWidget->setResistance(m_itemID, m_oldResistance, m_oldPinSpacing);
+	m_sketchWidget->setResistance(m_itemID, m_oldResistance, m_oldPinSpacing, true);
 }
 
 void SetResistanceCommand::redo() {
-	m_sketchWidget->setResistance(m_itemID, m_newResistance, m_newPinSpacing);
+	m_sketchWidget->setResistance(m_itemID, m_newResistance, m_newPinSpacing, true);
 }
 
 QString SetResistanceCommand::getParamString() const {

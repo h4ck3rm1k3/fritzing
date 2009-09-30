@@ -46,9 +46,11 @@ public:
 	bool sticky();
 	bool multiLayer();
 	bool getSvgElementID(QDomDocument * , ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID );
-	static QDomElement getSvgElementLayers(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier );
 	bool canFlipHorizontal();
 	bool canFlipVertical();
+
+public:
+	static QDomElement getSvgElementLayers(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier );
 
 protected:
 	static QDomElement getSvgElementLayer(QDomDocument *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, int & layerCount );

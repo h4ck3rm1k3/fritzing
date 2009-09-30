@@ -74,6 +74,7 @@ public:
 	int connectorItemCount();
 	bool external();
 	void setExternal(bool);
+	void unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID);
 
 public:
 	static void initNames();

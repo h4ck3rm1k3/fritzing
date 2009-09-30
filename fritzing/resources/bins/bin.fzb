@@ -2,14 +2,14 @@
 <module>
 	<title>Core</title>
     <instances>
-        <instance moduleIdRef="9e39adf0-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="5" path="parts/core/resistor_220.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="1000AAAA01" modelIndex="6" path="parts/core/ceramic_capacitor_basic_0_1uF.fzp">
+      <instance moduleIdRef="ResistorModuleID" modelIndex="5" path=":/resources/parts/core/resistor.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="1000AAAA01" modelIndex="6" path="parts/core/ceramic_capacitor_basic_0_1uF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -325,13 +325,6 @@
         </views>
       </instance>
       <instance moduleIdRef="JumperModuleID" modelIndex="51" path=":/resources/parts/core/jumper.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="ResistorModuleID" modelIndex="52" path=":/resources/parts/core/resistor.fzp">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
