@@ -12,15 +12,15 @@
   <line stroke="white" y1="10000" x1="0" y2="0" stroke-width="0" x2="0" />
  </g>
  <g id="copper0" >
-  <rect width="4250" x="2875" y="2875" fill="none" height="4250" stroke="rgb(255, 191, 0)" stroke-width="1250" />
-  <circle fill="none" cx="5000" cy="5000" stroke="rgb(255, 191, 0)" r="2125" id="connector0pin" stroke-width="1250" />
-  <circle fill="none" cx="5000" cy="15000" stroke="rgb(255, 191, 0)" r="2125" id="connector1pin" stroke-width="1250" />
-  <circle fill="none" cx="5000" cy="25000" stroke="rgb(255, 191, 0)" r="2125" id="connector2pin" stroke-width="1250" />
-  <circle fill="none" cx="5000" cy="35000" stroke="rgb(255, 191, 0)" r="2125" id="connector3pin" stroke-width="1250" />
-  <circle fill="none" cx="65000" cy="35000" stroke="rgb(255, 191, 0)" r="2125" id="connector4pin" stroke-width="1250" />
-  <circle fill="none" cx="65000" cy="25000" stroke="rgb(255, 191, 0)" r="2125" id="connector5pin" stroke-width="1250" />
-  <circle fill="none" cx="65000" cy="15000" stroke="rgb(255, 191, 0)" r="2125" id="connector6pin" stroke-width="1250" />
-  <circle fill="none" cx="65000" cy="5000" stroke="rgb(255, 191, 0)" r="2125" id="connector7pin" stroke-width="1250" />
+  <rect width="5500" x="2250" y="2250" fill="none" height="5500" stroke="rgb(255, 191, 0)" stroke-width="2000" />
+  <circle fill="none" cx="5000" cy="5000" stroke="rgb(255, 191, 0)" r="2750" id="connector0pin" stroke-width="2000" />
+  <circle fill="none" cx="5000" cy="15000" stroke="rgb(255, 191, 0)" r="2750" id="connector1pin" stroke-width="2000" />
+  <circle fill="none" cx="5000" cy="25000" stroke="rgb(255, 191, 0)" r="2750" id="connector2pin" stroke-width="2000" />
+  <circle fill="none" cx="5000" cy="35000" stroke="rgb(255, 191, 0)" r="2750" id="connector3pin" stroke-width="2000" />
+  <circle fill="none" cx="65000" cy="35000" stroke="rgb(255, 191, 0)" r="2750" id="connector4pin" stroke-width="2000" />
+  <circle fill="none" cx="65000" cy="25000" stroke="rgb(255, 191, 0)" r="2750" id="connector5pin" stroke-width="2000" />
+  <circle fill="none" cx="65000" cy="15000" stroke="rgb(255, 191, 0)" r="2750" id="connector6pin" stroke-width="2000" />
+  <circle fill="none" cx="65000" cy="5000" stroke="rgb(255, 191, 0)" r="2750" id="connector7pin" stroke-width="2000" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />

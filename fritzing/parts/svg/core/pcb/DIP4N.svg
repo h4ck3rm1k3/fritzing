@@ -9,10 +9,11 @@
   <line stroke="white" y1="1000" x1="41000" y2="21000" stroke-width="1000" x2="41000" />
  </g>
  <g id="copper0" >
-  <circle fill="none" cx="6000" cy="6000" stroke="rgb(255, 191, 0)" r="2200" id="connector0pin" stroke-width="1600" />
-  <circle fill="none" cx="36000" cy="16000" stroke="rgb(255, 191, 0)" r="2200" id="connector1pin" stroke-width="1600" />
-  <circle fill="none" cx="6000" cy="16000" stroke="rgb(255, 191, 0)" r="2200" id="connector2pin" stroke-width="1600" />
-  <circle fill="none" cx="36000" cy="6000" stroke="rgb(255, 191, 0)" r="2200" id="connector3pin" stroke-width="1600" />
+  <rect width="5500" x="3250" y="3250" fill="none" height="5500" stroke="rgb(255, 191, 0)" stroke-width="2000" />
+  <circle fill="none" cx="6000" cy="6000" stroke="rgb(255, 191, 0)" r="2750" id="connector0pin" stroke-width="2000" />
+  <circle fill="none" cx="36000" cy="16000" stroke="rgb(255, 191, 0)" r="2750" id="connector1pin" stroke-width="2000" />
+  <circle fill="none" cx="6000" cy="16000" stroke="rgb(255, 191, 0)" r="2750" id="connector2pin" stroke-width="2000" />
+  <circle fill="none" cx="36000" cy="6000" stroke="rgb(255, 191, 0)" r="2750" id="connector3pin" stroke-width="2000" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />
