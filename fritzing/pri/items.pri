@@ -18,31 +18,33 @@
 # ********************************************************************/
 
 HEADERS += \
+    src/items/clipablewire.h \
     src/items/graphicssvglineitem.h \
     src/items/itembase.h \
     src/items/jumperitem.h \
     src/items/layerkinpaletteitem.h \
+    src/items/mysterypart.h \
     src/items/paletteitem.h \
     src/items/paletteitembase.h \
-    src/items/clipablewire.h \
-    src/items/tracewire.h \
-    src/items/virtualwire.h \
-    src/items/wire.h \
 	src/items/resistor.h \
 	src/items/resizableboard.h \
-	src/items/symbolpaletteitem.h 
+	src/items/symbolpaletteitem.h \
+    src/items/tracewire.h \
+    src/items/virtualwire.h \
+    src/items/wire.h 
 
 SOURCES += \
+    src/items/clipablewire.cpp \
     src/items/graphicssvglineitem.cpp \
     src/items/itembase.cpp \
     src/items/jumperitem.cpp \
     src/items/layerkinpaletteitem.cpp \
+    src/items/mysterypart.cpp \
     src/items/paletteitem.cpp \
     src/items/paletteitembase.cpp \
-    src/items/clipablewire.cpp \
-    src/items/tracewire.cpp \
-    src/items/virtualwire.cpp \
-    src/items/wire.cpp \
 	src/items/resistor.cpp \
 	src/items/resizableboard.cpp \
-	src/items/symbolpaletteitem.cpp 
+	src/items/symbolpaletteitem.cpp \
+    src/items/tracewire.cpp \
+    src/items/virtualwire.cpp \
+    src/items/wire.cpp 

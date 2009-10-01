@@ -426,6 +426,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(setResistanceSignal(long, QString, QString, bool)),
 									 slotter, SLOT(setResistance(long, QString, QString, bool)));
 
+	succeeded = succeeded && connect(signaller, SIGNAL(setChipLabelSignal(long, QString, bool)),
+									 slotter, SLOT(setChipLabel(long, QString, bool)));
+
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");
 	}

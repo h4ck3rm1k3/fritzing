@@ -13,6 +13,7 @@
   <property name="family" >Mystery Part</property>
   <property name="pins">$pins</property>
   <property name="footprint">100 mil jumper</property>
+  <property name="chip label">?</property>
  </properties>
  <taxonomy>part.mystery.magical.${pins}pins</taxonomy>
  <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With $pins pins on a 100 mil inline pin header footprint.</description>

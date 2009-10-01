@@ -14,7 +14,7 @@
    viewBox="0 0 ${width} ${height}"
    id="svg2">
   <g id="schematic">
-    <text id="label" x="${(rectwidth / 2) + rectx}" y="${texty}" stroke="#000000" font-family="Droid Sans" text-anchor="middle" writing-mode="tb" glyph-orientation-vertical="auto" font-size="16" >mystery part</text>     
+    <text id="label" x="${(rectwidth / 2) + rectx}" y="${texty}" fill="#000000" stroke="none" font-family="Droid Sans" text-anchor="middle" font-size="18" >?</text> 
       #for $pin in range(int($pins))
         #set $piny = 19.401056 + ($pin * 20)
         #set $terminaly = 18.244013 + ($pin * 20)

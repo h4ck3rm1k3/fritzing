@@ -74,6 +74,7 @@ $Date$
 #include "utils/graphicsutils.h"
 #include "fsvgrenderer.h"
 #include "items/resistor.h"
+#include "items/mysterypart.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
@@ -704,6 +705,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		default:
 			if (modelPart->moduleID().compare(ItemBase::resistorModuleIDName) == 0) {
 				paletteItem = new Resistor(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true, m_viewLayers);
+			}
+			else if (modelPart->properties().value("family", "").compare("mystery part", Qt::CaseInsensitive) == 0) {
+				paletteItem = new MysteryPart(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
 			}
 			else {
 				paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
@@ -5512,6 +5516,35 @@ void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpa
 
 	if (doEmit) {
 		emit setResistanceSignal(itemID, resistance, pinSpacing, false);
+	}
+}
+
+// called from javascript (htmlInfoView)
+void SketchWidget::setChipLabel(QString label)
+{
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
+	if (mysteryPart == NULL) return;
+
+	SetChipLabelCommand * cmd = new SetChipLabelCommand(this, item->id(), mysteryPart->chipLabel(), label, NULL);
+	cmd->setText(tr("Change ChipLabel from %1 to %2").arg(mysteryPart->chipLabel()).arg(label));
+	m_undoStack->push(cmd);
+}
+
+void SketchWidget::setChipLabel(long itemID, QString label, bool doEmit) {
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return;
+
+	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
+	if (mysteryPart == NULL) return;
+
+	mysteryPart->setChipLabel(label, false);
+	viewItemInfo(item);
+
+	if (doEmit) {
+		emit setChipLabelSignal(itemID, label, false);
 	}
 }
 

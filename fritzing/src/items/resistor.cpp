@@ -39,6 +39,8 @@ static QList<QString> Resistances;
 static QList<QString> PinSpacings;
 static QHash<int, QColor> ColorBands;
 static QChar OhmSymbol(0x03A9);
+static QRegExp Digits("(\\d)+");
+
 
 // TODO
 //	save into parts bin
@@ -135,11 +137,10 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash &
 				QString filename = element.attribute("image");
 				if (filename.isEmpty()) break;
 
-				QRegExp digits("(\\d)+");
-				if (pinSpacing.indexOf(digits) < 0) break;
+				if (pinSpacing.indexOf(Digits) < 0) break;
 
-				QString newSpacing = digits.cap(0);		
-				filename.replace(digits, newSpacing);
+				QString newSpacing = Digits.cap(0);		
+				filename.replace(Digits, newSpacing);
 				element.setAttribute("image", filename);
 
 				foreach (Connector * connector, modelPart()->connectors()) {

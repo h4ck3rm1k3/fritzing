@@ -479,7 +479,11 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 	}
 
 	if(!dynamic || name.toLower() == "id" || name.toLower() == "family" || values.size() == 1) {
-		return QString("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n").arg(displayName).arg(value);
+		QString v = value;
+		if (!extraHtml.isEmpty()) {
+			v = extraHtml;
+		}
+		return QString("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n").arg(displayName).arg(v);
 	} else {
 		QString options = "";
 		QString jsCode = "<script language='JavaScript'>\n";

@@ -668,6 +668,22 @@ protected:
 	long m_itemID;
 };
 
+class SetChipLabelCommand : public BaseCommand
+{
+public:
+	SetChipLabelCommand(class SketchWidget *, long itemID, QString oldLabel, QString newLabel, QUndoCommand * parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QString m_oldLabel;
+	QString m_newLabel;
+	long m_itemID;
+};
+
 class ResizeJumperItemCommand : public BaseCommand
 {
 public:

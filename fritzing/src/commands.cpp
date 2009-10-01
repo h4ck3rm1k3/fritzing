@@ -1258,6 +1258,34 @@ QString SetResistanceCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+SetChipLabelCommand::SetChipLabelCommand(SketchWidget * sketchWidget, long itemID, QString oldLabel, QString newLabel, QUndoCommand * parent)
+: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
+{
+	m_itemID = itemID;
+	m_oldLabel = oldLabel;
+	m_newLabel = newLabel;
+}
+
+void SetChipLabelCommand::undo() {
+	m_sketchWidget->setChipLabel(m_itemID, m_oldLabel, true);
+}
+
+void SetChipLabelCommand::redo() {
+	m_sketchWidget->setChipLabel(m_itemID, m_newLabel, true);
+}
+
+QString SetChipLabelCommand::getParamString() const {
+
+	return QString("SetChipLabelCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 o:%2 n:%3")
+		.arg(m_itemID)
+		.arg(m_oldLabel)
+		.arg(m_newLabel);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ResizeJumperItemCommand::ResizeJumperItemCommand(SketchWidget * sketchWidget, long itemID, QPointF oldPos, QPointF oldC0, QPointF oldC1, QPointF newPos, QPointF newC0, QPointF newC1, QUndoCommand * parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {

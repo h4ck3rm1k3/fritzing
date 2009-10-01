@@ -380,6 +380,7 @@ signals:
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
+	void setChipLabelSignal(long itemID, QString label, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -425,9 +426,11 @@ public slots:
 	void resizeBoard(long id, qreal w, qreal h);
 	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
 	void setVoltage(qreal voltage);
-	void setResistance(QString resistance, QString pinSpacing);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit);
+	void setResistance(QString resistance, QString pinSpacing);
+	void setChipLabel(long itemID, QString label, bool doEmit);
+	void setChipLabel(QString label);
 
 protected:
 	QPointer<PaletteModel> m_paletteModel;

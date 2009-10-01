@@ -4,7 +4,7 @@
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 1 pins</title>
  <label>U</label>
- <date>2009-01-28</date>
+ <date>2009-10-01</date>
  <tags>
   <tag>mystery part</tag>
   <tag>fritzing core</tag>
@@ -13,9 +13,10 @@
   <property name="family" >Mystery Part</property>
   <property name="pins">1</property>
   <property name="footprint">100 mil jumper</property>
+  <property name="chip label">?</property>
  </properties>
  <taxonomy>part.mystery.magical.1pins</taxonomy>
- <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With 1 pin on a 100 mil inline pin header footprint.</description>
+ <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With 1 pins on a 100 mil inline pin header footprint.</description>
  <views>
   <iconView>
    <layers image="icon/mystery_part_icon.svg" >
