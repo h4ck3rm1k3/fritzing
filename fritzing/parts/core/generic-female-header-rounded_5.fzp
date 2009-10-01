@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="bd523905-1ee1-11de-8283-0019d2b7521e">
     <author>Fritzing Part-o-matic</author>
-    <title>Generic Female Rounded Header - 5 pins</title>
+    <title>Generic female header - metal rounded - 5 pins</title>
     <label>J</label>
-    <date>2009-04-01</date>
+    <date>2009-10-01</date>
     <tags></tags>
     <properties>
         <property name="family">Pin Header</property>
