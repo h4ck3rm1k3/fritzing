@@ -3,6 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="2.985in" height="5.63in" viewBox="0 0 214.92 405.36" enable-background="new 0 0 214.92 405.36" xml:space="preserve">
+<g id="schematic">
 <rect id="connector0pin" x="1.299" y="85.004" fill="none" width="10.488" height="2.1"/>
 <rect id="connector1pin" x="106.41" y="393.897" fill="none" width="2.099" height="10.488"/>
 <rect id="connector2pin" x="203.165" y="63.556" fill="none" width="10.488" height="2.099"/>
@@ -154,5 +155,6 @@
 	<text transform="matrix(1 0 0 1 96.9282 372.9604)" font-family="'DroidSans'" font-size="9.9889">GND</text>
 	<polygon points="206.345,311.2 211.05,313.917 206.345,316.633 	"/>
 	<polygon points="211.05,337.245 206.345,334.524 211.05,331.809 	"/>
+</g>
 </g>
 </svg>

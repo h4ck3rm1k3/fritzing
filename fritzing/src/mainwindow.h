@@ -248,6 +248,7 @@ protected slots:
 
 	void startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &);
 	void loadedViewsSlot(ModelBase *, QDomElement & views);
+	void exportNormalizedSVG();
 
 #ifdef NAVENDU
 	void launchExternalProcess();
@@ -297,7 +298,7 @@ protected:
 	void exportToGerber();
     void exportBOM();
     void exportNetlist();
-    void exportSvg();
+    void exportSvg(qreal res, bool selectedItems);
 	void exportEtchable(bool wantPDF, bool wantSVG);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
@@ -480,6 +481,7 @@ protected:
     QAction *m_createNewPart;
 	QAction *m_openInOldPartsEditorAct;
 	QAction *m_infoViewOnHoverAction;
+	QAction *m_exportNormalizedSvgAction;
 	// TODO PARTS EDITOR REMOVE
     QAction *m_openInPartsEditorAct;
     QMenu *m_addToBinMenu;

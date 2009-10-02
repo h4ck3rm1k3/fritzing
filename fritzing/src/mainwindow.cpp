@@ -60,6 +60,7 @@ $Date$
 #include "svg/svgfilesplitter.h"
 #include "utils/folderutils.h"
 #include "utils/textutils.h"
+#include "utils/graphicsutils.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -1701,7 +1702,7 @@ void MainWindow::initExternalConnectors(QList<ConnectorItem *> & externalConnect
 
 QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs) {
 	QSizeF imageSize;
-	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL, 1000);
+	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL, GraphicsUtils::StandardFritzingDPI, false);
 }
 
 void MainWindow::swapSelected(const QVariant & currProps, const QString & family, const QString & name) {

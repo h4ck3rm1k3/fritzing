@@ -45,6 +45,11 @@ public:
 	static qreal pixels2mm(qreal p);
 	static qreal mils2pixels(qreal m);
 
+public:
+	static const int IllustratorDPI = 72;
+	static const int StandardFritzingDPI = 1000;
+
+
 };
 
 #endif

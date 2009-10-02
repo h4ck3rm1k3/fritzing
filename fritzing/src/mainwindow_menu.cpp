@@ -57,6 +57,7 @@ $Date$
 #include "help/tipsandtricks.h"
 #include "dialogs/setcolordialog.h"
 #include "utils/folderutils.h"
+#include "utils/graphicsutils.h"
 #include "connectors/ercdata.h"
 
 static QString eagleActionType = ".eagle";
@@ -72,10 +73,6 @@ static QString netlistActionType = ".xml";
 static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
 static QHash<QString, QString> fileExtFormats;
-
-static const int IllustratorDPI = 72;
-static const int StandardFritzingDPI = 1000;
-
 
 bool sortPartList(ItemBase * b1, ItemBase * b2){
     return b1->instanceTitle().toLower() < b2->instanceTitle().toLower();
@@ -162,7 +159,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	if (wantSVG) {
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, IllustratorDPI);
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, GraphicsUtils::IllustratorDPI, false);
 		QString svgFileName = fileName;
 		svgFileName.replace(fileExt, ".svg");
 		QFile file(svgFileName);
@@ -179,7 +176,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		if (painter.begin(&printer))
 		{
 			int res = printer.resolution();
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, res);
+			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, res, false);
 			// now convert to pdf
 			QSvgRenderer svgRenderer;
 			svgRenderer.load(svg.toLatin1());
@@ -292,7 +289,7 @@ void MainWindow::doExport() {
 	}
 
 	if (actionType.compare(svgActionType) == 0) {
-		exportSvg();
+		exportSvg(GraphicsUtils::IllustratorDPI, false);
 		return;
 	}
 
@@ -1126,6 +1123,10 @@ void MainWindow::createPartMenuActions() {
 	m_infoViewOnHoverAction->setChecked(infoViewOnHover);
 	setInfoViewOnHover(infoViewOnHover);
 	connect(m_infoViewOnHoverAction, SIGNAL(toggled(bool)), this, SLOT(setInfoViewOnHover(bool)));
+
+	m_exportNormalizedSvgAction = new QAction(tr("Export Normalized SVG"), this);
+	m_exportNormalizedSvgAction->setStatusTip(tr("Export 1000 dpi SVG of this part in this view"));
+	connect(m_exportNormalizedSvgAction, SIGNAL(triggered()), this, SLOT(exportNormalizedSVG()));
 #endif
 
 	m_rotate90cwAct = new QAction(tr("&Rotate 90\x00B0 Clockwise"), this);
@@ -2174,7 +2175,7 @@ void MainWindow::exportToGerber() {
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
-    QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, StandardFritzingDPI);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -2228,7 +2229,7 @@ void MainWindow::exportToGerber() {
     // now do it for silk
     QList<ViewLayer::ViewLayerID> silkLayerIDs;
     silkLayerIDs << ViewLayer::Silkscreen /* TODO:  << ViewLayer::SilkscreenLabel  */;
-    QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, StandardFritzingDPI);
+	QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false);
     if (svgSilk.isEmpty()) {
         // tell the user something reasonable
         return;
@@ -2266,7 +2267,7 @@ void MainWindow::exportToGerber() {
     // now do it for the outline/contour
     QList<ViewLayer::ViewLayerID> outlineLayerIDs;
     outlineLayerIDs << ViewLayer::Board;
-    QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, StandardFritzingDPI);
+	QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false);
     if (svgOutline.isEmpty()) {
         // tell the user something reasonable
         return;
@@ -2356,7 +2357,7 @@ void MainWindow::exportToEagle() {
 	*/
 }
 
-void MainWindow::exportSvg() {
+void MainWindow::exportSvg(qreal res, bool selectedItems) {
 	QString path = defaultSaveFolder();
 	QString fileExt;
 	QString fileName = FApplication::getSaveFileName(this,
@@ -2377,7 +2378,7 @@ void MainWindow::exportSvg() {
 	}
 
 	QSizeF imageSize;
-    QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL, IllustratorDPI);
+	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL, res, selectedItems);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -2874,7 +2875,7 @@ void MainWindow::groundFill()
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Board;
 	QSizeF boardImageSize;
-    QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, StandardFritzingDPI);
+	QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false);
 	if (boardSvg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return;
@@ -2886,7 +2887,7 @@ void MainWindow::groundFill()
 
 	m_pcbGraphicsView->showGroundTraces(false);
 
-    QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, StandardFritzingDPI);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false);
 	if (svg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 		return;
@@ -3047,6 +3048,7 @@ QMenu *MainWindow::breadboardWireMenu() {
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
+	menu->addAction(m_exportNormalizedSvgAction);
 #endif
 
     connect( menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
@@ -3116,6 +3118,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
+	menu->addAction(m_exportNormalizedSvgAction);
 #endif
 
     connect(
@@ -3277,3 +3280,6 @@ void MainWindow::shareOnline() {
 	QDesktopServices::openUrl(QString("http://fritzing.org/projects/create"));
 }
 
+void MainWindow::exportNormalizedSVG() {
+	exportSvg(GraphicsUtils::StandardFritzingDPI, true);
+}
