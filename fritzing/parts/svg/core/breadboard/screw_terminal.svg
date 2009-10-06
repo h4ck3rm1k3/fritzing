@@ -1,10 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1 Basic//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd'>
 <svg width="0.20in" x="0px" version="1.1" y="0px" xmlns="http://www.w3.org/2000/svg" height="0.17in" viewBox="0 0 14.693 12.277" baseProfile="basic" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" xml:space="preserve" >
- <rect width="2.15" x="2.519" y="11.4" fill="none" height="0.874" />
- <rect width="2.152" x="9.719" y="11.4" fill="none" height="0.874" />
- <rect width="2.15" x="2.519" y="11.873" fill="none" height="0.404" />
- <rect width="2.15" x="9.721" y="11.873" fill="none" height="0.404" />
  <g id="breadboard" >
   <g>
    <polygon fill="#254E89" points="14.4,2.885 14.4,0 0,0 0,2.885 0.293,2.885 0.293,5.229 0,5.229 0,11.382 14.4,11.382 14.4,5.229 14.693,5.229 14.693,2.885 " />
@@ -85,7 +81,7 @@
    </g>
    <rect width="2.098" x="9.754" y="10.768" fill="#8C8C8C" height="1.505" />
   </g>
- </g>
  <rect width="2.315876068376031" x="2.519" y="7.934844936625098" fill="none" height="4.3391550633749" id="connector0pin" />
  <rect width="2.254175663517746" x="9.718999999999999" y="8.032304649255085" fill="none" height="4.241695350744913" id="connector1pin" />
+ </g>
 </svg>

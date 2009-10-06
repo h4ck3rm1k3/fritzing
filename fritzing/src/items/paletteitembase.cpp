@@ -299,8 +299,8 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
-		qreal radius;
-		qreal strokeWidth;
+		qreal radius = 0;
+		qreal strokeWidth = 0;
 		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, radius, strokeWidth, ignoreTerminalPoints);
 		if (!result) continue;
 

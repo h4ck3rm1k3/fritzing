@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+#set $ipins = int($pins)
+#set $dx = 312.47
+#set $width = 580 + (($ipins - 2) * $dx)
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" 
+     width="${width / 1000.0}in" height="0.7in" viewBox="0 0 ${width} 700" >
+  <g id="schematic" >
+  #for $pin in range($ipins)
+  #set $x = 133.758 + ($dx * $pin)
+   <circle fill="none" cx="${x}" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="${x}" y1="258.775" x2="${x}" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="${x}" y1="688.882" x2="${x}" y2="454.761" id="connector${pin}pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="${x - (27.5534 / 2.0)}" y="684.949" width="27.5534" height="13.8699" id="connector${pin}terminal" stroke-width="0" />
+  #end for
+</g>
+</svg>

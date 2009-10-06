@@ -1702,7 +1702,7 @@ void MainWindow::initExternalConnectors(QList<ConnectorItem *> & externalConnect
 
 QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs) {
 	QSizeF imageSize;
-	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL, GraphicsUtils::StandardFritzingDPI, false);
+	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL, GraphicsUtils::StandardFritzingDPI, false, false);
 }
 
 void MainWindow::swapSelected(const QVariant & currProps, const QString & family, const QString & name) {

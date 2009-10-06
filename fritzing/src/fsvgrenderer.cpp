@@ -103,12 +103,31 @@ bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename,
 bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors) {
 	QByteArray cleanContents = contents; // if the part has been created through the parts editor, it's clean
 
+	/*
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	doc.setContent(cleanContents, &errorStr, &errorLine, &errorColumn);
+	QDomElement root = doc.documentElement();
+	SvgFileSplitter::fixStyleAttributeRecurse(root);
+	cleanContents = doc.toByteArray();
+
+	//QFile file("all.txt");
+	//if (file.open(QIODevice::Append)) {
+		//QTextStream t(&file);
+		//t << cleanContents;
+		//file.close();
+	//}
+
+	*/
+
 	//DebugDialog::debug(cleanContents.data());
 
 	QXmlStreamReader xml(cleanContents);
 	parseForWidthAndHeight(xml);
 	if (readConnectors) {
-		m_svgXml =  contents;
+		m_svgXml =  cleanContents;
 	}
 
 	bool result = QSvgRenderer::load(cleanContents);
@@ -247,6 +266,8 @@ qreal FSvgRenderer::printerScale() {
 
 bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth) {
 	Q_UNUSED(viewLayerID);
+
+	radius = strokeWidth = 0;
 	
 	if (m_svgXml.size() == 0 && m_svgDomDocument.isNull()) {
 		return false;
@@ -284,8 +305,14 @@ bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID,
 	if (!ok) return false;
 	qreal r = element.attribute("r").toDouble(&ok);
 	if (!ok) return false;
-	qreal sw = element.attribute("stroke-width").toDouble(&ok);			// for now, assumes this isn't in the style attribute
-	if (!ok) return false;
+	qreal sw = element.attribute("stroke-width").toDouble(&ok);	
+	if (!ok) {
+		SvgFileSplitter::fixStyleAttribute(element, element.attribute("style"), "stroke-width");
+		sw = element.attribute("stroke-width").toDouble(&ok);
+		if (!ok) {
+			return false;
+		}
+	}
 
 	m_cachedElement = element;
 

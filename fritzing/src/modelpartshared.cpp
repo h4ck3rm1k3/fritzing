@@ -173,8 +173,12 @@ void ModelPartShared::setDescription(QString description) {
 }
 
 const QDate & ModelPartShared::date() {
-	return *new QDate(QDate::fromString(m_date,Qt::ISODate));
+	// 	return *new QDate(QDate::fromString(m_date,Qt::ISODate));   // causes memory leak
+	static QDate tempDate;
+	tempDate = QDate::fromString(m_date,Qt::ISODate);
+	return tempDate;
 }
+
 void ModelPartShared::setDate(QDate date) {
 	m_date = date.toString(Qt::ISODate);
 }

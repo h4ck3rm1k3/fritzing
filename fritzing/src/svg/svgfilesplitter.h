@@ -68,6 +68,7 @@ public:
 	static bool changeStrokeWidth(const QString & svg, qreal delta, QByteArray &);
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 	static void fixStyleAttributeRecurse(QDomElement & element);
+	static void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
 
 protected:
 	void normalizeChild(QDomElement & childElement, 
@@ -83,7 +84,6 @@ protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta);
 	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
 	static void fixStyleAttribute(QDomElement & element);
-	static void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

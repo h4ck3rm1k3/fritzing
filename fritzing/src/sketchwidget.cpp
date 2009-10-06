@@ -68,6 +68,7 @@ $Date$
 #include "labels/note.h"
 #include "group/groupitem.h"
 #include "svg/svgfilesplitter.h"
+#include "svg/svgflattener.h"
 #include "help/sketchmainhelp.h"
 #include "htmlinfoview.h"
 #include "items/resizableboard.h"
@@ -5141,7 +5142,8 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 	note->setSize(size);
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems)
+QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten)
 {
 	qreal width =  scene()->width();
 	qreal height =  scene()->height();
@@ -5217,6 +5219,21 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 				QString itemSvg = itemBase->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 				if (itemSvg.isEmpty()) continue;
+
+				if (flatten) {
+					QDomDocument domDocument;
+					QString errorStr;
+					int errorLine;
+					int errorColumn;
+					bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
+					if (!result) continue;
+
+					QDomElement root = domDocument.documentElement();
+					SvgFlattener flattener;
+					flattener.flattenChildren(root);
+					SvgFileSplitter::fixStyleAttributeRecurse(root);
+					itemSvg = domDocument.toString();
+				}
 
 				if (!itemBase->transform().isIdentity()) {
 					QTransform transform = itemBase->transform();

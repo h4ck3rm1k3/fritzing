@@ -907,8 +907,19 @@ void SvgFileSplitter::fixStyleAttribute(QDomElement & element)
 	fixStyleAttribute(element, style, "stroke");
 	fixStyleAttribute(element, style, "fill");
 	fixStyleAttribute(element, style, "fill-opacity");
+	fixStyleAttribute(element, style, "font-size");
 
-	element.setAttribute("style", style);
+	if (style.trimmed().isEmpty()) {
+		element.removeAttribute("style");
+	}
+	else {
+		element.setAttribute("style", style);
+	}
+
+	//QString deleteMe;
+	//QTextStream stream(&deleteMe);
+	//stream << element;
+	//DebugDialog::debug(deleteMe);
 }
 
 void SvgFileSplitter::fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName)
