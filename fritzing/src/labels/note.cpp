@@ -210,7 +210,7 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	}
 
 	m_inResize = NULL;
-	this->setCursor(Qt::CrossCursor);
+	this->setCursor(Qt::ArrowCursor);
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
 

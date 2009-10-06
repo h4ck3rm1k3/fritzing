@@ -24,7 +24,7 @@
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
-        <schematicView>
+        <schematicView fliphorizontal="true" flipvertical="true">
 #set $schem_suffix = '_'+$schem_unique if not $gen_to_core else ''
             <layers image="schematic/generic-male-header_schem_${pins}${schem_suffix}.svg">
                 <layer layerId="schematic"></layer>

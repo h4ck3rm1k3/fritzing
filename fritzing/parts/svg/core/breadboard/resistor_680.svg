@@ -3,15 +3,15 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="0.429in" height="0.0945in" viewBox="0 0 42.917 9.45" 
+	 x="0px" y="0px" width="0.42917in" height="0.0945in" viewBox="0 0 42.917 9.45" 
 	 xml:space="preserve">
 
 <g id="breadboard">
 	<rect id="connector0pin" x="0" y="3.59" fill="none" width="6.5" height="2.91"/>
 	<rect id="connector1pin" x="36.417" y="3.59" fill="none" width="6.5" height="2.91"/>
-	<rect id="connector0terminal" x="0" y="3.59" fill="none" width="0" height="2.91"/>
-	<rect id="connector1terminal" x="42.917" y="3.59" fill="none" width="0" height="2.91"/>
-	<rect y="3.59" fill="#8C8C8C" width="42.917" height="2.91"/>
+	<rect id="connector0terminal" x="1.485" y="3.59" fill="none" width="0" height="2.91"/>
+	<rect id="connector1terminal" x="41.485" y="3.59" fill="none" width="0" height="2.91"/>
+  <rect x="0" y="3.59" fill="#8C8C8C" width="42.917" height="2.91"/>
 	<path id="body" fill="#D9B477" d="M14.233,0.688c-0.5-0.23-1.36-0.41-1.91-0.41h-2.76c-0.55,0-1,0.45-1,1v7.439c0,0.551,0.45,1,1,1
 		h2.76c0.55,0,1.41-0.189,1.91-0.41l0.1-0.049c0.5-0.23,1.36-0.41,1.91-0.41h9.98c0.551,0,1.409,0.189,1.909,0.41l0.101,0.049
 		c0.5,0.23,1.358,0.41,1.91,0.41h2.76c0.552,0,1-0.449,1-1V1.278c0-0.55-0.448-1-1-1h-2.76c-0.552,0-1.41,0.19-1.91,0.41
