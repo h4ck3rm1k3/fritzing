@@ -77,6 +77,8 @@ $Date$
 #include "utils/autoclosemessagebox.h"
 #include "utils/fileprogressdialog.h"
 #include "items/resizableboard.h"
+#include "items/resistor.h"
+#include "items/symbolpaletteitem.h"
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
@@ -1712,6 +1714,10 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	QMap<QString, QVariant> currPropsMap = currProps.toMap();
 	if (currPropsMap.isEmpty()) return;
 
+	if (swapSpecial(currPropsMap)) {
+		return;
+	}
+
 	foreach (QString key, currPropsMap.keys()) {
 		QString value = currPropsMap.value(key).toString();
 		m_refModel->recordProperty(key, value);
@@ -1721,39 +1727,6 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	bool exactMatch = m_refModel->lastWasExactMatch();
 
 	if(moduleID == ___emptyString___) {
-		QString pinSpacing, resistance;
-		foreach (QString key, currPropsMap.keys()) {
-			if (key.compare("shape", Qt::CaseInsensitive) == 0) {
-				QString value = currPropsMap.value(key).toString();
-				if (value.compare(ResizableBoard::customShapeTranslated) == 0) {
-					if (!loadCustomBoardShape()) {
-						ItemBase * itemBase = m_infoView->currentItem();
-						// restores the infoview size menu
-						m_currentGraphicsView->viewItemInfo(itemBase);
-					}
-					return;
-				}
-			}
-			if (key.compare("voltage", Qt::CaseInsensitive) == 0) {
-				QString value = currPropsMap.value(key).toString();
-				m_currentGraphicsView->setVoltage(value.toDouble());
-				return;
-			}
-			if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
-				resistance = currPropsMap.value(key).toString();
-				continue;
-			}
-			if (key.compare("pin spacing", Qt::CaseInsensitive) == 0) {
-				pinSpacing = currPropsMap.value(key).toString();
-				continue;
-			}
-		}
-
-		if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
-			m_currentGraphicsView->setResistance(resistance, pinSpacing);
-			return;
-		}
-
 		QMessageBox::information(
 			this,
 			tr("Sorry!"),
@@ -1781,6 +1754,51 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	}
 
 	swapSelectedAux(itemBase, moduleID);
+}
+
+bool MainWindow::swapSpecial(QMap<QString, QVariant> & currPropsMap) {
+	ItemBase * itemBase = m_infoView->currentItem();
+	QString pinSpacing, resistance;
+	foreach (QString key, currPropsMap.keys()) {
+		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
+			ResizableBoard * board = dynamic_cast<ResizableBoard *>(itemBase);
+			if (board == NULL) continue;
+			QString value = currPropsMap.value(key).toString();
+			if (value.compare(ResizableBoard::customShapeTranslated) == 0) {
+				if (!loadCustomBoardShape()) {
+					
+					// restores the infoview size menu
+					m_currentGraphicsView->viewItemInfo(itemBase);
+				}
+				return true;
+			}
+		}
+		if (key.compare("voltage", Qt::CaseInsensitive) == 0) {
+			SymbolPaletteItem * sitem = dynamic_cast<SymbolPaletteItem *>(itemBase);
+			if (sitem == NULL) continue;
+			QString value = currPropsMap.value(key).toString();
+			m_currentGraphicsView->setVoltage(value.toDouble());
+			return true;
+		}
+		if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
+			resistance = currPropsMap.value(key).toString();
+			continue;
+		}
+		if (key.compare("pin spacing", Qt::CaseInsensitive) == 0) {
+			pinSpacing = currPropsMap.value(key).toString();
+			continue;
+		}
+	}
+
+	if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
+		Resistor * resistor = dynamic_cast<Resistor *>(itemBase);
+		if (resistor != NULL) {
+			m_currentGraphicsView->setResistance(resistance, pinSpacing);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) {
