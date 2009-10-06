@@ -324,7 +324,7 @@ protected:
 	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize, bool isLabel);
+	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize, bool isLabel, bool firstTime);
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
@@ -382,6 +382,7 @@ signals:
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setChipLabelSignal(long itemID, QString label, bool doEmit);
+	void setInstanceTitleSignal(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -418,7 +419,7 @@ public slots:
 	void changeWireColor(const QString newColor);
 	void changeWireWidthMils(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);
-	void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable);
+	void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
 	void showPartLabel(long id, bool showIt);
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);

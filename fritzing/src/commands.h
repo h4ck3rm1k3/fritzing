@@ -476,7 +476,7 @@ protected:
 class ChangeLabelTextCommand : public BaseCommand
 {
 public:
-    ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, bool isLabel, QUndoCommand *parent);
+    ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, bool isLabel, bool firstTime, QUndoCommand *parent);
     void undo();
     void redo();
 	int id() const;

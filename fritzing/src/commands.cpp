@@ -854,7 +854,7 @@ QString MoveLabelCommand::getParamString() const {
 
 ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, 
 											   const QString & oldText, const QString & newText, 
-											   QSizeF oldSize, QSizeF newSize, bool isLabel, QUndoCommand *parent)
+											   QSizeF oldSize, QSizeF newSize, bool isLabel, bool firstTime, QUndoCommand *parent)
 	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
     m_itemID = id;
@@ -862,12 +862,12 @@ ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget,
     m_newText = newText;
 	m_oldSize = oldSize;
 	m_newSize = newSize;
-	m_firstTime = true;
+	m_firstTime = firstTime;
 	m_isLabel = isLabel;
 }
 
 void ChangeLabelTextCommand::undo() {
-	m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, m_isLabel, false);
+	m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, m_isLabel, false, true);
 	if (m_oldSize != m_newSize) {
 		m_sketchWidget->resizeNote(m_itemID, m_oldSize);
 	}
@@ -879,7 +879,7 @@ void ChangeLabelTextCommand::redo() {
 		return;
 	}
 
-    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, m_isLabel, false);
+    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, m_isLabel, false, true);
 	if (m_oldSize != m_newSize) {
 		m_sketchWidget->resizeNote(m_itemID, m_newSize);
 	}
