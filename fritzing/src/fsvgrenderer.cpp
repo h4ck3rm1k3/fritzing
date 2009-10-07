@@ -27,6 +27,7 @@ $Date$
 #include "fsvgrenderer.h"
 #include "debugdialog.h"
 #include "svg/svgfilesplitter.h"
+#include "svg/svgflattener.h"
 #include "utils/textutils.h"
 
 #include <QRegExp>
@@ -264,7 +265,8 @@ qreal FSvgRenderer::printerScale() {
 	return m_printerScale;
 }
 
-bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth) {
+bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth, QMatrix & matrix, const QString & terminalName, QMatrix & terminalMatrix)
+{
 	Q_UNUSED(viewLayerID);
 
 	radius = strokeWidth = 0;
@@ -284,14 +286,30 @@ bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID,
 		}
 	}
 
-	QDomElement element;
-	if (m_cachedElement.isNull()) {
-		element = TextUtils::findElementWithAttribute(m_svgDomDocument.documentElement(), "id", connectorName);
-	}
-	else {
+	QDomElement element, terminalElement;
+	if (!m_cachedElement.isNull()) {
 		element = TextUtils::findElementWithAttribute(m_cachedElement.parentNode().toElement(), "id", connectorName);
+		if (!terminalName.isEmpty()) {
+			terminalElement = TextUtils::findElementWithAttribute(m_cachedElement.parentNode().toElement(), "id", terminalName);
+		}
 	}
+	if (element.isNull()) {
+		element = TextUtils::findElementWithAttribute(m_svgDomDocument.documentElement(), "id", connectorName);
+		if (!terminalName.isEmpty() && terminalElement.isNull()) {
+			terminalElement = TextUtils::findElementWithAttribute(element.parentNode().toElement(), "id", terminalName);
+		}
+	}
+	if (!terminalName.isEmpty() && terminalElement.isNull()) {
+		terminalElement = TextUtils::findElementWithAttribute(m_svgDomDocument.documentElement(), "id", terminalName);
+	}
+
+	if (!terminalElement.isNull()) {
+		terminalMatrix = SvgFlattener::elementToMatrix(terminalElement);
+	}
+
 	if (element.isNull()) return false;
+
+	matrix = SvgFlattener::elementToMatrix(element);
 
 
 	if (element.nodeName().compare("circle") != 0) return false;

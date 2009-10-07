@@ -31,6 +31,7 @@ $Date$
 #include <QSvgRenderer>
 #include <QXmlStreamReader>
 #include <QDomDocument>
+#include <QMatrix>
 
 #include "viewlayer.h"
 
@@ -46,7 +47,7 @@ public:
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
-	bool getSvgCircleConnectorInfo(ViewLayer::ViewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth);
+	bool getSvgCircleConnectorInfo(ViewLayer::ViewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth, QMatrix & matrix, const QString & terminalName, QMatrix & terminalMatrix);
 	static void removeFromHash(const QString &moduleId, const QString filename);
 
 public:

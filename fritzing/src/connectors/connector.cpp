@@ -267,13 +267,15 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		qreal rad = 0;
 		qreal sw = 0;
-		bool gotCircle = renderer->getSvgCircleConnectorInfo(viewLayerID, connectorID, bounds, rad, sw);		
+		QMatrix matrix, terminalMatrix;
+		bool gotCircle = renderer->getSvgCircleConnectorInfo(viewLayerID, connectorID, bounds, rad, sw, matrix, svgIdLayer->m_terminalId, terminalMatrix);		
 		if (gotCircle && (rad != 0)) {
 			radius = svgIdLayer->m_radius = rad * defaultSizeF.width() / viewBox.width();
 			strokeWidth = svgIdLayer->m_strokeWidth = sw * defaultSizeF.width() / viewBox.width();
 		}
 
-		QMatrix matrix0 = renderer->matrixForElement(connectorID);
+		// matrixForElement only grabs parent matrices, not any transforms in the element itself
+		QMatrix matrix0 = renderer->matrixForElement(connectorID) * matrix;  
 
 		/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
 						   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
@@ -283,20 +285,20 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		);
 		*/
 
-		// seems to be a bug in qt's matrixForElement
 		QRectF r1 = matrix0.mapRect(bounds);
 		connectorRect.setRect(r1.x() * defaultSizeF.width() / viewBox.width(), r1.y() * defaultSizeF.height() / viewBox.height(), r1.width() * defaultSizeF.width() / viewBox.width(), r1.height() * defaultSizeF.height() / viewBox.height());
 
 		svgIdLayer->m_visible = true;
 		svgIdLayer->m_rect = connectorRect;
-		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, ignoreTerminalPoint, viewBox);
+		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, ignoreTerminalPoint, viewBox, terminalMatrix);
 	}
 
 	return true;
 }
 
 QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * renderer,
-									const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox)
+									const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox,
+									QMatrix & terminalMatrix)
 {
 	// this code is a bit more viewish than modelish...
 
@@ -312,6 +314,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * 
 	if (tBounds.isNull()) {
 		return terminalPoint;
 	}
+
 	QSizeF defaultSizeF = renderer->defaultSizeF();
 	if (tBounds.width() >= defaultSizeF.width() && tBounds.height() >= defaultSizeF.height()) {
 		return terminalPoint;
@@ -325,7 +328,8 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * 
 										//arg(terminalID) );
 
 
-	QMatrix tMatrix = renderer->matrixForElement(terminalId);
+	// matrixForElement only grabs parent matrices, not any transforms in the element itself
+	QMatrix tMatrix = renderer->matrixForElement(terminalId) * terminalMatrix;
 	QRectF terminalRect = tMatrix.mapRect(tBounds);
 	QPointF c = terminalRect.center();
 	QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());

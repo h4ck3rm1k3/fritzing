@@ -86,7 +86,7 @@ protected:
 	void writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId);
 	void writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId);
 	QPointF calcTerminalPoint(const QString & terminalId, class FSvgRenderer * renderer, 
-							  const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox);
+							  const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix &);
 
 protected:
 	QPointer<class ConnectorShared> m_connectorShared;
