@@ -325,7 +325,9 @@ bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID,
 	if (!ok) return false;
 	qreal sw = element.attribute("stroke-width").toDouble(&ok);	
 	if (!ok) {
-		SvgFileSplitter::fixStyleAttribute(element, element.attribute("style"), "stroke-width");
+                QString sw("stroke-width");
+                QString s = element.attribute("style");
+                SvgFileSplitter::fixStyleAttribute(element, s, sw);
 		sw = element.attribute("stroke-width").toDouble(&ok);
 		if (!ok) {
 			return false;
