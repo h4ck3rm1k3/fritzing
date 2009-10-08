@@ -31,8 +31,9 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 
-static QRegExp Text("<text.*>.*</text>");
-static QRegExp Subtext(">.*</text>");
+#include <QDomNodeList>
+#include <QDomDocument>
+#include <QDomElement>
 
 // TODO
 //	save into parts bin
@@ -52,6 +53,7 @@ MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 MysteryPart::~MysteryPart() {
 }
 
+
 void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
 	if (!force && m_chipLabel.compare(chipLabel) == 0) return;
@@ -70,7 +72,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 		if (m_renderer == NULL) {
 			m_renderer = new FSvgRenderer(this);
 		}
-		DebugDialog::debug(svg);
+		//DebugDialog::debug(svg);
 
 		bool result = m_renderer->fastLoad(svg.toUtf8());
 		if (result) {
@@ -110,11 +112,30 @@ QString MysteryPart::makeSvg(const QString & chipLabel) {
 }
 
 QString MysteryPart::replaceText(QString svg, const QString & chipLabel) {
-	if (svg.indexOf(Text) < 0) return svg;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return svg;
 
-	QString text = Text.cap(0);
-	text.replace(Subtext, ">" + chipLabel + "</text>");
-	svg.replace(Text, text);
+	QDomElement root = doc.documentElement();
+	QDomNodeList domNodeList = root.elementsByTagName("text");
+	for (int i = 0; i < domNodeList.count(); i++) {
+		QDomElement node = domNodeList.item(i).toElement();
+		if (node.isNull()) continue;
+
+		if (node.attribute("id").compare("label") != 0) continue;
+
+		QDomNodeList childList = node.childNodes();
+		for (int j = 0; j < childList.count(); j++) {
+			QDomNode child = childList.item(i);
+			if (child.isText()) {
+				child.setNodeValue(chipLabel);
+				return doc.toString();
+			}
+		}
+	}
+		
 	return svg;
 }
 

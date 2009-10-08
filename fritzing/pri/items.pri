@@ -19,6 +19,7 @@
 
 HEADERS += \
     src/items/clipablewire.h \
+    src/items/dip.h \
     src/items/graphicssvglineitem.h \
     src/items/itembase.h \
     src/items/jumperitem.h \
@@ -35,6 +36,7 @@ HEADERS += \
 
 SOURCES += \
     src/items/clipablewire.cpp \
+    src/items/dip.cpp \
     src/items/graphicssvglineitem.cpp \
     src/items/itembase.cpp \
     src/items/jumperitem.cpp \

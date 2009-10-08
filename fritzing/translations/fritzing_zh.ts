@@ -381,10 +381,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Connections</source>
         <translation type="unfinished"></translation>
     </message>
@@ -447,6 +443,30 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pin spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated power</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1670,6 +1690,22 @@ Quantity	Part
     </message>
     <message>
         <source>Change background color for %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Normalized SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export 1000 dpi SVG of this part in this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Normalized Flattened SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export 1000 dpi Flattened SVG of this part in this view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2928,6 +2964,14 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>Disconnect all wires from %1 items</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change Resistance from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change ChipLabel from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
@@ -3039,7 +3083,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chinese Simp. - %1</source>
+        <source>Chinese (Simplified) - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

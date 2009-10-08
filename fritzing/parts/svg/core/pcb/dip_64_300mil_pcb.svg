@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" width="0.42in" height="3.22in" viewBox="0 0 420.0 3220" baseProfile="tiny" >
+ <desc>Fritzing footprint SVG</desc>
+ <g id="silkscreen" >
+  <line stroke="white" y1="10" x1="10" y2="3210" stroke-width="10" x2="10" />
+  <line stroke="white" y1="3210" x1="10" y2="3210" stroke-width="10" x2="410.0" />
+  <line stroke="white" y1="3210" x1="410.0" y2="10" stroke-width="10" x2="410.0" />
+  <line stroke="white" y1="10" x1="10" y2="10" stroke-width="10" x2="160.0" />
+  <line stroke="white" y1="10" x1="260.0" y2="10" stroke-width="10" x2="410.0" />
+ </g>
+ <g id="copper0" >
+  <rect width="55" x="32.5" y="32.5" fill="none" height="55" stroke="rgb(255, 191, 0)" stroke-width="20" />
+   <circle fill="none" cx="60" cy="60" stroke="rgb(255, 191, 0)" r="27.5" id="connector0pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="60" stroke="rgb(255, 191, 0)" r="27.5" id="connector63pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="160" stroke="rgb(255, 191, 0)" r="27.5" id="connector1pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="160" stroke="rgb(255, 191, 0)" r="27.5" id="connector62pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="260" stroke="rgb(255, 191, 0)" r="27.5" id="connector2pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="260" stroke="rgb(255, 191, 0)" r="27.5" id="connector61pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="360" stroke="rgb(255, 191, 0)" r="27.5" id="connector3pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="360" stroke="rgb(255, 191, 0)" r="27.5" id="connector60pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="460" stroke="rgb(255, 191, 0)" r="27.5" id="connector4pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="460" stroke="rgb(255, 191, 0)" r="27.5" id="connector59pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="560" stroke="rgb(255, 191, 0)" r="27.5" id="connector5pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="560" stroke="rgb(255, 191, 0)" r="27.5" id="connector58pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="660" stroke="rgb(255, 191, 0)" r="27.5" id="connector6pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="660" stroke="rgb(255, 191, 0)" r="27.5" id="connector57pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="760" stroke="rgb(255, 191, 0)" r="27.5" id="connector7pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="760" stroke="rgb(255, 191, 0)" r="27.5" id="connector56pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="860" stroke="rgb(255, 191, 0)" r="27.5" id="connector8pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="860" stroke="rgb(255, 191, 0)" r="27.5" id="connector55pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="960" stroke="rgb(255, 191, 0)" r="27.5" id="connector9pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="960" stroke="rgb(255, 191, 0)" r="27.5" id="connector54pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1060" stroke="rgb(255, 191, 0)" r="27.5" id="connector10pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1060" stroke="rgb(255, 191, 0)" r="27.5" id="connector53pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1160" stroke="rgb(255, 191, 0)" r="27.5" id="connector11pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1160" stroke="rgb(255, 191, 0)" r="27.5" id="connector52pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1260" stroke="rgb(255, 191, 0)" r="27.5" id="connector12pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1260" stroke="rgb(255, 191, 0)" r="27.5" id="connector51pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1360" stroke="rgb(255, 191, 0)" r="27.5" id="connector13pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1360" stroke="rgb(255, 191, 0)" r="27.5" id="connector50pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1460" stroke="rgb(255, 191, 0)" r="27.5" id="connector14pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1460" stroke="rgb(255, 191, 0)" r="27.5" id="connector49pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1560" stroke="rgb(255, 191, 0)" r="27.5" id="connector15pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1560" stroke="rgb(255, 191, 0)" r="27.5" id="connector48pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1660" stroke="rgb(255, 191, 0)" r="27.5" id="connector16pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1660" stroke="rgb(255, 191, 0)" r="27.5" id="connector47pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1760" stroke="rgb(255, 191, 0)" r="27.5" id="connector17pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1760" stroke="rgb(255, 191, 0)" r="27.5" id="connector46pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1860" stroke="rgb(255, 191, 0)" r="27.5" id="connector18pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1860" stroke="rgb(255, 191, 0)" r="27.5" id="connector45pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="1960" stroke="rgb(255, 191, 0)" r="27.5" id="connector19pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="1960" stroke="rgb(255, 191, 0)" r="27.5" id="connector44pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2060" stroke="rgb(255, 191, 0)" r="27.5" id="connector20pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2060" stroke="rgb(255, 191, 0)" r="27.5" id="connector43pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2160" stroke="rgb(255, 191, 0)" r="27.5" id="connector21pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2160" stroke="rgb(255, 191, 0)" r="27.5" id="connector42pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2260" stroke="rgb(255, 191, 0)" r="27.5" id="connector22pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2260" stroke="rgb(255, 191, 0)" r="27.5" id="connector41pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2360" stroke="rgb(255, 191, 0)" r="27.5" id="connector23pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2360" stroke="rgb(255, 191, 0)" r="27.5" id="connector40pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2460" stroke="rgb(255, 191, 0)" r="27.5" id="connector24pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2460" stroke="rgb(255, 191, 0)" r="27.5" id="connector39pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2560" stroke="rgb(255, 191, 0)" r="27.5" id="connector25pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2560" stroke="rgb(255, 191, 0)" r="27.5" id="connector38pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2660" stroke="rgb(255, 191, 0)" r="27.5" id="connector26pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2660" stroke="rgb(255, 191, 0)" r="27.5" id="connector37pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2760" stroke="rgb(255, 191, 0)" r="27.5" id="connector27pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2760" stroke="rgb(255, 191, 0)" r="27.5" id="connector36pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2860" stroke="rgb(255, 191, 0)" r="27.5" id="connector28pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2860" stroke="rgb(255, 191, 0)" r="27.5" id="connector35pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="2960" stroke="rgb(255, 191, 0)" r="27.5" id="connector29pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="2960" stroke="rgb(255, 191, 0)" r="27.5" id="connector34pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="3060" stroke="rgb(255, 191, 0)" r="27.5" id="connector30pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="3060" stroke="rgb(255, 191, 0)" r="27.5" id="connector33pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="3160" stroke="rgb(255, 191, 0)" r="27.5" id="connector31pad" stroke-width="20" />
+   <circle fill="none" cx="360.0" cy="3160" stroke="rgb(255, 191, 0)" r="27.5" id="connector32pad" stroke-width="20" />
+ </g>
+ <g id="keepout" />
+ <g id="soldermask" />
+ <g id="outline" />
+</svg>

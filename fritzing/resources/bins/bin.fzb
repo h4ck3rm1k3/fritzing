@@ -331,5 +331,12 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="generic_ic_dip_8_300mil" modelIndex="52" path="parts/core/generic_ic_dip_8_300mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
     </instances>
   </module>

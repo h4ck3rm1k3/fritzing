@@ -76,6 +76,7 @@ $Date$
 #include "fsvgrenderer.h"
 #include "items/resistor.h"
 #include "items/mysterypart.h"
+#include "items/dip.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
@@ -709,6 +710,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			}
 			else if (modelPart->properties().value("family", "").compare("mystery part", Qt::CaseInsensitive) == 0) {
 				paletteItem = new MysteryPart(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
+			}
+			else if (modelPart->properties().value("family", "").compare("generic DIP", Qt::CaseInsensitive) == 0) {
+				paletteItem = new Dip(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
 			}
 			else {
 				paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);

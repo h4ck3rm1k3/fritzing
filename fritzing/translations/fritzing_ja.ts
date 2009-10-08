@@ -434,10 +434,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <source>width</source>
         <translation>幅</translation>
     </message>
-    <message>
-        <source>resistance</source>
-        <translation>抵抗</translation>
-    </message>
 </context>
 <context>
     <name>ItemBase</name>
@@ -448,6 +444,30 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Module</source>
         <translation>モジュール</translation>
+    </message>
+    <message>
+        <source>family</source>
+        <translation type="unfinished">ファミリー</translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished">カラー</translation>
+    </message>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished">抵抗</translation>
+    </message>
+    <message>
+        <source>voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pin spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated power</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1671,6 +1691,22 @@ Do you want to restart now?</source>
     </message>
     <message>
         <source>Remove copper fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Normalized SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export 1000 dpi SVG of this part in this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Normalized Flattened SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export 1000 dpi Flattened SVG of this part in this view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2938,6 +2974,14 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Disconnect all wires from %1 items</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change Resistance from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change ChipLabel from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
@@ -3049,7 +3093,7 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chinese Simp. - %1</source>
+        <source>Chinese (Simplified) - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

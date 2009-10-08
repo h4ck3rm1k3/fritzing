@@ -12,10 +12,10 @@
   <line stroke="white" y1="120" x1="20" y2="120" stroke-width="10" x2="120" />
  </g>
  <g id="copper0" >
-  <rect width="48" x="46" y="46" fill="none" height="48" stroke="rgb(255, 191, 0)" stroke-width="11" />
+  <rect width="55" x="46" y="46" fill="none" height="55" stroke="rgb(255, 191, 0)" stroke-width="20" />
    #for $pin in range(int($pins))
    #set $piny = 70 + ($pin * 100)
-   <circle fill="none" cx="70" cy="${piny}" stroke="rgb(255, 191, 0)" r="24" id="connector${pin}pin" stroke-width="11" />
+   <circle fill="none" cx="70" cy="${piny}" stroke="rgb(255, 191, 0)" r="27.5" id="connector${pin}pin" stroke-width="20" />
    #end for
  </g>
  <g id="keepout" />

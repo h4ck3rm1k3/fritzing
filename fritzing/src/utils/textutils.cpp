@@ -72,7 +72,7 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok) {
 		string.chop(2);
 	}
 	else if (string.endsWith("px", Qt::CaseInsensitive)) {
-		divisor = 72.0;
+		divisor = 90.0;
 		string.chop(2);
 	}
 	else {
