@@ -9,6 +9,8 @@ C:\Python26\python.exe partomatic.py -c .\deleteme\config\generic_rounded_female
 C:\Python26\python.exe partomatic.py -c .\deleteme\config\generic_male_pin_header_100mil_fzp.cfg -t .\templates\generic-male-header.fzp -o .\deleteme\fzp
 C:\Python26\python.exe partomatic.py -c .\deleteme\config\generic_male_pin_header_100mil_bread_svg.cfg -t .\templates\generic-male-header_bread.svg -o .\deleteme\bread
 C:\Python26\python.exe partomatic.py -c .\deleteme\config\generic_male_pin_header_100mil_schem_svg.cfg -t .\templates\generic-male-header_schem.svg -o .\deleteme\schem
-
+C:\Python26\python.exe partomatic.py -c .\deleteme\config\screw_terminal_100mil_fzp.cfg -t .\templates\screw_terminal.fzp -o .\deleteme\fzp
+C:\Python26\python.exe partomatic.py -c .\deleteme\config\screw_terminal_100mil_bread_svg.cfg -t .\templates\screw_terminal_bread.svg -o .\deleteme\bread
+C:\Python26\python.exe partomatic.py -c .\deleteme\config\screw_terminal_100mil_schem_svg.cfg -t .\templates\screw_terminal_schem.svg -o .\deleteme\schem
 
 

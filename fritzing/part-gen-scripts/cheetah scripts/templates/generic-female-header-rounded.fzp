@@ -10,9 +10,8 @@
     <properties>
         <property name="family">Connector</property>
         <property name="Pins">$pins</property>
-        <property name="Gender">&#9792;</property>
+        <property name="Form">&#9792; (female rounded)</property>
         <property name="Pin Spacing">${fpitch}in (${fpitch * 25.4}mm)</property>
-        <property name="Hole Shape">Round</property>
     </properties>
     <description>Generic female header - metal rounded</description>
     <views>

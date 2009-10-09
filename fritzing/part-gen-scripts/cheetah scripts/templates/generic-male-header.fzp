@@ -10,7 +10,7 @@
     <properties>
         <property name="family">Connector</property>
         <property name="Pins">$pins</property>
-        <property name="Gender">&#9794;</property>
+        <property name="Form">&#9794; (male)</property>
         <property name="Pin Spacing">${fpitch}in (${25.4 * fpitch}mm)</property>
     </properties>
     <description>Generic male header</description>

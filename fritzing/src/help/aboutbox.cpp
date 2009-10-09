@@ -145,8 +145,14 @@ tr("<p>Thanks to Kurt Badelt<br/>"
 tr("Gianluca Urgese<br/>"
    "for the Italian translation,<br/>") +
 
-tr("and to Nuno Pessanha Santos<br/>"
-   "for the Portuguese translation.</p>") +
+tr("to Nuno Pessanha Santos<br/>"
+   "for the Portuguese translation,<br/>") +
+
+tr("to Yuelin<br/>"
+   "for the Chinese (Simplified) translation,<br/>") +
+
+tr("and to Vladimir Savinov<br/>"
+   "for the Russian translation.</p>") +
 
 tr("<p>Fritzing is made possible with funding from the<br/>"
    "MWFK Brandenburg, the sponsorship of the Design<br/>"

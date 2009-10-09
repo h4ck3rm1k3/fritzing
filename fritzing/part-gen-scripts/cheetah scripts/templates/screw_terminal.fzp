@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="Screw_Terminal_${spacing}_${pins}">
+#set $fpitch = float($pitch)
+#set $mils = int($fpitch * 1000)
+<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="$uuid">
     <author>Lionel Michel</author>
     <title>Screw terminal - $pins pins</title>
     <label>J</label>
@@ -8,7 +10,8 @@
     <properties>
         <property name="family">Connector</property>
         <property name="Pins">$pins</property>
-        <property name="Pin Spacing">${spacing}in (${spacing * 25.4}mm)</property>
+        <property name="Pin Spacing">${fpitch}in (${fpitch * 25.4}mm)</property>
+        <property name="Form">screw terminal</property>
     </properties>
     <description>Screw terminal with $pins pins</description>
     <views>
@@ -18,17 +21,17 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/screw_terminal_${spacing}_${pins}_bread.svg">
+            <layers image="breadboard/screw_terminal_${pins}_${mils}mil_bread.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/screw_terminal_${spacing}_${pins}_schem.svg">
+            <layers image="schematic/screw_terminal_${pins}_${mils}mil_schem.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/jumper_${spacing}_${pins}_pcb.svg">
+            <layers image="pcb/jumper_${pins}_${mils}mil_pcb.svg">
                 <layer layerId="copper0"></layer>
                 <layer layerId="silkscreen"></layer>
             </layers>
