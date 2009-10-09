@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" 
+     width="12.76633in" height="0.7in" viewBox="0 0 12766.33 700" >
+  <g id="schematic" >
+   <circle fill="none" cx="133.758" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="133.758" y1="258.775" x2="133.758" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="133.758" y1="688.882" x2="133.758" y2="454.761" id="connector0pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="119.9813" y="684.949" width="27.5534" height="13.8699" id="connector0terminal" stroke-width="0" />
+   <circle fill="none" cx="446.228" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="446.228" y1="258.775" x2="446.228" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="446.228" y1="688.882" x2="446.228" y2="454.761" id="connector1pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="432.4513" y="684.949" width="27.5534" height="13.8699" id="connector1terminal" stroke-width="0" />
+   <circle fill="none" cx="758.698" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="758.698" y1="258.775" x2="758.698" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="758.698" y1="688.882" x2="758.698" y2="454.761" id="connector2pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="744.9213" y="684.949" width="27.5534" height="13.8699" id="connector2terminal" stroke-width="0" />
+   <circle fill="none" cx="1071.168" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="1071.168" y1="258.775" x2="1071.168" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="1071.168" y1="688.882" x2="1071.168" y2="454.761" id="connector3pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="1057.3913" y="684.949" width="27.5534" height="13.8699" id="connector3terminal" stroke-width="0" />
+   <circle fill="none" cx="1383.638" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="1383.638" y1="258.775" x2="1383.638" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="1383.638" y1="688.882" x2="1383.638" y2="454.761" id="connector4pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="1369.8613" y="684.949" width="27.5534" height="13.8699" id="connector4terminal" stroke-width="0" />
+   <circle fill="none" cx="1696.108" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="1696.108" y1="258.775" x2="1696.108" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="1696.108" y1="688.882" x2="1696.108" y2="454.761" id="connector5pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="1682.3313" y="684.949" width="27.5534" height="13.8699" id="connector5terminal" stroke-width="0" />
+   <circle fill="none" cx="2008.578" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="2008.578" y1="258.775" x2="2008.578" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="2008.578" y1="688.882" x2="2008.578" y2="454.761" id="connector6pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="1994.8013" y="684.949" width="27.5534" height="13.8699" id="connector6terminal" stroke-width="0" />
+   <circle fill="none" cx="2321.048" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="2321.048" y1="258.775" x2="2321.048" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="2321.048" y1="688.882" x2="2321.048" y2="454.761" id="connector7pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="2307.2713" y="684.949" width="27.5534" height="13.8699" id="connector7terminal" stroke-width="0" />
+   <circle fill="none" cx="2633.518" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="2633.518" y1="258.775" x2="2633.518" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="2633.518" y1="688.882" x2="2633.518" y2="454.761" id="connector8pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="2619.7413" y="684.949" width="27.5534" height="13.8699" id="connector8terminal" stroke-width="0" />
+   <circle fill="none" cx="2945.988" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="2945.988" y1="258.775" x2="2945.988" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="2945.988" y1="688.882" x2="2945.988" y2="454.761" id="connector9pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="2932.2113" y="684.949" width="27.5534" height="13.8699" id="connector9terminal" stroke-width="0" />
+   <circle fill="none" cx="3258.458" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="3258.458" y1="258.775" x2="3258.458" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="3258.458" y1="688.882" x2="3258.458" y2="454.761" id="connector10pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="3244.6813" y="684.949" width="27.5534" height="13.8699" id="connector10terminal" stroke-width="0" />
+   <circle fill="none" cx="3570.928" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="3570.928" y1="258.775" x2="3570.928" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="3570.928" y1="688.882" x2="3570.928" y2="454.761" id="connector11pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="3557.1513" y="684.949" width="27.5534" height="13.8699" id="connector11terminal" stroke-width="0" />
+   <circle fill="none" cx="3883.398" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="3883.398" y1="258.775" x2="3883.398" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="3883.398" y1="688.882" x2="3883.398" y2="454.761" id="connector12pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="3869.6213" y="684.949" width="27.5534" height="13.8699" id="connector12terminal" stroke-width="0" />
+   <circle fill="none" cx="4195.868" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="4195.868" y1="258.775" x2="4195.868" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="4195.868" y1="688.882" x2="4195.868" y2="454.761" id="connector13pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="4182.0913" y="684.949" width="27.5534" height="13.8699" id="connector13terminal" stroke-width="0" />
+   <circle fill="none" cx="4508.338" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="4508.338" y1="258.775" x2="4508.338" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="4508.338" y1="688.882" x2="4508.338" y2="454.761" id="connector14pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="4494.5613" y="684.949" width="27.5534" height="13.8699" id="connector14terminal" stroke-width="0" />
+   <circle fill="none" cx="4820.808" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="4820.808" y1="258.775" x2="4820.808" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="4820.808" y1="688.882" x2="4820.808" y2="454.761" id="connector15pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="4807.0313" y="684.949" width="27.5534" height="13.8699" id="connector15terminal" stroke-width="0" />
+   <circle fill="none" cx="5133.278" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="5133.278" y1="258.775" x2="5133.278" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="5133.278" y1="688.882" x2="5133.278" y2="454.761" id="connector16pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="5119.5013" y="684.949" width="27.5534" height="13.8699" id="connector16terminal" stroke-width="0" />
+   <circle fill="none" cx="5445.748" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="5445.748" y1="258.775" x2="5445.748" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="5445.748" y1="688.882" x2="5445.748" y2="454.761" id="connector17pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="5431.9713" y="684.949" width="27.5534" height="13.8699" id="connector17terminal" stroke-width="0" />
+   <circle fill="none" cx="5758.218" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="5758.218" y1="258.775" x2="5758.218" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="5758.218" y1="688.882" x2="5758.218" y2="454.761" id="connector18pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="5744.4413" y="684.949" width="27.5534" height="13.8699" id="connector18terminal" stroke-width="0" />
+   <circle fill="none" cx="6070.688" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="6070.688" y1="258.775" x2="6070.688" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="6070.688" y1="688.882" x2="6070.688" y2="454.761" id="connector19pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="6056.9113" y="684.949" width="27.5534" height="13.8699" id="connector19terminal" stroke-width="0" />
+   <circle fill="none" cx="6383.158" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="6383.158" y1="258.775" x2="6383.158" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="6383.158" y1="688.882" x2="6383.158" y2="454.761" id="connector20pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="6369.3813" y="684.949" width="27.5534" height="13.8699" id="connector20terminal" stroke-width="0" />
+   <circle fill="none" cx="6695.628" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="6695.628" y1="258.775" x2="6695.628" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="6695.628" y1="688.882" x2="6695.628" y2="454.761" id="connector21pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="6681.8513" y="684.949" width="27.5534" height="13.8699" id="connector21terminal" stroke-width="0" />
+   <circle fill="none" cx="7008.098" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="7008.098" y1="258.775" x2="7008.098" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="7008.098" y1="688.882" x2="7008.098" y2="454.761" id="connector22pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="6994.3213" y="684.949" width="27.5534" height="13.8699" id="connector22terminal" stroke-width="0" />
+   <circle fill="none" cx="7320.568" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="7320.568" y1="258.775" x2="7320.568" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="7320.568" y1="688.882" x2="7320.568" y2="454.761" id="connector23pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="7306.7913" y="684.949" width="27.5534" height="13.8699" id="connector23terminal" stroke-width="0" />
+   <circle fill="none" cx="7633.038" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="7633.038" y1="258.775" x2="7633.038" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="7633.038" y1="688.882" x2="7633.038" y2="454.761" id="connector24pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="7619.2613" y="684.949" width="27.5534" height="13.8699" id="connector24terminal" stroke-width="0" />
+   <circle fill="none" cx="7945.508" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="7945.508" y1="258.775" x2="7945.508" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="7945.508" y1="688.882" x2="7945.508" y2="454.761" id="connector25pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="7931.7313" y="684.949" width="27.5534" height="13.8699" id="connector25terminal" stroke-width="0" />
+   <circle fill="none" cx="8257.978" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="8257.978" y1="258.775" x2="8257.978" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="8257.978" y1="688.882" x2="8257.978" y2="454.761" id="connector26pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="8244.2013" y="684.949" width="27.5534" height="13.8699" id="connector26terminal" stroke-width="0" />
+   <circle fill="none" cx="8570.448" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="8570.448" y1="258.775" x2="8570.448" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="8570.448" y1="688.882" x2="8570.448" y2="454.761" id="connector27pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="8556.6713" y="684.949" width="27.5534" height="13.8699" id="connector27terminal" stroke-width="0" />
+   <circle fill="none" cx="8882.918" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="8882.918" y1="258.775" x2="8882.918" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="8882.918" y1="688.882" x2="8882.918" y2="454.761" id="connector28pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="8869.1413" y="684.949" width="27.5534" height="13.8699" id="connector28terminal" stroke-width="0" />
+   <circle fill="none" cx="9195.388" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="9195.388" y1="258.775" x2="9195.388" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="9195.388" y1="688.882" x2="9195.388" y2="454.761" id="connector29pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="9181.6113" y="684.949" width="27.5534" height="13.8699" id="connector29terminal" stroke-width="0" />
+   <circle fill="none" cx="9507.858" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="9507.858" y1="258.775" x2="9507.858" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="9507.858" y1="688.882" x2="9507.858" y2="454.761" id="connector30pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="9494.0813" y="684.949" width="27.5534" height="13.8699" id="connector30terminal" stroke-width="0" />
+   <circle fill="none" cx="9820.328" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="9820.328" y1="258.775" x2="9820.328" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="9820.328" y1="688.882" x2="9820.328" y2="454.761" id="connector31pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="9806.5513" y="684.949" width="27.5534" height="13.8699" id="connector31terminal" stroke-width="0" />
+   <circle fill="none" cx="10132.798" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="10132.798" y1="258.775" x2="10132.798" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="10132.798" y1="688.882" x2="10132.798" y2="454.761" id="connector32pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="10119.0213" y="684.949" width="27.5534" height="13.8699" id="connector32terminal" stroke-width="0" />
+   <circle fill="none" cx="10445.268" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="10445.268" y1="258.775" x2="10445.268" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="10445.268" y1="688.882" x2="10445.268" y2="454.761" id="connector33pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="10431.4913" y="684.949" width="27.5534" height="13.8699" id="connector33terminal" stroke-width="0" />
+   <circle fill="none" cx="10757.738" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="10757.738" y1="258.775" x2="10757.738" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="10757.738" y1="688.882" x2="10757.738" y2="454.761" id="connector34pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="10743.9613" y="684.949" width="27.5534" height="13.8699" id="connector34terminal" stroke-width="0" />
+   <circle fill="none" cx="11070.208" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="11070.208" y1="258.775" x2="11070.208" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="11070.208" y1="688.882" x2="11070.208" y2="454.761" id="connector35pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="11056.4313" y="684.949" width="27.5534" height="13.8699" id="connector35terminal" stroke-width="0" />
+   <circle fill="none" cx="11382.678" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="11382.678" y1="258.775" x2="11382.678" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="11382.678" y1="688.882" x2="11382.678" y2="454.761" id="connector36pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="11368.9013" y="684.949" width="27.5534" height="13.8699" id="connector36terminal" stroke-width="0" />
+   <circle fill="none" cx="11695.148" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="11695.148" y1="258.775" x2="11695.148" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="11695.148" y1="688.882" x2="11695.148" y2="454.761" id="connector37pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="11681.3713" y="684.949" width="27.5534" height="13.8699" id="connector37terminal" stroke-width="0" />
+   <circle fill="none" cx="12007.618" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="12007.618" y1="258.775" x2="12007.618" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="12007.618" y1="688.882" x2="12007.618" y2="454.761" id="connector38pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="11993.8413" y="684.949" width="27.5534" height="13.8699" id="connector38terminal" stroke-width="0" />
+   <circle fill="none" cx="12320.088" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="12320.088" y1="258.775" x2="12320.088" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="12320.088" y1="688.882" x2="12320.088" y2="454.761" id="connector39pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="12306.3113" y="684.949" width="27.5534" height="13.8699" id="connector39terminal" stroke-width="0" />
+   <circle fill="none" cx="12632.558" cy="137.74" stroke="#000000" r="119.981" stroke-width="27.5534" />
+   <line x1="12632.558" y1="258.775" x2="12632.558" y2="547.292" fill="none" stroke="#000000" stroke-width="27.5534"  />
+   <line x1="12632.558" y1="688.882" x2="12632.558" y2="454.761" id="connector40pin" fill="none" stroke="#000000" stroke-linejoin="round" stroke-linecap="square" stroke-width="27.5534" />
+   <rect x="12618.7813" y="684.949" width="27.5534" height="13.8699" id="connector40terminal" stroke-width="0" />
+</g>
+</svg>
