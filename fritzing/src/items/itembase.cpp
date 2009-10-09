@@ -1239,8 +1239,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 
 		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));
 
-    	QStringList possibleFolders;
-    	possibleFolders << "core" << "contrib" << "user";
+		QStringList possibleFolders = ModelPart::possibleFolders();
 		bool gotOne = false;
 		QString filename;
 		foreach (QString possibleFolder, possibleFolders) {

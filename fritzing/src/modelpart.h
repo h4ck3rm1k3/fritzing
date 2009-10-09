@@ -126,6 +126,7 @@ public:
 	static long nextIndex();
 	static void updateIndex(long index);
 	static const int indexMultiplier;
+	static const QStringList & possibleFolders();
 
 signals:
 	void startSaveInstances(ModelPart *, QXmlStreamWriter &);
@@ -163,6 +164,7 @@ protected:
 protected:
 	static QHash<ItemType, QString> itemTypeNames;
 	static long m_nextIndex;
+	static QStringList m_possibleFolders;
 };
 
 Q_DECLARE_METATYPE( ModelPart* );			// so we can stash them in a QVariant

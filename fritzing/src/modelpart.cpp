@@ -36,6 +36,7 @@ $Date$
 
 long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
+QStringList ModelPart::m_possibleFolders;
 
 ModelPart::ModelPart(ItemType type)
 	: QObject()
@@ -485,11 +486,10 @@ void ModelPart::grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndP
 }
 
 QString ModelPart::inWhichFolder(const QString &partspath, const QString &imagepath) {
-	QStringList possibleFolders;
-	possibleFolders << "core" << "contrib" << "user";
-	for(int i=0; i < possibleFolders.size(); i++) {
-		if (QFileInfo( partspath+"/"+possibleFolders[i]+"/"+imagepath ).exists()) {
-			return possibleFolders[i];
+	QStringList pf = possibleFolders();
+	for(int i=0; i < pf.size(); i++) {
+		if (QFileInfo( partspath+"/"+pf[i]+"/"+imagepath ).exists()) {
+			return pf[i];
 		}
 	}
 	return ___emptyString___;
@@ -529,4 +529,12 @@ void ModelPart::setProp(const char * name, const QVariant & value) {
 
 QVariant ModelPart::prop(const char * name) const {
 	return property(name);
+}
+
+const QStringList & ModelPart::possibleFolders() {
+	if (m_possibleFolders.count() == 0) {
+		m_possibleFolders << "core" << "obsolete" << "contrib" << "user";
+	}
+
+	return m_possibleFolders;
 }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+#set $fpitch = float($pitch)
+#set $mils = int($fpitch * 1000)
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="$uuid">
     <author>Fritzing Part-o-matic</author>
     <title>Generic male header - $pins pins</title>
@@ -9,7 +11,7 @@
         <property name="family">Connector</property>
         <property name="Pins">$pins</property>
         <property name="Gender">&#9794;</property>
-        <property name="Pin Spacing">0.1in (2.54mm)</property>
+        <property name="Pin Spacing">${fpitch}in (${25.4 * fpitch}mm)</property>
     </properties>
     <description>Generic male header</description>
     <views>
@@ -20,18 +22,18 @@
         </iconView>
         <breadboardView>
 #set $bread_suffix = '_'+$bread_unique if not $gen_to_core else ''
-            <layers image="breadboard/generic-male-header_bread_${pins}${bread_suffix}.svg">
+            <layers image="breadboard/generic_male_pin_header_${pins}_${mils}mil_bread.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
         <schematicView fliphorizontal="true" flipvertical="true">
 #set $schem_suffix = '_'+$schem_unique if not $gen_to_core else ''
-            <layers image="schematic/generic-male-header_schem_${pins}${schem_suffix}.svg">
+            <layers image="schematic/generic_male_pin_header_${pins}_${mils}mil_schem.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/jumper${pins}.svg">
+            <layers image="pcb/jumper_${pins}_${mils}mil_pcb.svg">
                 <layer layerId="copper0"></layer>
                 <layer layerId="silkscreen"></layer>
             </layers>

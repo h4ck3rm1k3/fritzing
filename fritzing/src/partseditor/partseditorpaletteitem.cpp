@@ -120,8 +120,7 @@ bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, c
 
 		QStringList possibleRootFolders;
 		possibleRootFolders << FolderUtils::getApplicationSubFolderPath("parts") << FolderUtils::getUserDataStorePath("parts");
-		QStringList possibleFolders;
-		possibleFolders << "core" << "contrib" << "user";
+		QStringList possibleFolders = ModelPart::possibleFolders();
 		foreach(QString rootFolder, possibleRootFolders) {
 			foreach(QString folder, possibleFolders) {
 				if (QFileInfo( tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder) ).exists()) {

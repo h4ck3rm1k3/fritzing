@@ -692,6 +692,7 @@ bool PartsEditorView::isIllustratorFile(const QString &fileContent) {
 
 bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &filename) {
 	if(m_viewIdentifier == ViewIdentifierClass::IconView) return false;
+	return false;
 
 	QDomDocument *svgDom = new QDomDocument();
 
@@ -772,7 +773,7 @@ bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, con
 		bool ok;
 		qreal value = attrValue.remove("px").toDouble(&ok);
 		if(ok) {
-			QString newValue = QString("%1in").arg(value/72);
+			QString newValue = QString("%1in").arg(value/90);
 			elem.setAttribute(attrName,newValue);
 			DebugDialog::debug(
 				QString("translating svg attribute '%1' from '%2px' to '%3' in file '%4'")
