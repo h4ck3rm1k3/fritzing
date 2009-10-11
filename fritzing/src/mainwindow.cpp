@@ -282,59 +282,6 @@ void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->addViewLayers();
 }
 
-/*
-qreal MainWindow::getSvgWidthInInches(const QString & filename)
-{
-	qreal result = 0;
-
-	QFile file(filename);
-	if (!file.open(QFile::ReadOnly | QFile::Text)) {
-		return result;
-	}
-
-	result = getSvgWidthInInches(file);
-	file.close();
-
-	return result;
-}
-
-qreal MainWindow::getSvgWidthInInches(QFile & file)
-{
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument* domDocument = new QDomDocument();
-
-	if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		return 0;
-	}
-
-	QDomElement root = domDocument->documentElement();
-	if (root.isNull()) {
-		return 0;
-	}
-
-	if (root.tagName() != "svg") {
-		return 0;
-	}
-
-	QString stringWidth = root.attribute("width");
-	if (stringWidth.isNull()) {
-		return 0;
-	}
-
-	if (stringWidth.isEmpty()) {
-		return 0;
-	}
-
-	bool ok;
-	qreal result = convertToInches(stringWidth, &ok);
-	if (!ok) return 0;
-
-	return result;
-}
-*/
-
 void MainWindow::connectPairs() {
 	connectPair(m_breadboardGraphicsView, m_schematicGraphicsView);
 	connectPair(m_breadboardGraphicsView, m_pcbGraphicsView);

@@ -58,9 +58,10 @@ public:
 	static void calcPrinterScale();
 	static qreal printerScale();
 	static void cleanup();
+	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
 
 protected:
-	void parseForWidthAndHeight(QXmlStreamReader & xml);
+	void determineDefaultSize(QXmlStreamReader &);
 	QByteArray cleanXml(const QByteArray & contents, const QString & filename);
 	bool loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors);
 

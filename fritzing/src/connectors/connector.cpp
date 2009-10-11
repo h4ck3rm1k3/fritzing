@@ -258,6 +258,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		}
 
 		QSizeF defaultSizeF = renderer->defaultSizeF();
+		QSize defaultSize = renderer->defaultSize();
 		if ((bounds.width()) == defaultSizeF.width() && (bounds.height()) == defaultSizeF.height()) {
 			svgIdLayer->m_visible = false;
 			return false;
@@ -286,7 +287,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		*/
 
 		QRectF r1 = matrix0.mapRect(bounds);
-		connectorRect.setRect(r1.x() * defaultSizeF.width() / viewBox.width(), r1.y() * defaultSizeF.height() / viewBox.height(), r1.width() * defaultSizeF.width() / viewBox.width(), r1.height() * defaultSizeF.height() / viewBox.height());
+		connectorRect.setRect(r1.x() * defaultSize.width() / viewBox.width(), r1.y() * defaultSize.height() / viewBox.height(), r1.width() * defaultSize.width() / viewBox.width(), r1.height() * defaultSize.height() / viewBox.height());
 
 		svgIdLayer->m_visible = true;
 		svgIdLayer->m_rect = connectorRect;
@@ -316,6 +317,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * 
 	}
 
 	QSizeF defaultSizeF = renderer->defaultSizeF();
+	QSize defaultSize = renderer->defaultSize();
 	if (tBounds.width() >= defaultSizeF.width() && tBounds.height() >= defaultSizeF.height()) {
 		return terminalPoint;
 	}
@@ -332,7 +334,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * 
 	QMatrix tMatrix = renderer->matrixForElement(terminalId) * terminalMatrix;
 	QRectF terminalRect = tMatrix.mapRect(tBounds);
 	QPointF c = terminalRect.center();
-	QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());
+	QPointF q(c.x() * defaultSize.width() / viewBox.width(), c.y() * defaultSize.height() / viewBox.height());
 	terminalPoint = q - connectorRect.topLeft();
 	//DebugDialog::debug(	QString("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
 										//arg(terminalPoint.y()).

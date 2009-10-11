@@ -34,10 +34,11 @@ $Date$
 #include <QTextStream>
 #include <QPainter>
 #include <QCoreApplication>
+#include <QGraphicsSvgItem>
 
 QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
 QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
-qreal FSvgRenderer::m_printerScale = 1;
+qreal FSvgRenderer::m_printerScale = 90.0;
 
 FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
 {
@@ -78,8 +79,8 @@ bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 
 	/*
 
-	QXmlStreamReader xml(&file);
-	parseForWidthAndHeight(xml);
+	QXmlStreamReader xml(contents);
+	determineDefaultSize(xml);
 
 	if (readConnectors) {
 		file.seek(0);
@@ -126,7 +127,7 @@ bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filena
 	//DebugDialog::debug(cleanContents.data());
 
 	QXmlStreamReader xml(cleanContents);
-	parseForWidthAndHeight(xml);
+	determineDefaultSize(xml);
 	if (readConnectors) {
 		m_svgXml =  cleanContents;
 	}
@@ -199,9 +200,17 @@ void FSvgRenderer::set(const QString & moduleID, ViewLayer::ViewLayerID viewLaye
 	rendererHash->insert(viewLayerID, renderer);
 }
 
-void FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
+void FSvgRenderer::determineDefaultSize(QXmlStreamReader & xml)
+{
+	QSizeF size = parseForWidthAndHeight(xml);
+	m_defaultSizeF = QSizeF(size.width() * m_printerScale, size.height() * m_printerScale);
+}
+
+QSizeF FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 {
     xml.setNamespaceProcessing(false);
+
+	QSizeF size(0,0);
 
 	while (!xml.atEnd()) {
         switch (xml.readNext()) {
@@ -211,20 +220,25 @@ void FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 				QString hs = xml.attributes().value("height").toString();
 				bool ok;
 				qreal w = TextUtils::convertToInches(ws, &ok);
-				if (!ok) return;
+				if (!ok) return size;
 
 				qreal h = TextUtils::convertToInches(hs, &ok);
-				if (!ok) return;
+				if (!ok) return size;
 
-				m_defaultSizeF = QSizeF(w * m_printerScale, h * m_printerScale);
-
+				size.setWidth(w);
+				size.setHeight(h);
+				return size;
 			}
-			return;
+			return size;
 		default:
 			break;
 		}
 	}
+
+	return size;
 }
+
+
 
 QSizeF FSvgRenderer::defaultSizeF() {
 	if (m_defaultSizeF.width() == 0 && m_defaultSizeF.height() == 0) {
@@ -237,28 +251,28 @@ QSizeF FSvgRenderer::defaultSizeF() {
 void FSvgRenderer::calcPrinterScale() {
 
 	// note: I think that printerScale is probably just 90 dpi, since the calculation
-	// result is 89.8407 across all three platforms
+	// result is 89.8407 for the breadboard svg across all three platforms 
+	// note: calculation result depends on the svg used; if the svg size is a float, the scale will vary a little
+	// using an svg file with exactly a 1-inch width (like 'wire.svg') gives exactly a 90.0 printerscale value.
 
 	m_printerScale = 90.0;
-	return;
 
-/*
-	m_printerScale = 1;
-	ViewGeometry viewGeometry;
-	ItemBase * itemBase = m_breadboardGraphicsView->addItem(ItemBase::rulerModuleIDName, BaseCommand::SingleView, viewGeometry, ItemBase::getNextID());
-	if (itemBase == NULL) return;
+	/*
 
-	QSize size = itemBase->size();
-	QString filename = dynamic_cast<PaletteItemBase *>(itemBase)->filename();
-	m_breadboardGraphicsView->deleteItem(itemBase, true, false, false);
+	QString filename(":/resources/parts/svg/core/breadboard/wire.svg");
+	
+	QGraphicsSvgItem item(filename);
+	QRectF b = item.boundingRect();
+	QFile file(filename);
+	file.open(QFile::ReadOnly);
+	QXmlStreamReader xml(&file);
+	QSizeF size = parseForWidthAndHeight(xml);
+	if (size.width() <= 0) return;
 
-	qreal width = getSvgWidthInInches(filename);
-	if (width <= 0) return;
+	qreal pscale = b.width() / size.width();
+	DebugDialog::debug(QString("printerscale %1").arg(pscale));
 
-	m_printerScale = size.width() / width;
-	DebugDialog::debug(QString("printerscale %1").arg(m_printerScale));
-*/
-
+	*/
 }
 
 qreal FSvgRenderer::printerScale() {

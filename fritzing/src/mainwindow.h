@@ -368,8 +368,6 @@ protected:
 	bool wannaRestart();
 
 protected:
-	//static qreal getSvgWidthInInches(const QString & filename);
-	//static qreal getSvgWidthInInches(QFile & file);
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
 
 
