@@ -148,7 +148,7 @@ tr("Gianluca Urgese<br/>"
 tr("to Nuno Pessanha Santos<br/>"
    "for the Portuguese translation,<br/>") +
 
-tr("to Yuelin<br/>"
+tr("to Yuelin and Ninjia<br/>"
    "for the Chinese (Simplified) translation,<br/>") +
 
 tr("and to Vladimir Savinov<br/>"

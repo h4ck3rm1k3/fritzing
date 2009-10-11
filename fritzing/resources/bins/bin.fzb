@@ -345,5 +345,12 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="generic_sip_2_300mil" modelIndex="53" path="parts/core/generic_sip_2_300mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
     </instances>
   </module>

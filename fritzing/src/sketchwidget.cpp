@@ -714,6 +714,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			else if (modelPart->properties().value("family", "").compare("generic DIP", Qt::CaseInsensitive) == 0) {
 				paletteItem = new Dip(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
 			}
+			else if (modelPart->properties().value("family", "").compare("generic SIP", Qt::CaseInsensitive) == 0) {
+				paletteItem = new Dip(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
+			}
 			else {
 				paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
 			}
