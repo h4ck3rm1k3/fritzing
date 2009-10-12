@@ -166,7 +166,12 @@ QString SqliteReferenceModel::retrieveModuleIdWith(const QString &family, const 
 }
 
 QString SqliteReferenceModel::retrieveModuleId(const QString &family, const QMultiHash<QString, QString> &properties, const QString &propertyName) {
-	return retrieveModuleId(Part::from(family, properties), propertyName);
+	Part * part = Part::from(family, properties);
+	if (part == NULL) return "";
+
+	QString moduleID = retrieveModuleId(part, propertyName);
+	delete part;
+	return moduleID;
 }
 
 QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QString &propertyName) {

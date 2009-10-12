@@ -3699,6 +3699,12 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 			break;
 	}
 
+	// TODO: does this need to be generalized to the whole set of modelpart props?
+	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
+	if (mysteryPart != NULL) {
+		new SetChipLabelCommand(this, itemBase->id(), mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+	}
+
 	rememberSticky(itemBase->id(), parentCommand);
 	if (crossView == BaseCommand::CrossView) {
 		emit rememberStickySignal(itemBase->id(), parentCommand);
@@ -4222,6 +4228,12 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		selectItemCommand->addUndo(itemBase->id());
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, true, parentCommand);
 		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, true, parentCommand);
+			
+		MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
+		if (mysteryPart != NULL) {
+			new SetChipLabelCommand(this, newID, mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+		}
+	
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 		new CleanUpWiresCommand(this, false, parentCommand);
 	}
