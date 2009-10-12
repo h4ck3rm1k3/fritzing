@@ -1,4 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
+#set $fpitch = float($pitch)
+#set $mils = int($fpitch * 1000)
 <module moduleId="$uuid" >
  <version>1.0</version>
  <author>Fritzing Part-o-matic</author>
@@ -13,7 +15,7 @@
   <property name="family" >Mystery Part</property>
   <property name="pins">$pins</property>
   <property name="footprint">100 mil jumper</property>
-  <property name="chip label">?</property>
+  <property name="chip label">${label}</property>
  </properties>
  <taxonomy>part.mystery.magical.${pins}pins</taxonomy>
  <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With $pins pins on a 100 mil inline pin header footprint.</description>
@@ -24,17 +26,17 @@
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/mystery_part${pins}.svg" >
+   <layers image="breadboard/mystery_part_${pins}_bread.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/mystery_part${pins}.svg" >
+   <layers image="schematic/generic_sip_${pins}_${mils}mil_schem.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/jumper${pins}.svg" >
+   <layers image="pcb/jumper_${pins}_100mil_pcb.svg" >
     <layer layerId="silkscreen" />
     <layer layerId="copper0" />
    </layers>

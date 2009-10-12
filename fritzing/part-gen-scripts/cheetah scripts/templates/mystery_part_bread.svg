@@ -1,70 +1,55 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-#set $width = ((int($pins)-1) * 10) + 12
-#set $widthin = $width / 100.0
-#set $rectwidth = $width - 1.4
-#set $bodyright1 = $width - 0.75
-#set $bodyright2 = $width - 2.15
-#set $height = 30
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.0"
-   baseProfile="tiny"
-   id="svg2"
-   width="${widthin}in"
-   height="${height / 100.0}in"
-   viewBox="0 0 $width $height">
-  <g id="breadboard">
-  <polygon
-     id="bodybottom"
-     points="0,18.5 $width,18.5 $width,27 0,27 0,18.5 " />
-  <polygon
-     style="fill:#3d3d3d"
-     id="bodytop"
-     points="0,0 $width,0 $width,8.5 0,8.5 0,0 " />
-  <polygon
-     style="fill:#1f1f1f"
-     id="polygon58"
-     points="0,0 0.75,2.46 0.75,8.5 5,8.5 5,18.5 0.75,18.5 0.75,24.54 0,27 0,0 " />
-  <polygon
-     style="fill:#141414"
-     id="bodyright"
-     points="$width,0 $bodyright1,2.46 $bodyright2,2.46 $bodyright2,24.53 $bodyright1,24.54 $width,27 $width,0 " />
-  <rect
-     y="2.205883"
-     x="0.69999999"
-     height="22.517677"
-     width="$rectwidth"
-     id="rect2477"
-     style="fill:#000000;fill-opacity:1;stroke:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  <path
-     style="fill:#262626"
-     id="path66"
-     d="M 0.56,10.58 L 0.56,16.41 C 2.03,16.24 3.18,15.01 3.18,13.49 C 3.18,11.97 2.04,10.75 0.56,10.58 z" />     
-  #for $pin in range(int($pins))
-        #set $pinx = 3.5 + ($pin * 10)
-        #set $terminaly = 475.39526 + ($pin * 20)
-        #set $flare1 = $pinx + 3
-        #set $flare2 = $pinx + 5
-  <polygon
-     style="fill:#8c8c8c"
-     id="pinflare$pin"
-     points="$pinx,25.66 $pinx,27.66 $flare1,27.66 $flare2,26.74 $flare2,25.66 $pinx,25.66 " />
-  <rect
-     style="fill:#8c8c8c"
-     height="3"
-     width="3"
-     y="27"
-     x="$pinx"
-     id="connector${pin}terminal" />
-  <rect
-     style="fill:#8c8c8c"
-     id="connector${pin}pin"
-     height="4.3400002"
-     width="3"
-     y="25.672941"
-     x="$pinx" />
-  #end for         
-  <text id="label" x="${width / 2}" y="${height / 2}" fill="#e6e6e6" stroke="none" font-family="ocra10" text-anchor="middle" font-size="10" >?</text>
+<?xml version="1.0" encoding="utf-8"?>
+#set $ipins = int($pins)
+#set $widthin = (0.1 * $ipins)
+#set $width = $widthin * 100
+#set $heightin = float($pitch)
+#set $height = $heightin * 100
+#set $halfheight = ($height / 2.0) + 1.5
+<svg version="1.2" baseProfile="tiny" id="svg2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 width="${widthin}in" height="${heightin}in" viewBox="0 0 ${width} ${height}" xml:space="preserve">
+
+<g id="breadboard">
+  <rect id="middle" x="0" y="0" fill="#303030" width="${width}" height="${height - 3}" />  
+  
+  <rect id="top" x="0" y="0" fill="#3D3D3D" width="${width}" height="2.46"/>
+  <rect id="bottom" x="0" y="${height - 2.46 - 3}" fill="#000000" width="${width}" height="2.46"/>
+  
+  
+  
+     <polygon id="right" fill="#141414" points="${width},0 ${width - 0.75},2.46 ${width - 0.75},${height - 5.46} ${width},${height - 3}"/> 
+      <polygon id="left" fill="#1F1F1F" points="0,0 0.75,2.46 0.75,${height - 5.46} 0,${height - 3}"/>
+  
+  
+  
+	<polygon id="left-upper-rect" fill="#1C1C1C" points="5,${halfheight - 8} 0.75,${halfheight - 8.04} 0.56,${halfheight - 5.92} 0.56,${halfheight - 3} 5,${halfheight - 3}"/>
+	<polygon id="left-lower-rect" fill="#383838" points="0.75,${halfheight + 2.05} 5,${halfheight + 2.05} 5,${halfheight - 3} 0.56,${halfheight - 3} 0.56,${halfheight + 2.92 - 3}"/>
+
+  <path id="slot" fill="#262626" d="M0.56,${halfheight - 5.92}v5.83c1.47-0.17,2.62-1.4,2.62-2.92C3.18,${halfheight - 4.53},2.04,${halfheight - 5.75},0.56,${halfheight - 5.92}z"/>
+  <path id="cover" fill="#303030" d="M0.75,2.46V${halfheight - 8.05}c2.38,0.45,4.19,2.53,4.19,5.04c0,2.51-1.8,4.6-4.19,5.05V${halfheight + 2.05}h5.0V2.46H0.75z"/>
+	<circle fill="#212121" cx="6.5" cy="${height - 9.53}" r="2.06"/>
+ 
+  <text id="label" x="6.5" y="${(height / 2)}" fill="#e6e6e6" stroke="none" font-family="ocra10" text-anchor="start" font-size="8" >${label}</text>
+
+  
+	<rect id="connector0pin" x="3.5" y="${height - 4.34}" fill="#8C8C8C" width="3" height="4.34"/>
+  <rect id="connector0terminal" x="3.5" y="${height - 3}" fill="#8C8C8C" width="3" height="3"/>
+  
+	<polygon fill="#8C8C8C" points="3.5,${height - 4.34} 3.5,${height - 2.34} 6.5,${height - 2.34} 8.5,${height - 3.26} 8.5,${height - 4.34} 	"/>
+  
+  
+  
+  <rect id="connector${ipins - 1}pin" x="${width - 6.5}" y="${height - 4.34}" fill="#8C8C8C" width="3" height="4.34"/>
+  <rect id="connector${ipins - 1}terminal" x="${width - 6.5}" y="${height - 3}" fill="#8C8C8C" width="3" height="3"/>
+	<polygon fill="#8C8C8C" points="${width - 8.5},${height - 4.34} ${width - 8.5},${height - 3.26} ${width - 6.5},${height - 2.34} ${width - 3.5},${height - 2.34} ${width - 3.5},${height - 4.34}"/>
+
+
+  #for $pin in range($ipins - 2)
+        #set $pinx = 13.5 + ($pin * 10)
+        <rect id="connector${pin + 1}pin" x="${pinx}" y="${height - 4.34}" fill="#8C8C8C" width="3" height="4.34"/>
+        <rect id="connector${pin + 1}terminal" x="${pinx}" y="${height - 3}" fill="#8C8C8C" width="3" height="3"/>
+        <polygon fill="#8C8C8C" points="${pinx - 2},${height - 4.34} ${pinx - 2},${height - 3.26} ${pinx},${height - 2.34} ${pinx + 3},${height - 2.34} ${pinx + 5},${height - 3.26} ${pinx + 5},${height - 4.34}"/>            
+  #end for
+        
+
 </g>
 </svg>

@@ -15,7 +15,7 @@
   <property name="family" >Generic SIP</property>
   <property name="pins">$pins</property>
   <property name="spacing">${mils}mil</property>
-  <property name="chip label">IC</property>
+  <property name="chip label">${label}</property>
  </properties>
  <taxonomy>part.sip.${pins}pins</taxonomy>
  <description>A SIP stand-in part for whatever you want.  With $pins pins on a ${mils} mil single inline package (SIP) footprint.</description>

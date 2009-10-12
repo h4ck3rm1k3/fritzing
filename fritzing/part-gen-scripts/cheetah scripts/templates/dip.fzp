@@ -14,7 +14,7 @@
   <property name="family" >generic DIP</property>
   <property name="pins">$pins</property>
   <property name="spacing">${mils}mil</property>
-  <property name="chip label">IC</property>
+  <property name="chip label">${label}</property>
  </properties>
  <taxonomy>part.dip.${pins}pins</taxonomy>
  <description>A DIP stand-in part for whatever IC you want.  With $pins pins on a ${mils} mil dual inline package (DIP) footprint.</description>

@@ -268,21 +268,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="bf1d778246ec524bc51c67761afef94e" modelIndex="43" path="parts/core/Generic male header.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="0aecd08e3f3118d56cb4a63ebc4e5212" modelIndex="44" path="parts/core/Screw terminal.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="3a761a45-f1ff-11dd-b332-001a4d5c439f" modelIndex="45" path="parts/core/mystery_part3.fzp">
+        <instance moduleIdRef="mystery_part_3" modelIndex="45" path="parts/core/mystery_part_3.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -345,7 +331,14 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="generic_sip_2_300mil" modelIndex="53" path="parts/core/generic_sip_2_300mil.fzp">
+      <instance moduleIdRef="screw_terminal_2_100mil" modelIndex="54" path="parts/core/screw_terminal_2_100mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="generic_sip_2_300mil" modelIndex="55" path="parts/core/generic_sip_2_300mil.fzp">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
