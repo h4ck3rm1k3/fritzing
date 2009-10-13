@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="generic_male_pin_header_63_100mil">
+    <version>2</version>
     <author>Fritzing Part-o-matic</author>
     <title>Generic male header - 63 pins</title>
     <label>J</label>
-    <date>2009-10-09</date>
+    <date>2009-10-13</date>
     <tags></tags>
     <properties>
         <property name="family">Connector</property>

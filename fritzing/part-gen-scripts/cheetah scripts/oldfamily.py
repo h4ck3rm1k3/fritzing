@@ -1,4 +1,3 @@
-# generic wrapper for cheetah templates
 # usage:
 #    oldfamily.py -d <directory> 
 #    

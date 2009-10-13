@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="screw_terminal_55_100mil">
+    <version>2</version>
     <author>Lionel Michel</author>
     <title>Screw terminal - 55 pins</title>
     <label>J</label>
-    <date>2009-10-09</date>
+    <date>2009-10-13</date>
     <tags>fritzing core</tags>
     <properties>
         <property name="family">Connector</property>
