@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="c46f1ec52c4917dd6e7aa12d7b7d66ea">
+<version>1</version>
     <author>Lionel Michel</author>
     <title>Arduino Nano</title>
     <date>2009-03-06</date>

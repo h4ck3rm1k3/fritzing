@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.6b.08.14.3340" moduleId="1000FADF10011">
-    <version>1.0</version>
+    <version>1</version>
     <author>Brendan Howell/Dirk van Osterbosch/Lionel Michel</author>
     <title>DC Motor</title>
     <label>M</label>

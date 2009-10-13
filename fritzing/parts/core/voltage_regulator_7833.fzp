@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.1255" moduleId="1238DBDC00-voltage-reg_7833" >
- <version>1.1</version>
+ <version>2</version>
  <author>Jenny</author>
  <title>Voltage Regulator - 3.3V</title>
  <label>U</label>

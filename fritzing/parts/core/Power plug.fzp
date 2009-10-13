@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.1.b.03.03.2541" moduleId="d8f570d723ea4d14f9b61b34575a9699">
+<version>1</version>
     <author>Lionel Michel</author>
     <title>Power plug</title>
     <label>Power plug</label>

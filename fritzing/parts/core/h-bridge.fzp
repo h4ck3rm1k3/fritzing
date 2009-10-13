@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.6b.08.14.3340" moduleId="a4f38a10-dd92-11dd-a3e2-001f5b3a17a4">
-    <version>1.0</version>
+    <version>1</version>
     <author>Dirk van Oosterbosch</author>
     <title>H-Bridge</title>
     <label>IC</label>

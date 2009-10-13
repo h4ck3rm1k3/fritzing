@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.0.b.02.26.2493" moduleId="56bed03878064b8286b71d5240035138">
+<version>1</version>
     <author>lionel</author>
     <title>Inductor</title>
     <label>L</label>

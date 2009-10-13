@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.1201" moduleId="1099ABDE24_ST-2leadbutton-horizon" >
- <version>1.0</version>
+ <version>1</version>
  <title>Pushbutton</title>
  <date>2008-09-16</date>
  <label>S</label>

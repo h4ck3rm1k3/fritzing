@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.1.b.03.03.2541" moduleId="5e3b9f7a14a1627168e700bfc9a03b3c">
+<version>1</version>
     <author>Lionel Michel</author>
     <title>USB connector</title>
     <label>CONN</label>

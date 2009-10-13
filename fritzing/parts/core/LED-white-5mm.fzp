@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.beta.1407" moduleId="1902whiteABDC24" >
- <version>1.1</version>
+ <version>2</version>
  <author>Stefan Hermann</author>
  <title>white LED - 5mm</title>
  <label>LED</label>

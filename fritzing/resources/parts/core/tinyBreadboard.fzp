@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This xml file is generated through a template. Please don't edit it directly -->
 <module moduleId="TinyBreadboardModuleID">
-  <version>1.1</version>
+  <version>2</version>
   <author>Dirk van Oosterbosch</author>
   <title>Tiny Breadboard</title>
   <date>2008-12-30</date>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.6b.08.14.3340" moduleId="1a7828b6466fac9fd042221e931124c4">
+<version>1</version>
     <author>Jonas Jaeger</author>
     <title>74HC595</title>
     <label>74HC595</label>

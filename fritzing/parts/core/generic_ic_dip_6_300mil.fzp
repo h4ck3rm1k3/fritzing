@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="generic_ic_dip_6_300mil" >
- <version>1.0</version>
+ <version>1</version>
  <author>Fritzing Part-o-matic</author>
  <title>DIP - 6 pins</title>
  <label>IC</label>

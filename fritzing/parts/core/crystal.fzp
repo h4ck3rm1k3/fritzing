@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.6b.08.14.3340" moduleId="3746667c843a2127a0e499f8a0b3ef6a">
+<version>1</version>
     <author>Lionel Michel</author>
     <title>Crystal</title>
     <label>XTAL</label>

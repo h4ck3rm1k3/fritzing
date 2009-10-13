@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="6d07f5eae4523283f5da4171f9c54e25">
+<version>1</version>
     <author>Lionel Michel</author>
     <title>Antenna</title>
     <label>ANT</label>

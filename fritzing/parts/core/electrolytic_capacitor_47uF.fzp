@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.2.1223" moduleId="1001ABDC03B" >
- <version>1.0</version>
+ <version>1</version>
  <author>Brendan Howell</author>
  <title>Electrolytic Capacitor</title>
  <label>C</label>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.1255" moduleId="1001ABDC04" >
- <version>1.0</version>
+ <version>1</version>
  <author>Stefan Hermann</author>
  <title>Basic FET N-Channel</title>
  <label>Q</label>

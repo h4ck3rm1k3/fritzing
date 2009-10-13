@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.0.b.02.26.2493" moduleId="93d4585be720f3982141f4d032f44c8e">
+<version>1</version>
     <author>Lionel Michel</author>
     <title>Peltier Element</title>
     <label>J</label>

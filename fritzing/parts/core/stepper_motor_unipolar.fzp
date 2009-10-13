@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="a22e371d3e8c77a58fdfe4dd2799c449">
+<version>1</version>
     <author>Peter Boman</author>
     <title>Stepper Motor - Unipolar</title>
     <label>M</label>

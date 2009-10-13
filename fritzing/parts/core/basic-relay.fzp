@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.6b.08.14.3340" moduleId="1099ABDE24_ST_relay">
-    <version>1.0</version>
+    <version>1</version>
     <title>Relay</title>
     <label>K</label>
     <date>2009-05-04</date>

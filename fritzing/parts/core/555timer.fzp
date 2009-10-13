@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.beta.1407" moduleId="1001AAAB555Timer" >
+<version>1</version>
  <author>Dirk van Oosterbosch</author>
  <title>555 Timer</title>
  <date>2008-11-11</date>

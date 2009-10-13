@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="RectanglePCBModuleID" >
- <version>1.0</version>
+ <version>1</version>
  <author>Brendan Howell</author>
  <title>Rectangular PCB - 60 x 100 mm</title>
  <date>2008-11-25</date>

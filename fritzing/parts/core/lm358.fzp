@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.1.16.b.02.02.2310" moduleId="a59353bd0db0225dc22770e292c622f3">
+<version>1</version>
     <author>Brendan Howell</author>
     <title>LM 358 Dual Op-Amp</title>
     <label>U</label>

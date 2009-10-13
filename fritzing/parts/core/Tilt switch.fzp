@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.1.b.03.03.2541" moduleId="d206ca0d70364191f0b3fd30d5e53c5d">
+<version>1</version>
     <author>Lionel Michel</author>
     <title>Tilt Switch</title>
     <label>S</label>
