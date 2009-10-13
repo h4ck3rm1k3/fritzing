@@ -8,18 +8,27 @@
 
 {% block title %}{% trans "Events" %}{% endblock %}
 {% block page_title %}{% trans "Events" %}{% endblock %}
-{% block teaser %}Meet and Greet{% endblock %}
+{% block teaser %}
+We love to give talks and workshops about Fritzing and physical prototyping. Stay
+tuned for an upcoming event in your area or invite us to your school for a
+presentation or workshop.
+<p>
+	<img alt="" src="{{ MEDIA_URL }}uploads/reto_summit_jpg_versions/small_reto_summit.jpg"/>
+</p>
+{% endblock %}
 
 {% block content %}
 <div class="content first-content">
     {% autopaginate event_list %}
     	<div class="events_row">
     {% for event in event_list %}
-	    {% if forloop.counter|divisibleby:"4" %}
+		{% include "events/event.html" %}
+		
+		{% if forloop.counter|divisibleby:"3" %}
 	    </div>
 	    <div class="events_row not_first">
 	    {% endif %}
-		{% include "events/event.html" %}
+	    
     {% endfor %}
     	</div>
 </div>
