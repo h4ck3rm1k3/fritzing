@@ -1,7 +1,8 @@
 {% load tree_menu_tags %}
 
 {% if menu_item.has_children %}
-    <li><a href="{{ menu_item.url }}">{{ menu_item.caption }}</a>
+    <li><a {% if forloop.last %}class="last-item"{% endif %}
+    			href="{{ menu_item.url }}">{{ menu_item.caption }}</a>
         <ul>
             {% for child in menu_item.children %}
                 {% show_menu_item child %}
@@ -9,5 +10,6 @@
         </ul>
     </li>
 {% else %}
-        <li><a href="{% if menu_item.url %}{{ menu_item.url }}{% else %}{% reverse_named_url menu_item.named_url %}{% endif %}">{{ menu_item.caption }}</a></li>
+        <li><a {% if forloop.last %}class="last-item"{% endif %}
+        			href="{% if menu_item.url %}{{ menu_item.url }}{% else %}{% reverse_named_url menu_item.named_url %}{% endif %}">{{ menu_item.caption }}</a></li>
 {% endif %}

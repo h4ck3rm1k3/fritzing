@@ -2471,6 +2471,10 @@ background: transparent url(../img/seperator.gif) no-repeat right center;
 padding: 0 1em 0 0.3em !important;
 color: #4D3333;
 }
+	
+#portal-column-one ul.navTree li a.last-item {
+background: none;
+}
 
 #portal-column-one ul.navTree li a span {
 background: none;
