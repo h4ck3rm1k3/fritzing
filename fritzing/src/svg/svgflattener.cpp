@@ -188,6 +188,7 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
     pathUserData->string.append(command);
     qreal x;
     qreal y;
+	QPointF point;
 
 	for (int i = 0; i < args.count(); ) {
 		switch(command.toAscii()) {
@@ -215,17 +216,33 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
 				break;
 			case 'a':
 			case 'A':
-				// TODO: handle A command
+				// TODO: test whether this is correct
+				for (int j = 0; j < 5; j++) {
+					pathUserData->string.append(QString::number(args[j]));
+					pathUserData->string.append(',');
+				}
+				x = args[5];
+				y = args[6];
 				i += 7;
+				point = pathUserData->transform.map(QPointF(x,y));
+				pathUserData->string.append(QString::number(point.x()));
+				pathUserData->string.append(',');
+				pathUserData->string.append(QString::number(point.y()));
+				if (i < args.count()) {
+					pathUserData->string.append(',');
+				}
 				break;
 			default:
 				x = args[i];
 				y = args[i+1];
 				i += 2;
-				QPointF point = pathUserData->transform.map(QPointF(x,y));
+				point = pathUserData->transform.map(QPointF(x,y));
 				pathUserData->string.append(QString::number(point.x()));
 				pathUserData->string.append(',');
 				pathUserData->string.append(QString::number(point.y()));
+				if (i < args.count()) {
+					pathUserData->string.append(',');
+				}
 		}
 	}
 }

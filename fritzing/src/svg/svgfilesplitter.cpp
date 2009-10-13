@@ -362,6 +362,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	}
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
 		fixStyleAttribute(element);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		QString data = element.attribute("points");
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
@@ -379,6 +380,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	}
 	else if (element.nodeName().compare("path") == 0) {
 		fixStyleAttribute(element);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		setStrokeOrFill(element, blackOnly);
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
@@ -630,6 +632,26 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 			*/
 			break;
 		case SVGPathLexer::FakeClosePathChar:
+			break;
+		case 'a':
+		case 'A':
+			for (int i = 0; i < args.count(); i++) {
+				d = args[i];
+				if (i % 7 == 5) {
+					if (!relative) {
+						d += pathUserData->x;
+					}
+				}
+				else if (i % 7 == 6) {
+					if (!relative) {
+						d += pathUserData->y;
+					}
+				}
+				pathUserData->string.append(QString::number(d));
+				if (i < args.count() - 1) {
+					pathUserData->string.append(',');
+				}
+			}
 			break;
 		default:
 			for (int i = 0; i < args.count(); i++) {
