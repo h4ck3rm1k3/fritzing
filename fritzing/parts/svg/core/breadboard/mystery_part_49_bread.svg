@@ -1,183 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.2" baseProfile="tiny" id="svg2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 width="4.9in" height="0.3in" viewBox="0 0 490.0 30.0" xml:space="preserve">
+	 width="4.860022in" height="0.200222in" viewBox="0 0 486.0022 20.0222" xml:space="preserve">
 
 <g id="breadboard">
-  <rect id="middle" x="0" y="0" fill="#303030" width="490.0" height="27.0" />  
-  
-  <rect id="top" x="0" y="0" fill="#3D3D3D" width="490.0" height="2.46"/>
-  <rect id="bottom" x="0" y="24.54" fill="#000000" width="490.0" height="2.46"/>
-  
-  
-  
-     <polygon id="right" fill="#141414" points="490.0,0 489.25,2.46 489.25,24.54 490.0,27.0"/> 
-      <polygon id="left" fill="#1F1F1F" points="0,0 0.75,2.46 0.75,24.54 0,27.0"/>
-  
-  
-  
-	<polygon id="left-upper-rect" fill="#1C1C1C" points="5,8.5 0.75,8.46 0.56,10.58 0.56,13.5 5,13.5"/>
-	<polygon id="left-lower-rect" fill="#383838" points="0.75,18.55 5,18.55 5,13.5 0.56,13.5 0.56,16.42"/>
+ <rect width="486.0022" x="0" y="0" height="17.6211" id="upper" stroke-width="0" />
+ <rect width="486.0022" x="0" y="15.4611" fill="#262626" height="2.16" id="lower" stroke-width="0" />
 
-  <path id="slot" fill="#262626" d="M0.56,10.58v5.83c1.47-0.17,2.62-1.4,2.62-2.92C3.18,11.97,2.04,10.75,0.56,10.58z"/>
-  <path id="cover" fill="#303030" d="M0.75,2.46V8.45c2.38,0.45,4.19,2.53,4.19,5.04c0,2.51-1.8,4.6-4.19,5.05V18.55h5.0V2.46H0.75z"/>
-	<circle fill="#212121" cx="6.5" cy="20.47" r="2.06"/>
- 
-  <text id="label" x="6.5" y="15.0" fill="#e6e6e6" stroke="none" font-family="ocra10" text-anchor="start" font-size="8" >?</text>
+ <text id="label" x="2.5894" y="9.333" fill="#e6e6e6" stroke="none" font-family="ocra10" text-anchor="start" font-size="5.7" >?</text>
 
-  
-	<rect id="connector0pin" x="3.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-  <rect id="connector0terminal" x="3.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-  
-	<polygon fill="#8C8C8C" points="3.5,25.66 3.5,27.66 6.5,27.66 8.5,26.74 8.5,25.66 	"/>
-  
-  
-  
-  <rect id="connector48pin" x="483.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-  <rect id="connector48terminal" x="483.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-	<polygon fill="#8C8C8C" points="481.5,25.66 481.5,26.74 483.5,27.66 486.5,27.66 486.5,25.66"/>
+  <circle fill="#565656" cx="482.6433" cy="3.37222" r="2.11444" stroke-width="0" />
+  <text x="482.6433" y="4.67222" font-family="'DroidSans'" text-anchor="middle" font-weight="bold" stroke-width="0" font-size="3.9165" >?</text>
 
 
-        <rect id="connector1pin" x="13.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector1terminal" x="13.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="11.5,25.66 11.5,26.74 13.5,27.66 16.5,27.66 18.5,26.74 18.5,25.66"/>            
-        <rect id="connector2pin" x="23.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector2terminal" x="23.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="21.5,25.66 21.5,26.74 23.5,27.66 26.5,27.66 28.5,26.74 28.5,25.66"/>            
-        <rect id="connector3pin" x="33.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector3terminal" x="33.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="31.5,25.66 31.5,26.74 33.5,27.66 36.5,27.66 38.5,26.74 38.5,25.66"/>            
-        <rect id="connector4pin" x="43.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector4terminal" x="43.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="41.5,25.66 41.5,26.74 43.5,27.66 46.5,27.66 48.5,26.74 48.5,25.66"/>            
-        <rect id="connector5pin" x="53.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector5terminal" x="53.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="51.5,25.66 51.5,26.74 53.5,27.66 56.5,27.66 58.5,26.74 58.5,25.66"/>            
-        <rect id="connector6pin" x="63.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector6terminal" x="63.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="61.5,25.66 61.5,26.74 63.5,27.66 66.5,27.66 68.5,26.74 68.5,25.66"/>            
-        <rect id="connector7pin" x="73.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector7terminal" x="73.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="71.5,25.66 71.5,26.74 73.5,27.66 76.5,27.66 78.5,26.74 78.5,25.66"/>            
-        <rect id="connector8pin" x="83.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector8terminal" x="83.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="81.5,25.66 81.5,26.74 83.5,27.66 86.5,27.66 88.5,26.74 88.5,25.66"/>            
-        <rect id="connector9pin" x="93.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector9terminal" x="93.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="91.5,25.66 91.5,26.74 93.5,27.66 96.5,27.66 98.5,26.74 98.5,25.66"/>            
-        <rect id="connector10pin" x="103.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector10terminal" x="103.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="101.5,25.66 101.5,26.74 103.5,27.66 106.5,27.66 108.5,26.74 108.5,25.66"/>            
-        <rect id="connector11pin" x="113.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector11terminal" x="113.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="111.5,25.66 111.5,26.74 113.5,27.66 116.5,27.66 118.5,26.74 118.5,25.66"/>            
-        <rect id="connector12pin" x="123.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector12terminal" x="123.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="121.5,25.66 121.5,26.74 123.5,27.66 126.5,27.66 128.5,26.74 128.5,25.66"/>            
-        <rect id="connector13pin" x="133.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector13terminal" x="133.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="131.5,25.66 131.5,26.74 133.5,27.66 136.5,27.66 138.5,26.74 138.5,25.66"/>            
-        <rect id="connector14pin" x="143.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector14terminal" x="143.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="141.5,25.66 141.5,26.74 143.5,27.66 146.5,27.66 148.5,26.74 148.5,25.66"/>            
-        <rect id="connector15pin" x="153.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector15terminal" x="153.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="151.5,25.66 151.5,26.74 153.5,27.66 156.5,27.66 158.5,26.74 158.5,25.66"/>            
-        <rect id="connector16pin" x="163.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector16terminal" x="163.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="161.5,25.66 161.5,26.74 163.5,27.66 166.5,27.66 168.5,26.74 168.5,25.66"/>            
-        <rect id="connector17pin" x="173.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector17terminal" x="173.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="171.5,25.66 171.5,26.74 173.5,27.66 176.5,27.66 178.5,26.74 178.5,25.66"/>            
-        <rect id="connector18pin" x="183.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector18terminal" x="183.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="181.5,25.66 181.5,26.74 183.5,27.66 186.5,27.66 188.5,26.74 188.5,25.66"/>            
-        <rect id="connector19pin" x="193.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector19terminal" x="193.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="191.5,25.66 191.5,26.74 193.5,27.66 196.5,27.66 198.5,26.74 198.5,25.66"/>            
-        <rect id="connector20pin" x="203.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector20terminal" x="203.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="201.5,25.66 201.5,26.74 203.5,27.66 206.5,27.66 208.5,26.74 208.5,25.66"/>            
-        <rect id="connector21pin" x="213.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector21terminal" x="213.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="211.5,25.66 211.5,26.74 213.5,27.66 216.5,27.66 218.5,26.74 218.5,25.66"/>            
-        <rect id="connector22pin" x="223.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector22terminal" x="223.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="221.5,25.66 221.5,26.74 223.5,27.66 226.5,27.66 228.5,26.74 228.5,25.66"/>            
-        <rect id="connector23pin" x="233.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector23terminal" x="233.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="231.5,25.66 231.5,26.74 233.5,27.66 236.5,27.66 238.5,26.74 238.5,25.66"/>            
-        <rect id="connector24pin" x="243.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector24terminal" x="243.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="241.5,25.66 241.5,26.74 243.5,27.66 246.5,27.66 248.5,26.74 248.5,25.66"/>            
-        <rect id="connector25pin" x="253.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector25terminal" x="253.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="251.5,25.66 251.5,26.74 253.5,27.66 256.5,27.66 258.5,26.74 258.5,25.66"/>            
-        <rect id="connector26pin" x="263.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector26terminal" x="263.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="261.5,25.66 261.5,26.74 263.5,27.66 266.5,27.66 268.5,26.74 268.5,25.66"/>            
-        <rect id="connector27pin" x="273.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector27terminal" x="273.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="271.5,25.66 271.5,26.74 273.5,27.66 276.5,27.66 278.5,26.74 278.5,25.66"/>            
-        <rect id="connector28pin" x="283.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector28terminal" x="283.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="281.5,25.66 281.5,26.74 283.5,27.66 286.5,27.66 288.5,26.74 288.5,25.66"/>            
-        <rect id="connector29pin" x="293.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector29terminal" x="293.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="291.5,25.66 291.5,26.74 293.5,27.66 296.5,27.66 298.5,26.74 298.5,25.66"/>            
-        <rect id="connector30pin" x="303.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector30terminal" x="303.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="301.5,25.66 301.5,26.74 303.5,27.66 306.5,27.66 308.5,26.74 308.5,25.66"/>            
-        <rect id="connector31pin" x="313.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector31terminal" x="313.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="311.5,25.66 311.5,26.74 313.5,27.66 316.5,27.66 318.5,26.74 318.5,25.66"/>            
-        <rect id="connector32pin" x="323.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector32terminal" x="323.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="321.5,25.66 321.5,26.74 323.5,27.66 326.5,27.66 328.5,26.74 328.5,25.66"/>            
-        <rect id="connector33pin" x="333.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector33terminal" x="333.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="331.5,25.66 331.5,26.74 333.5,27.66 336.5,27.66 338.5,26.74 338.5,25.66"/>            
-        <rect id="connector34pin" x="343.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector34terminal" x="343.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="341.5,25.66 341.5,26.74 343.5,27.66 346.5,27.66 348.5,26.74 348.5,25.66"/>            
-        <rect id="connector35pin" x="353.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector35terminal" x="353.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="351.5,25.66 351.5,26.74 353.5,27.66 356.5,27.66 358.5,26.74 358.5,25.66"/>            
-        <rect id="connector36pin" x="363.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector36terminal" x="363.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="361.5,25.66 361.5,26.74 363.5,27.66 366.5,27.66 368.5,26.74 368.5,25.66"/>            
-        <rect id="connector37pin" x="373.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector37terminal" x="373.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="371.5,25.66 371.5,26.74 373.5,27.66 376.5,27.66 378.5,26.74 378.5,25.66"/>            
-        <rect id="connector38pin" x="383.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector38terminal" x="383.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="381.5,25.66 381.5,26.74 383.5,27.66 386.5,27.66 388.5,26.74 388.5,25.66"/>            
-        <rect id="connector39pin" x="393.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector39terminal" x="393.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="391.5,25.66 391.5,26.74 393.5,27.66 396.5,27.66 398.5,26.74 398.5,25.66"/>            
-        <rect id="connector40pin" x="403.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector40terminal" x="403.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="401.5,25.66 401.5,26.74 403.5,27.66 406.5,27.66 408.5,26.74 408.5,25.66"/>            
-        <rect id="connector41pin" x="413.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector41terminal" x="413.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="411.5,25.66 411.5,26.74 413.5,27.66 416.5,27.66 418.5,26.74 418.5,25.66"/>            
-        <rect id="connector42pin" x="423.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector42terminal" x="423.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="421.5,25.66 421.5,26.74 423.5,27.66 426.5,27.66 428.5,26.74 428.5,25.66"/>            
-        <rect id="connector43pin" x="433.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector43terminal" x="433.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="431.5,25.66 431.5,26.74 433.5,27.66 436.5,27.66 438.5,26.74 438.5,25.66"/>            
-        <rect id="connector44pin" x="443.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector44terminal" x="443.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="441.5,25.66 441.5,26.74 443.5,27.66 446.5,27.66 448.5,26.74 448.5,25.66"/>            
-        <rect id="connector45pin" x="453.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector45terminal" x="453.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="451.5,25.66 451.5,26.74 453.5,27.66 456.5,27.66 458.5,26.74 458.5,25.66"/>            
-        <rect id="connector46pin" x="463.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector46terminal" x="463.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="461.5,25.66 461.5,26.74 463.5,27.66 466.5,27.66 468.5,26.74 468.5,25.66"/>            
-        <rect id="connector47pin" x="473.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>
-        <rect id="connector47terminal" x="473.5" y="27.0" fill="#8C8C8C" width="3" height="3"/>
-        <polygon fill="#8C8C8C" points="471.5,25.66 471.5,26.74 473.5,27.66 476.5,27.66 478.5,26.74 478.5,25.66"/>            
+        <rect id="connector0terminal" x="1.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector0pin" x="1.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector1terminal" x="11.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector1pin" x="11.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector2terminal" x="21.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector2pin" x="21.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector3terminal" x="31.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector3pin" x="31.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector4terminal" x="41.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector4pin" x="41.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector5terminal" x="51.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector5pin" x="51.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector6terminal" x="61.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector6pin" x="61.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector7terminal" x="71.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector7pin" x="71.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector8terminal" x="81.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector8pin" x="81.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector9terminal" x="91.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector9pin" x="91.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector10terminal" x="101.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector10pin" x="101.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector11terminal" x="111.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector11pin" x="111.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector12terminal" x="121.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector12pin" x="121.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector13terminal" x="131.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector13pin" x="131.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector14terminal" x="141.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector14pin" x="141.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector15terminal" x="151.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector15pin" x="151.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector16terminal" x="161.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector16pin" x="161.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector17terminal" x="171.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector17pin" x="171.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector18terminal" x="181.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector18pin" x="181.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector19terminal" x="191.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector19pin" x="191.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector20terminal" x="201.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector20pin" x="201.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector21terminal" x="211.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector21pin" x="211.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector22terminal" x="221.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector22pin" x="221.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector23terminal" x="231.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector23pin" x="231.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector24terminal" x="241.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector24pin" x="241.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector25terminal" x="251.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector25pin" x="251.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector26terminal" x="261.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector26pin" x="261.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector27terminal" x="271.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector27pin" x="271.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector28terminal" x="281.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector28pin" x="281.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector29terminal" x="291.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector29pin" x="291.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector30terminal" x="301.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector30pin" x="301.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector31terminal" x="311.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector31pin" x="311.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector32terminal" x="321.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector32pin" x="321.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector33terminal" x="331.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector33pin" x="331.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector34terminal" x="341.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector34pin" x="341.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector35terminal" x="351.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector35pin" x="351.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector36terminal" x="361.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector36pin" x="361.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector37terminal" x="371.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector37pin" x="371.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector38terminal" x="381.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector38pin" x="381.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector39terminal" x="391.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector39pin" x="391.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector40terminal" x="401.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector40pin" x="401.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector41terminal" x="411.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector41pin" x="411.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector42terminal" x="421.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector42pin" x="421.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector43terminal" x="431.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector43pin" x="431.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector44terminal" x="441.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector44pin" x="441.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector45terminal" x="451.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector45pin" x="451.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector46terminal" x="461.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector46pin" x="461.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector47terminal" x="471.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector47pin" x="471.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
+        <rect id="connector48terminal" x="481.8" y="17.6211" fill="#8C8C8C" width="2.4" height="2.4"/>
+        <rect id="connector48pin" x="481.8" y="16.5422" fill="#8C8C8C" width="2.4" height="3.38"/>
         
 
 </g>

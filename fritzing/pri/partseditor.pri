@@ -41,7 +41,6 @@ HEADERS += \
     src/partseditor/partspecificationswidget.h \
     src/partseditor/addremovelistwidget.h \
     src/partseditor/connectorswidget.h \
-    src/partseditor/partinfowidget.h \
     src/partseditor/partseditorpaletteitem.h \
     src/partseditor/pcbxml.h \
     src/partseditor/svgdomdocument.h \
@@ -75,7 +74,6 @@ SOURCES += \
     src/partseditor/partspecificationswidget.cpp \
     src/partseditor/addremovelistwidget.cpp \
     src/partseditor/connectorswidget.cpp \
-    src/partseditor/partinfowidget.cpp \
     src/partseditor/partseditorpaletteitem.cpp \
     src/partseditor/pcbxml.cpp \
     src/partseditor/svgdomdocument.cpp \

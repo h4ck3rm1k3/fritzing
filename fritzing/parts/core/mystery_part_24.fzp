@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="mystery_part_24" >
- <version>1</version>
+ <version>1.0</version>
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 24 pins</title>
  <label>U</label>
- <date>2009-10-12</date>
+ <date>2009-10-13</date>
  <tags>
   <tag>mystery part</tag>
   <tag>fritzing core</tag>
@@ -29,7 +29,7 @@
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/generic_sip_24_300mil_schem.svg" >
+   <layers image="schematic/mystery_part_24_schem.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>

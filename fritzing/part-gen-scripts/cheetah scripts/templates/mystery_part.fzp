@@ -31,7 +31,7 @@
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/generic_sip_${pins}_${mils}mil_schem.svg" >
+   <layers image="schematic/mystery_part_${pins}_schem.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>

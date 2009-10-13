@@ -1440,7 +1440,7 @@ void MainWindow::saveAsModule()
 
 	QString moduleID;
 	QString uri;
-	QString version;
+	QString version("1");
 
 	if(moduleID.isNull() || moduleID.isEmpty()) {
 		moduleID = FritzingWindow::getRandText();
