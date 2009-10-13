@@ -282,7 +282,7 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 	if (viewLayerID == ViewLayer::Copper0) {
 		xml = makeSvg(ViewLayer::Copper0);
 	}
-	else if (viewLayerID = ViewLayer::Jumperwires) {
+	else if (viewLayerID == ViewLayer::Jumperwires) {
 		xml = makeSvg(ViewLayer::Jumperwires);
 	}
 
