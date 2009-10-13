@@ -32,6 +32,10 @@ drag-and-drop-based GUI to copy your sketch. From there it is possible
 to create PCB layouts for turning your prototype into a robust PCB, 
 either on your own, or with the help of a manufacturer.
 
+To launch Fritzing: 
+	on Mac, double-click the Fritzing application
+	on Linux, double-click fritzing.sh, or try ./fritzing.sh in your shell window
+	on Windows, double-click fritzing.exe
 
 GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest
 
