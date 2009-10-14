@@ -1910,16 +1910,27 @@ void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
 void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	ModelPart* modelPart = paletteItem? paletteItem->modelPart(): NULL;
 	long id = paletteItem? paletteItem->id(): -1;
-	QWidget *partsEditor = getPartsEditor(modelPart, id);
+	QWidget *partsEditor = getPartsEditor(modelPart, id, paletteItem, NULL);
 	partsEditor->show();
 	partsEditor->raise();
 }
 
-PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id, class PartsBinPaletteWidget* requester) {
+PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id, ItemBase * fromItem, class PartsBinPaletteWidget* requester) {
 	static long nextId = -1;
 	long id = _id==-1? nextId--: _id;
 
-	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(id, this, modelPart, (modelPart!=NULL));
+	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(this);
+	if (fromItem != NULL) {
+		ItemBase * bb = this->m_breadboardGraphicsView->findItem(_id);
+		if (bb) bb = bb->layerKinChief();
+		ItemBase * ss = this->m_schematicGraphicsView->findItem(_id);
+		if (ss) ss = ss->layerKinChief();
+		ItemBase * pp = this->m_pcbGraphicsView->findItem(_id);
+		if (pp) pp = pp->layerKinChief();
+		mainPartsEditorWindow->setViewItems(bb, ss, pp);
+	}
+
+	mainPartsEditorWindow->setup(id, modelPart, (modelPart!=NULL));
 
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(const QString&, long, bool)), this, SLOT(loadPart(const QString&, long, bool)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));

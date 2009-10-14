@@ -42,6 +42,7 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 #include "../fapplication.h"
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
+#include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
 
 
@@ -54,6 +55,7 @@ PartsEditorView::PartsEditorView(
 		QWidget *parent, int size, bool deleteModelPartOnClearScene)
 	: SketchWidget(viewId, parent, size, size)
 {
+	m_viewItem = NULL;
 	m_item = NULL;
 	m_deleteModelPartOnSceneClear = deleteModelPartOnClearScene;
 	m_tempFolder = tempDir;
@@ -130,7 +132,6 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 	Q_ASSERT(paletteItem);
 	if(paletteItem) {
 		modelPart->initConnectors();    // is a no-op if connectors already in place
-
 		QString layerFileName = getLayerFileName(modelPart);
 		if(layerFileName != ___emptyString___) {
 			if(paletteItem->createSvgPath(modelPart->modelPartShared()->path(), layerFileName)) {
@@ -143,6 +144,14 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 					viewLayerID = getViewLayerID(modelPart);
 				}
 				addDefaultLayers();
+				if (m_viewItem != NULL) {
+					QSizeF size = m_viewItem->size();
+					QString svg = makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height());
+					QHash<QString, SvgFileSplitter *> svgHash;
+					svg += m_viewItem->retrieveSvg(viewLayerID, svgHash, false, GraphicsUtils::StandardFritzingDPI);
+					svg += "</svg>";
+					paletteItem->setItemSVG(svg);
+				}
 
 				if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
 					addToScene(paletteItemAux, paletteItemAux->viewLayerID());
@@ -1565,4 +1574,8 @@ bool PartsEditorView::cleanXml(QString &content, const QString & filename)
 	SvgFileSplitter::fixStyleAttributeRecurse(root);
 	return doc.toByteArray();
 	*/
+}
+
+void PartsEditorView::setViewItem(ItemBase * item) {
+	m_viewItem = item;
 }

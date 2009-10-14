@@ -83,8 +83,13 @@ void PartsEditorMainWindow::initText() {
 
 }
 
-PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart *modelPart, bool fromTemplate)
+PartsEditorMainWindow::PartsEditorMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
+{
+	m_breadboardItem = m_schematicItem = m_pcbItem = NULL;
+}
+
+void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTemplate)
 {
     QFile styleSheet(":/resources/styles/partseditor.qss");
     m_mainFrame = new QFrame(this);
@@ -128,7 +133,19 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart
 	if(!fromTemplate) {
 		m_sketchModel = new SketchModel(true);
 	} else {
-		modelPart = m_paletteModel->loadPart(m_fileName);
+		ModelPart * mp = m_paletteModel->loadPart(m_fileName);
+		QHash<QString,QString> properties = mp->modelPartShared()->properties();
+		foreach (QString key, properties.keys()) {
+			QVariant prop = modelPart->prop(key.toUtf8().constData());
+			if (!prop.isNull() && prop.isValid()) {
+				QString p = prop.toString();
+				if (!p.isEmpty()) {
+					mp->modelPartShared()->properties()[key] = p;
+				}
+			}
+		}
+
+		modelPart = mp;
 		m_sketchModel = new SketchModel(modelPart);
 	}
 
@@ -151,6 +168,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart
 	setCentralWidget(m_mainFrame);
 
     if(fromTemplate) {
+		m_views->setViewItems(m_breadboardItem, m_schematicItem, m_pcbItem);
     	m_views->loadViewsImagesFromModel(m_paletteModel, m_sketchModel->root());
     }
 
@@ -778,4 +796,10 @@ bool PartsEditorMainWindow::validateMinRequirements() {
 		QMessageBox::information(this, tr("Icon needed"), tr("Please, provide an icon image for this part"));
 		return false;
 	}
+}
+
+void PartsEditorMainWindow::setViewItems(ItemBase* bbItem, ItemBase* schemItem, ItemBase* pcbItem) {
+	m_breadboardItem = bbItem;
+	m_schematicItem = schemItem;
+	m_pcbItem = pcbItem;
 }

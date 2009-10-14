@@ -38,11 +38,13 @@ $Date$
 #include "../layerattributes.h"
 #include "../items/layerkinpaletteitem.h"
 #include "../utils/folderutils.h"
+#include "../utils/graphicsutils.h"
 
 
 PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
+	m_itemSVG.clear();
 	m_owner = owner;
 
 	m_svgDom = NULL;
@@ -89,6 +91,11 @@ void PartsEditorPaletteItem::createSvgFile(QString path) {
 		delete m_svgDom;
 	}
     m_svgDom = new QDomDocument();
+	if (!m_itemSVG.isEmpty() && m_svgDom->setContent(m_itemSVG)) {
+		m_originalSvgPath = path;
+		return;
+	}
+
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
         return;
@@ -204,7 +211,14 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 		renderer = FSvgRenderer::getByFilename(fn, viewLayerID);
 		if (renderer == NULL) {
 			renderer = new FSvgRenderer();
-			if (!renderer->load(m_svgStrings->absolutePath(), false)) {
+			bool loaded = false;
+			if (!m_itemSVG.isEmpty()) {
+				loaded = renderer->load(m_itemSVG.toUtf8(), m_svgStrings->absolutePath(), false);
+			}
+			if (!loaded) {
+				loaded = renderer->load(m_svgStrings->absolutePath(), false);
+			}
+			if (!loaded) {
 				QMessageBox::information( NULL, QObject::tr("Fritzing"),
 						QObject::tr("The file %1 is not a Fritzing file (11).").arg(m_svgStrings->absolutePath()));
 				delete renderer;
@@ -279,4 +293,8 @@ void PartsEditorPaletteItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
 
 void PartsEditorPaletteItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 	GraphicsSvgLineItem::hoverLeaveEvent(event);
+}
+
+void PartsEditorPaletteItem::setItemSVG(const QString & itemSVG) {
+	m_itemSVG = itemSVG;
 }

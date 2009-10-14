@@ -44,6 +44,7 @@ Q_OBJECT
 		QCheckBox *showTerminalPointsCheckBox();
 
 		bool imagesLoadedInAllViews();
+		void setViewItems(class ItemBase *, class ItemBase *, class ItemBase *);
 
 		PartsEditorView *breadboardView();
 		PartsEditorView *schematicView();

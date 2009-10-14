@@ -225,6 +225,7 @@ public:
 	virtual bool ignoreFemale();
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	void setVoltage(long itemID, qreal voltage);
+	ItemBase * findItem(long id);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -238,7 +239,6 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
     PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok);
-	ItemBase * findItem(long id);
 	void clearHoldingSelectItem();
 	bool startZChange(QList<ItemBase *> & bases);
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
@@ -346,6 +346,8 @@ protected:
 	long findWire(long itemID);
 	void resizeBoard();
 	void resizeJumperItem();
+	QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
+
 
 protected:
 	static bool lessThan(int a, int b);

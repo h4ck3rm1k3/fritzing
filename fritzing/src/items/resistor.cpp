@@ -88,16 +88,16 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		file.close();
 	}
 
-	m_ohms = modelPart->prop("resistance").toString();
+	m_ohms = modelPart->prop("Resistance").toString();
 	if (m_ohms.isEmpty()) {
 		m_ohms = modelPart->properties().value("Resistance", "220");
-		modelPart->setProp("resistance", m_ohms);
+		modelPart->setProp("Resistance", m_ohms);
 	}
 
-	m_pinSpacing = modelPart->prop("pinspacing").toString();
+	m_pinSpacing = modelPart->prop("Pin Spacing").toString();
 	if (m_pinSpacing.isEmpty()) {
 		m_pinSpacing = modelPart->properties().value("Pin Spacing", "400 mil");
-		modelPart->setProp("pinspacing", m_pinSpacing);
+		modelPart->setProp("Pin Spacing", m_pinSpacing);
 	}
 
 	m_renderer = NULL;
@@ -164,8 +164,8 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash &
 
 	m_ohms = resistance;
 	m_pinSpacing = pinSpacing;
-	modelPart()->setProp("resistance", resistance);
-	modelPart()->setProp("pinspacing", pinSpacing);
+	modelPart()->setProp("Resistance", resistance);
+	modelPart()->setProp("Pin Spacing", pinSpacing);
 
 	updateResistances(m_ohms);
 	updateTooltip();
@@ -209,7 +209,7 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 void Resistor::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
 	ignoreValues = false;
 
-	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
+	if (prop.compare("Resistance", Qt::CaseInsensitive) == 0) {
 		ignoreValues = true;
 		value = m_ohms + OhmSymbol;
 		foreach (QString r, Resistances) {
@@ -230,7 +230,7 @@ void Resistor::collectExtraInfoValues(const QString & prop, QString & value, QSt
 QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & value) {
 	Q_UNUSED(value);
 
-	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
+	if (prop.compare("Resistance", Qt::CaseInsensitive) == 0) {
 		return QString("&nbsp;<input type='text' name='sResistance' id='sResistance' maxlength='8' value='%1' style='width:55px' onblur='setResistance()' onkeypress='setResistanceEnter(event)' />"
 					   "<script language='JavaScript'>lastGoodResistance=%1;</script>"
 					   ).arg(m_ohms + OhmSymbol);
@@ -240,7 +240,7 @@ QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & val
 }
 
 QString Resistor::getProperty(const QString & key) {
-	if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
+	if (key.compare("Resistance", Qt::CaseInsensitive) == 0) {
 		return m_ohms + OhmSymbol;
 	}
 

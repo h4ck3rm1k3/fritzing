@@ -73,6 +73,7 @@ class PartsEditorView : public SketchWidget {
 		PartsEditorConnectorsPaletteItem *myItem();
 
 		bool connsPosOrSizeChanged();
+		void setViewItem(ItemBase *);
 
 	public slots:
 		// general
@@ -202,6 +203,7 @@ class PartsEditorView : public SketchWidget {
 		QTimer *m_terminalPointsTimer;
 
 		QList<QWidget* > m_fixedWidgets;
+		ItemBase * m_viewItem;
 
 	protected:
 		static int ConnDefaultWidth;

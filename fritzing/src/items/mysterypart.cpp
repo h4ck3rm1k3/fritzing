@@ -41,10 +41,10 @@ $Date$
 MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_chipLabel = modelPart->prop("chiplabel").toString();
+	m_chipLabel = modelPart->prop("chip label").toString();
 	if (m_chipLabel.isEmpty()) {
 		m_chipLabel = modelPart->properties().value("chip label", "?");
-		modelPart->setProp("chiplabel", m_chipLabel);
+		modelPart->setProp("chip label", m_chipLabel);
 	}
 
 	m_renderer = NULL;
@@ -81,7 +81,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 	}
 
 	m_chipLabel = chipLabel;
-	modelPart()->setProp("chiplabel", chipLabel);
+	modelPart()->setProp("chip label", chipLabel);
 
 	updateTooltip();
 }

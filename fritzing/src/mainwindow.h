@@ -88,7 +88,7 @@ public:
 	void showAllFirstTimeHelp(bool show);
 	void enableCheckUpdates(bool enabled);
 
-	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id=-1, class PartsBinPaletteWidget* requester=NULL);
+	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id, ItemBase * fromItem, class PartsBinPaletteWidget* requester);
 	ModelPart *loadPartFromFile(const QString& newPartPath, bool connectorsChanged=false);
 	void addBoard();
 	void init();

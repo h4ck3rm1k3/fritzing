@@ -56,6 +56,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 
 		void createSvgFile(QString path);
 		bool createSvgPath(const QString &modelPartSharedPath, const QString &layerFileName);
+		void setItemSVG(const QString &);
 
 	protected:
 		bool setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
@@ -78,6 +79,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 
 		PartsEditorView *m_owner;
 		bool m_shouldDeletePath;
+		QString m_itemSVG;
 };
 
 #endif /* PARTSEDITORPALETTEITEM_H_ */

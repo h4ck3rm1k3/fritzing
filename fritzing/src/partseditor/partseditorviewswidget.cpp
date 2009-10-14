@@ -323,3 +323,11 @@ bool PartsEditorViewsWidget::connectorsPosOrSizeChanged() {
 			|| m_schemView->connsPosOrSizeChanged()
 			|| m_pcbView->connsPosOrSizeChanged();
 }
+
+void PartsEditorViewsWidget::setViewItems(ItemBase* bbItem, ItemBase* schemItem, ItemBase* pcbItem) 
+{
+	m_breadView->setViewItem(bbItem);
+	m_schemView->setViewItem(schemItem);
+	m_pcbView->setViewItem(pcbItem);
+}
+

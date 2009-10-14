@@ -48,9 +48,11 @@ class PartsEditorMainWindow : public FritzingWindow
 Q_OBJECT
 
 public:
-	PartsEditorMainWindow(long id, QWidget *parent=0, ModelPart *modelPart=0, bool fromTemplate=false);
+	PartsEditorMainWindow(QWidget *parent=0);
 	~PartsEditorMainWindow();
 
+	void setup(long id, ModelPart *modelPart, bool fromTemplate);
+	void setViewItems(class ItemBase *, class ItemBase *, class ItemBase *);
 	static const QString templatePath;
 	const QDir& tempDir();
 
@@ -110,6 +112,10 @@ protected:
 	EditableLineWidget *m_title;
 
 	class PartsEditorViewsWidget *m_views;
+
+	class ItemBase * m_breadboardItem;
+	class ItemBase * m_schematicItem;
+	class ItemBase * m_pcbItem;
 
 	EditableLineWidget *m_label;
 	class EditableTextWidget *m_description;
