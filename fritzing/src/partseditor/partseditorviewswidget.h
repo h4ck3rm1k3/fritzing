@@ -37,6 +37,8 @@ class PartsEditorViewsWidget : public QFrame {
 Q_OBJECT
 	public:
 		PartsEditorViewsWidget(SketchModel *sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent);
+		~PartsEditorViewsWidget();
+
 		void copySvgFilesToDestiny(const QString &partFileName);
 		void loadViewsImagesFromModel(PaletteModel *paletteModel, ModelPart *modelPart);
 		const QDir& tempDir();
@@ -67,8 +69,8 @@ Q_OBJECT
 		void connectorSelectedInView(const QString& connId);
 
 	protected:
-		void createViewImageWidget(
-			SketchModel* sketchModel, class WaitPushUndoStack *undoStack, PartsEditorView *&viw,
+		PartsEditorView * createViewImageWidget(
+			SketchModel* sketchModel, class WaitPushUndoStack *undoStack,
 			ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText,
 			ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId
 		);
@@ -82,13 +84,13 @@ Q_OBJECT
 		void connectPair(PartsEditorView *v1, PartsEditorView *v2);
 		void connectToThis(PartsEditorView *v);
 
-		PartsEditorView *m_breadView;
-		PartsEditorView *m_schemView;
-		PartsEditorView *m_pcbView;
+		QPointer<PartsEditorView> m_breadView;
+		QPointer<PartsEditorView> m_schemView;
+		QPointer<PartsEditorView> m_pcbView;
 		QHash<ViewIdentifierClass::ViewIdentifier,PartsEditorView*> m_views;
 
-		QCheckBox *m_showTerminalPointsCheckBox;
-		QLabel *m_guidelines;
+		QPointer<QCheckBox> m_showTerminalPointsCheckBox;
+		QPointer<QLabel> m_guidelines;
 
 		bool m_connsPosChanged;
 

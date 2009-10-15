@@ -92,6 +92,7 @@ PartsEditorView::PartsEditorView(
 
 PartsEditorView::~PartsEditorView() {
 	delete m_svgFilePath;
+	clearScene();
 }
 
 void PartsEditorView::addDefaultLayers() {
@@ -241,7 +242,12 @@ ModelPart *PartsEditorView::createFakeModelPart(SvgAndPartFilePath *svgpath) {
 	const QStringList layers = getLayers(svgpath->absolutePath());
 
 	QString path = svgpath->relativePath() == ___emptyString___ ? svgpath->absolutePath() : svgpath->relativePath();
-	return createFakeModelPart(connIds, layers, path);
+	ModelPart * mp = createFakeModelPart(connIds, layers, path);
+	foreach(StringPair * sp, connIds.values()) {
+		delete sp;
+	}
+
+	return mp;
 }
 
 ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, const QString &svgFilePath) {
@@ -898,7 +904,7 @@ void PartsEditorView::setSvgFilePath(const QString &filePath) {
 		relative = "";
 	}
 
-	// TODO: delete m_svgFilePath;
+	if (m_svgFilePath) delete m_svgFilePath;
 	m_svgFilePath = new SvgAndPartFilePath(filePath,relative);
 }
 

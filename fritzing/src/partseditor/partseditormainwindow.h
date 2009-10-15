@@ -105,51 +105,51 @@ protected:
 protected:
 	long m_id;
 
-	class PaletteModel *m_paletteModel;
-	class SketchModel *m_sketchModel;
+	QPointer<class PaletteModel> m_paletteModel;
+	QPointer<class SketchModel> m_sketchModel;
 
-	class PartsEditorView *m_iconViewImage;
-	EditableLineWidget *m_title;
+	QPointer<class PartsEditorView> m_iconViewImage;
+	QPointer<EditableLineWidget> m_title;
 
-	class PartsEditorViewsWidget *m_views;
+	QPointer<class PartsEditorViewsWidget> m_views;
 
-	class ItemBase * m_iconItem;
-	class ItemBase * m_breadboardItem;
-	class ItemBase * m_schematicItem;
-	class ItemBase * m_pcbItem;
+	QPointer<class ItemBase> m_iconItem;
+	QPointer<class ItemBase> m_breadboardItem;
+	QPointer<class ItemBase> m_schematicItem;
+	QPointer<class ItemBase> m_pcbItem;
 
-	EditableLineWidget *m_label;
-	class EditableTextWidget *m_description;
-	//EditableLineWidget *m_taxonomy;
-	EditableLineWidget *m_tags;
-	class HashPopulateWidget *m_properties;
-	EditableLineWidget *m_author;
-	class EditableDateWidget *m_createdOn;
-	QLabel *m_createdByText;
+	QPointer<EditableLineWidget> m_label;
+	QPointer<class EditableTextWidget> m_description;
+	//QPointer<EditableLineWidget> m_taxonomy;
+	QPointer<EditableLineWidget> m_tags;
+	QPointer<class HashPopulateWidget> m_properties;
+	QPointer<EditableLineWidget> m_author;
+	QPointer<class EditableDateWidget> m_createdOn;
+	QPointer<QLabel> m_createdByText;
 
-	ConnectorsInfoWidget *m_connsInfo;
+	QPointer<ConnectorsInfoWidget> m_connsInfo;
 
 	QString m_version;
 	QString m_moduleId;
 	QString m_uri;
 
 
-	QPushButton *m_saveAsNewPartButton;
-	QPushButton *m_saveButton;
-	QPushButton *m_cancelCloseButton;
+	QPointer<QPushButton> m_saveAsNewPartButton;
+	QPointer<QPushButton> m_saveButton;
+	QPointer<QPushButton> m_cancelCloseButton;
 
-	QTabWidget *m_tabWidget;
+	QPointer<QTabWidget> m_tabWidget;
 
-	QFrame *m_mainFrame;
-    QFrame *m_headerFrame;
-    QFrame *m_centerFrame;
-    QFrame *m_footerFrame;
+	QPointer<QFrame> m_mainFrame;
+    QPointer<QFrame> m_headerFrame;
+    QPointer<QFrame> m_centerFrame;
+    QPointer<QFrame> m_footerFrame;
 
     bool m_updateEnabled;
     bool m_partUpdated;
     bool m_savedAsNewPart;
 
-    static PartsEditorMainWindow *m_lastOpened;
+    static QPointer<PartsEditorMainWindow> m_lastOpened;
     static int m_closedBeforeCount;
     static QString ___partsEditorName___;
     static bool m_closeAfterSaving;

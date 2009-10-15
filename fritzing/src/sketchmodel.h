@@ -35,7 +35,7 @@ $Date$
 
 class SketchModel : public ModelBase
 {
-
+Q_OBJECT
 public:
 	SketchModel(bool makeRoot);
 	SketchModel(ModelPart * root);

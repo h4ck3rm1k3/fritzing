@@ -61,7 +61,7 @@ QString PartsEditorMainWindow::___partsEditorName___;
 const QString PartsEditorMainWindow::templatePath = "/docs/templates/";
 
 int PartsEditorMainWindow::UntitledPartIndex = 1;
-PartsEditorMainWindow *PartsEditorMainWindow::m_lastOpened = NULL;
+QPointer<PartsEditorMainWindow> PartsEditorMainWindow::m_lastOpened = NULL;
 int PartsEditorMainWindow::m_closedBeforeCount = 0;
 bool PartsEditorMainWindow::m_closeAfterSaving = true;
 
@@ -98,10 +98,11 @@ PartsEditorMainWindow::~PartsEditorMainWindow()
 
 	if (m_sketchModel) {
 		// memory leak here, but delete or deleteLater causes a crash if you're editing an already existing part;  a new part seems ok
-		//delete m_sketchModel;
-		//delete m_paletteModel;
-		//m_sketchModel->deleteLater();
-		//m_paletteModel->deleteLater();
+		delete m_sketchModel;
+	}
+
+	if (m_paletteModel) {
+		delete m_paletteModel;
 	}
 }
 

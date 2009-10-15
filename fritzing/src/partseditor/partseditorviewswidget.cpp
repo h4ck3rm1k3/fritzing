@@ -47,9 +47,9 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	m_showTerminalPointsCheckBox->setText(tr("Show Anchor Points"));
 	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(showHideTerminalPoints(int)));
 
-	createViewImageWidget(sketchModel, undoStack, m_breadView, ViewIdentifierClass::BreadboardView, "breadboard_icon.png", EmptyBreadViewText, info, ViewLayer::Breadboard);
-	createViewImageWidget(sketchModel, undoStack, m_schemView, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic);
-	createViewImageWidget(sketchModel, undoStack, m_pcbView, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0);
+	m_breadView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::BreadboardView, "breadboard_icon.png", EmptyBreadViewText, info, ViewLayer::Breadboard);
+	m_schemView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic);
+	m_pcbView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0);
 
 	m_guidelines = new QLabel(tr("Please refer to the <a style='color: #52182C' href='http://fritzing.org/learning/tutorials/creating-custom-parts/'>guidelines</a> before modifying or creating parts"), this);
 	m_guidelines->setOpenExternalLinks(true);
@@ -96,6 +96,12 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	//this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
 }
 
+PartsEditorViewsWidget::~PartsEditorViewsWidget() {
+	if (m_breadView) delete m_breadView;
+	if (m_schemView) delete m_schemView;
+	if (m_pcbView) delete m_pcbView;
+}
+
 void PartsEditorViewsWidget::init() {
 	m_connsPosChanged = false;
 
@@ -110,13 +116,13 @@ void PartsEditorViewsWidget::init() {
 	}
 }
 
-void PartsEditorViewsWidget::createViewImageWidget(
-		SketchModel* sketchModel, WaitPushUndoStack *undoStack, PartsEditorView *&viw,
+PartsEditorView * PartsEditorViewsWidget::createViewImageWidget(
+		SketchModel* sketchModel, WaitPushUndoStack *undoStack,
 		ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText,
 		ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId
 	) {
 
-	viw = new PartsEditorView(viewId,tempDir(),showingTerminalPoints(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
+	PartsEditorView * viw = new PartsEditorView(viewId,tempDir(),showingTerminalPoints(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
 	viw->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -141,6 +147,8 @@ void PartsEditorViewsWidget::createViewImageWidget(
 		info, SIGNAL(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString &, bool)),
 		viw, SLOT(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString &, bool))
 	);
+
+	return viw;
 }
 
 void PartsEditorViewsWidget::copySvgFilesToDestiny(const QString &partFileName) {
