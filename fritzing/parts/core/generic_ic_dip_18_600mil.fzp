@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="generic_ic_dip_18_600mil" >
- <version>1</version>
+ <version>1.0</version>
  <author>Fritzing Part-o-matic</author>
  <title>DIP - 18 pins</title>
  <label>IC</label>
- <date>2009-10-08</date>
+ <date>2009-10-15</date>
  <tags>
   <tag>DIP</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >generic DIP</property>
+  <property name="family" >Generic DIP IC</property>
   <property name="pins">18</property>
   <property name="spacing">600mil</property>
   <property name="chip label">IC</property>
@@ -29,7 +29,7 @@
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/generic_ic_dip_18_600mil_schem.svg" >
+   <layers image="schematic/generic_ic_dip_18_schem.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>

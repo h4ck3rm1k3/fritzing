@@ -11,7 +11,7 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >generic DIP</property>
+  <property name="family" >Generic DIP IC</property>
   <property name="pins">$pins</property>
   <property name="spacing">${mils}mil</property>
   <property name="chip label">${label}</property>
@@ -30,7 +30,7 @@
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/generic_ic_dip_${pins}_${mils}mil_schem.svg" >
+   <layers image="schematic/generic_ic_dip_${pins}_schem.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>

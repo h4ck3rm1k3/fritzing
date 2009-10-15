@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="generic_sip_25_300mil" >
- <version>1</version>
+ <version>1.0</version>
  <author>Fritzing Part-o-matic</author>
  <title>SIP - 25 pins</title>
  <label>U</label>
- <date>2009-10-11</date>
+ <date>2009-10-15</date>
  <tags>
   <tag>SIP</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >Generic SIP</property>
+  <property name="family" >Generic SIP IC</property>
   <property name="pins">25</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>

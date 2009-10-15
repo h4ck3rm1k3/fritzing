@@ -12,7 +12,7 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >Generic SIP</property>
+  <property name="family" >Generic SIP IC</property>
   <property name="pins">$pins</property>
   <property name="spacing">${mils}mil</property>
   <property name="chip label">${label}</property>
