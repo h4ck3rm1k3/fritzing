@@ -49,6 +49,7 @@ public:
 	void setChipLabel(QString label, bool force);
 	QString chipLabel();
 	const QString & title();
+	bool hasCustomSVG();
 
 protected:
 	QString makeSvg(const QString & chipLabel);

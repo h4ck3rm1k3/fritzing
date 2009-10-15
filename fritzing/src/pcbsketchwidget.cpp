@@ -141,8 +141,9 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 }
 
 
-ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName) {
+ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
+	Q_UNUSED(viewIdentifier);
 
 	// priviledge Copper0 if it's available
 	QDomElement layer = layers.firstChildElement("layer");

@@ -148,7 +148,7 @@ public:
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
-    virtual ItemBase * addItemAux(ModelPart *, const ViewGeometry &, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem * paletteItem, bool doConnectors);
+	virtual ItemBase * addItemAux(ModelPart *, const ViewGeometry &, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
 
     bool swappingEnabled(ItemBase *);
 
@@ -238,7 +238,7 @@ protected:
 	virtual void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
-    PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok);
+	PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier);
 	void clearHoldingSelectItem();
 	bool startZChange(QList<ItemBase *> & bases);
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
@@ -277,7 +277,7 @@ protected:
 	void clearTemporaries();
 	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	void killDroppingItem();
-	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
+	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	ItemBase * overSticky(ItemBase *);
 	virtual void setNewPartVisible(ItemBase *);
 	virtual void collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
@@ -293,7 +293,7 @@ protected:
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
-	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName);
+	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, QDomElement & layers, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();

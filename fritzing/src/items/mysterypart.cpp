@@ -92,6 +92,7 @@ QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStri
 	switch (viewLayerID) {
 		case ViewLayer::Breadboard:
 		case ViewLayer::Schematic:
+		case ViewLayer::Icon:
 			return replaceText(svg, m_chipLabel);
 		default:
 			break;
@@ -181,4 +182,14 @@ const QString & MysteryPart::title() {
 	return m_chipLabel;
 }
 
+bool MysteryPart::hasCustomSVG() {
+	switch (m_viewIdentifier) {
+		case ViewIdentifierClass::BreadboardView:
+		case ViewIdentifierClass::SchematicView:
+		case ViewIdentifierClass::IconView:
+			return true;
+		default:
+			return ItemBase::hasCustomSVG();
+	}
+}
 

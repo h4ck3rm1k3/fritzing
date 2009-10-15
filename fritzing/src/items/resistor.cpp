@@ -88,16 +88,16 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		file.close();
 	}
 
-	m_ohms = modelPart->prop("Resistance").toString();
+	m_ohms = modelPart->prop("resistance").toString();
 	if (m_ohms.isEmpty()) {
-		m_ohms = modelPart->properties().value("Resistance", "220");
-		modelPart->setProp("Resistance", m_ohms);
+		m_ohms = modelPart->properties().value("resistance", "220");
+		modelPart->setProp("resistance", m_ohms);
 	}
 
-	m_pinSpacing = modelPart->prop("Pin Spacing").toString();
+	m_pinSpacing = modelPart->prop("pin spacing").toString();
 	if (m_pinSpacing.isEmpty()) {
-		m_pinSpacing = modelPart->properties().value("Pin Spacing", "400 mil");
-		modelPart->setProp("Pin Spacing", m_pinSpacing);
+		m_pinSpacing = modelPart->properties().value("pin spacing", "400 mil");
+		modelPart->setProp("pin spacing", m_pinSpacing);
 	}
 
 	m_renderer = NULL;
@@ -164,8 +164,8 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash &
 
 	m_ohms = resistance;
 	m_pinSpacing = pinSpacing;
-	modelPart()->setProp("Resistance", resistance);
-	modelPart()->setProp("Pin Spacing", pinSpacing);
+	modelPart()->setProp("resistance", resistance);
+	modelPart()->setProp("pin spacing", pinSpacing);
 
 	updateResistances(m_ohms);
 	updateTooltip();
@@ -173,8 +173,12 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash &
 
 QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
-	if (viewLayerID != ViewLayer::Breadboard) {
-		return PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+	switch (viewLayerID) {
+		case ViewLayer::Breadboard:
+		case ViewLayer::Icon:
+			break;
+		default:
+			return PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
 	QString svg = makeBreadboardSvg(m_ohms);
@@ -209,7 +213,7 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 void Resistor::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
 	ignoreValues = false;
 
-	if (prop.compare("Resistance", Qt::CaseInsensitive) == 0) {
+	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		ignoreValues = true;
 		value = m_ohms + OhmSymbol;
 		foreach (QString r, Resistances) {
@@ -230,7 +234,7 @@ void Resistor::collectExtraInfoValues(const QString & prop, QString & value, QSt
 QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & value) {
 	Q_UNUSED(value);
 
-	if (prop.compare("Resistance", Qt::CaseInsensitive) == 0) {
+	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		return QString("&nbsp;<input type='text' name='sResistance' id='sResistance' maxlength='8' value='%1' style='width:55px' onblur='setResistance()' onkeypress='setResistanceEnter(event)' />"
 					   "<script language='JavaScript'>lastGoodResistance=%1;</script>"
 					   ).arg(m_ohms + OhmSymbol);
@@ -240,7 +244,7 @@ QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & val
 }
 
 QString Resistor::getProperty(const QString & key) {
-	if (key.compare("Resistance", Qt::CaseInsensitive) == 0) {
+	if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
 		return m_ohms + OhmSymbol;
 	}
 
@@ -311,4 +315,18 @@ ConnectorItem* Resistor::newConnectorItem(Connector *connector) {
 	}
 
 	return PaletteItem::newConnectorItem(connector);
+}
+
+bool Resistor::hasCustomSVG() {
+	switch (m_viewIdentifier) {
+		case ViewIdentifierClass::BreadboardView:
+		case ViewIdentifierClass::IconView:
+			return true;
+		default:
+			return ItemBase::hasCustomSVG();
+	}
+}
+
+bool Resistor::canEditPart() {
+	return false;
 }

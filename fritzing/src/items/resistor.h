@@ -51,6 +51,8 @@ public:
 	QString resistance();
 	QString pinSpacing();
 	const QString & title();
+	bool hasCustomSVG();
+	bool canEditPart();
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);

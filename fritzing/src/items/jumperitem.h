@@ -48,6 +48,7 @@ public:
 	void setAutoroutable(bool);
 	class ConnectorItem * connector0();
 	class ConnectorItem * connector1();
+	bool hasCustomSVG();
 
 protected:
 	void resize();

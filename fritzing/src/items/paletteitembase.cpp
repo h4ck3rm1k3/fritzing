@@ -409,6 +409,12 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 	return splitter->elementString(xmlName);
 }
 
+bool PaletteItemBase::canEditPart() {
+	if (itemType() == ModelPart::Part) return true;
+
+	return ItemBase::canEditPart();
+}
+
 /*
 
 void PaletteItemBase::setPos(const QPointF & pos) {

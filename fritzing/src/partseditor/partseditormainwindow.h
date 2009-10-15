@@ -52,7 +52,7 @@ public:
 	~PartsEditorMainWindow();
 
 	void setup(long id, ModelPart *modelPart, bool fromTemplate);
-	void setViewItems(class ItemBase *, class ItemBase *, class ItemBase *);
+	void setViewItems(class ItemBase *, class ItemBase *, class ItemBase *, class ItemBase *);
 	static const QString templatePath;
 	const QDir& tempDir();
 
@@ -113,6 +113,7 @@ protected:
 
 	class PartsEditorViewsWidget *m_views;
 
+	class ItemBase * m_iconItem;
 	class ItemBase * m_breadboardItem;
 	class ItemBase * m_schematicItem;
 	class ItemBase * m_pcbItem;

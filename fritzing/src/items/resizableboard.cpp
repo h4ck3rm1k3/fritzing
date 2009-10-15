@@ -460,3 +460,13 @@ void ResizableBoard::getParams(QPointF & p, QSizeF & s) {
 	p = m_boardPos;
 	s = m_boardSize;
 }
+
+bool ResizableBoard::hasCustomSVG() {
+	switch (m_viewIdentifier) {
+		case ViewIdentifierClass::PCBView:
+			return true;
+		default:
+			return ItemBase::hasCustomSVG();
+	}
+}
+

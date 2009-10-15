@@ -124,7 +124,7 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 	emit connectorsFound(this->m_viewIdentifier,m_item->connectors());
 }
 
-ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, long /*originalModelIndex*/, AddDeleteItemCommand * /*originatingCommand*/, PaletteItem * paletteItemAux, bool doConnectors) {
+ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry &, long /*id*/, long /*originalModelIndex*/, AddDeleteItemCommand *, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier) {
 	if(paletteItemAux == NULL) {
 		paletteItemAux = newPartsEditorPaletteItem(modelPart);
 	}
@@ -141,16 +141,17 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 						findConnectorLayerId(paletteItem->svgDom())
 					);
 				if(viewLayerID == ViewLayer::UnknownLayer) {
-					viewLayerID = getViewLayerID(modelPart);
+					viewLayerID = getViewLayerID(modelPart, m_viewIdentifier);
 				}
 				addDefaultLayers();
 				if (m_viewItem != NULL) {
-					QSizeF size = m_viewItem->size();
-					QString svg = makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height());
 					QHash<QString, SvgFileSplitter *> svgHash;
-					svg += m_viewItem->retrieveSvg(viewLayerID, svgHash, false, GraphicsUtils::StandardFritzingDPI);
-					svg += "</svg>";
-					paletteItem->setItemSVG(svg);
+					QString svg = m_viewItem->retrieveSvg(viewLayerID, svgHash, false, GraphicsUtils::StandardFritzingDPI);
+					if (!svg.isEmpty()) {
+						QSizeF size = m_viewItem->size();
+						svg = makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
+						paletteItem->setItemSVG(svg);
+					}
 				}
 
 				if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
@@ -705,17 +706,14 @@ bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &
 
 	QDomDocument *svgDom = new QDomDocument();
 
-	QString *errorMsg = new QString("");
-	int *errorLine = new int(0);
-	int *errorCol = new int(0);
-	if(!svgDom->setContent(fileContent, true, errorMsg, errorLine, errorCol)) {
+	QString errorMsg;
+	int errorLine;
+	int errorCol;
+	if(!svgDom->setContent(fileContent, true, &errorMsg, &errorLine, &errorCol)) {
 		qWarning() << QString("PartsEditorView::fixPixelDimensionsIn(filename) couldn't load svg: %1 (line %2, col %3)")
-						.arg(*errorMsg).arg(*errorLine).arg(*errorCol);
+						.arg(errorMsg).arg(errorLine).arg(errorCol);
 		return false;
 	}
-	delete errorMsg;
-	delete errorLine;
-	delete errorCol;
 
 	QDomElement elem = svgDom->firstChildElement("svg");
 	bool fileHasChanged = pxToInches(elem,"width",filename);
@@ -780,9 +778,9 @@ bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, con
 	QString attrValue = elem.attribute(attrName);
 	if(attrValue.endsWith("px")) {
 		bool ok;
-		qreal value = attrValue.remove("px").toDouble(&ok);
+		qreal value = TextUtils::convertToInches(attrValue, &ok);
 		if(ok) {
-			QString newValue = QString("%1in").arg(value/90);
+			QString newValue = QString("%1in").arg(value);
 			elem.setAttribute(attrName,newValue);
 			DebugDialog::debug(
 				QString("translating svg attribute '%1' from '%2px' to '%3' in file '%4'")
@@ -1128,7 +1126,7 @@ void PartsEditorView::aboutToSave() {
 			somethingChanged |= removeConnectorsIfNeeded(elem);
 			somethingChanged |= updateTerminalPoints(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
-
+			somethingChanged |= (m_viewItem != NULL);
 
 			if(somethingChanged) {
 				QString viewFolder = getOrCreateViewFolderInTemp();
@@ -1144,12 +1142,14 @@ void PartsEditorView::aboutToSave() {
 							.arg(tempFile)
 					);*/
 				}
-				QTextStream out(&file);
-				out << removeXMLEntities(svgDom->toString());
+				else {
+					QTextStream out(&file);
+					out << removeXMLEntities(svgDom->toString());
 
-				file.close();
+					file.close();
+					updateModelPart(tempFile);
+				}
 
-				updateModelPart(tempFile);
 			}
 		} else {
 			DebugDialog::debug("updating part view svg file: could not load file "+m_item->flatSvgFilePath());

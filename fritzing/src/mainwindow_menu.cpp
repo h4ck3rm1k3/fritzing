@@ -1677,7 +1677,7 @@ void MainWindow::updateItemMenu() {
 	//TODO PARTS EDITOR REMOVE
 	//m_openInOldPartsEditorAct->setEnabled(enabled);
 	// can't open wire in parts editor
-	enabled &= selected != NULL && selected->itemType() == ModelPart::Part;
+	enabled &= selected != NULL && itemBase != NULL && itemBase->canEditPart();
 	m_openInPartsEditorAct->setEnabled(enabled);
 
 	m_disconnectAllAct->setEnabled(enabled && m_currentGraphicsView->canDisconnectAll() && (itemBase->rightClickedConnector() != NULL));
@@ -1921,13 +1921,25 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 
 	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(this);
 	if (fromItem != NULL) {
-		ItemBase * bb = this->m_breadboardGraphicsView->findItem(_id);
+		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, ViewGeometry(), ItemBase::getNextID(), -1, NULL, NULL, true, ViewIdentifierClass::IconView);
+		if (ii != NULL) {
+			m_breadboardGraphicsView->scene()->removeItem(ii);
+			if (!ii->hasCustomSVG()) {
+				delete ii;
+				ii = NULL;
+			}
+		}
+
+		ItemBase * bb = m_breadboardGraphicsView->findItem(_id);
 		if (bb) bb = bb->layerKinChief();
-		ItemBase * ss = this->m_schematicGraphicsView->findItem(_id);
+		if (bb != NULL && !bb->hasCustomSVG()) bb = NULL;
+		ItemBase * ss = m_schematicGraphicsView->findItem(_id);
 		if (ss) ss = ss->layerKinChief();
-		ItemBase * pp = this->m_pcbGraphicsView->findItem(_id);
+		if (ss != NULL && !ss->hasCustomSVG()) ss = NULL;
+		ItemBase * pp = m_pcbGraphicsView->findItem(_id);
 		if (pp) pp = pp->layerKinChief();
-		mainPartsEditorWindow->setViewItems(bb, ss, pp);
+		if (pp != NULL && !pp->hasCustomSVG()) pp = NULL;
+		mainPartsEditorWindow->setViewItems(ii, bb, ss, pp);
 	}
 
 	mainPartsEditorWindow->setup(id, modelPart, (modelPart!=NULL));

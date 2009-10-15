@@ -1478,3 +1478,10 @@ QString ItemBase::translatePropertyName(const QString & key) {
 	return TranslatedPropertyNames.value(key.toLower(), key);
 }
 
+bool ItemBase::canEditPart() {
+	return false;
+}
+
+bool ItemBase::hasCustomSVG() {
+	return false;
+}

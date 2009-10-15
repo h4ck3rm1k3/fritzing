@@ -54,6 +54,7 @@ public:
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
+	bool hasCustomSVG();
 
 public:
 	static QString customShapeTranslated;

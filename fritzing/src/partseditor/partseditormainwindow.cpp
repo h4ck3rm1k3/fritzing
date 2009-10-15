@@ -86,8 +86,25 @@ void PartsEditorMainWindow::initText() {
 PartsEditorMainWindow::PartsEditorMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
-	m_breadboardItem = m_schematicItem = m_pcbItem = NULL;
+	m_iconItem = m_breadboardItem = m_schematicItem = m_pcbItem = NULL;
 }
+
+PartsEditorMainWindow::~PartsEditorMainWindow()
+{
+	if (m_iconItem) {
+		// m_iconItem was custom-created for the PartsEditor; the other items exist in the sketch so shouldn't be deleted
+		delete m_iconItem;
+	}
+
+	if (m_sketchModel) {
+		// memory leak here, but delete or deleteLater causes a crash if you're editing an already existing part;  a new part seems ok
+		//delete m_sketchModel;
+		//delete m_paletteModel;
+		//m_sketchModel->deleteLater();
+		//m_paletteModel->deleteLater();
+	}
+}
+
 
 void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTemplate)
 {
@@ -141,6 +158,9 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 				QString p = prop.toString();
 				if (!p.isEmpty()) {
 					mp->modelPartShared()->properties()[key] = p;
+					if (key.compare("chip label") == 0) {
+						mp->modelPartShared()->properties()["family"] = p;
+					}
 				}
 			}
 		}
@@ -186,17 +206,6 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 
 }
 
-PartsEditorMainWindow::~PartsEditorMainWindow()
-{
-	if (m_sketchModel) {
-		// memory leak here, but delete or deleteLater causes a crash if you're editing an already existing part;  a new part seems ok
-		//delete m_sketchModel;
-		//delete m_paletteModel;
-		//m_sketchModel->deleteLater();
-		//m_paletteModel->deleteLater();
-	}
-}
-
 void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_headerFrame = new QFrame();
 	m_headerFrame->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
@@ -208,6 +217,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_iconViewImage = new PartsEditorView(
 		ViewIdentifierClass::IconView, createTempFolderIfNecessary(), false, startItem, m_headerFrame, iconViewSize
 	);
+	m_iconViewImage->setViewItem(m_iconItem);
 	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);
 	m_iconViewImage->setObjectName("iconImage");
 	m_iconViewImage->setSketchModel(m_sketchModel);
@@ -643,6 +653,7 @@ ModelPartShared* PartsEditorMainWindow::modelPartShared() {
 	shared->setTags(tags);
 	shared->setProperties(m_properties->hash());
 
+	m_iconViewImage->aboutToSave();
 	m_views->aboutToSave();
 	shared->setConnectorsShared(m_connsInfo->connectorsShared());
 
@@ -798,7 +809,8 @@ bool PartsEditorMainWindow::validateMinRequirements() {
 	}
 }
 
-void PartsEditorMainWindow::setViewItems(ItemBase* bbItem, ItemBase* schemItem, ItemBase* pcbItem) {
+void PartsEditorMainWindow::setViewItems(ItemBase * iiItem, ItemBase* bbItem, ItemBase* schemItem, ItemBase* pcbItem) {
+	m_iconItem = iiItem;
 	m_breadboardItem = bbItem;
 	m_schematicItem = schemItem;
 	m_pcbItem = pcbItem;

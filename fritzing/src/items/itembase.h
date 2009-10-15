@@ -175,6 +175,8 @@ public:
 	virtual QString collectExtraInfoHtml(const QString & prop, const QString & value);
 	virtual QString getProperty(const QString & key);
 	ConnectorItem * rightClickedConnector();
+	virtual bool canEditPart();
+	virtual bool hasCustomSVG();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

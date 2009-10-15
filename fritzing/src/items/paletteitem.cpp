@@ -64,8 +64,6 @@ PaletteItem::~PaletteItem() {
 }
 
 bool PaletteItem::renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {
-	Q_UNUSED(viewLayerID);
-
 	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
 
 	m_syncMoved = this->pos();

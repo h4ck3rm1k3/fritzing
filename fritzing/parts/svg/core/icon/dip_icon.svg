@@ -2,7 +2,7 @@
 <svg version="1.2" baseProfile="tiny" id="svg2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 width="0.3in" height="0.33in" viewBox="0 0 30.0 33.0" xml:space="preserve">
 
-<g id="breadboard">
+<g id="icon">
   <rect id="middle" x="0" y="3" fill="#303030" width="30.0" height="27.0" />
   <rect id="top" x="0" y="3.0" fill="#3D3D3D" width="30.0" height="2.46"/>
   <rect id="bottom" x="0" y="27.54" fill="#000000" width="30.0" height="2.46"/>

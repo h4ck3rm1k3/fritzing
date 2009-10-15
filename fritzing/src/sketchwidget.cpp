@@ -200,7 +200,7 @@ void SketchWidget::setUndoStack(WaitPushUndoStack * undoStack) {
 ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& viewGeometry){
 	// assumes modelPart has already been added to the sketch
 	// or you're in big trouble when you delete the item
-	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true);
+	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true, m_viewIdentifier);
 }
 
 void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
@@ -238,7 +238,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		// use a function of the model index to ensure the same parts have the same ID across views
 		long newID = ItemBase::getNextID(mp->modelIndex());
 		if (parentCommand == NULL) {
-			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true);
+			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
 			if (item != NULL) {
 				zmap.insert(viewGeometry.z() - floor(viewGeometry.z()), item);   
 				const char * className = item->metaObject()->className();
@@ -609,7 +609,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 	}
 	if (modelPart == NULL) return NULL;
 
-	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, originalModelIndex, originatingCommand, partsEditorPaletteItem, true);
+	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, originalModelIndex, originatingCommand, partsEditorPaletteItem, true, m_viewIdentifier);
 	if (crossViewType == BaseCommand::CrossView) {
 		emit itemAddedSignal(modelPart, viewGeometry, id, originatingCommand ? originatingCommand->dropOrigin() : NULL);
 	}
@@ -617,9 +617,12 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 	return newItem;
 }
 
-ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem, bool doConnectors)
+ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier viewIdentifier)
 {
 	Q_UNUSED(partsEditorPaletteItem);
+	if (viewIdentifier == ViewIdentifierClass::UnknownView) {
+		viewIdentifier = m_viewIdentifier;
+	}
 
 	if (doConnectors) {
 		modelPart->initConnectors();    // is a no-op if connectors already in place
@@ -639,7 +642,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			bool virtualWire = viewGeometry.getVirtual();
 			Wire * wire = NULL;
 			if (virtualWire) {
-				VirtualWire * vw = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+				VirtualWire * vw = new VirtualWire(modelPart, viewIdentifier, viewGeometry, id, m_wireMenu);
 				setClipEnds(vw, true);
 				wire = vw;
              	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
@@ -648,12 +651,12 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			}
 			else {
 				if (viewGeometry.getTrace()) {
-					TraceWire * traceWire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+					TraceWire * traceWire = new TraceWire(modelPart, viewIdentifier, viewGeometry, id, m_wireMenu);
 					setClipEnds(traceWire, true);
 					wire = traceWire;
 				}
 				else {
-					wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+					wire = new Wire(modelPart, viewIdentifier, viewGeometry, id, m_wireMenu);
 					if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
 						wire->setNormal(true);
 					}
@@ -677,7 +680,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			addToScene(wire, wire->viewLayerID());
 			DebugDialog::debug(QString("adding wire %1 %2 %3 %4 %5")
 				.arg(wire->id())
-				.arg(m_viewIdentifier)
+				.arg(viewIdentifier)
 				.arg(viewGeometry.flagsAsInt())
 				.arg((long) wire, 0, 16)
 				.arg((long) static_cast<QGraphicsItem *>(wire), 0, 16)
@@ -688,7 +691,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		}
 		case ModelPart::Note:
 		{
-			Note * note = new Note(modelPart, m_viewIdentifier, viewGeometry, id, NULL);
+			Note * note = new Note(modelPart, viewIdentifier, viewGeometry, id, NULL);
 			note->setViewLayerID(getNoteViewLayerID(), m_viewLayers);
 			note->setZValue(note->z());
 			note->setVisible(true);
@@ -696,39 +699,39 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			return note;
 		}
 		case ModelPart::Jumper:
-			paletteItem = new JumperItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			paletteItem = new JumperItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		case ModelPart::ResizableBoard:
-			paletteItem = new ResizableBoard(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			paletteItem = new ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		case ModelPart::Symbol:
-			paletteItem = new SymbolPaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			paletteItem = new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		default:
 			if (modelPart->moduleID().compare(ItemBase::resistorModuleIDName) == 0) {
-				paletteItem = new Resistor(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true, m_viewLayers);
+				paletteItem = new Resistor(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true, m_viewLayers);
 			}
 			else if (modelPart->properties().value("family", "").compare("mystery part", Qt::CaseInsensitive) == 0) {
-				paletteItem = new MysteryPart(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
+				paletteItem = new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
 			}
 			else if (modelPart->properties().value("family", "").compare("generic DIP", Qt::CaseInsensitive) == 0) {
-				paletteItem = new Dip(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
+				paletteItem = new Dip(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
 			}
 			else if (modelPart->properties().value("family", "").compare("generic SIP", Qt::CaseInsensitive) == 0) {
-				paletteItem = new Dip(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu, true);
+				paletteItem = new Dip(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
 			}
 			else {
-				paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+				paletteItem = new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			}
 			break;
 	}
 
 	bool ok;
-	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors, ok);
+	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors, ok, viewIdentifier);
 	DebugDialog::debug(QString("adding part %1 %2 %4 %5 %3")
 		.arg(id)
 		.arg(paletteItem->title())
-		.arg(m_viewIdentifier)
+		.arg(viewIdentifier)
 		.arg((long) itemBase, 0, 16)
 		.arg((long) static_cast<QGraphicsItem *>(itemBase), 0, 16));
 	setNewPartVisible(itemBase);
@@ -775,16 +778,16 @@ void SketchWidget::checkSticky(long id, bool doEmit, bool checkCurrent, CheckSti
 	}
 }
 
-PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok) {
+PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 
 	ok = false;
-	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart);
+	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart, viewIdentifier);
 
 	// render it, only if the layer is defined in the fzp file
 	// if the view is not defined in the part file, without this condition
 	// fritzing crashes
 	if(viewLayerID != ViewLayer::UnknownLayer) {
-		if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+		if (paletteItem->renderImage(modelPart, viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
 			addToScene(paletteItem, paletteItem->viewLayerID());
 			paletteItem->loadLayerKin(m_viewLayers);
 			foreach (ItemBase * lkpi, paletteItem->layerKin()) {
@@ -1122,7 +1125,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 	}
 
 	if (addItNow) {
-		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName), viewGeometry, newID, -1, NULL, NULL, true);
+		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName), viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
 		if (newItemBase) {
 			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
@@ -1402,7 +1405,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 				break;
 		}
 
-		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors);
+		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors, m_viewIdentifier);
 
 		ItemDrag::_cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -1975,7 +1978,7 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	vg.setLine(newLine2);
 	long newID = ItemBase::getNextID();
 	ConnectorItem * oldConnector1 = wire->connector1();
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), vg, newID, -1, NULL, NULL, true));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), vg, newID, -1, NULL, NULL, true, m_viewIdentifier));
 	ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
 		oldConnector1->tempRemove(toConnectorItem, false);
@@ -2317,10 +2320,10 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 		QPointF dp = viewGeometry.loc() - from;
 		ViewGeometry vg(viewGeometry);
 		vg.setLoc(to + dp);
-		addItemAux(modelPart, vg, id, -1, NULL, NULL, true);
+		addItemAux(modelPart, vg, id, -1, NULL, NULL, true, m_viewIdentifier);
 	}
 	else {
-		addItemAux(modelPart, viewGeometry, id, -1, NULL, NULL, true);
+		addItemAux(modelPart, viewGeometry, id, -1, NULL, NULL, true, m_viewIdentifier);
 	}
 }
 
@@ -3176,7 +3179,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 
 	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true, m_viewIdentifier));
 	DebugDialog::debug("creating connector drag wire");
 	if (m_connectorDragWire == NULL) {
 		clearDragWireTempCommand();
@@ -3771,9 +3774,9 @@ void SketchWidget::killDroppingItem() {
 	}
 }
 
-ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart) {
+ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 
-	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->modelPartShared()->domDocument(), m_viewIdentifier);
+	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->modelPartShared()->domDocument(), viewIdentifier);
 	if (layers.isNull()) return ViewLayer::UnknownLayer;
 
 	QDomElement layer = layers.firstChildElement("layer");
@@ -3791,12 +3794,14 @@ ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart) {
 		return ViewLayer::viewLayerIDFromXmlString(layerName);
 	}
 
-	return multiLayerGetViewLayerID(modelPart, layers, layerName);
+	return multiLayerGetViewLayerID(modelPart, viewIdentifier, layers, layerName);
 }
 
-ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName) {
+ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
 	Q_UNUSED(layers);
+	Q_UNUSED(viewIdentifier);
+
 	return ViewLayer::viewLayerIDFromXmlString(layerName);
 }
 

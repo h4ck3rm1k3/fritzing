@@ -319,3 +319,13 @@ ConnectorItem * JumperItem::connector0() {
 ConnectorItem * JumperItem::connector1() {
 	return m_connector1;
 }
+
+bool JumperItem::hasCustomSVG() {
+	switch (m_viewIdentifier) {
+		case ViewIdentifierClass::PCBView:
+			return true;
+		default:
+			return ItemBase::hasCustomSVG();
+	}
+}
+
