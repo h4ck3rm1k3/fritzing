@@ -50,7 +50,7 @@ QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
 QString PaletteModel::NonCorePartsBinFilePath = ___emptyString___;
 
 
-QString InstanceTemplate(
+const QString InstanceTemplate(
         		"\t\t<instance moduleIdRef=\"%1\" path=\"%2\">\n"
 				"\t\t\t<views>\n"
         		"\t\t\t\t<iconView layer=\"icon\">\n"
@@ -114,7 +114,8 @@ void PaletteModel::loadParts() {
 	nameFilters << "*" + FritzingPartExtension << "*" + FritzingModuleExtension;
 
 	JustAppendAllPartsInstances = true;   
-	/// !!!!!!!!!!!!!!!!  JustAppendAllPartsInstances = CreateAllPartsBinFile is wrong
+	/// !!!!!!!!!!!!!!!!  "JustAppendAllPartsInstances = CreateAllPartsBinFile"
+	/// !!!!!!!!!!!!!!!!  is incorrect
 	/// !!!!!!!!!!!!!!!!  this flag was originally set up because sometimes we were appending a
 	/// !!!!!!!!!!!!!!!!  single instance into an already existing file,
 	/// !!!!!!!!!!!!!!!!  so simply appending new items as text gave us xml errors.
@@ -144,7 +145,8 @@ void PaletteModel::loadParts() {
 	writeCommonBinsFooter();
 	
 	JustAppendAllPartsInstances = false;   
-	/// !!!!!!!!!!!!!!!!  JustAppendAllPartsInstances = !CreateAllPartsBinFile is wrong
+	/// !!!!!!!!!!!!!!!!  "JustAppendAllPartsInstances = !CreateAllPartsBinFile"
+	/// !!!!!!!!!!!!!!!!  is incorrect
 	/// !!!!!!!!!!!!!!!!  See above.  We simply want to restore the default, so that other functions calling
 	/// !!!!!!!!!!!!!!!!  writeInstanceInCommonBin via LoadPart() will use the slower DomDocument methods,
 	/// !!!!!!!!!!!!!!!!  since in that case we are appending to an already existing file.
