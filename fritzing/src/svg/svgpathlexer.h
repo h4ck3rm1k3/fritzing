@@ -30,6 +30,8 @@ $Date$
 #include <QtCore/QString>
 #include <QtCore/QHash>
 #include <QRegExp>
+#include <QDomElement>
+#include <QMatrix>
 
 class SVGPathLexer
 {

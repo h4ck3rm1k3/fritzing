@@ -69,6 +69,9 @@ public:
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 	static void fixStyleAttributeRecurse(QDomElement & element);
 	static void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
+    static QList<qreal> getTransformFloats(QDomElement & element);
+	static QList<qreal> getTransformFloats(const QString & transform);
+	static QMatrix elementToMatrix(QDomElement & element);
 
 protected:
 	void normalizeChild(QDomElement & childElement, 
@@ -79,6 +82,9 @@ protected:
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void painterPathChild(QDomElement & element, QPainterPath & ppath);			// note: only partially implemented
+	void normalizeTranslation(QDomElement & element, 
+							qreal sNewWidth, qreal sNewHeight,
+							qreal vbWidth, qreal vbHeight);
 
 protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta);

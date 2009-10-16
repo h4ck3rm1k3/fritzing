@@ -27,7 +27,6 @@ $Date$
 #include "fsvgrenderer.h"
 #include "debugdialog.h"
 #include "svg/svgfilesplitter.h"
-#include "svg/svgflattener.h"
 #include "utils/textutils.h"
 
 #include <QRegExp>
@@ -318,13 +317,12 @@ bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID,
 	}
 
 	if (!terminalElement.isNull()) {
-		terminalMatrix = SvgFlattener::elementToMatrix(terminalElement);
+		terminalMatrix = SvgFileSplitter::elementToMatrix(terminalElement);
 	}
 
 	if (element.isNull()) return false;
 
-	matrix = SvgFlattener::elementToMatrix(element);
-
+	matrix = SvgFileSplitter::elementToMatrix(element);
 
 	if (element.nodeName().compare("circle") != 0) return false;
 

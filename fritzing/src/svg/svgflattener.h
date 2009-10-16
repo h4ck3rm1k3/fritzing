@@ -41,9 +41,6 @@ public:
 public:
     static bool hasTranslate(QDomElement & element);
     static bool hasRotate(QDomElement & element);
-    static QList<qreal> getTransformFloats(QDomElement & element);
-	static QList<qreal> getTransformFloats(const QString & transform);
-	static QMatrix elementToMatrix(QDomElement & element);
 
 protected slots:
     void rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

@@ -311,11 +311,28 @@ void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppa
 	}
 }
 
+void SvgFileSplitter::normalizeTranslation(QDomElement & element,
+											qreal sNewWidth, qreal sNewHeight,
+											qreal vbWidth, qreal vbHeight)
+{
+	QString attr = element.attribute("transform");
+	if (attr.isEmpty()) return;
+
+	QMatrix matrix = elementToMatrix(element);
+	qreal dx = matrix.dx() * sNewWidth / vbWidth;
+	qreal dy = matrix.dy() * sNewHeight / vbHeight;
+	if (dx == 0 && dy == 0) return;
+
+	QString m = QString("matrix(%1, %2, %3, %4, %5, %6)").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(dx).arg(dy);
+	element.setAttribute("transform", m);
+}
+
 
 void SvgFileSplitter::normalizeChild(QDomElement & element,
 									 qreal sNewWidth, qreal sNewHeight,
 									 qreal vbWidth, qreal vbHeight, bool blackOnly)
 {
+	normalizeTranslation(element, sNewWidth, sNewHeight, vbWidth, vbHeight);
 
 	if (element.nodeName().compare("circle") == 0) {
 		fixStyleAttribute(element);
@@ -678,7 +695,7 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData, QObject * slotTarget, bool convertHV) {
 	QString dataCopy(data);
 
-	if (!dataCopy.startsWith('M')) {
+	if (!dataCopy.startsWith('M', Qt::CaseInsensitive)) {
 		dataCopy.prepend('M');
 	}
 	while (dataCopy.at(dataCopy.length() - 1).isSpace()) {
@@ -837,7 +854,6 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 			x = data->x;
 			y = data->y;
 			for (int i = 0; i < args.count(); i += 7) {
-				data->path.append(command);
 				data->x = x + args[i + 5];
 				data->y = y + args[i + 6];
 				appendPair(data->path, args[i], args[i + 1]);
@@ -1080,3 +1096,62 @@ void SvgFileSplitter::changeColors(QDomElement & element, QString & toColor, QSt
 		child = child.nextSiblingElement();
 	}
 }
+
+QList<qreal> SvgFileSplitter::getTransformFloats(QDomElement & element){
+	return getTransformFloats(element.attribute("transform"));
+}
+
+QList<qreal> SvgFileSplitter::getTransformFloats(const QString & transform){
+    QList<qreal> list;
+    int pos = 0;
+
+	while ((pos = SVGPathLexer::floatingPointMatcher.indexIn(transform, pos)) != -1) {
+		list << transform.mid(pos, SVGPathLexer::floatingPointMatcher.matchedLength()).toDouble();
+        pos += SVGPathLexer::floatingPointMatcher.matchedLength();
+    }
+
+#ifndef QT_NO_DEBUG
+   // QString dbg = "got transform params: \n";
+    //dbg += transform + "\n";
+    //for(int i=0; i < list.size(); i++){
+        //dbg += QString::number(list.at(i)) + " ";
+    // }
+    //DebugDialog::debug(dbg);
+#endif
+
+    return list;
+}
+
+QMatrix SvgFileSplitter::elementToMatrix(QDomElement & element) {
+	QString transform = element.attribute("transform");
+	if (transform.isEmpty()) return QMatrix();
+
+	QList<qreal> floats = getTransformFloats(transform);
+
+	if (transform.startsWith("translate")) {
+		return QMatrix().translate(floats[0], (floats.length() > 1) ? floats[1] : 0);
+	}
+	else if (transform.startsWith("rotate")) {
+		if (floats.length() == 1) {
+			return QMatrix().rotate(floats[0]);
+		}
+		else if (floats.length() == 3) {
+			return  QMatrix().translate(-floats[1], -floats[2]) * QMatrix().rotate(floats[0]) * QMatrix().translate(floats[1], floats[2]);
+		}
+	}
+	else if (transform.startsWith("matrix")) {
+        return QMatrix(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5]);
+	}
+	else if (transform.startsWith("scale")) {
+		return QMatrix().scale(floats[0], floats[1]);
+	}
+	else if (transform.startsWith("skewX")) {
+		return QMatrix().shear(floats[0], 0);
+	}
+	else if (transform.startsWith("skewY")) {
+		return QMatrix().shear(0, floats[0]);
+	}
+
+	return QMatrix();
+}
+

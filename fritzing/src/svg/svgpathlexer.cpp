@@ -213,3 +213,4 @@ QChar SVGPathLexer::currentCommand() {
 double SVGPathLexer::currentNumber() {
 	return m_currentNumber;
 }
+
