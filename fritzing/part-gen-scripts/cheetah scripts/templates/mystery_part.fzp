@@ -45,7 +45,7 @@
  <connectors>
 #for $pin in range(int($pins))
   #set $pindex = $pin + 1
-  <connector type="male" id="connector$pin" name="leg$pindex" >
+  <connector type="male" id="connector$pin" name="pin$pindex" >
    <description>pin $pindex</description>
    <views>
     <breadboardView>

@@ -4,7 +4,7 @@
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 52 pins</title>
  <label>U</label>
- <date>2009-10-13</date>
+ <date>2009-10-16</date>
  <tags>
   <tag>mystery part</tag>
   <tag>fritzing core</tag>
@@ -41,7 +41,7 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="leg1" >
+  <connector type="male" id="connector0" name="pin1" >
    <description>pin 1</description>
    <views>
     <breadboardView>
@@ -55,7 +55,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="leg2" >
+  <connector type="male" id="connector1" name="pin2" >
    <description>pin 2</description>
    <views>
     <breadboardView>
@@ -69,7 +69,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector2" name="leg3" >
+  <connector type="male" id="connector2" name="pin3" >
    <description>pin 3</description>
    <views>
     <breadboardView>
@@ -83,7 +83,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector3" name="leg4" >
+  <connector type="male" id="connector3" name="pin4" >
    <description>pin 4</description>
    <views>
     <breadboardView>
@@ -97,7 +97,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector4" name="leg5" >
+  <connector type="male" id="connector4" name="pin5" >
    <description>pin 5</description>
    <views>
     <breadboardView>
@@ -111,7 +111,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector5" name="leg6" >
+  <connector type="male" id="connector5" name="pin6" >
    <description>pin 6</description>
    <views>
     <breadboardView>
@@ -125,7 +125,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector6" name="leg7" >
+  <connector type="male" id="connector6" name="pin7" >
    <description>pin 7</description>
    <views>
     <breadboardView>
@@ -139,7 +139,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector7" name="leg8" >
+  <connector type="male" id="connector7" name="pin8" >
    <description>pin 8</description>
    <views>
     <breadboardView>
@@ -153,7 +153,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector8" name="leg9" >
+  <connector type="male" id="connector8" name="pin9" >
    <description>pin 9</description>
    <views>
     <breadboardView>
@@ -167,7 +167,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector9" name="leg10" >
+  <connector type="male" id="connector9" name="pin10" >
    <description>pin 10</description>
    <views>
     <breadboardView>
@@ -181,7 +181,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector10" name="leg11" >
+  <connector type="male" id="connector10" name="pin11" >
    <description>pin 11</description>
    <views>
     <breadboardView>
@@ -195,7 +195,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector11" name="leg12" >
+  <connector type="male" id="connector11" name="pin12" >
    <description>pin 12</description>
    <views>
     <breadboardView>
@@ -209,7 +209,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector12" name="leg13" >
+  <connector type="male" id="connector12" name="pin13" >
    <description>pin 13</description>
    <views>
     <breadboardView>
@@ -223,7 +223,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector13" name="leg14" >
+  <connector type="male" id="connector13" name="pin14" >
    <description>pin 14</description>
    <views>
     <breadboardView>
@@ -237,7 +237,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector14" name="leg15" >
+  <connector type="male" id="connector14" name="pin15" >
    <description>pin 15</description>
    <views>
     <breadboardView>
@@ -251,7 +251,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector15" name="leg16" >
+  <connector type="male" id="connector15" name="pin16" >
    <description>pin 16</description>
    <views>
     <breadboardView>
@@ -265,7 +265,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector16" name="leg17" >
+  <connector type="male" id="connector16" name="pin17" >
    <description>pin 17</description>
    <views>
     <breadboardView>
@@ -279,7 +279,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector17" name="leg18" >
+  <connector type="male" id="connector17" name="pin18" >
    <description>pin 18</description>
    <views>
     <breadboardView>
@@ -293,7 +293,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector18" name="leg19" >
+  <connector type="male" id="connector18" name="pin19" >
    <description>pin 19</description>
    <views>
     <breadboardView>
@@ -307,7 +307,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector19" name="leg20" >
+  <connector type="male" id="connector19" name="pin20" >
    <description>pin 20</description>
    <views>
     <breadboardView>
@@ -321,7 +321,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector20" name="leg21" >
+  <connector type="male" id="connector20" name="pin21" >
    <description>pin 21</description>
    <views>
     <breadboardView>
@@ -335,7 +335,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector21" name="leg22" >
+  <connector type="male" id="connector21" name="pin22" >
    <description>pin 22</description>
    <views>
     <breadboardView>
@@ -349,7 +349,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector22" name="leg23" >
+  <connector type="male" id="connector22" name="pin23" >
    <description>pin 23</description>
    <views>
     <breadboardView>
@@ -363,7 +363,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector23" name="leg24" >
+  <connector type="male" id="connector23" name="pin24" >
    <description>pin 24</description>
    <views>
     <breadboardView>
@@ -377,7 +377,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector24" name="leg25" >
+  <connector type="male" id="connector24" name="pin25" >
    <description>pin 25</description>
    <views>
     <breadboardView>
@@ -391,7 +391,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector25" name="leg26" >
+  <connector type="male" id="connector25" name="pin26" >
    <description>pin 26</description>
    <views>
     <breadboardView>
@@ -405,7 +405,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector26" name="leg27" >
+  <connector type="male" id="connector26" name="pin27" >
    <description>pin 27</description>
    <views>
     <breadboardView>
@@ -419,7 +419,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector27" name="leg28" >
+  <connector type="male" id="connector27" name="pin28" >
    <description>pin 28</description>
    <views>
     <breadboardView>
@@ -433,7 +433,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector28" name="leg29" >
+  <connector type="male" id="connector28" name="pin29" >
    <description>pin 29</description>
    <views>
     <breadboardView>
@@ -447,7 +447,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector29" name="leg30" >
+  <connector type="male" id="connector29" name="pin30" >
    <description>pin 30</description>
    <views>
     <breadboardView>
@@ -461,7 +461,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector30" name="leg31" >
+  <connector type="male" id="connector30" name="pin31" >
    <description>pin 31</description>
    <views>
     <breadboardView>
@@ -475,7 +475,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector31" name="leg32" >
+  <connector type="male" id="connector31" name="pin32" >
    <description>pin 32</description>
    <views>
     <breadboardView>
@@ -489,7 +489,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector32" name="leg33" >
+  <connector type="male" id="connector32" name="pin33" >
    <description>pin 33</description>
    <views>
     <breadboardView>
@@ -503,7 +503,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector33" name="leg34" >
+  <connector type="male" id="connector33" name="pin34" >
    <description>pin 34</description>
    <views>
     <breadboardView>
@@ -517,7 +517,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector34" name="leg35" >
+  <connector type="male" id="connector34" name="pin35" >
    <description>pin 35</description>
    <views>
     <breadboardView>
@@ -531,7 +531,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector35" name="leg36" >
+  <connector type="male" id="connector35" name="pin36" >
    <description>pin 36</description>
    <views>
     <breadboardView>
@@ -545,7 +545,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector36" name="leg37" >
+  <connector type="male" id="connector36" name="pin37" >
    <description>pin 37</description>
    <views>
     <breadboardView>
@@ -559,7 +559,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector37" name="leg38" >
+  <connector type="male" id="connector37" name="pin38" >
    <description>pin 38</description>
    <views>
     <breadboardView>
@@ -573,7 +573,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector38" name="leg39" >
+  <connector type="male" id="connector38" name="pin39" >
    <description>pin 39</description>
    <views>
     <breadboardView>
@@ -587,7 +587,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector39" name="leg40" >
+  <connector type="male" id="connector39" name="pin40" >
    <description>pin 40</description>
    <views>
     <breadboardView>
@@ -601,7 +601,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector40" name="leg41" >
+  <connector type="male" id="connector40" name="pin41" >
    <description>pin 41</description>
    <views>
     <breadboardView>
@@ -615,7 +615,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector41" name="leg42" >
+  <connector type="male" id="connector41" name="pin42" >
    <description>pin 42</description>
    <views>
     <breadboardView>
@@ -629,7 +629,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector42" name="leg43" >
+  <connector type="male" id="connector42" name="pin43" >
    <description>pin 43</description>
    <views>
     <breadboardView>
@@ -643,7 +643,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector43" name="leg44" >
+  <connector type="male" id="connector43" name="pin44" >
    <description>pin 44</description>
    <views>
     <breadboardView>
@@ -657,7 +657,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector44" name="leg45" >
+  <connector type="male" id="connector44" name="pin45" >
    <description>pin 45</description>
    <views>
     <breadboardView>
@@ -671,7 +671,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector45" name="leg46" >
+  <connector type="male" id="connector45" name="pin46" >
    <description>pin 46</description>
    <views>
     <breadboardView>
@@ -685,7 +685,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector46" name="leg47" >
+  <connector type="male" id="connector46" name="pin47" >
    <description>pin 47</description>
    <views>
     <breadboardView>
@@ -699,7 +699,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector47" name="leg48" >
+  <connector type="male" id="connector47" name="pin48" >
    <description>pin 48</description>
    <views>
     <breadboardView>
@@ -713,7 +713,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector48" name="leg49" >
+  <connector type="male" id="connector48" name="pin49" >
    <description>pin 49</description>
    <views>
     <breadboardView>
@@ -727,7 +727,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector49" name="leg50" >
+  <connector type="male" id="connector49" name="pin50" >
    <description>pin 50</description>
    <views>
     <breadboardView>
@@ -741,7 +741,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector50" name="leg51" >
+  <connector type="male" id="connector50" name="pin51" >
    <description>pin 51</description>
    <views>
     <breadboardView>
@@ -755,7 +755,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector51" name="leg52" >
+  <connector type="male" id="connector51" name="pin52" >
    <description>pin 52</description>
    <views>
     <breadboardView>

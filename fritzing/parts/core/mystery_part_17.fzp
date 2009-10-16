@@ -4,7 +4,7 @@
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 17 pins</title>
  <label>U</label>
- <date>2009-10-13</date>
+ <date>2009-10-16</date>
  <tags>
   <tag>mystery part</tag>
   <tag>fritzing core</tag>
@@ -41,7 +41,7 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="leg1" >
+  <connector type="male" id="connector0" name="pin1" >
    <description>pin 1</description>
    <views>
     <breadboardView>
@@ -55,7 +55,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="leg2" >
+  <connector type="male" id="connector1" name="pin2" >
    <description>pin 2</description>
    <views>
     <breadboardView>
@@ -69,7 +69,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector2" name="leg3" >
+  <connector type="male" id="connector2" name="pin3" >
    <description>pin 3</description>
    <views>
     <breadboardView>
@@ -83,7 +83,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector3" name="leg4" >
+  <connector type="male" id="connector3" name="pin4" >
    <description>pin 4</description>
    <views>
     <breadboardView>
@@ -97,7 +97,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector4" name="leg5" >
+  <connector type="male" id="connector4" name="pin5" >
    <description>pin 5</description>
    <views>
     <breadboardView>
@@ -111,7 +111,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector5" name="leg6" >
+  <connector type="male" id="connector5" name="pin6" >
    <description>pin 6</description>
    <views>
     <breadboardView>
@@ -125,7 +125,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector6" name="leg7" >
+  <connector type="male" id="connector6" name="pin7" >
    <description>pin 7</description>
    <views>
     <breadboardView>
@@ -139,7 +139,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector7" name="leg8" >
+  <connector type="male" id="connector7" name="pin8" >
    <description>pin 8</description>
    <views>
     <breadboardView>
@@ -153,7 +153,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector8" name="leg9" >
+  <connector type="male" id="connector8" name="pin9" >
    <description>pin 9</description>
    <views>
     <breadboardView>
@@ -167,7 +167,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector9" name="leg10" >
+  <connector type="male" id="connector9" name="pin10" >
    <description>pin 10</description>
    <views>
     <breadboardView>
@@ -181,7 +181,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector10" name="leg11" >
+  <connector type="male" id="connector10" name="pin11" >
    <description>pin 11</description>
    <views>
     <breadboardView>
@@ -195,7 +195,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector11" name="leg12" >
+  <connector type="male" id="connector11" name="pin12" >
    <description>pin 12</description>
    <views>
     <breadboardView>
@@ -209,7 +209,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector12" name="leg13" >
+  <connector type="male" id="connector12" name="pin13" >
    <description>pin 13</description>
    <views>
     <breadboardView>
@@ -223,7 +223,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector13" name="leg14" >
+  <connector type="male" id="connector13" name="pin14" >
    <description>pin 14</description>
    <views>
     <breadboardView>
@@ -237,7 +237,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector14" name="leg15" >
+  <connector type="male" id="connector14" name="pin15" >
    <description>pin 15</description>
    <views>
     <breadboardView>
@@ -251,7 +251,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector15" name="leg16" >
+  <connector type="male" id="connector15" name="pin16" >
    <description>pin 16</description>
    <views>
     <breadboardView>
@@ -265,7 +265,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector16" name="leg17" >
+  <connector type="male" id="connector16" name="pin17" >
    <description>pin 17</description>
    <views>
     <breadboardView>

@@ -4,7 +4,7 @@
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 7 pins</title>
  <label>U</label>
- <date>2009-10-13</date>
+ <date>2009-10-16</date>
  <tags>
   <tag>mystery part</tag>
   <tag>fritzing core</tag>
@@ -41,7 +41,7 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="leg1" >
+  <connector type="male" id="connector0" name="pin1" >
    <description>pin 1</description>
    <views>
     <breadboardView>
@@ -55,7 +55,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="leg2" >
+  <connector type="male" id="connector1" name="pin2" >
    <description>pin 2</description>
    <views>
     <breadboardView>
@@ -69,7 +69,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector2" name="leg3" >
+  <connector type="male" id="connector2" name="pin3" >
    <description>pin 3</description>
    <views>
     <breadboardView>
@@ -83,7 +83,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector3" name="leg4" >
+  <connector type="male" id="connector3" name="pin4" >
    <description>pin 4</description>
    <views>
     <breadboardView>
@@ -97,7 +97,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector4" name="leg5" >
+  <connector type="male" id="connector4" name="pin5" >
    <description>pin 5</description>
    <views>
     <breadboardView>
@@ -111,7 +111,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector5" name="leg6" >
+  <connector type="male" id="connector5" name="pin6" >
    <description>pin 6</description>
    <views>
     <breadboardView>
@@ -125,7 +125,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector6" name="leg7" >
+  <connector type="male" id="connector6" name="pin7" >
    <description>pin 7</description>
    <views>
     <breadboardView>

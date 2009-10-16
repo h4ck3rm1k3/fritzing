@@ -4,7 +4,7 @@
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 2 pins</title>
  <label>U</label>
- <date>2009-10-13</date>
+ <date>2009-10-16</date>
  <tags>
   <tag>mystery part</tag>
   <tag>fritzing core</tag>
@@ -41,7 +41,7 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="leg1" >
+  <connector type="male" id="connector0" name="pin1" >
    <description>pin 1</description>
    <views>
     <breadboardView>
@@ -55,7 +55,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="leg2" >
+  <connector type="male" id="connector1" name="pin2" >
    <description>pin 2</description>
    <views>
     <breadboardView>
