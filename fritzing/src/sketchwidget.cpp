@@ -4240,6 +4240,8 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		}
 	
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
+		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
 		new CleanUpWiresCommand(this, false, parentCommand);
 	}
 }

@@ -1777,6 +1777,8 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 
 	// TODO:  z-order?
 
+
+
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, 10);
 
