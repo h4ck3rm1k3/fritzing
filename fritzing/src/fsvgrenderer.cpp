@@ -131,6 +131,18 @@ bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filena
 		m_svgXml =  cleanContents;
 	}
 
+	/*
+	QString path = QCoreApplication::applicationDirPath();
+	path += "/../boom.svg";
+	QFile file(path);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		QTextStream out(&file);
+		out << QString(cleanContents);
+		file.close();
+	}
+	*/
+
+
 	bool result = QSvgRenderer::load(cleanContents);
 	if (result) {
 		m_filename = filename;

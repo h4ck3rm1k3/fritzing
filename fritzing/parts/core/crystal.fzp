@@ -30,6 +30,7 @@
         <pcbView>
             <layers image="pcb/crystal_hc49u.svg">
                 <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
             </layers>
         </pcbView>
         <schematicView>

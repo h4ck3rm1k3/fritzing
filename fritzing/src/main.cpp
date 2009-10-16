@@ -25,6 +25,8 @@ $Date$
 ********************************************************************/
 
 
+#include <QTextStream>
+#include <QFile>
 
 #include "fapplication.h"
 #include "debugdialog.h"
@@ -35,8 +37,41 @@ $Date$
 #endif
 #endif
 
+QtMsgHandler originalMsgHandler;
+
+void fMessageHandler(QtMsgType type, const char *msg)
+ {
+	switch (type) {
+		case QtDebugMsg:
+			originalMsgHandler(type, msg);
+			break;
+		case QtWarningMsg:
+			originalMsgHandler(type, msg);
+			break;
+		case QtCriticalMsg:
+			originalMsgHandler(type, msg);
+			break;
+		case QtFatalMsg:
+			{
+				QString path = QCoreApplication::applicationDirPath();
+				path += "/../fritzingcrash.txt";
+				QFile file(path);
+   				if (file.open(QIODevice::Append | QIODevice::Text)) {
+   					QTextStream out(&file);
+   					out << QString(msg) << "\n";
+					file.close();
+				}
+			}
+
+			// don't abort
+			originalMsgHandler(QtCriticalMsg, msg);
+	}
+ }
+
+
 int main(int argc, char *argv[])
 {
+	originalMsgHandler = qInstallMsgHandler(fMessageHandler);
 
 #ifdef _MSC_VER // just for the MS compiler
 #define WIN_CHECK_LEAKS
@@ -78,3 +113,4 @@ int main(int argc, char *argv[])
 	delete app;
 	return result;
 }
+

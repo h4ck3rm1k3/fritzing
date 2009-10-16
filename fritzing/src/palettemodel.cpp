@@ -49,6 +49,16 @@ bool JustAppendAllPartsInstances = false;
 QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
 QString PaletteModel::NonCorePartsBinFilePath = ___emptyString___;
 
+
+QString InstanceTemplate(
+        		"\t\t<instance moduleIdRef=\"%1\" path=\"%2\">\n"
+				"\t\t\t<views>\n"
+        		"\t\t\t\t<iconView layer=\"icon\">\n"
+        		"\t\t\t\t\t<geometry z=\"-1\" x=\"-1\" y=\"-1\"></geometry>\n"
+        		"\t\t\t\t</iconView>\n"
+        		"\t\t\t</views>\n"
+        		"\t\t</instance>\n");
+
 PaletteModel::PaletteModel() : ModelBase(true) {
 	m_loadedFromFile = false;
 	m_loadingCore = false;
@@ -103,7 +113,19 @@ void PaletteModel::loadParts() {
 	QStringList nameFilters;
 	nameFilters << "*" + FritzingPartExtension << "*" + FritzingModuleExtension;
 
-	JustAppendAllPartsInstances = CreateAllPartsBinFile;
+	JustAppendAllPartsInstances = true;   
+	/// !!!!!!!!!!!!!!!!  JustAppendAllPartsInstances = CreateAllPartsBinFile is wrong
+	/// !!!!!!!!!!!!!!!!  this flag was originally set up because sometimes we were appending a
+	/// !!!!!!!!!!!!!!!!  single instance into an already existing file,
+	/// !!!!!!!!!!!!!!!!  so simply appending new items as text gave us xml errors.
+	/// !!!!!!!!!!!!!!!!  The problem was that there was no easy way to set the flag directly on the actual
+	/// !!!!!!!!!!!!!!!!  function being used:  PaletteModel::LoadPart(), though maybe this deserves another look.
+	/// !!!!!!!!!!!!!!!!  However, since we're starting from scratch in LoadParts, we can use the much faster 
+	/// !!!!!!!!!!!!!!!!  file append method.  Since CreateAllPartsBinFile is false in release mode,
+	/// !!!!!!!!!!!!!!!!  Fritzing was taking forever to start up.
+
+	
+	CreateAllPartsBinFile;
 	writeCommonBinsHeader();
 
 	QDir * dir1 = FolderUtils::getApplicationSubFolder("parts");
@@ -120,7 +142,12 @@ void PaletteModel::loadParts() {
 	loadPartsAux(*dir1, nameFilters);
 
 	writeCommonBinsFooter();
-	JustAppendAllPartsInstances = !CreateAllPartsBinFile;
+	
+	JustAppendAllPartsInstances = false;   
+	/// !!!!!!!!!!!!!!!!  JustAppendAllPartsInstances = !CreateAllPartsBinFile is wrong
+	/// !!!!!!!!!!!!!!!!  See above.  We simply want to restore the default, so that other functions calling
+	/// !!!!!!!!!!!!!!!!  writeInstanceInCommonBin via LoadPart() will use the slower DomDocument methods,
+	/// !!!!!!!!!!!!!!!!  since in that case we are appending to an already existing file.
 
 	delete dir1;
 }
@@ -154,15 +181,7 @@ void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QStri
 	pathAux.remove(FolderUtils::getApplicationSubFolderPath("")+"/");
 
 	if (JustAppendAllPartsInstances) {
-		QString instance =
-			QString(
-        		"\t\t<instance moduleIdRef=\"%1\" path=\"%2\">\n").arg(moduleID).arg(pathAux)+
-				"\t\t\t<views>\n"
-        		"\t\t\t\t<iconView layer=\"icon\">\n"
-        		"\t\t\t\t\t<geometry z=\"-1\" x=\"-1\" y=\"-1\"></geometry>\n"
-        		"\t\t\t\t</iconView>\n"
-        		"\t\t\t</views>\n"
-        		"\t\t</instance>\n";
+		QString instance = InstanceTemplate.arg(moduleID).arg(pathAux);
 		writeToCommonBinAux(instance, QFile::Append, doIt, filename);
 	}
 	else {
@@ -251,6 +270,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
     }
 
 
+	//DebugDialog::debug(QString("loading %1 %2").arg(path).arg(QTime::currentTime().toString("HH:mm:ss")));
     QString errorStr;
     int errorLine;
     int errorColumn;
@@ -346,9 +366,11 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 
     emit newPartLoaded(modelPart);
 
+	//DebugDialog::debug(QString("all parts %1").arg(JustAppendAllPartsInstances));
     writeInstanceInCommonBin(moduleID,path,CreateAllPartsBinFile,AllPartsBinFilePath);
 
     bool keepOnCreatingNonCorePartBins = !modelPart->isCore();
+	//DebugDialog::debug(QString("non core parts %1").arg(JustAppendAllPartsInstances));
     writeInstanceInCommonBin(moduleID,path,keepOnCreatingNonCorePartBins,NonCorePartsBinFilePath);
     if(!modelPart->isCore()) {
     	CreateNonCorePartsBinFile = keepOnCreatingNonCorePartBins;

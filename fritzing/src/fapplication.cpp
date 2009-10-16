@@ -393,8 +393,9 @@ int FApplication::startup(bool firstRun)
 	}
 
 	m_referenceModel = new CurrentReferenceModel();
+	//DebugDialog::debug("after new current reference model");
 	m_paletteBinModel = new PaletteModel(true, false);
-
+	//DebugDialog::debug("after new palette model");
 
 	QSettings settings;
 	QString prevVersion = settings.value("version").toString();
@@ -406,6 +407,7 @@ int FApplication::startup(bool firstRun)
 	splash.showProgress(progressIndex, 0.1);
 	createUserDataStoreFolderStructure();
 
+	//DebugDialog::debug("after createUserDataStoreFolderStructure");
 
 	splash.showProgress(progressIndex, 0.2);
 	processEvents();
