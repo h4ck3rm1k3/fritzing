@@ -374,7 +374,7 @@ void ConnectorsInfoWidget::clearMismatchingForView(ViewIdentifierClass::ViewIden
 // Updates previous connector to mismatching if they are not in the list
 void ConnectorsInfoWidget::singleToMismatchingNotInView(ViewIdentifierClass::ViewIdentifier viewId, const QStringList &connIds) {
 	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
-		if(connIds.indexOf(sci->connector()->connectorSharedID()) == -1) {
+		if(connIds.indexOf(sci->id()) == -1) {
 			MismatchingConnectorWidget *mcw = sci->toMismatching(viewId);
 			connect(
 				mcw, SIGNAL(completeConn(MismatchingConnectorWidget*)),
@@ -411,11 +411,19 @@ void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier
 		if(existingConnId(connId)) {
 			emit existingConnector(viewId, connId, findConnector(connId));
 		} else {
-			MismatchingConnectorWidget *mcw;
+			MismatchingConnectorWidget *mcw = NULL;
 			if(( mcw = existingMismatchingConnector(connId) )) {
 				if(mcw->onlyMissingThisView(viewId)) {
+					Connector * prevConn = mcw->prevConn();
 					removeMismatchingConnectorInfo(mcw, false);
-					addConnectorInfo(mcw);
+					//addConnectorInfo(mcw) is unsafe; mcw was just deleted in removeMismatchingConnectorInfo
+					//addConnectorInfo(mcw);
+					if(prevConn) {
+						addConnectorInfo(prevConn);
+					} else {
+						addConnectorInfo(connId);
+					}
+					
 					emit existingConnector(viewId, connId, findConnector(connId));
 				} else {
 					mcw->addViewPresence(viewId);
@@ -478,14 +486,14 @@ void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, b
 
 	scrollContentLayout()->removeWidget(sci);
 	m_connsInfo.removeOne(sci);
-	m_allConnsInfo.remove(sci->connector()->connectorSharedID());
+	m_allConnsInfo.remove(sci->id());
 
 	if(m_selected == sci) {
 		m_selected = NULL;
 	}
 
 	if(alsoDeleteFromView) {
-		emit removeConnectorFrom(sci->connector()->connectorSharedID(), ViewIdentifierClass::AllViews);
+		emit removeConnectorFrom(sci->id(), ViewIdentifierClass::AllViews);
 	}
 
 	m_objToDelete = sci;

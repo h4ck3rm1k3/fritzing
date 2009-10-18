@@ -2703,6 +2703,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 }
 
 void SketchWidget::addViewLayer(ViewLayer * viewLayer) {
+	ViewLayer * oldViewLayer = m_viewLayers.value(viewLayer->viewLayerID(), NULL);
+	if (oldViewLayer) {
+		delete oldViewLayer;
+	}
+
 	m_viewLayers.insert(viewLayer->viewLayerID(), viewLayer);
 	QAction* action = new QAction(QObject::tr("%1 Layer").arg(viewLayer->displayName()), this);
 	action->setData(QVariant::fromValue<ViewLayer *>(viewLayer));

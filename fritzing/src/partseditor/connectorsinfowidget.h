@@ -122,7 +122,7 @@ class ConnectorsInfoWidget : public QFrame {
 		AbstractConnectorInfoWidget *m_selected;
 
 		QList<SingleConnectorInfoWidget*> m_connsInfo;
-		QList<MismatchingConnectorWidget*> m_mismatchConnsInfo;
+		QList< QPointer<MismatchingConnectorWidget> > m_mismatchConnsInfo;
 		QHash<QString /*connId*/, AbstractConnectorInfoWidget*> m_allConnsInfo;
 
 		QStringList m_connIds;

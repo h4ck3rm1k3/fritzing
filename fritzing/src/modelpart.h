@@ -146,6 +146,7 @@ protected:
 	ItemType m_type;
 	QPointer<ModelPartShared> m_modelPartShared;
 	QHash<QString, Connector *> m_connectorHash;
+	QList<Connector *> m_deletedConnectors;
 	QHash<QString, class Bus *> m_busHash;
 	long m_index;						// only used at save time to identify model parts in the xml
 	long m_originalIndex;				// only used at save time to identify model parts in the xml (for modules)

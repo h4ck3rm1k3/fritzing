@@ -37,6 +37,8 @@ class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 	Q_OBJECT
 	public:
 		MismatchingConnectorWidget(class ConnectorsInfoWidget *topLevelContainer, ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView = true, Connector* conn = NULL);
+		~MismatchingConnectorWidget();
+		
 		void setSelected(bool selected, bool doEmitChange=true);
 		bool onlyMissingThisView(ViewIdentifierClass::ViewIdentifier viewId);
 		void addViewPresence(ViewIdentifierClass::ViewIdentifier viewId);
@@ -59,7 +61,7 @@ class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 
 		QList<ViewIdentifierClass::ViewIdentifier> m_missingViews;
 		QString m_connId;
-		Connector *m_prevConn; // If this connector info used to be a not mismatching one, we save that info here
+		QPointer<Connector> m_prevConn; // If this connector info used to be a not mismatching one, we save that info here
 
 		QLabel *m_connIdLabel;
 		QLabel *m_connMsgLabel;

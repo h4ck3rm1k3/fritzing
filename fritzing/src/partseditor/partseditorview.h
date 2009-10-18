@@ -41,7 +41,7 @@ class PartsEditorView : public SketchWidget {
 	public:
 		PartsEditorView(
 			ViewIdentifierClass::ViewIdentifier, QDir tempDir,
-			bool showingTerminalPoints, QGraphicsItem *startItem=0,
+			bool showingTerminalPoints, QGraphicsProxyWidget *startItem=0,
 			QWidget *parent=0, int size=150, bool deleteModelPartOnClearScene=false);
 		~PartsEditorView();
 
@@ -129,7 +129,7 @@ class PartsEditorView : public SketchWidget {
 
 		QString findConnectorLayerId(QDomDocument *svgDom);
 		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
-		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem);
+		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem, bool wantTerminal);
 		QString getLayerFileName(ModelPart * modelPart);
 		ViewLayer::ViewLayerID defaultLayer();
 		QString defaultLayerAsStr();
@@ -186,10 +186,10 @@ class PartsEditorView : public SketchWidget {
 
 
 
-		PartsEditorPaletteItem *m_item; // just one item per view
+		QPointer<PartsEditorPaletteItem> m_item; // just one item per view
 		QDir m_tempFolder;
 		bool m_deleteModelPartOnSceneClear;
-		QGraphicsItem *m_startItem;
+		QPointer<QGraphicsProxyWidget> m_startItem;
 
 		SvgAndPartFilePath *m_svgFilePath;
 		QString m_originalSvgFilePath;

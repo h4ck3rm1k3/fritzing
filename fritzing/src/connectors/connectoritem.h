@@ -127,7 +127,7 @@ protected:
 	bool isEverVisible();
 
 protected:
-	Connector * m_connector;
+	QPointer<Connector> m_connector;
 	QPointer<ItemBase> m_attachedTo;
 	QList< QPointer<ConnectorItem> > m_connectedTo;
 	QPointF m_terminalPoint;

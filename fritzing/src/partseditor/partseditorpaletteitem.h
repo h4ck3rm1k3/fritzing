@@ -75,7 +75,8 @@ class PartsEditorPaletteItem : public PaletteItem {
 		QString m_originalSvgPath;
 
 		SvgAndPartFilePath *m_svgStrings;
-		QList<Connector *> *m_connectors;
+		QList< QPointer<Connector> > m_connectors;
+		QList<Connector*> m_connectorsTemp;
 
 		PartsEditorView *m_owner;
 		bool m_shouldDeletePath;

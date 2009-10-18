@@ -131,6 +131,7 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 	m_connector = connector;
 
 	if(connector && connector->connectorShared()) {
+		m_id = connector->connectorSharedID();
 		ConnectorShared *connStuff = connector->connectorShared();
 		name = connStuff->name().isNull() || connStuff->name().isEmpty() ? EMPTY_CONN_NAME : connStuff->name();
 		description = connStuff->description().isNull() || connStuff->description().isEmpty()? EMPTY_CONN_DESC : connStuff->description();
@@ -176,7 +177,11 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 }
 
 QString SingleConnectorInfoWidget::id() {
-	return m_connector->connectorSharedID();
+	if (m_connector) {
+		return m_connector->connectorSharedID();
+	}
+
+	return m_id;
 }
 QString SingleConnectorInfoWidget::name() {
 	return m_nameLabel->text();

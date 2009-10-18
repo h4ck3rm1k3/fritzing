@@ -49,7 +49,6 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorView *owner, ModelPart
 
 	m_svgDom = NULL;
 
-	m_connectors = NULL;
 	m_svgStrings = NULL;
 	m_shouldDeletePath = true;
 }
@@ -64,7 +63,6 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorView *owner, ModelPart
 	m_svgStrings = path;
 	m_shouldDeletePath = false;
 
-	m_connectors = NULL;
 
 	setAcceptHoverEvents(false);
 	setSelected(false);
@@ -74,9 +72,6 @@ PartsEditorPaletteItem::~PartsEditorPaletteItem()
 {
 	if (m_svgDom) {
 		delete m_svgDom;
-	}
-	if (m_connectors) {
-		delete m_connectors;
 	}
 	if (m_shouldDeletePath && m_svgStrings) {
 		delete m_svgStrings;
@@ -164,16 +159,21 @@ void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeEndElement();
 }
 
-const QList<Connector *> &PartsEditorPaletteItem::connectors() {
-	if(!m_connectors) {
-		m_connectors = new QList<Connector*>;
+const QList<Connector*> &PartsEditorPaletteItem::connectors() {
+	if(m_connectors.size() == 0) {
 		QList<QString> connNames = modelPart()->connectors().keys();
 		qSort(connNames);
 		foreach(QString connName, connNames) {
-			*m_connectors << modelPart()->connectors()[connName];
+			m_connectors << modelPart()->connectors()[connName];
 		}
 	}
-	return *m_connectors;
+	m_connectorsTemp.clear();
+	foreach (Connector * connector, m_connectors) {
+		if (connector != NULL) {
+			m_connectorsTemp.append(connector);
+		}
+	}
+	return m_connectorsTemp;
 }
 
 void PartsEditorPaletteItem::setConnector(const QString &id, Connector *connector) {

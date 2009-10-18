@@ -82,6 +82,10 @@ ModelPart::~ModelPart() {
 		delete connector;
 	}
 	m_connectorHash.clear();
+	foreach (Connector * connector, m_deletedConnectors) {
+		delete connector;
+	}
+	m_deletedConnectors.clear();
 
 	foreach (Bus* bus, m_busHash.values()) {
 		delete bus;
@@ -300,7 +304,10 @@ void ModelPart::initConnectors(bool force) {
 	if(m_modelPartShared == NULL) return;
 
 	if(force) {
-		m_connectorHash.clear();						// TODO: not deleting old connectors here causes a memory leak; but deleting them here causes a crash
+		foreach (Connector * connector, m_connectorHash.values()) {
+			m_deletedConnectors.append(connector);
+		}
+		m_connectorHash.clear();						
 		foreach (Bus * bus, m_busHash.values()) {
 			delete bus;
 		}

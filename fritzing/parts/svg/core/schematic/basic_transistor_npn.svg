@@ -14,10 +14,10 @@
    width=".58in"
    height=".72in"
    id="svg2"
-   sodipodi:version="0.32"
-   inkscape:version="0.46"
-   sodipodi:docname="basic_transistor_npn.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   
+   
+   
+   >
   <metadata
      id="metadata3614">
     <rdf:RDF>
@@ -32,18 +32,18 @@
   <defs
      id="defs3612">
     <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 32.400002 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="52.199997 : 32.400002 : 1"
-       inkscape:persp3d-origin="26.099998 : 21.600001 : 1"
+       
+       
+       
+       
+       
        id="perspective3616" />
   </defs>
   <sodipodi:namedview
-     inkscape:window-height="726"
-     inkscape:window-width="645"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
+     
+     
+     
+     
      guidetolerance="10.0"
      gridtolerance="10.0"
      objecttolerance="10.0"
@@ -52,12 +52,12 @@
      pagecolor="#ffffff"
      id="base"
      showgrid="false"
-     inkscape:zoom="7.6234564"
-     inkscape:cx="26.099998"
-     inkscape:cy="32.400002"
-     inkscape:window-x="50"
-     inkscape:window-y="25"
-     inkscape:current-layer="svg2" />
+     
+     
+     
+     
+     
+      />
   <rect
      id="connector1pin"
      x="42.632999"

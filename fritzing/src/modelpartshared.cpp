@@ -123,6 +123,9 @@ void ModelPartShared::populateTagCollection(QDomElement parent, QHash<QString,QS
 }
 
 void ModelPartShared::setDomDocument(QDomDocument * domDocument) {
+	if (m_domDocument) {
+		delete m_domDocument;
+	}
 	m_domDocument = domDocument;
 }
 
@@ -243,6 +246,9 @@ void ModelPartShared::setConnectorsShared(QList<ConnectorShared *> connectors) {
 
 void ModelPartShared::resetConnectorsInitialization() {
 	m_connectorsInitialized = false;
+	foreach (ConnectorShared * cs, m_connectorSharedHash.values()) {
+		delete cs;
+	}
 	m_connectorSharedHash.clear();
 }
 

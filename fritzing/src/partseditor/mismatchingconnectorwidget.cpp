@@ -81,6 +81,9 @@ MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *top
 	setMaximumHeight(SingleConnectorHeight);
 }
 
+MismatchingConnectorWidget::~MismatchingConnectorWidget() {
+}
+
 void MismatchingConnectorWidget::setSelected(bool selected, bool doEmitChange) {
 	AbstractConnectorInfoWidget::setSelected(selected, doEmitChange);
 

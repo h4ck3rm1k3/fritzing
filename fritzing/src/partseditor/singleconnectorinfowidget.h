@@ -120,7 +120,9 @@ class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 		QPushButton *m_cancelButton;
 
 		WaitPushUndoStack *m_undoStack;
-		Connector *m_connector;
+		QPointer<Connector> m_connector;
+
+		QString m_id;
 
 		volatile bool m_isInEditionMode;
 };

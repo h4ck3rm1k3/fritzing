@@ -38,8 +38,9 @@ $Date$
 #include "../viewidentifierclass.h"
 #include "../viewlayer.h"
 
-class Connector
+class Connector : public QObject
 {
+Q_OBJECT
 public:
 	enum ConnectorType {
 		Male,

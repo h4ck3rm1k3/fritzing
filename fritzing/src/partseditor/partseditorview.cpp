@@ -51,7 +51,7 @@ int PartsEditorView::ConnDefaultHeight = ConnDefaultWidth;
 
 PartsEditorView::PartsEditorView(
 		ViewIdentifierClass::ViewIdentifier viewId, QDir tempDir,
-		bool showingTerminalPoints, QGraphicsItem *startItem,
+		bool showingTerminalPoints, QGraphicsProxyWidget *startItem,
 		QWidget *parent, int size, bool deleteModelPartOnClearScene)
 	: SketchWidget(viewId, parent, size, size)
 {
@@ -91,6 +91,7 @@ PartsEditorView::PartsEditorView(
 }
 
 PartsEditorView::~PartsEditorView() {
+	if (m_startItem) delete m_startItem;
 	delete m_svgFilePath;
 	clearScene();
 }
@@ -424,26 +425,26 @@ QString PartsEditorView::terminalIdForConnector(const QString &connId) {
 
 	QString result = "";
 	QDomElement elem = m_item->svgDom()->documentElement();
-	if(terminalIdForConnectorIdAux(result, connId, elem)) {
+	if(terminalIdForConnectorIdAux(result, connId, elem, true)) {
 		return result;
 	} else {
 		return "";
 	}
 }
 
-bool PartsEditorView::terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem) {
+bool PartsEditorView::terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem, bool wantTerminal) {
 	QDomNode n = docElem.firstChild();
 	while(!n.isNull()) {
 		QDomElement e = n.toElement();
 		if(!e.isNull()) {
 			QString id = e.attribute("id");
-			if(id.startsWith(connId) && id.endsWith("terminal")) {
+			if(id.startsWith(connId) && ((wantTerminal && id.endsWith("terminal")) || (!wantTerminal && !id.endsWith("terminal")))) {
 				// the id is the one from the previous iteration
 				result = id;
 				return true;
 			} else if(n.hasChildNodes()) {
 				// potencial solution, if the next iteration returns true
-				if(terminalIdForConnectorIdAux(result, connId, e)) {
+				if(terminalIdForConnectorIdAux(result, connId, e, wantTerminal)) {
 					return true;
 				}
 			}
@@ -546,8 +547,7 @@ void PartsEditorView::loadFile() {
 		if(origPath != ___emptyString___) {
 			if(m_startItem) {
 				m_fixedToCenterItems.removeAll(m_startItem);
-				scene()->removeItem(m_startItem);
-				//delete m_startItem;
+				delete m_startItem;
 				m_startItem = NULL;
 			}
 			loadSvgFile(origPath);
@@ -578,6 +578,10 @@ void PartsEditorView::loadSvgFile(const QString& origPath) {
 		m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
 		setSvgFilePath(origPath);
 
+		// TODO: this code reuses the current modelpart and replaces its connectors,
+		// it would be better to delete the modelpart and create a new one
+		// however, one would have to tidy up the various objects that rely on pointers 
+		// to the original modelpart and its connectors
 		ModelPart * mp = createFakeModelPart(m_svgFilePath);
 		loadSvgFile(mp);
 	}
@@ -735,30 +739,25 @@ bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &
 }
 
 bool PartsEditorView::fixViewboxOrigin(QString &fileContent, const QString &filename) {
-	QDomDocument *svgDom = new QDomDocument();
+	QDomDocument svgDom;
 
 	bool fileHasChanged = false;
 	if(isIllustratorFile(fileContent)) {
-		QString *errorMsg = new QString("");
-		int *errorLine = new int(0);
-		int *errorCol = new int(0);
-		if(!svgDom->setContent(fileContent, true, errorMsg, errorLine, errorCol)) {
+		QString errorMsg;
+		int errorLine;
+		int errorCol;
+		if(!svgDom.setContent(fileContent, true, &errorMsg, &errorLine, &errorCol)) {
 			qWarning() << QString("PartsEditorView::fixViewboxOrigin(filename) couldn't load svg: %1 (line %2, col %3)")
-							.arg(*errorMsg).arg(*errorLine).arg(*errorCol);
+							.arg(errorMsg).arg(errorLine).arg(errorCol);
 			return false;
 		}
-		delete errorMsg;
-		delete errorLine;
-		delete errorCol;
 
-		QDomElement elem = svgDom->firstChildElement("svg");
+		QDomElement elem = svgDom.firstChildElement("svg");
 		fileHasChanged = moveViewboxToTopLeftCorner(elem,filename);
 
 		if(fileHasChanged) {
-			fileContent = svgDom->toString();
+			fileContent = svgDom.toString();
 		}
-
-		delete svgDom;
 	}
 
 	return fileHasChanged;
@@ -818,6 +817,7 @@ void PartsEditorView::loadFromModel(PaletteModel *paletteModel, ModelPart * mode
 	if(m_item) {
 		if(m_startItem) {
 			m_fixedToCenterItems.removeAll(m_startItem);
+			delete m_startItem;
 			m_startItem = NULL;
 		}
 
@@ -1237,20 +1237,31 @@ QString PartsEditorView::defaultLayerAsStr() {
 QString PartsEditorView::svgIdForConnector(const QString &connId) {
 	//Q_ASSERT(m_item)
 
-	if (m_item == NULL) return "";
+	if (m_item == NULL) return connId;
 
+
+	QString result = "";
+	QDomElement elem = m_item->svgDom()->documentElement();
+	if(terminalIdForConnectorIdAux(result, connId, elem, false)) {
+		return result;
+	} 
+
+/*
 	foreach(Connector* conn, m_item->connectors()) {
 		QString svgId = svgIdForConnector(conn, connId);
 		if(connId != svgId) {
 			return svgId;
 		}
 	}
+
+*/
+
 	return connId;
 }
 
 QString PartsEditorView::svgIdForConnector(Connector* conn, const QString &connId) {
-	foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
-		if(conn->connectorSharedID() == connId) {
+	if (conn->connectorShared() && conn->connectorSharedID() == connId) {
+		foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
 			return sil->m_svgId;
 		}
 	}
@@ -1443,7 +1454,7 @@ bool PartsEditorView::isSupposedToBeRemoved(const QString& id) {
 }
 
 PartsEditorConnectorsPaletteItem *PartsEditorView::myItem() {
-	return dynamic_cast<PartsEditorConnectorsPaletteItem*>(m_item);
+	return dynamic_cast<PartsEditorConnectorsPaletteItem*>(m_item.data());
 }
 
 void PartsEditorView::showTerminalPoints(bool show) {
