@@ -1419,21 +1419,35 @@ void PartsEditorView::addRectToSvg(QDomDocument* svgDom, const QString &id, cons
 		svgDom->firstChildElement("svg").appendChild(connElem);
 	} else {
 		QDomElement docElem = svgDom->documentElement();
+		DebugDialog::debug("///////////////////////////////////////////////");
+		DebugDialog::debug("connectors layer: "+connectorsLayerId);
 		Q_ASSERT(addRectToSvgAux(docElem, connectorsLayerId, connElem));
+		DebugDialog::debug("///////////////////////////////////////////////");
+		DebugDialog::debug("");
 	}
 }
 
-bool PartsEditorView::addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem) {
+bool PartsEditorView::addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem, int step) {
+	QString tabs = "";
+	for(int i=0; i < step; i++){
+		tabs+="\t";
+	}
+
 	QDomNode n = docElem.firstChild();
+	if(!n.isNull()) DebugDialog::debug(tabs+" node not null");
 	while(!n.isNull()) {
 		QDomElement e = n.toElement();
 		if(!e.isNull()) {
+			DebugDialog::debug(tabs+" element not null");
 			QString id = e.attribute("id");
+			DebugDialog::debug(tabs+" element found with id ="+id);
 			if(id == connectorsLayerId) {
+				DebugDialog::debug(tabs+" layer found! appendig rect");
 				e.appendChild(rectElem);
 				return true;
 			} else if(n.hasChildNodes()) {
-				if(addRectToSvgAux(e, connectorsLayerId, rectElem)) {
+				DebugDialog::debug(tabs+" not the same layer, recursing.....");
+				if(addRectToSvgAux(e, connectorsLayerId, rectElem, ++step)) {
 					return true;
 				}
 			}
