@@ -219,6 +219,20 @@
                 </iconView>
             </views>
         </instance>
+      <instance moduleIdRef="generic_sip_4_300mil" modelIndex="55" path="parts/core/generic_sip_2_300mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="generic_ic_dip_8_300mil" modelIndex="52" path="parts/core/generic_ic_dip_8_300mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
         <instance moduleIdRef="3746667c843a2127a0e499f8a0b3ef6a" modelIndex="36" path="parts/core/crystal.fzp">
             <views>
                 <iconView layer="icon">
@@ -254,20 +268,20 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="BreadboardModuleID" modelIndex="41" path="parts/core/breadboard.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="RectanglePCBModuleID" modelIndex="42" path=":/resources/parts/core/rectangle_pcb.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
+      <instance moduleIdRef="generic_female_pin_header_2_100mil" modelIndex="53" path="parts/core/generic_female_pin_header_2_100mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="screw_terminal_2_100mil" modelIndex="54" path="parts/core/screw_terminal_2_100mil.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
         <instance moduleIdRef="mystery_part_3" modelIndex="45" path="parts/core/mystery_part_3.fzp">
             <views>
                 <iconView layer="icon">
@@ -282,14 +296,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="47" path=":/resources/parts/core/wire.fzp">
+        <instance moduleIdRef="BreadboardModuleID" modelIndex="41" path="parts/core/breadboard.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="RulerModuleID" modelIndex="48" path=":/resources/parts/core/cmRuler.fzp">
+        <instance moduleIdRef="WireModuleID" modelIndex="47" path=":/resources/parts/core/wire.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -310,6 +324,13 @@
           </iconView>
         </views>
       </instance>
+        <instance moduleIdRef="RectanglePCBModuleID" modelIndex="42" path=":/resources/parts/core/rectangle_pcb.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
       <instance moduleIdRef="JumperModuleID" modelIndex="51" path=":/resources/parts/core/jumper.fzp">
         <views>
           <iconView layer="icon">
@@ -317,33 +338,12 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="generic_ic_dip_8_300mil" modelIndex="52" path="parts/core/generic_ic_dip_8_300mil.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="generic_female_pin_header_2_100mil" modelIndex="53" path="parts/core/generic_female_pin_header_2_100mil.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="screw_terminal_2_100mil" modelIndex="54" path="parts/core/screw_terminal_2_100mil.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="generic_sip_2_300mil" modelIndex="55" path="parts/core/generic_sip_2_300mil.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
+        <instance moduleIdRef="RulerModuleID" modelIndex="48" path=":/resources/parts/core/cmRuler.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
     </instances>
   </module>
