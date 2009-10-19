@@ -527,7 +527,8 @@ bool PartsEditorMainWindow::saveAs() {
 		m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
 
 		// TODO Mariano: This folder should be defined in the preferences... some day
-		QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
+		QString partsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/";
+		QString userPartsFolderPath = partsFolderPath+"user/";
 
 		bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
 		while(m_fileName.isEmpty()
@@ -559,6 +560,7 @@ bool PartsEditorMainWindow::saveAs() {
 	#endif
 
 		QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
+						//&& !m_fileName.startsWith(partsFolderPath, cs)
 				? userPartsFolderPath+m_fileName
 				: m_fileName;
 		QString guid = "__"+getRandText()+FritzingPartExtension;
