@@ -71,13 +71,12 @@ void fMessageHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
-	originalMsgHandler = qInstallMsgHandler(fMessageHandler);
-
 #ifdef _MSC_VER // just for the MS compiler
 #define WIN_CHECK_LEAKS
 #endif
 
 #ifdef Q_WS_WIN
+	originalMsgHandler = qInstallMsgHandler(fMessageHandler);
 #ifndef QT_NO_DEBUG
 #ifdef WIN_CHECK_LEAKS
 	HANDLE hLogFile;

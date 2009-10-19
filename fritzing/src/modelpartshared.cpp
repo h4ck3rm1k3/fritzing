@@ -246,9 +246,9 @@ void ModelPartShared::setConnectorsShared(QList<ConnectorShared *> connectors) {
 
 void ModelPartShared::resetConnectorsInitialization() {
 	m_connectorsInitialized = false;
-	foreach (ConnectorShared * cs, m_connectorSharedHash.values()) {
-		delete cs;
-	}
+	//foreach (ConnectorShared * cs, m_connectorSharedHash.values()) {
+		//delete cs;
+	//}
 	m_connectorSharedHash.clear();
 }
 
