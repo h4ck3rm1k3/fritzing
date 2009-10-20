@@ -190,6 +190,6 @@
     <line xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#020202" y1="127.154" x1="117.322" y2="127.154" x2="134.039" />
    </g>
   </g>
-  <text xmlns="http://www.w3.org/2000/svg" font-family="Droid Sans" transform="matrix(1 0 0 1 38.532 31.7617)" font-size="23.8794" >74HC595</text>
+  <text xmlns="http://www.w3.org/2000/svg" font-family="DroidSans" transform="matrix(1 0 0 1 38.532 31.7617)" font-size="23.8794" >74HC595</text>
  </g>
 </svg>

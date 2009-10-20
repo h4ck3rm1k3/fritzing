@@ -4,13 +4,14 @@
  <author>Fritzing Part-o-matic</author>
  <title>SIP - 10 pins</title>
  <label>U</label>
- <date>2009-10-15</date>
+ <date>2009-10-20</date>
  <tags>
   <tag>SIP</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >Generic SIP IC</property>
+  <property name="family" >Generic IC</property>
+  <property name="package" >Single Inline</property>
   <property name="pins">10</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>
@@ -19,7 +20,7 @@
  <description>A SIP stand-in part for whatever you want.  With 10 pins on a 300 mil single inline package (SIP) footprint.</description>
  <views>
   <iconView>
-   <layers image="icon/sip_icon.svg" >
+   <layers image="icon/dip_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>

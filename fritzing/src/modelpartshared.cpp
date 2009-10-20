@@ -71,10 +71,14 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 
 ModelPartShared::~ModelPartShared() {
 	foreach (ConnectorShared * connectorShared, m_connectorSharedHash.values()) {
-		
 		delete connectorShared;
 	}
 	m_connectorSharedHash.clear();
+
+	foreach (ConnectorShared * connectorShared, m_deletedList) {
+		delete connectorShared;
+	}
+	m_deletedList.clear();
 
 	foreach (BusShared * busShared, m_buses.values()) {
 		delete busShared;
@@ -246,9 +250,10 @@ void ModelPartShared::setConnectorsShared(QList<ConnectorShared *> connectors) {
 
 void ModelPartShared::resetConnectorsInitialization() {
 	m_connectorsInitialized = false;
-	//foreach (ConnectorShared * cs, m_connectorSharedHash.values()) {
-		//delete cs;
-	//}
+
+	foreach (ConnectorShared * cs, m_connectorSharedHash.values()) {
+		m_deletedList.append(cs);
+	}
 	m_connectorSharedHash.clear();
 }
 

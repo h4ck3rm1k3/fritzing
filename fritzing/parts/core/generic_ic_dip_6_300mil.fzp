@@ -4,13 +4,14 @@
  <author>Fritzing Part-o-matic</author>
  <title>DIP - 6 pins</title>
  <label>IC</label>
- <date>2009-10-15</date>
+ <date>2009-10-20</date>
  <tags>
   <tag>DIP</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >Generic DIP IC</property>
+  <property name="family" >Generic IC</property>
+  <property name="package" >Dual Inline</property>
   <property name="pins">6</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>

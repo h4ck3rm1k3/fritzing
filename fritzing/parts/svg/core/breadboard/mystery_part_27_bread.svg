@@ -6,10 +6,10 @@
  <rect width="266.0022" x="0" y="0" height="24.17675" fill="#000000" id="upper" stroke-width="0" />
  <rect width="266.0022" x="0" y="22" fill="#404040" height="3.096" id="lower" stroke-width="0" />
 
- <text id="label" x="2.5894" y="13" fill="#e6e6e6" stroke="none" font-family="'DroidSans'" text-anchor="start" font-size="7.3" >?</text>
+ <text id="label" x="2.5894" y="13" fill="#e6e6e6" stroke="none" font-family="DroidSans" text-anchor="start" font-size="7.3" >?</text>
 
   <circle fill="#8C8C8C" cx="261.0022" cy="5" r="3" stroke-width="0" />
-  <text x="261.0022" y="6.7" font-family="'DroidSans'" text-anchor="middle" font-weight="bold" stroke-width="0" font-size="5.5" >?</text>
+  <text x="261.0022" y="6.7" font-family="DroidSans" text-anchor="middle" font-weight="bold" stroke-width="0" font-size="5.5" >?</text>
 
 
         <rect id="connector0terminal" x="1.87" y="25.586" fill="#8C8C8C" width="2.3" height="2.0"/>

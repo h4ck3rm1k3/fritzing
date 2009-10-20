@@ -12,7 +12,8 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >Generic SIP IC</property>
+  <property name="family" >Generic IC</property>
+  <property name="package" >Single Inline</property>
   <property name="pins">$pins</property>
   <property name="spacing">${mils}mil</property>
   <property name="chip label">${label}</property>
@@ -21,7 +22,7 @@
  <description>A SIP stand-in part for whatever you want.  With $pins pins on a ${mils} mil single inline package (SIP) footprint.</description>
  <views>
   <iconView>
-   <layers image="icon/sip_icon.svg" >
+   <layers image="icon/dip_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>

@@ -119,6 +119,7 @@ protected:
 
 	QHash<QString, class ConnectorShared *> m_connectorSharedHash;
 	QHash<QString, class BusShared *> m_buses;
+	QList<class ConnectorShared *> m_deletedList;
 
 	bool m_connectorsInitialized;
 	bool m_ignoreTerminalPoints;
