@@ -5,13 +5,13 @@
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="${0.10*int($pins)}in" height="0.10in"
 	 viewBox="0 0 ${$one_tenth_of_an_inch*int($pins)} 7.178" xml:space="preserve">
 	 
+<g id="breadboard">
 #for $pin in range(int($pins))
 	#set $offset = $pin*$one_tenth_of_an_inch
 <rect id="connector${pin}pin" x="${$offset+2.198}" y="2.197" fill="none" width="2.783" height="2.783"/>
 <rect id="connector${pin}terminal" x="${$offset+2.511}" y="2.461" fill="none" width="2.157" height="2.256"/>
 #end for
 
-<g id="breadboard">
 	<rect fill="#404040" width="${$one_tenth_of_an_inch*int($pins)}" height="7.178"/>
 #for $pin in range(int($pins))
 	#set $offset = $pin*$one_tenth_of_an_inch

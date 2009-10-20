@@ -3,6 +3,7 @@
 <svg version="1.1" baseProfile="basic" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="2.7in" height="0.10in" viewBox="0 0 194.373 7.199" xml:space="preserve">
 
+<g id="breadboard">
 <rect id="connector0pin" x="2.204" y="2.204" fill="none" width="2.791" height="2.791"/>
 <rect id="connector0terminal" x="2.518" y="2.469" fill="none" width="2.164" height="2.262"/>
 <rect id="connector1pin" x="9.403" y="2.204" fill="none" width="2.791" height="2.791"/>
@@ -58,7 +59,6 @@
 <rect id="connector26pin" x="189.378" y="2.204" fill="none" width="2.791" height="2.791"/>
 <rect id="connector26terminal" x="189.692" y="2.469" fill="none" width="2.164" height="2.262"/>
 
-<g id="breadboard">
 	<g>
 		<polygon fill="#404040" points="1.563,0 0.0,1.564 0.0,5.637 1.563,7.199 5.635,7.199 7.199,5.637 7.199,1.564 5.635,0 1.563,0"/>
 	</g>

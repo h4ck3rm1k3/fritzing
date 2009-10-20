@@ -4,7 +4,7 @@
     <author>Fritzing Part-o-matic</author>
     <title>Generic female header - metal rounded - 9 pins</title>
     <label>J</label>
-    <date>2009-10-13</date>
+    <date>2009-10-20</date>
     <tags></tags>
     <properties>
         <property name="family">Connector</property>
@@ -24,7 +24,7 @@
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
-        <schematicView fliphorizontal="true" flipvertical="true">
+        <schematicView fliphorizontal="true" >
             <layers image="schematic/generic_female_pin_header_9_100mil_schem.svg">
                 <layer layerId="schematic"></layer>
             </layers>

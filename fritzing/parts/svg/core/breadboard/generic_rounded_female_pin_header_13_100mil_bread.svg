@@ -4,6 +4,7 @@
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1.3in" height="0.10in"
 	 viewBox="0 0 93.327 7.178" xml:space="preserve">
 	 
+<g id="breadboard">
 <rect id="connector0pin" x="2.198" y="2.197" fill="none" width="2.783" height="2.783"/>
 <rect id="connector0terminal" x="2.511" y="2.461" fill="none" width="2.157" height="2.256"/>
 <rect id="connector1pin" x="9.377" y="2.197" fill="none" width="2.783" height="2.783"/>
@@ -31,7 +32,6 @@
 <rect id="connector12pin" x="88.346" y="2.197" fill="none" width="2.783" height="2.783"/>
 <rect id="connector12terminal" x="88.659" y="2.461" fill="none" width="2.157" height="2.256"/>
 
-<g id="breadboard">
 	<rect fill="#404040" width="93.327" height="7.178"/>
 	<g>
 		<g>
