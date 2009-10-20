@@ -29,6 +29,7 @@ $Date$
 #define PARTSEDITORVIEWSWIDGET_H_
 
 #include <QWidget>
+#include <QSplitter>
 
 #include "partseditorview.h"
 #include "connectorsinfowidget.h"
@@ -88,6 +89,7 @@ Q_OBJECT
 		QPointer<PartsEditorView> m_schemView;
 		QPointer<PartsEditorView> m_pcbView;
 		QHash<ViewIdentifierClass::ViewIdentifier,PartsEditorView*> m_views;
+		QSplitter *m_viewsContainter;
 
 		QPointer<QCheckBox> m_showTerminalPointsCheckBox;
 		QPointer<QLabel> m_guidelines;

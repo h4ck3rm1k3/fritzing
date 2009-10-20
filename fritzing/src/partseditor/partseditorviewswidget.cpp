@@ -26,7 +26,6 @@ $Date$
 
 #include <QGridLayout>
 #include <QHBoxLayout>
-#include <QSplitter>
 #include <QLabel>
 #include <QtAlgorithms>
 
@@ -64,11 +63,12 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	connectToThis(m_schemView);
 	connectToThis(m_pcbView);
 
-	QSplitter *viewsContainter = new QSplitter(this);
-	viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_breadView));
-	viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_schemView));
-	viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_pcbView));
-	viewsContainter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	m_viewsContainter = new QSplitter(this);
+	m_viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_breadView));
+	m_viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_schemView));
+	m_viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_pcbView));
+	m_viewsContainter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	m_guidelines = new QLabel(tr("Please refer to the <a style='color: #52182C' href='http://fritzing.org/learning/tutorials/creating-custom-parts/'>guidelines</a> before modifying or creating parts"), this);
 	m_guidelines->setOpenExternalLinks(true);
@@ -87,7 +87,7 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	layout2->setSpacing(1);
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->addWidget(viewsContainter);
+	lo->addWidget(m_viewsContainter);
 	lo->addWidget(toolsAndInfoContainer);
 	lo->setMargin(3);
 	lo->setSpacing(1);

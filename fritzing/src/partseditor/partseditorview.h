@@ -92,6 +92,7 @@ class PartsEditorView : public SketchWidget {
 
 	protected slots:
 		void recoverTerminalPointsState();
+		void fitCenterAndDeselect();
 
 	signals:
 		// conns
@@ -107,7 +108,6 @@ class PartsEditorView : public SketchWidget {
 
 		void setDefaultBackground();
 		void clearScene();
-		void fitCenterAndDeselect();
 		void removeConnectors();
 		void addDefaultLayers();
 
@@ -163,6 +163,7 @@ class PartsEditorView : public SketchWidget {
 		void mousePressEvent(QMouseEvent *event);
 		void mouseMoveEvent(QMouseEvent *event);
 		void mouseReleaseEvent(QMouseEvent *event);
+		void resizeEvent(QResizeEvent * event);
 		void connectItem();
 		void createConnector(Connector *conn, const QSize &connSize, bool showTerminalPoint);
 		void setItemProperties();
@@ -204,6 +205,7 @@ class PartsEditorView : public SketchWidget {
 
 		QList<QWidget* > m_fixedWidgets;
 		ItemBase * m_viewItem;
+		QTimer *m_fitItemInViewTimer;
 
 	protected:
 		static int ConnDefaultWidth;

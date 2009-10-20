@@ -34,6 +34,7 @@ $Date$
 #include "partseditorview.h"
 #include "partseditorconnectoritem.h"
 #include "fixfontsdialog.h"
+#include "zoomcontrols.h"
 #include "../items/layerkinpaletteitem.h"
 #include "../layerattributes.h"
 #include "../fritzingwindow.h"
@@ -88,6 +89,11 @@ PartsEditorView::PartsEditorView(
 		this,SLOT(recoverTerminalPointsState())
 	);
 	m_showingTerminalPointsBackup = m_showingTerminalPoints;
+
+	m_fitItemInViewTimer = new QTimer(this);
+	m_fitItemInViewTimer->setSingleShot(true);
+	m_fitItemInViewTimer->setInterval(200);
+	connect(m_fitItemInViewTimer,SIGNAL(timeout()),this,SLOT(fitCenterAndDeselect()));
 }
 
 PartsEditorView::~PartsEditorView() {
@@ -178,18 +184,9 @@ void PartsEditorView::fitCenterAndDeselect() {
 		m_item->setSelected(false);
 		m_item->setHidden(false);
 
+		fitInView(m_item, Qt::KeepAspectRatio);
+
 		QRectF viewRect = rect();
-
-		int zoomCorrection;
-		if(m_viewIdentifier != ViewIdentifierClass::IconView) {
-			qreal x = viewRect.center().x();
-			qreal y = viewRect.center().y();
-			m_item->setPos(x,y);
-			zoomCorrection = 10;
-		} else {
-			zoomCorrection = 0;
-		}
-
 		QRectF itemsRect = scene()->itemsBoundingRect();
 
 		qreal wRelation = viewRect.width()  / itemsRect.width();
@@ -201,8 +198,7 @@ void PartsEditorView::fitCenterAndDeselect() {
 			m_scaleValue = (hRelation * 100);
 		}
 
-		absoluteZoom(m_scaleValue-zoomCorrection);
-		centerOn(itemsRect.center());
+		emit zoomChanged(m_scaleValue);
 	}
 }
 
@@ -1022,6 +1018,15 @@ void PartsEditorView::mouseMoveEvent(QMouseEvent *event) {
 
 void PartsEditorView::mouseReleaseEvent(QMouseEvent *event) {
 	SketchWidget::mouseReleaseEvent(event);
+}
+
+void PartsEditorView::resizeEvent(QResizeEvent * event) {
+	SketchWidget::resizeEvent(event);
+	if(m_fitItemInViewTimer->isActive()) {
+		m_fitItemInViewTimer->stop();
+	}
+	m_fitItemInViewTimer->start();
+
 }
 
 void PartsEditorView::drawConector(Connector *conn, bool showTerminalPoint) {
