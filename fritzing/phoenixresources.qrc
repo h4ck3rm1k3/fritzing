@@ -178,12 +178,12 @@
         <file>resources/parts/svg/core/pcb/jumper.svg</file>
         <file>resources/parts/svg/core/icon/jumpericon.svg</file>
         <file>resources/templates/jumper_copper0LayerTemplate.txt</file>
-	  <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
+		<file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_fzpTemplate.txt</file>
         <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
         <file>resources/parts/core/resistor.fzp</file>
-
+		<file>resources/images/splitterHandle.png</file>
     </qresource>
 </RCC>

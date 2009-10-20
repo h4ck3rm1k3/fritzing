@@ -26,6 +26,7 @@ $Date$
 
 #include <QGridLayout>
 #include <QHBoxLayout>
+#include <QSplitter>
 #include <QLabel>
 #include <QtAlgorithms>
 
@@ -51,15 +52,6 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	m_schemView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic);
 	m_pcbView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0);
 
-	m_guidelines = new QLabel(tr("Please refer to the <a style='color: #52182C' href='http://fritzing.org/learning/tutorials/creating-custom-parts/'>guidelines</a> before modifying or creating parts"), this);
-	m_guidelines->setOpenExternalLinks(true);
-	m_guidelines->setObjectName("guidelinesLabel");
-
-	QHBoxLayout *labelLayout = new QHBoxLayout();
-	labelLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
-	labelLayout->addWidget(m_guidelines);
-	labelLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
-
 	m_breadView->setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel, ViewLayer::BreadboardNote);
 	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 	m_pcbView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
@@ -72,24 +64,32 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	connectToThis(m_schemView);
 	connectToThis(m_pcbView);
 
-	QFrame *viewsContainter = new QFrame(this);
-	QHBoxLayout *layout1 = new QHBoxLayout(viewsContainter);
-	layout1->addWidget(addZoomControlsAndBrowseButton(m_breadView));
-	layout1->addWidget(addZoomControlsAndBrowseButton(m_schemView));
-	layout1->addWidget(addZoomControlsAndBrowseButton(m_pcbView));
+	QSplitter *viewsContainter = new QSplitter(this);
+	viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_breadView));
+	viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_schemView));
+	viewsContainter->addWidget(addZoomControlsAndBrowseButton(m_pcbView));
+	viewsContainter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-	QFrame *toolsContainer = new QFrame(this);
-	QHBoxLayout *layout2 = new QHBoxLayout(toolsContainer);
-	layout2->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	m_guidelines = new QLabel(tr("Please refer to the <a style='color: #52182C' href='http://fritzing.org/learning/tutorials/creating-custom-parts/'>guidelines</a> before modifying or creating parts"), this);
+	m_guidelines->setOpenExternalLinks(true);
+	m_guidelines->setObjectName("guidelinesLabel");
+
+	QHBoxLayout *labelLayout = new QHBoxLayout();
+	labelLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+	labelLayout->addWidget(m_guidelines);
+	labelLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+
+	QFrame *toolsAndInfoContainer = new QFrame(this);
+	QHBoxLayout *layout2 = new QHBoxLayout(toolsAndInfoContainer);
+	layout2->addLayout(labelLayout);
 	layout2->addWidget(m_showTerminalPointsCheckBox);
 	layout2->setMargin(1);
 	layout2->setSpacing(1);
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->addLayout(labelLayout);
 	lo->addWidget(viewsContainter);
-	lo->addWidget(toolsContainer);
-	lo->setMargin(1);
+	lo->addWidget(toolsAndInfoContainer);
+	lo->setMargin(3);
 	lo->setSpacing(1);
 
 	this->resize(width(),220);

@@ -23,6 +23,18 @@ PartConnectorsWidget {
 	background-color: #7F7F7F;
 }
 
+QSplitter::handle {
+	height: 6px;
+	width: 6px;
+	background-image: url(':/resources/images/splitterHandle.png');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+PartsEditorViewsWidget QSplitter::handle {
+	background-color: #7F7F7F;
+}
+
 PartsEditorView {
 	border-radius: 5px;
 	background-color: #D8D8D8;
