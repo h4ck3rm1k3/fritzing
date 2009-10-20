@@ -65,7 +65,15 @@ FixFontsDialog::FixFontsDialog(QWidget *parent, const QSet<QString> fontsTofix)
 	layout->setSpacing(1);
 	layout->setMargin(1);
 
+	foreach (QString f, fontsTofix) {
+		DebugDialog::debug("incoming font " + f);
+	}
+
 	m_fontsToFix = fontsTofix - FApplication::InstalledFonts;
+	foreach (QString fontFileName, FApplication::InstalledFontsNameMapper.values()) {
+		// SVG uses filename which may not match family name (e.g. "DroidSans" and "Droid Sans")
+		m_fontsToFix.remove(fontFileName);
+	}
 	QStringList availFonts = FApplication::InstalledFonts.toList();
 	qSort(availFonts);
 	availFonts.insert(0,tr("-- ignore --"));
@@ -153,7 +161,10 @@ FixedFontsHash FixFontsDialog::getFixedFontsHash() {
 		if( idx != -1) {
 			int value = cb->itemData(idx).toInt();
 			if(value > -1) {
-				retval[cb->brokenFont()] = cb->itemText(idx);
+				QString fixedFont = cb->itemText(idx);
+				// at least for Droid Sans, family name is "Droid Sans" but SVGs seem to need filename ("DroidSans").
+				fixedFont = FApplication::InstalledFontsNameMapper.value(fixedFont);
+				retval[cb->brokenFont()] = fixedFont;
 			}
 		}
 	}

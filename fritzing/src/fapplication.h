@@ -34,6 +34,7 @@ $Date$
 #include <QPointer>
 #include <QWidget>
 #include <QMutex>
+#include <QMultiHash>
 
 class FApplication :
 	public QApplication
@@ -77,7 +78,7 @@ protected:
 	void loadNew(QString path);
 	void loadOne(class MainWindow *, QString path, int loaded);
 	void initSplash(class FSplashScreen & splash, int & progressIndex, QPixmap & pixmap);
-	void registerFont(const QString &fontFile, QList<int> &fontIds);
+	void registerFont(const QString &fontFile, bool reallyRegister);
 	void clearModels();
 
 protected:
@@ -99,6 +100,7 @@ protected:
 
 public:
 	static QSet<QString> InstalledFonts;
+	static QMultiHash<QString, QString> InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
 	static int RestartNeeded;
 
 };

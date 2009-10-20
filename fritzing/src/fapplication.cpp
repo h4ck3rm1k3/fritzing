@@ -72,6 +72,7 @@ QString FApplication::m_libPath;
 QString FApplication::m_translationPath;
 UpdateDialog * FApplication::m_updateDialog = NULL;
 QSet<QString> FApplication::InstalledFonts;
+QMultiHash<QString, QString> FApplication::InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
 QPointer<MainWindow> FApplication::m_lastTopmostWindow = NULL;
 QTimer FApplication::m_activationTimer;
 QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
@@ -348,24 +349,16 @@ int FApplication::startup(bool firstRun)
 		PartsEditorMainWindow::initText();
 		BinManager::initNames();
 		PaletteModel::initNames();
-
-		QList<int> fontIds;
-		registerFont(":/resources/fonts/DroidSans.ttf", fontIds);
-		registerFont(":/resources/fonts/DroidSans-Bold.ttf", fontIds);
-		registerFont(":/resources/fonts/ocra10.ttf", fontIds);
-
-		foreach(int id, fontIds) {
-			foreach(QString ff, QFontDatabase::applicationFontFamilies(id)) {
-				InstalledFonts << ff;
-				DebugDialog::debug("installing font family: "+ff);
-			}
-		}
+		
+		registerFont(":/resources/fonts/DroidSans.ttf", true);
+		registerFont(":/resources/fonts/DroidSans-Bold.ttf", false);
+		registerFont(":/resources/fonts/ocra10.ttf", true);
 
 		/*
 		QFontDatabase database;
 		QStringList families = database.families (  );
 		foreach (QString string, families) {
-			DebugDialog::debug(string);			// should print out the name of the font you loaded
+			DebugDialog::debug(string);			// should print out the name of the fonts you loaded
 		}
 		*/
 
@@ -562,10 +555,16 @@ int FApplication::startup(bool firstRun)
 	return 0;
 }
 
-void FApplication::registerFont(const QString &fontFile, QList<int> &fontIds) {
+void FApplication::registerFont(const QString &fontFile, bool reallyRegister) {
 	int id = QFontDatabase::addApplicationFont(fontFile);
-	if(id > -1) {
-		fontIds << id;
+	if(id > -1 && reallyRegister) {
+		QStringList familyNames = QFontDatabase::applicationFontFamilies(id);
+		QFileInfo finfo(fontFile);
+		foreach (QString family, familyNames) {
+			InstalledFontsNameMapper.insert(family, finfo.baseName());
+			InstalledFonts << family;
+			DebugDialog::debug("registering font family: "+family);
+		}
 	}
 }
 
