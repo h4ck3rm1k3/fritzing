@@ -30,6 +30,7 @@
         <pcbView>
             <layers image="pcb/FRS1B-S-relay-fp.svg">
                 <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
             </layers>
         </pcbView>
         <schematicView>

@@ -2992,7 +2992,7 @@
    x="30.5747"
    y="38.7432"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text443">1</text>
 
@@ -3000,7 +3000,7 @@
    x="66.3931"
    y="38.7432"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text445">5</text>
 
@@ -3008,7 +3008,7 @@
    x="109.3877"
    y="38.7432"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text447">10</text>
 
@@ -3016,7 +3016,7 @@
    x="154.3979"
    y="38.7432"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text449">15</text>
 
@@ -3024,7 +3024,7 @@
    x="199.6201"
    y="38.7432"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text451">20</text>
 
@@ -3032,7 +3032,7 @@
    x="244.9175"
    y="38.7432"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text453">25</text>
 
@@ -3040,7 +3040,7 @@
    x="289.6904"
    y="38.7432"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text455">30</text>
 
@@ -3054,7 +3054,7 @@
    x="30.5747"
    y="152.9932"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text469">1</text>
 
@@ -3062,7 +3062,7 @@
    x="66.3931"
    y="152.9932"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text471">5</text>
 
@@ -3070,7 +3070,7 @@
    x="109.3877"
    y="152.9932"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text473">10</text>
 
@@ -3078,7 +3078,7 @@
    x="154.3979"
    y="152.9932"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text475">15</text>
 
@@ -3086,7 +3086,7 @@
    x="199.6201"
    y="152.9932"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text477">20</text>
 
@@ -3094,7 +3094,7 @@
    x="244.9175"
    y="152.9932"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text479">25</text>
 
@@ -3102,7 +3102,7 @@
    x="289.6904"
    y="152.9932"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text481">30</text>
 
@@ -3116,7 +3116,7 @@
    x="5.0767"
    y="46.5176"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text495">A</text>
 
@@ -3124,7 +3124,7 @@
    x="5.0767"
    y="55.584"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text497">B</text>
 
@@ -3132,7 +3132,7 @@
    x="5.1313"
    y="64.6484"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text499">C</text>
 
@@ -3140,7 +3140,7 @@
    x="5.0249"
    y="73.7119"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text501">D</text>
 
@@ -3148,7 +3148,7 @@
    x="5.2925"
    y="82.7764"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text503">E</text>
 
@@ -3156,7 +3156,7 @@
    x="5.3442"
    y="109.9707"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text505">F</text>
 
@@ -3164,7 +3164,7 @@
    x="5.0767"
    y="119.0332"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text507">G</text>
 
@@ -3172,7 +3172,7 @@
    x="5.0767"
    y="128.0986"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text509">H</text>
 
@@ -3180,7 +3180,7 @@
    x="5.9341"
    y="137.1641"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text511">I</text>
 
@@ -3188,7 +3188,7 @@
    x="5.3442"
    y="146.2285"
    fill="#B3B0B0"
-   font-family="'HelveticaNeue-CondensedBold'"
+   font-family="DroidSans"
    font-size="5.7545"
    id="text513">J</text>
 
