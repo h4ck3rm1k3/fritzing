@@ -1,0 +1,34 @@
+<div id="manufacturer_opts">
+	{% for section,options in sections.items %}
+		<div class="section">
+		{{ section }}
+			<div class="options">
+			{% for option in options.xor_options %}
+				{% for choice in option.choices.all %}
+					<input type="radio" name="xor-{{option.pk}}" value="{{ choice.pk }}"
+						{% ifequal forloop.counter 1 %}checked="checked"{% endifequal %}
+					>
+					{{ choice }}
+					</input><br />
+				{% endfor %}		
+			{% endfor %}
+			
+			{% for option in options.onoff_options %}
+				<input  type="checkbox" name="onoff-{{option.pk}}">
+					{{ option.text }}
+				</input>
+			{% endfor %}
+
+			{% for option in options.intvalue_options %}
+				{{ option.text }}
+				<input  type="text" name="intvalue-{{option.pk}}" value="{{ option.default_value }}">
+				</input>
+			{% endfor %}
+			</div>
+		</div>
+	{% endfor %}
+	<div id="comments">
+		Comments:<br/>
+		<textarea rows="6" cols="40" name="comments"></textarea>
+	</div>
+</div>

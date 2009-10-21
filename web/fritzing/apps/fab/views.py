@@ -1,3 +1,4 @@
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from fritzing.apps.fab.forms import FabOrderForm, FabOrderAddress
 from fritzing.apps.fab.models import *
@@ -22,3 +23,32 @@ def create(request, form_class=FabOrderForm):
         'form': form,
     }, context_instance=RequestContext(request))
 
+def load_options(manufacturer,opts_name,sections):
+    for opt in manufacturer[opts_name].all():
+        section = opt.section.text
+        if not section in sections:
+            sections[section] = {}
+        if not opts_name in sections[section]:
+            sections[section][opts_name] = []
+        sections[section][opts_name].append(opt)
+
+@login_required
+def manufacturer_form(request, manufacturer_id):
+    manufacturer = get_object_or_404(Manufacturer, pk=manufacturer_id)
+    man_opts = {}
+    man_opts['xor_options'] = manufacturer.xor_options
+    man_opts['onoff_options'] = manufacturer.onoff_options
+    man_opts['intvalue_options'] = manufacturer.intvalue_options
+    
+    sections = {}
+    load_options(man_opts,'xor_options',sections)
+    load_options(man_opts,'onoff_options',sections)
+    load_options(man_opts,'intvalue_options',sections)
+    
+    print sections
+    
+    return render_to_response("fab/manufacturer_opts.html", {
+        'sections': sections,
+    }, context_instance=RequestContext(request))
+    
+    
