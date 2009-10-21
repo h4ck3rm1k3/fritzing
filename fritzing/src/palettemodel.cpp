@@ -62,11 +62,13 @@ const QString InstanceTemplate(
 PaletteModel::PaletteModel() : ModelBase(true) {
 	m_loadedFromFile = false;
 	m_loadingCore = false;
+	m_loadingContrib = false;
 }
 
 PaletteModel::PaletteModel(bool makeRoot, bool doInit) : ModelBase( makeRoot ) {
 	m_loadedFromFile = false;
 	m_loadingCore = false;
+	m_loadingContrib = false;
 
 	if (doInit)
 		init();
@@ -125,8 +127,7 @@ void PaletteModel::loadParts() {
 	/// !!!!!!!!!!!!!!!!  file append method.  Since CreateAllPartsBinFile is false in release mode,
 	/// !!!!!!!!!!!!!!!!  Fritzing was taking forever to start up.
 
-	
-	CreateAllPartsBinFile;
+
 	writeCommonBinsHeader();
 
 	QDir * dir1 = FolderUtils::getApplicationSubFolder("parts");
@@ -255,7 +256,12 @@ void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters) {
     for (int i = 0; i < dirs.size(); ++i) {
     	QString temp2 = dirs[i];
        	dir.cd(temp2);
-       	m_loadingCore = temp2=="core";
+
+       	//if(temp2 == "core" || temp2=="contrib" || temp2=="user") {
+			m_loadingCore = temp2=="core";
+			m_loadingContrib = temp2=="contrib";
+       	//}
+
     	loadPartsAux(dir, nameFilters);
     	dir.cdUp();
     }
@@ -343,6 +349,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	if (modelPart == NULL) return NULL;
 
 	modelPart->setCore(m_loadingCore);
+	modelPart->setContrib(m_loadingContrib);
 
 	if (m_partHash.contains(moduleID) && m_partHash[moduleID]) {
 		if(!update) {
@@ -377,7 +384,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
     if(!modelPart->isCore()) {
     	CreateNonCorePartsBinFile = keepOnCreatingNonCorePartBins;
     }
-
+    
     return modelPart;
 }
 

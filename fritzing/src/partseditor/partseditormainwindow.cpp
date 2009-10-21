@@ -142,7 +142,9 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 		m_updateEnabled = true;
 	} else {
 		// user only allowed to save parts, once he has saved it as a new one
-		m_updateEnabled = modelPart->isCore()? CORE_EDITION_ENABLED: true;
+		m_updateEnabled = modelPart->isCore()?
+							CORE_EDITION_ENABLED:
+							(modelPart->isContrib()? false: true);
 		m_fileName = modelPart->modelPartShared()->path();
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough

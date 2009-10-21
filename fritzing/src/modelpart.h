@@ -103,6 +103,9 @@ public:
 	bool isCore();
 	void setCore(bool core);
 
+	bool isContrib();
+	void setContrib(bool contrib);
+
 	bool isAlien(); // from "outside" ?
 	void setAlien(bool alien);
 
@@ -153,6 +156,7 @@ protected:
 	QDomElement m_instanceDomElement;	// only used at load time (so far)
 
 	bool m_core;
+	bool m_contrib;
 	bool m_valid;
 	bool m_alien;
 	bool m_originalModelPartShared;

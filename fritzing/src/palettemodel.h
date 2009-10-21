@@ -65,6 +65,7 @@ protected:
 	QString m_loadedFrom; // The file this was loaded from, only if m_loadedFromFile == true
 
 	bool m_loadingCore;
+	bool m_loadingContrib;
 
 protected:
 	virtual void init();

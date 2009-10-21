@@ -108,6 +108,7 @@ void ModelPart::copy(ModelPart * modelPart) {
 	m_type = modelPart->itemType();
 	m_modelPartShared = modelPart->modelPartShared();
 	m_core = modelPart->isCore();
+	m_contrib = modelPart->isContrib();
 }
 
 void ModelPart::copyNew(ModelPart * modelPart) {
@@ -423,6 +424,14 @@ bool ModelPart::isCore() {
 
 void ModelPart::setCore(bool core) {
 	m_core = core;
+}
+
+bool ModelPart::isContrib() {
+	return m_contrib;
+}
+
+void ModelPart::setContrib(bool contrib) {
+	m_contrib = contrib;
 }
 
 bool ModelPart::isAlien() {
