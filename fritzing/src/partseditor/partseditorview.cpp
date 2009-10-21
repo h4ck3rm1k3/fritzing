@@ -58,6 +58,8 @@ PartsEditorView::PartsEditorView(
 {
 	m_viewItem = NULL;
 	m_item = NULL;
+	m_connsLayerID = ViewLayer::UnknownLayer;
+	m_svgLodaded = false;
 	m_deleteModelPartOnSceneClear = deleteModelPartOnClearScene;
 	m_tempFolder = tempDir;
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -146,7 +148,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 				paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
 				ViewLayer::ViewLayerID viewLayerID =
 					ViewLayer::viewLayerIDFromXmlString(
-						findConnectorLayerId(paletteItem->svgDom())
+						findConnectorsLayerId(paletteItem->svgDom())
 					);
 				if(viewLayerID == ViewLayer::UnknownLayer) {
 					viewLayerID = getViewLayerID(modelPart, m_viewIdentifier);
@@ -235,19 +237,16 @@ void PartsEditorView::removeConnectors() {
 }
 
 ModelPart *PartsEditorView::createFakeModelPart(SvgAndPartFilePath *svgpath) {
-	const QHash<QString,StringPair*> connIds = getConnectorIds(svgpath->absolutePath());
+	const QHash<QString,ConnectorTerminalSvgIdPair> connIds = getConnectorsSvgIds(svgpath->absolutePath());
 	const QStringList layers = getLayers(svgpath->absolutePath());
 
 	QString path = svgpath->relativePath() == ___emptyString___ ? svgpath->absolutePath() : svgpath->relativePath();
 	ModelPart * mp = createFakeModelPart(connIds, layers, path);
-	foreach(StringPair * sp, connIds.values()) {
-		delete sp;
-	}
 
 	return mp;
 }
 
-ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, const QString &svgFilePath) {
+ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,ConnectorTerminalSvgIdPair> &conns, const QStringList &layers, const QString &svgFilePath) {
 	QDomDocument *domDoc = new QDomDocument();
 	QString errorStr;
 	int errorLine;
@@ -263,12 +262,12 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,StringPair*>
 			QString("</views><connectors>\n");
 
 	foreach(QString id, conns.keys()) {
-		QString terminalAttr = conns[id]->second != ___emptyString___ ? QString("terminalId='%1'").arg(conns[id]->second) : "";
+		QString terminalAttr = conns[id].terminalId != ___emptyString___ ? QString("terminalId='%1'").arg(conns[id].terminalId) : "";
 		fakeFzFile += QString("<connector id='%1'><views>\n").arg(id)+
 				QString("<%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 				QString("<p layer='%1' svgId='%2' %3/>\n")
 					.arg(ViewLayer::viewLayerXmlNameFromID(SketchWidget::defaultConnectorLayer(m_viewIdentifier)))
-					.arg(conns[id]->first)
+					.arg(conns[id].connectorId)
 					.arg(terminalAttr)+
 				QString("</%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 				QString("</views></connector>\n");
@@ -286,20 +285,19 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,StringPair*>
 	return retval;
 }
 
-const QHash<QString,StringPair*> PartsEditorView::getConnectorIds(const QString &path) {
+const QHash<QString,ConnectorTerminalSvgIdPair> PartsEditorView::getConnectorsSvgIds(const QString &path) {
 	QDomDocument dom ;
 	QFile file(path);
 	dom.setContent(&file);
 	file.close();
 
-	QHash<QString,StringPair*> retval;
 	QDomElement docElem = dom.documentElement();
-	getConnectorIdsAux(retval, docElem);
+	getConnectorsSvgIdsAux(docElem);
 
-	return retval;
+	return m_svgIds;
 }
 
-void PartsEditorView::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair*> &retval, QDomElement &docElem) {
+void PartsEditorView::getConnectorsSvgIdsAux(QDomElement &docElem) {
 	QDomNode n = docElem.firstChild();
 	while(!n.isNull()) {
 		QDomElement e = n.toElement(); // try to convert the node to an element.
@@ -307,18 +305,18 @@ void PartsEditorView::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair
 			QString id = e.attribute("id");
 			if(id.startsWith("connector") && id.endsWith("terminal")) {
 				QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
-				StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
-				pair->second = id;
-				retval[conn] = pair;
+				ConnectorTerminalSvgIdPair pair = m_svgIds.contains(conn) ? m_svgIds[conn] : ConnectorTerminalSvgIdPair();
+				pair.terminalId = id;
+				m_svgIds[conn] = pair;
 			}
 			else if(id.startsWith("connector") /*&& id.endsWith("pin") */ ) {
 				QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
-				StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
-				pair->first = id;
-				retval[conn] = pair;
+				ConnectorTerminalSvgIdPair pair = m_svgIds.contains(conn) ? m_svgIds[conn] : ConnectorTerminalSvgIdPair();
+				pair.connectorId = id;
+				m_svgIds[conn] = pair;
 			}
 			else if(n.hasChildNodes()) {
-				getConnectorIdsAux(retval, e);
+				getConnectorsSvgIdsAux(e);
 			}
 		}
 		n = n.nextSibling();
@@ -400,19 +398,10 @@ bool PartsEditorView::ensureFilePath(const QString &filePath) {
 	return true;
 }
 
-ViewLayer::ViewLayerID PartsEditorView::connectorLayerId() {
+ViewLayer::ViewLayerID PartsEditorView::connectorsLayerId() {
 	//Q_ASSERT(m_item);
-	ViewLayer::ViewLayerID viewLayerID = ViewLayer::UnknownLayer;
-	if (m_item != NULL) {
-		viewLayerID = ViewLayer::viewLayerIDFromXmlString(
-			findConnectorLayerId(m_item->svgDom())
-		);
-	}
-	if(viewLayerID == ViewLayer::UnknownLayer) {
-		return SketchWidget::defaultConnectorLayer(m_viewIdentifier);
-	} else {
-		return viewLayerID;
-	}
+	findConnectorsLayerId();
+	return m_connsLayerID;
 }
 
 QString PartsEditorView::terminalIdForConnector(const QString &connId) {
@@ -451,11 +440,24 @@ bool PartsEditorView::terminalIdForConnectorIdAux(QString &result, const QString
 	return false;
 }
 
-QString PartsEditorView::findConnectorLayerId(QDomDocument *svgDom) {
+void PartsEditorView::findConnectorsLayerId() {
+	if(m_connsLayerID == ViewLayer::UnknownLayer) {
+		if (m_item != NULL) {
+			m_connsLayerID = ViewLayer::viewLayerIDFromXmlString(
+				findConnectorsLayerId(m_item->svgDom())
+			);
+		}
+		if(m_connsLayerID == ViewLayer::UnknownLayer) {
+			m_connsLayerID = SketchWidget::defaultConnectorLayer(m_viewIdentifier);
+		}
+	}
+}
+
+QString PartsEditorView::findConnectorsLayerId(QDomDocument *svgDom) {
 	QString result = ___emptyString___;
 	QStringList layers;
 	QDomElement docElem = svgDom->documentElement();
-	if(findConnectorLayerIdAux(result, docElem, layers)) {
+	if(findConnectorsLayerIdAux(result, docElem, layers)) {
 		if(ViewLayer::viewLayerIDFromString(result) == ViewLayer::UnknownLayer) {
 			foreach(QString layer, layers) {
 				ViewLayer::ViewLayerID vlid = ViewLayer::viewLayerIDFromXmlString(layer);
@@ -470,7 +472,7 @@ QString PartsEditorView::findConnectorLayerId(QDomDocument *svgDom) {
 	}
 }
 
-bool PartsEditorView::findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers) {
+bool PartsEditorView::findConnectorsLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers) {
 	QDomNode n = docElem.firstChild();
 	while(!n.isNull()) {
 		QDomElement e = n.toElement();
@@ -483,7 +485,7 @@ bool PartsEditorView::findConnectorLayerIdAux(QString &result, QDomElement &docE
 				// potencial solution, if the next iteration returns true
 				result = id;
 				prevLayers << id;
-				if(findConnectorLayerIdAux(result, e, prevLayers)) {
+				if(findConnectorsLayerIdAux(result, e, prevLayers)) {
 					return true;
 				}
 			}
@@ -567,6 +569,10 @@ void PartsEditorView::loadSvgFile(const QString& origPath) {
 	// back to an empty state
 	m_drawnConns.clear();
 	m_removedConnIds.clear();
+	m_connsLayerID = ViewLayer::UnknownLayer;
+	m_svgIds.clear();
+
+	m_svgLodaded = true;
 
 	bool canceled = false;
 	beforeSVGLoading(origPath, canceled);
@@ -1133,7 +1139,7 @@ void PartsEditorView::aboutToSave() {
 			// let's get the connectorsLayer after it
 			bool somethingChanged = addDefaultLayerIfNotIn(svgDom);
 
-			QString connectorsLayerId = findConnectorLayerId(svgDom);
+			QString connectorsLayerId = findConnectorsLayerId(svgDom);
 			QDomElement elem = svgDom->documentElement();
 
 			somethingChanged |= removeConnectorsIfNeeded(elem);
@@ -1603,4 +1609,19 @@ bool PartsEditorView::cleanXml(QString &content, const QString & filename)
 
 void PartsEditorView::setViewItem(ItemBase * item) {
 	m_viewItem = item;
+}
+
+void PartsEditorView::updatePinsInfo(QList<ConnectorShared*> connsShared) {
+	if(m_svgLodaded) { // if the user has not changed the svg file, there's nothing to update
+		connectorsLayerId();
+		foreach(ConnectorShared* cs, connsShared) {
+			QString connId = cs->id();
+			SvgIdLayer* pinInfo = cs->fullPinInfo(m_viewIdentifier, m_connsLayerID);
+			if(pinInfo != NULL && m_svgIds[connId].connectorId != ___emptyString___) {
+				pinInfo->m_svgId = m_svgIds[connId].connectorId;
+				// terminal points are already updated (by the function updateTerminalPoints)
+					// pinInfo->m_terminalId = m_svgIds[connId].terminalId;
+			}
+		}
+	}
 }

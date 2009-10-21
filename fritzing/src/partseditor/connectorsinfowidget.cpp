@@ -237,19 +237,19 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 	connShared->addPin(
 		ViewIdentifierClass::BreadboardView,
 		m_views->breadboardView()->svgIdForConnector(id),
-		m_views->breadboardView()->connectorLayerId(),
+		m_views->breadboardView()->connectorsLayerId(),
 		m_views->breadboardView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
 		ViewIdentifierClass::SchematicView,
 		m_views->schematicView()->svgIdForConnector(id),
-		m_views->schematicView()->connectorLayerId(),
+		m_views->schematicView()->connectorsLayerId(),
 		m_views->schematicView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
 		ViewIdentifierClass::PCBView,
 		m_views->pcbView()->svgIdForConnector(id),
-		m_views->pcbView()->connectorLayerId(),
+		m_views->pcbView()->connectorsLayerId(),
 		m_views->pcbView()->terminalIdForConnector(id)
 	);
 

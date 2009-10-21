@@ -561,7 +561,7 @@ bool PartsEditorMainWindow::saveAs() {
 	#endif
 
 		QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
-						//&& !m_fileName.startsWith(partsFolderPath, cs)
+						&& !m_fileName.startsWith(partsFolderPath, cs)
 				? userPartsFolderPath+m_fileName
 				: m_fileName;
 		QString guid = "__"+getRandText()+FritzingPartExtension;
@@ -659,6 +659,9 @@ ModelPartShared* PartsEditorMainWindow::modelPartShared() {
 
 	m_iconViewImage->aboutToSave();
 	m_views->aboutToSave();
+
+	QList<ConnectorShared*> connsShared = m_connsInfo->connectorsShared();
+	m_views->updatePinsInfo(connsShared);
 	shared->setConnectorsShared(m_connsInfo->connectorsShared());
 
 	return shared;

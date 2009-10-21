@@ -35,6 +35,15 @@ $Date$
 #include "partseditorconnectorsconnectoritem.h"
 
 
+struct ConnectorTerminalSvgIdPair {
+	ConnectorTerminalSvgIdPair() {
+		connectorId = ___emptyString___;
+		terminalId = ___emptyString___;
+	}
+	QString connectorId;
+	QString terminalId;
+};
+
 class PartsEditorView : public SketchWidget {
 	Q_OBJECT
 
@@ -48,7 +57,7 @@ class PartsEditorView : public SketchWidget {
 		// general
 		QDir tempFolder();
 		bool isEmpty();
-		ViewLayer::ViewLayerID connectorLayerId();
+		ViewLayer::ViewLayerID connectorsLayerId();
 		QString terminalIdForConnector(const QString &connId);
 		void addFixedToBottomRight(QWidget *widget);
 		bool imageLoaded();
@@ -65,6 +74,7 @@ class PartsEditorView : public SketchWidget {
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
 		void aboutToSave();
+		void updatePinsInfo(QList<ConnectorShared*> conns);
 
 		void showTerminalPoints(bool show);
 		bool showingTerminalPoints();
@@ -117,18 +127,19 @@ class PartsEditorView : public SketchWidget {
 		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
 
 		ModelPart *createFakeModelPart(SvgAndPartFilePath *svgpath);
-		ModelPart *createFakeModelPart(const QHash<QString,StringPair*> &connIds, const QStringList &layers, const QString &svgFilePath);
+		ModelPart *createFakeModelPart(const QHash<QString,ConnectorTerminalSvgIdPair> &connIds, const QStringList &layers, const QString &svgFilePath);
 
-		const QHash<QString,StringPair*> getConnectorIds(const QString &path);
-		void getConnectorIdsAux(QHash<QString,StringPair*> &retval, QDomElement &docElem);
+		const QHash<QString,ConnectorTerminalSvgIdPair> getConnectorsSvgIds(const QString &path);
+		void getConnectorsSvgIdsAux(QDomElement &docElem);
 		const QStringList getLayers(const QString &path);
 		const QStringList getLayers(const QDomDocument *dom, bool addDefaultIfNone=true);
 
 		QString getOrCreateViewFolderInTemp();
 		bool ensureFilePath(const QString &filePath);
 
-		QString findConnectorLayerId(QDomDocument *svgDom);
-		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
+		void findConnectorsLayerId();
+		QString findConnectorsLayerId(QDomDocument *svgDom);
+		bool findConnectorsLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
 		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem, bool wantTerminal);
 		QString getLayerFileName(ModelPart * modelPart);
 		ViewLayer::ViewLayerID defaultLayer();
@@ -197,6 +208,10 @@ class PartsEditorView : public SketchWidget {
 
 		QHash<QString /*id*/,PartsEditorConnectorsConnectorItem*> m_drawnConns;
 		QStringList m_removedConnIds;
+
+		QHash<QString/*connectorId*/,ConnectorTerminalSvgIdPair> m_svgIds;
+		ViewLayer::ViewLayerID m_connsLayerID;
+		bool m_svgLodaded;
 
 		QString m_lastSelectedConnId;
 		bool m_showingTerminalPoints;
