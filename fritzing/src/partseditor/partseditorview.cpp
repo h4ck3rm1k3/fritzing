@@ -375,7 +375,8 @@ QString PartsEditorView::getOrCreateViewFolderInTemp() {
 	QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 
 	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
-		Q_ASSERT(m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder));
+		bool mkResult = m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder);
+		Q_ASSERT(mkResult);
 	}
 
 	return viewFolder;
@@ -958,7 +959,8 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 	out << svgDom;
 	destFile.close();
 	qDebug() << newFilePath;
-	Q_ASSERT(QFileInfo(newFilePath).exists());
+	bool existsResult = QFileInfo(newFilePath).exists();
+	Q_ASSERT(existsResult);
 */
 
 	QImage imgOrig(origFilePath);

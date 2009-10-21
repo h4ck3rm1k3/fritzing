@@ -111,7 +111,9 @@ void TerminalPointItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 }
 
 QPointF TerminalPointItem::mappedPoint() {
-	//Q_ASSERT(m_cross->hasBeenMoved());
+	//bool result = m_cross->hasBeenMoved();
+	//Q_ASSERT(result);
+
 	QPointF p = m_cross->mapToItem(m_parent,transformedCrossCenter());
 	const PartsEditorConnectorsConnectorItem *pci = parentConnectorItem();
 	//if(pci->hasBeenMoved()) {
