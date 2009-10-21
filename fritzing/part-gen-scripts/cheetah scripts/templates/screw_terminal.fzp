@@ -26,7 +26,7 @@
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
-        <schematicView>
+        <schematicView fliphorizontal="true" >
             <layers image="schematic/screw_terminal_${pins}_${mils}mil_schem.svg">
                 <layer layerId="schematic"></layer>
             </layers>

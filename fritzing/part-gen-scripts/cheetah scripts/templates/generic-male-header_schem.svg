@@ -8,12 +8,8 @@
 <g id="schematic">
 #for $pin in range(int($pins))
 	#set $offset = $pin*$translation
-<line id="connector${pin}pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="0.998" y1="${$offset+9.723}" x2="17.845" y2="${$offset+9.723}"/>
-<rect id="connector${pin}terminal" x="0" y="${$offset+8.725}" width="0.998" height="1.997"/>
-#end for
-
-#for $pin in range(int($pins))
-	#set $offset = $pin*$translation
+	<line id="connector${pin}pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="0.998" y1="${$offset+9.723}" x2="17.845" y2="${$offset+9.723}"/>
+	<rect id="connector${pin}terminal" x="0" y="${$offset+8.725}" width="0.998" height="1.997"/>
 	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="46.597,${$offset+3.034} 
 		61.641,${$offset+9.718} 46.597,${$offset+16.406} 	"/>
 	
