@@ -63,6 +63,7 @@ signals:
 	void closed(long id);
 	void changeActivationSignal(bool activate, QWidget * originator);
 	void saveButtonClicked();
+	void alienPartUsed();
 
 public slots:
 	void parentAboutToClose();
@@ -148,6 +149,7 @@ protected:
     bool m_updateEnabled;
     bool m_partUpdated;
     bool m_savedAsNewPart;
+    bool m_editingAlien;
 
     static QPointer<PartsEditorMainWindow> m_lastOpened;
     static int m_closedBeforeCount;

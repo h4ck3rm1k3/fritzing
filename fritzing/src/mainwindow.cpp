@@ -739,6 +739,10 @@ bool MainWindow::whatToDoWithAlienFiles() {
 	}
 }
 
+void MainWindow::acceptAlienFiles() {
+	m_alienFiles.clear();
+}
+
 
 void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
 	if(!zoomComboBox) zoomComboBox = currentSketchArea()->zoomComboBox();

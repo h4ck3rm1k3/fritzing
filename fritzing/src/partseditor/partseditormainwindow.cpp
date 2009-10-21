@@ -87,6 +87,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
 	m_iconItem = m_breadboardItem = m_schematicItem = m_pcbItem = NULL;
+	m_editingAlien = false;
 }
 
 PartsEditorMainWindow::~PartsEditorMainWindow()
@@ -112,6 +113,8 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
     QFile styleSheet(":/resources/styles/partseditor.qss");
     m_mainFrame = new QFrame(this);
     m_mainFrame->setObjectName("partsEditor");
+
+    m_editingAlien = modelPart? modelPart->isAlien(): false;
 
     if (!styleSheet.open(QIODevice::ReadOnly)) {
         qWarning("Unable to open :/resources/styles/partseditor.qss");
@@ -144,7 +147,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 		// user only allowed to save parts, once he has saved it as a new one
 		m_updateEnabled = modelPart->isCore()?
 							CORE_EDITION_ENABLED:
-							(modelPart->isContrib()? false: true);
+							(modelPart->isContrib() || modelPart->isAlien()? false: true);
 		m_fileName = modelPart->modelPartShared()->path();
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough
@@ -631,6 +634,12 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
    // mark the stack clean so we update the window dirty flag
     m_undoStack->setClean();
     setTitle();
+
+    if(m_editingAlien) {
+    	// FIXME: this will keep ALL the external files, not just the ones that this part uses
+    	emit alienPartUsed();
+    	m_editingAlien = false;
+    }
 }
 
 void PartsEditorMainWindow::updateDateAndAuthor() {

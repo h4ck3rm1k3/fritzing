@@ -125,6 +125,7 @@ public slots:
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 	void partsEditorClosed(long id);
 	void importFilesFromPrevInstall();
+	void acceptAlienFiles();
 
 protected slots:
 	void load();

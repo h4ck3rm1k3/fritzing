@@ -109,6 +109,7 @@ void ModelPart::copy(ModelPart * modelPart) {
 	m_modelPartShared = modelPart->modelPartShared();
 	m_core = modelPart->isCore();
 	m_contrib = modelPart->isContrib();
+	m_alien = modelPart->isAlien();
 }
 
 void ModelPart::copyNew(ModelPart * modelPart) {
