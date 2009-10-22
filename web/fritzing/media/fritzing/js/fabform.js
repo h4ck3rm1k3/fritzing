@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$("#fabform").validate({
 		errorPlacement: function(error, element) {
 			var elemName = element.attr("name");
-			if (elemName.startsWith("billing") || elemName.startsWith("shipping")) {
+			if (elemName.startsWith("billing") || elemName.startsWith("shipping") || elemName == "comments") {
 				error.insertBefore(element);
 			} else {
 				error.insertAfter(element);
