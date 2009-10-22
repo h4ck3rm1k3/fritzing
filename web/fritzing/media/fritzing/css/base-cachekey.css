@@ -2830,3 +2830,7 @@ span.required {
 	color: red;
 	font-size: medium;
 }
+
+span.help {
+    color: #999;
+}

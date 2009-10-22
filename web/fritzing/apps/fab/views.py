@@ -26,7 +26,7 @@ def create(request, form_class=FabOrderForm):
 
 def load_options(manufacturer,opts_name,sections):
     for opt in manufacturer[opts_name].all():
-        section = opt.section.text
+        section = opt.section
         if not section in sections:
             sections[section] = {}
         if not opts_name in sections[section]:
@@ -48,7 +48,7 @@ def manufacturer_form(request, manufacturer_id):
     
     sections_order = {}
     for s in OptionsSection.objects.all():
-        sections_order[s.text] = s.order
+        sections_order[s] = s.order
     
     ordered_sections = sorted(sections.iteritems(), key=lambda (k,v): (sections_order[k],v))
     
