@@ -24,6 +24,7 @@ class FabOrder(TimeStampedModel):
     
 class Address(models.Model):
     street = models.CharField(_('street'), max_length=255)
+    city = models.CharField(_('city'), max_length=255)
     state = models.CharField(_('state'), max_length=255, blank=True, null=True)
     country = models.CharField(_('country'), max_length=255)
     
