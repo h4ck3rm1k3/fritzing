@@ -77,6 +77,7 @@ $Date$
 #include "items/resistor.h"
 #include "items/mysterypart.h"
 #include "items/dip.h"
+#include "items/groundplane.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
@@ -698,6 +699,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			addToScene(note, getNoteViewLayerID());
 			return note;
 		}
+		case ModelPart::CopperFill:
+			paletteItem = new GroundPlane(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
+			break;
 		case ModelPart::Jumper:
 			paletteItem = new JumperItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
@@ -1370,7 +1374,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 	if (!canDropModelPart(modelPart)) return false;
 
-	m_droppingWire = (modelPart->itemType() == ModelPart::Wire || modelPart->itemType() == ModelPart::Jumper);
+	m_droppingWire = (modelPart->itemType() == ModelPart::Wire);
 	m_droppingOffset = offset;
 
 	if (ItemDrag::_cache().contains(this)) {
@@ -1394,6 +1398,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::Module:
 			case ModelPart::Symbol:
 			case ModelPart::Jumper:
+			case ModelPart::CopperFill:
 			case ModelPart::Unknown:
 				doConnectors = false;
 				break;
@@ -3672,6 +3677,8 @@ void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass:
 }
 
 void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) {
+	// TODO: handle this with virtual functions in the itemBase
+
 	switch (itemBase->itemType()) {
 		case ModelPart::Wire:
 			{
@@ -3700,6 +3707,12 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 			new ResizeJumperItemCommand(this, jumper->id(), p, c0, c1, p, c0, c1, parentCommand);
 			}
 			break;
+		case ModelPart::CopperFill:
+			{
+			GroundPlane * groundPlane = dynamic_cast<GroundPlane *>(itemBase);
+			new SetPropCommand(this, itemBase->id(), "svg", groundPlane->svg(), groundPlane->svg(), parentCommand);
+			}
+			break;
 		default:
 			break;
 	}
@@ -3707,7 +3720,12 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 	// TODO: does this need to be generalized to the whole set of modelpart props?
 	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
 	if (mysteryPart != NULL) {
-		new SetChipLabelCommand(this, itemBase->id(), mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+		new SetPropCommand(this, itemBase->id(), "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+	}
+
+	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
+	if (resistor != NULL) {
+		new SetResistanceCommand(this, itemBase->id(), resistor->resistance(), resistor->resistance(), resistor->pinSpacing(), resistor->pinSpacing(), parentCommand);
 	}
 
 	rememberSticky(itemBase->id(), parentCommand);
@@ -4238,7 +4256,7 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 			
 		MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
 		if (mysteryPart != NULL) {
-			new SetChipLabelCommand(this, newID, mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+			new SetPropCommand(this, newID, "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
 		}
 	
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
@@ -5517,20 +5535,9 @@ void SketchWidget::setVoltage(qreal v)
 		return;
 	}
 
-	SetVoltageCommand * cmd = new SetVoltageCommand(this, item->id(), sitem->voltage(), v, NULL);
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "voltage", QString::number(sitem->voltage()), QString::number(v), NULL);
 	cmd->setText(tr("Change voltage from %1 to %2").arg(sitem->voltage()).arg(v));
 	m_undoStack->push(cmd);
-}
-
-void SketchWidget::setVoltage(long itemID, qreal voltage) {
-	ItemBase * item = findItem(itemID);
-	if (item == NULL) return;
-
-	SymbolPaletteItem * sitem = qobject_cast<SymbolPaletteItem *>(item);
-	if (sitem == NULL) return;
-
-	sitem->setVoltage(voltage);
-	viewItemInfo(item);
 }
 
 // called from javascript (htmlInfoView)
@@ -5583,23 +5590,20 @@ void SketchWidget::setChipLabel(QString label)
 	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
 	if (mysteryPart == NULL) return;
 
-	SetChipLabelCommand * cmd = new SetChipLabelCommand(this, item->id(), mysteryPart->chipLabel(), label, NULL);
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "chip label", mysteryPart->chipLabel(), label, NULL);
 	cmd->setText(tr("Change ChipLabel from %1 to %2").arg(mysteryPart->chipLabel()).arg(label));
 	m_undoStack->push(cmd);
 }
 
-void SketchWidget::setChipLabel(long itemID, QString label, bool doEmit) {
+void SketchWidget::setProp(long itemID, const QString & prop, const QString & value, bool doEmit) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
-	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
-	if (mysteryPart == NULL) return;
-
-	mysteryPart->setChipLabel(label, false);
+	item->setProp(prop, value);
 	viewItemInfo(item);
 
 	if (doEmit) {
-		emit setChipLabelSignal(itemID, label, false);
+		emit setPropSignal(itemID, prop, value, false);
 	}
 }
 
@@ -5753,18 +5757,7 @@ void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 }
 
 void SketchWidget::tidyWires() {
-}
-
-void SketchWidget::painterPathHack(long itemID, const QString & connectorID, QPainterPath & painterPath) {
-	ItemBase * item = findItem(itemID);
-	if (item == NULL) return;
-
-	ConnectorItem * connectorItem = item->findConnectorItemNamed(connectorID);
-	if (connectorItem == NULL) return;
-
-	connectorItem->setShape(painterPath);
-	item->setShape(painterPath);
-}    
+}   
 
 void SketchWidget::updateConnectors() {
 	// update issue with 4.5.0?

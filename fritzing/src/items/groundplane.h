@@ -18,42 +18,40 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2676 $:
+$Revision: 3559 $:
 $Author: cohen@irascible.com $:
-$Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
+$Date: 2009-10-15 13:12:59 +0200 (Thu, 15 Oct 2009) $
 
 ********************************************************************/
 
-#ifndef GROUNDPLANEGENERATOR_H
-#define GROUNDPLANEGENERATOR_H
+#ifndef GROUNDPLANE_H
+#define GROUNDPLANE_H
 
-#include <QImage>
-#include <QList>
-#include <QRect>
-#include <QPolygon>
-#include <QString>
-#include <QStringList>
-#include <QGraphicsItem>
+#include "paletteitem.h"
 
-class GroundPlaneGenerator
+class GroundPlane : public PaletteItem
 {
 
 public:
-	GroundPlaneGenerator();
-	~GroundPlaneGenerator();
+	GroundPlane( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel = true); 
 
-	bool start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, QGraphicsItem * board); 
-	const QStringList & newSVGs();
+ 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+	void saveParams();
+	void getParams();
+	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	class ConnectorItem * connector0();
+	bool hasCustomSVG();
+	void setProp(const QString & prop, const QString & value);
+	QString svg();
 
 protected:
-	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects);
-	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
-	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
-	QString makePolySvg(QList<QPolygon> & polygons, int res, qreal bWidth, qreal bHeight);
+	void setSvg(const QString &);
+	void setSvgAux(const QString &);
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 protected:
-	QStringList m_newSVGs;
-	
+	ConnectorItem * m_connector0;
+	class FSvgRenderer * m_renderer;
 };
 
 #endif

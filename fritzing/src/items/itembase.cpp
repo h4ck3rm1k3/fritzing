@@ -1485,3 +1485,8 @@ bool ItemBase::canEditPart() {
 bool ItemBase::hasCustomSVG() {
 	return false;
 }
+
+void ItemBase::setProp(const QString & prop, const QString & value) {
+	Q_UNUSED(prop);
+	Q_UNUSED(value);
+}

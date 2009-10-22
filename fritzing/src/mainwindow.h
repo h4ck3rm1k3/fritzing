@@ -361,7 +361,6 @@ protected:
 	bool swapSpecial(QMap<QString, QVariant> & currPropsMap);
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
-	void clearGroundPlanes();
 	QString constructFileName(const QString & differentiator, const QString & extension);
 	bool isGroundFill(ItemBase * itemBase);
 
@@ -585,7 +584,6 @@ protected:
 	QTimer m_setUpDockManagerTimer;
 	class DockManager * m_dockManager;
 	class FileProgressDialog * m_fileProgressDialog;
-	QList<QString> m_groundPlaneSuffixes;
 
 protected:
 	static const QString UntitledSketchName;

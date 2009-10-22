@@ -214,7 +214,6 @@ public:
 	virtual void createTrace();
 	void selectAllWires(ViewGeometry::WireFlag);
 	virtual void tidyWires();
-	void painterPathHack(long itemID, const QString & connectorID, QPainterPath &);
 	void updateConnectors();
 	const QString & getShortName();
 	virtual void setClipEnds(class ClipableWire *, bool);
@@ -224,7 +223,6 @@ public:
 	virtual bool canDisconnectAll();
 	virtual bool ignoreFemale();
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
-	void setVoltage(long itemID, qreal voltage);
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 
@@ -383,7 +381,7 @@ signals:
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
-	void setChipLabelSignal(long itemID, QString label, bool doEmit);
+	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setInstanceTitleSignal(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
 
 protected slots:
@@ -433,7 +431,7 @@ public slots:
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setResistance(QString resistance, QString pinSpacing);
-	void setChipLabel(long itemID, QString label, bool doEmit);
+	void setProp(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setChipLabel(QString label);
 
 protected:

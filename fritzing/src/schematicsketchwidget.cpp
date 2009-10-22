@@ -149,16 +149,21 @@ void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color) {
 }
 
 void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
-	if (itemBase->itemType() == ModelPart::Breadboard || itemBase->itemType() == ModelPart::Jumper) {
-		// don't need to see the breadboard in the other views
-		// but it's there so connections can be more easily synched between views
-		itemBase->setVisible(false);
-		itemBase->setEverVisible(false);
+	switch (itemBase->itemType()) {
+		case ModelPart::Breadboard:
+		case ModelPart::Jumper:
+		case ModelPart::CopperFill:
+			// don't need to see the breadboard in the other views
+			// but it's there so connections can be more easily synched between views
+			itemBase->setVisible(false);
+			itemBase->setEverVisible(false);
+			return;
 	}
 }
 
 bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Jumper) return false;
+	if (modelPart->itemType() == ModelPart::CopperFill) return false;
 
 	bool result = PCBSketchWidget::canDropModelPart(modelPart);
 	if (result) return result;

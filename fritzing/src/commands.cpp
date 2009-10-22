@@ -1145,32 +1145,6 @@ QString TransformItemCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-PainterPathHackCommand::PainterPathHackCommand(class SketchWidget * sketchWidget, long itemID, const QString & connectorID, QPainterPath & painterPath, QUndoCommand * parent)
-    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
-{
-    m_itemID = itemID;
-    m_connectorID = connectorID;
-    m_painterPath = painterPath;
-}
-
-void PainterPathHackCommand::undo()
-{
-}
-
-void PainterPathHackCommand::redo()
-{
-    m_sketchWidget->painterPathHack(m_itemID, m_connectorID, m_painterPath);
-}
-
-QString PainterPathHackCommand::getParamString() const {
-	return QString("PainterPathHackCommand ") 
-		+ BaseCommand::getParamString() + 
-		QString(" id:%1 connectorid:%2")
-		.arg(m_itemID).arg(m_connectorID);
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 SketchBackgroundColorChangeCommand::SketchBackgroundColorChangeCommand(SketchWidget* sketchWidget, const QString &oldColor, const QString &newColor, QUndoCommand *parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
@@ -1196,34 +1170,6 @@ QString SketchBackgroundColorChangeCommand::getParamString() const {
 		+ QString(" viewid:%1 oldcolor:%2 newcolor:%3" ) 
 			.arg(m_sketchWidget->viewIdentifier()).arg(m_oldColor).arg(m_newColor);
 
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-SetVoltageCommand::SetVoltageCommand(SketchWidget * sketchWidget, long itemID, qreal oldVoltage, qreal newVoltage, QUndoCommand * parent)
-: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
-{
-	m_itemID = itemID;
-	m_oldVoltage = oldVoltage;
-	m_newVoltage = newVoltage;
-}
-
-void SetVoltageCommand::undo() {
-	m_sketchWidget->setVoltage(m_itemID, m_oldVoltage);
-}
-
-void SetVoltageCommand::redo() {
-	m_sketchWidget->setVoltage(m_itemID, m_newVoltage);
-}
-
-QString SetVoltageCommand::getParamString() const {
-
-	return QString("SetVoltageCommand ") 
-		+ BaseCommand::getParamString() + 
-		QString(" id:%1 ov:%2 nv:%3")
-		.arg(m_itemID)
-		.arg(m_oldVoltage)
-		.arg(m_newVoltage);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1258,30 +1204,32 @@ QString SetResistanceCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SetChipLabelCommand::SetChipLabelCommand(SketchWidget * sketchWidget, long itemID, QString oldLabel, QString newLabel, QUndoCommand * parent)
+SetPropCommand::SetPropCommand(SketchWidget * sketchWidget, long itemID, QString prop, QString oldValue, QString newValue, QUndoCommand * parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
 	m_itemID = itemID;
-	m_oldLabel = oldLabel;
-	m_newLabel = newLabel;
+	m_prop = prop;
+	m_oldValue = oldValue;
+	m_newValue = newValue;
 }
 
-void SetChipLabelCommand::undo() {
-	m_sketchWidget->setChipLabel(m_itemID, m_oldLabel, true);
+void SetPropCommand::undo() {
+	m_sketchWidget->setProp(m_itemID, m_prop, m_oldValue, true);
 }
 
-void SetChipLabelCommand::redo() {
-	m_sketchWidget->setChipLabel(m_itemID, m_newLabel, true);
+void SetPropCommand::redo() {
+	m_sketchWidget->setProp(m_itemID, m_prop, m_newValue, true);
 }
 
-QString SetChipLabelCommand::getParamString() const {
+QString SetPropCommand::getParamString() const {
 
-	return QString("SetChipLabelCommand ") 
+	return QString("SetPropCommand ") 
 		+ BaseCommand::getParamString() + 
-		QString(" id:%1 o:%2 n:%3")
+		QString(" id:%1 p:%2 o:%3 n:%4")
 		.arg(m_itemID)
-		.arg(m_oldLabel)
-		.arg(m_newLabel);
+		.arg(m_prop)
+		.arg(m_oldValue)
+		.arg(m_newValue);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

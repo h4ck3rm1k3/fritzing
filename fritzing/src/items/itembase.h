@@ -177,6 +177,8 @@ public:
 	ConnectorItem * rightClickedConnector();
 	virtual bool canEditPart();
 	virtual bool hasCustomSVG();
+	virtual void setProp(const QString & prop, const QString & value);
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

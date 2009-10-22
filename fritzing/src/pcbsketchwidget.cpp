@@ -762,6 +762,7 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	}
 
 	if (modelPart->itemType() == ModelPart::Symbol) return false;
+	if (modelPart->itemType() == ModelPart::CopperFill) return false;
 
 	if (modelPart->itemType() == ModelPart::Board || modelPart->itemType() == ModelPart::ResizableBoard) {
 		return matchesLayer(modelPart);

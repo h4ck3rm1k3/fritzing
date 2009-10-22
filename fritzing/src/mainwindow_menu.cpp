@@ -2876,10 +2876,6 @@ void MainWindow::groundFill()
 
 	FileProgressDialog fileProgress("Generating copper fill...", 0, this);
 
-	clearGroundPlanes();
-
-	QString suffix = getRandText();
-
 	ItemBase * board = NULL;
     foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
         board = dynamic_cast<ItemBase *>(childItem);
@@ -2927,7 +2923,7 @@ void MainWindow::groundFill()
 	exceptions << m_pcbGraphicsView->background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
-	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, suffix, ItemBase::groundPlaneModuleIDName, exceptions, board);
+	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board);
 	if (result == false) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
 		return;
@@ -2935,68 +2931,15 @@ void MainWindow::groundFill()
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Copper Fill"));
 
-	foreach (QString newPartPath, gpg.newPartPaths()) {
-		ModelPart * modelPart = loadPartFromFile(newPartPath);
-		if (modelPart != NULL) {
-			ViewGeometry vg;
-			vg.setLoc(board->pos());
-			long newID = ItemBase::getNextID();
-			new AddItemCommand(m_pcbGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, newID, false, -1, -1, parentCommand);
-
-			QString xmlName = ViewLayer::viewLayerXmlNameFromID(ViewLayer::GroundPlane);
-			SvgFileSplitter	splitter;
-			bool result = splitter.split(gpg.newSvgPath(newPartPath), xmlName);
-			if (result) {
-				QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), xmlName);
-				if (!painterPath.isEmpty()) {
-					new PainterPathHackCommand(m_pcbGraphicsView, newID, "connector0", painterPath, parentCommand);
-				}
-			}
-		}
+	foreach (QString svg, gpg.newSVGs()) {
+		ViewGeometry vg;
+		vg.setLoc(board->pos());
+		long newID = ItemBase::getNextID();
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ItemBase::groundPlaneModuleIDName, vg, newID, false, -1, -1, parentCommand);
+		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
 	}
 
 	m_undoStack->push(parentCommand);
-
-	m_groundPlaneSuffixes.append(suffix);
-}
-
-void MainWindow::clearGroundPlanes() {
-	foreach (QString suffix, m_groundPlaneSuffixes) {
-		QDir fzpFolder = QDir::temp();
-		fzpFolder.cd(suffix);
-		fzpFolder.cd("parts");
-		QDir svgFolder(fzpFolder);
-		fzpFolder.cd("user");
-
-		svgFolder.cd("svg");
-		svgFolder.cd("user");
-		svgFolder.cd("pcb");
-
-		int ix = 0;
-		while (true) {
-			QString moduleID = QString("%1%2%3").arg(ItemBase::groundPlaneModuleIDName).arg(suffix).arg(ix++);
-			bool gotOne = fzpFolder.remove(QString("%1.fzp").arg(moduleID));
-			gotOne = svgFolder.remove(QString("%1.svg").arg(moduleID)) || gotOne;
-			if (!gotOne) break;
-		}
-
-		svgFolder.cdUp();
-		svgFolder.rmdir("pcb");
-		svgFolder.cdUp();
-		svgFolder.rmdir("user");
-		svgFolder.cdUp();
-		svgFolder.rmdir("svg");
-		svgFolder.rmdir("user");
-		svgFolder.cdUp();
-		svgFolder.rmdir("parts");
-		svgFolder.cdUp();
-		svgFolder.rmdir(suffix);
-
-		// TODO: clear the part from the palette and renderer cache
-	}
-
-	m_groundPlaneSuffixes.clear();
-
 }
 
 void MainWindow::removeGroundFill() {

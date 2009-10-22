@@ -210,6 +210,8 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 
 QPainterPath SvgFileSplitter::painterPath(qreal dpi, const QString & elementID)
 {
+	// only partially implemented because so far we only use this for polygons generated for the groundplane
+
 	QPainterPath ppath;
 
 	bool result = normalize(dpi, elementID, false);

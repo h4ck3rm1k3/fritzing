@@ -158,6 +158,7 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 			modelPart->setOriginalModelIndex(index);
 		}
 
+		// note: this QDomNamedNodeMap loop is obsolete, but leaving it here so that old sketches don't get broken (jc, 22 Oct 2009)
 		QDomNamedNodeMap map = instance.attributes();
 		for (int m = 0; m < map.count(); m++) {
 			QDomNode node = map.item(m);
@@ -170,6 +171,20 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 			if (nodeName.compare("path") == 0) continue;
 
 			modelPart->setProp(nodeName.toUtf8().constData(), node.nodeValue());
+		}
+
+		// "property" loop replaces previous QDomNamedNodeMap loop (jc, 22 Oct 2009)
+		QDomElement prop = instance.firstChildElement("property");
+		while(!prop.isNull()) {
+			QString name = prop.attribute("name");
+			if (name.isEmpty()) continue;
+
+			QString value = prop.attribute("value");
+			if (value.isEmpty()) continue;
+
+			modelPart->setProp(name.toUtf8().constData(), value);
+
+			prop = prop.nextSiblingElement("property");
 		}
 
    		instance = instance.nextSiblingElement("instance");

@@ -102,6 +102,15 @@ qreal SymbolPaletteItem::voltage() {
 	return m_voltage;
 }
 
+void SymbolPaletteItem::setProp(const QString & prop, const QString & value) {
+	if (prop.compare("voltage", Qt::CaseInsensitive) == 0) {
+		setVoltage(value.toDouble());
+		return;
+	}
+
+	PaletteItem::setProp(prop, value);
+}
+
 void SymbolPaletteItem::setVoltage(qreal v) {
 	removeMeFromBus();
 

@@ -127,6 +127,7 @@ ModelPartShared * ModelPart::modelPartShared() {
 	}
 	return m_modelPartShared;
 }
+
 void ModelPart::setModelPartShared(ModelPartShared * modelPartShared) {
 	m_modelPartShared = modelPartShared;
 }
@@ -169,10 +170,15 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
 			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
 			streamWriter.writeAttribute("path", m_modelPartShared->path());
-			foreach (QByteArray byteArray, dynamicPropertyNames()) {
-				streamWriter.writeAttribute(byteArray.data(), property(byteArray.data()).toString());
-			}
 		}
+
+		foreach (QByteArray byteArray, dynamicPropertyNames()) {
+			streamWriter.writeStartElement("property");
+			streamWriter.writeAttribute("name",  byteArray.data());
+			streamWriter.writeAttribute("value", property(byteArray.data()).toString());
+			streamWriter.writeEndElement();
+		}
+
 		QString title = instanceTitle();
 		if(!title.isNull() && !title.isEmpty()) {
 			writeTag(streamWriter,"title",title);

@@ -47,7 +47,7 @@ GroundPlaneGenerator::~GroundPlaneGenerator() {
 }
 
 bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-								 const QString &suffix, const QString & baseName, QStringList & exceptions, QGraphicsItem * board) 
+								 QStringList & exceptions, QGraphicsItem * board) 
 {
 	QByteArray boardByteArray;
     QString tempColor("#ffffff");
@@ -106,21 +106,10 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	QDir fzpFolder = QDir::temp();
-	FolderUtils::createFolderAnCdIntoIt(fzpFolder, suffix);
-	FolderUtils::createFolderAnCdIntoIt(fzpFolder, "parts");
-	QDir svgFolder(fzpFolder);
-	FolderUtils::createFolderAnCdIntoIt(fzpFolder, "user");
-
-	FolderUtils::createFolderAnCdIntoIt(svgFolder, "svg");
-	FolderUtils::createFolderAnCdIntoIt(svgFolder, "user");
-	FolderUtils::createFolderAnCdIntoIt(svgFolder, "pcb");
-
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects);
 	QList< QList<int> * > pieces;
 	splitScanLines(rects, pieces);
-	int pieceCount = 0;
 	foreach (QList<int> * piece, pieces) {
 		QList<QPolygon> polygons;
 		QList<QRect> newRects;
@@ -128,26 +117,11 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 			QRect r = rects.at(i);
 			newRects.append(QRect(r.x() * MILS, r.y() * MILS, (r.width() * MILS) + 1, MILS + 1));    // + 1 is for off-by-one converting rects to polys
 		}
+
+		// note: there is always one
 		joinScanLines(newRects, polygons);
 		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight);
-		QString moduleID = QString("%1%2%3").arg(baseName).arg(suffix).arg(pieceCount++);
-		QString pFzp = makePolyFzp(polygons, moduleID);
-
-		QString newPartPath = fzpFolder.absoluteFilePath(QString("%1.fzp").arg(moduleID));
-		QFile file3(newPartPath);
-		file3.open(QIODevice::WriteOnly);
-		QTextStream out3(&file3);
-		out3 << pFzp;
-		file3.close();
-
-		QString newSvgPath = svgFolder.absoluteFilePath(QString("%1.svg").arg(moduleID));
-		QFile file2(newSvgPath);
-		file2.open(QIODevice::WriteOnly);
-		QTextStream out2(&file2);
-		out2 << pSvg;
-		file2.close();
-
-		m_newPartPaths.insert(newPartPath, newSvgPath);
+		m_newSVGs.append(pSvg);
 
 		/*
 		QFile file4("testPoly.svg");
@@ -475,68 +449,7 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, int res, q
 	return pSvg;
 }
 
-QString GroundPlaneGenerator::makePolyFzp(QList<QPolygon> & polygons, const QString & moduleID) 
-{
-	Q_UNUSED(polygons);
 
-	QString newFzp = "<?xml version='1.0' encoding='UTF-8'?>\n";
-	newFzp += QString("<module fritzingVersion='%1' moduleId='%2' >\n").arg(Version::versionString()).arg(moduleID);
-	newFzp += "<version>1.1</version>\n";
-	newFzp += "<author>Fritzing</author>\n";
-	newFzp += "<title>Copper Fill</title>\n";
-	newFzp += "<label>Copper Fill</label>\n";
-	newFzp += QString("<date>%1</date>\n").arg(QDate::currentDate().toString("yyyy-MM-dd"));
-	newFzp += "<properties>\n";
-	newFzp += "<property name='family'>copper fill</property>\n";
-	newFzp += "</properties>\n";
-	newFzp += "<description>A copper fill</description>\n";
-	newFzp += "<views>\n";
-	newFzp += "<iconView>\n";
-	newFzp += QString("<layers image='pcb/%1.svg' >\n").arg(moduleID);
-    newFzp += "<layer layerId='icon' />\n";
-	newFzp += "</layers>\n";
-	newFzp += "</iconView>\n";
-	newFzp += "<pcbView>\n";
-	newFzp += QString("<layers image='pcb/%1.svg' >\n").arg(moduleID);
-    newFzp += "<layer layerId='groundplane' />\n";
-	newFzp += "</layers>\n";
-	newFzp += "</pcbView>\n";
-	newFzp += "</views>\n";
-	newFzp += "<connectors>\n";
-	int ix = 0;
-	//foreach (QPolygon poly, polygons) {
-		newFzp += QString("<connector type='male' id='connector%1' name='connector%1' >\n").arg(ix);
-		newFzp += "<description></description>\n";
-		newFzp += "<views>\n";
-		newFzp += "<pcbView>\n";
-		newFzp += QString("<p svgId='connector%1pad' layer='groundplane' />\n").arg(ix);
-		newFzp += "</pcbView>\n";
-		newFzp += "</views>\n";
-		newFzp += "</connector>\n";
-		ix++;
-	//}
-	newFzp += "</connectors>\n";
-
-	/*
-	newFzp += "<buses>\n";
-	newFzp += QString("<bus id='b1'>\n");
-	ix = 0;
-	foreach (QPolygon poly, polygons) {
-		newFzp += QString("<nodeMember connectorId='connector%1' />\n").arg(ix++);
-	}
-	newFzp += "</bus>\n";
-	newFzp += "</buses>\n";
-	*/
-
-	newFzp += "</module>\n";
-
-	return newFzp;
-}
-
-const QList<QString> GroundPlaneGenerator::newPartPaths() {
-	return m_newPartPaths.keys();
-}
-
-const QString GroundPlaneGenerator::newSvgPath(const QString & newPartPath) {
-	return m_newPartPaths.value(newPartPath, "");
+const QStringList & GroundPlaneGenerator::newSVGs() {
+	return m_newSVGs;
 }

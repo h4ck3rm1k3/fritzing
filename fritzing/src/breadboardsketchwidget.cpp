@@ -271,6 +271,7 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 
 	if (modelPart->itemType() == ModelPart::Symbol) return false;
 	if (modelPart->itemType() == ModelPart::Jumper) return false;
+	if (modelPart->itemType() == ModelPart::CopperFill) return false;
 
 	return true;
 }
@@ -294,9 +295,13 @@ void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color) {
 }
 
 void BreadboardSketchWidget::setNewPartVisible(ItemBase * itemBase) {
-	if (itemBase->itemType() == ModelPart::Symbol || itemBase->itemType() == ModelPart::Jumper) {
-		itemBase->setVisible(false);
-		itemBase->setEverVisible(false);
+	switch (itemBase->itemType()) {
+		case ModelPart::Symbol:
+		case ModelPart::Jumper:
+		case ModelPart::CopperFill:
+			itemBase->setVisible(false);
+			itemBase->setEverVisible(false);
+			return;
 	}
 }
 

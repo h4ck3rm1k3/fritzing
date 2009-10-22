@@ -463,7 +463,7 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 		}
 	}
 	else if (!m_shape.isEmpty()) {
-		painter->setBrush(brush());
+		painter->setBrush(brush());  
 		painter->setPen(pen());
 		painter->drawPath(m_shape);
 	}

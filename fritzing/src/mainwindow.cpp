@@ -266,7 +266,6 @@ void MainWindow::init() {
 
 MainWindow::~MainWindow()
 {
-	clearGroundPlanes();
 	delete m_sketchModel;
 	m_dockManager->dontKeepMargins();
 	m_setUpDockManagerTimer.stop();
@@ -376,8 +375,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(setResistanceSignal(long, QString, QString, bool)),
 									 slotter, SLOT(setResistance(long, QString, QString, bool)));
 
-	succeeded = succeeded && connect(signaller, SIGNAL(setChipLabelSignal(long, QString, bool)),
-									 slotter, SLOT(setChipLabel(long, QString, bool)));
+	succeeded = succeeded && connect(signaller, SIGNAL(setPropSignal(long,  const QString &,  const QString &, bool)),
+									 slotter, SLOT(setProp(long,  const QString &,  const QString &, bool)));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(setInstanceTitleSignal(long, const QString &, bool, bool, bool )),
 									 slotter, SLOT(setInstanceTitle(long, const QString &, bool, bool, bool )));

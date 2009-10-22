@@ -41,6 +41,7 @@ public:
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
 	qreal voltage();
+	void setProp(const QString & prop, const QString & value);
 	void setVoltage(qreal);
 	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);

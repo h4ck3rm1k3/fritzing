@@ -603,22 +603,6 @@ protected:
 	long m_itemID;
 };
 
-class PainterPathHackCommand : public BaseCommand
-{
-public:
-	PainterPathHackCommand(class SketchWidget *, long itemID, const QString & connectorID, QPainterPath &, QUndoCommand * parent);
-	void undo();
-	void redo();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	QPainterPath m_painterPath;
-	QString m_connectorID;
-	long m_itemID;
-};
-
 class SketchBackgroundColorChangeCommand : public BaseCommand
 {
 public:
@@ -632,22 +616,6 @@ protected:
 protected:
 	QString m_oldColor;
 	QString m_newColor;
-};
-
-class SetVoltageCommand : public BaseCommand
-{
-public:
-	SetVoltageCommand(class SketchWidget *, long itemID, qreal oldVoltage, qreal newVoltage, QUndoCommand * parent);
-	void undo();
-	void redo();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	qreal m_oldVoltage;
-	qreal m_newVoltage;
-	long m_itemID;
 };
 
 class SetResistanceCommand : public BaseCommand
@@ -668,10 +636,10 @@ protected:
 	long m_itemID;
 };
 
-class SetChipLabelCommand : public BaseCommand
+class SetPropCommand : public BaseCommand
 {
 public:
-	SetChipLabelCommand(class SketchWidget *, long itemID, QString oldLabel, QString newLabel, QUndoCommand * parent);
+	SetPropCommand(class SketchWidget *, long itemID, QString prop, QString oldValue, QString newValue, QUndoCommand * parent);
 	void undo();
 	void redo();
 
@@ -679,8 +647,9 @@ protected:
 	QString getParamString() const;
 
 protected:
-	QString m_oldLabel;
-	QString m_newLabel;
+	QString m_prop;
+	QString m_oldValue;
+	QString m_newValue;
 	long m_itemID;
 };
 

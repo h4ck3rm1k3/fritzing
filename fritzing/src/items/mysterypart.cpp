@@ -53,6 +53,15 @@ MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 MysteryPart::~MysteryPart() {
 }
 
+void MysteryPart::setProp(const QString & prop, const QString & value) {
+	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
+		setChipLabel(value, false);
+		return;
+	}
+
+	PaletteItem::setProp(prop, value);
+}
+
 
 void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
