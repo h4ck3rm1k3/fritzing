@@ -1080,7 +1080,9 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 		wire->setOpacity(Wire::ROUTED_OPACITY);
 	}
 
-	ratsnestCommand->addWire(this, wire, source, dest, select);
+	if (ratsnestCommand) {
+		ratsnestCommand->addWire(this, wire, source, dest, select);
+	}
 	return wire ;
 }
 

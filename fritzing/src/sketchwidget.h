@@ -226,6 +226,7 @@ public:
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	void setVoltage(long itemID, qreal voltage);
 	ItemBase * findItem(long id);
+	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -257,7 +258,6 @@ protected:
 	void updateAllLayersActions(QAction * showAllAction, QAction * hideAllAction);
 	bool checkMoved();
 
-	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	void changeConnectionAux(long fromID, const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
 						  bool connect, bool seekLayerKin, bool updateConnections);

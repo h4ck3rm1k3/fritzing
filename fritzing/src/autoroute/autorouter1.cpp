@@ -60,6 +60,7 @@ struct JumperItemStruct {
 	ItemBase * partForBounds;
 	QPolygonF boundingPoly;
 	Wire * jumperWire;
+	JumperItem * jumperItem;
 };
 
 Subedge * makeSubedge(QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to) 
@@ -304,6 +305,7 @@ void Autorouter1::start()
 			jumpers.append(jumperWire);
 			if (m_sketchWidget->usesJumperItem()) {
 				JumperItemStruct * jumperItemStruct = new JumperItemStruct();
+				jumperItemStruct->jumperItem = NULL;
 				jumperItemStruct->from = edge->from;
 				jumperItemStruct->to = edge->to;
 				jumperItemStruct->partForBounds = partForBounds;
@@ -356,7 +358,12 @@ void Autorouter1::start()
 	}
 	edges.clear();
 
-	addToUndo(parentCommand);
+	addToUndo(parentCommand, jumperItemStructs);
+
+	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
+		delete jumperItemStruct;
+	}
+	jumperItemStructs.clear();
 
 	emit setProgressValue(edgesDone);
 	
@@ -373,14 +380,13 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 		ConnectorItem * from = jumperItemStruct->from;
 		ConnectorItem * to = jumperItemStruct->to;
 		JumperItem * jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
+		jumperItemStruct->jumperItem = jumperItem;
 		if (jumperItem == NULL) {
 			// notify user?
-			delete jumperItemStruct;
 			continue;
 		}
 
 		m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
-		delete jumperItemStruct;
 
 		m_sketchWidget->scene()->addItem(jumperItem);
 
@@ -390,14 +396,14 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 		traceWire->connector1()->tempConnectTo(from, true);
 		from->tempConnectTo(traceWire->connector1(), true);
 
+
 		traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH);
 		traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
 		jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
 		traceWire->connector1()->tempConnectTo(to, true);
 		to->tempConnectTo(traceWire->connector1(), true);
-	}
 
-	jumperItemStructs.clear();
+	}
 }
 
 
@@ -1681,7 +1687,8 @@ void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorIte
 
 void Autorouter1::restoreOriginalState(QUndoCommand * parentCommand) {
 	QUndoStack undoStack;
-	addToUndo(parentCommand);
+	QList<struct JumperItemStruct *> jumperItemStructs;
+	addToUndo(parentCommand, jumperItemStructs);
 	undoStack.push(parentCommand);
 	undoStack.undo();
 }
@@ -1700,7 +1707,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 	addItemCommand->turnOffFirstRedo();
 }
 
-void Autorouter1::addToUndo(QUndoCommand * parentCommand) 
+void Autorouter1::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct *> & jumperItemStructs) 
 {
 	QList<Wire *> wires;
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
@@ -1725,19 +1732,24 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 			continue;
 		}
 
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-		if (jumperItem != NULL) {
-			if (!jumperItem->autoroutable()) continue;
+	}
 
-			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ItemBase::jumperModuleIDName, jumperItem->getViewGeometry(), jumperItem->id(), false, -1, -1, parentCommand);
-			jumperItem->saveParams();
-			QPointF pos, c0, c1;
-			jumperItem->getParams(pos, c0, c1);
-			new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
-			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, parentCommand);
-			addItemCommand->turnOffFirstRedo();			
-			continue;
-		}
+	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {	
+		JumperItem * jumperItem = jumperItemStruct->jumperItem;
+		if (jumperItem == NULL) continue;
+
+		jumperItem->saveParams();
+		QPointF pos, c0, c1;
+		jumperItem->getParams(pos, c0, c1);
+
+		new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ItemBase::jumperModuleIDName, jumperItem->getViewGeometry(), jumperItem->id(), false, -1, -1, parentCommand);
+		new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
+		new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, parentCommand);
+
+		m_sketchWidget->createWire(jumperItem->connector0(), jumperItemStruct->from, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+		m_sketchWidget->createWire(jumperItem->connector1(), jumperItemStruct->to, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+
+		m_sketchWidget->deleteItem(jumperItem->id(), true, false, false, NULL);
 	}
 
 	addUndoConnections(m_sketchWidget, true, wires, parentCommand);

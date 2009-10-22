@@ -68,7 +68,7 @@ protected:
 	class JumperItem * drawJumperItem(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
-	void addToUndo(QUndoCommand * parentCommand);
+	void addToUndo(QUndoCommand * parentCommand, QList<struct JumperItemStruct *> &);
 	void reduceWires(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly);
 	Wire * reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, QPointF fromPos, QPointF toPos, const QPolygonF & boundingPoly);
 	bool clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & oldWires);
