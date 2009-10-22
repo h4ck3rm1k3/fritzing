@@ -5,11 +5,22 @@ from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 
 class FabOrder(TimeStampedModel):
+    CHECKING = 1
+    WAITING_APPROVAL = 2
+    PRODUCING = 3
+    SHIPPING = 4
+    STATES = (
+        (CHECKING, "Checking"),
+        (WAITING_APPROVAL, "Waiting for Customer Approval"),
+        (PRODUCING, "Producing"),
+        (SHIPPING, "Shipping"),
+    )
     user = models.ForeignKey(User)
     shipping_address = models.ForeignKey('FabOrderAddress',related_name='orders_shipping')
     billing_address = models.ForeignKey('FabOrderAddress',related_name='orders_billing')
     manufacturer = models.ForeignKey('Manufacturer',related_name='orders')
-    comment = models.TextField(blank=True,null=True, max_length=1000)
+    state = models.IntegerField(_('state'), choices=STATES)
+    comments = models.TextField(blank=True,null=True, max_length=1000)
     
 class Address(models.Model):
     street = models.CharField(_('street'), max_length=255)
@@ -30,8 +41,7 @@ class FabOrderAddress(Address):
 class Manufacturer(TitleSlugDescriptionModel):
     location = models.CharField(_('location'), max_length=255)
     email = models.EmailField(_('email'))
-    contanct_person_first_name = models.CharField(_('contact person first name'), max_length=255)
-    contanct_person_last_name = models.CharField(_('contact person last name'), max_length=255)
+    contanct_person = models.ForeignKey(User)
     phone_number = models.PositiveIntegerField(_('phone number'))
     address = models.OneToOneField(Address, verbose_name=_('address'))
     account_info = models.TextField(
@@ -81,7 +91,12 @@ class Option(TextModel):
         abstract = True
     
 class OptionsSection(TextModel):
-    pass
+    help_text = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    order = models.IntegerField()
 
 class XOrOptionChoice(TextModel):
     owner_option = models.ForeignKey('XOrOption', related_name='choices')

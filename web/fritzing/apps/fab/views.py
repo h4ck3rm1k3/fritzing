@@ -45,10 +45,14 @@ def manufacturer_form(request, manufacturer_id):
     load_options(man_opts,'onoff_options',sections)
     load_options(man_opts,'intvalue_options',sections)
     
-    print sections
+    sections_order = {}
+    for s in OptionsSection.objects.all():
+        sections_order[s.text] = s.order
+    
+    ordered_sections = sorted(sections.iteritems(), key=lambda (k,v): (sections_order[k],v))
     
     return render_to_response("fab/manufacturer_opts.html", {
-        'sections': sections,
+        'sections': ordered_sections,
     }, context_instance=RequestContext(request))
     
     
