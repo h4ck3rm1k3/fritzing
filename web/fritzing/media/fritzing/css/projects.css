@@ -138,11 +138,6 @@ ul.selection {
     color: #333;
 }
 
-span.required {
-	color: red;
-	font-size: medium;
-}
-
 h3 {
 	margin-top: 5px;
 }

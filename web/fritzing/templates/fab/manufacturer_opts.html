@@ -2,29 +2,35 @@
 	{% for section,options in sections %}
 		<div class="section">
 		{{ section }}
-			<div class="options">
+			<ul class="options">
 			{% for option in options.xor_options %}
 				{% for choice in option.choices.all %}
+				<li>
 					<input type="radio" name="xor-{{option.pk}}" value="{{ choice.pk }}"
 						{% ifequal forloop.counter 1 %}checked="checked"{% endifequal %}
 					>
 					{{ choice }}
 					</input><br />
+				</li>
 				{% endfor %}		
 			{% endfor %}
 			
 			{% for option in options.onoff_options %}
+				<li>
 				<input  type="checkbox" name="onoff-{{option.pk}}">
 					{{ option.text }}
 				</input>
+				</li>
 			{% endfor %}
 
 			{% for option in options.intvalue_options %}
+				<li>
 				{{ option.text }}
-				<input  type="text" name="intvalue-{{option.pk}}" value="{{ option.default_value }}">
+				<input  type="text" name="intvalue-{{option.pk}}" class="intvalue-input required digits" value="{{ option.default_value }}">
 				</input>
+				</li>
 			{% endfor %}
-			</div>
+			</ul>
 		</div>
 	{% endfor %}
 	<div id="comments">

@@ -7,3 +7,20 @@ span.address-title {
 	font-size: 1.1em;
 	font-weight: bold;
 }
+
+ul.options {
+	list-style-type: none !important;
+}
+
+input.intvalue-input {
+	width: 10%;
+}
+
+label {
+	font-weight:bold;
+}
+
+label.error {
+	font-weight: normal;
+	margin-left: 5px;
+}

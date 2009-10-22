@@ -1,9 +1,26 @@
+String.prototype.startsWith = function(str) {return (this.match("^"+str)==str)}
+
 $(document).ready(function(){
 	loadForm()
-	$("#id_manufacturer").change(loadForm)
+	var manufact = $("#id_manufacturer")
+	manufact.change(loadForm)
+	manufact.addClass("required")
+	
 	toggleBillingAddress()
 	$("#billing_enabled").change(toggleBillingAddress)
 	syncShippingAndBillingValue()
+	
+	
+	$("#fabform").validate({
+		errorPlacement: function(error, element) {
+			var elemName = element.attr("name");
+			if (elemName.startsWith("billing") || elemName.startsWith("shipping")) {
+				error.insertBefore(element);
+			} else {
+				error.insertAfter(element);
+			}
+		},
+	});
 })
 
 var loadForm = function() {
@@ -41,12 +58,23 @@ var enableBillingAddress = function(enabled) {
 					.each(function() {
 						value = $(this).val();
 					})
-				$(this).val(value)
 			} else {
 				$(this).removeAttr('disabled');
 				$(this).val("")
 			}   
 		}
+	})
+	
+	$(".billing.customer-address > span[class=required]").each(function() {
+		if(enabled) {
+			$(this).show()
+		} else {
+			$(this).hide()
+		}
+	})
+	
+	$(".billing.customer-address > label[class=error]").each(function() {
+		$(this).remove()
 	})
 }
 

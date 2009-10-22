@@ -8,13 +8,33 @@ class FabOrder(TimeStampedModel):
     CHECKING = 1
     WAITING_APPROVAL = 2
     PRODUCING = 3
-    SHIPPING = 4
+    CANCELED = 4
+    SHIPPING = 5
+    
+    checking_pair = (CHECKING, "Checking")
+    waiting_approval_pair = (WAITING_APPROVAL, "Waiting for Customer Approval")
+    producing_pair = (PRODUCING, "Producing")
+    canceled_pair = (CANCELED, "Canceled by Customer")
+    shipping_pair = (SHIPPING, "Shipping")
+    
     STATES = (
-        (CHECKING, "Checking"),
-        (WAITING_APPROVAL, "Waiting for Customer Approval"),
-        (PRODUCING, "Producing"),
-        (SHIPPING, "Shipping"),
+        checking_pair,
+        waiting_approval_pair,
+        producing_pair,
+        canceled_pair,
+        shipping_pair,
     )
+    
+    MANUFACTURER_STATES = (
+        waiting_approval_pair,
+        producing_pair,
+        shipping_pair
+    )
+    
+    CUSTOMER_STATES = (
+        canceled_pair
+    )
+    
     user = models.ForeignKey(User)
     shipping_address = models.ForeignKey('FabOrderAddress',related_name='orders_shipping')
     billing_address = models.ForeignKey('FabOrderAddress',related_name='orders_billing')

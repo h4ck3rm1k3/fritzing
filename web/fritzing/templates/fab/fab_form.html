@@ -17,16 +17,21 @@
 	<link rel="stylesheet" href="{{ MEDIA_URL }}/fritzing/css/fabform.css" type="text/css" media="screen" charset="utf-8">
 	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script>
 	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.query.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/fabform.js"></script>
 {% endblock %}
 
 {% block content %}
+<form name="fabform" id="fabform" action="/fab/create" method="POST">
 	<div id="customer-addresses">
 		<div class="shipping customer-address">
 			<span class="address-title">Shipping Address</span><br />
 			{% for field in shipping_address_form %}
 				<label for="shipping-{{ field.html_name }}">{{ field.label }}:</label>
-				<input id="shipping-{{ field.html_name }}" type="text" maxlength="255" name="shipping-{{ field.html_name }}"/>
+				{% if field.field.required %}
+                	<span class="required">&bull;</span>
+				{% endif %}
+				<input id="shipping-{{ field.html_name }}" {% if field.field.required %}class="required"{% endif %} type="text" maxlength="255" name="shipping-{{ field.html_name }}"/>
 			{% endfor %}
 		</div>
 		<div class="billing customer-address">
@@ -34,11 +39,20 @@
 			<span class="address-title">Billing Address</span> <span class="help">Only if different from the shipping one</span><br />
 			{% for field in billing_address_form %}
 				<label for="billing-{{ field.html_name }}">{{ field.label }}:</label>
-				<input id="billing-{{ field.html_name }}" type="text" maxlength="255" name="billing-{{ field.html_name }}"/>
+				{% if field.field.required %}
+                	<span class="required">&bull;</span>
+                	<span style="font-size: medium;"></span>
+				{% endif %}
+				<input id="billing-{{ field.html_name }}" {% if field.field.required %}class="required"{% endif %} type="text" maxlength="255" name="billing-{{ field.html_name }}"/>
 			{% endfor %}
 		</div>
 	</div>
+	
+	<div style="clear:both">
 	{{ form.as_p }}
+	</div>
 	<div id="manufacturer-form">
 	</div>
+	<input type="submit" value="Order!"/>
+</form>
 {% endblock %}

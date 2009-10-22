@@ -2825,3 +2825,8 @@ color: #999;
 #id_honeypot {
 display: none;
 }
+
+span.required {
+	color: red;
+	font-size: medium;
+}
