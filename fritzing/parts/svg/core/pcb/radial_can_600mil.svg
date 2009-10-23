@@ -5,7 +5,7 @@
   <circle fill="none" cx="305" cy="305" stroke="white" r="300" stroke-width="10" />
  </g>
  <g id="copper0" >
-  <rect width="54" x="128" y="278" fill="none" height="54" stroke="rgb(255, 191, 0)" stroke-width="5" />
+  <rect width="62" x="124" y="274" fill="none" height="62" stroke="rgb(255, 191, 0)" stroke-width="20" />
   <circle fill="none" cx="155" cy="305" stroke="rgb(255, 191, 0)" r="31" id="connector0pin" stroke-width="20" />
   <circle fill="none" cx="455" cy="305" stroke="rgb(255, 191, 0)" r="31" id="connector1pin" stroke-width="20" />
  </g>
