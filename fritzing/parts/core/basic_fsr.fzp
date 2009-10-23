@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.1201" moduleId="1000ABDD10011" >
- <version>1</version>
+ <version>2</version>
  <title>Basic Force Sensing Resistor (FSR)</title>
  <label>J</label>
  <date>2008-09-25</date>
@@ -11,7 +11,7 @@
  </tags>
  <properties>
   <property name="family" >FSR</property>
-  <property name="Sensing Area Width" >.5 "</property>
+  <property name="Sensing Area Diameter" >.5 "</property>
  </properties>
  <taxonomy>discreteParts.resistor.fsr</taxonomy>
  <description>A generic force sensitive resistor</description>
@@ -32,7 +32,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/jumper2.svg" >
+   <layers image="pcb/jumper_2_100mil_pcb.svg" >
     <layer layerId="copper0" />
     <layer layerId="silkscreen" />
    </layers>
@@ -40,7 +40,7 @@
  </views>
  <connectors>
   <connector type="male" id="connector0" name="pin 0" >
-   <description>anode pin</description>
+   <description>Pin 1</description>
    <views>
     <breadboardView>
      <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
@@ -54,7 +54,7 @@
    </views>
   </connector>
   <connector type="male" id="connector1" name="pin 1" >
-   <description>cathode pin</description>
+   <description>Pin 2</description>
    <views>
     <breadboardView>
      <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
