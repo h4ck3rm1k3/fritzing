@@ -13,7 +13,7 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="Package" >TO220</property>
+  <property name="package" >TO220</property>
   <property name="Rated Voltage" >Variable V</property>
   <property name="family" >Voltage Regulator</property>
  </properties>

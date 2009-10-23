@@ -9,7 +9,7 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="rated voltage">5V</property>
+        <property name="Rated Voltage">5V</property>
         <property name="family">Relay</property>
         <property name="contact rating">125VAC / 30VDC @ 1 AMP</property>
         <property name="switching circuit">SPDT</property>
