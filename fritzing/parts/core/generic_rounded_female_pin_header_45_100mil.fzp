@@ -4,10 +4,10 @@
     <author>Fritzing Part-o-matic</author>
     <title>Generic female header - metal rounded - 45 pins</title>
     <label>J</label>
-    <date>2009-10-20</date>
+    <date>2009-10-23</date>
     <tags></tags>
     <properties>
-        <property name="family">Connector</property>
+        <property name="family">Pin Header</property>
         <property name="Pins">45</property>
         <property name="Form">&#9792; (female rounded)</property>
         <property name="Pin Spacing">0.1in (2.54mm)</property>

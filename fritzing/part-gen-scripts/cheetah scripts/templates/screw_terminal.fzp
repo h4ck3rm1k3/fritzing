@@ -12,7 +12,6 @@
         <property name="family">Screw Terminal</property>
         <property name="Pins">$pins</property>
         <property name="Pin Spacing">${int(fpitch * 1000) / 1000.0}in (${int(fpitch * 1000 * 25.4) / 1000.0}mm)</property>
-        <property name="Form">screw terminal</property>
     </properties>
     <description>Screw terminal with $pins pins</description>
     <views>

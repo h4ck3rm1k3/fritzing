@@ -14,8 +14,8 @@
  <g id="copper0" >
   <rect width="55" x="32.5" y="32.5" fill="none" height="55" stroke="rgb(255, 191, 0)" stroke-width="20" />
    #for $pin in range($ipins / 2)
-   <circle fill="none" cx="60" cy="${60 + (100 * $pin)}" stroke="rgb(255, 191, 0)" r="27.5" id="connector${pin}pad" stroke-width="20" />
-   <circle fill="none" cx="${width - 60}" cy="${60 + (100 * $pin)}" stroke="rgb(255, 191, 0)" r="27.5" id="connector${ipins - pin - 1}pad" stroke-width="20" />
+   <circle fill="none" cx="60" cy="${60 + (100 * $pin)}" stroke="rgb(255, 191, 0)" r="27.5" id="connector${pin}pin" stroke-width="20" />
+   <circle fill="none" cx="${width - 60}" cy="${60 + (100 * $pin)}" stroke="rgb(255, 191, 0)" r="27.5" id="connector${ipins - pin - 1}pin" stroke-width="20" />
    #end for
  </g>
  <g id="keepout" />

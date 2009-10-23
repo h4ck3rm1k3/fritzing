@@ -55,7 +55,7 @@
      <p svgId="connector${pin}pin" layer="schematic" terminalId="connector${pin}terminal" />
     </schematicView>
     <pcbView>
-     <p svgId="connector${pin}pad" layer="copper0" />
+     <p svgId="connector${pin}pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
