@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="3234DBDC80" >
- <version>2</version>
+ <version>3</version>
  <author>Stefan Hermann</author>
  <title>Basic Servo</title>
  <label>J</label>
@@ -31,7 +31,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/jumper3.svg" >
+   <layers image="pcb/jumper_3_100mil_pcb.svg" >
     <layer layerId="silkscreen" />
     <layer layerId="copper0" />
    </layers>
