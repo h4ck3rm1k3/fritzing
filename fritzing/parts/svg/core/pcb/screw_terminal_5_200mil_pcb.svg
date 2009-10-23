@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="0.48in"
+   version="1.2"
+   height="1.04in"
+   viewBox="0 0 480.0 1040.0"
+   baseProfile="tiny"
+   id="svg2">
+  <desc
+     id="desc4">Fritzing footprint SVG</desc>
+  <g
+     id="silkscreen">
+    <line id="vertical-left" 
+       y1="20"
+       x1="20"
+       y2="1030.0"
+       x2="20"
+       stroke="white" stroke-width="20" />
+    <line id="bottom" 
+       y1="1030.0"
+       x1="20"
+       y2="1030.0"
+       x2="460.0"
+       stroke="white" stroke-width="20" />
+    <line id="vertical-right" 
+       y1="1030.0"
+       x1="460.0"
+       y2="20"
+       x2="460.0"
+       stroke="white" stroke-width="20" />
+    <line id="top" 
+       y1="20"
+       x1="460.0"
+       y2="20"
+       x2="20"
+       stroke="white" stroke-width="20" />
+    <line id="mid-vertical" 
+       y1="1030.0"
+       x1="380.0"
+       y2="20"
+       x2="380.0"
+       stroke="white" stroke-width="10" />
+  </g>
+  <g
+     id="copper0">
+    <rect
+       width="55"
+       x="172.5"
+       y="97.5"
+       height="55"
+       id="rect20"
+       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
+    <circle
+       cx="200.0"
+       cy="125.0"
+       r="27.5"
+       id="connector0pin"
+       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
+    <circle
+       cx="200.0"
+       cy="325.0"
+       r="27.5"
+       id="connector1pin"
+       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
+    <circle
+       cx="200.0"
+       cy="525.0"
+       r="27.5"
+       id="connector2pin"
+       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
+    <circle
+       cx="200.0"
+       cy="725.0"
+       r="27.5"
+       id="connector3pin"
+       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
+    <circle
+       cx="200.0"
+       cy="925.0"
+       r="27.5"
+       id="connector4pin"
+       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
+  </g>
+  <g
+     id="keepout" />
+  <g
+     id="soldermask" />
+  <g
+     id="outline" />
+</svg>
