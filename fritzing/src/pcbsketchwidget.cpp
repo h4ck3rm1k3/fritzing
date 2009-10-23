@@ -1050,7 +1050,11 @@ bool PCBSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Conne
 
 Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand * ratsnestCommand, bool select) {
 	if (source->attachedTo() == dest->attachedTo()) {
-		return NULL;				// don't draw a wire within the same part
+		if (source == dest) return NULL;
+
+		if (source->bus() == dest->bus() && dest->bus() != NULL) {
+			return NULL;				// don't draw a wire within the same part on the same bus
+		}
 	}
 	
 	long newID = ItemBase::getNextID();
