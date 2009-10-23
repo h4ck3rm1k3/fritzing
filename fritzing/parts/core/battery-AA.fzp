@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.6b.08.14.3340" moduleId="1000AFDF10011">
-    <version>1</version>
+    <version>2</version>
     <author>Brendan Howell/Dirk van Osterbosch/Lionel Michel</author>
     <title>Battery</title>
     <label>VCC</label>
-    <date>2008-12-23</date>
+    <date>2009-10-23</date>
     <tags>
         <tag>Battery</tag>
         <tag>power supply</tag>
@@ -27,7 +27,7 @@
             </layers>
         </breadboardView>
         <pcbView>
-            <layers image="pcb/jumper2.svg">
+            <layers image="pcb/jumper_2_100mil_pcb.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
             </layers>

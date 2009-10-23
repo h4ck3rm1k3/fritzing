@@ -26,9 +26,9 @@
   <line stroke="white" y1="35000" x1="10500" y2="1000" stroke-width="1000" x2="10500" />
  </g>
  <g id="copper0" >
-  <circle fill="none" cx="54500" cy="18000" stroke="rgb(255, 191, 0)" r="7500" id="connector0pin" stroke-width="2500" />
-  <circle fill="none" cx="30500" cy="18000" stroke="rgb(255, 191, 0)" r="6500" id="connector1pin" stroke-width="2000" />
-  <circle fill="none" cx="42500" cy="37000" stroke="rgb(255, 191, 0)" r="6500" id="connector2pin" stroke-width="2000" />
+  <circle fill="none" cx="54500" cy="18000" stroke="rgb(255, 191, 0)" r="5300" id="connector0pin" stroke-width="2000" />
+  <circle fill="none" cx="30500" cy="18000" stroke="rgb(255, 191, 0)" r="5300" id="connector1pin" stroke-width="2000" />
+  <circle fill="none" cx="42500" cy="37000" stroke="rgb(255, 191, 0)" r="5300" id="connector2pin" stroke-width="2000" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />
