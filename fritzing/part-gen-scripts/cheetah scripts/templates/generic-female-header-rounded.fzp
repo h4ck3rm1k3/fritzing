@@ -9,7 +9,7 @@
     <date>$date</date>
     <tags></tags>
     <properties>
-        <property name="family">Connector</property>
+        <property name="family">Pin Header</property>
         <property name="Pins">$pins</property>
         <property name="Form">&#9792; (female rounded)</property>
         <property name="Pin Spacing">${fpitch}in (${fpitch * 25.4}mm)</property>
