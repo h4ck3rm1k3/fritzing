@@ -69,6 +69,7 @@ public slots:
 	void changeActivation(bool activate, QWidget * originator);
 	void updateActivation();
 	void topLevelWidgetDestroyed(QObject *);
+	void closeAllWindows2();
 
 
 protected:

@@ -44,6 +44,7 @@ $Date$
 #include "help/tipsandtricks.h"
 #include "utils/folderutils.h"
 #include "dialogs/translatorlistmodel.h"
+#include "partsbinpalette/svgiconwidget.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -839,4 +840,56 @@ void FApplication::topLevelWidgetDestroyed(QObject * object) {
 	}
 }
 
+void FApplication::closeAllWindows2() {
+/*
+Ok, near as I can tell, here's what's going on.  When you quit fritzing, the function 
+QApplication::closeAllWindows() is invoked.  This goes through the top-level window 
+list in random order and calls close() on each window, until some window says "no".  
+The QGraphicsProxyWidgets must contain top-level windows, and at least on the mac, their response to close() 
+seems to be setVisible(false).  The random order explains why different icons 
+disappear, or sometimes none at all.  
 
+So the hack for now is to call the windows in non-random order.
+
+Eventually, maybe the SvgIconWidget class could be rewritten so that it's not using QGraphicsProxyWidget, 
+which is really not intended for hundreds of widgets.
+*/
+
+
+// this code modified from QApplication::closeAllWindows()
+
+
+    bool did_close = true;
+    QWidget *w;
+    while((w = activeModalWidget()) && did_close) {
+        if(!w->isVisible())
+            break;
+        did_close = w->close();
+    }
+	if (!did_close) return;
+
+    QWidgetList list = QApplication::topLevelWidgets();
+    for (int i = 0; did_close && i < list.size(); ++i) {
+        w = list.at(i);
+        FritzingWindow *fWindow = qobject_cast<FritzingWindow *>(w);
+		if (fWindow == NULL) continue;
+
+        if (w->isVisible() && w->windowType() != Qt::Desktop) {
+            did_close = w->close();
+            list = QApplication::topLevelWidgets();
+            i = -1;
+        }
+    }
+	if (!did_close) return;
+
+    list = QApplication::topLevelWidgets();
+    for (int i = 0; did_close && i < list.size(); ++i) {
+        w = list.at(i);
+        if (w->isVisible() && w->windowType() != Qt::Desktop) {
+            did_close = w->close();
+            list = QApplication::topLevelWidgets();
+            i = -1;
+        }
+    }
+
+}

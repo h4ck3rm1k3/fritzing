@@ -857,7 +857,7 @@ void MainWindow::createFileMenuActions() {
 	m_quitAct = new QAction(tr("&Quit"), this);
 	m_quitAct->setShortcut(tr("Ctrl+Q"));
 	m_quitAct->setStatusTip(tr("Quit the application"));
-	connect(m_quitAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
+	connect(m_quitAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows2()));
 	m_quitAct->setMenuRole(QAction::QuitRole);
 
 }
