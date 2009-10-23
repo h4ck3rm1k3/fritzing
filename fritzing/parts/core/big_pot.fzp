@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="3234DFDC00" >
- <version>1</version>
+ <version>1.1</version>
  <author>Brendan Howell</author>
  <title>Big Potentiometer</title>
  <label>R</label>
- <date>2008-12-23</date>
+ <date>2009-10-23</date>
  <tags>
   <tag>potentiometer</tag>
   <tag>poti</tag>
@@ -15,7 +15,7 @@
  <properties>
   <property name="family" >Potentiometer</property>
   <property name="type">Rotary Shaft Potentiometer</property>
-  <property name="Maximum Resistance" >1k&#8486;</property>
+  <property name="Maximum Resistance" >100k&#8486;</property>
   <property name="Track" >Linear</property>
  </properties>
  <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
@@ -37,7 +37,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/jumper3-200mil.svg" >
+   <layers image="pcb/jumper_3_200mil_pcb.svg" >
     <layer layerId="silkscreen" />
     <layer layerId="copper0" />
    </layers>
