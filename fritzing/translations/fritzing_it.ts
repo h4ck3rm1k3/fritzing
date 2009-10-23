@@ -44,7 +44,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>and to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation.&lt;/p&gt;</source>
+        <source>to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Yuelin and Ninjia&lt;br/&gt;for the Chinese (Simplified) translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and to Vladimir Savinov&lt;br/&gt;for the Russian translation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -470,6 +478,30 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>rated power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum resistance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1778,41 +1810,6 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Click questo connettore per trascinare fuori una nuova traccia.</translation>
-    </message>
-</context>
-<context>
-    <name>PartInfoWidget</name>
-    <message>
-        <source>Tags</source>
-        <translation>Tag</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Proprietà</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>Versione</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>Autore</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Titolo</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation>Etichetta</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Descrizione</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation>Data</translation>
     </message>
 </context>
 <context>

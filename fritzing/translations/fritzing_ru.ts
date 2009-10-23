@@ -36,16 +36,24 @@
         <translation>Gianluca Urgese&lt;br/&gt;за перевод на итальянский,&lt;br/&gt;</translation>
     </message>
     <message>
-        <source>and to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation.&lt;/p&gt;</source>
-        <translation>и Nuno Pessanha Santos&lt;br/&gt;за перевод на португальский.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Fritzing создан при финансировании&lt;br/&gt;MWFK Brandenburg, спонсировании кафедры&lt;br/&gt;дизайна университета Bauhaus (Веймар) и&lt;br/&gt;IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation>&lt;p&gt;Так же большое спасибо всем студентам&lt;br/&gt;и альфа-тестерам, которым хватает храбрости работать&lt;br/&gt;с тестовой версией Fritzing.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Yuelin and Ninjia&lt;br/&gt;for the Chinese (Simplified) translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and to Vladimir Savinov&lt;br/&gt;for the Russian translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -474,6 +482,30 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>rated power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum resistance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1785,41 +1817,6 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation type="unfinished">Щёлкните на данном соединении для прокладывания нового маршрута.</translation>
-    </message>
-</context>
-<context>
-    <name>PartInfoWidget</name>
-    <message>
-        <source>Tags</source>
-        <translation>Метки</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Свойства</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>Версия</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>Автор</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Наименование</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation>Подпись</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Описание</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation>Дата</translation>
     </message>
 </context>
 <context>

@@ -44,7 +44,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>and to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation.&lt;/p&gt;</source>
+        <source>to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Yuelin and Ninjia&lt;br/&gt;for the Chinese (Simplified) translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and to Vladimir Savinov&lt;br/&gt;for the Russian translation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -474,6 +482,30 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     </message>
     <message>
         <source>rated power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum resistance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1779,41 +1811,6 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Clique neste conector para arrastar um novo traço.</translation>
-    </message>
-</context>
-<context>
-    <name>PartInfoWidget</name>
-    <message>
-        <source>Tags</source>
-        <translation>Tags</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propriedades</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>Versão</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>Autor</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Título</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation>Etiqueta</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Descrição</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation>Data</translation>
     </message>
 </context>
 <context>

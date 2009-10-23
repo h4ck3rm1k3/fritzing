@@ -36,10 +36,6 @@
         <translation>Gianluca Urgese&lt;br/&gt;对意大利版的翻译，&lt;br/&gt;</translation>
     </message>
     <message>
-        <source>and to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation.&lt;/p&gt;</source>
-        <translation>和 Nuno Pessanha Santos&lt;br/&gt;对葡萄牙版的翻译。&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</translation>
     </message>
@@ -47,6 +43,18 @@
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translatorcomment>特别感谢那些有足够勇气让Fritzing进行周期测试的学生和 alpha 测试员。</translatorcomment>
         <translation>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Yuelin and Ninjia&lt;br/&gt;for the Chinese (Simplified) translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and to Vladimir Savinov&lt;br/&gt;for the Russian translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -388,10 +396,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>颜色</translation>
     </message>
     <message>
-        <source>resistance</source>
-        <translation>电阻</translation>
-    </message>
-    <message>
         <source>Connections</source>
         <translation>连接数</translation>
     </message>
@@ -455,6 +459,54 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Module</source>
         <translation>模块</translation>
+    </message>
+    <message>
+        <source>family</source>
+        <translation type="unfinished">类族</translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished">颜色</translation>
+    </message>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished">电阻</translation>
+    </message>
+    <message>
+        <source>voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pin spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rated current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum resistance</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1692,6 +1744,22 @@ Quantity	Part
         <source>Change background color for %1 from %2 to %3</source>
         <translation>为%1改变背景色，从%2到%3</translation>
     </message>
+    <message>
+        <source>Export Normalized SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export 1000 dpi SVG of this part in this view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Normalized Flattened SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export 1000 dpi Flattened SVG of this part in this view</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1745,41 +1813,6 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>点击这个接插件拖出新的迹线.</translation>
-    </message>
-</context>
-<context>
-    <name>PartInfoWidget</name>
-    <message>
-        <source>Tags</source>
-        <translation>标志</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>属性</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>版本</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>作者</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>标题</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation>标签</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>描述</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation>日期</translation>
     </message>
 </context>
 <context>
@@ -2977,6 +3010,14 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Disconnect all wires from %1 items</source>
         <translation>断开所有自%1项目的连线</translation>
     </message>
+    <message>
+        <source>Change Resistance from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change ChipLabel from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
@@ -3088,7 +3129,7 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chinese Simp. - %1</source>
+        <source>Chinese (Simplified) - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
