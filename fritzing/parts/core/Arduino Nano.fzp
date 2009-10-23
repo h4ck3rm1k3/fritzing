@@ -30,7 +30,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/DIP30W.svg">
+            <layers image="pcb/dip_30_600mil_pcb.svg">
                 <layer layerId="copper0"></layer>
                 <layer layerId="silkscreen"></layer>
             </layers>

@@ -20,37 +20,40 @@
        id="line7"
        style="stroke:#ffffff;stroke-width:10" />
     <path
-       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:11.11111164;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path2413"
        d="M 232.61,156.154A 84.871323,52.651653 0 0 1 62.8732,156.756" />
   </g>
   <g
      id="copper0">
     <rect
-       width="56"
-       x="22"
-       y="86"
-       height="56"
+       width="55"
+       x="22.5"
+       y="86.5"
+       height="55"
        id="rect10"
-       style="fill:none;stroke:#ffbf00;stroke-width:15" />
+       style="fill:none;stroke:#ffbf00;stroke-width:20" />
     <circle
        cx="50"
        cy="114"
-       r="28"
+       r="27.5"
        id="connector0pin"
-       style="fill:none;stroke:#ffbf00;stroke-width:15" />
+       style="fill:none;stroke:#ffbf00;stroke-width:20" />
     <circle
        cx="150"
        cy="114"
-       r="28"
+       r="27.5"
        id="connector1pin"
-       style="fill:none;stroke:#ffbf00;stroke-width:15" />
+       stroke-width="20"
+       stroke="#ffbf00"
+       fill="none"
+       />
     <circle
        cx="250"
        cy="114"
-       r="28"
+       r="27.5"
        id="connector2pin"
-       style="fill:none;stroke:#ffbf00;stroke-width:15" />
+       style="fill:none;stroke:#ffbf00;stroke-width:20" />
   </g>
   <g
      id="keepout" />
