@@ -6,8 +6,8 @@
  </g>
  <g id="copper0" >
   <rect width="54" x="128" y="278" fill="none" height="54" stroke="rgb(255, 191, 0)" stroke-width="5" />
-  <circle fill="none" cx="155" cy="305" stroke="rgb(255, 191, 0)" r="27" id="connector0pin" stroke-width="5" />
-  <circle fill="none" cx="455" cy="305" stroke="rgb(255, 191, 0)" r="27" id="connector1pin" stroke-width="5" />
+  <circle fill="none" cx="155" cy="305" stroke="rgb(255, 191, 0)" r="31" id="connector0pin" stroke-width="20" />
+  <circle fill="none" cx="455" cy="305" stroke="rgb(255, 191, 0)" r="31" id="connector1pin" stroke-width="20" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />
