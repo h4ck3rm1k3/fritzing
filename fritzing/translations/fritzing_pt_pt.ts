@@ -41,19 +41,19 @@
     </message>
     <message>
         <source>Gianluca Urgese&lt;br/&gt;for the Italian translation,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Gianluca Urgese &lt;br/&gt; pela tradução em Italiano,&lt;br/&gt;</translation>
     </message>
     <message>
         <source>to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>ao Nuno Pessanha Santos&lt;br/&gt;pela tradução para Português,&lt;br/&gt;</translation>
     </message>
     <message>
         <source>to Yuelin and Ninjia&lt;br/&gt;for the Chinese (Simplified) translation,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>ao Yelin e Ninjia&lt;br/&gt;pela tradução para chinês (Simplificado),&lt;br/&gt;</translation>
     </message>
     <message>
         <source>and to Vladimir Savinov&lt;br/&gt;for the Russian translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>e ao Vladimir Savinov&lt;br/&gt;pela tradução para Russo.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -188,7 +188,6 @@ antes de adicionar algum conector</translation>
     </message>
     <message>
         <source>Breadboard</source>
-        <translatorcomment>In portugal we use the word Breadboard very often  - Nuno Pessanha Santos</translatorcomment>
         <translation>Breadboard</translation>
     </message>
     <message>
@@ -462,51 +461,51 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     </message>
     <message>
         <source>family</source>
-        <translation type="unfinished">família</translation>
+        <translation>família</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished">cor</translation>
+        <translation>cor</translation>
     </message>
     <message>
         <source>resistance</source>
-        <translation type="unfinished">resistência</translation>
+        <translation>resistência</translation>
     </message>
     <message>
         <source>voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>tensão</translation>
     </message>
     <message>
         <source>pin spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Espaço entre pinos</translation>
     </message>
     <message>
         <source>rated power</source>
-        <translation type="unfinished"></translation>
+        <translation>potência nominal</translation>
     </message>
     <message>
         <source>rated voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>tensão nominal</translation>
     </message>
     <message>
         <source>rated current</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente nominal</translation>
     </message>
     <message>
         <source>version</source>
-        <translation type="unfinished"></translation>
+        <translation>versão</translation>
     </message>
     <message>
         <source>package</source>
-        <translation type="unfinished"></translation>
+        <translation>pacote</translation>
     </message>
     <message>
         <source>shape</source>
-        <translation type="unfinished"></translation>
+        <translation>forma</translation>
     </message>
     <message>
         <source>maximum resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>resistência máxima</translation>
     </message>
     <message>
         <source>size</source>
@@ -1286,7 +1285,7 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     </message>
     <message>
         <source>Check whether a newer version of Fritzing is available for download</source>
-        <translation>Ver se uma nova versão do Pritzing se encontra disponível para download</translation>
+        <translation>Ver se uma nova versão do Fritzing se encontra disponível para download</translation>
     </message>
     <message>
         <source>&amp;About</source>
@@ -1682,85 +1681,85 @@ Estamos a trabalhar para evitar esta mensagem, e apenas deixar-te escolher entre
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>partilhar</translation>
     </message>
     <message>
         <source>Updating existing part</source>
-        <translation type="unfinished">Actualizar um componente existente</translation>
+        <translation>Actualizar componente existente</translation>
     </message>
     <message>
         <source>Some connectors have changed.
 In order to see the changes, you have to restart fritzing.
 Do you want to restart now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Algumas ligações mudaram.Para ver as mudanças,tens de reiniciar o Fritzing.Queres reiniciar agora?</translation>
     </message>
     <message>
         <source>Share online...</source>
-        <translation type="unfinished"></translation>
+        <translation>Partilhar online...</translation>
     </message>
     <message>
         <source>Post a project to the Fritzing website</source>
-        <translation type="unfinished"></translation>
+        <translation>Partilhar um projecto no website Fritzing</translation>
     </message>
     <message>
         <source>List of parts (&amp;Bill of Materials)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de componentes (&amp;Bill of Materials)...</translation>
     </message>
     <message>
         <source>XML Netlist...</source>
-        <translation type="unfinished"></translation>
+        <translation>XML Netlist...</translation>
     </message>
     <message>
         <source>Save a netlist in XML format</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar uma netlist no formato XML</translation>
     </message>
     <message>
         <source>Export Netlist...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar a Netlist...</translation>
     </message>
     <message>
         <source>Copper Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Preenchimento em cobre</translation>
     </message>
     <message>
         <source>Fill empty regions of the copper layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Preencher as regiões livres com uma camada de cobre</translation>
     </message>
     <message>
         <source>Remove Copper Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover camada de cobre</translation>
     </message>
     <message>
         <source>Remove the copper fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover a camada de cobre</translation>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
-        <translation type="unfinished"></translation>
+        <translation>O teu sketch ainda não tem uma placa! Por favor adiciona uma PCB (Placa de Circuito Impresso) para usar o preenchimento em cobre.</translation>
     </message>
     <message>
         <source>Fritzing error: unable to write copper fill.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro no Fritzing: Incapaz de criar o preenchimento em cobre.</translation>
     </message>
     <message>
         <source>Remove copper fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover camada de cobre</translation>
     </message>
     <message>
         <source>Export Normalized SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar SVG Normalizado</translation>
     </message>
     <message>
         <source>Export 1000 dpi SVG of this part in this view</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar o componente nesta vista em 1000 dpi SVG </translation>
     </message>
     <message>
         <source>Export Normalized Flattened SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar SVG Achatado Normalizado</translation>
     </message>
     <message>
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar o componente nesta vista em 1000 dpi SVG Achatado</translation>
     </message>
     <message>
         <source>Select All Obsolete Parts</source>
@@ -1853,103 +1852,103 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <source>Edit label text</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar a etiqueta de texto</translation>
     </message>
     <message>
         <source>Display Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar valores</translation>
     </message>
     <message>
         <source>Flip/Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverter/Rodar</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho da letra</translation>
     </message>
     <message>
         <source>Rotate 90° Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodar 90º no sentido Horário</translation>
     </message>
     <message>
         <source>Rotate the label by 90 degrees clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodar a etiqueta 90º no sentido Horário</translation>
     </message>
     <message>
         <source>Rotate 180°</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodar 180º</translation>
     </message>
     <message>
         <source>Rotate the label by 180 degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodar a etiqueta 180 graus</translation>
     </message>
     <message>
         <source>Rotate 90° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodar 90º no sentido Anti-Horário</translation>
     </message>
     <message>
         <source>Flip Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverter na Horizontal</translation>
     </message>
     <message>
         <source>Flip label horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverter a etiqueta na horizontal</translation>
     </message>
     <message>
         <source>Flip Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverter na Vertical</translation>
     </message>
     <message>
         <source>Flip label vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverter a etiqueta na vertical</translation>
     </message>
     <message>
         <source>Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Pequeno</translation>
     </message>
     <message>
         <source>Set font size to small</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o tamanho de letra para pequeno</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Médio</translation>
     </message>
     <message>
         <source>Set font size to medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o tamanho de letra para médio</translation>
     </message>
     <message>
         <source>Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Grande</translation>
     </message>
     <message>
         <source>Set font size to large</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar o tamanho de letra para grande</translation>
     </message>
     <message>
         <source>Label text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto da etiqueta</translation>
     </message>
     <message>
         <source>Display the text of the label</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar o texto da etiqueta</translation>
     </message>
     <message>
         <source>Display the value of property %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar o valor da propriedade %1</translation>
     </message>
     <message>
         <source>Set label for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir etiqueta para %1</translation>
     </message>
     <message>
         <source>Label text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto da etiqueta:</translation>
     </message>
 </context>
 <context>
@@ -2078,23 +2077,23 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <source>From file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Do ficheiro...</translation>
     </message>
     <message>
         <source>Core</source>
-        <translation type="unfinished"></translation>
+        <translation>Core</translation>
     </message>
     <message>
         <source>All Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos os Componentes</translation>
     </message>
     <message>
         <source>All User Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos os Componentes usados</translation>
     </message>
 </context>
 <context>
@@ -2857,7 +2856,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>standard %1 color (%2)</source>
-        <translation>Cor Standard %1 (%2)</translation>
+        <translation>Cor Padrão %1 (%2)</translation>
     </message>
     <message>
         <source>Make this the default %1 color</source>
@@ -3039,19 +3038,19 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Disconnect all wires from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Desligar todos os fios de %1</translation>
     </message>
     <message>
         <source>Disconnect all wires from %1 items</source>
-        <translation type="unfinished"></translation>
+        <translation>Desligar todos os fios de %1 Artigos</translation>
     </message>
     <message>
         <source>Change Resistance from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar a resistência de %1 para %2</translation>
     </message>
     <message>
         <source>Change ChipLabel from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar a ChipLabel de %1 para %2</translation>
     </message>
 </context>
 <context>
@@ -3165,6 +3164,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Chinese (Simplified) - %1</source>
+        <translation>Chinês (Simplificado) - %1</translation>
+    </message>
+    <message>
+        <source>Estonian - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3188,11 +3191,11 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>A new main release is available for downloading:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uma nova versão do Fritzing  encontra-se disponível para download:</translation>
     </message>
     <message>
         <source>A new interim release is available for downloading:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uma nova versão intercalar está disponível para download:</translation>
     </message>
 </context>
 <context>
@@ -3246,19 +3249,19 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>thin (16 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>fino (16 mil)</translation>
     </message>
     <message>
         <source>standard (24 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>Padrão (24 mil)</translation>
     </message>
     <message>
         <source>thick (32 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>grosso (32 mil)</translation>
     </message>
     <message>
         <source>extra thick (48 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra grosso (48 mil)</translation>
     </message>
 </context>
 </TS>

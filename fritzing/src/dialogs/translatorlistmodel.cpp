@@ -45,6 +45,7 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
         m_languages.insert("portuguese_portugal", tr("Portuguese (European)- %1").arg("Português (Europeu)"));
         m_languages.insert("portuguese_brazil", tr("Portuguese (Brazilian) - %1").arg("Português (do Brasil)"));
         m_languages.insert("hungarian", tr("Hungarian - %1").arg("Magyar"));
+        m_languages.insert("estonian", tr("Estonian - %1").arg("Eesti keel"));
 
 // put in extras so if someone does a new translation, we won't have to recompile
         m_languages.insert("dutch", tr("Dutch - %1").arg("Nederlands"));

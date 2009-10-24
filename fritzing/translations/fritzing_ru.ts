@@ -3176,6 +3176,10 @@ Fritzing по-прежнему работает, но вы не сможете �
         <source>Chinese (Simplified) - %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Estonian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>

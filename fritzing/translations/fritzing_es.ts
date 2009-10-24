@@ -3928,22 +3928,27 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/translatorlistmodel.cpp" line="50"/>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="48"/>
+        <source>Estonian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="51"/>
         <source>Dutch - %1</source>
         <translation>Holandés- %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/translatorlistmodel.cpp" line="52"/>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="53"/>
         <source>Russian - %1</source>
         <translation>Ruso- %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/translatorlistmodel.cpp" line="53"/>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="54"/>
         <source>Italian - %1</source>
         <translation>Italiano- %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/translatorlistmodel.cpp" line="63"/>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="64"/>
         <source>Chinese (Simplified) - %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3953,17 +3958,17 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
         <translation>Japonés - %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/translatorlistmodel.cpp" line="55"/>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="56"/>
         <source>Hebrew - %1</source>
         <translation>Hebreo - %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/translatorlistmodel.cpp" line="57"/>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="58"/>
         <source>Arabic - %1</source>
         <translation>Árabe - %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/translatorlistmodel.cpp" line="59"/>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="60"/>
         <source>Hindi - %1</source>
         <translation>Hindú - %1</translation>
     </message>
