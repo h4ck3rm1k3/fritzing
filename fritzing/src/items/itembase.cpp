@@ -300,6 +300,7 @@ ModelPartShared * ItemBase::modelPartShared() {
 void ItemBase::initNames() {
 	if (TranslatedPropertyNames.count() == 0) {
 		TranslatedPropertyNames.insert("family", tr("family"));
+		TranslatedPropertyNames.insert("size", tr("size"));
 		TranslatedPropertyNames.insert("color", tr("color"));
 		TranslatedPropertyNames.insert("resistance", tr("resistance"));
 		TranslatedPropertyNames.insert("voltage", tr("voltage"));
