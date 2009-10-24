@@ -1497,3 +1497,11 @@ void ItemBase::setProp(const QString & prop, const QString & value) {
 	Q_UNUSED(prop);
 	Q_UNUSED(value);
 }
+
+bool ItemBase::isObsolete() {
+	if (modelPart() == NULL) return false;
+
+	QString family = modelPart()->properties().value("family", "");
+	return family.startsWith("old ");
+}
+

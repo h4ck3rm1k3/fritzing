@@ -7,7 +7,7 @@
     <date>2009-10-01</date>
     <tags></tags>
     <properties>
-        <property name="family">Pin Header</property>
+        <property name="family">old Pin Header</property>
         <property name="Pins">8</property>
         <property name="Gender">&#9792;</property>
         <property name="Pin Spacing">0.1in (2.54mm)</property>

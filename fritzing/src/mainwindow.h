@@ -252,6 +252,9 @@ protected slots:
 	void exportNormalizedSVG();
 	void exportNormalizedFlattenedSVG();
 
+	void selectAllObsolete();
+	void swapObsolete();
+
 #ifdef NAVENDU
 	void launchExternalProcess();
 	void processError(QProcess::ProcessError processError);
@@ -358,6 +361,7 @@ protected:
 	bool loadCustomBoardShape();
 	void svgMissingLayer(const QString & layername, const QString & path);
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
+	void swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, QUndoCommand * parentCommand);
 	bool swapSpecial(QMap<QString, QVariant> & currPropsMap);
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
@@ -496,6 +500,8 @@ protected:
 	QAction *m_loadBundledPart;
 	QAction *m_saveBundledPart;
 	QAction *m_disconnectAllAct;
+	QAction *m_selectAllObsoleteAct;
+	QAction *m_swapObsoleteAct;
 
 	QAction *m_addBendpointAct;
 

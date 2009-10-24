@@ -13,7 +13,7 @@
  </tags>
  <properties>
   <property name="Size" >200 x 300 mm</property>
-  <property name="family" >Plain PCB</property>
+  <property name="family" >old Plain PCB</property>
  </properties>
  <taxonomy>discreteParts.pcb.plain.200x300mm</taxonomy>
  <description>Plain Vanilla 200 x 300 mm Circuit Board</description>

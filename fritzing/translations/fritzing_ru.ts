@@ -508,6 +508,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <source>maximum resistance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LinkDialog</name>
@@ -1764,6 +1768,35 @@ Quantity	Part
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select All Obsolete Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swap Obsolete Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swap Selected Obsolete Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No obsolete parts found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No new part found for %1.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Swap %n obsolete part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2731,6 +2764,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     <message>
         <source>Unknown Layer</source>
         <translation type="unfinished">Неизвестный слой</translation>
+    </message>
+    <message>
+        <source>Select all obsolete parts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

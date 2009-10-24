@@ -2813,6 +2813,7 @@ ItemCount SketchWidget::calcItemCount() {
 	itemCount.selCount = 0;
 	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable = 0;
 	itemCount.itemsCount = 0;
+	itemCount.obsoleteCount = 0;
 
 	for (int i = 0; i < selItems.count(); i++) {
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(selItems[i]);
@@ -2829,6 +2830,10 @@ ItemCount SketchWidget::calcItemCount() {
 
 			if (itemBase->canFlipVertical()) {
 				itemCount.selVFlipable++;
+			}
+
+			if (itemBase->isObsolete()) {
+				itemCount.obsoleteCount++;
 			}
 
 			bool rotatable = rotationAllowed(itemBase);
@@ -6037,3 +6042,32 @@ void SketchWidget::resizeJumperItem(long itemID, QPointF pos, QPointF c0, QPoint
 	dynamic_cast<JumperItem *>(item)->resize(pos, c0, c1);
 }
 
+int SketchWidget::selectAllObsolete() 
+{
+	QList<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (!itemBase->isObsolete()) continue;
+
+		itemBases.append(itemBase->layerKinChief());
+	}
+
+	if (itemBases.count() <= 0) {
+		// TODO: tell user?
+		return 0;
+	}
+
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all obsolete parts"));
+
+	stackSelectionState(false, parentCommand);
+	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+	foreach (ItemBase * itemBase, itemBases) {
+		selectItemCommand->addRedo(itemBase->id());
+	}
+
+	scene()->clearSelection();
+	m_undoStack->push(parentCommand);
+
+	return itemBases.count();
+}

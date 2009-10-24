@@ -13,7 +13,7 @@
  </tags>
  <properties>
   <property name="Size" >135 x 126 mm</property>
-  <property name="family" >PCB Tree</property>
+  <property name="family" >old PCB Tree</property>
  </properties>
  <taxonomy>discreteParts.pcb.Tree.135x126mm</taxonomy>
  <description>Plain Vanilla 135 x 126 mm Circuit Tree Board</description>

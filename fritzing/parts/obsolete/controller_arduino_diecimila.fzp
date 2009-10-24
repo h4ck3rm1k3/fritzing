@@ -13,7 +13,7 @@
 </tags>
 <properties>
   <property name="type" >Arduino Diecimila (deprecated)</property>
-  <property name="family" >Microcontroller Board (deprecated)</property>
+  <property name="family" >old Microcontroller Board (deprecated)</property>
  </properties>
  <taxonomy>discreteParts.controller</taxonomy>
  <description>The awesome Arduino Diecimila microcontroller (deprecated)</description>

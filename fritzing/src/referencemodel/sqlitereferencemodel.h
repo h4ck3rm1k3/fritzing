@@ -48,7 +48,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		ModelPart *retrieveModelPart(const QString &moduleID);
 		ModelPart *retrieveModelPart(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties);
 		ModelPart *retrieveModelPart(const Part *examplePart);
-		QString retrieveModuleId(const Part *examplePart, const QString &propertyName);
+		QString retrieveModuleId(const Part *examplePart, const QString &propertyName, bool closestMatch);
 
 		bool addPart(ModelPart * newModel, bool update);
 		bool updatePart(ModelPart * newModel);
@@ -61,8 +61,8 @@ class SqliteReferenceModel : public ReferenceModel {
 
 	public slots:
 		void recordProperty(const QString &name, const QString &value);
-		QString retrieveModuleIdWith(const QString &family, const QString &propertyName);
-		QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties, const QString &propertyName);
+		QString retrieveModuleIdWith(const QString &family, const QString &propertyName, bool closestMatch);
+		QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties, const QString &propertyName, bool closestMatch);
 		QStringList values(const QString &family, const QString &propName, bool distinct=true);
 		bool lastWasExactMatch();
 

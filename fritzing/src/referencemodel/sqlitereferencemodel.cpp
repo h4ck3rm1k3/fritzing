@@ -156,25 +156,25 @@ ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &family, const 
 }
 
 ModelPart *SqliteReferenceModel::retrieveModelPart(const Part *examplePart) {
-	return retrieveModelPart(retrieveModuleId(examplePart,___emptyString___));
+	return retrieveModelPart(retrieveModuleId(examplePart,___emptyString___, false));
 }
 
-QString SqliteReferenceModel::retrieveModuleIdWith(const QString &family, const QString &propertyName) {
-	QString moduleID = retrieveModuleId(family,m_recordedProperties,propertyName);
+QString SqliteReferenceModel::retrieveModuleIdWith(const QString &family, const QString &propertyName, bool closestMatch) {
+	QString moduleID = retrieveModuleId(family,m_recordedProperties,propertyName, closestMatch);
 	m_recordedProperties.clear();
 	return moduleID;
 }
 
-QString SqliteReferenceModel::retrieveModuleId(const QString &family, const QMultiHash<QString, QString> &properties, const QString &propertyName) {
+QString SqliteReferenceModel::retrieveModuleId(const QString &family, const QMultiHash<QString, QString> &properties, const QString &propertyName, bool closestMatch) {
 	Part * part = Part::from(family, properties);
 	if (part == NULL) return "";
 
-	QString moduleID = retrieveModuleId(part, propertyName);
+	QString moduleID = retrieveModuleId(part, propertyName, closestMatch);
 	delete part;
 	return moduleID;
 }
 
-QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QString &propertyName) {
+QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QString &propertyName, bool closestMatch) {
 	PartPropertyList props = examplePart->properties();
 	QString propertyValue = ___emptyString___;
 
@@ -229,7 +229,7 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QS
 		if(moduleId != ___emptyString___) {
 			m_lastWasExactMatch = true;
 			return moduleId;
-		} else if(propertyName!=___emptyString___) {
+		} else if(closestMatch || propertyName!=___emptyString___) {
 			m_lastWasExactMatch = false;
 			return closestMatchId(examplePart, propertyName, propertyValue);
 		} else {
@@ -251,21 +251,24 @@ QStringList SqliteReferenceModel::getPossibleMatches(const Part *examplePart, co
 		"SELECT moduleID FROM parts part \n"
 		"WHERE part.family = :family AND EXISTS ( \n"
 			"SELECT * FROM properties prop \n"
-			"WHERE prop.part_id = part.id AND prop.name = :prop_name  AND prop.value = :prop_value \n"
+			"WHERE prop.part_id = part.id %1 \n"
 		") ";
+	queryStr = queryStr.arg((propertyName.isEmpty()) ? "" : "AND prop.name = :prop_name  AND prop.value = :prop_value ");
 	QString dbgQueryStr =
 		"SELECT moduleID FROM parts part \n"
 		"WHERE part.family = "+examplePart->family()+" AND EXISTS ( \n"
 			"SELECT * FROM properties prop \n"
-			"WHERE prop.part_id = part.id AND prop.name = "+propertyName+"  AND prop.value = "+propertyValue+" \n"
+			"WHERE prop.part_id = part.id %1 \n"
 		") ";
-
+	dbgQueryStr = dbgQueryStr.arg((propertyName.isEmpty()) ? "" : "AND prop.name = "+propertyName+"  AND prop.value = "+propertyValue); 
 	QSqlQuery query;
 	query.prepare(queryStr);
 
 	query.bindValue(":family",examplePart->family());
-	query.bindValue(":prop_name",propertyName);
-	query.bindValue(":prop_value",propertyValue);
+	if (!propertyName.isEmpty()) {
+		query.bindValue(":prop_name",propertyName);
+		query.bindValue(":prop_value",propertyValue);
+	}
 
 	Q_UNUSED(dbgQueryStr);
 	//DebugDialog::debug(dbgQueryStr);

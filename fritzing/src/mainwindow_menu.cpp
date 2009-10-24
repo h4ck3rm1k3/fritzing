@@ -1209,6 +1209,14 @@ void MainWindow::createPartMenuActions() {
 	m_addBendpointAct = new BendpointAction(tr("Add Bendpoint"), this);
 	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
 	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
+
+	m_selectAllObsoleteAct = new QAction(tr("Select All Obsolete Parts"), this);
+	m_selectAllObsoleteAct->setStatusTip(tr("Select All Obsolete Parts"));
+	connect(m_selectAllObsoleteAct, SIGNAL(triggered()), this, SLOT(selectAllObsolete()));
+
+	m_swapObsoleteAct = new QAction(tr("Swap Obsolete Parts"), this);
+	m_swapObsoleteAct->setStatusTip(tr("Swap Selected Obsolete Parts"));
+	connect(m_swapObsoleteAct, SIGNAL(triggered()), this, SLOT(swapObsolete()));
 }
 
 void MainWindow::createViewMenuActions() {
@@ -1412,6 +1420,9 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addMenu(m_addToBinMenu);
 	m_partMenu->addAction(m_showPartLabelAct);
+	m_partMenu->addSeparator();
+	m_partMenu->addAction(m_selectAllObsoleteAct);
+	m_partMenu->addAction(m_swapObsoleteAct);
 
 #ifndef QT_NO_DEBUG
 	m_partMenu->addSeparator();
@@ -1600,6 +1611,11 @@ void MainWindow::updatePartMenu() {
 	if (itemCount.selCount == 1) {
 		enableAddBendpointAct(m_currentGraphicsView->scene()->selectedItems()[0]);
 	}
+
+	// TODO: only enable if there is an obsolete part in the sketch
+	m_selectAllObsoleteAct->setEnabled(true);
+	m_swapObsoleteAct->setEnabled(itemCount.obsoleteCount > 0);
+
 }
 
 void MainWindow::updateTransformationActions() {
@@ -3258,3 +3274,74 @@ void MainWindow::exportNormalizedSVG() {
 void MainWindow::exportNormalizedFlattenedSVG() {
 	exportSvg(GraphicsUtils::StandardFritzingDPI, true, true);
 }
+
+void MainWindow::selectAllObsolete() {
+	int obs = m_currentGraphicsView->selectAllObsolete();
+	if (obs <= 0) {
+		QMessageBox::information(this, tr("Fritzing"), tr("No obsolete parts found") );
+	}
+}
+
+void MainWindow::swapObsolete() {
+
+	QSet<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->selectedItems()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (!itemBase->isObsolete()) continue;
+
+		itemBase = itemBase->layerKinChief();
+		itemBases.insert(itemBase);
+	}
+
+	if (itemBases.count() <= 0) return;
+
+	QUndoCommand* parentCommand = new QUndoCommand();
+	bool count = 0;
+
+	foreach (ItemBase * itemBase, itemBases) {
+		QHash<QString, QString> properties = itemBase->modelPart()->properties();
+		QString family;
+		bool pins = false;
+		foreach (QString name, properties.keys()) {
+			QString value = properties.value(name, "");
+			if (name.compare("family", Qt::CaseInsensitive) == 0) {
+				family = value.right(value.length() - 4);
+			}
+			else {
+				if (name.compare("pins") == 0) {
+					pins = true;
+				}
+				m_refModel->recordProperty(name, value);
+			}
+		}
+
+		QString propertyName = pins ? "pins" : "";				// matching pins is the most important thing?
+		QString moduleID = m_refModel->retrieveModuleIdWith(family, propertyName, true);
+		DebugDialog::debug(QString("new module id %1").arg(moduleID));
+		bool exactMatch = m_refModel->lastWasExactMatch();
+
+		if(moduleID == ___emptyString___) {
+			QMessageBox::information(
+				this,
+				tr("Sorry!"),
+				tr( "No new part found for %1.\n").arg(itemBase->title())
+			);
+			continue;
+		}
+
+
+		count++;
+		swapSelectedAuxAux(itemBase, moduleID, parentCommand);
+	}
+
+	if (count == 0) {
+		delete parentCommand;
+	}
+	else {
+		parentCommand->setText(tr("Swap %n obsolete part(s)", "", count));
+		m_undoStack->push(parentCommand);
+	}
+
+}
+

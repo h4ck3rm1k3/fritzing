@@ -7,7 +7,7 @@
     <date>2009-03-05</date>
     <tags></tags>
     <properties>
-        <property name="family">Screw Terminal</property>
+        <property name="family">old Screw Terminal</property>
         <property name="Pins">2</property>
         <property name="Pin Spacing">0.1in (2.54mm)</property>
     </properties>

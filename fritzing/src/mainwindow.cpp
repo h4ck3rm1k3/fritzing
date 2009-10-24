@@ -1677,7 +1677,7 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 		m_refModel->recordProperty(key, value);
 	}
 
-	QString moduleID = m_refModel->retrieveModuleIdWith(family, name);
+	QString moduleID = m_refModel->retrieveModuleIdWith(family, name, true);
 	bool exactMatch = m_refModel->lastWasExactMatch();
 
 	if(moduleID == ___emptyString___) {
@@ -1758,6 +1758,14 @@ bool MainWindow::swapSpecial(QMap<QString, QVariant> & currPropsMap) {
 void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) {
 
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
+	swapSelectedAuxAux(itemBase, moduleID, parentCommand);
+	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
+	m_undoStack->waitPush(parentCommand, 10);
+}
+
+
+void MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, QUndoCommand * parentCommand) 
+{
 	long modelIndex = ModelPart::nextIndex();
 
 	QList<bool> masterflags;
@@ -1779,12 +1787,6 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 	m_breadboardGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[2], parentCommand);
 
 	// TODO:  z-order?
-
-
-
-	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
-	m_undoStack->waitPush(parentCommand, 10);
-
 }
 
 bool MainWindow::loadCustomBoardShape()

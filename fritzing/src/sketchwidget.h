@@ -60,6 +60,7 @@ struct ItemCount {
 	int selHFlipable;
 	int selVFlipable;
 	int noteCount;
+	int obsoleteCount;
 };
 
 class SketchWidget : public InfoGraphicsView
@@ -225,6 +226,7 @@ public:
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
+	int selectAllObsolete();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
