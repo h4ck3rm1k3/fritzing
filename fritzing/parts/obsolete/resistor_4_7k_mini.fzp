@@ -12,7 +12,7 @@
     </tags>
     <properties>
         <property name="Resistance">4.7k&#8486;</property>
-        <property name="family">old Resistor</property>
+        <property name="family">obsolete Resistor</property>
       <property name="Rated Power">0.25 watt</property>
       <property name="footprint">300 mil</property>
     </properties>

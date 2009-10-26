@@ -3299,6 +3299,8 @@ void MainWindow::swapObsolete() {
 	QUndoCommand* parentCommand = new QUndoCommand();
 	bool count = 0;
 
+	QString obsoletePrefix = "obsolete ";
+
 	foreach (ItemBase * itemBase, itemBases) {
 		QHash<QString, QString> properties = itemBase->modelPart()->properties();
 		QString family;
@@ -3306,7 +3308,7 @@ void MainWindow::swapObsolete() {
 		foreach (QString name, properties.keys()) {
 			QString value = properties.value(name, "");
 			if (name.compare("family", Qt::CaseInsensitive) == 0) {
-				family = value.right(value.length() - 4);
+				family = value.right(value.length() - obsoletePrefix.size());
 			}
 			else {
 				if (name.compare("pins") == 0) {

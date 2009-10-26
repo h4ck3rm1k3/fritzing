@@ -3,7 +3,7 @@
 #    
 #    <directory> is a folder containing .fzp files.  In each fzp file in the directory containing a <family> text element:
 #    like <family>x</family> 
-#	 the text is renamed to "old x" and saved back to the file
+#	 the text is renamed to "obsolete x" and saved back to the file
 
 import getopt, sys, os, re
     
@@ -15,7 +15,7 @@ usage:
     directory is a folder containing .fzp files.  
     In each fzp file in the directory containing a <family> text element:
     like <family>x</family> 
-    the text is renamed to "old x" and saved back to the file.
+    the text is renamed to "obsolete x" and saved back to the file.
     """
     
   	
@@ -53,8 +53,12 @@ def main():
             infile.close();
             match = re.search('(<property.+name=\"family\".*>)(.+)(</property>)', fzp)
             if (match != None):
-                if (not match.group(2).startswith("old")):
-                    oldfzp = re.sub(r'(<property.+name=\"family\".*>)(.+)(</property>)', r'\1old \2\3', fzp);
+                if (not match.group(2).startswith("obsolete")):
+                    oldfzp = ""
+                    if match.group(2).startswith("old "):
+                        oldfzp = re.sub(r'(<property.+name=\"family\".*>)old (.+)(</property>)', r'\1obsolete \2\3', fzp);
+                    else:
+                        oldfzp = re.sub(r'(<property.+name=\"family\".*>)(.+)(</property>)', r'\1obsolete \2\3', fzp);
                     print "{0}:{1}".format(filename, match.group(2))
                     outfile = open(os.path.join(outputDir, filename), "w")
                     outfile.write(oldfzp);

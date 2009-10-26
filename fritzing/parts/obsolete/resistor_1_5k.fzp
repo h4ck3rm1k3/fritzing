@@ -11,8 +11,9 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
+	  <property name="replaced by">ResistorModuleID</property>
         <property name="Resistance">1.5k&#8486;</property>
-        <property name="family">old Resistor</property>
+        <property name="family">obsolete Resistor</property>
       <property name="Rated Power">0.25 watt</property>
       <property name="footprint">400 mil</property>
     </properties>

@@ -1502,6 +1502,6 @@ bool ItemBase::isObsolete() {
 	if (modelPart() == NULL) return false;
 
 	QString family = modelPart()->properties().value("family", "");
-	return family.startsWith("old ");
+	return family.startsWith("obsolete ");
 }
 
