@@ -10,6 +10,7 @@ $(document).ready(function(){
 	$("#billing_enabled").change(toggleBillingAddress)
 	syncShippingAndBillingValue()
 	
+	multifile();
 	
 	$("#fabform").validate({
 		errorPlacement: function(error, element) {
@@ -20,6 +21,19 @@ $(document).ready(function(){
 				error.insertAfter(element);
 			}
 		},
+		rules: {
+			confirm_email: {
+				equalTo: "#email"
+			},
+			fritz_file: {
+				accept: "fz|fzz"
+			}
+		},
+		messages: {
+			fritz_file: {
+				accept: "Please enter a file with a valid extension (fz or fzz)"
+			}
+		}
 	});
 })
 
@@ -93,3 +107,28 @@ var syncShippingAndBillingValue = function() {
 		})
 	})
 }
+
+var multifile = function() {
+	$('input.upload').after('<div id="files_list"></div>');
+
+	$("input.upload").change(function(){
+		doIt(this);
+	});
+
+}	
+
+var doIt = function doIt(obj) {
+	$(obj).hide();
+	$(obj).parent().prepend('<input type="file" class="upload" name="other_files[]" />')
+		.find("input").change(function() {doIt(this)});
+	var v = obj.value;
+	if(v != '') {
+		$("div#files_list").append('<div><a href="#none"><img src="/media/admin/img/admin/icon_deletelink.gif"/> '+v+'</a></div>')
+			.find("a").click(function(){
+				$(this).parent().remove();
+				$(obj).remove();
+				return true;
+			});
+	}
+}
+

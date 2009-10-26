@@ -12,6 +12,14 @@ ul.options {
 	list-style-type: none !important;
 }
 
+#emails input {
+	width: 40%;
+}
+
+#emails input[type=file] {
+	width: 48%;
+}
+
 input.intvalue-input {
 	width: 10%;
 }

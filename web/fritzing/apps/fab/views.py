@@ -35,6 +35,8 @@ def load_options(manufacturer,opts_name,sections):
 
 @login_required
 def manufacturer_form(request, manufacturer_id):
+    #if not request.user.email:
+    #    return HttpResponseRedirect("")
     manufacturer = get_object_or_404(Manufacturer, pk=manufacturer_id)
     man_opts = {}
     man_opts['xor_options'] = manufacturer.xor_options

@@ -36,6 +36,7 @@ class FabOrder(TimeStampedModel):
     )
     
     user = models.ForeignKey(User)
+    user_email = models.EmailField()
     shipping_address = models.ForeignKey('FabOrderAddress',related_name='orders_shipping')
     billing_address = models.ForeignKey('FabOrderAddress',related_name='orders_billing')
     manufacturer = models.ForeignKey('Manufacturer',related_name='orders')
