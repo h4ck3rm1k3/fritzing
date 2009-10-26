@@ -25,15 +25,24 @@
 <form name="fabform" id="fabform" action="/fab/create" method="POST" enctype="multipart/form-data" >
 	<table id="emails">
 		<tr>
-			<td width="18%"><label for="email">Email:</label></td>
+			<td width="18%">
+				<label for="email">Email:</label>
+				<span class="required">&bull;</span>
+			</td>
 			<td><input type="text" name="email" id="email" class="required email"></input></td>
 		</tr>
 		<tr>
-			<td><label for="confirm_email">Confirm Email:</label></td>
+			<td>
+				<label for="confirm_email">Confirm Email:</label>
+				<span class="required">&bull;</span>
+			</td>
 			<td><input type="text" name="confirm_email" id="confirm_email" class="required email"></input></td>
 		</tr>
 		<tr>
-			<td><label for="fritz_file">Fritzing File:</label></td>
+			<td>
+				<label for="fritz_file">Fritzing File:</label>
+				<span class="required">&bull;</span>
+			</td>
 			<td><input type="file" id="fritz_file" name="fritz_file" class="required"></input></td>
 		</tr>
 		<tr>
