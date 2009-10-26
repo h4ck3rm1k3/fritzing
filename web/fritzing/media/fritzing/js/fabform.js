@@ -10,8 +10,11 @@ $(document).ready(function(){
 	$("#billing_enabled").change(toggleBillingAddress)
 	syncShippingAndBillingValue()
 	
-	multifile();
-	
+	multifiles();
+	formStuff();
+})
+
+var formStuff = function() {
 	$("#fabform").validate({
 		errorPlacement: function(error, element) {
 			var elemName = element.attr("name");
@@ -35,7 +38,13 @@ $(document).ready(function(){
 			}
 		}
 	});
-})
+	
+	$("#fabform").submit(function() {
+		if($(this).valid()) {
+			enableBillingAddress(true,false)
+		}
+	});
+}
 
 var loadForm = function() {
 	var value = $("#id_manufacturer").val()
@@ -57,24 +66,27 @@ var cbGetForm = function(data) {
 var toggleBillingAddress = function() {
 	var checkbox = $("#billing_enabled");
 	var checked = checkbox.is(':checked');
-	enableBillingAddress(checked)
+	enableBillingAddress(checked,true)
 }
 
-var enableBillingAddress = function(enabled) {
+var enableBillingAddress = function(enabled,clean) {
 	$(".billing.customer-address > input").each(function() {
 		if($(this).attr("name")) {
 			if (!enabled) {
-				$(this).attr('disabled', true);
+				var billing = $(this)
+				billing.attr('disabled', true);
 				var value = "";
-				var name = $(this).attr("name")
+				var name = billing.attr("name")
 				name = name.substring(name.indexOf('-'))
 				$(".shipping.customer-address > input[name$="+name+"]")
 					.each(function() {
-						value = $(this).val();
+						billing.val($(this).val());
 					})
 			} else {
 				$(this).removeAttr('disabled');
-				$(this).val("")
+				if(clean) {
+					$(this).val("")
+				}
 			}   
 		}
 	})
@@ -108,7 +120,7 @@ var syncShippingAndBillingValue = function() {
 	})
 }
 
-var multifile = function() {
+var multifiles = function() {
 	$('input.upload').after('<div id="files_list"></div>');
 
 	$("input.upload").change(function(){

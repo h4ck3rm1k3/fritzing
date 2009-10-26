@@ -21,6 +21,13 @@ class FabOrderAddressForm(forms.ModelForm):
             'state',
             'country'
         ]
+        
+    def props(self):
+        retval = {}
+        for f1 in self.fields:
+            print self.fields[f1].value
+            #retval[f.label] = f.value
+        return retval
 
     class Meta:
         model = FabOrderAddress

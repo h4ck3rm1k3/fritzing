@@ -131,3 +131,18 @@ def contains(list, item):
     tells if list contains item
     """
     return list and item in list
+
+@register.filter
+def field_value(field):
+    """
+    Get the value of a field.
+    """
+    
+    if not field.form.is_bound:
+        data = field.form.initial.get(field.name, field.field.initial)
+        if callable(data):
+            data = data()
+    else:
+        data = field.data
+    s = data
+    return s

@@ -1,11 +1,11 @@
 {% extends "site_base.html" %} 
-
+{% load fritzing_tools %}
 {% block title %}
-  New Fab Order
+Fab Order Details
 {% endblock %}
 
 {% block page_title %}
-  New Fab Order
+  Fab Order
 {% endblock %}
 
 {% block teaser %}
@@ -22,21 +22,19 @@
 {% endblock %}
 
 {% block content %}
-<form name="fabform" id="fabform" action="/fab/create/" method="POST" enctype="multipart/form-data" >
+
+{% if not is_customer and not is_manufacturer %}
+	you are not allowed to see this page
+{% else %}
+	{{ order }}
+{%endif %}
 	<table id="emails">
 		<tr>
 			<td width="18%">
 				<label for="email">Email:</label>
 				<span class="required">&bull;</span>
 			</td>
-			<td><input type="text" name="email" id="email" class="required email"></input></td>
-		</tr>
-		<tr>
-			<td>
-				<label for="confirm_email">Confirm Email:</label>
-				<span class="required">&bull;</span>
-			</td>
-			<td><input type="text" name="confirm_email" id="confirm_email" class="required email"></input></td>
+			<td><span class="property">{{ order.user_email}}</span></td>
 		</tr>
 		<tr>
 			<td>
@@ -55,31 +53,15 @@
 			<span class="address-title">Shipping Address</span><br />
 			{% for field in shipping_address_form %}
 				<label for="shipping-{{ field.html_name }}">{{ field.label }}:</label>
-				{% if field.field.required %}
-                	<span class="required">&bull;</span>
-				{% endif %}
-				<input id="shipping-{{ field.html_name }}" {% if field.field.required %}class="required"{% endif %} type="text" maxlength="255" name="shipping-{{ field.html_name }}"/>
+				<span class="property">{{ field|field_value }}</span><br />
 			{% endfor %}
 		</div>
 		<div class="billing customer-address">
-			<input type="checkbox" id="billing_enabled"></input>
-			<span class="address-title">Billing Address</span> <span class="help">Only if different from the shipping one</span><br />
+			<span class="address-title">Billing Address</span><br />
 			{% for field in billing_address_form %}
 				<label for="billing-{{ field.html_name }}">{{ field.label }}:</label>
-				{% if field.field.required %}
-                	<span class="required">&bull;</span>
-                	<span style="font-size: medium;"></span>
-				{% endif %}
-				<input id="billing-{{ field.html_name }}" {% if field.field.required %}class="required"{% endif %} type="text" maxlength="255" name="billing-{{ field.html_name }}"/>
+				<span class="property">{{ field|field_value }}</span><br />
 			{% endfor %}
 		</div>
 	</div>
-	
-	<div style="clear:both">
-	{{ form.as_p }}
-	</div>
-	<div id="manufacturer-form">
-	</div>
-	<input type="submit" value="Order!"/>
-</form>
 {% endblock %}
