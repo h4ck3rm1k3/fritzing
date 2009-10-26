@@ -339,9 +339,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (properties.text().contains("note", Qt::CaseInsensitive)) {
 		type = ModelPart::Note;
 	}
-	else if (properties.text().contains("module", Qt::CaseInsensitive)) {
+	/*else if (properties.text().equals("module", Qt::CaseInsensitive)) {
 		type = ModelPart::Module;
-	}
+	}*/
 	else if (properties.text().contains("symbol", Qt::CaseInsensitive)) {
 		type = ModelPart::Symbol;
 	}
