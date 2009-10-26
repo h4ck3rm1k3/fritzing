@@ -9,7 +9,7 @@
         <tag>id12</tag>
     </tags>
     <properties>
-        <property name="family">RFID module</property>
+        <property name="family">RFID reader</property>
     </properties>
     <description>Simple RFID reader module with internal antenna</description>
     <views>
