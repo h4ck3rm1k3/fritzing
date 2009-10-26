@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="f3eb6551-1edf-11de-8283-0019d2b7521e">
-<version>1</version>
+<version replacedby="generic_female_pin_header_2_100mil" >1</version>
     <author>Fritzing Part-o-matic</author>
     <title>Generic female header - 2 pins</title>
     <label>J</label>

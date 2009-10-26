@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="bf1d778246ec524bc51c67761afef94e">
-<version>1</version>
+<version replacedby="generic_male_pin_header_1_100mil">1</version>
     <author>Lionel Michel</author>
     <title>Generic male header</title>
     <label>J</label>

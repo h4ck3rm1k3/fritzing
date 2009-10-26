@@ -125,6 +125,8 @@ public:
 	void setProp(const char * name, const QVariant & value);
 	QVariant prop(const char * name) const;
 
+	const QString & replacedby();
+
 public:
 	static long nextIndex();
 	static void updateIndex(long index);

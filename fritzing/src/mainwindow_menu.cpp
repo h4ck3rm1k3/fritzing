@@ -3299,31 +3299,9 @@ void MainWindow::swapObsolete() {
 	QUndoCommand* parentCommand = new QUndoCommand();
 	bool count = 0;
 
-	QString obsoletePrefix = "obsolete ";
-
 	foreach (ItemBase * itemBase, itemBases) {
-		QHash<QString, QString> properties = itemBase->modelPart()->properties();
-		QString family;
-		bool pins = false;
-		foreach (QString name, properties.keys()) {
-			QString value = properties.value(name, "");
-			if (name.compare("family", Qt::CaseInsensitive) == 0) {
-				family = value.right(value.length() - obsoletePrefix.size());
-			}
-			else {
-				if (name.compare("pins") == 0) {
-					pins = true;
-				}
-				m_refModel->recordProperty(name, value);
-			}
-		}
-
-		QString propertyName = pins ? "pins" : "";				// matching pins is the most important thing?
-		QString moduleID = m_refModel->retrieveModuleIdWith(family, propertyName, true);
-		DebugDialog::debug(QString("new module id %1").arg(moduleID));
-		bool exactMatch = m_refModel->lastWasExactMatch();
-
-		if(moduleID == ___emptyString___) {
+		QString newModuleID = itemBase->modelPart()->replacedby();
+		if (newModuleID.isEmpty()) {
 			QMessageBox::information(
 				this,
 				tr("Sorry!"),
@@ -3332,9 +3310,18 @@ void MainWindow::swapObsolete() {
 			continue;
 		}
 
+		ModelPart * mp = this->m_refModel->retrieveModelPart(newModuleID);
+		if (mp == NULL) {
+			QMessageBox::information(
+				this,
+				tr("Sorry!"),
+				tr( "Unknown module id for %1.\n").arg(itemBase->title())
+			);
+			continue;
+		}
 
 		count++;
-		swapSelectedAuxAux(itemBase, moduleID, parentCommand);
+		swapSelectedAuxAux(itemBase, newModuleID, parentCommand);
 	}
 
 	if (count == 0) {

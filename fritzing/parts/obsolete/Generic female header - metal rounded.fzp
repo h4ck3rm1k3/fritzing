@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="bdeca02fd3a9cdeea91a5401a231507b">
-<version>1</version>
+<version replacedby="generic_rounded_female_pin_header_1_100mil">1</version>
     <author>Lionel Michel</author>
     <title>Generic female header - metal rounded</title>
     <label>J</label>

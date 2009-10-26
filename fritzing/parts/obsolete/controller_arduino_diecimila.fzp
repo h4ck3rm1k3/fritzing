@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="1234ABDE24_ST" >
- <version>2</version>
+ <version replacedby="4321DEAB24_ST">2</version>
  <creator>Stefan Hermann</creator>
  <title>Arduino Diecimila (deprecated)</title>
  <date>2008-09-16</date>

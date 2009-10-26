@@ -62,6 +62,15 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 	loadTagText(root, "description", m_description);
 	loadTagText(root, "taxonomy", m_taxonomy);
 	loadTagText(root, "date", m_date);
+	QDomElement version = root.firstChildElement("version");
+	if (!version.isNull()) {
+		m_replacedby = version.attribute("replacedby");
+	}
+
+	if (!m_replacedby.isEmpty()) {
+		DebugDialog::debug(m_replacedby);
+	}
+
 
 	populateTagCollection(root, m_tags, "tags");
 	populateTagCollection(root, m_properties, "properties", "name");
@@ -334,4 +343,8 @@ void ModelPartShared::copy(ModelPartShared* other) {
 
 void ModelPartShared::setProperty(const QString & key, const QString & value) {
 	m_properties.insert(key, value);
+}
+
+const QString & ModelPartShared::replacedby() {
+	return m_replacedby;
 }

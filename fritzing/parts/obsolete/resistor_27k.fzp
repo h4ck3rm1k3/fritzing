@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.1.1201" moduleId="4a2459c0-9ae8-11de-8cac-0013ce8bc1d4">
-    <version>1</version>
+    <version replacedby="ResistorModuleID" >1</version>
     <title>27k &#8486; Resistor</title>
     <label>R</label>
     <date>2009-09-08</date>

@@ -561,3 +561,10 @@ const QStringList & ModelPart::possibleFolders() {
 
 	return m_possibleFolders;
 }
+
+const QString & ModelPart::replacedby() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->replacedby();
+
+	return ___emptyString___;
+}
+

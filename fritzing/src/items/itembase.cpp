@@ -1501,7 +1501,6 @@ void ItemBase::setProp(const QString & prop, const QString & value) {
 bool ItemBase::isObsolete() {
 	if (modelPart() == NULL) return false;
 
-	QString family = modelPart()->properties().value("family", "");
-	return family.startsWith("obsolete ");
+	return !modelPart()->replacedby().isEmpty();
 }
 

@@ -92,6 +92,7 @@ public:
 	bool ignoreTerminalPoints();
 
 	void setProperty(const QString & key, const QString & value);
+	const QString & replacedby();
 
 
 protected:
@@ -110,6 +111,7 @@ protected:
 	QString m_label;
 	QString m_description;
 	QString m_date;
+	QString m_replacedby;
 
 	QString m_path;
 	QString m_taxonomy;

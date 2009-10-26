@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="0aecd38e5f3188d59cb4a63cbce5312">
-<version>1</version>
+<version replacedby="screw_terminal_2_3.5mm">1</version>
     <author>Brendan Howell</author>
     <title>Screw terminal</title>
     <label>J</label>
