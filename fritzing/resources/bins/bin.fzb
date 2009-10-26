@@ -184,6 +184,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="a975d1270bd55d6fc3916947793f1a57" modelIndex="30" path="parts/core/rfid-reader.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="f5e8f260-de38-11dd-b332-0022430987e8" modelIndex="31" path="parts/core/atmega168.fzp">
             <views>
                 <iconView layer="icon">

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" 
+  x="0px" y="0px" width="1.05324in" height="1.00996in" viewBox="0 0 75.833 72.717" baseProfile="tiny" version="1.2" id="pcb" >
+ <g id="silkscreen">
+	<rect width="74.833" x="0.5" y="0.5" fill="none" height="71.716" stroke="#FFFFFF"/>
+ </g>
+ <g id="copper0" >
+  <rect fill="none" x="55.304" y="12.906" width="3.856" height="3.857" stroke="#FEBF10" stroke-width="1.44" />
+  <circle fill="none" cx="45.868" cy="57.329" stroke="#FEBF10" id="connector2pin" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="40.179" cy="57.329" stroke="#FEBF10" id="connector2pin_1_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="34.493" cy="57.329" stroke="#FEBF10" id="connector2pin_2_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="28.868" cy="57.329" stroke="#FEBF10" id="connector2pin_3_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="23.195" cy="57.329" stroke="#FEBF10" id="connector2pin_4_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="45.868" cy="14.829" stroke="#FEBF10" id="connector2pin_9_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="57.201" cy="14.829" stroke="#FEBF10" id="connector2pin_10_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="40.179" cy="14.829" stroke="#FEBF10" id="connector2pin_8_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="34.493" cy="14.829" stroke="#FEBF10" id="connector2pin_7_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="28.868" cy="14.829" stroke="#FEBF10" id="connector2pin_6_" r="1.728" stroke-width="1.44" />
+  <circle fill="none" cx="23.195" cy="14.829" stroke="#FEBF10" id="connector2pin_5_" r="1.728" stroke-width="1.44" />
+ </g>
+ <g id="outline" />
+</svg>
