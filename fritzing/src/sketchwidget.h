@@ -208,7 +208,7 @@ public:
 		bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten);
 	bool spaceBarIsPressed();
 	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
-	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
+	long setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();

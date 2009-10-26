@@ -67,9 +67,9 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 		m_replacedby = version.attribute("replacedby");
 	}
 
-	if (!m_replacedby.isEmpty()) {
-		DebugDialog::debug(m_replacedby);
-	}
+	//if (!m_replacedby.isEmpty()) {
+		//DebugDialog::debug(m_replacedby);
+	//}
 
 
 	populateTagCollection(root, m_tags, "tags");

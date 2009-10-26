@@ -4225,10 +4225,10 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
+long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
 {
 	ItemBase * itemBase = findItem(itemID);
-	if (itemBase == NULL) return;
+	if (itemBase == NULL) return 0;
 
 	long newID = ItemBase::getNextID(newModelIndex);
 
@@ -4269,6 +4269,8 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
 		new CleanUpWiresCommand(this, false, parentCommand);
 	}
+
+	return newID;
 }
 
 void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand)

@@ -3321,7 +3321,21 @@ void MainWindow::swapObsolete() {
 		}
 
 		count++;
-		swapSelectedAuxAux(itemBase, newModuleID, parentCommand);
+		long newID = swapSelectedAuxAux(itemBase, newModuleID, parentCommand);
+		if (itemBase->modelPart()) {
+			// special case for swapping old resistors.
+			QString resistance = itemBase->modelPart()->properties().value("resistance", "");
+			QChar r = resistance.at(resistance.length() - 1);
+			ushort ohm = r.unicode();
+			if (ohm == 8486) {
+				// ends with the ohm symbol
+				resistance.chop(1);
+			}
+			QString footprint = itemBase->modelPart()->properties().value("footprint", "");
+			if (!resistance.isEmpty() && !footprint.isEmpty()) {
+				new SetResistanceCommand(m_currentGraphicsView, newID, resistance, resistance, footprint, footprint, parentCommand);
+			}
+		}
 	}
 
 	if (count == 0) {

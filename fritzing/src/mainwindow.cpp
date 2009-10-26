@@ -1764,7 +1764,7 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 }
 
 
-void MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, QUndoCommand * parentCommand) 
+long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, QUndoCommand * parentCommand) 
 {
 	long modelIndex = ModelPart::nextIndex();
 
@@ -1780,13 +1780,17 @@ void MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 		masterflags[0] = true;
 	}
 
-	m_schematicGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[0], parentCommand);
-	m_pcbGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[1], parentCommand);
+	long newID1 = m_schematicGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[0], parentCommand);
+	long newID2 = m_pcbGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[1], parentCommand);
 
 	// master view must go last, since it creates the delete command
-	m_breadboardGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[2], parentCommand);
+	long newID3 = m_breadboardGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[2], parentCommand);
 
 	// TODO:  z-order?
+
+	if (newID3 != 0) return newID3;
+	if (newID2 != 0) return newID2;
+	return newID1;
 }
 
 bool MainWindow::loadCustomBoardShape()
