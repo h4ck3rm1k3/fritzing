@@ -388,6 +388,20 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	s += blockContainer(PropsBlockId);
 #ifndef QT_NO_DEBUG
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
+	if (itemBase) {
+		PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
+		QString svgpath = paletteItemBase->filename();
+		if (!svgpath.isEmpty()) {
+			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("svg").arg(svgpath);
+		}
+	}
+	if (modelPart && modelPart->modelPartShared()) {
+		QString fzppath = modelPart->modelPartShared()->path();
+		if (!fzppath.isEmpty()) {
+			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("fzp").arg(fzppath);
+		}
+	}
+
 #else
 	Q_UNUSED(id)
 #endif
