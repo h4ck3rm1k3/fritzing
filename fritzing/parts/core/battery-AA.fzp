@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.6b.08.14.3340" moduleId="1000AFDF10011">
+<module fritzingVersion="0.3.9b.10.15.3559" moduleId="1000AFDF10011">
     <version>2</version>
     <author>Brendan Howell/Dirk van Osterbosch/Lionel Michel</author>
     <title>Battery</title>
@@ -26,25 +26,23 @@
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
-        <pcbView>
-            <layers image="pcb/jumper_2_100mil_pcb.svg">
-                <layer layerId="copper0"/>
-                <layer layerId="silkscreen"/>
-            </layers>
-        </pcbView>
         <schematicView>
             <layers image="schematic/dc_powersupply.svg">
                 <layer layerId="schematic"/>
             </layers>
         </schematicView>
+        <pcbView>
+            <layers image="pcb/jumper_2_100mil_pcb.svg">
+                <layer layerId="copper0"/>
+            </layers>
+        </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="+">
-	          <erc etype="VCC">
-		          <voltage value="3.0" />
-		          <current flow="source" valueMax="0.1" />
-	          </erc>
-            <description>+ side</description>
+        <connector id="connector0" type="male" name="-">
+			<erc etype="ground">
+                <current flow="sink" valueMax="0.1" />
+            </erc>
+            <description>negative side</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -57,11 +55,12 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="-">
-	          <erc etype="ground">
-                <current flow="sink" valueMax="0.1" />
-            </erc>
-            <description>- side</description>
+        <connector id="connector1" type="male" name="+">
+            <erc etype="VCC">
+				<voltage value="3.0" />
+				<current flow="source" valueMax="0.1" />
+			</erc>
+            <description>positive side</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
