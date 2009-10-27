@@ -17,7 +17,10 @@ Fab Order Details
 	<link rel="stylesheet" href="{{ MEDIA_URL }}/fritzing/css/fabform.css" type="text/css" media="screen" charset="utf-8">
 	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script>
 	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.query.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/javascript/jquery-ui-1.6.custom.min.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.alerts.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/fabdetails.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ MEDIA_URL }}/fritzing/css/jquery.alerts.css" />
 {% endblock %}
 
 {% block content %}
@@ -44,6 +47,8 @@ Fab Order Details
 					{% else %}{% if is_manufacturer %}
 						<form id="form" action="/fab/order/state/change/" method="POST">
 						<input type="hidden" value="{{ order.pk }}" name="order_id"/>
+						<input type="hidden" value="{{ curr_state.label }}" id="old_state_label"/>
+						<input type="hidden" value="{{ curr_state.value }}" id="old_state_value"/>
 						<select id="state" name="state">
 							<option value="{{ curr_state.value }}" selected="selected">{{ curr_state.label }}</option>
 							{% if next_state %}<option value="{{ next_state.value }}">{{ next_state.label }}</option>{% endif %}
