@@ -83,6 +83,8 @@ def create(request, form_class=FabOrderForm):
 
         _populate_options(order, manufacturer, request.POST)
         
+        # TODO: SEND EMAIL TO THE CUSTOMER AND THE MANUFACTURER
+        
         return HttpResponseRedirect(reverse('faborder-details', args=[order.pk]))
     else:
         form = form_class()
@@ -168,9 +170,10 @@ def details(request,order_id):
         next_state['value'] = order.state+1
         next_state['label'] = _label_for_state(order.state+1)
         
-    cancel_state = {}
-    cancel_state['value'] = FabOrder.CANCELED
-    cancel_state['label'] = _label_for_state(FabOrder.CANCELED)
+    cancel_state = {} if order.state < FabOrder.CANCELED else None
+    if cancel_state == {}:
+        cancel_state['value'] = FabOrder.CANCELED
+        cancel_state['label'] = _label_for_state(FabOrder.CANCELED)
     
     return render_to_response("fab/details.html", {
         'order': order,
@@ -184,7 +187,7 @@ def details(request,order_id):
         'cancel_state': cancel_state,
     }, context_instance=RequestContext(request))
     
-    
+@login_required
 def state_change(request):
     if request.POST:
         order_id = request.POST['order_id']
@@ -194,6 +197,7 @@ def state_change(request):
         if request.user == order.manufacturer.contact_person:
             order.state = state
             order.save()
+            # TODO: SEND EMAIL TO THE CUSTOMER
         
         return HttpResponseRedirect(reverse('faborder-details', args=[order.pk]))
     else:

@@ -47,7 +47,7 @@ Fab Order Details
 						<select id="state" name="state">
 							<option value="{{ curr_state.value }}" selected="selected">{{ curr_state.label }}</option>
 							{% if next_state %}<option value="{{ next_state.value }}">{{ next_state.label }}</option>{% endif %}
-							<option value="{{ cancel_state.value }}">{{ cancel_state.label }}</option>
+							{% if cancel_state %}<option value="{{ cancel_state.value }}">{{ cancel_state.label }}</option>{% endif %}
 						</select>
 						</form>
 					{% endif %}{% endif %}
