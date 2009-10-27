@@ -1210,12 +1210,12 @@ void MainWindow::createPartMenuActions() {
 	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
 	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
 
-	m_selectAllObsoleteAct = new QAction(tr("Select All Obsolete Parts"), this);
-	m_selectAllObsoleteAct->setStatusTip(tr("Select All Obsolete Parts"));
+        m_selectAllObsoleteAct = new QAction(tr("Find outdated parts"), this);
+        m_selectAllObsoleteAct->setStatusTip(tr("Find outdated parts"));
 	connect(m_selectAllObsoleteAct, SIGNAL(triggered()), this, SLOT(selectAllObsolete()));
 
-	m_swapObsoleteAct = new QAction(tr("Swap Obsolete Parts"), this);
-	m_swapObsoleteAct->setStatusTip(tr("Swap Selected Obsolete Parts"));
+        m_swapObsoleteAct = new QAction(tr("Update selected parts"), this);
+        m_swapObsoleteAct->setStatusTip(tr("Update selected parts"));
 	connect(m_swapObsoleteAct, SIGNAL(triggered()), this, SLOT(swapObsolete()));
 }
 
@@ -3278,8 +3278,20 @@ void MainWindow::exportNormalizedFlattenedSVG() {
 void MainWindow::selectAllObsolete() {
 	int obs = m_currentGraphicsView->selectAllObsolete();
 	if (obs <= 0) {
-		QMessageBox::information(this, tr("Fritzing"), tr("No obsolete parts found") );
-	}
+            QMessageBox::information(this, tr("Fritzing"), tr("No outdated parts found.\nAll your parts are up-to-date.") );
+        } else {
+            QMessageBox::StandardButton answer = QMessageBox::question(
+                    this,
+                    tr("Outdated parts"),
+                    tr("Found %n outdated parts. Do you want to update them now?", "", obs),
+                    QMessageBox::Yes | QMessageBox::No,
+                    QMessageBox::Yes
+            );
+            // TODO: make button texts translatable
+            if(answer == QMessageBox::Yes) {
+                    swapObsolete();
+            }
+        }
 }
 
 void MainWindow::swapObsolete() {
@@ -3338,11 +3350,14 @@ void MainWindow::swapObsolete() {
 		}
 	}
 
+        QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %n part(s).\n"
+                                                          "Please check all views for potential side-effects.", "", count) );
+
 	if (count == 0) {
 		delete parentCommand;
 	}
 	else {
-		parentCommand->setText(tr("Swap %n obsolete part(s)", "", count));
+                parentCommand->setText(tr("Update %n part(s)", "", count));
 		m_undoStack->push(parentCommand);
 	}
 
