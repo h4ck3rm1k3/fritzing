@@ -23,36 +23,45 @@
 
 {% block content %}
 <form name="fabform" id="fabform" action="/fab/create/" method="POST" enctype="multipart/form-data" >
-	<table id="emails">
-		<tr>
-			<td width="18%">
-				<label for="email">Email:</label>
-				<span class="required">&bull;</span>
-			</td>
-			<td><input type="text" name="email" id="email" class="required email"></input></td>
-		</tr>
-		<tr>
-			<td>
-				<label for="confirm_email">Confirm Email:</label>
-				<span class="required">&bull;</span>
-			</td>
-			<td><input type="text" name="confirm_email" id="confirm_email" class="required email"></input></td>
-		</tr>
-		<tr>
-			<td>
-				<label for="fritz_file">Fritzing File:</label>
-				<span class="required">&bull;</span>
-			</td>
-			<td><input type="file" id="fritz_file" name="fritz_file" class="required"></input></td>
-		</tr>
-		<tr>
-			<td><label for="other_files-0">Other Files:</label></td>
-			<td><input class="upload" type="file" id="other_files-0[]" name="other_files-0[]"></input></td>
-		</tr>
-	</table>
-	<div id="customer-addresses">
+	<fieldset>
+		<span class="title">Files</span>
+		<table id="files">
+			<tr>
+				<td width="18%">
+					<label for="fritz_file">Fritzing File:</label>
+					<span class="required">&bull;</span>
+				</td>
+				<td><input type="file" id="fritz_file" name="fritz_file" class="required"></input></td>
+			</tr>
+			<tr>
+				<td><label for="other_files-0">Other Files:</label></td>
+				<td><input class="upload" type="file" id="other_files-0[]" name="other_files-0[]"></input></td>
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset>
+		<span class="title">Contact</span>
+		<table id="contact">
+			<tr>
+				<td width="18%">
+					<label for="email">Email:</label>
+					<span class="required">&bull;</span>
+				</td>
+				<td><input type="text" name="email" id="email" class="required email"></input></td>
+			</tr>
+			<tr>
+				<td>
+					<label for="confirm_email">Confirm Email:</label>
+					<span class="required">&bull;</span>
+				</td>
+				<td><input type="text" name="confirm_email" id="confirm_email" class="required email"></input></td>
+			</tr>
+		</table>
+	</fieldset>
+	
+	<fieldset id="customer-addresses">
 		<div class="shipping customer-address">
-			<span class="address-title">Shipping Address</span><br />
+			<span class="title">Shipping Address</span><br />
 			{% for field in shipping_address_form %}
 				<label for="shipping-{{ field.html_name }}">{{ field.label }}:</label>
 				{% if field.field.required %}
@@ -63,7 +72,7 @@
 		</div>
 		<div class="billing customer-address">
 			<input type="checkbox" id="billing_enabled"></input>
-			<span class="address-title">Billing Address</span> <span class="help">Only if different from the shipping one</span><br />
+			<span class="title">Billing Address</span> <span class="help">Only if different from the shipping one</span><br />
 			{% for field in billing_address_form %}
 				<label for="billing-{{ field.html_name }}">{{ field.label }}:</label>
 				{% if field.field.required %}
@@ -73,13 +82,23 @@
 				<input id="billing-{{ field.html_name }}" {% if field.field.required %}class="required"{% endif %} type="text" maxlength="255" name="billing-{{ field.html_name }}"/>
 			{% endfor %}
 		</div>
+	</fieldset>
+	
+	<div style="clear:both; margin-top: 0;">
+		<span class="title">Manufacturer</span>
+			<table>
+				{% for f in form %}
+				<tr>
+					<td width="13%"><label>{{ f.label }}:</label></td>
+					<td>{{ f }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+	</div>
+	<div id="manufacturer-form" style="margin:0;">
 	</div>
 	
-	<div style="clear:both">
-	{{ form.as_p }}
-	</div>
-	<div id="manufacturer-form">
-	</div>
+	<br />
 	<input type="submit" value="Order!"/>
 </form>
 {% endblock %}

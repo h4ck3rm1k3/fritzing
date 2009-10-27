@@ -8,31 +8,21 @@ class FabOrder(TimeStampedModel):
     CHECKING = 1
     WAITING_APPROVAL = 2
     PRODUCING = 3
-    CANCELED = 4
-    SHIPPING = 5
+    SHIPPING = 4
+    CANCELED = 5
     
     checking_pair = (CHECKING, "Checking")
     waiting_approval_pair = (WAITING_APPROVAL, "Waiting for Customer Approval")
     producing_pair = (PRODUCING, "Producing")
-    canceled_pair = (CANCELED, "Canceled by Customer")
     shipping_pair = (SHIPPING, "Shipping")
+    canceled_pair = (CANCELED, "Canceled")
     
     STATES = (
         checking_pair,
         waiting_approval_pair,
         producing_pair,
-        canceled_pair,
         shipping_pair,
-    )
-    
-    MANUFACTURER_STATES = (
-        waiting_approval_pair,
-        producing_pair,
-        shipping_pair
-    )
-    
-    CUSTOMER_STATES = (
-        canceled_pair
+        canceled_pair,
     )
     
     user = models.ForeignKey(User)
@@ -63,7 +53,7 @@ class FabOrderAddress(Address):
 class Manufacturer(TitleSlugDescriptionModel):
     location = models.CharField(_('location'), max_length=255)
     email = models.EmailField(_('email'))
-    contanct_person = models.ForeignKey(User)
+    contact_person = models.ForeignKey(User)
     phone_number = models.PositiveIntegerField(_('phone number'))
     address = models.OneToOneField(Address, verbose_name=_('address'))
     account_info = models.TextField(

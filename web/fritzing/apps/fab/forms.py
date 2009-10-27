@@ -1,8 +1,10 @@
 from django import forms
-from fritzing.apps.fab.models import FabOrder, FabOrderAddress
-
+from fritzing.apps.fab.models import FabOrder, FabOrderAddress, Manufacturer
+from django.utils.translation import ugettext_lazy as _
 
 class FabOrderForm(forms.ModelForm):
+    manufacturer = forms.ModelChoiceField(queryset=Manufacturer.objects.all(),label=_("Company"))
+
     class Meta:
         model = FabOrder
         fields= (
@@ -21,13 +23,6 @@ class FabOrderAddressForm(forms.ModelForm):
             'state',
             'country'
         ]
-        
-    def props(self):
-        retval = {}
-        for f1 in self.fields:
-            print self.fields[f1].value
-            #retval[f.label] = f.value
-        return retval
 
     class Meta:
         model = FabOrderAddress

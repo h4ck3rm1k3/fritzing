@@ -17,8 +17,7 @@ Fab Order Details
 	<link rel="stylesheet" href="{{ MEDIA_URL }}/fritzing/css/fabform.css" type="text/css" media="screen" charset="utf-8">
 	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script>
 	<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.query.js"></script>
-	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/fabform.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/fabdetails.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -26,42 +25,118 @@ Fab Order Details
 {% if not is_customer and not is_manufacturer %}
 	you are not allowed to see this page
 {% else %}
-	{{ order }}
-{%endif %}
-	<table id="emails">
-		<tr>
-			<td width="18%">
-				<label for="email">Email:</label>
-				<span class="required">&bull;</span>
-			</td>
-			<td><span class="property">{{ order.user_email}}</span></td>
-		</tr>
-		<tr>
-			<td>
-				<label for="fritz_file">Fritzing File:</label>
-				<span class="required">&bull;</span>
-			</td>
-			<td><input type="file" id="fritz_file" name="fritz_file" class="required"></input></td>
-		</tr>
-		<tr>
-			<td><label for="other_files-0">Other Files:</label></td>
-			<td><input class="upload" type="file" id="other_files-0[]" name="other_files-0[]"></input></td>
-		</tr>
-	</table>
-	<div id="customer-addresses">
+	<fieldset>
+		<span class="title">Order</span>
+		<table id="files">
+			<tr>
+				<td width="18%"><label for="fritz_file">Fritzing File:</label></td>
+				<td><input type="file" id="fritz_file" name="fritz_file" class="required"></input></td>
+			</tr>
+			<tr>
+				<td><label for="other_files-0">Other Files:</label></td>
+				<td><input class="upload" type="file" id="other_files-0[]" name="other_files-0[]"></input></td>
+			</tr>
+			<tr>
+				<td><label>State:</label></td>
+				<td>
+					{% if is_customer %}
+						<span class="property">{{ curr_state.label }}</span>
+					{% else %}{% if is_manufacturer %}
+						<form id="form" action="/fab/order/state/change/" method="POST">
+						<input type="hidden" value="{{ order.pk }}" name="order_id"/>
+						<select id="state" name="state">
+							<option value="{{ curr_state.value }}" selected="selected">{{ curr_state.label }}</option>
+							{% if next_state %}<option value="{{ next_state.value }}">{{ next_state.label }}</option>{% endif %}
+							<option value="{{ cancel_state.value }}">{{ cancel_state.label }}</option>
+						</select>
+						</form>
+					{% endif %}{% endif %}
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset>
+		<span class="title">Contact</span>
+		<table id="contact">
+			<tr>
+				<td width="18%"><label for="email">Customer Email:</label></td>
+				<td><span class="property">{{ order.user_email}}</span></td>
+			</tr>
+		</table>
+	</fieldset>
+	
+	<fieldset id="customer-addresses">
 		<div class="shipping customer-address">
-			<span class="address-title">Shipping Address</span><br />
+			<span class="title">Shipping Address</span><br />
 			{% for field in shipping_address_form %}
 				<label for="shipping-{{ field.html_name }}">{{ field.label }}:</label>
 				<span class="property">{{ field|field_value }}</span><br />
 			{% endfor %}
 		</div>
 		<div class="billing customer-address">
-			<span class="address-title">Billing Address</span><br />
+			<span class="title">Billing Address</span><br />
 			{% for field in billing_address_form %}
 				<label for="billing-{{ field.html_name }}">{{ field.label }}:</label>
 				<span class="property">{{ field|field_value }}</span><br />
 			{% endfor %}
 		</div>
-	</div>
+	</fieldset>
+	
+	<table style="margin-top: 10px;">
+		<tr>
+			<td colspan="2"><span class="title">Manufacturer:</span></td>
+		</tr>
+		<tr>
+			<td width="13%"><label>Company:</label></td>
+			<td><span class="property">{{ order.manufacturer.title }}</span></td>
+		</tr>
+		<tr>
+			<td><label>Location:</label></td>
+			<td><span class="property">{{ order.manufacturer.location}}</span></td>
+		</tr>
+		<tr>
+			<td><label>Email:</label>	</td>
+			<td><span class="property">{{ order.manufacturer.email}}</span></td>
+		</tr>
+	</table>
+	<fieldset id="options">
+		<span class="title">Production Options</span><br />
+	{% for section,options in sections %}
+		<div class="section">
+			<label>{{ section }}</label>
+			<ul class="options">
+			{% for opt in options.xor_options %}
+				<li>
+					<label>{{ opt.option.text }}:</label>
+					{{ opt.choice.text }}
+				</li>
+			{% endfor %}
+			
+			{% for opt in options.onoff_options %}
+				<li>
+					<label>{{ opt.option.text }}:</label>
+					{% if opt.onoff%}Yes{% else %}No{% endif %}
+				</li>
+			{% endfor %}
+
+			{% for opt in options.intvalue_options %}
+				<li>
+					<label>{{ opt.option.text }}:</label>
+					{{ opt.value }}
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
+		
+		{% if order.comments %}
+		<div id="comments">
+			<label for="comments">Comments</label>
+			<textarea readonly="readonly" rows="6" cols="40" 	name="comments" id="comments"
+				maxlength="1000" >{{ order.comments }}</textarea>
+		</div>
+		{% endif %}
+		
+	</fieldset>
+{% endif %}
 {% endblock %}

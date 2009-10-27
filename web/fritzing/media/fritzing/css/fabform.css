@@ -3,7 +3,7 @@ div .customer-address {
 	width: 50%;
 }
 
-span.address-title {
+span.title {
 	font-size: 1.1em;
 	font-weight: bold;
 }
@@ -12,11 +12,11 @@ ul.options {
 	list-style-type: none !important;
 }
 
-#emails input {
+#contact input {
 	width: 40%;
 }
 
-#emails input[type=file] {
+#files input[type=file] {
 	width: 48%;
 }
 

@@ -1,8 +1,20 @@
 <div id="manufacturer_opts">
+	<table>
+		<tr>
+			<td width="13%"><label>Location:</label></td>
+			<td><span class="property">{{ manufacturer.location}}</span></td>
+		</tr>
+		<tr>
+			<td><label>Email:</label>	</td>
+			<td><span class="property">{{ manufacturer.email}}</span></td>
+		</tr>
+	</table>
+	<fieldset>
+		<span class="title">Production Options</span>
 	{% for section,options in sections %}
-		<div class="section">
-		<label>{{ section }}</label>
-		<span class="help">{{ section.help_text }}</span>
+			<div class="section">
+			<label>{{ section }}</label>
+			<span class="help">{{ section.help_text }}</span>
 			<ul class="options">
 			{% for option in options.xor_options %}
 				{% for choice in option.choices.all %}
@@ -34,8 +46,10 @@
 			</ul>
 		</div>
 	{% endfor %}
-	<div id="comments">
-		<label for="comments">Comments</label>
-		<textarea rows="6" cols="40" name="comments" id="comments" maxlength="1000" ></textarea>
-	</div>
+	
+		<div id="comments">
+			<label for="comments">Comments</label>
+			<textarea rows="6" cols="40" name="comments" id="comments" maxlength="1000" ></textarea>
+		</div>
+	</fieldset>
 </div>
