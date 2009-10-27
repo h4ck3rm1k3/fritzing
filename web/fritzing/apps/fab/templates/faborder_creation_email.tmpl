@@ -1,0 +1,62 @@
+#from fritzing.apps.fab.utils import *
+#from django.core.urlresolvers import reverse
+#from fritzing.apps.tools.templatetags.fritzing_tools import field_value
+#from django.utils.encoding import force_unicode
+
+You have received a new order #$order.pk.
+Please check it and contact the customer with an offer as soon as possible.
+
+Order
+	- URL: http://www.fritzing.org${reverse('faborder-details',args=[$order.pk])}
+	- State: $curr_state
+	
+	- Fritzing File: http://www.fritzing.org${order.fritzing_attachment.attachment.url}
+	- Other Files:
+#for $a in $order.other_attachments.all()
+			http://www.fritzing.org${a.attachment.url}
+#end for
+
+
+Contact
+	- Customer Email: ${order.user_email}
+
+	- Shipping Address:
+#for $field in $shipping_address_form
+		${force_unicode($field.label)}: ${field_value($field)}
+#end for
+
+	- Billing Address:
+#for $field in $billing_address_form
+		${force_unicode($field.label)}: ${field_value($field)}
+#end for
+
+
+Manufacturer
+	- Company: ${order.manufacturer.title}
+	- Location: ${order.manufacturer.location}
+	- Email: ${order.manufacturer.email}
+	
+Production Options
+#for $section,$options in $sections
+	- ${section}:
+#if 'xor_options' in $options
+	#for $opt in $options['xor_options']
+		${opt.option.text}: ${opt.choice.text}
+	#end for
+#end if
+#if 'onoff_options' in $options
+	#for $opt in $options['onoff_options']
+		${opt.option.text}: ${boolean_to_word($opt.onoff)}
+	#end for
+#end if
+#if 'intvalue_options' in $options
+	#for $opt in $options['intvalue_options']
+		${opt.option.text}: ${opt.value}
+	#end for
+#end if
+
+#end for
+
+#if $order.comments
+	- Comments: ${order.comments}
+#end if

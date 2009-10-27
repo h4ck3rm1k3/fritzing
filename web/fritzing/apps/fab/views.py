@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from apps.projects.views import detail
+import os
 
 def _populate_address(prefix, post):
     props = {}
@@ -96,9 +98,9 @@ def create(request, form_class=FabOrderForm):
         _place_attachments(request,order,'fritz_file',FabOrderFritzingFileAttachment)
         _place_attachments(request,order,'other_files[]',FabOrderOtherAttachment)
 
-        # TODO: SEND EMAIL TO THE CUSTOMER AND THE MANUFACTURER
+        _send_creation_email(order)
         
-        return HttpResponseRedirect(reverse('faborder-details', args=[order.pk]))
+        return details(request,order.pk,True)
     else:
         form = form_class()
     shipping_address_form = FabOrderAddressForm()
@@ -164,7 +166,7 @@ def _label_for_state(order_state):
             return label
 
 @login_required
-def details(request,order_id):
+def details(request, order_id, show_thanks_msg=False):
     order = get_object_or_404(FabOrder,pk=order_id)
     is_customer = order.user == request.user
     is_manufacturer = order.manufacturer.contact_person == request.user
@@ -198,6 +200,7 @@ def details(request,order_id):
         'curr_state': curr_state,
         'next_state': next_state,
         'cancel_state': cancel_state,
+        'show_thanks_msg': show_thanks_msg,
     }, context_instance=RequestContext(request))
     
 @login_required
@@ -215,3 +218,37 @@ def state_change(request):
         return HttpResponseRedirect(reverse('faborder-details', args=[order.pk]))
     else:
         return HttpResponseRedirect(reverse('faborder-create'))
+
+
+from Cheetah.Template import Template
+from django.core.mail import send_mail
+
+def _get_creation_mail_body(order):
+    shipping_address_form = FabOrderAddressForm(instance=order.shipping_address)
+    billing_address_form = FabOrderAddressForm(instance=order.billing_address)    
+    ordered_sections = _get_sections(order, _load_fab_options)
+    curr_state = _label_for_state(order.state)
+    
+    data = {
+        'order' : order,
+        'shipping_address_form': shipping_address_form,
+        'billing_address_form': billing_address_form,
+        'sections': ordered_sections,
+        'curr_state': curr_state
+    }
+    
+    path = os.path.join(os.path.dirname(__file__),"templates")
+    page = Template(file=path+'/faborder_creation_email.tmpl', searchList=[data])
+    return str(page)
+
+def _send_creation_email(order):
+    subject = "New Fritzing Fab Order #(%s)" % order.pk
+    body = _get_creation_mail_body(order)
+    to_email = order.manufacturer.email
+    from_email = order.user_email
+    
+    print """
+    sending email from %(from)s to %(to)s
+    """ % {'from':from_email, 'to': to_email}
+    
+    return send_mail(subject, body, from_email, [to_email], fail_silently=False)

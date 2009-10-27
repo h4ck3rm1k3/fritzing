@@ -27,13 +27,22 @@ class FabOrder(TimeStampedModel):
         canceled_pair,
     )
     
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User,related_name='fab_orders')
     user_email = models.EmailField(blank=True)
     shipping_address = models.ForeignKey('FabOrderAddress',related_name='orders_shipping')
     billing_address = models.ForeignKey('FabOrderAddress',related_name='orders_billing')
     manufacturer = models.ForeignKey('Manufacturer',related_name='orders')
     state = models.IntegerField(_('state'), choices=STATES)
     comments = models.TextField(blank=True,null=True, max_length=1000)
+    
+    @property
+    def status(self):
+        if self.state == self.CHECKING: return "checking since"
+        elif self.state == self.WAITING_APPROVAL: return "awaiting approval since"
+        elif self.state == self.PRODUCING: return "production started on"
+        elif self.state == self.SHIPPING: return "shipped on"
+        elif self.state == self.CANCELED: return "canceled on"
+        else: return "modified on"
     
 class Address(models.Model):
     street = models.CharField(_('street'), max_length=255)

@@ -60,6 +60,8 @@ def profile(request, username, template_name="profiles/profile.html", project_co
             profile_form = ProfileForm(instance=other_user.get_profile())
     else:
         profile_form = None
+        
+    fab_orders = other_user.fab_orders.all().order_by('-modified') if is_me else None;
 
     return render_to_response(template_name, {
         "profile_form": profile_form,
@@ -67,6 +69,7 @@ def profile(request, username, template_name="profiles/profile.html", project_co
         "other_user": other_user,
         "projects" : projects,
         "forum_entries" : forum_entries,
+        "fab_orders": fab_orders,
     }, context_instance=RequestContext(request))
 
 @login_required

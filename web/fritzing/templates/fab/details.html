@@ -28,21 +28,20 @@ Fab Order Details
 {% if not is_customer and not is_manufacturer %}
 	you are not allowed to see this page
 {% else %}
+	{% if show_thanks_msg %} 
+	<div>
+    <p>
+    Thank you very much for your order. It has been send to the manufacturer.<br />
+    He will contact you shortly with an offer.
+    </p>
+    <p>
+    You can keep track of your order status through <a href="{% url profile_detail user.username %}">your profile page</a>.
+    </p>
+	</div>
+	{% endif %}
 	<fieldset>
 		<span class="title">Order</span>
 		<table id="files">
-			<tr>
-				<td width="18%"><label for="fritz_file">Fritzing File:</label></td>
-				<td><a href="{{ order.fritzing_attachment.attachment.url }}">{{ order.fritzing_attachment.filename }}</a></td>
-			</tr>
-			<tr>
-				<td valign="top"><label for="other_files-0">Other Files:</label></td>
-				<td>
-				{% for a in order.other_attachments.all %}
-					<a href="{{ a.attachment.url }}">{{ a.filename }}</a><br/>
-				{% endfor %}
-				</td>
-			</tr>
 			<tr>
 				<td><label>State:</label></td>
 				<td>
@@ -60,6 +59,18 @@ Fab Order Details
 						</select>
 						</form>
 					{% endif %}{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td width="18%"><label for="fritz_file">Fritzing File:</label></td>
+				<td><a href="{{ order.fritzing_attachment.attachment.url }}">{{ order.fritzing_attachment.filename }}</a></td>
+			</tr>
+			<tr>
+				<td valign="top"><label for="other_files-0">Other Files:</label></td>
+				<td>
+				{% for a in order.other_attachments.all %}
+					<a href="{{ a.attachment.url }}">{{ a.filename }}</a><br/>
+				{% endfor %}
 				</td>
 			</tr>
 		</table>

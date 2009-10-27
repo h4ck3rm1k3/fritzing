@@ -127,6 +127,27 @@
 				<p>{% trans "This user has no posts" %}</p>
 			{% endif %}
     	</div>
+    	
+    	{% if user.is_authenticated and is_me %}
+    	 <div class="data_col col1">
+	    	<h3 style="margin-bottom:  10px;">{% trans "Fab Orders" %}</h3>
+		    <form action="{% url faborder-create %}">
+				<input type="submit" value="{% trans "Create New Order..." %}"></input>
+			</form>
+		    {% if fab_orders %}
+				<div class="plain project">
+					{% for order in fab_orders %}
+						<div class="project overview item col1" style="width:100%">
+							<a href="{% url faborder-details order.pk %}">#{{ order.pk }} {{ order.fritzing_attachment.filename}}</a><br />
+							{{ order.status }} {{ order.created|date:_("DATE_FORMAT") }}
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p>{% trans "You have no fab orders" %}</p>
+			{% endif %}
+    	</div>
+    	{% endif %}
     </div>
 {% endblock %}
 
