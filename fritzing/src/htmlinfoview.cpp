@@ -395,7 +395,16 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("svg").arg(svgpath);
 		}
 	}
-	if (modelPart && modelPart->modelPartShared()) {
+	else {
+		FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);
+		if (renderer != NULL) {
+			QString iconpath = renderer->filename();
+			if (!iconpath.isEmpty()) {
+				s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("svg").arg(iconpath);
+			}
+		}
+	}
+	if (modelPart->modelPartShared()) {
 		QString fzppath = modelPart->modelPartShared()->path();
 		if (!fzppath.isEmpty()) {
 			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("fzp").arg(fzppath);
