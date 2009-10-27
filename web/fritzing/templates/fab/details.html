@@ -33,11 +33,15 @@ Fab Order Details
 		<table id="files">
 			<tr>
 				<td width="18%"><label for="fritz_file">Fritzing File:</label></td>
-				<td><input type="file" id="fritz_file" name="fritz_file" class="required"></input></td>
+				<td><a href="{{ order.fritzing_attachment.attachment.url }}">{{ order.fritzing_attachment.filename }}</a></td>
 			</tr>
 			<tr>
-				<td><label for="other_files-0">Other Files:</label></td>
-				<td><input class="upload" type="file" id="other_files-0[]" name="other_files-0[]"></input></td>
+				<td valign="top"><label for="other_files-0">Other Files:</label></td>
+				<td>
+				{% for a in order.other_attachments.all %}
+					<a href="{{ a.attachment.url }}">{{ a.filename }}</a><br/>
+				{% endfor %}
+				</td>
 			</tr>
 			<tr>
 				<td><label>State:</label></td>
@@ -134,13 +138,15 @@ Fab Order Details
 		</div>
 	{% endfor %}
 		
-		{% if order.comments %}
 		<div id="comments">
+			{% if order.comments %}
 			<label for="comments">Comments</label>
 			<textarea readonly="readonly" rows="6" cols="40" 	name="comments" id="comments"
 				maxlength="1000" >{{ order.comments }}</textarea>
+			{% else %}
+			<label>No Comments</label>
+			{% endif %}
 		</div>
-		{% endif %}
 		
 	</fieldset>
 {% endif %}

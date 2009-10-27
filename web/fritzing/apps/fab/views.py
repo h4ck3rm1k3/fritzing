@@ -61,6 +61,15 @@ def _populate_options(order, manufacturer, post):
             instance = FabOrderOnOffOption(order=order,option=option,onoff=False)
             instance.save()
 
+def _place_attachments(request,order,field_name,attach_class):
+    for attachment_file in request.FILES.getlist(field_name):
+        if attachment_file.name:
+            at = attach_class(
+                attachment=attachment_file.name,
+                order=order,
+                user=request.user)
+            at.attachment.save(attachment_file.name, attachment_file)
+            at.save()
 
 @login_required
 def create(request, form_class=FabOrderForm):
@@ -77,12 +86,16 @@ def create(request, form_class=FabOrderForm):
             manufacturer=manufacturer,
             user=request.user,
             user_email=request.POST['email'],
-            state=FabOrder.CHECKING
+            state=FabOrder.CHECKING,
+            comments=request.POST['comments']
         )
         order.save()
 
         _populate_options(order, manufacturer, request.POST)
         
+        _place_attachments(request,order,'fritz_file',FabOrderFritzingFileAttachment)
+        _place_attachments(request,order,'other_files[]',FabOrderOtherAttachment)
+
         # TODO: SEND EMAIL TO THE CUSTOMER AND THE MANUFACTURER
         
         return HttpResponseRedirect(reverse('faborder-details', args=[order.pk]))

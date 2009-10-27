@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
+import os
+from fritzing import settings
 
 class FabOrder(TimeStampedModel):
     CHECKING = 1
@@ -156,20 +158,40 @@ class FabOrderIntegerValueOption(models.Model):
     option = models.ForeignKey(IntegerValueOption)
     value = models.IntegerField()
 
-def faborder_attachment_path(filename):
-    pass
+def faborder_attachment_path(order_id,filename):
+    path = "orders"
+    return os.path.join(settings.USER_FILES_FOLDER, path, str(order_id), filename)
 
 # ATTACHMENTS
-class FritzingFileAttachment():
+class GenericAttachment(models.Model):
+    def attachment_path(self, filename):
+        return faborder_attachment_path(self.order.pk,filename)
+
+    title = models.CharField(_('title'), max_length=255, blank=True,
+        null=True, help_text=_('Leave empty to populate with filename'))
+    attachment = models.FileField(upload_to=attachment_path, max_length=512)
+    
+    def save(self, force_insert=False, force_update=False):
+        if not self.pk and not self.title:
+            self.title = self.attachment.name
+        super(GenericAttachment, self).save(force_insert, force_update)
+
+    @property
+    def filename(self):
+        if self.attachment:
+            filename = os.path.split(self.attachment.name)
+            return filename[1]
+        return None
+    
+class FabOrderFritzingFileAttachment(GenericAttachment):
     order = models.OneToOneField(FabOrder,
         verbose_name=_('order'), related_name='fritzing_attachment')
+    user = models.ForeignKey(User,
+        blank=True, null=True, related_name='faborder_fritzing_attachment')
     
-    def attachment_path(self, filename):
-        return faborder_attachment_path(filename)
-
-class OtherAttachment():
+class FabOrderOtherAttachment(GenericAttachment):    
     order = models.ForeignKey(FabOrder,
         verbose_name=_('order'), related_name='other_attachments')
-    
-    def attachment_path(self, filename):
-        return faborder_attachment_path(filename)
+    user = models.ForeignKey(User,
+        blank=True, null=True, related_name='faborder_other_attachments')
+
