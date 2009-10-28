@@ -1661,12 +1661,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		return;
 	}
 
-	m_resizingJumperItem = dynamic_cast<JumperItem *>(item);
-	if (m_resizingJumperItem != NULL) {
-		m_resizingJumperItem->saveParams();
-		return;
-	}
-
 	Wire * wire = dynamic_cast<Wire *>(item);
 	if ((event->button() == Qt::LeftButton) && (wire != NULL) && !wire->getRatsnest()) {
 		if (canChainWire(wire) && wire->hasConnections() ) {
@@ -1680,6 +1674,13 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 				return;	
 			}
 		}
+	}
+
+	JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+	if (jumperItem != NULL && jumperItem->inDrag()) {
+		m_resizingJumperItem = jumperItem;
+		m_resizingJumperItem->saveParams();
+		return;
 	}
 
 	prepMove();
@@ -6060,7 +6061,7 @@ int SketchWidget::selectAllObsolete()
 		return 0;
 	}
 
-	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all obsolete parts"));
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select outdated parts"));
 
 	stackSelectionState(false, parentCommand);
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);

@@ -49,6 +49,7 @@ public:
 	class ConnectorItem * connector0();
 	class ConnectorItem * connector1();
 	bool hasCustomSVG();
+	bool inDrag();
 
 protected:
 	void resize();
@@ -56,6 +57,7 @@ protected:
 	QPainterPath makePath() const;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y);
 
 protected:

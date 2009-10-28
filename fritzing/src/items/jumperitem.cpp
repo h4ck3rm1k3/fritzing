@@ -67,14 +67,23 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 
 QPainterPath JumperItem::hoverShape() const
 {
-    QPainterPath path = makePath();
-    return qt_graphicsItem_shapeFromPath(path, m_pen, 1);
+	QPainterPath p;
+	QPointF c0 = m_connector0->rect().center();
+	QPointF c1 = m_connector1->rect().center();
+    p.moveTo(c0);
+    p.lineTo(c1);
+	QPen pen = m_pen;
+	pen.setWidthF(1.0);
+	QPainterPath pp = qt_graphicsItem_shapeFromPath(p, pen, 4);
+
+	QPainterPath path = makePath();
+    QPainterPath qq = qt_graphicsItem_shapeFromPath(path, m_pen, 4);
+	return qq.united(pp);
 }
 
 QPainterPath JumperItem::shape() const
 {
-	QPainterPath path = makePath();
-	return qt_graphicsItem_shapeFromPath(path, m_pen, 4);
+	return hoverShape();
 }
 
 QPainterPath JumperItem::makePath() const {
@@ -134,15 +143,27 @@ bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIden
 
 void JumperItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	QPointF c0 = m_connector0->rect().center();
-	QPointF c1 = m_connector1->rect().center();
-	if (GraphicsUtils::distance2(c0, event->pos()) <= GraphicsUtils::distance2(c1, event->pos())) {
+	m_dragItem = NULL;
+	QRectF rect = m_connector0->rect();
+	qreal dx = m_connectorTL.x();
+	qreal dy = m_connectorTL.y();
+	rect.adjust(-dx, -dy, dx, dy);
+	if (rect.contains(event->pos())) {
 		m_dragItem = m_connector0;
 		m_otherItem = m_connector1;
 	}
 	else {
-		m_dragItem = m_connector1;
-		m_otherItem = m_connector0;
+		rect = m_connector1->rect();
+		dx = m_connectorBR.x();
+		dy = m_connectorBR.y();
+		rect.adjust(-dx, -dy, dx, dy);
+		if (rect.contains(event->pos())) {
+			m_dragItem = m_connector1;
+			m_otherItem = m_connector0;
+		}
+		else {
+			return PaletteItem::mousePressEvent(event);
+		}
 	}
 
 	m_dragStartScenePos = event->scenePos();
@@ -169,7 +190,15 @@ void JumperItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	r.moveTo(mapFromScene(p));
 	m_dragItem->setRect(r);
 	resize();
+	ItemBase::updateConnections(m_dragItem);	
 }
+
+void JumperItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+	m_dragItem = NULL;
+	PaletteItem::mouseReleaseEvent(event);
+}
+
 
 QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID) 
 {
@@ -329,3 +358,6 @@ bool JumperItem::hasCustomSVG() {
 	}
 }
 
+bool JumperItem::inDrag() {
+	return m_dragItem != NULL;
+}
