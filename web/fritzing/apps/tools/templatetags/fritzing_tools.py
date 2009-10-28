@@ -159,6 +159,6 @@ def ordered_thread_list(thread_list):
         
     print retval
 
-    retval.sort(lambda t: t.latest_post_time)
+    retval.sort(lambda t1,t2: t1.latest_post_time > t2.latest_post_time)
     return retval
 
