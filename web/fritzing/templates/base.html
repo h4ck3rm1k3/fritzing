@@ -4,6 +4,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery-cachekey.js"></script>
+        <script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/search.js"></script>
         {% block extra_script %}{% endblock %}
         <style type="text/css">
         /*<![CDATA[*/
@@ -33,10 +35,14 @@
                         <img src="{{ MEDIA_URL }}fritzing/img/logo.gif" alt="" title="" height="29" width="289" />
                     </a>
                     <div id="portal-personaltools-wrapper">
+						<form id="searchForm" class="search" style="margin-bottom: 0;" action="http://www.google.com/search" method="get">
+							<input id="search" type="text" value="" name="q"/>
+						</form>
                         {% block login %}{% endblock %}
                     </div>
                 </div>
             </div>
+
             {% if site_wide_announcements %}
                 <div id="site_wide_announcements">
                     <ul>

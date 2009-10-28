@@ -381,7 +381,7 @@ border: none
 
 #portal-personaltools-wrapper {
 padding: 0;
-margin: 17px 5px 0px 0px;
+margin: 0;
 float: right;
 }
 
@@ -418,13 +418,16 @@ width: 210px;
 display: none;
 }
 
-input#searchGadget {
+input#search {
 width: 220px;
 background: url(../img/searchField.png) no-repeat right center;
 color: #666;
+margin: -2px 0px 5px 0px;
+padding: 0px;
+float: right;
 }
 
-input#searchGadget:focus {
+input#search:focus {
 width: 220px;
 background: url(../img/searchField.png) no-repeat right center;
 color: black;
@@ -2410,8 +2413,8 @@ left: 565px;
 top: 10px;
 }
 
-input#searchGadget,
-input#searchGadget:focus {
+input#search,
+input#search:focus {
 background-color: white;
 width: 180px;
 font-size: 11px;
