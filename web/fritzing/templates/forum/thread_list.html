@@ -61,13 +61,14 @@
 </table>
 
 {% if is_paginated %}
-<ul>
-  <li class="djangoForumPagination"><a href="?page=1">{% trans "First" %}</a></li>
+{%% }
+<div class="pagination">
+	<a class="prev" href="?page=1">{% trans "First" %}</a>
 {% for page_number in paginator.page_range %}
-  <li class="djangoForumPagination"><a href="?page={{ page_number }}">{{ page_number }}</a></li>  
+ 	<a class="page" href="?page={{ page_number }}">{{ page_number }}</a>
 {% endfor %}
-  <li class="djangoForumPagination"><a href="?page={{ paginator.num_pages }}">{% trans "Last" %}</a></li>  
-</ul>
+	<a class="page" href="?page={{ paginator.num_pages }}">{% trans "Last" %}</a>
+</div>
 {% endif %}
 
 <h3>Create a Thread</h3>
