@@ -2,6 +2,11 @@
 {% load i18n %}
 {% load markup %}
 
+{% block extra_head %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}tinymce/tiny_mce.js"></script>
+{% endblock %}
+
+
 {% block title %}{{ thread.title|escape }} - {{ forum.title }} - {{ block.super}}{% endblock %}
 
 {% block pagetitle %}{{ forum.title }} &raquo; {{ thread.title|escape }}{% endblock %}
@@ -39,8 +44,16 @@
 {% else %}
 {% if user.is_authenticated %}
 <form method='post' action='reply/'>
-{{ form.as_p }}
-<input type='submit' value='Submit' />
+	<p>
+		<label for="id_body">Body:</label>
+		<textarea id="id_body" name="body" cols="50" rows="8" ></textarea>
+		<script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/forum.tinyMce.js"></script>
+	</p>
+	<p>
+		<label for="id_subscribe">Subscribe via email:</label>
+		<input 	id="id_subscribe" type="checkbox" name="subscribe" />
+	</p>
+	<input type='submit' value='Submit' />
 </form>
 {% else %}
 <p>Please login to post a reply.</p>

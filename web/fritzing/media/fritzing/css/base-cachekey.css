@@ -2566,6 +2566,10 @@ color: #94294E;
 border-bottom: 1px solid;
 border-bottom-color: #94294E;
 }
+	
+#content a.mceButton {
+border-bottom: none;
+}
 
 #content a:visited {
 color: #777;
