@@ -2,11 +2,11 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from fritzing.apps.fab.forms import FabOrderForm, FabOrderAddressForm
 from fritzing.apps.fab.models import *
+from fritzing.apps.projects.views import detail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from apps.projects.views import detail
 import os
 
 def _populate_address(prefix, post):
