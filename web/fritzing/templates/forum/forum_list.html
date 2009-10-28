@@ -1,7 +1,17 @@
 {% extends "forum_base.html" %}{% load i18n %}
 
 {% block content %}
-<h1>Forums</h1>
+<div style="clear: both; float: left;">
+	<h1>Forums</h1>
+</div>
+
+<div style="float: right">
+	<form id="searchForm" class="forumSearch" style="margin-bottom: 0; " action="http://www.google.com/search" method="get">
+		<input style="margin: 0; width: 150px" type="text" value="" name="q" />
+		<input type="submit" value="Search"/>
+	</form>
+</div>
+
 <table class='listing nosort'>
 <thead>
 <tr>
