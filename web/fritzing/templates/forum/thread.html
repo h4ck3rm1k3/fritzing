@@ -9,16 +9,7 @@
 {% block breadcrumbs %}{% for title, url in thread.forum.get_url_name %} &raquo; <a href='{{ url }}'>{{ title }}</a>{% endfor %} &raquo; <a href='{{ thread.get_absolute_url }}'>{{ thread.title|escape }}</a> ({{ thread.posts }} post{{ thread.posts|pluralize }}){% endblock %}
 
 {% block content %}
-<div style="clear: both; float: left;">
-	<h1>{{ thread.title }}</h1>
-</div>
-
-<div style="float: right">
-	<form id="searchForm" class="forumSearch" style="margin-bottom: 0; " action="http://www.google.com/search" method="get">
-		<input style="margin: 0; width: 150px" type="text" value="" name="q" />
-		<input type="submit" value="Search"/>
-	</form>
-</div>
+<h1>{{ thread.title }}</h1>
 {% for post in post_list %}
     <div class="boardCommentComplete {% cycle 'odd' 'even' %}">
         <div class="classCommentBody">
