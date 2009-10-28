@@ -1,6 +1,5 @@
 {% extends "forum_base.html" %}
 {% load i18n %}
-{% load fritzing_tools %}
 
 {% block title %}{{ forum.title }} - {{ block.super }}{% endblock %}
 
@@ -48,7 +47,7 @@
 </thead>
 
 <tbody>
-{% for t in thread_list|ordered_thread_list %}
+{% for t in thread_list %}
     <tr class="{% cycle 'odd' 'even' %}">
     <td>{% if t.sticky %}Sticky {% endif %}<a href='{{ t.get_absolute_url }}'>{{ t.title|escape }}</a>{% if t.closed %} (Closed){% endif %}</td>
     <td style='width: 50px;'>{{ t.posts }}</td>
