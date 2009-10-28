@@ -108,7 +108,10 @@
                                             <a href="/admin/pages/page/{{ current_page.pk }}/" title="">Edit</a>
                                         </li>
                                         {% endif %}
-                                        {% block metalinks %}{% endblock %}
+                                        {% block metalinks %}
+										    <li><a href="{% url ticker_feeds "rss" %}">RSS</a></li>
+										    <li><a href="{% url ticker_feeds "atom" %}">Atom</a></li>
+                                        {% endblock %}
                                         <li id="document-action-print">
                                             <a href="javascript:this.print();" title="">Print this</a>
                                         </li>
