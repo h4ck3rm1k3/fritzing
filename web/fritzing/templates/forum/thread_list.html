@@ -66,7 +66,7 @@
 {% for page_number in paginator.page_range %}
  	<a class="page" href="?page={{ page_number }}">{{ page_number }}</a>
 {% endfor %}
-	<a class="page" href="?page={{ paginator.num_pages }}">{% trans "Last" %}</a>
+	<a class="last" href="?page={{ paginator.num_pages }}">{% trans "Last" %}</a>
 </div>
 <br />
 {% endif %}
