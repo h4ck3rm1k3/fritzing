@@ -146,3 +146,19 @@ def field_value(field):
         data = field.data
     s = data
     return s
+
+@register.filter
+def ordered_thread_list(thread_list):
+    """
+    Get the value of a field.
+    """
+    
+    retval = []
+    for t in thread_list:
+        retval.append(t)
+        
+    print retval
+
+    retval.sort(lambda t: t.latest_post_time)
+    return retval
+
