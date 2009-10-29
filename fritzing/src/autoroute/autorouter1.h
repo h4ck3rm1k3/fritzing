@@ -90,7 +90,7 @@ protected:
 	void addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<struct Subedge *> & subedges);
 	bool traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase * partForBounds, const QPolygonF & boundingPoly, QGraphicsLineItem *);
 	ItemBase * getPartForBounds(struct Edge *);
-	void fixupJumperItems(QList<struct JumperItemStruct *> &);
+	void fixupJumperItems(QList<struct JumperItemStruct *> &, int edgesDone);
 
 public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);

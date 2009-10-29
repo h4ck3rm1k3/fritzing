@@ -312,6 +312,7 @@ void Autorouter1::start()
 				jumperItemStruct->boundingPoly = boundingPoly;
 				jumperItemStruct->jumperWire = jumperWire;
 				jumperItemStructs.append(jumperItemStruct);
+				emit setMaximumProgress(edges.count() + jumperItemStructs.count());
 			}
 		}
 
@@ -349,8 +350,7 @@ void Autorouter1::start()
 
 	delete lineItem;
 
-
-	fixupJumperItems(jumperItemStructs);
+	fixupJumperItems(jumperItemStructs, edgesDone);
 
 	cleanUp();
 	foreach (Edge * edge, edges) {
@@ -364,8 +364,6 @@ void Autorouter1::start()
 		delete jumperItemStruct;
 	}
 	jumperItemStructs.clear();
-
-	emit setProgressValue(edgesDone);
 	
 	updateRatsnest(!m_stopTrace, parentCommand);
 	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
@@ -373,9 +371,10 @@ void Autorouter1::start()
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
-void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
+void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs, int edgesDone) {
 	if (jumperItemStructs.count() <= 0) return;
 
+	int jumpersDone = 0;
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 		ConnectorItem * from = jumperItemStruct->from;
 		ConnectorItem * to = jumperItemStruct->to;
@@ -383,25 +382,27 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 		jumperItemStruct->jumperItem = jumperItem;
 		if (jumperItem == NULL) {
 			// notify user?
-			continue;
+		}
+		else {
+			m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
+
+			m_sketchWidget->scene()->addItem(jumperItem);
+
+			TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH);
+			traceWire->connector0()->tempConnectTo(jumperItem->connector0(), true);
+			jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
+			traceWire->connector1()->tempConnectTo(from, true);
+			from->tempConnectTo(traceWire->connector1(), true);
+
+
+			traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH);
+			traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
+			jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
+			traceWire->connector1()->tempConnectTo(to, true);
+			to->tempConnectTo(traceWire->connector1(), true);
 		}
 
-		m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
-
-		m_sketchWidget->scene()->addItem(jumperItem);
-
-		TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH);
-		traceWire->connector0()->tempConnectTo(jumperItem->connector0(), true);
-		jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
-		traceWire->connector1()->tempConnectTo(from, true);
-		from->tempConnectTo(traceWire->connector1(), true);
-
-
-		traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH);
-		traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
-		jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
-		traceWire->connector1()->tempConnectTo(to, true);
-		to->tempConnectTo(traceWire->connector1(), true);
+		emit setProgressValue(edgesDone + (++jumpersDone));
 
 	}
 }
