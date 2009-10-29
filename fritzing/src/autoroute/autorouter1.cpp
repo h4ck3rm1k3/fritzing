@@ -651,6 +651,33 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 	QList<Wire *> oldTraces;
 	QList<JumperItem *> oldJumperItems;
 	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+		if (jumperItem == NULL) continue;
+
+		if (deleteAll || jumperItem->autoroutable()) {
+			oldJumperItems.append(jumperItem);
+			QList<ConnectorItem *> both;
+			foreach (ConnectorItem * ci, jumperItem->connector0()->connectedToItems()) both.append(ci);
+			foreach (ConnectorItem * ci, jumperItem->connector1()->connectedToItems()) both.append(ci);
+			foreach (ConnectorItem * connectorItem, both) {
+				Wire * w = dynamic_cast<Wire *>(connectorItem->attachedTo());
+				if (w == NULL) continue;
+
+				if (w->getTrace() || w->getJumper()) {
+					QList<Wire *> wires;
+					QList<ConnectorItem *> ends;
+					QList<ConnectorItem *> uniqueEnds;
+
+					w->collectChained(wires, ends, uniqueEnds);
+					foreach (Wire * wire, wires) {
+						wire->setAutoroutable(true);
+					}
+				}
+			}
+		}
+	}
+
+	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire != NULL) {		
 			if (wire->getTrace() || wire->getJumper()) {
@@ -668,13 +695,6 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 			continue;
 		}
 
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-		if (jumperItem != NULL) {
-			if (deleteAll || jumperItem->autoroutable()) {
-				oldJumperItems.append(jumperItem);
-			}
-			continue;
-		}
 	}
 
 
