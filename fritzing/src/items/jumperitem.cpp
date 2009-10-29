@@ -361,3 +361,8 @@ bool JumperItem::hasCustomSVG() {
 bool JumperItem::inDrag() {
 	return m_dragItem != NULL;
 }
+
+void JumperItem::loadLayerKin( const LayerHash & viewLayers) {
+	PaletteItem::loadLayerKin(viewLayers);
+	resize();
+}

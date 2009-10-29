@@ -50,6 +50,7 @@ public:
 	class ConnectorItem * connector1();
 	bool hasCustomSVG();
 	bool inDrag();
+	void loadLayerKin( const LayerHash & viewLayers);
 
 protected:
 	void resize();

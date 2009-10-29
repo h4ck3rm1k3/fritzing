@@ -1210,8 +1210,8 @@ void MainWindow::createPartMenuActions() {
 	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
 	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
 
-        m_selectAllObsoleteAct = new QAction(tr("Find outdated parts"), this);
-        m_selectAllObsoleteAct->setStatusTip(tr("Find outdated parts"));
+        m_selectAllObsoleteAct = new QAction(tr("Select outdated parts"), this);
+        m_selectAllObsoleteAct->setStatusTip(tr("Select outdated parts"));
 	connect(m_selectAllObsoleteAct, SIGNAL(triggered()), this, SLOT(selectAllObsolete()));
 
         m_swapObsoleteAct = new QAction(tr("Update selected parts"), this);
