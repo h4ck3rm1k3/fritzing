@@ -30,3 +30,16 @@ scrollbar-highlight-color:#F0F0EE;
 scrollbar-shadow-color:#F0F0EE;
 scrollbar-track-color:#F5F5F5;
 }
+
+code {
+	font-family: monospace;
+	color: black;
+	font-size: medium;
+	background: #b8e5cb;
+	border: 1px dashed #4EA172;
+	display: block;
+	overflow: auto;
+	padding: 5px;
+	margin: 5px;
+	white-space: pre;
+}
