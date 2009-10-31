@@ -142,7 +142,7 @@ tr("<p>Special thanks goes out to:<br />"
 tr("<p>Thanks to Kurt Badelt<br/>"
    "for the Spanish translation,<br/>") +
 
-tr("Gianluca Urgese<br/>"
+tr("to Gianluca Urgese<br/>"
    "for the Italian translation,<br/>") +
 
 tr("to Nuno Pessanha Santos<br/>"
@@ -150,6 +150,9 @@ tr("to Nuno Pessanha Santos<br/>"
 
 tr("to Yuelin and Ninjia<br/>"
    "for the Chinese (Simplified) translation,<br/>") +
+
+tr("to Hiroshi Suzuki<br/>"
+   "for the Japanese translation,<br/>") +
 
 tr("and to Vladimir Savinov<br/>"
    "for the Russian translation.</p>") +

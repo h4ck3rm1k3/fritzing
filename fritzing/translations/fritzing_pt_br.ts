@@ -1745,28 +1745,47 @@ Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select All Obsolete Parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swap Obsolete Parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swap Selected Obsolete Parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No obsolete parts found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No new part found for %1.
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select outdated parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update selected parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No outdated parts found.
+All your parts are up-to-date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outdated parts</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
-        <source>Swap %n obsolete part(s)</source>
+        <source>Found %n outdated parts. Do you want to update them now?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Unknown module id for %1.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Successfully updated %n part(s).
+Please check all views for potential side-effects.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Update %n part(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -2708,7 +2727,7 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select all obsolete parts</source>
+        <source>Select outdated parts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
