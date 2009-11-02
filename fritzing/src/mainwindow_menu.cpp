@@ -3309,7 +3309,7 @@ void MainWindow::swapObsolete() {
 	if (itemBases.count() <= 0) return;
 
 	QUndoCommand* parentCommand = new QUndoCommand();
-	bool count = 0;
+        int count = 0;
 
 	foreach (ItemBase * itemBase, itemBases) {
 		QString newModuleID = itemBase->modelPart()->replacedby();
@@ -3350,14 +3350,14 @@ void MainWindow::swapObsolete() {
 		}
 	}
 
-        QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %n part(s).\n"
-                                                          "Please check all views for potential side-effects.", "", count) );
+        QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
+                                                          "Please check all views for potential side-effects.").arg(count) );
 
 	if (count == 0) {
 		delete parentCommand;
 	}
 	else {
-                parentCommand->setText(tr("Update %n part(s)", "", count));
+                parentCommand->setText(tr("Update %1 part(s)", "").arg(count));
 		m_undoStack->push(parentCommand);
 	}
 
