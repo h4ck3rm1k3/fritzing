@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.1201" moduleId="1000AAAA01" >
- <version>1</version>
+<module fritzingVersion="0.1.1201" moduleId="2010BABA11">
+ <version>2</version>
  <author>Stefan Hermann</author>
  <title>Ceramic Capacitor</title>
  <label>C</label>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.beta.1407" moduleId="1905ABDC24" >
- <version>2</version>
+<module fritzingVersion="0.1.beta.1407" moduleId="2915BBEC34" >
+ <version>3</version>
  <author>Stefan Hermann</author>
  <title>green LED - 5mm</title>
  <label>LED</label>

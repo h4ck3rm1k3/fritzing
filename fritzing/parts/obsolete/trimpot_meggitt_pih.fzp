@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module moduleId="4244TPM6MM" >
- <version>2</version>
+<module moduleId="3234TPM6MM" >
+ <version>1</version>
  <author>Brendan Howell</author>
  <title>Basic Potentiometer</title>
  <label>R</label>

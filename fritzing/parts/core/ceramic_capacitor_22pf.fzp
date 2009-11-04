@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.1201" moduleId="1001ABDC02A" >
- <version>1</version>
+<module fritzingVersion="0.1.1201" moduleId="2011BBEC12B" >
+ <version>2</version>
  <author>Brendan Howell</author>
  <title>Ceramic Disk Capacitor</title>
  <label>C</label>

@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.beta.1396" moduleId="2910BBEC34" >
- <version>3</version>
- <author>Stefan Hermann</author>
- <title>Blue LED - 5mm</title>
+<module fritzingVersion="0.1.beta.1396" moduleId="1234ABDC24" >
+ <version>2</version>
+ <author>Brendan Howell</author>
+ <title>Red LED - 5mm</title>
  <label>LED</label>
- <date>2008-10-10</date>
+ <date>2008-07-25</date>
  <tags>
   <tag>LED</tag>
-  <tag>Blue LED</tag>
+  <tag>Red LED</tag>
   <tag>indicator</tag>
   <tag>fritzing core</tag>
  </tags>
@@ -15,17 +15,17 @@
   <property name="package" >T1.75 (5mm)</property>
   <property name="family" >LED</property>
   <property name="forward voltage" >1.8V</property>
-  <property name="color" >blue</property>
+  <property name="color" >red</property>
  </properties>
- <description>A generic blue LED (~1.8V)</description>
+ <description>A generic red LED (~1.8V)</description>
  <views>
   <iconView>
-   <layers image="icon/LED-blue-5mmicon.svg" >
+   <layers image="icon/LED-red-5mmicon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/LED-5mm-blue.svg" >
+   <layers image="breadboard/LED-5mm-red.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>

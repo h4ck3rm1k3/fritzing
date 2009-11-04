@@ -1,46 +1,40 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.beta.1396" moduleId="2910BBEC34" >
- <version>3</version>
- <author>Stefan Hermann</author>
- <title>Blue LED - 5mm</title>
- <label>LED</label>
- <date>2008-10-10</date>
+<module fritzingVersion="0.1.beta.1396" moduleId="1234ABDC24diode" >
+ <version>2</version>
+ <author>JennyLC</author>
+ <title>Rectifier Diode</title>
+ <label>D</label>
+ <date>2008-11-11</date>
  <tags>
-  <tag>LED</tag>
-  <tag>Blue LED</tag>
-  <tag>indicator</tag>
+  <tag>Diode</tag>
+  <tag>Rectifider Diode</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="package" >T1.75 (5mm)</property>
-  <property name="family" >LED</property>
-  <property name="forward voltage" >1.8V</property>
-  <property name="color" >blue</property>
+  <property name="family" >Diode</property>
+  <property name="part" >1N4001</property>
  </properties>
- <description>A generic blue LED (~1.8V)</description>
+ <description>A generic rectifier diode</description>
  <views>
   <iconView>
-   <layers image="icon/LED-blue-5mmicon.svg" >
+   <layers image="icon/basic-diode.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/LED-5mm-blue.svg" >
+   <layers image="breadboard/basic-diode.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/led.svg" >
+   <layers image="schematic/diode.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/T1.75_LED.svg" >
+   <layers image="pcb/axial_lay_300mil.svg" >
     <layer layerId="copper0" />
-    <layer layerId="keepout" />
-    <layer layerId="soldermask" />
     <layer layerId="silkscreen" />
-    <layer layerId="outline" />
    </layers>
   </pcbView>
  </views>
@@ -49,7 +43,7 @@
    <description>cathode pin</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+     <p svgId="connector0pin" layer="breadboard" />
     </breadboardView>
     <schematicView>
      <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
@@ -63,7 +57,7 @@
    <description>anode pin</description>
    <views>
     <breadboardView>
-     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+     <p svgId="connector1pin" layer="breadboard" />
     </breadboardView>
     <schematicView>
      <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />

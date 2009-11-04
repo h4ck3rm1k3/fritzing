@@ -1,52 +1,49 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.beta.1396" moduleId="2910BBEC34" >
- <version>3</version>
+<module fritzingVersion="0.1.1201" moduleId="1001ABDC02" >
+ <version>1</version>
  <author>Stefan Hermann</author>
- <title>Blue LED - 5mm</title>
- <label>LED</label>
- <date>2008-10-10</date>
+ <title>Ceramic Capacitor</title>
+ <label>C</label>
+ <date>2008-09-23</date>
  <tags>
-  <tag>LED</tag>
-  <tag>Blue LED</tag>
-  <tag>indicator</tag>
+  <tag>Capacitor</tag>
+  <tag>Ceramic Capacitor</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="package" >T1.75 (5mm)</property>
-  <property name="family" >LED</property>
-  <property name="forward voltage" >1.8V</property>
-  <property name="color" >blue</property>
+  <property name="family" >Capacitor</property>
+  <property name="Capacitance" >0.01 &#181;F</property>
+  <property name="Capacitor Type" >Ceramic</property>
+  <property name="Rated Voltage" >50 v</property>
  </properties>
- <description>A generic blue LED (~1.8V)</description>
+ <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
+ <description>0.01 &#181;F Ceramic Disk Capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/LED-blue-5mmicon.svg" >
+   <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/LED-5mm-blue.svg" >
+   <layers image="breadboard/ceramic_disk_capacitor_ochre.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/led.svg" >
+   <layers image="schematic/capacitor.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/T1.75_LED.svg" >
+   <layers image="pcb/axial_lay_300mil.svg" >
     <layer layerId="copper0" />
-    <layer layerId="keepout" />
-    <layer layerId="soldermask" />
     <layer layerId="silkscreen" />
-    <layer layerId="outline" />
    </layers>
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="cathode" >
-   <description>cathode pin</description>
+  <connector type="male" id="connector0" name="pin 0" >
+   <description>pin0</description>
    <views>
     <breadboardView>
      <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
@@ -59,8 +56,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="anode" >
-   <description>anode pin</description>
+  <connector type="male" id="connector1" name="pin 1" >
+   <description>pin1</description>
    <views>
     <breadboardView>
      <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
