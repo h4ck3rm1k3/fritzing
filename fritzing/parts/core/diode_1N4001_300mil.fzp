@@ -32,7 +32,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/axial_lay_300mil.svg" >
+   <layers image="pcb/axial_lay_2_300mil_pcb.svg" >
     <layer layerId="copper0" />
     <layer layerId="silkscreen" />
    </layers>
