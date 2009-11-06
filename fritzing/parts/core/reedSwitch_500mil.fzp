@@ -30,7 +30,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/axial_lay_500mil.svg">
+            <layers image="pcb/axial_lay_2_500mil_pcb.svg">
                 <layer layerId="copper0"></layer>
                 <layer layerId="silkscreen"></layer>
             </layers>
@@ -47,7 +47,7 @@
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector0pad"></p>
+                    <p layer="copper0" svgId="connector0pin"></p>
                 </pcbView>
             </views>
         </connector>
@@ -61,7 +61,7 @@
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></p>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector1pad"></p>
+                    <p layer="copper0" svgId="connector1pin"></p>
                 </pcbView>
             </views>
         </connector>

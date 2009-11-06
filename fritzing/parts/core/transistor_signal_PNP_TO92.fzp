@@ -2,14 +2,14 @@
 <module fritzingVersion="0.1.1255" moduleId="2244EBEC21" >
  <version>3</version>
  <author>Stefan Hermann</author>
- <title>pnp-Transistor</title>
+ <title>PNP-Transistor</title>
  <label>Q</label>
  <date>2008-10-10</date>
  <tags>
   <tag>pnp</tag>
   <tag>transistor</tag>
   <tag>signal transistor</tag>
-  <tag>aplifier</tag>
+  <tag>amplifier</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
@@ -17,7 +17,7 @@
   <property name="family" >Bipolar Transistor</property>
   <property name="doping" >pnp</property>
  </properties>
- <description>A standard pnp-transistor</description>
+ <description>A standard PNP signal transistor</description>
  <views>
   <iconView>
    <layers image="icon/basic_transistor_pnpicon.svg" >
@@ -46,7 +46,7 @@
    <description>emitter</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+     <p svgId="connector2pin" layer="breadboard" terminalId="connector0terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
@@ -74,7 +74,7 @@
    <description>collector</description>
    <views>
     <breadboardView>
-     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector2terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />

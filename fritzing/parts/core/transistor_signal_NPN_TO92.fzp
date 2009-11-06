@@ -9,7 +9,7 @@
   <tag>NPN</tag>
   <tag>transistor</tag>
   <tag>signal transistor</tag>
-  <tag>aplifier</tag>
+  <tag>amplifier</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
@@ -46,7 +46,7 @@
    <description>emitter</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+     <p svgId="connector2pin" layer="breadboard" terminalId="connector0terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
@@ -74,7 +74,7 @@
    <description>collector</description>
    <views>
     <breadboardView>
-     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector2terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
