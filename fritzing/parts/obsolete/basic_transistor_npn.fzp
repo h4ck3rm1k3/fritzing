@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.1255" moduleId="1234DBDC00" >
- <version>2</version>
+ <version replacedby="2244EBEC10">2</version>
  <author>Stefan Hermann</author>
  <title>NPN-Transistor</title>
  <label>Q</label>

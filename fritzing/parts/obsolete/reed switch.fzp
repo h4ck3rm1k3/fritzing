@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.0.b.02.26.2493" moduleId="b0e55b1d0b90f35f7ce4a2221e985a35">
-<version>1</version>
+<version replacedby="c0e65b2d0c9003507cf4a3222e995a45">1</version>
     <author>Lionel Michel</author>
     <title>Reed switch</title>
     <label>S</label>

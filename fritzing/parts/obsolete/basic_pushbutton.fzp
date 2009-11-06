@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.b.1486" moduleId="1099ABDE24_ST" >
- <version>1</version>
+ <version replacedby="20A9BBEE34_ST">1</version>
  <title>Pushbutton</title>
  <label>S</label>
  <date>2008-09-16</date>

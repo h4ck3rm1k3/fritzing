@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.7b.08.26.3377" moduleId="1000ABDD10012">
-    <version>2</version>
+    <version replacedby="2010BBCD20113">2</version>
     <title>Basic Photo-Resistor (Photocell)</title>
     <label>R</label>
     <date>2008-09-25</date>

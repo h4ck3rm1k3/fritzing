@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.beta.1396" moduleId="1234ABDC24" >
- <version>2</version>
+ <version replacedby="2244BBEC34">2</version>
  <author>Brendan Howell</author>
  <title>Red LED - 5mm</title>
  <label>LED</label>

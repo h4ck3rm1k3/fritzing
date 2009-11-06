@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.1.beta.1407" moduleId="1901ABDC24" >
- <version>2</version>
+ <version replacedby="2911BBEC34">2</version>
  <author>Stefan Hermann</author>
  <title>yellow LED - 5mm</title>
  <label>LED</label>
