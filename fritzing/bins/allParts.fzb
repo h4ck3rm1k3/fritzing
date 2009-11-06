@@ -16,7 +16,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24diode" modelIndex="348" path="parts/core/basic-diode.fzp">
+        <instance moduleIdRef="2244BBEC34diode" modelIndex="348" path="parts/core/diode_1N4001_300mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -65,21 +65,21 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1001ABDC02A" modelIndex="354" path="parts/core/ceramic_capacitor_22pf.fzp">
+        <instance moduleIdRef="2011BBEC12B" modelIndex="354" path="parts/core/capacitor_ceramic_300mil_22pF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1001ABDC02" modelIndex="355" path="parts/core/ceramic_capacitor_0_01uF.fzp">
+        <instance moduleIdRef="2011BBEC12" modelIndex="355" path="parts/core/capacitor_ceramic_300mil_0_01uF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1000AAAA01" modelIndex="356" path="parts/core/ceramic_capacitor_basic_0_1uF.fzp">
+        <instance moduleIdRef="2010BABA11" modelIndex="356" path="parts/core/capacitor_ceramic_300mil_0_1uF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -170,14 +170,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1000ABDD10012" modelIndex="368" path="parts/core/basic_ldr.fzp">
+        <instance moduleIdRef="2010BBCD20113" modelIndex="368" path="parts/core/LDR_photocell_300mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1002ACDC0FA" modelIndex="369" path="parts/core/basic_thermistor.fzp">
+        <instance moduleIdRef="i2012BCEC1FB" modelIndex="369" path="parts/core/thermistor_300mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -212,6 +212,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="4244TPM6MM" modelIndex="371" path="parts/core/pot_trimmer_6mm.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1238DBDC00" modelIndex="372" path="parts/core/basic_power_transistor_npn.fzp">
             <views>
                 <iconView layer="icon">
@@ -226,14 +233,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1099ABDE24_ST" modelIndex="374" path="parts/core/basic_pushbutton.fzp">
+        <instance moduleIdRef="20A9BBEE34_ST" modelIndex="374" path="parts/core/pushbutton_4_horizontal.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" modelIndex="375" path="parts/core/basic_pushbutton_2lead_horizon.fzp">
+        <instance moduleIdRef="20A9BBEE34_ST-2leadbutton-horizon" modelIndex="375" path="parts/core/pushbutton_2_horizontal.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -254,14 +261,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234DBDC00" modelIndex="377" path="parts/core/basic_transistor_npn.fzp">
+        <instance moduleIdRef="2244EBEC10" modelIndex="377" path="parts/core/transistor_signal_NPN_TO92.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234DBDC11" modelIndex="378" path="parts/core/basic_transistor_pnp.fzp">
+        <instance moduleIdRef="2244EBEC21" modelIndex="378" path="parts/core/transistor_signal_PNP_TO92.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -310,35 +317,35 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1900ABDC24" modelIndex="383" path="parts/core/LED-blue-5mm.fzp">
+        <instance moduleIdRef="2910BBEC34" modelIndex="383" path="parts/core/LED-blue-5mm.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1905ABDC24" modelIndex="384" path="parts/core/LED-green-5mm.fzp">
+        <instance moduleIdRef="2915BBEC34" modelIndex="384" path="parts/core/LED-green-5mm.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24" modelIndex="385" path="parts/core/LED-red-5mm.fzp">
+        <instance moduleIdRef="2244BBEC34" modelIndex="385" path="parts/core/LED-red-5mm.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1902whiteABDC24" modelIndex="386" path="parts/core/LED-white-5mm.fzp">
+        <instance moduleIdRef="2912whiteBBEC34" modelIndex="386" path="parts/core/LED-white-5mm.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1901ABDC24" modelIndex="387" path="parts/core/LED-yellow-5mm.fzp">
+        <instance moduleIdRef="2911BBEC34" modelIndex="387" path="parts/core/LED-yellow-5mm.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
