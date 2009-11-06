@@ -27,7 +27,7 @@
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
-        <breadboardView>
+        <breadboardView fliphorizontal="true">
             <layers image="breadboard/antenna.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
