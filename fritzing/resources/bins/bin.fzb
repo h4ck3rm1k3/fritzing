@@ -9,7 +9,7 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="1000AAAA01" modelIndex="6" path="parts/core/ceramic_capacitor_basic_0_1uF.fzp">
+      <instance moduleIdRef="2010BABA11" modelIndex="6" path="parts/core/capacitor_ceramic_300mil_0_1uF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -30,21 +30,21 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24diode" modelIndex="9" path="parts/core/basic-diode.fzp">
+        <instance moduleIdRef="2244BBEC34diode" modelIndex="9" path="parts/core/diode_1N4001_300mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234DBDC00" modelIndex="10" path="parts/core/basic_transistor_npn.fzp">
+        <instance moduleIdRef="2244EBEC21" modelIndex="10" path="parts/core/transistor_signal_PNP_TO92.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1238DBDC00" modelIndex="11" path="parts/core/basic_power_transistor_npn.fzp">
+        <instance moduleIdRef="2244EBEC10" modelIndex="11" path="parts/core/transistor_signal_NPN_TO92.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -72,14 +72,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" modelIndex="15" path="parts/core/basic_pushbutton_2lead_horizon.fzp">
+        <instance moduleIdRef="20A9BBEE34_ST-2leadbutton-horizon" modelIndex="15" path="parts/core/pushbutton_2_horizontal.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1099ABDE24_ST" modelIndex="16" path="parts/core/basic_pushbutton.fzp">
+        <instance moduleIdRef="20A9BBEE34_ST" modelIndex="16" path="parts/core/pushbutton_4_horizontal.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -107,21 +107,21 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1000ABDD10012" modelIndex="20" path="parts/core/basic_ldr.fzp">
+        <instance moduleIdRef="2010BBCD20113" modelIndex="20" path="parts/core/LDR_photocell_300mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1002ACDC0FA" modelIndex="21" path="parts/core/basic_thermistor.fzp">
+        <instance moduleIdRef="2012BCEC1FB" modelIndex="21" path="parts/core/thermistor_300mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="b0e55b1d0b90f35f7ce4a2221e985a35" modelIndex="22" path="parts/core/reed switch.fzp">
+        <instance moduleIdRef="c0e65b2d0c9003507cf4a3222e995a45" modelIndex="22" path="parts/core/reedSwitch_500mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -135,7 +135,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24" modelIndex="24" path="parts/core/LED-red-5mm.fzp">
+        <instance moduleIdRef="2244BBEC34" modelIndex="24" path="parts/core/LED-red-5mm.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
