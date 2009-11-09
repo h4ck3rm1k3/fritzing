@@ -76,6 +76,7 @@ protected:
 	static qreal m_printerScale;
 	static QHash<QString, RendererHash * > m_filenameRendererHash;
 	static QHash<QString, RendererHash * > m_moduleIDRendererHash;
+	static QSet<RendererHash *> m_deleted;
 };
 
 

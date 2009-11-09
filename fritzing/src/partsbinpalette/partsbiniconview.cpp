@@ -105,7 +105,7 @@ void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
 	if (m_infoView == NULL) return;
 
 	if(m_infoViewOnHover) {
-		SvgIconWidget * item = dynamic_cast<SvgIconWidget*>(itemAt(event->pos()));
+		SvgIconWidget * item = svgIconWidgetAt(event->pos());
 		if(item) showInfo(item);
 	}
 }
@@ -115,11 +115,10 @@ void PartsBinIconView::showInfo(SvgIconWidget * item) {
 }
 
 void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
-	QGraphicsItem* item = this->itemAt(event->pos());
-	if (item == NULL || event->button() != Qt::LeftButton) {
+	SvgIconWidget* icon = svgIconWidgetAt(event->pos());
+	if (icon == NULL || event->button() != Qt::LeftButton) {
 		QGraphicsView::mousePressEvent(event);
 	} else {
-		SvgIconWidget* icon = dynamic_cast<SvgIconWidget *>(item);
 		if (icon != NULL) {
 			QList<QGraphicsItem *> items = scene()->selectedItems();
 			for (int i = 0; i < items.count(); i++) {
@@ -138,7 +137,7 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 				showInfo(icon);
 			}
 
-			mousePressOnItem(event->pos(), moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
+			mousePressOnItem(event->pos(), moduleID, icon->rect().size().toSize(), (mts - icon->pos()), hotspot );
 		}
 	}
 	informNewSelection();
@@ -303,7 +302,7 @@ void PartsBinIconView::itemMoved(int fromIndex, int toIndex) {
 
 int PartsBinIconView::itemIndexAt(const QPoint& pos, bool &trustIt) {
 	trustIt = true;
-	QGraphicsWidget *item = dynamic_cast<QGraphicsWidget*>(itemAt(pos));
+	SvgIconWidget *item = svgIconWidgetAt(pos);
 	if(item) {
 		int foundIdx = m_layout->indexOf(item);
 		/*if(foundIdx != -1) { // no trouble finding it
@@ -343,18 +342,18 @@ bool PartsBinIconView::inEmptyArea(const QPoint& pos) {
 
 QGraphicsWidget* PartsBinIconView::closestItemTo(const QPoint& pos) {
 	QPointF realPos = mapToScene(pos);
-	QGraphicsItem *item = NULL;
-	if((item = itemAt(realPos.x()+ICON_SPACING,realPos.y()+ICON_SPACING))) {
-		return dynamic_cast<QGraphicsWidget*>(item);
+	SvgIconWidget *item = NULL;
+	if((item = svgIconWidgetAt(realPos.x()+ICON_SPACING,realPos.y()+ICON_SPACING))) {
+		return item;
 	}
-	if((item = itemAt(realPos.x()-ICON_SPACING,realPos.y()+ICON_SPACING))) {
-		return dynamic_cast<QGraphicsWidget*>(item);
+	if((item = svgIconWidgetAt(realPos.x()-ICON_SPACING,realPos.y()+ICON_SPACING))) {
+		return item;
 	}
-	if((item = itemAt(realPos.x()+ICON_SPACING,realPos.y()-ICON_SPACING))) {
-		return dynamic_cast<QGraphicsWidget*>(item);
+	if((item = svgIconWidgetAt(realPos.x()+ICON_SPACING,realPos.y()-ICON_SPACING))) {
+		return item;
 	}
-	if((item = itemAt(realPos.x()-ICON_SPACING,realPos.y()-ICON_SPACING))) {
-		return dynamic_cast<QGraphicsWidget*>(item);
+	if((item = svgIconWidgetAt(realPos.x()-ICON_SPACING,realPos.y()-ICON_SPACING))) {
+		return item;
 	}
 	return NULL;
 }
@@ -371,7 +370,7 @@ QList<QObject*> PartsBinIconView::orderedChildren() {
 }
 
 void PartsBinIconView::showContextMenu(const QPoint& pos) {
-	QGraphicsItem *it = itemAt(pos);
+	SvgIconWidget *it = svgIconWidgetAt(pos);
 
 	QMenu *menu;
 	if(it) {
@@ -382,4 +381,22 @@ void PartsBinIconView::showContextMenu(const QPoint& pos) {
 		menu = m_binMenu;
 	}
     menu->exec(mapToGlobal(pos));
+}
+
+SvgIconWidget * PartsBinIconView::svgIconWidgetAt(int x, int y) {
+	return svgIconWidgetAt(QPoint(x, y));
+}
+
+SvgIconWidget * PartsBinIconView::svgIconWidgetAt(const QPoint & pos) {
+	QGraphicsItem * item = itemAt(pos);
+	while (item != NULL) {
+		SvgIconWidget * svgIconWidget = dynamic_cast<SvgIconWidget *>(item);
+		if (svgIconWidget != NULL) {
+			return svgIconWidget;
+		}
+
+		item = item->parentItem();
+	}
+
+	return NULL;
 }

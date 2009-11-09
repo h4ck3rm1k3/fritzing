@@ -29,9 +29,8 @@ $Date$
 #ifndef SVGICONWIDGET_H_
 #define SVGICONWIDGET_H_
 
-#include <QGraphicsProxyWidget>
-#include <QLabel>
-#include <QFrame>
+#include <QGraphicsWidget>
+#include <QGraphicsPixmapItem>
 #include <QToolTip>
 
 #include "../modelpart.h"
@@ -39,7 +38,8 @@ $Date$
 
 class SvgIconWidgetContainer;
 
-class SvgIconWidget : public QGraphicsProxyWidget {
+class SvgIconWidget : public QGraphicsWidget
+{
 	Q_OBJECT
 	public:
 		SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
@@ -49,41 +49,12 @@ class SvgIconWidget : public QGraphicsProxyWidget {
 		QPoint globalPos();
 
 	protected:
-
-		enum StyleSheetType {
-			SELECTEDSTYLESHEET = 1,
-			NONSELECTEDSTYLESHEET = 0
-		};
-
 		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 
 		PaletteItem *m_paletteItem;
-		QLabel *m_pixmapContainer;
-		SvgIconWidgetContainer *m_container;
-		StyleSheetType m_styleSheetType;
+		QGraphicsPixmapItem *m_pixmapItem;
 		QString m_moduleId;
 };
 
-class SvgIconWidgetContainer : public QFrame {
-	public:
-		SvgIconWidgetContainer(PaletteItem *paletteItem, SvgIconWidget *parent) : QFrame() {
-			m_parent = parent;
-			m_paletteItem = paletteItem;
-		}
-
-	protected:
-		bool event(QEvent * event) {
-			if(event->type() == QEvent::ToolTip) {
-				QHelpEvent *tooltipEvent = (QHelpEvent*)event;
-				QToolTip::showText(m_parent->globalPos()+tooltipEvent->pos(), m_paletteItem->toolTip());
-				return true;
-			} else {
-				return QFrame::event(event);
-			}
-		}
-
-		SvgIconWidget *m_parent;
-		PaletteItem *m_paletteItem;
-};
 
 #endif /* SVGICONWIDGET_H_ */

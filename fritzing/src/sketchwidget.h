@@ -121,7 +121,7 @@ public:
 	const QColor& standardBackground();
  	void setItemMenu(QMenu*);
  	void setWireMenu(QMenu*);
-	void changeConnection(long fromID,
+	virtual void changeConnection(long fromID,
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
 						  bool connect, bool doEmit, bool seekLayerKin,

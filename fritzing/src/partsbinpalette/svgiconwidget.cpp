@@ -25,9 +25,6 @@ $Date$
 ********************************************************************/
 
 
-
-#include <QHBoxLayout>
-
 #include "svgiconwidget.h"
 #include "../infographicsview.h"
 #include "../debugdialog.h"
@@ -39,40 +36,34 @@ $Date$
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
 
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
-	: QGraphicsProxyWidget() {
-	setFlags(QGraphicsItem::ItemIsSelectable);
+	: QGraphicsWidget() 
+{
 	m_moduleId = modelPart->moduleID();
+
+	setFlags(QGraphicsItem::ItemIsSelectable);
+
+	this->setMaximumSize(QSize(32, 32));
 
 	m_paletteItem = new IconWidgetPaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
 	m_paletteItem->renderImage(modelPart, ViewIdentifierClass::IconView, viewLayers,ViewLayer::Icon, false);
 
-	m_container = new SvgIconWidgetContainer(m_paletteItem, this);
-	m_container->setStyleSheet(NON_SELECTED_STYLE);
-	m_styleSheetType = NONSELECTEDSTYLESHEET;
-	m_container->setFixedSize(32,32);
-
-	m_pixmapContainer = new QLabel(m_container);
-	QPixmap * pixmap = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, m_container->size());
+	QPixmap * pixmap = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(32, 32));
 	if (pixmap) {
-		m_pixmapContainer->setPixmap(*pixmap);
+		m_pixmapItem = new QGraphicsPixmapItem(*pixmap, this);
 		delete pixmap;
 	}
+	else {
+		m_pixmapItem = new QGraphicsPixmapItem(this);
+	}
 
-	QHBoxLayout *lo = new QHBoxLayout(m_container);
-	lo->setMargin(0);
-	lo->setSpacing(0);
-	lo->addWidget(m_pixmapContainer);
-	m_container->setLayout(lo);
+	m_pixmapItem->setFlags(0);
 
-	setWidget(m_container);
 
 	m_paletteItem->setTooltip();
 	setToolTip(m_paletteItem->toolTip());
 }
 
 SvgIconWidget::~SvgIconWidget() {
-	// should delete it
-	//delete m_container;
 	delete m_paletteItem;
 }
 
@@ -85,17 +76,15 @@ const QString &SvgIconWidget::moduleID() const {
 }
 
 void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	QColor c(0xc2, 0xc2,0xc2);
 	if(isSelected()) {
-		if (m_styleSheetType != SELECTEDSTYLESHEET) {
-			m_container->setStyleSheet(SELECTED_STYLE);
-			m_styleSheetType = SELECTEDSTYLESHEET;
-		}
-	} else if (m_styleSheetType != NONSELECTEDSTYLESHEET) {
-		m_container->setStyleSheet(NON_SELECTED_STYLE);
-		m_styleSheetType = NONSELECTEDSTYLESHEET;
-	}
+		c.setRgb(255, 255, 255);
+	} 
 
-	QGraphicsProxyWidget::paint(painter, option, widget);
+	QSizeF size = this->geometry().size();
+	painter->fillRect(0, 0, size.width(), size.height(), c);
+
+	QGraphicsWidget::paint(painter, option, widget);
 }
 
 QPoint SvgIconWidget::globalPos() {

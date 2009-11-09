@@ -3614,13 +3614,13 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		return;
 	}
 
-
 	if (connect) {
 		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
 		fromConnectorItem->connectTo(toConnectorItem);
 		toConnectorItem->connectTo(fromConnectorItem);
 	}
 	else {
+
 		fromConnectorItem->connector()->disconnectFrom(toConnectorItem->connector());
 		fromConnectorItem->removeConnection(toConnectorItem, true);
 		toConnectorItem->removeConnection(fromConnectorItem, true);

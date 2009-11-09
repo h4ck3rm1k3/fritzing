@@ -724,17 +724,18 @@ void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 		if (wire == NULL) continue;
 		if (!wire->getRatsnest()) continue;
 		
-		QList<ConnectorItem *>  ends;
-		if (wire->findJumperOrTraced(ViewGeometry::TraceFlag | ViewGeometry::JumperFlag, ends)) {
-			m_sketchWidget->makeChangeRoutedCommand(wire, true, Wire::ROUTED_OPACITY, parentCommand);
-			wire->setOpacity(Wire::ROUTED_OPACITY);
-			wire->setRouted(true);
+		if (!routed) {
+			QList<ConnectorItem *>  ends;
+			bool connected = wire->findJumperOrTraced(ViewGeometry::TraceFlag | ViewGeometry::JumperFlag, ends);
+			if (!connected) {
+				// check for jumperitems?
+			}
+			if (connected) routed = true;
 		}
-		else {	
-			m_sketchWidget->makeChangeRoutedCommand(wire, routed, routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY, parentCommand);
-			wire->setOpacity(routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY);	
-			wire->setRouted(routed);
-		}
+
+		m_sketchWidget->makeChangeRoutedCommand(wire, routed, routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY, parentCommand);
+		wire->setOpacity(routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY);	
+		wire->setRouted(routed);
 	}
 }
 

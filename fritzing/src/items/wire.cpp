@@ -94,7 +94,6 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 }
 
 Wire::~Wire() {
-
 }
 
 FSvgRenderer * Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView ) {
@@ -1142,8 +1141,29 @@ void Wire::cleanup() {
 void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {
 
 	int count = 0;
+	bool bendpoint = true;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+			bendpoint = false;
+			if (toConnectorItem->connectionsCount() > 1) {	
+				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+				if (infoGraphicsView != NULL && infoGraphicsView->hasBigDots()) {
+					int c = 0;
+					foreach (ConnectorItem * totoConnectorItem, toConnectorItem->connectedToItems()) {
+						if (totoConnectorItem->attachedToItemType() == ModelPart::Wire) {
+							Wire * w = dynamic_cast<Wire *>(totoConnectorItem->attachedTo());
+							if (w && w->getTrace()) {
+								c++;
+							}
+						}
+					}
+					if (c > 1) {
+						count = 2;
+						break;
+					}
+				}
+			}
+
 			ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth);
 			return;
 		}
@@ -1154,6 +1174,12 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	if (count == 0) {
 		ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth);
 		return;
+	}
+	
+	// connectorItem is a bendpoint or connects to a multiply connected connector
+
+	if (!bendpoint) {
+		//DebugDialog::debug(QString("big dot %1 %2 %3").arg(this->id()).arg(connectorItem->connectorSharedID()).arg(count));
 	}
 
 	brush = &m_shadowBrush;
@@ -1209,3 +1235,4 @@ bool Wire::acceptsMouseReleaseConnectorEvent(ConnectorItem *, QGraphicsSceneMous
 void Wire::setIgnoreSelectionChange(bool ignore) {
 	m_ignoreSelectionChange = ignore;
 }
+

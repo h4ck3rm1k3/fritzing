@@ -37,6 +37,8 @@ $Date$
 
 QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
 QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
+QSet<RendererHash * > FSvgRenderer::m_deleted;
+
 qreal FSvgRenderer::m_printerScale = 90.0;
 
 FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
@@ -57,6 +59,10 @@ void FSvgRenderer::cleanup() {
 	}
 	m_moduleIDRendererHash.clear();
 
+	foreach (RendererHash * rendererHash, m_deleted) {
+		delete rendererHash;
+	}
+	m_deleted.clear();
 }
 
 bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
@@ -367,9 +373,15 @@ bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID,
 }
 
 void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filename) {
-	DebugDialog::debug(QString("length before %1").arg(m_moduleIDRendererHash.size()));
-	m_moduleIDRendererHash.remove(moduleId);
-	DebugDialog::debug(QString("length after %1").arg(m_moduleIDRendererHash.size()));
-	m_filenameRendererHash.remove(filename);
+	//DebugDialog::debug(QString("length before %1").arg(m_moduleIDRendererHash.size()));
+	RendererHash * r = m_moduleIDRendererHash.take(moduleId);
+	if (r != NULL) {
+		m_deleted.insert(r);
+	}
+	//DebugDialog::debug(QString("length after %1").arg(m_moduleIDRendererHash.size()));
+	r = m_filenameRendererHash.take(filename);
+	if (r != NULL) {
+		m_deleted.insert(r);
+	}
 }
 

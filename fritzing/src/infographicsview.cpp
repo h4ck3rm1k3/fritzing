@@ -182,3 +182,8 @@ qreal InfoGraphicsView::getLabelFontSizeMedium() {
 qreal InfoGraphicsView::getLabelFontSizeLarge() {
 	return 14;
 }
+
+bool InfoGraphicsView::hasBigDots() {
+	return false;
+}
+

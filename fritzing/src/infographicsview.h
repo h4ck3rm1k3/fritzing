@@ -75,6 +75,7 @@ public:
 	virtual qreal getLabelFontSizeSmall();
 	virtual qreal getLabelFontSizeMedium();
 	virtual qreal getLabelFontSizeLarge();
+	virtual bool hasBigDots();
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

@@ -28,6 +28,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "autoroute/autorouter1.h"
 #include "debugdialog.h"
 #include "items/virtualwire.h"
+#include "items/tracewire.h"
 #include "connectors/connectoritem.h"
 
 #include <limits>
@@ -46,6 +47,10 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 	m_jumperColor = "blackblack";	
 	m_jumperWidth = 2;
 	m_cleanType = ninetyClean;
+
+	m_updateDotsTimer.setInterval(20);
+	m_updateDotsTimer.setSingleShot(true);
+	connect(&m_updateDotsTimer, SIGNAL(timeout()), this, SLOT(updateBigDots()));
 }
 
 void SchematicSketchWidget::addViewLayers() {
@@ -175,4 +180,34 @@ bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 
 bool SchematicSketchWidget::includeSymbols() {
 	return true;
+}
+
+bool SchematicSketchWidget::hasBigDots() {
+	return true;
+}
+
+void SchematicSketchWidget::updateBigDots() 
+{	
+	QList<ConnectorItem *> connectorItems;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+		if (connectorItem->attachedToItemType() != ModelPart::Wire) continue;
+
+		TraceWire * traceWire = dynamic_cast<TraceWire *>(connectorItem->attachedTo());
+		if (traceWire == NULL) continue;
+
+		//DebugDialog::debug(QString("update big dot %1 %2").arg(traceWire->id()).arg(connectorItem->connectorSharedID()));
+
+		connectorItem->restoreColor(false, 0);
+	}
+}
+
+void SchematicSketchWidget::changeConnection(long fromID, const QString & fromConnectorID,
+									long toID, const QString & toConnectorID,
+									bool connect, bool doEmit, bool seekLayerKin, bool updateConnections)
+{
+	m_updateDotsTimer.stop();
+	SketchWidget::changeConnection(fromID, fromConnectorID, toID, toConnectorID, connect,  doEmit,  seekLayerKin,  updateConnections);
+	m_updateDotsTimer.start();
 }

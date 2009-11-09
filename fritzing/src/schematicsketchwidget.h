@@ -58,9 +58,22 @@ public:
 	void setNewPartVisible(ItemBase *);
 	bool canDropModelPart(ModelPart * modelPart); 
 	bool includeSymbols();
+	bool hasBigDots();
+	void changeConnection(long fromID,
+						  const QString & fromConnectorID,
+						  long toID, const QString & toConnectorID,
+						  bool connect, bool doEmit, bool seekLayerKin,
+						  bool updateConnections);
+
+protected slots:
+	void updateBigDots();
 
 protected:
 	qreal getRatsnestOpacity(Wire *);
+
+
+protected:
+	QTimer m_updateDotsTimer;
 
 };
 

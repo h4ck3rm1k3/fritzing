@@ -176,8 +176,40 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	updateTooltip();
 }
 
+ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
+	for (int i = 0; i < m_connectedTo.count(); i++) {
+		if (m_connectedTo[i]->attachedTo() == itemBase) {
+			ConnectorItem * removed = m_connectedTo[i];
+			m_connectedTo.removeAt(i);
+			if (m_attachedTo != NULL) {
+				m_attachedTo->connectionChange(this, removed, false);
+			}
+			restoreColor(true, -1);
+			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
+				.arg((long) this, 0, 16)
+				.arg(itemBase->modelPartShared()->title())
+				.arg(m_connectedTo.count()) );
+			updateTooltip();
+			return removed;
+		}
+	}
+
+	return NULL;
+}
+
+void ConnectorItem::removeConnection(ConnectorItem * connectedItem, bool emitChange) {
+	if (connectedItem == NULL) return;
+
+	m_connectedTo.removeOne(connectedItem);
+	restoreColor(true, -1);
+	if (emitChange) {
+		m_attachedTo->connectionChange(this, connectedItem, false);
+	}
+	updateTooltip();
+}
+
 void ConnectorItem::tempConnectTo(ConnectorItem * item, bool applyColor) {
-	m_connectedTo.append(item);
+	if (!m_connectedTo.contains(item)) m_connectedTo.append(item);
 	updateTooltip();
 
 	if(applyColor) restoreColor(true, -1);
@@ -400,38 +432,6 @@ void ConnectorItem::attachedMoved() {
 
 		itemBase->connectedMoved(this, toConnector);
 	}
-}
-
-ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
-	for (int i = 0; i < m_connectedTo.count(); i++) {
-		if (m_connectedTo[i]->attachedTo() == itemBase) {
-			ConnectorItem * removed = m_connectedTo[i];
-			m_connectedTo.removeAt(i);
-			if (m_attachedTo != NULL) {
-				m_attachedTo->connectionChange(this, removed, false);
-			}
-			restoreColor(true, -1);
-			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
-				.arg((long) this, 0, 16)
-				.arg(itemBase->modelPartShared()->title())
-				.arg(m_connectedTo.count()) );
-			updateTooltip();
-			return removed;
-		}
-	}
-
-	return NULL;
-}
-
-void ConnectorItem::removeConnection(ConnectorItem * connectedItem, bool emitChange) {
-	if (connectedItem == NULL) return;
-
-	m_connectedTo.removeOne(connectedItem);
-	restoreColor(true, -1);
-	if (emitChange) {
-		m_attachedTo->connectionChange(this, connectedItem, false);
-	}
-	updateTooltip();
 }
 
 ConnectorItem * ConnectorItem::firstConnectedToIsh() {
