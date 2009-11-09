@@ -35,7 +35,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/to92.svg" >
+   <layers image="pcb/TO92_3_100mil_pcb.svg" >
     <layer layerId="copper0" />
     <layer layerId="silkscreen" />
    </layers>
