@@ -37,10 +37,12 @@ $Date$
 #include "aboutbox.h"
 #include "../debugdialog.h"
 #include "../version/version.h"
+#include "../expandinglabel.h"
 
 AboutBox* AboutBox::singleton = NULL;
 
 static const int AboutWidth = 390;
+static const int AboutText = 210;
 
 AboutBox::AboutBox(QWidget *parent)
 : QWidget(parent)
@@ -55,10 +57,8 @@ AboutBox::AboutBox(QWidget *parent)
 	setStyleSheet("background-color: #E8E8E8");
 
 	// the new Default Font
-	QFont smallFont;
-	smallFont.setPointSize(11);
-	QFont extraSmallFont;
-	extraSmallFont.setPointSize(9);
+	QFont smallFont("Droid Sans", 11);
+	QFont extraSmallFont("Droid Sans", 9);
 	extraSmallFont.setLetterSpacing(QFont::PercentageSpacing, 92);
 
 	// Big Icon
@@ -117,79 +117,63 @@ AboutBox::AboutBox(QWidget *parent)
 
 	// Scrolling Credits Text
 
-	// creditsScroll as QLabel
-	QLabel *creditsScroll = new QLabel(this);
-
 	// moved data out of credits.txt so we could apply translation
 	QString data = 
 tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />"
-   "<p><br/>Fritzing is made by:<br />"
-   "Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic,<br/>"
-   "Zach Eveland, Dirk van Oosterbosch,<br/>"
-   "Jonathan Cohen, Marcus Paeschke, Omer Yosha,<br/>"
-   "Travis Robertson, Stefan Hermann, Brendan Howell,<br/>"
-   "Mariano Crowe, Johannes Landstorfer,<br/>"
+   "<p>Fritzing is made by: "
+   "Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic, "
+   "Zach Eveland, Dirk van Oosterbosch, "
+   "Jonathan Cohen, Marcus Paeschke, Omer Yosha, "
+   "Travis Robertson, Stefan Hermann, Brendan Howell, "
+   "Mariano Crowe, Johannes Landstorfer, "
    "Jenny Chowdhury, Lionel Michel and Jannis Leidel.</p>") +
 
-tr("<p>Special thanks goes out to:<br />"
-   "Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir,<br/>"
-   "Durrell Bishop, David Cuartielles, Fabian Hemmert,<br />"
-   "Gero Herkenrath, Jeff Hoefs, Tom Hulbert,<br/>"
-   "Tom Igoe, Hans-Peter Kadel, Till Savelkoul,<br/>"
-   "Jan Sieber, Yaniv Steiner, Olaf Val,<br/>"
+tr("<p>Special thanks goes out to: "
+   "Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir, "
+   "Durrell Bishop, David Cuartielles, Fabian Hemmert, "
+   "Gero Herkenrath, Jeff Hoefs, Tom Hulbert, "
+   "Tom Igoe, Hans-Peter Kadel, Till Savelkoul, "
+   "Jan Sieber, Yaniv Steiner, Olaf Val, "
    "Michaela Vieser and Julia Werner.</p>") +
 
-tr("<p>Thanks to Kurt Badelt<br/>"
-   "for the Spanish translation,<br/>") +
+tr("<p>Thanks to Kurt Badelt for the Spanish translation, "
+	"to Gianluca Urgese for the Italian translation, "
+	"to Nuno Pessanha Santos for the Portuguese translation, "
+	"to Yuelin and Ninjia  for the Chinese (Simplified) translation, "
+	"to Hiroshi Suzuki for the Japanese translation, "
+	"and to Vladimir Savinov for the Russian translation.</p>") +
 
-tr("to Gianluca Urgese<br/>"
-   "for the Italian translation,<br/>") +
-
-tr("to Nuno Pessanha Santos<br/>"
-   "for the Portuguese translation,<br/>") +
-
-tr("to Yuelin and Ninjia<br/>"
-   "for the Chinese (Simplified) translation,<br/>") +
-
-tr("to Hiroshi Suzuki<br/>"
-   "for the Japanese translation,<br/>") +
-
-tr("and to Vladimir Savinov<br/>"
-   "for the Russian translation.</p>") +
-
-tr("<p>Fritzing is made possible with funding from the<br/>"
-   "MWFK Brandenburg, the sponsorship of the Design<br/>"
-   "Department of Bauhaus-University Weimar and<br/>"
+tr("<p>Fritzing is made possible with funding from the "
+   "MWFK Brandenburg, the sponsorship of the Design "
+   "Department of Bauhaus-University Weimar and "
    "IxDS.</p>") +
 
-tr("<p>Special thanks goes out as well to all the students<br/>"
-   "and alpha testers who were brave enough to give<br/>"
-   "Fritzing a test spin.</p>"
+tr("<p>Special thanks goes out as well to all the students "
+   "and alpha testers who were brave enough to give "
+   "Fritzing a test spin. "
    "<br /><br /><br /><br /><br /><br /><br /><br /><br />"
    );
 
-	creditsScroll->setText(data);
-	creditsScroll->setFont(smallFont);
-	creditsScroll->setGeometry(0, 0, AboutWidth, 800);
-	creditsScroll->setWordWrap(false);
-	creditsScroll->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+	QPixmap fadepixmap(":/resources/images/aboutbox_scrollfade.png");
 
-	int max = creditsScroll->sizeHint().height();
-	creditsScroll->setGeometry(0, 0, AboutWidth, max);
-
-	// set the creditsScroll inside our QScrollArea
-	m_scrollArea = new QScrollArea(this);
-	m_scrollArea->setWidget(creditsScroll);
-	m_scrollArea->setGeometry(0, 210, AboutWidth, 160);
-	m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	m_scrollArea->setFrameStyle(QFrame::NoFrame);
-	m_scrollArea->ensureVisible(0, 0);
+	m_expandingLabel = new ExpandingLabel(this, AboutWidth);
+	m_expandingLabel->setLabelText(data);
+	m_expandingLabel->setFont(smallFont);
+	m_expandingLabel->setGeometry(0, AboutText, AboutWidth, fadepixmap.height());
+	m_expandingLabel->setStyleSheet("border: 0px; background-color: transparent; margin-top: 0px; margin-bottom: 0px;");
+	
+	// setAlignment only aligns the "current paragraph"
+	// the QTextCursor code aligns all paragraphs
+	QTextCursor cursor(m_expandingLabel->document());
+	cursor.select(QTextCursor::Document);
+	QTextBlockFormat fmt;
+	fmt.setAlignment(Qt::AlignCenter);
+	cursor.mergeBlockFormat(fmt);
 	
 	// Add a fade out and a fade in the scrollArea
 	QLabel *scrollFade = new QLabel(this);
-	scrollFade->setPixmap(QPixmap(":/resources/images/aboutbox_scrollfade.png"));
-	scrollFade->setGeometry(0, 210, AboutWidth, 160);
+	scrollFade->setPixmap(fadepixmap);
+	scrollFade->setGeometry(0, AboutText, AboutWidth, fadepixmap.height());
 	scrollFade->setStyleSheet("background-color: none");
 	
 
@@ -202,7 +186,7 @@ tr("<p>Special thanks goes out as well to all the students<br/>"
 
 void AboutBox::resetScrollAnimation() {
 	// Only called when the window is newly loaded
-	m_autoScrollTimer->start(25);
+	m_autoScrollTimer->start(35);
 	m_startTime.start();
 }
 
@@ -214,15 +198,15 @@ void AboutBox::scrollCredits() {
 			// Reset at the top
 			m_startTime.start();
 			m_restartAtTop = false;
-			m_scrollArea->verticalScrollBar()->setValue(0);
+			m_expandingLabel->verticalScrollBar()->setValue(0);
 			return;
 		}
-		if (m_scrollArea->verticalScrollBar()->value() >= m_scrollArea->verticalScrollBar()->maximum()) {
+		if (m_expandingLabel->verticalScrollBar()->value() >= m_expandingLabel->verticalScrollBar()->maximum()) {
 			// go and reset
 			// m_startTime.start();
 			m_restartAtTop = true;
 		} else {
-			m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->value() + 1);
+			m_expandingLabel->verticalScrollBar()->setValue(m_expandingLabel->verticalScrollBar()->value() + 1);
 		}
 	}
 }
@@ -241,7 +225,7 @@ void AboutBox::showAbout() {
 	}
 
 	// scroll text now to prevent a flash of text if text was visible the last time the about box was open
-	singleton->m_scrollArea->verticalScrollBar()->setValue(0);
+	singleton->m_expandingLabel->verticalScrollBar()->setValue(0);
 
 	singleton->show();
 }

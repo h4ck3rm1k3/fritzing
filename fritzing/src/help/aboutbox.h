@@ -41,7 +41,8 @@ private:
 	void resetScrollAnimation();
 
 private:
-	QScrollArea *m_scrollArea;
+	//QScrollArea *m_scrollArea;
+	class ExpandingLabel * m_expandingLabel;
 	bool m_restartAtTop;
 	QTime m_startTime;
 	QTimer *m_autoScrollTimer;

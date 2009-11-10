@@ -5,6 +5,7 @@
     <name>AboutBox</name>
     <message>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
+        <translatorcomment>バージョン %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translatorcomment>
         <translation>バージョン %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
     </message>
     <message>
@@ -20,40 +21,24 @@
         <translation>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;br/&gt;Fritzing is made by:&lt;br /&gt;Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
-        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;br/&gt;Fritzing開発者:&lt;br /&gt;Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</translation>
+        <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;Fritzing is made by: Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Marcus Paeschke, Omer Yosha, Travis Robertson, Stefan Hermann, Brendan Howell, Mariano Crowe, Johannes Landstorfer, Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
+        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;Fritzing開発者: Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Marcus Paeschke, Omer Yosha, Travis Robertson, Stefan Hermann, Brendan Howell, Mariano Crowe, Johannes Landstorfer, Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;協力に感謝します:&lt;br /&gt;Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Special thanks goes out to: Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrell Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;協力に感謝します:&lt;br /&gt;Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrell Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Fritzingは　MWFK Brandenburg基金によって作られ&lt;br/&gt;バウハウス大学のワイマールおよび&lt;br/&gt;IxDSのスポンサーシップによる資金で運営されています.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
+        <translation type="unfinished">&lt;p&gt;翻訳協力 Kurt Badelt スペイン語, Gianluca Urgese イタリア語, Nuno Pessanha Santos ポルトガル語,Yuelin and Ninjia 中国語 (簡体字), Vladimir Savinov ロシア語.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt&lt;br/&gt;for the Spanish translation,&lt;br/&gt;</source>
-        <translation>&lt;p&gt;翻訳協力 Kurt Badelt&lt;br/&gt;スペイン語,&lt;br/&gt;</translation>
+        <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar and IxDS.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Fritzingは　MWFK Brandenburg基金によって作られ バウハウス大学のワイマールおよび IxDSのスポンサーシップによる資金で運営されています.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation>&lt;p&gt;Fritzingのテストのために協力してくれた&lt;br/&gt;素晴らしい学生たちとアルファテスターに感謝します&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <source>Gianluca Urgese&lt;br/&gt;for the Italian translation,&lt;br/&gt;</source>
-        <translation>Gianluca Urgese&lt;br/&gt;イタリア語,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>to Nuno Pessanha Santos&lt;br/&gt;for the Portuguese translation,&lt;br/&gt;</source>
-        <translation>Nuno Pessanha Santos&lt;br/&gt;ポルトガル語,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>to Yuelin and Ninjia&lt;br/&gt;for the Chinese (Simplified) translation,&lt;br/&gt;</source>
-        <translation>Yuelin and Ninjia&lt;br/&gt;中国語 (簡体字),&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <source>and to Vladimir Savinov&lt;br/&gt;for the Russian translation.&lt;/p&gt;</source>
-        <translation>Vladimir Savinov&lt;br/&gt;ロシア語.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Special thanks goes out as well to all the students and alpha testers who were brave enough to give Fritzing a test spin. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <translation>&lt;p&gt;Fritzingのテストのために協力してくれた 素晴らしい学生たちとアルファテスターに感謝します&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
 </context>
 <context>
@@ -1805,18 +1790,14 @@ All your parts are up-to-date.</source>
 </source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Successfully updated %n part(s).
+    <message>
+        <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Update %n part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
+    <message>
+        <source>Update %1 part(s)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2779,10 +2760,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>&lt;b&gt;接続されていない強調色&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>Unable to change the voltage of this part, because other ground/voltage symbols are connected.</source>
-        <translation>他の部品のグランドまたは電圧が接続されているため、この部品の電圧を変えることは出来ません.</translation>
-    </message>
-    <message>
         <source>Select outdated parts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2865,6 +2842,13 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>Proceed</source>
         <translation>処理終了</translation>
+    </message>
+</context>
+<context>
+    <name>SchematicSketchWidget</name>
+    <message>
+        <source>Change voltage from %1 to %2</source>
+        <translation type="unfinished">電圧を %1 から %2 へ変更</translation>
     </message>
 </context>
 <context>
@@ -3058,10 +3042,6 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>or alt-drag to move the segment</source>
         <translation>またはAltキーを押しながらセグメントをドラッグします</translation>
-    </message>
-    <message>
-        <source>Change voltage from %1 to %2</source>
-        <translation>電圧を %1 から %2 へ変更</translation>
     </message>
     <message>
         <source>Disconnect all wires from %1</source>
