@@ -2856,4 +2856,6 @@ code {
 	overflow: auto;
 	padding: 5px;
 	margin: 5px;
+	white-space: pre;
+	overflow: auto;
 }
