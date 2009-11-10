@@ -374,6 +374,7 @@ QString PartsEditorView::getOrCreateViewFolderInTemp() {
 
 	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
 		bool mkResult = m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder);
+		Q_UNUSED(mkResult);
 		Q_ASSERT(mkResult);
 	}
 
@@ -1433,6 +1434,7 @@ void PartsEditorView::addRectToSvg(QDomDocument* svgDom, const QString &id, cons
 	} else {
 		QDomElement docElem = svgDom->documentElement();
 		bool result = addRectToSvgAux(docElem, connectorsLayerId, connElem);
+		Q_UNUSED(result);
 		Q_ASSERT(result);
 	}
 }

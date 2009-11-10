@@ -28,8 +28,10 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "autoroute/autorouter1.h"
 #include "debugdialog.h"
 #include "items/virtualwire.h"
+#include "items/symbolpaletteitem.h"
 #include "items/tracewire.h"
 #include "connectors/connectoritem.h"
+#include "waitpushundostack.h"
 
 #include <limits>
 
@@ -211,3 +213,101 @@ void SchematicSketchWidget::changeConnection(long fromID, const QString & fromCo
 	SketchWidget::changeConnection(fromID, fromConnectorID, toID, toConnectorID, connect,  doEmit,  seekLayerKin,  updateConnections);
 	m_updateDotsTimer.start();
 }
+
+AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent)
+{
+	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, viewGeometry, id, updateInfoView, modelIndex, originalModelIndex, parent);
+	qreal v = 0;
+	bool gotV = false;
+	if (moduleID.compare(ItemBase::groundModuleIDName) == 0) {
+		gotV = true;
+	}
+	else if (moduleID.compare(ItemBase::powerModuleIDName) == 0) {
+		gotV = true;
+		v = SymbolPaletteItem::DefaultVoltage;
+	}
+
+	if (!gotV) {
+		return addItemCommand;
+	}
+
+	// create the item temporarily, then delete it
+	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, BaseCommand::SingleView, viewGeometry, id, modelIndex, originalModelIndex, NULL));
+	
+	foreach (QGraphicsItem * item, scene()->items()) {
+		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);
+		if (symbol == NULL) continue;
+		if (symbol == newSymbol) continue;					// don't connect self to self
+		if (symbol->connector0() == NULL) continue;			// the drag item
+
+		if (symbol->voltage() == v) {
+			makeModifiedWire(newSymbol->connector0(), symbol->connector0(), crossViewType, 0, parent); 
+		}
+
+		if (symbol->connector1() != NULL && v == 0) {
+			makeModifiedWire(newSymbol->connector0(), symbol->connector1(), crossViewType, 0, parent); 
+		}
+
+		if (newSymbol->connector1() != NULL) {
+			if (symbol->voltage() == 0) {
+				makeModifiedWire(newSymbol->connector1(), symbol->connector0(), crossViewType, 0, parent); 
+			}
+			if (symbol->connector1() != NULL) {
+				makeModifiedWire(newSymbol->connector1(), symbol->connector1(), crossViewType, 0, parent); 
+			}
+		}
+	}
+
+	deleteItem(newSymbol, true, false, false);
+
+	return addItemCommand;
+}
+
+// called from javascript (htmlInfoView)
+void SchematicSketchWidget::setVoltage(qreal v)
+{
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	if (item->itemType() != ModelPart::Symbol) return;
+
+	SymbolPaletteItem * sitem = qobject_cast<SymbolPaletteItem *>(item);
+	if (sitem == NULL) return;
+
+	if (sitem->modelPart()->moduleID().compare("ground symbol", Qt::CaseInsensitive) == 0) return;
+	if (v == sitem->voltage()) return;
+
+	QUndoCommand * parentCommand =  new QUndoCommand();
+	parentCommand->setText(tr("Change voltage from %1 to %2").arg(sitem->voltage()).arg(v));
+
+	foreach (ConnectorItem * toConnectorItem, sitem->connector0()->connectedToItems()) {
+		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		if (w == NULL) continue;
+
+		QList<Wire *> chained;
+		QList<ConnectorItem *> ends;
+		QList<ConnectorItem *> uniqueEnds;
+		w->collectChained(chained, ends, uniqueEnds);
+		makeWiresChangeConnectionCommands(chained, parentCommand);
+		foreach (Wire * c, chained) {
+			makeDeleteItemCommand(c, BaseCommand::CrossView, parentCommand);
+		}
+	}
+
+	new SetPropCommand(this, item->id(), "voltage", QString::number(sitem->voltage()), QString::number(v), parentCommand);
+	
+	foreach (QGraphicsItem * item, scene()->items()) {
+		SymbolPaletteItem * other = dynamic_cast<SymbolPaletteItem *>(item);
+		if (other == NULL) continue;
+		if (other == sitem) continue;
+
+		if (other->voltage() == v) {
+			this->makeModifiedWire(sitem->connector0(), other->connector0(), BaseCommand::CrossView, 0, parentCommand);
+		}
+	}
+
+	new CleanUpWiresCommand(this, false, parentCommand);
+
+	m_undoStack->push(parentCommand);
+}
+

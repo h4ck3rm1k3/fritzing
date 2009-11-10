@@ -478,6 +478,7 @@ const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
 		Q_ASSERT(dirCreation);
 		if(dirCreation) {
 			bool cdResult = m_tempDir.cd(randext);
+			Q_UNUSED(cdResult);
 			Q_ASSERT(cdResult);
 		} else {
 			// will use the standard location of the temp folder

@@ -347,6 +347,9 @@ protected:
 	void resizeBoard();
 	void resizeJumperItem();
 	QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
+	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
+											   QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
+											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 
 
 protected:
@@ -429,7 +432,7 @@ public slots:
 	void resizeBoard(qreal w, qreal h);
 	void resizeBoard(long id, qreal w, qreal h);
 	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
-	void setVoltage(qreal voltage);
+	virtual void setVoltage(qreal voltage);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setResistance(QString resistance, QString pinSpacing);

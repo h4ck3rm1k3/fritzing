@@ -342,7 +342,10 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	/*else if (properties.text().equals("module", Qt::CaseInsensitive)) {
 		type = ModelPart::Module;
 	}*/
-	else if (properties.text().contains("symbol", Qt::CaseInsensitive)) {
+	else if (properties.text().contains("ground symbol", Qt::CaseInsensitive)) {
+		type = ModelPart::Symbol;
+	}
+	else if (properties.text().contains("power symbol", Qt::CaseInsensitive)) {
 		type = ModelPart::Symbol;
 	}
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);

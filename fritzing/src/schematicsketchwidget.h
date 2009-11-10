@@ -65,11 +65,17 @@ public:
 						  bool connect, bool doEmit, bool seekLayerKin,
 						  bool updateConnections);
 
+public slots:
+	void setVoltage(qreal voltage);
+
 protected slots:
 	void updateBigDots();
 
 protected:
 	qreal getRatsnestOpacity(Wire *);
+	AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
+										QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
+										bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 
 
 protected:

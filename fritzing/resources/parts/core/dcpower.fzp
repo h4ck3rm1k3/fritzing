@@ -11,12 +11,11 @@
    <tag>fritzing core</tag>
  </tags>
  <properties>
-   <property name="family">symbol</property>
-   <property name="symbol">power</property>
-   <property name="voltage"></property>
+   <property name="family">power symbol</property>
+   <property name="voltage">5</property>
  </properties>
  <taxonomy>discreteParts.power.power.power</taxonomy>
- <description>A generic power symbol</description>
+ <description>A generic dc power symbol</description>
  <views>
   <defaultUnits>cmil</defaultUnits>
   <iconView>
@@ -76,12 +75,13 @@
        </pcbView>
      </views>
    </connector>
-
-
  </connectors>
  <buses>
    <bus id="powerbus" >
      <nodeMember connectorId="connector0" />
+   </bus>
+   <bus id="groundbus" >
+     <nodeMember connectorId="connector1" />
    </bus>
  </buses>
 </module>

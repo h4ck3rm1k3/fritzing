@@ -27,6 +27,7 @@ $Date$
 #include "symbolpaletteitem.h"
 #include "../debugdialog.h"
 #include "../connectors/connectoritem.h"
+#include "../connectors/bus.h"
 
 #include <QMultiHash>
 
@@ -35,10 +36,14 @@ $Date$
 
 static QMultiHash<long, ConnectorItem *> localVoltages;			// Qt doesn't do Hash keys with qreal
 static QList<qreal> Voltages;
+qreal SymbolPaletteItem::DefaultVoltage = 5;
 
 SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_connector0 = m_connector1 = NULL;
+	m_voltage = 0;
+
 	if (Voltages.count() == 0) {
 		Voltages.append(0.0);
 		Voltages.append(3.3);
@@ -52,11 +57,9 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 		m_voltage = temp;
 	}
 	else {
-		if (modelPart->properties().value("symbol").compare("ground") == 0) {
-			m_voltage = 0;
-		}
-		else {
-			m_voltage = 5;
+		temp = modelPart->properties().value("voltage").toDouble(&ok);
+		if (ok) {
+			m_voltage = SymbolPaletteItem::DefaultVoltage;
 		}
 		modelPart->setProp("voltage", m_voltage);
 	}
@@ -66,15 +69,31 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 }
 
 SymbolPaletteItem::~SymbolPaletteItem() {
-	removeMeFromBus();
+	foreach (long key, localVoltages.uniqueKeys()) {
+		if (m_connector0) {
+			localVoltages.remove(key, m_connector0);
+		}
+		if (m_connector1) {
+			localVoltages.remove(key, m_connector1);
+		}
+	}
 }
 
-void SymbolPaletteItem::removeMeFromBus() {
+void SymbolPaletteItem::removeMeFromBus(qreal v) {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		localVoltages.remove(FROMVOLTAGE(m_voltage), connectorItem);
+		qreal nv = useVoltage(connectorItem);
+		if (nv == v) {
+			int count = localVoltages.remove(FROMVOLTAGE(v), connectorItem);
+			if (count == 0) {
+				DebugDialog::debug(QString("removeMeFromBus failed %1 %2 %3 %4")
+					.arg(this->id())
+					.arg(connectorItem->connectorSharedID())
+					.arg(v).arg(nv));
+			}
+		}
 	}
 }
 
@@ -83,18 +102,31 @@ ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector)
 	ConnectorItem * connectorItem = PaletteItemBase::newConnectorItem(connector);
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return connectorItem;
 
-	localVoltages.insert(FROMVOLTAGE(m_voltage), connectorItem);
+	if (connector->connectorSharedID().compare("connector0") == 0) {
+		m_connector0 = connectorItem;
+	}
+	else if (connector->connectorSharedID().compare("connector1") == 0) {
+		m_connector1 = connectorItem;
+	}
+	else {
+		return connectorItem;
+	}
+
+	localVoltages.insert(FROMVOLTAGE(useVoltage(connectorItem)), connectorItem);
 	return connectorItem;
 }
 
-void SymbolPaletteItem::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
+void SymbolPaletteItem::busConnectorItems(Bus * bus, QList<class ConnectorItem *> & items) {
 	PaletteItem::busConnectorItems(bus, items);
 
 	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
 
-	QList<ConnectorItem *> mitems = localVoltages.values(FROMVOLTAGE(m_voltage));
+	qreal v = (bus->id().compare("groundbus", Qt::CaseInsensitive) == 0) ? 0 : m_voltage;
+	QList<ConnectorItem *> mitems = localVoltages.values(FROMVOLTAGE(v));
 	foreach (ConnectorItem * connectorItem, mitems) {
-		items.append(connectorItem);
+		if (connectorItem->scene() == this->scene()) {
+			items.append(connectorItem);
+		}
 	}
 }
 
@@ -112,7 +144,7 @@ void SymbolPaletteItem::setProp(const QString & prop, const QString & value) {
 }
 
 void SymbolPaletteItem::setVoltage(qreal v) {
-	removeMeFromBus();
+	removeMeFromBus(m_voltage);
 
 	m_voltage = v;
 	m_modelPart->setProp("voltage", v);
@@ -120,16 +152,22 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 		Voltages.append(v);
 	}
 
+	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
+
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		localVoltages.insert(FROMVOLTAGE(m_voltage), connectorItem);
+		if (connectorItem->connectorSharedName().compare("GND", Qt::CaseInsensitive) == 0) continue;
+
+		localVoltages.insert(FROMVOLTAGE(v), connectorItem);
 	}
 }
 
 void SymbolPaletteItem::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
 	ignoreValues = false;
+
+	if (modelPart()->moduleID().compare(ItemBase::groundModuleIDName) == 0) return;
 
 	if (prop.compare("voltage", Qt::CaseInsensitive) == 0) {
 		ignoreValues = true;
@@ -144,6 +182,7 @@ QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QStr
 	Q_UNUSED(value);
 
 	if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
+	if (modelPart()->moduleID().compare(ItemBase::groundModuleIDName) == 0) return ___emptyString___;
 
 	qreal v = qRound(m_voltage * 100) / 100.0;	// truncate to 2 decimal places
 	return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='8' value='%1' style='width:55px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"
@@ -161,13 +200,14 @@ QString SymbolPaletteItem::getProperty(const QString & key) {
 	return PaletteItem::getProperty(key);
 }
 
-bool SymbolPaletteItem::canChangeVoltage() {
-	foreach (ConnectorItem * connectorItem, localVoltages.values(FROMVOLTAGE(m_voltage))) {
-		if (connectorItem->attachedTo() != this && connectorItem->attachedToItemType() == ModelPart::Symbol) {
-			// at least for now, don't allow swapping if another symbol is hooked up
-			return false;
-		}
-	}
+qreal SymbolPaletteItem::useVoltage(ConnectorItem * connectorItem) {
+	return (connectorItem->connectorSharedName().compare("GND", Qt::CaseInsensitive) == 0) ? 0 : m_voltage;
+}
 
-	return true;
+ConnectorItem * SymbolPaletteItem::connector0() {
+	return m_connector0;
+}
+
+ConnectorItem * SymbolPaletteItem::connector1() {
+	return m_connector1;
 }

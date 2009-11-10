@@ -46,13 +46,20 @@ public:
 	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);
 	QString getProperty(const QString & key);
-	bool canChangeVoltage();
+	ConnectorItem * connector0();
+	ConnectorItem * connector1();
+
+public:
+	static qreal DefaultVoltage;
 
 protected:
-	void removeMeFromBus();
+	void removeMeFromBus(qreal voltage);
+	qreal useVoltage(ConnectorItem * connectorItem);
 
 protected:
 	qreal m_voltage;
+	QPointer<ConnectorItem> m_connector0;
+	QPointer<ConnectorItem> m_connector1;
 
 };
 

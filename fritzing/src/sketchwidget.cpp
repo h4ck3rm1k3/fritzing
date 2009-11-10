@@ -272,7 +272,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (offsetPaste) {
 				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
 			}
-			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
+			AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
 			if (mp->itemType() == ModelPart::ResizableBoard) {
 				bool ok;
 				qreal w = mp->prop("width").toDouble(&ok);
@@ -1498,7 +1498,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 			// rulers are local to a particular view
 			crossViewType = BaseCommand::SingleView;
 		}
-		AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
+		AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
 		addItemCommand->setDropOrigin(this);
 		
 		new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
@@ -4242,7 +4242,7 @@ long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		needsTransform = true;
 	}
 
-	new AddItemCommand(this, BaseCommand::SingleView, newModuleID, vg, newID, true, newModelIndex, -1, parentCommand);
+	newAddItemCommand(BaseCommand::SingleView, newModuleID, vg, newID, true, newModelIndex, -1, parentCommand);
 
 	if (needsTransform) {
 		QMatrix m;
@@ -5528,24 +5528,7 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 // called from javascript (htmlInfoView)
 void SketchWidget::setVoltage(qreal v)
 {
-	PaletteItem * item = getSelectedPart();
-	if (item == NULL) return;
-
-	if (item->itemType() != ModelPart::Symbol) return;
-
-	SymbolPaletteItem * sitem = qobject_cast<SymbolPaletteItem *>(item);
-	if (sitem == NULL) return;
-
-	if (!sitem->canChangeVoltage()) {
-		QMessageBox::warning(this, QObject::tr("Fritzing"),
-							  QObject::tr("Unable to change the voltage of this part, because other ground/voltage symbols are connected."));
-
-		return;
-	}
-
-	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "voltage", QString::number(sitem->voltage()), QString::number(v), NULL);
-	cmd->setText(tr("Change voltage from %1 to %2").arg(sitem->voltage()).arg(v));
-	m_undoStack->push(cmd);
+	Q_UNUSED(v);
 }
 
 // called from javascript (htmlInfoView)
@@ -6073,4 +6056,9 @@ int SketchWidget::selectAllObsolete()
 	m_undoStack->push(parentCommand);
 
 	return itemBases.count();
+}
+
+AddItemCommand * SketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent)
+{
+	return new AddItemCommand(this, crossViewType, moduleID, viewGeometry, id, updateInfoView, modelIndex, originalModelIndex, parent);
 }
