@@ -165,4 +165,12 @@
             </views>
         </connector>
     </connectors>
+		<buses>
+			<bus id="ground">
+				<nodeMember connectorId="connector6" />
+				<nodeMember connectorId="connector7" />
+				<nodeMember connectorId="connector8" />
+				<nodeMember connectorId="connector9" />
+			</bus>
+		</buses>
 </module>
