@@ -109,7 +109,7 @@
 					{% for entry in forum_entries %}
 						<li><dd class="portletItem">
 							<div class="contenttype-ploneboardconversation">
-								{{ entry.body|truncatechars:75 }}
+								{{ entry.body|striptags|truncatechars:75|safe }}
 								<br/>in 
 								<a href="{{ entry.thread.thread_latest_post.get_feed_url }}"
 										class="state-active tile"
