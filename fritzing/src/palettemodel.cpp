@@ -36,6 +36,7 @@ $Date$
 #include "version/version.h"
 #include "layerattributes.h"
 #include "utils/folderutils.h"
+#include "items/moduleidnames.h"
 
 #ifndef QT_NO_DEBUG
 bool PaletteModel::CreateAllPartsBinFile = true;
@@ -318,7 +319,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	if (properties.text().contains("wire", Qt::CaseInsensitive)) {
 		type = ModelPart::Wire;
 	}
-	else if (moduleID.compare(ItemBase::jumperModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::jumperModuleIDName) == 0) {
 		type = ModelPart::Jumper;
 	}
 	else if (properties.text().contains("breadboard", Qt::CaseInsensitive)) {
@@ -327,7 +328,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (properties.text().contains("plain vanilla pcb", Qt::CaseInsensitive)) {
 		type = ModelPart::ResizableBoard;
 	}
-	else if (moduleID.compare(ItemBase::groundPlaneModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::groundPlaneModuleIDName) == 0) {
 		type = ModelPart::CopperFill;
 	}
 	else if (properties.text().contains("arduino", Qt::CaseInsensitive)) {

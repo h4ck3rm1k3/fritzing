@@ -35,6 +35,7 @@ $Date$
 #include "autoroute/autorouter1.h"
 #include "connectors/connectoritem.h"
 #include "help/sketchmainhelp.h"
+#include "items/moduleidnames.h"
 
 #include <limits>
 
@@ -633,7 +634,7 @@ void PCBSketchWidget::addBoard() {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
-	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ItemBase::rectangleModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
 	// so position it in setCurrent()
@@ -1073,7 +1074,7 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);		
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 	if (!select) {
@@ -1193,7 +1194,7 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 	ViewGeometry viewGeometry;
 	makeRatsnestViewGeometry(viewGeometry, fromConnectorItem, toConnectorItem);
 	viewGeometry.setWireFlags(wireFlags);
-	new AddItemCommand(this, cvt, ItemBase::wireModuleIDName, viewGeometry, newID, true, -1, -1, parentCommand);
+	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, viewGeometry, newID, true, -1, -1, parentCommand);
 	new CheckStickyCommand(this, cvt, newID, false, parentCommand);
 
 	new ChangeConnectionCommand(this, cvt,
@@ -1299,7 +1300,7 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 	vg.setLoc(QPointF(0, maxY + 50));
 
 	long id = ItemBase::getNextID();
-	newBreadboard = this->addItem(ItemBase::tinyBreadboardModuleIDName, BaseCommand::SingleView, vg, id, -1, 0, NULL);
+	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, BaseCommand::SingleView, vg, id, -1, 0, NULL);
 	busConnectorItem = findEmptyBus(newBreadboard);
 	return busConnectorItem;
 }

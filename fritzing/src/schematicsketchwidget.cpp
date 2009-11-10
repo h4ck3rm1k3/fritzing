@@ -32,6 +32,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "items/tracewire.h"
 #include "connectors/connectoritem.h"
 #include "waitpushundostack.h"
+#include "items/moduleidnames.h"
 
 #include <limits>
 
@@ -219,10 +220,14 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, viewGeometry, id, updateInfoView, modelIndex, originalModelIndex, parent);
 	qreal v = 0;
 	bool gotV = false;
-	if (moduleID.compare(ItemBase::groundModuleIDName) == 0) {
+	if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
 		gotV = true;
 	}
-	else if (moduleID.compare(ItemBase::powerModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::powerModuleIDName) == 0) {
+		gotV = true;
+		v = SymbolPaletteItem::DefaultVoltage;
+	}
+	else if (moduleID.compare(ModuleIDNames::justPowerModuleIDName) == 0) {
 		gotV = true;
 		v = SymbolPaletteItem::DefaultVoltage;
 	}

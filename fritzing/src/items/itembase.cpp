@@ -78,19 +78,6 @@ protected:
 
 /////////////////////////////////
 
-const QString ItemBase::rulerModuleIDName = "RulerModuleID";
-const QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
-const QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
-const QString ItemBase::groupModuleIDName = "GroupModuleID";
-const QString ItemBase::rectangleModuleIDName = "RectanglePCBModuleID";
-const QString ItemBase::noteModuleIDName = "NoteModuleID";
-const QString ItemBase::wireModuleIDName = "WireModuleID";
-const QString ItemBase::jumperModuleIDName = "JumperModuleID";
-const QString ItemBase::groundPlaneModuleIDName = "GroundPlaneModuleID";
-const QString ItemBase::groundModuleIDName = "GroundModuleID";
-const QString ItemBase::powerModuleIDName = "PowerModuleID";
-const QString ItemBase::resistorModuleIDName = "ResistorModuleID";
-
 const QString ItemBase::ITEMBASE_FONT_PREFIX = "<font size='2'>";
 const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";
 

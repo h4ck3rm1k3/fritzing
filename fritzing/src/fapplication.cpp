@@ -45,6 +45,7 @@ $Date$
 #include "utils/folderutils.h"
 #include "dialogs/translatorlistmodel.h"
 #include "partsbinpalette/svgiconwidget.h"
+#include "items/moduleidnames.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -671,7 +672,7 @@ void FApplication::preloadSlowParts() {
 	//QTime t;
 	//t.start();
 	//DebugDialog::debug(QString("preload slow parts"));
-	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
+	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ModuleIDNames::breadboardModuleIDName);
 	if (modelPart == NULL) {
 		// something is badly wrong--parts folder is missing, for example
 		return;

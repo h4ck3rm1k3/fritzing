@@ -32,6 +32,7 @@ $Date$
 #include "../items/jumperitem.h"
 #include "../utils/graphicsutils.h"
 #include "../connectors/connectoritem.h"
+#include "../items/moduleidnames.h"
 
 #include <qmath.h>
 #include <QApplication>
@@ -924,7 +925,7 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	m_sketchWidget->setJumperFlags(viewGeometry);
 	viewGeometry.setAutoroutable(true);
 
-	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
+	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
 												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (itemBase == NULL) {
 		// we're in trouble
@@ -953,7 +954,7 @@ JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * t
 {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
-	ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::jumperModuleIDName), 
+	ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
 												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (temp == NULL) {
 		// we're in trouble
@@ -1721,7 +1722,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 		return;
 	}
 
-	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ItemBase::wireModuleIDName, wire->getViewGeometry(), wire->id(), false, -1, -1, parentCommand);
+	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->getViewGeometry(), wire->id(), false, -1, -1, parentCommand);
 	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, parentCommand);
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
@@ -1764,7 +1765,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct
 		QPointF pos, c0, c1;
 		jumperItem->getParams(pos, c0, c1);
 
-		new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ItemBase::jumperModuleIDName, jumperItem->getViewGeometry(), jumperItem->id(), false, -1, -1, parentCommand);
+		new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::jumperModuleIDName, jumperItem->getViewGeometry(), jumperItem->id(), false, -1, -1, parentCommand);
 		new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
 		new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, parentCommand);
 
@@ -1977,7 +1978,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width)
 	viewGeometry.setTrace(true);
 	viewGeometry.setAutoroutable(true);
 
-	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
+	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
 												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble

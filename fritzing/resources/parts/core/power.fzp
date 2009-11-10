@@ -1,41 +1,41 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module moduleId="PowerModuleID" >
+<module moduleId="JustPowerModuleID" >
  <version>2</version>
  <author>Brendan Howell</author>
- <title>DC Power</title>
+ <title>Power</title>
  <date>2008-07-28</date>
- <label>DC Power</label>
+ <label>Power</label>
  <tags>
-   <tag>dc power</tag>
+   <tag>power</tag>
    <tag>symbol</tag>
    <tag>fritzing core</tag>
  </tags>
  <properties>
    <property name="family">power symbol</property>
-   <property name="type">dc power</property>
+   <property name="type">power</property>
    <property name="voltage">5</property>
  </properties>
- <taxonomy>discreteParts.power.power.dcpower</taxonomy>
- <description>A generic dc power symbol</description>
+ <taxonomy>discreteParts.power.power.power</taxonomy>
+ <description>A generic power symbol</description>
  <views>
   <defaultUnits>cmil</defaultUnits>
   <iconView>
-   <layers image="schematic/cell.svg" >
+   <layers image="schematic/power.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="schematic/cell.svg" >
+   <layers image="schematic/power.svg" >
     <layer layerId="schematic" />
    </layers>
   </breadboardView>
    <schematicView flipvertical="true">
-   <layers image="schematic/cell.svg" >
+   <layers image="schematic/power.svg" >
      <layer layerId="schematic" />
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="schematic/cell.svg" >
+   <layers image="schematic/power.svg" >
     <layer layerId="schematic" />
    </layers>
   </pcbView>
@@ -59,30 +59,10 @@
        </pcbView>
      </views>
    </connector>
-   <connector type="male" id="connector1" name="GND" >
-     <description>Ground</description>
-     <erc etype="ground">
-       <current flow="sink" valueMax="0.1" />
-     </erc>
-     <views>
-       <breadboardView>
-         <p svgId="connector1pin" layer="schematic" />
-       </breadboardView>
-       <schematicView>
-         <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
-       </schematicView>
-       <pcbView>
-         <p svgId="connector1pin" layer="schematic" />
-       </pcbView>
-     </views>
-   </connector>
  </connectors>
  <buses>
    <bus id="powerbus" >
      <nodeMember connectorId="connector0" />
-   </bus>
-   <bus id="groundbus" >
-     <nodeMember connectorId="connector1" />
    </bus>
  </buses>
 </module>

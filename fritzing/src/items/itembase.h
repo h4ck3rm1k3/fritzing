@@ -50,20 +50,6 @@ class ItemBase : public GraphicsSvgLineItem
 Q_OBJECT
 
 public:
-	static const QString rulerModuleIDName;
-	static const QString breadboardModuleIDName;
-	static const QString tinyBreadboardModuleIDName;
-	static const QString groupModuleIDName;
-	static const QString rectangleModuleIDName;
-	static const QString noteModuleIDName;
-	static const QString wireModuleIDName;
-	static const QString jumperModuleIDName;
-	static const QString groundPlaneModuleIDName;
-	static const QString groundModuleIDName;
-	static const QString powerModuleIDName;
-	static const QString resistorModuleIDName;
-
-public:
 	static const QString ITEMBASE_FONT_PREFIX;
 	static const QString ITEMBASE_FONT_SUFFIX;
 	static QHash<QString, QString> TranslatedPropertyNames;

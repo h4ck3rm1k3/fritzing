@@ -31,6 +31,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include "../infographicsview.h"
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
+#include "moduleidnames.h"
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
@@ -54,7 +55,7 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 		file.close();
 	}
 
-	if (modelPart->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
+	if (modelPart->moduleID().compare(ModuleIDNames::rectangleModuleIDName) == 0) {
 		m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
 		connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
 		m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
@@ -398,7 +399,7 @@ void ResizableBoard::rotateItem(qreal degrees) {
 	// eventually need to make this work for other angles
 	// what gets screwed up is the drag handles
 
-	if (modelPart()->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
+	if (modelPart()->moduleID().compare(ModuleIDNames::rectangleModuleIDName) == 0) {
 		if (degrees == 90 || degrees == -90) {
 			QRectF r = this->boundingRect();
 			r.moveTopLeft(pos());

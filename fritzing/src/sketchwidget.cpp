@@ -78,6 +78,7 @@ $Date$
 #include "items/mysterypart.h"
 #include "items/dip.h"
 #include "items/groundplane.h"
+#include "items/moduleidnames.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
@@ -285,7 +286,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			}
 
 			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
-			if (mp->moduleID() == ItemBase::wireModuleIDName) {
+			if (mp->moduleID() == ModuleIDNames::wireModuleIDName) {
 				addWireExtras(newID, view, parentCommand);
 			}
 			else if (mp->itemType() == ModelPart::Module) {
@@ -712,7 +713,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			paletteItem = new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		default:
-			if (modelPart->moduleID().compare(ItemBase::resistorModuleIDName) == 0) {
+			if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) == 0) {
 				paletteItem = new Resistor(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true, m_viewLayers);
 			}
 			else if (modelPart->properties().value("family", "").compare("mystery part", Qt::CaseInsensitive) == 0) {
@@ -1112,7 +1113,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, ItemBase::wireModuleIDName, viewGeometry, newID, false, -1, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, viewGeometry, newID, false, -1, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
@@ -1126,7 +1127,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 	}
 
 	if (addItNow) {
-		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName), viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
+		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
 		if (newItemBase) {
 			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
@@ -2468,7 +2469,7 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
 	if (itemBases.count() < 2) return NULL;
 
 	if (modelPart == NULL) {
-		modelPart = m_paletteModel->retrieveModelPart(ItemBase::groupModuleIDName);
+		modelPart = m_paletteModel->retrieveModelPart(ModuleIDNames::groupModuleIDName);
 	}
 	if (modelPart == NULL) return NULL;
 
@@ -3171,7 +3172,7 @@ ViewLayer::ViewLayerID SketchWidget::getNoteViewLayerID() {
 
 void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
 
-	ModelPart * wireModel = m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName);
+	ModelPart * wireModel = m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName);
 	if (wireModel == NULL) return;
 
 	m_tempDragWireCommand = m_holdingSelectItemCommand;
@@ -3242,7 +3243,7 @@ void SketchWidget::rotateX(qreal degrees)
 		ViewGeometry vg1 = item->getViewGeometry();
 		ViewGeometry vg2(vg1);
 		if (item->itemType() != ModelPart::Wire) {
-			if (item->modelPart()->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
+			if (item->modelPart()->moduleID().compare(ModuleIDNames::rectangleModuleIDName) == 0) {
 				// because these boards don't actually rotate yet
 				QRectF r = item->boundingRect();
 				//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
@@ -3955,7 +3956,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
-	new AddItemCommand(this, crossView, ItemBase::wireModuleIDName, vg, newID, true, -1, -1, parentCommand);
+	new AddItemCommand(this, crossView, ModuleIDNames::wireModuleIDName, vg, newID, true, -1, -1, parentCommand);
 	new CheckStickyCommand(this, crossView, newID, false, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
@@ -4344,7 +4345,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			if (cleanup && master) {
 				long wireID = ItemBase::getNextID();
 				ViewGeometry vg;
-				new AddItemCommand(this, BaseCommand::CrossView, ItemBase::wireModuleIDName, vg, wireID, false, -1, -1, parentCommand);
+				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, vg, wireID, false, -1, -1, parentCommand);
 				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 						wireID, "connector0", true, true, parentCommand);
@@ -5539,7 +5540,7 @@ void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 
 	ModelPart * modelPart = item->modelPart();
 
-	if (modelPart->moduleID().compare(ItemBase::resistorModuleIDName) != 0) return;
+	if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) != 0) return;
 
 	Resistor * resistor = dynamic_cast<Resistor *>(item);
 	if (resistor == NULL) return;

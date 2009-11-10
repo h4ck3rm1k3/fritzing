@@ -28,6 +28,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../connectors/connectoritem.h"
 #include "../connectors/bus.h"
+#include "moduleidnames.h"
 
 #include <QMultiHash>
 
@@ -167,7 +168,7 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 void SymbolPaletteItem::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
 	ignoreValues = false;
 
-	if (modelPart()->moduleID().compare(ItemBase::groundModuleIDName) == 0) return;
+	if (modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) == 0) return;
 
 	if (prop.compare("voltage", Qt::CaseInsensitive) == 0) {
 		ignoreValues = true;
@@ -182,7 +183,7 @@ QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QStr
 	Q_UNUSED(value);
 
 	if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
-	if (modelPart()->moduleID().compare(ItemBase::groundModuleIDName) == 0) return ___emptyString___;
+	if (modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) == 0) return ___emptyString___;
 
 	qreal v = qRound(m_voltage * 100) / 100.0;	// truncate to 2 decimal places
 	return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='8' value='%1' style='width:55px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"

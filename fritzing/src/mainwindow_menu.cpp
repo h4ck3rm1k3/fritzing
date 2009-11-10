@@ -59,6 +59,7 @@ $Date$
 #include "utils/folderutils.h"
 #include "utils/graphicsutils.h"
 #include "connectors/ercdata.h"
+#include "items/moduleidnames.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -2764,7 +2765,7 @@ void MainWindow::addNote() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
 	m_currentGraphicsView->stackSelectionState(false, parentCommand);
 	m_currentGraphicsView->scene()->clearSelection();
-	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ItemBase::noteModuleIDName, vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -2951,7 +2952,7 @@ void MainWindow::groundFill()
 		ViewGeometry vg;
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
-		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ItemBase::groundPlaneModuleIDName, vg, newID, false, -1, -1, parentCommand);
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, vg, newID, false, -1, -1, parentCommand);
 		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
 	}
 
