@@ -31,6 +31,10 @@ scrollbar-shadow-color:#F0F0EE;
 scrollbar-track-color:#F5F5F5;
 }
 
+/*
+this style should be exactly the same as defined in the file
+media/fritzing/css/base-cachekey.css
+*/
 code {
 	font-family: monospace;
 	color: black;
@@ -41,5 +45,4 @@ code {
 	overflow: auto;
 	padding: 5px;
 	margin: 5px;
-	white-space: pre;
 }
