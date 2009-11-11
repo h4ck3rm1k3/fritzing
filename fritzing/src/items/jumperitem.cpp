@@ -242,6 +242,9 @@ void JumperItem::resize(QPointF p0, QPointF p1) {
 }
 
 void JumperItem::resize() {
+	if (m_connector0 == NULL) return;
+	if (m_connector1 == NULL) return;
+
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}
