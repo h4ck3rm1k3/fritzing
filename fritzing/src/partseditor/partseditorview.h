@@ -155,7 +155,7 @@ class PartsEditorView : public SketchWidget {
 		bool cleanXml(QString &bytes, const QString & filename);
 		bool removeFontFamilySingleQuotes(QString &fileContent, const QString &filename);
 		bool fixUnavailableFontFamilies(QString &fileContent, const QString &filename, bool &canceled);
-		bool pxToInches(QDomElement &elem, const QString &attrName, const QString &filename);
+		bool pxToInches(QDomElement &elem, const QString &attrName, const QString &filename, bool isIllustrator);
 		bool moveViewboxToTopLeftCorner(QDomElement &elem, const QString &filename);
 		QSet<QString> getAttrFontFamilies(const QString &fileContent);
 		QSet<QString> getFontFamiliesInsideStyleTag(const QString &fileContent);

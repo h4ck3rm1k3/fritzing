@@ -164,7 +164,11 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	}*/
 
 	// !!! translator must be installed before any widgets are created !!!
+#ifdef QT_NO_DEBUG
+	m_translationPath = FolderUtils::getApplicationSubFolderPath("lib")+"/translations";
+#else
 	m_translationPath = FolderUtils::getApplicationSubFolderPath("translations");
+#endif
 	bool loaded = findTranslator(m_translationPath);
 	Q_UNUSED(loaded);
 
@@ -792,6 +796,10 @@ void FApplication::createUserDataStoreFolderStructure() {
 		QFile::setPermissions(
 			BinManager::MyPartsBinLocation,
 			QFile::WriteOwner | QFile::WriteUser | ps
+#ifdef Q_WS_WIN
+			| QFile::WriteOther | QFile::WriteGroup
+#endif
+
 		);
 	}
 }

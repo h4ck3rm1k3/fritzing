@@ -716,7 +716,6 @@ bool PartsEditorView::isIllustratorFile(const QString &fileContent) {
 
 bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &filename) {
 	if(m_viewIdentifier == ViewIdentifierClass::IconView) return false;
-	return false;
 
 	QDomDocument *svgDom = new QDomDocument();
 
@@ -729,9 +728,14 @@ bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &
 		return false;
 	}
 
-	QDomElement elem = svgDom->firstChildElement("svg");
-	bool fileHasChanged = pxToInches(elem,"width",filename);
-	fileHasChanged |= pxToInches(elem,"height",filename);
+	bool isIllustrator = isIllustratorFile(fileContent);
+	bool fileHasChanged = false;
+
+	if(isIllustrator) {
+		QDomElement elem = svgDom->firstChildElement("svg");
+		fileHasChanged =  pxToInches(elem,"width",filename,isIllustrator);
+		fileHasChanged |= pxToInches(elem,"height",filename,isIllustrator);
+	}
 
 	if(fileHasChanged) {
 		fileContent = removeXMLEntities(svgDom->toString());
@@ -757,6 +761,7 @@ bool PartsEditorView::fixViewboxOrigin(QString &fileContent, const QString &file
 		}
 
 		QDomElement elem = svgDom.firstChildElement("svg");
+
 		fileHasChanged = moveViewboxToTopLeftCorner(elem,filename);
 
 		if(fileHasChanged) {
@@ -783,16 +788,16 @@ bool PartsEditorView::moveViewboxToTopLeftCorner(QDomElement &elem, const QStrin
 	return false;
 }
 
-bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, const QString &filename) {
+bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, const QString &filename, bool isIllustrator) {
 	QString attrValue = elem.attribute(attrName);
 	if(attrValue.endsWith("px")) {
 		bool ok;
-		qreal value = TextUtils::convertToInches(attrValue, &ok);
+		qreal value = TextUtils::convertToInches(attrValue, &ok, isIllustrator);
 		if(ok) {
 			QString newValue = QString("%1in").arg(value);
 			elem.setAttribute(attrName,newValue);
 			DebugDialog::debug(
-				QString("translating svg attribute '%1' from '%2px' to '%3' in file '%4'")
+				QString("translating svg attribute '%1' from '%2' to '%3' in file '%4'")
 					.arg(attrName).arg(attrValue).arg(newValue).arg(filename)
 			);
 

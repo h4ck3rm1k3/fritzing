@@ -56,7 +56,7 @@ QSet<QString> TextUtils::getRegexpCaptures(const QString &pattern, const QString
 	return captures;
 }
 
-qreal TextUtils::convertToInches(const QString & s, bool * ok) {
+qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrator) {
 	QString string = s;
 	qreal divisor = 1.0;
 	if (string.endsWith("cm", Qt::CaseInsensitive)) {
@@ -72,7 +72,7 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok) {
 		string.chop(2);
 	}
 	else if (string.endsWith("px", Qt::CaseInsensitive)) {
-		divisor = 90.0;
+		divisor = isIllustrator? 72.0: 90.0;
 		string.chop(2);
 	}
 	else {

@@ -37,7 +37,7 @@ class TextUtils
 public:
 	static QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
-	static qreal convertToInches(const QString & string, bool * ok);
+	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
 
 };
 
