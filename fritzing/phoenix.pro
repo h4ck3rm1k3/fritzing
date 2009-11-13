@@ -74,6 +74,7 @@ RESOURCES += phoenixresources.qrc
 	include(pri/autoroute.pri)
 	include(pri/dialogs.pri)
 	include(pri/connectors.pri)
+	include(pri/infoview.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

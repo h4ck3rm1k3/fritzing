@@ -27,7 +27,7 @@ $Date$
 #include "infographicsview.h"
 #include "debugdialog.h"
 #include "commands.h"
-#include "htmlinfoview.h"
+#include "infoview/htmlinfoview.h"
 
 #include <QMessageBox>
 
@@ -187,3 +187,8 @@ bool InfoGraphicsView::hasBigDots() {
 	return false;
 }
 
+void InfoGraphicsView::setVoltage(qreal v, bool doEmit) {
+	if (doEmit) {
+		emit setVoltageSignal(v, false);
+	}
+}

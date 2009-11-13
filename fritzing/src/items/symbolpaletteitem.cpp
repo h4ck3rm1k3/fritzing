@@ -31,7 +31,10 @@ $Date$
 #include "moduleidnames.h"
 #include "../fsvgrenderer.h"
 #include "../utils/textutils.h"
+#include "../infographicsview.h"
 
+#include <QLineEdit>
+#include <QComboBox>
 #include <QMultiHash>
 
 #define VOLTAGE_HASH_CONVERSION 1000000
@@ -204,33 +207,13 @@ QString SymbolPaletteItem::replaceTextElement(QString svg) {
 	return TextUtils::replaceTextElement(svg, QString::number(v) + "V");
 }
 
-
-void SymbolPaletteItem::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
-	ignoreValues = false;
-
-	if (modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) == 0) return;
-
-	if (prop.compare("voltage", Qt::CaseInsensitive) == 0) {
-		ignoreValues = true;
-		value = QString::number(m_voltage);
-		foreach (qreal v, Voltages) {
-			extraValues.append(QString::number(v));
-		}
-	}
-}
-
 QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QString & value) {
 	Q_UNUSED(value);
 
 	if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
 	if (modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) == 0) return ___emptyString___;
 
-	qreal v = qRound(m_voltage * 100) / 100.0;	// truncate to 2 decimal places
-	return QString("&nbsp;<input type='text' name='sVoltage' id='sVoltage' maxlength='8' value='%1' style='width:55px' onblur='setVoltage()' onkeypress='setVoltageEnter(event)' />"
-				   "<script language='JavaScript'>lastGoodVoltage=%1;</script>"
-				   ).arg(v);
-
-	return ___emptyString___;
+	return "<object type='application/x-qt-plugin' classid='VoltageInput' width='65px' height='22px'></object>";  
 }
 
 QString SymbolPaletteItem::getProperty(const QString & key) {
@@ -283,4 +266,42 @@ QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash
 	}
 
 	return svg; 
+}
+
+QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(url);
+	Q_UNUSED(paramNames);
+	Q_UNUSED(paramValues);
+
+	if (classid.compare("VoltageInput") != 0) return NULL;
+	
+	QComboBox * edit = new QComboBox(parent);
+	edit->setEditable(true);
+	int ix = 0;
+	foreach (qreal v, Voltages) {
+		edit->addItem(QString::number(v));
+		if (v == m_voltage) {
+			edit->setCurrentIndex(ix);
+		}
+		ix++;
+	}
+
+	QDoubleValidator * validator = new QDoubleValidator(edit);
+	validator->setRange(-9999.99, 9999.99, 2);
+	validator->setNotation(QDoubleValidator::StandardNotation);
+	edit->setValidator(validator);
+	//edit->setFixedWidth(70);
+	//edit->setFixedHeight(20);
+
+	connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
+	//connect(edit, SIGNAL(editTextChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
+
+	return edit;	
+}
+
+void SymbolPaletteItem::voltageEntry(const QString & text) {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setVoltage(text.toDouble(), true);
+	}
 }

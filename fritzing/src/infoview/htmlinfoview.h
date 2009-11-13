@@ -34,10 +34,10 @@ $Date$
 #include <QGraphicsSceneHoverEvent>
 #include <QMutex>
 
-#include "items/itembase.h"
-#include "items/wire.h"
-#include "connectors/connectoritem.h"
-#include "referencemodel/referencemodel.h"
+#include "../items/itembase.h"
+#include "../items/wire.h"
+#include "../connectors/connectoritem.h"
+#include "../referencemodel/referencemodel.h"
 
 class HtmlInfoView : public QFrame
 {
@@ -110,6 +110,7 @@ protected:
 
 	QWebView *m_webView;
 	QHash<QString /**/, bool> m_blocksVisibility;
+	QPointer<class InfoViewWebPage> m_infoViewWebPage;
 
 protected:
 	static QString PropsBlockId;

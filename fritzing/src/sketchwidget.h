@@ -227,7 +227,6 @@ public:
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
-	virtual void setVoltage(qreal voltage);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -352,7 +351,6 @@ protected:
 											   QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 
-
 protected:
 	static bool lessThan(int a, int b);
 	static bool greaterThan(int a, int b);
@@ -438,7 +436,6 @@ public slots:
 	void setResistance(QString resistance, QString pinSpacing);
 	void setProp(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setChipLabel(QString label);
-	void setVoltage(QString voltage);
 
 protected:
 	QPointer<PaletteModel> m_paletteModel;

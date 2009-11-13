@@ -30,13 +30,14 @@ $Date$
 #include <QSettings>
 
 #include "htmlinfoview.h"
-#include "infographicsview.h"
-#include "debugdialog.h"
-#include "connectors/connectorshared.h"
-#include "connectors/connector.h"
-#include "fsvgrenderer.h"
-#include "layerattributes.h"
-#include "dockmanager.h"
+#include "infoviewwebpage.h"
+#include "../infographicsview.h"
+#include "../debugdialog.h"
+#include "../connectors/connectorshared.h"
+#include "../connectors/connector.h"
+#include "../fsvgrenderer.h"
+#include "../layerattributes.h"
+#include "../dockmanager.h"
 
 
 #define HTML_EOF "</body>\n</html>"
@@ -68,6 +69,8 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 	lo->setMargin(0);
 	lo->setSpacing(0);
 	m_webView = new QWebView(this);
+	m_infoViewWebPage = new InfoViewWebPage(m_webView);
+	m_webView->setPage(m_infoViewWebPage);
 	lo->addWidget(m_webView);
 
 	m_webView->setContextMenuPolicy(Qt::PreventContextMenu);
@@ -597,13 +600,14 @@ void HtmlInfoView::registerCurrentAgain() {
 
 bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 	// note: must take place after setContent()
+	m_currentItem = item;
+	m_infoViewWebPage->setCurrentItem(item);
 	if(item) {
-		m_currentItem = item;
 		registerJsObjects();
 	} else {
-		m_currentItem = NULL;
 		setNullContent();
 	}
+
 	return m_currentItem != NULL;
 }
 

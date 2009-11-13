@@ -70,7 +70,7 @@ $Date$
 #include "svg/svgfilesplitter.h"
 #include "svg/svgflattener.h"
 #include "help/sketchmainhelp.h"
-#include "htmlinfoview.h"
+#include "infoview/htmlinfoview.h"
 #include "items/resizableboard.h"
 #include "utils/graphicsutils.h"
 #include "fsvgrenderer.h"
@@ -5525,17 +5525,6 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 	setLastPaletteItemSelected(paletteItem);
 }
 
-
-// called from javascript (htmlInfoView)
-void SketchWidget::setVoltage(qreal v)
-{
-	Q_UNUSED(v);
-}
-
-void SketchWidget::setVoltage(QString v) {
-	setVoltage(v.toDouble());
-}
-
 // called from javascript (htmlInfoView)
 void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 {
@@ -6067,3 +6056,4 @@ AddItemCommand * SketchWidget::newAddItemCommand(BaseCommand::CrossViewType cros
 {
 	return new AddItemCommand(this, crossViewType, moduleID, viewGeometry, id, updateInfoView, modelIndex, originalModelIndex, parent);
 }
+

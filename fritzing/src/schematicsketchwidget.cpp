@@ -268,9 +268,10 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	return addItemCommand;
 }
 
-// called from javascript (htmlInfoView)
-void SchematicSketchWidget::setVoltage(qreal v)
+void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 {
+	Q_UNUSED(doEmit);
+
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
 

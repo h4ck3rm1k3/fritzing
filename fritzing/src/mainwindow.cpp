@@ -49,7 +49,7 @@ $Date$
 #include "partseditor/mainpartseditorwindow.h"
 #include "partsbinpalette/partsbinpalettewidget.h"
 #include "fdockwidget.h"
-#include "htmlinfoview.h"
+#include "infoview/htmlinfoview.h"
 #include "waitpushundostack.h"
 #include "fapplication.h"
 #include "layerattributes.h"
@@ -380,6 +380,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(setInstanceTitleSignal(long, const QString &, bool, bool, bool )),
 									 slotter, SLOT(setInstanceTitle(long, const QString &, bool, bool, bool )));
+
+	succeeded = succeeded && connect(signaller, SIGNAL(setVoltageSignal(qreal, bool )),
+									 slotter, SLOT(setVoltage(qreal, bool )));
 
 
 	if (!succeeded) {
@@ -1726,13 +1729,6 @@ bool MainWindow::swapSpecial(QMap<QString, QVariant> & currPropsMap) {
 				}
 				return true;
 			}
-		}
-		if (key.compare("voltage", Qt::CaseInsensitive) == 0) {
-			SymbolPaletteItem * sitem = dynamic_cast<SymbolPaletteItem *>(itemBase);
-			if (sitem == NULL) continue;
-			QString value = currPropsMap.value(key).toString();
-			m_currentGraphicsView->setVoltage(value.toDouble());
-			return true;
 		}
 		if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
 			resistance = currPropsMap.value(key).toString();

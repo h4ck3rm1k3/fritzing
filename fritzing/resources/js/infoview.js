@@ -4,7 +4,6 @@ var changing = false;
 var lastGoodWidth = 0;
 var lastGoodHeight = 0;
 var lastGoodResistance = 0;
-var lastGoodVoltage = 0
 
 function fieldEnter(field,evt,idfld) {
 	evt = (evt) ? evt : window.event;
@@ -213,31 +212,6 @@ function updateBoardSize(w, h) {
     }
 }
 
-function setVoltage() {
-	var reg = /^(-{0,1}\d{1,4}$)|(-{0,1}\d{1,4}\.\d{1,2}$)/;
-	
-	var v = document.getElementById("sVoltage").value;			
-   	if (!reg.test(v)) {
-	    alert("The value '" + v + "' doesn't fit within the range of -9999.99 to 9999.99");
-	    setLastVoltage();
-	    return;
-	}
-	
-	lastGoodVoltage = v;
-	
-    sketch.setVoltage(v);
-}
-
-function setVoltageEnter(evt) {
-	evt = (evt) ? evt : window.event;	
-	if (evt.keyCode == 13) {
-	    setVoltage();
-		return false;
-	} 
-		
-	return true;
-}
-
 function setResistance() {
 	var reg = /^((\d{1,3})|(\d{1,3}\.\d))[kMG]{0,1}[\u03A9]{0,1}$/;
 	
@@ -314,10 +288,6 @@ function resizeBoardHeightEnter(evt) {
 function setLastGoodSize() {
     document.getElementById("boardwidth").value = lastGoodWidth;
     document.getElementById("boardheight").value = lastGoodHeight;
-}
-
-function setLastVoltage() {
-    document.getElementById("sVoltage").value = lastGoodVoltage;
 }
 
 function setLastResistance() {

@@ -28,7 +28,7 @@ $Date$
 #include <QMenu>
 
 #include "../debugdialog.h"
-#include "../htmlinfoview.h"
+#include "../infoview/htmlinfoview.h"
 #include "../items/itembase.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"

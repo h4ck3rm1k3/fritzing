@@ -44,7 +44,7 @@ $Date$
 #include "../utils/misc.h"
 #include "../debugdialog.h"
 #include "../dockmanager.h"
-#include "../htmlinfoview.h"
+#include "../infoview/htmlinfoview.h"
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 

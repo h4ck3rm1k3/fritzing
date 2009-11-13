@@ -34,6 +34,7 @@ $Date$
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsItem>
 #include <QPointer>
+#include <QUrl>
 
 #include "../viewgeometry.h"
 #include "../viewlayer.h"
@@ -165,6 +166,8 @@ public:
 	virtual bool hasCustomSVG();
 	virtual void setProp(const QString & prop, const QString & value);
 	bool isObsolete();
+	virtual QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

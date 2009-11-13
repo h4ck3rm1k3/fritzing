@@ -43,15 +43,18 @@ public:
 	qreal voltage();
 	void setProp(const QString & prop, const QString & value);
 	void setVoltage(qreal);
-	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	QString collectExtraInfoHtml(const QString & prop, const QString & value);
 	QString getProperty(const QString & key);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
 public:
 	static qreal DefaultVoltage;
+
+public slots:
+	void voltageEntry(const QString & text);
 
 protected:
 	void removeMeFromBus(qreal voltage);

@@ -77,6 +77,12 @@ public:
 	virtual qreal getLabelFontSizeLarge();
 	virtual bool hasBigDots();
 
+public slots:
+	virtual void setVoltage(qreal, bool doEmit);
+
+signals:
+	void setVoltageSignal(qreal, bool doEmit);
+
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);
 

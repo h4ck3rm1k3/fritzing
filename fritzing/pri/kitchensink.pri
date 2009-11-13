@@ -33,7 +33,6 @@ HEADERS += \
     src/fsplashscreen.h \
     src/ftabwidget.h \
     src/fsvgrenderer.h \
-    src/htmlinfoview.h \
     src/idockablewidget.h \
     src/infographicsview.h \
     src/itemdrag.h \
@@ -71,7 +70,6 @@ SOURCES += \
     src/fsplashscreen.cpp \
     src/ftabwidget.cpp \
     src/fsvgrenderer.cpp \
-    src/htmlinfoview.cpp \
     src/infographicsview.cpp \
     src/itemdrag.cpp \
     src/layerattributes.cpp \

@@ -1491,3 +1491,12 @@ bool ItemBase::isObsolete() {
 	return !modelPart()->replacedby().isEmpty();
 }
 
+QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(parent);
+	Q_UNUSED(classid);
+	Q_UNUSED(url);
+	Q_UNUSED(paramNames);
+	Q_UNUSED(paramValues);
+
+	return NULL;
+}

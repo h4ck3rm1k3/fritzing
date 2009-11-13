@@ -35,7 +35,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #include "viewswitcher/viewswitcherdockwidget.h"
 #include "utils/misc.h"
 #include "partsbinpalette/binmanager/binmanager.h"
-#include "htmlinfoview.h"
+#include "infoview/htmlinfoview.h"
 
 FDockWidget * makeViewSwitcherDock(const QString & title, QWidget * parent) {
 	return new ViewSwitcherDockWidget(title, parent);
