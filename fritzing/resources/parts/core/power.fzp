@@ -12,7 +12,7 @@
  </tags>
  <properties>
    <property name="family">power symbol</property>
-   <property name="type">power</property>
+   <property name="type">voltage reference</property>
    <property name="voltage">5</property>
  </properties>
  <taxonomy>discreteParts.power.power.power</taxonomy>

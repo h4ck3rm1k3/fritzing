@@ -29,6 +29,8 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../connectors/bus.h"
 #include "moduleidnames.h"
+#include "../fsvgrenderer.h"
+#include "../utils/textutils.h"
 
 #include <QMultiHash>
 
@@ -44,6 +46,9 @@ SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass
 {
 	m_connector0 = m_connector1 = NULL;
 	m_voltage = 0;
+	m_renderer = NULL;
+
+	m_voltageReference = (modelPart->properties().value("type").compare("voltage reference") == 0);
 
 	if (Voltages.count() == 0) {
 		Voltages.append(0.0);
@@ -163,7 +168,42 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 
 		localVoltages.insert(FROMVOLTAGE(v), connectorItem);
 	}
+
+	if (!m_voltageReference) return;
+
+	QString svg = makeSvg();
+	if (!svg.isEmpty()) {
+		if (m_renderer == NULL) {
+			m_renderer = new FSvgRenderer(this);
+		}
+		//DebugDialog::debug(svg);
+
+		bool result = m_renderer->fastLoad(svg.toUtf8());
+		if (result) {
+			setSharedRenderer(m_renderer);
+		}
+	}
+
 }
+
+QString SymbolPaletteItem::makeSvg() {
+	QString path = filename();
+	QFile file(filename());
+	QString svg;
+	if (file.open(QFile::ReadOnly)) {
+		svg = file.readAll();
+		file.close();
+		return replaceTextElement(svg);
+	}
+
+	return "";
+}
+
+QString SymbolPaletteItem::replaceTextElement(QString svg) {
+	qreal v = ((int) (m_voltage * 1000)) / 1000.0;
+	return TextUtils::replaceTextElement(svg, QString::number(v) + "V");
+}
+
 
 void SymbolPaletteItem::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
 	ignoreValues = false;
@@ -211,4 +251,36 @@ ConnectorItem * SymbolPaletteItem::connector0() {
 
 ConnectorItem * SymbolPaletteItem::connector1() {
 	return m_connector1;
+}
+
+QVariant SymbolPaletteItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	if (m_voltageReference) {
+		switch (change) {
+			case ItemSceneHasChanged:
+				if (this->scene()) {
+					setVoltage(m_voltage);
+				}
+				break;
+			default:
+				break;
+   		}
+	}
+
+    return PaletteItem::itemChange(change, value);
+}
+
+QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+{
+	QString svg = PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+	if (m_voltageReference) {
+		switch (viewLayerID) {
+			case ViewLayer::Schematic:
+				return replaceTextElement(svg);
+			default:
+				break;
+		}
+	}
+
+	return svg; 
 }

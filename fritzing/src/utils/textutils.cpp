@@ -89,3 +89,31 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrato
 	if (ok) *ok = true;
 	return result / divisor;
 }
+
+QString TextUtils::replaceTextElement(QString svg, const QString & label) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return svg;
+
+	QDomElement root = doc.documentElement();
+	QDomNodeList domNodeList = root.elementsByTagName("text");
+	for (int i = 0; i < domNodeList.count(); i++) {
+		QDomElement node = domNodeList.item(i).toElement();
+		if (node.isNull()) continue;
+
+		if (node.attribute("id").compare("label") != 0) continue;
+
+		QDomNodeList childList = node.childNodes();
+		for (int j = 0; j < childList.count(); j++) {
+			QDomNode child = childList.item(i);
+			if (child.isText()) {
+				child.setNodeValue(label);
+				return doc.toString();
+			}
+		}
+	}
+		
+	return svg;
+}

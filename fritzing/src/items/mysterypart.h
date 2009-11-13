@@ -55,7 +55,6 @@ public:
 protected:
 	QString makeSvg(const QString & chipLabel);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	QString replaceText(QString svg, const QString & chipLabel);
 
 protected:
 	class FSvgRenderer * m_renderer;

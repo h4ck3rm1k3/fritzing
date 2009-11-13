@@ -48,6 +48,7 @@ public:
 	QString getProperty(const QString & key);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 
 public:
 	static qreal DefaultVoltage;
@@ -55,11 +56,16 @@ public:
 protected:
 	void removeMeFromBus(qreal voltage);
 	qreal useVoltage(ConnectorItem * connectorItem);
+	QString makeSvg();
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	QString replaceTextElement(QString svg);
 
 protected:
 	qreal m_voltage;
 	QPointer<ConnectorItem> m_connector0;
 	QPointer<ConnectorItem> m_connector1;
+	bool m_voltageReference;
+	class FSvgRenderer * m_renderer;
 
 };
 

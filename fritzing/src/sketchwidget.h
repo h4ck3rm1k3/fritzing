@@ -227,6 +227,7 @@ public:
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
+	virtual void setVoltage(qreal voltage);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -432,12 +433,12 @@ public slots:
 	void resizeBoard(qreal w, qreal h);
 	void resizeBoard(long id, qreal w, qreal h);
 	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
-	virtual void setVoltage(qreal voltage);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setResistance(QString resistance, QString pinSpacing);
 	void setProp(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setChipLabel(QString label);
+	void setVoltage(QString voltage);
 
 protected:
 	QPointer<PaletteModel> m_paletteModel;

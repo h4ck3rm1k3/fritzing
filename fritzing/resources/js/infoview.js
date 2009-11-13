@@ -4,6 +4,7 @@ var changing = false;
 var lastGoodWidth = 0;
 var lastGoodHeight = 0;
 var lastGoodResistance = 0;
+var lastGoodVoltage = 0
 
 function fieldEnter(field,evt,idfld) {
 	evt = (evt) ? evt : window.event;
@@ -221,7 +222,7 @@ function setVoltage() {
 	    setLastVoltage();
 	    return;
 	}
-		
+	
 	lastGoodVoltage = v;
 	
     sketch.setVoltage(v);

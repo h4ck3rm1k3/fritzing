@@ -64,8 +64,6 @@ public:
 						  long toID, const QString & toConnectorID,
 						  bool connect, bool doEmit, bool seekLayerKin,
 						  bool updateConnections);
-
-public slots:
 	void setVoltage(qreal voltage);
 
 protected slots:

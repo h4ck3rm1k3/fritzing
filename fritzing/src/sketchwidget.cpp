@@ -5532,6 +5532,10 @@ void SketchWidget::setVoltage(qreal v)
 	Q_UNUSED(v);
 }
 
+void SketchWidget::setVoltage(QString v) {
+	setVoltage(v.toDouble());
+}
+
 // called from javascript (htmlInfoView)
 void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 {
