@@ -36,7 +36,7 @@ echo "making library folders"
 mkdir lib
 mkdir lib/imageformats
 mkdir lib/sqldrivers
-mkdir lib/translations
+mkdir translations
 
 cd lib
 echo "copying libraries"
@@ -59,7 +59,7 @@ cp $QT_HOME/plugins/imageformats/libqjpeg.so imageformats
 cp $QT_HOME/plugins/sqldrivers/libqsqlite.so sqldrivers
 
 echo "copying translations"
-cp ../../compile_folder/translations/*.qm translations
+cp ../../compile_folder/translations/*.qm ../translations
 cd ../../
 
 echo "compressing...."
