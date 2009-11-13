@@ -880,9 +880,6 @@ void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & all
 		wire->collectChained(wires, ends, uniqueEnds);
 		foreach (Wire * w, wires) {
 			visitedWires.insert(w);
-			if (w->id() == 434350) {
-				DebugDialog::debug("what gives");
-			}
 		}
 
 		QList<Wire *> wiresCopy(wires);

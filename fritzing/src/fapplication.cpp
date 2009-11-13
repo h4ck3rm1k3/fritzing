@@ -80,7 +80,7 @@ QTimer FApplication::m_activationTimer;
 QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
 QStringList FApplication::m_arguments;
 int FApplication::RestartNeeded = 9999;
-
+bool FApplication::m_runAsService;
 
 static int kBottomOfAlpha = 204;
 
@@ -126,6 +126,7 @@ void DoOnceThread::run()
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
+	m_runAsService = false;
 	m_arguments = arguments();
 	for (int i = 0; i < m_arguments.length() - 1; i++) {
 		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||
@@ -138,6 +139,16 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 			break;
 		}
 	}
+
+	/*
+	for (int i = 0; i < m_arguments.length(); i++) {
+		if (m_arguments[i].compare("-c", Qt::CaseInsensitive) == 0) {
+			m_runAsService = true;
+			break;
+		}
+	}
+	*/
+
 	m_started = false;
 	m_updateDialog = NULL;
 	m_lastTopmostWindow = NULL;
@@ -164,15 +175,28 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	}*/
 
 	// !!! translator must be installed before any widgets are created !!!
-#ifdef QT_NO_DEBUG
-	m_translationPath = FolderUtils::getApplicationSubFolderPath("lib")+"/translations";
-#else
 	m_translationPath = FolderUtils::getApplicationSubFolderPath("translations");
-#endif
+
 	bool loaded = findTranslator(m_translationPath);
 	Q_UNUSED(loaded);
 
 	Q_INIT_RESOURCE(phoenixresources);
+
+	qRegisterMetaType<ViewGeometry>("ViewGeometry");
+
+	MainWindow::initExportConstants();
+	FSvgRenderer::calcPrinterScale();
+	ViewIdentifierClass::initNames();
+	Wire::initNames();
+	ItemBase::initNames();
+	ViewLayer::initNames();
+	Connector::initNames();
+	ZoomComboBox::loadFactors();
+	Helper::initText();
+	PartsEditorMainWindow::initText();
+	BinManager::initNames();
+	PaletteModel::initNames();
+
 }
 
 FApplication::~FApplication(void)
@@ -341,20 +365,6 @@ int FApplication::startup(bool firstRun)
 
 	if(firstRun) {
 		// so we can use ViewGeometry in a Qt::QueueConnection signal
-		qRegisterMetaType<ViewGeometry>("ViewGeometry");
-
-		MainWindow::initExportConstants();
-		FSvgRenderer::calcPrinterScale();
-		ViewIdentifierClass::initNames();
-		Wire::initNames();
-		ItemBase::initNames();
-		ViewLayer::initNames();
-		Connector::initNames();
-		ZoomComboBox::loadFactors();
-		Helper::initText();
-		PartsEditorMainWindow::initText();
-		BinManager::initNames();
-		PaletteModel::initNames();
 		
 		registerFont(":/resources/fonts/DroidSans.ttf", true);
 		registerFont(":/resources/fonts/DroidSans-Bold.ttf", false);
@@ -391,7 +401,7 @@ int FApplication::startup(bool firstRun)
 		FSvgRenderer::cleanup();
 	}
 
-	m_referenceModel = new CurrentReferenceModel();
+	m_referenceModel = new CurrentReferenceModel();					// this is very slow
 	//DebugDialog::debug("after new current reference model");
 	m_paletteBinModel = new PaletteModel(true, false);
 	//DebugDialog::debug("after new palette model");
@@ -450,7 +460,7 @@ int FApplication::startup(bool firstRun)
 	splash.showProgress(progressIndex, 0.70);
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
-	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
+	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);   // this is also slow
 
 	splash.showProgress(progressIndex, 0.9);
 	processEvents();
@@ -901,4 +911,8 @@ which is really not intended for hundreds of widgets.
         }
     }
 
+}
+
+bool FApplication::runAsService() {
+	return m_runAsService;
 }

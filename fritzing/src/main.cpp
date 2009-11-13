@@ -27,6 +27,7 @@ $Date$
 
 #include <QTextStream>
 #include <QFile>
+#include <QtDebug>
 
 #include "fapplication.h"
 #include "debugdialog.h"
@@ -100,14 +101,15 @@ int main(int argc, char *argv[])
 	//DebugDialog::setDebugLevel(DebugDialog::Error);
 	bool firstRun = true;
 	int result = 0;
-	do {
-		result = app->startup(firstRun);
-		if (result == 0) {
-			result = app->exec();
-			firstRun = false;
-		}
-	} while(result == FApplication::RestartNeeded);
-
+	if (!app->runAsService()) {
+		do {
+			result = app->startup(firstRun);
+			if (result == 0) {
+				result = app->exec();
+				firstRun = false;
+			}
+		} while(result == FApplication::RestartNeeded);
+	}
 	app->finish();
 	delete app;
 	return result;

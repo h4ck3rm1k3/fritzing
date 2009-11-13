@@ -315,38 +315,39 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
     ModelPart::ItemType type = ModelPart::Part;
     // check if it's a wire
 	QDomElement properties = root.firstChildElement("properties");
+	QString propertiesText = properties.text();
 	// FIXME: properties is nested right now
-	if (properties.text().contains("wire", Qt::CaseInsensitive)) {
+	if (propertiesText.contains("wire", Qt::CaseInsensitive)) {
 		type = ModelPart::Wire;
 	}
 	else if (moduleID.compare(ModuleIDNames::jumperModuleIDName) == 0) {
 		type = ModelPart::Jumper;
 	}
-	else if (properties.text().contains("breadboard", Qt::CaseInsensitive)) {
+	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {
 		type = ModelPart::Breadboard;
 	}
-	else if (properties.text().contains("plain vanilla pcb", Qt::CaseInsensitive)) {
+	else if (propertiesText.contains("plain vanilla pcb", Qt::CaseInsensitive)) {
 		type = ModelPart::ResizableBoard;
 	}
 	else if (moduleID.compare(ModuleIDNames::groundPlaneModuleIDName) == 0) {
 		type = ModelPart::CopperFill;
 	}
-	else if (properties.text().contains("arduino", Qt::CaseInsensitive)) {
+	else if (propertiesText.contains("arduino", Qt::CaseInsensitive)) {
 		LayerAttributes la;
 		if (la.getSvgElementID(domDocument, ViewIdentifierClass::PCBView, ViewLayer::Board)) {
 			type = ModelPart::Board;
 		}
 	}
-	else if (properties.text().contains("note", Qt::CaseInsensitive)) {
+	else if (propertiesText.contains("note", Qt::CaseInsensitive)) {
 		type = ModelPart::Note;
 	}
-	/*else if (properties.text().equals("module", Qt::CaseInsensitive)) {
+	/*else if (propertiesText.equals("module", Qt::CaseInsensitive)) {
 		type = ModelPart::Module;
 	}*/
-	else if (properties.text().contains("ground symbol", Qt::CaseInsensitive)) {
+	else if (propertiesText.contains("ground symbol", Qt::CaseInsensitive)) {
 		type = ModelPart::Symbol;
 	}
-	else if (properties.text().contains("power symbol", Qt::CaseInsensitive)) {
+	else if (propertiesText.contains("power symbol", Qt::CaseInsensitive)) {
 		type = ModelPart::Symbol;
 	}
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);
@@ -376,8 +377,6 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else {
     	modelPart->setParent(m_root);
    	}
-
-    emit newPartLoaded(modelPart);
 
 	//DebugDialog::debug(QString("all parts %1").arg(JustAppendAllPartsInstances));
     writeInstanceInCommonBin(moduleID,path,CreateAllPartsBinFile,AllPartsBinFilePath);

@@ -56,6 +56,7 @@ public:
 	static void setOpenSaveFolder(const QString& path);
 	static const QString openSaveFolder();
 	static bool spaceBarIsPressed();
+	static bool runAsService();
 
 signals:
 	void spaceBarIsPressedSignal(bool);
@@ -98,6 +99,7 @@ protected:
 	static QPointer<class MainWindow> m_lastTopmostWindow;
 	static QList<QWidget *> m_orderedTopLevelWidgets;
 	static QStringList m_arguments;
+	static bool m_runAsService;
 
 public:
 	static QSet<QString> InstalledFonts;

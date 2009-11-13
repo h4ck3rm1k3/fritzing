@@ -56,9 +56,6 @@ public:
 	void clearPartHash();
 	void setOrdererChildren(QList<QObject*> children);
 
-signals:
-	void newPartLoaded(ModelPart *);
-
 protected:
 	QHash<QString, ModelPart *> m_partHash;
 	bool m_loadedFromFile;
