@@ -70,7 +70,7 @@ $Date$
 
 #include "fsvgrenderer.h"
 #include "fsizegrip.h"
-#include "expandinglabel.h"
+#include "utils/expandinglabel.h"
 #include "viewswitcher/viewswitcher.h"
 #include "viewswitcher/viewswitcherdockwidget.h"
 

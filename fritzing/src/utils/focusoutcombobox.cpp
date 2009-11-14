@@ -18,26 +18,29 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2820 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-04-15 16:37:21 +0200 (Wed, 15 Apr 2009) $
 
 ********************************************************************/
 
-#ifndef FTABWIDGET_H
-#define FTABWIDGET_H
+#include "focusoutcombobox.h"
 
-#include <QTabWidget>
-#include "debugdialog.h"
-
-class FTabWidget : public QTabWidget
+FocusOutComboBox::FocusOutComboBox(QWidget * parent) : QComboBox(parent)
 {
-	Q_OBJECT
+	setEditable(true);
+}
 
-public:
-	FTabWidget(QWidget * parent = 0);
-
-	QTabBar * tabBar();
-};
-
-#endif
+void FocusOutComboBox::focusOutEvent(QFocusEvent * e) {
+	QComboBox::focusOutEvent(e);
+	QString t = this->currentText();
+	QString it = this->itemText(this->currentIndex());
+	if (t.compare(it) != 0) {
+		int ix = findText(t);
+		if (ix == -1) {
+			addItem(t);
+			ix = count() - 1;
+		}
+		setCurrentIndex(ix);
+	}
+}

@@ -34,7 +34,7 @@ $Date$
 #include "../palettemodel.h"
 #include "../modelpart.h"
 #include "../waitpushundostack.h"
-#include "../abstractimagebutton.h"
+#include "../utils/abstractimagebutton.h"
 #include "../utils/bundler.h"
 
 class ImageButton : public AbstractImageButton {

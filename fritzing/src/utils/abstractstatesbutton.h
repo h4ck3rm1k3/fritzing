@@ -32,7 +32,7 @@ $Date$
 #include <QIcon>
 #include <QMouseEvent>
 
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 class AbstractStatesButton {
 public:

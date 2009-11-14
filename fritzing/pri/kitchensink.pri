@@ -17,21 +17,17 @@
 # $Date$
 # ********************************************************************/
 HEADERS += \
-    src/abstractimagebutton.h \
-    src/abstractstatesbutton.h \
     src/breadboardsketchwidget.h \
     src/commands.h \
     src/console.h \
     src/debugdialog.h \
     src/dockmanager.h \
-    src/expandinglabel.h \
     src/fapplication.h \
     src/fdockwidget.h \
     src/fgraphicsscene.h \
     src/fritzingwindow.h \
     src/fsizegrip.h \
     src/fsplashscreen.h \
-    src/ftabwidget.h \
     src/fsvgrenderer.h \
     src/idockablewidget.h \
     src/infographicsview.h \
@@ -68,7 +64,6 @@ SOURCES += \
     src/fritzingwindow.cpp \
     src/fsizegrip.cpp \
     src/fsplashscreen.cpp \
-    src/ftabwidget.cpp \
     src/fsvgrenderer.cpp \
     src/infographicsview.cpp \
     src/itemdrag.cpp \

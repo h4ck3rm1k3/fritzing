@@ -160,7 +160,7 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	m_currentSwappingEnabled = swappingEnabled;
 
 	QString s = appendStuff(item,swappingEnabled);
-
+	setCurrentItem(item);
 	setContent(s);
 	registerAsCurrentItem(item);
 	registerInfoGraphicsView(infoGraphicsView);
@@ -208,6 +208,7 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnab
 	s += 		 "</table></div>\n";
 	s += "</div>";
 
+	setCurrentItem(item->attachedTo());
 	setContent(s);
 
 	if (item->attachedTo() && item->attachedTo() != m_currentItem) {
@@ -598,10 +599,13 @@ void HtmlInfoView::registerCurrentAgain() {
 	registerAsCurrentItem(m_currentItem);
 }
 
-bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
-	// note: must take place after setContent()
+void HtmlInfoView::setCurrentItem(ItemBase * item) {
 	m_currentItem = item;
 	m_infoViewWebPage->setCurrentItem(item);
+}
+
+bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
+	// note: must take place after setContent()
 	if(item) {
 		registerJsObjects();
 	} else {
@@ -618,6 +622,7 @@ void HtmlInfoView::registerJsObjects() {
 }
 
 void HtmlInfoView::unregisterCurrentItem() {
+	setCurrentItem(NULL);
 	registerAsCurrentItem(NULL);
 }
 
@@ -626,7 +631,7 @@ void HtmlInfoView::unregisterCurrentItemIf(long id) {
 		return;
 	}
 	if (m_currentItem->id() == id) {
-		registerAsCurrentItem(NULL);
+		unregisterCurrentItem();
 	}
 }
 

@@ -26,6 +26,7 @@ $Date$
 
 #include "resistor.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/focusoutcombobox.h"
 #include "../fsvgrenderer.h"
 #include "../infographicsview.h"
 #include "../svg/svgfilesplitter.h"
@@ -33,6 +34,8 @@ $Date$
 #include "../layerattributes.h"
 
 #include <qmath.h>
+#include <QRegExpValidator>
+#include <limits>
 
 static QString BreadboardLayerTemplate = "";
 static QList<QString> Resistances;
@@ -41,6 +44,38 @@ static QHash<int, QColor> ColorBands;
 static QChar OhmSymbol(0x03A9);
 static QRegExp Digits("(\\d)+");
 static QRegExp DigitsMil("(\\d)+mil");
+
+class BoundedRegExpValidator : public QRegExpValidator 
+{
+public:
+	BoundedRegExpValidator(QObject * parent) : QRegExpValidator(parent) {
+		m_max = std::numeric_limits<double>::max();
+		m_min = std::numeric_limits<double>::min();
+	}
+
+	void setBounds(qreal min, qreal max) {
+		m_min = min;
+		m_max = max;
+	}
+
+	QValidator::State validate ( QString & input, int & pos ) const {
+		QValidator::State state = QRegExpValidator::validate(input, pos);
+		if (state == QValidator::Invalid) return state;
+		if (state == QValidator::Intermediate) return state;
+
+		QString r = input;
+		qreal ohms = Resistor::toOhms(r);
+		if (ohms < m_min) return QValidator::Invalid;
+		if (ohms > m_max) return QValidator::Invalid;
+
+		return QValidator::Acceptable;
+	}
+
+protected:
+	qreal m_min;
+	qreal m_max;
+
+};
 
 
 // TODO
@@ -214,14 +249,6 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 void Resistor::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
 	ignoreValues = false;
 
-	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
-		ignoreValues = true;
-		value = m_ohms + OhmSymbol;
-		foreach (QString r, Resistances) {
-			extraValues.append(r);
-		}
-		return;
-	}
 	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
 		ignoreValues = true;
 		value = m_pinSpacing;
@@ -236,9 +263,7 @@ QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & val
 	Q_UNUSED(value);
 
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
-		return QString("&nbsp;<input type='text' name='sResistance' id='sResistance' maxlength='8' value='%1' style='width:55px' onblur='setResistance()' onkeypress='setResistanceEnter(event)' />"
-					   "<script language='JavaScript'>lastGoodResistance=%1;</script>"
-					   ).arg(m_ohms + OhmSymbol);
+		return "<object type='application/x-qt-plugin' classid='ResistanceInput' width='65px' height='22px'></object>";  
 	}
 
 	return ___emptyString___;
@@ -268,15 +293,19 @@ qreal Resistor::toOhms(const QString & ohms)
 {
 	qreal multiplier = 1;
 	QString temp = ohms;
+	if (temp.endsWith(OhmSymbol)) {
+		temp.chop(1);
+	}
+
 	if (temp.endsWith("k", Qt::CaseInsensitive)) {
 		multiplier = 1000;
 		temp.chop(1);
 	}
-	else if (ohms.endsWith("M", Qt::CaseInsensitive)) {
+	else if (temp.endsWith("M", Qt::CaseInsensitive)) {
 		multiplier = 1000000;
 		temp.chop(1);
 	}
-	else if (ohms.endsWith("G", Qt::CaseInsensitive)) {
+	else if (temp.endsWith("G", Qt::CaseInsensitive)) {
 		multiplier = 1000000000;
 		temp.chop(1);
 	}
@@ -330,4 +359,40 @@ bool Resistor::hasCustomSVG() {
 
 bool Resistor::canEditPart() {
 	return false;
+}
+
+QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(url);
+	Q_UNUSED(paramNames);
+	Q_UNUSED(paramValues);
+
+	if (classid.compare("ResistanceInput") != 0) return NULL;
+	
+	FocusOutComboBox * edit = new FocusOutComboBox(parent);
+	edit->setEditable(true);
+	int ix = 0;
+	QString current = m_ohms + OhmSymbol;
+	foreach (QString r, Resistances) {
+		edit->addItem(r);
+		if (r == current) {
+			edit->setCurrentIndex(ix);
+		}
+		ix++;
+	}
+				
+	BoundedRegExpValidator * validator = new BoundedRegExpValidator(edit);
+	validator->setBounds(0, 9900000000);
+	validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
+	edit->setValidator(validator);
+
+	connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
+
+	return edit;	
+}
+
+void Resistor::resistanceEntry(const QString & text) {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setResistance(text, "");
+	}
 }

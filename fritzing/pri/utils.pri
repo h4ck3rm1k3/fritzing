@@ -18,11 +18,15 @@
 # ********************************************************************/
 
 HEADERS += \
+src/utils/abstractimagebutton.h \
+src/utils/abstractstatesbutton.h \
 src/utils/autoclosemessagebox.h \
 src/utils/bendpointaction.h \
 src/utils/bundler.h \
 src/utils/clickablelabel.h \
+src/utils/expandinglabel.h \
 src/utils/fileprogressdialog.h \
+src/utils/focusoutcombobox.h \
 src/utils/misc.h \
 src/utils/resizehandle.h \
 src/utils/folderutils.h \
@@ -34,6 +38,7 @@ src/utils/autoclosemessagebox.cpp \
 src/utils/bendpointaction.cpp \
 src/utils/clickablelabel.cpp \
 src/utils/fileprogressdialog.cpp \
+src/utils/focusoutcombobox.cpp \
 src/utils/misc.cpp \
 src/utils/resizehandle.cpp \
 src/utils/folderutils.cpp \

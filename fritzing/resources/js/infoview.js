@@ -3,7 +3,6 @@
 var changing = false;
 var lastGoodWidth = 0;
 var lastGoodHeight = 0;
-var lastGoodResistance = 0;
 
 function fieldEnter(field,evt,idfld) {
 	evt = (evt) ? evt : window.event;
@@ -212,32 +211,6 @@ function updateBoardSize(w, h) {
     }
 }
 
-function setResistance() {
-	var reg = /^((\d{1,3})|(\d{1,3}\.\d))[kMG]{0,1}[\u03A9]{0,1}$/;
-	
-	var r = document.getElementById("sResistance").value;
-	var s = r;			
-   	if (!reg.test(r) || (s < 0) || (s > 9900000000)) {
-	    alert("The value '" + r + "' doesn't fit within the range of 1.0 to 9.9G");
-	    setLastResistance();
-	    return;
-	}
-		
-	lastGoodResistance = r;
-	
-    sketch.setResistance(r, "");
-}
-
-function setResistanceEnter(evt) {
-	evt = (evt) ? evt : window.event;	
-	if (evt.keyCode == 13) {
-	    setResistance();
-		return false;
-	} 
-		
-	return true;
-}
-
 function resizeBoardWidth() {
     resizeBoard();
 }
@@ -288,9 +261,5 @@ function resizeBoardHeightEnter(evt) {
 function setLastGoodSize() {
     document.getElementById("boardwidth").value = lastGoodWidth;
     document.getElementById("boardheight").value = lastGoodHeight;
-}
-
-function setLastResistance() {
-    document.getElementById("sResistance").value = lastGoodResistance;
 }
 

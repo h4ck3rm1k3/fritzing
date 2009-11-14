@@ -53,12 +53,17 @@ public:
 	const QString & title();
 	bool hasCustomSVG();
 	bool canEditPart();
+	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateResistances(QString r);
 	ConnectorItem* newConnectorItem(class Connector *connector);
+
+public slots:
+	void resistanceEntry(const QString & text);
+
 
 public:
 	static qreal toOhms(const QString & ohmsString);

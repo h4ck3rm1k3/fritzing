@@ -192,3 +192,10 @@ void InfoGraphicsView::setVoltage(qreal v, bool doEmit) {
 		emit setVoltageSignal(v, false);
 	}
 }
+
+void InfoGraphicsView::setResistance(QString resistance, QString pinSpacing)
+{
+	Q_UNUSED(resistance);
+	Q_UNUSED(pinSpacing);
+}
+

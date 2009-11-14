@@ -32,7 +32,7 @@ $Date$
 
 #include <QToolButton>
 
-#include "abstractstatesbutton.h"
+#include "utils/abstractstatesbutton.h"
 
 class SketchToolButton : public QToolButton, public AbstractStatesButton {
 	Q_OBJECT

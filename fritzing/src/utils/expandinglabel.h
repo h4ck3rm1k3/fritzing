@@ -31,7 +31,7 @@ $Date: 2008-11-24 12:33:07 +0100 (Mon, 24 Nov 2008) $
 #include <QScrollBar>
 #include <QAbstractTextDocumentLayout>
 
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 class ExpandingLabel : public QTextEdit {
 	Q_OBJECT

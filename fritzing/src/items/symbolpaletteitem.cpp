@@ -31,10 +31,10 @@ $Date$
 #include "moduleidnames.h"
 #include "../fsvgrenderer.h"
 #include "../utils/textutils.h"
+#include "../utils/focusoutcombobox.h"
 #include "../infographicsview.h"
 
 #include <QLineEdit>
-#include <QComboBox>
 #include <QMultiHash>
 
 #define VOLTAGE_HASH_CONVERSION 1000000
@@ -275,8 +275,7 @@ QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &class
 
 	if (classid.compare("VoltageInput") != 0) return NULL;
 	
-	QComboBox * edit = new QComboBox(parent);
-	edit->setEditable(true);
+	FocusOutComboBox * edit = new FocusOutComboBox(parent);
 	int ix = 0;
 	foreach (qreal v, Voltages) {
 		edit->addItem(QString::number(v));
@@ -290,12 +289,8 @@ QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &class
 	validator->setRange(-9999.99, 9999.99, 2);
 	validator->setNotation(QDoubleValidator::StandardNotation);
 	edit->setValidator(validator);
-	//edit->setFixedWidth(70);
-	//edit->setFixedHeight(20);
 
 	connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
-	//connect(edit, SIGNAL(editTextChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
-
 	return edit;	
 }
 
@@ -305,3 +300,4 @@ void SymbolPaletteItem::voltageEntry(const QString & text) {
 		infoGraphicsView->setVoltage(text.toDouble(), true);
 	}
 }
+

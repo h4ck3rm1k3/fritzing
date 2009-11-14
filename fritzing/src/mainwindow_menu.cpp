@@ -46,7 +46,7 @@ $Date$
 #include "schematicsketchwidget.h"
 #include "pcbsketchwidget.h"
 #include "partsbinpalette/binmanager/binmanager.h"
-#include "expandinglabel.h"
+#include "utils/expandinglabel.h"
 #include "infoview/htmlinfoview.h"
 #include "utils/bendpointaction.h"
 #include "fgraphicsscene.h"

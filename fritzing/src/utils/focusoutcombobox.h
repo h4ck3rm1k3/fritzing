@@ -18,35 +18,27 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2467 $:
+$Revision: 2676 $:
 $Author: cohen@irascible.com $:
-$Date: 2009-02-23 19:06:21 +0100 (Mon, 23 Feb 2009) $
+$Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 
 ********************************************************************/
 
-#ifndef TRIPLE_H
-#define TRIPLE_H
+#ifndef FOCUSOUTCOMBOBOX_H
+#define FOCUSOUTCOMBOBOX_H
 
-template <class T1, class T2, class T3>
-struct Triple {
+#include <QCombobox>
+#include <QFocusEvent>
+
+class FocusOutComboBox : public QComboBox {
+Q_OBJECT
+
 public:
-	Triple() {}
+	FocusOutComboBox(QWidget * parent = NULL);
 
-	Triple(T1 _first, T2 _second, T3 _third) {
-		first = _first;
-		second = _second;
-		third = _third;
-	}
+protected:
+	void focusOutEvent(QFocusEvent *);
 
-	T1 first;
-	T2 second;
-	T3 third;
-};
-
-struct StringTriple : public Triple<QString, QString, QString> {
-	StringTriple() : Triple<QString, QString, QString>() {}
-	StringTriple(QString _first, QString _second, QString _third)
-		: Triple<QString, QString, QString>(_first, _second, _third) {}
 };
 
 

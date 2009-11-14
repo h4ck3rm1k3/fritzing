@@ -92,6 +92,7 @@ protected:
 	QString blockContainer(const QString &blockId);
 	QString settingsBlockVisibilityName(const QString &blockId);
 
+	void setCurrentItem(ItemBase *);
 	void registerJsObjects();
 	void registerCurrentAgain();
 	bool registerAsCurrentItem(ItemBase *item);
