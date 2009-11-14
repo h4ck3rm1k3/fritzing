@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.7b.08.26.3377" moduleId="beab33bd7feee277622ef76dd6e79e4d">
-    <author>lionelmichel</author>
+<module fritzingVersion="0.3.11" moduleId="beab33bd7feee277622ef76dd6e79e4d">
+    <author>Lionel Michel</author>
     <title>Infrared proximity sensor</title>
-    <date>2009-09-16</date>
+    <date>2009-11-12</date>
     <tags/>
     <properties>
         <property name="family"></property>

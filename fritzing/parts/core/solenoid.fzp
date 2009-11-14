@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.11b.11.09.3700" moduleId="9f2b90fcf9c65c9bc09d570e3442069e">
-    <author>lionelmichel</author>
+    <author>Lionel Michel</author>
     <title>Solenoid</title>
-    <date>2009-09-16</date>
+    <date>2009-11-12</date>
     <tags/>
     <properties>
         <property name="family"> </property>

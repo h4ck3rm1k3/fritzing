@@ -114,6 +114,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="beab33bd7feee277622ef76dd6e79e4d" modelIndex="20" path="parts/core/infrared_proximity_sensor.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="2012BCEC1FB" modelIndex="21" path="parts/core/thermistor_300mil.fzp">
             <views>
                 <iconView layer="icon">
@@ -142,7 +149,35 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="f2341c24e2a6d9182a55c653b6bbefed" modelIndex="24" path="parts/core/7-segment_display.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="c8994c24e2a6d9182a55c653b6bbefed" modelIndex="24" path="parts/core/16-segment_display.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="8abf6496b5d466c7a1893c17a296a676" modelIndex="25" path="parts/core/piezo sensor.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="5c5090e231dbe30e6bd4b9e2e7949902" modelIndex="25" path="parts/core/loudspeaker.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="415c9d899a1e7de6c023ea0731bab117" modelIndex="25" path="parts/core/microphone.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -164,6 +199,13 @@
             </views>
         </instance>
         <instance moduleIdRef="7d0bc366bcac9395c747f3a92e2ff843" modelIndex="28" path="parts/core/stepper_motor_bipolar.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="9f2b90fcf9c65c9bc09d570e3442069e" modelIndex="28" path="parts/core/solenoid.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
