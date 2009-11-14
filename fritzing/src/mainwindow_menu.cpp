@@ -2464,7 +2464,7 @@ void MainWindow::exportBOM() {
 
     for(int i=0; i < partList.size(); i++){
         QString label = partList.at(i)->instanceTitle();
-        QString desc = partList.at(i)->modelPartShared()->title();
+        QString desc = partList.at(i)->title();
         if(label.length() > maxLabelWidth) {
             maxLabelWidth = label.length();
         }

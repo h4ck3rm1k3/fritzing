@@ -28,7 +28,7 @@ $Date: 2008-12-02 13:50:15 +0100 (Tue, 02 Dec 2008) $
 #ifndef ADDREMOVECONNECTORBUTTON_H_
 #define ADDREMOVECONNECTORBUTTON_H_
 
-#include "../abstractimagebutton.h"
+#include "../utils/abstractimagebutton.h"
 
 class AddRemoveConnectorButton : public AbstractImageButton {
 public:

@@ -394,9 +394,11 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
 	if (itemBase) {
 		PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
-		QString svgpath = paletteItemBase->filename();
-		if (!svgpath.isEmpty()) {
-			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("svg").arg(svgpath);
+		if (paletteItemBase != NULL) {
+			QString svgpath = paletteItemBase->filename();
+			if (!svgpath.isEmpty()) {
+				s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("svg").arg(svgpath);
+			}
 		}
 	}
 	else {
