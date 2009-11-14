@@ -381,7 +381,7 @@ QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const
 	}
 				
 	BoundedRegExpValidator * validator = new BoundedRegExpValidator(edit);
-	validator->setBounds(0, 9900000000);
+        validator->setBounds(0, 9900000000.0);
 	validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
 	edit->setValidator(validator);
 
