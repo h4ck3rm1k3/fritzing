@@ -38,8 +38,8 @@ $Date$
 #include "hashpopulatewidget.h"
 #include "partspecificationswidget.h"
 #include "partconnectorswidget.h"
-#include "../palettemodel.h"
-#include "../sketchmodel.h"
+#include "../model/palettemodel.h"
+#include "../model/sketchmodel.h"
 #include "../utils/folderutils.h"
 
 #include <QtGui>

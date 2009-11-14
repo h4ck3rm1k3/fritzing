@@ -25,12 +25,12 @@ $Date$
 ********************************************************************/
 
 #include "modelpart.h"
-#include "debugdialog.h"
-#include "connectors/connectorshared.h"
-#include "connectors/busshared.h"
-#include "connectors/bus.h"
-#include "version/version.h"
-#include "utils/folderutils.h"
+#include "../debugdialog.h"
+#include "../connectors/connectorshared.h"
+#include "../connectors/busshared.h"
+#include "../connectors/bus.h"
+#include "../version/version.h"
+#include "../utils/folderutils.h"
 
 #include <QDomElement>
 

@@ -38,7 +38,7 @@ $Date$
 #include "../items/paletteitem.h"
 #include "../debugdialog.h"
 #include "svgiconwidget.h"
-#include "../palettemodel.h"
+#include "../model/palettemodel.h"
 
 #define ICON_SPACING 3
 

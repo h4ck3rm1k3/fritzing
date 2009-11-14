@@ -25,7 +25,7 @@ $Date: 2009-04-15 16:37:21 +0200 (Wed, 15 Apr 2009) $
 ********************************************************************/
 
 #include "resizehandle.h"
-#include "../zoomablegraphicsview.h"
+#include "../sketch/zoomablegraphicsview.h"
 
 #include <QCursor>
 

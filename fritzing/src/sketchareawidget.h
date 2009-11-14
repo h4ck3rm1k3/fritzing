@@ -34,7 +34,7 @@ $Date$
 #include <QStatusBar>
 #include <QMainWindow>
 
-#include "sketchwidget.h"
+#include "sketch/sketchwidget.h"
 #include "zoomcombobox.h"
 
 

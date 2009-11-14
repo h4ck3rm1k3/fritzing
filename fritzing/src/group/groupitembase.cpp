@@ -28,7 +28,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../debugdialog.h"
 #include "../items/wire.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 
 #include <QTimer>
 #include <QSet>

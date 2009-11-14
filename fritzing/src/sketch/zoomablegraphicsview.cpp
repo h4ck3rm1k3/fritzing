@@ -27,7 +27,7 @@ $Date: 2009-01-31 23:08:01 +0100 (Sat, 31 Jan 2009) $
 #include <QWheelEvent>
 
 #include "zoomablegraphicsview.h"
-#include "zoomcombobox.h"
+#include "../zoomcombobox.h"
 
 ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 	: QGraphicsView(parent)

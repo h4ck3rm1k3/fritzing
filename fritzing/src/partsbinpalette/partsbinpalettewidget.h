@@ -31,8 +31,8 @@ $Date$
 #include <QFrame>
 #include <QToolButton>
 
-#include "../palettemodel.h"
-#include "../modelpart.h"
+#include "../model/palettemodel.h"
+#include "../model/modelpart.h"
 #include "../waitpushundostack.h"
 #include "../utils/abstractimagebutton.h"
 #include "../utils/bundler.h"

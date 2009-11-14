@@ -28,9 +28,9 @@ $Date$
 
 #include "helper.h"
 #include "../debugdialog.h"
-#include "../breadboardsketchwidget.h"
-#include "../schematicsketchwidget.h"
-#include "../pcbsketchwidget.h"
+#include "../sketch/breadboardsketchwidget.h"
+#include "../sketch/schematicsketchwidget.h"
+#include "../sketch/pcbsketchwidget.h"
 
 
 QString Helper::BreadboardHelpText;

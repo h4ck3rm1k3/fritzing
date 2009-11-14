@@ -27,8 +27,8 @@ $Date$
 #include "note.h"
 #include "../items/graphicssvglineitem.h"
 #include "../debugdialog.h"
-#include "../infographicsview.h"
-#include "../modelpart.h"
+#include "../sketch/infographicsview.h"
+#include "../model/modelpart.h"
 #include "../utils/resizehandle.h"
 
 #include <QTextFrame>

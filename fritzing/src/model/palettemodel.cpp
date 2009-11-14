@@ -31,12 +31,12 @@ $Date$
 #include <QDir>
 #include <QDomElement>
 
-#include "debugdialog.h"
+#include "../debugdialog.h"
 #include "modelpart.h"
-#include "version/version.h"
-#include "layerattributes.h"
-#include "utils/folderutils.h"
-#include "items/moduleidnames.h"
+#include "../version/version.h"
+#include "../layerattributes.h"
+#include "../utils/folderutils.h"
+#include "../items/moduleidnames.h"
 
 #ifndef QT_NO_DEBUG
 bool PaletteModel::CreateAllPartsBinFile = true;

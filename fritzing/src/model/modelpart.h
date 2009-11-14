@@ -39,10 +39,10 @@ $Date$
 #include <QList>
 #include <QPointer>
 
-#include "items/itembase.h"
+#include "../items/itembase.h"
 #include "modelpartshared.h"
-#include "connectors/connector.h"
-#include "svgandpartfilepath.h"
+#include "../connectors/connector.h"
+#include "../utils/svgandpartfilepath.h"
 
 class ModelPart : public QObject
 {

@@ -27,10 +27,10 @@ $Date$
 
 #include "itembase.h"
 #include "../debugdialog.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "../connectors/connectoritem.h"
 #include "../connectors/connectorshared.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../connectors/connector.h"
 #include "../connectors/bus.h"
 #include "../labels/partlabel.h"

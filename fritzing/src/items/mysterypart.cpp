@@ -27,7 +27,7 @@ $Date$
 #include "mysterypart.h"
 #include "../utils/graphicsutils.h"
 #include "../fsvgrenderer.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "../utils/textutils.h"

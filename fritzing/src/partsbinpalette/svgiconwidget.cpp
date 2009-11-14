@@ -26,7 +26,7 @@ $Date$
 
 
 #include "svgiconwidget.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 #include "../utils/misc.h"
 #include "../fsvgrenderer.h"

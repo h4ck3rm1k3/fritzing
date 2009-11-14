@@ -26,7 +26,7 @@ $Date$
 
 #include "clipablewire.h"
 #include "../connectors/connectoritem.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include <qmath.h>
 
 static double connectorRectClipInset = 0.5;

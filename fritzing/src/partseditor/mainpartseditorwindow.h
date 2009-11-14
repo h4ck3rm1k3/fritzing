@@ -33,8 +33,8 @@ $Date$
 #include "partseditorsketchwidget.h"
 #include "connectorswidget.h"
 #include "partinfowidget.h"
-#include "../palettemodel.h"
-#include "../sketchmodel.h"
+#include "../model/palettemodel.h"
+#include "../model/sketchmodel.h"
 #include "../zoomcombobox.h"
 //
 

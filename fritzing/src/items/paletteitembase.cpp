@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "paletteitembase.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 #include "../fsvgrenderer.h"
 #include "../svg/svgfilesplitter.h"

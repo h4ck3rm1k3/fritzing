@@ -31,7 +31,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QLabel>
 #include <QBoxLayout>
 
-#include "../zoomablegraphicsview.h"
+#include "../sketch/zoomablegraphicsview.h"
 #include "../help/inotseeninminiview.h"
 
 

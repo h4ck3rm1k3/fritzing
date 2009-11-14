@@ -28,7 +28,7 @@ $Date$
 #ifndef REFERENCEMODEL_H_
 #define REFERENCEMODEL_H_
 
-#include "../palettemodel.h"
+#include "../model/palettemodel.h"
 #include "daos.h"
 
 class ReferenceModel : public PaletteModel {

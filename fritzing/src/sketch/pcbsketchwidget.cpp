@@ -26,16 +26,16 @@ $Date$
 
 
 #include "pcbsketchwidget.h"
-#include "debugdialog.h"
-#include "svg/svgfilesplitter.h"
-#include "items/tracewire.h"
-#include "items/virtualwire.h"
-#include "items/resizableboard.h"
-#include "waitpushundostack.h"
-#include "autoroute/autorouter1.h"
-#include "connectors/connectoritem.h"
-#include "help/sketchmainhelp.h"
-#include "items/moduleidnames.h"
+#include "../debugdialog.h"
+#include "../svg/svgfilesplitter.h"
+#include "../items/tracewire.h"
+#include "../items/virtualwire.h"
+#include "../items/resizableboard.h"
+#include "../waitpushundostack.h"
+#include "../autoroute/autorouter1.h"
+#include "../connectors/connectoritem.h"
+#include "../items/moduleidnames.h"
+#include "../help/sketchmainhelp.h"
 
 #include <limits>
 

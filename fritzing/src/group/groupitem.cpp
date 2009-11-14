@@ -103,7 +103,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../items/wire.h"
 #include "../debugdialog.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 
 GroupItem::GroupItem( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)

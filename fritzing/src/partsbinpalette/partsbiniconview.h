@@ -32,7 +32,7 @@ $Date$
 #include <QGraphicsView>
 
 #include "partsbinview.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 
 QT_BEGIN_NAMESPACE
 class QDragEnterEvent;

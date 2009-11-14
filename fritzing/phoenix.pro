@@ -75,6 +75,8 @@ RESOURCES += phoenixresources.qrc
 	include(pri/dialogs.pri)
 	include(pri/connectors.pri)
 	include(pri/infoview.pri)
+	include(pri/model.pri)
+	include(pri/sketch.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

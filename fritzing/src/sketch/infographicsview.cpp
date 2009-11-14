@@ -25,9 +25,9 @@ $Date$
 ********************************************************************/
 
 #include "infographicsview.h"
-#include "debugdialog.h"
-#include "commands.h"
-#include "infoview/htmlinfoview.h"
+#include "../debugdialog.h"
+#include "../commands.h"
+#include "../infoview/htmlinfoview.h"
 
 #include <QMessageBox>
 

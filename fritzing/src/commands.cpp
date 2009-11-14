@@ -27,7 +27,7 @@ $Date$
 
 #include "commands.h"
 #include "debugdialog.h"
-#include "sketchwidget.h"
+#include "sketch/sketchwidget.h"
 #include "waitpushundostack.h"
 #include "items/wire.h"
 #include "connectors/connectoritem.h"

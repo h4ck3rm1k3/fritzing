@@ -25,14 +25,14 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 ********************************************************************/
 
 #include "schematicsketchwidget.h"
-#include "autoroute/autorouter1.h"
-#include "debugdialog.h"
-#include "items/virtualwire.h"
-#include "items/symbolpaletteitem.h"
-#include "items/tracewire.h"
-#include "connectors/connectoritem.h"
-#include "waitpushundostack.h"
-#include "items/moduleidnames.h"
+#include "../autoroute/autorouter1.h"
+#include "../debugdialog.h"
+#include "../items/virtualwire.h"
+#include "../items/symbolpaletteitem.h"
+#include "../items/tracewire.h"
+#include "../connectors/connectoritem.h"
+#include "../waitpushundostack.h"
+#include "../items/moduleidnames.h"
 
 #include <limits>
 

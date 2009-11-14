@@ -31,11 +31,11 @@ $Date$
 #include <QColor>
 #include <limits>
 
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 #include "bus.h"
 #include "../items/wire.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 #include "ercdata.h"
 

@@ -28,7 +28,7 @@ $Date$
 #include "connectorshared.h"
 #include "connectoritem.h"
 #include "../debugdialog.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "bus.h"
 #include "../fsvgrenderer.h"
 #include "ercdata.h"

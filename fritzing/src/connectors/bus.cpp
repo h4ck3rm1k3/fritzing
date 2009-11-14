@@ -29,7 +29,7 @@ $Date$
 #include "connectorshared.h"
 #include "../debugdialog.h"
 #include "connectoritem.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 
 
 QHash<QString, class Bus *> Bus::___emptyBusList___;

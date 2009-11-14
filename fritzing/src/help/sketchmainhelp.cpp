@@ -32,7 +32,7 @@ $Date$
 #include <QPainter>
 
 #include "sketchmainhelp.h"
-#include "../expandinglabel.h"
+#include "../utils/expandinglabel.h"
 
 qreal SketchMainHelp::OpacityLevel = 0.5;
 

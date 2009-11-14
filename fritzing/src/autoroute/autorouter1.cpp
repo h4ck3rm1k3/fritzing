@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "autorouter1.h"
-#include "../pcbsketchwidget.h"
+#include "../sketch/pcbsketchwidget.h"
 #include "../debugdialog.h"
 #include "../items/virtualwire.h"
 #include "../items/tracewire.h"

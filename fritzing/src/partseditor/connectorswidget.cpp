@@ -32,7 +32,7 @@ $Date$
 
 #include "connectorswidget.h"
 #include "../debugdialog.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "../connectors/connectorshared.h"
 
 

@@ -27,7 +27,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include <QHash>
 
 #include "connectorrectangle.h"
-#include "../zoomablegraphicsview.h"
+#include "../sketch/zoomablegraphicsview.h"
 #include "../debugdialog.h"
 #include "../partseditor/partseditorconnectorsconnectoritem.h"
 

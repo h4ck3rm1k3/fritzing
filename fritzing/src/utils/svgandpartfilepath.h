@@ -27,8 +27,8 @@ $Date$
 #ifndef SVGANDPARTFILEPATH_H_
 #define SVGANDPARTFILEPATH_H_
 
-#include "utils/misc.h"
-#include "debugdialog.h"
+#include "misc.h"
+#include "../debugdialog.h"
 
 /*
  * While the svg and parts files, are loaded dynamically from different folders

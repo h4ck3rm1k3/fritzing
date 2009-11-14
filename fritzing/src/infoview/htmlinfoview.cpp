@@ -31,7 +31,7 @@ $Date$
 
 #include "htmlinfoview.h"
 #include "infoviewwebpage.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 #include "../connectors/connectorshared.h"
 #include "../connectors/connector.h"

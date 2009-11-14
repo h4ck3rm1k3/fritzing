@@ -31,7 +31,7 @@ $Date$
 
 #include "../items/paletteitem.h"
 #include "../utils/misc.h"
-#include "../svgandpartfilepath.h"
+#include "../utils/svgandpartfilepath.h"
 
 class PartsEditorAbstractView;
 class PartsEditorView;

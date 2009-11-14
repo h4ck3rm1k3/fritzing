@@ -35,8 +35,8 @@ $Date$
 #include <QDateEdit>
 
 #include "addremovelistwidget.h"
-#include "../modelpart.h"
-#include "../modelpartshared.h"
+#include "../model/modelpart.h"
+#include "../model/modelpartshared.h"
 
 class PartInfoWidget : public QWidget {
 	Q_OBJECT

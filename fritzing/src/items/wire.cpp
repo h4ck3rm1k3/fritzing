@@ -37,13 +37,13 @@ $Date$
 #include <QSet>
 
 #include "../debugdialog.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../connectors/connectoritem.h"
 #include "../connectors/connectorshared.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"
 #include "../labels/partlabel.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 
 #include <stdlib.h>

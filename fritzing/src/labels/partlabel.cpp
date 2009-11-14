@@ -28,8 +28,8 @@ $Date$
 #include "../items/itembase.h"
 #include "../viewgeometry.h"
 #include "../debugdialog.h"
-#include "../infographicsview.h"
-#include "../modelpart.h"
+#include "../sketch/infographicsview.h"
+#include "../model/modelpart.h"
 
 #include <QGraphicsScene>
 #include <QTextDocument>

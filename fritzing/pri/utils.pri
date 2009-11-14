@@ -31,6 +31,7 @@ src/utils/misc.h \
 src/utils/resizehandle.h \
 src/utils/folderutils.h \
 src/utils/graphicsutils.h \
+src/utils/svgandpartfilepath.h \
 src/utils/textutils.h
  
 SOURCES += \

@@ -26,7 +26,7 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 #include "terminalpointitem.h"
 #include "../partseditor/partseditorconnectorsconnectoritem.h"
-#include "../zoomablegraphicsview.h"
+#include "../sketch/zoomablegraphicsview.h"
 #include "../debugdialog.h"
 
 QHash<ConnectorRectangle::State, QPixmap> TerminalPointItem::m_pixmapHash;

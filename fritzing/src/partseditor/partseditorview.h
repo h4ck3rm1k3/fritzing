@@ -28,7 +28,7 @@ $Date$
 #ifndef PARTSEDITORVIEW_H_
 #define PARTSEDITORVIEW_H_
 
-#include "../sketchwidget.h"
+#include "../sketch/sketchwidget.h"
 #include "../connectors/connectorshared.h"
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectorspaletteitem.h"

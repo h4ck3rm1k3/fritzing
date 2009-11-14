@@ -27,7 +27,7 @@ $Date$
 #ifndef PARTSEDITORSKETCHWIDGET_H
 #define PARTSEDITORSKETCHWIDGET_H
 //
-#include "../sketchwidget.h"
+#include "../sketch/sketchwidget.h"
 #include "partseditorpaletteitem.h"
 //
 class PartsEditorSketchWidget : public SketchWidget

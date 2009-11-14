@@ -28,7 +28,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../utils/focusoutcombobox.h"
 #include "../fsvgrenderer.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "../layerattributes.h"

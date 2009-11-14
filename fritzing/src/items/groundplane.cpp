@@ -28,7 +28,7 @@ $Date: 2009-10-15 13:12:59 +0200 (Thu, 15 Oct 2009) $
 #include "../connectors/connectoritem.h"
 #include "../fsvgrenderer.h"
 #include "../layerattributes.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
 

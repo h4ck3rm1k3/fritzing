@@ -38,14 +38,14 @@ $Date$
 #include <QHash>
 #include <QTimer>
 
-#include "items/paletteitem.h"
-#include "palettemodel.h"
-#include "sketchmodel.h"
-#include "viewgeometry.h"
+#include "../items/paletteitem.h"
+#include "../model/palettemodel.h"
+#include "../model/sketchmodel.h"
+#include "../viewgeometry.h"
 #include "infographicsview.h"
-#include "viewlayer.h"
-#include "utils/misc.h"
-#include "commands.h"
+#include "../viewlayer.h"
+#include "../utils/misc.h"
+#include "../commands.h"
 
 QT_BEGIN_NAMESPACE
 class QDragEnterEvent;

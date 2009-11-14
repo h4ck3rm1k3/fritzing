@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "sketchmodel.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 #include <QDir>
 #include <QMessageBox>

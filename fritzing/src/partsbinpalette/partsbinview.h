@@ -29,7 +29,7 @@ $Date$
 #ifndef PARTSBINVIEW_H_
 #define PARTSBINVIEW_H_
 
-#include "../palettemodel.h"
+#include "../model/palettemodel.h"
 #include "../items/paletteitem.h"
 #include "../referencemodel/referencemodel.h"
 

@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "modelbase.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 #include <QMessageBox>
 

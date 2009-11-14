@@ -32,7 +32,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../utils/textutils.h"
 #include "../utils/focusoutcombobox.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 
 #include <QLineEdit>
 #include <QMultiHash>

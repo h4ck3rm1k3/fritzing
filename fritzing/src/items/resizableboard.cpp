@@ -28,7 +28,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include "../utils/resizehandle.h"
 #include "../utils/graphicsutils.h"
 #include "../fsvgrenderer.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "moduleidnames.h"
@@ -447,7 +447,6 @@ QString ResizableBoard::collectExtraInfoHtml(const QString & prop, const QString
 	if (!m_modelPart->prop("height").isValid()) return ___emptyString___;
 
 	return "<object type='application/x-qt-plugin' classid='ResizableBoardInput' width='215px' height='32px'></object>";  
-
 }
 
 void ResizableBoard::saveParams() {

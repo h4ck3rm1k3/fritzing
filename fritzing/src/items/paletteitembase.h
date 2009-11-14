@@ -31,7 +31,7 @@ $Date$
 #include <QGraphicsSceneMouseEvent>
 #include <QSet>
 
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "itembase.h"
 
 class LayerKinPaletteItem;

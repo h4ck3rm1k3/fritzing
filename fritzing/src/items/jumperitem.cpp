@@ -28,7 +28,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../fsvgrenderer.h"
 #include "../layerattributes.h"
-#include "../modelpart.h"
+#include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
 

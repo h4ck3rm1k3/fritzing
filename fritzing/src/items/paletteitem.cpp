@@ -27,7 +27,7 @@ $Date$
 #include "paletteitem.h"
 #include "../debugdialog.h"
 #include "../viewgeometry.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "layerkinpaletteitem.h"
 #include "../fsvgrenderer.h"
 #include "../layerattributes.h"

@@ -32,7 +32,7 @@ $Date$
 #include <QHash>
 #include <QList>
 
-#include "items/itembase.h"
+#include "../items/itembase.h"
 #include "zoomablegraphicsview.h"
 
 class InfoGraphicsView : public ZoomableGraphicsView

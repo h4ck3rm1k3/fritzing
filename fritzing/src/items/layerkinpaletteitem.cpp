@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "layerkinpaletteitem.h"
-#include "../infographicsview.h"
+#include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 
 LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)

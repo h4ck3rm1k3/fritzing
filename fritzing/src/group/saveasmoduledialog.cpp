@@ -25,10 +25,10 @@ $Date$
 ********************************************************************/
 
 #include "saveasmoduledialog.h"
-#include "../sketchwidget.h"
-#include "../sketchmodel.h"
+#include "../sketch/sketchwidget.h"
+#include "../model/sketchmodel.h"
 #include "../connectors/connectoritem.h"
-#include "../zoomablegraphicsview.h"
+#include "../sketch/zoomablegraphicsview.h"
 #include "../partseditor/partspecificationswidget.h"
 #include "../partseditor/partseditormainwindow.h"
 #include "../partseditor/editablelinewidget.h"
