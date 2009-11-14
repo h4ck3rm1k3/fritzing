@@ -33,6 +33,11 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include "../commands.h"
 #include "moduleidnames.h"
 
+#include <QHBoxLayout>
+#include <QFrame>
+#include <QLabel>
+#include <QLineEdit>
+
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 4;
@@ -42,6 +47,8 @@ QString ResizableBoard::customShapeTranslated;
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_widthEditor = m_heightEditor = NULL;
+
 	if (BoardLayerTemplate.isEmpty()) {
 		QFile file(":/resources/templates/resizableBoard_boardLayerTemplate.txt");
 		file.open(QFile::ReadOnly);
@@ -300,9 +307,11 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
 
-		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-		if (infoGraphicsView) {
-			infoGraphicsView->evaluateJavascript(QString("updateBoardSize(%1,%2);").arg(qRound(mmW * 10) / 10.0).arg(qRound(mmH * 10) / 10.0));
+		if (m_widthEditor) {
+			m_widthEditor->setText(QString::number(qRound(mmW * 10) / 10.0));
+		}
+		if (m_heightEditor) {
+			m_heightEditor->setText(QString::number(qRound(mmH * 10) / 10.0));
 		}
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
@@ -431,23 +440,14 @@ void ResizableBoard::collectExtraInfoValues(const QString & prop, QString & valu
 }
 
 QString ResizableBoard::collectExtraInfoHtml(const QString & prop, const QString & value) {
-	if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
+	Q_UNUSED(value);
 
-	if (value.compare(customShapeTranslated) == 0) {
-		return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
-	}
+	if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
 	
 	if (!m_modelPart->prop("height").isValid()) return ___emptyString___;
 
-	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
-	return QString("&nbsp;width(mm):<input type='text' name='boardwidth' id='boardwidth' maxlength='5' value='%1' style='width:35px' onblur='resizeBoardWidth()' onkeypress='resizeBoardWidthEnter(event)' />"
-				   "&nbsp;height(mm):<input type='text' name='boardheight' id='boardheight' maxlength='5' value='%2' style='width:35px' onblur='resizeBoardHeight()' onkeypress='resizeBoardHeightEnter(event)' />"
-				   "<script language='JavaScript'>lastGoodWidth=%1;lastGoodHeight=%2;</script>"
-				   ).arg(w).arg(h);
+	return "<object type='application/x-qt-plugin' classid='ResizableBoardInput' width='215px' height='32px'></object>";  
 
-
-	return ___emptyString___;
 }
 
 void ResizableBoard::saveParams() {
@@ -470,4 +470,72 @@ bool ResizableBoard::hasCustomSVG() {
 			return ItemBase::hasCustomSVG();
 	}
 }
+
+QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(url);
+	Q_UNUSED(paramNames);
+	Q_UNUSED(paramValues);
+
+	if (classid.compare("ResizableBoardInput") != 0) return NULL;
+
+	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
+	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+
+	QFrame * frame = new QFrame(parent);
+	QHBoxLayout * hboxLayout = new QHBoxLayout();
+
+	QLabel * l1 = new QLabel(tr("width(mm):"));	
+	QLineEdit * e1 = new QLineEdit();
+	QDoubleValidator * validator = new QDoubleValidator(e1);
+	validator->setRange(0.1, 999.9, 1);
+	validator->setNotation(QDoubleValidator::StandardNotation);
+	e1->setValidator(validator);
+	e1->setMaxLength(5);
+	e1->setText(QString::number(w));
+	m_widthEditor = e1;
+
+	QLabel * l2 = new QLabel(tr("height(mm):"));	
+	QLineEdit * e2 = new QLineEdit();
+	validator = new QDoubleValidator(e1);
+	validator->setRange(0.1, 999.9, 1);
+	validator->setNotation(QDoubleValidator::StandardNotation);
+	e2->setValidator(validator);
+	e2->setMaxLength(5);
+	e2->setText(QString::number(h));
+	m_heightEditor = e2;
+
+	hboxLayout->addWidget(l1);
+	hboxLayout->addWidget(e1);
+	hboxLayout->addSpacing(8);
+	hboxLayout->addWidget(l2);
+	hboxLayout->addWidget(e2);
+
+	frame->setLayout(hboxLayout);
+
+	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
+	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
+
+	return frame;
+}
+
+void ResizableBoard::widthEntry() {
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->resizeBoard(edit->text().toDouble(), m_modelPart->prop("height").toDouble(), true);
+	}
+}
+
+void ResizableBoard::heightEntry() {
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->resizeBoard(m_modelPart->prop("width").toDouble(), edit->text().toDouble(), true);
+	}
+}
+
 

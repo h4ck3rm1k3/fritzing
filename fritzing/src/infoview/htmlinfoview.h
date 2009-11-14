@@ -65,8 +65,6 @@ public:
 	void unregisterCurrentItem();
 	void unregisterCurrentItemIf(long id);
 
-	QVariant evaluateJavascript(const QString &);
-
 public:
 	static const int STANDARD_ICON_IMG_WIDTH;
 	static const int STANDARD_ICON_IMG_HEIGHT;

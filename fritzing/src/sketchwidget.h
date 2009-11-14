@@ -428,7 +428,6 @@ public slots:
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);
 	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
-	void resizeBoard(qreal w, qreal h);
 	void resizeBoard(long id, qreal w, qreal h);
 	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);

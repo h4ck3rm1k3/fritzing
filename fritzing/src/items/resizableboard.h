@@ -55,10 +55,14 @@ public:
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
 	bool hasCustomSVG();
+	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
 public:
 	static QString customShapeTranslated;
 
+public slots:
+	void widthEntry();
+	void heightEntry();
 
 protected slots:
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
@@ -83,6 +87,8 @@ protected:
 	QSizeF m_boardSize;
 	QPointF m_boardPos;
 	QRectF m_originalRect;
+	QPointer<QLineEdit> m_widthEditor;
+	QPointer<QLineEdit> m_heightEditor;
 };
 
 #endif

@@ -1,8 +1,6 @@
 // based on: http://www.yvoschaap.com/instantedit/instantedit.js
 
 var changing = false;
-var lastGoodWidth = 0;
-var lastGoodHeight = 0;
 
 function fieldEnter(field,evt,idfld) {
 	evt = (evt) ? evt : window.event;
@@ -97,10 +95,6 @@ function editBox(current) {
 	current.firstChild.focus();
 }
 
-function showPartLabel(current, showIt) {
-    sketch.showPartLabel(currentItem.id(), showIt);
-}
-
 //get width of text element
 function widthEl(span){
 	if (document.layers){
@@ -133,6 +127,19 @@ function noLight(span){
 	span.style.border = "0px";
 }
 
+function toggleVisibility(emitter,idToAffect) {
+	var isBeingShown = emitter.innerHTML == "[-]";
+	var elemToAffect = document.getElementById(idToAffect);
+	if(isBeingShown) {
+		elemToAffect.style.display = "none";
+		emitter.innerHTML = "[+]";
+	} else {
+		elemToAffect.style.display = "block";
+		emitter.innerHTML = "[-]";
+	}
+	infoView.setBlockVisibility(idToAffect,!isBeingShown);
+}
+
 var currProps = {};
 
 function doSwap(family,name,currValue) {
@@ -147,72 +154,6 @@ function setWireColor(wireTitle, wireId, newColor) {
 
 function setWireWidthMils(wireTitle, wireId, newWidth) {
     sketch.changeWireWidthMils(newWidth);
-}
-
-function toggleVisibility(emitter,idToAffect) {
-	var isBeingShown = emitter.innerHTML == "[-]";
-	var elemToAffect = document.getElementById(idToAffect);
-	if(isBeingShown) {
-		elemToAffect.style.display = "none";
-		emitter.innerHTML = "[+]";
-	} else {
-		elemToAffect.style.display = "block";
-		emitter.innerHTML = "[-]";
-	}
-	infoView.setBlockVisibility(idToAffect,!isBeingShown);
-}
-
-function loadBoardImage() {
-    alert("load board image");
-}
-
-function resizeBoard() {    
-	var reg = /^(\d{1,3}$)|(\d{1,3}\.\d$)/;
-	
-	var w = document.getElementById("boardwidth").value;			
-   	if (!reg.test(w)) {
-	    alert("board width is not a number");
-	    setLastGoodSize();
-	    return;
-	}
-	if (w < 3) {
-	    alert("board width must be at least 3 mm");
-	    return;
-	}
-	
-   	var h = document.getElementById("boardheight").value;		
-   	if (!reg.test(h)) {
-	    alert("board height is not a number");
-	    setLastGoodSize();
-	    return;
-	}	
-	if (h < 3) {
-	    alert("board width must be at least 3 mm");
-	    setLastGoodSize();
-	    return;
-	}
-	
-	lastGoodWidth = w;
-	lastGoodHeight = h;
-	
-    sketch.resizeBoard(w, h);
-}
-
-function updateBoardSize(w, h) {
-    lastGoodWidth = w;
-    lastGoodHeight = h;
-    var bw = document.getElementById("boardwidth");
-    if (bw) {
-        bw.value = w;
-    }
-    var bh = document.getElementById("boardheight");
-    if (bh) {
-        bh.value = h;
-    }
-}
-
-function resizeBoardWidth() {
-    resizeBoard();
 }
 
 function setChipLabel() {
@@ -230,36 +171,6 @@ function setChipLabelEnter(evt) {
 	return true;
 }
 
-function resizeBoardWidth() {
-    resizeBoard();
+function showPartLabel(current, showIt) {
+    sketch.showPartLabel(currentItem.id(), showIt);
 }
-
-function resizeBoardHeight() {
-    resizeBoard();
-}
-
-function resizeBoardWidthEnter(evt) {
-	evt = (evt) ? evt : window.event;	
-	if (evt.keyCode == 13) {
-	    resizeBoard();
-		return false;
-	} 
-		
-	return true;
-}
-
-function resizeBoardHeightEnter(evt) {
-	evt = (evt) ? evt : window.event;	
-	if (evt.keyCode == 13) {
-	    resizeBoard();
-		return false;
-	} 
-		
-	return true;
-}
-
-function setLastGoodSize() {
-    document.getElementById("boardwidth").value = lastGoodWidth;
-    document.getElementById("boardheight").value = lastGoodHeight;
-}
-

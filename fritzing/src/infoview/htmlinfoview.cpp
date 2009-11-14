@@ -677,9 +677,3 @@ void HtmlInfoView::setNullContent()
 {
 	setContent("<html></html>");
 }
-
-QVariant HtmlInfoView::evaluateJavascript(const QString & script) {
-	QVariant v = m_webView->page()->mainFrame()->evaluateJavaScript(script);
-	//DebugDialog::debug(QString("return %1").arg(v.toString()));
-	return v;
-}

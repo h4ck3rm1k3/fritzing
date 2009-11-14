@@ -72,6 +72,9 @@ public:
 	virtual qreal getLabelFontSizeLarge();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 
+public slots:
+	void resizeBoard(qreal w, qreal h, bool doEmit);
+
 public:
 	enum CleanType {
 		noClean,

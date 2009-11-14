@@ -1472,3 +1472,38 @@ qreal PCBSketchWidget::getLabelFontSizeMedium() {
 qreal PCBSketchWidget::getLabelFontSizeLarge() {
 	return 12;
 }
+
+void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
+{
+	Q_UNUSED(doEmit);
+
+	if (m_viewIdentifier != ViewIdentifierClass::PCBView) return;
+
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	if (item->itemType() != ModelPart::ResizableBoard) return;
+
+	qreal origw = item->modelPart()->prop("width").toDouble();
+	qreal origh = item->modelPart()->prop("width").toDouble();
+
+	if (mmH == 0 || mmW == 0) {
+		dynamic_cast<ResizableBoard *>(item)->setInitialSize();
+		qreal w = item->modelPart()->prop("width").toDouble();
+		qreal h = item->modelPart()->prop("height").toDouble();
+		if (origw == w && origh == h) {
+			// no change
+			return;
+		}
+
+		viewItemInfo(item);
+		mmW = w;
+		mmH = h;
+	}
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(mmW).arg(mmH));
+	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
+	new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), true, parentCommand);
+	m_undoStack->push(parentCommand);
+}
+

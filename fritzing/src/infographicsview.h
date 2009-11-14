@@ -67,8 +67,6 @@ public:
 	virtual bool spaceBarIsPressed(); 
 	virtual void initWire(class Wire *, int penWidth);
 
-	QVariant evaluateJavascript(const QString &);
-
 	virtual void setIgnoreSelectionChangeEvents(bool) {}
 	virtual void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
 	virtual void getLabelFont(QFont &, QColor &);
@@ -80,9 +78,11 @@ public:
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
+	virtual void resizeBoard(qreal w, qreal h, bool doEmit);
 
 signals:
 	void setVoltageSignal(qreal, bool doEmit);
+	void resizeBoardSignal(qreal, qreal, bool doEmit);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

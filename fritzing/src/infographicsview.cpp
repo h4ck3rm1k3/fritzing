@@ -140,13 +140,6 @@ bool InfoGraphicsView::spaceBarIsPressed() {
 	return false;
 }
 
-QVariant InfoGraphicsView::evaluateJavascript(const QString & script)
-{
-	if (m_infoView == NULL) return QVariant();
-
-	return m_infoView->evaluateJavascript(script);
-}
-
 InfoGraphicsView * InfoGraphicsView::getInfoGraphicsView(QGraphicsItem * item)
 {
 	if (item == NULL) return NULL;
@@ -190,6 +183,12 @@ bool InfoGraphicsView::hasBigDots() {
 void InfoGraphicsView::setVoltage(qreal v, bool doEmit) {
 	if (doEmit) {
 		emit setVoltageSignal(v, false);
+	}
+}
+
+void InfoGraphicsView::resizeBoard(qreal w, qreal h, bool doEmit) {
+	if (doEmit) {
+		emit resizeBoardSignal(w, h, false);
 	}
 }
 
