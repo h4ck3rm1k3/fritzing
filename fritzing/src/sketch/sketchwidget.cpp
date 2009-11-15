@@ -62,7 +62,6 @@ $Date$
 #include "../zoomcombobox.h"
 #include "../autoroute/autorouter1.h"
 #include "../fgraphicsscene.h"
-#include "../mainwindow.h"
 #include "../version/version.h"
 #include "../labels/partlabel.h"
 #include "../labels/note.h"
@@ -85,6 +84,7 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_statusConnectState = StatusConnectNotTried;
 	m_dragBendpointWire = NULL;
 	m_lastHoverEnterItem = NULL;
 	m_lastHoverEnterConnectorItem = NULL;
@@ -4068,21 +4068,27 @@ void SketchWidget::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 	}
 }
 
-void SketchWidget::statusMessage(QString message, int timeout) {
-	// TODO: first time, try to connect, if connect fails get status bar and display; if succeeds, then emit signal
-	QStatusBar *sb;
-	MainWindow * mainWindow = dynamic_cast<MainWindow *>(window());
-	if (mainWindow == NULL) {
-		QMainWindow * qMainWindow = dynamic_cast<QMainWindow *>(window());
-		if (qMainWindow == NULL) return;
-		else {
-			sb = qMainWindow->statusBar();
-		}
-	} else {
-		sb = mainWindow->realStatusBar();
+void SketchWidget::statusMessage(QString message, int timeout) 
+{
+	// TODO: eventually do the connecting from the window not from the sketch
+	QMainWindow * mainWindow = dynamic_cast<QMainWindow *>(window());
+	if (mainWindow == NULL) return;
+
+	if (m_statusConnectState == StatusConnectNotTried) {
+		bool result = connect(this, SIGNAL(statusMessageSignal(QString, int)),
+							  mainWindow, SLOT(statusMessage(QString, int)));
+		m_statusConnectState = (result) ? StatusConnectSucceeded : StatusConnectFailed;
 	}
 
-	sb->showMessage(message, timeout);
+	if (m_statusConnectState == StatusConnectFailed) {
+		QStatusBar * sb = mainWindow->statusBar();
+		if (sb != NULL) {
+			sb->showMessage(message, timeout);
+		}
+	}
+	else {
+		emit statusMessageSignal(message, timeout);
+	}
 }
 
 void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
@@ -4839,7 +4845,7 @@ void SketchWidget::setWireVisible(Wire * wire) {
 	Q_UNUSED(wire);
 }
 
-void SketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) {
+void SketchWidget::forwardRoutingStatus(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) {
 
 	emit routingStatusSignal(this, netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 }

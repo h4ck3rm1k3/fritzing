@@ -332,7 +332,7 @@ void Autorouter1::start()
 				netsDone++;
 			}
 		}
-		m_sketchWidget->forwardRoutingStatusSignal(m_allPartConnectorItems.count(), netsDone, edges.count() + 1 - edgesDone, jumpers.count());
+		m_sketchWidget->forwardRoutingStatus(m_allPartConnectorItems.count(), netsDone, edges.count() + 1 - edgesDone, jumpers.count());
 
 		QApplication::processEvents();
 

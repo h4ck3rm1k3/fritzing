@@ -804,11 +804,11 @@ RoutingStatusCommand::RoutingStatusCommand(class SketchWidget * sketchWidget, in
 }
 
 void RoutingStatusCommand::undo() {
-	m_sketchWidget->forwardRoutingStatusSignal(m_oldNetCount, m_oldNetRoutedCount, m_oldConnectorsLeftToRoute, m_oldJumpers);
+	m_sketchWidget->forwardRoutingStatus(m_oldNetCount, m_oldNetRoutedCount, m_oldConnectorsLeftToRoute, m_oldJumpers);
 }
 
 void RoutingStatusCommand::redo() {
-	m_sketchWidget->forwardRoutingStatusSignal(m_newNetCount, m_newNetRoutedCount, m_newConnectorsLeftToRoute, m_newJumpers);
+	m_sketchWidget->forwardRoutingStatus(m_newNetCount, m_newNetRoutedCount, m_newConnectorsLeftToRoute, m_newJumpers);
 }
 
 QString RoutingStatusCommand::getParamString() const {

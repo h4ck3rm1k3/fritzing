@@ -126,6 +126,7 @@ public slots:
 	void partsEditorClosed(long id);
 	void importFilesFromPrevInstall();
 	void acceptAlienFiles();
+	void statusMessage(QString message, int timeout);
 
 protected slots:
 	void load();

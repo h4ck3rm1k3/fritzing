@@ -1971,3 +1971,10 @@ void MainWindow::redrawSketch() {
 		}
 	}
 }
+
+void MainWindow::statusMessage(QString message, int timeout) {
+	QStatusBar * sb = realStatusBar();
+	if (sb != NULL) {
+		sb->showMessage(message, timeout);
+	}
+}

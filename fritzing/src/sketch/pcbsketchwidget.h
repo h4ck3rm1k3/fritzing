@@ -47,7 +47,7 @@ public:
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
 	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
-	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
+	void forwardRoutingStatus(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 	void addBoard();
 	void setCurrent(bool current);
 	void initWire(Wire *, int penWidth);

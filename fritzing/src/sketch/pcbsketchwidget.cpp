@@ -430,13 +430,13 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 	}
 }
 
-void PCBSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) 
+void PCBSketchWidget::forwardRoutingStatus(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) 
 {
 	m_netCount = netCount;
 	m_netRoutedCount = netRoutedCount;
 	m_connectorsLeftToRoute = connectorsLeftToRoute;
 	m_jumperCount = jumperCount;
-	SketchWidget::forwardRoutingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+	SketchWidget::forwardRoutingStatus(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 }
 
 void PCBSketchWidget::selectAllExcludedTraces() 

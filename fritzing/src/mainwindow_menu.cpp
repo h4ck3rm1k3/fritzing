@@ -388,7 +388,6 @@ void MainWindow::printAux(QPrinter &printer, const QString & message, bool remov
 		//QRectF target = printer.pageRect();
 		//QRectF target = printer.paperRect();
 
-
 		QPointF sceneStart = m_currentGraphicsView->mapToScene(QPoint(0,0));
 		QPointF sceneEnd = m_currentGraphicsView->mapToScene(QPoint(m_currentGraphicsView->viewport()->width(), m_currentGraphicsView->viewport()->height()));
 
@@ -406,8 +405,28 @@ void MainWindow::printAux(QPrinter &printer, const QString & message, bool remov
 			item->setSelected(false);
 		}
 
-		// render to printer:
-		m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+		int xPages = qCeil(target.width() / printer.width());
+		int yPages = qCeil(target.height() / printer.height());
+		int lastPage = xPages * yPages;
+
+		int xSourcePage = qFloor(printer.width() / scale2);
+		int ySourcePage = qFloor(printer.height() / scale2);
+
+		int page = 0;
+		for (int iy = 0; iy < yPages; iy++) {
+			for (int ix = 0; ix < xPages; ix++) {
+				// render to printer:
+				QRectF pSource((ix * xSourcePage) + source.left(), 
+							   (iy * ySourcePage) + source.top(), 
+							   qMin(xSourcePage, (int) source.width() - (ix * xSourcePage)), 
+							   qMin(ySourcePage, (int) source.height() - (iy * ySourcePage)));
+				QRectF pTarget(0, 0, pSource.width() * scale2, pSource.height() * scale2);
+				m_currentGraphicsView->scene()->render(&painter, pTarget, pSource, Qt::KeepAspectRatio);
+				if (++page < lastPage) {
+					printer.newPage();
+				}
+			}
+		}
 
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(true);

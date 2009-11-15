@@ -176,7 +176,7 @@ public:
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
-	virtual void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
+	virtual void forwardRoutingStatus(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 	void addFixedToTopLeftItem(QGraphicsItem *item);
 	void addFixedToTopRightItem(QGraphicsItem *item);
@@ -387,6 +387,7 @@ signals:
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setInstanceTitleSignal(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
+	void statusMessageSignal(QString, int timeout);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -435,6 +436,13 @@ public slots:
 	void setResistance(QString resistance, QString pinSpacing);
 	void setProp(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setChipLabel(QString label);
+
+protected:
+	enum StatusConnectStatus {
+		StatusConnectNotTried,
+		StatusConnectSucceeded,
+		StatusConnectFailed
+	};
 
 protected:
 	QPointer<PaletteModel> m_paletteModel;
@@ -508,6 +516,7 @@ protected:
 	Wire * m_dragBendpointWire;
 	QPoint m_dragBendpointPos;
 	QColor m_standardBackgroundColor;
+	StatusConnectStatus m_statusConnectState;
 
 protected:
 	QString m_viewName;
