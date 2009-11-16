@@ -103,7 +103,8 @@ void MainWindow::print() {
 
 		QPrintDialog *printDialog = new QPrintDialog(&printer, this);
 		if (printDialog->exec() == QDialog::Accepted) {
-			printAux(printer,tr("Printing..."));
+			m_statusBar->showMessage(tr("Printing..."));
+			printAux(printer, true, true);
 			m_statusBar->showMessage(tr("Ready"), 2000);
 		} else {
 			return;
@@ -173,18 +174,23 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		QPrinter printer(QPrinter::HighResolution);
 		printer.setOutputFormat(filePrintFormats[fileExt]);
 		printer.setOutputFileName(fileName);
+		int res = printer.resolution();
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, res, false, false);
+		// now convert to pdf
+		QSvgRenderer svgRenderer;
+		svgRenderer.load(svg.toLatin1());
+		qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
+		qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
+		QRectF target(0, 0, trueWidth * res, trueHeight * res);
+
+		QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
+					 (target.height() + printer.paperRect().height() - printer.height()) / res);
+		printer.setPaperSize(psize, QPrinter::Inch);
+
 		QPainter painter;
 		if (painter.begin(&printer))
 		{
-			int res = printer.resolution();
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, res, false, false);
-			// now convert to pdf
-			QSvgRenderer svgRenderer;
-			svgRenderer.load(svg.toLatin1());
-			qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
-			qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
-			QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
-			svgRenderer.render(&painter, bounds);
+			svgRenderer.render(&painter, target);
 		}
 
 		painter.end();
@@ -314,12 +320,12 @@ void MainWindow::doExport() {
 				fileName += actionType;
 			}
 
-
 			if(filePrintFormats.contains(actionType)) { // PDF or PS
 				QPrinter printer(QPrinter::HighResolution);
 				printer.setOutputFormat(filePrintFormats[actionType]);
 				printer.setOutputFileName(fileName);
-				printAux(printer,tr("Exporting..."));
+				m_statusBar->showMessage(tr("Exporting..."));
+				printAux(printer, true, false);
 				m_statusBar->showMessage(tr("Sketch exported"), 2000);
 			} else { // PNG...
 				DebugDialog::debug(QString("format: %1 %2").arg(fileExt).arg(fileExportFormats[actionType]));
@@ -331,7 +337,13 @@ void MainWindow::doExport() {
 	#endif
 }
 
-void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeBackground) {
+void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeBackground) 
+{
+	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
+	int width = source.width();
+	int height = source.height();
+
+	/*
 	int width = m_currentGraphicsView->width();
 	if (m_currentGraphicsView->verticalScrollBar()->isVisible()) {
 		width -= m_currentGraphicsView->verticalScrollBar()->width();
@@ -340,13 +352,13 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	if (m_currentGraphicsView->horizontalScrollBar()->isVisible()) {
 		height -= m_currentGraphicsView->horizontalScrollBar()->height();
 	}
+	*/
+
 	QSize imgSize(width, height);
 	QImage image(imgSize,format);
 	image.setDotsPerMeterX(1200*254);
 	image.setDotsPerMeterY(1200*254);
 	QPainter painter;
-
-
 	QColor color;
 	if (removeBackground) {
 		color = m_currentGraphicsView->background();
@@ -354,7 +366,9 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	}
 
 	painter.begin(&image);
-	m_currentGraphicsView->render(&painter);
+	//m_currentGraphicsView->render(&painter);
+	QRectF target(0, 0, width, height);
+	m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
 	painter.end();
 
 	if (removeBackground) {
@@ -367,9 +381,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	}
 }
 
-void MainWindow::printAux(QPrinter &printer, const QString & message, bool removeBackground) {
-	m_statusBar->showMessage(message);
-
+void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginate) {
 	int res = printer.resolution();
 	qreal scale2 = res / FSvgRenderer::printerScale();
 	DebugDialog::debug(QString("p.w:%1 p.h:%2 pager.w:%3 pager.h:%4 paperr.w:%5 paperr.h:%6 source.w:%7 source.h:%8")
@@ -390,9 +402,11 @@ void MainWindow::printAux(QPrinter &printer, const QString & message, bool remov
 	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
 	QRectF target(0, 0, source.width() * scale2, source.height() * scale2);
 
-	QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
-		         (target.height() + printer.paperRect().height() - printer.height()) / res);
-	printer.setPaperSize(psize, QPrinter::Inch);
+	if (!paginate) {
+		QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
+					 (target.height() + printer.paperRect().height() - printer.height()) / res);
+		printer.setPaperSize(psize, QPrinter::Inch);
+	}
 
 	QPainter painter;
 	if (painter.begin(&printer)) {
@@ -407,33 +421,33 @@ void MainWindow::printAux(QPrinter &printer, const QString & message, bool remov
 			item->setSelected(false);
 		}
 
-		/*
-		int xPages = qCeil(target.width() / printer.width());
-		int yPages = qCeil(target.height() / printer.height());
-		int lastPage = xPages * yPages;
+		if (paginate) {
+			int xPages = qCeil(target.width() / printer.width());
+			int yPages = qCeil(target.height() / printer.height());
+			int lastPage = xPages * yPages;
 
-		int xSourcePage = qFloor(printer.width() / scale2);
-		int ySourcePage = qFloor(printer.height() / scale2);
+			int xSourcePage = qFloor(printer.width() / scale2);
+			int ySourcePage = qFloor(printer.height() / scale2);
 
-		int page = 0;
-		for (int iy = 0; iy < yPages; iy++) {
-			for (int ix = 0; ix < xPages; ix++) {
-				// render to printer:
-				QRectF pSource((ix * xSourcePage) + source.left(), 
-							   (iy * ySourcePage) + source.top(), 
-							   qMin(xSourcePage, (int) source.width() - (ix * xSourcePage)), 
-							   qMin(ySourcePage, (int) source.height() - (iy * ySourcePage)));
-				QRectF pTarget(0, 0, pSource.width() * scale2, pSource.height() * scale2);
-				m_currentGraphicsView->scene()->render(&painter, pTarget, pSource, Qt::KeepAspectRatio);
-				if (++page < lastPage) {
-					printer.newPage();
+			int page = 0;
+			for (int iy = 0; iy < yPages; iy++) {
+				for (int ix = 0; ix < xPages; ix++) {
+					// render to printer:
+					QRectF pSource((ix * xSourcePage) + source.left(), 
+								   (iy * ySourcePage) + source.top(), 
+								   qMin(xSourcePage, (int) source.width() - (ix * xSourcePage)), 
+								   qMin(ySourcePage, (int) source.height() - (iy * ySourcePage)));
+					QRectF pTarget(0, 0, pSource.width() * scale2, pSource.height() * scale2);
+					m_currentGraphicsView->scene()->render(&painter, pTarget, pSource, Qt::KeepAspectRatio);
+					if (++page < lastPage) {
+						printer.newPage();
+					}
 				}
 			}
 		}
-		*/
-
-
-		m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+		else {
+			m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+		}
 
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(true);

@@ -293,7 +293,7 @@ protected:
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
 	void closeEvent(QCloseEvent * event);
 	void saveAsAux(const QString & fileName);
-	void printAux(QPrinter &printer, const QString & message, bool removeBackground=true);
+	void printAux(QPrinter &printer, bool removeBackground, bool paginate);
 	void exportAux(QString fileName, QImage::Format format, bool removeBackground);
 	void notYetImplemented(QString action);
 	void setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox = NULL);

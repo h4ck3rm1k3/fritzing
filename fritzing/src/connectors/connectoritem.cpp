@@ -77,7 +77,8 @@ ConnectorItem::~ConnectorItem() {
 	//DebugDialog::debug(QString("deleting connectorItem %1").arg((long) this, 0, 16));
 	foreach (ConnectorItem * connectorItem, m_connectedTo) {
 		if (connectorItem != NULL) {
-			connectorItem->tempRemove(this, true);
+			//DebugDialog::debug(QString("temp remove %1 %2").arg(this->attachedToID()).arg(connectorItem->attachedToID()));
+			connectorItem->tempRemove(this, this->attachedToID() != connectorItem->attachedToID());
 		}
 	}
 	if (this->connector() != NULL) {
@@ -308,8 +309,8 @@ void ConnectorItem::setUnconnectedColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
+	//DebugDialog::debug(QString("set unconnected %1").arg(attachedToID()) );
 	m_attachedTo->getUnconnectedColor(this, brush, pen, m_opacity, m_negativePenWidth);
-	//DebugDialog::debug(QString("set unconnected %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, true);
 }
 
