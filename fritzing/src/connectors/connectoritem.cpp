@@ -674,6 +674,7 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 
 void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & elementName)
 {
+	//DebugDialog::debug(QString("write connector %1").arg(this->attachedToID()));
 	writer.writeStartElement(elementName);
 	writer.writeAttribute("connectorId", connectorSharedID());
 	if (attachedTo()->parentItem() == NULL) {

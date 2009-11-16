@@ -4016,7 +4016,7 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 
 	ConnectorItem * otherConnector = toWire->otherConnector(toConnectorItem);
 
-	BaseCommand::CrossViewType crossView = wireSplitCrossView();
+	BaseCommand::CrossViewType crossView = BaseCommand::CrossView; // wireSplitCrossView();
 
 	// disconnect the wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), clickedConnectorItem->connectorSharedID(),
