@@ -34,6 +34,7 @@
         <pcbView>
             <layers image="pcb/jumper_2_100mil_pcb.svg">
                 <layer layerId="copper0"/>
+		<layer layerId="silkscreen" />
             </layers>
         </pcbView>
     </views>
