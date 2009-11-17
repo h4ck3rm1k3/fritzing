@@ -12,7 +12,7 @@
  </tags>
  <properties>
   <property name="family" >Generic IC</property>
-  <property name="package" >Dual Inline</property>
+  <property name="package" >DIP (Dual Inline)</property>
   <property name="pins">$pins</property>
   <property name="spacing">${mils}mil</property>
   <property name="chip label">${label}</property>

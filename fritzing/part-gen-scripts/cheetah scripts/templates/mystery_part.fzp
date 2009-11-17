@@ -1,7 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 #set $fpitch = float($pitch)
 #set $mils = int($fpitch * 1000)
-<module moduleId="$uuid" >
+#set $pcbname = "jumper_" + $pins + "_100"
+#set $breadname = "mystery_part_" + $pins + "_sip_100"
+#set $moduleid = $uuid
+#if $package == "Double Row" 
+#set $pcbname = "dip_" + $pins + "_" + str($mils)
+#set $breadname = "mystery_part_" + $pins + "_dip_" + str($mils)
+#else
+#set $moduleid = "mystery_part_" + $pins
+#end if
+<module moduleId="$moduleid" >
  <version>1.0</version>
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - $pins pins</title>
@@ -14,7 +23,8 @@
  <properties>
   <property name="family" >Mystery Part</property>
   <property name="pins">$pins</property>
-  <property name="footprint">100 mil jumper</property>
+  <property name="layout">$package</property>
+  <property name="spacing">${mils}mil</property>
   <property name="chip label">${label}</property>
  </properties>
  <taxonomy>part.mystery.magical.${pins}pins</taxonomy>
@@ -26,7 +36,7 @@
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/mystery_part_${pins}_bread.svg" >
+   <layers image="breadboard/${breadname}mil_bread.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
@@ -36,7 +46,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/jumper_${pins}_100mil_pcb.svg" >
+   <layers image="pcb/${pcbname}mil_pcb.svg" >
     <layer layerId="silkscreen" />
     <layer layerId="copper0" />
    </layers>

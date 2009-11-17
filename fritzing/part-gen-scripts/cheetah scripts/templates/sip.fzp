@@ -13,7 +13,7 @@
  </tags>
  <properties>
   <property name="family" >Generic IC</property>
-  <property name="package" >Single Inline</property>
+  <property name="package" >SIP (Single Inline)</property>
   <property name="pins">$pins</property>
   <property name="spacing">${mils}mil</property>
   <property name="chip label">${label}</property>
