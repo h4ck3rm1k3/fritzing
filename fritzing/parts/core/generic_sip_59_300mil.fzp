@@ -11,7 +11,7 @@
  </tags>
  <properties>
   <property name="family" >Generic IC</property>
-  <property name="package" >Single Inline</property>
+  <property name="package" >SIP (Single Inline)</property>
   <property name="pins">59</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>
