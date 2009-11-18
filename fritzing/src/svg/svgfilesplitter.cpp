@@ -1014,7 +1014,7 @@ bool SvgFileSplitter::getSvgSizeAttributes(const QString & path, QString & width
 	return true;
 }
 
-bool SvgFileSplitter::changeStrokeWidth(const QString & svg, qreal delta, QByteArray & byteArray) {
+bool SvgFileSplitter::changeStrokeWidth(const QString & svg, qreal delta, bool absolute, QByteArray & byteArray) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -1034,20 +1034,20 @@ bool SvgFileSplitter::changeStrokeWidth(const QString & svg, qreal delta, QByteA
 		return false;
 	}
 
-	changeStrokeWidth(root, delta);
+	changeStrokeWidth(root, delta, absolute);
 	byteArray = domDocument.toByteArray();
 	return true;
 }
 
-void SvgFileSplitter::changeStrokeWidth(QDomElement & element, qreal delta) {
+void SvgFileSplitter::changeStrokeWidth(QDomElement & element, qreal delta, bool absolute) {
 	bool ok;
 	qreal sw = element.attribute("stroke-width").toDouble(&ok);
 	if (ok) {
-		element.setAttribute("stroke-width", QString::number(sw + delta));
+		element.setAttribute("stroke-width", QString::number((absolute) ? delta : sw + delta));
 	}
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
-		changeStrokeWidth(child, delta);
+		changeStrokeWidth(child, delta, absolute);
 		child = child.nextSiblingElement();
 	}
 }

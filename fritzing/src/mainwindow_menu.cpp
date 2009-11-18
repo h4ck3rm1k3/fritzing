@@ -58,6 +58,7 @@ $Date$
 #include "dialogs/setcolordialog.h"
 #include "utils/folderutils.h"
 #include "utils/graphicsutils.h"
+#include "utils/textutils.h"
 #include "connectors/ercdata.h"
 #include "items/moduleidnames.h"
 
@@ -157,11 +158,25 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		fileName += suffix;
 	}
 
+    ItemBase * board = NULL;
+    foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
+        board = dynamic_cast<ItemBase *>(childItem);
+        if (board == NULL) continue;
+
+        //for now take the first board you find
+        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
+            break;
+        }
+        board = NULL;
+    }
+
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	if (wantSVG) {
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, GraphicsUtils::IllustratorDPI, false, false);
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false);
+		svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize);
+		
 		QString svgFileName = fileName;
 		svgFileName.replace(fileExt, ".svg");
 		QFile file(svgFileName);
@@ -175,7 +190,9 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		printer.setOutputFormat(filePrintFormats[fileExt]);
 		printer.setOutputFileName(fileName);
 		int res = printer.resolution();
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL, res, false, false);
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false);
+		svg = mergeBoardSvg(svg, board, res, imageSize);
+		
 		// now convert to pdf
 		QSvgRenderer svgRenderer;
 		svgRenderer.load(svg.toLatin1());
@@ -265,8 +282,42 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
 */
 
-
 }
+
+QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize) {
+	QSizeF boardImageSize;
+	QString boardSvg = getBoardSilkscreenSvg(board, res, boardImageSize);
+	if (boardSvg.isEmpty()) return svg;
+
+	QByteArray byteArray;
+	SvgFileSplitter::changeStrokeWidth(boardSvg, res / 360.0, true, byteArray);
+	imageSize = boardImageSize;
+	return TextUtils::mergeSvg(QString(byteArray), svg);
+}
+
+QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & imageSize) {
+	if (board == NULL) return ___emptyString___;
+
+	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(true);
+
+	QList<QGraphicsItem *> items = m_pcbGraphicsView->scene()->selectedItems();
+	foreach (QGraphicsItem * item, items) {
+		item->setSelected(false);
+	}
+	board->setSelected(true);
+	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	viewLayerIDs << ViewLayer::Silkscreen;
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, true, false);
+	board->setSelected(false);
+	foreach (QGraphicsItem * item, items) {
+		item->setSelected(true);
+	}
+
+	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
+
+	return svg;
+}
+
 
 void MainWindow::doExport() {
 	QAction * action = qobject_cast<QAction *>(sender());

@@ -65,7 +65,7 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 
 
 	QByteArray copperByteArray;
-	if (!SvgFileSplitter::changeStrokeWidth(svg, 50, copperByteArray)) {
+	if (!SvgFileSplitter::changeStrokeWidth(svg, 50, false, copperByteArray)) {
 		return false;
 	}
 

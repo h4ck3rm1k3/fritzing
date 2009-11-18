@@ -117,3 +117,30 @@ QString TextUtils::replaceTextElement(QString svg, const QString & label) {
 		
 	return svg;
 }
+
+QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc1;
+	if (!doc1.setContent(svg1, &errorStr, &errorLine, &errorColumn)) return ___emptyString___;
+
+	QDomDocument doc2;
+	if (!doc2.setContent(svg2, &errorStr, &errorLine, &errorColumn)) return ___emptyString___;
+
+	QDomElement root1 = doc1.documentElement();
+	if (root1.tagName() != "svg") return ___emptyString___;
+
+	QDomElement root2 = doc2.documentElement();
+	if (root2.tagName() != "svg") ___emptyString___;
+
+	QDomNode node = root2.firstChild();
+	while (!node.isNull()) {
+		root1.appendChild(node);
+		node = node.nextSibling();
+	}
+
+	return doc1.toString();
+}
+
+
