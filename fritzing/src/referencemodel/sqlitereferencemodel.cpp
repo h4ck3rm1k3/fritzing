@@ -34,10 +34,14 @@ $Date$
 #define MAX_CONN_TRIES 3
 
 SqliteReferenceModel::SqliteReferenceModel() {
-	init();
-
 	m_swappingEnabled = false;
 	m_lastWasExactMatch = true;
+}
+
+void SqliteReferenceModel::loadAll()
+{
+	init();
+
 	int tries = 0;
 	while(!m_swappingEnabled && tries < MAX_CONN_TRIES) {
 		createConnection();

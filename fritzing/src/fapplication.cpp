@@ -62,26 +62,6 @@ $Date$
 #include <QTextStream>
 #include <QFontDatabase>
 
-bool FApplication::m_spaceBarIsPressed = false;
-bool FApplication::m_mousePressed = false;
-QString FApplication::m_openSaveFolder = ___emptyString___;
-QTranslator FApplication::m_translator;
-ReferenceModel * FApplication::m_referenceModel = NULL;
-PaletteModel * FApplication::m_paletteBinModel = NULL;
-bool FApplication::m_started = false;
-QList<QString> FApplication::m_filesToLoad;
-QString FApplication::m_libPath;
-QString FApplication::m_translationPath;
-UpdateDialog * FApplication::m_updateDialog = NULL;
-QSet<QString> FApplication::InstalledFonts;
-QMultiHash<QString, QString> FApplication::InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
-QPointer<MainWindow> FApplication::m_lastTopmostWindow = NULL;
-QTimer FApplication::m_activationTimer;
-QList<QWidget *> FApplication::m_orderedTopLevelWidgets;
-QStringList FApplication::m_arguments;
-int FApplication::RestartNeeded = 9999;
-bool FApplication::m_runAsService;
-
 static int kBottomOfAlpha = 204;
 
 #ifdef Q_WS_WIN
@@ -102,6 +82,13 @@ static int kBottomOfAlpha = 204;
 #ifdef Q_WS_MAC
 #define PLATFORM_NAME "mac"
 #endif
+
+int FApplication::RestartNeeded = 9999;
+QSet<QString> FApplication::InstalledFonts;
+QMultiHash<QString, QString> FApplication::InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
+
+static const qreal LoadProgressStart = 0.085;
+static const qreal LoadProgressEnd = 0.6;
 
 //////////////////////////
 
@@ -126,6 +113,18 @@ void DoOnceThread::run()
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
+	m_spaceBarIsPressed = false;
+	m_mousePressed = false;
+	m_openSaveFolder = ___emptyString___;
+	m_referenceModel = NULL;
+	m_paletteBinModel = NULL;
+	m_started = false;
+	m_updateDialog = NULL;
+	m_lastTopmostWindow = NULL;
+	m_runAsService = false;
+	m_splash = NULL;
+
+	m_splash = NULL;
 	m_runAsService = false;
 	m_arguments = arguments();
 	for (int i = 0; i < m_arguments.length() - 1; i++) {
@@ -234,29 +233,29 @@ void FApplication::clearModels() {
 }
 
 bool FApplication::spaceBarIsPressed() {
-	return m_spaceBarIsPressed;
+	return ((FApplication *) qApp)->m_spaceBarIsPressed;
 }
 
 void FApplication::setOpenSaveFolder(const QString& path) {
 	QFileInfo fileInfo(path);
 	if(fileInfo.isDir()) {
-		m_openSaveFolder = path;
+		((FApplication *) qApp)->m_openSaveFolder = path;
 	} else {
-		m_openSaveFolder = fileInfo.path().remove(fileInfo.fileName());
+		((FApplication *) qApp)->m_openSaveFolder = fileInfo.path().remove(fileInfo.fileName());
 	}
 	QSettings settings;
-	settings.setValue("openSaveFolder", m_openSaveFolder);
+	settings.setValue("openSaveFolder", ((FApplication *) qApp)->m_openSaveFolder);
 }
 
 const QString FApplication::openSaveFolder() {
-	if(m_openSaveFolder == ___emptyString___) {
+	if(((FApplication *) qApp)->m_openSaveFolder == ___emptyString___) {
 		QSettings settings;
 		QString tempFolder = settings.value("openSaveFolder").toString();
 		if (!tempFolder.isEmpty()) {
 			QFileInfo fileInfo(tempFolder);
 			if (fileInfo.exists()) {
-				m_openSaveFolder = tempFolder;
-				return m_openSaveFolder;
+				((FApplication *) qApp)->m_openSaveFolder = tempFolder;
+				return ((FApplication *) qApp)->m_openSaveFolder;
 			}
 			else {
 				settings.remove("openSaveFolder");
@@ -266,7 +265,7 @@ const QString FApplication::openSaveFolder() {
 		DebugDialog::debug(QString("default save location: %1").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)));
 		return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
 	} else {
-		return m_openSaveFolder;
+		return ((FApplication *) qApp)->m_openSaveFolder;
 	}
 }
 
@@ -353,12 +352,12 @@ bool FApplication::findTranslator(const QString & translationsPath) {
 
 int FApplication::startup(bool firstRun)
 {
-	int progressIndex;
     QPixmap pixmap(":/resources/images/splash_2010.png");
 	FSplashScreen splash(pixmap);
+	m_splash = &splash;
 	processEvents();								// seems to need this (sometimes?) to display the splash screen
 
-	initSplash(splash, progressIndex, pixmap);
+	initSplash(splash, pixmap);
 	processEvents();
 
 	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
@@ -378,7 +377,7 @@ int FApplication::startup(bool firstRun)
 		}
 		*/
 
-		splash.showProgress(progressIndex, 0.085);
+		splash.showProgress(m_progressIndex, LoadProgressStart);
 		processEvents();
 
 #ifdef Q_WS_WIN
@@ -401,7 +400,9 @@ int FApplication::startup(bool firstRun)
 		FSvgRenderer::cleanup();
 	}
 
-	m_referenceModel = new CurrentReferenceModel();					// this is very slow
+	m_referenceModel = new CurrentReferenceModel();	
+	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
+	m_referenceModel->loadAll();								// this is very slow
 	//DebugDialog::debug("after new current reference model");
 	m_paletteBinModel = new PaletteModel(true, false);
 	//DebugDialog::debug("after new palette model");
@@ -413,12 +414,12 @@ int FApplication::startup(bool firstRun)
 		settings.clear();
 	}
 
-	splash.showProgress(progressIndex, 0.1);
+	splash.showProgress(m_progressIndex, LoadProgressEnd);
 	createUserDataStoreFolderStructure();
 
 	//DebugDialog::debug("after createUserDataStoreFolderStructure");
 
-	splash.showProgress(progressIndex, 0.2);
+	splash.showProgress(m_progressIndex, 0.65);
 	processEvents();
 
 	QString binToOpen = settings.value("lastBin").toString();
@@ -433,7 +434,7 @@ int FApplication::startup(bool firstRun)
 		}
 	}
 
-	splash.showProgress(progressIndex, 0.4);
+	splash.showProgress(m_progressIndex, 0.8);
 	processEvents();
 
 	QTime t;
@@ -450,19 +451,19 @@ int FApplication::startup(bool firstRun)
 	mutex.unlock();
 	//DebugDialog::debug(QString("ending thread %1").arg(t.elapsed()));
 
-	splash.showProgress(progressIndex, 0.65);
+	splash.showProgress(m_progressIndex, 0.85);
 
 
 	m_updateDialog = new UpdateDialog();
 	connect(m_updateDialog, SIGNAL(enableAgainSignal(bool)), this, SLOT(enableCheckUpdates(bool)));
 	checkForUpdates(false);
 
-	splash.showProgress(progressIndex, 0.70);
+	splash.showProgress(m_progressIndex, 0.875);
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);   // this is also slow
 
-	splash.showProgress(progressIndex, 0.9);
+	splash.showProgress(m_progressIndex, 0.9);
 	processEvents();
 
 	int loaded = 0;
@@ -503,7 +504,7 @@ int FApplication::startup(bool firstRun)
 
 //#ifndef WIN_DEBUG
 	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
-	splash.showProgress(progressIndex, 0.99);
+	splash.showProgress(m_progressIndex, 0.99);
 	processEvents();
 //#endif
 
@@ -648,12 +649,12 @@ void FApplication::preferences() {
 	}
 }
 
-void FApplication::initSplash(FSplashScreen & splash, int & progressIndex, QPixmap & pixmap) {
+void FApplication::initSplash(FSplashScreen & splash, QPixmap & pixmap) {
 	QPixmap logo(":/resources/images/fhp_logo_small.png");
 	QPixmap progress(":/resources/images/splash_progressbar.png");
 
-	progressIndex = splash.showPixmap(progress, QPoint(0, pixmap.height() - progress.height()));
-	splash.showProgress(progressIndex, 0);
+	m_progressIndex = splash.showPixmap(progress, QPoint(0, pixmap.height() - progress.height()));
+	splash.showProgress(m_progressIndex, 0);
 
 	// put this above the progress indicator
 	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
@@ -914,5 +915,14 @@ which is really not intended for hundreds of widgets.
 }
 
 bool FApplication::runAsService() {
-	return m_runAsService;
+	return ((FApplication *) qApp)->m_runAsService;
+}
+
+void FApplication::loadedPart(int loaded, int total) {
+	if (total == 0) return;
+	if (m_splash == NULL) return;
+
+
+
+	m_splash->showProgress(m_progressIndex, LoadProgressStart + ((LoadProgressEnd - LoadProgressStart) * loaded / (double) total));
 }

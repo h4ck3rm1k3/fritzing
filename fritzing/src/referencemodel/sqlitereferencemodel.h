@@ -43,6 +43,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		SqliteReferenceModel();
 		~SqliteReferenceModel();
 
+		void loadAll();
 		ModelPart *loadPart(const QString & path, bool update);
 
 		ModelPart *retrieveModelPart(const QString &moduleID);

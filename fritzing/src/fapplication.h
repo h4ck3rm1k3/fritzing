@@ -35,6 +35,7 @@ $Date$
 #include <QWidget>
 #include <QMutex>
 #include <QMultiHash>
+#include <QTimer>
 
 class FApplication :
 	public QApplication
@@ -71,6 +72,7 @@ public slots:
 	void updateActivation();
 	void topLevelWidgetDestroyed(QObject *);
 	void closeAllWindows2();
+	void loadedPart(int loaded, int total);
 
 
 protected:
@@ -79,27 +81,29 @@ protected:
 	bool findTranslator(const QString & translationsPath);
 	void loadNew(QString path);
 	void loadOne(class MainWindow *, QString path, int loaded);
-	void initSplash(class FSplashScreen & splash, int & progressIndex, QPixmap & pixmap);
+	void initSplash(class FSplashScreen & splash, QPixmap & pixmap);
 	void registerFont(const QString &fontFile, bool reallyRegister);
 	void clearModels();
 
 protected:
-	static bool m_spaceBarIsPressed;
-	static bool m_mousePressed;
-	static QString m_openSaveFolder;
-	static QTranslator m_translator;
-	static class ReferenceModel * m_referenceModel;
-	static class PaletteModel * m_paletteBinModel;
-	static bool m_started;
-	static QList<QString> m_filesToLoad;
-	static QString m_libPath;
-	static QString m_translationPath;
-	static class UpdateDialog * m_updateDialog;
-	static QTimer m_activationTimer;
-	static QPointer<class MainWindow> m_lastTopmostWindow;
-	static QList<QWidget *> m_orderedTopLevelWidgets;
-	static QStringList m_arguments;
-	static bool m_runAsService;
+	bool m_spaceBarIsPressed;
+	bool m_mousePressed;
+	QString m_openSaveFolder;
+	QTranslator m_translator;
+	class ReferenceModel * m_referenceModel;
+	class PaletteModel * m_paletteBinModel;
+	bool m_started;
+	QList<QString> m_filesToLoad;
+	QString m_libPath;
+	QString m_translationPath;
+	class UpdateDialog * m_updateDialog;
+	QTimer m_activationTimer;
+	QPointer<class MainWindow> m_lastTopmostWindow;
+	QList<QWidget *> m_orderedTopLevelWidgets;
+	QStringList m_arguments;
+	bool m_runAsService;
+	int m_progressIndex;
+	class FSplashScreen * m_splash;
 
 public:
 	static QSet<QString> InstalledFonts;

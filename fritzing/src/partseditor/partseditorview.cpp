@@ -40,7 +40,6 @@ $Date$
 #include "../fritzingwindow.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
-#include "../fapplication.h"
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"

@@ -131,18 +131,26 @@ void PaletteModel::loadParts() {
 
 	writeCommonBinsHeader();
 
+	int totalPartCount = 0;
+	emit loadedPart(0, totalPartCount);
+
 	QDir * dir1 = FolderUtils::getApplicationSubFolder("parts");
 	if (dir1 != NULL) {
-		loadPartsAux(*dir1, nameFilters);
+		countParts(*dir1, nameFilters, totalPartCount);
+	}
+	QDir dir2(FolderUtils::getUserDataStorePath("parts"));
+	countParts(dir2, nameFilters, totalPartCount);
+	QDir dir3(":/resources/parts");
+	countParts(dir3, nameFilters, totalPartCount);
+
+	int loadingPart = 0;
+	if (dir1 != NULL) {
+		loadPartsAux(*dir1, nameFilters, loadingPart, totalPartCount);
 		delete dir1;
-		dir1 = NULL;
 	}
 
-	QDir dir2(FolderUtils::getUserDataStorePath("parts"));
-	loadPartsAux(dir2, nameFilters);
-
-	dir1 = new QDir(":/resources/parts");
-	loadPartsAux(*dir1, nameFilters);
+	loadPartsAux(dir2, nameFilters, loadingPart, totalPartCount);
+	loadPartsAux(dir3, nameFilters, loadingPart, totalPartCount);
 
 	writeCommonBinsFooter();
 	
@@ -153,7 +161,6 @@ void PaletteModel::loadParts() {
 	/// !!!!!!!!!!!!!!!!  writeInstanceInCommonBin via LoadPart() will use the slower DomDocument methods,
 	/// !!!!!!!!!!!!!!!!  since in that case we are appending to an already existing file.
 
-	delete dir1;
 }
 
 void PaletteModel::writeCommonBinsHeader() {
@@ -243,7 +250,22 @@ void PaletteModel::writeToCommonBinAux(const QString &textToWrite, QIODevice::Op
 	}
 }
 
-void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters) {
+void PaletteModel::countParts(QDir & dir, QStringList & nameFilters, int & partCount) {
+    QString temp = dir.absolutePath();
+    QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+	partCount += list.size();
+
+    QStringList dirs = dir.entryList(QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+    for (int i = 0; i < dirs.size(); ++i) {
+    	QString temp2 = dirs[i];
+       	dir.cd(temp2);
+
+    	countParts(dir, nameFilters, partCount);
+    	dir.cdUp();
+    }
+}
+
+void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadingPart, int totalPartCount) {
     QString temp = dir.absolutePath();
     QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
     for (int i = 0; i < list.size(); ++i) {
@@ -251,6 +273,7 @@ void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters) {
         QString path = fileInfo.absoluteFilePath ();
         // DebugDialog::debug(QString("part path:%1 core? %2").arg(path).arg(m_loadingCore? "true" : "false"));
         loadPart(path);
+		emit loadedPart(++loadingPart, totalPartCount);
     }
 
     QStringList dirs = dir.entryList(QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
@@ -263,7 +286,7 @@ void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters) {
 			m_loadingContrib = temp2=="contrib";
        	//}
 
-    	loadPartsAux(dir, nameFilters);
+    	loadPartsAux(dir, nameFilters, loadingPart, totalPartCount);
     	dir.cdUp();
     }
 }

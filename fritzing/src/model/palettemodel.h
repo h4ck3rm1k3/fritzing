@@ -64,10 +64,14 @@ protected:
 	bool m_loadingCore;
 	bool m_loadingContrib;
 
+signals:
+	void loadedPart(int i, int total);
+
 protected:
 	virtual void init();
 	void loadParts();
-	void loadPartsAux(QDir & dir, QStringList & nameFilters);
+	void loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadedPart, int totalParts);
+	void countParts(QDir & dir, QStringList & nameFilters, int & partCount);
 
 	void writeCommonBinsHeader();
 	void writeCommonBinsHeaderAux(bool &doIt, const QString &filename, const QString &binName);

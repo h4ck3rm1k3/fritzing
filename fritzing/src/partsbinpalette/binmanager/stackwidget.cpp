@@ -31,7 +31,6 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "stacktabwidget.h"
 #include "stackwidgetseparator.h"
 #include "binmanager.h"
-#include "../partsbinpalettewidget.h"
 #include "../../fdockwidget.h"
 #include "../../debugdialog.h"
 
