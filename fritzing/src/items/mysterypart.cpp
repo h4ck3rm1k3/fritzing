@@ -35,6 +35,7 @@ $Date$
 #include <QDomNodeList>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QLineEdit>
 
 // TODO
 //	save into parts bin
@@ -128,8 +129,7 @@ QString MysteryPart::collectExtraInfoHtml(const QString & prop, const QString & 
 	Q_UNUSED(value);
 
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
-		return QString("&nbsp;<input type='text' name='sChipLabel' id='sChipLabel' maxlength='15' value='%1' style='width:95px' onblur='setChipLabel()' onkeypress='setChipLabelEnter(event)' />"
-					   ).arg(m_chipLabel);
+		return "<object type='application/x-qt-plugin' classid='ChipLabelInput' width='150px' height='22px'></object>";  
 	}
 
 	return ___emptyString___;
@@ -177,3 +177,27 @@ bool MysteryPart::hasCustomSVG() {
 	}
 }
 
+QObject * MysteryPart::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(url);
+	Q_UNUSED(paramNames);
+	Q_UNUSED(paramValues);
+
+	if (classid.compare("ChipLabelInput") != 0) return NULL;
+
+	QLineEdit * e1 = new QLineEdit(parent);
+	e1->setMaxLength(15);
+	e1->setText(m_chipLabel);
+	connect(e1, SIGNAL(editingFinished()), this, SLOT(chipLabelEntry()));
+
+	return e1;
+}
+
+void MysteryPart::chipLabelEntry() {
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setChipLabel(edit->text());
+	}
+}

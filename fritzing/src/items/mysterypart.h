@@ -51,6 +51,10 @@ public:
 	QString chipLabel();
 	const QString & title();
 	bool hasCustomSVG();
+	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+
+public slots:
+	void chipLabelEntry();
 
 protected:
 	QString makeSvg(const QString & chipLabel);

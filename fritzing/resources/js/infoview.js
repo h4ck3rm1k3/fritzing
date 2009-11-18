@@ -156,21 +156,6 @@ function setWireWidthMils(wireTitle, wireId, newWidth) {
     sketch.changeWireWidthMils(newWidth);
 }
 
-function setChipLabel() {
-	var r = document.getElementById("sChipLabel").value;
-    sketch.setChipLabel(r);
-}
-
-function setChipLabelEnter(evt) {
-	evt = (evt) ? evt : window.event;	
-	if (evt.keyCode == 13) {
-	    setChipLabel();
-		return false;
-	} 
-		
-	return true;
-}
-
 function showPartLabel(current, showIt) {
     sketch.showPartLabel(currentItem.id(), showIt);
 }

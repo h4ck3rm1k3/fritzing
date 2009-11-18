@@ -198,3 +198,7 @@ void InfoGraphicsView::setResistance(QString resistance, QString pinSpacing)
 	Q_UNUSED(pinSpacing);
 }
 
+void InfoGraphicsView::setChipLabel(QString label)
+{
+	Q_UNUSED(label);
+}

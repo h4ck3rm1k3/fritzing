@@ -75,6 +75,7 @@ public:
 	virtual qreal getLabelFontSizeLarge();
 	virtual bool hasBigDots();
 	virtual void setResistance(QString resistance, QString pinSpacing);
+	virtual void setChipLabel(QString label);
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
