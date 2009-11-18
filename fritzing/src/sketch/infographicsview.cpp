@@ -52,7 +52,7 @@ void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase
 void InfoGraphicsView::hoverEnterItem(ModelPart* modelPart) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterItem(modelPart, swappingEnabled(NULL));
+	m_infoView->hoverEnterItem(this, modelPart, swappingEnabled(NULL));
 }
 
 void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
@@ -64,13 +64,13 @@ void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase
 void InfoGraphicsView::hoverLeaveItem(ModelPart* modelPart) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverLeaveItem(modelPart);
+	m_infoView->hoverLeaveItem(this, modelPart);
 }
 
 void InfoGraphicsView::viewConnectorItemInfo(ConnectorItem * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->viewConnectorItemInfo(item, swappingEnabled(item->attachedTo()));
+	m_infoView->viewConnectorItemInfo(this, item, swappingEnabled(item->attachedTo()));
 }
 
 void InfoGraphicsView::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {

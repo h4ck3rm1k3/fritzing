@@ -65,6 +65,7 @@ bool valueLessThan(QString v1, QString v2)
 
 HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) 
 {
+	m_infoGraphicsView = NULL;
 	m_setContentTimer.setSingleShot(true);
 	m_setContentTimer.setInterval(10);
 	connect(&m_setContentTimer, SIGNAL(timeout()), this, SLOT(setContent()));
@@ -97,7 +98,6 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 	//m_includes = "\t<link rel'stylesheet' type='text/css' href='/resources/styles/infoview.css' />\n";
 	//m_includes+= "\t<script src=':/resources/js/infoview.js' type='text/javascript'></script>\n";
 
-	//setContent("<html></html>");
 	m_currentItem = NULL;
 	m_currentSwappingEnabled = false;
 	m_refModel = refModel;
@@ -147,10 +147,11 @@ QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
 	return "infoView/"+blockId+"Visibility";
 }
 
-void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
+void HtmlInfoView::hoverEnterItem(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
 	m_currentSwappingEnabled = swappingEnabled;
 	QString s = "";
 	s += appendItemStuff(NULL, modelPart, 0, swappingEnabled, "", false);
+	m_infoGraphicsView = igv;
 	setContent(s);
 }
 
@@ -167,9 +168,8 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 
 	QString s = appendStuff(item,swappingEnabled);
 	setCurrentItem(item);
+	m_infoGraphicsView = infoGraphicsView;
 	setContent(s);
-	registerAsCurrentItem(item);
-	registerInfoGraphicsView(infoGraphicsView);
 }
 
 QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
@@ -186,8 +186,9 @@ void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphics
 }
 
 
-void HtmlInfoView::hoverLeaveItem(ModelPart * modelPart) {
+void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart * modelPart) {
 	Q_UNUSED(modelPart);
+	Q_UNUSED(infoGraphicsView);
 	//clear();
 }
 
@@ -197,7 +198,7 @@ void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * , QGraphicsSceneHoverEvent 
 	unregisterCurrentItem();
 }
 
-void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnabled) {
+void HtmlInfoView::viewConnectorItemInfo(InfoGraphicsView * infoGraphicsView, ConnectorItem * item, bool swappingEnabled) {
 	Connector * connector = item->connector();
 	if (connector == NULL) return;
 
@@ -215,17 +216,13 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnab
 	s += "</div>";
 
 	setCurrentItem(item->attachedTo());
+	m_infoGraphicsView = infoGraphicsView;
 	setContent(s);
-
-	if (item->attachedTo() && item->attachedTo() != m_currentItem) {
-		registerAsCurrentItem(item->attachedTo());
-	}
 }
 
 void HtmlInfoView::hoverEnterConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem * item, bool swappingEnabled) {
-	Q_UNUSED(igv)
 	Q_UNUSED(event)
-	viewConnectorItemInfo(item, swappingEnabled);
+	viewConnectorItemInfo(igv, item, swappingEnabled);
 }
 
 void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem *connItem) {
@@ -603,6 +600,10 @@ void HtmlInfoView::setContent() {
 	QString fileContent = QString(QString("<html>\n%1<body>\n%2")+HTML_EOF).arg(m_includes).arg(m_content);
 	m_webView->setHtml(fileContent);
 	m_savedContent = m_content;
+	if (m_currentItem != NULL) {
+		registerJsObjects();
+	}
+	registerInfoGraphicsView(m_infoGraphicsView);
 
 	m_setContentMutex.unlock();
 

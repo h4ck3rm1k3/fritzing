@@ -305,6 +305,7 @@ QString SqliteReferenceModel::getClosestMatch(const Part *examplePart, QStringLi
 		propsInCommonCountAux = countPropsInCommon(examplePart,retrieveModelPart(modId));
 		if(propsInCommonCountAux > propsInCommonCount) {
 			result = modId;
+			propsInCommonCount = propsInCommonCountAux;
 		}
 	}
 	return result;

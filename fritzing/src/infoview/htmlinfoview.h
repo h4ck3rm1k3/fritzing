@@ -54,12 +54,12 @@ public:
 	void reloadContent(class InfoGraphicsView *);
 
 	void viewItemInfo(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
-	void hoverEnterItem(ModelPart *, bool swappingEnabled);
-	void hoverLeaveItem(ModelPart *);
+	void hoverEnterItem(class InfoGraphicsView *, ModelPart *, bool swappingEnabled);
+	void hoverLeaveItem(class InfoGraphicsView *, ModelPart *);
 	void hoverEnterItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item, bool swappingEnabled);
 	void hoverLeaveItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item);
 
-	void viewConnectorItemInfo(ConnectorItem* item, bool swappingEnabled);
+	void viewConnectorItemInfo(class InfoGraphicsView *, ConnectorItem* item, bool swappingEnabled);
 	void hoverEnterConnectorItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ConnectorItem * item, bool swappingEnabled);
 	void hoverLeaveConnectorItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
@@ -115,6 +115,7 @@ protected:
 	QString m_content;
 	QString m_savedContent;
 	QTimer m_setContentTimer;
+	class InfoGraphicsView * m_infoGraphicsView;
 
 protected:
 	static QString PropsBlockId;

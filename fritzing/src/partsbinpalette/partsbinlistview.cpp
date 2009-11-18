@@ -122,7 +122,7 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 	if (m_hoverItem != NULL) {
 		ModelPart * modelPart = m_hoverItem->data(Qt::UserRole).value<ModelPart *>();
 		if (modelPart != NULL) {
-			m_infoView->hoverLeaveItem(modelPart);
+			m_infoView->hoverLeaveItem(NULL, modelPart);
 		}
 	}
 
@@ -135,7 +135,7 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 	ModelPart * modelPart = item->data(Qt::UserRole).value<ModelPart *>();
 	if (modelPart == NULL) return;
 
-	m_infoView->hoverEnterItem(modelPart, swappingEnabled());
+	m_infoView->hoverEnterItem(NULL, modelPart, swappingEnabled());
 }
 
 
