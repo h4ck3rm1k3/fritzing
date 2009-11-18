@@ -65,6 +65,9 @@ bool valueLessThan(QString v1, QString v2)
 
 HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) 
 {
+	m_setContentTimer.setSingleShot(true);
+	m_setContentTimer.setInterval(10);
+	connect(&m_setContentTimer, SIGNAL(timeout()), this, SLOT(setContent()));
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(0);
 	lo->setSpacing(0);
@@ -114,7 +117,10 @@ HtmlInfoView::~HtmlInfoView() {
 }
 
 void HtmlInfoView::jsRegister() {
-	if (!m_setContentMutex.tryLock()) return;
+	if (!m_setContentMutex.tryLock()) {
+		//DebugDialog::debug("html info view js register mutex bail");
+		return;
+	}
 
 	m_setContentMutex.unlock();
 
@@ -126,7 +132,7 @@ void HtmlInfoView::jsRegister() {
 			registerInfoGraphicsView(igv);
 		}
 	}
-	registerCurrentAgain();
+	registerJsObjects();
 	m_webView->page()->mainFrame()->addToJavaScriptWindowObject( "infoView", this);
 	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 }
@@ -574,14 +580,29 @@ QString HtmlInfoView::toHtmlImage(QPixmap *pixmap, const char* format) {
 }
 
 void HtmlInfoView::setContent(const QString &html) {
-
-	// using a mutex because setContent can trigger jsRegister which can cause another call to setContent
-	if (!m_setContentMutex.tryLock()) {
+	//DebugDialog::debug("html set content");
+	m_setContentTimer.stop();
+	if (html.compare(m_savedContent) == 0) {
+		//DebugDialog::debug("same content bail");
 		return;
 	}
 
-	QString fileContent = QString(QString("<html>\n%1<body>\n%2")+HTML_EOF).arg(m_includes).arg(html);
+	m_content = html;
+	m_setContentTimer.start();
+}
+
+void HtmlInfoView::setContent() {
+	// using a mutex because setContent can trigger jsRegister which can cause another call to setContent
+	if (!m_setContentMutex.tryLock()) {
+		//DebugDialog::debug("html info view mutex bail");
+		return;
+	}
+
+	//DebugDialog::debug("html info view set content");
+
+	QString fileContent = QString(QString("<html>\n%1<body>\n%2")+HTML_EOF).arg(m_includes).arg(m_content);
 	m_webView->setHtml(fileContent);
+	m_savedContent = m_content;
 
 	m_setContentMutex.unlock();
 

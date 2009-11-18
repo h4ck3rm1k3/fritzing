@@ -33,6 +33,7 @@ $Date$
 #include <QWebView>
 #include <QGraphicsSceneHoverEvent>
 #include <QMutex>
+#include <QTimer>
 
 #include "../items/itembase.h"
 #include "../items/wire.h"
@@ -72,6 +73,7 @@ public:
 protected slots:
 	void jsRegister();
 	void setBlockVisibility(const QString &blockId, bool value);
+	void setContent();
 
 protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
@@ -110,6 +112,9 @@ protected:
 	QWebView *m_webView;
 	QHash<QString /**/, bool> m_blocksVisibility;
 	QPointer<class InfoViewWebPage> m_infoViewWebPage;
+	QString m_content;
+	QString m_savedContent;
+	QTimer m_setContentTimer;
 
 protected:
 	static QString PropsBlockId;
