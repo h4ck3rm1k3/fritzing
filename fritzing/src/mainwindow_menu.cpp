@@ -3429,11 +3429,13 @@ void MainWindow::swapObsolete() {
 		if (itemBase->modelPart()) {
 			// special case for swapping old resistors.
 			QString resistance = itemBase->modelPart()->properties().value("resistance", "");
-			QChar r = resistance.at(resistance.length() - 1);
-			ushort ohm = r.unicode();
-			if (ohm == 8486) {
-				// ends with the ohm symbol
-				resistance.chop(1);
+			if (!resistance.isEmpty()) {
+				QChar r = resistance.at(resistance.length() - 1);
+				ushort ohm = r.unicode();
+				if (ohm == 8486) {
+					// ends with the ohm symbol
+					resistance.chop(1);
+				}
 			}
 			QString footprint = itemBase->modelPart()->properties().value("footprint", "");
 			if (!resistance.isEmpty() && !footprint.isEmpty()) {

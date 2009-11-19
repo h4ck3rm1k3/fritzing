@@ -6000,13 +6000,13 @@ void SketchWidget::resizeJumperItem(long itemID, QPointF pos, QPointF c0, QPoint
 
 int SketchWidget::selectAllObsolete() 
 {
-	QList<ItemBase *> itemBases;
+	QSet<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 		if (!itemBase->isObsolete()) continue;
 
-		itemBases.append(itemBase->layerKinChief());
+		itemBases.insert(itemBase->layerKinChief());
 	}
 
 	if (itemBases.count() <= 0) {
