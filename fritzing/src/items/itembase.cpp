@@ -1432,6 +1432,12 @@ QString ItemBase::collectExtraInfoHtml(const QString & prop, const QString & val
 	return ___emptyString___;
 }
 
+bool ItemBase::collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue) {
+	returnProp = ItemBase::translatePropertyName(prop);
+	returnValue = value;
+	return true;
+}
+
 QString ItemBase::getProperty(const QString & key) {
 	if (m_modelPart == NULL) return "";
 

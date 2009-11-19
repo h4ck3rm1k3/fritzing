@@ -202,3 +202,12 @@ void InfoGraphicsView::setChipLabel(QString label)
 {
 	Q_UNUSED(label);
 }
+
+void InfoGraphicsView::changeWireWidthMils(const QString newWidth) {
+	Q_UNUSED(newWidth);
+}
+
+void InfoGraphicsView::changeWireColor(const QString newColor) {
+	Q_UNUSED(newColor);
+}
+

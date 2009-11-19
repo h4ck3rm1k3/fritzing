@@ -475,7 +475,9 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("ResizableBoardInput") != 0) return NULL;
+	if (classid.compare("ResizableBoardInput") != 0) {
+		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
+	}
 
 	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
 	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point

@@ -109,9 +109,13 @@ public:
 	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setCanChainMultiple(bool);
 	bool canChangeColor();
-	bool canChangeWidth();
 	void collectDirectWires(QList<Wire *> & wires);
 	bool isGrounded();
+	bool collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue);
+	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+
+protected slots:
+	void colorEntry(const QString & text);
 
 public:
 	static const qreal ROUTED_OPACITY;
@@ -180,8 +184,6 @@ public:
 	static QHash<QString, QString> colorTrans;
 	static QHash<long, QString> widthTrans;
 	static QList<long> widths;
-
-
 
 protected:
 	static QHash<QString, QString> shadowColors;

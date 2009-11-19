@@ -160,6 +160,7 @@ public:
 	virtual bool connectionIsAllowed(ConnectorItem *);
 	virtual void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
 	virtual QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	virtual bool collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue);
 	virtual QString getProperty(const QString & key);
 	ConnectorItem * rightClickedConnector();
 	virtual bool canEditPart();

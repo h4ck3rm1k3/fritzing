@@ -35,6 +35,7 @@ $Date$
 #include <QList>
 #include <QGraphicsItem>
 #include <QSet>
+#include <QComboBox>
 
 #include "../debugdialog.h"
 #include "../sketch/infographicsview.h"
@@ -1070,11 +1071,6 @@ bool Wire::canChangeColor() {
 	return true;
 }
 
-bool Wire::canChangeWidth() {
-	return getTrace();
-}
-
-
 void Wire::collectDirectWires(QList<Wire *> & wires) {
 	if (!wires.contains(this)) {
 		wires.append(this);
@@ -1236,3 +1232,65 @@ void Wire::setIgnoreSelectionChange(bool ignore) {
 	m_ignoreSelectionChange = ignore;
 }
 
+
+
+bool Wire::collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue) {
+	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
+		return false;
+	}
+
+
+	if (prop.compare("color", Qt::CaseInsensitive) == 0) {
+		returnProp = tr("color");
+		if (canChangeColor()) {
+			returnValue = "<object type='application/x-qt-plugin' classid='WireColorInput' width='100px' height='22px'></object>";
+		}
+		else {
+			returnValue = colorString();
+		}
+		return true;
+	}
+
+	return ItemBase::collectExtraInfoHtml(prop, value, returnProp, returnValue);
+}
+
+QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(url);
+	Q_UNUSED(paramNames);
+	Q_UNUSED(paramValues);
+
+	if (classid.compare("WireColorInput") != 0) {
+		return ItemBase::createPlugin(parent, classid, url, paramNames, paramValues);
+	}
+
+	QComboBox * comboBox = new QComboBox(parent);
+	comboBox->setEditable(false);
+	
+	int ix = 0;
+	QString currColor = colorString();
+	foreach(QString colorName, Wire::colorNames) {
+		QString tColorName = Wire::colorTrans.value(colorName);
+		comboBox->addItem(tColorName, QVariant(colorName));
+		if (colorName.compare(currColor, Qt::CaseInsensitive) == 0) {
+			comboBox->setCurrentIndex(ix);
+		}
+		ix++;
+	}
+
+	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(colorEntry(const QString &)));
+	return comboBox;
+}
+
+void Wire::colorEntry(const QString & text) {
+	Q_UNUSED(text);
+
+	QComboBox * comboBox = dynamic_cast<QComboBox *>(sender());
+	if (comboBox == NULL) return;
+
+	QString color = comboBox->itemData(comboBox->currentIndex()).toString();
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->changeWireColor(color);
+	}
+}

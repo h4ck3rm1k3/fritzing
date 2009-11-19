@@ -147,15 +147,3 @@ function doSwap(family,name,currValue) {
 	currProps[name] = value;
 	mainWindow.swapSelected(currProps, family, name);
 }
-
-function setWireColor(wireTitle, wireId, newColor) {
-	sketch.changeWireColor(newColor);
-}
-
-function setWireWidthMils(wireTitle, wireId, newWidth) {
-    sketch.changeWireWidthMils(newWidth);
-}
-
-function showPartLabel(current, showIt) {
-    sketch.showPartLabel(currentItem.id(), showIt);
-}

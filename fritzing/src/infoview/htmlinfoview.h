@@ -84,8 +84,6 @@ protected:
 	void prepareTitleStuff(ItemBase *base, QString &title);
 	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml, bool ignoreValues);
 	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
-	QString wireColorsSelect(Wire *wire);
-	QString wireWidthSelect(Wire *wire);
 
 	QString blockHeader(const QString &title, const QString &blockId);
 	QString blockVisibility(const QString &blockId);

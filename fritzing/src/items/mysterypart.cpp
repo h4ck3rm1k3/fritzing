@@ -182,7 +182,9 @@ QObject * MysteryPart::createPlugin(QWidget * parent, const QString &classid, co
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("ChipLabelInput") != 0) return NULL;
+	if (classid.compare("ChipLabelInput") != 0) {
+		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
+	}
 
 	QLineEdit * e1 = new QLineEdit(parent);
 	e1->setMaxLength(15);

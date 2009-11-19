@@ -31,9 +31,15 @@ $Date$
 
 class TraceWire : public ClipableWire
 {
-
+Q_OBJECT
 public:
 	TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+
+	bool collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue);
+	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+
+protected slots:
+	void widthEntry(const QString & text);
 
 };
 

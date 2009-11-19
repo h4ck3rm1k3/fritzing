@@ -76,6 +76,8 @@ public:
 	virtual bool hasBigDots();
 	virtual void setResistance(QString resistance, QString pinSpacing);
 	virtual void setChipLabel(QString label);
+	virtual void changeWireWidthMils(const QString newWidth);
+	virtual void changeWireColor(const QString newColor);
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);

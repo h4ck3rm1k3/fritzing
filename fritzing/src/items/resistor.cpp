@@ -366,7 +366,9 @@ QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("ResistanceInput") != 0) return NULL;
+	if (classid.compare("ResistanceInput") != 0) {
+		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
+	}
 	
 	FocusOutComboBox * edit = new FocusOutComboBox(parent);
 	edit->setEditable(true);

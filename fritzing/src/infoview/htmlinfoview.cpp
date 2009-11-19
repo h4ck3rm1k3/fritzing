@@ -278,13 +278,6 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 		pixmap = NULL;
 	}
 
-	/*
-	// TODO:  put this somewhere more reasonable
-	if(!title.isNull() && !title.isEmpty()) {
-		s += QString("<input type='checkbox' %1 id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label").arg(wire->isPartLabelVisible() ? "checked='true'" : "");
-	}
-	*/
-
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
 											   .arg(modelPart->modelPartShared()->version());
 	s += 		"</div>\n";
@@ -298,12 +291,12 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	Q_UNUSED(id);
 #endif
 	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("family")).arg(properties["family"]);
-	QString select = wireColorsSelect(wire);
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("color")).arg(select);
-	select = wireWidthSelect(wire);
-	if (!select.isEmpty()) {
-		s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("width")).arg(select);
+	foreach (QString prop, properties.keys()) {
+		QString returnProp, returnValue;
+		bool display = wire->collectExtraInfoHtml(prop, properties.value(prop, ""), returnProp, returnValue);
+		if (display) {
+			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(returnProp).arg(returnValue);
+		}
 	}
 
 	s += 		 "</table></div>\n";
@@ -377,13 +370,6 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 		delete pixmap3;
 	}
-
-	/*
-	// TODO:  put this somewhere more reasonable
-	if(!title.isNull() && !title.isEmpty()) {
-		s += QString("<input type='checkbox' %1 id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label").arg(labelIsVisible ? "checked='true'" : "");
-	}
-	*/
 
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg((itemBase) ? itemBase->title() : modelPart->title())
@@ -463,45 +449,6 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	}
 
 	return s;
-}
-
-QString HtmlInfoView::wireColorsSelect(Wire *wire) {
-	QString currColor = wire->colorString();
-	if (wire->canChangeColor()) {
-		QString retval = QString("<script language='JavaScript'>var oldColor = '%1'</script>\n").arg(currColor);
-		retval += QString("<select onchange='setWireColor(\"%1\",%2,this.value)'>\n")
-					.arg(wire->instanceTitle())
-					.arg(wire->id());
-		foreach(QString colorName, Wire::colorNames) {
-			QString colorValue = Wire::colorTrans.value(colorName);
-			QString selected = colorValue == currColor ? " selected='selected' " : "";
-			retval += QString("\t<option value='%2' %3>%1</option>\n").arg(colorName).arg(colorValue).arg(selected);
-		}
-		retval += "</select>\n";
-		return retval;
-	}
-	else {
-		return currColor;
-	}
-}
-
-QString HtmlInfoView::wireWidthSelect(Wire *wire) {
-	if (!wire->canChangeWidth()) {
-		return ___emptyString___;
-	}
-
-	QString retval = QString("<script language='JavaScript'>var oldWidth = '%1'</script>\n").arg(wire->width());
-	retval += QString("<select onchange='setWireWidthMils(\"%1\",%2,this.value)'>\n")
-				.arg(wire->instanceTitle())
-				.arg(wire->id());
-	qreal mils = wire->mils();
-	foreach(long widthValue, Wire::widths) {
-		QString widthName = Wire::widthTrans.value(widthValue);
-		QString selected = (qAbs(mils - widthValue) < .01) ? " selected='selected' " : "";
-		retval += QString("\t<option value='%2' %3>%1</option>\n").arg(widthName).arg(widthValue).arg(selected);
-	}
-	retval += "</select>\n";
-	return retval;
 }
 
 QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, const QString & displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml, bool ignoreValues) {
@@ -640,8 +587,7 @@ bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 }
 
 void HtmlInfoView::registerJsObjects() {
-	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
-		"currentItem", m_currentItem
+	m_webView->page()->mainFrame()->addToJavaScriptWindowObject("currentItem", m_currentItem
 	);
 }
 
