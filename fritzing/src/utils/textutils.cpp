@@ -136,8 +136,9 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2) {
 
 	QDomNode node = root2.firstChild();
 	while (!node.isNull()) {
+		QDomNode nextNode = node.nextSibling();
 		root1.appendChild(node);
-		node = node.nextSibling();
+		node = nextNode;
 	}
 
 	return doc1.toString();

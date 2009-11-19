@@ -289,10 +289,10 @@ QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSiz
 	QString boardSvg = getBoardSilkscreenSvg(board, res, boardImageSize);
 	if (boardSvg.isEmpty()) return svg;
 
-	QByteArray byteArray;
-	SvgFileSplitter::changeStrokeWidth(boardSvg, res / 360.0, true, byteArray);
+	//QByteArray byteArray;
+	//SvgFileSplitter::changeStrokeWidth(boardSvg, res / 360.0, true, byteArray);
 	imageSize = boardImageSize;
-	return TextUtils::mergeSvg(QString(byteArray), svg);
+	return TextUtils::mergeSvg(boardSvg /* QString(byteArray) */, svg);
 }
 
 QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & imageSize) {
