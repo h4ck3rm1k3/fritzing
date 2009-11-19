@@ -53,7 +53,7 @@ QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, cons
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("WireWidthInput") != 0) {
+	if (classid.compare("WireWidthInput", Qt::CaseInsensitive) != 0) {
 		return ClipableWire::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 

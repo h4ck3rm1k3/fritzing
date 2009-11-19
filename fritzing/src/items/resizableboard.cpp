@@ -475,7 +475,7 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("ResizableBoardInput") != 0) {
+	if (classid.compare("ResizableBoardInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 

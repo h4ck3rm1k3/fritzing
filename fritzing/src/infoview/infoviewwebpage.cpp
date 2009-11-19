@@ -26,13 +26,15 @@ $Date$
 
 #include "infoviewwebpage.h"
 #include "../items/itembase.h"
+#include "htmlinfoview.h"
 
 #include <QWebFrame>
 #include <QtDebug>
 
 
-InfoViewWebPage::InfoViewWebPage(QWidget *parent) : QWebPage(parent)
+InfoViewWebPage::InfoViewWebPage(HtmlInfoView * infoView, QWidget *parent) : QWebPage(parent)
 {
+	m_infoView = infoView;
     m_parent = parent;
 	m_currentItem = NULL;
     settings()->setAttribute(QWebSettings::PluginsEnabled,true);
@@ -42,6 +44,11 @@ QObject * InfoViewWebPage::createPlugin(const QString &classid, const QUrl &url,
 {
 	if (m_currentItem) {
 		QObject * plugin = m_currentItem->createPlugin(m_parent, classid, url, paramNames, paramValues);
+		if (plugin) return plugin;
+	}
+
+	if (m_infoView) {
+		QObject * plugin = m_infoView->createPlugin(m_parent, classid, url, paramNames, paramValues);
 		if (plugin) return plugin;
 	}
 

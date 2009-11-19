@@ -27,6 +27,7 @@ $Date: 2009-09-04 12:26:26 +0200 (Fri, 04 Sep 2009) $
 #include "textutils.h"
 #include "misc.h"
 #include <QRegExp>
+#include <QBuffer>
 
 QDomElement TextUtils::findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue) {
 	if (element.hasAttribute(attributeName)) {
@@ -144,4 +145,10 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2) {
 	return doc1.toString();
 }
 
-
+QString TextUtils::toHtmlImage(QPixmap *pixmap, const char* format) {
+	QByteArray bytes;
+	QBuffer buffer(&bytes);
+	buffer.open(QIODevice::WriteOnly);
+	pixmap->save(&buffer, format); // writes pixmap into bytes in PNG format
+	return QString("data:image/%1;base64,%2").arg(QString(format).toLower()).arg(QString(bytes.toBase64()));
+}

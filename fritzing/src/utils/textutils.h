@@ -30,6 +30,7 @@ $Date: 2009-09-07 10:55:58 +0200 (Mon, 07 Sep 2009) $
 #include <QPointF>
 #include <QDomElement>
 #include <QSet>
+#include <QPixmap>
 
 class TextUtils
 {
@@ -40,6 +41,7 @@ public:
 	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
 	static QString replaceTextElement(QString svg, const QString & label);
 	static QString mergeSvg(const QString & svg1, const QString & svg2);
+	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 
 };
 

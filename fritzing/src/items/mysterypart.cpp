@@ -182,7 +182,7 @@ QObject * MysteryPart::createPlugin(QWidget * parent, const QString &classid, co
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("ChipLabelInput") != 0) {
+	if (classid.compare("ChipLabelInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 

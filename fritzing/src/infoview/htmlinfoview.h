@@ -65,6 +65,7 @@ public:
 
 	void unregisterCurrentItem();
 	void unregisterCurrentItemIf(long id);
+	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
 public:
 	static const int STANDARD_ICON_IMG_WIDTH;
@@ -83,7 +84,6 @@ protected:
 
 	void prepareTitleStuff(ItemBase *base, QString &title);
 	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml, bool ignoreValues);
-	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 
 	QString blockHeader(const QString &title, const QString &blockId);
 	QString blockVisibility(const QString &blockId);

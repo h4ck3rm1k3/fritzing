@@ -27,7 +27,10 @@ $Date$
 #include <QWebFrame>
 #include <QBuffer>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QSettings>
+#include <QLabel>
+#include <QPalette>
 
 #include "htmlinfoview.h"
 #include "infoviewwebpage.h"
@@ -54,6 +57,7 @@ static QHash<QString, qreal> NumberMatcherValues;
 
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
+const int IconSpace = 3;
 
 
 bool valueLessThan(QString v1, QString v2)
@@ -73,7 +77,7 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 	lo->setMargin(0);
 	lo->setSpacing(0);
 	m_webView = new QWebView(this);
-	m_infoViewWebPage = new InfoViewWebPage(m_webView);
+	m_infoViewWebPage = new InfoViewWebPage(this, m_webView);
 	m_webView->setPage(m_infoViewWebPage);
 	lo->addWidget(m_webView);
 
@@ -263,20 +267,16 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	QString title;
 	prepareTitleStuff(wire, title);
 
-	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
-	QPixmap *pixmap = FSvgRenderer::getPixmap(wire->modelPart()->moduleID(), ViewLayer::Icon, size);
-
 	QString s = "";
 	if(!title.isNull() && !title.isEmpty()) {
 		s += QString("<h1 onclick='editBox(this)' id='title'>%1</h1>\n").arg(title);
 	}
 	s += 		 "<div class='parttitle'>\n";
 
-	if(pixmap != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
-		delete pixmap;
-		pixmap = NULL;
-	}
+	s += QString("<object type='application/x-qt-plugin' classid='PartIcons' width='%1px' height='%2px'><param name='moduleid' value='%3'/></object>")
+		.arg(3 * (STANDARD_ICON_IMG_WIDTH + IconSpace))
+		.arg(STANDARD_ICON_IMG_HEIGHT)
+		.arg(wire->modelPart()->moduleID());
 
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
 											   .arg(modelPart->modelPartShared()->version());
@@ -331,45 +331,17 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	if (modelPart == NULL) return "missing modelpart";
 	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
 
-	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
-	QPixmap *pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
-	QPixmap *pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
-	QPixmap *pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
-
-	// TODO (jrc): calling setUpImage here is a hack, best to do it somewhere else
-	if (pixmap1 == NULL) {
-		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
-		pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
-	}
-	if (pixmap2 == NULL) {
-		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic, layerAttributes);
-		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
-	}
-	if (pixmap3 == NULL) {
-		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0, layerAttributes);
-		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
-	}
 
 	QString s = "";
 	if(!title.isNull() && !title.isEmpty()) {
 		s += QString("<h1 onclick='editBox(this)' id='title'>%1</h1>\n").arg(title);
 	}
 	s += 		 "<div class='parttitle'>\n";
-	if(pixmap1 != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap1)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
-		delete pixmap1;
-	}
-	if(pixmap2 != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap2)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
-		delete pixmap2;
-	}
-	if(pixmap3 != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
-		delete pixmap3;
-	}
+
+	s += QString("<object type='application/x-qt-plugin' classid='PartIcons' width='%1px' height='%2px'><param name='moduleid' value='%3'/></object>")
+		.arg(3 * (STANDARD_ICON_IMG_WIDTH + IconSpace))
+		.arg(STANDARD_ICON_IMG_HEIGHT)
+		.arg(modelPart->moduleID());
 
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg((itemBase) ? itemBase->title() : modelPart->title())
@@ -431,6 +403,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 		rowsLeft--;
 	}
 
+	// always keep the same number of rows in the table even if there are fewer properties
 	for(int i = 0; i < rowsLeft; i++) {
 		s += "<tr style='height: 35px; '><td style='border-bottom: 0px;' colspan='2'>&nbsp;</td></tr>\n";
 	}
@@ -513,14 +486,6 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 		return jsCode+QString("<tr style='height: 35px;'><td class='label'>%5</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select>" + extraHtml + "</td></tr>\n")
 						.arg(name).arg(value).arg(family).arg(options).arg(displayName);
 	}
-}
-
-QString HtmlInfoView::toHtmlImage(QPixmap *pixmap, const char* format) {
-	QByteArray bytes;
-	QBuffer buffer(&bytes);
-	buffer.open(QIODevice::WriteOnly);
-	pixmap->save(&buffer, format); // writes pixmap into bytes in PNG format
-	return QString("data:image/%1;base64,%2").arg(QString(format).toLower()).arg(QString(bytes.toBase64()));
 }
 
 void HtmlInfoView::setContent(const QString &html) {
@@ -645,3 +610,79 @@ void HtmlInfoView::setNullContent()
 {
 	setContent("<html></html>");
 }
+
+void addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
+	QLabel * label = new QLabel();
+	QPalette palette = label->palette();
+	palette.setColor(QPalette::Window, QColor(0xc2, 0xc2, 0xc2));
+	label->setPalette(palette);
+	label->setAutoFillBackground(true);
+	label->setPixmap(*pixmap);
+	label->setFixedSize(pixmap->size());
+	hboxLayout->addWidget(label);
+	hboxLayout->addSpacing(IconSpace);
+}
+
+QObject * HtmlInfoView::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(url);
+	Q_UNUSED(paramNames);
+
+	// TODO (jrc): calling all this icon stuff in htmlInfoView isn't nice but I haven't figured out a better location
+	// since you can't count on having the ItemBase
+
+	if (classid.compare("PartIcons", Qt::CaseInsensitive) != 0) {
+		return NULL;
+	}
+
+	if (paramValues.count() < 1) return NULL;
+
+	QString moduleID = paramValues.at(0);
+	ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+	if (modelPart == NULL) return NULL;
+
+	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
+	QPixmap *pixmap1 = FSvgRenderer::getPixmap(moduleID, ViewLayer::Icon, size);
+	QPixmap *pixmap2 = FSvgRenderer::getPixmap(moduleID, ViewLayer::Schematic, size);
+	QPixmap *pixmap3 = FSvgRenderer::getPixmap(moduleID, ViewLayer::Copper0, size);
+
+	if (pixmap1 == NULL) {
+		LayerAttributes layerAttributes;
+		ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
+		pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+	}
+	if (pixmap2 == NULL) {
+		LayerAttributes layerAttributes;
+		ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic, layerAttributes);
+		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
+	}
+	if (pixmap3 == NULL) {
+		LayerAttributes layerAttributes;
+		ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0, layerAttributes);
+		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
+	}
+
+	if (pixmap1 == NULL && pixmap2 == NULL && pixmap3 == NULL) return NULL;
+
+	QFrame * frame = new QFrame(parent);
+	QHBoxLayout * hboxLayout = new QHBoxLayout();
+	hboxLayout->setContentsMargins (0, 0, 0, 0);
+
+	if(pixmap1 != NULL) {
+		addLabel(hboxLayout, pixmap1);
+		delete pixmap1;
+	}
+	if(pixmap2 != NULL) {
+		addLabel(hboxLayout, pixmap2);
+		delete pixmap2;
+	}
+	if(pixmap3 != NULL) {
+		addLabel(hboxLayout, pixmap3);
+		delete pixmap3;
+	}
+
+	frame->setLayout(hboxLayout);
+
+	return frame;
+}
+
+

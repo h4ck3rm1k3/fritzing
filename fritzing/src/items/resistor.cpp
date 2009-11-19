@@ -366,7 +366,7 @@ QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("ResistanceInput") != 0) {
+	if (classid.compare("ResistanceInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 	

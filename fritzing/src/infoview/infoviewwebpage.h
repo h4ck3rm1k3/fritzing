@@ -35,7 +35,7 @@ class InfoViewWebPage : public QWebPage
 	Q_OBJECT
 
 public:
-    InfoViewWebPage(QWidget *parent=0);
+    InfoViewWebPage(class HtmlInfoView *, QWidget *parent=0);
 
 	void setCurrentItem(class ItemBase *);
 
@@ -45,6 +45,7 @@ protected:
 protected:	
 	QWidget *m_parent;
 	QPointer<class ItemBase> m_currentItem;
+	QPointer<class HtmlInfoView> m_infoView;
 };
 
 #endif // INFOVIEWWEBPAGE_H

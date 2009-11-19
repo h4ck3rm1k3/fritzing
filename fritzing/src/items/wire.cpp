@@ -1259,7 +1259,7 @@ QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUr
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
-	if (classid.compare("WireColorInput") != 0) {
+	if (classid.compare("WireColorInput", Qt::CaseInsensitive) != 0) {
 		return ItemBase::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 
