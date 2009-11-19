@@ -64,7 +64,8 @@ QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, cons
 	qreal m = mils();
 	foreach(long widthValue, Wire::widths) {
 		QString widthName = Wire::widthTrans.value(widthValue);
-		comboBox->addItem(widthName, QVariant(widthValue));
+                QVariant val((int)widthValue);
+                comboBox->addItem(widthName, val);
 		if (qAbs(m - widthValue) < .01) {
 			comboBox->setCurrentIndex(ix);
 		}
