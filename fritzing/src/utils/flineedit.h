@@ -38,8 +38,14 @@ public:
 	~FLineEdit();
 
 protected:
-	void mousePressEvent ( QMouseEvent * event );
+	void mousePressEvent( QMouseEvent * event );
+	void enterEvent( QEvent *);
+	void leaveEvent( QEvent *);
 
+signals:
+	void mouseEnter();
+	void mouseLeave();
+	void editable(bool);
 
 protected slots:
 	void editingFinishedSlot();

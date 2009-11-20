@@ -28,8 +28,7 @@ $Date$
 
 FLineEdit::FLineEdit(QWidget * parent) : QLineEdit(parent)
 {
-	setReadOnly(true);
-	setCursor(Qt::IBeamCursor);
+	editingFinishedSlot();
 	connect(this, SIGNAL(editingFinished()), this, SLOT(editingFinishedSlot()));
 }
 
@@ -39,14 +38,30 @@ FLineEdit::~FLineEdit()
 
 void FLineEdit::editingFinishedSlot() {
 	setReadOnly(true);
+	emit editable(false);
 	setCursor(Qt::IBeamCursor);
 }
 
 void FLineEdit::mousePressEvent ( QMouseEvent * event ) {
 	if (isReadOnly()) {
 		setReadOnly(false);
+		emit editable(true);
 	}
 
 	QLineEdit::mousePressEvent(event);
+}
+
+void FLineEdit::enterEvent(QEvent * event) {
+	QLineEdit::enterEvent(event);
+	if (isReadOnly()) {
+		emit mouseEnter();
+	}
+}
+
+void FLineEdit::leaveEvent(QEvent * event) {
+	QLineEdit::leaveEvent(event);
+	if (isReadOnly()) {
+		emit mouseLeave();
+	}
 }
 

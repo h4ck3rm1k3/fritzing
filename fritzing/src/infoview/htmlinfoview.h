@@ -76,6 +76,9 @@ protected slots:
 	void setBlockVisibility(const QString &blockId, bool value);
 	void setContent();
 	void setInstanceTitle();
+	void instanceTitleEnter();
+	void instanceTitleLeave();
+	void instanceTitleEditable(bool editable);
 
 protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
@@ -84,6 +87,8 @@ protected:
 	QString appendItemStuff(ItemBase * base, ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
 
 	void prepareTitleStuff(ItemBase *base, QString &title);
+	void setInstanceTitleColors(class FLineEdit * edit, const QColor & base, const QColor & text);
+
 
 	QString blockHeader(const QString &title, const QString &blockId);
 	QString blockVisibility(const QString &blockId);

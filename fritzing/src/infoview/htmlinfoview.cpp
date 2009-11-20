@@ -517,7 +517,11 @@ QObject * HtmlInfoView::createPlugin(QWidget * parent, const QString &classid, c
 
 	if (classid.compare("title", Qt::CaseInsensitive) == 0) {
 		FLineEdit * lineEdit = new FLineEdit(parent);
-
+		lineEdit->setObjectName("instanceTitleEditor");
+		//QFont font = lineEdit->font();
+		//font.setPointSize(14);
+		//font.setBold(true);
+		//lineEdit->setFont(font);
 		for (int i = 0; i < paramNames.count(); i++) {
 			if (paramNames[i].compare("title", Qt::CaseInsensitive) == 0) {
 				lineEdit->setText(paramValues[i]);
@@ -526,6 +530,12 @@ QObject * HtmlInfoView::createPlugin(QWidget * parent, const QString &classid, c
 		}
 
 		connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(setInstanceTitle()));
+		connect(lineEdit, SIGNAL(mouseEnter()), this, SLOT(instanceTitleEnter()));
+		connect(lineEdit, SIGNAL(mouseLeave()), this, SLOT(instanceTitleLeave()));
+		connect(lineEdit, SIGNAL(editable(bool)), this, SLOT(instanceTitleEditable(bool)));
+
+		setInstanceTitleColors(lineEdit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+		lineEdit->setAutoFillBackground(true);
 
 		return lineEdit;
 	}
@@ -600,4 +610,34 @@ void HtmlInfoView::setInstanceTitle() {
 	if (m_currentItem == NULL) return;
 
 	m_infoGraphicsView->setInstanceTitle(m_currentItem->id(), edit->text(), true, true, false);
+}
+
+void HtmlInfoView::instanceTitleEnter() {
+	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	setInstanceTitleColors(edit, QColor(0xc8, 0xc8, 0xc8), QColor(0x57, 0x57, 0x57));
+}
+
+void HtmlInfoView::instanceTitleLeave() {
+	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	setInstanceTitleColors(edit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+}
+
+void HtmlInfoView::instanceTitleEditable(bool editable) {
+	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	if (editable) {
+		setInstanceTitleColors(edit, QColor(0xfc, 0xfc, 0xfc), QColor(0x00, 0x00, 0x00));
+	}
+	else {
+		setInstanceTitleColors(edit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+	}
+}
+
+void HtmlInfoView::setInstanceTitleColors(FLineEdit * edit, const QColor & base, const QColor & text) {
+	//QPalette palette = edit->palette();
+	//palette.setColor(QPalette::Base, base);
+	//palette.setColor(QPalette::Text, text);
+	//edit->setPalette(palette);
+	edit->setStyleSheet(QString("background: rgb(%1,%2,%3); color: rgb(%4,%5,%6);")
+		.arg(base.red()).arg(base.green()).arg(base.blue())
+		.arg(text.red()).arg(text.green()).arg(text.blue()) );
 }
