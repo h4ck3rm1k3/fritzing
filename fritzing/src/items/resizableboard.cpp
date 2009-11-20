@@ -34,13 +34,17 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include "moduleidnames.h"
 
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QFrame>
 #include <QLabel>
 #include <QLineEdit>
+#include <QRegExp>
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 4;
+static const QRegExp WidthExpr("width=\\'\\d*px");
+static const QRegExp HeightExpr("height=\\'\\d*px");
 
 QString ResizableBoard::customShapeTranslated;
 
@@ -427,19 +431,6 @@ void ResizableBoard::rotateItem(qreal degrees) {
 	}
 }
 
-
-
-bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
-{
-	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnValue = "<object type='application/x-qt-plugin' classid='ResizableBoardInput' width='215px' height='32px'></object>";  
-		returnProp = tr("shape");
-		return true;
-	}
-
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
-}
-
 void ResizableBoard::saveParams() {
 	qreal w = modelPart()->prop("width").toDouble();
 	qreal h = modelPart()->prop("height").toDouble();
@@ -461,35 +452,55 @@ bool ResizableBoard::hasCustomSVG() {
 	}
 }
 
-QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
-	Q_UNUSED(paramValues);
+bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+{
+	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 
-	if (classid.compare("ResizableBoardInput", Qt::CaseInsensitive) != 0) {
-		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
+	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
+		if (m_modelPart->prop("height").isValid()) {
+			returnValue.replace(WidthExpr, "width='275px");
+			returnValue.replace(HeightExpr, "height='80px");
+		}
+		returnProp = tr("shape");
 	}
 
+	return result;
+}
 
-	/*
+QStringList ResizableBoard::collectValues(const QString & family, const QString & prop) {
+	QStringList result = PaletteItem::collectValues(family, prop);
+	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (customShapeTranslated.isEmpty()) {
 			customShapeTranslated = tr("Import Shape...");
 		}
-		extraValues.append(customShapeTranslated);
+		result.append(customShapeTranslated);
+	}
 
+	return result;
+}
 
-			if (!m_modelPart->prop("height").isValid()) 
+QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
 
-		*/
+	QObject * result = PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 
+	if ((classid.compare("shape", Qt::CaseInsensitive) != 0) || (!m_modelPart->prop("height").isValid())) { 
+		return result;
+	}
 
 	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
 	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
 
-	QFrame * frame = new QFrame(parent);
+	QFrame * frame = new QFrame();
+	QVBoxLayout * vboxLayout = new QVBoxLayout();
+	vboxLayout->setAlignment(Qt::AlignLeft);
+	vboxLayout->setSpacing(3);
+
+	QFrame * subframe = new QFrame();
 	QHBoxLayout * hboxLayout = new QHBoxLayout();
+	hboxLayout->setAlignment(Qt::AlignLeft);
 
 	QLabel * l1 = new QLabel(tr("width(mm):"));	
+	l1->setMargin(0);
 	QLineEdit * e1 = new QLineEdit();
 	QDoubleValidator * validator = new QDoubleValidator(e1);
 	validator->setRange(0.1, 999.9, 1);
@@ -499,7 +510,8 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	e1->setText(QString::number(w));
 	m_widthEditor = e1;
 
-	QLabel * l2 = new QLabel(tr("height(mm):"));	
+	QLabel * l2 = new QLabel(tr("height(mm):"));
+	l2->setMargin(0);
 	QLineEdit * e2 = new QLineEdit();
 	validator = new QDoubleValidator(e1);
 	validator->setRange(0.1, 999.9, 1);
@@ -515,7 +527,12 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	hboxLayout->addWidget(l2);
 	hboxLayout->addWidget(e2);
 
-	frame->setLayout(hboxLayout);
+	subframe->setLayout(hboxLayout);
+
+	vboxLayout->addWidget(qobject_cast<QWidget *>(result));
+	vboxLayout->addWidget(subframe);
+
+	frame->setLayout(vboxLayout);
 
 	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));

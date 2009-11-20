@@ -73,7 +73,8 @@ protected:
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
 	QString makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QString makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-
+	QStringList collectValues(const QString & family, const QString & prop);
+	
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	class ResizeHandle * m_resizeGripTL;
