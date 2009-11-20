@@ -1909,6 +1909,8 @@ bool MainWindow::loadCustomBoardShape()
 
 	swapSelectedAux(itemBase, moduleID);
 
+	itemBase->resetValues(itemBase->modelPart()->properties().value("family", "").toLower(), "shape");
+
 	return true;
 }
 

@@ -169,6 +169,8 @@ public:
 	bool isObsolete();
 	virtual QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	void prepareProps();
+	void resetValues(const QString & family, const QString & prop);
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

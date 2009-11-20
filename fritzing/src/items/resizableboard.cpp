@@ -458,8 +458,8 @@ bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString 
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (m_modelPart->prop("height").isValid()) {
-			returnValue.replace(WidthExpr, "width='275px");
-			returnValue.replace(HeightExpr, "height='80px");
+			returnValue.replace(WidthExpr, "width='255px");
+			returnValue.replace(HeightExpr, "height='50px");
 		}
 		returnProp = tr("shape");
 	}
@@ -493,11 +493,14 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	QFrame * frame = new QFrame();
 	QVBoxLayout * vboxLayout = new QVBoxLayout();
 	vboxLayout->setAlignment(Qt::AlignLeft);
-	vboxLayout->setSpacing(3);
+	vboxLayout->setSpacing(0);
+	vboxLayout->setContentsMargins(0, 3, 0, 0);
 
 	QFrame * subframe = new QFrame();
 	QHBoxLayout * hboxLayout = new QHBoxLayout();
 	hboxLayout->setAlignment(Qt::AlignLeft);
+	hboxLayout->setContentsMargins(0, 0, 0, 0);
+	hboxLayout->setSpacing(0);
 
 	QLabel * l1 = new QLabel(tr("width(mm):"));	
 	l1->setMargin(0);

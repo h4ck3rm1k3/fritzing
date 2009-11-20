@@ -1606,3 +1606,8 @@ void ItemBase::prepareProps() {
 	m_propsMap.clear();
 
 };
+
+void ItemBase::resetValues(const QString & family, const QString & prop) {
+	CachedValues.remove(family + prop);
+}
+
