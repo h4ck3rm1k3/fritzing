@@ -37,15 +37,15 @@ TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 	m_canChainMultiple = true;
 }
 
-bool TraceWire::collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue) {
-
+bool TraceWire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+{
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
 		returnValue = "<object type='application/x-qt-plugin' classid='WireWidthInput' width='125px' height='22px'></object>";
 		return true;
 	}
 
-	return ClipableWire::collectExtraInfoHtml(prop, value, returnProp, returnValue);
+	return ClipableWire::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 }
 
 QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
@@ -64,8 +64,8 @@ QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, cons
 	qreal m = mils();
 	foreach(long widthValue, Wire::widths) {
 		QString widthName = Wire::widthTrans.value(widthValue);
-                QVariant val((int)widthValue);
-                comboBox->addItem(widthName, val);
+        QVariant val((int)widthValue);
+        comboBox->addItem(widthName, val);
 		if (qAbs(m - widthValue) < .01) {
 			comboBox->setCurrentIndex(ix);
 		}

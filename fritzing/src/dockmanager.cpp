@@ -67,7 +67,7 @@ void DockManager::dockChangeActivation(bool activate, QWidget * originator) {
 }
 
 void DockManager::createBinAndInfoViewDocks() {
-	m_mainWindow->m_infoView = new HtmlInfoView(m_mainWindow->m_refModel);
+	m_mainWindow->m_infoView = new HtmlInfoView();
 
 	m_mainWindow->m_paletteWidget = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
 

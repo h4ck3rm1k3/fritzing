@@ -24,23 +24,27 @@ $Date$
 
 ********************************************************************/
 
-#ifndef TRACEWIRE_H
-#define TRACEWIRE_H
+#ifndef FLINEEDIT_H
+#define FLINEEDIT_H
 
-#include "clipablewire.h"
+#include <QLineEdit>
+#include <QMouseEvent>
 
-class TraceWire : public ClipableWire
-{
+class FLineEdit : public QLineEdit {
 Q_OBJECT
-public:
-	TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
 
-	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+public:
+	FLineEdit(QWidget * parent = NULL);
+	~FLineEdit();
+
+protected:
+	void mousePressEvent ( QMouseEvent * event );
+
 
 protected slots:
-	void widthEntry(const QString & text);
+	void editingFinishedSlot();
 
 };
+
 
 #endif

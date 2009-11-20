@@ -24,22 +24,29 @@ $Date$
 
 ********************************************************************/
 
-#ifndef TRACEWIRE_H
-#define TRACEWIRE_H
+#ifndef FAMILYPROPERTYCOMBOBOX_H
+#define FAMILYPROPERTYCOMBOBOX_H
 
-#include "clipablewire.h"
+#include <QComboBox>
 
-class TraceWire : public ClipableWire
+class FamilyPropertyComboBox : public QComboBox 
 {
-Q_OBJECT
+	Q_OBJECT
+
 public:
-	TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	FamilyPropertyComboBox(const QString & family, const QString & prop, QWidget * parent = 0) : QComboBox(parent) {
+		m_family = family;
+		m_prop = prop;
+	}
+	~FamilyPropertyComboBox() {
+	}
 
-	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+	const QString & prop() { return m_prop; }
+	const QString & family() { return m_family; }
 
-protected slots:
-	void widthEntry(const QString & text);
+protected:
+	QString m_family;
+	QString m_prop;
 
 };
 

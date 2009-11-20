@@ -34,9 +34,9 @@ $Date$
 #include <QTextStream>
 #include <QSet>
 
-static QList<QString> ___fritzingExtensions___;
+static QStringList ___fritzingExtensions___;
 
-const QList<QString> & fritzingExtensions() {
+const QStringList & fritzingExtensions() {
 	if (___fritzingExtensions___.count() == 0) {
 		___fritzingExtensions___
 			<< FritzingSketchExtension << FritzingBinExtension

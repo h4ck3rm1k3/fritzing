@@ -62,11 +62,11 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 	font.setPointSize(pointSize);
 	this->setFont(font);
 	
-	QList<QString> actives;
+	QStringList actives;
 	actives << "Active" << "Inactive";
-	QList<QString> focuses;
+	QStringList focuses;
 	focuses << "Focus" << "Dimmed";
-	QList<QString> hovers;
+	QStringList hovers;
 	hovers << "Hover" << "";
 
 	foreach (QString active, actives) {

@@ -211,3 +211,14 @@ void InfoGraphicsView::changeWireColor(const QString newColor) {
 	Q_UNUSED(newColor);
 }
 
+void InfoGraphicsView::swap(const QString & family, const QString & prop, const QMap<QString, QString> & propsMap) {
+	emit swapSignal(family, prop, propsMap);
+}
+
+void InfoGraphicsView::setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit) {
+	Q_UNUSED(id);
+	Q_UNUSED(title);
+	Q_UNUSED(isLabel);
+	Q_UNUSED(isUndoable);
+	Q_UNUSED(doEmit);
+}

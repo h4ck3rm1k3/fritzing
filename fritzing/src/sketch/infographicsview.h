@@ -78,14 +78,17 @@ public:
 	virtual void setChipLabel(QString label);
 	virtual void changeWireWidthMils(const QString newWidth);
 	virtual void changeWireColor(const QString newColor);
+	virtual void swap(const QString & family, const QString & prop, const QMap<QString, QString> & propsMap);
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
 	virtual void resizeBoard(qreal w, qreal h, bool doEmit);
+	virtual void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
 
 signals:
 	void setVoltageSignal(qreal, bool doEmit);
 	void resizeBoardSignal(qreal, qreal, bool doEmit);
+	void swapSignal(const QString & family, const QString & prop, const QMap<QString, QString> & propsMap);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

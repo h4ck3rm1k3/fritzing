@@ -34,3 +34,10 @@ Dip::Dip( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentif
 Dip::~Dip() {
 }
 
+bool Dip::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) {
+	bool result = MysteryPart::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
+		returnProp = tr("chip label");
+	}
+	return result;
+}

@@ -401,6 +401,7 @@ int FApplication::startup(bool firstRun)
 	}
 
 	m_referenceModel = new CurrentReferenceModel();	
+	ItemBase::setReferenceModel(m_referenceModel);
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
 	m_referenceModel->loadAll();								// this is very slow
 	//DebugDialog::debug("after new current reference model");

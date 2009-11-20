@@ -212,7 +212,7 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
 }
 
 void SVG2gerber::copyStyles(QDomElement source, QDomElement dest){
-    QList<QString> attrList;
+    QStringList attrList;
     attrList << "stroke" << "fill" << "stroke-width" << "style";
 
     for (int i = 0; i < attrList.size(); ++i) {

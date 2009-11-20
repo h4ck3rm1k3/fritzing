@@ -294,6 +294,13 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
 						this, SLOT(routingStatusSlot(SketchWidget *, int, int, int, int)));
 
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, const QMap<QString, QString> &)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, const QMap<QString, QString> &)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, const QMap<QString, QString> &)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, const QMap<QString, QString> &)));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, const QMap<QString, QString> &)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, const QMap<QString, QString> &)));
+
 	
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
@@ -1659,7 +1666,6 @@ void MainWindow::initExternalConnectors(QList<ConnectorItem *> & externalConnect
 
 		external = external.nextSiblingElement("external");
 	}
-
 }
 
 QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs) {
@@ -1667,23 +1673,18 @@ QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLa
 	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL, GraphicsUtils::StandardFritzingDPI, false, false);
 }
 
-void MainWindow::swapSelected(const QVariant & currProps, const QString & family, const QString & name) {
-	if (family.isEmpty()) return;
-	if (name.isEmpty()) return;
-
-	QMap<QString, QVariant> currPropsMap = currProps.toMap();
-	if (currPropsMap.isEmpty()) return;
-
+void MainWindow::swapSelectedMap(const QString & family, const QString & prop, const QMap<QString, QString> & currPropsMap) 
+{
 	if (swapSpecial(currPropsMap)) {
 		return;
 	}
 
 	foreach (QString key, currPropsMap.keys()) {
-		QString value = currPropsMap.value(key).toString();
+		QString value = currPropsMap.value(key);
 		m_refModel->recordProperty(key, value);
 	}
 
-	QString moduleID = m_refModel->retrieveModuleIdWith(family, name, true);
+	QString moduleID = m_refModel->retrieveModuleIdWith(family, prop, true);
 	bool exactMatch = m_refModel->lastWasExactMatch();
 
 	if(moduleID == ___emptyString___) {
@@ -1716,14 +1717,14 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	swapSelectedAux(itemBase, moduleID);
 }
 
-bool MainWindow::swapSpecial(QMap<QString, QVariant> & currPropsMap) {
+bool MainWindow::swapSpecial(const QMap<QString, QString> & currPropsMap) {
 	ItemBase * itemBase = m_infoView->currentItem();
 	QString pinSpacing, resistance;
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 			ResizableBoard * board = dynamic_cast<ResizableBoard *>(itemBase);
 			if (board == NULL) continue;
-			QString value = currPropsMap.value(key).toString();
+			QString value = currPropsMap.value(key, "");
 			if (value.compare(ResizableBoard::customShapeTranslated) == 0) {
 				if (!loadCustomBoardShape()) {
 					
@@ -1734,11 +1735,11 @@ bool MainWindow::swapSpecial(QMap<QString, QVariant> & currPropsMap) {
 			}
 		}
 		if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
-			resistance = currPropsMap.value(key).toString();
+			resistance = currPropsMap.value(key);
 			continue;
 		}
 		if (key.compare("pin spacing", Qt::CaseInsensitive) == 0) {
-			pinSpacing = currPropsMap.value(key).toString();
+			pinSpacing = currPropsMap.value(key);
 			continue;
 		}
 	}

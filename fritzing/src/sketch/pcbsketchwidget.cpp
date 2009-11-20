@@ -1440,7 +1440,7 @@ void PCBSketchWidget::getLabelFont(QFont & font, QColor & color) {
 
 void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand)
 {
-	QList<QString> alreadyList;
+	QStringList alreadyList;
 	foreach (Wire * wire, wires) {
 		QList<ConnectorItem *> wireConnectorItems;
 		wireConnectorItems << wire->connector0() << wire->connector1();

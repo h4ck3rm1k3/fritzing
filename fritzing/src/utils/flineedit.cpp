@@ -24,23 +24,29 @@ $Date$
 
 ********************************************************************/
 
-#ifndef TRACEWIRE_H
-#define TRACEWIRE_H
+#include "flineedit.h"
 
-#include "clipablewire.h"
-
-class TraceWire : public ClipableWire
+FLineEdit::FLineEdit(QWidget * parent) : QLineEdit(parent)
 {
-Q_OBJECT
-public:
-	TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	setReadOnly(true);
+	setCursor(Qt::IBeamCursor);
+	connect(this, SIGNAL(editingFinished()), this, SLOT(editingFinishedSlot()));
+}
 
-	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+FLineEdit::~FLineEdit()
+{
+}
 
-protected slots:
-	void widthEntry(const QString & text);
+void FLineEdit::editingFinishedSlot() {
+	setReadOnly(true);
+	setCursor(Qt::IBeamCursor);
+}
 
-};
+void FLineEdit::mousePressEvent ( QMouseEvent * event ) {
+	if (isReadOnly()) {
+		setReadOnly(false);
+	}
 
-#endif
+	QLineEdit::mousePressEvent(event);
+}
+

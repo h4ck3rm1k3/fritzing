@@ -41,6 +41,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../layerattributes.h"
 #include "../dockmanager.h"
+#include "../utils/flineedit.h"
 
 
 #define HTML_EOF "</body>\n</html>"
@@ -49,25 +50,13 @@ QString HtmlInfoView::PropsBlockId = "props_id";
 QString HtmlInfoView::TagsBlockId = "tags_id";
 QString HtmlInfoView::ConnsBlockId = "conns_id";
 
-static const ushort MicroSymbolCode = 181;
-static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode);
-
-static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
-static QHash<QString, qreal> NumberMatcherValues;
-
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
 const int IconSpace = 3;
 
-
-bool valueLessThan(QString v1, QString v2)
-{
-	return NumberMatcherValues.value(v1, 0) <= NumberMatcherValues.value(v2, 0);
-}
-
 //////////////////////////////////////
 
-HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) 
+HtmlInfoView::HtmlInfoView(QWidget * parent) : QFrame(parent) 
 {
 	m_infoGraphicsView = NULL;
 	m_setContentTimer.setSingleShot(true);
@@ -104,8 +93,6 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 
 	m_currentItem = NULL;
 	m_currentSwappingEnabled = false;
-	m_refModel = refModel;
-	Q_ASSERT(m_refModel);
 
 	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 
@@ -121,24 +108,7 @@ HtmlInfoView::~HtmlInfoView() {
 }
 
 void HtmlInfoView::jsRegister() {
-	if (!m_setContentMutex.tryLock()) {
-		//DebugDialog::debug("html info view js register mutex bail");
-		return;
-	}
-
-	m_setContentMutex.unlock();
-
-	// prevent recursion, particularly when setting content to NULL
-	disconnect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
-	if(m_currentItem) {
-		InfoGraphicsView* igv = dynamic_cast<InfoGraphicsView*>(m_currentItem->scene()->parent());
-		if(igv) {
-			registerInfoGraphicsView(igv);
-		}
-	}
-	registerJsObjects();
 	m_webView->page()->mainFrame()->addToJavaScriptWindowObject( "infoView", this);
-	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 }
 
 void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
@@ -164,7 +134,6 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	if (item == NULL) {
 		// TODO: it would be nice to do something reasonable in this case
 		setNullContent();
-		registerInfoGraphicsView(infoGraphicsView);
 		return;
 	}
 
@@ -269,10 +238,11 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 
 	QString s = "";
 	if(!title.isNull() && !title.isEmpty()) {
-		s += QString("<h1 onclick='editBox(this)' id='title'>%1</h1>\n").arg(title);
+		s += QString("<object type='application/x-qt-plugin' classid='title' id='title' width='100%' height='30px'><param name='title' value='%1'/></object>").arg(title);
 	}
 	s += 		 "<div class='parttitle'>\n";
 
+	m_modelPart = wire->modelPart();
 	s += QString("<object type='application/x-qt-plugin' classid='PartIcons' width='%1px' height='%2px'><param name='moduleid' value='%3'/></object>")
 		.arg(3 * (STANDARD_ICON_IMG_WIDTH + IconSpace))
 		.arg(STANDARD_ICON_IMG_HEIGHT)
@@ -291,9 +261,11 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	Q_UNUSED(id);
 #endif
 	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
+	QString family = properties.value("family", "");
 	foreach (QString prop, properties.keys()) {
 		QString returnProp, returnValue;
-		bool display = wire->collectExtraInfoHtml(prop, properties.value(prop, ""), returnProp, returnValue);
+		QStringList nothing;
+		bool display = wire->collectExtraInfoHtml(family, prop, properties.value(prop, ""), false, returnProp, returnValue);
 		if (display) {
 			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(returnProp).arg(returnValue);
 		}
@@ -334,10 +306,11 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 
 	QString s = "";
 	if(!title.isNull() && !title.isEmpty()) {
-		s += QString("<h1 onclick='editBox(this)' id='title'>%1</h1>\n").arg(title);
+		s += QString("<object type='application/x-qt-plugin' classid='title' id='title' width='100%' height='30px'><param name='title' value='%1'/></object>").arg(title);
 	}
 	s += 		 "<div class='parttitle'>\n";
 
+	m_modelPart = modelPart;
 	s += QString("<object type='application/x-qt-plugin' classid='PartIcons' width='%1px' height='%2px'><param name='moduleid' value='%3'/></object>")
 		.arg(3 * (STANDARD_ICON_IMG_WIDTH + IconSpace))
 		.arg(STANDARD_ICON_IMG_HEIGHT)
@@ -386,20 +359,28 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 
 	m_maxPropCount = properties.keys().size() > m_maxPropCount ? properties.keys().size() : m_maxPropCount;
 	int rowsLeft = m_maxPropCount;
-	for(int i=0; i < properties.keys().size(); i++) {
-		QString key = properties.keys()[i];
+	QString basis("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n");
+	if (itemBase) {
+		itemBase->prepareProps();
+	}
+	foreach(QString key, properties.keys()) {
 		QString value = properties.value(key,"");
 		QString translatedName = ItemBase::translatePropertyName(key);
-		QStringList extraValues;
-		QString extraHtml;
-		bool ignoreValues = false;
+		QString resultKey, resultValue;
+		bool result = false;
 		if (itemBase != NULL) {
-			itemBase->collectExtraInfoValues(key, value, extraValues, ignoreValues);
-			extraHtml = itemBase->collectExtraInfoHtml(key, value);
+			bool collectValues = swappingEnabled && 
+								 (key.compare("family", Qt::CaseInsensitive) != 0) &&
+								 (key.compare("id", Qt::CaseInsensitive) != 0); 
+			result = itemBase->collectExtraInfoHtml(family, key, value, collectValues, resultKey, resultValue);
 		}
-		QString phtml = propertyHtml(key, value, family, translatedName, swappingEnabled, extraValues, extraHtml, ignoreValues);
-		//DebugDialog::debug(phtml);
-		s += phtml;
+		if (result) {
+			s += basis.arg(resultKey).arg(resultValue);
+		}
+		else {
+			s += basis.arg(translatedName).arg(value);
+		}
+
 		rowsLeft--;
 	}
 
@@ -424,70 +405,6 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	return s;
 }
 
-QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, const QString & displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml, bool ignoreValues) {
-	QStringList values;
-	if (!ignoreValues) {
-		values = m_refModel->values(family,name);
-	}
-
-	if(!dynamic || name.toLower() == "id" || name.toLower() == "family" || values.size() == 1) {
-		QString v = value;
-		if (!extraHtml.isEmpty()) {
-			v = extraHtml;
-		}
-		return QString("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n").arg(displayName).arg(v);
-	} else {
-		QString options = "";
-		QString jsCode = "<script language='JavaScript'>\n";
-		jsCode += QString("currProps['%1'] = '%2'; \n").arg(name).arg(value);
-		// sort values numerically
-		NumberMatcherValues.clear();
-		bool ok = true;
-		foreach(QString opt, values) {
-			int ix = NumberMatcher.indexIn(opt);
-			if (ix < 0) {
-				ok = false;
-				break;
-			}
-			qreal n = NumberMatcher.cap(1).toDouble(&ok);
-			if (!ok) break;
-
-			QString unit = NumberMatcher.cap(5);
-			if (unit.contains('k')) {
-				n *= 1000;
-			}
-			else if (unit.contains('M')) {
-				n *= 1000000;
-			}
-			else if (unit.contains('G')) {
-				n *= 1000000000;
-			}
-			else if (unit.contains('p')) {
-				n *= 0.000000000001;
-			}
-			else if (unit.contains(MicroSymbol)) {
-				n *= 0.000001;
-			}
-			NumberMatcherValues.insert(opt, n);
-		}
-		if (ok) {
-			qSort(values.begin(), values.end(), valueLessThan);
-		}
-		foreach(QString opt, values) {
-			options += QString("<option value='%1' %2>%1</option> \n")
-				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);
-		}
-		foreach (QString opt, extraValues) {
-			options += QString("<option value='%1' %2>%1</option> \n")
-				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);
-		}
-		jsCode += "</script>\n";
-
-		return jsCode+QString("<tr style='height: 35px;'><td class='label'>%5</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select>" + extraHtml + "</td></tr>\n")
-						.arg(name).arg(value).arg(family).arg(options).arg(displayName);
-	}
-}
-
 void HtmlInfoView::setContent(const QString &html) {
 	//DebugDialog::debug("html set content");
 	m_setContentTimer.stop();
@@ -501,23 +418,12 @@ void HtmlInfoView::setContent(const QString &html) {
 }
 
 void HtmlInfoView::setContent() {
-	// using a mutex because setContent can trigger jsRegister which can cause another call to setContent
-	if (!m_setContentMutex.tryLock()) {
-		//DebugDialog::debug("html info view mutex bail");
-		return;
-	}
 
 	//DebugDialog::debug("html info view set content");
 
 	QString fileContent = QString(QString("<html>\n%1<body>\n%2")+HTML_EOF).arg(m_includes).arg(m_content);
 	m_webView->setHtml(fileContent);
 	m_savedContent = m_content;
-	if (m_currentItem != NULL) {
-		registerJsObjects();
-	}
-	registerInfoGraphicsView(m_infoGraphicsView);
-
-	m_setContentMutex.unlock();
 
 	/*QFile file("/tmp/infoview.html");
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -531,29 +437,16 @@ QSize HtmlInfoView::sizeHint() const {
 	return QSize(DockManager::DockDefaultWidth, DockManager::InfoViewDefaultHeight);
 }
 
-void HtmlInfoView::registerCurrentAgain() {
-	registerAsCurrentItem(m_currentItem);
-}
 
 void HtmlInfoView::setCurrentItem(ItemBase * item) {
 	m_currentItem = item;
 	m_infoViewWebPage->setCurrentItem(item);
 }
 
-bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
-	// note: must take place after setContent()
-	if(item) {
-		registerJsObjects();
-	} else {
+void HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
+	if(item == NULL) {
 		setNullContent();
 	}
-
-	return m_currentItem != NULL;
-}
-
-void HtmlInfoView::registerJsObjects() {
-	m_webView->page()->mainFrame()->addToJavaScriptWindowObject("currentItem", m_currentItem
-	);
 }
 
 void HtmlInfoView::unregisterCurrentItem() {
@@ -598,13 +491,6 @@ QString HtmlInfoView::blockContainer(const QString &blockId) {
 	return QString("<div id='%1' %2><table>\n").arg(blockId).arg(blockVisibility(blockId));
 }
 
-void HtmlInfoView::registerInfoGraphicsView(InfoGraphicsView * infoGraphicsView) {
-	// note: must take place after setContent()
-	if(infoGraphicsView) {
-		m_webView->page()->mainFrame()->addToJavaScriptWindowObject("sketch", infoGraphicsView);
-		m_webView->page()->mainFrame()->addToJavaScriptWindowObject("mainWindow", infoGraphicsView->window());
-	}
-}
 
 void HtmlInfoView::setNullContent()
 {
@@ -625,10 +511,24 @@ void addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
 
 QObject * HtmlInfoView::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
 	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
 
 	// TODO (jrc): calling all this icon stuff in htmlInfoView isn't nice but I haven't figured out a better location
 	// since you can't count on having the ItemBase
+
+	if (classid.compare("title", Qt::CaseInsensitive) == 0) {
+		FLineEdit * lineEdit = new FLineEdit(parent);
+
+		for (int i = 0; i < paramNames.count(); i++) {
+			if (paramNames[i].compare("title", Qt::CaseInsensitive) == 0) {
+				lineEdit->setText(paramValues[i]);
+				break;
+			}
+		}
+
+		connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(setInstanceTitle()));
+
+		return lineEdit;
+	}
 
 	if (classid.compare("PartIcons", Qt::CaseInsensitive) != 0) {
 		return NULL;
@@ -636,8 +536,15 @@ QObject * HtmlInfoView::createPlugin(QWidget * parent, const QString &classid, c
 
 	if (paramValues.count() < 1) return NULL;
 
-	QString moduleID = paramValues.at(0);
-	ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+	QString moduleID;
+	for (int i = 0; i < paramNames.count(); i++) {
+		if (paramNames[i].compare("moduleid", Qt::CaseInsensitive) == 0) {
+			moduleID = paramValues.at(i);
+			break;
+		}
+	}
+
+	ModelPart * modelPart = m_modelPart;
 	if (modelPart == NULL) return NULL;
 
 	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
@@ -686,3 +593,11 @@ QObject * HtmlInfoView::createPlugin(QWidget * parent, const QString &classid, c
 }
 
 
+void HtmlInfoView::setInstanceTitle() {
+	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
+	if (edit == NULL) return;
+	if (m_infoGraphicsView == NULL) return;
+	if (m_currentItem == NULL) return;
+
+	m_infoGraphicsView->setInstanceTitle(m_currentItem->id(), edit->text(), true, true, false);
+}

@@ -35,6 +35,7 @@ Q_OBJECT
 
 public:
 	FocusOutComboBox(QWidget * parent = NULL);
+	~FocusOutComboBox();
 
 protected:
 	void focusOutEvent(QFocusEvent *);

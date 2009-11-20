@@ -25,7 +25,9 @@ src/utils/bendpointaction.h \
 src/utils/bundler.h \
 src/utils/clickablelabel.h \
 src/utils/expandinglabel.h \
+src/utils/familypropertycombobox.h \
 src/utils/fileprogressdialog.h \
+src/utils/flineedit.h \
 src/utils/focusoutcombobox.h \
 src/utils/misc.h \
 src/utils/resizehandle.h \
@@ -39,6 +41,7 @@ src/utils/autoclosemessagebox.cpp \
 src/utils/bendpointaction.cpp \
 src/utils/clickablelabel.cpp \
 src/utils/fileprogressdialog.cpp \
+src/utils/flineedit.cpp \
 src/utils/focusoutcombobox.cpp \
 src/utils/misc.cpp \
 src/utils/resizehandle.cpp \

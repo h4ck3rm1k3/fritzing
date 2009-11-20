@@ -121,7 +121,7 @@ signals:
 
 public slots:
 	void ensureClosable();
-	void swapSelected(const QVariant & currProps, const QString &family, const QString & name);
+	void swapSelectedMap(const QString & family, const QString & prop, const QMap<QString, QString> & currPropsMap);
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 	void partsEditorClosed(long id);
 	void importFilesFromPrevInstall();
@@ -363,7 +363,8 @@ protected:
 	void svgMissingLayer(const QString & layername, const QString & path);
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
 	long swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, QUndoCommand * parentCommand);
-	bool swapSpecial(QMap<QString, QVariant> & currPropsMap);
+	bool swapSpecial(const QMap<QString, QString> & currPropsMap);
+
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
 	QString constructFileName(const QString & differentiator, const QString & extension);

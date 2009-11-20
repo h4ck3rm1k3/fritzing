@@ -52,7 +52,7 @@ $Date$
 QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
-QList<QString> Wire::colorNames;
+QStringList Wire::colorNames;
 QHash<long, QString> Wire::widthTrans;
 QList<long> Wire::widths;
 QList<QColor *> ratsnestColors;
@@ -1234,11 +1234,11 @@ void Wire::setIgnoreSelectionChange(bool ignore) {
 
 
 
-bool Wire::collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue) {
+bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) {
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
+		// don't display width property
 		return false;
 	}
-
 
 	if (prop.compare("color", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("color");
@@ -1251,13 +1251,11 @@ bool Wire::collectExtraInfoHtml(const QString & prop, const QString & value, QSt
 		return true;
 	}
 
-	return ItemBase::collectExtraInfoHtml(prop, value, returnProp, returnValue);
+	return ItemBase::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 }
 
 QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
 	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
-	Q_UNUSED(paramValues);
 
 	if (classid.compare("WireColorInput", Qt::CaseInsensitive) != 0) {
 		return ItemBase::createPlugin(parent, classid, url, paramNames, paramValues);

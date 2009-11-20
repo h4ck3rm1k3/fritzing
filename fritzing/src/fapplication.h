@@ -93,7 +93,7 @@ protected:
 	class ReferenceModel * m_referenceModel;
 	class PaletteModel * m_paletteBinModel;
 	bool m_started;
-	QList<QString> m_filesToLoad;
+	QStringList m_filesToLoad;
 	QString m_libPath;
 	QString m_translationPath;
 	class UpdateDialog * m_updateDialog;

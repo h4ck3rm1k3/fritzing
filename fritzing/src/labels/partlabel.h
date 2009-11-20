@@ -92,7 +92,7 @@ protected:
 	bool m_hidden;
 	QMenu m_menu;
 	QString m_text;
-	QList<QString> m_displayKeys;
+	QStringList m_displayKeys;
 };
 
 #endif

@@ -44,7 +44,7 @@ class HtmlInfoView : public QFrame
 {
 Q_OBJECT
 public:
-	HtmlInfoView(ReferenceModel *refModel, QWidget * parent = 0);
+	HtmlInfoView(QWidget * parent = 0);
 	~HtmlInfoView();
 
 	QSize sizeHint() const;
@@ -75,6 +75,7 @@ protected slots:
 	void jsRegister();
 	void setBlockVisibility(const QString &blockId, bool value);
 	void setContent();
+	void setInstanceTitle();
 
 protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
@@ -83,7 +84,6 @@ protected:
 	QString appendItemStuff(ItemBase * base, ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
 
 	void prepareTitleStuff(ItemBase *base, QString &title);
-	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml, bool ignoreValues);
 
 	QString blockHeader(const QString &title, const QString &blockId);
 	QString blockVisibility(const QString &blockId);
@@ -91,29 +91,25 @@ protected:
 	QString settingsBlockVisibilityName(const QString &blockId);
 
 	void setCurrentItem(ItemBase *);
-	void registerJsObjects();
-	void registerCurrentAgain();
-	bool registerAsCurrentItem(ItemBase *item);
-	void registerInfoGraphicsView(class InfoGraphicsView *);
+	void registerAsCurrentItem(ItemBase *item);
 	void setNullContent();
 
 protected:
 	QString m_includes;
 	bool m_alreadyset;
 
-	QPointer<ReferenceModel> m_refModel;
 	QPointer<ItemBase> m_currentItem;
 	bool m_currentSwappingEnabled;
 	int m_maxPropCount;
-	QMutex m_setContentMutex;
 
 	QWebView *m_webView;
-	QHash<QString /**/, bool> m_blocksVisibility;
+	QHash<QString, bool> m_blocksVisibility;
 	QPointer<class InfoViewWebPage> m_infoViewWebPage;
 	QString m_content;
 	QString m_savedContent;
 	QTimer m_setContentTimer;
-	class InfoGraphicsView * m_infoGraphicsView;
+	QPointer<class InfoGraphicsView> m_infoGraphicsView;
+	QPointer<ModelPart> m_modelPart;
 
 protected:
 	static QString PropsBlockId;

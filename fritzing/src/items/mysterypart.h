@@ -44,7 +44,7 @@ public:
 	~MysteryPart();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
-	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	QString getProperty(const QString & key);
 	void setProp(const QString & prop, const QString & value);
 	void setChipLabel(QString label, bool force);

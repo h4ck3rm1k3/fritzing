@@ -38,8 +38,8 @@ $Date$
 #include <limits>
 
 static QString BreadboardLayerTemplate = "";
-static QList<QString> Resistances;
-static QList<QString> PinSpacings;
+static QStringList Resistances;
+static QStringList PinSpacings;
 static QHash<int, QColor> ColorBands;
 static QChar OhmSymbol(0x03A9);
 static QRegExp Digits("(\\d)+");
@@ -245,28 +245,21 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 		.arg(ColorBands.value(thirdband, Qt::black).name());
 }
 
-
-void Resistor::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
-	ignoreValues = false;
-
+bool Resistor::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+{
 	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
-		ignoreValues = true;
-		value = m_pinSpacing;
-		foreach (QString f, PinSpacings) {
-			extraValues.append(f);
-		}
-		return;
+		returnProp = tr("pin spacing");
+		returnValue = "<object type='application/x-qt-plugin' classid='PinSpacingInput' width='65px' height='22px'></object>";  
+		return true;
 	}
-}
-
-QString Resistor::collectExtraInfoHtml(const QString & prop, const QString & value) {
-	Q_UNUSED(value);
 
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
-		return "<object type='application/x-qt-plugin' classid='ResistanceInput' width='65px' height='22px'></object>";  
+		returnProp = tr("resistance");
+		returnValue = "<object type='application/x-qt-plugin' classid='ResistanceInput' width='65px' height='22px'></object>";  
+		return true;
 	}
 
-	return ___emptyString___;
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 }
 
 QString Resistor::getProperty(const QString & key) {
@@ -366,30 +359,29 @@ QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const
 	Q_UNUSED(paramNames);
 	Q_UNUSED(paramValues);
 
+	/*
+		value = m_pinSpacing;
+		foreach (QString f, PinSpacings) {
+			extraValues.append(f);
+		}
+*/
+
 	if (classid.compare("ResistanceInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 	
-	FocusOutComboBox * edit = new FocusOutComboBox(parent);
-	edit->setEditable(true);
-	int ix = 0;
+	FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
+	focusOutComboBox->setEditable(true);
 	QString current = m_ohms + OhmSymbol;
-	foreach (QString r, Resistances) {
-		edit->addItem(r);
-		if (r == current) {
-			edit->setCurrentIndex(ix);
-		}
-		ix++;
-	}
-				
-	BoundedRegExpValidator * validator = new BoundedRegExpValidator(edit);
-        validator->setBounds(0, 9900000000.0);
+	focusOutComboBox->addItems(Resistances);
+	focusOutComboBox->setCurrentIndex(focusOutComboBox->findText(current));
+	BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
+	validator->setBounds(0, 9900000000.0);
 	validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
-	edit->setValidator(validator);
-
-	connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
-
-	return edit;	
+	focusOutComboBox->setValidator(validator);
+	connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
+				
+	return focusOutComboBox;	
 }
 
 void Resistor::resistanceEntry(const QString & text) {

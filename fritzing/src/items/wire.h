@@ -111,7 +111,7 @@ public:
 	bool canChangeColor();
 	void collectDirectWires(QList<Wire *> & wires);
 	bool isGrounded();
-	bool collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue);
+	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
 protected slots:
@@ -180,7 +180,7 @@ protected:
 	bool m_ignoreSelectionChange;
 
 public:
-	static QList<QString> colorNames;
+	static QStringList colorNames;
 	static QHash<QString, QString> colorTrans;
 	static QHash<long, QString> widthTrans;
 	static QList<long> widths;

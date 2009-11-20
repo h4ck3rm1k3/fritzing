@@ -82,6 +82,6 @@ static const QString FritzingBundledPartExtension(".fzpz");
 static const QString FritzingModuleExtension(".fzm");
 static const QString FritzingBundleExtension(".fzz");
 
-const QList<QString> & fritzingExtensions();
+const QStringList & fritzingExtensions();
 
 #endif

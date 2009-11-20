@@ -38,13 +38,29 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../svg/svgfilesplitter.h"
 #include "../utils/folderutils.h"
+#include "../utils/familypropertycombobox.h"
+#include "../referencemodel/referencemodel.h"
 
 #include <QScrollBar>
 #include <QTimer>
 #include <QVector>
 #include <QSet>
 #include <QSettings>
+#include <QComboBox>
 #include <qmath.h>
+
+/////////////////////////////////
+
+static const ushort MicroSymbolCode = 181;
+static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode);
+
+static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
+static QHash<QString, qreal> NumberMatcherValues;
+
+bool numberValueLessThan(QString v1, QString v2)
+{
+	return NumberMatcherValues.value(v1, 0) <= NumberMatcherValues.value(v2, 0);
+}
 
 /////////////////////////////////
 
@@ -75,13 +91,14 @@ protected:
 	QString m_viewName;
 };
 
-
 /////////////////////////////////
 
 const QString ItemBase::ITEMBASE_FONT_PREFIX = "<font size='2'>";
 const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";
 
 QHash<QString, QString> ItemBase::TranslatedPropertyNames;
+
+QPointer<ReferenceModel> ItemBase::referenceModel = NULL;
 
 QString ItemBase::partInstanceDefaultTitle;
 QString ItemBase::moduleInstanceDefaultTitle;
@@ -111,6 +128,8 @@ QBrush ItemBase::chosenBrush(QColor(255,0,0));
 QBrush ItemBase::equalPotentialBrush(QColor(255,255,0));
 
 const qreal ItemBase::normalConnectorOpacity = 0.4;
+
+static QHash<QString, QStringList> CachedValues;
 
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {
@@ -1419,25 +1438,6 @@ bool ItemBase::connectionIsAllowed(ConnectorItem *) {
 	return true;
 }
 
-void ItemBase::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
-	Q_UNUSED(prop);
-	Q_UNUSED(value);
-	Q_UNUSED(extraValues);
-	ignoreValues = false;
-}
-
-QString ItemBase::collectExtraInfoHtml(const QString & prop, const QString & value) {
-	Q_UNUSED(prop);
-	Q_UNUSED(value);
-	return ___emptyString___;
-}
-
-bool ItemBase::collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue) {
-	returnProp = ItemBase::translatePropertyName(prop);
-	returnValue = value;
-	return true;
-}
-
 QString ItemBase::getProperty(const QString & key) {
 	if (m_modelPart == NULL) return "";
 
@@ -1497,12 +1497,112 @@ bool ItemBase::isObsolete() {
 	return !modelPart()->replacedby().isEmpty();
 }
 
-QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(parent);
-	Q_UNUSED(classid);
-	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
-	Q_UNUSED(paramValues);
+bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValuesFlag, QString & returnProp, QString & returnValue) {
+	returnProp = ItemBase::translatePropertyName(prop);
 
-	return NULL;
+	if (collectValuesFlag) {
+		returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2', value='%3' width='125px' height='22px'></object>")
+			.arg(prop).arg(family).arg(value);
+		m_propsMap.insert(prop, value);
+	}
+	else {
+		returnValue = value;
+	}
+	
+	return true;
 }
+
+QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
+	Q_UNUSED(url);
+
+
+	QString family, value;
+	for (int i = 0; i < paramNames.count(); i++) {
+		if (paramNames[i].compare("family", Qt::CaseInsensitive) == 0) {
+			family = paramValues.at(i);
+		}
+		else if (paramNames[i].compare("value", Qt::CaseInsensitive) == 0) {
+			value = paramValues.at(i);
+		}
+	}
+
+	QStringList values = collectValues(family, classid);
+	if (values.count() <= 1) return NULL;
+
+	FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, classid, parent);
+	comboBox->addItems(values);
+	comboBox->setCurrentIndex(comboBox->findText(value));
+
+	// need to save classid and family
+
+	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(swapEntry(const QString &)));
+
+	return comboBox;
+}
+
+void ItemBase::swapEntry(const QString & text) {
+	FamilyPropertyComboBox * comboBox = dynamic_cast<FamilyPropertyComboBox *>(sender());
+	if (comboBox == NULL) return;
+
+	m_propsMap.insert(comboBox->prop(), text);
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->swap(comboBox->family(), comboBox->prop(), m_propsMap);
+	}
+}
+
+void ItemBase::setReferenceModel(ReferenceModel * rm) {
+	referenceModel = rm;
+}
+
+QStringList ItemBase::collectValues(const QString & family, const QString & prop) {
+	if (referenceModel == NULL) return ___emptyStringList___;
+
+	QStringList values = CachedValues.value(family + prop, QStringList());
+	if (values.count() > 0) return values;
+
+	values = referenceModel->values(family, prop);
+
+	// sort values numerically
+	NumberMatcherValues.clear();
+	bool ok = true;
+	foreach(QString opt, values) {
+		int ix = NumberMatcher.indexIn(opt);
+		if (ix < 0) {
+			ok = false;
+			break;
+		}
+		qreal n = NumberMatcher.cap(1).toDouble(&ok);
+		if (!ok) break;
+
+		QString unit = NumberMatcher.cap(5);
+		if (unit.contains('k')) {
+			n *= 1000;
+		}
+		else if (unit.contains('M')) {
+			n *= 1000000;
+		}
+		else if (unit.contains('G')) {
+			n *= 1000000000;
+		}
+		else if (unit.contains('p')) {
+			n *= 0.000000000001;
+		}
+		else if (unit.contains(MicroSymbol)) {
+			n *= 0.000001;
+		}
+		NumberMatcherValues.insert(opt, n);
+	}
+	if (ok) {
+		qSort(values.begin(), values.end(), numberValueLessThan);
+	}
+
+	CachedValues.insert(family + prop, values);
+	return values;
+}
+
+void ItemBase::prepareProps() {
+	m_propsMap.clear();
+
+};

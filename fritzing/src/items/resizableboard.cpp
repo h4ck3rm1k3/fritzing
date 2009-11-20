@@ -427,26 +427,17 @@ void ResizableBoard::rotateItem(qreal degrees) {
 	}
 }
 
-void ResizableBoard::collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues) {
-	Q_UNUSED(value);
-	ignoreValues = false;
 
+
+bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+{
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		if (customShapeTranslated.isEmpty()) {
-			customShapeTranslated = tr("Import Shape...");
-		}
-		extraValues.append(customShapeTranslated);
+		returnValue = "<object type='application/x-qt-plugin' classid='ResizableBoardInput' width='215px' height='32px'></object>";  
+		returnProp = tr("shape");
+		return true;
 	}
-}
 
-QString ResizableBoard::collectExtraInfoHtml(const QString & prop, const QString & value) {
-	Q_UNUSED(value);
-
-	if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
-	
-	if (!m_modelPart->prop("height").isValid()) return ___emptyString___;
-
-	return "<object type='application/x-qt-plugin' classid='ResizableBoardInput' width='215px' height='32px'></object>";  
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 }
 
 void ResizableBoard::saveParams() {
@@ -478,6 +469,19 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	if (classid.compare("ResizableBoardInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
+
+
+	/*
+		if (customShapeTranslated.isEmpty()) {
+			customShapeTranslated = tr("Import Shape...");
+		}
+		extraValues.append(customShapeTranslated);
+
+
+			if (!m_modelPart->prop("height").isValid()) 
+
+		*/
+
 
 	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
 	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point

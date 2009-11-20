@@ -207,13 +207,17 @@ QString SymbolPaletteItem::replaceTextElement(QString svg) {
 	return TextUtils::replaceTextElement(svg, QString::number(v) + "V");
 }
 
-QString SymbolPaletteItem::collectExtraInfoHtml(const QString & prop, const QString & value) {
-	Q_UNUSED(value);
+bool SymbolPaletteItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+{
+	if ((prop.compare("voltage", Qt::CaseInsensitive) == 0) && 
+		(modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) == 0)) 
+	{
+		returnValue = "<object type='application/x-qt-plugin' classid='VoltageInput' width='65px' height='22px'></object>"; 
+		returnProp = tr("voltage");
+		return true;
+	}
 
-	if (prop.compare("voltage", Qt::CaseInsensitive) != 0) return ___emptyString___;
-	if (modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) == 0) return ___emptyString___;
-
-	return "<object type='application/x-qt-plugin' classid='VoltageInput' width='65px' height='22px'></object>";  
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 }
 
 QString SymbolPaletteItem::getProperty(const QString & key) {

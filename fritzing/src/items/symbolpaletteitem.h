@@ -43,7 +43,7 @@ public:
 	qreal voltage();
 	void setProp(const QString & prop, const QString & value);
 	void setVoltage(qreal);
-	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	QString getProperty(const QString & key);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();

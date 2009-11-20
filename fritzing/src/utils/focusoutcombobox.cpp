@@ -31,6 +31,10 @@ FocusOutComboBox::FocusOutComboBox(QWidget * parent) : QComboBox(parent)
 	setEditable(true);
 }
 
+FocusOutComboBox::~FocusOutComboBox()
+{
+}
+
 void FocusOutComboBox::focusOutEvent(QFocusEvent * e) {
 	QComboBox::focusOutEvent(e);
 	QString t = this->currentText();

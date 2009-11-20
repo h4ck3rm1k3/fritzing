@@ -50,8 +50,7 @@ public:
 	void setInitialSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	void rotateItem(qreal degrees);
-	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
-	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
 	bool hasCustomSVG();

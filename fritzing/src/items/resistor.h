@@ -44,8 +44,7 @@ public:
 	~Resistor();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
-	void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
-	QString collectExtraInfoHtml(const QString & prop, const QString & value);
+	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	QString getProperty(const QString & key);
 	void setResistance(QString resistance, QString pinSpacing, LayerHash &, bool force);
 	QString resistance();

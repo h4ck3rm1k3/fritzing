@@ -125,14 +125,15 @@ QString MysteryPart::makeSvg(const QString & chipLabel) {
 	return "";
 }
 
-QString MysteryPart::collectExtraInfoHtml(const QString & prop, const QString & value) {
-	Q_UNUSED(value);
-
+bool MysteryPart::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+{
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
-		return "<object type='application/x-qt-plugin' classid='ChipLabelInput' width='150px' height='22px'></object>";  
+		returnProp = tr("label");
+		returnValue = "<object type='application/x-qt-plugin' classid='ChipLabelInput' width='150px' height='22px'></object>";  
+		return true;
 	}
 
-	return ___emptyString___;
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 }
 
 QString MysteryPart::getProperty(const QString & key) {
@@ -203,3 +204,4 @@ void MysteryPart::chipLabelEntry() {
 		infoGraphicsView->setChipLabel(edit->text());
 	}
 }
+

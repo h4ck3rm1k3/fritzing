@@ -35,6 +35,7 @@ $Date$
 #include <QGraphicsItem>
 #include <QPointer>
 #include <QUrl>
+#include <QMap>
 
 #include "../viewgeometry.h"
 #include "../viewlayer.h"
@@ -63,6 +64,7 @@ public:
 	static QString moduleInstanceDefaultTitle;
 	static QList<ItemBase *> emptyList;
 	static QString translatePropertyName(const QString & key);
+	static void setReferenceModel(class ReferenceModel *);
 
 public:
 	ItemBase(class ModelPart*, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
@@ -158,9 +160,7 @@ public:
 	bool isEverVisible();
 	void setEverVisible(bool);
 	virtual bool connectionIsAllowed(ConnectorItem *);
-	virtual void collectExtraInfoValues(const QString & prop, QString & value, QStringList & extraValues, bool & ignoreValues);
-	virtual QString collectExtraInfoHtml(const QString & prop, const QString & value);
-	virtual bool collectExtraInfoHtml(const QString & prop, const QString & value, QString & returnProp, QString & returnValue);
+	virtual bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	virtual QString getProperty(const QString & key);
 	ConnectorItem * rightClickedConnector();
 	virtual bool canEditPart();
@@ -168,7 +168,7 @@ public:
 	virtual void setProp(const QString & prop, const QString & value);
 	bool isObsolete();
 	virtual QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
-
+	void prepareProps();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
@@ -230,6 +230,7 @@ public slots:
 	void showPartLabel(bool show, ViewLayer *);
 	void partLabelChanged(const QString &newText);
 	qint64 id();
+	void swapEntry(const QString & text);
 
 public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
@@ -245,6 +246,7 @@ protected:
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
+	virtual QStringList collectValues(const QString & family, const QString & prop);
 
 	void setInstanceTitleTooltip(const QString& text);
 	virtual void setDefaultTooltip();
@@ -276,6 +278,7 @@ protected:
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_everVisible;
 	ConnectorItem * m_rightClickedConnector;
+	QMap<QString, QString> m_propsMap;
 
 protected:
 	static long nextID;
@@ -284,6 +287,7 @@ protected:
 	const static QColor connectorHoverColor;
 	const static qreal connectorHoverOpacity;
 	static QString SvgFilesDir;
+	static QPointer<class ReferenceModel> referenceModel;
 
 };
 #endif
