@@ -207,19 +207,6 @@ QString SymbolPaletteItem::replaceTextElement(QString svg) {
 	return TextUtils::replaceTextElement(svg, QString::number(v) + "V");
 }
 
-bool SymbolPaletteItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
-{
-	if ((prop.compare("voltage", Qt::CaseInsensitive) == 0) && 
-		(modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) == 0)) 
-	{
-		returnValue = "<object type='application/x-qt-plugin' classid='VoltageInput' width='65px' height='22px'></object>"; 
-		returnProp = tr("voltage");
-		return true;
-	}
-
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
-}
-
 QString SymbolPaletteItem::getProperty(const QString & key) {
 	if (key.compare("voltage", Qt::CaseInsensitive) == 0) {
 		return QString::number(m_voltage);
@@ -272,11 +259,21 @@ QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash
 	return svg; 
 }
 
-QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
-	Q_UNUSED(paramValues);
+bool SymbolPaletteItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+{
+	if ((prop.compare("voltage", Qt::CaseInsensitive) == 0) && 
+		(modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) != 0)) 
+	{
+		returnValue = "<object type='application/x-qt-plugin' classid='VoltageInput' width='65px' height='22px'></object>"; 
+		returnProp = tr("voltage");
+		return true;
+	}
 
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+}
+
+
+QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
 	if (classid.compare("VoltageInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
