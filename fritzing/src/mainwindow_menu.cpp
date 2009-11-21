@@ -3326,6 +3326,8 @@ void MainWindow::launchExternalProcess() {
 	QStringList args;
 	if (!externalProcess(name, path, args)) return;
 
+	args.append("-sketch");
+	args.append(fileName());
 	m_externalProcessOutput.clear();
 
 	QFileInfo f = QFileInfo(path);
