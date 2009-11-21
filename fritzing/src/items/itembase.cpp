@@ -1499,16 +1499,18 @@ bool ItemBase::isObsolete() {
 
 bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValuesFlag, QString & returnProp, QString & returnValue) {
 	returnProp = ItemBase::translatePropertyName(prop);
+	returnValue = value;	
 
 	if (collectValuesFlag) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2', value='%3' width='125px' height='22px'></object>")
-			.arg(prop).arg(family).arg(value);
-		m_propsMap.insert(prop, value);
+		QString tempValue;
+		QStringList values = collectValues(family, prop, tempValue);
+		if (values.count() > 1) {
+			returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2', value='%3' width='125px' height='22px'></object>")
+									.arg(prop).arg(family).arg(value);
+			m_propsMap.insert(prop, value);
+		}
 	}
-	else {
-		returnValue = value;
-	}
-	
+		
 	return true;
 }
 
@@ -1526,7 +1528,7 @@ QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const
 		}
 	}
 
-	QStringList values = collectValues(family, classid);
+	QStringList values = collectValues(family, classid, value);
 	if (values.count() <= 1) return NULL;
 
 	FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, classid, parent);
@@ -1556,7 +1558,9 @@ void ItemBase::setReferenceModel(ReferenceModel * rm) {
 	referenceModel = rm;
 }
 
-QStringList ItemBase::collectValues(const QString & family, const QString & prop) {
+QStringList ItemBase::collectValues(const QString & family, const QString & prop, QString & value) {
+	Q_UNUSED(value);
+
 	if (referenceModel == NULL) return ___emptyStringList___;
 
 	QStringList values = CachedValues.value(family + prop, QStringList());

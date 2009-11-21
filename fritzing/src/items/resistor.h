@@ -59,6 +59,7 @@ protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateResistances(QString r);
 	ConnectorItem* newConnectorItem(class Connector *connector);
+	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 
 public slots:
 	void resistanceEntry(const QString & text);

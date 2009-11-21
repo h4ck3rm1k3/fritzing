@@ -467,8 +467,9 @@ bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString 
 	return result;
 }
 
-QStringList ResizableBoard::collectValues(const QString & family, const QString & prop) {
-	QStringList result = PaletteItem::collectValues(family, prop);
+QStringList ResizableBoard::collectValues(const QString & family, const QString & prop, QString & value) {
+	QStringList result = PaletteItem::collectValues(family, prop, value);
+
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (customShapeTranslated.isEmpty()) {
 			customShapeTranslated = tr("Import Shape...");

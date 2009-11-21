@@ -247,12 +247,6 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 
 bool Resistor::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
 {
-	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
-		returnProp = tr("pin spacing");
-		returnValue = "<object type='application/x-qt-plugin' classid='PinSpacingInput' width='65px' height='22px'></object>";  
-		return true;
-	}
-
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("resistance");
 		returnValue = "<object type='application/x-qt-plugin' classid='ResistanceInput' width='65px' height='22px'></object>";  
@@ -354,18 +348,21 @@ bool Resistor::canEditPart() {
 	return false;
 }
 
-QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
-	Q_UNUSED(paramValues);
-
-	/*
-		value = m_pinSpacing;
+QStringList Resistor::collectValues(const QString & family, const QString & prop, QString & value) {
+	if (prop.compare("pin spacing", Qt::CaseInsensitive) == 0) {
+		QStringList values;
 		foreach (QString f, PinSpacings) {
-			extraValues.append(f);
+			values.append(f);
 		}
-*/
+		value = m_pinSpacing;
+		return values;
+	}
 
+	return PaletteItem::collectValues(family, prop, value);
+}
+
+QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) 
+{
 	if (classid.compare("ResistanceInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}

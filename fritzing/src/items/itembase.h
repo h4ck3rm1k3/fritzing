@@ -248,7 +248,7 @@ protected:
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
-	virtual QStringList collectValues(const QString & family, const QString & prop);
+	virtual QStringList collectValues(const QString & family, const QString & prop, QString & value);
 
 	void setInstanceTitleTooltip(const QString& text);
 	virtual void setDefaultTooltip();

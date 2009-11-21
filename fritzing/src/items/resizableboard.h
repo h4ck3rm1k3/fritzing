@@ -73,7 +73,7 @@ protected:
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
 	QString makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QString makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	QStringList collectValues(const QString & family, const QString & prop);
+	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
