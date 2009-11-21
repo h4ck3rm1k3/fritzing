@@ -73,7 +73,7 @@ public slots:
 	void topLevelWidgetDestroyed(QObject *);
 	void closeAllWindows2();
 	void loadedPart(int loaded, int total);
-
+	void externalProcessSlot(QString & name, QString & path, QStringList & args);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -101,6 +101,9 @@ protected:
 	QPointer<class MainWindow> m_lastTopmostWindow;
 	QList<QWidget *> m_orderedTopLevelWidgets;
 	QStringList m_arguments;
+	QStringList m_externalProcessArgs;
+	QString m_externalProcessName;
+	QString m_externalProcessPath;
 	bool m_runAsService;
 	int m_progressIndex;
 	class FSplashScreen * m_splash;

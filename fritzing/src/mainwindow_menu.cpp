@@ -940,11 +940,14 @@ void MainWindow::createFileMenuActions() {
 	m_printAct->setStatusTip(tr("Print the current view"));
 	connect(m_printAct, SIGNAL(triggered()), this, SLOT(print()));
 
-#ifdef NAVENDU
-	m_launchExternalProcessAct = new QAction(tr("Launch External Process..."), this);
-	m_launchExternalProcessAct->setStatusTip(tr("Shell launch an external application"));
-	connect(m_launchExternalProcessAct, SIGNAL(triggered()), this, SLOT(launchExternalProcess()));
-#endif
+	QString name;
+	QString path;
+	QStringList args;
+	if (externalProcess(name, path, args)) {
+		m_launchExternalProcessAct = new QAction(name, this);
+		m_launchExternalProcessAct->setStatusTip(tr("Shell launch %1").arg(path));
+		connect(m_launchExternalProcessAct, SIGNAL(triggered()), this, SLOT(launchExternalProcess()));
+	}
 
 	m_quitAct = new QAction(tr("&Quit"), this);
 	m_quitAct->setShortcut(tr("Ctrl+Q"));
@@ -1450,16 +1453,18 @@ void MainWindow::createMenus()
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));
     //m_fileMenu->addAction(m_pageSetupAct);
     m_fileMenu->addAction(m_printAct);
-#ifdef NAVENDU
-	m_fileMenu->addSeparator();
-	m_fileMenu->addAction(m_launchExternalProcessAct);
-#endif
+
+	QString name;
+	QString path;
+	QStringList args;
+	if (externalProcess(name, path, args)) {
+		m_fileMenu->addSeparator();
+		m_fileMenu->addAction(m_launchExternalProcessAct);
+	}
+
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
     connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
-
-
-
 
 	m_exportMenu->addAction(m_exportPdfAct);
 	m_exportMenu->addAction(m_exportPsAct);
@@ -3303,11 +3308,25 @@ void MainWindow::disconnectAll() {
 	m_currentGraphicsView->disconnectAll();
 }
 
-#ifdef NAVENDU
+bool MainWindow::externalProcess(QString & name, QString & path, QStringList & args) {
+	emit externalProcessSignal(name, path, args);
+
+	if (path.isEmpty()) return false;
+
+	if (name.isEmpty()) {
+		name = tr("Launch %1...").arg(path);
+	}
+
+	return true;
+}
 
 void MainWindow::launchExternalProcess() {
-	QString path = QFileDialog::getOpenFileName(this, "launch process", QApplication::applicationFilePath());
-	if (path.isEmpty()) return;
+	QString name;
+	QString path;
+	QStringList args;
+	if (!externalProcess(name, path, args)) return;
+
+	m_externalProcessOutput.clear();
 
 	QFileInfo f = QFileInfo(path);
 	QProcess * process = new QProcess(this);
@@ -3320,8 +3339,7 @@ void MainWindow::launchExternalProcess() {
 	connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(processReadyRead()));
 	connect(process, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(processStateChanged(QProcess::ProcessState)));
 
-	process->start(path);
-
+	process->start(path, args);
 }
 
 
@@ -3331,11 +3349,19 @@ void MainWindow::processError(QProcess::ProcessError processError) {
 
 void MainWindow::processFinished(int exitCode, QProcess::ExitStatus exitStatus) {
 	DebugDialog::debug(QString("process finished %1 %2").arg(exitCode).arg(exitStatus));
+
+	QString name, path;
+	QStringList args;
+	externalProcess(name, path, args);
+	QMessageBox::information(this, name, QString(m_externalProcessOutput));
+
 	sender()->deleteLater();
 }
 
 void MainWindow::processReadyRead() {
 	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+	m_externalProcessOutput.append(byteArray);
+
 	DebugDialog::debug(byteArray.data());
 }
 
@@ -3352,8 +3378,6 @@ void MainWindow::processStateChanged(QProcess::ProcessState newState) {
 			break;
 	}
 }
-
-#endif // NAVENDU
 
 void MainWindow::shareOnline() {
 	QDesktopServices::openUrl(QString("http://fritzing.org/projects/create"));

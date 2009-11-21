@@ -128,6 +128,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	connect(this, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)), Qt::DirectConnection);
 	connect(this, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
+	connect(this, SIGNAL(externalProcessSignal(QString &, QString &, QStringList &)),
+			qApp, SLOT(externalProcessSlot(QString &, QString &, QStringList &)), 
+			Qt::DirectConnection);
 }
 
 void MainWindow::init() {

@@ -127,26 +127,46 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_splash = NULL;
 	m_runAsService = false;
 	m_arguments = arguments();
+	QList<int> toRemove;
 	for (int i = 0; i < m_arguments.length() - 1; i++) {
 		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("-folder", Qt::CaseInsensitive) == 0))
 		{
 			FolderUtils::setApplicationPath(m_arguments[i + 1]);
 			// delete these so we don't try to process them as files later
-			m_arguments.removeAt(i);
-			m_arguments.removeAt(i);
-			break;
+			toRemove << i;
+			toRemove << i + 1;
 		}
+
+		if (m_arguments[i].compare("-c", Qt::CaseInsensitive) == 0) {
+			//m_runAsService = true;
+			toRemove << i;
+		}
+
+		if (m_arguments[i].compare("-ep", Qt::CaseInsensitive) == 0) {
+			m_externalProcessPath = m_arguments[i + 1];
+			toRemove << i;
+			toRemove << (i + 1);
+		}
+
+		if (m_arguments[i].compare("-eparg", Qt::CaseInsensitive) == 0) {
+			m_externalProcessArgs << m_arguments[i + 1];
+			toRemove << i;
+			toRemove << (i + 1);
+		}
+
+		if (m_arguments[i].compare("-epname", Qt::CaseInsensitive) == 0) {
+			m_externalProcessName = m_arguments[i + 1];
+			toRemove << i;
+			toRemove << (i + 1);
+		}
+
 	}
 
-	/*
-	for (int i = 0; i < m_arguments.length(); i++) {
-		if (m_arguments[i].compare("-c", Qt::CaseInsensitive) == 0) {
-			m_runAsService = true;
-			break;
-		}
+	while (toRemove.count() > 0) {
+		int ix = toRemove.takeLast();
+		m_arguments.removeAt(ix);
 	}
-	*/
 
 	m_started = false;
 	m_updateDialog = NULL;
@@ -926,4 +946,10 @@ void FApplication::loadedPart(int loaded, int total) {
 
 
 	m_splash->showProgress(m_progressIndex, LoadProgressStart + ((LoadProgressEnd - LoadProgressStart) * loaded / (double) total));
+}
+
+void FApplication::externalProcessSlot(QString &name, QString &path, QStringList &args) {
+	name = m_externalProcessName;
+	path = m_externalProcessPath;
+	args = m_externalProcessArgs;
 }

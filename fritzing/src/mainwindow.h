@@ -42,8 +42,6 @@ $Date$
 #include "zoomcombobox.h"
 #include "sketchtoolbutton.h"
 
-//#define NAVENDU					// hack for Navendu Sinha, who we never heard from again
-
 QT_BEGIN_NAMESPACE
 class QAction;
 class QListWidget;
@@ -118,6 +116,7 @@ signals:
 	void viewSwitched(int);
 	void mainWindowMoved(QWidget *);
 	void changeActivationSignal(bool activate, QWidget * originator);
+	void externalProcessSignal(QString & name, QString & path, QStringList & args);
 
 public slots:
 	void ensureClosable();
@@ -256,14 +255,12 @@ protected slots:
 	void selectAllObsolete();
 	void swapObsolete();
 
-#ifdef NAVENDU
 	void launchExternalProcess();
+	bool externalProcess(QString & name, QString & path, QStringList & args);
 	void processError(QProcess::ProcessError processError);
 	void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void processReadyRead();
 	void processStateChanged(QProcess::ProcessState newState);
-
-#endif
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -445,9 +442,8 @@ protected:
 	QAction *m_shareOnlineAct;
 	QAction *m_saveAsModuleAct;
 	QAction *m_editModuleAct;
-#ifdef NAVENDU
+
 	QAction * m_launchExternalProcessAct;
-#endif
 
 	QMenu *m_zOrderMenu;
 	QAction *m_bringToFrontAct;
@@ -594,6 +590,8 @@ protected:
 	QTimer m_setUpDockManagerTimer;
 	class DockManager * m_dockManager;
 	class FileProgressDialog * m_fileProgressDialog;
+
+	QByteArray m_externalProcessOutput;
 
 protected:
 	static const QString UntitledSketchName;
