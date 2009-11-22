@@ -31,6 +31,8 @@ $Date$
 
 #include <QMessageBox>
 
+static LayerHash ViewLayers;
+
 InfoGraphicsView::InfoGraphicsView( QWidget * parent )
 	: ZoomableGraphicsView(parent)
 {
@@ -211,7 +213,7 @@ void InfoGraphicsView::changeWireColor(const QString newColor) {
 	Q_UNUSED(newColor);
 }
 
-void InfoGraphicsView::swap(const QString & family, const QString & prop, const QMap<QString, QString> & propsMap) {
+void InfoGraphicsView::swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap) {
 	emit swapSignal(family, prop, propsMap);
 }
 
@@ -221,4 +223,8 @@ void InfoGraphicsView::setInstanceTitle(long id, const QString & title, bool isL
 	Q_UNUSED(isLabel);
 	Q_UNUSED(isUndoable);
 	Q_UNUSED(doEmit);
+}
+
+LayerHash & InfoGraphicsView::viewLayers() {
+	return ViewLayers;
 }

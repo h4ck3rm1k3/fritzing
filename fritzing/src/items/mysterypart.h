@@ -52,6 +52,9 @@ public:
 	const QString & title();
 	bool hasCustomSVG();
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+	void setSpacing(QString spacing, bool force);
+	const QString & spacing();
+	bool onlySpacingChanges(QMap<QString, QString> & propsMap);
 
 public slots:
 	void chipLabelEntry();
@@ -59,11 +62,18 @@ public slots:
 protected:
 	QString makeSvg(const QString & chipLabel);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	ConnectorItem* newConnectorItem(class Connector *connector);
+	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+	virtual bool isDIP();
+	virtual bool otherPropsChange(const QMap<QString, QString> & propsMap);
+	virtual const QStringList & spacings();
 
 protected:
 	class FSvgRenderer * m_renderer;
 	QString m_chipLabel;
 	QString m_title;
+	bool m_changingSpacing;
+	QString m_spacing;
 };
 
 #endif

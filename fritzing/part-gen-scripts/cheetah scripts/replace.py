@@ -9,7 +9,7 @@ import getopt, sys, os, re
 def usage():
     print """
 usage:
-    grep.py -d [directory] -f [text] -r [replace] -s [suffix]
+    replace.py -d [directory] -f [text] -r [replace] -s [suffix]
     
     directory is a folder containing [suffix] files.  
     In each [suffix] file in the directory or its subfolders,

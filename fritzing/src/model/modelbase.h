@@ -54,7 +54,8 @@ signals:
 protected:
 	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);
 	void renewExternalIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QList<long> *, QString > * externalConnectors);
-	bool loadInstances(QDomElement & root, QList<ModelPart *> & modelParts);
+	bool loadInstances(QDomDocument &, QDomElement & root, QList<ModelPart *> & modelParts);
+	ModelPart * fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef);
 
 protected:
 	QPointer<ModelPart> m_root;

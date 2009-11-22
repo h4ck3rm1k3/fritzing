@@ -40,6 +40,10 @@ public:
 
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 
+protected:
+	bool isDIP();
+	bool otherPropsChange(const QMap<QString, QString> & propsMap);
+	const QStringList & spacings();
 };
 
 #endif

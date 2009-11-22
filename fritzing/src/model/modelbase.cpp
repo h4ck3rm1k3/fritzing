@@ -110,11 +110,32 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
     	delete child;
    	}
 
-	return loadInstances(instances, modelParts);
+	return loadInstances(domDocument, instances, modelParts);
 
 }
 
-bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & modelParts)
+ModelPart * ModelBase::fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef) {
+	// TODO: less hard-coding
+	QRegExp oldDip("generic_ic_dip_(\\d{1,2})_(\\d{3}mil)");
+	if (oldDip.indexIn(moduleIDRef) == 0) {
+		QString spacing = oldDip.cap(2);
+		QString pins = oldDip.cap(1);
+		moduleIDRef = QString("generic_ic_dip_%1_300mil").arg(pins);
+		ModelPart * modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
+		if (modelPart != NULL) {
+			instance.setAttribute("moduleIdRef", moduleIDRef);
+			QDomElement prop = domDocument.createElement("property");
+			instance.appendChild(prop);
+			prop.setAttribute("name", "spacing");
+			prop.setAttribute("value", spacing);
+			return modelPart;
+		}
+	}
+
+	return NULL;
+}
+
+bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instances, QList<ModelPart *> & modelParts)
 {
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
@@ -123,8 +144,12 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
    		QString moduleIDRef = instance.attribute("moduleIdRef");
    		modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
    		if (modelPart == NULL) {
-   			instance = instance.nextSiblingElement("instance");
-   			continue;
+			DebugDialog::debug(QString("module id %1 not found in database").arg(moduleIDRef));
+			modelPart = fixObsoleteModuleID(domDocument, instance, moduleIDRef);
+			if (modelPart == NULL) {
+   				instance = instance.nextSiblingElement("instance");
+   				continue;
+			}
    		}
 
    		modelPart = addModelPart(m_root, modelPart);
@@ -177,12 +202,12 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 		QDomElement prop = instance.firstChildElement("property");
 		while(!prop.isNull()) {
 			QString name = prop.attribute("name");
-			if (name.isEmpty()) continue;
-
-			QString value = prop.attribute("value");
-			if (value.isEmpty()) continue;
-
-			modelPart->setProp(name.toUtf8().constData(), value);
+			if (!name.isEmpty()) {
+				QString value = prop.attribute("value");
+				if (!value.isEmpty()) {
+					modelPart->setProp(name.toUtf8().constData(), value);
+				}
+			}
 
 			prop = prop.nextSiblingElement("property");
 		}
@@ -300,7 +325,7 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 	//file.write(domDocument.toByteArray());
 	//file.close();
 
-	return loadInstances(instances, modelParts);
+	return loadInstances(domDocument, instances, modelParts);
 }
 
 void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew)

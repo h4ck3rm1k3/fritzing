@@ -61,6 +61,7 @@ $Date$
 #include "utils/folderutils.h"
 #include "utils/textutils.h"
 #include "utils/graphicsutils.h"
+#include "items/mysterypart.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -297,12 +298,12 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
 						this, SLOT(routingStatusSlot(SketchWidget *, int, int, int, int)));
 
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, const QMap<QString, QString> &)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, const QMap<QString, QString> &)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, const QMap<QString, QString> &)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, const QMap<QString, QString> &)));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, const QMap<QString, QString> &)), 
-						this, SLOT(swapSelectedMap(const QString &, const QString &, const QMap<QString, QString> &)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
+						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
 
 	
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
@@ -1676,7 +1677,7 @@ QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLa
 	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL, GraphicsUtils::StandardFritzingDPI, false, false);
 }
 
-void MainWindow::swapSelectedMap(const QString & family, const QString & prop, const QMap<QString, QString> & currPropsMap) 
+void MainWindow::swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap) 
 {
 	if (swapSpecial(currPropsMap)) {
 		return;
@@ -1720,13 +1721,14 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, c
 	swapSelectedAux(itemBase, moduleID);
 }
 
-bool MainWindow::swapSpecial(const QMap<QString, QString> & currPropsMap) {
+bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 	ItemBase * itemBase = m_infoView->currentItem();
 	QString pinSpacing, resistance;
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 			ResizableBoard * board = dynamic_cast<ResizableBoard *>(itemBase);
 			if (board == NULL) continue;
+
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(ResizableBoard::customShapeTranslated) == 0) {
 				if (!loadCustomBoardShape()) {
@@ -1737,6 +1739,19 @@ bool MainWindow::swapSpecial(const QMap<QString, QString> & currPropsMap) {
 				return true;
 			}
 		}
+
+		if (key.compare("spacing", Qt::CaseInsensitive) == 0) {
+			MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
+			if (mysteryPart == NULL) continue;
+
+			if (mysteryPart->onlySpacingChanges(currPropsMap)) {
+				m_currentGraphicsView->setSpacing(currPropsMap.value(key));
+				return true;
+			}
+
+			continue;
+		}
+
 		if (key.compare("resistance", Qt::CaseInsensitive) == 0) {
 			resistance = currPropsMap.value(key);
 			continue;

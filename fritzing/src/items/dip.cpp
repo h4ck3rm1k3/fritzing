@@ -26,6 +26,8 @@ $Date$
 
 #include "dip.h"
 
+static QStringList Spacings;
+
 Dip::Dip( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: MysteryPart(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
@@ -41,3 +43,22 @@ bool Dip::collectExtraInfoHtml(const QString & family, const QString & prop, con
 	}
 	return result;
 }
+
+bool Dip::isDIP() {
+	QString package = modelPart()->properties().value("package", "");
+	return (package.indexOf("DIP", 0, Qt::CaseInsensitive) >= 0);
+}
+
+bool Dip::otherPropsChange(const QMap<QString, QString> & propsMap) {
+	QString layout = modelPart()->properties().value("package", "");
+	return (layout.compare(propsMap.value("package", "")) != 0);
+}
+
+const QStringList & Dip::spacings() {
+	if (Spacings.count() == 0) {
+		Spacings << "300mil" << "400mil" << "600mil" << "900mil";
+	}
+
+	return Spacings;
+}
+

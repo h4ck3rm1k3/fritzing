@@ -82,11 +82,10 @@ protected:
 //	save into parts bin
 //	other manifestations of "220"?
 
-Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel, LayerHash & layers)
+Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_changingPinSpacing = false;
-	m_layers = layers;
 	if (Resistances.count() == 0) {
 		Resistances 
 		 << QString("1") + OhmSymbol << QString("1.5") + OhmSymbol << QString("2.2") + OhmSymbol << QString("3.3") + OhmSymbol << QString("4.7") + OhmSymbol << QString("6.8") + OhmSymbol
@@ -144,7 +143,7 @@ Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 Resistor::~Resistor() {
 }
 
-void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash & layers, bool force) {
+void Resistor::setResistance(QString resistance, QString pinSpacing, bool force) {
 	if (resistance.endsWith(OhmSymbol)) {
 		resistance.chop(1);
 	}
@@ -165,6 +164,10 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash &
 			break;
 		case ViewIdentifierClass::PCBView:
 			if (force || pinSpacing.compare(m_pinSpacing) != 0) {
+
+				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+				if (infoGraphicsView == NULL) break;
+
 				// hack the dom element and call setUpImage
 				FSvgRenderer::removeFromHash(this->modelPart()->moduleID(), "");
 				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->modelPartShared()->domDocument(), m_viewIdentifier);
@@ -184,11 +187,11 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, LayerHash &
 				}
 
 				m_changingPinSpacing = true;
-				this->setUpImage(modelPart(), this->viewIdentifier(), layers, this->viewLayerID(), true);
+				this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), true);
 				m_changingPinSpacing = false;
 				
 				foreach (ItemBase * itemBase, m_layerKin) {
-					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), layers, itemBase->viewLayerID(), true);
+					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), infoGraphicsView->viewLayers(), itemBase->viewLayerID(), true);
 				}
 
 				updateConnections();
@@ -305,7 +308,7 @@ QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
 	switch (change) {
 		case ItemSceneHasChanged:
 			if (this->scene()) {
-				setResistance(m_ohms, m_pinSpacing, m_layers, true);
+				setResistance(m_ohms, m_pinSpacing, true);
 			}
 			break;
 		default:

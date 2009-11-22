@@ -149,7 +149,7 @@ ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &moduleID) {
 	if(moduleID == ___emptyString___) {
 		return NULL;
 	}
-	return m_partHash[moduleID];
+	return m_partHash.value(moduleID, NULL);
 }
 
 ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &family, const QMultiHash<QString, QString> &properties) {

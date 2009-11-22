@@ -89,7 +89,7 @@ void PaletteModel::initNames() {
 }
 
 ModelPart * PaletteModel::retrieveModelPart(const QString & moduleID) {
-	ModelPart * modelPart = m_partHash[moduleID];
+	ModelPart * modelPart = m_partHash.value(moduleID, NULL);
 	if (modelPart != NULL) return modelPart;
 
 	if (m_referenceModel != NULL) {
@@ -104,7 +104,7 @@ bool PaletteModel::containsModelPart(const QString & moduleID) {
 }
 
 void PaletteModel::updateOrAddModelPart(const QString & moduleID, ModelPart *newOne) {
-	ModelPart *oldOne = m_partHash[moduleID];
+	ModelPart *oldOne = m_partHash.value(moduleID, NULL);
 	if(oldOne) {
 		oldOne->copy(newOne);
 	} else {
@@ -379,7 +379,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	modelPart->setCore(m_loadingCore);
 	modelPart->setContrib(m_loadingContrib);
 
-	if (m_partHash.contains(moduleID) && m_partHash[moduleID]) {
+	if (m_partHash.value(moduleID, NULL)) {
 		if(!update) {
 			QMessageBox::warning(NULL, QObject::tr("Fritzing"),
 							 QObject::tr("The part '%1' at '%2' does not have a unique module id '%3'.")

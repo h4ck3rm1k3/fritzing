@@ -40,13 +40,13 @@ class Resistor : public PaletteItem
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	Resistor(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel, LayerHash &);
+	Resistor(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~Resistor();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	QString getProperty(const QString & key);
-	void setResistance(QString resistance, QString pinSpacing, LayerHash &, bool force);
+	void setResistance(QString resistance, QString pinSpacing, bool force);
 	QString resistance();
 	QString pinSpacing();
 	const QString & title();
@@ -73,7 +73,6 @@ protected:
 	QString m_ohms;
 	QString m_pinSpacing;
 	QString m_title;
-	LayerHash m_layers;
 	bool m_changingPinSpacing;
 };
 

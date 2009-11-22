@@ -78,7 +78,8 @@ public:
 	virtual void setChipLabel(QString label);
 	virtual void changeWireWidthMils(const QString newWidth);
 	virtual void changeWireColor(const QString newColor);
-	virtual void swap(const QString & family, const QString & prop, const QMap<QString, QString> & propsMap);
+	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap);
+	virtual LayerHash & viewLayers();
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
@@ -88,7 +89,7 @@ public slots:
 signals:
 	void setVoltageSignal(qreal, bool doEmit);
 	void resizeBoardSignal(qreal, qreal, bool doEmit);
-	void swapSignal(const QString & family, const QString & prop, const QMap<QString, QString> & propsMap);
+	void swapSignal(const QString & family, const QString & prop, QMap<QString, QString> & propsMap);
 
 public:
 	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);

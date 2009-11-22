@@ -714,7 +714,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			break;
 		default:
 			if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) == 0) {
-				paletteItem = new Resistor(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true, m_viewLayers);
+				paletteItem = new Resistor(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
 			}
 			else if (modelPart->properties().value("family", "").compare("mystery part", Qt::CaseInsensitive) == 0) {
 				paletteItem = new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
@@ -3728,6 +3728,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
 	if (mysteryPart != NULL) {
 		new SetPropCommand(this, itemBase->id(), "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+		new SetPropCommand(this, itemBase->id(), "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
 	}
 
 	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
@@ -4271,6 +4272,7 @@ long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
 		if (mysteryPart != NULL) {
 			new SetPropCommand(this, newID, "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+			new SetPropCommand(this, newID, "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
 		}
 	
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
@@ -5102,7 +5104,7 @@ const QString & SketchWidget::viewName() {
 }
 
 void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool isLabel, bool isUndoable, bool doEmit) {
-	// isUndoable is true when setInstanceTitle is called from the infoview (via javascript)
+	// isUndoable is true when setInstanceTitle is called from the infoview 
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase != NULL) {
 		if (!isLabel) {
@@ -5532,7 +5534,18 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 	setLastPaletteItemSelected(paletteItem);
 }
 
-// called from javascript (htmlInfoView)
+void SketchWidget::setSpacing(const QString & spacing) {
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
+	if (mysteryPart == NULL) return;
+
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "spacing", mysteryPart->spacing(), spacing, NULL);
+	cmd->setText(tr("Change pin spacing from %1 to %2").arg(mysteryPart->spacing()).arg(spacing));
+	m_undoStack->push(cmd);
+}
+
 void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 {
 	PaletteItem * item = getSelectedPart();
@@ -5565,7 +5578,7 @@ void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpa
 	Resistor * ritem = dynamic_cast<Resistor *>(item);
 	if (ritem == NULL) return;
 
-	ritem->setResistance(resistance, pinSpacing, m_viewLayers, false);
+	ritem->setResistance(resistance, pinSpacing, false);
 	viewItemInfo(item);
 
 	if (doEmit) {
@@ -5573,7 +5586,6 @@ void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpa
 	}
 }
 
-// called from javascript (htmlInfoView)
 void SketchWidget::setChipLabel(QString label)
 {
 	PaletteItem * item = getSelectedPart();
