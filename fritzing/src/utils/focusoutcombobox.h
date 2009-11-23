@@ -27,7 +27,7 @@ $Date$
 #ifndef FOCUSOUTCOMBOBOX_H
 #define FOCUSOUTCOMBOBOX_H
 
-#include <QCombobox>
+#include <QComboBox>
 #include <QFocusEvent>
 
 class FocusOutComboBox : public QComboBox {
