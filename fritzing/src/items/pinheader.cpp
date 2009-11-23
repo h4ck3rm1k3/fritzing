@@ -40,9 +40,12 @@ $Date$
 
 static QStringList Forms;
 static const ushort FemaleSymbol = 9792;
-static const QString FemaleSymbolString = QString::fromUtf16(&FemaleSymbol);
 static const ushort MaleSymbol = 9794;
+static const QString FemaleSymbolString = QString::fromUtf16(&FemaleSymbol);
 static const QString MaleSymbolString = QString::fromUtf16(&MaleSymbol);
+const QString PinHeader::FemaleFormString = FemaleSymbolString + " (female)";
+const QString PinHeader::FemaleRoundedFormString = FemaleSymbolString + " (female rounded)";
+const QString PinHeader::MaleFormString = MaleSymbolString + " (male)";
 
 
 // TODO
@@ -54,8 +57,8 @@ PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 	m_changingForm = false;
 	m_form = modelPart->prop("form").toString();
 	if (m_form.isEmpty()) {
-		m_form = modelPart->properties().value("m_form", FemaleSymbolString + " (female)");
-		modelPart->setProp("m_form", m_form);
+		m_form = modelPart->properties().value("form", FemaleFormString);
+		modelPart->setProp("form", m_form);
 	}
 
 	m_renderer = NULL;
@@ -197,7 +200,7 @@ const QString & PinHeader::form() {
 
 const QStringList & PinHeader::forms() {
 	if (Forms.count() == 0) {
-		Forms << FemaleSymbolString + " (female)" << FemaleSymbolString + " (female rounded)" << MaleSymbolString + " (male)";
+		Forms << FemaleFormString << FemaleRoundedFormString << MaleFormString;
 	}
 	return Forms;
 }
@@ -208,4 +211,14 @@ bool PinHeader::onlyFormChanges(QMap<QString, QString> & propsMap) {
 	if (modelPart()->properties().value("pins", "").compare(propsMap.value("pins", "")) != 0) return false;
 
 	return true;
+}
+
+bool PinHeader::hasCustomSVG() {
+	switch (m_viewIdentifier) {
+		case ViewIdentifierClass::BreadboardView:
+		case ViewIdentifierClass::SchematicView:
+			return true;
+		default:
+			return ItemBase::hasCustomSVG();
+	}
 }

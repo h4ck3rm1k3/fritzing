@@ -48,12 +48,18 @@ public:
 	void setForm(QString form, bool force);
 	const QString & form();
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
+	bool PinHeader::hasCustomSVG();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	ConnectorItem* newConnectorItem(class Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	const QStringList & forms();
+
+public:
+	static const QString FemaleFormString;
+	static const QString FemaleRoundedFormString;
+	static const QString MaleFormString;
 
 protected:
 	class FSvgRenderer * m_renderer;

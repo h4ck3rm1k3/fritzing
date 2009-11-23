@@ -26,6 +26,7 @@ $Date$
 
 #include "modelbase.h"
 #include "../debugdialog.h"
+#include "../items/pinheader.h"
 
 #include <QMessageBox>
 
@@ -128,6 +129,32 @@ ModelPart * ModelBase::fixObsoleteModuleID(QDomDocument & domDocument, QDomEleme
 			instance.appendChild(prop);
 			prop.setAttribute("name", "spacing");
 			prop.setAttribute("value", spacing);
+			return modelPart;
+		}
+	}
+
+	if (moduleIDRef.startsWith("generic_male")) {
+		moduleIDRef.replace("male", "female");
+		ModelPart * modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
+		if (modelPart != NULL) {
+			instance.setAttribute("moduleIdRef", moduleIDRef);
+			QDomElement prop = domDocument.createElement("property");
+			instance.appendChild(prop);
+			prop.setAttribute("name", "form");
+			prop.setAttribute("value", PinHeader::MaleFormString);
+			return modelPart;
+		}
+	}
+
+	if (moduleIDRef.startsWith("generic_rounded_female")) {
+		moduleIDRef.replace("rounded_female", "female");
+		ModelPart * modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
+		if (modelPart != NULL) {
+			instance.setAttribute("moduleIdRef", moduleIDRef);
+			QDomElement prop = domDocument.createElement("property");
+			instance.appendChild(prop);
+			prop.setAttribute("name", "form");
+			prop.setAttribute("value", PinHeader::FemaleRoundedFormString);
 			return modelPart;
 		}
 	}
