@@ -75,6 +75,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../items/resistor.h"
 #include "../items/mysterypart.h"
+#include "../items/pinheader.h"
 #include "../items/dip.h"
 #include "../items/groundplane.h"
 #include "../items/moduleidnames.h"
@@ -713,17 +714,23 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			paletteItem = new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		default:
-			if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) == 0) {
-				paletteItem = new Resistor(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
-			}
-			else if (modelPart->properties().value("family", "").compare("mystery part", Qt::CaseInsensitive) == 0) {
-				paletteItem = new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
-			}
-			else if (modelPart->properties().value("family", "").compare("generic IC", Qt::CaseInsensitive) == 0) {
-				paletteItem = new Dip(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
-			}
-			else {
-				paletteItem = new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
+			{
+				QString family = modelPart->properties().value("family", "");
+				if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) == 0) {
+					paletteItem = new Resistor(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
+				}
+				else if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
+					paletteItem = new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
+				}
+				else if (family.compare("pin header", Qt::CaseInsensitive) == 0) {
+					paletteItem = new PinHeader(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
+				}
+				else if (family.compare("generic IC", Qt::CaseInsensitive) == 0) {
+					paletteItem = new Dip(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
+				}
+				else {
+					paletteItem = new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
+				}
 			}
 			break;
 	}
@@ -3731,6 +3738,11 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 		new SetPropCommand(this, itemBase->id(), "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
 	}
 
+	PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
+	if (pinHeader != NULL) {
+		new SetPropCommand(this, itemBase->id(), "form", pinHeader->form(), pinHeader->form(), parentCommand);
+	}
+
 	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
 	if (resistor != NULL) {
 		new SetResistanceCommand(this, itemBase->id(), resistor->resistance(), resistor->resistance(), resistor->pinSpacing(), resistor->pinSpacing(), parentCommand);
@@ -4273,6 +4285,11 @@ long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		if (mysteryPart != NULL) {
 			new SetPropCommand(this, newID, "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
 			new SetPropCommand(this, newID, "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
+		}
+	
+		PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
+		if (pinHeader != NULL) {
+			new SetPropCommand(this, newID, "form", pinHeader->form(), pinHeader->form(), parentCommand);
 		}
 	
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
@@ -5543,6 +5560,18 @@ void SketchWidget::setSpacing(const QString & spacing) {
 
 	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "spacing", mysteryPart->spacing(), spacing, NULL);
 	cmd->setText(tr("Change pin spacing from %1 to %2").arg(mysteryPart->spacing()).arg(spacing));
+	m_undoStack->push(cmd);
+}
+
+void SketchWidget::setForm(const QString & form) {
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	PinHeader * pinHeader = dynamic_cast<PinHeader *>(item);
+	if (pinHeader == NULL) return;
+
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "form", pinHeader->form(), form, NULL);
+	cmd->setText(tr("Change form from %1 to %2").arg(pinHeader->form()).arg(form));
 	m_undoStack->push(cmd);
 }
 

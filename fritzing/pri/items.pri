@@ -29,6 +29,7 @@ HEADERS += \
     src/items/mysterypart.h \
     src/items/paletteitem.h \
     src/items/paletteitembase.h \
+    src/items/pinheader.h \
     src/items/resistor.h \
     src/items/resizableboard.h \
     src/items/symbolpaletteitem.h \
@@ -48,9 +49,10 @@ SOURCES += \
     src/items/mysterypart.cpp \
     src/items/paletteitem.cpp \
     src/items/paletteitembase.cpp \
-	src/items/resistor.cpp \
-	src/items/resizableboard.cpp \
-	src/items/symbolpaletteitem.cpp \
+    src/items/pinheader.cpp \
+    src/items/resistor.cpp \
+    src/items/resizableboard.cpp \
+    src/items/symbolpaletteitem.cpp \
     src/items/tracewire.cpp \
     src/items/virtualwire.cpp \
     src/items/wire.cpp 

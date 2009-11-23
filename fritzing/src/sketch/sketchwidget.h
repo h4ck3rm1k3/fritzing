@@ -437,6 +437,7 @@ public slots:
 	void setProp(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setChipLabel(QString label);
 	void setSpacing(const QString & spacing);
+	void setForm(const QString & form);
 
 protected:
 	enum StatusConnectStatus {

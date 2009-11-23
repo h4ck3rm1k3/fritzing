@@ -62,6 +62,7 @@ $Date$
 #include "utils/textutils.h"
 #include "utils/graphicsutils.h"
 #include "items/mysterypart.h"
+#include "items/pinheader.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -1738,6 +1739,18 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 				}
 				return true;
 			}
+		}
+
+		if (key.compare("form", Qt::CaseInsensitive) == 0) {
+			PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
+			if (pinHeader == NULL) continue;
+
+			if (pinHeader->onlyFormChanges(currPropsMap)) {
+				m_currentGraphicsView->setForm(currPropsMap.value(key));
+				return true;
+			}
+
+			continue;
 		}
 
 		if (key.compare("spacing", Qt::CaseInsensitive) == 0) {

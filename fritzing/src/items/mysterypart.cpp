@@ -276,10 +276,6 @@ bool MysteryPart::hasCustomSVG() {
 }
 
 QObject * MysteryPart::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
-	Q_UNUSED(paramValues);
-
 	if (classid.compare("ChipLabelInput", Qt::CaseInsensitive) != 0) {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
