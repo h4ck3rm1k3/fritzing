@@ -27,60 +27,108 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 #include "autoclosemessagebox.h"
 #include "../debugdialog.h"
 
+static const int Interval = 30;
+static const int Steps = 7;
+static const int Wait = 100;
+
 
 AutoCloseMessageBox::AutoCloseMessageBox( QWidget * parent ) 
-	: QMessageBox(parent)
+	: QLabel(parent)
 {
-	m_closeTimer = NULL;
-	setAttribute(Qt::WA_DeleteOnClose, true);
+	setWordWrap(true);
 }
 
-void AutoCloseMessageBox::autoExec(long ms) {
-	setUp(ms);
-	exec();
-}
-
-void AutoCloseMessageBox::autoShow(long ms) {
-	setUp(ms);
-	this->setModal(false);
-	show();
-	//Qt::WindowFlags flags = windowFlags();
-	//setWindowFlags(flags);
+void AutoCloseMessageBox::setStartPos(int x, int y) {
+	m_startX = x;
+	m_startY = y;
 	QRect r = this->geometry();
-	r.moveTo(r.left(), parentWidget()->height() - this->height() + parentWidget()->pos().y());
-	this->setGeometry(r);
+	r.moveTo(x, y);
+	setGeometry(r);
 }
 
-void AutoCloseMessageBox::setUp(long ms) {
-	m_closeTimer = new QTimer(this);
-	m_closeTimer->setSingleShot(true);
-	connect(m_closeTimer, SIGNAL(timeout()), this, SLOT(autoClose()));
-	m_closeTimer->start(ms);
+void AutoCloseMessageBox::setEndPos(int x, int y) {
+	m_endX = x;
+	m_endY = y;
 }
 
-void AutoCloseMessageBox::autoClose() {
-	close();
+void AutoCloseMessageBox::start() {
+	m_counter = Steps;
+	m_animationTimer.setInterval(Interval);
+	m_animationTimer.setSingleShot(false);
+	connect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(moveOut()));
+	m_movingState = MovingOut;
+	m_animationTimer.start();
+	show();
 }
-
 
 void AutoCloseMessageBox::mousePressEvent(QMouseEvent * event) {
 	Q_UNUSED(event);
-	close();
-}
 
-void AutoCloseMessageBox::closeEvent(QCloseEvent * event) {
-	if (m_closeTimer) {
-		m_closeTimer->stop();
+	if (m_movingState != MovingBack) {
+		m_animationTimer.stop();
+		if (m_movingState == MovingOut) {
+			disconnect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(moveOut()));
+		}
+		else if (m_movingState = Waiting) {
+			disconnect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(wait()));
+		}
+
+		prepMoveBack();
 	}
-	QDialog::closeEvent(event);
 }
 
-/*
-//	example usage:
-		AutoCloseMessageBox messageBox(this);
-		messageBox.setIcon(QMessageBox::Information);
-		messageBox.setWindowTitle(tr("Fritzing"));
-		messageBox.setText(tr("Fritzing doesn't yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted."));
-		messageBox.setStandardButtons(QMessageBox::Ok);
-		messageBox.autoExec(10 * 1000);  // msec
-*/
+
+void AutoCloseMessageBox::moveOut() {
+	if (--m_counter == 0) {
+		m_animationTimer.stop();
+		disconnect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(moveOut()));
+		m_movingState = Waiting;
+		QRect r = geometry();
+		r.moveTo(m_endX, m_endY);
+		setGeometry(r);
+		m_counter = Wait;
+		connect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(wait()));
+		m_animationTimer.start();
+		return;
+	}
+
+	QRect r = geometry();
+	int dx = (m_endX - r.x()) / m_counter;
+	int dy = (m_endY - r.y()) / m_counter;
+	r.translate(dx, dy);
+	setGeometry(r);
+}
+
+
+void AutoCloseMessageBox::moveBack() {
+	if (--m_counter == 0) {
+		m_animationTimer.stop();
+		disconnect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(moveOut()));
+		QRect r = geometry();
+		r.moveTo(m_startX, m_startY);
+		setGeometry(r);
+		this->deleteLater();
+		return;
+	}
+
+	QRect r = geometry();
+	int dx = (m_startX - r.x()) / m_counter;
+	int dy = (m_startY - r.y()) / m_counter;
+	r.translate(dx, dy);
+	setGeometry(r);
+}
+
+void AutoCloseMessageBox::wait() {
+	if (--m_counter == 0) {
+		m_animationTimer.stop();
+		disconnect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(wait()));
+		prepMoveBack();
+	}
+}
+
+void AutoCloseMessageBox::prepMoveBack() {
+	m_counter = Steps;
+	m_movingState = MovingBack;
+	connect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(moveBack()));
+	m_animationTimer.start();
+}

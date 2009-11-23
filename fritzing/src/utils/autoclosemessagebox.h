@@ -27,28 +27,42 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 #ifndef AUTOCLOSEMESSAGEBOX_H
 #define AUTOCLOSEMESSAGEBOX_H
 
-#include <QMessageBox>
+#include <QLabel>
 #include <QTimer>
 
-class AutoCloseMessageBox : public QMessageBox
+class AutoCloseMessageBox : public QLabel
 {
 Q_OBJECT
 public:
 	AutoCloseMessageBox(QWidget * parent);
-	void autoExec(long ms);
-	void autoShow(long ms);
+
+	void setStartPos(int x, int y);
+	void setEndPos(int x, int y);
+	void start();
 
 protected:
-	void setUp(long ms);
 	void mousePressEvent(QMouseEvent *);
+	void prepMoveBack();
 
 protected slots:
-	void autoClose();
-	void closeEvent(QCloseEvent * event);
+	void moveOut();
+	void moveBack();
+	void wait();
 
 protected:
-	QTimer * m_closeTimer;
+	enum MovingState {
+		MovingOut,
+		Waiting,
+		MovingBack
+	};
 
+	volatile MovingState m_movingState;
+	int m_endX;
+	int m_endY;
+	int m_startX;
+	int m_startY;
+	QTimer m_animationTimer;
+	int m_counter;
 };
 
 #endif

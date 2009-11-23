@@ -32,15 +32,15 @@ $Date$
 #include <QStringList>
 #include <QFileInfoList>
 #include <QDir>
-
+#include <QLabel>
 #include <QTime>
 #include <QCleanlooksStyle>
-#include <QDir>
 #include <QSettings>
 #include <QRegExpValidator>
 #include <QRegExp>
 #include <QPaintDevice>
 #include <QPixmap>
+#include <QTimer>
 
 #include "items/paletteitem.h"
 #include "mainwindow.h"
@@ -1709,14 +1709,14 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	itemBase = itemBase->layerKinChief();
 
 	if(!exactMatch) {
-		// TODO: andre wants some kind of special disappearing message that's not the status bar
-		// and not the autorouting status message
-		AutoCloseMessageBox * messageBox = new AutoCloseMessageBox(this);
-		messageBox->setIcon(QMessageBox::Information);
-		messageBox->setWindowTitle(tr("Fritzing"));
-		messageBox->setText(tr("Fritzing doesn't yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted."));
-		messageBox->setStandardButtons(QMessageBox::NoButton);
-		messageBox->autoShow(4 * 1000);  // msec
+		AutoCloseMessageBox * acmb = new AutoCloseMessageBox(this);
+		acmb->setText("Note: Fritzing was unable to find a part that exactly matched all selected properties.");
+		acmb->adjustSize();
+		QRect r = this->geometry();
+		QRect s = acmb->geometry();
+		acmb->setStartPos((r.width() - s.width()) / 2, r.height());
+		acmb->setEndPos((r.width() - s.width()) / 2, r.height() - s.height());
+		acmb->start();
 	}
 
 	swapSelectedAux(itemBase, moduleID);
@@ -2012,3 +2012,4 @@ void MainWindow::statusMessage(QString message, int timeout) {
 		sb->showMessage(message, timeout);
 	}
 }
+

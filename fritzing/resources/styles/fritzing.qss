@@ -233,6 +233,14 @@ FDockWidget::float-button:pressed {
  	background-image: url(:/resources/images/icons/dockWidgetFloatPressed_icon.png);
 }
 
+
+AutoCloseMessageBox {
+	background-color: #FFFFE1;
+	border: 1px solid black;
+	padding: 5px;
+	font-size: 12px;
+}
+
 /* INFO VIEW */
 HtmlInfoView {
 	border: 1px solid rgb(117,117,117);
