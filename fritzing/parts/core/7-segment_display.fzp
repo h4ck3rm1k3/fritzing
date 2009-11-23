@@ -2,6 +2,7 @@
 <module fritzingVersion="0.3.11" moduleId="f2341c24e2a6d9182a55c653b6bbefed">
     <author>lionelmichel</author>
     <title>7-Segment LED Display</title>
+    <label>DI</label>
     <date>2009-11-12</date>
     <tags>LED, 7-Segment, display, output</tags>
     <properties>
