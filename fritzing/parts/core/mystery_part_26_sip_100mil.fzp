@@ -13,7 +13,7 @@
   <property name="family" >Mystery Part</property>
   <property name="pins">26</property>
   <property name="layout">Single Row</property>
-  <property name="spacing">300mil</property>
+  <property name="pin spacing">100mil</property>
   <property name="chip label">?</property>
  </properties>
  <taxonomy>part.mystery.magical.26pins</taxonomy>
