@@ -35,6 +35,7 @@
         <sketch id="Blink"/>
         <sketch id="Loop"/>
         <sketch id="TrafficLight"/>
+				<sketch id="Shift_Register"/>
       </category>
       <category name="Input">
         <sketch id="Button"/>
@@ -83,6 +84,7 @@
         <sketch id="Blink"/>
         <sketch id="Loop"/>
         <sketch id="TrafficLight"/>
+				<sketch id="Shift_Register"/>
         <sketch id="AnalogInputOutput"/>
       </category>
       <category name="Display">
