@@ -133,7 +133,7 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2) {
 	if (root1.tagName() != "svg") return ___emptyString___;
 
 	QDomElement root2 = doc2.documentElement();
-	if (root2.tagName() != "svg") ___emptyString___;
+	if (root2.tagName() != "svg") return ___emptyString___;
 
 	QDomNode node = root2.firstChild();
 	while (!node.isNull()) {

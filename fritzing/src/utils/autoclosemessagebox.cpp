@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2085 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -69,7 +69,7 @@ void AutoCloseMessageBox::mousePressEvent(QMouseEvent * event) {
 		if (m_movingState == MovingOut) {
 			disconnect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(moveOut()));
 		}
-		else if (m_movingState = Waiting) {
+		else if (m_movingState == Waiting) {
 			disconnect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(wait()));
 		}
 

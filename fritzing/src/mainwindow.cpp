@@ -1710,13 +1710,17 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 
 	if(!exactMatch) {
 		AutoCloseMessageBox * acmb = new AutoCloseMessageBox(this);
-		acmb->setText("Note: Fritzing was unable to find a part that exactly matched all selected properties.");
-		acmb->adjustSize();
-		QRect r = this->geometry();
-		QRect s = acmb->geometry();
-		acmb->setStartPos((r.width() - s.width()) / 2, r.height());
-		acmb->setEndPos((r.width() - s.width()) / 2, r.height() - s.height());
-		acmb->start();
+		acmb->setText("No exactly matching part found; Fritzing chose the closest match.");
+		if (m_statusBar != NULL) {
+			QRect dest = m_statusBar->geometry(); // toolbar->geometry();
+			QRect r = this->geometry();
+			acmb->setFixedSize(QSize(dest.width(), dest.height()));
+			QPoint p(dest.x(), dest.y());
+			p = m_statusBar->parentWidget()->mapTo(this, p);
+			acmb->setStartPos(p.x(), r.height());
+			acmb->setEndPos(p.x(), p.y());
+			acmb->start();
+		}
 	}
 
 	swapSelectedAux(itemBase, moduleID);

@@ -52,6 +52,7 @@ public:
 	static QWidget *separator(QWidget* parent);
 	class ExpandingLabel * routingStatusLabel();
 	void setRoutingStatusLabel(ExpandingLabel *);
+	QFrame * toolbar();
 
 protected:
 	void createLayout();

@@ -142,3 +142,7 @@ void SketchAreaWidget::setRoutingStatusLabel(ExpandingLabel * rsl) {
 ExpandingLabel * SketchAreaWidget::routingStatusLabel() {
 	return m_routingStatusLabel;
 }
+
+QFrame * SketchAreaWidget::toolbar() {
+	return m_toolbar;
+}
