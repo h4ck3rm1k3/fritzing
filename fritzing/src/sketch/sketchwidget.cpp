@@ -244,24 +244,36 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
 			if (item != NULL) {
 				zmap.insert(viewGeometry.z() - floor(viewGeometry.z()), item);   
-				const char * className = item->metaObject()->className();
-				if (strcmp(className, "PaletteItem") == 0) {
+				bool gotOne = false;
+				if (!gotOne) {
 					PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
-					// wires don't have transforms
-					paletteItem->setTransforms();
+					if (paletteItem != NULL) {
+						// wires don't have transforms
+						paletteItem->setTransforms();
+						gotOne = true;
+					}
 				}
-				else if (strcmp(className, "Wire") == 0) {
+				if (!gotOne) {
 					Wire * wire = dynamic_cast<Wire *>(item);
-					QDomElement extras = view.firstChildElement("wireExtras");
-					wire->setExtras(extras, this);
+					if (wire != NULL) {
+						QDomElement extras = view.firstChildElement("wireExtras");
+						wire->setExtras(extras, this);
+						gotOne = true;
+					}
 				}
-				else if (strcmp(className, "Note") == 0) {
+				if (!gotOne) {
 					Note * note = dynamic_cast<Note *>(item);
-					note->setText(mp->instanceText(), true);
+					if (note != NULL) {
+						note->setText(mp->instanceText(), true);
+						gotOne = true;
+					}
 				}
-				else if (strcmp(className, "GroupItem") == 0) {
+				if (!gotOne) {
 					GroupItem * groupItem = dynamic_cast<GroupItem *>(item);
-					groupItem->setTransforms();
+					if (groupItem != NULL) {
+						groupItem->setTransforms();
+						gotOne = true;
+					}
 				}
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file

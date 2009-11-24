@@ -252,7 +252,7 @@ bool Resistor::collectExtraInfoHtml(const QString & family, const QString & prop
 {
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("resistance");
-		returnValue = "<object type='application/x-qt-plugin' classid='ResistanceInput' width='65px' height='22px'></object>";  
+		returnValue = "<object type='application/x-qt-plugin' classid='ResistanceInput' width='100%' height='22px'></object>";  
 		return true;
 	}
 

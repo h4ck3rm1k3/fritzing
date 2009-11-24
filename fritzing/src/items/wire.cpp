@@ -1243,7 +1243,7 @@ bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, co
 	if (prop.compare("color", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("color");
 		if (canChangeColor()) {
-			returnValue = "<object type='application/x-qt-plugin' classid='WireColorInput' width='100px' height='22px'></object>";
+			returnValue = "<object type='application/x-qt-plugin' classid='WireColorInput' width='100%' height='22px'></object>";
 		}
 		else {
 			returnValue = colorString();

@@ -1505,7 +1505,7 @@ bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop
 		QString tempValue;
 		QStringList values = collectValues(family, prop, tempValue);
 		if (values.count() > 1) {
-			returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2', value='%3' width='125px' height='22px'></object>")
+			returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2', value='%3' width='100%' height='22px'></object>")
 									.arg(prop).arg(family).arg(value);
 			m_propsMap.insert(prop, value);
 		}

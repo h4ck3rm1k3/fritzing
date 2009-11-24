@@ -41,7 +41,7 @@ bool TraceWire::collectExtraInfoHtml(const QString & family, const QString & pro
 {
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
-		returnValue = "<object type='application/x-qt-plugin' classid='WireWidthInput' width='125px' height='22px'></object>";
+		returnValue = "<object type='application/x-qt-plugin' classid='WireWidthInput' width='100%' height='22px'></object>";
 		return true;
 	}
 

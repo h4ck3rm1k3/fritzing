@@ -221,7 +221,7 @@ bool MysteryPart::collectExtraInfoHtml(const QString & family, const QString & p
 {
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("label");
-		returnValue = "<object type='application/x-qt-plugin' classid='ChipLabelInput' width='150px' height='22px'></object>";  
+		returnValue = "<object type='application/x-qt-plugin' classid='ChipLabelInput' width='100%' height='22px'></object>";  
 		return true;
 	}
 
