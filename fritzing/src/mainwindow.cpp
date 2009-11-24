@@ -1710,7 +1710,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 
 	if(!exactMatch) {
 		AutoCloseMessageBox * acmb = new AutoCloseMessageBox(this);
-		acmb->setText("No exactly matching part found; Fritzing chose the closest match.");
+		acmb->setText(tr("No exactly matching part found; Fritzing chose the closest match."));
 		if (m_statusBar != NULL) {
 			QRect dest = m_statusBar->geometry(); // toolbar->geometry();
 			QRect r = this->geometry();
