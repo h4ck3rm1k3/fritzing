@@ -48,7 +48,7 @@ public:
 	void setForm(QString form, bool force);
 	const QString & form();
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
-	bool PinHeader::hasCustomSVG();
+        bool hasCustomSVG();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
