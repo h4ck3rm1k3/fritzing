@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
-<svg version="1.1" baseProfile="basic" id="svg" xmlns:xml="http://www.w3.org/XML/1998/namespace"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1.5087in"
-	 height="1.8048in" viewBox="0 0 108.633 129.947" xml:space="preserve">
-<rect id="connector2pin" x="96.568" y="63.88" width="9.781" height="1.896"/>
-<rect id="connector2terminal" x="105.627" y="64.395" width="0.688" height="0.866"/>
-<rect id="connector0pin" x="0.82" y="63.884" width="9.783" height="1.893"/>
-<rect id="connector0terminal" x="0.207" y="64.363" width="0.688" height="0.867"/>
-<rect id="connector1pin" x="0.681" y="85.69" width="9.783" height="1.895"/>
-<rect id="connector1terminal" y="86.239" width="0.686" height="0.865"/>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="svg" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1.21in"
+	 height="1.78in" viewBox="0 0 87.48 128.246" enable-background="new 0 0 87.48 128.246" xml:space="preserve">
+<rect id="connector2pin" x="51.977" y="1.7" width="1.896" height="9.779"/>
+<rect id="connector2terminal" x="52.492" y="1.733" width="0.865" height="0.688"/>
+<rect id="connector0pin" x="1.613" y="63.635" width="9.782" height="1.895"/>
+<rect id="connector0terminal" x="1" y="64.115" width="0.688" height="0.866"/>
+<rect id="connector1pin" x="51.979" y="117.782" width="1.896" height="9.781"/>
+<rect id="connector1terminal" x="52.527" y="127.558" width="0.865" height="0.688"/>
 <g id="schematic">
-	<g>
-		<polyline fill="#FFFFFF" stroke="#000000" stroke-width="2.4" stroke-linecap="round" points="106.309,64.812 63.381,64.812 
-			61.518,68.312 57.482,61.065 53.448,68.312 49.416,61.065 45.381,68.312 41.347,61.065 39.175,64.812 0.207,64.812 		"/>
-		<polygon points="61.01,46.948 58.922,56.983 53.661,54.095 		"/>
-		<polyline fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" points="58.2,52.013 39.723,86.638 
-			0.076,86.632 		"/>
-	</g>
 	
-		<rect x="21.438" y="1.201" fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" width="63.796" height="127.546"/>
+		<rect x="22.13" y="21.904" fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" width="63.793" height="85.537"/>
 	<g>
 		<g>
 			<g id="schematic_2_">
 				<g>
-					<polygon points="37.396,14.64 39.04,19.19 34.966,16.578 36.18,15.608 					"/>
-					<path d="M33.545,16.648l2.115-1.688l1.215-0.968l0.901-0.722l2.868,7.938L33.545,16.648L33.545,16.648z"/>
-					<path d="M37.918,19.114l-7.794-9.766c-0.283-0.359-0.228-0.88,0.135-1.166l0,0c0.354-0.285,0.879-0.227,1.162,0.132l0,0
-						l7.794,9.767c0.285,0.359,0.229,0.879-0.133,1.165l0,0c-0.15,0.122-0.337,0.181-0.517,0.181l0,0
-						C38.322,19.426,38.082,19.319,37.918,19.114L37.918,19.114z"/>
-					<polygon points="42.75,9.818 44.393,14.368 40.32,11.756 41.535,10.787 					"/>
-					<path d="M38.899,11.828l2.117-1.689l1.215-0.968l0.901-0.721l2.875,7.939L38.899,11.828L38.899,11.828z"/>
-					<path d="M43.272,14.293L37.2,6.685c-0.284-0.359-0.227-0.88,0.133-1.166l0,0c0.354-0.286,0.883-0.226,1.164,0.132l0,0
-						l6.07,7.609c0.286,0.356,0.229,0.878-0.131,1.164l0,0c-0.153,0.122-0.335,0.181-0.519,0.181l0,0
-						C43.676,14.605,43.435,14.498,43.272,14.293L43.272,14.293z"/>
+					<polygon points="38.087,35.342 39.731,39.89 35.657,37.28 36.871,36.309 					"/>
+					<path d="M34.236,37.349l2.115-1.688l1.215-0.969l0.901-0.722l2.867,7.938L34.236,37.349L34.236,37.349z"/>
+					<path d="M38.609,39.815l-7.794-9.766c-0.282-0.359-0.228-0.88,0.136-1.166l0,0c0.354-0.285,0.879-0.228,1.161,0.132l0,0
+						l7.794,9.768c0.285,0.357,0.229,0.879-0.133,1.165l0,0c-0.15,0.121-0.337,0.181-0.518,0.181l0,0
+						C39.014,40.128,38.773,40.02,38.609,39.815L38.609,39.815z"/>
+					<polygon points="43.441,30.519 45.084,35.069 41.011,32.458 42.226,31.489 					"/>
+					<path d="M39.59,32.53l2.117-1.688l1.215-0.968l0.901-0.723l2.875,7.938L39.59,32.53L39.59,32.53z"/>
+					<path d="M43.963,34.995l-6.071-7.607c-0.284-0.358-0.228-0.88,0.133-1.166l0,0c0.354-0.286,0.883-0.226,1.164,0.132l0,0
+						l6.069,7.608c0.286,0.355,0.229,0.878-0.131,1.164l0,0c-0.153,0.122-0.335,0.182-0.519,0.182l0,0
+						C44.367,35.306,44.126,35.2,43.963,34.995L43.963,34.995z"/>
 				</g>
 			</g>
 		</g>
 		<g>
 			<polygon fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" points="
-				43.453,35.446 52.751,19.353 62.042,35.446 			"/>
+				44.143,56.146 53.441,40.053 62.73,56.146 			"/>
 			
-				<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" x1="43.453" y1="19.353" x2="62.042" y2="19.353"/>
+				<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" x1="44.143" y1="40.053" x2="62.73" y2="40.053"/>
 		</g>
 		<g id="schematic_3_">
 			<g>
-				<polygon points="73.479,116.483 75.122,121.036 71.049,118.423 72.264,117.454 				"/>
-				<path d="M69.627,118.493l2.115-1.688l1.215-0.972l0.902-0.725l2.867,7.938L69.627,118.493L69.627,118.493z"/>
-				<path d="M74,120.96l-7.793-9.77c-0.283-0.355-0.229-0.881,0.135-1.166l0,0c0.354-0.281,0.879-0.229,1.162,0.135l0,0l7.795,9.768
-					c0.283,0.359,0.229,0.881-0.135,1.164l0,0c-0.148,0.123-0.336,0.184-0.516,0.184l0,0C74.404,121.272,74.165,121.165,74,120.96
-					L74,120.96z"/>
-				<path d="M62.782,120.048l2.116-1.688l1.215-0.968l0.9-0.723l2.875,7.938L62.782,120.048L62.782,120.048z"/>
-				<path d="M67.154,122.517l-6.069-7.606c-0.283-0.358-0.229-0.883,0.133-1.166l0,0c0.354-0.285,0.882-0.228,1.166,0.133l0,0
-					l6.064,7.607c0.286,0.354,0.229,0.877-0.132,1.161l0,0c-0.149,0.123-0.334,0.185-0.516,0.185l0,0
-					C67.559,122.825,67.316,122.72,67.154,122.517L67.154,122.517z"/>
+				<polygon points="74.168,95.177 75.811,99.73 71.738,97.119 72.953,96.149 				"/>
+				<path d="M70.316,97.188l2.114-1.688l1.216-0.972l0.9-0.727l2.867,7.938L70.316,97.188L70.316,97.188z"/>
+				<path d="M74.689,99.656l-7.793-9.771c-0.283-0.354-0.229-0.881,0.135-1.166l0,0c0.354-0.281,0.879-0.229,1.162,0.135l0,0
+					l7.795,9.769c0.283,0.357,0.229,0.881-0.135,1.164l0,0c-0.148,0.123-0.338,0.184-0.518,0.184l0,0
+					C75.093,99.967,74.854,99.859,74.689,99.656L74.689,99.656z"/>
+				<path d="M63.472,98.744l2.116-1.688l1.215-0.968l0.898-0.723l2.875,7.938L63.472,98.744L63.472,98.744z"/>
+				<path d="M67.844,101.213l-6.068-7.605c-0.283-0.357-0.229-0.883,0.133-1.166l0,0c0.354-0.284,0.883-0.229,1.166,0.134l0,0
+					l6.063,7.605c0.286,0.354,0.229,0.877-0.132,1.161l0,0c-0.148,0.123-0.334,0.185-0.518,0.185l0,0
+					C68.248,101.519,68.006,101.416,67.844,101.213L67.844,101.213z"/>
 			</g>
 		</g>
 		<g>
-			<polygon fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" points="
-				62.042,94.362 52.751,110.456 43.453,94.362 			"/>
+			<polygon fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" points="62.73,73.058 
+				53.441,89.151 44.143,73.058 			"/>
 			
-				<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" x1="62.042" y1="110.456" x2="43.453" y2="110.456"/>
+				<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" x1="62.73" y1="89.151" x2="44.143" y2="89.151"/>
+			
+				<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" x1="20.731" y1="64.549" x2="2.143" y2="64.549"/>
+			
+				<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" x1="52.926" y1="127.03" x2="52.926" y2="108.441"/>
+			
+				<line fill="none" stroke="#000000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" x1="52.926" y1="20.654" x2="52.926" y2="2.065"/>
 		</g>
 	</g>
 </g>
