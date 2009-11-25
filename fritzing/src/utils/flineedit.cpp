@@ -37,14 +37,14 @@ FLineEdit::~FLineEdit()
 }
 
 void FLineEdit::editingFinishedSlot() {
-	setReadOnly(true);
+	m_readOnly = true;
 	emit editable(false);
 	setCursor(Qt::IBeamCursor);
 }
 
 void FLineEdit::mousePressEvent ( QMouseEvent * event ) {
-	if (isReadOnly()) {
-		setReadOnly(false);
+	if (m_readOnly) {
+		m_readOnly = false;
 		emit editable(true);
 	}
 
@@ -53,14 +53,14 @@ void FLineEdit::mousePressEvent ( QMouseEvent * event ) {
 
 void FLineEdit::enterEvent(QEvent * event) {
 	QLineEdit::enterEvent(event);
-	if (isReadOnly()) {
+	if (m_readOnly) {
 		emit mouseEnter();
 	}
 }
 
 void FLineEdit::leaveEvent(QEvent * event) {
 	QLineEdit::leaveEvent(event);
-	if (isReadOnly()) {
+	if (m_readOnly) {
 		emit mouseLeave();
 	}
 }

@@ -49,6 +49,9 @@ signals:
 
 protected slots:
 	void editingFinishedSlot();
+	
+protected:
+	bool m_readOnly;						// was using readOnly() but mac didn't like it
 
 };
 
