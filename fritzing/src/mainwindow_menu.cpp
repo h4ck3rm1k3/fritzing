@@ -2376,6 +2376,60 @@ void MainWindow::exportToGerber() {
         return;
     }
 
+	if (m_pcbGraphicsView->partLabelsVisible()) {
+		// add labels to silkscreen layer
+		m_pcbGraphicsView->saveLayerVisibility();
+		m_pcbGraphicsView->setAllLayersVisible(false);
+		m_pcbGraphicsView->setLayerVisible(ViewLayer::SilkscreenLabel, true);
+
+		QList<QGraphicsItem*> selItems = m_currentGraphicsView->scene()->selectedItems();
+		foreach(QGraphicsItem *item, selItems) {
+			item->setSelected(false);
+		}
+
+		QSizeF boardImageSize = board->size();
+		qreal res = GraphicsUtils::StandardFritzingDPI;
+
+		QRectF source = board->boundingRect();
+		QPointF p = board->mapToScene(QPointF(0,0));
+		source.moveTo(p.x(), p.y());
+		int swidth = source.width();
+		int sheight = source.height();
+		int twidth = res * swidth / FSvgRenderer::printerScale();
+		int theight = res * sheight / FSvgRenderer::printerScale();
+
+		QSize imgSize(twidth, theight);
+		QImage image(imgSize, QImage::Format_RGB32);
+		image.setDotsPerMeterX(res * 39.3700787);
+		image.setDotsPerMeterY(res * 39.3700787);
+		QPainter painter;
+		QBrush brush = m_pcbGraphicsView->scene()->backgroundBrush();
+		m_pcbGraphicsView->scene()->setBackgroundBrush(Qt::black);
+
+		painter.begin(&image);
+		QRectF target(0, 0, twidth, theight);
+		m_pcbGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+		painter.end();
+
+		GroundPlaneGenerator gpg;
+		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI);
+		foreach (QString gsvg, gpg.newSVGs()) {
+			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg);
+		}
+
+		//image.save("C:/fritzing2/fz/labeltest.png");
+
+		foreach(QGraphicsItem *item, selItems) {
+			item->setSelected(true);
+		}
+
+		m_pcbGraphicsView->scene()->setBackgroundBrush(brush);
+		m_pcbGraphicsView->restoreLayerVisibility();
+	}
+
+
+
+
 	/*
 	// for debugging silkscreen svg
     QFile silkout("silk.svg");
@@ -3036,7 +3090,7 @@ void MainWindow::groundFill()
 	exceptions << m_pcbGraphicsView->background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
-	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board);
+	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */);
 	if (result == false) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
 		return;

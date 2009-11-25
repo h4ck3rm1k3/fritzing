@@ -384,7 +384,7 @@ void SVG2gerber::allPaths2gerber() {
         QDomElement polygon = polyList.item(p).toElement();
 
         QString points = polygon.attribute("points");
-        QStringList pointList = points.split(",");
+		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
 
         //start poly area fill
         m_gerber_paths += "G36*\n";

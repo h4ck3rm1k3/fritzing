@@ -227,6 +227,8 @@ public:
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
+	bool partLabelsVisible();
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

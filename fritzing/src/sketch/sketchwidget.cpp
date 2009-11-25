@@ -6086,3 +6086,14 @@ AddItemCommand * SketchWidget::newAddItemCommand(BaseCommand::CrossViewType cros
 	return new AddItemCommand(this, crossViewType, moduleID, viewGeometry, id, updateInfoView, modelIndex, originalModelIndex, parent);
 }
 
+bool SketchWidget::partLabelsVisible() {
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		if (itemBase->isPartLabelVisible()) return true;
+
+	}
+
+	return false;
+}

@@ -47,7 +47,7 @@ GroundPlaneGenerator::~GroundPlaneGenerator() {
 }
 
 bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-								 QStringList & exceptions, QGraphicsItem * board) 
+								 QStringList & exceptions, QGraphicsItem * board, qreal res) 
 {
 	QByteArray boardByteArray;
     QString tempColor("#ffffff");
@@ -77,7 +77,6 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	file1.close();
 	*/
 
-	qreal res = 1000 / MILS;   // 100 dpi = 10 mils
 	qreal svgWidth = res * qMax(boardImageSize.width(), copperImageSize.width()) / FSvgRenderer::printerScale();
 	qreal svgHeight = res * qMax(boardImageSize.height(), copperImageSize.height()) / FSvgRenderer::printerScale();
 
@@ -106,6 +105,12 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
+	scanImage(image, bWidth, bHeight, MILS, res);
+	return true;
+}
+
+void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res)  
+{
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects);
 	QList< QList<int> * > pieces;
@@ -115,12 +120,12 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 		QList<QRect> newRects;
 		foreach (int i, *piece) {
 			QRect r = rects.at(i);
-			newRects.append(QRect(r.x() * MILS, r.y() * MILS, (r.width() * MILS) + 1, MILS + 1));    // + 1 is for off-by-one converting rects to polys
+			newRects.append(QRect(r.x() * pixelFactor, r.y() * pixelFactor, (r.width() * pixelFactor) + 1, pixelFactor + 1));    // + 1 is for off-by-one converting rects to polys
 		}
 
 		// note: there is always one
 		joinScanLines(newRects, polygons);
-		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight);
+		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor);
 		m_newSVGs.append(pSvg);
 
 		/*
@@ -155,8 +160,6 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	newSvg += "</g>\n</svg>\n";
 	*/
 
-
-	return true;
 }
 
 void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects)
@@ -427,13 +430,13 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 	}
 }
 
-QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, int res, qreal bWidth, qreal bHeight) 
+QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor) 
 {
 	QString pSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
 		.arg(bWidth / res)
 		.arg(bHeight / res)
-		.arg(bWidth * MILS)
-		.arg(bHeight * MILS);
+		.arg(bWidth * pixelFactor)
+		.arg(bHeight * pixelFactor);
 	pSvg += "<g id='groundplane'>\n";
 	pSvg += "<g id='connector0pad'>\n";
 	foreach (QPolygon poly, polygons) {

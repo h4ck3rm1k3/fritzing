@@ -73,7 +73,7 @@ void fMessageHandler(QtMsgType type, const char *msg)
 int main(int argc, char *argv[])
 {
 #ifdef _MSC_VER // just for the MS compiler
-#define WIN_CHECK_LEAKS
+//#define WIN_CHECK_LEAKS
 #endif
 
 #ifdef Q_WS_WIN
