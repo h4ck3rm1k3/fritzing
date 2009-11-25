@@ -239,7 +239,12 @@ void PartLabel::displayTexts() {
 	}
 
 	if (text.length() > 0) {
+		// remove /n
 		text.chop(1);
+	}
+
+	if (text.length() == 0) {
+		text = "?";					// make sure there's something visible
 	}
 
 	QGraphicsSimpleTextItem::setText(text);
@@ -386,23 +391,29 @@ void PartLabel::initMenu()
 	flipVerticalAct->setData(QVariant(PartLabelFlipVertical));
 	flipVerticalAct->setStatusTip(tr("Flip label vertically"));
 
-    QAction *smallAct = fsmenu->addAction(tr("Small"));
-	smallAct->setData(QVariant(PartLabelFontSizeSmall));
-	smallAct->setStatusTip(tr("Set font size to small"));
+    m_smallAct = fsmenu->addAction(tr("Small"));
+	m_smallAct->setData(QVariant(PartLabelFontSizeSmall));
+	m_smallAct->setStatusTip(tr("Set font size to small"));
+	m_smallAct->setCheckable(true);
+	m_smallAct->setChecked(false);
 
-    QAction *mediumAct = fsmenu->addAction(tr("Medium"));
-	mediumAct->setData(QVariant(PartLabelFontSizeMedium));
-	mediumAct->setStatusTip(tr("Set font size to medium"));
+    m_mediumAct = fsmenu->addAction(tr("Medium"));
+	m_mediumAct->setData(QVariant(PartLabelFontSizeMedium));
+	m_mediumAct->setStatusTip(tr("Set font size to medium"));
+	m_mediumAct->setCheckable(true);
+	m_mediumAct->setChecked(false);
 
-    QAction *largeAct = fsmenu->addAction(tr("Large"));
-	largeAct->setData(QVariant(PartLabelFontSizeLarge));
-	largeAct->setStatusTip(tr("Set font size to large"));
+    m_largeAct = fsmenu->addAction(tr("Large"));
+	m_largeAct->setData(QVariant(PartLabelFontSizeLarge));
+	m_largeAct->setStatusTip(tr("Set font size to large"));
+	m_largeAct->setCheckable(true);
+	m_largeAct->setChecked(false);
 
-    QAction *labelAct = dvmenu->addAction(tr("Label text"));
-	labelAct->setData(QVariant(PartLabelDisplayLabelText));
-	labelAct->setCheckable(true);
-	labelAct->setChecked(true);
-	labelAct->setStatusTip(tr("Display the text of the label"));
+    m_labelAct = dvmenu->addAction(tr("Label text"));
+	m_labelAct->setData(QVariant(PartLabelDisplayLabelText));
+	m_labelAct->setCheckable(true);
+	m_labelAct->setChecked(true);
+	m_labelAct->setStatusTip(tr("Display the text of the label"));
 
 	dvmenu->addSeparator();
 
@@ -414,6 +425,7 @@ void PartLabel::initMenu()
 		action->setCheckable(true);
 		action->setChecked(false);
 		action->setStatusTip(tr("Display the value of property %1").arg(translatedName));
+		m_displayActs.append(action);
 	}
 }
 
@@ -497,6 +509,30 @@ void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 	if (m_menu.isEmpty()) {
 		initMenu();
+	}
+
+	m_labelAct->setChecked(m_displayKeys.contains(LabelTextKey));
+	foreach (QAction * displayAct, m_displayActs) {
+		QString data = displayAct->data().toString();
+		displayAct->setChecked(m_displayKeys.contains(data));
+	}
+
+	m_smallAct->setChecked(false);
+	m_mediumAct->setChecked(false);
+	m_largeAct->setChecked(false);
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infographics != NULL) {
+		QFont font = this->font();
+		int fs = font.pointSize();
+		if (fs == infographics->getLabelFontSizeSmall()) {
+			m_smallAct->setChecked(true);
+		}
+		else if (fs == infographics->getLabelFontSizeMedium()) {
+			m_mediumAct->setChecked(true);
+		}
+		else if (fs == infographics->getLabelFontSizeLarge()) {
+			m_largeAct->setChecked(true);
+		}
 	}
     
 	QAction *selectedAction = m_menu.exec(event->screenPos());
