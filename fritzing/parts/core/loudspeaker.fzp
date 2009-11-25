@@ -2,6 +2,7 @@
 <module fritzingVersion="0.3.7b.08.26.3377" moduleId="5c5090e231dbe30e6bd4b9e2e7949902">
     <author>Lionel Michel</author>
     <title>Loudspeaker</title>
+    <label>SPKR</label>
     <date>2009-11-12</date>
     <tags>audio, output</tags>
     <properties>
@@ -24,8 +25,9 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/jumper2.svg">
-                <layer layerId="copper0"/>
+            <layers image="pcb/jumper_2_100mil_pcb.svg">
+                <layer layerId="copper0" />
+		<layer layerId="silkscreen" />
             </layers>
         </pcbView>
     </views>

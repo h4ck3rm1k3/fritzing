@@ -21,7 +21,8 @@
         </schematicView>
         <pcbView>
             <layers image="pcb/dip_10_700mil_pcb.svg">
-                <layer layerId="copper0"/>
+                <layer layerId="copper0" />
+		<layer layerId="silkscreen" />
             </layers>
         </pcbView>
         <breadboardView>
