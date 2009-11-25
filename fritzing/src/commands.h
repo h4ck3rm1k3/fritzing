@@ -454,6 +454,37 @@ protected:
 
 };
 
+class RestoreLabelCommand : public BaseCommand
+{
+public:
+    RestoreLabelCommand(class SketchWidget *sketchWidget, long id, QDomElement &, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    QDomElement m_element;
+};
+
+class ShowLabelFirstTimeCommand : public BaseCommand
+{
+public:
+    ShowLabelFirstTimeCommand(class SketchWidget *sketchWidget, CrossViewType crossView, long id, bool oldVis, bool newVis, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    bool m_oldVis;
+    bool m_newVis;
+};
+
 class MoveLabelCommand : public BaseCommand
 {
 public:

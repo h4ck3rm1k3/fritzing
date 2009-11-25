@@ -228,7 +228,7 @@ public:
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
 	bool partLabelsVisible();
-
+	void restorePartLabel(long itemID, QDomElement & element);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -390,6 +390,8 @@ signals:
 	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doEmit);
 	void setInstanceTitleSignal(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
 	void statusMessageSignal(QString, int timeout);
+	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
+
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -440,6 +442,7 @@ public slots:
 	void setChipLabel(QString label);
 	void setSpacing(const QString & spacing);
 	void setForm(const QString & form);
+	virtual void showLabelFirstTime(long itemID, bool show, bool doEmit);
 
 protected:
 	enum StatusConnectStatus {

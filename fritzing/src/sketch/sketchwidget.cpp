@@ -298,6 +298,22 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				}
 			}
 
+			if (!labelGeometry.isNull()) {
+				QDomElement clone = labelGeometry.cloneNode(true).toElement();
+				bool ok;
+				qreal x = clone.attribute("x").toDouble(&ok);
+				if (ok) {
+					x += (20 * m_pasteCount);
+					clone.setAttribute("x", QString::number(x));
+				}
+				qreal y = clone.attribute("y").toDouble(&ok);
+				if (ok) {
+					y += (20 * m_pasteCount);
+					clone.setAttribute("y", QString::number(y));
+				}
+				new RestoreLabelCommand(this, newID, clone, parentCommand);
+			}
+
 			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 			if (mp->moduleID() == ModuleIDNames::wireModuleIDName) {
 				addWireExtras(newID, view, parentCommand);
@@ -1514,7 +1530,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		long fromID = m_droppingItem->id();
 
 		BaseCommand::CrossViewType crossViewType = BaseCommand::CrossView;
-		if (modelPart->properties().values().contains(QString("ruler"))) { // TODO Mariano: add case-insensitiveness
+		if (modelPart->properties().values().contains(QString("ruler"))) { 
 			// rulers are local to a particular view
 			crossViewType = BaseCommand::SingleView;
 		}
@@ -1530,6 +1546,8 @@ void SketchWidget::dropEvent(QDropEvent *event)
 
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(fromID);
+
+		new ShowLabelFirstTimeCommand(this, crossViewType, fromID, true, true, parentCommand);
 
 		if (modelPart->itemType() == ModelPart::Wire && !m_lastColorSelected.isEmpty()) {
 			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, Wire::UNROUTED_OPACITY, Wire::UNROUTED_OPACITY, parentCommand);
@@ -6096,4 +6114,17 @@ bool SketchWidget::partLabelsVisible() {
 	}
 
 	return false;
+}
+
+void SketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
+	if (doEmit) {
+		emit showLabelFirstTimeSignal(itemID, show, false);
+	}
+}
+
+void SketchWidget::restorePartLabel(long itemID, QDomElement & element) {
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase == NULL) return;
+
+	itemBase->restorePartLabel(element, getLabelViewLayerID());
 }

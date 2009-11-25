@@ -738,7 +738,7 @@ QString WireFlagChangeCommand::getParamString() const {
 
 //////////////////////////////////////////
 
-RatsnestCommand::RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType crossViewType,
+RatsnestCommand::RatsnestCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType crossViewType,
 									long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
 									bool connect, bool seekLayerKin,
@@ -789,7 +789,7 @@ QString RatsnestCommand::getParamString() const {
 
 ///////////////////////////////////////////
 
-RoutingStatusCommand::RoutingStatusCommand(class SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
+RoutingStatusCommand::RoutingStatusCommand(SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
 												int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers, QUndoCommand * parent)												
 	: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
@@ -822,7 +822,61 @@ QString RoutingStatusCommand::getParamString() const {
 
 ///////////////////////////////////////////////
 
-MoveLabelCommand::MoveLabelCommand(class SketchWidget *sketchWidget, long id, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset, QUndoCommand *parent)
+ShowLabelFirstTimeCommand::ShowLabelFirstTimeCommand(SketchWidget *sketchWidget, CrossViewType crossView, long id, bool oldVis, bool newVis, QUndoCommand *parent)
+    : BaseCommand(crossView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_oldVis = oldVis;
+    m_newVis = newVis;
+}
+
+void ShowLabelFirstTimeCommand::undo()
+{
+}
+
+void ShowLabelFirstTimeCommand::redo()
+{
+    m_sketchWidget->showLabelFirstTime(m_itemID, m_newVis, true);
+}
+
+QString ShowLabelFirstTimeCommand::getParamString() const {
+	return QString("ShowLabelFirstTimeCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 %2 %3") 
+			.arg(m_itemID).arg(m_oldVis).arg(m_newVis);
+
+}
+
+///////////////////////////////////////////////
+
+RestoreLabelCommand::RestoreLabelCommand(SketchWidget *sketchWidget,long id, QDomElement & element, QUndoCommand *parent)
+: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_element = element;
+	// seems to be safe to keep a copy of the element even though the document may no longer exist
+}
+
+void RestoreLabelCommand::undo()
+{
+}
+
+void RestoreLabelCommand::redo()
+{
+    m_sketchWidget->restorePartLabel(m_itemID, m_element);
+}
+
+QString RestoreLabelCommand::getParamString() const {
+	return QString("RestoreLabelCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1") 
+			.arg(m_itemID);
+
+}
+
+///////////////////////////////////////////////
+
+MoveLabelCommand::MoveLabelCommand(SketchWidget *sketchWidget, long id, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
     m_itemID = id;
@@ -853,7 +907,7 @@ QString MoveLabelCommand::getParamString() const {
 
 ///////////////////////////////////////////////
 
-ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, 
+ChangeLabelTextCommand::ChangeLabelTextCommand(SketchWidget *sketchWidget, long id, 
 											   const QString & oldText, const QString & newText, 
 											   QSizeF oldSize, QSizeF newSize, bool isLabel, bool firstTime, QUndoCommand *parent)
 	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
@@ -1013,7 +1067,7 @@ QString GroupCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-ModuleChangeConnectionCommand::ModuleChangeConnectionCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType cv,
+ModuleChangeConnectionCommand::ModuleChangeConnectionCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType cv,
 							long fromID, const QString & fromConnectorID,
 							QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
 							bool connect, bool seekLayerKin,
@@ -1119,7 +1173,7 @@ QString ResizeBoardCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-TransformItemCommand::TransformItemCommand(class SketchWidget *sketchWidget, long id, const QMatrix & oldMatrix, const QMatrix & newMatrix, QUndoCommand *parent)
+TransformItemCommand::TransformItemCommand(SketchWidget *sketchWidget, long id, const QMatrix & oldMatrix, const QMatrix & newMatrix, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
     m_itemID = id;

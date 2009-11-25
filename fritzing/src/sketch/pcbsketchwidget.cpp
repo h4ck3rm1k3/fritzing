@@ -1433,7 +1433,7 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 
 void PCBSketchWidget::getLabelFont(QFont & font, QColor & color) {
 	font.setFamily("ocra10");
-	font.setPointSize(9);
+	font.setPointSize(getLabelFontSizeMedium());
 	color.setAlpha(255);
 	color.setRgb(0xffffff);
 }
@@ -1507,3 +1507,17 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 	m_undoStack->push(parentCommand);
 }
 
+void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
+	SketchWidget::showLabelFirstTime(itemID, show, doEmit);
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase == NULL) return;
+
+	switch (itemBase->itemType()) {
+		case ModelPart::Part:
+			itemBase->showPartLabel(true, m_viewLayers.value(getLabelViewLayerID()));
+			break;
+		default:
+			break;
+	}
+
+}

@@ -74,6 +74,8 @@ public:
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
+	void showLabelFirstTime(long itemID, bool show, bool doEmit);
+
 
 public:
 	enum CleanType {
