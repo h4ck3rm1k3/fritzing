@@ -41,7 +41,7 @@ PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidg
 {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
-	m_infoViewOnHover = false;
+	m_infoViewOnHover = true;
 	setMouseTracking(true);
 	setSpacing(2);
 	setIconSize(QSize(16,16));

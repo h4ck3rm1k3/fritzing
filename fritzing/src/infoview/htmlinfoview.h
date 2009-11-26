@@ -121,7 +121,8 @@ protected:
 	QPointer<ModelPart> m_modelPart;
 	QPointer<ModelPart> m_lastModelPart;
 	QPointer<ItemBase> m_lastItemBase;
-	QPointer<class InfoGraphicsView> m_lastInfoGraphicsView;
+	QPointer<class InfoGraphicsView> m_lastItemBaseInfoGraphicsView;
+	QPointer<class InfoGraphicsView> m_lastModelPartInfoGraphicsView;
 
 protected:
 	static QString PropsBlockId;

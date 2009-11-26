@@ -58,7 +58,8 @@ const int IconSpace = 3;
 
 HtmlInfoView::HtmlInfoView(QWidget * parent) : QFrame(parent) 
 {
-	m_lastInfoGraphicsView = NULL;
+	m_lastModelPartInfoGraphicsView = NULL;
+	m_lastItemBaseInfoGraphicsView = NULL;
 	m_lastModelPart = NULL;
 	m_lastItemBase = NULL;
 	m_infoGraphicsView = NULL;
@@ -121,14 +122,16 @@ void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart
 		viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
 	}
 	else {
-		viewItemInfoAux(m_lastInfoGraphicsView, m_lastItemBase, true);
+		viewItemInfoAux(m_lastItemBaseInfoGraphicsView, m_lastItemBase, true);
 	}
 }
 
 void HtmlInfoView::viewModelPartInfo(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
-	DebugDialog::debug(QString("viewModelPartInfo modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
+	//DebugDialog::debug(QString("viewModelPartInfo modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
 	viewModelPartInfoAux(igv, modelPart, swappingEnabled);
 	m_lastModelPart = modelPart;
+	m_lastItemBase = NULL;
+	m_lastModelPartInfoGraphicsView = igv;
 }
 
 void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) 
@@ -136,16 +139,21 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
 	m_lastItemBase = item;
 	m_lastModelPart = NULL;
-	m_lastInfoGraphicsView = infoGraphicsView;
+	m_lastItemBaseInfoGraphicsView = infoGraphicsView;
 }
 
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * item, bool swappingEnabled) {
-	//viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
+	viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
 }
 
 void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * itemBase){
-	DebugDialog::debug(QString("hoverLeaveItem itembase %1").arg(itemBase ? itemBase->instanceTitle() : "NULL"));
-	//viewItemInfoAux(infoGraphicsView, m_lastItemBase, true);
+	//DebugDialog::debug(QString("hoverLeaveItem itembase %1").arg(itemBase ? itemBase->instanceTitle() : "NULL"));
+	if (m_lastItemBase == NULL) {
+		viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
+	}
+	else {
+		viewItemInfoAux(infoGraphicsView, m_lastItemBase, true);
+	}
 }
 
 void HtmlInfoView::viewConnectorItemInfo(InfoGraphicsView * infoGraphicsView, ConnectorItem * item, bool swappingEnabled) {
@@ -186,7 +194,7 @@ void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsScene
 void HtmlInfoView::viewModelPartInfoAux(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
 	if (modelPart == NULL) {
 		if (m_lastItemBase) {
-			viewItemInfoAux(m_lastInfoGraphicsView, m_lastItemBase, true);
+			viewItemInfoAux(m_lastItemBaseInfoGraphicsView, m_lastItemBase, true);
 		}
 		else {
 			setNullContent();
@@ -205,8 +213,12 @@ void HtmlInfoView::viewModelPartInfoAux(InfoGraphicsView * igv, ModelPart * mode
 void HtmlInfoView::viewItemInfoAux(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
 
 	if (item == NULL) {
-		// TODO: it would be nice to do something reasonable in this case
-		setNullContent();
+		if (m_lastModelPart) {
+			viewModelPartInfoAux(m_lastModelPartInfoGraphicsView, m_lastModelPart, true);
+		}
+		else {
+			setNullContent();
+		}
 		return;
 	}
 

@@ -1214,7 +1214,7 @@ void MainWindow::createPartMenuActions() {
 #ifndef QT_NO_DEBUG
 	m_infoViewOnHoverAction = new QAction(tr("Update InfoView on hover"), this);
 	m_infoViewOnHoverAction->setCheckable(true);
-	bool infoViewOnHover = false;
+	bool infoViewOnHover = true;
 	m_infoViewOnHoverAction->setChecked(infoViewOnHover);
 	setInfoViewOnHover(infoViewOnHover);
 	connect(m_infoViewOnHoverAction, SIGNAL(toggled(bool)), this, SLOT(setInfoViewOnHover(bool)));

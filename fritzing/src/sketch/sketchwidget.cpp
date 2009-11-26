@@ -133,8 +133,6 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     this->scene()->addItem(item);
     item->setVisible(false);
 
-	
-	
 	connect(this->scene(), SIGNAL(selectionChanged()), this, SLOT(scene_selectionChanged()));
 
     connect(QApplication::clipboard(),SIGNAL(changed(QClipboard::Mode)),this,SLOT(restartPasteCount()));
@@ -146,9 +144,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 
     setLastPaletteItemSelected(NULL);
 
-#ifdef QT_NO_DEBUG
-    m_infoViewOnHover = false;
-#endif
+    m_infoViewOnHover = true;
 
     connect(this, SIGNAL(resizeSignal()), this, SLOT(ensureFixedItemsPositions()));
     connect(this, SIGNAL(wheelSignal()),  this, SLOT(ensureFixedItemsPositions()));
