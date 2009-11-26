@@ -2451,7 +2451,7 @@ void MainWindow::exportToGerber() {
 
     QString silk0File = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                          + "_silkTop.gto";
+                          + "_silkBottom.gbo";
     QFile silk0Out(silk0File);
     if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text))
         DebugDialog::debug("gerber export: cannot open output file");
