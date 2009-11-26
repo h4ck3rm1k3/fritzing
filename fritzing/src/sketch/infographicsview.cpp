@@ -45,6 +45,12 @@ void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 	m_infoView->viewItemInfo(this, item, swappingEnabled(item));
 }
 
+void InfoGraphicsView::viewModelPartInfo(ModelPart * modelPart) {
+	if (m_infoView == NULL) return;
+
+	m_infoView->viewModelPartInfo(this, modelPart, false);
+}
+
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {
 	if (m_infoView == NULL) return;
 

@@ -54,6 +54,8 @@ public:
 	void reloadContent(class InfoGraphicsView *);
 
 	void viewItemInfo(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
+	void viewModelPartInfo(class InfoGraphicsView *, ModelPart * modelPart, bool swappingEnabled);
+
 	void hoverEnterItem(class InfoGraphicsView *, ModelPart *, bool swappingEnabled);
 	void hoverLeaveItem(class InfoGraphicsView *, ModelPart *);
 	void hoverEnterItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item, bool swappingEnabled);
@@ -98,6 +100,8 @@ protected:
 	void setCurrentItem(ItemBase *);
 	void registerAsCurrentItem(ItemBase *item);
 	void setNullContent();
+	void viewItemInfoAux(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
+	void viewModelPartInfoAux(class InfoGraphicsView *, ModelPart * modelPart, bool swappingEnabled);
 
 protected:
 	QString m_includes;
@@ -115,6 +119,9 @@ protected:
 	QTimer m_setContentTimer;
 	QPointer<class InfoGraphicsView> m_infoGraphicsView;
 	QPointer<ModelPart> m_modelPart;
+	QPointer<ModelPart> m_lastModelPart;
+	QPointer<ItemBase> m_lastItemBase;
+	QPointer<class InfoGraphicsView> m_lastInfoGraphicsView;
 
 protected:
 	static QString PropsBlockId;

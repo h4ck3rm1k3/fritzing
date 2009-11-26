@@ -107,6 +107,7 @@ void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
 	if(m_infoViewOnHover) {
 		SvgIconWidget * item = svgIconWidgetAt(event->pos());
 		if(item) showInfo(item);
+		else hoverLeaveItem((ModelPart *) NULL);
 	}
 }
 
@@ -118,6 +119,9 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 	SvgIconWidget* icon = svgIconWidgetAt(event->pos());
 	if (icon == NULL || event->button() != Qt::LeftButton) {
 		QGraphicsView::mousePressEvent(event);
+		if (icon == NULL) {
+			viewModelPartInfo(NULL);
+		}
 	} else {
 		if (icon != NULL) {
 			QList<QGraphicsItem *> items = scene()->selectedItems();
@@ -137,7 +141,12 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 				showInfo(icon);
 			}
 
+			viewModelPartInfo(icon->modelPart());
+
 			mousePressOnItem(event->pos(), moduleID, icon->rect().size().toSize(), (mts - icon->pos()), hotspot );
+		}
+		else {
+			viewModelPartInfo(NULL);
 		}
 	}
 	informNewSelection();

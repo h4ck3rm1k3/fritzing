@@ -144,9 +144,13 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 	QListWidget::mousePressEvent(event);
 
 	QListWidgetItem * current = currentItem();
-	if (current == NULL) return;
+	if (current == NULL) {
+		m_infoView->viewModelPartInfo(NULL, NULL, false);
+		return;
+	}
 
 	showInfo(current);
+	m_infoView->viewModelPartInfo(NULL, current->data(Qt::UserRole).value<ModelPart *>(), false);
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {

@@ -43,6 +43,7 @@ public:
 	InfoGraphicsView(QWidget* parent = 0);
 
 	void viewItemInfo(ItemBase * item);
+	void viewModelPartInfo(ModelPart *);
 	virtual void hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	virtual void hoverEnterItem(ModelPart * modelPart);
 	virtual void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);

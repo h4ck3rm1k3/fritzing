@@ -58,6 +58,9 @@ const int IconSpace = 3;
 
 HtmlInfoView::HtmlInfoView(QWidget * parent) : QFrame(parent) 
 {
+	m_lastInfoGraphicsView = NULL;
+	m_lastModelPart = NULL;
+	m_lastItemBase = NULL;
 	m_infoGraphicsView = NULL;
 	m_setContentTimer.setSingleShot(true);
 	m_setContentTimer.setInterval(10);
@@ -107,71 +110,42 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QFrame(parent)
 HtmlInfoView::~HtmlInfoView() {
 }
 
-void HtmlInfoView::jsRegister() {
-	m_webView->page()->mainFrame()->addToJavaScriptWindowObject( "infoView", this);
-}
-
-void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
-	m_blocksVisibility[blockId] = value;
-	QSettings settings;
-	settings.setValue(settingsBlockVisibilityName(blockId),QVariant::fromValue(value));
-}
-
-QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
-	return "infoView/"+blockId+"Visibility";
-}
-
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
-	m_currentSwappingEnabled = swappingEnabled;
-	QString s = "";
-	s += appendItemStuff(NULL, modelPart, 0, swappingEnabled, "", false);
-	m_infoGraphicsView = igv;
-	setContent(s);
+	//viewModelPartInfoAux(igv, modelPart, swappingEnabled);
 }
 
-void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
-
-	if (item == NULL) {
-		// TODO: it would be nice to do something reasonable in this case
-		setNullContent();
-		return;
-	}
-
-	m_currentSwappingEnabled = swappingEnabled;
-
-	QString s = appendStuff(item,swappingEnabled);
-	setCurrentItem(item);
-	m_infoGraphicsView = infoGraphicsView;
-	setContent(s);
+void HtmlInfoView::viewModelPartInfo(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
+	viewModelPartInfoAux(igv, modelPart, swappingEnabled);
+	m_lastModelPart = modelPart;
 }
 
-QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
-	Wire *wire = dynamic_cast<Wire*>(item);
-	if(wire) {
-		return appendWireStuff(wire, wire->id());
-	} else {
-		return appendItemStuff(item, item->id(), swappingEnabled);
-	}
+void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) 
+{
+	viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
+	m_lastItemBase = item;
+	m_lastInfoGraphicsView = infoGraphicsView;
 }
 
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * item, bool swappingEnabled) {
-	viewItemInfo(infoGraphicsView, item, swappingEnabled);
+	//viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
 }
 
-
-void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart * modelPart) {
-	Q_UNUSED(modelPart);
-	Q_UNUSED(infoGraphicsView);
-	//clear();
+void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart *) {
+	if (m_lastModelPart) {
+		//viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
+	}
+	else {
+		//viewItemInfoAux(m_lastInfoGraphicsView, m_lastItemBase, true);
+	}
 }
 
-
-void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * , QGraphicsSceneHoverEvent *, ItemBase * ){
-	//clear();
-	unregisterCurrentItem();
+void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * ){
+	//viewItemInfoAux(infoGraphicsView, m_lastItemBase, true);
 }
 
 void HtmlInfoView::viewConnectorItemInfo(InfoGraphicsView * infoGraphicsView, ConnectorItem * item, bool swappingEnabled) {
+	if (item->attachedTo() != m_lastItemBase) return;
+
 	Connector * connector = item->connector();
 	if (connector == NULL) return;
 
@@ -202,7 +176,50 @@ void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsScene
 	Q_UNUSED(igv);
 	Q_UNUSED(event);
 	Q_UNUSED(connItem);
-	// clear
+}
+
+void HtmlInfoView::viewModelPartInfoAux(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
+	if (modelPart == NULL) {
+		if (m_lastItemBase) {
+			viewItemInfoAux(m_lastInfoGraphicsView, m_lastItemBase, true);
+		}
+		else {
+			setNullContent();
+		}
+
+		return;
+	}
+
+	m_currentSwappingEnabled = swappingEnabled;
+	QString s = "";
+	s += appendItemStuff(NULL, modelPart, 0, swappingEnabled, "", false);
+	m_infoGraphicsView = igv;
+	setContent(s);
+}
+
+void HtmlInfoView::viewItemInfoAux(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
+
+	if (item == NULL) {
+		// TODO: it would be nice to do something reasonable in this case
+		setNullContent();
+		return;
+	}
+
+	m_currentSwappingEnabled = swappingEnabled;
+
+	QString s = appendStuff(item,swappingEnabled);
+	setCurrentItem(item);
+	m_infoGraphicsView = infoGraphicsView;
+	setContent(s);
+}
+
+QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
+	Wire *wire = dynamic_cast<Wire*>(item);
+	if(wire) {
+		return appendWireStuff(wire, wire->id());
+	} else {
+		return appendItemStuff(item, item->id(), swappingEnabled);
+	}
 }
 
 QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnabled) {
@@ -494,7 +511,7 @@ QString HtmlInfoView::blockContainer(const QString &blockId) {
 
 void HtmlInfoView::setNullContent()
 {
-	setContent("<html></html>");
+	setContent("");
 }
 
 void addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
@@ -637,3 +654,18 @@ void HtmlInfoView::setInstanceTitleColors(FLineEdit * edit, const QColor & base,
 		.arg(base.red()).arg(base.green()).arg(base.blue())
 		.arg(text.red()).arg(text.green()).arg(text.blue()) );
 }
+
+void HtmlInfoView::jsRegister() {
+	m_webView->page()->mainFrame()->addToJavaScriptWindowObject( "infoView", this);
+}
+
+void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
+	m_blocksVisibility[blockId] = value;
+	QSettings settings;
+	settings.setValue(settingsBlockVisibilityName(blockId),QVariant::fromValue(value));
+}
+
+QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
+	return "infoView/"+blockId+"Visibility";
+}
+
