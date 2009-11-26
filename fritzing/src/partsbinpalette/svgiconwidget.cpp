@@ -42,7 +42,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 
 	setFlags(QGraphicsItem::ItemIsSelectable);
 
-	this->setMaximumSize(QSize(32, 32));
+	this->setMaximumSize(QSize(38, 38));
 
 	m_paletteItem = new IconWidgetPaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
 	m_paletteItem->renderImage(modelPart, ViewIdentifierClass::IconView, viewLayers,ViewLayer::Icon, false);
@@ -57,6 +57,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	}
 
 	m_pixmapItem->setFlags(0);
+	m_pixmapItem->setPos(3, 3);
 
 
 	m_paletteItem->setTooltip();
@@ -76,13 +77,20 @@ const QString &SvgIconWidget::moduleID() const {
 }
 
 void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	QColor c(0xc2, 0xc2,0xc2);
-	if(isSelected()) {
-		c.setRgb(255, 255, 255);
-	} 
 
+	QColor c(0xc2, 0xc2,0xc2);
 	QSizeF size = this->geometry().size();
 	painter->fillRect(0, 0, size.width(), size.height(), c);
+
+	if(isSelected()) {
+		painter->save();
+		QPen pen = painter->pen();
+		pen.setColor(QColor(255, 255, 255));
+		pen.setWidth(3);
+		painter->setPen(pen);
+		painter->drawRect(0, 0, size.width(), size.height());
+		painter->restore();
+	} 
 
 	QGraphicsWidget::paint(painter, option, widget);
 }
