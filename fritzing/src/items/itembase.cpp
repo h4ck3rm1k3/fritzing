@@ -52,7 +52,7 @@ $Date$
 /////////////////////////////////
 
 static const ushort MicroSymbolCode = 181;
-static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode);
+static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
 
 static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
 static QHash<QString, qreal> NumberMatcherValues;
@@ -317,6 +317,7 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("version", tr("version"));
 		TranslatedPropertyNames.insert("package", tr("package"));
 		TranslatedPropertyNames.insert("shape", tr("shape"));
+		TranslatedPropertyNames.insert("form", tr("form"));
 		TranslatedPropertyNames.insert("maximum resistance", tr("maximum resistance"));
 		// TODO: translate more known property names from fzp files
 	}

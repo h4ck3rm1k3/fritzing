@@ -41,8 +41,8 @@ $Date$
 static QStringList Forms;
 static const ushort FemaleSymbol = 9792;
 static const ushort MaleSymbol = 9794;
-static const QString FemaleSymbolString = QString::fromUtf16(&FemaleSymbol);
-static const QString MaleSymbolString = QString::fromUtf16(&MaleSymbol);
+static const QString FemaleSymbolString = QString::fromUtf16(&FemaleSymbol, 1);
+static const QString MaleSymbolString = QString::fromUtf16(&MaleSymbol, 1);
 const QString PinHeader::FemaleFormString = FemaleSymbolString + " (female)";
 const QString PinHeader::FemaleRoundedFormString = FemaleSymbolString + " (female rounded)";
 const QString PinHeader::MaleFormString = MaleSymbolString + " (male)";
