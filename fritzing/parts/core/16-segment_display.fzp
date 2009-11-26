@@ -2,6 +2,7 @@
 <module fritzingVersion="0.3.11" moduleId="c8994c24e2a6d9182a55c653b6bbefed">
     <author>lionelmichel</author>
     <title>16-segment display</title>
+    <label>DI</label>
     <date>2009-11-12</date>
     <tags/>
     <properties>
@@ -31,8 +32,8 @@
         </breadboardView>
     </views>
     <connectors>
-        <connector id="connector15" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector15" type="male" name="anodeM">
+            <description>Anode Segment M</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector15pin" terminalId="connector15terminal"/>
@@ -45,8 +46,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector7" type="male" name="anodeR">
+            <description>Anode Segment R</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"/>
@@ -59,8 +60,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector16" type="male" name="commCathode">
+            <description>Common Cathode</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector16pin" terminalId="connector16terminal"/>
@@ -73,8 +74,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector8" type="male" name="anodeN">
+            <description>Anode Segment N</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector8pin" terminalId="connector8terminal"/>
@@ -87,8 +88,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector17" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector17" type="male" name="anodeK">
+            <description>Anode Segment K</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector17pin" terminalId="connector17terminal"/>
@@ -101,8 +102,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector9" type="male" name="anodeD1">
+            <description>Anode Segment D1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector9pin" terminalId="connector9terminal"/>
@@ -115,8 +116,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector0" type="male" name="anodeA2">
+            <description>Anode Segment A2</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -129,8 +130,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector1" type="male" name="anodeA1">
+            <description>Anode Segment A1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -143,8 +144,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector10" type="male" name="anodeD2">
+            <description>Anode Segment D2</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector10pin" terminalId="connector10terminal"/>
@@ -157,8 +158,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector2" type="male" name="anodeF">
+            <description>Anode Segment F</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
@@ -171,8 +172,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector11" type="male" name="commCathode">
+            <description>Common Cathode</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector11pin" terminalId="connector11terminal"/>
@@ -185,8 +186,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector3" type="male" name="anodeH">
+            <description>Anode Segment H</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -199,8 +200,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector4" type="male" name="anodeE">
+            <description>Anode Segment E</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -213,8 +214,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector12" type="male" name="anodeC">
+            <description>Anode Segment C</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector12pin" terminalId="connector12terminal"/>
@@ -227,8 +228,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector5" type="male" name="anodeJ">
+            <description>Anode Segment J</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
@@ -241,8 +242,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector13" type="male" name="anodeG">
+            <description>Anode Segment G</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector13pin" terminalId="connector13terminal"/>
@@ -255,8 +256,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector6" type="male" name="anodeP">
+            <description>Anode Segment P</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"/>
@@ -269,8 +270,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector14" type="male" name="anodeB">
+            <description>Anode Segment B</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector14pin" terminalId="connector14terminal"/>

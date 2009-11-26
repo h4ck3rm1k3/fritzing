@@ -2,6 +2,7 @@
 <module fritzingVersion="0.3.11" moduleId="beab33bd7feee277622ef76dd6e79e4d">
     <author>Lionel Michel</author>
     <title>Infrared Proximity Sensor</title>
+    <label>J</label>
     <date>2009-11-12</date>
     <tags>sensor, input, proximity, distance</tags>
     <properties>
