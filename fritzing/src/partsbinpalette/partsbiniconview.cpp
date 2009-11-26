@@ -101,20 +101,6 @@ void PartsBinIconView::resizeEvent(QResizeEvent * event) {
 	updateSize(event->size());
 }
 
-void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
-	if (m_infoView == NULL) return;
-
-	if(m_infoViewOnHover) {
-		SvgIconWidget * item = svgIconWidgetAt(event->pos());
-		if(item) showInfo(item);
-		else hoverLeaveItem((ModelPart *) NULL);
-	}
-}
-
-void PartsBinIconView::showInfo(SvgIconWidget * item) {
-	hoverEnterItem(item->modelPart());
-}
-
 void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 	SvgIconWidget* icon = svgIconWidgetAt(event->pos());
 	if (icon == NULL || event->button() != Qt::LeftButton) {
@@ -136,10 +122,6 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 			QPointF mts = this->mapToScene(event->pos());
 			QString moduleID = icon->moduleID();
 			QPoint hotspot = (mts.toPoint()-icon->pos().toPoint());
-
-			if(!m_infoViewOnHover) {
-				showInfo(icon);
-			}
 
 			viewModelPartInfo(icon->modelPart());
 

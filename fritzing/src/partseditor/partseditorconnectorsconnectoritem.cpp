@@ -100,7 +100,6 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 
 	setFlag(QGraphicsItem::ItemIsMovable);
 
-	setAcceptsHoverEvents(resizable);
 	setAcceptHoverEvents(resizable);
 	m_showErrorIcon = false;
 	m_geometryHasChanged = false;

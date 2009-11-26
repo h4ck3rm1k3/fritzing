@@ -64,7 +64,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 		connector->addViewItem(this);
 	}
 	restoreColor(false, -1);
-    setAcceptsHoverEvents(true);
+    setAcceptHoverEvents(true);
     this->setCursor(Qt::CrossCursor);
 
 	//DebugDialog::debug(QString("%1 attached to %2")

@@ -55,12 +55,12 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		int selectedIndex();
 
 		QList<QObject*> orderedChildren();
+
 	protected:
 		void doClear();
 		void moveItem(int fromIndex, int toIndex);
 		int itemIndexAt(const QPoint& pos, bool &trustIt);
 
-		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);
 		void dragMoveEvent(QDragMoveEvent* event);
 		void dropEvent(QDropEvent* event);
@@ -73,12 +73,10 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void updateSizeAux(int width);
 		void setupLayout();
 
-		void showInfo(class SvgIconWidget * item);
-
 		bool inEmptyArea(const QPoint& pos);
 		QGraphicsWidget* closestItemTo(const QPoint& pos);
-		SvgIconWidget * svgIconWidgetAt(const QPoint & pos);
-		SvgIconWidget * svgIconWidgetAt(int x, int y);
+		class SvgIconWidget * svgIconWidgetAt(const QPoint & pos);
+		class SvgIconWidget * svgIconWidgetAt(int x, int y);
 
 	public slots:
 		void setSelected(int position, bool doEmit=false);

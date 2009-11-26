@@ -41,6 +41,7 @@ $Date$
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
 	: QGraphicsWidget() 
 {
+	setAcceptHoverEvents(true);
 	m_moduleId = modelPart->moduleID();
 
 	setFlags(QGraphicsItem::ItemIsSelectable);
@@ -97,11 +98,18 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	QGraphicsWidget::paint(painter, option, widget);
 }
 
-QPoint SvgIconWidget::globalPos() {
-	InfoGraphicsView *igv = dynamic_cast<InfoGraphicsView*>(this->scene()->parent());
-	if(igv) {
-		return igv->mapToGlobal(this->pos().toPoint());
-	} else {
-		return this->pos().toPoint();
+void SvgIconWidget::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ){
+	QGraphicsWidget::hoverEnterEvent(event);
+	InfoGraphicsView * igv = InfoGraphicsView::getInfoGraphicsView(this);
+	if (igv) {
+		igv->hoverEnterItem(this->modelPart());
+	}
+}
+
+void SvgIconWidget::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
+	QGraphicsWidget::hoverLeaveEvent(event);
+	InfoGraphicsView * igv = InfoGraphicsView::getInfoGraphicsView(this);
+	if (igv) {
+		igv->hoverLeaveItem(this->modelPart());
 	}
 }

@@ -111,10 +111,22 @@ HtmlInfoView::~HtmlInfoView() {
 }
 
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
-	//viewModelPartInfoAux(igv, modelPart, swappingEnabled);
+	//DebugDialog::debug(QString("hoverEnterItem modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
+	viewModelPartInfoAux(igv, modelPart, swappingEnabled);
+}
+
+void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart * modelPart) {
+	//DebugDialog::debug(QString("hoverLeaveItem modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
+	if (m_lastModelPart) {
+		viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
+	}
+	else {
+		viewItemInfoAux(m_lastInfoGraphicsView, m_lastItemBase, true);
+	}
 }
 
 void HtmlInfoView::viewModelPartInfo(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
+	DebugDialog::debug(QString("viewModelPartInfo modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
 	viewModelPartInfoAux(igv, modelPart, swappingEnabled);
 	m_lastModelPart = modelPart;
 }
@@ -123,6 +135,7 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 {
 	viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
 	m_lastItemBase = item;
+	m_lastModelPart = NULL;
 	m_lastInfoGraphicsView = infoGraphicsView;
 }
 
@@ -130,16 +143,8 @@ void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphics
 	//viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
 }
 
-void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart *) {
-	if (m_lastModelPart) {
-		//viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
-	}
-	else {
-		//viewItemInfoAux(m_lastInfoGraphicsView, m_lastItemBase, true);
-	}
-}
-
-void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * ){
+void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * itemBase){
+	DebugDialog::debug(QString("hoverLeaveItem itembase %1").arg(itemBase ? itemBase->instanceTitle() : "NULL"));
 	//viewItemInfoAux(infoGraphicsView, m_lastItemBase, true);
 }
 

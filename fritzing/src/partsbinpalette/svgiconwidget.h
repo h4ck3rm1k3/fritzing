@@ -40,20 +40,22 @@ class SvgIconWidgetContainer;
 
 class SvgIconWidget : public QGraphicsWidget
 {
-	Q_OBJECT
-	public:
-		SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
-		~SvgIconWidget();
-		ModelPart *modelPart() const;
-		const QString &moduleID() const;
-		QPoint globalPos();
+Q_OBJECT
+public:
+	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
+	~SvgIconWidget();
+	ModelPart *modelPart() const;
+	const QString &moduleID() const;
 
-	protected:
-		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
+protected:
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
+	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 
-		PaletteItem *m_paletteItem;
-		QGraphicsPixmapItem *m_pixmapItem;
-		QString m_moduleId;
+protected:
+	PaletteItem *m_paletteItem;
+	QGraphicsPixmapItem *m_pixmapItem;
+	QString m_moduleId;
 };
 
 

@@ -48,7 +48,6 @@ CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsItem* parentIt
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
 	setFlag(QGraphicsItem::ItemClipsChildrenToShape);
 	setAcceptHoverEvents(true);
-	setAcceptsHoverEvents(true);
 
 	doSetVisible(false);
 }
