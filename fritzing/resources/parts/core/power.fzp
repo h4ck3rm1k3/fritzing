@@ -20,7 +20,7 @@
  <views>
   <defaultUnits>cmil</defaultUnits>
   <iconView>
-   <layers image="schematic/power.svg" >
+   <layers image="icon/power.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>

@@ -171,6 +171,9 @@
         <file>resources/parts/svg/core/schematic/ground.svg</file>
         <file>resources/parts/svg/core/schematic/cell.svg</file>
         <file>resources/parts/svg/core/schematic/power.svg</file>
+        <file>resources/parts/svg/core/icon/ground.svg</file>
+        <file>resources/parts/svg/core/icon/cell.svg</file>
+        <file>resources/parts/svg/core/icon/power.svg</file>
         <file>resources/parts/core/dcpower.fzp</file>
         <file>resources/parts/core/power.fzp</file>
         <file>resources/images/icons/toolbarSharePressed_icon.png</file>

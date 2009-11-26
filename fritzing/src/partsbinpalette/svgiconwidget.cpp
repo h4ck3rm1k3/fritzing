@@ -35,6 +35,9 @@ $Date$
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
 
+#define SELECTION_THICKNESS 3
+#define ICON_SIZE 32
+
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
 	: QGraphicsWidget() 
 {
@@ -42,12 +45,12 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 
 	setFlags(QGraphicsItem::ItemIsSelectable);
 
-	this->setMaximumSize(QSize(38, 38));
+	this->setMaximumSize(QSize(ICON_SIZE + (2 * SELECTION_THICKNESS), ICON_SIZE + (2 * SELECTION_THICKNESS)));
 
 	m_paletteItem = new IconWidgetPaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
 	m_paletteItem->renderImage(modelPart, ViewIdentifierClass::IconView, viewLayers,ViewLayer::Icon, false);
 
-	QPixmap * pixmap = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(32, 32));
+	QPixmap * pixmap = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
 	if (pixmap) {
 		m_pixmapItem = new QGraphicsPixmapItem(*pixmap, this);
 		delete pixmap;
@@ -57,8 +60,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	}
 
 	m_pixmapItem->setFlags(0);
-	m_pixmapItem->setPos(3, 3);
-
+	m_pixmapItem->setPos(SELECTION_THICKNESS, SELECTION_THICKNESS);
 
 	m_paletteItem->setTooltip();
 	setToolTip(m_paletteItem->toolTip());
@@ -85,8 +87,8 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	if(isSelected()) {
 		painter->save();
 		QPen pen = painter->pen();
-		pen.setColor(QColor(255, 255, 255));
-		pen.setWidth(3);
+		pen.setColor(QColor(122, 15, 49));
+		pen.setWidth(SELECTION_THICKNESS);
 		painter->setPen(pen);
 		painter->drawRect(0, 0, size.width(), size.height());
 		painter->restore();

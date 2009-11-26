@@ -18,7 +18,7 @@
  <views>
   <defaultUnits>cmil</defaultUnits>
   <iconView>
-   <layers image="schematic/ground.svg" >
+   <layers image="icon/ground.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
