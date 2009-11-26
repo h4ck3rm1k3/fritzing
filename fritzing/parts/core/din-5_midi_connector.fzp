@@ -34,6 +34,7 @@
         <pcbView>
             <layers image="pcb/DIN5_midi_5_pcb.svg">
                 <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
             </layers>
         </pcbView>
     </views>

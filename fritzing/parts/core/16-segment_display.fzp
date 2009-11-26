@@ -21,6 +21,7 @@
         <pcbView>
             <layers image="pcb/dip_18_600mil_pcb.svg">
                 <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
             </layers>
         </pcbView>
         <breadboardView>
