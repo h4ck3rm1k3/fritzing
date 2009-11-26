@@ -10,9 +10,9 @@
  </g>
  <g id="copper0" >
   <rect width="55" x="42.5" y="42.5" fill="none" height="55" stroke="rgb(255, 191, 0)" stroke-width="20" />
-   <circle fill="none" cx="70" cy="70" stroke="rgb(255, 191, 0)" r="27.5" id="connector0pin" stroke-width="20" />
-   <circle fill="none" cx="70" cy="270" stroke="rgb(255, 191, 0)" r="27.5" id="connector1pin" stroke-width="20" />
-   <circle fill="none" cx="70" cy="470" stroke="rgb(255, 191, 0)" r="27.5" id="connector2pin" stroke-width="20" />
+   <circle fill="none" cx="70" cy="70" stroke="rgb(255, 191, 0)" r="31" id="connector0pin" stroke-width="20" />
+   <circle fill="none" cx="70" cy="270" stroke="rgb(255, 191, 0)" r="31" id="connector1pin" stroke-width="20" />
+   <circle fill="none" cx="70" cy="470" stroke="rgb(255, 191, 0)" r="31" id="connector2pin" stroke-width="20" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />
