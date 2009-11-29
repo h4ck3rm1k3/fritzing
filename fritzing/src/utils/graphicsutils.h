@@ -28,6 +28,9 @@ $Date: 2009-09-07 10:55:58 +0200 (Mon, 07 Sep 2009) $
 #define GRAPHICSUTILS_H
 
 #include <QPointF>
+#include <QTransform>
+#include <QXmlStreamWriter>
+#include <QDomElement>
 
 class GraphicsUtils
 {
@@ -44,10 +47,14 @@ public:
 	static qreal mm2mils(qreal mm);
 	static qreal pixels2mm(qreal p);
 	static qreal mils2pixels(qreal m);
+	static void saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform);
+	static bool loadTransform(const QDomElement & transformElement, QTransform & transform);
+
 
 public:
 	static const int IllustratorDPI = 72;
 	static const int StandardFritzingDPI = 1000;
+	static const qreal InchesPerMeter;
 
 
 };

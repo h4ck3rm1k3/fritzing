@@ -74,9 +74,10 @@ protected:
 	QString makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QString makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
-	
-protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	virtual bool hasGrips();
+
+protected:
 	class ResizeHandle * m_resizeGripTL;
 	class ResizeHandle * m_resizeGripTR;
 	class ResizeHandle * m_resizeGripBL;

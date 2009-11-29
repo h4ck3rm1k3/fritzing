@@ -593,6 +593,9 @@ protected:
 
 	QByteArray m_externalProcessOutput;
 
+public:
+	static int RestartNeeded;
+
 protected:
 	static const QString UntitledSketchName;
 	static int UntitledSketchIndex;

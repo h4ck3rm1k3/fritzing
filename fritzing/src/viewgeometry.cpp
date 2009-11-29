@@ -25,6 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "viewgeometry.h"
+#include "utils/graphicsutils.h"
 
 // get a compiler errow when using WireFlags instead of QFlags<>
 QFlags<ViewGeometry::WireFlag> ViewGeometry::TraceJumperRatsnestFlags = ViewGeometry::TraceFlag | ViewGeometry::JumperFlag | ViewGeometry::RatsnestFlag;
@@ -62,41 +63,8 @@ ViewGeometry::ViewGeometry(QDomElement & geometry) {
 		m_rect.setWidth(geometry.attribute("width").toDouble());
 		m_rect.setHeight(geometry.attribute("height").toDouble());
 	}
-	QDomElement transformElement = geometry.firstChildElement("transform");
-	if (!transformElement.isNull()) {
-		qreal m11 = m_transform.m11();
-		qreal m12 = m_transform.m12();
-		qreal m13 = m_transform.m13();
-		qreal m21 = m_transform.m21();
-		qreal m22 = m_transform.m22();
-		qreal m23 = m_transform.m23();
-		qreal m31 = m_transform.m31();
-		qreal m32 = m_transform.m32();
-		qreal m33 = m_transform.m33();
-		bool ok;
-		qreal temp;
 
-		temp = transformElement.attribute("m11").toDouble(&ok);
-		if (ok) m11 = temp;
-		temp = transformElement.attribute("m12").toDouble(&ok);
-		if (ok) m12 = temp;
-		temp = transformElement.attribute("m13").toDouble(&ok);
-		if (ok) m13 = temp;
-		temp = transformElement.attribute("m21").toDouble(&ok);
-		if (ok) m21 = temp;
-		temp = transformElement.attribute("m22").toDouble(&ok);
-		if (ok) m22 = temp;
-		temp = transformElement.attribute("m23").toDouble(&ok);
-		if (ok) m23 = temp;
-		temp = transformElement.attribute("m31").toDouble(&ok);
-		if (ok) m31 = temp;
-		temp = transformElement.attribute("m32").toDouble(&ok);
-		if (ok) m32 = temp;
-		temp = transformElement.attribute("m33").toDouble(&ok);
-		if (ok) m33 = temp;
-
-		m_transform.setMatrix(m11, m12, m13, m21, m22, m23, m31, m32, m33);
-	}
+	GraphicsUtils::loadTransform(geometry.firstChildElement("transform"), m_transform);
 }
 
 void ViewGeometry::setZ(qreal z) {

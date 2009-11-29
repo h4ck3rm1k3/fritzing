@@ -172,6 +172,7 @@ void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Jumper) return false;
 	if (modelPart->itemType() == ModelPart::CopperFill) return false;
+	if (modelPart->itemType() == ModelPart::Logo) return false;
 
 	bool result = PCBSketchWidget::canDropModelPart(modelPart);
 	if (result) return result;

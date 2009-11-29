@@ -39,7 +39,7 @@ $Date$
 #include "fritzingwindow.h"
 #include "debugdialog.h"
 #include "utils/misc.h"
-#include "fapplication.h"
+#include "utils/folderutils.h"
 
 #include "lib/quazip/quazip.h"
 #include "lib/quazip/quazipfile.h"
@@ -122,7 +122,7 @@ bool FritzingWindow::saveAs() {
 		path = m_fileName;
 	}
 	DebugDialog::debug(QString("current file: %1").arg(m_fileName));
-    QString fileName = FApplication::getSaveFileName(
+    QString fileName = FolderUtils::getSaveFileName(
 						this,
                         tr("Specify a file name"),
                         path,
@@ -151,7 +151,7 @@ bool FritzingWindow::saveAs() {
 }
 
 //void FritzingWindow::saveAsAux(const QString & fileName) {
-	//FApplication::setOpenSaveFolder(fileName);
+	//FolderUtils::setOpenSaveFolder(fileName);
 //}
 
 void FritzingWindow::undoStackCleanChanged(bool isClean) {

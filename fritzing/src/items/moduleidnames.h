@@ -45,6 +45,7 @@ public:
 	static const QString powerModuleIDName;
 	static const QString justPowerModuleIDName;
 	static const QString resistorModuleIDName;
+	static const QString logoModuleIDName;
 };
 
 #endif

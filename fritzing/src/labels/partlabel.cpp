@@ -30,6 +30,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../sketch/infographicsview.h"
 #include "../model/modelpart.h"
+#include "../utils/graphicsutils.h"
 
 #include <QGraphicsScene>
 #include <QTextDocument>
@@ -290,6 +291,7 @@ void PartLabel::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("yOffset", QString::number(m_offset.y()));
 	streamWriter.writeAttribute("textColor", brush().color().name());
 	streamWriter.writeAttribute("fontSize", QString::number(font().pointSizeF()));
+	GraphicsUtils::saveTransform(streamWriter, transform());
 	foreach (QString key, m_displayKeys) {
 		streamWriter.writeStartElement("displayKey");
 		streamWriter.writeAttribute("key", key);
@@ -346,6 +348,12 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	if (m_displayKeys.length() == 0) {
 		m_displayKeys.append(LabelTextKey);
 	}
+
+	QTransform t;
+	if (GraphicsUtils::loadTransform(labelGeometry.firstChildElement("transform"), t)) {
+		setTransform(t);
+	}
+
 
 }
 

@@ -755,18 +755,19 @@ void PCBSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 }
 
 bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
-	if (modelPart->itemType() == ModelPart::Jumper) return true;
-
-	if (modelPart->itemType() == ModelPart::Wire || modelPart->itemType() == ModelPart::Breadboard) {
-		// can't drag and drop these parts in these views
-		return false;
-	}
-
-	if (modelPart->itemType() == ModelPart::Symbol) return false;
-	if (modelPart->itemType() == ModelPart::CopperFill) return false;
-
-	if (modelPart->itemType() == ModelPart::Board || modelPart->itemType() == ModelPart::ResizableBoard) {
-		return matchesLayer(modelPart);
+	switch (modelPart->itemType()) {
+		case ModelPart::Jumper:
+		case ModelPart::Logo:
+			return true;
+		case ModelPart::Wire:
+		case ModelPart::Breadboard:
+		case ModelPart::Symbol:
+		case ModelPart::CopperFill:
+			// can't drag and drop these parts in this view
+			return false;
+		case ModelPart::Board:
+		case ModelPart::ResizableBoard:
+			return matchesLayer(modelPart);
 	}
 
 	return true;

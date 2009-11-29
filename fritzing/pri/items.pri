@@ -25,6 +25,7 @@ HEADERS += \
     src/items/itembase.h \
     src/items/jumperitem.h \
     src/items/layerkinpaletteitem.h \
+    src/items/logoitem.h \
     src/items/moduleidnames.h \
     src/items/mysterypart.h \
     src/items/paletteitem.h \
@@ -45,6 +46,7 @@ SOURCES += \
     src/items/itembase.cpp \
     src/items/jumperitem.cpp \
     src/items/layerkinpaletteitem.cpp \
+    src/items/logoitem.cpp \
     src/items/moduleidnames.cpp \
     src/items/mysterypart.cpp \
     src/items/paletteitem.cpp \

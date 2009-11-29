@@ -30,6 +30,10 @@ $Date: 2009-09-04 12:26:26 +0200 (Fri, 04 Sep 2009) $
 #include <QList>
 #include <QLineF>
 
+
+const qreal GraphicsUtils::InchesPerMeter = 39.370078;
+
+
 void GraphicsUtils::distanceFromLine(double cx, double cy, double ax, double ay, double bx, double by, 
 									 double & dx, double & dy, double &distanceSegment, bool & atEndpoint)
 {
@@ -148,5 +152,60 @@ qreal GraphicsUtils::pixels2mm(qreal p) {
 
 qreal GraphicsUtils::mils2pixels(qreal m) {
 	return (FSvgRenderer::printerScale() * m / 1000);
+}
+
+void GraphicsUtils::saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform) {
+	if (transform.isIdentity()) return;
+
+	streamWriter.writeStartElement("transform");
+	streamWriter.writeAttribute("m11", QString::number(transform.m11()));
+	streamWriter.writeAttribute("m12", QString::number(transform.m12()));
+	streamWriter.writeAttribute("m13", QString::number(transform.m13()));
+	streamWriter.writeAttribute("m21", QString::number(transform.m21()));
+	streamWriter.writeAttribute("m22", QString::number(transform.m22()));
+	streamWriter.writeAttribute("m23", QString::number(transform.m23()));
+	streamWriter.writeAttribute("m31", QString::number(transform.m31()));
+	streamWriter.writeAttribute("m32", QString::number(transform.m32()));
+	streamWriter.writeAttribute("m33", QString::number(transform.m33()));
+	streamWriter.writeEndElement();
+}
+
+bool GraphicsUtils::loadTransform(const QDomElement & transformElement, QTransform & transform)
+{
+	if (transformElement.isNull()) return false;
+
+	qreal m11 = transform.m11();
+	qreal m12 = transform.m12();
+	qreal m13 = transform.m13();
+	qreal m21 = transform.m21();
+	qreal m22 = transform.m22();
+	qreal m23 = transform.m23();
+	qreal m31 = transform.m31();
+	qreal m32 = transform.m32();
+	qreal m33 = transform.m33();
+	bool ok;
+	qreal temp;
+
+	temp = transformElement.attribute("m11").toDouble(&ok);
+	if (ok) m11 = temp;
+	temp = transformElement.attribute("m12").toDouble(&ok);
+	if (ok) m12 = temp;
+	temp = transformElement.attribute("m13").toDouble(&ok);
+	if (ok) m13 = temp;
+	temp = transformElement.attribute("m21").toDouble(&ok);
+	if (ok) m21 = temp;
+	temp = transformElement.attribute("m22").toDouble(&ok);
+	if (ok) m22 = temp;
+	temp = transformElement.attribute("m23").toDouble(&ok);
+	if (ok) m23 = temp;
+	temp = transformElement.attribute("m31").toDouble(&ok);
+	if (ok) m31 = temp;
+	temp = transformElement.attribute("m32").toDouble(&ok);
+	if (ok) m32 = temp;
+	temp = transformElement.attribute("m33").toDouble(&ok);
+	if (ok) m33 = temp;
+
+	transform.setMatrix(m11, m12, m13, m21, m22, m23, m31, m32, m33);
+	return true;
 }
 

@@ -30,6 +30,7 @@ $Date: 2009-04-15 16:37:21 +0200 (Wed, 15 Apr 2009) $
 #include "../debugdialog.h"
 #include "../version/version.h"
 #include "../utils/folderutils.h"
+#include "../utils/graphicsutils.h"
 
 #include <QPainter>
 #include <QSvgRenderer>
@@ -84,8 +85,8 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	qreal bWidth = res * br.width() / FSvgRenderer::printerScale();
 	qreal bHeight = res * br.height() / FSvgRenderer::printerScale();
 	QImage image(qMax(svgWidth, bWidth), qMax(svgHeight, bHeight), QImage::Format_RGB32);
-	image.setDotsPerMeterX(res * 39.3700787);
-	image.setDotsPerMeterY(res * 39.3700787);
+	image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+	image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
 	image.fill(0x0);
 
 	QSvgRenderer renderer(boardByteArray);
@@ -105,11 +106,11 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	scanImage(image, bWidth, bHeight, MILS, res);
+	scanImage(image, bWidth, bHeight, MILS, res, "#ffbf00");
 	return true;
 }
 
-void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res)  
+void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString)  
 {
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects);
@@ -125,7 +126,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 
 		// note: there is always one
 		joinScanLines(newRects, polygons);
-		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor);
+		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString);
 		m_newSVGs.append(pSvg);
 
 		/*
@@ -170,8 +171,12 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 		QRgb* scanLine = (QRgb *) image.scanLine(y);
 		for (int x = 0; x < bWidth; x++) {
 			QRgb current = *(scanLine + x);
+			//if (current != 0xff000000 && current != 0xffffffff) {
+				//DebugDialog::debug(QString("current %1").arg(current,0,16));
+			//}
+			int gray = qGray(current);
 			if (inWhite) {
-				if (qBlue(current) == 0xff) {
+				if (gray > 192) {			// qBlue(current) == 0xff    gray > 128
 					// another white pixel, keep moving
 					continue;
 				}
@@ -186,7 +191,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 				rects.append(QRect(whiteStart, y, x - whiteStart + 1, 1));
 			}
 			else {
-				if (qBlue(current) != 0xff) {
+				if (gray <= 192) {		// qBlue(current) != 0xff				
 					// another black pixel, keep moving
 					continue;
 				}
@@ -430,7 +435,7 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 	}
 }
 
-QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor) 
+QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString) 
 {
 	QString pSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
 		.arg(bWidth / res)
@@ -440,7 +445,7 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res,
 	pSvg += "<g id='groundplane'>\n";
 	pSvg += "<g id='connector0pad'>\n";
 	foreach (QPolygon poly, polygons) {
-		pSvg += QString("<polygon fill='#ffbf00' points='\n");
+		pSvg += QString("<polygon fill='%1' points='\n").arg(colorString);
 		int space = 0;
 		foreach (QPoint p, poly) {
 			pSvg += QString("%1,%2 %3").arg(p.x()).arg(p.y()).arg((++space % 8 == 0) ?  "\n" : "");

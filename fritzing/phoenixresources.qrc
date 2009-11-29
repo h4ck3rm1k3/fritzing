@@ -30,18 +30,33 @@
         <file>resources/ratsnestcolors.txt</file>
         <file>resources/parts/core/wire.fzp</file>
         <file>resources/parts/core/cmRuler.fzp</file>
-        <file>resources/parts/core/tinyBreadboard.fzp</file>
         <file>resources/parts/core/note.fzp</file>
         <file>resources/parts/core/group.fzp</file>
         <file>resources/parts/core/rectangle_pcb.fzp</file>
+        <file>resources/parts/core/logo.fzp</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>
-        <file>resources/parts/svg/core/icon/tinyBreadboardIcon.svg</file>
         <file>resources/parts/svg/core/icon/rulericon.svg</file>
         <file>resources/parts/svg/core/icon/rectangle_pcb.svg</file>
         <file>resources/parts/svg/core/breadboard/ruler.svg</file>
-        <file>resources/parts/svg/core/breadboard/tinyBreadboard.svg</file>
         <file>resources/parts/svg/core/breadboard/wire.svg</file>
         <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
+        <file>resources/parts/svg/core/pcb/logo.svg</file>
+        <file>resources/parts/core/ground.fzp</file>
+        <file>resources/parts/svg/core/schematic/ground.svg</file>
+        <file>resources/parts/svg/core/schematic/cell.svg</file>
+        <file>resources/parts/svg/core/schematic/power.svg</file>
+        <file>resources/parts/svg/core/icon/logo.svg</file>
+        <file>resources/parts/svg/core/icon/ground.svg</file>
+        <file>resources/parts/svg/core/icon/cell.svg</file>
+        <file>resources/parts/svg/core/icon/power.svg</file>
+        <file>resources/parts/core/dcpower.fzp</file>
+        <file>resources/parts/core/power.fzp</file>
+        <file>resources/parts/core/jumper.fzp</file>
+        <file>resources/parts/svg/core/pcb/jumper.svg</file>
+        <file>resources/parts/svg/core/icon/jumpericon.svg</file>
+        <file>resources/parts/core/resistor.fzp</file>
+        <file>resources/parts/core/groundplane.fzp</file>
+        <file>resources/parts/svg/core/pcb/groundplane.svg</file>
         <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
         <file>resources/images/icons/partsBinOpenPressed_icon.png</file>
         <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>
@@ -167,30 +182,15 @@
         <file>resources/images/icons/arrowButtonDown.png</file>
         <file>resources/images/icons/arrowButtonLeft.png</file>
         <file>resources/images/icons/arrowButtonRight.png</file>
-        <file>resources/parts/core/ground.fzp</file>
-        <file>resources/parts/svg/core/schematic/ground.svg</file>
-        <file>resources/parts/svg/core/schematic/cell.svg</file>
-        <file>resources/parts/svg/core/schematic/power.svg</file>
-        <file>resources/parts/svg/core/icon/ground.svg</file>
-        <file>resources/parts/svg/core/icon/cell.svg</file>
-        <file>resources/parts/svg/core/icon/power.svg</file>
-        <file>resources/parts/core/dcpower.fzp</file>
-        <file>resources/parts/core/power.fzp</file>
         <file>resources/images/icons/toolbarSharePressed_icon.png</file>
         <file>resources/images/icons/toolbarShareDisabled_icon.png</file>
         <file>resources/images/icons/toolbarShareEnabled_icon.png</file>
-        <file>resources/parts/core/jumper.fzp</file>
-        <file>resources/parts/svg/core/pcb/jumper.svg</file>
-        <file>resources/parts/svg/core/icon/jumpericon.svg</file>
         <file>resources/templates/jumper_copper0LayerTemplate.txt</file>
 	  <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_fzpTemplate.txt</file>
         <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
-        <file>resources/parts/core/resistor.fzp</file>
-        <file>resources/parts/core/groundplane.fzp</file>
-        <file>resources/parts/svg/core/pcb/groundplane.svg</file>
 	  <file>resources/images/splitterHandle.png</file>
     </qresource>
 </RCC>

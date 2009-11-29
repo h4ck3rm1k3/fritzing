@@ -52,10 +52,6 @@ public:
 	void preloadSlowParts();
 
 public:
-	static QString getOpenFileName( QWidget * parent = 0, const QString & caption = QString(), const QString & dir = QString(), const QString & filter = QString(), QString * selectedFilter = 0, QFileDialog::Options options = 0 );
-	static QString getSaveFileName( QWidget * parent = 0, const QString & caption = QString(), const QString & dir = QString(), const QString & filter = QString(), QString * selectedFilter = 0, QFileDialog::Options options = 0 );
-	static void setOpenSaveFolder(const QString& path);
-	static const QString openSaveFolder();
 	static bool spaceBarIsPressed();
 	static bool runAsService();
 
@@ -88,7 +84,6 @@ protected:
 protected:
 	bool m_spaceBarIsPressed;
 	bool m_mousePressed;
-	QString m_openSaveFolder;
 	QTranslator m_translator;
 	class ReferenceModel * m_referenceModel;
 	class PaletteModel * m_paletteBinModel;

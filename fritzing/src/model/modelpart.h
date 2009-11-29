@@ -60,6 +60,7 @@ public:
 		 Symbol,
 		 Jumper,
 		 CopperFill,
+		 Logo,
 		 Unknown
 	};
 

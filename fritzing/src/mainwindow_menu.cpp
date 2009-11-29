@@ -39,7 +39,6 @@ $Date$
 #include "items/virtualwire.h"
 #include "fsvgrenderer.h"
 #include "labels/note.h"
-#include "fapplication.h"
 #include "svg/svg2gerber.h"
 #include "eagle/fritzing2eagle.h"
 #include "sketch/breadboardsketchwidget.h"
@@ -140,7 +139,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	QString fileExt;
 	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
 	QString suffix = (wantPDF) ? pdfActionType : svgActionType;
-	QString fileName = FApplication::getSaveFileName(this,
+	QString fileName = FolderUtils::getSaveFileName(this,
 		tr("Export Etchable for DIY..."),
 		path+"/"+constructFileName("etch", suffix),
 		extFmt,
@@ -233,8 +232,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	// set everything to a 1200 dpi resolution
 	QSize imgSize(trueWidth * 1200, trueHeight * 1200);
 	QImage image(imgSize, QImage::Format_RGB32);
-	image.setDotsPerMeterX(1200 * 39.3700787);
-	image.setDotsPerMeterY(1200 * 39.3700787);
+	image.setDotsPerMeterX(1200 * GraphicsUtils::InchesPerMeter);
+	image.setDotsPerMeterY(1200 * GraphicsUtils::InchesPerMeter);
 	QPainter painter;
 
 	QColor color;
@@ -355,7 +354,7 @@ void MainWindow::doExport() {
 		QString fileExt;
 		QString extFmt = fileExtFormats.value(actionType);
 		DebugDialog::debug(QString("file export string %1").arg(extFmt));
-		QString fileName = FApplication::getSaveFileName(this,
+		QString fileName = FolderUtils::getSaveFileName(this,
 			tr("Export..."),
 			path+"/"+constructFileName("", actionType),
 			extFmt,
@@ -606,7 +605,7 @@ void MainWindow::load() {
 		path = "";
 	}
 
-	QString fileName = FApplication::getOpenFileName(
+	QString fileName = FolderUtils::getOpenFileName(
 			this,
 			tr("Select a Fritzing File to Open"),
 			path,
@@ -2400,8 +2399,8 @@ void MainWindow::exportToGerber() {
 
 		QSize imgSize(twidth, theight);
 		QImage image(imgSize, QImage::Format_RGB32);
-		image.setDotsPerMeterX(res * 39.3700787);
-		image.setDotsPerMeterY(res * 39.3700787);
+		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
 		QPainter painter;
 		QBrush brush = m_pcbGraphicsView->scene()->backgroundBrush();
 		m_pcbGraphicsView->scene()->setBackgroundBrush(Qt::black);
@@ -2412,7 +2411,7 @@ void MainWindow::exportToGerber() {
 		painter.end();
 
 		GroundPlaneGenerator gpg;
-		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI);
+		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff");
 		foreach (QString gsvg, gpg.newSVGs()) {
 			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg);
 		}
@@ -2555,7 +2554,7 @@ void MainWindow::exportToEagle() {
 void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 	QString path = defaultSaveFolder();
 	QString fileExt;
-	QString fileName = FApplication::getSaveFileName(this,
+	QString fileName = FolderUtils::getSaveFileName(this,
 		tr("Export SVG..."),
 		path+"/"+constructFileName("", svgActionType),
 		fileExtFormats[svgActionType],
@@ -2649,7 +2648,7 @@ void MainWindow::exportBOM() {
     QString fname = path+"/"+constructFileName("bom", bomActionType);
     DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
-    QString fileName = FApplication::getSaveFileName(this,
+    QString fileName = FolderUtils::getSaveFileName(this,
             tr("Export Bill of Materials (BoM)..."),
             fname,
             extFmt,
@@ -2755,7 +2754,7 @@ void MainWindow::exportNetlist() {
     QString fname = path + "/" +constructFileName("netlist", netlistActionType);
     //DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
-    QString fileName = FApplication::getSaveFileName(this,
+    QString fileName = FolderUtils::getSaveFileName(this,
             tr("Export Netlist..."),
             fname,
             extFmt,

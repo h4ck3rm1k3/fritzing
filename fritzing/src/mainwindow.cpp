@@ -51,7 +51,6 @@ $Date$
 #include "fdockwidget.h"
 #include "infoview/htmlinfoview.h"
 #include "waitpushundostack.h"
-#include "fapplication.h"
 #include "layerattributes.h"
 #include "navigator/triplenavigator.h"
 #include "sketch/breadboardsketchwidget.h"
@@ -86,6 +85,7 @@ const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
 int MainWindow::CascadeFactorX = 21;
 int MainWindow::CascadeFactorY = 19;
+int MainWindow::RestartNeeded = 0;
 
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
@@ -326,12 +326,9 @@ void MainWindow::connectPairs() {
 						Qt::DirectConnection);
 	*/
 
-	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
-	if (fapp != NULL) {
-		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
-		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
-		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
-	}
+	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 }
 
 void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
@@ -798,7 +795,7 @@ void MainWindow::restoreDocks() {
 
 ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath, bool connectorsChanged) {
 	if(connectorsChanged && wannaRestart()) {
-		FApplication::exit(FApplication::RestartNeeded);
+		QApplication::exit(RestartNeeded);
 		return NULL;
 	} else {
 		ModelPart* mp = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
@@ -872,7 +869,7 @@ const QString MainWindow::fileExtension() {
 }
 
 const QString MainWindow::defaultSaveFolder() {
-	return FApplication::openSaveFolder();
+	return FolderUtils::openSaveFolder();
 }
 
 const QString & MainWindow::fileName() {
@@ -909,7 +906,7 @@ void MainWindow::saveBundledSketch() {
 void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave) {
 	QString fileExt;
 	QString path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName()+"z";
-	QString bundledFileName = FApplication::getSaveFileName(
+	QString bundledFileName = FolderUtils::getSaveFileName(
 			this,
 			tr("Specify a file name"),
 			path,
@@ -1013,7 +1010,7 @@ void MainWindow::loadBundledPartFromWeb() {
 }
 
 void MainWindow::loadBundledPart() {
-	QString fileName = FApplication::getOpenFileName(
+	QString fileName = FolderUtils::getOpenFileName(
 		this,
 		tr("Select a part to import"),
 		defaultSaveFolder(),
@@ -1065,7 +1062,7 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 
 	QString fileExt;
 	QString path = defaultSaveFolder()+"/"+partTitle+FritzingBundledPartExtension;
-	QString bundledFileName = FApplication::getSaveFileName(
+	QString bundledFileName = FolderUtils::getSaveFileName(
 			this,
 			tr("Specify a file name"),
 			path,
@@ -1838,7 +1835,7 @@ bool MainWindow::loadCustomBoardShape()
 
 	itemBase = itemBase->layerKinChief();
 
-	QString path = FApplication::getOpenFileName(this,
+	QString path = FolderUtils::getOpenFileName(this,
 		tr("Open custom board shape SVG file"),
 		defaultSaveFolder(),
 		tr("SVG Files (%1)").arg("*.svg")

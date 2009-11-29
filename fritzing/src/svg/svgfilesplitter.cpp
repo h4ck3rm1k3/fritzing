@@ -948,6 +948,7 @@ void SvgFileSplitter::fixStyleAttribute(QDomElement & element)
 	fixStyleAttribute(element, style, "stroke");
 	fixStyleAttribute(element, style, "fill");
 	fixStyleAttribute(element, style, "fill-opacity");
+	fixStyleAttribute(element, style, "stroke-opacity");
 	fixStyleAttribute(element, style, "font-size");
 
 	if (style.trimmed().isEmpty()) {
@@ -1090,6 +1091,11 @@ void SvgFileSplitter::changeColors(QDomElement & element, QString & toColor, QSt
 	QString fillo = element.attribute("fill-opacity");
 	if (!fillo.isEmpty()) {
 		element.setAttribute("fill-opacity", "1.0");
+	}
+
+	QString sillo = element.attribute("stroke-opacity");
+	if (!sillo.isEmpty()) {
+		element.setAttribute("stroke-opacity", "1.0");
 	}
 
 	QDomElement child = element.firstChildElement();

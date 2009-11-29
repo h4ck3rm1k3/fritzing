@@ -113,9 +113,9 @@ void DoOnceThread::run()
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
+	MainWindow::RestartNeeded = RestartNeeded;
 	m_spaceBarIsPressed = false;
 	m_mousePressed = false;
-	m_openSaveFolder = ___emptyString___;
 	m_referenceModel = NULL;
 	m_paletteBinModel = NULL;
 	m_started = false;
@@ -256,38 +256,6 @@ bool FApplication::spaceBarIsPressed() {
 	return ((FApplication *) qApp)->m_spaceBarIsPressed;
 }
 
-void FApplication::setOpenSaveFolder(const QString& path) {
-	QFileInfo fileInfo(path);
-	if(fileInfo.isDir()) {
-		((FApplication *) qApp)->m_openSaveFolder = path;
-	} else {
-		((FApplication *) qApp)->m_openSaveFolder = fileInfo.path().remove(fileInfo.fileName());
-	}
-	QSettings settings;
-	settings.setValue("openSaveFolder", ((FApplication *) qApp)->m_openSaveFolder);
-}
-
-const QString FApplication::openSaveFolder() {
-	if(((FApplication *) qApp)->m_openSaveFolder == ___emptyString___) {
-		QSettings settings;
-		QString tempFolder = settings.value("openSaveFolder").toString();
-		if (!tempFolder.isEmpty()) {
-			QFileInfo fileInfo(tempFolder);
-			if (fileInfo.exists()) {
-				((FApplication *) qApp)->m_openSaveFolder = tempFolder;
-				return ((FApplication *) qApp)->m_openSaveFolder;
-			}
-			else {
-				settings.remove("openSaveFolder");
-			}
-		}
-
-		DebugDialog::debug(QString("default save location: %1").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)));
-		return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-	} else {
-		return ((FApplication *) qApp)->m_openSaveFolder;
-	}
-}
 
 bool FApplication::eventFilter(QObject *obj, QEvent *event)
 {
@@ -774,25 +742,6 @@ void FApplication::enableCheckUpdates(bool enabled)
 	}
 }
 
-
-QString FApplication::getOpenFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
-{
-	QString result = QFileDialog::getOpenFileName(parent, caption, dir, filter, selectedFilter, options);
-	if (!result.isNull()) {
-		setOpenSaveFolder(result);
-	}
-	return result;
-}
-
-QString FApplication::getSaveFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
-{
-	//DebugDialog::debug(QString("getopenfilename %1 %2 %3 %4").arg(caption).arg(dir).arg(filter).arg(*selectedFilter));
-	QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
-	if (!result.isNull()) {
-		setOpenSaveFolder(result);
-	}
-	return result;
-}
 
 void FApplication::createUserDataStoreFolderStructure() {
 	// make sure that the folder structure for parts and bins, exists

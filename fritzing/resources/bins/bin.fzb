@@ -401,7 +401,14 @@
           </iconView>
         </views>
       </instance>
-        <instance moduleIdRef="RulerModuleID" modelIndex="55" path=":/resources/parts/core/cmRuler.fzp">
+        <instance moduleIdRef="LogoModuleID" modelIndex="55" path=":/resources/parts/core/logo.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="RulerModuleID" modelIndex="56" path=":/resources/parts/core/cmRuler.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

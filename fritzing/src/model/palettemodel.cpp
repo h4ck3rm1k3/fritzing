@@ -352,6 +352,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (propertiesText.contains("plain vanilla pcb", Qt::CaseInsensitive)) {
 		type = ModelPart::ResizableBoard;
 	}
+	else if (propertiesText.contains("logo", Qt::CaseInsensitive)) {
+		type = ModelPart::Logo;
+	}
 	else if (moduleID.compare(ModuleIDNames::groundPlaneModuleIDName) == 0) {
 		type = ModelPart::CopperFill;
 	}

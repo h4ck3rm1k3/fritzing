@@ -66,20 +66,7 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 		file.close();
 	}
 
-	if (modelPart->moduleID().compare(ModuleIDNames::rectangleModuleIDName) == 0) {
-		m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
-		connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-		m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
-		connect(m_resizeGripTR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-		m_resizeGripBL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png"), Qt::SizeBDiagCursor, this);
-		connect(m_resizeGripBL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-		m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), Qt::SizeFDiagCursor, this);
-		connect(m_resizeGripBR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-		connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
-	}
-	else {
-		m_resizeGripTL = m_resizeGripTR = m_resizeGripBL = m_resizeGripBR = NULL;
-	}
+	m_resizeGripTL = m_resizeGripTR = m_resizeGripBL = m_resizeGripBR = NULL;
 
 	m_silkscreenRenderer = m_renderer = NULL;
 	m_inResize = NULL;
@@ -101,6 +88,17 @@ QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &v
 			}
 			break;
 		case ItemSceneHasChanged:
+			if (hasGrips()) {
+				m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
+				connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+				m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
+				connect(m_resizeGripTR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+				m_resizeGripBL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png"), Qt::SizeBDiagCursor, this);
+				connect(m_resizeGripBL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+				m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), Qt::SizeFDiagCursor, this);
+				connect(m_resizeGripBR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+				connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
+			}
 			if (m_resizeGripBL && this->scene()) {
 				setInitialSize();
 			}
@@ -110,6 +108,10 @@ QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &v
    	}
 
     return PaletteItem::itemChange(change, value);
+}
+
+bool ResizableBoard::hasGrips() {
+	return modelPart()->moduleID().compare(ModuleIDNames::rectangleModuleIDName) == 0;
 }
 
 void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
@@ -422,7 +424,7 @@ void ResizableBoard::rotateItem(qreal degrees) {
 			qreal w = m_modelPart->prop("width").toDouble();
 			qreal h = m_modelPart->prop("height").toDouble();
 			LayerHash viewLayers;
-			resizeMM(w, h, viewLayers);
+			resizeMM(h, w, viewLayers);
 			moveItem(vg);
 		}
 	}
@@ -458,7 +460,6 @@ bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString 
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (m_modelPart->prop("height").isValid()) {
-			returnValue.replace(WidthExpr, "width='255px");
 			returnValue.replace(HeightExpr, "height='50px");
 		}
 		returnProp = tr("shape");

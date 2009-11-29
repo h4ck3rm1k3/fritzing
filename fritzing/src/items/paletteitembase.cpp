@@ -68,6 +68,9 @@ QPainterPath PaletteItemBase::shape() const
 	// TODO: figure out real shape of svg
     QPainterPath path;
 
+	// returns a custom shape for the now-obsolete arduino board, which allows some kind of click-thru
+	// need to clean this up...
+
 	if ((m_viewLayerID == ViewLayer::Copper0) && 
 		((itemType() == ModelPart::Board) || (itemType() == ModelPart::ResizableBoard)) && 
 		(m_modelPart->moduleID().compare("1234ABDE24_ST") == 0)) 
@@ -190,6 +193,7 @@ void PaletteItemBase::findConnectorsUnder() {
 		case ModelPart::Breadboard:
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
+		case ModelPart::Logo:
 			// don't try to map connectors when we drag a breadboard: it's too damn slow
 			return;
 		default:

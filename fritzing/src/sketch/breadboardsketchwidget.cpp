@@ -269,6 +269,7 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		return matchesLayer(modelPart);
 	}
 
+	if (modelPart->itemType() == ModelPart::Logo) return false;
 	if (modelPart->itemType() == ModelPart::Symbol) return false;
 	if (modelPart->itemType() == ModelPart::Jumper) return false;
 	if (modelPart->itemType() == ModelPart::CopperFill) return false;

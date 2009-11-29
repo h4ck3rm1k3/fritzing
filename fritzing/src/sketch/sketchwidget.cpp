@@ -44,6 +44,7 @@ $Date$
 #include <QSettings>
 
 #include "../items/paletteitem.h"
+#include "../items/logoitem.h"
 #include "../items/symbolpaletteitem.h"
 #include "../items/wire.h"
 #include "../commands.h"
@@ -733,6 +734,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			break;
 		case ModelPart::ResizableBoard:
 			paletteItem = new ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
+			break;
+		case ModelPart::Logo:
+			paletteItem = new LogoItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		case ModelPart::Symbol:
 			paletteItem = new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
@@ -1427,6 +1431,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::Breadboard:
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
+			case ModelPart::Logo:
 			case ModelPart::Module:
 			case ModelPart::Symbol:
 			case ModelPart::Jumper:
@@ -5692,6 +5697,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 		case ModelPart::Breadboard:
+		case ModelPart::Logo:
 			//if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
 				//return false;
 			//}
