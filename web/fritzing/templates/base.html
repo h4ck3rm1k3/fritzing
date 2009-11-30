@@ -128,7 +128,7 @@
                 <div id="portal-column-two">
                     <div class="visualPadding">
                         
-                        {% get_latest_objects news.NewsEntry 5 as latest_news %}
+                        {% get_latest_objects news.NewsEntry 3 as latest_news %}
                         {% if latest_news %}
                         <div class="portletWrapper">
                             <dl class="portlet portletNews">
@@ -149,7 +149,7 @@
                        	
                         
                         
-                        {% get_latest_timed_objects events.event 5 start_date >= today as latest_events %}
+                        {% get_latest_timed_objects events.event 3 start_date >= today as latest_events %}
                         {% if latest_events %}
                         <div class="portletWrapper">
                             <dl class="portlet portletNews">
@@ -176,7 +176,7 @@
 
                         
                         {% cache 600 sidebar_forum %}
-                        {% get_latest_objects_with_relatives forum.thread 5 order_by -latest_post_time as latest_forum_threads %}
+                        {% get_latest_objects_with_relatives forum.thread 3 order_by -latest_post_time as latest_forum_threads %}
                         <div class="portletWrapper">
                             <dl class="portlet portletPloneboardRecent">
                                 <dt class="portletHeader">
