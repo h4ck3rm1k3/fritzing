@@ -657,6 +657,8 @@ void PCBSketchWidget::setCurrent(bool current) {
 			// TODO: make these constants less arbitrary
 			p += QPointF(10, 30);
 
+			// add a board to the empty sketch, and place it in the help area.
+
 			m_addedBoard->setPos(p);
 			qobject_cast<ResizableBoard *>(m_addedBoard)->resizePixels(110, helpsize.height() - 30 - 30, m_viewLayers);
 		}

@@ -26,9 +26,9 @@ $Date$
 
 #include "svgpathlexer.h"
 #include "svgpathgrammar_p.h"
+#include "../utils/textutils.h"
 #include <qdebug.h>
 
-static const QRegExp findWhitespace("[\\s]+");
 static const QRegExp findWhitespaceBefore(" ([AaCcMmVvTtQqSsLlVvHhZz,])");
 static const QRegExp findWhitespaceAfter("([AaCcMmVvTtQqSsLlVvHhZz,]) ");
 static const QRegExp findWhitespaceAtEnd(" $");
@@ -59,7 +59,7 @@ QString SVGPathLexer::clean(const QString & source) {
 
 	
 	QString s1 = source;
-	s1.replace(findWhitespace, " ");
+	s1.replace(TextUtils::FindWhitespace, " ");
 	s1.replace(findWhitespaceBefore, "\\1");    // replace with the captured character
 	s1.replace(findWhitespaceAfter, "\\1");    // replace with the captured character
 	s1.replace(findWhitespaceAtEnd, "");

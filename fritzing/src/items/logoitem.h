@@ -24,72 +24,43 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 ********************************************************************/
 
-#ifndef RESIZABLEBOARD_H
-#define RESIZABLEBOARD_H
+#ifndef LOGOITEM_H
+#define LOGOITEMD_H
 
 #include <QRectF>
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
 
-#include "paletteitem.h"
+#include "resizableboard.h"
 
-class ResizableBoard : public PaletteItem 
+class LogoItem : public ResizableBoard 
 {
 	Q_OBJECT
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	ResizableBoard(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
-	~ResizableBoard();
+	LogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
+	~LogoItem();
 
-	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
-	virtual void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
-	void resizePixels(qreal w, qreal h, const LayerHash & viewLayers);
- 	void loadLayerKin(const LayerHash & viewLayers);
-	void setInitialSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
-	void rotateItem(qreal degrees);
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
-	bool hasCustomSVG();
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
-
-public:
-	static QString customShapeTranslated;
-
-public slots:
-	void widthEntry();
-	void heightEntry();
+	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
 
 protected slots:
-	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
-	void handleZoomChangedSlot(qreal scale);
+	void prepLoadImage();
 
 protected:
-	void positionGrips();
-	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
-	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
-	QString makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	QString makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
-	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	virtual bool hasGrips();
+	bool hasGrips();
 
 protected:
-	class ResizeHandle * m_resizeGripTL;
-	class ResizeHandle * m_resizeGripTR;
-	class ResizeHandle * m_resizeGripBL;
-	class ResizeHandle * m_resizeGripBR;
-	class ResizeHandle * m_inResize;
-	class FSvgRenderer * m_renderer;
-	class FSvgRenderer * m_silkscreenRenderer;
-	QSizeF m_boardSize;
-	QPointF m_boardPos;
-	QRectF m_originalRect;
-	QPointer<QLineEdit> m_widthEditor;
-	QPointer<QLineEdit> m_heightEditor;
+	QSizeF m_aspectRatio;
+
 };
 
 #endif

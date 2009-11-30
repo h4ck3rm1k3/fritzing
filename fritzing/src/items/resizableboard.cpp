@@ -298,6 +298,15 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 		return;
 	}
 
+	QRectF r = this->boundingRect();
+	if (qAbs(GraphicsUtils::pixels2mm(r.width()) - mmW) < .001 &&
+		qAbs(GraphicsUtils::pixels2mm(r.height()) - mmH) < .001) 
+	{
+		positionGrips();
+		return;
+	}
+
+
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}

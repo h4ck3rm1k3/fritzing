@@ -29,6 +29,8 @@ $Date: 2009-09-04 12:26:26 +0200 (Fri, 04 Sep 2009) $
 #include <QRegExp>
 #include <QBuffer>
 
+QRegExp TextUtils::FindWhitespace("[\\s]+");
+
 QDomElement TextUtils::findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue) {
 	if (element.hasAttribute(attributeName)) {
 		if (element.attribute(attributeName).compare(attributeValue) == 0) return element;

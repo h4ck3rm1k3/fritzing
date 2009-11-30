@@ -43,6 +43,9 @@ public:
 	static QString mergeSvg(const QString & svg1, const QString & svg2);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 
+public:
+	static QRegExp FindWhitespace;
+
 };
 
 #endif

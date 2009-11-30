@@ -26,9 +26,8 @@ $Date: 2008-11-28 12:20:31 +0100 (Fri, 28 Nov 2008) $
 
 #include "gedaelementlexer.h"
 #include "gedaelementgrammar_p.h"
+#include "../utils/textutils.h"
 #include <qdebug.h>
-
-static QRegExp findWhitespace("[\\s]+");
 
 GedaElementLexer::GedaElementLexer(const QString &source)
 {
@@ -53,7 +52,7 @@ QString GedaElementLexer::clean(const QString & source) {
 	// clean it up to make it easier to parse
 	
 	QString s1 = source;
-	QString s2 = s1.replace(findWhitespace, " ");
+	QString s2 = s1.replace(TextUtils::FindWhitespace, " ");
 	return s2;
 }
 
