@@ -772,8 +772,8 @@ void MainWindow::saveDocks()
 		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 		if (dock == NULL) continue;
 
+		DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
 		dock->saveState();
-		//DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
 
 		if (dock->isFloating() && dock->isVisible()) {
 			//DebugDialog::debug(QString("hiding dock %1").arg(dock->windowTitle()));
@@ -787,8 +787,8 @@ void MainWindow::restoreDocks() {
 		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 		if (dock == NULL) continue;
 
+		DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
 		dock->restoreState();
-		//DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
 	}
 }
 

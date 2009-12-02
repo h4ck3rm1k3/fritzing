@@ -802,7 +802,7 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 }
 
 void FApplication::updateActivation() {
-	//DebugDialog::debug("updating activation");
+	DebugDialog::debug("updating activation");
 
 	MainWindow * prior = m_lastTopmostWindow; 
 	m_lastTopmostWindow = NULL;

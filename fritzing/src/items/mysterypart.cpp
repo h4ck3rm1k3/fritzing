@@ -281,7 +281,6 @@ QObject * MysteryPart::createPlugin(QWidget * parent, const QString &classid, co
 	}
 
 	QLineEdit * e1 = new QLineEdit(parent);
-	e1->setMaxLength(15);
 	e1->setText(m_chipLabel);
 	connect(e1, SIGNAL(editingFinished()), this, SLOT(chipLabelEntry()));
 

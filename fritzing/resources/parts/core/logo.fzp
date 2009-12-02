@@ -15,6 +15,7 @@
    <property name="filename" ></property>
    <property name="shape" ></property>
    <property name="family" >Logo</property>
+   <property name="logo" >logo</property>
  </properties>
  <taxonomy>discreteParts.pcb.logo</taxonomy>
  <description>Logo for adding images to the board</description>

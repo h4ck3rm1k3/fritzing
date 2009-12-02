@@ -54,6 +54,12 @@ static const QRegExp HeightExpr("height=\\'\\d*px");
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_logo = modelPart->prop("logo").toString();
+	if (m_logo.isEmpty()) {
+		m_logo = modelPart->properties().value("logo", "logo");
+		modelPart->setProp("logo", m_logo);
+	}
+
 }
 
 LogoItem::~LogoItem() {
@@ -118,6 +124,13 @@ bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop
 		return true;
 	}
 
+	if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
+		returnProp = tr("logo");
+		returnValue = "<object type='application/x-qt-plugin' classid='logo' width='100%' height='22px'></object>";  
+		return true;
+	}
+
+
 	if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
 		returnValue = QString("<object type='application/x-qt-plugin' classid='filename' width='100%' height='22px'></object>");
 		returnProp = "";
@@ -136,6 +149,13 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 		QPushButton * button = new QPushButton (tr("load image file"), parent);
 		connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
 		return button;
+	}
+	else if (classid.compare("logo", Qt::CaseInsensitive) == 0) {
+		QLineEdit * e1 = new QLineEdit(parent);
+		e1->setText(m_logo);
+		connect(e1, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
+
+		return e1;
 	}
 	else {
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);;
@@ -337,5 +357,61 @@ void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 		modelPart()->setProp("shape", svg);
 		positionGrips();
 	}
+}
+
+void LogoItem::setProp(const QString & prop, const QString & value) {
+	if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
+		setLogo(value, false);
+		return;
+	}
+
+	ResizableBoard::setProp(prop, value);
+}
+
+void LogoItem::setLogo(QString logo, bool force) {
+
+	if (!force && m_logo.compare(logo) == 0) return;
+
+	QString svg;
+	switch (this->m_viewIdentifier) {
+		case ViewIdentifierClass::PCBView:
+			// see if there's already a <text> element 
+			break;
+		default:
+			break;
+	}
+
+	if (!svg.isEmpty()) {
+		if (m_renderer == NULL) {
+			m_renderer = new FSvgRenderer(this);
+		}
+		//DebugDialog::debug(svg);
+
+		bool result = m_renderer->fastLoad(svg.toUtf8());
+		if (result) {
+			setSharedRenderer(m_renderer);
+		}
+	}
+
+	m_logo = logo;
+	modelPart()->setProp("logo", logo);
+
+	updateTooltip();
+}
+
+QString LogoItem::getProperty(const QString & key) {
+	if (key.compare("logo", Qt::CaseInsensitive) == 0) {
+		return m_logo;
+	}
+
+	return PaletteItem::getProperty(key);
+}
+
+const QString & LogoItem::logo() {
+	return m_logo;
+}
+
+bool LogoItem::canEditPart() {
+	return false;
 }
 

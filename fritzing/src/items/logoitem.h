@@ -50,6 +50,12 @@ public:
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
+	QString getProperty(const QString & key);
+	void setLogo(QString logo, bool force);
+	const QString & logo();
+	bool canEditPart();
+	void setProp(const QString & prop, const QString & value);
+
 
 protected slots:
 	void prepLoadImage();
@@ -60,6 +66,7 @@ protected:
 
 protected:
 	QSizeF m_aspectRatio;
+	QString m_logo;
 
 };
 
