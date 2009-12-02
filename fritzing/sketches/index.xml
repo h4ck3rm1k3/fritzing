@@ -2,7 +2,7 @@
   <sketches>
     <sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
     <sketch id="AnalogInputFSR" name="Force Sensor" src="core/AnalogInputFSR.fz"/>
-    <sketch id="AnalogInputOutput" name="Analog Input / Output" src="core/AnalogInputOutput.fz"/>
+    <sketch id="AnalogInputOutput" name="Analog In/Out (Pot & LED)" src="core/AnalogInputOutput.fz"/>
     <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
     <sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
     <sketch id="AnalogInputToServo" name="Servo (with Pot)" src="core/AnalogInputToServo.fz"/>
@@ -17,7 +17,8 @@
     <sketch id="npnPowerTransistor" name="NPN Power Transistor" src="core/npnPowerTransistor.fz"/>
     <sketch id="Op_Amp" name="Operation Amplifier" src="core/Op-amp.fz"/>
     <sketch id="Optocoupler" name="Optocoupler" src="core/Optocoupler.fz"/>
-    <sketch id="Photocell" name="Photocell" src="core/Photocell.fz"/>
+		<sketch id="Photocell" name="Photocell" src="core/Photocell.fz"/>
+    <sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fz"/>
     <sketch id="Relay" name="Relay" src="core/Relay.fz"/>
     <sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fz"/>
     <sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fz"/>
@@ -49,6 +50,7 @@
         <sketch id="Knock"/>
         <sketch id="Touch_Switch"/>
         <sketch id="Photocell"/>
+        <sketch id="Parking"/>
         <sketch id="AnalogInputThermistor"/>
         <sketch id="AnalogInputOutput"/>
       </category>
@@ -59,21 +61,25 @@
       </category>
     </category>
     <category name="Sensors">
-      <category name="Rotary">
-        <sketch id="AnalogInputPot"/>
+      <category name="Force">
+        <sketch id="AnalogInputFSR"/>
       </category>
       <category name="Light">
         <sketch id="Photocell"/>
       </category>
-      <category name="Temperature">
-        <sketch id="AnalogInputThermistor"/>
+      <category name="Proximity">
+        <sketch id="Parking"/>
+        <sketch id="Photocell"/>
+      </category>
+      <category name="Rotary">
+        <sketch id="AnalogInputPot"/>
       </category>
       <category name="Sound">
         <sketch id="Knock"/>
         <sketch id="MidiDrumKit"/>
       </category>
-      <category name="Force">
-        <sketch id="AnalogInputFSR"/>
+      <category name="Temperature">
+        <sketch id="AnalogInputThermistor"/>
       </category>
       <category name="Touch">
         <sketch id="555TouchSwitch"/>
@@ -85,6 +91,7 @@
       <category name="LED">
         <sketch id="Blink"/>
         <sketch id="Loop"/>
+        <sketch id="Parking"/>
         <sketch id="TrafficLight"/>
 				<sketch id="Shift_Register"/>
         <sketch id="AnalogInputOutput"/>
