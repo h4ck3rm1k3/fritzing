@@ -1324,3 +1324,38 @@ QString ResizeJumperItemCommand::getParamString() const {
 		;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ShowLabelCommand::ShowLabelCommand(class SketchWidget *sketchWidget, QUndoCommand *parent) 
+: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+}
+
+void ShowLabelCommand::undo()
+{
+	foreach (long id, m_idStates.keys()) {
+		m_sketchWidget->showPartLabel(id, (m_idStates.value(id) & 2) != 0);
+	}
+}
+
+void ShowLabelCommand::redo()
+{
+	foreach (long id, m_idStates.keys()) {
+		m_sketchWidget->showPartLabel(id, (m_idStates.value(id) & 1) != 0);
+	}
+}
+
+void ShowLabelCommand::add(long id, bool prev, bool post)
+{
+	int v = 0;
+	if (prev) v += 2;
+	if (post) v += 1;
+	m_idStates.insert(id, v);
+}
+
+
+QString ShowLabelCommand::getParamString() const {
+
+	return QString("ShowLabelCommand ") 
+		+ BaseCommand::getParamString();
+}

@@ -5237,12 +5237,30 @@ void SketchWidget::rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientati
 
 void SketchWidget::showPartLabels(bool show)
 {
+	bool gotOne = false;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
 		if (itemBase == NULL) continue;
 
-		itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()));
+		gotOne = true;
+		break;
+		//itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()));
 	}
+
+	if (!gotOne) return;
+
+	ShowLabelCommand * showLabelCommand = new ShowLabelCommand(this, NULL);
+	showLabelCommand->setText(show ? tr("Show part label") : tr("Hide part label"));
+
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
+		if (itemBase == NULL) continue;
+
+		showLabelCommand->add(itemBase->id(), itemBase->isPartLabelVisible(), show);
+		//itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()));
+	}
+
+	m_undoStack->push(showLabelCommand);
 }
 
 void SketchWidget::noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize)

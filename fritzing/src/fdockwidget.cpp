@@ -51,10 +51,6 @@ void FDockWidget::restoreState() {
 	}
 }
 
-void FDockWidget::restoreStateSoon() {
-	QTimer::singleShot(10, this, SLOT(restoreState()));
-}
-
 bool FDockWidget::event(QEvent * e) {
 	switch (e->type()) {
 		case QEvent::WindowActivate:

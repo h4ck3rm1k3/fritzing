@@ -37,10 +37,8 @@ class FDockWidget : public QDockWidget
 Q_OBJECT
 public:
 	FDockWidget(const QString & title, QWidget * parent = 0);
-	//QSize sizeHint() const;
 
 	void saveState();
-	void restoreStateSoon();
 	
 public slots:
 	void restoreState();

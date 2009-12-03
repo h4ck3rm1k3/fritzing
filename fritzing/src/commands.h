@@ -704,6 +704,22 @@ protected:
 	long m_itemID;
 };
 
+class ShowLabelCommand : public BaseCommand
+{
+public:
+    ShowLabelCommand(class SketchWidget *sketchWidget, QUndoCommand *parent);
+
+    void undo();
+    void redo();
+    void add(long id, bool prev, bool post);
+
+protected:
+	QString getParamString() const;
+
+protected:
+    QHash<long, int> m_idStates;
+
+};
 
 
 #endif // COMMANDS_H
