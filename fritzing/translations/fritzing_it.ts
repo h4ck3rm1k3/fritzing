@@ -190,6 +190,13 @@ before adding any connectors</source>
     </message>
 </context>
 <context>
+    <name>Dip</name>
+    <message>
+        <source>chip label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DockManager</name>
     <message>
         <source>View Switcher</source>
@@ -366,14 +373,6 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>HtmlInfoView</name>
     <message>
-        <source>family</source>
-        <translation>famiglia</translation>
-    </message>
-    <message>
-        <source>color</source>
-        <translation>colore</translation>
-    </message>
-    <message>
         <source>Connections</source>
         <translation>Connessioni</translation>
     </message>
@@ -421,10 +420,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Properties</source>
         <translation>Proprietà</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>larghezza</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -493,6 +488,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <source>size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LinkDialog</name>
@@ -503,6 +502,53 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>OK</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>LogoItem</name>
+    <message>
+        <source>size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>load image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display image from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -622,10 +668,6 @@ Please select one of the Fritzing fonts to replace them:</source>
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation>Nussun componente con queste caratteristiche.
 Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere tra le proprietà esistenti</translation>
-    </message>
-    <message>
-        <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
-        <translation>Fritzing non ha un componente che corrisponde con le proprietà richieste, solo alcune delle proprietà dovrebbero essere sostituite.</translation>
     </message>
     <message>
         <source>Swapped %1 with module %2</source>
@@ -1628,14 +1670,6 @@ Quantità	Componente
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Launch External Process...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shell launch an external application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Disconnect All Wires</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1792,6 +1826,18 @@ Please check all views for potential side-effects.</source>
         <source>Update %1 part(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No exactly matching part found; Fritzing chose the closest match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell launch %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launch %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1825,6 +1871,13 @@ Reason: %2 (errcode %3)</source>
     </message>
 </context>
 <context>
+    <name>MysteryPart</name>
+    <message>
+        <source>label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Note</name>
     <message>
         <source>[write your note here]</source>
@@ -1844,6 +1897,10 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>Click questo connettore per trascinare fuori una nuova traccia.</translation>
+    </message>
+    <message>
+        <source>Resize board to %1 %2</source>
+        <translation type="unfinished">Ridimensiona basetta da %1 %2</translation>
     </message>
 </context>
 <context>
@@ -2757,10 +2814,29 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
 </context>
 <context>
+    <name>Resistor</name>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished">resistenza</translation>
+    </message>
+</context>
+<context>
     <name>ResizableBoard</name>
     <message>
         <source>Import Shape...</source>
         <translation type="unfinished">Importa Shape...</translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3044,6 +3120,35 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Change ChipLabel from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>show part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>hide part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Change pin spacing from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change form from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SymbolPaletteItem</name>
+    <message>
+        <source>voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
@@ -3094,6 +3199,13 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TraceWire</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">larghezza</translation>
     </message>
 </context>
 <context>
@@ -3254,6 +3366,10 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>extra thick (48 mil)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished">colore</translation>
     </message>
 </context>
 </TS>

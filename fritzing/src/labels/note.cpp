@@ -691,3 +691,7 @@ void Note::handleMousePressSlot(QGraphicsSceneMouseEvent * event, ResizeHandle *
 
 }
 
+bool Note::hasPartLabel() {
+	
+	return false;
+}

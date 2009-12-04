@@ -43,6 +43,7 @@ public:
 	bool hasCustomSVG();
 	void setProp(const QString & prop, const QString & value);
 	QString svg();
+	bool hasPartLabel();
 
 protected:
 	void setSvg(const QString &);

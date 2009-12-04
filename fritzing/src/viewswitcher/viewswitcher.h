@@ -108,13 +108,4 @@ class ViewSwitcher : public QFrame {
 		QWidget * m_buttonHolder;
 };
 
-/*
-#include "help/inotseeninminiview.h"
-
-class ViewSwitcher : public QGraphicsProxyWidget, public INotSeenInMiniView {
-public:
-	ViewSwitcher(QWidget *parent);
-};
-*/
-
 #endif /* VIEWSWITCHER_H_ */

@@ -52,21 +52,6 @@ class Helper;
 class DockManager;
 class FSizeGrip;
 
-// help struct to create the example menu from a xml file
-struct SketchDescriptor {
-	SketchDescriptor(const QString &_id, const QString &_name, const QString &_src) {
-		id = _id;
-		name = _name;
-		src = _src;
-	}
-
-	QString id;
-	QString name;
-	QString src;
-};
-
-#define SketchIndex QHash<QString /*id*/, SketchDescriptor*>
-
 bool sortPartList(ItemBase * b1, ItemBase * b2);
 
 class MainWindow : public FritzingWindow
@@ -163,8 +148,6 @@ protected slots:
 	void updateRecentFileActions();
 	void updateTraceMenu();
     void tabWidget_currentChanged(int index);
-    // TODO PARTS EDITOR REMOVE
-    void createNewPartInOldEditor();
     void createNewPart();
     void createNewSketch();
     void minimize();
@@ -195,11 +178,7 @@ protected slots:
 	void addBendpoint();
 	void disconnectAll();
 
-	// TODO PARTS EDITOR REMOVE
-	void openInOldPartsEditor();
 	void openInPartsEditor();
-	// TODO PARTS EDITOR REMOVE
-	void openOldPartsEditor(PaletteItem *);
 	void openPartsEditor(PaletteItem *);
 
 	void updateZoomOptions(qreal zoom);
@@ -274,8 +253,8 @@ protected:
     		const QString &rootNode, const QString &indexNode,
     		const QString &submenuNode*/
     );
-    SketchIndex indexAvailableElements(QDomElement &domElem, const QString &srcPrefix="");
-    void populateMenuWithIndex(const SketchIndex &index, QMenu * parentMenu, QStringList &actionsTracker, QDomElement &domElem);
+    QHash<QString, struct SketchDescriptor *> indexAvailableElements(QDomElement &domElem, const QString &srcPrefix, QStringList & actionsTracker);
+    void populateMenuWithIndex(const QHash<QString, struct SketchDescriptor *> &, QMenu * parentMenu, QDomElement &domElem);
     void populateMenuFromFolderContent(QMenu *parentMenu, const QString &path);
     void createOpenRecentMenu();
     void createEditMenuActions();
@@ -480,14 +459,10 @@ protected:
 
     // Part Menu
     QMenu *m_partMenu;
-    QAction *m_createNewPartActInOldEditor;
-    // TODO PARTS EDITOR REMOVE
     QAction *m_createNewPart;
-	QAction *m_openInOldPartsEditorAct;
 	QAction *m_infoViewOnHoverAction;
 	QAction *m_exportNormalizedSvgAction;
 	QAction *m_exportNormalizedFlattenedSvgAction;
-	// TODO PARTS EDITOR REMOVE
     QAction *m_openInPartsEditorAct;
     QMenu *m_addToBinMenu;
 	QAction *m_rotate90cwAct;

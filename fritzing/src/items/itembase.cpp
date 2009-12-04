@@ -1604,3 +1604,6 @@ void ItemBase::resetValues(const QString & family, const QString & prop) {
 	CachedValues.remove(family + prop);
 }
 
+bool ItemBase::hasPartLabel() {
+	return true;
+}

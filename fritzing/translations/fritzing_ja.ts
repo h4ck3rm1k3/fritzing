@@ -192,6 +192,13 @@ before adding any connectors</source>
     </message>
 </context>
 <context>
+    <name>Dip</name>
+    <message>
+        <source>chip label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DockManager</name>
     <message>
         <source>View Switcher</source>
@@ -420,18 +427,6 @@ Fritzingのフォントを指定してください:</translation>
         <source>Tags</source>
         <translation>タグ</translation>
     </message>
-    <message>
-        <source>family</source>
-        <translation>ファミリー</translation>
-    </message>
-    <message>
-        <source>color</source>
-        <translation>カラー</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>幅</translation>
-    </message>
 </context>
 <context>
     <name>ItemBase</name>
@@ -495,6 +490,10 @@ Fritzingのフォントを指定してください:</translation>
         <source>size</source>
         <translation>サイズ</translation>
     </message>
+    <message>
+        <source>form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LinkDialog</name>
@@ -505,6 +504,53 @@ Fritzingのフォントを指定してください:</translation>
     <message>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>LogoItem</name>
+    <message>
+        <source>size</source>
+        <translation type="unfinished">サイズ</translation>
+    </message>
+    <message>
+        <source>logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>load image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display image from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1472,11 +1518,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
 (翻訳者中:使用箇所不明)</translation>
     </message>
     <message>
-        <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
-        <translatorcomment>使用箇所不明</translatorcomment>
-        <translation>Fritzing はすべてのプロパティを設定できないため、条件に合うものだけを使いました。</translation>
-    </message>
-    <message>
         <source>Swapped %1 with module %2</source>
         <translation>モジュール %1 と %2 を交換しました</translation>
     </message>
@@ -1630,14 +1671,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>&amp;Wire Color</source>
         <translation>ワイヤの色(&amp;W)</translation>
-    </message>
-    <message>
-        <source>Launch External Process...</source>
-        <translation>外部の処理を起動 ...</translation>
-    </message>
-    <message>
-        <source>Shell launch an external application</source>
-        <translation>外部アプリケーションを起動します</translation>
     </message>
     <message>
         <source>Disconnect All Wires</source>
@@ -1799,6 +1832,18 @@ Please check all views for potential side-effects.</source>
         <source>Update %1 part(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No exactly matching part found; Fritzing chose the closest match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell launch %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launch %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1834,6 +1879,13 @@ Reason: %2 (errcode %3)</source>
     </message>
 </context>
 <context>
+    <name>MysteryPart</name>
+    <message>
+        <source>label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Note</name>
     <message>
         <source>[write your note here]</source>
@@ -1853,6 +1905,10 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>このコネクターをドラッグして新しいトレースを作成.</translation>
+    </message>
+    <message>
+        <source>Resize board to %1 %2</source>
+        <translation type="unfinished">ボードのサイズを %1 %2 に変更</translation>
     </message>
 </context>
 <context>
@@ -2772,10 +2828,29 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
 </context>
 <context>
+    <name>Resistor</name>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished">抵抗</translation>
+    </message>
+</context>
+<context>
     <name>ResizableBoard</name>
     <message>
         <source>Import Shape...</source>
         <translation>シェイプのインポート ...</translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">シェイプ</translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3059,6 +3134,33 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Change ChipLabel from %1 to %2</source>
         <translation>チップラベルを %1 から %2 へ変更</translation>
     </message>
+    <message numerus="yes">
+        <source>show part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>hide part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Change pin spacing from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change form from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SymbolPaletteItem</name>
+    <message>
+        <source>voltage</source>
+        <translation type="unfinished">電圧</translation>
+    </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
@@ -3109,6 +3211,13 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>TraceWire</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">幅</translation>
     </message>
 </context>
 <context>
@@ -3269,6 +3378,10 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>extra thick (48 mil)</source>
         <translation>極太 (48 mil)</translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished">カラー</translation>
     </message>
 </context>
 </TS>

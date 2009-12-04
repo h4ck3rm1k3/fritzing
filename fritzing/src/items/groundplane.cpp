@@ -163,3 +163,8 @@ void GroundPlane::setSvgAux(const QString & svg) {
 QString GroundPlane::svg() {
 	return modelPart()->prop("svg").toString();
 }
+
+bool GroundPlane::hasPartLabel() {
+	
+	return false;
+}

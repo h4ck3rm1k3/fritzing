@@ -674,9 +674,6 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	// update issue with 4.5.1?
 	m_currentGraphicsView->updateConnectors();
 
-	// obsolete: when there are 3 navigators and 3 zoom boxes, no need to update when current view changes
-	//m_miniViewContainer0->setView(widget);
-	//setZoomComboBoxValue(m_currentWidget->currentZoom());
 }
 
 void MainWindow::setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2) {
@@ -701,6 +698,20 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		m_paletteWidget->createIfMyPartsNotExists();
 	}
 
+
+	DebugDialog::debug(QString("current top level windows: %1").arg(QApplication::topLevelWidgets().size()));
+	foreach (QWidget * widget, QApplication::topLevelWidgets()) {
+		QMenu * menu = qobject_cast<QMenu *>(widget);
+		if (menu != NULL) {
+			continue;				// QMenus are always top level widgets, even if they have parents...
+		}
+		DebugDialog::debug(QString("top level widget %1 %2 %3")
+			.arg(widget->metaObject()->className())
+			.arg(widget->windowTitle())
+			.arg(widget->toolTip())
+			);
+	}
+
 	m_closing = true;
 	emit aboutToClose();
 
@@ -708,14 +719,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	foreach (QWidget *widget, QApplication::topLevelWidgets()) {
 		if (widget == this) continue;
 		if (dynamic_cast<QMainWindow *>(widget) == NULL) continue;
-		// TODO Brendan: please remove all the references and the source code
-		// of the old parts editor
-		//if (dynamic_cast<MainPartsEditorWindow *>(widget) != NULL) continue;
 
 		count++;
 	}
-
-	DebugDialog::debug(QString("current top level windows: %1").arg(QApplication::topLevelWidgets().size()));
 
 	if (count == 0) {
 		DebugDialog::closeDebug();
@@ -772,7 +778,7 @@ void MainWindow::saveDocks()
 		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 		if (dock == NULL) continue;
 
-		DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
+		//DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
 		dock->saveState();
 
 		if (dock->isFloating() && dock->isVisible()) {
@@ -787,7 +793,7 @@ void MainWindow::restoreDocks() {
 		FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 		if (dock == NULL) continue;
 
-		DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
+		// DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
 		dock->restoreState();
 	}
 }

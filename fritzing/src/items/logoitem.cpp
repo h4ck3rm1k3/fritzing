@@ -55,6 +55,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_logo = modelPart->prop("logo").toString();
+	m_hasLogo = true;
 	if (m_logo.isEmpty()) {
 		m_logo = modelPart->properties().value("logo", "logo");
 		modelPart->setProp("logo", m_logo);
@@ -75,10 +76,12 @@ QVariant LogoItem::itemChange(GraphicsItemChange change, const QVariant &value)
 				m_aspectRatio.setWidth(this->boundingRect().width());
 				m_aspectRatio.setHeight(this->boundingRect().height());
 				QString path = filename();
+				m_originalFilename = path;
 				QFile f(path);
 				if (f.open(QFile::ReadOnly)) {
 					QString svg = f.readAll();
 					modelPart()->setProp("shape", svg);
+					m_hasLogo = true;
 				}
 			}
 			break;
@@ -293,11 +296,15 @@ void LogoItem::prepLoadImage() {
 	if (result) {
 		setSharedRenderer(m_renderer);
 		modelPart()->setProp("shape", svg);
+		modelPart()->setProp("logo", "");
 		QRectF r = m_renderer->viewBoxF();
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());
 		positionGrips();
+		m_hasLogo = false;
+		m_logo = "";
 	}
+
 }
 
 void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
@@ -355,6 +362,8 @@ void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	if (result) {
 		setSharedRenderer(m_renderer);
 		modelPart()->setProp("shape", svg);
+		modelPart()->setProp("width", mmW);
+		modelPart()->setProp("height", mmH);
 		positionGrips();
 	}
 }
@@ -372,29 +381,43 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 	if (!force && m_logo.compare(logo) == 0) return;
 
-	QString svg;
 	switch (this->m_viewIdentifier) {
 		case ViewIdentifierClass::PCBView:
-			// see if there's already a <text> element 
 			break;
 		default:
-			break;
+			return;
 	}
 
-	if (!svg.isEmpty()) {
-		if (m_renderer == NULL) {
-			m_renderer = new FSvgRenderer(this);
+	QString svg;
+	if (false  /* m_hasLogo */) {
+		svg = modelPart()->prop("shape").toString();
+	}
+	else {
+		QFile f(m_originalFilename);
+		if (f.open(QFile::ReadOnly)) {
+			svg = f.readAll();
 		}
-		//DebugDialog::debug(svg);
+	}
 
-		bool result = m_renderer->fastLoad(svg.toUtf8());
-		if (result) {
-			setSharedRenderer(m_renderer);
-		}
+	if (svg.isEmpty()) return;
+
+	svg = hackSvg(svg, logo);
+
+	if (m_renderer == NULL) {
+		m_renderer = new FSvgRenderer(this);
+	}
+	//DebugDialog::debug(svg);
+
+	bool result = m_renderer->fastLoad(svg.toUtf8());
+	if (result) {
+		setSharedRenderer(m_renderer);
 	}
 
 	m_logo = logo;
+	m_hasLogo = true;
 	modelPart()->setProp("logo", logo);
+	modelPart()->setProp("shape", svg);
+	positionGrips();
 
 	updateTooltip();
 }
@@ -415,3 +438,78 @@ bool LogoItem::canEditPart() {
 	return false;
 }
 
+bool LogoItem::hasPartLabel() {
+	return false;
+}
+
+void LogoItem::logoEntry() {
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setChipLabel(edit->text());
+	}
+}
+
+QString LogoItem::hackSvg(const QString & svg, const QString & logo) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return svg;
+
+	QDomElement root = doc.documentElement();
+	root.setAttribute("width", QString::number(logo.length() * 0.1) + "in");
+	
+	QString viewBox = root.attribute("viewBox");
+	QStringList coords = viewBox.split(" ", QString::SkipEmptyParts);
+	coords[2] = QString::number(logo.length() * 10);
+	root.setAttribute("viewBox", coords.join(" "));
+
+	QDomNodeList domNodeList = root.elementsByTagName("text");
+	for (int i = 0; i < domNodeList.count(); i++) {
+		QDomElement node = domNodeList.item(i).toElement();
+		if (node.isNull()) continue;
+
+		if (node.attribute("id").compare("label") != 0) continue;
+
+		node.setAttribute("x", QString::number(logo.length() * 5));
+
+		QDomNodeList childList = node.childNodes();
+		for (int j = 0; j < childList.count(); j++) {
+			QDomNode child = childList.item(i);
+			if (child.isText()) {
+				child.setNodeValue(logo);
+
+				modelPart()->setProp("width", logo.length() * 0.1 * 25.4);
+				QString h = root.attribute("height");
+				bool ok;
+				modelPart()->setProp("height", TextUtils::convertToInches(h, &ok, false) * 25.4);
+				return doc.toString();
+			}
+		}
+	}
+
+	return svg;
+}
+
+void LogoItem::widthEntry() {
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->resizeBoard(edit->text().toDouble(), m_modelPart->prop("height").toDouble(), true);
+	}
+}
+
+void LogoItem::heightEntry() {
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->resizeBoard(m_modelPart->prop("width").toDouble(), edit->text().toDouble(), true);
+	}
+}

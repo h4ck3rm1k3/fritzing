@@ -132,6 +132,7 @@ public:
 	bool canFlipVertical();
 	void setCanFlipVertical(bool);
 	virtual void clearModelPart();
+	virtual bool hasPartLabel();
 	void clearPartLabel();
 	bool isPartLabelVisible();
 	void restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);				// on loading from a file

@@ -1435,7 +1435,7 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 }
 
 void PCBSketchWidget::getLabelFont(QFont & font, QColor & color) {
-	font.setFamily("ocra10");
+	font.setFamily("ocra10");			// ocra10
 	font.setPointSize(getLabelFontSizeMedium());
 	color.setAlpha(255);
 	color.setRgb(0xffffff);
@@ -1485,10 +1485,16 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
 
-	if (item->itemType() != ModelPart::ResizableBoard) return;
+	switch (item->itemType()) {
+		case ModelPart::ResizableBoard:
+		case ModelPart::Logo:
+			break;
+		default:
+			return;
+	}
 
 	qreal origw = item->modelPart()->prop("width").toDouble();
-	qreal origh = item->modelPart()->prop("width").toDouble();
+	qreal origh = item->modelPart()->prop("height").toDouble();
 
 	if (mmH == 0 || mmW == 0) {
 		dynamic_cast<ResizableBoard *>(item)->setInitialSize();

@@ -93,7 +93,7 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrato
 	return result / divisor;
 }
 
-QString TextUtils::replaceTextElement(QString svg, const QString & label) {
+QString TextUtils::replaceTextElement(const QString & svg, const QString & label) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;

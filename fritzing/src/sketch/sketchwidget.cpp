@@ -2849,8 +2849,7 @@ ItemCount SketchWidget::calcItemCount() {
 	QList<QGraphicsItem *> items = scene()->items();
 	QList<QGraphicsItem *> selItems = scene()->selectedItems();
 
-	itemCount.labelCount = 0;
-	itemCount.noteCount = 0;
+	itemCount.visLabelCount = itemCount.hasLabelCount = 0;
 	itemCount.selCount = 0;
 	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable = 0;
 	itemCount.itemsCount = 0;
@@ -2861,8 +2860,11 @@ ItemCount SketchWidget::calcItemCount() {
 		if (itemBase != NULL) {
 			itemCount.selCount++;
 
-			if (itemBase->isPartLabelVisible()) {
-				itemCount.labelCount++;
+			if (itemBase->hasPartLabel()) {
+				itemCount.hasLabelCount++;
+				if (itemBase->isPartLabelVisible()) {
+					itemCount.visLabelCount++;
+				}
 			}
 
 			if (itemBase->canFlipHorizontal()) {
@@ -2878,13 +2880,6 @@ ItemCount SketchWidget::calcItemCount() {
 			}
 
 			bool rotatable = rotationAllowed(itemBase);
-			switch (itemBase->itemType()) {
-				case ModelPart::Note:
-					itemCount.noteCount++;
-				default:
-					break;
-			}
-
 			if (rotatable) {
 				itemCount.selRotatable++;
 			}
@@ -5237,27 +5232,30 @@ void SketchWidget::rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientati
 
 void SketchWidget::showPartLabels(bool show)
 {
-	bool gotOne = false;
+	QList<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
 		if (itemBase == NULL) continue;
 
-		gotOne = true;
-		break;
-		//itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()));
+		if (itemBase->hasPartLabel()) {
+			itemBases.append(itemBase);
+		}
 	}
 
-	if (!gotOne) return;
+	if (itemBases.count() <= 0) return;
 
 	ShowLabelCommand * showLabelCommand = new ShowLabelCommand(this, NULL);
-	showLabelCommand->setText(show ? tr("Show part label") : tr("Hide part label"));
+	QString text;
+	if (show) {
+		text = tr("show part label(s)", "", itemBases.count());
+	}
+	else {
+		text = tr("hide part label(s)", "", itemBases.count());
+	}
+	showLabelCommand->setText(text);
 
-	foreach (QGraphicsItem * item, scene()->selectedItems()) {
-		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
-		if (itemBase == NULL) continue;
-
+	foreach (ItemBase * itemBase, itemBases) {
 		showLabelCommand->add(itemBase->id(), itemBase->isPartLabelVisible(), show);
-		//itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()));
 	}
 
 	m_undoStack->push(showLabelCommand);
@@ -5670,11 +5668,22 @@ void SketchWidget::setChipLabel(QString label)
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
 
-	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
-	if (mysteryPart == NULL) return;
+	SetPropCommand * cmd = NULL;
 
-	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "chip label", mysteryPart->chipLabel(), label, NULL);
-	cmd->setText(tr("Change ChipLabel from %1 to %2").arg(mysteryPart->chipLabel()).arg(label));
+	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
+	if (mysteryPart != NULL) {
+		cmd = new SetPropCommand(this, item->id(), "chip label", mysteryPart->chipLabel(), label, NULL);
+		cmd->setText(tr("Change chip label from %1 to %2").arg(mysteryPart->chipLabel()).arg(label));
+	}
+
+	LogoItem * logoItem = dynamic_cast<LogoItem *>(item);
+	if (logoItem != NULL) {
+		cmd = new SetPropCommand(this, item->id(), "logo", logoItem->logo(), label, NULL);
+		cmd->setText(tr("Change logo from %1 to %2").arg(logoItem->logo()).arg(label));
+	}
+
+	if (cmd == NULL) return;
+
 	m_undoStack->push(cmd);
 }
 
@@ -5695,9 +5704,12 @@ void SketchWidget::resizeBoard(long itemID, qreal mmW, qreal mmH) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
-	if (item->itemType() != ModelPart::ResizableBoard) return;
-
-	dynamic_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+	if (item->itemType() == ModelPart::ResizableBoard) {
+		dynamic_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+	}
+	else if (item->itemType() == ModelPart::Logo) {
+		dynamic_cast<LogoItem *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+	}
 }
 
 bool SketchWidget::rotationAllowed(ItemBase * itemBase) 

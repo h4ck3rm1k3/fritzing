@@ -55,6 +55,7 @@ public:
 	QString text();
 	void setSize(const QSizeF & size);
 	void setHidden(bool hide) ;
+	bool hasPartLabel();
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -75,9 +75,34 @@ static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
 static QHash<QString, QString> fileExtFormats;
 
+////////////////////////////////////////////////////////
+
+// help struct to create the example menu from a xml file
+struct SketchDescriptor {
+	SketchDescriptor(const QString &_id, const QString &_name, const QString &_src, QAction * _action) {
+		id = _id;
+		name = _name;
+		src = _src;
+		action = _action;
+	}
+
+	QString id;
+	QString name;
+	QString src;
+	QAction * action;
+};
+
+bool sortSketchDescriptors(SketchDescriptor * s1, SketchDescriptor * s2){
+    return s1->name.toLower() < s2->name.toLower();
+}
+
+/////////////////////////////////////////////////////////
+
 bool sortPartList(ItemBase * b1, ItemBase * b2){
     return b1->instanceTitle().toLower() < b2->instanceTitle().toLower();
 }
+
+/////////////////////////////////////////////////////////
 
 void MainWindow::initExportConstants()
 {
@@ -974,63 +999,76 @@ void MainWindow::populateMenuFromXMLFile(
 	file.close();
 
 	QDomElement domElem = dom.documentElement();
-	QDomElement indexDomElem = domElem.firstChild().toElement();
-	QDomElement taxonomyDomElem = indexDomElem.nextSiblingElement("categories");
+	QDomElement indexDomElem = domElem.firstChildElement("sketches");
+	QDomElement taxonomyDomElem = domElem.firstChildElement("categories");
 
-	SketchIndex index = indexAvailableElements(indexDomElem,folderPath);
-	populateMenuWithIndex(index,parentMenu,actionsTracker,taxonomyDomElem);
+	QHash<QString, struct SketchDescriptor *> index = indexAvailableElements(indexDomElem,folderPath, actionsTracker);
+	QList<SketchDescriptor *> sketchDescriptors(index.values());
+	qSort(sketchDescriptors.begin(), sketchDescriptors.end(), sortSketchDescriptors);
+
+
+	if (sketchDescriptors.size() > 0) {
+		// set up the "all" category
+		QDomElement all = dom.createElement("category");
+		all.setAttribute("name", tr("All"));
+		taxonomyDomElem.appendChild(all);
+		foreach (SketchDescriptor * sketchDescriptor, sketchDescriptors) {
+			QDomElement sketch = dom.createElement("sketch");
+			sketch.setAttribute("id", sketchDescriptor->id);
+			all.appendChild(sketch);
+		}
+	}
+	populateMenuWithIndex(index,parentMenu,taxonomyDomElem);
 	foreach (SketchDescriptor * sketchDescriptor, index.values()) {
 		delete sketchDescriptor;
 	}
 }
 
-SketchIndex MainWindow::indexAvailableElements(QDomElement &domElem, const QString &srcPrefix) {
-	SketchIndex retval;
-	QDomNode n = domElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement();
-		if(!e.isNull() && e.tagName() == "sketch") {
-			const QString id = e.attribute("id");
-			const QString name = e.attribute("name");
-			QString srcAux = e.attribute("src");
-			// if it's an absolute path, don't prefix it
-			const QString src = QFileInfo(srcAux).exists()? srcAux: srcPrefix+srcAux;
-			retval[id] = new SketchDescriptor(id,name,src);
+QHash<QString, struct SketchDescriptor *> MainWindow::indexAvailableElements(QDomElement &domElem, const QString &srcPrefix, QStringList & actionsTracker) {
+	QHash<QString, struct SketchDescriptor *> retval;
+	QDomElement sketch = domElem.firstChildElement("sketch");
+	while(!sketch.isNull()) {
+		const QString id = sketch.attribute("id");
+		const QString name = sketch.attribute("name");
+		QString srcAux = sketch.attribute("src");
+		// if it's an absolute path, don't prefix it
+		const QString src = QFileInfo(srcAux).exists()? srcAux: srcPrefix+srcAux;
+		if(QFileInfo(src).exists()) {
+			actionsTracker << name;
+			QAction * action = new QAction(name, this);
+			action->setData(src);
+			connect(action,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
+			retval[id] = new SketchDescriptor(id,name,src, action);
 		}
-		n = n.nextSibling();
+		sketch = sketch.nextSiblingElement("sketch");
 	}
 	return retval;
 }
 
-void MainWindow::populateMenuWithIndex(const SketchIndex &index, QMenu * parentMenu, QStringList &actionsTracker, QDomElement &domElem) {
-	QDomNode n = domElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement(); // try to convert the node to an element.
-		if(!e.isNull()) {
-			if(e.nodeName() == "sketch") {
-				QString id = e.attribute("id");
-				if(!id.isNull() && !id.isEmpty()) {
-					if(index[id]) {
-						SketchDescriptor elem = *index[id];
-						if(QFileInfo(elem.src).exists()) {
-							actionsTracker << elem.name;
-							QAction * currAction = new QAction(elem.name, this);
-							currAction->setData(elem.src);
-							connect(currAction,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
-							parentMenu->addAction(currAction);
-						}
-					} else {
-						qWarning() << tr("MainWindow::populateMenuWithIndex: couldn't load example with id='%1'").arg(id);
-					}
+void MainWindow::populateMenuWithIndex(const QHash<QString, struct SketchDescriptor *>  &index, QMenu * parentMenu, QDomElement &domElem) {
+	// note: the <sketch> element here is not the same as the <sketch> element in indexAvailableElements()
+	QDomElement e = domElem.firstChildElement();
+	while(!e.isNull()) {
+		if(e.nodeName() == "sketch") {
+			QString id = e.attribute("id");
+			if(!id.isEmpty()) {
+				if(index[id]) {
+					SketchDescriptor * sketchDescriptor = index[id];
+					parentMenu->addAction(sketchDescriptor->action);
+				} 
+				else 
+				{
+					qWarning() << tr("MainWindow::populateMenuWithIndex: couldn't load example with id='%1'").arg(id);
 				}
-			} else if(e.nodeName() == "category") {
-				QString name = e.attribute("name");
-				QMenu * currMenu = new QMenu(name, parentMenu);
-				parentMenu->addMenu(currMenu);
-				populateMenuWithIndex(index, currMenu, actionsTracker, e);
 			}
+		} 
+		else if(e.nodeName() == "category") {
+			QString name = e.attribute("name");
+			QMenu * currMenu = new QMenu(name, parentMenu);
+			parentMenu->addMenu(currMenu);
+			populateMenuWithIndex(index, currMenu, e);
 		}
-		n = n.nextSibling();
+		e = e.nextSiblingElement();
 	}
 }
 
@@ -1185,10 +1223,6 @@ void MainWindow::createEditMenuActions() {
 }
 
 void MainWindow::createPartMenuActions() {
-	// TODO PARTS EDITOR REMOVE
-    /*m_createNewPartActInOldEditor = new QAction(tr("&Create New Part in Old Editor..."), this);
-	connect(m_createNewPartActInOldEditor, SIGNAL(triggered()), this, SLOT(createNewPartInOldEditor()));*/
-
 	m_createNewPart = new QAction(tr("&New"), this);
 	m_createNewPart->setShortcut(tr("Alt+Ctrl+N"));
 	m_createNewPart->setStatusTip(tr("Create new part"));
@@ -1205,10 +1239,6 @@ void MainWindow::createPartMenuActions() {
 	m_disconnectAllAct = new QAction(tr("Disconnect All Wires"), this);
 	m_disconnectAllAct->setStatusTip(tr("Disconnect all wires connected to this connector"));
 	connect(m_disconnectAllAct, SIGNAL(triggered()), this, SLOT(disconnectAll()));
-
-	// TODO PARTS EDITOR REMOVE
-	/*m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
-	connect(m_openInOldPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInOldPartsEditor()));*/
 
 #ifndef QT_NO_DEBUG
 	m_infoViewOnHoverAction = new QAction(tr("Update InfoView on hover"), this);
@@ -1688,8 +1718,8 @@ void MainWindow::updatePartMenu() {
 	m_sendBackwardAct->setEnabled(enable);
 	m_sendToBackAct->setEnabled(enable);
 
-	m_showPartLabelAct->setEnabled((itemCount.selCount > 0)  && (itemCount.selCount > itemCount.noteCount));
-	m_showPartLabelAct->setChecked(itemCount.labelCount == itemCount.selCount);
+	m_showPartLabelAct->setEnabled((itemCount.hasLabelCount > 0) && enable);
+	m_showPartLabelAct->setChecked(itemCount.visLabelCount == itemCount.hasLabelCount);
 
 	enable = (itemCount.selRotatable > 0);
 
@@ -1786,8 +1816,6 @@ void MainWindow::updateItemMenu() {
 	}
 	m_saveBundledPart->setEnabled(enabled && !selected->modelPart()->isCore());
 
-	//TODO PARTS EDITOR REMOVE
-	//m_openInOldPartsEditorAct->setEnabled(enabled);
 	// can't open wire in parts editor
 	enabled &= selected != NULL && itemBase != NULL && itemBase->canEditPart();
 	m_openInPartsEditorAct->setEnabled(enabled);
@@ -1991,34 +2019,10 @@ void MainWindow::reportBug() {
 	 QDesktopServices::openUrl(QString("http://code.google.com/p/fritzing/issues"));
 }
 
-void MainWindow::createNewPartInOldEditor() {
-	openOldPartsEditor(NULL);
-}
-
 void MainWindow::createNewPart() {
 	openPartsEditor(NULL);
 }
 
-void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
-	Q_UNUSED(paletteItem);
-	/*static long nextId = -1;
-	ModelPart *modelPart = NULL;
-	long id = nextId--;
-
-	if(paletteItem != NULL) {
-		modelPart = paletteItem->modelPart();
-		id = paletteItem->id();
-	}
-
-	MainPartsEditorWindow * mainPartsEditorWindow = new MainPartsEditorWindow(id,this,0,modelPart,modelPart!=NULL);
-	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
-	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
-
-	mainPartsEditorWindow->show();
-	mainPartsEditorWindow->raise();*/
-}
-
-// TODO PARTS EDITOR REMOVE
 void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	ModelPart* modelPart = paletteItem? paletteItem->modelPart(): NULL;
 	long id = paletteItem? paletteItem->id(): -1;
@@ -2075,15 +2079,6 @@ void MainWindow::partsEditorClosed(long id) {
 	m_binsWithPartsEditorRequests.remove(id);
 }
 
-void MainWindow::openInOldPartsEditor() {
-	// TODO: check to see if part is already open in a part editor window
-	if (m_currentGraphicsView == NULL) return;
-	PaletteItem *selectedPart = m_currentGraphicsView->getSelectedPart();
-
-	openOldPartsEditor(selectedPart);
-}
-
-// TODO PARTS EDITOR REMOVE
 void MainWindow::openInPartsEditor() {
 	if (m_currentGraphicsView == NULL) return;
 

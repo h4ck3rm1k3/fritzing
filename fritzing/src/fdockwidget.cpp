@@ -40,12 +40,12 @@ FDockWidget::FDockWidget( const QString & title, QWidget * parent)
 
 void FDockWidget::saveState() {
 	m_state = this->isFloating() && this->isVisible();
-	DebugDialog::debug(QString("dock save state %1 %2").arg(windowTitle()).arg(m_state));
+	//DebugDialog::debug(QString("dock save state %1 %2").arg(windowTitle()).arg(m_state));
 
 }
 
 void FDockWidget::restoreState() {
-	DebugDialog::debug(QString("dock restore state %1 %2").arg(windowTitle()).arg(m_state));
+	//DebugDialog::debug(QString("dock restore state %1 %2").arg(windowTitle()).arg(m_state));
 	if (m_state) {
 		this->setVisible(true);
 	}

@@ -191,6 +191,13 @@ in order to fix this connector</source>
     </message>
 </context>
 <context>
+    <name>Dip</name>
+    <message>
+        <source>chip label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DockManager</name>
     <message>
         <source>View Switcher</source>
@@ -370,14 +377,6 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>HtmlInfoView</name>
     <message>
-        <source>family</source>
-        <translation type="unfinished">семейство</translation>
-    </message>
-    <message>
-        <source>color</source>
-        <translation>цвет</translation>
-    </message>
-    <message>
         <source>Connections</source>
         <translation>Соединения</translation>
     </message>
@@ -424,10 +423,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Properties</source>
         <translation>Свойства</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>ширина</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -496,6 +491,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <source>size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LinkDialog</name>
@@ -506,6 +505,53 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>OK</source>
         <translation>Принять</translation>
+    </message>
+</context>
+<context>
+    <name>LogoItem</name>
+    <message>
+        <source>size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>load image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display image from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -647,10 +693,6 @@ Do you want to restart now?</source>
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation type="unfinished">Нет элементов с такими характеристиками.
 Мы работаем над тем, чтобы избежать этого сообщения, и вы могли работать с параметрами, которые действительно существуют</translation>
-    </message>
-    <message>
-        <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
-        <translation type="unfinished">Fritzing пока не имеет элемента, который соответствует всем запрашиваемым свойствам; но вы можете выбрать заменену из подходящих элементов.</translation>
     </message>
     <message>
         <source>Swapped %1 with module %2</source>
@@ -983,14 +1025,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Print the current view</source>
         <translation>Печать текущего вида</translation>
-    </message>
-    <message>
-        <source>Launch External Process...</source>
-        <translation>Запуск внешнего приложения ...</translation>
-    </message>
-    <message>
-        <source>Shell launch an external application</source>
-        <translation>Оболочка запуска внешних приложений</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -1796,6 +1830,18 @@ Please check all views for potential side-effects.</source>
         <source>Update %1 part(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No exactly matching part found; Fritzing chose the closest match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell launch %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launch %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1830,6 +1876,13 @@ Reason: %2 (errcode %3)</source>
     </message>
 </context>
 <context>
+    <name>MysteryPart</name>
+    <message>
+        <source>label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Note</name>
     <message>
         <source>[write your note here]</source>
@@ -1849,6 +1902,10 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation type="unfinished">Щёлкните на данном соединении для прокладывания нового маршрута.</translation>
+    </message>
+    <message>
+        <source>Resize board to %1 %2</source>
+        <translation type="unfinished">Изменить размер на %1 %2</translation>
     </message>
 </context>
 <context>
@@ -2773,10 +2830,29 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
 </context>
 <context>
+    <name>Resistor</name>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished">сопротивление</translation>
+    </message>
+</context>
+<context>
     <name>ResizableBoard</name>
     <message>
         <source>Import Shape...</source>
         <translation type="unfinished">Импортировать форму...</translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3060,6 +3136,37 @@ Fritzing по-прежнему работает, но вы не сможете �
         <source>Change ChipLabel from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>show part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>hide part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Change pin spacing from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change form from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SymbolPaletteItem</name>
+    <message>
+        <source>voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
@@ -3110,6 +3217,13 @@ Fritzing по-прежнему работает, но вы не сможете �
     <message>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>TraceWire</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">ширина</translation>
     </message>
 </context>
 <context>
@@ -3270,6 +3384,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     <message>
         <source>orange</source>
         <translation>оранжевый</translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished">цвет</translation>
     </message>
 </context>
 </TS>

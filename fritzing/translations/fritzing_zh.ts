@@ -191,6 +191,13 @@ in order to fix this connector</source>
     </message>
 </context>
 <context>
+    <name>Dip</name>
+    <message>
+        <source>chip label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DockManager</name>
     <message>
         <source>View Switcher</source>
@@ -371,14 +378,6 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>HtmlInfoView</name>
     <message>
-        <source>family</source>
-        <translation>类族</translation>
-    </message>
-    <message>
-        <source>color</source>
-        <translation>颜色</translation>
-    </message>
-    <message>
         <source>Connections</source>
         <translation>连接数</translation>
     </message>
@@ -423,10 +422,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Properties</source>
         <translation>属性</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>宽度</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -495,6 +490,10 @@ Please select one of the Fritzing fonts to replace them:</source>
         <source>size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LinkDialog</name>
@@ -505,6 +504,53 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>OK</source>
         <translation>确定</translation>
+    </message>
+</context>
+<context>
+    <name>LogoItem</name>
+    <message>
+        <source>size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>load image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to display image from %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -642,10 +688,6 @@ Do you want to restart now?</source>
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation>没有这些参数的原件.
 我们努力避免这个信息，以便您可以从已有的属性的原件中选择</translation>
-    </message>
-    <message>
-        <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
-        <translation>Fritzing还没有一个符合所有的请求属性的元件，所以选择一个部分属性的原件作为替代。</translation>
     </message>
     <message>
         <source>Swapped %1 with module %2</source>
@@ -978,14 +1020,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Print the current view</source>
         <translation>打印当前视图</translation>
-    </message>
-    <message>
-        <source>Launch External Process...</source>
-        <translation>载入外部程序...</translation>
-    </message>
-    <message>
-        <source>Shell launch an external application</source>
-        <translation>程序载入一个外部程序</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -1789,6 +1823,18 @@ Please check all views for potential side-effects.</source>
         <source>Update %1 part(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No exactly matching part found; Fritzing chose the closest match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell launch %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launch %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1823,6 +1869,13 @@ Reason: %2 (errcode %3)</source>
     </message>
 </context>
 <context>
+    <name>MysteryPart</name>
+    <message>
+        <source>label</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Note</name>
     <message>
         <source>[write your note here]</source>
@@ -1842,6 +1895,10 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>Click this connector to drag out a new trace.</source>
         <translation>点击这个接插件拖出新的迹线.</translation>
+    </message>
+    <message>
+        <source>Resize board to %1 %2</source>
+        <translation type="unfinished">恢复板大小至%1 %2</translation>
     </message>
 </context>
 <context>
@@ -2763,10 +2820,29 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
 </context>
 <context>
+    <name>Resistor</name>
+    <message>
+        <source>resistance</source>
+        <translation type="unfinished">电阻</translation>
+    </message>
+</context>
+<context>
     <name>ResizableBoard</name>
     <message>
         <source>Import Shape...</source>
         <translation>导入形状...</translation>
+    </message>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3050,6 +3126,33 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Change ChipLabel from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>show part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>hide part label(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Change pin spacing from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change form from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SymbolPaletteItem</name>
+    <message>
+        <source>voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
@@ -3100,6 +3203,13 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>TraceWire</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">宽度</translation>
     </message>
 </context>
 <context>
@@ -3260,6 +3370,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>orange</source>
         <translation>橙</translation>
+    </message>
+    <message>
+        <source>color</source>
+        <translation type="unfinished">颜色</translation>
     </message>
 </context>
 </TS>

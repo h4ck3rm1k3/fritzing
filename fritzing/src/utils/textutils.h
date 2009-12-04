@@ -39,7 +39,7 @@ public:
 	static QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
-	static QString replaceTextElement(QString svg, const QString & label);
+	static QString replaceTextElement(const QString & svg, const QString & label);
 	static QString mergeSvg(const QString & svg1, const QString & svg2);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 

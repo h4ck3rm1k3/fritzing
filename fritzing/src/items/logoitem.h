@@ -55,18 +55,25 @@ public:
 	const QString & logo();
 	bool canEditPart();
 	void setProp(const QString & prop, const QString & value);
-
+	bool hasPartLabel();
 
 protected slots:
 	void prepLoadImage();
+	void logoEntry();
+	void widthEntry();
+	void heightEntry();
+
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	bool hasGrips();
+	QString hackSvg(const QString & svg, const QString & logo);
 
 protected:
 	QSizeF m_aspectRatio;
 	QString m_logo;
+	bool m_hasLogo;
+	QString m_originalFilename;
 
 };
 

@@ -117,6 +117,7 @@ void HtmlInfoView::hoverEnterItem(InfoGraphicsView * igv, ModelPart * modelPart,
 }
 
 void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart * modelPart) {
+	Q_UNUSED(modelPart);
 	//DebugDialog::debug(QString("hoverLeaveItem modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
 	if (m_lastModelPart) {
 		viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
@@ -147,6 +148,7 @@ void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphics
 }
 
 void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * itemBase){
+	Q_UNUSED(itemBase);
 	//DebugDialog::debug(QString("hoverLeaveItem itembase %1").arg(itemBase ? itemBase->instanceTitle() : "NULL"));
 	if (m_lastItemBase == NULL) {
 		viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);

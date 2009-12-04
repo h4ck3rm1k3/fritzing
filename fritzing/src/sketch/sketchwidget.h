@@ -54,12 +54,12 @@ QT_END_NAMESPACE
 
 struct ItemCount {
 	int selCount;
-	int labelCount;
+	int hasLabelCount;
+	int visLabelCount;
 	int itemsCount;
 	int selRotatable;
 	int selHFlipable;
 	int selVFlipable;
-	int noteCount;
 	int obsoleteCount;
 };
 

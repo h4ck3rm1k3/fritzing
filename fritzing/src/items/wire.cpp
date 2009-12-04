@@ -1292,3 +1292,8 @@ void Wire::colorEntry(const QString & text) {
 		infoGraphicsView->changeWireColor(color);
 	}
 }
+
+bool Wire::hasPartLabel() {
+	
+	return false;
+}

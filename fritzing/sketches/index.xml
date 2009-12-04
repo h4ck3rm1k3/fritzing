@@ -2,7 +2,7 @@
   <sketches>
     <sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
     <sketch id="AnalogInputFSR" name="Force Sensor" src="core/AnalogInputFSR.fz"/>
-    <sketch id="AnalogInputOutput" name="Analog In/Out (Pot & LED)" src="core/AnalogInputOutput.fz"/>
+    <sketch id="AnalogInputOutput" name="Analog In/Out (Pot &amp; LED)" src="core/AnalogInputOutput.fz"/>
     <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
     <sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
     <sketch id="AnalogInputToServo" name="Servo (with Pot)" src="core/AnalogInputToServo.fz"/>
@@ -126,36 +126,6 @@
     </category>
     <category name="Processing">
       <sketch id="Arduino-no-FTDI"/>
-    </category>
-    <category name="All">
-      <sketch id="555TouchSwitch" />
-      <sketch id="AnalogInputFSR" />
-      <sketch id="AnalogInputOutput" />
-      <sketch id="AnalogInputPot" />
-      <sketch id="AnalogInputThermistor" />
-      <sketch id="AnalogInputToServo" />
-      <sketch id="Arduino-no-FTDI" />
-      <sketch id="Blink" />
-      <sketch id="Button" />
-      <sketch id="DC_motor_control" />
-      <sketch id="Knock" />
-      <sketch id="Loop" />
-      <sketch id="Melody" />
-			<sketch id="MidiDrumKit"/>
-      <sketch id="npnPowerTransistor" />
-      <sketch id="Op_Amp" />
-      <sketch id="Optocoupler" />
-      <sketch id="Photocell" />
-      <sketch id="Relay" />
-      <sketch id="Shift_Register" />
-      <sketch id="Stepper_Motor" />
-      <sketch id="TiltSwitch" />
-      <sketch id="Touch_Switch" />
-      <sketch id="TrafficLight" />
-      <sketch id="VirtualColorMixer" />
-      <sketch id="VoltageRegulator" />
-      <sketch id="VoltageRegulatorSwitch" />
-      <sketch id="Window_Alarm" />
     </category>
   </categories>
 </fritzing-sketches>
