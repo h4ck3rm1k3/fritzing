@@ -310,6 +310,12 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="1a4bfb87a0f0fd2c59be43f3497d72e6" path="parts/core/xbee.fzp">
+            <views>
+                <iconView layer="icon">                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="5e3b9f7a14a1627168e700bfc9a03b3c" modelIndex="42" path="parts/core/USB connector.fzp">
             <views>
                 <iconView layer="icon">

@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.13b.12.02.3806" moduleId="1a4bfb87a0f0fd2c59be43f3497d72e6">
     <version>1.0</version>
-    <author>Fritzing Part-o-matic</author>
+    <author>Lionel Michel</author>
     <title>XBee</title>
-    <label>IC</label>
+    <label>U</label>
     <date>2009-10-23</date>
     <tags>
-        <tag>DIP</tag>
-        <tag>user part</tag>
+        <tag>XBee</tag>
+        <tag>wireless</tag>
+	<tag>serial</tag>
     </tags>
     <properties>
-        <property name="package">DIP (Dual Inline)</property>
         <property name="family">XBee</property>
-        <property name="chip label">XBee</property>
         <property name="pins">20</property>
-        <property name="spacing">600mil</property>
+	<property name="model">XBee ZNet 2.5</property>
     </properties>
-    <description>A DIP stand-in part for whatever IC you want.  With 20 pins on a 300 mil dual inline package (DIP) footprint.</description>
+    <description>XBee embedded RF module.</description>
     <views>
         <iconView>
-            <layers image="icon/XBee__2fc757020d8583bdd1e59f40679bc556__icon__8fff41702f02a0f73dd84eba53d7511a.svg">
-                <layer layerId="icon"/>
+            <layers image="icon/xbee.svg">
+                <layer layerId="icon" />
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/XBee__7ea1c9c8e1266d1f39c1cafc1e10c6ce__breadboard__0b204d78e16f4a7de0166a6335f32d8c.svg">
-                <layer layerId="breadboard"/>
+            <layers image="breadboard/xbee.svg">
+                <layer layerId="breadboard" />
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/XBee__a5f4e366c0a7bc194b3ffab00d3eddd1__schematic__7ddc200123290ad721fc7437056ae6d6.svg">
-                <layer layerId="schematic"/>
+            <layers image="schematic/xbee.svg">
+                <layer layerId="schematic" />
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/dip_20_300mil_pcb.svg">
-                <layer layerId="copper0"/>
+            <layers image="pcb/xbee_20_2mm_pcb.svg">
+                <layer layerId="copper0" />
+		<layer layerId="silkscreen" />
             </layers>
         </pcbView>
     </views>
     <connectors>
         <connector id="connector15" type="male" name="pin16">
-            <description>pin 16</description>
+            <description>RTS / AD6 / DIO6</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector15pin" terminalId="connector15terminal"/>
@@ -55,7 +55,7 @@
             </views>
         </connector>
         <connector id="connector7" type="male" name="pin8">
-            <description>pin 8</description>
+            <description>Do Not Connect!</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"/>
@@ -69,7 +69,7 @@
             </views>
         </connector>
         <connector id="connector16" type="male" name="pin17">
-            <description>pin 17</description>
+            <description>AD3 / DIO3</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector16pin" terminalId="connector16terminal"/>
@@ -83,7 +83,7 @@
             </views>
         </connector>
         <connector id="connector8" type="male" name="pin9">
-            <description>pin 9</description>
+            <description>DTR / SLEEP_RQ / DI8</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector8pin" terminalId="connector8terminal"/>
@@ -97,7 +97,7 @@
             </views>
         </connector>
         <connector id="connector17" type="male" name="pin18">
-            <description>pin 18</description>
+            <description>AD2 / DIO2</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector17pin" terminalId="connector17terminal"/>
@@ -110,8 +110,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="pin10">
-            <description>pin 10</description>
+        <connector id="connector9" type="male" name="GND">
+            <description>Ground</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector9pin" terminalId="connector9terminal"/>
@@ -125,7 +125,7 @@
             </views>
         </connector>
         <connector id="connector18" type="male" name="pin19">
-            <description>pin 19</description>
+            <description>AD1 / DIO1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector18pin" terminalId="connector18terminal"/>
@@ -139,7 +139,7 @@
             </views>
         </connector>
         <connector id="connector19" type="male" name="pin20">
-            <description>pin 20</description>
+            <description>AD0 / DIO0</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector19pin" terminalId="connector19terminal"/>
@@ -152,8 +152,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="pin1">
-            <description>pin 1</description>
+        <connector id="connector0" type="male" name="VCC">
+            <description>Supply Voltage</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -167,7 +167,7 @@
             </views>
         </connector>
         <connector id="connector1" type="male" name="pin2">
-            <description>pin 2</description>
+            <description>DOUT</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -181,7 +181,7 @@
             </views>
         </connector>
         <connector id="connector2" type="male" name="pin3">
-            <description>pin 3</description>
+            <description>DIN / CONFIG</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
@@ -195,7 +195,7 @@
             </views>
         </connector>
         <connector id="connector10" type="male" name="pin11">
-            <description>pin 11</description>
+            <description>AD4 / DIO4</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector10pin" terminalId="connector10terminal"/>
@@ -209,7 +209,7 @@
             </views>
         </connector>
         <connector id="connector11" type="male" name="pin12">
-            <description>pin 12</description>
+            <description>CTS / DIO7</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector11pin" terminalId="connector11terminal"/>
@@ -223,7 +223,7 @@
             </views>
         </connector>
         <connector id="connector3" type="male" name="pin4">
-            <description>pin 4</description>
+            <description>DO8</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -237,7 +237,7 @@
             </views>
         </connector>
         <connector id="connector4" type="male" name="pin5">
-            <description>pin 5</description>
+            <description>RESET</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -251,7 +251,7 @@
             </views>
         </connector>
         <connector id="connector12" type="male" name="pin13">
-            <description>pin 13</description>
+            <description>ON / SLEEP</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector12pin" terminalId="connector12terminal"/>
@@ -265,7 +265,7 @@
             </views>
         </connector>
         <connector id="connector5" type="male" name="pin6">
-            <description>pin 6</description>
+            <description>PWM0 / RSSI</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
@@ -279,7 +279,7 @@
             </views>
         </connector>
         <connector id="connector13" type="male" name="pin14">
-            <description>pin 14</description>
+            <description>VREF</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector13pin" terminalId="connector13terminal"/>
@@ -293,7 +293,7 @@
             </views>
         </connector>
         <connector id="connector6" type="male" name="pin7">
-            <description>pin 7</description>
+            <description>PWM1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"/>
@@ -307,7 +307,7 @@
             </views>
         </connector>
         <connector id="connector14" type="male" name="pin15">
-            <description>pin 15</description>
+            <description>Associate / AD5 / DIO5</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector14pin" terminalId="connector14terminal"/>
