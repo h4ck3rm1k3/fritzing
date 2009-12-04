@@ -1671,7 +1671,9 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		}
 
 		clickBackground(event);
-		m_infoView->viewItemInfo(this, NULL, true);
+		if (m_infoView != NULL) {
+			m_infoView->viewItemInfo(this, NULL, true);
+		}
 		return;
 	}
 

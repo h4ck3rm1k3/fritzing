@@ -2,7 +2,7 @@
   <sketches>
     <sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
     <sketch id="AnalogInputFSR" name="Force Sensor" src="core/AnalogInputFSR.fz"/>
-    <sketch id="AnalogInputOutput" name="Analog In/Out (Pot &amp; LED)" src="core/AnalogInputOutput.fz"/>
+    <sketch id="AnalogInputOutput" name="Analog In/Out (Pot and LED)" src="core/AnalogInputOutput.fz"/>
     <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
     <sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
     <sketch id="AnalogInputToServo" name="Servo (with Pot)" src="core/AnalogInputToServo.fz"/>
