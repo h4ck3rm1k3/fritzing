@@ -309,42 +309,42 @@
 		<rect x="14.098" y="28.393" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 71.0663 49.6527)" fill="#02809E" width="22.303" height="22.303"/>
 	<circle fill="#02809E" cx="13.291" cy="13.413" r="2.101"/>
 	
-		<text transform="matrix(0.6947 0.7193 -0.7193 0.6947 28.1257 24.4624)" fill="#FFFFFF" font-family="'ocra10'" font-size="3.4998">Arduino</text>
-	<text transform="matrix(0.6947 0.7193 -0.7193 0.6947 8.3635 43.9297)" fill="#FFFFFF" font-family="'ocra10'" font-size="3.4998">MINI 04</text>
-	<text transform="matrix(1 0 0 1 29.9597 77.998)" fill="#FFFFFF" font-family="'ocra10'" font-size="3.4998">5V</text>
-	<text transform="matrix(1 0 0 1 45.2546 81.3643)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">10</text>
-	<text transform="matrix(1 0 0 1 45.2546 74.1768)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">11</text>
-	<text transform="matrix(1 0 0 1 45.2546 66.9277)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">12</text>
-	<text transform="matrix(1 0 0 1 45.2546 59.3652)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">13</text>
-	<text transform="matrix(1 0 0 1 44.5339 52.6826)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD0</text>
-	<text transform="matrix(1 0 0 1 8.6526 71.1133)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD6</text>
-	<text transform="matrix(1 0 0 1 15.7805 71.1133)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD7</text>
-	<text transform="matrix(1 0 0 1 8.6526 80.2207)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD4</text>
-	<text transform="matrix(1 0 0 1 15.7805 80.2207)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD5</text>
-	<text transform="matrix(1 0 0 1 44.5339 45.4961)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD1</text>
-	<text transform="matrix(1 0 0 1 44.5339 38.1357)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD2</text>
-	<text transform="matrix(1 0 0 1 44.5339 30.8223)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">AD3</text>
-	<text transform="matrix(1 0 0 1 44.5339 23.5439)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">+5V</text>
-	<text transform="matrix(1 0 0 1 44.5339 16.5107)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">RST</text>
-	<text transform="matrix(1 0 0 1 44.5339 9.3242)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">GND</text>
-	<text transform="matrix(1 0 0 1 44.5339 2.3574)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">+9V</text>
-	<text transform="matrix(1 0 0 1 2.8098 81.3643)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">9</text>
-	<text transform="matrix(1 0 0 1 2.8098 74.1768)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">8</text>
-	<text transform="matrix(1 0 0 1 2.8098 66.9277)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">7</text>
-	<text transform="matrix(1 0 0 1 2.8098 59.3652)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">6</text>
-	<text transform="matrix(1 0 0 1 2.8098 52.6826)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">5</text>
-	<text transform="matrix(1 0 0 1 2.8098 45.4961)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">4</text>
-	<text transform="matrix(1 0 0 1 2.8098 38.1357)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">3</text>
-	<text transform="matrix(1 0 0 1 2.8098 30.8223)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">2</text>
-	<text transform="matrix(1 0 0 1 1.3699 23.5439)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">GND</text>
-	<text transform="matrix(1 0 0 1 1.3699 16.5107)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">RST</text>
-	<text transform="matrix(1 0 0 1 2.0901 9.3242)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">RX</text>
-	<text transform="matrix(1 0 0 1 2.0901 2.3574)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">TX</text>
-	<text transform="matrix(1 0 0 1 38.3884 77.998)" fill="#FFFFFF" font-family="'ocra10'" font-size="3.4998">-</text>
-	<text transform="matrix(1 0 0 1 8.5872 9.7266)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">IO7 </text>
-	<text transform="matrix(1 0 0 1 16.3928 9.7266)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">TX</text>
-	<text transform="matrix(1 0 0 1 23.6086 9.7266)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">RX</text>
-	<text transform="matrix(1 0 0 1 30.1042 9.7266)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">+5V</text>
-	<text transform="matrix(1 0 0 1 37.321 9.7266)" fill="#FFFFFF" font-family="'ocra10'" font-size="1.9999">GND</text>
+		<text transform="matrix(0.6947 0.7193 -0.7193 0.6947 28.1257 24.4624)" fill="#FFFFFF" font-family="'OCRA'" font-size="3.4998">Arduino</text>
+	<text transform="matrix(0.6947 0.7193 -0.7193 0.6947 8.3635 43.9297)" fill="#FFFFFF" font-family="'OCRA'" font-size="3.4998">MINI 04</text>
+	<text transform="matrix(1 0 0 1 29.9597 77.998)" fill="#FFFFFF" font-family="'OCRA'" font-size="3.4998">5V</text>
+	<text transform="matrix(1 0 0 1 45.2546 81.3643)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">10</text>
+	<text transform="matrix(1 0 0 1 45.2546 74.1768)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">11</text>
+	<text transform="matrix(1 0 0 1 45.2546 66.9277)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">12</text>
+	<text transform="matrix(1 0 0 1 45.2546 59.3652)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">13</text>
+	<text transform="matrix(1 0 0 1 44.5339 52.6826)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD0</text>
+	<text transform="matrix(1 0 0 1 8.6526 71.1133)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD6</text>
+	<text transform="matrix(1 0 0 1 15.7805 71.1133)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD7</text>
+	<text transform="matrix(1 0 0 1 8.6526 80.2207)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD4</text>
+	<text transform="matrix(1 0 0 1 15.7805 80.2207)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD5</text>
+	<text transform="matrix(1 0 0 1 44.5339 45.4961)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD1</text>
+	<text transform="matrix(1 0 0 1 44.5339 38.1357)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD2</text>
+	<text transform="matrix(1 0 0 1 44.5339 30.8223)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">AD3</text>
+	<text transform="matrix(1 0 0 1 44.5339 23.5439)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">+5V</text>
+	<text transform="matrix(1 0 0 1 44.5339 16.5107)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">RST</text>
+	<text transform="matrix(1 0 0 1 44.5339 9.3242)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">GND</text>
+	<text transform="matrix(1 0 0 1 44.5339 2.3574)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">+9V</text>
+	<text transform="matrix(1 0 0 1 2.8098 81.3643)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">9</text>
+	<text transform="matrix(1 0 0 1 2.8098 74.1768)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">8</text>
+	<text transform="matrix(1 0 0 1 2.8098 66.9277)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">7</text>
+	<text transform="matrix(1 0 0 1 2.8098 59.3652)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">6</text>
+	<text transform="matrix(1 0 0 1 2.8098 52.6826)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">5</text>
+	<text transform="matrix(1 0 0 1 2.8098 45.4961)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">4</text>
+	<text transform="matrix(1 0 0 1 2.8098 38.1357)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">3</text>
+	<text transform="matrix(1 0 0 1 2.8098 30.8223)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">2</text>
+	<text transform="matrix(1 0 0 1 1.3699 23.5439)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">GND</text>
+	<text transform="matrix(1 0 0 1 1.3699 16.5107)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">RST</text>
+	<text transform="matrix(1 0 0 1 2.0901 9.3242)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">RX</text>
+	<text transform="matrix(1 0 0 1 2.0901 2.3574)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">TX</text>
+	<text transform="matrix(1 0 0 1 38.3884 77.998)" fill="#FFFFFF" font-family="'OCRA'" font-size="3.4998">-</text>
+	<text transform="matrix(1 0 0 1 8.5872 9.7266)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">IO7 </text>
+	<text transform="matrix(1 0 0 1 16.3928 9.7266)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">TX</text>
+	<text transform="matrix(1 0 0 1 23.6086 9.7266)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">RX</text>
+	<text transform="matrix(1 0 0 1 30.1042 9.7266)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">+5V</text>
+	<text transform="matrix(1 0 0 1 37.321 9.7266)" fill="#FFFFFF" font-family="'OCRA'" font-size="1.9999">GND</text>
 </g>
 </svg>

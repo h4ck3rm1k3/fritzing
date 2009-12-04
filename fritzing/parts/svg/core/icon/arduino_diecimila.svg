@@ -190,8 +190,8 @@
 	5.597,15.855 5.597,15.077 "/>
 <polygon id="polygon262" fill="#262626" points="5.598,17.211 5.598,16.432 5.354,16.432 5.354,16.921 4.792,16.921 4.792,16.432 
 	4.549,16.432 4.549,17.211 "/>
-<text id="text280" transform="matrix(1 0 0 1 17.1289 13.5098)" fill="#CCCCCC" font-family="ocra10" font-size="1.3133">Diecimila</text>
-<text id="text282" transform="matrix(1 0 0 1 17.5098 11.9609)" fill="#CCCCCC" font-family="ocra10" font-size="1.3133">Arduino</text>
+<text id="text280" transform="matrix(1 0 0 1 17.1289 13.5098)" fill="#CCCCCC" font-family="OCRA" font-size="1.3133">Diecimila</text>
+<text id="text282" transform="matrix(1 0 0 1 17.5098 11.9609)" fill="#CCCCCC" font-family="OCRA" font-size="1.3133">Arduino</text>
 <rect id="rect390" y="8.83" fill="#676666" width="5.72" height="5.113"/>
 <rect id="rect392" x="5.72" y="8.83" fill="#676666" width="1.215" height="5.113"/>
 <rect id="rect394" x="2.279" y="22.416" width="5.619" height="3.594"/>

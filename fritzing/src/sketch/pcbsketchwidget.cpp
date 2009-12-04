@@ -1435,7 +1435,7 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 }
 
 void PCBSketchWidget::getLabelFont(QFont & font, QColor & color) {
-	font.setFamily("ocra10");			// ocra10
+	font.setFamily("OCRA");			// ocra10
 	font.setPointSize(getLabelFontSizeMedium());
 	color.setAlpha(255);
 	color.setRgb(0xffffff);

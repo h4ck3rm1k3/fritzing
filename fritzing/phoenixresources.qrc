@@ -176,8 +176,8 @@
         <file>resources/fonts/DroidSans.ttf</file>
         <file>resources/fonts/DroidSans-Bold.ttf</file>
         <file>resources/fonts/NOTICE</file>
-        <file>resources/fonts/README</file>
-        <file>resources/fonts/ocra10.ttf</file>
+        <file>resources/fonts/OCRA.ttf</file>
+        <file>resources/fonts/ReadMe.txt</file>
         <file>resources/images/icons/arrowButtonUp.png</file>
         <file>resources/images/icons/arrowButtonDown.png</file>
         <file>resources/images/icons/arrowButtonLeft.png</file>

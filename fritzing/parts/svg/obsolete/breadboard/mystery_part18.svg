@@ -359,6 +359,6 @@
      width="3"
      y="25.672941"
      x="173.5" />
-  <text id="label" x="91" y="15" fill="#e6e6e6" stroke="none" font-family="ocra10" text-anchor="middle" font-size="10" >?</text>
+  <text id="label" x="91" y="15" fill="#e6e6e6" stroke="none" font-family="OCRA" text-anchor="middle" font-size="10" >?</text>
 </g>
 </svg>

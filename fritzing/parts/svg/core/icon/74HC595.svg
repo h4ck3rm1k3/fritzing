@@ -14,8 +14,8 @@
 	<path id="cover" fill="#303030" d="M0.54,3.931v4.313c1.713,0.322,3.017,1.82,3.017,3.628s-1.296,3.313-3.017,3.637v0.007h3.6
 		V3.931H0.54z"/>
 	<circle fill="#212121" cx="4.68" cy="16.898" r="1.483"/>
-	<text transform="matrix(1 0 0 1 4.4827 10.8792)" fill="#DDDDDD" font-family="ocra10" font-size="5.76">74HC</text>
-	<text transform="matrix(1 0 0 1 8.5989 17.7913)" fill="#DDDDDD" font-family="ocra10" font-size="5.76">595</text>
+	<text transform="matrix(1 0 0 1 4.4827 10.8792)" fill="#DDDDDD" font-family="OCRA" font-size="5.76">74HC</text>
+	<text transform="matrix(1 0 0 1 8.5989 17.7913)" fill="#DDDDDD" font-family="OCRA" font-size="5.76">595</text>
 	<rect id="connector0pin" x="2.52" y="20.635" fill="#8C8C8C" width="2.16" height="3.125"/>
 	<rect id="connector0terminal" x="2.52" y="21.6" fill="#8C8C8C" width="2.16" height="2.16"/>
 	<polygon fill="#8C8C8C" points="2.52,20.635 2.52,22.075 4.68,22.075 6.12,21.412 6.12,20.635 	"/>

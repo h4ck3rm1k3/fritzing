@@ -23,7 +23,7 @@
   <path id="cover" fill="#303030" d="M0.75,2.46V8.45c2.38,0.45,4.19,2.53,4.19,5.04c0,2.51-1.8,4.6-4.19,5.05V18.55h5.0V2.46H0.75z"/>
 	<circle fill="#212121" cx="6.5" cy="20.47" r="2.06"/>
  
-  <text id="label" x="6.5" y="15.0" fill="#e6e6e6" stroke="none" font-family="ocra10" text-anchor="start" font-size="8" >IC</text>
+  <text id="label" x="6.5" y="15.0" fill="#e6e6e6" stroke="none" font-family="OCRA" text-anchor="start" font-size="8" >IC</text>
 
   
 	<rect id="connector0pin" x="3.5" y="25.66" fill="#8C8C8C" width="3" height="4.34"/>

@@ -79,5 +79,5 @@
 	<circle fill="#212121" cx="4.68" cy="16.898" r="1.483"/>
 </g>
 <rect x="6.494" y="9.792" fill="none" width="32.372" height="5.95"/>
-<text transform="matrix(1 0 0 1 6.4939 14.0374)" fill="#E5E5E5" font-family="ocra10" font-size="5.76">74HC595</text>
+<text transform="matrix(1 0 0 1 6.4939 14.0374)" fill="#E5E5E5" font-family="OCRA" font-size="5.76">74HC595</text>
 </svg>

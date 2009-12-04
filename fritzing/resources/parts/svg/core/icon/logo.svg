@@ -1,5 +1,5 @@
 <svg xmlns='http://www.w3.org/2000/svg' width='.4in' height='.4in' viewBox='0 0 40 40' >
 <g id='silkscreen'>
 <rect id="background" x="0" y="0" fill="#568B53" stroke-width="0" width="40" height="40"/>
-<text x="20" y="20" stroke-width="0" fill="#ffffff" font-family="ocra10" text-anchor="middle" font-size="10.0">LOGO</text></g>
+<text x="20" y="20" stroke-width="0" fill="#ffffff" font-family="OCRA" text-anchor="middle" font-size="10.0">LOGO</text></g>
 </svg>

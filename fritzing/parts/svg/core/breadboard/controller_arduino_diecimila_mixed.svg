@@ -1154,5 +1154,5 @@
 	<polygon fill="#595959" points="201.474,7.906 200.452,6.885 197.679,6.885 196.657,7.906 	"/>
 	<polygon fill="#373737" points="196.656,7.906 197.679,6.883 197.679,4.11 196.656,3.087 	"/>
 </g>
-<text  transform="matrix(1 0 0 1 116.1038 49.3794)" fill="#FFFFFF" font-family="ocra10" font-size="9">Arduino</text>
+<text  transform="matrix(1 0 0 1 116.1038 49.3794)" fill="#FFFFFF" font-family="OCRA" font-size="9">Arduino</text>
 </svg>

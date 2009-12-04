@@ -766,146 +766,146 @@
 	<polygon fill="#474747" points="299.389,133.328 298.363,132.305 295.591,132.305 294.57,133.328 	"/>
 	<polygon fill="#595959" points="294.57,133.326 295.591,132.304 295.591,129.531 294.57,128.509 	"/>
 	<polygon fill="#373737" points="294.57,128.507 295.593,129.531 298.366,129.531 299.389,128.507 	"/>
-	<text transform="matrix(1 0 0 1 172.7256 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">A</text>
-	<text transform="matrix(1 0 0 1 178.1094 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">r</text>
-	<text transform="matrix(1 0 0 1 183.4932 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">d</text>
-	<text transform="matrix(1 0 0 1 188.877 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">u</text>
-	<text transform="matrix(1 0 0 1 194.2607 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">i</text>
-	<text transform="matrix(1 0 0 1 199.6445 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">n</text>
-	<text transform="matrix(1 0 0 1 205.0273 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">o</text>
-	<text transform="matrix(1 0 0 1 210.4111 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782"> </text>
-	<text transform="matrix(1 0 0 1 215.7949 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">M</text>
-	<text transform="matrix(1 0 0 1 221.1787 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">E</text>
-	<text transform="matrix(1 0 0 1 226.5625 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">G</text>
-	<text transform="matrix(1 0 0 1 231.9463 107.811)" fill="#FFFFFF" font-family="'ocra10'" font-size="8.4782">A</text>
-	<text transform="matrix(1 0 0 1 183.1328 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">w</text>
-	<text transform="matrix(1 0 0 1 186.2734 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">w</text>
-	<text transform="matrix(1 0 0 1 189.4141 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">w</text>
-	<text transform="matrix(1 0 0 1 192.5537 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">.</text>
-	<text transform="matrix(1 0 0 1 195.6943 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">a</text>
-	<text transform="matrix(1 0 0 1 198.835 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">r</text>
-	<text transform="matrix(1 0 0 1 201.9756 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">d</text>
-	<text transform="matrix(1 0 0 1 205.1152 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">u</text>
-	<text transform="matrix(1 0 0 1 208.2559 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">i</text>
-	<text transform="matrix(1 0 0 1 211.3965 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">n</text>
-	<text transform="matrix(1 0 0 1 214.5371 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">o</text>
-	<text transform="matrix(1 0 0 1 217.6777 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">.</text>
-	<text transform="matrix(1 0 0 1 220.8174 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">c</text>
-	<text transform="matrix(1 0 0 1 223.958 113.7456)" fill="#FFFFFF" font-family="'ocra10'" font-size="4.9456">c</text>
-	<text transform="matrix(0 -1 1 0 85.978 24.2261)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">AREF</text>
-	<text transform="matrix(0 -1 1 0 93.1279 20.8013)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">GND</text>
-	<text transform="matrix(0 -1 1 0 100.2778 17.3755)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">13</text>
-	<text transform="matrix(0 -1 1 0 107.4277 17.3755)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">12</text>
-	<text transform="matrix(0 -1 1 0 114.5781 17.3755)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">11</text>
-	<text transform="matrix(0 -1 1 0 121.7285 17.3755)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">10</text>
-	<text transform="matrix(0 -1 1 0 128.8789 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">9</text>
-	<text transform="matrix(0 -1 1 0 136.0273 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">8</text>
-	<text transform="matrix(0 -1 1 0 150.2754 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">7</text>
-	<text transform="matrix(0 -1 1 0 157.4766 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">6</text>
-	<text transform="matrix(0 -1 1 0 164.6758 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">5</text>
-	<text transform="matrix(0 -1 1 0 171.876 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">4</text>
-	<text transform="matrix(0 -1 1 0 179.0762 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">3</text>
-	<text transform="matrix(0 -1 1 0 186.2754 13.9507)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">2</text>
-	<text transform="matrix(0 -1 1 0 193.4766 33.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5"> </text>
-	<text transform="matrix(0 -1 1 0 193.4766 29.6509)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">T</text>
-	<text transform="matrix(0 -1 1 0 193.4766 26.2261)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">X</text>
-	<text transform="matrix(0 -1 1 0 193.4766 22.8013)" fill="#FFFFFF" font-family="'ocra10'" font-size="5"> </text>
-	<text transform="matrix(0 -1 1 0 193.4766 18.3765)" fill="#FFFFFF" font-family="'ocra10'" font-size="5"> </text>
-	<text transform="matrix(0 -1 1 0 193.4766 13.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 200.6758 33.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5"> </text>
-	<text transform="matrix(0 -1 1 0 200.6758 29.6509)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">R</text>
-	<text transform="matrix(0 -1 1 0 200.6758 26.2261)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">X</text>
-	<text transform="matrix(0 -1 1 0 200.6758 22.8013)" fill="#FFFFFF" font-family="'ocra10'" font-size="5"> </text>
-	<text transform="matrix(0 -1 1 0 200.6758 18.3765)" fill="#FFFFFF" font-family="'ocra10'" font-size="5"> </text>
-	<text transform="matrix(0 -1 1 0 200.6758 13.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">0</text>
-	<text transform="matrix(0 -1 1 0 165.0508 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">0</text>
-	<text transform="matrix(0 -1 1 0 172.2002 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 179.3496 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">2</text>
-	<text transform="matrix(0 -1 1 0 186.5 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">3</text>
-	<text transform="matrix(0 -1 1 0 193.6504 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">4</text>
-	<text transform="matrix(0 -1 1 0 200.8008 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">5</text>
-	<text transform="matrix(0 -1 1 0 207.9512 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">6</text>
-	<text transform="matrix(0 -1 1 0 215.0996 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">7</text>
-	<text transform="matrix(0 -1 1 0 114.5488 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">RESET</text>
-	<text transform="matrix(0 -1 1 0 121.6992 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">3V3</text>
-	<text transform="matrix(0 -1 1 0 229.3477 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">8</text>
-	<text transform="matrix(0 -1 1 0 236.5488 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">9</text>
-	<text transform="matrix(0 -1 1 0 243.748 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 243.748 134.0269)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">0</text>
-	<text transform="matrix(0 -1 1 0 250.9482 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 250.9482 134.0269)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 258.1484 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 258.1484 134.0269)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">2</text>
-	<text transform="matrix(0 -1 1 0 265.3477 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 265.3477 134.0269)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">3</text>
-	<text transform="matrix(0 -1 1 0 272.5488 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 272.5488 134.0269)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">4</text>
-	<text transform="matrix(0 -1 1 0 279.748 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">1</text>
-	<text transform="matrix(0 -1 1 0 279.748 134.0269)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">5</text>
-	<text transform="matrix(1 0 0 1 277.002 18.2036)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">22</text>
-	<text transform="matrix(1 0 0 1 277.002 25.4038)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">24</text>
-	<text transform="matrix(1 0 0 1 277.002 32.6035)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">26</text>
-	<text transform="matrix(1 0 0 1 277.002 39.8037)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">28</text>
-	<text transform="matrix(1 0 0 1 277.002 47.0034)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">30</text>
-	<text transform="matrix(1 0 0 1 277.002 54.2036)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">32</text>
-	<text transform="matrix(1 0 0 1 277.002 61.4038)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">34</text>
-	<text transform="matrix(1 0 0 1 277.002 68.604)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">36</text>
-	<text transform="matrix(1 0 0 1 277.002 75.8032)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">38</text>
-	<text transform="matrix(1 0 0 1 277.002 83.0034)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">40</text>
-	<text transform="matrix(1 0 0 1 277.002 90.2036)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">42</text>
-	<text transform="matrix(1 0 0 1 277.002 97.4038)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">44</text>
-	<text transform="matrix(1 0 0 1 277.002 104.604)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">46</text>
-	<text transform="matrix(1 0 0 1 277.002 111.8032)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">48</text>
-	<text transform="matrix(1 0 0 1 277.002 119.0034)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">50</text>
-	<text transform="matrix(1 0 0 1 277.002 126.2036)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">52</text>
-	<text transform="matrix(1 0 0 1 302.252 46.6851)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">31</text>
-	<text transform="matrix(1 0 0 1 302.252 53.8853)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">33</text>
-	<text transform="matrix(1 0 0 1 302.252 61.085)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">35</text>
-	<text transform="matrix(1 0 0 1 302.252 68.2852)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">37</text>
-	<text transform="matrix(1 0 0 1 302.252 75.4849)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">39</text>
-	<text transform="matrix(1 0 0 1 302.252 82.6851)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">41</text>
-	<text transform="matrix(1 0 0 1 302.252 89.8853)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">43</text>
-	<text transform="matrix(1 0 0 1 302.252 97.0854)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">45</text>
-	<text transform="matrix(1 0 0 1 302.252 104.2847)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">47</text>
-	<text transform="matrix(1 0 0 1 302.252 111.4849)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">49</text>
-	<text transform="matrix(1 0 0 1 302.252 118.6851)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">51</text>
-	<text transform="matrix(1 0 0 1 302.252 125.8853)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">53</text>
-	<text transform="matrix(0 -1 1 0 215.5449 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">TX3 14</text>
-	<text transform="matrix(0 -1 1 0 222.7461 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">RX3 15</text>
-	<text transform="matrix(0 -1 1 0 229.9453 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">TX2 16</text>
-	<text transform="matrix(0 -1 1 0 237.1455 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">RX2 17</text>
-	<text transform="matrix(0 -1 1 0 244.3457 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">TX1 18</text>
-	<text transform="matrix(0 -1 1 0 251.5449 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">RX1 19</text>
-	<text transform="matrix(0 -1 1 0 258.7461 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">SDA 20</text>
-	<text transform="matrix(0 -1 1 0 265.9453 31.0757)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">SCL 21</text>
+	<text transform="matrix(1 0 0 1 172.7256 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">A</text>
+	<text transform="matrix(1 0 0 1 178.1094 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">r</text>
+	<text transform="matrix(1 0 0 1 183.4932 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">d</text>
+	<text transform="matrix(1 0 0 1 188.877 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">u</text>
+	<text transform="matrix(1 0 0 1 194.2607 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">i</text>
+	<text transform="matrix(1 0 0 1 199.6445 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">n</text>
+	<text transform="matrix(1 0 0 1 205.0273 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">o</text>
+	<text transform="matrix(1 0 0 1 210.4111 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782"> </text>
+	<text transform="matrix(1 0 0 1 215.7949 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">M</text>
+	<text transform="matrix(1 0 0 1 221.1787 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">E</text>
+	<text transform="matrix(1 0 0 1 226.5625 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">G</text>
+	<text transform="matrix(1 0 0 1 231.9463 107.811)" fill="#FFFFFF" font-family="'OCRA'" font-size="8.4782">A</text>
+	<text transform="matrix(1 0 0 1 183.1328 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">w</text>
+	<text transform="matrix(1 0 0 1 186.2734 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">w</text>
+	<text transform="matrix(1 0 0 1 189.4141 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">w</text>
+	<text transform="matrix(1 0 0 1 192.5537 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">.</text>
+	<text transform="matrix(1 0 0 1 195.6943 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">a</text>
+	<text transform="matrix(1 0 0 1 198.835 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">r</text>
+	<text transform="matrix(1 0 0 1 201.9756 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">d</text>
+	<text transform="matrix(1 0 0 1 205.1152 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">u</text>
+	<text transform="matrix(1 0 0 1 208.2559 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">i</text>
+	<text transform="matrix(1 0 0 1 211.3965 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">n</text>
+	<text transform="matrix(1 0 0 1 214.5371 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">o</text>
+	<text transform="matrix(1 0 0 1 217.6777 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">.</text>
+	<text transform="matrix(1 0 0 1 220.8174 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">c</text>
+	<text transform="matrix(1 0 0 1 223.958 113.7456)" fill="#FFFFFF" font-family="'OCRA'" font-size="4.9456">c</text>
+	<text transform="matrix(0 -1 1 0 85.978 24.2261)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">AREF</text>
+	<text transform="matrix(0 -1 1 0 93.1279 20.8013)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">GND</text>
+	<text transform="matrix(0 -1 1 0 100.2778 17.3755)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">13</text>
+	<text transform="matrix(0 -1 1 0 107.4277 17.3755)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">12</text>
+	<text transform="matrix(0 -1 1 0 114.5781 17.3755)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">11</text>
+	<text transform="matrix(0 -1 1 0 121.7285 17.3755)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">10</text>
+	<text transform="matrix(0 -1 1 0 128.8789 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">9</text>
+	<text transform="matrix(0 -1 1 0 136.0273 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">8</text>
+	<text transform="matrix(0 -1 1 0 150.2754 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">7</text>
+	<text transform="matrix(0 -1 1 0 157.4766 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">6</text>
+	<text transform="matrix(0 -1 1 0 164.6758 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">5</text>
+	<text transform="matrix(0 -1 1 0 171.876 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">4</text>
+	<text transform="matrix(0 -1 1 0 179.0762 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">3</text>
+	<text transform="matrix(0 -1 1 0 186.2754 13.9507)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">2</text>
+	<text transform="matrix(0 -1 1 0 193.4766 33.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5"> </text>
+	<text transform="matrix(0 -1 1 0 193.4766 29.6509)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">T</text>
+	<text transform="matrix(0 -1 1 0 193.4766 26.2261)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">X</text>
+	<text transform="matrix(0 -1 1 0 193.4766 22.8013)" fill="#FFFFFF" font-family="'OCRA'" font-size="5"> </text>
+	<text transform="matrix(0 -1 1 0 193.4766 18.3765)" fill="#FFFFFF" font-family="'OCRA'" font-size="5"> </text>
+	<text transform="matrix(0 -1 1 0 193.4766 13.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 200.6758 33.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5"> </text>
+	<text transform="matrix(0 -1 1 0 200.6758 29.6509)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">R</text>
+	<text transform="matrix(0 -1 1 0 200.6758 26.2261)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">X</text>
+	<text transform="matrix(0 -1 1 0 200.6758 22.8013)" fill="#FFFFFF" font-family="'OCRA'" font-size="5"> </text>
+	<text transform="matrix(0 -1 1 0 200.6758 18.3765)" fill="#FFFFFF" font-family="'OCRA'" font-size="5"> </text>
+	<text transform="matrix(0 -1 1 0 200.6758 13.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">0</text>
+	<text transform="matrix(0 -1 1 0 165.0508 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">0</text>
+	<text transform="matrix(0 -1 1 0 172.2002 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 179.3496 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">2</text>
+	<text transform="matrix(0 -1 1 0 186.5 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">3</text>
+	<text transform="matrix(0 -1 1 0 193.6504 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">4</text>
+	<text transform="matrix(0 -1 1 0 200.8008 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">5</text>
+	<text transform="matrix(0 -1 1 0 207.9512 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">6</text>
+	<text transform="matrix(0 -1 1 0 215.0996 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">7</text>
+	<text transform="matrix(0 -1 1 0 114.5488 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">RESET</text>
+	<text transform="matrix(0 -1 1 0 121.6992 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">3V3</text>
+	<text transform="matrix(0 -1 1 0 229.3477 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">8</text>
+	<text transform="matrix(0 -1 1 0 236.5488 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">9</text>
+	<text transform="matrix(0 -1 1 0 243.748 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 243.748 134.0269)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">0</text>
+	<text transform="matrix(0 -1 1 0 250.9482 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 250.9482 134.0269)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 258.1484 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 258.1484 134.0269)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">2</text>
+	<text transform="matrix(0 -1 1 0 265.3477 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 265.3477 134.0269)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">3</text>
+	<text transform="matrix(0 -1 1 0 272.5488 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 272.5488 134.0269)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">4</text>
+	<text transform="matrix(0 -1 1 0 279.748 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">1</text>
+	<text transform="matrix(0 -1 1 0 279.748 134.0269)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">5</text>
+	<text transform="matrix(1 0 0 1 277.002 18.2036)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">22</text>
+	<text transform="matrix(1 0 0 1 277.002 25.4038)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">24</text>
+	<text transform="matrix(1 0 0 1 277.002 32.6035)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">26</text>
+	<text transform="matrix(1 0 0 1 277.002 39.8037)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">28</text>
+	<text transform="matrix(1 0 0 1 277.002 47.0034)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">30</text>
+	<text transform="matrix(1 0 0 1 277.002 54.2036)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">32</text>
+	<text transform="matrix(1 0 0 1 277.002 61.4038)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">34</text>
+	<text transform="matrix(1 0 0 1 277.002 68.604)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">36</text>
+	<text transform="matrix(1 0 0 1 277.002 75.8032)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">38</text>
+	<text transform="matrix(1 0 0 1 277.002 83.0034)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">40</text>
+	<text transform="matrix(1 0 0 1 277.002 90.2036)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">42</text>
+	<text transform="matrix(1 0 0 1 277.002 97.4038)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">44</text>
+	<text transform="matrix(1 0 0 1 277.002 104.604)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">46</text>
+	<text transform="matrix(1 0 0 1 277.002 111.8032)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">48</text>
+	<text transform="matrix(1 0 0 1 277.002 119.0034)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">50</text>
+	<text transform="matrix(1 0 0 1 277.002 126.2036)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">52</text>
+	<text transform="matrix(1 0 0 1 302.252 46.6851)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">31</text>
+	<text transform="matrix(1 0 0 1 302.252 53.8853)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">33</text>
+	<text transform="matrix(1 0 0 1 302.252 61.085)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">35</text>
+	<text transform="matrix(1 0 0 1 302.252 68.2852)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">37</text>
+	<text transform="matrix(1 0 0 1 302.252 75.4849)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">39</text>
+	<text transform="matrix(1 0 0 1 302.252 82.6851)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">41</text>
+	<text transform="matrix(1 0 0 1 302.252 89.8853)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">43</text>
+	<text transform="matrix(1 0 0 1 302.252 97.0854)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">45</text>
+	<text transform="matrix(1 0 0 1 302.252 104.2847)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">47</text>
+	<text transform="matrix(1 0 0 1 302.252 111.4849)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">49</text>
+	<text transform="matrix(1 0 0 1 302.252 118.6851)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">51</text>
+	<text transform="matrix(1 0 0 1 302.252 125.8853)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">53</text>
+	<text transform="matrix(0 -1 1 0 215.5449 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">TX3 14</text>
+	<text transform="matrix(0 -1 1 0 222.7461 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">RX3 15</text>
+	<text transform="matrix(0 -1 1 0 229.9453 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">TX2 16</text>
+	<text transform="matrix(0 -1 1 0 237.1455 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">RX2 17</text>
+	<text transform="matrix(0 -1 1 0 244.3457 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">TX1 18</text>
+	<text transform="matrix(0 -1 1 0 251.5449 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">RX1 19</text>
+	<text transform="matrix(0 -1 1 0 258.7461 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">SDA 20</text>
+	<text transform="matrix(0 -1 1 0 265.9453 31.0757)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">SCL 21</text>
 	<polygon fill="#FFFFFF" points="189.388,19.711 191.435,16.166 193.481,19.711 	"/>
 	<polygon fill="#FFFFFF" points="196.647,19.711 198.694,16.166 200.741,19.711 	"/>
-	<text transform="matrix(1 0 0 1 135.7734 24.9253)" fill="#FFFFFF" font-family="'ocra10'" font-size="6">PWM</text>
-	<text transform="matrix(1 0 0 1 215.6465 53.1519)" fill="#FFFFFF" font-family="'ocra10'" font-size="6">PWR</text>
+	<text transform="matrix(1 0 0 1 135.7734 24.9253)" fill="#FFFFFF" font-family="'OCRA'" font-size="6">PWM</text>
+	<text transform="matrix(1 0 0 1 215.6465 53.1519)" fill="#FFFFFF" font-family="'OCRA'" font-size="6">PWR</text>
 	<polyline fill="none" stroke="#FFFFFF" points="273.72,122.399 270.941,119.621 270.941,86.82 	"/>
 	<polyline fill="none" stroke="#FFFFFF" points="273.721,17.217 270.941,19.995 270.941,52.796 	"/>
 	<polyline fill="none" stroke="#FFFFFF" points="190.611,34.549 193.391,37.329 199.057,37.329 	"/>
 	<polyline fill="none" stroke="#FFFFFF" points="265.289,34.549 262.51,37.329 256.844,37.329 	"/>
 	<polyline fill="none" stroke="#FFFFFF" points="183.602,20.195 180.822,22.974 149.853,22.974 	"/>
 	<polyline fill="none" stroke="#FFFFFF" points="98.378,20.195 101.158,22.974 132.882,22.974 	"/>
-	<text transform="matrix(0 -1 1 0 273.1074 83.4575)" fill="#FFFFFF" font-family="'ocra10'" font-size="6">DIGITAL</text>
+	<text transform="matrix(0 -1 1 0 273.1074 83.4575)" fill="#FFFFFF" font-family="'OCRA'" font-size="6">DIGITAL</text>
 	<g>
 		<polyline fill="none" stroke="#FFFFFF" points="197.199,125.942 165.179,125.942 162.401,128.72 		"/>
 		<polyline fill="none" stroke="#FFFFFF" points="276.421,128.721 273.643,125.942 242.27,125.942 		"/>
 	</g>
-	<text transform="matrix(1 0 0 1 201.9609 128.1079)" fill="#FFFFFF" font-family="'ocra10'" font-size="6">ANALOG IN</text>
-	<text transform="matrix(1 0 0 1 201.084 39.1187)" fill="#FFFFFF" font-family="'ocra10'" font-size="6">COMMUNICATION</text>
-	<text transform="matrix(1 0 0 1 123.6064 135.9536)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">5V</text>
-	<text transform="matrix(1 0 0 1 133.0088 135.9536)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">GND</text>
-	<text transform="matrix(1 0 0 1 301.1484 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">G</text>
-	<text transform="matrix(1 0 0 1 304.0723 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">N</text>
-	<text transform="matrix(1 0 0 1 306.998 136.9517)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">D</text>
-	<text transform="matrix(1 0 0 1 145.3379 135.9536)" fill="#FFFFFF" font-family="'ocra10'" font-size="5">VIN</text>
-	<text transform="matrix(1 0 0 1 196.457 86.9077)" fill="#FFFFFF" font-family="'ocra10'" font-size="5.5">I</text>
-	<text transform="matrix(1 0 0 1 199.6738 86.9077)" fill="#FFFFFF" font-family="'ocra10'" font-size="5.5">C</text>
-	<text transform="matrix(1 0 0 1 202.8926 86.9077)" fill="#FFFFFF" font-family="'ocra10'" font-size="5.5">S</text>
-	<text transform="matrix(1 0 0 1 206.1094 86.9077)" fill="#FFFFFF" font-family="'ocra10'" font-size="5.5">P</text>
-	<text transform="matrix(1 0 0 1 196.0723 58.0386)" fill="#FFFFFF" font-family="'ocra10'" font-size="5.5">1</text>
+	<text transform="matrix(1 0 0 1 201.9609 128.1079)" fill="#FFFFFF" font-family="'OCRA'" font-size="6">ANALOG IN</text>
+	<text transform="matrix(1 0 0 1 201.084 39.1187)" fill="#FFFFFF" font-family="'OCRA'" font-size="6">COMMUNICATION</text>
+	<text transform="matrix(1 0 0 1 123.6064 135.9536)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">5V</text>
+	<text transform="matrix(1 0 0 1 133.0088 135.9536)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">GND</text>
+	<text transform="matrix(1 0 0 1 301.1484 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">G</text>
+	<text transform="matrix(1 0 0 1 304.0723 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">N</text>
+	<text transform="matrix(1 0 0 1 306.998 136.9517)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">D</text>
+	<text transform="matrix(1 0 0 1 145.3379 135.9536)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">VIN</text>
+	<text transform="matrix(1 0 0 1 196.457 86.9077)" fill="#FFFFFF" font-family="'OCRA'" font-size="5.5">I</text>
+	<text transform="matrix(1 0 0 1 199.6738 86.9077)" fill="#FFFFFF" font-family="'OCRA'" font-size="5.5">C</text>
+	<text transform="matrix(1 0 0 1 202.8926 86.9077)" fill="#FFFFFF" font-family="'OCRA'" font-size="5.5">S</text>
+	<text transform="matrix(1 0 0 1 206.1094 86.9077)" fill="#FFFFFF" font-family="'OCRA'" font-size="5.5">P</text>
+	<text transform="matrix(1 0 0 1 196.0723 58.0386)" fill="#FFFFFF" font-family="'OCRA'" font-size="5.5">1</text>
 	<polyline fill="none" stroke="#FFFFFF" points="296.979,135.067 296.979,136.57 289.802,136.57 289.802,135.067 	"/>
 	<path fill="#02809E" d="M143.548,120.931c3.033,0,5.528-2.229,5.988-5.133h0.094V98.276c0-3.358-2.723-6.082-6.082-6.082
 		s-6.083,2.724-6.083,6.082v17.522h0.095C138.02,118.704,140.516,120.931,143.548,120.931z"/>

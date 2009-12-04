@@ -17,7 +17,7 @@
   
 	<circle fill="#212121" cx="6.5" cy="53.47" r="2.06"/>
  
-  <text id="label" x="6.5" y="31.5" fill="#e6e6e6" stroke="none" font-family="ocra10" text-anchor="start" font-size="8" >IC</text>
+  <text id="label" x="6.5" y="31.5" fill="#e6e6e6" stroke="none" font-family="OCRA" text-anchor="start" font-size="8" >IC</text>
 
 	<rect id="connector0pin" x="3.5" y="58.66" fill="#8C8C8C" width="3" height="4.34"/>
   <rect id="connector0terminal" x="3.5" y="60.0" fill="#8C8C8C" width="3" height="3"/>
