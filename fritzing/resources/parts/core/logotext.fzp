@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module moduleId="LogoModuleID" >
+<module moduleId="LogoTextModuleID" >
  <version>1</version>
  <author>Brendan Howell</author>
  <title>Logo</title>
@@ -12,17 +12,17 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-   <property name="filename" ></property>
-   <property name="shape" ></property>
    <property name="family" >Logo</property>
    <property name="logo" >logo</property>
+   <property name="shape" ></property>
+   <property name="type" >text</property>
  </properties>
  <taxonomy>discreteParts.pcb.logo</taxonomy>
  <description>Logo for adding images to the board</description>
  <views>
   <defaultUnits>mm</defaultUnits>
   <iconView>
-   <layers image="icon/logo.svg" >
+   <layers image="icon/silkscreen_text.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>

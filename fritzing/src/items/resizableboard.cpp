@@ -51,6 +51,7 @@ QString ResizableBoard::customShapeTranslated;
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_keepAspectRatio = false;
 	m_widthEditor = m_heightEditor = NULL;
 
 	if (BoardLayerTemplate.isEmpty()) {
@@ -141,6 +142,18 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		if (newY - oldY1 < minHeight) {
 			newY = oldY1 + minHeight;
 		}
+
+		if (m_keepAspectRatio) {
+			qreal w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
+			qreal h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
+			if (qAbs(w + oldX1 - newX) <= qAbs(h + oldY1 - newY)) {
+				newX = oldX1 + w;
+			}
+			else {
+				newY = oldY1 + h;
+			}
+		}
+
 		newR.setRect(0, 0, newX - oldX1, newY - oldY1);
 	}
 	else if (m_inResize == m_resizeGripTL) {
@@ -157,6 +170,17 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		QPointF p(newX, newY);
 		if (p != this->pos()) {
 			this->setPos(p);
+		}
+
+		if (m_keepAspectRatio) {
+			qreal w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
+			qreal h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
+			if (qAbs(w + newX - oldX2) <= qAbs(h + newY - oldY2)) {
+				oldX2 = newX + w;
+			}
+			else {
+				oldY2 = newY + h;
+			}
 		}
 
 		newR.setRect(0, 0, oldX2 - newX, oldY2 - newY);
@@ -176,9 +200,18 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 			this->setPos(p);
 		}
 
+		if (m_keepAspectRatio) {
+			qreal w = (oldY2 - newY) * m_aspectRatio.width() / m_aspectRatio.height();
+			qreal h = (newX - oldX1) * m_aspectRatio.height() / m_aspectRatio.width();
+			if (qAbs(w + newX - oldX1) <= qAbs(h + newY - oldY2)) {
+				newX = oldX1 + w;
+			}
+			else {
+				oldY2 = newY + h;
+			}
+		}
+
 		newR.setRect(0, 0, newX - oldX1, oldY2 - newY);
-		QRectF tempR = newR;
-		tempR.moveTopLeft(p);
 		//DebugDialog::debug(QString("new rect %1 %2 %3").arg(newY).arg(newR.height()).arg(newY + newR.height()));
 	}
 	else if (m_inResize == m_resizeGripBL) {
@@ -194,6 +227,18 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		if (p != this->pos()) {
 			this->setPos(p);
 		}
+
+		if (m_keepAspectRatio) {
+			qreal w = (newY - oldY1) * m_aspectRatio.width() / m_aspectRatio.height();
+			qreal h = (oldX2 - newX) * m_aspectRatio.height() / m_aspectRatio.width();
+			if (qAbs(w + oldX2 - newX) <= qAbs(h + oldY1 - newY)) {
+				oldX2 = newX + w;
+			}
+			else {
+				newY = oldY1 + h;
+			}
+		}
+
 
 		newR.setRect(0, 0, oldX2 - newX, newY - oldY1);
 	}

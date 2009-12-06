@@ -29,7 +29,10 @@ $Date: 2009-09-04 12:26:26 +0200 (Fri, 04 Sep 2009) $
 #include <QRegExp>
 #include <QBuffer>
 
-QRegExp TextUtils::FindWhitespace("[\\s]+");
+const QRegExp TextUtils::FindWhitespace("[\\s]+");
+const QRegExp TextUtils::SodipodiDetector("((inkscape)|(sodipodi)):[^=\\s]+=\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"");
+
+const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
 
 QDomElement TextUtils::findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue) {
 	if (element.hasAttribute(attributeName)) {
@@ -153,4 +156,155 @@ QString TextUtils::toHtmlImage(QPixmap *pixmap, const char* format) {
 	buffer.open(QIODevice::WriteOnly);
 	pixmap->save(&buffer, format); // writes pixmap into bytes in PNG format
 	return QString("data:image/%1;base64,%2").arg(QString(format).toLower()).arg(QString(bytes.toBase64()));
+}
+
+QString TextUtils::makeSVGHeader(qreal printerScale, qreal dpi, qreal width, qreal height) {
+
+	qreal trueWidth = width / printerScale;
+	qreal trueHeight = height / printerScale;
+
+	return 
+		QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "
+							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
+							 "version=\"1.2\" baseProfile=\"tiny\" "
+							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
+							 "viewBox=\"0 0 %3 %4\" >")
+						.arg(trueWidth)
+						.arg(trueHeight)
+						.arg(trueWidth * dpi)
+						.arg(trueHeight * dpi);
+}
+
+bool TextUtils::isIllustratorFile(const QString &fileContent) {
+	return fileContent.contains("<!-- Generator: Adobe Illustrator", Qt::CaseInsensitive);
+}
+
+
+QString TextUtils::removeXMLEntities(QString svgContent) {
+	return svgContent.remove(HexExpr);
+}
+
+bool TextUtils::cleanSodipodi(QString &content)
+{
+	// clean out sodipodi stuff
+	// TODO: don't bother with the core parts
+	int l1 = content.length();
+	content.remove(SodipodiDetector);
+	if (content.length() != l1) {
+		/*
+		QFileInfo f(filename);
+		QString p = f.absoluteFilePath();
+		p.remove(':');
+		p.remove('/');
+		p.remove('\\');
+		QFile fi(QCoreApplication::applicationDirPath() + p);
+		bool ok = fi.open(QFile::WriteOnly);
+		if (ok) {
+			QTextStream out(&fi);
+   			out << str;
+			fi.close();
+		}
+		*/
+		return true;
+	}
+	return false;
+
+
+	/*
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	bool result = doc.setContent(bytes, &errorStr, &errorLine, &errorColumn);
+	m_svgXml.clear();
+	if (!result) {
+		return false;
+	}
+
+	SvgFlattener flattener;
+	QDomElement root = doc.documentElement();
+	flattener.flattenChildren(root);
+	SvgFileSplitter::fixStyleAttributeRecurse(root);
+	return doc.toByteArray();
+	*/
+}
+
+bool TextUtils::fixViewboxOrigin(QString &fileContent) {
+	QDomDocument svgDom;
+
+	bool fileHasChanged = false;
+	if(isIllustratorFile(fileContent)) {
+		QString errorMsg;
+		int errorLine;
+		int errorCol;
+		if(!svgDom.setContent(fileContent, true, &errorMsg, &errorLine, &errorCol)) {
+			return false;
+		}
+
+		QDomElement elem = svgDom.firstChildElement("svg");
+
+		fileHasChanged = moveViewboxToTopLeftCorner(elem);
+
+		if(fileHasChanged) {
+			fileContent = svgDom.toString();
+		}
+	}
+
+	return fileHasChanged;
+}
+
+bool TextUtils::moveViewboxToTopLeftCorner(QDomElement &elem) {
+	QString attrName = elem.hasAttribute("viewbox")? "viewbox": "viewBox";
+	QStringList vals = elem.attribute(attrName).split(" ");
+	if(vals.length() == 4 && (vals[0] != "0" || vals[1] != "0")) {
+		QString newValue = QString("0 0 %1 %2").arg(vals[2]).arg(vals[3]);
+		elem.setAttribute(attrName,newValue);
+		return true;
+	}
+	return false;
+}
+
+bool TextUtils::fixPixelDimensionsIn(QString &fileContent) {
+	bool isIllustrator = isIllustratorFile(fileContent);
+	if (!isIllustrator) return false;
+
+	QDomDocument svgDom;
+
+	QString errorMsg;
+	int errorLine;
+	int errorCol;
+	if(!svgDom.setContent(fileContent, true, &errorMsg, &errorLine, &errorCol)) {
+		return false;
+	}
+
+	bool fileHasChanged = false;
+
+	if(isIllustrator) {
+		QDomElement elem = svgDom.firstChildElement("svg");
+		fileHasChanged =  pxToInches(elem,"width",isIllustrator);
+		fileHasChanged |= pxToInches(elem,"height",isIllustrator);
+	}
+
+	if (fileHasChanged) {
+		fileContent = removeXMLEntities(svgDom.toString());
+	}
+
+	return fileHasChanged;
+}
+
+bool TextUtils::pxToInches(QDomElement &elem, const QString &attrName, bool isIllustrator) {
+	if (!isIllustrator) return false;
+
+	QString attrValue = elem.attribute(attrName);
+	if(attrValue.endsWith("px")) {
+		bool ok;
+		qreal value = TextUtils::convertToInches(attrValue, &ok, isIllustrator);
+		if(ok) {
+			QString newValue = QString("%1in").arg(value);
+			elem.setAttribute(attrName,newValue);
+
+			return true;
+		}
+	}
+	return false;
 }

@@ -158,7 +158,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 					QString svg = m_viewItem->retrieveSvg(viewLayerID, svgHash, false, GraphicsUtils::StandardFritzingDPI);
 					if (!svg.isEmpty()) {
 						QSizeF size = m_viewItem->size();
-						svg = makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
+						svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
 						paletteItem->setItemSVG(svg);
 					}
 				}
@@ -606,9 +606,9 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
     }
 
     QString fileContent(file.readAll());
-	bool fileHasChanged = fixPixelDimensionsIn(fileContent,filename);
-	fileHasChanged |= cleanXml(fileContent,filename);
-	fileHasChanged |= fixViewboxOrigin(fileContent,filename);
+	bool fileHasChanged = (m_viewIdentifier == ViewIdentifierClass::IconView) ? false : TextUtils::fixPixelDimensionsIn(fileContent);
+	fileHasChanged |= TextUtils::cleanSodipodi(fileContent);
+	fileHasChanged |= TextUtils::fixViewboxOrigin(fileContent);
 	fileHasChanged |= fixFonts(fileContent,filename,canceled);
 
 	if(fileHasChanged) {
@@ -707,103 +707,6 @@ style="font-size:144px;font-style:normal;font-weight:normal;line-height:100%;fil
 
 	QString pattern = "font-family\\s*:\\s*(.|[^;\"]*).*\"";
 	return TextUtils::getRegexpCaptures(pattern,fileContent);
-}
-
-bool PartsEditorView::isIllustratorFile(const QString &fileContent) {
-	return fileContent.contains("<!-- Generator: Adobe Illustrator");
-}
-
-bool PartsEditorView::fixPixelDimensionsIn(QString &fileContent, const QString &filename) {
-	if(m_viewIdentifier == ViewIdentifierClass::IconView) return false;
-
-	QDomDocument *svgDom = new QDomDocument();
-
-	QString errorMsg;
-	int errorLine;
-	int errorCol;
-	if(!svgDom->setContent(fileContent, true, &errorMsg, &errorLine, &errorCol)) {
-		qWarning() << QString("PartsEditorView::fixPixelDimensionsIn(filename) couldn't load svg: %1 (line %2, col %3)")
-						.arg(errorMsg).arg(errorLine).arg(errorCol);
-		return false;
-	}
-
-	bool isIllustrator = isIllustratorFile(fileContent);
-	bool fileHasChanged = false;
-
-	if(isIllustrator) {
-		QDomElement elem = svgDom->firstChildElement("svg");
-		fileHasChanged =  pxToInches(elem,"width",filename,isIllustrator);
-		fileHasChanged |= pxToInches(elem,"height",filename,isIllustrator);
-	}
-
-	if(fileHasChanged) {
-		fileContent = removeXMLEntities(svgDom->toString());
-	}
-
-	delete svgDom;
-
-	return fileHasChanged;
-}
-
-bool PartsEditorView::fixViewboxOrigin(QString &fileContent, const QString &filename) {
-	QDomDocument svgDom;
-
-	bool fileHasChanged = false;
-	if(isIllustratorFile(fileContent)) {
-		QString errorMsg;
-		int errorLine;
-		int errorCol;
-		if(!svgDom.setContent(fileContent, true, &errorMsg, &errorLine, &errorCol)) {
-			qWarning() << QString("PartsEditorView::fixViewboxOrigin(filename) couldn't load svg: %1 (line %2, col %3)")
-							.arg(errorMsg).arg(errorLine).arg(errorCol);
-			return false;
-		}
-
-		QDomElement elem = svgDom.firstChildElement("svg");
-
-		fileHasChanged = moveViewboxToTopLeftCorner(elem,filename);
-
-		if(fileHasChanged) {
-			fileContent = svgDom.toString();
-		}
-	}
-
-	return fileHasChanged;
-}
-
-bool PartsEditorView::moveViewboxToTopLeftCorner(QDomElement &elem, const QString &filename) {
-	QString attrName = elem.hasAttribute("viewbox")? "viewbox": "viewBox";
-	QStringList vals = elem.attribute(attrName).split(" ");
-	if(vals.length() == 4 && (vals[0] != "0" || vals[1] != "0")) {
-		QString newValue = QString("0 0 %1 %2").arg(vals[2]).arg(vals[3]);
-		elem.setAttribute(attrName,newValue);
-		DebugDialog::debug(
-			QString("translating svg viewbox origin from '(%1,%2)' to '(0,0)' in file '%3'")
-				.arg(vals[0]).arg(vals[1]).arg(filename)
-		);
-
-		return true;
-	}
-	return false;
-}
-
-bool PartsEditorView::pxToInches(QDomElement &elem, const QString &attrName, const QString &filename, bool isIllustrator) {
-	QString attrValue = elem.attribute(attrName);
-	if(attrValue.endsWith("px")) {
-		bool ok;
-		qreal value = TextUtils::convertToInches(attrValue, &ok, isIllustrator);
-		if(ok) {
-			QString newValue = QString("%1in").arg(value);
-			elem.setAttribute(attrName,newValue);
-			DebugDialog::debug(
-				QString("translating svg attribute '%1' from '%2' to '%3' in file '%4'")
-					.arg(attrName).arg(attrValue).arg(newValue).arg(filename)
-			);
-
-			return true;
-		}
-	}
-	return false;
 }
 
 void PartsEditorView::loadSvgFile(ModelPart * modelPart) {
@@ -1168,7 +1071,7 @@ void PartsEditorView::aboutToSave() {
 				}
 				else {
 					QTextStream out(&file);
-					out << removeXMLEntities(svgDom->toString());
+					out << TextUtils::removeXMLEntities(svgDom->toString());
 
 					file.close();
 					updateModelPart(tempFile);
@@ -1179,15 +1082,6 @@ void PartsEditorView::aboutToSave() {
 			DebugDialog::debug("updating part view svg file: could not load file "+m_item->flatSvgFilePath());
 		}
 	}
-}
-
-QString PartsEditorView::removeXMLEntities(QString svgContent) {
-	// remove the html entities
-	svgContent.replace("&#xd;","");
-	svgContent.replace("&#xa;","");
-	svgContent.replace("&#x9;","");
-
-	return svgContent;
 }
 
 bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
@@ -1565,52 +1459,6 @@ bool PartsEditorView::connsPosOrSizeChanged() {
 		}
 	}
 	return false;
-}
-
-bool PartsEditorView::cleanXml(QString &content, const QString & filename)
-{
-	// clean out sodipodi stuff
-	// TODO: don't bother with the core parts
-	int l1 = content.length();
-	content.remove(SvgFileSplitter::sodipodiDetector);
-	if (content.length() != l1) {
-		DebugDialog::debug(QString("sodipodi found in %1").arg(filename));
-		/*
-		QFileInfo f(filename);
-		QString p = f.absoluteFilePath();
-		p.remove(':');
-		p.remove('/');
-		p.remove('\\');
-		QFile fi(QCoreApplication::applicationDirPath() + p);
-		bool ok = fi.open(QFile::WriteOnly);
-		if (ok) {
-			QTextStream out(&fi);
-   			out << str;
-			fi.close();
-		}
-		*/
-		return true;
-	}
-	return false;
-
-
-	/*
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument doc;
-	bool result = doc.setContent(bytes, &errorStr, &errorLine, &errorColumn);
-	m_svgXml.clear();
-	if (!result) {
-		return false;
-	}
-
-	SvgFlattener flattener;
-	QDomElement root = doc.documentElement();
-	flattener.flattenChildren(root);
-	SvgFileSplitter::fixStyleAttributeRecurse(root);
-	return doc.toByteArray();
-	*/
 }
 
 void PartsEditorView::setViewItem(ItemBase * item) {

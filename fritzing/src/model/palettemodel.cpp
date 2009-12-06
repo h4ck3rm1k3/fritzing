@@ -340,7 +340,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	QDomElement properties = root.firstChildElement("properties");
 	QString propertiesText = properties.text();
 	// FIXME: properties is nested right now
-	if (propertiesText.contains("wire", Qt::CaseInsensitive)) {
+	if (moduleID.compare(ModuleIDNames::wireModuleIDName) == 0) {
 		type = ModelPart::Wire;
 	}
 	else if (moduleID.compare(ModuleIDNames::jumperModuleIDName) == 0) {
@@ -352,7 +352,10 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (propertiesText.contains("plain vanilla pcb", Qt::CaseInsensitive)) {
 		type = ModelPart::ResizableBoard;
 	}
-	else if (propertiesText.contains("logo", Qt::CaseInsensitive)) {
+	else if (moduleID.compare(ModuleIDNames::logoImageModuleIDName) == 0) {
+		type = ModelPart::Logo;
+	}
+	else if (moduleID.compare(ModuleIDNames::logoTextModuleIDName) == 0) {
 		type = ModelPart::Logo;
 	}
 	else if (moduleID.compare(ModuleIDNames::groundPlaneModuleIDName) == 0) {
@@ -364,16 +367,19 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 			type = ModelPart::Board;
 		}
 	}
-	else if (propertiesText.contains("note", Qt::CaseInsensitive)) {
+	else if (moduleID.compare(ModuleIDNames::noteModuleIDName) == 0) {
 		type = ModelPart::Note;
 	}
 	/*else if (propertiesText.equals("module", Qt::CaseInsensitive)) {
 		type = ModelPart::Module;
 	}*/
-	else if (propertiesText.contains("ground symbol", Qt::CaseInsensitive)) {
+	else if (moduleID.compare(ModuleIDNames::justPowerModuleIDName) == 0) {
 		type = ModelPart::Symbol;
 	}
-	else if (propertiesText.contains("power symbol", Qt::CaseInsensitive)) {
+	else if (moduleID.compare(ModuleIDNames::powerModuleIDName) == 0) {
+		type = ModelPart::Symbol;
+	}
+	else if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
 		type = ModelPart::Symbol;
 	}
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);

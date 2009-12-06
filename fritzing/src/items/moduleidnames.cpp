@@ -43,6 +43,7 @@ const QString ModuleIDNames::groundModuleIDName = "GroundModuleID";
 const QString ModuleIDNames::powerModuleIDName = "PowerModuleID";
 const QString ModuleIDNames::justPowerModuleIDName = "JustPowerModuleID";
 const QString ModuleIDNames::resistorModuleIDName = "ResistorModuleID";
-const QString ModuleIDNames::logoModuleIDName = "LogoModuleID";
+const QString ModuleIDNames::logoTextModuleIDName = "LogoTextModuleID";
+const QString ModuleIDNames::logoImageModuleIDName = "LogoImageModuleID";
 
 

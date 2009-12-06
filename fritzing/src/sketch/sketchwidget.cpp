@@ -73,6 +73,7 @@ $Date$
 #include "../infoview/htmlinfoview.h"
 #include "../items/resizableboard.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
 #include "../fsvgrenderer.h"
 #include "../items/resistor.h"
 #include "../items/mysterypart.h"
@@ -5329,7 +5330,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 	imageSize.setWidth(width);
 	imageSize.setHeight(height);
 
-	QString outputSVG = makeSVGHeader(printerScale, dpi, width, height);
+	QString outputSVG = TextUtils::makeSVGHeader(printerScale, dpi, width, height);
 
 	QHash<QString, SvgFileSplitter *> svgHash;
 
@@ -5429,23 +5430,6 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 	return outputSVG;
 
-}
-
-QString SketchWidget::makeSVGHeader(qreal printerScale, qreal dpi, qreal width, qreal height) {
-
-	qreal trueWidth = width / printerScale;
-	qreal trueHeight = height / printerScale;
-
-	return 
-		QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "
-							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
-							 "version=\"1.2\" baseProfile=\"tiny\" "
-							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
-							 "viewBox=\"0 0 %3 %4\" >")
-						.arg(trueWidth)
-						.arg(trueHeight)
-						.arg(trueWidth * dpi)
-						.arg(trueHeight * dpi);
 }
 
 void SketchWidget::addFixedToCenterItem2(SketchMainHelp * item) {

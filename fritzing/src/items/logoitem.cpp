@@ -39,13 +39,12 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QVBoxLayout>
 #include <QFrame>
 #include <QLabel>
-#include <QLineEdit>
 #include <QRegExp>
-#include <QCheckBox>
 #include <QPushButton>
 #include <QImageReader>
 #include <QMessageBox>
 #include <QImage>
+#include <QLineEdit>
 
 static const int LineThickness = 4;
 static const QRegExp WidthExpr("width=\\'\\d*px");
@@ -54,9 +53,11 @@ static const QRegExp HeightExpr("height=\\'\\d*px");
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_aspectRatioCheck = NULL;
+	m_keepAspectRatio = true;
+	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::logoTextModuleIDName);
 	m_logo = modelPart->prop("logo").toString();
-	m_hasLogo = true;
-	if (m_logo.isEmpty()) {
+	if (m_hasLogo && m_logo.isEmpty()) {
 		m_logo = modelPart->properties().value("logo", "logo");
 		modelPart->setProp("logo", m_logo);
 	}
@@ -75,13 +76,26 @@ QVariant LogoItem::itemChange(GraphicsItemChange change, const QVariant &value)
 				setInitialSize();
 				m_aspectRatio.setWidth(this->boundingRect().width());
 				m_aspectRatio.setHeight(this->boundingRect().height());
-				QString path = filename();
-				m_originalFilename = path;
-				QFile f(path);
-				if (f.open(QFile::ReadOnly)) {
-					QString svg = f.readAll();
-					modelPart()->setProp("shape", svg);
-					m_hasLogo = true;
+				m_originalFilename = filename();
+				QString shape = modelPart()->prop("shape").toString();
+				if (!shape.isEmpty()) {
+					// TODO: aspect ratio
+					if (m_renderer == NULL) {
+						m_renderer = new FSvgRenderer(this);
+					}
+
+					bool result = m_renderer->fastLoad(shape.toUtf8());
+					if (result) {
+						setSharedRenderer(m_renderer);
+						positionGrips();
+					}
+				}
+				else {
+					QFile f(m_originalFilename);
+					if (f.open(QFile::ReadOnly)) {
+						QString svg = f.readAll();
+						modelPart()->setProp("shape", svg);
+					}
 				}
 			}
 			break;
@@ -121,22 +135,24 @@ QStringList LogoItem::collectValues(const QString & family, const QString & prop
 
 bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
 {
+	if (m_hasLogo) {
+		if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
+			returnProp = tr("logo");
+			returnValue = "<object type='application/x-qt-plugin' classid='logo' width='100%' height='22px'></object>";  
+			return true;
+		}
+	}
+	else {
+		if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
+			returnValue = QString("<object type='application/x-qt-plugin' classid='filename' width='100%' height='22px'></object>");
+			returnProp = "";
+			return true;
+		}
+	}
+
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' width='100%' height='50px'></object>");
 		returnProp = tr("size");
-		return true;
-	}
-
-	if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
-		returnProp = tr("logo");
-		returnValue = "<object type='application/x-qt-plugin' classid='logo' width='100%' height='22px'></object>";  
-		return true;
-	}
-
-
-	if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='filename' width='100%' height='22px'></object>");
-		returnProp = "";
 		return true;
 	}
 
@@ -147,6 +163,7 @@ bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop
 QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
 
 	if (classid.compare("shape", Qt::CaseInsensitive) == 0) {
+		// implemented below
 	}
 	else if (classid.compare("filename", Qt::CaseInsensitive) == 0) { 
 		QPushButton * button = new QPushButton (tr("load image file"), parent);
@@ -167,11 +184,15 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
 	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
 
-	QFrame * frame = new QFrame();
-	QVBoxLayout * vboxLayout = new QVBoxLayout();
-	vboxLayout->setAlignment(Qt::AlignLeft);
-	vboxLayout->setSpacing(0);
-	vboxLayout->setContentsMargins(0, 3, 0, 0);
+	QVBoxLayout * vboxLayout = NULL;
+	QFrame * frame = NULL;
+	if (!m_hasLogo) {
+		frame = new QFrame();
+		vboxLayout = new QVBoxLayout();
+		vboxLayout->setAlignment(Qt::AlignLeft);
+		vboxLayout->setSpacing(0);
+		vboxLayout->setContentsMargins(0, 3, 0, 0);
+	}
 
 	QFrame * subframe = new QFrame();
 	QHBoxLayout * hboxLayout = new QHBoxLayout();
@@ -179,7 +200,7 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	hboxLayout->setContentsMargins(0, 0, 0, 0);
 	hboxLayout->setSpacing(0);
 
-	QLabel * l1 = new QLabel(tr("width(mm):"));	
+	QLabel * l1 = new QLabel(tr("width(mm)"));	
 	l1->setMargin(0);
 	QLineEdit * e1 = new QLineEdit();
 	QDoubleValidator * validator = new QDoubleValidator(e1);
@@ -188,9 +209,8 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	e1->setValidator(validator);
 	e1->setMaxLength(5);
 	e1->setText(QString::number(w));
-	m_widthEditor = e1;
 
-	QLabel * l2 = new QLabel(tr("height(mm):"));
+	QLabel * l2 = new QLabel(tr("height(mm)"));
 	l2->setMargin(0);
 	QLineEdit * e2 = new QLineEdit();
 	validator = new QDoubleValidator(e1);
@@ -199,10 +219,11 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	e2->setValidator(validator);
 	e2->setMaxLength(5);
 	e2->setText(QString::number(h));
-	m_heightEditor = e2;
 
+	QLabel * l3 = new QLabel(tr("w:h"));	
+	l1->setMargin(0);
 	QCheckBox * checkBox = new QCheckBox();
-	checkBox->setChecked(true);							// TODO: remember the state next time
+	checkBox->setChecked(m_keepAspectRatio);
 
 	hboxLayout->addWidget(l1);
 	hboxLayout->addWidget(e1);
@@ -210,18 +231,25 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	hboxLayout->addWidget(l2);
 	hboxLayout->addWidget(e2);
 	hboxLayout->addSpacing(8);
+	hboxLayout->addWidget(l3);
 	hboxLayout->addWidget(checkBox);
 
 	subframe->setLayout(hboxLayout);
 
-	vboxLayout->addWidget(subframe);
-
-	frame->setLayout(vboxLayout);
-
 	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
+	connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(keepAspectRatio(bool)));
 
-	// TODO:  connect checkbox to something useful
+	m_widthEditor = e1;
+	m_heightEditor = e2;
+	m_aspectRatioCheck = checkBox;
+
+	if (m_hasLogo) {
+		return subframe;
+	}
+
+	vboxLayout->addWidget(subframe);
+	frame->setLayout(vboxLayout);
 
 	return frame;
 
@@ -251,41 +279,91 @@ void LogoItem::prepLoadImage() {
 
 	if (fileName.isEmpty()) return;
 
+	QString svg;
 	if (fileName.endsWith(".svg")) {
-		return;
+		QFile f(fileName);
+		if (f.open(QFile::ReadOnly)) {
+			svg = f.readAll();
+		}
+		if (svg.isEmpty()) {
+			unableToLoad(fileName);
+			return;
+		}
+
+
+		TextUtils::fixPixelDimensionsIn(svg);
+		TextUtils::cleanSodipodi(svg);
+		TextUtils::fixViewboxOrigin(svg);
+
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+
+		QDomDocument domDocument;
+
+		if (!domDocument.setContent(svg, true, &errorStr, &errorLine, &errorColumn)) {
+			unableToLoad(fileName);
+			return;
+		}
+
+		QDomElement root = domDocument.documentElement();
+		if (root.isNull()) {
+			unableToLoad(fileName);
+			return;
+		}
+
+		if (root.tagName() != "svg") {
+			unableToLoad(fileName);
+			return;
+		}
+
+		QStringList exceptions;
+		QString toColor("#ffffff");
+		SvgFileSplitter::changeColors(root, toColor, exceptions);
+
+		QString viewBox = root.attribute("viewBox");
+		if (viewBox.isEmpty()) {
+			bool ok1, ok2;
+			qreal w = TextUtils::convertToInches(root.attribute("width"), &ok1) * FSvgRenderer::printerScale();
+			qreal h = TextUtils::convertToInches(root.attribute("height"), &ok2) * FSvgRenderer::printerScale();
+			if (!ok1 || !ok2) {
+				unableToLoad(fileName);
+				return;
+			}
+
+			root.setAttribute("viewBox", QString("0 0 %1 %2").arg(w).arg(h));
+		}
+
+		svg = TextUtils::removeXMLEntities(domDocument.toString());
 	}
+	else {
+		QImage image(fileName);
+		if (image.isNull()) {
+			unableToLoad(fileName);
+			return;
+		}
 
-	QImage image(fileName);
-	if (image.isNull()) {
-		QMessageBox::information(
-			NULL,
-			tr("Unable to load"),
-			tr("Unable to load image from %1").arg(fileName)
-		);
-		return;
-	}
+		if (image.format() != QImage::Format_RGB32) {
+			image = image.convertToFormat(QImage::Format_RGB32);
+		}
 
-	if (image.format() != QImage::Format_RGB32) {
-		image = image.convertToFormat(QImage::Format_RGB32);
-	}
+		GroundPlaneGenerator gpg;
+		qreal res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
+		gpg.scanImage(image, image.width(), image.height(), 1, res, "#ffffff");
+		QStringList newSvgs = gpg.newSVGs();
+		if (newSvgs.count() < 1) {
+			QMessageBox::information(
+				NULL,
+				tr("Unable to display"),
+				tr("Unable to display image from %1").arg(fileName)
+			);
+			return;
+		}
 
-
-	GroundPlaneGenerator gpg;
-	qreal res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
-	gpg.scanImage(image, image.width(), image.height(), 1, res, "#ffffff");
-	QStringList newSvgs = gpg.newSVGs();
-	if (newSvgs.count() < 1) {
-		QMessageBox::information(
-			NULL,
-			tr("Unable to display"),
-			tr("Unable to display image from %1").arg(fileName)
-		);
-		return;
-	}
-
-	QString svg = newSvgs[0];
-	for (int i = 1; i < newSvgs.length(); i++) {
-		svg = TextUtils::mergeSvg(svg, newSvgs[i]);
+		svg = newSvgs[0];
+		for (int i = 1; i < newSvgs.length(); i++) {
+			svg = TextUtils::mergeSvg(svg, newSvgs[i]);
+		}
 	}
 
 	if (m_renderer == NULL) {
@@ -301,10 +379,14 @@ void LogoItem::prepLoadImage() {
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());
 		positionGrips();
-		m_hasLogo = false;
 		m_logo = "";
 	}
-
+	else {
+		// restore previous (not sure whether this is necessary)
+		m_renderer->fastLoad(modelPart()->prop("shape").toString().toUtf8());
+		setSharedRenderer(m_renderer);
+		unableToLoad(fileName);
+	}
 }
 
 void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
@@ -355,8 +437,7 @@ void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	root.setAttribute("width", QString::number(inW) + "in");
 	root.setAttribute("height", QString::number(inH) + "in");
 
-	svg = domDocument.toString(-1);					// (-1) remove whitespace (does't really help)
-	svg = svg.replace("&#xa;", "");					// there will probably be other shit....
+	svg = TextUtils::removeXMLEntities(domDocument.toString());			
 
 	bool result = m_renderer->fastLoad(svg.toUtf8());
 	if (result) {
@@ -365,6 +446,14 @@ void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
 		positionGrips();
+	}
+
+	if (m_widthEditor) {
+		m_widthEditor->setText(QString::number(qRound(mmW * 10) / 10.0));
+	}
+
+	if (m_heightEditor) {
+		m_heightEditor->setText(QString::number(qRound(mmH * 10) / 10.0));
 	}
 }
 
@@ -411,10 +500,12 @@ void LogoItem::setLogo(QString logo, bool force) {
 	bool result = m_renderer->fastLoad(svg.toUtf8());
 	if (result) {
 		setSharedRenderer(m_renderer);
+		QRectF r = m_renderer->viewBoxF();
+		m_aspectRatio.setWidth(r.width());
+		m_aspectRatio.setHeight(r.height());
 	}
 
 	m_logo = logo;
-	m_hasLogo = true;
 	modelPart()->setProp("logo", logo);
 	modelPart()->setProp("shape", svg);
 	positionGrips();
@@ -498,9 +589,15 @@ void LogoItem::widthEntry() {
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
+	qreal w = edit->text().toDouble();
+	qreal h = m_modelPart->prop("height").toDouble();
+	if (m_keepAspectRatio) {
+		h = w * m_aspectRatio.height() / m_aspectRatio.width();
+	}
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->resizeBoard(edit->text().toDouble(), m_modelPart->prop("height").toDouble(), true);
+		infoGraphicsView->resizeBoard(w, h, true);
 	}
 }
 
@@ -508,8 +605,26 @@ void LogoItem::heightEntry() {
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
+	qreal w = m_modelPart->prop("width").toDouble();
+	qreal h = edit->text().toDouble();
+	if (m_keepAspectRatio) {
+		w = h * m_aspectRatio.width() / m_aspectRatio.height();
+	}
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->resizeBoard(m_modelPart->prop("width").toDouble(), edit->text().toDouble(), true);
+		infoGraphicsView->resizeBoard(w, h, true);
 	}
+}
+
+void LogoItem::unableToLoad(const QString & fileName) {
+	QMessageBox::information(
+		NULL,
+		tr("Unable to load"),
+		tr("Unable to load image from %1").arg(fileName)
+	);
+}
+
+void LogoItem::keepAspectRatio(bool checkState) {
+	m_keepAspectRatio = checkState;
 }

@@ -90,6 +90,8 @@ protected:
 	QRectF m_originalRect;
 	QPointer<QLineEdit> m_widthEditor;
 	QPointer<QLineEdit> m_heightEditor;
+	bool m_keepAspectRatio;
+	QSizeF m_aspectRatio;
 };
 
 #endif

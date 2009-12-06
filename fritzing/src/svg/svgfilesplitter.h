@@ -67,6 +67,7 @@ public:
 	static bool getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox);
 	static bool changeStrokeWidth(const QString & svg, qreal delta, bool absolute, QByteArray &);
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
+	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
 	static void fixStyleAttributeRecurse(QDomElement & element);
 	static void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
     static QList<qreal> getTransformFloats(QDomElement & element);
@@ -88,7 +89,6 @@ protected:
 
 protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);
-	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
 	static void fixStyleAttribute(QDomElement & element);
 
 protected slots:
@@ -97,10 +97,6 @@ protected slots:
     virtual void rotateCommandSlot(QChar, bool, QList<double> &, void *){}
 	void painterPathCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
 	void convertHVSlot(QChar command, bool relative, QList<double> & args, void * userData);
-
-
-public:
-	static const QRegExp sodipodiDetector;
 
 protected:
 	QByteArray m_byteArray;

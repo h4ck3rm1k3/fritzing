@@ -31,6 +31,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
+#include <QCheckBox>
 
 #include "resizableboard.h"
 
@@ -62,19 +63,19 @@ protected slots:
 	void logoEntry();
 	void widthEntry();
 	void heightEntry();
-
+	void keepAspectRatio(bool checkState);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	bool hasGrips();
 	QString hackSvg(const QString & svg, const QString & logo);
+	void unableToLoad(const QString & fileName);
 
 protected:
-	QSizeF m_aspectRatio;
 	QString m_logo;
 	bool m_hasLogo;
 	QString m_originalFilename;
-
+	QCheckBox * m_aspectRatioCheck;
 };
 
 #endif

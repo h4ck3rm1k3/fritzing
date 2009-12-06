@@ -348,7 +348,6 @@ protected:
 	long findWire(long itemID);
 	void resizeBoard();
 	void resizeJumperItem();
-	QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
 	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
 											   QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);

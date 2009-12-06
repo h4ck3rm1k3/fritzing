@@ -38,8 +38,6 @@ $Date$
 #include <QtDebug>
 
 static QString findStyle("%1[\\s]*:[\\s]*([^;]*)[;]?");
-const QRegExp SvgFileSplitter::sodipodiDetector("((inkscape)|(sodipodi)):[^=\\s]+=\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"");
-
 
 struct HVConvertData {
 	qreal x;
@@ -87,7 +85,7 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 	contents.remove(QChar('\r'));
 
 	// get rid of inkscape stuff too
-	contents.remove(sodipodiDetector);
+	contents.remove(TextUtils::SodipodiDetector);
 
 	QString errorStr;
 	int errorLine;

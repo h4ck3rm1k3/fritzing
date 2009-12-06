@@ -42,9 +42,22 @@ public:
 	static QString replaceTextElement(const QString & svg, const QString & label);
 	static QString mergeSvg(const QString & svg1, const QString & svg2);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
+	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
+	static bool isIllustratorFile(const QString &fileContent);
+	static QString removeXMLEntities(QString svgContent);
+	static bool cleanSodipodi(QString &bytes);
+	static bool fixViewboxOrigin(QString &fileContent);
+	static bool fixPixelDimensionsIn(QString &fileContent);
 
 public:
-	static QRegExp FindWhitespace;
+	static const QRegExp FindWhitespace;
+	static const QRegExp SodipodiDetector;
+
+protected:
+	static bool moveViewboxToTopLeftCorner(QDomElement &elem);
+	static bool pxToInches(QDomElement &elem, const QString &attrName, bool isIllustrator);
+
+
 
 };
 
