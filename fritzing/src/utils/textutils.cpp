@@ -96,6 +96,63 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrato
 	return result / divisor;
 }
 
+bool TextUtils::squashNotElement(QString & svg, const QString & elementName) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return false;
+
+	QDomElement root = doc.documentElement();
+	QString tagName = root.tagName();
+	bool result = false;
+	squashNotElement(root, elementName, result);
+	root.setTagName(tagName);
+	if (result) {
+		svg = doc.toString();
+	}
+	return result;
+}
+
+void TextUtils::squashNotElement(QDomElement & element, const QString & elementName, bool & result) {
+	if (element.tagName().compare(elementName) != 0) {
+		element.setTagName("g");
+		result = true;
+	}
+
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		squashNotElement(child, elementName, result);
+		child = child.nextSiblingElement();
+	}
+}
+
+
+bool TextUtils::squashElement(QString & svg, const QString & elementName) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return false;
+
+	bool result = false;
+	QDomElement root = doc.documentElement();
+	QDomNodeList domNodeList = root.elementsByTagName(elementName);
+	for (int i = 0; i < domNodeList.count(); i++) {
+		QDomElement node = domNodeList.item(i).toElement();
+		if (node.isNull()) continue;
+
+		node.setTagName("g");
+		result = true;
+	}
+
+	if (result) {
+		svg = doc.toString();
+	}
+
+	return result;
+}
+
 QString TextUtils::replaceTextElement(const QString & svg, const QString & label) {
 	QString errorStr;
 	int errorLine;
@@ -147,7 +204,7 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2) {
 		node = nextNode;
 	}
 
-	return doc1.toString();
+	return removeXMLEntities(doc1.toString());
 }
 
 QString TextUtils::toHtmlImage(QPixmap *pixmap, const char* format) {

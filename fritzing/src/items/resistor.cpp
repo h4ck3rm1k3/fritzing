@@ -27,6 +27,7 @@ $Date$
 #include "resistor.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/focusoutcombobox.h"
+#include "../utils/boundedregexpvalidator.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
@@ -35,7 +36,6 @@ $Date$
 
 #include <qmath.h>
 #include <QRegExpValidator>
-#include <limits>
 
 static QString BreadboardLayerTemplate = "";
 static QStringList Resistances;
@@ -44,39 +44,6 @@ static QHash<int, QColor> ColorBands;
 static QChar OhmSymbol(0x03A9);
 static QRegExp Digits("(\\d)+");
 static QRegExp DigitsMil("(\\d)+mil");
-
-class BoundedRegExpValidator : public QRegExpValidator 
-{
-public:
-	BoundedRegExpValidator(QObject * parent) : QRegExpValidator(parent) {
-		m_max = std::numeric_limits<double>::max();
-		m_min = std::numeric_limits<double>::min();
-	}
-
-	void setBounds(qreal min, qreal max) {
-		m_min = min;
-		m_max = max;
-	}
-
-	QValidator::State validate ( QString & input, int & pos ) const {
-		QValidator::State state = QRegExpValidator::validate(input, pos);
-		if (state == QValidator::Invalid) return state;
-		if (state == QValidator::Intermediate) return state;
-
-		QString r = input;
-		qreal ohms = Resistor::toOhms(r);
-		if (ohms < m_min) return QValidator::Invalid;
-		if (ohms > m_max) return QValidator::Invalid;
-
-		return QValidator::Acceptable;
-	}
-
-protected:
-	qreal m_min;
-	qreal m_max;
-
-};
-
 
 // TODO
 //	save into parts bin
@@ -376,6 +343,7 @@ QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const
 	focusOutComboBox->addItems(Resistances);
 	focusOutComboBox->setCurrentIndex(focusOutComboBox->findText(current));
 	BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
+	validator->setConverter(toOhms);
 	validator->setBounds(0, 9900000000.0);
 	validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
 	focusOutComboBox->setValidator(validator);

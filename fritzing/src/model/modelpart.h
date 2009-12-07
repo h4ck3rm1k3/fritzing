@@ -61,6 +61,7 @@ public:
 		 Jumper,
 		 CopperFill,
 		 Logo,
+		 Ruler,
 		 Unknown
 	};
 

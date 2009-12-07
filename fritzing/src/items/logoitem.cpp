@@ -31,7 +31,6 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
 #include "../svg/svgfilesplitter.h"
-#include "../commands.h"
 #include "moduleidnames.h"
 #include "../svg/groundplanegenerator.h"
 
@@ -45,10 +44,6 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QMessageBox>
 #include <QImage>
 #include <QLineEdit>
-
-static const int LineThickness = 4;
-static const QRegExp WidthExpr("width=\\'\\d*px");
-static const QRegExp HeightExpr("height=\\'\\d*px");
 
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -349,7 +344,7 @@ void LogoItem::prepLoadImage() {
 
 		GroundPlaneGenerator gpg;
 		qreal res = image.dotsPerMeterX() / GraphicsUtils::InchesPerMeter;
-		gpg.scanImage(image, image.width(), image.height(), 1, res, "#ffffff");
+		gpg.scanImage(image, image.width(), image.height(), 1, res, "#ffffff", "silkscreen");
 		QStringList newSvgs = gpg.newSVGs();
 		if (newSvgs.count() < 1) {
 			QMessageBox::information(

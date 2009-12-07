@@ -40,6 +40,8 @@ public:
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
 	static QString replaceTextElement(const QString & svg, const QString & label);
+	static bool squashElement(QString & svg, const QString & elementName);
+	static bool squashNotElement(QString & svg, const QString & elementName);
 	static QString mergeSvg(const QString & svg1, const QString & svg2);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
@@ -56,7 +58,7 @@ public:
 protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);
 	static bool pxToInches(QDomElement &elem, const QString &attrName, bool isIllustrator);
-
+	static void squashNotElement(QDomElement & element, const QString & elementName, bool & result);
 
 
 };

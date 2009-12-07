@@ -22,6 +22,7 @@ src/utils/abstractimagebutton.h \
 src/utils/abstractstatesbutton.h \
 src/utils/autoclosemessagebox.h \
 src/utils/bendpointaction.h \
+src/utils/boundedregexpvalidator.h \
 src/utils/bundler.h \
 src/utils/clickablelabel.h \
 src/utils/expandinglabel.h \

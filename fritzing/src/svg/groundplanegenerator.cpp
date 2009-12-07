@@ -106,11 +106,11 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	scanImage(image, bWidth, bHeight, MILS, res, "#ffbf00");
+	scanImage(image, bWidth, bHeight, MILS, res, "#ffbf00", "groundplane");
 	return true;
 }
 
-void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString)  
+void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName)  
 {
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects);
@@ -126,7 +126,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 
 		// note: there is always one
 		joinScanLines(newRects, polygons);
-		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString);
+		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName);
 		m_newSVGs.append(pSvg);
 
 		/*
@@ -435,14 +435,14 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 	}
 }
 
-QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString) 
+QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName) 
 {
 	QString pSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
 		.arg(bWidth / res)
 		.arg(bHeight / res)
 		.arg(bWidth * pixelFactor)
 		.arg(bHeight * pixelFactor);
-	pSvg += "<g id='groundplane'>\n";
+	pSvg += QString("<g id='%1'>\n").arg(layerName);
 	pSvg += "<g id='connector0pad'>\n";
 	foreach (QPolygon poly, polygons) {
 		pSvg += QString("<polygon fill='%1' points='\n").arg(colorString);

@@ -2370,13 +2370,30 @@ void MainWindow::exportToGerber() {
         return;
     }
 
-	if (m_pcbGraphicsView->partLabelsVisible()) {
+	bool textToConvert = false;
+	QString textOnly = svgSilk;
+	QByteArray textByteArray;
+	if (TextUtils::squashElement(svgSilk, "text")) {
+		svgSilk = TextUtils::removeXMLEntities(svgSilk);
+		TextUtils::squashNotElement(textOnly, "text");
+		textOnly = TextUtils::removeXMLEntities(textOnly);
+
+		QStringList exceptions;
+		QString toColor("#FFFFFF");
+		SvgFileSplitter::changeColors(textOnly, toColor, exceptions, textByteArray);
+
+		textToConvert = true;
+	}
+
+	bool partLabelsVisible = m_pcbGraphicsView->partLabelsVisible();
+
+	if (partLabelsVisible || textToConvert) {
 		// add labels to silkscreen layer
 		m_pcbGraphicsView->saveLayerVisibility();
 		m_pcbGraphicsView->setAllLayersVisible(false);
 		m_pcbGraphicsView->setLayerVisible(ViewLayer::SilkscreenLabel, true);
 
-		QList<QGraphicsItem*> selItems = m_currentGraphicsView->scene()->selectedItems();
+		QList<QGraphicsItem*> selItems = m_pcbGraphicsView->scene()->selectedItems();
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(false);
 		}
@@ -2394,24 +2411,35 @@ void MainWindow::exportToGerber() {
 
 		QSize imgSize(twidth, theight);
 		QImage image(imgSize, QImage::Format_RGB32);
+		image.fill(0);
 		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
-		QPainter painter;
+		QRectF target(0, 0, twidth, theight);
+
 		QBrush brush = m_pcbGraphicsView->scene()->backgroundBrush();
 		m_pcbGraphicsView->scene()->setBackgroundBrush(Qt::black);
 
+		QPainter painter;
 		painter.begin(&image);
-		QRectF target(0, 0, twidth, theight);
+		QGraphicsSvgItem * textItem = NULL;
+		QSvgRenderer * textRenderer = NULL;
+		if (textToConvert) {
+			textItem = new QGraphicsSvgItem();
+			textRenderer = new QSvgRenderer(textByteArray);
+			textItem->setSharedRenderer(textRenderer);
+			textItem->setPos(p);								// the rendering is offset from the board, so move the textItem to the board location
+			textItem->setVisible(true);
+			textItem->setZValue(-999999);				// underneath
+			m_pcbGraphicsView->scene()->addItem(textItem);
+		}
+
 		m_pcbGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
 		painter.end();
 
-		GroundPlaneGenerator gpg;
-		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff");
-		foreach (QString gsvg, gpg.newSVGs()) {
-			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg);
+		if (textItem) {
+			delete textItem;
+			delete textRenderer;
 		}
-
-		//image.save("C:/fritzing2/fz/labeltest.png");
 
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(true);
@@ -2419,6 +2447,17 @@ void MainWindow::exportToGerber() {
 
 		m_pcbGraphicsView->scene()->setBackgroundBrush(brush);
 		m_pcbGraphicsView->restoreLayerVisibility();
+
+		GroundPlaneGenerator gpg;
+		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen");
+		foreach (QString gsvg, gpg.newSVGs()) {
+			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg);
+		}
+
+		//image.save("C:/fritzing2/fz/labeltest.png");
+
+
+
 	}
 
 
@@ -2508,7 +2547,7 @@ void MainWindow::exportToEagle() {
 		return;
 	}
 
-    m_currentGraphicsView->collectParts(partList);
+    m_pcbGraphicsView->collectParts(partList);
 
 	QString exportInfoString = tr("parts include:\n");
 	QString exportString = tr("GRID INCH 0.005\n");

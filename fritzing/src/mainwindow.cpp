@@ -36,7 +36,6 @@ $Date$
 #include <QTime>
 #include <QCleanlooksStyle>
 #include <QSettings>
-#include <QRegExpValidator>
 #include <QRegExp>
 #include <QPaintDevice>
 #include <QPixmap>

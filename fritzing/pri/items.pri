@@ -33,6 +33,7 @@ HEADERS += \
     src/items/pinheader.h \
     src/items/resistor.h \
     src/items/resizableboard.h \
+    src/items/ruler.h \
     src/items/symbolpaletteitem.h \
     src/items/tracewire.h \
     src/items/virtualwire.h \
@@ -54,6 +55,7 @@ SOURCES += \
     src/items/pinheader.cpp \
     src/items/resistor.cpp \
     src/items/resizableboard.cpp \
+    src/items/ruler.cpp \
     src/items/symbolpaletteitem.cpp \
     src/items/tracewire.cpp \
     src/items/virtualwire.cpp \

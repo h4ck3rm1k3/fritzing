@@ -45,6 +45,7 @@ $Date$
 
 #include "../items/paletteitem.h"
 #include "../items/logoitem.h"
+#include "../items/ruler.h"
 #include "../items/symbolpaletteitem.h"
 #include "../items/wire.h"
 #include "../commands.h"
@@ -295,6 +296,8 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 					}
 				}
 			}
+
+			// TODO: may need to do ruler here
 
 			if (!labelGeometry.isNull()) {
 				QDomElement clone = labelGeometry.cloneNode(true).toElement();
@@ -738,6 +741,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			break;
 		case ModelPart::Logo:
 			paletteItem = new LogoItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
+			break;
+		case ModelPart::Ruler:
+			paletteItem = new Ruler(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 		case ModelPart::Symbol:
 			paletteItem = new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
@@ -1433,6 +1439,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
 			case ModelPart::Logo:
+			case ModelPart::Ruler:
 			case ModelPart::Module:
 			case ModelPart::Symbol:
 			case ModelPart::Jumper:
@@ -3731,6 +3738,9 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 			new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 			}
 			break;
+		
+		// TODO: LogoItem and Ruler
+
 		case ModelPart::ResizableBoard:
 			{
 			ResizableBoard * rb = dynamic_cast<ResizableBoard *>(itemBase);
@@ -5714,6 +5724,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::ResizableBoard:
 		case ModelPart::Breadboard:
 		case ModelPart::Logo:
+		case ModelPart::Ruler:
 			//if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
 				//return false;
 			//}

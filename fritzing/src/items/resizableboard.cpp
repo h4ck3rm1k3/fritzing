@@ -43,7 +43,6 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 4;
-static const QRegExp WidthExpr("width=\\'\\d*px");
 static const QRegExp HeightExpr("height=\\'\\d*px");
 
 QString ResizableBoard::customShapeTranslated;

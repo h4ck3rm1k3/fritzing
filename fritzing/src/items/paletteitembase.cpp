@@ -194,6 +194,7 @@ void PaletteItemBase::findConnectorsUnder() {
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 		case ModelPart::Logo:
+		case ModelPart::Ruler:
 			// don't try to map connectors when we drag a breadboard: it's too damn slow
 			return;
 		default:

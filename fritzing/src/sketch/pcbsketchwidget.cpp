@@ -760,6 +760,7 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	switch (modelPart->itemType()) {
 		case ModelPart::Jumper:
 		case ModelPart::Logo:
+		case ModelPart::Ruler:
 			return true;
 		case ModelPart::Wire:
 		case ModelPart::Breadboard:

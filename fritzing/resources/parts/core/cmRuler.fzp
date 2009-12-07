@@ -2,16 +2,17 @@
 <module moduleId="RulerModuleID" >
  <version>2</version>
  <author>Mariano Crowe</author>
- <title>10 cm Ruler</title>
+ <title>Ruler</title>
  <date>2008-08-21</date>
  <tags>
   <tag>ruler</tag>
   <tag>cm</tag>
  </tags>
  <properties>
-  <property name="family" >Ruler</property>
+   <property name="family" >Ruler</property>
+   <property name="width" >10cm</property>
  </properties>
- <description>A 10cm ruler</description>
+ <description>An adjustable ruler</description>
  <views>
   <defaultUnits>cmil</defaultUnits>
   <iconView>

@@ -382,6 +382,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
 		type = ModelPart::Symbol;
 	}
+	else if (moduleID.compare(ModuleIDNames::rulerModuleIDName) == 0) {
+		type = ModelPart::Ruler;
+	}
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);
 	if (modelPart == NULL) return NULL;
 
