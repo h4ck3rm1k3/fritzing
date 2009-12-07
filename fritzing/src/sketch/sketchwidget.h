@@ -68,7 +68,7 @@ class SketchWidget : public InfoGraphicsView
 	Q_OBJECT
 
 public:
-    SketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0, int size=600, int minSize=400);
+    SketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0, int size=400, int minSize=300);
 	~SketchWidget();
 
 	void pushCommand(QUndoCommand *);
