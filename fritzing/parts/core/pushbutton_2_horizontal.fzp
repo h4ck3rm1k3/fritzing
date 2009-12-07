@@ -40,11 +40,11 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="leg0" >
+  <connector type="male" id="connector0" name="leg0">
    <description>leg</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" />
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
@@ -58,7 +58,7 @@
    <description>leg</description>
    <views>
     <breadboardView>
-     <p svgId="connector1pin" layer="breadboard" />
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal"/>
     </breadboardView>
     <schematicView>
      <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
