@@ -521,14 +521,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>width(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>height(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
@@ -550,6 +542,18 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     </message>
     <message>
         <source>Unable to display image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>w:h</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1834,6 +1838,10 @@ Please check all views for potential side-effects.</source>
         <source>Launch %1...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2846,6 +2854,13 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
 </context>
 <context>
+    <name>Ruler</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished">forma</translation>
+    </message>
+</context>
+<context>
     <name>SVGView</name>
     <message>
         <source>Print</source>
@@ -3122,10 +3137,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Change Resistance from %1 to %2</source>
         <translation>Mudar a resistência de %1 para %2</translation>
     </message>
-    <message>
-        <source>Change ChipLabel from %1 to %2</source>
-        <translation>Mudar a ChipLabel de %1 para %2</translation>
-    </message>
     <message numerus="yes">
         <source>show part label(s)</source>
         <translation type="unfinished">
@@ -3146,6 +3157,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Change form from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change chip label from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change logo from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

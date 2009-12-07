@@ -519,14 +519,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>width(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>height(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
@@ -548,6 +540,18 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Unable to display image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>w:h</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1838,6 +1842,10 @@ Please check all views for potential side-effects.</source>
         <source>Launch %1...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2840,6 +2848,13 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
 </context>
 <context>
+    <name>Ruler</name>
+    <message>
+        <source>shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SVGView</name>
     <message>
         <source>Print</source>
@@ -3116,10 +3131,6 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Change Resistance from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Change ChipLabel from %1 to %2</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>show part label(s)</source>
         <translation type="unfinished">
@@ -3140,6 +3151,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Change form from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change chip label from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change logo from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
