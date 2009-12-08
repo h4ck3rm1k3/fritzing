@@ -771,6 +771,8 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 			return matchesLayer(modelPart);
+		default:
+			return true;
 	}
 
 	return true;
