@@ -31,6 +31,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QTabWidget>
 #include <QTabBar>
 #include <QPushButton>
+#include <QPointer>
 
 #include "dropsink.h"
 
@@ -46,6 +47,7 @@ class StackTabWidget : public QTabWidget, public DropSink {
 		void moveTab(int fromIndex, int toIndex);
 		void informCurrentChanged(int index);
 		void informTabCloseRequested(int index);
+		void showFeedback();
 
 	signals:
 		void currentChanged(StackTabWidget *, int index);
@@ -54,7 +56,7 @@ class StackTabWidget : public QTabWidget, public DropSink {
 	protected:
 		void dragEnterEvent(QDragEnterEvent* event);
 
-		QPushButton *m_feedback;
+		QPointer<QPushButton> m_feedback;
 };
 
 #endif /* STACKTABWIDGET_H_ */

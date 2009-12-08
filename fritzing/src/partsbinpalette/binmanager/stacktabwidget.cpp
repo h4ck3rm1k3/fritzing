@@ -25,6 +25,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 ********************************************************************/
 
 #include <QMouseEvent>
+#include <QTimer>
 
 #include "stacktabwidget.h"
 #include "stackwidget.h"
@@ -99,16 +100,40 @@ void StackTabWidget::moveTab(int fromIndex, int toIndex) {
 }
 
 void StackTabWidget::showFeedback(int index, QTabBar::ButtonPosition side, bool doShow) {
-	m_feedback->setVisible(doShow);
+	QTimer * timer = new QTimer();
+	timer->setSingleShot(true);
+	timer->setInterval(10);
+	timer->setProperty("index", index);
+	timer->setProperty("side", side);
+	timer->setProperty("show", doShow);
+	connect(timer, SIGNAL(timeout()), this, SLOT(showFeedback()));
+	timer->start();
+}
+
+void StackTabWidget::showFeedback() {
+	QObject * sndr = sender();
+	if (sndr == NULL) return;
+
+	int index = sndr->property("index").toInt();
+	bool doShow = sndr->property("show").toBool();
+	QTabBar::ButtonPosition side = (QTabBar::ButtonPosition) sndr->property("side").toInt();
+
+	if (m_feedback) {
+		m_feedback->setVisible(doShow);
+	}
 	if(doShow) {
 		tabBar()->setTabButton(index,side,m_feedback);
 		QTabBar::ButtonPosition otherSide = side == QTabBar::RightSide? QTabBar::LeftSide: QTabBar::RightSide;
 		tabBar()->setTabButton(index,otherSide,NULL);
 	} else {
-		m_feedback->setParent(this);
+		if (m_feedback) {
+			m_feedback->setParent(this);
+		}
 		tabBar()->setTabButton(index,QTabBar::LeftSide,NULL);
 		tabBar()->setTabButton(index,QTabBar::RightSide,NULL);
 	}
+
+	sndr->deleteLater();
 }
 
 StackTabBar *StackTabWidget::stackTabBar() {
