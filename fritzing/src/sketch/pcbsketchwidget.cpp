@@ -1481,8 +1481,6 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 {
 	Q_UNUSED(doEmit);
 
-	if (m_viewIdentifier != ViewIdentifierClass::PCBView) return;
-
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;
 
@@ -1491,7 +1489,7 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 		case ModelPart::Logo:
 			break;
 		default:
-			return;
+			return SketchWidget::resizeBoard(mmW, mmH, doEmit);
 	}
 
 	qreal origw = item->modelPart()->prop("width").toDouble();

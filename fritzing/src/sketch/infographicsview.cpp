@@ -195,9 +195,9 @@ void InfoGraphicsView::setVoltage(qreal v, bool doEmit) {
 }
 
 void InfoGraphicsView::resizeBoard(qreal w, qreal h, bool doEmit) {
-	if (doEmit) {
-		emit resizeBoardSignal(w, h, false);
-	}
+	Q_UNUSED(w);
+	Q_UNUSED(h);
+	Q_UNUSED(doEmit);
 }
 
 void InfoGraphicsView::setResistance(QString resistance, QString pinSpacing)

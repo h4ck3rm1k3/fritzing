@@ -31,6 +31,8 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QPainterPath>
 #include <QPixmap>
 #include <QVariant>
+#include <QComboBox>
+#include <QDoubleValidator>
 
 #include "paletteitem.h"
 
@@ -43,23 +45,18 @@ public:
 	Ruler(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
 	~Ruler();
 
-	virtual void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
- 	void loadLayerKin(const LayerHash & viewLayers);
-	void setInitialSize();
+	void resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers);
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
-	void saveParams();
-	void getParams(QPointF &, QSizeF &);
 	bool hasCustomSVG();
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
-
 public slots:
 	void widthEntry();
+	void unitsEntry(const QString &);
 
 protected:
-	QString makeSvg(qreal mmW, qreal milsW);
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	QString makeSvg(qreal inches);
 	
 protected:
 	static qreal convertToInches(const QString & string);
@@ -67,6 +64,8 @@ protected:
 protected:
 	class FSvgRenderer * m_renderer;
 	QPointer<QLineEdit> m_widthEditor;
+	QPointer<QComboBox> m_unitsEditor;
+	QPointer<QDoubleValidator> m_widthValidator;
 };
 
 #endif

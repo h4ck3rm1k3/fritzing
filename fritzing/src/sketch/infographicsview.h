@@ -89,7 +89,6 @@ public slots:
 
 signals:
 	void setVoltageSignal(qreal, bool doEmit);
-	void resizeBoardSignal(qreal, qreal, bool doEmit);
 	void swapSignal(const QString & family, const QString & prop, QMap<QString, QString> & propsMap);
 
 public:

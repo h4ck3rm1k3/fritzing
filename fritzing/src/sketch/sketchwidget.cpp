@@ -1539,9 +1539,14 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		long fromID = m_droppingItem->id();
 
 		BaseCommand::CrossViewType crossViewType = BaseCommand::CrossView;
-		if (modelPart->properties().values().contains(QString("ruler"))) { 
-			// rulers are local to a particular view
-			crossViewType = BaseCommand::SingleView;
+		switch (modelPart->itemType()) {
+			case ModelPart::Ruler:
+			case ModelPart::Logo:
+				// rulers and logos are local to a particular view
+				crossViewType = BaseCommand::SingleView;
+				break;
+			default:
+				break;				
 		}
 		AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
 		addItemCommand->setDropOrigin(this);
@@ -5700,13 +5705,49 @@ void SketchWidget::resizeBoard(long itemID, qreal mmW, qreal mmH) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
-	if (item->itemType() == ModelPart::ResizableBoard) {
-		dynamic_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+	switch (item->itemType()) {
+		case ModelPart::ResizableBoard:
+			dynamic_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+			return;
+
+		case ModelPart::Logo:
+			dynamic_cast<LogoItem *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+			return;
+
+		case ModelPart::Ruler:
+			dynamic_cast<Ruler *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+			return;
 	}
-	else if (item->itemType() == ModelPart::Logo) {
-		dynamic_cast<LogoItem *>(item)->resizeMM(mmW, mmH, m_viewLayers);
-	}
+
 }
+
+void SketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
+{
+	Q_UNUSED(doEmit);
+	Q_UNUSED(mmH);
+
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) {
+		return InfoGraphicsView::resizeBoard(mmW, mmH, doEmit);
+	}
+
+	switch (item->itemType()) {
+		case ModelPart::Ruler:
+			break;
+		default:
+			return;
+	}
+
+	QString orig = item->modelPart()->prop("width").toString();
+	QString temp = orig;
+	temp.chop(2);
+	qreal origw = temp.toDouble();
+	qreal origh = orig.endsWith("cm") ? 0 : 1;
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize ruler to %1%2").arg(mmW).arg((mmH == 0) ? "cm" : "in"));
+	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
+	m_undoStack->push(parentCommand);
+}
+
 
 bool SketchWidget::rotationAllowed(ItemBase * itemBase) 
 {

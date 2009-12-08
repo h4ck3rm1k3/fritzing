@@ -365,3 +365,5 @@ bool TextUtils::pxToInches(QDomElement &elem, const QString &attrName, bool isIl
 	}
 	return false;
 }
+
+

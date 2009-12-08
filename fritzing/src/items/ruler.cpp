@@ -39,98 +39,60 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QLabel>
 #include <QLineEdit>
 #include <QRegExp>
+#include <qmath.h>
+
+static const int IndexCm = 0;
+static const int IndexIn = 1;
 
 Ruler::Ruler( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_widthEditor = NULL;
+	m_unitsEditor = NULL;
+	m_widthValidator = NULL;
 	m_renderer = NULL;
+	QString w = modelPart->prop("width").toString();
+	if (w.isEmpty()) {
+		m_modelPart->setProp("width", modelPart->properties().value("width", "10cm"));
+	}
 }
 
 Ruler::~Ruler() {
 }
 
+void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers) {
+	Q_UNUSED(viewLayers);
 
-QVariant Ruler::itemChange(GraphicsItemChange change, const QVariant &value)
-{
-	switch (change) {
-		case ItemSceneHasChanged:
-			break;
-		default:
-			break;
-   	}
+	qreal w = convertToInches(modelPart()->prop("width").toString());
+	QString units((unitsFlag == IndexCm) ? "cm" : "in");
+	qreal newW = convertToInches(QString::number(magnitude) + units);
+	if (w == newW) return;
 
-    return PaletteItem::itemChange(change, value);
-}
-
-void Ruler::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
-	if (mmW == 0 || mmH == 0) {
-		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, true);
-		modelPart()->setProp("height", QVariant());
-		modelPart()->setProp("width", QVariant());
-		// do the layerkin
-		return;
-	}
-
-	QRectF r = this->boundingRect();
-	if (qAbs(GraphicsUtils::pixels2mm(r.width()) - mmW) < .001 &&
-		qAbs(GraphicsUtils::pixels2mm(r.height()) - mmH) < .001) 
-	{
-		return;
-	}
-
+	QString s = makeSvg(newW);
 
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	qreal milsW = GraphicsUtils::mm2mils(mmW);
-
-	QString s = makeSvg(mmW, milsW);
-
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
 		setSharedRenderer(m_renderer);
-		modelPart()->setProp("width", mmW);
-		modelPart()->setProp("height", mmH);
-
-		if (m_widthEditor) {
-			m_widthEditor->setText(QString::number(qRound(mmW * 10) / 10.0));
-		}
+		modelPart()->setProp("width", QString::number(magnitude) + units);
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 
-
-}
-
-void Ruler::loadLayerKin( const LayerHash & viewLayers) {
-	PaletteItem::loadLayerKin(viewLayers);
-	qreal w = m_modelPart->prop("width").toDouble();
-	if (w != 0) {
-		resizeMM(w, m_modelPart->prop("height").toDouble(), viewLayers);
-	}
-}
-
-void Ruler::setInitialSize() {
-	qreal w = m_modelPart->prop("width").toDouble();
-	if (w == 0) {
-		// set the size so the infoGraphicsView will display the size as you drag
-		QSizeF sz = this->boundingRect().size();
-		modelPart()->setProp("width", GraphicsUtils::pixels2mm(sz.width())); 
-		modelPart()->setProp("height", GraphicsUtils::pixels2mm(sz.height())); 
-	}
 }
 
 QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
-	qreal w = m_modelPart->prop("width").toDouble();
+	qreal w = convertToInches(m_modelPart->prop("width").toString());
 	if (w != 0) {
 		QString xml;
 		switch (viewLayerID) {
 			case ViewLayer::BreadboardRuler:
 			case ViewLayer::SchematicRuler:
 			case ViewLayer::PcbRuler:
-				xml = makeSvg(w, GraphicsUtils::mm2mils(w));
+				xml = makeSvg(w);
 				break;
 			default:
 				break;
@@ -154,8 +116,63 @@ QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, Sv
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
-QString Ruler::makeSvg(qreal mmW, qreal milsW) {
-	return ___emptyString___;
+QString Ruler::makeSvg(qreal inches) {
+	qreal cm = 1 / 2.54;
+	qreal offset = 0.125;
+	qreal mmW = inches * 25.4;
+	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, (inches + offset + offset) * FSvgRenderer::printerScale(), FSvgRenderer::printerScale());
+	svg += "<g font-family='DroidSans' text-anchor='middle' font-size='100' stroke-width='1px' stroke='black'>";
+	int counter = 0;
+	for (int i = 0; i <= qCeil(mmW); i++) {
+		qreal h = cm / 4;
+		qreal x = (offset + (i / 25.4)) * 1000;
+		if (i % 10 == 0) {
+			h = cm / 2;
+			qreal y = (h + .1) * 1000;
+			svg += QString("<text x='%1' y='%2'>%3</text>")
+					.arg(x)
+					.arg(y)
+					.arg(QString::number(counter++));
+			if (counter == 1) {
+				svg += QString("<text x='%1' y='%2'>cm</text>").arg(x + 103).arg(y);
+			}
+		}
+		else if (i % 5 == 0) {
+			h = 3 * cm / 8;
+		}
+		svg += QString("<line x1='%1' y1='0' x2='%1' y2='%2' />\n")
+			.arg(x)
+			.arg(h * 1000);
+	}
+	counter = 0;
+	for (int i = 0; i <= inches * 16; i++) {
+		qreal h = 0.125;
+		qreal x = (offset + (i / 16.0)) * 1000;
+		if (i % 16 == 0) {
+			h = .125 +  (3.0 / 16);
+			qreal y = 1000 - ((h + .015) * 1000);
+			svg += QString("<text x='%1' y='%2'>%3</text>")
+					.arg(x)
+					.arg(y)
+					.arg(QString::number(counter++));
+			if (counter == 1) {
+				svg += QString("<text x='%1' y='%2'>in</text>").arg(x + 81).arg(y);
+			}
+		}
+		else if (i % 8 == 0) {
+			h = .125 +  (2.0 / 16);
+		}
+		else if (i % 4 == 0) {
+			h = .125 +  (1.0 / 16);
+		}
+		svg += QString("<line x1='%1' y1='%2' x2='%1' y2='1000' />\n")
+			.arg(x)
+			.arg(1000 - (h * 1000));
+	}
+
+	svg += "</g></svg>";
+
+	return svg;
 }
 
 bool Ruler::hasCustomSVG() {
@@ -185,34 +202,38 @@ bool Ruler::collectExtraInfoHtml(const QString & family, const QString & prop, c
 QObject * Ruler::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
 
 	if (classid.compare("width", Qt::CaseInsensitive) == 0) {
-
-		QLabel * l1 = new QLabel(tr("in/cm:"));	
-		l1->setMargin(0);
-
-		qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-
+		int units = m_modelPart->prop("width").toString().contains("cm") ? IndexCm : IndexIn;
 		QLineEdit * e1 = new QLineEdit();
-		BoundedRegExpValidator * validator = new BoundedRegExpValidator(e1);
-		validator->setConverter(convertToInches);
-		validator->setBounds(1.0 / 2.54, 20);
-		validator->setRegExp(QRegExp("\\d{1,3}((in)|(cm))"));
+		QDoubleValidator * validator = new QDoubleValidator(e1);
+		validator->setRange(1.0, 20 * ((units == IndexCm) ? 2.54 : 1), 2);
+		validator->setNotation(QDoubleValidator::StandardNotation);
 		e1->setValidator(validator);
-		e1->setMaxLength(5);
-		e1->setText(QString::number(w));
+		QString temp = m_modelPart->prop("width").toString();
+		temp.chop(2);
+		e1->setText(temp);
 		m_widthEditor = e1;
+		m_widthValidator = validator;
+
+		QComboBox * comboBox = new QComboBox(parent);
+		comboBox->setEditable(false);
+		comboBox->addItem("cm");
+		comboBox->addItem("in");
+		comboBox->setCurrentIndex(units);
+		m_unitsEditor = comboBox;
 
 		QHBoxLayout * hboxLayout = new QHBoxLayout();
 		hboxLayout->setAlignment(Qt::AlignLeft);
 		hboxLayout->setContentsMargins(0, 0, 0, 0);
 		hboxLayout->setSpacing(0);
 
-		hboxLayout->addWidget(l1);
 		hboxLayout->addWidget(e1);
+		hboxLayout->addWidget(comboBox);
 
 		QFrame * frame = new QFrame();
 		frame->setLayout(hboxLayout);
 
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
+		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));
 
 		return frame;
 	}
@@ -227,7 +248,22 @@ void Ruler::widthEntry() {
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->resizeBoard(edit->text().toDouble(), m_modelPart->prop("height").toDouble(), true);
+		int units = (m_unitsEditor->currentText() == "cm") ? IndexCm : IndexIn;
+		infoGraphicsView->resizeBoard(edit->text().toDouble(), units, false);
+	}
+}
+
+void Ruler::unitsEntry(const QString & units) {
+	qreal inches = convertToInches(modelPart()->prop("width").toString());
+	if (units == "in") {
+		modelPart()->setProp("width", QString::number(inches) + "in");
+		m_widthEditor->setText(QString::number(inches));
+		m_widthValidator->setTop(20);
+	}
+	else {
+		modelPart()->setProp("width", QString::number(inches * 2.54) + "cm");
+		m_widthEditor->setText(QString::number(inches * 2.54));
+		m_widthValidator->setTop(20 * 2.54);
 	}
 }
 
@@ -238,6 +274,4 @@ qreal Ruler::convertToInches(const QString & string) {
 
 	return retval;
 }
-
-
 
