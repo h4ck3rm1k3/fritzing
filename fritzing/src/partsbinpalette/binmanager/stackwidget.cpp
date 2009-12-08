@@ -96,10 +96,6 @@ StackWidget::StackWidget(QWidget *parent) : QFrame(parent) {
 	m_layout->setSpacing(1);
 	m_layout->setMargin(1);
 
-	m_dragSource = DragFromOrTo();
-	m_dropSink = DragFromOrTo();
-	m_potentialDropSink = DragFromOrTo();
-
 	m_topSeparator = newSeparator(this);
 	m_layout->addWidget(m_topSeparator);
 }
@@ -137,11 +133,13 @@ StackWidgetSeparator *StackWidget::newSeparator(QWidget *widget) {
 	StackWidgetSeparator *sep = new StackWidgetSeparator(this);
 	connect(
 		sep, SIGNAL(setDropSink(DropSink*,QTabBar::ButtonPosition,int)),
-		this, SLOT(setDropSink(DropSink*,QTabBar::ButtonPosition,int))
+		this, SLOT(setDropSink(DropSink*,QTabBar::ButtonPosition,int)),
+		Qt::DirectConnection
 	);
 	connect(
 		sep, SIGNAL(setPotentialDropSink(DropSink*,QTabBar::ButtonPosition,int)),
-		this, SLOT(setPotentialDropSink(DropSink*,QTabBar::ButtonPosition,int))
+		this, SLOT(setPotentialDropSink(DropSink*,QTabBar::ButtonPosition,int)),
+		Qt::DirectConnection
 	);
 	connect(
 		sep, SIGNAL(dropped()),
@@ -192,11 +190,14 @@ bool StackWidget::contains(QWidget *widget) const {
 }
 
 void StackWidget::setDragSource(StackTabWidget* tabWidget, int index) {
-	m_dragSource = DragFromOrTo(tabWidget,index);
+	m_dragSource.sink = tabWidget;
+	m_dragSource.index = index;
 }
 
 void StackWidget::setDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index) {
-	m_dropSink = DragFromOrTo(receptor,index,side);
+	m_dropSink.sink = receptor;
+	m_dropSink.side = side;
+	m_dropSink.index = index;	
 }
 
 void StackWidget::setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index) {
@@ -204,7 +205,9 @@ void StackWidget::setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPositi
 	if(oldOne && (oldOne != receptor || m_potentialDropSink.index != index)) {
 		oldOne->showFeedback(m_potentialDropSink.index, side, false);
 	}
-	m_potentialDropSink = DragFromOrTo(receptor,index,side);
+	m_potentialDropSink.sink = receptor;
+	m_potentialDropSink.index = index;
+	m_potentialDropSink.side = side;
 	if(m_potentialDropSink.sink) {
 		m_potentialDropSink.sink->showFeedback(m_potentialDropSink.index, side, true);
 	}
@@ -212,7 +215,7 @@ void StackWidget::setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPositi
 
 void StackWidget::dropped() {
 	StackTabWidget *oldTabWidget = dynamic_cast<StackTabWidget*>(m_dragSource.sink);
-	if(oldTabWidget && m_dropSink.sink) {
+	if(oldTabWidget && m_dropSink.sink && m_potentialDropSink.sink) {
 		m_potentialDropSink.sink->showFeedback(m_potentialDropSink.index, QTabBar::LeftSide, false);
 		int fromIndex  = m_dragSource.index;
 		int toIndex = m_dropSink.index;
@@ -253,6 +256,10 @@ void StackWidget::dropped() {
 			//delete sepToRemove;
 		}
 	}
+
+	m_dropSink.sink = NULL;
+	m_dragSource.sink = NULL;
+	m_potentialDropSink.sink = NULL;
 }
 
 int StackWidget::closestIndexToPos(const QPoint &pos) {

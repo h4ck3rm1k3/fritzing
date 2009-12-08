@@ -392,9 +392,6 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(setVoltageSignal(qreal, bool )),
 									 slotter, SLOT(setVoltage(qreal, bool )));
 
-	succeeded = succeeded && connect(signaller, SIGNAL(resizeBoardSignal(qreal, qreal, bool )),
-									 slotter, SLOT(resizeBoard(qreal, qreal, bool )));
-
 	succeeded = succeeded && connect(signaller, SIGNAL(showLabelFirstTimeSignal(long, bool, bool )),
 									 slotter, SLOT(showLabelFirstTime(long, bool, bool )));
 
