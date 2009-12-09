@@ -38,7 +38,7 @@
   </schematicView>
   <pcbView>
    <label/>
-   <layers image="pcb/logo_image.svg" >
+   <layers image="pcb/Fritzing icon.svg" >
     <layer layerId="silkscreen"/>
    </layers>
   </pcbView>
