@@ -121,6 +121,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="a7ec63797771e5b6f370dca4ff17bc81" modelIndex="20" path="parts/core/accelerometer-adxl.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="2012BCEC1FB" modelIndex="21" path="parts/core/thermistor_300mil.fzp">
             <views>
                 <iconView layer="icon">
