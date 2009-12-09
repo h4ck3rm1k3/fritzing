@@ -705,7 +705,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 			sketchWidget->makeDeleteItemCommand(wire, BaseCommand::SingleView, parentCommand);
 		}
 		foreach (JumperItem * jumperItem, oldJumperItems) {
-			sketchWidget->makeDeleteItemCommand(jumperItem, BaseCommand::SingleView, parentCommand);
+			sketchWidget->makeDeleteItemCommand(jumperItem, BaseCommand::CrossView, parentCommand);
 		}
 	}
 
@@ -714,7 +714,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 		sketchWidget->deleteItem(wire, true, false, false);
 	}
 	foreach (JumperItem * jumperItem, oldJumperItems) {
-		sketchWidget->deleteItem(jumperItem, true, false, false);
+		sketchWidget->deleteItem(jumperItem, true, true, false);
 	}
 }
 

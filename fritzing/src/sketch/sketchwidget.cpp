@@ -900,6 +900,11 @@ void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool l
 		}
 		deleteItem(pitem, deleteModelPart, doEmit, later);
 	}
+	else {
+		if (doEmit) {
+			emit itemDeletedSignal(id);
+		}
+	}
 }
 
 void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
