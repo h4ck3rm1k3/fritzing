@@ -42,7 +42,6 @@
         <file>resources/parts/svg/core/breadboard/wire.svg</file>
         <file>resources/parts/svg/core/pcb/rectangle_pcb.svg</file>
         <file>resources/parts/svg/core/pcb/logo.svg</file>
-        <file>resources/parts/svg/core/pcb/logo_image.svg</file>
         <file>resources/parts/core/ground.fzp</file>
         <file>resources/parts/svg/core/schematic/ground.svg</file>
         <file>resources/parts/svg/core/schematic/cell.svg</file>
