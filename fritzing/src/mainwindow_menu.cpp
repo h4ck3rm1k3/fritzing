@@ -2379,6 +2379,7 @@ void MainWindow::exportToGerber() {
 		textOnly = TextUtils::removeXMLEntities(textOnly);
 
 		QStringList exceptions;
+		exceptions << "none";
 		QString toColor("#FFFFFF");
 		SvgFileSplitter::changeColors(textOnly, toColor, exceptions, textByteArray);
 

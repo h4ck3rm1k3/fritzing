@@ -3950,11 +3950,19 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckSti
 	QList<ItemBase *> already;
 	QPolygonF poly = stickyOne->mapToScene(stickyOne->boundingRect());
 	foreach (QGraphicsItem * item, scene()->items(poly)) {
+		ItemBase * itemBase = NULL;
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
+		// TODO: make this more efficient by selecting itembases to begin with
+		if (connectorItem == NULL) {
+			itemBase = dynamic_cast<ItemBase *>(item);
+			if (itemBase == NULL) continue;
 
-		ItemBase * itemBase = connectorItem->attachedTo();
-		if (itemBase == NULL) continue;
+			if (itemBase->itemType() != ModelPart::Logo) continue;
+		}
+		else {
+			itemBase = connectorItem->attachedTo();
+			if (itemBase == NULL) continue;
+		}
 
 		// check whether it's a module
 		ItemBase * parent = itemBase;

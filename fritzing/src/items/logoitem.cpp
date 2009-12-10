@@ -45,9 +45,17 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QImage>
 #include <QLineEdit>
 
+static QStringList ImageNames;
+static QStringList NewImageNames;
+
 LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	if (ImageNames.count() == 0) {
+		ImageNames << "Made with Fritzing" << "Fritzing icon";
+	}
+
+	m_fileNameComboBox = NULL;
 	m_aspectRatioCheck = NULL;
 	m_keepAspectRatio = true;
 	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::logoTextModuleIDName);
@@ -56,7 +64,6 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 		m_logo = modelPart->properties().value("logo", "logo");
 		modelPart->setProp("logo", m_logo);
 	}
-
 }
 
 LogoItem::~LogoItem() {
@@ -74,7 +81,8 @@ QVariant LogoItem::itemChange(GraphicsItemChange change, const QVariant &value)
 				m_originalFilename = filename();
 				QString shape = modelPart()->prop("shape").toString();
 				if (!shape.isEmpty()) {
-					// TODO: aspect ratio
+					
+					m_aspectRatio = modelPart()->prop("aspectratio").toSizeF();
 					if (m_renderer == NULL) {
 						m_renderer = new FSvgRenderer(this);
 					}
@@ -90,6 +98,7 @@ QVariant LogoItem::itemChange(GraphicsItemChange change, const QVariant &value)
 					if (f.open(QFile::ReadOnly)) {
 						QString svg = f.readAll();
 						modelPart()->setProp("shape", svg);
+						modelPart()->setProp("lastfilename", m_originalFilename);
 					}
 				}
 			}
@@ -146,7 +155,7 @@ bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop
 	}
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' width='100%' height='50px'></object>");
+		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' width='100%' height='22px'></object>");
 		returnProp = tr("size");
 		return true;
 	}
@@ -161,9 +170,29 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 		// implemented below
 	}
 	else if (classid.compare("filename", Qt::CaseInsensitive) == 0) { 
-		QPushButton * button = new QPushButton (tr("load image file"), parent);
+		QFrame * frame = new QFrame();
+		QHBoxLayout * hboxLayout = new QHBoxLayout();
+		hboxLayout->setAlignment(Qt::AlignLeft);
+		hboxLayout->setContentsMargins(0, 0, 0, 0);
+		hboxLayout->setSpacing(0);
+
+		QComboBox * comboBox = new QComboBox();
+		comboBox->setEditable(false);
+		m_fileNameComboBox = comboBox;
+
+		setFileNameItems();
+
+		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+
+		QPushButton * button = new QPushButton (tr("load image file"));
 		connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
-		return button;
+		button->setMinimumWidth(100);
+
+		hboxLayout->addWidget(comboBox);
+		hboxLayout->addWidget(button);
+
+		frame->setLayout(hboxLayout);
+		return frame;
 	}
 	else if (classid.compare("logo", Qt::CaseInsensitive) == 0) {
 		QLineEdit * e1 = new QLineEdit(parent);
@@ -274,6 +303,11 @@ void LogoItem::prepLoadImage() {
 
 	if (fileName.isEmpty()) return;
 
+	prepLoadImageAux(fileName, true);
+}
+
+void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
+{
 	QString svg;
 	if (fileName.endsWith(".svg")) {
 		QFile f(fileName);
@@ -284,7 +318,6 @@ void LogoItem::prepLoadImage() {
 			unableToLoad(fileName);
 			return;
 		}
-
 
 		TextUtils::fixPixelDimensionsIn(svg);
 		TextUtils::cleanSodipodi(svg);
@@ -313,6 +346,7 @@ void LogoItem::prepLoadImage() {
 		}
 
 		QStringList exceptions;
+		exceptions << "none";
 		QString toColor("#ffffff");
 		SvgFileSplitter::changeColors(root, toColor, exceptions);
 
@@ -373,6 +407,19 @@ void LogoItem::prepLoadImage() {
 		QRectF r = m_renderer->viewBoxF();
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());
+		modelPart()->setProp("aspectratio", m_aspectRatio);
+		modelPart()->setProp("lastfilename", fileName);
+		if (addName) {
+			if (!NewImageNames.contains(fileName, Qt::CaseInsensitive)) {
+				NewImageNames.append(fileName);
+				disconnect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+				while (m_fileNameComboBox->count() > 0) {
+					m_fileNameComboBox->removeItem(0);
+				}
+				setFileNameItems();
+				connect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+			}
+		}
 		positionGrips();
 		m_logo = "";
 	}
@@ -382,6 +429,8 @@ void LogoItem::prepLoadImage() {
 		setSharedRenderer(m_renderer);
 		unableToLoad(fileName);
 	}
+
+
 }
 
 void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
@@ -623,3 +672,40 @@ void LogoItem::unableToLoad(const QString & fileName) {
 void LogoItem::keepAspectRatio(bool checkState) {
 	m_keepAspectRatio = checkState;
 }
+
+void LogoItem::fileNameEntry(const QString & filename) {
+	foreach (QString name, ImageNames) {
+		if (filename.compare(name) == 0) {
+			QString f = FolderUtils::getApplicationSubFolderPath("parts") + "/svg/core/pcb/" + filename + ".svg";
+			return prepLoadImageAux(f, false);
+			break;
+		}
+	}
+
+	prepLoadImageAux(filename, true);
+}
+
+void LogoItem::setFileNameItems() {
+	if (m_fileNameComboBox == NULL) return;
+
+	m_fileNameComboBox->addItems(ImageNames);
+	m_fileNameComboBox->addItems(NewImageNames);
+
+	int ix = 0;
+	foreach (QString name, ImageNames) {
+		if (modelPart()->prop("lastfilename").toString().contains(name)) {
+			m_fileNameComboBox->setCurrentIndex(ix);
+			return;
+		}
+		ix++;
+	}
+
+	foreach (QString name, NewImageNames) {
+		if (modelPart()->prop("lastfilename").toString().contains(name)) {
+			m_fileNameComboBox->setCurrentIndex(ix);
+			return;
+		}
+		ix++;
+	}
+}
+

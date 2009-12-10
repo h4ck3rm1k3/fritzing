@@ -27,12 +27,12 @@
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="pcb/logo_image.svg" >
+   <layers image="pcb/Fritzing icon.svg" >
     <layer layerId="unknown" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="pcb/logo_image.svg" >
+   <layers image="pcb/Fritzing icon.svg" >
     <layer layerId="unknown" />
    </layers>
   </schematicView>
