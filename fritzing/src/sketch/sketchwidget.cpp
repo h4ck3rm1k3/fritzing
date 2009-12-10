@@ -6212,3 +6212,29 @@ void SketchWidget::restorePartLabel(long itemID, QDomElement & element) {
 
 	itemBase->restorePartLabel(element, getLabelViewLayerID());
 }
+
+void SketchWidget::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
+	QUndoCommand * cmd = new LoadLogoImageCommand(this, itemID, oldSvg, oldAspectRatio, oldFilename, newFilename, addName, NULL);
+	cmd->setText(tr("Change image from %1 to %2").arg(oldFilename).arg(newFilename));
+	m_undoStack->push(cmd);
+}
+
+void SketchWidget::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename) {
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase == NULL) return;
+
+	LogoItem * logoItem = qobject_cast<LogoItem *>(itemBase);
+	if (logoItem == NULL) return;
+
+	logoItem->reloadImage(oldSvg, oldAspectRatio, oldFilename, false);
+}
+
+void SketchWidget::loadLogoImage(long itemID, const QString & newFilename, bool addName) {
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase == NULL) return;
+
+	LogoItem * logoItem = qobject_cast<LogoItem *>(itemBase);
+	if (logoItem == NULL) return;
+
+	logoItem->loadImage(newFilename, addName);
+}

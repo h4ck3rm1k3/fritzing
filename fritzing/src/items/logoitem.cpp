@@ -308,6 +308,53 @@ void LogoItem::prepLoadImage() {
 
 void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->loadLogoImage(this->id(), modelPart()->prop("shape").toString(), m_aspectRatio, modelPart()->prop("lastfilename").toString(), fileName, addName);
+	}
+}
+
+void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
+{
+	bool result = m_renderer->fastLoad(svg.toUtf8());
+	if (result) {
+		setSharedRenderer(m_renderer);
+		if (aspectRatio == QSizeF(0, 0)) {
+			QRectF r = m_renderer->viewBoxF();
+			m_aspectRatio.setWidth(r.width());
+			m_aspectRatio.setHeight(r.height());
+		}
+		else {
+			m_aspectRatio = aspectRatio;
+		}
+		modelPart()->setProp("aspectratio", m_aspectRatio);
+		modelPart()->setProp("shape", svg);
+		modelPart()->setProp("logo", "");
+		modelPart()->setProp("lastfilename", fileName);
+		if (addName) {
+			if (!NewImageNames.contains(fileName, Qt::CaseInsensitive)) {
+				NewImageNames.append(fileName);
+				disconnect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+				while (m_fileNameComboBox->count() > 0) {
+					m_fileNameComboBox->removeItem(0);
+				}
+				setFileNameItems();
+				connect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+			}
+		}
+		positionGrips();
+		m_logo = "";
+	}
+	else {
+		// restore previous (not sure whether this is necessary)
+		m_renderer->fastLoad(modelPart()->prop("shape").toString().toUtf8());
+		setSharedRenderer(m_renderer);
+		unableToLoad(fileName);
+	}
+}
+
+void LogoItem::loadImage(const QString & fileName, bool addName)
+{
 	QString svg;
 	if (fileName.endsWith(".svg")) {
 		QFile f(fileName);
@@ -399,38 +446,7 @@ void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	bool result = m_renderer->fastLoad(svg.toUtf8());
-	if (result) {
-		setSharedRenderer(m_renderer);
-		modelPart()->setProp("shape", svg);
-		modelPart()->setProp("logo", "");
-		QRectF r = m_renderer->viewBoxF();
-		m_aspectRatio.setWidth(r.width());
-		m_aspectRatio.setHeight(r.height());
-		modelPart()->setProp("aspectratio", m_aspectRatio);
-		modelPart()->setProp("lastfilename", fileName);
-		if (addName) {
-			if (!NewImageNames.contains(fileName, Qt::CaseInsensitive)) {
-				NewImageNames.append(fileName);
-				disconnect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
-				while (m_fileNameComboBox->count() > 0) {
-					m_fileNameComboBox->removeItem(0);
-				}
-				setFileNameItems();
-				connect(m_fileNameComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
-			}
-		}
-		positionGrips();
-		m_logo = "";
-	}
-	else {
-		// restore previous (not sure whether this is necessary)
-		m_renderer->fastLoad(modelPart()->prop("shape").toString().toUtf8());
-		setSharedRenderer(m_renderer);
-		unableToLoad(fileName);
-	}
-
-
+	reloadImage(svg, QSizeF(0, 0), fileName, addName);
 }
 
 void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {

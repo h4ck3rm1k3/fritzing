@@ -58,6 +58,8 @@ public:
 	bool canEditPart();
 	void setProp(const QString & prop, const QString & value);
 	bool hasPartLabel();
+	void loadImage(const QString & fileName, bool addName);
+	void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
 
 protected slots:
 	void prepLoadImage();

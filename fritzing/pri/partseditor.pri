@@ -42,9 +42,6 @@ HEADERS += \
     src/partseditor/addremovelistwidget.h \
     src/partseditor/connectorswidget.h \
     src/partseditor/partseditorpaletteitem.h \
-    src/partseditor/pcbxml.h \
-    src/partseditor/svgdomdocument.h \
-    src/partseditor/svgview.h \
     src/partseditor/zoomcontrols.h \
     src/partseditor/addremoveconnectorbutton.h \
     src/partseditor/baseremovebutton.h \
@@ -75,9 +72,6 @@ SOURCES += \
     src/partseditor/addremovelistwidget.cpp \
     src/partseditor/connectorswidget.cpp \
     src/partseditor/partseditorpaletteitem.cpp \
-    src/partseditor/pcbxml.cpp \
-    src/partseditor/svgdomdocument.cpp \
-    src/partseditor/svgview.cpp \
     src/partseditor/zoomcontrols.cpp \
     src/partseditor/partseditorconnectorspaletteitem.cpp \
     src/partseditor/partseditorconnectorsconnectoritem.cpp \

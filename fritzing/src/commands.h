@@ -503,7 +503,6 @@ protected:
     QPointF m_newOffset;
 };
 
-
 class ChangeLabelTextCommand : public BaseCommand
 {
 public:
@@ -721,5 +720,24 @@ protected:
 
 };
 
+
+class LoadLogoImageCommand : public BaseCommand
+{
+public:
+    LoadLogoImageCommand(class SketchWidget *sketchWidget, long id, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    QString m_oldSvg;
+    QSizeF m_oldAspectRatio;
+	QString m_oldFilename;
+	QString m_newFilename;
+	bool m_addName;
+};
 
 #endif // COMMANDS_H

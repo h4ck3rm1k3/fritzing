@@ -81,6 +81,7 @@ public:
 	virtual void changeWireColor(const QString newColor);
 	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap);
 	virtual LayerHash & viewLayers();
+	virtual void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);

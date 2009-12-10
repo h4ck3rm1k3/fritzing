@@ -1359,3 +1359,34 @@ QString ShowLabelCommand::getParamString() const {
 	return QString("ShowLabelCommand ") 
 		+ BaseCommand::getParamString();
 }
+
+///////////////////////////////////////////////
+
+LoadLogoImageCommand::LoadLogoImageCommand(SketchWidget *sketchWidget, long id, 
+											   const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, 
+											   const QString & newFilename, bool addName, QUndoCommand *parent)
+	: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_oldFilename = oldFilename;
+    m_newFilename = newFilename;
+	m_oldAspectRatio = oldAspectRatio;
+	m_oldSvg = oldSvg;
+	m_addName = addName;
+}
+
+void LoadLogoImageCommand::undo() {
+	m_sketchWidget->loadLogoImage(m_itemID, m_oldSvg, m_oldAspectRatio, m_oldFilename);
+}
+
+void LoadLogoImageCommand::redo() {
+	m_sketchWidget->loadLogoImage(m_itemID, m_newFilename, m_addName);
+}
+
+QString LoadLogoImageCommand::getParamString() const {
+	return QString("LoadLogoImageCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 old:%2 new:%3") 
+			.arg(m_itemID).arg(m_oldFilename).arg(m_newFilename);
+
+}

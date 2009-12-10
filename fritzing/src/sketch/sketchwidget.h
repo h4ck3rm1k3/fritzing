@@ -229,6 +229,9 @@ public:
 	int selectAllObsolete();
 	bool partLabelsVisible();
 	void restorePartLabel(long itemID, QDomElement & element);
+	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
+	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename);
+	void loadLogoImage(long itemID, const QString & newFilename, bool addName);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

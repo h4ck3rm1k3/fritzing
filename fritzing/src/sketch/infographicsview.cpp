@@ -101,7 +101,6 @@ HtmlInfoView * InfoGraphicsView::infoView() {
 	return m_infoView;
 }
 
-
 void InfoGraphicsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
@@ -233,4 +232,13 @@ void InfoGraphicsView::setInstanceTitle(long id, const QString & title, bool isL
 
 LayerHash & InfoGraphicsView::viewLayers() {
 	return ViewLayers;
+}
+
+void InfoGraphicsView::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
+	Q_UNUSED(itemID);
+	Q_UNUSED(oldSvg);
+	Q_UNUSED(oldAspectRatio);
+	Q_UNUSED(oldFilename);
+	Q_UNUSED(newFilename);
+	Q_UNUSED(addName);
 }
