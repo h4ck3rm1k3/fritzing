@@ -356,7 +356,7 @@ int FApplication::startup(bool firstRun)
 		registerFont(":/resources/fonts/DroidSans.ttf", true);
 		registerFont(":/resources/fonts/DroidSans-Bold.ttf", false);
 		//registerFont(":/resources/fonts/ocra10.ttf", true);
-		registerFont(":/resources/fonts/OCRA.ttf", true);
+		registerFont(":/resources/fonts/OCRA.otf", true);
 
 		/*
 		QFontDatabase database;
