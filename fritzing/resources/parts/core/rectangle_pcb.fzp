@@ -2,7 +2,7 @@
 <module moduleId="RectanglePCBModuleID" >
  <version>1</version>
  <author>Brendan Howell</author>
- <title>Rectangular PCB - 60 x 100 mm</title>
+ <title>Rectangular PCB - Resizable</title>
  <date>2008-11-25</date>
  <label>PCB</label>
  <tags>
@@ -15,8 +15,8 @@
   <property name="Shape" >rectangle</property>
   <property name="family" >Plain Vanilla PCB</property>
  </properties>
- <taxonomy>discreteParts.pcb.rectangle.60x100mm</taxonomy>
- <description>Rectangular 60 x 100 mm Circuit Board</description>
+ <taxonomy>discreteParts.pcb.rectangle.resizable</taxonomy>
+ <description>Rectangular Resizable Circuit Board</description>
  <views>
   <defaultUnits>mm</defaultUnits>
   <iconView>
