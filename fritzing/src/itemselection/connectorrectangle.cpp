@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2148 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 #include <QPainter>
