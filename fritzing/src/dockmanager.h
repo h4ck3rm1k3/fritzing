@@ -69,19 +69,18 @@ class DockManager : public QObject {
 		bool m_dontKeepMargins;
 
 	public:
-		static const int PartsBinDefaultHeight = 220;
-		static const int PartsBinMinHeight = 122;
-		static const int NavigatorDefaultHeight = 70;
-		static const int NavigatorMinHeight = NavigatorDefaultHeight;
-		static const int InfoViewDefaultHeight = 150;
-		static const int InfoViewMinHeight = 50;
-		static const int UndoHistoryDefaultHeight = 70;
-		static const int UndoHistoryMinHeight = UndoHistoryDefaultHeight;
-	public:
-		static const int DockDefaultWidth = 250;
-		static const int DockMinWidth = 130;
-		static const int DockDefaultHeight = 50;
-		static const int DockMinHeight = 30;
+                static const int PartsBinDefaultHeight;
+                static const int PartsBinMinHeight;
+                static const int NavigatorDefaultHeight;
+                static const int NavigatorMinHeight;
+                static const int InfoViewDefaultHeight;
+                static const int InfoViewMinHeight;
+                static const int UndoHistoryDefaultHeight;
+                static const int UndoHistoryMinHeight;
+                static const int DockDefaultWidth;
+                static const int DockMinWidth;
+                static const int DockDefaultHeight;
+                static const int DockMinHeight;
 };
 
 #endif /* DOCKMANAGER_H_ */

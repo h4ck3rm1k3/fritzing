@@ -37,6 +37,19 @@ $Date$
 #include "partsbinpalette/binmanager/binmanager.h"
 #include "infoview/htmlinfoview.h"
 
+const int DockManager::PartsBinDefaultHeight = 240;
+const int DockManager::PartsBinMinHeight = 100;
+const int DockManager::InfoViewDefaultHeight = 220;
+const int DockManager::InfoViewMinHeight = 50;
+const int DockManager::NavigatorDefaultHeight = 60;
+const int DockManager::NavigatorMinHeight = 40;
+const int DockManager::UndoHistoryDefaultHeight = 70;
+const int DockManager::UndoHistoryMinHeight = UndoHistoryDefaultHeight;
+const int DockManager::DockDefaultWidth = 250;
+const int DockManager::DockMinWidth = 130;
+const int DockManager::DockDefaultHeight = 50;
+const int DockManager::DockMinHeight = 30;
+
 FDockWidget * makeViewSwitcherDock(const QString & title, QWidget * parent) {
 	return new ViewSwitcherDockWidget(title, parent);
 }

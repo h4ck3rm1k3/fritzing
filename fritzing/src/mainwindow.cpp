@@ -86,7 +86,7 @@ int MainWindow::CascadeFactorX = 21;
 int MainWindow::CascadeFactorY = 19;
 int MainWindow::RestartNeeded = 0;
 
-static const int MainWindowDefaultWidth = 800;
+static const int MainWindowDefaultWidth = 840;
 static const int MainWindowDefaultHeight = 600;
 
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
