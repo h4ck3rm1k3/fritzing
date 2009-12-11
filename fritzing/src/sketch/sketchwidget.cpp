@@ -305,8 +305,8 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				QString w2 = w;
 				w.chop(2);
 				int units = w2.endsWith("cm") ? 0 : 1;
-				// doesn't trigger: needs some kind of force command...
 				new ResizeBoardCommand(this, newID, w.toDouble(), units, w.toDouble(), units, parentCommand);
+				mp->setProp("width", "");		// ResizeBoardCommand won't execute if the width property is already set
 			}
 
 			if (!labelGeometry.isNull()) {
