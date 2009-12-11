@@ -416,7 +416,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="female" name="RESET">
+        <connector id="connector16" type="female" name="RST">
             <description>Reset Pin</description>
             <views>
                 <breadboardView>
