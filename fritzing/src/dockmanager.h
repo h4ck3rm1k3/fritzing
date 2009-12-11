@@ -78,7 +78,7 @@ class DockManager : public QObject {
 		static const int UndoHistoryDefaultHeight = 70;
 		static const int UndoHistoryMinHeight = UndoHistoryDefaultHeight;
 	public:
-		static const int DockDefaultWidth = 185;
+		static const int DockDefaultWidth = 250;
 		static const int DockMinWidth = 130;
 		static const int DockDefaultHeight = 50;
 		static const int DockMinHeight = 30;

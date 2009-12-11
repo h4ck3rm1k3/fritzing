@@ -86,6 +86,9 @@ int MainWindow::CascadeFactorX = 21;
 int MainWindow::CascadeFactorY = 19;
 int MainWindow::RestartNeeded = 0;
 
+static const int MainWindowDefaultWidth = 800;
+static const int MainWindowDefaultHeight = 600;
+
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
@@ -97,7 +100,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_comboboxChanged = false;
 	m_helper = NULL;
 
-	resize(740,600);
+	resize(MainWindowDefaultWidth, MainWindowDefaultHeight);
 
 	// Create dot icons
 	m_dotIcon = QIcon(":/resources/images/dot.png");
