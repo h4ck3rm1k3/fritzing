@@ -248,7 +248,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector80" type="female" name="5V">
+        <connector id="connector80" type="female" name="+5V">
             <description>Regulated 5V Output</description>
             <views>
                 <breadboardView>
@@ -276,7 +276,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector81" type="female" name="5V">
+        <connector id="connector81" type="female" name="+5V">
             <description>Regulated 5V Output</description>
             <views>
                 <breadboardView>
@@ -388,7 +388,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="female" name="D1">
+        <connector id="connector14" type="female" name="D1TX">
             <description>Digital I/O Pin 1 (TX)</description>
             <views>
                 <breadboardView>
@@ -402,7 +402,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector15" type="female" name="D0">
+        <connector id="connector15" type="female" name="D0RX">
             <description>Digital I/O Pin 0 (RX)</description>
             <views>
                 <breadboardView>
@@ -444,7 +444,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector18" type="female" name="5V">
+        <connector id="connector18" type="female" name="+5V">
             <description>Regulated 5 Volt Output</description>
             <views>
                 <breadboardView>
