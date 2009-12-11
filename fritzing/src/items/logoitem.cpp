@@ -148,7 +148,7 @@ bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop
 	}
 	else {
 		if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
-			returnValue = QString("<object type='application/x-qt-plugin' classid='filename' width='100%' height='22px'></object>");
+			returnValue = QString("<object type='application/x-qt-plugin' classid='filename' width='100%' height='44px'></object>");
 			returnProp = "";
 			return true;
 		}
@@ -171,10 +171,10 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	}
 	else if (classid.compare("filename", Qt::CaseInsensitive) == 0) { 
 		QFrame * frame = new QFrame();
-		QHBoxLayout * hboxLayout = new QHBoxLayout();
-		hboxLayout->setAlignment(Qt::AlignLeft);
-		hboxLayout->setContentsMargins(0, 0, 0, 0);
-		hboxLayout->setSpacing(0);
+		QVBoxLayout * vboxLayout = new QVBoxLayout();
+		vboxLayout->setAlignment(Qt::AlignLeft);
+		vboxLayout->setContentsMargins(0, 0, 0, 0);
+		vboxLayout->setSpacing(0);
 
 		QComboBox * comboBox = new QComboBox();
 		comboBox->setEditable(false);
@@ -188,10 +188,10 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 		connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
 		button->setMinimumWidth(100);
 
-		hboxLayout->addWidget(comboBox);
-		hboxLayout->addWidget(button);
+		vboxLayout->addWidget(comboBox);
+		vboxLayout->addWidget(button);
 
-		frame->setLayout(hboxLayout);
+		frame->setLayout(vboxLayout);
 		return frame;
 	}
 	else if (classid.compare("logo", Qt::CaseInsensitive) == 0) {
@@ -401,7 +401,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		}
 
 		QStringList exceptions;
-		exceptions << "none";
+		exceptions << "none" << "";
 		QString toColor("#ffffff");
 		SvgFileSplitter::changeColors(root, toColor, exceptions);
 
