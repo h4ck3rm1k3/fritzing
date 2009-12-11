@@ -454,7 +454,7 @@ void Note::contentsChangedSlot() {
 		QSizeF newSize = oldSize;
 		checkSize(newSize);
 
-		infoGraphicsView->partLabelChanged(this, oldText, m_graphicsTextItem->document()->toHtml(), oldSize, newSize, false);
+		infoGraphicsView->noteChanged(this, oldText, m_graphicsTextItem->document()->toHtml(), oldSize, newSize);
 	}
 	if (m_modelPart) {
 		m_modelPart->setInstanceText(m_graphicsTextItem->document()->toHtml());
@@ -485,7 +485,6 @@ void Note::connectSlots() {
 		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 	connect(m_graphicsTextItem->document(), SIGNAL(contentsChange(int, int, int)),
 		this, SLOT(contentsChangeSlot(int, int, int)), Qt::DirectConnection);
-
 }
 
 void Note::setText(const QString & text, bool check) {

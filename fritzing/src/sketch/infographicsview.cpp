@@ -104,13 +104,18 @@ HtmlInfoView * InfoGraphicsView::infoView() {
 void InfoGraphicsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
-void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, bool isLabel) {
+void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText) {
+	Q_UNUSED(item);
+	Q_UNUSED(oldText);
+	Q_UNUSED(newText);
+}
+
+void InfoGraphicsView::noteChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
 	Q_UNUSED(item);
 	Q_UNUSED(oldText);
 	Q_UNUSED(newText);
 	Q_UNUSED(oldSize);
 	Q_UNUSED(newSize);
-	Q_UNUSED(isLabel);
 }
 
 QGraphicsItem *InfoGraphicsView::selectedAux() {
@@ -222,10 +227,9 @@ void InfoGraphicsView::swap(const QString & family, const QString & prop, QMap<Q
 	emit swapSignal(family, prop, propsMap);
 }
 
-void InfoGraphicsView::setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit) {
+void InfoGraphicsView::setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit) {
 	Q_UNUSED(id);
 	Q_UNUSED(title);
-	Q_UNUSED(isLabel);
 	Q_UNUSED(isUndoable);
 	Q_UNUSED(doEmit);
 }

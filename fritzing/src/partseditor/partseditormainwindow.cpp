@@ -506,8 +506,8 @@ void PartsEditorMainWindow::loadPcbFootprint(){
         return;
     }
     file.close();
-    PcbXML *footprint = new PcbXML(doc.documentElement());
-    DebugDialog::debug(footprint->getSvgFile());
+    //PcbXML *footprint = new PcbXML(doc.documentElement());
+    //DebugDialog::debug(footprint->getSvgFile());
 }
 
 bool PartsEditorMainWindow::save() {

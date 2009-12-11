@@ -36,6 +36,7 @@ $Date$
 #include <QKeyEvent>
 #include <QDialog>
 #include <QLineEdit>
+#include <QTextCursor>
 
 #include "../items/itembase.h"
 

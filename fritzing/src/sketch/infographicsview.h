@@ -60,7 +60,8 @@ public:
 
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
-	virtual void partLabelChanged(ItemBase *, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, bool isLabel);
+	virtual void partLabelChanged(ItemBase *, const QString &oldText, const QString & newText);
+	virtual void noteChanged(ItemBase *, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize);
 	virtual void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
 	virtual void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
 	virtual void noteSizeChanged(ItemBase * itemBase, const QRectF & oldRect, const QRectF & newRect);
@@ -86,7 +87,7 @@ public:
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
 	virtual void resizeBoard(qreal w, qreal h, bool doEmit);
-	virtual void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
+	virtual void setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit);
 
 signals:
 	void setVoltageSignal(qreal, bool doEmit);

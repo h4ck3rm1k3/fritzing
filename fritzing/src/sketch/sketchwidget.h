@@ -145,7 +145,8 @@ public:
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *, bool skipMe);
 
-	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext, QSizeF oldSize, QSizeF newSize, bool isLabel);
+	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext);
+	void noteChanged(ItemBase *, const QString & oldText, const QString &newtext, QSizeF oldSize, QSizeF newSize);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
@@ -329,7 +330,7 @@ protected:
 	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize, bool isLabel, bool firstTime);
+	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText);
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
@@ -390,7 +391,7 @@ signals:
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doEmit);
-	void setInstanceTitleSignal(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
+	void setInstanceTitleSignal(long id, const QString & title, bool isUndoable, bool doEmit);
 	void statusMessageSignal(QString, int timeout);
 	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
 
@@ -430,7 +431,8 @@ public slots:
 	void changeWireColor(const QString newColor);
 	void changeWireWidthMils(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);
-	void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable, bool doEmit);
+	void setNoteText(long itemID, const QString & newText);
+	void setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit);
 	void showPartLabel(long id, bool showIt);
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);

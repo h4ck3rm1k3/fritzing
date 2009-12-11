@@ -506,9 +506,26 @@ protected:
 class ChangeLabelTextCommand : public BaseCommand
 {
 public:
-    ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, bool isLabel, bool firstTime, QUndoCommand *parent);
+    ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QUndoCommand *parent);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    QString m_oldText;
+    QString m_newText;
+};
+
+class ChangeNoteTextCommand : public BaseCommand
+{
+public:
+    ChangeNoteTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, QUndoCommand *parent);
+    void undo();
+    void redo();
+	void setFirstTime(bool);
 	int id() const;
 	bool mergeWith(const QUndoCommand *other);
 
@@ -522,9 +539,8 @@ protected:
 	QSizeF m_oldSize;
 	QSizeF m_newSize;
 	bool m_firstTime;
-	bool m_isLabel;
 
-	static int changeLabelTextCommandID;
+	static int changeNoteTextCommandID;
 };
 
 class RotateFlipLabelCommand : public BaseCommand

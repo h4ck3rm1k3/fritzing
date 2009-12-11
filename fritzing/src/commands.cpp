@@ -34,7 +34,7 @@ $Date$
 #include "items/moduleidnames.h"
 
 int SelectItemCommand::selectItemCommandID = 3;
-int ChangeLabelTextCommand::changeLabelTextCommandID = 4;
+int ChangeNoteTextCommand::changeNoteTextCommandID = 5;
 int BaseCommand::nextIndex = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -909,7 +909,35 @@ QString MoveLabelCommand::getParamString() const {
 
 ChangeLabelTextCommand::ChangeLabelTextCommand(SketchWidget *sketchWidget, long id, 
 											   const QString & oldText, const QString & newText, 
-											   QSizeF oldSize, QSizeF newSize, bool isLabel, bool firstTime, QUndoCommand *parent)
+											   QUndoCommand *parent)
+	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_oldText = oldText;
+    m_newText = newText;
+}
+
+void ChangeLabelTextCommand::undo() {
+	m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, false, true);
+}
+
+void ChangeLabelTextCommand::redo() {
+    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, false, true);
+}
+
+QString ChangeLabelTextCommand::getParamString() const {
+	return QString("ChangeLabelTextCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 old:%2 new:%3") 
+			.arg(m_itemID).arg(m_oldText).arg(m_newText);
+
+}
+
+///////////////////////////////////////////////
+
+ChangeNoteTextCommand::ChangeNoteTextCommand(SketchWidget *sketchWidget, long id, 
+											   const QString & oldText, const QString & newText, 
+											   QSizeF oldSize, QSizeF newSize, QUndoCommand *parent)
 	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
     m_itemID = id;
@@ -917,35 +945,38 @@ ChangeLabelTextCommand::ChangeLabelTextCommand(SketchWidget *sketchWidget, long 
     m_newText = newText;
 	m_oldSize = oldSize;
 	m_newSize = newSize;
-	m_firstTime = firstTime;
-	m_isLabel = isLabel;
+	m_firstTime = true;
 }
 
-void ChangeLabelTextCommand::undo() {
-	m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, m_isLabel, false, true);
+void ChangeNoteTextCommand::undo() {
+	m_sketchWidget->setNoteText(m_itemID, m_oldText);
 	if (m_oldSize != m_newSize) {
 		m_sketchWidget->resizeNote(m_itemID, m_oldSize);
 	}
 }
 
-void ChangeLabelTextCommand::redo() {
+void ChangeNoteTextCommand::redo() {
 	if (m_firstTime) {
 		m_firstTime = false;
 		return;
 	}
 
-    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, m_isLabel, false, true);
+    m_sketchWidget->setNoteText(m_itemID, m_newText);
 	if (m_oldSize != m_newSize) {
 		m_sketchWidget->resizeNote(m_itemID, m_newSize);
 	}
 
 }
 
-int ChangeLabelTextCommand::id() const {
-	return changeLabelTextCommandID;
+void ChangeNoteTextCommand::setFirstTime(bool f) {
+	m_firstTime = f;
 }
 
-bool ChangeLabelTextCommand::mergeWith(const QUndoCommand *other)
+int ChangeNoteTextCommand::id() const {
+	return changeNoteTextCommandID;
+}
+
+bool ChangeNoteTextCommand::mergeWith(const QUndoCommand *other)
 {
 	// "this" is earlier; "other" is later
 
@@ -953,15 +984,11 @@ bool ChangeLabelTextCommand::mergeWith(const QUndoCommand *other)
         return false;
    	}
 
-    const ChangeLabelTextCommand * sother = dynamic_cast<const ChangeLabelTextCommand *>(other);
+    const ChangeNoteTextCommand * sother = dynamic_cast<const ChangeNoteTextCommand *>(other);
     if (sother == NULL) return false;
 
 	if (sother->m_itemID != m_itemID) {
 		// this is not the same label so don't merge
-		return false;
-	}
-
-	if (m_isLabel != sother->m_isLabel) {
 		return false;
 	}
 
@@ -970,8 +997,8 @@ bool ChangeLabelTextCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-QString ChangeLabelTextCommand::getParamString() const {
-	return QString("ChangeLabelTextCommand ") 
+QString ChangeNoteTextCommand::getParamString() const {
+	return QString("ChangeNoteTextCommand ") 
 		+ BaseCommand::getParamString()
 		+ QString(" id:%1 old:%2 new:%3") 
 			.arg(m_itemID).arg(m_oldText).arg(m_newText);

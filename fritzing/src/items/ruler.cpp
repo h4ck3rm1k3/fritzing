@@ -246,6 +246,13 @@ void Ruler::widthEntry() {
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
+	QString t = edit->text();
+	QString w = modelPart()->prop("width").toString();
+	w.chop(2);
+	if (t.compare(w) == 0) {
+		return;
+	}
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		int units = (m_unitsEditor->currentText() == "cm") ? IndexCm : IndexIn;

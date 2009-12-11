@@ -645,7 +645,7 @@ void HtmlInfoView::setInstanceTitle() {
 	if (m_infoGraphicsView == NULL) return;
 	if (m_currentItem == NULL) return;
 
-	m_infoGraphicsView->setInstanceTitle(m_currentItem->id(), edit->text(), true, true, false);
+	m_infoGraphicsView->setInstanceTitle(m_currentItem->id(), edit->text(), true, false);
 }
 
 void HtmlInfoView::instanceTitleEnter() {
