@@ -35,7 +35,7 @@
 			<input type="submit" value="{% trans "Create New..." %}"></input>
 		</form>
 		
-		<form action="{% url projects-overview %}" id="searchForm" method="get">
+		<form action="{% url projects-overview %}" id="filterForm" method="get">
 			<div class="option">
 				<div class="header">By category:</div>
 				{% for c in categories %}					
