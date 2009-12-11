@@ -2,9 +2,9 @@
 <module moduleId="LogoImageModuleID" >
  <version>1</version>
  <author>Brendan Howell</author>
- <title>Logo</title>
+ <title>Silkscreen Image</title>
  <date>2008-11-25</date>
- <label>PCB</label>
+ <label>IMG</label>
  <tags>
   <tag>pcb</tag>
   <tag>part</tag>
@@ -18,7 +18,7 @@
    <property name="type" >image</property>
  </properties>
  <taxonomy>discreteParts.pcb.logo</taxonomy>
- <description>Logo for adding images to the board</description>
+ <description>For adding images to the silkscreen layer of the board</description>
  <views>
   <defaultUnits>mm</defaultUnits>
   <iconView>
