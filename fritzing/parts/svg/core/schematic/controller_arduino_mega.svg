@@ -30,10 +30,10 @@
 <rect id="connector12terminal" x="212.212" y="215.952" fill="none" width="2" height="2"/>
 <rect id="connector13pin" x="204.212" y="230.018" fill="none" width="10" height="2"/>
 <rect id="connector13terminal" x="212.212" y="230.018" fill="none" width="2" height="2"/>
-<rect id="connector14pin_2_" x="204.188" y="244.348" fill="none" width="10" height="2"/>
-<rect id="connector14terminal_2_" x="212.188" y="244.348" fill="none" width="2" height="2"/>
-<rect id="connector15pin_2_" x="204.188" y="258.519" fill="none" width="10" height="2"/>
-<rect id="connector15terminal_2_" x="212.188" y="258.519" fill="none" width="2" height="2"/>
+<rect id="connector14pin" x="204.188" y="244.348" fill="none" width="10" height="2"/>
+<rect id="connector14terminal" x="212.188" y="244.348" fill="none" width="2" height="2"/>
+<rect id="connector15pin" x="204.188" y="258.519" fill="none" width="10" height="2"/>
+<rect id="connector15terminal" x="212.188" y="258.519" fill="none" width="2" height="2"/>
 <rect id="connector16pin" x="1.15" y="61.566" fill="none" width="10" height="2"/>
 <rect id="connector16terminal" x="1.15" y="61.566" fill="none" width="2" height="2"/>
 <rect id="connector17pin" x="64.013" y="1.155" fill="none" width="2" height="10"/>
@@ -162,6 +162,11 @@
 <rect id="connector78terminal" x="1.135" y="314.401" fill="none" width="2" height="2"/>
 <rect id="connector79pin" x="1.135" y="328.601" fill="none" width="10" height="2"/>
 <rect id="connector79terminal" x="1.135" y="328.601" fill="none" width="2" height="2"/>
+<rect id="connector80pin" x="85.272" y="1.155" fill="none" width="2" height="10"/>
+<rect id="connector80terminal" x="85.272" y="1.155" fill="none" width="2" height="2"/>
+<rect id="connector81pin" x="85.272" y="1.155" fill="none" width="2" height="10"/>
+<rect id="connector81terminal" x="85.272" y="1.155" fill="none" width="2" height="2"/>
+
 <g id="schematic">
 	<g>
 		
