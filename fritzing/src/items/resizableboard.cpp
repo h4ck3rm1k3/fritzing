@@ -515,7 +515,7 @@ bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString 
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (m_modelPart->prop("height").isValid()) {
-			returnValue.replace(HeightExpr, "height='50px");
+			returnValue.replace(HeightExpr, "height='60px");
 		}
 		returnProp = tr("shape");
 	}
@@ -553,11 +553,11 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	vboxLayout->setSpacing(0);
 	vboxLayout->setContentsMargins(0, 3, 0, 0);
 
-	QFrame * subframe = new QFrame();
-	QHBoxLayout * hboxLayout = new QHBoxLayout();
-	hboxLayout->setAlignment(Qt::AlignLeft);
-	hboxLayout->setContentsMargins(0, 0, 0, 0);
-	hboxLayout->setSpacing(0);
+	QFrame * subframe1 = new QFrame();
+	QHBoxLayout * hboxLayout1 = new QHBoxLayout();
+	hboxLayout1->setAlignment(Qt::AlignLeft);
+	hboxLayout1->setContentsMargins(0, 0, 0, 0);
+	hboxLayout1->setSpacing(0);
 
 	QLabel * l1 = new QLabel(tr("width(mm):"));	
 	l1->setMargin(0);
@@ -570,6 +570,12 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	e1->setText(QString::number(w));
 	m_widthEditor = e1;
 
+	QFrame * subframe2 = new QFrame();
+	QHBoxLayout * hboxLayout2 = new QHBoxLayout();
+	hboxLayout2->setAlignment(Qt::AlignLeft);
+	hboxLayout2->setContentsMargins(0, 0, 0, 0);
+	hboxLayout2->setSpacing(0);
+
 	QLabel * l2 = new QLabel(tr("height(mm):"));
 	l2->setMargin(0);
 	QLineEdit * e2 = new QLineEdit();
@@ -581,16 +587,18 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	e2->setText(QString::number(h));
 	m_heightEditor = e2;
 
-	hboxLayout->addWidget(l1);
-	hboxLayout->addWidget(e1);
-	hboxLayout->addSpacing(8);
-	hboxLayout->addWidget(l2);
-	hboxLayout->addWidget(e2);
+	hboxLayout1->addWidget(l1);
+	hboxLayout1->addWidget(e1);
 
-	subframe->setLayout(hboxLayout);
+	hboxLayout2->addWidget(l2);
+	hboxLayout2->addWidget(e2);
+
+	subframe1->setLayout(hboxLayout1);
+	subframe2->setLayout(hboxLayout2);
 
 	vboxLayout->addWidget(qobject_cast<QWidget *>(result));
-	vboxLayout->addWidget(subframe);
+	vboxLayout->addWidget(subframe1);
+	vboxLayout->addWidget(subframe2);
 
 	frame->setLayout(vboxLayout);
 

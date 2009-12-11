@@ -155,7 +155,7 @@ bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop
 	}
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' width='100%' height='22px'></object>");
+		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' width='100%' height='60px'></object>");
 		returnProp = tr("size");
 		return true;
 	}
@@ -210,19 +210,30 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 
 	QVBoxLayout * vboxLayout = NULL;
 	QFrame * frame = NULL;
-	if (!m_hasLogo) {
-		frame = new QFrame();
-		vboxLayout = new QVBoxLayout();
-		vboxLayout->setAlignment(Qt::AlignLeft);
-		vboxLayout->setSpacing(0);
-		vboxLayout->setContentsMargins(0, 3, 0, 0);
-	}
 
-	QFrame * subframe = new QFrame();
-	QHBoxLayout * hboxLayout = new QHBoxLayout();
-	hboxLayout->setAlignment(Qt::AlignLeft);
-	hboxLayout->setContentsMargins(0, 0, 0, 0);
-	hboxLayout->setSpacing(0);
+	frame = new QFrame();
+	vboxLayout = new QVBoxLayout();
+	vboxLayout->setAlignment(Qt::AlignLeft);
+	vboxLayout->setSpacing(0);
+	vboxLayout->setContentsMargins(0, 3, 0, 0);
+
+	QFrame * subframe1 = new QFrame();
+	QHBoxLayout * hboxLayout1 = new QHBoxLayout();
+	hboxLayout1->setAlignment(Qt::AlignLeft);
+	hboxLayout1->setContentsMargins(0, 0, 0, 0);
+	hboxLayout1->setSpacing(0);
+
+	QFrame * subframe2 = new QFrame();
+	QHBoxLayout * hboxLayout2 = new QHBoxLayout();
+	hboxLayout2->setAlignment(Qt::AlignLeft);
+	hboxLayout2->setContentsMargins(0, 0, 0, 0);
+	hboxLayout2->setSpacing(0);
+
+	QFrame * subframe3 = new QFrame();
+	QHBoxLayout * hboxLayout3 = new QHBoxLayout();
+	hboxLayout3->setAlignment(Qt::AlignLeft);
+	hboxLayout3->setContentsMargins(0, 0, 0, 0);
+	hboxLayout3->setSpacing(0);
 
 	QLabel * l1 = new QLabel(tr("width(mm)"));	
 	l1->setMargin(0);
@@ -244,21 +255,21 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	e2->setMaxLength(5);
 	e2->setText(QString::number(h));
 
-	QLabel * l3 = new QLabel(tr("w:h"));	
+	QLabel * l3 = new QLabel(tr("keep in proportion"));	
 	l1->setMargin(0);
 	QCheckBox * checkBox = new QCheckBox();
 	checkBox->setChecked(m_keepAspectRatio);
 
-	hboxLayout->addWidget(l1);
-	hboxLayout->addWidget(e1);
-	hboxLayout->addSpacing(8);
-	hboxLayout->addWidget(l2);
-	hboxLayout->addWidget(e2);
-	hboxLayout->addSpacing(8);
-	hboxLayout->addWidget(l3);
-	hboxLayout->addWidget(checkBox);
+	hboxLayout1->addWidget(l1);
+	hboxLayout1->addWidget(e1);
+	hboxLayout2->addWidget(l2);
+	hboxLayout2->addWidget(e2);
+	hboxLayout3->addWidget(l3);
+	hboxLayout3->addWidget(checkBox);
 
-	subframe->setLayout(hboxLayout);
+	subframe1->setLayout(hboxLayout1);
+	subframe2->setLayout(hboxLayout2);
+	subframe3->setLayout(hboxLayout3);
 
 	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
@@ -268,15 +279,12 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	m_heightEditor = e2;
 	m_aspectRatioCheck = checkBox;
 
-	if (m_hasLogo) {
-		return subframe;
-	}
-
-	vboxLayout->addWidget(subframe);
+	vboxLayout->addWidget(subframe1);
+	vboxLayout->addWidget(subframe2);
+	vboxLayout->addWidget(subframe3);
 	frame->setLayout(vboxLayout);
 
 	return frame;
-
 }
 
 bool LogoItem::hasGrips() {
