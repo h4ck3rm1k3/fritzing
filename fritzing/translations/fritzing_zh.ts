@@ -553,7 +553,7 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>w:h</source>
+        <source>keep in proportion</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2600,32 +2600,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>取消</translation>
     </message>
     <message>
-        <source>Parts Editor</source>
-        <translation>元件编辑器</translation>
-    </message>
-    <message>
-        <source>Cannot write to file %1:
-%2.</source>
-        <translation>不能写入文件 %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Parse error (3) at line %1, column %2:
-%3
-%4</source>
-        <translation>分析错误(3)在行%1,列%2:
-%3
-%4</translation>
-    </message>
-    <message>
-        <source>The file %1 is not a Fritzing file (12).</source>
-        <translation>文件 %1 不是Fritzing文件(12).</translation>
-    </message>
-    <message>
-        <source>The file %1 is not a Fritzing Footprint XML file.</source>
-        <translation>文件 %1 不是Fritzing Footprint XML文件(12).</translation>
-    </message>
-    <message>
         <source>PCB View</source>
         <translation>PCB视图</translation>
     </message>
@@ -2856,27 +2830,8 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
 <context>
     <name>Ruler</name>
     <message>
-        <source>shape</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SVGView</name>
-    <message>
-        <source>Print</source>
-        <translation>打印</translation>
-    </message>
-    <message>
-        <source>Import XML</source>
-        <translation>导入XML</translation>
-    </message>
-    <message>
-        <source>Select Footprint XML File</source>
-        <translation>选择Footprint XML文件</translation>
-    </message>
-    <message>
-        <source>Fritzing Footprint XML Files (*.fzfp);;All Files (*)</source>
-        <translation>Fritzing Footprint XML文件(*.fzfp);;所有文件(*)</translation>
+        <source>width</source>
+        <translation type="unfinished">宽度</translation>
     </message>
 </context>
 <context>
@@ -3163,6 +3118,18 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Change logo from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change %note to &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resize ruler to %1%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change image from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -553,7 +553,7 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>w:h</source>
+        <source>keep in proportion</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2556,32 +2556,6 @@ numa PCB (Placa de Circuito Impresso)?</translation>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Parts Editor</source>
-        <translation>Editar componentes</translation>
-    </message>
-    <message>
-        <source>Cannot write to file %1:
-%2.</source>
-        <translation>Não foi possível escrever no ficheiro %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Parse error (3) at line %1, column %2:
-%3
-%4</source>
-        <translation>Parse error (3) na linha %1, coluna %2:
-%3
-%4</translation>
-    </message>
-    <message>
-        <source>The file %1 is not a Fritzing file (12).</source>
-        <translation>O ficheiro %1 não é um ficheiro Fritzing (12).</translation>
-    </message>
-    <message>
-        <source>The file %1 is not a Fritzing Footprint XML file.</source>
-        <translation>O ficheiro %1 não é um ficheiro Fritzing XML.</translation>
-    </message>
-    <message>
         <source>PCB View</source>
         <translation>vista pcb (Placa de circuito impresso)</translation>
     </message>
@@ -2856,27 +2830,8 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
 <context>
     <name>Ruler</name>
     <message>
-        <source>shape</source>
-        <translation type="unfinished">forma</translation>
-    </message>
-</context>
-<context>
-    <name>SVGView</name>
-    <message>
-        <source>Print</source>
-        <translation>Imprimir</translation>
-    </message>
-    <message>
-        <source>Import XML</source>
-        <translation>Importar XML</translation>
-    </message>
-    <message>
-        <source>Select Footprint XML File</source>
-        <translation>Seleccionar Ficheiro &quot;pegada&quot; XLM</translation>
-    </message>
-    <message>
-        <source>Fritzing Footprint XML Files (*.fzfp);;All Files (*)</source>
-        <translation>Seleccionar Ficheiro &quot;pegada&quot; XLM (*.fzfp);;All Files (*)</translation>
+        <source>width</source>
+        <translation type="unfinished">largura</translation>
     </message>
 </context>
 <context>
@@ -3165,6 +3120,18 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Change logo from %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change %note to &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resize ruler to %1%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change image from %1 to %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
