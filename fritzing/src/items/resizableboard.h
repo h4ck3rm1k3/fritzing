@@ -55,6 +55,7 @@ public:
 	void getParams(QPointF &, QSizeF &);
 	bool hasCustomSVG();
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+	bool stickyEnabled();
 
 public:
 	static QString customShapeTranslated;

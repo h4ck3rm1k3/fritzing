@@ -779,8 +779,15 @@ void ItemBase::setItemPos(QPointF & loc) {
 	setPos(loc);
 }
 
-bool ItemBase::stickyEnabled(ItemBase * stickTo) {
-	Q_UNUSED(stickTo);
+bool ItemBase::stickyEnabled() {
+	switch (itemType()) {
+		case ModelPart::Board:
+		case ModelPart::Breadboard:
+		case ModelPart::Unknown:
+			return false;
+		default:
+			return true;
+	}
 
 	return true;
 }
@@ -797,10 +804,10 @@ void ItemBase::setSticky(bool s)
 void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
 	if (stickem) {
 		if (!m_sticky) {
-			foreach (ItemBase * oldStuckTo, m_stickyList) {
-				if (oldStuckTo == sticky->layerKinChief()) continue;
+			foreach (ItemBase * oldstickingTo, m_stickyList) {
+				if (oldstickingTo == sticky->layerKinChief()) continue;
 
-				oldStuckTo->addSticky(this, false);
+				oldstickingTo->addSticky(this, false);
 			}
 			m_stickyList.clear();
 		}
@@ -815,7 +822,7 @@ void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
 }
 
 
-ItemBase * ItemBase::stuckTo() {
+ItemBase * ItemBase::stickingTo() {
 	if (m_sticky) return NULL;
 
 	if (m_stickyList.count() < 1) return NULL;

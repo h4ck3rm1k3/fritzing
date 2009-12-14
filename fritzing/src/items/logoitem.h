@@ -60,6 +60,7 @@ public:
 	bool hasPartLabel();
 	void loadImage(const QString & fileName, bool addName);
 	void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
+	bool stickyEnabled();
 
 protected slots:
 	void prepLoadImage();

@@ -98,7 +98,10 @@ void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal widt
 void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 	m_resized = false;
 
-	setFlag(QGraphicsItem::ItemIsMovable);
+	setFlag(QGraphicsItem::ItemIsMovable, true);
+#if QT_VERSION >= 0x040600
+		this->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+#endif
 
 	setAcceptHoverEvents(resizable);
 	m_showErrorIcon = false;

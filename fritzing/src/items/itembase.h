@@ -113,10 +113,10 @@ public:
 	virtual bool sticky();
 	virtual void setSticky(bool);
 	virtual void addSticky(ItemBase *, bool stickem);
-	virtual ItemBase * stuckTo();
+	virtual ItemBase * stickingTo();
 	virtual QList<ItemBase *> & stickyList();
 	virtual bool alreadySticking(ItemBase * itemBase);
-	virtual bool stickyEnabled(ItemBase * stickTo);
+	virtual bool stickyEnabled();
 	ConnectorItem * anyConnectorItem();
 	bool isConnectedTo(ItemBase * other);
 	virtual QString instanceTitle();

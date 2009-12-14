@@ -67,7 +67,7 @@ public:
 	void findConnectorsUnder();
 	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds);
 	void collectWires(QList<Wire *> & wires);
-	bool stickyEnabled(ItemBase * stickTo);
+	bool stickyEnabled();
 	void setPcbPenBrush(QBrush & brush);
 	bool getTrace();
 	void setTrace(bool);

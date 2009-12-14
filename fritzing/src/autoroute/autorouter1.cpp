@@ -411,13 +411,13 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 
 ItemBase * Autorouter1::getPartForBounds(Edge * edge) {
 	if (m_sketchWidget->autorouteNeedsBounds()) {
-		if (edge->from->attachedTo()->stuckTo() != NULL && edge->from->attachedTo()->stuckTo() == edge->to->attachedTo()->stuckTo()) {
-			return edge->from->attachedTo()->stuckTo();
+		if (edge->from->attachedTo()->stickingTo() != NULL && edge->from->attachedTo()->stickingTo() == edge->to->attachedTo()->stickingTo()) {
+			return edge->from->attachedTo()->stickingTo();
 		}
-		else if (edge->from->attachedTo()->sticky() && edge->from->attachedTo() == edge->to->attachedTo()->stuckTo()) {
+		else if (edge->from->attachedTo()->sticky() && edge->from->attachedTo() == edge->to->attachedTo()->stickingTo()) {
 			return edge->from->attachedTo();
 		}
-		else if (edge->to->attachedTo()->sticky() && edge->to->attachedTo() == edge->from->attachedTo()->stuckTo()) {
+		else if (edge->to->attachedTo()->sticky() && edge->to->attachedTo() == edge->from->attachedTo()->stickingTo()) {
 			return edge->to->attachedTo();
 		}
 		else if (edge->to->attachedTo() == edge->from->attachedTo()) {

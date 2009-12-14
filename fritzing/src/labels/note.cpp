@@ -694,3 +694,7 @@ bool Note::hasPartLabel() {
 	
 	return false;
 }
+
+bool Note::stickyEnabled() {
+	return false;
+}

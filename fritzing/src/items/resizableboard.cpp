@@ -628,4 +628,7 @@ void ResizableBoard::heightEntry() {
 	}
 }
 
+bool ResizableBoard::stickyEnabled() {
+	return false;
+}
 

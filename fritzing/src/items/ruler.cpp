@@ -282,3 +282,7 @@ qreal Ruler::convertToInches(const QString & string) {
 	return retval;
 }
 
+bool Ruler::stickyEnabled() {
+	return false;
+}
+

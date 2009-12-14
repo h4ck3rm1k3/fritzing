@@ -113,8 +113,8 @@ QString LayerKinPaletteItem::toolTip2() {
 	return m_layerKinChief->toolTip2();
 }
 
-bool LayerKinPaletteItem::stickyEnabled(ItemBase * stickTo) {
-	return m_layerKinChief->stickyEnabled(stickTo);
+bool LayerKinPaletteItem::stickyEnabled() {
+	return m_layerKinChief->stickyEnabled();
 }
 
 bool LayerKinPaletteItem::sticky() {
@@ -130,8 +130,8 @@ void LayerKinPaletteItem::addSticky(ItemBase * sticky, bool stickem) {
 	m_layerKinChief->addSticky(sticky, stickem);
 }
 
-ItemBase * LayerKinPaletteItem::stuckTo() {
-	return m_layerKinChief->stuckTo();
+ItemBase * LayerKinPaletteItem::stickingTo() {
+	return m_layerKinChief->stickingTo();
 }
 
 QList<ItemBase *> & LayerKinPaletteItem::stickyList() {

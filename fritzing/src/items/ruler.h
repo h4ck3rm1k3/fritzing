@@ -50,6 +50,7 @@ public:
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
 	bool hasCustomSVG();
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+	bool stickyEnabled();
 
 public slots:
 	void widthEntry();

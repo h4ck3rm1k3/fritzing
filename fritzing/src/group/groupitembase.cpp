@@ -49,6 +49,9 @@ GroupItemBase::GroupItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIde
 
 	this->setVisible(true);
 	this->setFlag(QGraphicsItem::ItemIsSelectable, true);
+#if QT_VERSION >= 0x040600
+		this->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+#endif
 	this->setPos(viewGeometry.loc());
 }
 

@@ -57,6 +57,7 @@ public:
 	void setSize(const QSizeF & size);
 	void setHidden(bool hide) ;
 	bool hasPartLabel();
+	bool stickyEnabled();
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -785,9 +785,8 @@ void Wire::collectWiresAux(QList<Wire *> & wires, ConnectorItem * start) {
 
 }
 
-bool Wire::stickyEnabled(ItemBase * stickTo)
+bool Wire::stickyEnabled()
 {
-	Q_UNUSED(stickTo);
 	return (connector0()->connectionsCount() <= 0) && (connector1()->connectionsCount() <= 0);
 }
 

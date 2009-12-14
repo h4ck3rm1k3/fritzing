@@ -808,7 +808,7 @@ void SketchWidget::checkSticky(long id, bool doEmit, bool checkCurrent, CheckSti
 	}
 	else {
 		ItemBase * stickyOne = overSticky(itemBase);
-		ItemBase * wasStickyOne = itemBase->stuckTo();
+		ItemBase * wasStickyOne = itemBase->stickingTo();
 		if (stickyOne != wasStickyOne) {
 			if (wasStickyOne != NULL) {
 				wasStickyOne->addSticky(itemBase, false);
@@ -1881,11 +1881,11 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 			}
 			if (ct->status[i] != UNDETERMINED) continue;
 
-			ItemBase * stuckTo = ct->wire->stuckTo();
-			if (stuckTo != NULL) {
+			ItemBase * stickingTo = ct->wire->stickingTo();
+			if (stickingTo != NULL) {
 				QPointF p = from.at(i)->sceneAdjustedTerminalPoint(NULL);
-				if (stuckTo->contains(stuckTo->mapFromScene(p))) {
-					ct->status[i] = m_savedItems.contains(stuckTo) ? IN : OUT;
+				if (stickingTo->contains(stickingTo->mapFromScene(p))) {
+					ct->status[i] = m_savedItems.contains(stickingTo) ? IN : OUT;
 					changed = true;
 				}
 			}
@@ -3826,12 +3826,12 @@ void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 
 	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), false, parentCommand);
 	if (itemBase->sticky()) {
-		foreach (ItemBase * stuck, stickyList) {
-			checkStickyCommand->stick(this, itemBase->id(), stuck->id(), false);
+		foreach (ItemBase * sticking, stickyList) {
+			checkStickyCommand->stick(this, itemBase->id(), sticking->id(), false);
 		}
 	}
-	else if (itemBase->stuckTo() != NULL) {
-		checkStickyCommand->stick(this, itemBase->stuckTo()->id(), itemBase->id(), false);
+	else if (itemBase->stickingTo() != NULL) {
+		checkStickyCommand->stick(this, itemBase->stickingTo()->id(), itemBase->id(), false);
 	}
 }
 
@@ -3907,28 +3907,29 @@ ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelP
 }
 
 ItemBase * SketchWidget::overSticky(ItemBase * itemBase) {
-	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem != NULL) {
-			QPointF p = connectorItem->sceneAdjustedTerminalPoint(NULL);
-			foreach (QGraphicsItem * item,  this->scene()->items(p)) {
-				ItemBase * s = dynamic_cast<ItemBase *>(item);
-				if (s == NULL) continue;
+	if (!itemBase->stickyEnabled()) return NULL;
 
-				if (s == connectorItem->attachedTo()) continue;
-				if (!s->sticky()) continue;
+	if (itemBase->itemType() != ModelPart::Module) {
+		foreach (QGraphicsItem * item, scene()->collidingItems(itemBase)) {
+			ItemBase * s = dynamic_cast<ItemBase *>(item);
+			if (s == NULL) continue;
+			if (s == itemBase) continue;
+			if (!s->sticky()) continue;
 
-				return s->layerKinChief();
-			}
+			return s->layerKinChief();
 		}
-		else {
-			// if it's a module, look at connectors inside the module
-			ItemBase * subItemBase = dynamic_cast<ItemBase *>(childItem);
-			if (subItemBase != NULL) {
-				ItemBase * result = overSticky(subItemBase);
-				if (result != NULL) {
-					return result;
-				}
+
+		return NULL;
+	}
+
+	// if it's a module, look at connectors inside the module
+
+	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+		ItemBase * subItemBase = dynamic_cast<ItemBase *>(childItem);
+		if (subItemBase != NULL) {
+			ItemBase * result = overSticky(subItemBase);
+			if (result != NULL) {
+				return result;
 			}
 		}
 	}
@@ -3961,19 +3962,10 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckSti
 	QList<ItemBase *> already;
 	QPolygonF poly = stickyOne->mapToScene(stickyOne->boundingRect());
 	foreach (QGraphicsItem * item, scene()->items(poly)) {
-		ItemBase * itemBase = NULL;
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		// TODO: make this more efficient by selecting itembases to begin with
-		if (connectorItem == NULL) {
-			itemBase = dynamic_cast<ItemBase *>(item);
-			if (itemBase == NULL) continue;
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
 
-			if (itemBase->itemType() != ModelPart::Logo) continue;
-		}
-		else {
-			itemBase = connectorItem->attachedTo();
-			if (itemBase == NULL) continue;
-		}
+		itemBase = itemBase->layerKinChief();
 
 		// check whether it's a module
 		ItemBase * parent = itemBase;
@@ -3986,13 +3978,13 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckSti
 
 		itemBase = parent;
 
+		if (!itemBase->stickyEnabled()) continue;
 		if (added.contains(itemBase)) continue;
 		if (itemBase->sticky()) continue;
 		if (stickyOne->alreadySticking(itemBase)) {
 			already.append(itemBase);
 			continue;
 		}
-		if (!stickyOne->stickyEnabled(itemBase)) continue;
 
 		stickyOne->addSticky(itemBase, true);
 		itemBase->addSticky(stickyOne, true);

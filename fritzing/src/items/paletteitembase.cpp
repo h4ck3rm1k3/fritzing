@@ -51,7 +51,10 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
  	m_blockItemSelectedChange = false;
 	this->setPos(viewGeometry.loc());
     setFlag(QGraphicsItem::ItemIsSelectable, true);
-    setAcceptHoverEvents(true);
+#if QT_VERSION >= 0x040600
+		setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+#endif
+		setAcceptHoverEvents(true);
 }
 
 QRectF PaletteItemBase::boundingRect() const

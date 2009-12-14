@@ -733,3 +733,8 @@ void LogoItem::setFileNameItems() {
 	}
 }
 
+
+bool LogoItem::stickyEnabled() {
+	return true;
+}
+
