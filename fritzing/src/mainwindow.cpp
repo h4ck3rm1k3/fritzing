@@ -986,6 +986,7 @@ void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bu
 	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
 	// the bundled itself
 	bundler->loadBundledAux(unzipDir,mps);
+	m_fileName.clear();							// clear m_fileName, so "save" will become "save as"; otherwise it will attempt to save this in the unzipDirPath that you're about to rmdir
 
 	rmdir(unzipDirPath);
 }
