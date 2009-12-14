@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="silkscreen" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="107.496px" height="26.5px" viewBox="0 0 107.496 26.5" enable-background="new 0 0 107.496 26.5" xml:space="preserve">
+<g id="silkscreen">
 <path fill="#FFFFFF" d="M38.592,23.846h-6.33V7.793h6.33V23.846z"/>
 <path fill="#FFFFFF" d="M50.182,13.57v10.39h-7.285V13.57h-3.165V7.854h13.615v5.717H50.182z"/>
 <path fill="#FFFFFF" d="M75.516,23.96h-6.33V7.906h6.33V23.96z"/>
@@ -16,4 +17,5 @@
 <polygon fill="#FFFFFF" points="87.368,7.855 85.217,7.855 85.217,9.924 83.146,7.855 79.483,7.855 76.655,10.682 76.655,23.96 
 	81.561,23.96 81.561,20.906 82.701,20.906 82.701,21.926 84.734,23.96 90.215,23.96 90.215,10.682 "/>
 <text transform="matrix(1 0 0 1 2.5269 6.2251)" fill="#FFFFFF" font-family="'OCRA'" font-size="5">MADE WITH</text>
+</g>
 </svg>
