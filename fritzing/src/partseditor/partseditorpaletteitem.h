@@ -81,6 +81,8 @@ class PartsEditorPaletteItem : public PaletteItem {
 		PartsEditorView *m_owner;
 		bool m_shouldDeletePath;
 		QString m_itemSVG;
+
+		QList<ViewLayer::ViewLayerID> m_extraViewLayers;
 };
 
 #endif /* PARTSEDITORPALETTEITEM_H_ */

@@ -146,13 +146,28 @@ void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
 	streamWriter.writeStartElement("layers");
 	streamWriter.writeAttribute("image",m_svgStrings->relativePath());
-		streamWriter.writeStartElement("layer");
-		streamWriter.writeAttribute("layerId",xmlViewLayerID());
-		streamWriter.writeEndElement();
+	streamWriter.writeStartElement("layer");
+	streamWriter.writeAttribute("layerId",xmlViewLayerID());
+	streamWriter.writeEndElement();
+
+	// no layerkin were created, so use m_extraViewLayers
+	// TODO: what if svg doesn't have any elements with the given layerid?
+
+	/*
 	foreach (ItemBase * lkpi, m_layerKin) {
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(lkpi->viewLayerID()));
 		streamWriter.writeEndElement();
+	}
+	*/
+
+	foreach (ViewLayer::ViewLayerID vlid, m_extraViewLayers) {
+		QString layername = ViewLayer::viewLayerXmlNameFromID(vlid);
+		if (!layername.isEmpty()) {
+			streamWriter.writeStartElement("layer");
+			streamWriter.writeAttribute("layerId", layername);
+			streamWriter.writeEndElement();
+		}
 	}
 
 	streamWriter.writeEndElement();
@@ -204,6 +219,18 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 		}
 	}
 
+	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPartShared->domDocument(), viewIdentifier);
+	QDomElement layer = layers.firstChildElement("layer");
+	while (!layer.isNull()) {
+		QString layerName = layer.attribute("layerId");
+		if (!layerName.isEmpty()) {
+			ViewLayer::ViewLayerID vlid = ViewLayer::viewLayerIDFromXmlString(layerName);
+			if (vlid != viewLayerID) {
+				m_extraViewLayers << vlid;
+			}
+		}
+		layer = layer.nextSiblingElement("layer");
+	}
 
 	FSvgRenderer * renderer = NULL;
 	if (renderer == NULL) {
