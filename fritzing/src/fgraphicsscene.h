@@ -38,7 +38,6 @@ class FGraphicsScene : public QGraphicsScene
 public:
 	FGraphicsScene(QObject * parent = 0);
 	void helpEvent(QGraphicsSceneHelpEvent *);
-	void drawItems(QPainter *, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget *);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *contextMenuEvent);
 	QPointF lastContextMenuPos();
 

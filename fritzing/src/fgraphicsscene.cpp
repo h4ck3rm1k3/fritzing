@@ -73,11 +73,6 @@ void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
 
 }
 
-void FGraphicsScene::drawItems(QPainter * painter, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget * widget)
-{
-	QGraphicsScene::drawItems(painter, numItems, items, options, widget);
-}
-
 void FGraphicsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *contextMenuEvent)
 {
 	m_lastContextMenuPos = contextMenuEvent->scenePos();

@@ -47,7 +47,6 @@ public:
 protected:
 	void resizeEvent ( QResizeEvent * event ); 
 	void mousePressEvent(QMouseEvent *event);
-	void drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[]);
 
 public slots:
 	void updateSceneRect ( const QRectF & rect );

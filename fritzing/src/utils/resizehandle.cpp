@@ -86,3 +86,14 @@ qreal ResizeHandle::currentScale() {
 	}
 	return 1;
 }
+
+void ResizeHandle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	if(scene()) {
+		ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(scene()->parent());
+		if (sw != NULL) {
+			QGraphicsPixmapItem::paint(painter, option, widget);
+		}
+	}
+}
+
