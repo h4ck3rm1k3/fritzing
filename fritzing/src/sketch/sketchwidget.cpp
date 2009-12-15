@@ -6249,3 +6249,11 @@ void SketchWidget::loadLogoImage(long itemID, const QString & newFilename, bool 
 
 	logoItem->loadImage(newFilename, addName);
 }
+
+void SketchWidget::paintEvent ( QPaintEvent * event ) {
+    //DebugDialog::debug("sketch widget paint event");
+    if (scene()) {
+        ((FGraphicsScene *) scene())->setDisplayHandles(true);
+    }
+    QGraphicsView::paintEvent(event);
+}

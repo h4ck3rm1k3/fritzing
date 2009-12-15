@@ -42,6 +42,14 @@ MiniView::~MiniView()
 {
 }
 
+void MiniView::paintEvent ( QPaintEvent * event ) {
+    //DebugDialog::debug("mini view paint event");
+    if (scene()) {
+        ((FGraphicsScene *) scene())->setDisplayHandles(false);
+    }
+    QGraphicsView::paintEvent(event);
+}
+
 void MiniView::setView(QGraphicsView * view) {
 	m_otherView = view;
 	this->setBackgroundBrush(view->backgroundBrush());
