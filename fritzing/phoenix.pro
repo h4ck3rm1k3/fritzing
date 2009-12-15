@@ -34,6 +34,7 @@ macx {
 	CONFIG += x86 ppc
 	QMAKE_INFO_PLIST = FritzingInfo.plist
 	DEFINES += QT_NO_DEBUG
+        LIBS += /usr/lib/
 }
 unix {
     !macx {						# unix is defined on mac
