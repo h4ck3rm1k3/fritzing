@@ -467,6 +467,12 @@ void SVG2gerber::allPaths2gerber() {
         QString data = path.attribute("d");
         QString aperture;
 
+        // set poly fill if this is actually a filled in shape
+        if(path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
+            // start poly fill
+            m_gerber_paths += "G36*\n";
+        }
+
         const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
 
         PathUserData pathUserData;
@@ -507,6 +513,12 @@ void SVG2gerber::allPaths2gerber() {
 
             // draw 4 lines
             m_contour_paths += pathUserData.string;
+        }
+
+        // stop poly fill if this is actually a filled in shape
+        if(path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
+            // stop poly fill
+            m_gerber_paths += "G37*\n";
         }
     }
 }
