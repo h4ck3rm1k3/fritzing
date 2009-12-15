@@ -33,6 +33,7 @@ $Date$
 
 FGraphicsScene::FGraphicsScene( QObject * parent) : QGraphicsScene(parent)
 {
+    m_displayHandles = true;
 	//setItemIndexMethod(QGraphicsScene::NoIndex);
 }
 
@@ -82,4 +83,13 @@ void FGraphicsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *contextMen
 QPointF FGraphicsScene::lastContextMenuPos() {
 	return m_lastContextMenuPos;
 }
+
+void FGraphicsScene::setDisplayHandles(bool displayHandles) {
+    m_displayHandles = displayHandles;
+}
+
+bool FGraphicsScene::displayHandles() {
+    return m_displayHandles;
+}
+
 

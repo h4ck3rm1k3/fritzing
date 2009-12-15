@@ -40,9 +40,12 @@ public:
 	void helpEvent(QGraphicsSceneHelpEvent *);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *contextMenuEvent);
 	QPointF lastContextMenuPos();
+    void setDisplayHandles(bool);
+    bool displayHandles();
 
 protected:
 	QPointF m_lastContextMenuPos;
+    bool m_displayHandles;
 
 };
 
