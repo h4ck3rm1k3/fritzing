@@ -84,9 +84,6 @@ class BinManager : public QFrame {
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
-		void widgetChangedTabParent(
-			QWidget* widgetMoved, StackTabWidget* oldTabWidget, StackTabWidget* newTabWidget
-		);
 		void setAsCurrentBin(PartsBinPaletteWidget* bin);
 		void currentChanged(StackTabWidget*,int);
 		void tabCloseRequested(StackTabWidget*,int);

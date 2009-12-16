@@ -34,37 +34,7 @@ $Date$
 #include <QVBoxLayout>
 #include <QHash>
 
-class StackWidgetSeparator;
 class StackTabWidget;
-
-#include "dropsink.h"
-
-struct DragFromOrTo {
-	DragFromOrTo(DropSink* _sink = NULL, int _index = -1, QTabBar::ButtonPosition _side = QTabBar::LeftSide) {
-		sink = _sink;
-		index = _index;
-		side = _side;
-	}
-	DropSink* sink;
-	int index;
-	QTabBar::ButtonPosition side;
-};
-
-class StackWidgetDockTitleBar : public QFrame {
-	Q_OBJECT
-	public:
-		StackWidgetDockTitleBar(class StackWidget*, class FDockWidget*);
-
-	signals:
-		void draggingCloseToSeparator(QWidget*,bool);
-		void dropToSeparator(QWidget*);
-
-	protected:
-		void dragEnterEvent(QDragEnterEvent *event);
-		void dragLeaveEvent(QDragLeaveEvent *event);
-		void dragMoveEvent(QDragMoveEvent *event);
-		void dropEvent(QDropEvent *event);
-};
 
 class StackWidget : public QFrame {
 	Q_OBJECT
@@ -87,35 +57,15 @@ class StackWidget : public QFrame {
 		void setCurrentIndex(int index);
 		void setCurrentWidget(QWidget *widget);
 
-		void setDragSource(StackTabWidget*, int index);
-		void setDropSink(DropSink* receptor, QTabBar::ButtonPosition, int index);
-		void setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index);
-		void dropped();
-
-		void draggingCloseToSeparator(class QWidget*, bool);
-		void dropToSeparator(QWidget*);
-
 	signals:
 		void currentChanged(int index);
 		void widgetRemoved(int index);
-		void widgetChangedTabParent(
-			QWidget* widgetToMove, StackTabWidget* oldTabWidget, StackTabWidget* newTabWidget
-		);
-
 
 	protected:
-		int closestIndexToPos(const QPoint &pos);
-		StackWidgetSeparator *newSeparator(QWidget *widget);
-
 		QVBoxLayout *m_layout;
 		QWidget *m_current;
 
-		DragFromOrTo m_dragSource;
-		DragFromOrTo m_dropSink;
-		DragFromOrTo m_potentialDropSink;
 
-		QHash<QWidget*,StackWidgetSeparator*> m_separators;
-		StackWidgetSeparator* m_topSeparator;
 };
 
 #endif /* STACKWIDGET_H_ */

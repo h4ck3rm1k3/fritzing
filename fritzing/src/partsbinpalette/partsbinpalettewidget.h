@@ -126,9 +126,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void savePartAsBundled(const QString &moduleId);
 		void focused(PartsBinPaletteWidget*);
 
-		void draggingCloseToSeparator(QWidget*,bool);
-		void dropToSeparator(QWidget*);
-
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dragLeaveEvent(QDragLeaveEvent *event);

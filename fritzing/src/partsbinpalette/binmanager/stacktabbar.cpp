@@ -37,59 +37,13 @@ $Date$
 
 StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
 	setAcceptDrops(true);
+    //this->setContentsMargins(0,0,0,0);
+    //this->setTabsClosable(true);
+    setMovable(true);
 	m_parent = parent;
 	setProperty("current","false");
 	setExpanding(false);
 	setElideMode(Qt::ElideRight);
-}
-
-int StackTabBar::tabIndexAtPos(const QPoint &p) const {
-	for (int i = 0; i < m_parent->count(); ++i) {
-    	if (m_parent->isTabEnabled(i) && tabRect(i).contains(p)) {
-    		return i;
-    	}
-	}
-    return -1;
-}
-
-void StackTabBar::mouseMoveEvent(QMouseEvent *event) {
-	// If the left button isn't pressed anymore then return
-	if (!(event->buttons() & Qt::LeftButton))
-		return;
-
-	// If the distance is too small then return
-	if ((event->pos() - m_dragStartPos).manhattanLength()< QApplication::startDragDistance())
-		return;
-
-	// initiate Drag
-	QDrag* drag = new QDrag(this);
-
-	QMimeData* mimeData = new QMimeData;
-	// a crude way to distinguish tab-reodering drops from other ones
-	mimeData->setData("action", "tab-reordering");
-
-	drag->setMimeData(mimeData);
-	drag->exec();
-}
-
-void StackTabBar::mousePressEvent(QMouseEvent *event) {
-	if(event->button() == Qt::LeftButton) {
-		m_dragStartPos = event->pos();
-		int index = tabAt(m_dragStartPos);
-		emit setDragSource(m_parent,index);
-		if(index == currentIndex()) {
-			m_parent->informCurrentChanged(index);
-		}
-	}
-
-    QTabBar::mousePressEvent(event);
-}
-
-void StackTabBar::mouseReleaseEvent(QMouseEvent *event) {
-	if(event->button() == Qt::LeftButton) {
-		emit setDragSource(NULL);
-	}
-	QTabBar::mouseReleaseEvent(event);
 }
 
 bool StackTabBar::mimeIsAction(const QMimeData* m, const QString& action) {
@@ -102,29 +56,17 @@ bool StackTabBar::mimeIsAction(const QMimeData* m, const QString& action) {
 }
 
 void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
-	// Only accept if it's an tab-reordering request
+    // Only accept if it's an part-reordering request
 	const QMimeData *m = event->mimeData();
-	if (mimeIsAction(m, "tab-reordering") || mimeIsAction(m, "part-reordering")) {
+    if (mimeIsAction(m, "part-reordering")) {
 		event->acceptProposedAction();
 	}
-}
-
-void StackTabBar::dragLeaveEvent(QDragLeaveEvent* event) {
-	for(int i=0; i < m_parent->count(); i++) {
-		m_parent->showFeedback(i, QTabBar::LeftSide, false);
-	}
-	QTabBar::dragLeaveEvent(event);
 }
 
 void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	const QMimeData *m = event->mimeData();
 	int index = tabAt(event->pos());
-	if(mimeIsAction(m,"tab-reordering")) {
-		ButtonPosition side = getButtonPos(index,event->pos());
-		emit setPotentialDropSink(m_parent,side,index);
-		emit setDropSink(NULL);
-		event->acceptProposedAction();
-	} else if (event->source() != this && mimeIsAction(event->mimeData(),"part-reordering")) {
+    if ((event->source() != this) && mimeIsAction(m,"part-reordering")) {
 		PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(index));
 		if(bin && !bin->currentBinIsCore()) {
 			event->acceptProposedAction();
@@ -133,29 +75,11 @@ void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	}
 }
 
-QTabBar::ButtonPosition StackTabBar::getButtonPos(int index, const QPoint &pos) {
-	if(index == count()-1 && posCloserToTheEnd(pos)) {
-		return QTabBar::RightSide;
-	} else {
-		return QTabBar::LeftSide;
-	}
-}
-
-bool StackTabBar::posCloserToTheEnd(const QPoint &pos) {
-	QRect tabRect = this->tabRect(count()-1);
-	QPoint middle(tabRect.x()+tabRect.width()/2,tabRect.y()+tabRect.height());
-	QRect rightSide(tabRect.topLeft(),middle);
-	return !rightSide.contains(pos);
-}
-
 void StackTabBar::dropEvent(QDropEvent* event) {
 	int toIndex = tabAt(event->pos());
 
 	const QMimeData *m = event->mimeData();
-	if(mimeIsAction(m, "tab-reordering")) {
-		emit setDropSink(m_parent, getButtonPos(toIndex,event->pos()), toIndex);
-		emit dropped();
-	} else if(mimeIsAction(m, "part-reordering")) {
+    if(mimeIsAction(m, "part-reordering")) {
 		// this widget shouldn't know about bin widgets,
 		// but it's already aware of "part-reordering"
 		// actions, so fuck it!

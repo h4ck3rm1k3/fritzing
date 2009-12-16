@@ -33,30 +33,21 @@ $Date$
 #include <QPushButton>
 #include <QPointer>
 
-#include "dropsink.h"
-
 // originally extracted from http://wiki.qtcentre.org/index.php?title=Movable_Tabs
-class StackTabWidget : public QTabWidget, public DropSink {
+class StackTabWidget : public QTabWidget {
 	Q_OBJECT
 	public:
 		StackTabWidget(class StackWidget *parent);
-		void showFeedback(int index, QTabBar::ButtonPosition side, bool doShow=true);
 		class StackTabBar *stackTabBar();
 
 	public slots:
-		void moveTab(int fromIndex, int toIndex);
 		void informCurrentChanged(int index);
 		void informTabCloseRequested(int index);
-		void showFeedback();
 
 	signals:
 		void currentChanged(StackTabWidget *, int index);
 		void tabCloseRequested(StackTabWidget *, int index);
 
-	protected:
-		void dragEnterEvent(QDragEnterEvent* event);
-
-		QPointer<QPushButton> m_feedback;
 };
 
 #endif /* STACKTABWIDGET_H_ */

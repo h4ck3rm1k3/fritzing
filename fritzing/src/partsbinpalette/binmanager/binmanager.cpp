@@ -69,10 +69,6 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 
 	m_stackWidget = new StackWidget(this);
 	m_stackWidget->setAcceptDrops(true);
-	connect(
-		m_stackWidget, SIGNAL(widgetChangedTabParent(QWidget*, StackTabWidget*,StackTabWidget*)),
-		this, SLOT(widgetChangedTabParent(QWidget*, StackTabWidget*,StackTabWidget*))
-	);
 
 	m_unsavedBinsCount = 0;
 
@@ -332,16 +328,6 @@ PartsBinPaletteWidget* BinManager::newBin() {
 	connect(bin, SIGNAL(saved(bool)), m_mainWindow, SLOT(binSaved(bool)));
 	connect(m_mainWindow, SIGNAL(alienPartsDismissed()), bin, SLOT(removeAlienParts()));
 
-	connect(
-		bin, SIGNAL(draggingCloseToSeparator(QWidget*,bool)),
-		m_stackWidget, SLOT(draggingCloseToSeparator(QWidget*,bool))
-	);
-
-	connect(
-		bin, SIGNAL(dropToSeparator(QWidget*)),
-		m_stackWidget, SLOT(dropToSeparator(QWidget*))
-	);
-
 	return bin;
 }
 
@@ -467,16 +453,6 @@ void BinManager::restoreStateAndGeometry() {
 
 			settings.endGroup();
 		}
-	}
-}
-
-void BinManager::widgetChangedTabParent(
-	QWidget* widgetMoved, StackTabWidget *oldTabWidget, StackTabWidget *newTabWidget
-) {
-	Q_UNUSED(oldTabWidget);
-	PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(widgetMoved);
-	if(bin) {
-		registerBin(bin, newTabWidget);
 	}
 }
 

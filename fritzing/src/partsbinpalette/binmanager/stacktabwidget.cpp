@@ -35,40 +35,6 @@ $Date$
 StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 	setTabBar(new StackTabBar(this));
 
-	connect(
-		tabBar(),SIGNAL(setDragSource(StackTabWidget*, int)),
-		parent,SLOT(setDragSource(StackTabWidget*, int)),
-		Qt::DirectConnection
-	);
-	connect(
-		tabBar(),SIGNAL(setDropSink(DropSink*,QTabBar::ButtonPosition, int)),
-		parent,SLOT(setDropSink(DropSink*,QTabBar::ButtonPosition, int)),
-		Qt::DirectConnection
-	);
-	connect(
-		tabBar(),SIGNAL(setPotentialDropSink(DropSink*, QTabBar::ButtonPosition, int)),
-		parent,SLOT(setPotentialDropSink(DropSink*, QTabBar::ButtonPosition, int)),
-		Qt::DirectConnection
-	);
-	connect(
-		tabBar(),SIGNAL(dropped()),
-		parent,SLOT(dropped())
-	);
-
-	QPixmap pixmap = QPixmap(":/resources/images/icons/binRearrangeTabs.png");
-	QIcon icon(pixmap);
-	m_feedback = new QPushButton(this);
-	m_feedback->setIcon(icon);
-	m_feedback->hide();
-	m_feedback->setEnabled(false);
-	m_feedback->setFlat(true);
-	m_feedback->setFixedWidth(10);
-	m_feedback->setStyleSheet("background-color: transparent;");
-
-#if QT_VERSION >= 0x040500
-	//this->setMovable(true);
-	//this->setTabsClosable(true);
-#endif
 
 	connect(
 		this, SIGNAL(currentChanged(int)),
@@ -78,62 +44,6 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 		this, SIGNAL(tabCloseRequested(int)),
 		this, SLOT(informTabCloseRequested(int))
 	);
-}
-
-void StackTabWidget::dragEnterEvent(QDragEnterEvent* event) {
-	// Only accept if it's an tab-reordering request
-	const QMimeData* m = event->mimeData();
-	QStringList formats = m->formats();
-	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
-		event->acceptProposedAction();
-	}
-}
-
-void StackTabWidget::moveTab(int fromIndex, int toIndex) {
-	QWidget* w = widget(fromIndex);
-	QIcon icon = tabIcon(fromIndex);
-	QString text = tabText(fromIndex);
-
-	removeTab(fromIndex);
-	insertTab(toIndex, w, icon, text);
-	setCurrentIndex(toIndex);
-}
-
-void StackTabWidget::showFeedback(int index, QTabBar::ButtonPosition side, bool doShow) {
-	QTimer * timer = new QTimer();
-	timer->setSingleShot(true);
-	timer->setInterval(10);
-	timer->setProperty("index", index);
-	timer->setProperty("side", side);
-	timer->setProperty("show", doShow);
-	connect(timer, SIGNAL(timeout()), this, SLOT(showFeedback()));
-	timer->start();
-}
-
-void StackTabWidget::showFeedback() {
-	QObject * sndr = sender();
-	if (sndr == NULL) return;
-
-	int index = sndr->property("index").toInt();
-	bool doShow = sndr->property("show").toBool();
-	QTabBar::ButtonPosition side = (QTabBar::ButtonPosition) sndr->property("side").toInt();
-
-	if (m_feedback) {
-		m_feedback->setVisible(doShow);
-	}
-	if(doShow) {
-		tabBar()->setTabButton(index,side,m_feedback);
-		QTabBar::ButtonPosition otherSide = side == QTabBar::RightSide? QTabBar::LeftSide: QTabBar::RightSide;
-		tabBar()->setTabButton(index,otherSide,NULL);
-	} else {
-		if (m_feedback) {
-			m_feedback->setParent(this);
-		}
-		tabBar()->setTabButton(index,QTabBar::LeftSide,NULL);
-		tabBar()->setTabButton(index,QTabBar::RightSide,NULL);
-	}
-
-	sndr->deleteLater();
 }
 
 StackTabBar *StackTabWidget::stackTabBar() {

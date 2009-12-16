@@ -154,8 +154,6 @@
         <file>resources/images/icons/partsEditorConnectorRemoveEnabled_icon.png</file>
         <file>resources/images/icons/partsEditorConnectorRemoveDisabled_icon.png</file>
         <file>resources/images/icons/partsEditorConnectorRemovePressed_icon.png</file>
-        <file>resources/images/icons/binRearrangeTabs.png</file>
-        <file>resources/images/icons/binRearrangeSeparator.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
         <file>resources/images/itemselection/cornerHandlerActiveTopLeft.png</file>

@@ -822,29 +822,18 @@ bool PartsBinPaletteWidget::isOverFooter(QDropEvent* event) {
 }
 
 void PartsBinPaletteWidget::dragEnterEvent(QDragEnterEvent *event) {
-	if(BinManager::isTabReorderingEvent(event)) {
-		event->acceptProposedAction();
-	}
 	QFrame::dragEnterEvent(event);
 }
 
 void PartsBinPaletteWidget::dragLeaveEvent(QDragLeaveEvent *event) {
-	emit draggingCloseToSeparator((QWidget*)m_tabWidget,false);
 	QFrame::dragLeaveEvent(event);
 }
 
 void PartsBinPaletteWidget::dragMoveEvent(QDragMoveEvent *event) {
-	if(isOverFooter(event) && BinManager::isTabReorderingEvent(event)) {
-		event->acceptProposedAction();
-		emit draggingCloseToSeparator((QWidget*)m_tabWidget,true);
-	}
 	QFrame::dragMoveEvent(event);
 }
 
 void PartsBinPaletteWidget::dropEvent(QDropEvent *event) {
-	if(isOverFooter(event) && BinManager::isTabReorderingEvent(event)) {
-		emit dropToSeparator((QWidget*)m_tabWidget);
-	}
 	QFrame::dropEvent(event);
 }
 
