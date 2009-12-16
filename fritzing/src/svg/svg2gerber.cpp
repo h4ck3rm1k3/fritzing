@@ -37,28 +37,41 @@ SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
     Q_UNUSED(debugStr);
 
     m_SVGDom = QDomDocument("svg");
-    m_SVGDom.setContent(svgStr);
+    QString errorStr;
+    int errorLine;
+    int errorColumn;
+    bool result = m_SVGDom.setContent(svgStr, &errorStr, &errorLine, &errorColumn);
+    if (!result) {
+        DebugDialog::debug(QString("gerber svg failed %1 %2 %3 %4").arg(svgStr).arg(errorStr).arg(errorLine).arg(errorColumn));
+    }
 
-#ifdef QT_NO_DEBUG
+#ifndef QT_NO_DEBUG
+    QString temp;
     // dump paths SVG to tmp file for now
-    QFile dump("/tmp/paths_in" + debugStr + ".svg");
-    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
+    QFile dump(QDir::temp().absoluteFilePath("paths_in" + debugStr + ".svg"));
+    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber svg dump: cannot open output file");
-
-    QTextStream out(&dump);
-    out << m_SVGDom.toString();
+    }
+    else {
+        QTextStream out(&dump);
+        out << m_SVGDom.toString();
+    }
+    temp = m_SVGDom.toString();
 #endif
 
     normalizeSVG();
 
-#ifdef QT_NO_DEBUG
+#ifndef QT_NO_DEBUG
     // dump paths SVG to tmp file for now
-    QFile dump2("/tmp/paths_normal" + debugStr + ".svg");
-    if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text))
+    QFile dump2(QDir::temp().absoluteFilePath("paths_normal" + debugStr + ".svg"));
+    if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber svg dump: cannot open output file");
-
-    QTextStream out2(&dump2);
-    out2 << m_SVGDom.toString();
+    }
+    else {
+        QTextStream out2(&dump2);
+        out2 << m_SVGDom.toString();
+    }
+    temp = m_SVGDom.toString();
 #endif
 
     renderGerber();

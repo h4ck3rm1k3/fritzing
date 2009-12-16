@@ -2464,15 +2464,13 @@ void MainWindow::exportToGerber() {
 
 
 
-	/*
 	// for debugging silkscreen svg
-    QFile silkout("silk.svg");
+    QFile silkout("c://silk.svg");
 	if (silkout.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		QTextStream silkStream(&silkout);
 		silkStream << svgSilk;
 		silkout.close();
 	}
-	*/
 
     result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
     if (!result) {
