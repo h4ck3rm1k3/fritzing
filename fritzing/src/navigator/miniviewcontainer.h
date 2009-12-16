@@ -43,7 +43,7 @@ public:
 	void filterMousePress();
 	void hideHandle(bool hide);
 	void forceResize();
-	
+
 protected:
 	bool eventFilter(QObject *obj, QEvent *event);
 	

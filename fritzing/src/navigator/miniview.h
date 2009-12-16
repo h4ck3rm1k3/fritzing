@@ -48,6 +48,9 @@ protected:
 	void resizeEvent ( QResizeEvent * event ); 
 	void mousePressEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *);
+	void mouseMoveEvent(QMouseEvent * event);
+	bool viewportEvent(QEvent *event);
+	void drawBackground(QPainter * painter, const QRectF & rect);
 
 public slots:
 	void updateSceneRect ( const QRectF & rect );

@@ -42,6 +42,17 @@ MiniView::~MiniView()
 {
 }
 
+void MiniView::drawBackground(QPainter * painter, const QRectF & rect) {
+	QGraphicsView::drawBackground(painter, rect);
+
+	painter->save();
+	painter->setWindow(painter->viewport());
+	painter->setTransform(QTransform());
+	//painter->fillRect(0, 0, 10, 10, QBrush(QColor(Qt::blue)));
+	//painter->drawText(QPointF(0,0), "hello");
+	painter->restore();
+}
+
 void MiniView::paintEvent ( QPaintEvent * event ) {
     //DebugDialog::debug("mini view paint event");
     if (scene()) {
@@ -89,5 +100,17 @@ QGraphicsView * MiniView::view() {
 	return m_otherView;
 }
 
+void MiniView::mouseMoveEvent(QMouseEvent * event) {
+	Q_UNUSED(event);			// stops hover events when user hovers over QGraphicsItems in the navigator
+}
 
+bool MiniView::viewportEvent(QEvent *event)
+{
+	if (event->type() == QEvent::ToolTip) {
+		// stops hover events when user hovers over QGraphicsItems in the navigator
+		event->setAccepted(true);
+        return true;
+	}
 
+	return QGraphicsView::viewportEvent(event);
+}

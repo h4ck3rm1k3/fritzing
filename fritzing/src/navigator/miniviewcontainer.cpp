@@ -26,6 +26,7 @@ $Date$
 
 
 #include <QScrollBar>
+#include <QLabel>
 
 #include "miniviewcontainer.h"
 #include "../debugdialog.h"
@@ -252,6 +253,7 @@ void MiniViewContainer::hideHandle(bool hide) {
 	m_frame->setVisible(!hide);
 	m_outerFrame->setVisible(!hide);
 }
+
 
 /////////////////////////////////////////////
 

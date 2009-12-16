@@ -33,7 +33,6 @@ $Date$
 class PartsEditorConnectorsConnectorItem : public PartsEditorConnectorItem {
 	Q_OBJECT
 
-friend class ConnectorRectangle;
 public:
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint);
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds);
@@ -102,7 +101,7 @@ protected:
 	bool m_geometryHasChangedAlLeastOnce;
 	bool m_inFileDefined;
 
-	ConnectorRectangle *m_handlers;
+	class ConnectorRectangle *m_handlers;
 	bool m_resizable;
 	bool m_resized;
 	QPointF m_initialPos;

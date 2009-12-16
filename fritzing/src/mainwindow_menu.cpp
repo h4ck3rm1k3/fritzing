@@ -60,6 +60,7 @@ $Date$
 #include "utils/textutils.h"
 #include "connectors/ercdata.h"
 #include "items/moduleidnames.h"
+#include "navigator/miniviewcontainer.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";

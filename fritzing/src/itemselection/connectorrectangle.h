@@ -28,9 +28,6 @@ $Date$
 #define CONNECTORRECTANGLE_H_
 
 #include "cornerhandler.h"
-#include "rectangleside.h"
-
-class PartsEditorConnectorsConnectorItem;
 
 class ConnectorRectangle : public QObject {
 	Q_OBJECT
@@ -44,6 +41,7 @@ public:
 	};
 
 	ConnectorRectangle(QGraphicsItem* owner, bool withHandlers = true);
+	~ConnectorRectangle();
 	QGraphicsItem *owner();
 	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);
 	bool isResizable();
@@ -74,11 +72,6 @@ protected:
 	CornerHandler *m_bottomRightHandler;
 	CornerHandler *m_bottomLeftHandler;
 	QList<CornerHandler*> m_cornerHandlers;
-
-	RectangleSide *m_topSide;
-	RectangleSide *m_rightSide;
-	RectangleSide *m_leftSide;
-	RectangleSide *m_bottomSide;
 
 	qreal m_minWidth;
 	qreal m_minHeight;

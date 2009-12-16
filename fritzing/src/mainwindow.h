@@ -37,7 +37,6 @@ $Date$
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
-#include "navigator/miniviewcontainer.h"
 #include "viewlayer.h"
 #include "zoomcombobox.h"
 #include "sketchtoolbutton.h"
@@ -213,7 +212,7 @@ protected slots:
 	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
 	void applyReadOnlyChange(bool isReadOnly);
-	void currentNavigatorChanged(MiniViewContainer *);
+	void currentNavigatorChanged(class MiniViewContainer *);
 	void viewSwitchedTo(int viewIndex);
 
 	void raiseAndActivate();
@@ -370,10 +369,10 @@ protected:
 	class PCBSketchWidget *m_pcbGraphicsView;
 
     class BinManager *m_paletteWidget;
-    MiniViewContainer *m_miniViewContainerBreadboard;
-    MiniViewContainer *m_miniViewContainerSchematic;
-    MiniViewContainer *m_miniViewContainerPCB;
-	QList <MiniViewContainer *> m_navigators;
+    class MiniViewContainer *m_miniViewContainerBreadboard;
+    class MiniViewContainer *m_miniViewContainerSchematic;
+    class MiniViewContainer *m_miniViewContainerPCB;
+	QList <class MiniViewContainer *> m_navigators;
 	QStackedWidget * m_tabWidget;
     class PaletteModel *m_paletteModel;
     ReferenceModel *m_refModel;

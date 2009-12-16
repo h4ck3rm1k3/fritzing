@@ -27,6 +27,7 @@ $Date$
 
 #include "partseditorconnectorsconnectoritem.h"
 #include "partseditorview.h"
+#include "../itemselection/connectorrectangle.h"
 #include "../debugdialog.h"
 
 

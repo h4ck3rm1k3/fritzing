@@ -29,7 +29,6 @@ $Date$
 #include "connectorrectangle.h"
 #include "../sketch/zoomablegraphicsview.h"
 #include "../debugdialog.h"
-#include "../partseditor/partseditorconnectorsconnectoritem.h"
 
 
 qreal ConnectorRectangle::ErrorIconSize = 6;
@@ -56,6 +55,9 @@ ConnectorRectangle::ConnectorRectangle(QGraphicsItem* owner, bool withHandlers)
 		m_topLeftHandler = m_topRightHandler =
 		m_bottomRightHandler = m_bottomLeftHandler = NULL;
 	}
+}
+
+ConnectorRectangle::~ConnectorRectangle() {
 }
 
 void ConnectorRectangle::setHandlersVisible(bool visible) {

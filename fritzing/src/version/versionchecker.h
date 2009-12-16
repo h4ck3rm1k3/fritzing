@@ -59,7 +59,7 @@ public:
 signals:
 	void httpError(QHttp::Error statusCode);
 	void xmlError(QXmlStreamReader::Error errorCode);
-	void releasesAvailable();
+	void releasesAvailable(); 
 
 public slots:
     void fetch();
