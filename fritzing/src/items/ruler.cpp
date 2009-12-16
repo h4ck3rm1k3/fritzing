@@ -286,3 +286,6 @@ bool Ruler::stickyEnabled() {
 	return false;
 }
 
+bool Ruler::hasPartLabel() {
+    return false;
+}

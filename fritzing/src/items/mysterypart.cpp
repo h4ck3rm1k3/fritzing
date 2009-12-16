@@ -32,6 +32,7 @@ $Date$
 #include "../commands.h"
 #include "../utils/textutils.h"
 #include "../layerattributes.h"
+#include "../labels/partlabel.h"
 
 #include <QDomNodeList>
 #include <QDomDocument>
@@ -135,6 +136,7 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 	modelPart()->setProp("spacing", spacing);
 
 	updateTooltip();
+    if (m_partLabel) m_partLabel->displayTexts();
 
 }
 
@@ -168,6 +170,8 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 	modelPart()->setProp("chip label", chipLabel);
 
 	updateTooltip();
+    if (m_partLabel) m_partLabel->displayTexts();
+
 }
 
 QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 

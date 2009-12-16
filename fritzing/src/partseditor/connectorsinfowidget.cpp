@@ -35,7 +35,6 @@ $Date$
 #include "addremoveconnectorbutton.h"
 #include "partseditorviewswidget.h"
 #include "../debugdialog.h"
-#include "../fritzingwindow.h"
 
 
 ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent)

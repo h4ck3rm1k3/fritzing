@@ -1616,6 +1616,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		QGraphicsView::dropEvent(event);
 	}
 
+
 }
 
 SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand * parentCommand) {

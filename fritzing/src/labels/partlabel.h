@@ -63,6 +63,7 @@ public:
 	void rotateFlipLabel(qreal degrees, Qt::Orientations orientation);
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 	void ownerSelected(bool selected);
+    void displayTexts();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -77,7 +78,6 @@ protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void setFontSize(int action);
 	void rotateFlip(int action);
-	void displayTexts();
 	void setLabelDisplay(const QString & key);
 
 protected:

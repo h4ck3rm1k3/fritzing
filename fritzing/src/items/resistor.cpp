@@ -33,6 +33,7 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "../layerattributes.h"
+#include "../labels/partlabel.h"
 
 #include <qmath.h>
 #include <QRegExpValidator>
@@ -175,6 +176,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 
 	updateResistances(m_ohms);
 	updateTooltip();
+    if (m_partLabel) m_partLabel->displayTexts();
 }
 
 QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 

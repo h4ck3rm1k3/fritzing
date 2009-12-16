@@ -33,6 +33,7 @@ $Date$
 #include "../utils/textutils.h"
 #include "../utils/focusoutcombobox.h"
 #include "../sketch/infographicsview.h"
+#include "../labels/partlabel.h"
 
 #include <QLineEdit>
 #include <QMultiHash>
@@ -187,6 +188,8 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 		}
 	}
 
+    updateTooltip();
+    if (m_partLabel) m_partLabel->displayTexts();
 }
 
 QString SymbolPaletteItem::makeSvg() {
