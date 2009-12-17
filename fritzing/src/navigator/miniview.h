@@ -43,6 +43,7 @@ public:
 
 	void setView(QGraphicsView *);	
 	QGraphicsView* view();
+	void setTitle(const QString & title);
 	
 protected:
 	void resizeEvent ( QResizeEvent * event ); 
@@ -54,13 +55,21 @@ protected:
 
 public slots:
 	void updateSceneRect ( const QRectF & rect );
-	
+	void navigatorMousePressedSlot(class MiniViewContainer *);
+	void navigatorMouseEnterSlot(class MiniViewContainer *);
+	void navigatorMouseLeaveSlot(class MiniViewContainer *);
+
 signals:
 	void rectChangedSignal();
 	void miniViewMousePressedSignal();
 	
 protected:
 	QGraphicsView * m_otherView;
+	QString m_title;
+	int m_titleWeight;
+	QColor m_titleColor;
+	bool m_selected;
+	int m_lastHeight;
 
 };
 

@@ -254,7 +254,13 @@ void MiniViewContainer::hideHandle(bool hide) {
 	m_outerFrame->setVisible(!hide);
 }
 
+void MiniViewContainer::setTitle(const QString & title) {
+	m_miniView->setTitle(title);
+}
 
+QWidget * MiniViewContainer::miniView() {
+	return m_miniView;
+}
 /////////////////////////////////////////////
 
 MiniViewFrame::MiniViewFrame(QBrush & brush, bool draggable, QWidget * parent)

@@ -27,6 +27,13 @@ $Date$
 #include "miniview.h"
 #include "../debugdialog.h"
 #include "../fgraphicsscene.h"
+#include "miniviewcontainer.h"
+
+static const QColor NormalColor(0x70, 0x70, 0x70);
+static const QColor HoverColor(0x00, 0x00, 0x00);
+static const QColor PressedColor(84, 24, 44 /*0xff, 0xff, 0xff */);
+static const int FontPixelSize = 11;
+static const QString FontFamily = "Droid Sans";
 
 MiniView::MiniView(QWidget *parent )
 	: QGraphicsView(parent)
@@ -36,20 +43,47 @@ MiniView::MiniView(QWidget *parent )
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	//setAlignment(Qt::AlignLeft | Qt::AlignTop);
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+	m_selected = false;
 }
 
 MiniView::~MiniView()
 {
 }
 
+void MiniView::setTitle(const QString & title) {
+	m_title = title;
+	QFont font;
+	font.setFamily(FontFamily);
+	font.setWeight(QFont::Bold);
+	font.setPixelSize(FontPixelSize);
+	setFont(font);
+	QFontMetrics metrics = fontMetrics();
+	QRect br = metrics.boundingRect(m_title);
+	parentWidget()->setMinimumWidth(br.width());
+}
+
 void MiniView::drawBackground(QPainter * painter, const QRectF & rect) {
 	QGraphicsView::drawBackground(painter, rect);
 
 	painter->save();
-	painter->setWindow(painter->viewport());
+	QRect vp = painter->viewport(); 
+	painter->setWindow(vp);
 	painter->setTransform(QTransform());
 	//painter->fillRect(0, 0, 10, 10, QBrush(QColor(Qt::blue)));
-	//painter->drawText(QPointF(0,0), "hello");
+	QPen pen(m_titleColor, 1);
+	painter->setPen(pen);
+	QFont font;
+	font.setFamily(FontFamily);
+	font.setWeight(m_titleWeight);
+	font.setPixelSize(FontPixelSize);
+	painter->setFont(font);
+	QFontMetrics metrics = painter->fontMetrics();
+	m_lastHeight = metrics.descent() + metrics.ascent();
+	int h = 0;  // metrics.descent();
+	int y = vp.bottom() - h;
+	QRect br = metrics.boundingRect(m_title);
+	int x = vp.left() + ((vp.width() - br.width()) / 2);
+	painter->drawText(QPointF(x, y), m_title);
 	painter->restore();
 }
 
@@ -113,4 +147,46 @@ bool MiniView::viewportEvent(QEvent *event)
 	}
 
 	return QGraphicsView::viewportEvent(event);
+}
+
+void MiniView::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) {
+	if (miniViewContainer == this->parentWidget()) {
+		m_selected = true;
+		m_titleColor = PressedColor;
+		m_titleWeight = QFont::Bold;
+		qobject_cast<MiniViewContainer *>(parentWidget())->hideHandle(false);
+	}
+	else {
+		m_selected = false;
+		m_titleWeight = QFont::Normal;
+		m_titleColor = NormalColor;
+		qobject_cast<MiniViewContainer *>(parentWidget())->hideHandle(true);
+	}
+
+	//QSize sz = size();
+	//repaint(0, sz.height() - m_lastHeight, sz.width(), m_lastHeight);
+	this->setBackgroundBrush(backgroundBrush());				// only way I've found so far to force a repaint of the background
+
+}
+
+void MiniView::navigatorMouseEnterSlot(MiniViewContainer * miniViewContainer) {
+	if (miniViewContainer == this->parentWidget()) {
+		if (!m_selected) {
+			m_titleColor = HoverColor;
+			//QSize sz = size();
+			//repaint(0, sz.height() - m_lastHeight, sz.width(), m_lastHeight);
+			this->setBackgroundBrush(backgroundBrush());				// only way I've found so far to force a repaint of the background
+		}
+	}
+}
+
+void MiniView::navigatorMouseLeaveSlot(MiniViewContainer * miniViewContainer) {
+	if (miniViewContainer == this->parentWidget()) {
+		if (!m_selected) {
+			m_titleColor = NormalColor;
+			//QSize sz = size();
+			//repaint(0, sz.height() - m_lastHeight, sz.width(), m_lastHeight);
+			this->setBackgroundBrush(backgroundBrush());				// only way I've found so far to force a repaint of the background
+		}
+	}
 }

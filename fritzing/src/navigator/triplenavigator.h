@@ -47,28 +47,6 @@ protected:
 	QFrame *m_bottomMargin;
 };
 
-
-class TripleNavigatorLabel : public QLabel
-{
-	Q_OBJECT
-
-public:
-	TripleNavigatorLabel(QWidget * parent = 0);
-	void setMiniViewContainer(MiniViewContainer *);
-
-protected slots:
-	void navigatorMousePressedSlot(MiniViewContainer *);
-	void navigatorMouseEnterSlot(MiniViewContainer *);
-	void navigatorMouseLeaveSlot(MiniViewContainer *);
-
-
-protected:
-	MiniViewContainer * m_miniViewContainer;
-	QString m_currentStyleWeight;
-	QString m_currentStyleColor;
-};
-
-
 class TripleNavigatorFrame : public QFrame
 {
 	Q_OBJECT
@@ -83,7 +61,6 @@ protected:
 	bool eventFilter(QObject *obj, QEvent *event);
 
 protected:
-	TripleNavigatorLabel * m_tripleNavigatorLabel;
 	MiniViewContainer * m_miniViewContainer;
 };
 
