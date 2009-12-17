@@ -366,6 +366,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="346b613c666d64fc5ac622407ace7130" modelIndex="48" path="parts/core/controller_mbed.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="BreadboardModuleID" modelIndex="49" path="parts/core/breadboard.fzp">
             <views>
                 <iconView layer="icon">
