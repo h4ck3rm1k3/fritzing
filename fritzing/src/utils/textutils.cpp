@@ -96,7 +96,7 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrato
 	return result / divisor;
 }
 
-bool TextUtils::squashNotElement(QString & svg, const QString & elementName) {
+bool TextUtils::squashNotElement(QString & svg, const QString & elementName, const QString &attName, const QRegExp &matchContent) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -106,7 +106,7 @@ bool TextUtils::squashNotElement(QString & svg, const QString & elementName) {
 	QDomElement root = doc.documentElement();
 	QString tagName = root.tagName();
 	bool result = false;
-	squashNotElement(root, elementName, result);
+    squashNotElement(root, elementName, attName, matchContent, result);
 	root.setTagName(tagName);
 	if (result) {
 		svg = doc.toString();
@@ -114,43 +114,68 @@ bool TextUtils::squashNotElement(QString & svg, const QString & elementName) {
 	return result;
 }
 
-void TextUtils::squashNotElement(QDomElement & element, const QString & elementName, bool & result) {
+void TextUtils::squashNotElement(QDomElement & element, const QString & elementName, const QString &attName, const QRegExp &matchContent, bool & result) {
 	if (element.tagName().compare(elementName) != 0) {
 		element.setTagName("g");
 		result = true;
 	}
+    else {
+        if (!attName.isEmpty()) {
+            QString att = element.attribute(attName);
+            if (att.isEmpty()) {
+                element.setTagName("g");
+                result = true;
+            }
+            else {
+                if (!matchContent.isEmpty()) {
+                    if (matchContent.indexIn(att) < 0) {
+                        element.setTagName("g");
+                        result = true;
+                    }
+                }
+            }
+        }
+    }
 
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
-		squashNotElement(child, elementName, result);
+        squashNotElement(child, elementName, attName, matchContent, result);
 		child = child.nextSiblingElement();
 	}
 }
 
+bool TextUtils::squashElement(QString & svg, const QString & elementName, const QString &attName, const QRegExp &matchContent) {
+    QString errorStr;
+    int errorLine;
+    int errorColumn;
+    QDomDocument doc;
+    if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return false;
 
-bool TextUtils::squashElement(QString & svg, const QString & elementName) {
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument doc;
-	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return false;
+    bool result = false;
+    QDomElement root = doc.documentElement();
+    QDomNodeList domNodeList = root.elementsByTagName(elementName);
+    for (int i = 0; i < domNodeList.count(); i++) {
+        QDomElement node = domNodeList.item(i).toElement();
+        if (node.isNull()) continue;
 
-	bool result = false;
-	QDomElement root = doc.documentElement();
-	QDomNodeList domNodeList = root.elementsByTagName(elementName);
-	for (int i = 0; i < domNodeList.count(); i++) {
-		QDomElement node = domNodeList.item(i).toElement();
-		if (node.isNull()) continue;
+        if (!attName.isEmpty()) {
+            QString att = node.attribute(attName);
+            if (att.isEmpty()) continue;
 
-		node.setTagName("g");
-		result = true;
-	}
+            if (!matchContent.isEmpty()) {
+                if (matchContent.indexIn(att) < 0) continue;
+            }
+        }
 
-	if (result) {
-		svg = doc.toString();
-	}
+        node.setTagName("g");
+        result = true;
+    }
 
-	return result;
+    if (result) {
+        svg = doc.toString();
+    }
+
+    return result;
 }
 
 QString TextUtils::replaceTextElement(const QString & svg, const QString & label) {

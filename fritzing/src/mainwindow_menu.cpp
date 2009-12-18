@@ -2371,12 +2371,12 @@ void MainWindow::exportToGerber() {
         return;
     }
 
-	bool textToConvert = false;
+    bool svgToConvert = false;
 	QString textOnly = svgSilk;
 	QByteArray textByteArray;
-	if (TextUtils::squashElement(svgSilk, "text")) {
+    if (TextUtils::squashElement(svgSilk, "text", "", QRegExp())) {
 		svgSilk = TextUtils::removeXMLEntities(svgSilk);
-		TextUtils::squashNotElement(textOnly, "text");
+        TextUtils::squashNotElement(textOnly, "text", "", QRegExp());
 		textOnly = TextUtils::removeXMLEntities(textOnly);
 
 		QStringList exceptions;
@@ -2384,12 +2384,26 @@ void MainWindow::exportToGerber() {
 		QString toColor("#FFFFFF");
 		SvgFileSplitter::changeColors(textOnly, toColor, exceptions, textByteArray);
 
-		textToConvert = true;
+        svgToConvert = true;
 	}
+
+    if (TextUtils::squashElement(svgSilk, "path", "d", QRegExp("[aAcC]"))) {
+        svgSilk = TextUtils::removeXMLEntities(svgSilk);
+        QString temp;
+        TextUtils::squashNotElement(temp, "path", "d", QRegExp("[aAcC]"));
+        temp = TextUtils::removeXMLEntities(temp);
+        if (textOnly.isEmpty()) {
+            textOnly = temp;
+        }
+        else {
+            textOnly = TextUtils::mergeSvg(textOnly, temp);
+        }
+        svgToConvert = true;
+    }
 
 	bool partLabelsVisible = m_pcbGraphicsView->partLabelsVisible();
 
-	if (partLabelsVisible || textToConvert) {
+    if (partLabelsVisible || svgToConvert) {
 		// add labels to silkscreen layer
 		m_pcbGraphicsView->saveLayerVisibility();
 		m_pcbGraphicsView->setAllLayersVisible(false);
@@ -2425,7 +2439,7 @@ void MainWindow::exportToGerber() {
 		painter.begin(&image);
 		QGraphicsSvgItem * textItem = NULL;
 		QSvgRenderer * textRenderer = NULL;
-		if (textToConvert) {
+        if (svgToConvert) {
 			textItem = new QGraphicsSvgItem();
 			textRenderer = new QSvgRenderer(textByteArray);
 			textItem->setSharedRenderer(textRenderer);
@@ -2464,14 +2478,15 @@ void MainWindow::exportToGerber() {
 
 
 
-
+#ifndef QT_NO_DEBUG
 	// for debugging silkscreen svg
-    QFile silkout("c://silk.svg");
+    QFile silkout(QDir::temp().absoluteFilePath("silk.svg"));
 	if (silkout.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		QTextStream silkStream(&silkout);
 		silkStream << svgSilk;
 		silkout.close();
 	}
+#endif
 
     result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
     if (!result) {
