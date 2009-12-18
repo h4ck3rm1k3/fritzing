@@ -479,3 +479,10 @@ ViewSwitcher {
 	font-weight: bold;
 	font-family: "Lucida Grande", LucidaSans, Tahoma, Arial, sans-serif;
 }
+
+SearchLineEdit {
+	color: #000000;
+	font-size: 11px;
+	font-family: "Lucida Grande", LucidaSans, Tahoma, Arial, sans-serif;
+}
+

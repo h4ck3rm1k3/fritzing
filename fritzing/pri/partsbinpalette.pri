@@ -25,6 +25,7 @@ HEADERS += src/partsbinpalette/simpleeditablelabelwidget.h \
     src/partsbinpalette/svgiconwidget.h \
     src/partsbinpalette/iconwidgetpaletteitem.h \
     src/partsbinpalette/partsbincommands.h \
+    src/partsbinpalette/searchlineedit.h \
     src/partsbinpalette/binmanager/binmanager.h \
     src/partsbinpalette/binmanager/stackwidget.h \
     src/partsbinpalette/binmanager/stacktabbar.h \
@@ -39,6 +40,7 @@ SOURCES += src/partsbinpalette/simpleeditablelabelwidget.cpp \
     src/partsbinpalette/iconwidgetpaletteitem.cpp \
     src/partsbinpalette/svgiconwidget.cpp \
     src/partsbinpalette/partsbincommands.cpp \
+    src/partsbinpalette/searchlineedit.cpp \
     src/partsbinpalette/binmanager/binmanager.cpp \
     src/partsbinpalette/binmanager/stackwidget.cpp \
     src/partsbinpalette/binmanager/stacktabbar.cpp \

@@ -493,3 +493,62 @@ void PaletteModel::clearPartHash() {
 void PaletteModel::setOrdererChildren(QList<QObject*> children) {
 	m_root->setOrderedChildren(children);
 }
+
+QList<ModelPart *> PaletteModel::search(const QString & searchText) {
+	QList<ModelPart *> modelParts;
+
+	QStringList strings = searchText.split(":");
+	if (strings.count() > 2) return modelParts;
+
+	search(m_root, strings, modelParts);
+}
+
+void PaletteModel::search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts) {
+	// TODO: eventually move all this into the database?
+	// or use lucene
+	// or google search api
+	bool gotOne = false;
+	if (!gotOne && modelPart->title().contains(searchStrings[0], Qt::CaseInsensitive)) {
+		modelParts.append(modelPart);
+		gotOne = true;
+	}
+	if (!gotOne && modelPart->description().contains(searchStrings[0], Qt::CaseInsensitive)) {
+		modelParts.append(modelPart);
+		gotOne = true;
+	}
+	if (!gotOne) {
+		foreach (QString string, modelPart->tags()) {
+			if (string.contains(searchStrings[0], Qt::CaseInsensitive)) {
+				modelParts.append(modelPart);
+				gotOne = true;
+				break;
+			}
+		}
+	}
+	if (!gotOne) {
+		foreach (QString string, modelPart->properties().values()) {
+			if (string.contains(searchStrings[0], Qt::CaseInsensitive)) {
+				modelParts.append(modelPart);
+				gotOne = true;
+				break;
+			}
+		}
+	}
+	if (!gotOne) {
+		foreach (QString string, modelPart->properties().keys()) {
+			if (string.contains(searchStrings[0], Qt::CaseInsensitive)) {
+				modelParts.append(modelPart);
+				gotOne = true;
+				break;
+			}
+		}
+	}
+
+	foreach(QObject * child, modelPart->children()) {
+		ModelPart * mp = qobject_cast<ModelPart *>(child);
+		if (mp == NULL) continue;
+
+		search(mp, searchStrings, modelParts);
+	}
+}
+

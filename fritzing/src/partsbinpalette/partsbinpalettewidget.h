@@ -30,6 +30,7 @@ $Date$
 
 #include <QFrame>
 #include <QToolButton>
+#include <QLineEdit>
 
 #include "../model/palettemodel.h"
 #include "../model/modelpart.h"
@@ -119,6 +120,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void exportSelected();
 		void updateMenus();
 		void addSketchPartToMe();
+		void search();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -181,6 +183,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;
+
+		class SearchLineEdit * m_searchLineEdit;
 
 		QMenu *m_binContextMenu;
 		QToolButton *m_binMenuButton;

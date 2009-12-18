@@ -95,6 +95,7 @@ public:
 	Connector * getConnector(const QString & id);
 
 	const QString & title();
+	const QString & description();
 	const QStringList & tags();
 	const QHash<QString,QString> & properties() const;
 	const QHash<QString, class Bus *> & buses();

@@ -40,6 +40,7 @@ $Date$
 #include "partsbinlistview.h"
 #include "simpleeditablelabelwidget.h"
 #include "binmanager/binmanager.h"
+#include "searchlineedit.h"
 #include "../fritzingwindow.h"
 #include "../utils/misc.h"
 #include "../debugdialog.h"
@@ -137,7 +138,7 @@ void PartsBinPaletteWidget::setupFooter() {
 	QFrame *leftButtons = new QFrame(m_footer);
 	QHBoxLayout *leftLayout = new QHBoxLayout(leftButtons);
 	leftLayout->setMargin(0);
-	leftLayout->setSpacing(3);
+	leftLayout->setSpacing(6);
 	leftLayout->addWidget(m_showIconViewButton);
 	leftLayout->addWidget(m_showListViewButton);
 
@@ -153,7 +154,15 @@ void PartsBinPaletteWidget::setupFooter() {
 	footerLayout->setMargin(2);
 	footerLayout->setSpacing(0);
 	footerLayout->addWidget(leftButtons);
-	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+
+	footerLayout->addSpacing(6);
+	m_searchLineEdit = new SearchLineEdit(m_footer);
+	m_searchLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	connect(m_searchLineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
+	footerLayout->addWidget(m_searchLineEdit);
+
+	//footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+
 	footerLayout->addWidget(rightButtons);
 }
 
@@ -857,4 +866,18 @@ void PartsBinPaletteWidget::setFilename(const QString &filename) {
 	setAcceptDrops(acceptIt);
 	m_iconView->setAcceptDrops(acceptIt);
 	m_listView->setAcceptDrops(acceptIt);
+}
+
+void PartsBinPaletteWidget::search() {
+	SearchLineEdit * edit = qobject_cast<SearchLineEdit *>(sender());
+	if (edit == NULL) return;
+
+	QString searchText = edit->text();
+	if (searchText.isEmpty()) return;
+
+	QList<ModelPart *> parts = m_refModel->search(searchText);
+	foreach (ModelPart * modelPart, parts) {
+		DebugDialog::debug(modelPart->title());
+	}
+
 }

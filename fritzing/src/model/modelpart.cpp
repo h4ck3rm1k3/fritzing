@@ -395,6 +395,12 @@ const QString & ModelPart::title() {
 	return ___emptyString___;
 }
 
+const QString & ModelPart::description() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->description();
+
+	return ___emptyString___;
+}
+
 const QStringList & ModelPart::tags() {
 	if (m_modelPartShared != NULL) return m_modelPartShared->tags();
 
