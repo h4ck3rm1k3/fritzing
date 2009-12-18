@@ -70,12 +70,13 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 }
 
 void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
-    // I'm a leaf node.
-    QString tag = element.nodeName().toLower();
 
+	// TODO: missing ellipse element
 
     if(!element.hasChildNodes()) {
-        if(tag == "path"){
+		// I'm a leaf node.
+		QString tag = element.nodeName().toLower();
+		if(tag == "path"){
             QString data = element.attribute("d");
             if (!data.isEmpty()) {
                 const char * slot = SLOT(rotateCommandSlot(QChar, bool, QList<double> &, void *));
@@ -86,6 +87,18 @@ void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
                 }
             }
         }
+		else if ((tag == "polygon") || (tag == "polyline")) {
+			QString data = element.attribute("points");
+			if (!data.isEmpty()) {
+				const char * slot = SLOT(rotateCommandSlot(QChar, bool, QList<double> &, void *));
+				PathUserData pathUserData;
+				pathUserData.transform = transform;
+				if (parsePath(data, slot, pathUserData, this, false)) {
+					pathUserData.string.remove(0, 1);			// get rid of the "M"
+					element.setAttribute("points", pathUserData.string);
+				}
+			}
+		}
         else if(tag == "rect"){
             // NOTE: this only works for 90/180/270 deg rotations
             float x = element.attribute("x").toFloat();
