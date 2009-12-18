@@ -40,7 +40,8 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu);
 		~PartsBinListView();
 		void setInfoView(class HtmlInfoView *);
-		void removePart(const QString &moduleID);
+        void removePart(const QString &moduleID);
+        void removeParts();
 
 		ModelPart *selected();
 		bool swappingEnabled();

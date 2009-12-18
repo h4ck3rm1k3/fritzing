@@ -44,6 +44,7 @@ class PartsBinView {
 		void reloadParts(PaletteModel * model);
 		void addPart(ModelPart * model, int position = -1);
 		virtual void removePart(const QString &moduleID) = 0;
+        virtual void removeParts() = 0;
 
 		virtual ModelPart *selected() = 0;
 

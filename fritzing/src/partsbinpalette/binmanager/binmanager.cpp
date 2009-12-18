@@ -34,6 +34,7 @@ $Date$
 #include "binmanager.h"
 #include "stacktabwidget.h"
 #include "stacktabbar.h"
+
 #include "../partsbinpalettewidget.h"
 #include "../../model/modelpart.h"
 #include "../../mainwindow.h"
@@ -42,13 +43,17 @@ $Date$
 #include "../../debugdialog.h"
 #include "../../partseditor/partseditormainwindow.h"
 #include "../../utils/folderutils.h"
+#include "../../referencemodel/referencemodel.h"
 
 
 QString BinManager::Title;
 QString BinManager::MyPartsBinLocation;
 QString BinManager::MyPartsBinTemplateLocation;
+QString BinManager::SearchBinLocation;
+QString BinManager::SearchBinTemplateLocation;
 QString BinManager::AllPartsBinLocation;
 QString BinManager::NonCorePartsBinLocation;
+QString BinManager::CoreBinLocation;
 
 QString BinManager::StandardBinStyle = "background-color: gray;";
 QString BinManager::CurrentBinStyle = "background-color: black;";
@@ -180,32 +185,47 @@ void BinManager::addNewPart(ModelPart *modelPart) {
 }
 
 PartsBinPaletteWidget* BinManager::getOrOpenMyPartsBin() {
-	PartsBinPaletteWidget* myPartsBin = NULL;
+    return getOrOpenBin(MyPartsBinLocation, MyPartsBinTemplateLocation);
+}
+
+PartsBinPaletteWidget* BinManager::getOrOpenSearchBin() {
+    return getOrOpenBin(SearchBinLocation, SearchBinTemplateLocation);
+}
+
+PartsBinPaletteWidget* BinManager::getOrOpenBin(const QString & binLocation, const QString & binTemplateLocation) {
+
+    PartsBinPaletteWidget* partsBin = NULL;
 
 	foreach(PartsBinPaletteWidget* bin, m_tabWidgets.keys()) {
-		if(bin->fileName() == MyPartsBinLocation) {
-			myPartsBin = bin;
+        if(bin->fileName() == binLocation) {
+            partsBin = bin;
 			break;
 		}
 	}
 
-	if(!myPartsBin) {
-		QString fileToOpen = QFileInfo(MyPartsBinLocation).exists()?
-			MyPartsBinLocation:
-			createIfMyPartsNotExists();
+    if(!partsBin) {
+        QString fileToOpen = QFileInfo(binLocation).exists()?
+            binLocation:
+            createIfBinNotExists(binLocation, binTemplateLocation);
 
-		myPartsBin = openBinIn(m_tabWidgets.values()[0], fileToOpen);
+        partsBin = openBinIn(m_tabWidgets.values()[0], fileToOpen);
 	}
 
-	return myPartsBin;
+    return partsBin;
 }
 
 QString BinManager::createIfMyPartsNotExists() {
-	/*QDateTime now = QDateTime::currentDateTime();
-	QString binPath = getUserDataStorePath("bins")+
-	QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));*/
-	QString binPath = MyPartsBinLocation;
-	QFile file(":/resources/bins/my_parts.fzb");
+    return createIfBinNotExists(MyPartsBinLocation, MyPartsBinTemplateLocation);
+}
+
+QString BinManager::createIfSearchNotExists() {
+    return createIfBinNotExists(SearchBinLocation, SearchBinTemplateLocation);
+}
+
+QString BinManager::createIfBinNotExists(const QString & dest, const QString & source)
+{
+    QString binPath = dest;
+    QFile file(source);
 	file.copy(binPath);
 	return binPath;
 }
@@ -532,8 +552,28 @@ MainWindow* BinManager::mainWindow() {
 }
 
 void BinManager::initNames() {
-	BinManager::MyPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/my_parts.fzb";
-	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
-	BinManager::AllPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.fzb";
+    BinManager::MyPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/my_parts.fzb";
+    BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
+    BinManager::SearchBinLocation = FolderUtils::getUserDataStorePath("bins")+"/search.fzb";
+    BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
+    BinManager::AllPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.fzb";
 	BinManager::NonCorePartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/nonCoreParts.fzb";
+    BinManager::CoreBinLocation = ":/resources/bins/bin.fzp";
+}
+
+void BinManager::search(const QString & searchText) {
+    QList<ModelPart *> modelParts = m_refModel->search(searchText, false);
+
+    PartsBinPaletteWidget * searchBin = getOrOpenSearchBin();
+    if (searchBin == NULL) return;
+
+    setAsCurrentTab(searchBin);
+
+    searchBin->removeParts();
+    foreach (ModelPart * modelPart, modelParts) {
+        DebugDialog::debug(modelPart->title());
+        this->addPartTo(searchBin, modelPart);
+    }
+
+    setDirtyTab(searchBin);
 }

@@ -413,11 +413,11 @@ int FApplication::startup(bool firstRun)
 	processEvents();
 
 	QString binToOpen = settings.value("lastBin").toString();
-	binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? MainWindow::CoreBinLocation: binToOpen;
+    binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? BinManager::CoreBinLocation: binToOpen;
 
 	if (!m_paletteBinModel->load(binToOpen, m_referenceModel)) {
-		if(binToOpen == MainWindow::CoreBinLocation
-		   || !m_paletteBinModel->load(MainWindow::CoreBinLocation, m_referenceModel)) {
+        if(binToOpen == BinManager::CoreBinLocation
+           || !m_paletteBinModel->load(BinManager::CoreBinLocation, m_referenceModel)) {
 			// TODO: we're really screwed, what now?
 			QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 			return -1;
@@ -756,34 +756,40 @@ void FApplication::createUserDataStoreFolderStructure() {
 		}
 	}
 
-	if(!QFileInfo(BinManager::MyPartsBinLocation).exists()) {
-		// this copy action, is not working on windows, because is a resources file
-		if(!QFile(BinManager::MyPartsBinTemplateLocation).copy(BinManager::MyPartsBinLocation)) {
+    copyBin(BinManager::MyPartsBinLocation, BinManager::MyPartsBinTemplateLocation);
+    copyBin(BinManager::SearchBinLocation, BinManager::SearchBinTemplateLocation);
+
+}
+
+void FApplication::copyBin(const QString & dest, const QString & source) {
+    if(QFileInfo(dest).exists()) return;
+
+    // this copy action, is not working on windows, because is a resources file
+    if(!QFile(source).copy(dest)) {
 #ifdef Q_WS_WIN // may not be needed from qt 4.5.2 on
-			DebugDialog::debug("Failed to copy a file from the resources");
-			QApplication::processEvents();
-			QDir binsFolder = QFileInfo(BinManager::MyPartsBinLocation).dir().absolutePath();
-			QStringList binFiles = binsFolder.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
-			foreach(QString binName, binFiles) {
-				if(binName.startsWith("qt_temp.")) {
-					QString filePath = binsFolder.absoluteFilePath(binName);
-					bool success = QFile(filePath).rename(BinManager::MyPartsBinLocation);
-					Q_UNUSED(success);
-					break;
-				}
-			}
+        DebugDialog::debug("Failed to copy a file from the resources");
+        QApplication::processEvents();
+        QDir binsFolder = QFileInfo(dest).dir().absolutePath();
+        QStringList binFiles = binsFolder.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
+        foreach(QString binName, binFiles) {
+            if(binName.startsWith("qt_temp.")) {
+                QString filePath = binsFolder.absoluteFilePath(binName);
+                bool success = QFile(filePath).rename(dest);
+                Q_UNUSED(success);
+                break;
+            }
+        }
 #endif
-		}
-		QFlags<QFile::Permission> ps = QFile::permissions(BinManager::MyPartsBinLocation);
-		QFile::setPermissions(
-			BinManager::MyPartsBinLocation,
-			QFile::WriteOwner | QFile::WriteUser | ps
+    }
+    QFlags<QFile::Permission> ps = QFile::permissions(dest);
+    QFile::setPermissions(
+        dest,
+        QFile::WriteOwner | QFile::WriteUser | ps
 #ifdef Q_WS_WIN
-			| QFile::WriteOther | QFile::WriteGroup
+        | QFile::WriteOther | QFile::WriteGroup
 #endif
 
-		);
-	}
+    );
 }
 
 void FApplication::changeActivation(bool activate, QWidget * originator) {

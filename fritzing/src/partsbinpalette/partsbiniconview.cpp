@@ -149,27 +149,48 @@ void PartsBinIconView::addPart(ModelPart * model, int position) {
 }
 
 void PartsBinIconView::removePart(const QString &moduleID) {
-	SvgIconWidget *itemToRemove = NULL;
-	int position = 0;
-	foreach(QGraphicsItem *gIt, m_layouter->childItems()) {
-		SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(gIt);
-		if(it && it->moduleID() == moduleID) {
-			itemToRemove = it;
-			break;
-		} else {
-			position++;
-		}
-	}
-	if(itemToRemove) {
-		m_partHash.remove(moduleID);
-		itemToRemove->setParentItem(NULL);
-		m_noSelectionChangeEmition = true;
-		m_layout->removeItem(itemToRemove);
-		delete itemToRemove;
-	}
+    SvgIconWidget *itemToRemove = NULL;
+    int position = 0;
+    foreach(QGraphicsItem *gIt, m_layouter->childItems()) {
+        SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(gIt);
+        if(it && it->moduleID() == moduleID) {
+            itemToRemove = it;
+            break;
+        } else {
+            position++;
+        }
+    }
+    if(itemToRemove) {
+        m_partHash.remove(moduleID);
+        itemToRemove->setParentItem(NULL);
+        m_noSelectionChangeEmition = true;
+        m_layout->removeItem(itemToRemove);
+        delete itemToRemove;
+    }
 
-	setSelected(position, true);
-	updateSize();
+    setSelected(position, true);
+    updateSize();
+}
+
+void PartsBinIconView::removeParts() {
+    QList<SvgIconWidget *> itemsToRemove;
+    foreach(QGraphicsItem *gIt, m_layouter->childItems()) {
+        SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(gIt);
+        if(it) {
+            itemsToRemove.append(it);
+        }
+    }
+    m_partHash.clear();
+
+
+    foreach (SvgIconWidget * itemToRemove, itemsToRemove) {
+        m_noSelectionChangeEmition = true;
+        itemToRemove->setParentItem(NULL);
+        m_layout->removeItem(itemToRemove);
+        delete itemToRemove;
+    }
+
+    updateSize();
 }
 
 void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {

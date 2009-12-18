@@ -99,7 +99,6 @@ public:
 
 	public:
 		static QString ReadOnlyPlaceholder;
-		static const QString CoreBinLocation;
 };
 
 #endif /* FRITZINGWINDOW_H_ */

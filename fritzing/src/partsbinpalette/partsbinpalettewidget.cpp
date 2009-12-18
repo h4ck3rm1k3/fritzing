@@ -51,6 +51,7 @@ $Date$
 
 bool PartsBinPaletteWidget::m_openUserBinMenuCreated = false;
 QHash<QString,QString> PartsBinPaletteWidget::m_userBinsInfo = QHash<QString,QString>();
+static QList<SearchLineEdit *> SearchLineEdits;
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
@@ -109,6 +110,10 @@ PartsBinPaletteWidget::~PartsBinPaletteWidget() {
 		delete m_model;
 		m_model = NULL;
 	}
+
+    if (SearchLineEdits.contains(m_searchLineEdit)) {
+        SearchLineEdits.removeOne(m_searchLineEdit);
+    }
 }
 
 QSize PartsBinPaletteWidget::sizeHint() const {
@@ -157,9 +162,18 @@ void PartsBinPaletteWidget::setupFooter() {
 
 	footerLayout->addSpacing(6);
 	m_searchLineEdit = new SearchLineEdit(m_footer);
+    if (SearchLineEdits.count() > 0) {
+        m_searchLineEdit->setPost("");
+        m_searchLineEdit->setText(SearchLineEdits.at(0)->text());
+    }
 	m_searchLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	connect(m_searchLineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
 	footerLayout->addWidget(m_searchLineEdit);
+    foreach (SearchLineEdit * sel, SearchLineEdits) {
+        connect(m_searchLineEdit, SIGNAL(textEdited(const QString &)), sel, SLOT(syncText(const QString &)));
+        connect(sel, SIGNAL(textEdited(const QString &)), m_searchLineEdit, SLOT(syncText(const QString &)));
+    }
+    SearchLineEdits.append(m_searchLineEdit);
 
 	//footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 
@@ -541,7 +555,7 @@ bool PartsBinPaletteWidget::open(QString fileName) {
 }
 
 void PartsBinPaletteWidget::openCore() {
-	load(FritzingWindow::CoreBinLocation);
+    load(BinManager::CoreBinLocation);
 }
 
 void PartsBinPaletteWidget::load(const QString &filename) {
@@ -571,7 +585,7 @@ void PartsBinPaletteWidget::undoStackCleanChanged(bool isClean) {
 }
 
 bool PartsBinPaletteWidget::currentBinIsCore() {
-	return m_fileName == FritzingWindow::CoreBinLocation;
+    return m_fileName == BinManager::CoreBinLocation;
 }
 
 
@@ -649,6 +663,16 @@ void PartsBinPaletteWidget::removePart(const QString& moduleID) {
 	// and the removePart calls above still need the modelpart
 	m_model->removePart(moduleID);
 
+}
+
+
+void PartsBinPaletteWidget::removeParts() {
+    m_iconView->removeParts();
+    m_listView->removeParts();
+
+    // remove the model part from the model last, as this deletes it,
+    // and the removePart calls above still need the modelpart
+    m_model->removeParts();
 }
 
 void PartsBinPaletteWidget::removeAlienParts() {
@@ -875,9 +899,5 @@ void PartsBinPaletteWidget::search() {
 	QString searchText = edit->text();
 	if (searchText.isEmpty()) return;
 
-	QList<ModelPart *> parts = m_refModel->search(searchText);
-	foreach (ModelPart * modelPart, parts) {
-		DebugDialog::debug(modelPart->title());
-	}
-
+    m_manager->search(searchText);
 }

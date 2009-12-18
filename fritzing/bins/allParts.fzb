@@ -177,13 +177,6 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="i2012BCEC1FB" modelIndex="369" path="parts/core/thermistor_300mil.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
         <instance moduleIdRef="56bed03878064b8286b71d5240035138" path="parts/core/inductor.fzp">
             <views>
                 <iconView layer="icon">
@@ -507,13 +500,6 @@
         </views>
       </instance>
       <instance moduleIdRef="PowerModuleID" modelIndex="434" path=":/resources/parts/core/power.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="BareBonesBoard-ModuleID" modelIndex="435" path=":/resources/parts/core/BareBonesBoard.fzp">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>

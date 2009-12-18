@@ -1,5 +1,5 @@
- <RCC>
-    <qresource prefix="/" >
+<RCC>
+    <qresource prefix="/">
         <file>resources/images/splash_2010.png</file>
         <file>resources/images/fhp_logo_small.png</file>
         <file>resources/images/splash_progressbar.png</file>
@@ -186,11 +186,12 @@
         <file>resources/images/icons/toolbarShareDisabled_icon.png</file>
         <file>resources/images/icons/toolbarShareEnabled_icon.png</file>
         <file>resources/templates/jumper_copper0LayerTemplate.txt</file>
-	  <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
+        <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_silkscreenLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_fzpTemplate.txt</file>
         <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
-	  <file>resources/images/splitterHandle.png</file>
+        <file>resources/images/splitterHandle.png</file>
+        <file>resources/bins/search.fzb</file>
     </qresource>
 </RCC>

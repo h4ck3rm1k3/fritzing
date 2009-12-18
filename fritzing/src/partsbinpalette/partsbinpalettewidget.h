@@ -78,8 +78,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void addPart(const QString& moduleID, int position = -1);
 		void addNewPart(ModelPart *modelPart);
-		void removePart(const QString& moduleID);
-		void load(const QString&);
+        void removePart(const QString& moduleID);
+        void removeParts();
+        void load(const QString&);
 
 		bool contains(const QString &moduleID);
 		void setDirty(bool dirty=true);

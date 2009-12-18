@@ -483,6 +483,21 @@ void PaletteModel::removePart(const QString &moduleID) {
 	}
 }
 
+void PaletteModel::removeParts() {
+    QList<ModelPart *> modelParts;
+    foreach (QObject * child, m_root->children()) {
+        ModelPart * modelPart = qobject_cast<ModelPart *>(child);
+        if (modelPart == NULL) continue;
+
+        modelParts.append(modelPart);
+    }
+
+    foreach(ModelPart * modelPart, modelParts) {
+        modelPart->setParent(NULL);
+        delete modelPart;
+    }
+}
+
 void PaletteModel::clearPartHash() {
 	foreach (ModelPart * modelPart, m_partHash.values()) {
 		delete modelPart;
@@ -494,61 +509,68 @@ void PaletteModel::setOrdererChildren(QList<QObject*> children) {
 	m_root->setOrderedChildren(children);
 }
 
-QList<ModelPart *> PaletteModel::search(const QString & searchText) {
+QList<ModelPart *> PaletteModel::search(const QString & searchText, bool allowObsolete) {
 	QList<ModelPart *> modelParts;
 
 	QStringList strings = searchText.split(":");
 	if (strings.count() > 2) return modelParts;
 
-	search(m_root, strings, modelParts);
+    search(m_root, strings, modelParts, allowObsolete);
+    return modelParts;
 }
 
-void PaletteModel::search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts) {
+void PaletteModel::search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts, bool allowObsolete) {
 	// TODO: eventually move all this into the database?
 	// or use lucene
 	// or google search api
-	bool gotOne = false;
-	if (!gotOne && modelPart->title().contains(searchStrings[0], Qt::CaseInsensitive)) {
-		modelParts.append(modelPart);
-		gotOne = true;
+
+
+    ModelPart * candidate = NULL;
+    if (!candidate && modelPart->title().contains(searchStrings[0], Qt::CaseInsensitive)) {
+        candidate = modelPart;
 	}
-	if (!gotOne && modelPart->description().contains(searchStrings[0], Qt::CaseInsensitive)) {
-		modelParts.append(modelPart);
-		gotOne = true;
+    if (!candidate && modelPart->description().contains(searchStrings[0], Qt::CaseInsensitive)) {
+        candidate = modelPart;
 	}
-	if (!gotOne) {
+    if (!candidate) {
 		foreach (QString string, modelPart->tags()) {
 			if (string.contains(searchStrings[0], Qt::CaseInsensitive)) {
-				modelParts.append(modelPart);
-				gotOne = true;
+                candidate = modelPart;
 				break;
 			}
 		}
 	}
-	if (!gotOne) {
+    if (!candidate) {
 		foreach (QString string, modelPart->properties().values()) {
 			if (string.contains(searchStrings[0], Qt::CaseInsensitive)) {
-				modelParts.append(modelPart);
-				gotOne = true;
+                candidate = modelPart;
 				break;
 			}
 		}
 	}
-	if (!gotOne) {
+    if (!candidate) {
 		foreach (QString string, modelPart->properties().keys()) {
 			if (string.contains(searchStrings[0], Qt::CaseInsensitive)) {
-				modelParts.append(modelPart);
-				gotOne = true;
+                candidate = modelPart;
 				break;
 			}
 		}
 	}
+
+    if (candidate && !modelParts.contains(candidate)) {
+        if (!allowObsolete && !candidate->replacedby().isEmpty()) {
+        }
+        else
+        {
+            modelParts.append(candidate);
+        }
+    }
 
 	foreach(QObject * child, modelPart->children()) {
 		ModelPart * mp = qobject_cast<ModelPart *>(child);
 		if (mp == NULL) continue;
 
-		search(mp, searchStrings, modelParts);
+        search(mp, searchStrings, modelParts, allowObsolete);
 	}
 }
 

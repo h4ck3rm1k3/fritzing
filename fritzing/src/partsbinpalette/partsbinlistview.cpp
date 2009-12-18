@@ -165,6 +165,13 @@ void PartsBinListView::removePart(const QString &moduleID) {
 	}
 }
 
+void PartsBinListView::removeParts() {
+    m_partHash.clear();
+    while (count() > 0) {
+        delete takeItem(0);
+    }
+}
+
 int PartsBinListView::position(const QString &moduleID) {
 	for(int i=0; i < count(); i++) {
 		if(itemModuleID(item(i)) == moduleID) {

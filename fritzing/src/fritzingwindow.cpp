@@ -47,7 +47,6 @@ $Date$
 
 const QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some weird hack Qt uses in window titles as a placeholder to setr the modified state
 QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");
-const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin" + FritzingBinExtension;
 static QString ___fritzingTitle___;
 QStringList FritzingWindow::OtherKnownExtensions;
 

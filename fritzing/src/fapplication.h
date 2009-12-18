@@ -80,6 +80,7 @@ protected:
 	void initSplash(class FSplashScreen & splash, QPixmap & pixmap);
 	void registerFont(const QString &fontFile, bool reallyRegister);
 	void clearModels();
+    void copyBin(const QString & source, const QString & dest);
 
 protected:
 	bool m_spaceBarIsPressed;

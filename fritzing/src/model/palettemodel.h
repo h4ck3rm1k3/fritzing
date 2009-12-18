@@ -52,7 +52,8 @@ public:
 	bool load(const QString & fileName, ModelBase* refModel);
 	ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists=false);
 	void removePart(const QString &moduleID);
-	QList<ModelPart *> search(const QString & searchText);
+    void removeParts();
+    QList<ModelPart *> search(const QString & searchText, bool allowObsolete);
 
 	void clearPartHash();
 	void setOrdererChildren(QList<QObject*> children);
@@ -73,7 +74,7 @@ protected:
 	void loadParts();
 	void loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadedPart, int totalParts);
 	void countParts(QDir & dir, QStringList & nameFilters, int & partCount);
-	void search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts);
+    void search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts, bool allowObsolete);
 
 	void writeCommonBinsHeader();
 	void writeCommonBinsHeaderAux(bool &doIt, const QString &filename, const QString &binName);

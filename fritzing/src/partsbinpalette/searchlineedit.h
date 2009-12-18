@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 3774 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-11-25 11:14:43 +0100 (Wed, 25 Nov 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -40,8 +40,11 @@ public:
 protected:
 	void paintEvent(QPaintEvent *);
 
+public slots:
+    void setPost(const QString & text);
+
 protected slots:
-	void setPost(const QString & text);
+    void syncText(const QString & text);
 
 protected:
 	bool m_initialState;

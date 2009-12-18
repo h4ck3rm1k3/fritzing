@@ -47,7 +47,8 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void loadFromModel(class PaletteModel *);
 		void setPaletteModel(class PaletteModel *model, bool clear=false);
 		void addPart(ModelPart * model, int position = -1);
-		void removePart(const QString &moduleID);
+        void removePart(const QString &moduleID);
+        void removeParts();
 
 		bool swappingEnabled(ItemBase *);
 

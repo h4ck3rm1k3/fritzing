@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 3774 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-11-25 11:14:43 +0100 (Wed, 25 Nov 2009) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -60,6 +60,10 @@ void SearchLineEdit::paintEvent(QPaintEvent * event) {
 		QSize sz = size();
 		painter.drawText(0, 0, sz.width(), sz.height(), Qt::AlignVCenter + Qt::AlignRight + Qt::TextSingleLine, InitialText);
 	}
+}
+
+void SearchLineEdit::syncText(const QString & txt) {
+    setText(txt);
 }
 
 

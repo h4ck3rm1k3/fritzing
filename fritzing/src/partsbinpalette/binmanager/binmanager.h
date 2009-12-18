@@ -56,7 +56,9 @@ class BinManager : public QFrame {
 		bool beforeClosing();
 
 		bool hasAlienParts();
-		QString createIfMyPartsNotExists();
+        QString createIfMyPartsNotExists();
+        QString createIfSearchNotExists();
+        QString createIfBinNotExists(const QString & dest, const QString & source);
 
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void load(const QString&);
@@ -81,6 +83,7 @@ class BinManager : public QFrame {
 		QList<QAction*> openedBinsActions(const QString &moduleId);
 
 		MainWindow* mainWindow();
+        void search(const QString & searchText);
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
@@ -97,8 +100,10 @@ class BinManager : public QFrame {
 		void saveStateAndGeometry();
 		void restoreStateAndGeometry();
 		void setAsCurrentTab(PartsBinPaletteWidget* bin);
-		PartsBinPaletteWidget* getOrOpenMyPartsBin();
-		void connectTabWidget(StackTabWidget *tw);
+        PartsBinPaletteWidget* getOrOpenMyPartsBin();
+        PartsBinPaletteWidget* getOrOpenSearchBin();
+        PartsBinPaletteWidget* getOrOpenBin(const QString & dest, const QString & source);
+        void connectTabWidget(StackTabWidget *tw);
 		void addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
 
 		ReferenceModel *m_refModel;
@@ -122,9 +127,12 @@ class BinManager : public QFrame {
 
 	public:
 		static QString Title;
-		static QString MyPartsBinLocation;
-		static QString MyPartsBinTemplateLocation;
-		static QString AllPartsBinLocation;
+        static QString CoreBinLocation;
+        static QString MyPartsBinLocation;
+        static QString MyPartsBinTemplateLocation;
+        static QString SearchBinLocation;
+        static QString SearchBinTemplateLocation;
+        static QString AllPartsBinLocation;
 		static QString NonCorePartsBinLocation;
 		static bool isTabReorderingEvent(QDropEvent* event);
 		static void initNames();
