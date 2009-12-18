@@ -109,7 +109,7 @@ bool TextUtils::squashNotElement(QString & svg, const QString & elementName, con
     squashNotElement(root, elementName, attName, matchContent, result);
 	root.setTagName(tagName);
 	if (result) {
-		svg = doc.toString();
+		svg = removeXMLEntities(doc.toString());
 	}
 	return result;
 }
@@ -172,7 +172,7 @@ bool TextUtils::squashElement(QString & svg, const QString & elementName, const 
     }
 
     if (result) {
-        svg = doc.toString();
+        svg = removeXMLEntities(doc.toString());
     }
 
     return result;

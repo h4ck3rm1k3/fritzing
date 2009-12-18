@@ -76,6 +76,8 @@ static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
 static QHash<QString, QString> fileExtFormats;
 
+static QRegExp AaCc("[aAcC]");
+
 ////////////////////////////////////////////////////////
 
 // help struct to create the example menu from a xml file
@@ -2373,30 +2375,19 @@ void MainWindow::exportToGerber() {
 
     bool svgToConvert = false;
 	QString textOnly = svgSilk;
-	QByteArray textByteArray;
     if (TextUtils::squashElement(svgSilk, "text", "", QRegExp())) {
-		svgSilk = TextUtils::removeXMLEntities(svgSilk);
         TextUtils::squashNotElement(textOnly, "text", "", QRegExp());
-		textOnly = TextUtils::removeXMLEntities(textOnly);
-
-		QStringList exceptions;
-		exceptions << "none" << "";
-		QString toColor("#FFFFFF");
-		SvgFileSplitter::changeColors(textOnly, toColor, exceptions, textByteArray);
-
         svgToConvert = true;
 	}
 
-    if (TextUtils::squashElement(svgSilk, "path", "d", QRegExp("[aAcC]"))) {
-        svgSilk = TextUtils::removeXMLEntities(svgSilk);
-        QString temp;
-        TextUtils::squashNotElement(temp, "path", "d", QRegExp("[aAcC]"));
-        temp = TextUtils::removeXMLEntities(temp);
-        if (textOnly.isEmpty()) {
-            textOnly = temp;
+	QString curvesOnly = svgSilk;
+    if (TextUtils::squashElement(svgSilk, "path", "d", AaCc)) {
+        TextUtils::squashNotElement(curvesOnly, "path", "d", AaCc);
+        if (!svgToConvert) {
+            textOnly = curvesOnly;
         }
         else {
-            textOnly = TextUtils::mergeSvg(textOnly, temp);
+            textOnly = TextUtils::mergeSvg(textOnly, curvesOnly);
         }
         svgToConvert = true;
     }
@@ -2440,6 +2431,11 @@ void MainWindow::exportToGerber() {
 		QGraphicsSvgItem * textItem = NULL;
 		QSvgRenderer * textRenderer = NULL;
         if (svgToConvert) {
+			QStringList exceptions;
+			exceptions << "none" << "";
+			QString toColor("#FFFFFF");
+			QByteArray textByteArray;
+			SvgFileSplitter::changeColors(textOnly, toColor, exceptions, textByteArray);
 			textItem = new QGraphicsSvgItem();
 			textRenderer = new QSvgRenderer(textByteArray);
 			textItem->setSharedRenderer(textRenderer);
@@ -2469,14 +2465,7 @@ void MainWindow::exportToGerber() {
 		foreach (QString gsvg, gpg.newSVGs()) {
 			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg);
 		}
-
-		//image.save("C:/fritzing2/fz/labeltest.png");
-
-
-
 	}
-
-
 
 #ifndef QT_NO_DEBUG
 	// for debugging silkscreen svg
