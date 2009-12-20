@@ -89,6 +89,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		class PartsBinView *currentView();
 		QAction *addPartToMeAction();
+		bool allowsChanges();
+		void setAllowsChanges(bool);
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -113,6 +115,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void openCoreBin();
 		void openAllBin();
 		void openNonCoreBin();
+		void openContribBin();
 		void openUserBin();
 		void closeBin();
 		void newPart();
@@ -195,6 +198,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QAction *m_openCoreBinAction;
 		QAction *m_openAllBinAction;
 		QAction *m_openNonCoreBinAction;
+		QAction *m_openContribBinAction;
 		QAction *m_closeBinAction;
 		QAction *m_saveAction;
 		QAction *m_saveAsAction;
@@ -216,6 +220,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		StackTabWidget *m_tabWidget;
 
 		QStringList m_alienParts;
+		bool m_allowsChanges;
 
 		static bool m_openUserBinMenuCreated;
 		static QHash<QString /*binFile*/, QString /*binName*/> m_userBinsInfo;

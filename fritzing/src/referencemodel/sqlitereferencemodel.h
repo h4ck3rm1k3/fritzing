@@ -68,7 +68,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		bool lastWasExactMatch();
 
 	protected:
-		void init();
+		void initParts();
 
 	private:
 		bool addPartAux(ModelPart * newModel);

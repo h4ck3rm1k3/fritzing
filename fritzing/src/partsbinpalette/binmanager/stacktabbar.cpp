@@ -68,7 +68,7 @@ void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	int index = tabAt(event->pos());
     if ((event->source() != this) && mimeIsAction(m,"part-reordering")) {
 		PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(index));
-		if(bin && !bin->currentBinIsCore()) {
+		if(bin && bin->allowsChanges()) {
 			event->acceptProposedAction();
 			setCurrentIndex(index);
 		}
@@ -84,7 +84,7 @@ void StackTabBar::dropEvent(QDropEvent* event) {
 		// but it's already aware of "part-reordering"
 		// actions, so fuck it!
 		PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(toIndex));
-		if(bin && !bin->currentBinIsCore()) {
+		if(bin && bin->allowsChanges()) {
 			bin->currentView()->dropEventAux(event,true);
 		}
 	}

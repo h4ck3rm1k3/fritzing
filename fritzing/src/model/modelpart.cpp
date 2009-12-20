@@ -574,3 +574,9 @@ const QString & ModelPart::replacedby() {
 	return ___emptyString___;
 }
 
+bool ModelPart::isObsolete() {
+	if (m_modelPartShared != NULL) return !m_modelPartShared->replacedby().isEmpty();
+
+	return false;
+}
+

@@ -80,7 +80,7 @@ void MiniView::drawBackground(QPainter * painter, const QRectF & rect) {
 	QFontMetrics metrics = painter->fontMetrics();
 	m_lastHeight = metrics.descent() + metrics.ascent();
 	int h = 0;  // metrics.descent();
-	int y = vp.bottom() - h;
+	int y = vp.bottom() - h - 2;
 	QRect br = metrics.boundingRect(m_title);
 	int x = vp.left() + ((vp.width() - br.width()) / 2);
 	painter->drawText(QPointF(x, y), m_title);

@@ -2380,6 +2380,20 @@ void MainWindow::exportToGerber() {
         svgToConvert = true;
 	}
 
+	// gerber can't handle ellipses that are rotated, so cull them all
+	QString ellipseOnly = svgSilk;
+    if (TextUtils::squashElement(svgSilk, "ellipse", "", QRegExp())) {
+        TextUtils::squashNotElement(ellipseOnly, "ellipse", "", QRegExp());
+        if (!svgToConvert) {
+            textOnly = ellipseOnly;
+        }
+        else {
+            textOnly = TextUtils::mergeSvg(textOnly, ellipseOnly);
+        }
+        svgToConvert = true;
+    }
+
+	// gerber can't handle paths with curves
 	QString curvesOnly = svgSilk;
     if (TextUtils::squashElement(svgSilk, "path", "d", AaCc)) {
         TextUtils::squashNotElement(curvesOnly, "path", "d", AaCc);

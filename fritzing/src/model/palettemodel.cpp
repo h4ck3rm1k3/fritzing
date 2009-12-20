@@ -39,19 +39,23 @@ $Date$
 #include "../items/moduleidnames.h"
 
 #ifndef QT_NO_DEBUG
-bool PaletteModel::CreateAllPartsBinFile = true;
+bool PaletteModel::CreateAllPartsBinFile = false;
 #else
 bool PaletteModel::CreateAllPartsBinFile = false;
 #endif
 bool PaletteModel::CreateNonCorePartsBinFile = true;
+bool PaletteModel::CreateContribPartsBinFile = true;
 
-bool JustAppendAllPartsInstances = false;
+static bool JustAppendAllPartsInstances = false;
+static bool FirstTime = true;
 
 QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
 QString PaletteModel::NonCorePartsBinFilePath = ___emptyString___;
+QString PaletteModel::ContribPartsBinFilePath = ___emptyString___;
 
+static QString FritzingContribPath;
 
-const QString InstanceTemplate(
+const static QString InstanceTemplate(
         		"\t\t<instance moduleIdRef=\"%1\" path=\"%2\">\n"
 				"\t\t\t<views>\n"
         		"\t\t\t\t<iconView layer=\"icon\">\n"
@@ -71,11 +75,16 @@ PaletteModel::PaletteModel(bool makeRoot, bool doInit) : ModelBase( makeRoot ) {
 	m_loadingCore = false;
 	m_loadingContrib = false;
 
-	if (doInit)
-		init();
+	if (doInit) {
+		initParts();
+	}
 }
 
-void PaletteModel::init() {
+void PaletteModel::initParts() {
+	QDir * dir = FolderUtils::getApplicationSubFolder("parts");
+	FritzingContribPath = dir->absoluteFilePath("contrib");
+	delete dir;
+
 	loadParts();
 	if (m_root == NULL) {
 	    QMessageBox::information(NULL, QObject::tr("Fritzing"),
@@ -86,6 +95,7 @@ void PaletteModel::init() {
 void PaletteModel::initNames() {
 	AllPartsBinFilePath = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.dbg" + FritzingBinExtension;
 	NonCorePartsBinFilePath = FolderUtils::getApplicationSubFolderPath("bins")+"/nonCoreParts" + FritzingBinExtension;
+	ContribPartsBinFilePath = FolderUtils::getApplicationSubFolderPath("bins")+"/contribParts" + FritzingBinExtension;
 }
 
 ModelPart * PaletteModel::retrieveModelPart(const QString & moduleID) {
@@ -129,7 +139,9 @@ void PaletteModel::loadParts() {
 	/// !!!!!!!!!!!!!!!!  Fritzing was taking forever to start up.
 
 
-	writeCommonBinsHeader();
+	if (FirstTime) {
+		writeCommonBinsHeader();
+	}
 
 	int totalPartCount = 0;
 	emit loadedPart(0, totalPartCount);
@@ -152,7 +164,9 @@ void PaletteModel::loadParts() {
 	loadPartsAux(dir2, nameFilters, loadingPart, totalPartCount);
 	loadPartsAux(dir3, nameFilters, loadingPart, totalPartCount);
 
-	writeCommonBinsFooter();
+	if (FirstTime) {
+		writeCommonBinsFooter();
+	}
 	
 	JustAppendAllPartsInstances = false;   
 	/// !!!!!!!!!!!!!!!!  "JustAppendAllPartsInstances = !CreateAllPartsBinFile"
@@ -161,14 +175,17 @@ void PaletteModel::loadParts() {
 	/// !!!!!!!!!!!!!!!!  writeInstanceInCommonBin via LoadPart() will use the slower DomDocument methods,
 	/// !!!!!!!!!!!!!!!!  since in that case we are appending to an already existing file.
 
+	FirstTime = false;
+
 }
 
 void PaletteModel::writeCommonBinsHeader() {
 	writeCommonBinsHeaderAux(CreateAllPartsBinFile, AllPartsBinFilePath, "All Parts");
 	writeCommonBinsHeaderAux(CreateNonCorePartsBinFile, NonCorePartsBinFilePath, "All my parts");
+	writeCommonBinsHeaderAux(CreateContribPartsBinFile, ContribPartsBinFilePath, "Contributed");
 }
 
-void PaletteModel::writeCommonBinsHeaderAux(bool &doIt, const QString &filename, const QString &binName) {
+void PaletteModel::writeCommonBinsHeaderAux(bool doIt, const QString &filename, const QString &binName) {
 	QString header =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
 		QString("<module fritzingVersion='%1'>\n").arg(Version::versionString())+
@@ -180,14 +197,17 @@ void PaletteModel::writeCommonBinsHeaderAux(bool &doIt, const QString &filename,
 void PaletteModel::writeCommonBinsFooter() {
 	writeCommonBinsFooterAux(CreateAllPartsBinFile, AllPartsBinFilePath);
 	writeCommonBinsFooterAux(CreateNonCorePartsBinFile, NonCorePartsBinFilePath);
+	writeCommonBinsFooterAux(CreateContribPartsBinFile, ContribPartsBinFilePath);
 }
 
-void PaletteModel::writeCommonBinsFooterAux(bool &doIt, const QString &filename) {
+void PaletteModel::writeCommonBinsFooterAux(bool doIt, const QString &filename) {
 	QString footer = "\t</instances>\n</module>\n";
 	writeToCommonBinAux(footer, QFile::Append, doIt, filename);
 }
 
-void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool &doIt, const QString &filename) {
+void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool doIt, const QString &filename) {
+	if (!doIt) return;
+	
 	QString pathAux = path;
 	pathAux.remove(FolderUtils::getApplicationSubFolderPath("")+"/");
 
@@ -201,7 +221,7 @@ void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QStri
 		int errorColumn;
 		QDomDocument domDocument;
 
-		QFile file(AllPartsBinFilePath);
+		QFile file(filename);
 
 		if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
 			return;
@@ -237,13 +257,11 @@ void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QStri
 	}
 }
 
-void PaletteModel::writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool &doIt, const QString &filename) {
+void PaletteModel::writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool doIt, const QString &filename) {
 	if(!doIt) return;
 
 	QFile file(filename);
-	if (!file.open(openMode | QFile::Text)) {
-		doIt = false;
-	} else {
+	if (file.open(openMode | QFile::Text)) {
 		QTextStream out(&file);
 		out << textToWrite;
 		file.close();
@@ -413,16 +431,22 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
     	modelPart->setParent(m_root);
    	}
 
-	//DebugDialog::debug(QString("all parts %1").arg(JustAppendAllPartsInstances));
-    writeInstanceInCommonBin(moduleID,path,CreateAllPartsBinFile,AllPartsBinFilePath);
+	if (FirstTime) {
+		//DebugDialog::debug(QString("all parts %1").arg(JustAppendAllPartsInstances));
+		writeInstanceInCommonBin(moduleID,path,CreateAllPartsBinFile,AllPartsBinFilePath);
 
-    bool keepOnCreatingNonCorePartBins = !modelPart->isCore();
-	//DebugDialog::debug(QString("non core parts %1").arg(JustAppendAllPartsInstances));
-    writeInstanceInCommonBin(moduleID,path,keepOnCreatingNonCorePartBins,NonCorePartsBinFilePath);
-    if(!modelPart->isCore()) {
-    	CreateNonCorePartsBinFile = keepOnCreatingNonCorePartBins;
-    }
-    
+		if (modelPart->isContrib()) {
+			//if (path.startsWith(FritzingContribPath, Qt::CaseInsensitive)) {
+				writeInstanceInCommonBin(moduleID,path,CreateContribPartsBinFile,ContribPartsBinFilePath);
+			//}
+		}
+
+		//DebugDialog::debug(QString("non core parts %1").arg(JustAppendAllPartsInstances));
+		if (!modelPart->isCore() && !modelPart->isObsolete()) {
+			writeInstanceInCommonBin(moduleID,path,CreateNonCorePartsBinFile,NonCorePartsBinFilePath);
+		}
+	}
+
     return modelPart;
 }
 
@@ -558,7 +582,7 @@ void PaletteModel::search(ModelPart * modelPart, const QStringList & searchStrin
 	}
 
     if (candidate && !modelParts.contains(candidate)) {
-        if (!allowObsolete && !candidate->replacedby().isEmpty()) {
+        if (!allowObsolete && candidate->isObsolete()) {
         }
         else
         {

@@ -127,13 +127,14 @@ class BinManager : public QFrame {
 
 	public:
 		static QString Title;
-        static QString CoreBinLocation;
+        static QString CorePartsBinLocation;
         static QString MyPartsBinLocation;
         static QString MyPartsBinTemplateLocation;
         static QString SearchBinLocation;
         static QString SearchBinTemplateLocation;
         static QString AllPartsBinLocation;
 		static QString NonCorePartsBinLocation;
+		static QString ContribPartsBinLocation;
 		static bool isTabReorderingEvent(QDropEvent* event);
 		static void initNames();
 };

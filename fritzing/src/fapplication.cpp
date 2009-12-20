@@ -413,11 +413,11 @@ int FApplication::startup(bool firstRun)
 	processEvents();
 
 	QString binToOpen = settings.value("lastBin").toString();
-    binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? BinManager::CoreBinLocation: binToOpen;
+    binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? BinManager::CorePartsBinLocation: binToOpen;
 
 	if (!m_paletteBinModel->load(binToOpen, m_referenceModel)) {
-        if(binToOpen == BinManager::CoreBinLocation
-           || !m_paletteBinModel->load(BinManager::CoreBinLocation, m_referenceModel)) {
+        if(binToOpen == BinManager::CorePartsBinLocation
+           || !m_paletteBinModel->load(BinManager::CorePartsBinLocation, m_referenceModel)) {
 			// TODO: we're really screwed, what now?
 			QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 			return -1;

@@ -1490,7 +1490,7 @@ void ItemBase::setProp(const QString & prop, const QString & value) {
 bool ItemBase::isObsolete() {
 	if (modelPart() == NULL) return false;
 
-	return !modelPart()->replacedby().isEmpty();
+	return modelPart()->isObsolete();
 }
 
 bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValuesFlag, QString & returnProp, QString & returnValue) {

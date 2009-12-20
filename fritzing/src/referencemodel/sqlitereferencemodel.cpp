@@ -40,7 +40,7 @@ SqliteReferenceModel::SqliteReferenceModel() {
 
 void SqliteReferenceModel::loadAll()
 {
-	init();
+	initParts();
 
 	int tries = 0;
 	while(!m_swappingEnabled && tries < MAX_CONN_TRIES) {
@@ -86,9 +86,9 @@ SqliteReferenceModel::~SqliteReferenceModel() {
 	deleteConnection();
 }
 
-void SqliteReferenceModel::init() {
+void SqliteReferenceModel::initParts() {
 	m_init = true;
-	PaletteModel::init();
+	PaletteModel::initParts();
 	m_init = false;
 }
 

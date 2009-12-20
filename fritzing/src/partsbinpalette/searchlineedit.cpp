@@ -58,7 +58,7 @@ void SearchLineEdit::paintEvent(QPaintEvent * event) {
 		QPainter painter(this);
 		painter.setOpacity(.5);
 		QSize sz = size();
-		painter.drawText(0, 0, sz.width(), sz.height(), Qt::AlignVCenter + Qt::AlignRight + Qt::TextSingleLine, InitialText);
+		painter.drawText(0, 0, sz.width() - 2, sz.height(), Qt::AlignVCenter + Qt::AlignRight + Qt::TextSingleLine, InitialText);
 	}
 }
 

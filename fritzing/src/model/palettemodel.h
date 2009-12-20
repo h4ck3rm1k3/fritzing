@@ -70,24 +70,26 @@ signals:
 	void loadedPart(int i, int total);
 
 protected:
-	virtual void init();
+	virtual void initParts();
 	void loadParts();
 	void loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadedPart, int totalParts);
 	void countParts(QDir & dir, QStringList & nameFilters, int & partCount);
     void search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts, bool allowObsolete);
 
 	void writeCommonBinsHeader();
-	void writeCommonBinsHeaderAux(bool &doIt, const QString &filename, const QString &binName);
+	void writeCommonBinsHeaderAux(bool doIt, const QString &filename, const QString &binName);
 	void writeCommonBinsFooter();
-	void writeCommonBinsFooterAux(bool &doIt, const QString &filename);
-	void writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool &doIt, const QString &filename);
-	void writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool &doIt, const QString &filename);
+	void writeCommonBinsFooterAux(bool doIt, const QString &filename);
+	void writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool doIt, const QString &filename);
+	void writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool doIt, const QString &filename);
 
 protected:
 	static bool CreateAllPartsBinFile;
 	static QString AllPartsBinFilePath;
 	static bool CreateNonCorePartsBinFile;
 	static QString NonCorePartsBinFilePath;
+	static bool CreateContribPartsBinFile;
+	static QString ContribPartsBinFilePath;
 
 public:
 	static void initNames();

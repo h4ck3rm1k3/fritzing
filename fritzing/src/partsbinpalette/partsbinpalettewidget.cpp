@@ -57,6 +57,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	QFrame(manager)
 {
 	setAcceptDrops(true);
+	setAllowsChanges(true);
 
 	m_tabWidget = NULL;
 	m_manager = manager;
@@ -353,11 +354,13 @@ void PartsBinPaletteWidget::createOpenBinMenu() {
 	m_openCoreBinAction = new QAction(tr("Core"),this);
 	m_openAllBinAction = new QAction(tr("All Parts"),this);
 	m_openNonCoreBinAction = new QAction(tr("All User Parts"),this);
+	m_openContribBinAction = new QAction(tr("Contributed Parts"),this);
 
 	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openNewBin()));
 	connect(m_openCoreBinAction, SIGNAL(triggered()),this, SLOT(openCoreBin()));
 	connect(m_openAllBinAction, SIGNAL(triggered()),this, SLOT(openAllBin()));
 	connect(m_openNonCoreBinAction, SIGNAL(triggered()),this, SLOT(openNonCoreBin()));
+	connect(m_openContribBinAction, SIGNAL(triggered()),this, SLOT(openContribBin()));
 
 	m_openBinMenu->addAction(m_openCoreBinAction);
 	m_openBinMenu->addAction(m_openAllBinAction);
@@ -372,6 +375,7 @@ void PartsBinPaletteWidget::createOpenBinMenu() {
 	}
 
 	m_openBinMenu->addAction(m_openNonCoreBinAction);
+	m_openBinMenu->addAction(m_openContribBinAction);
 	m_openBinMenu->addSeparator();
 	m_openBinMenu->addAction(m_openBinAction);
 
@@ -555,7 +559,7 @@ bool PartsBinPaletteWidget::open(QString fileName) {
 }
 
 void PartsBinPaletteWidget::openCore() {
-    load(BinManager::CoreBinLocation);
+    load(BinManager::CorePartsBinLocation);
 }
 
 void PartsBinPaletteWidget::load(const QString &filename) {
@@ -585,7 +589,7 @@ void PartsBinPaletteWidget::undoStackCleanChanged(bool isClean) {
 }
 
 bool PartsBinPaletteWidget::currentBinIsCore() {
-    return m_fileName == BinManager::CoreBinLocation;
+    return m_fileName == BinManager::CorePartsBinLocation;
 }
 
 
@@ -767,6 +771,10 @@ void PartsBinPaletteWidget::openNonCoreBin() {
 	openNewBin(BinManager::NonCorePartsBinLocation);
 }
 
+void PartsBinPaletteWidget::openContribBin() {
+	openNewBin(BinManager::ContribPartsBinLocation);
+}
+
 void PartsBinPaletteWidget::closeBin() {
 	m_manager->closeBinIn(m_tabWidget);
 }
@@ -825,8 +833,8 @@ void PartsBinPaletteWidget::updateMenus() {
 	bool enabled = mp != NULL;
 	m_editPartAction->setEnabled(enabled);
 	m_exportPartAction->setEnabled(enabled && !mp->isCore());
-	m_removePartAction->setEnabled(enabled && !mp->isCore());
-	m_importPartAction->setEnabled(!currentBinIsCore());
+	m_removePartAction->setEnabled(enabled && !mp->isCore() && allowsChanges());
+	m_importPartAction->setEnabled(allowsChanges());
 }
 
 bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {
@@ -900,4 +908,12 @@ void PartsBinPaletteWidget::search() {
 	if (searchText.isEmpty()) return;
 
     m_manager->search(searchText);
+}
+
+bool PartsBinPaletteWidget::allowsChanges() {
+	return m_allowsChanges;
+}
+
+void PartsBinPaletteWidget::setAllowsChanges(bool allowsChanges) {
+	m_allowsChanges = allowsChanges;
 }

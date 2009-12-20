@@ -418,6 +418,20 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			root.setAttribute("viewBox", QString("0 0 %1 %2").arg(w).arg(h));
 		}
 
+		QList<QDomNode> rootChildren;
+		QDomNode rootChild = root.firstChild();
+		while (!rootChild.isNull()) {
+			rootChildren.append(rootChild);
+			rootChild = rootChild.nextSibling();
+		}
+
+		QDomElement topG = domDocument.createElement("g");
+		topG.setAttribute("id", "silkscreen");
+		root.appendChild(topG);
+		foreach (QDomNode node, rootChildren) {
+			topG.appendChild(node);
+		}
+
 		svg = TextUtils::removeXMLEntities(domDocument.toString());
 	}
 	else {

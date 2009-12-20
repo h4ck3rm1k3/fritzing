@@ -53,7 +53,8 @@ QString BinManager::SearchBinLocation;
 QString BinManager::SearchBinTemplateLocation;
 QString BinManager::AllPartsBinLocation;
 QString BinManager::NonCorePartsBinLocation;
-QString BinManager::CoreBinLocation;
+QString BinManager::ContribPartsBinLocation;
+QString BinManager::CorePartsBinLocation;
 
 QString BinManager::StandardBinStyle = "background-color: gray;";
 QString BinManager::CurrentBinStyle = "background-color: black;";
@@ -107,6 +108,16 @@ void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
 	m_tabWidgets[bin] = tb;
 	if(bin->fileName() != ___emptyString___) {
 		m_openedBins[bin->fileName()] = bin;
+	}
+
+	if (bin->fileName().compare(CorePartsBinLocation) == 0) {
+		bin->setAllowsChanges(false);
+	}
+	else if (bin->fileName().compare(SearchBinLocation) == 0) {
+		bin->setAllowsChanges(false);
+	}
+	else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
+		bin->setAllowsChanges(false);
 	}
 }
 
@@ -325,6 +336,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 
 PartsBinPaletteWidget* BinManager::openCoreBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = newBin();
+	bin->setAllowsChanges(false);
 	bin->openCore();
 	insertBin(bin, tb->currentIndex()+1, tb);
 	setAsCurrentBin(bin);
@@ -558,7 +570,8 @@ void BinManager::initNames() {
     BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
     BinManager::AllPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.fzb";
 	BinManager::NonCorePartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/nonCoreParts.fzb";
-    BinManager::CoreBinLocation = ":/resources/bins/bin.fzp";
+	BinManager::ContribPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/contribParts.fzb";
+    BinManager::CorePartsBinLocation = ":/resources/bins/bin.fzb";
 }
 
 void BinManager::search(const QString & searchText) {

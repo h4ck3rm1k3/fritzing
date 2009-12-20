@@ -129,6 +129,7 @@ public:
 	QVariant prop(const char * name) const;
 
 	const QString & replacedby();
+	bool isObsolete();
 
 public:
 	static long nextIndex();
