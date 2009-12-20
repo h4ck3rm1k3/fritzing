@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Agradecimento a Kurt Badelt pela tradução para Espanhol, Gianluca Urgese  pela tradução em Italiano, ao Nuno Pessanha Santos pela tradução para Português, ao Yelin e Ninjia pela tradução para chinês (Simplificado), e ao Vladimir Savinov pela tradução para Russo.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Agradecimento a Kurt Badelt pela tradução para Espanhol, Gianluca Urgese  pela tradução em Italiano, ao Nuno Pessanha Santos pela tradução para Português, ao Yelin e Ninjia pela tradução para chinês (Simplificado),ao Hiroshi Suzuki pela tradução para Japonês e ao Vladimir Savinov pela tradução para Russo.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar and IxDS.&lt;/p&gt;</source>
@@ -194,7 +194,7 @@ antes de adicionar algum conector</translation>
     <name>Dip</name>
     <message>
         <source>chip label</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiqueta do chip</translation>
     </message>
 </context>
 <context>
@@ -205,7 +205,7 @@ antes de adicionar algum conector</translation>
     </message>
     <message>
         <source>Inspector</source>
-        <translation>Inspetor</translation>
+        <translation>Propriedades</translation>
     </message>
     <message>
         <source>Undo History</source>
@@ -387,7 +387,7 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message numerus="yes">
         <source>connected to %n item(s)</source>
         <translation>
-            <numerusform>Conectado ao iten(s) %n</numerusform>
+            <numerusform>Ligado ao item(s) %n</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -488,11 +488,11 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     </message>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <source>form</source>
-        <translation type="unfinished"></translation>
+        <translation>Forma</translation>
     </message>
 </context>
 <context>
@@ -510,51 +510,51 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <name>LogoItem</name>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>tamanho</translation>
     </message>
     <message>
         <source>logo</source>
-        <translation type="unfinished"></translation>
+        <translation>logotipo</translation>
     </message>
     <message>
         <source>load image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar ficheiro de imagem</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagens</translation>
     </message>
     <message>
         <source>Select an image file to load</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione um ficheiro de imagem para carregar</translation>
     </message>
     <message>
         <source>Unable to load</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível carregar</translation>
     </message>
     <message>
         <source>Unable to load image from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível carregar a imagem do %1</translation>
     </message>
     <message>
         <source>Unable to display</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível mostrar</translation>
     </message>
     <message>
         <source>Unable to display image from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível mostrar imagem do %1</translation>
     </message>
     <message>
         <source>width(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>largura(mm)</translation>
     </message>
     <message>
         <source>height(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>altura(mm)</translation>
     </message>
     <message>
         <source>keep in proportion</source>
-        <translation type="unfinished"></translation>
+        <translation>manter na proporção</translation>
     </message>
 </context>
 <context>
@@ -1786,61 +1786,63 @@ Do you want to restart now?</source>
     <message>
         <source>No new part found for %1.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Não foram encontrados componentes para %1.</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione os componentes desactualizados</translation>
     </message>
     <message>
         <source>Update selected parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar os componentes seleccionados</translation>
     </message>
     <message>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foram encontrados componentes desactualizados.
+Todos os seus componentes estão actualizados.</translation>
     </message>
     <message>
         <source>Outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Componentes desactualizados</translation>
     </message>
     <message numerus="yes">
         <source>Found %n outdated parts. Do you want to update them now?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Foram encontradas %n componentes desactualizados. Quer actualizar esses componentes?</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>Unknown module id for %1.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Identificação do módulo%1 é desconhecida.</translation>
     </message>
     <message>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Foram actualizadas com sucesso %1 componente(s).
+Por favor verifique em todos os modos de visualização para verificar alguma modificação nas suas dimensões.</translation>
     </message>
     <message>
         <source>Update %1 part(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar %1 componente(s)</translation>
     </message>
     <message>
         <source>No exactly matching part found; Fritzing chose the closest match.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrada uma correspondência a um componente; o Fritzing vai escolher o mais adequado.</translation>
     </message>
     <message>
         <source>Shell launch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar Shell %1</translation>
     </message>
     <message>
         <source>Launch %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar %1...</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos</translation>
     </message>
 </context>
 <context>
@@ -1879,7 +1881,7 @@ Razão: %2 (código do erro %3)</translation>
     <name>MysteryPart</name>
     <message>
         <source>label</source>
-        <translation type="unfinished"></translation>
+        <translation>etiqueta</translation>
     </message>
 </context>
 <context>
@@ -1905,7 +1907,7 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Resize board to %1 %2</source>
-        <translation type="unfinished">Redimensionar placa para %1 %2</translation>
+        <translation>Redimensionar placa para %1 %2</translation>
     </message>
 </context>
 <context>
@@ -2791,7 +2793,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione os componentes desactualizados</translation>
     </message>
 </context>
 <context>
@@ -2805,7 +2807,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <name>Resistor</name>
     <message>
         <source>resistance</source>
-        <translation type="unfinished">resistência</translation>
+        <translation>resistência</translation>
     </message>
 </context>
 <context>
@@ -2816,22 +2818,22 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>shape</source>
-        <translation type="unfinished">forma</translation>
+        <translation>forma</translation>
     </message>
     <message>
         <source>width(mm):</source>
-        <translation type="unfinished"></translation>
+        <translation>largura(mm):</translation>
     </message>
     <message>
         <source>height(mm):</source>
-        <translation type="unfinished"></translation>
+        <translation>altura(mm):</translation>
     </message>
 </context>
 <context>
     <name>Ruler</name>
     <message>
         <source>width</source>
-        <translation type="unfinished">largura</translation>
+        <translation>largura</translation>
     </message>
 </context>
 <context>
@@ -2885,14 +2887,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <name>SchematicSketchWidget</name>
     <message>
         <source>Change voltage from %1 to %2</source>
-        <translation type="unfinished">Mudar a voltagem de %1 para %2</translation>
+        <translation>Mudar a tensão de %1 para %2</translation>
     </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
     <message>
         <source>type to search</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo a pesquisar</translation>
     </message>
 </context>
 <context>
@@ -3101,52 +3103,52 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message numerus="yes">
         <source>show part label(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>mostrar a(s) etiqueta(s) do componente</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>hide part label(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>esconder a(s) etiqueta(s) do componente</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>Change pin spacing from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar o espaçamento entre pinos de %1 para %2</translation>
     </message>
     <message>
         <source>Change form from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar o formato de %1 para %2</translation>
     </message>
     <message>
         <source>Change chip label from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar a etiqueta do chip de %1 para %2</translation>
     </message>
     <message>
         <source>Change logo from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar o logotipo de %1 para %2</translation>
     </message>
     <message>
         <source>Change %note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar a %nota para &apos;%2&apos;</translation>
     </message>
     <message>
         <source>Resize ruler to %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionar a régua para %1 %2</translation>
     </message>
     <message>
         <source>Change image from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar a imagem de %1 para %2</translation>
     </message>
 </context>
 <context>
     <name>SymbolPaletteItem</name>
     <message>
         <source>voltage</source>
-        <translation type="unfinished">tensão</translation>
+        <translation>tensão</translation>
     </message>
 </context>
 <context>
@@ -3204,7 +3206,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <name>TraceWire</name>
     <message>
         <source>width</source>
-        <translation type="unfinished">largura</translation>
+        <translation>largura</translation>
     </message>
 </context>
 <context>
@@ -3271,7 +3273,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Estonian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Estoniano - %1</translation>
     </message>
 </context>
 <context>
@@ -3368,7 +3370,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished">cor</translation>
+        <translation>cor</translation>
     </message>
 </context>
 </TS>
