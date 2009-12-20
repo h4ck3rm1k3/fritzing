@@ -2899,6 +2899,13 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
 </context>
 <context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>type to search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SetColorDialog</name>
     <message>
         <source>Set %1 Color...</source>

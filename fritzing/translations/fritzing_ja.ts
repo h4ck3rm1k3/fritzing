@@ -2897,6 +2897,13 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
 </context>
 <context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>type to search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SetColorDialog</name>
     <message>
         <source>Set %1 Color...</source>

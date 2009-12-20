@@ -2844,6 +2844,13 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
 </context>
 <context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>type to search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SetColorDialog</name>
     <message>
         <source>Set %1 Color...</source>

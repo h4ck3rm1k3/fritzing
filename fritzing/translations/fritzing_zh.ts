@@ -2889,6 +2889,13 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
 </context>
 <context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>type to search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SetColorDialog</name>
     <message>
         <source>Set %1 Color...</source>
