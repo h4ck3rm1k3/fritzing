@@ -193,5 +193,6 @@
         <file>resources/templates/resistor_breadboardLayerTemplate.txt</file>
         <file>resources/images/splitterHandle.png</file>
         <file>resources/bins/search.fzb</file>
+        <file>resources/images/icons/searchField.png</file>
     </qresource>
 </RCC>

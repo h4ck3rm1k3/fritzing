@@ -125,6 +125,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void updateMenus();
 		void addSketchPartToMe();
 		void search();
+        void clickedSearch();
 
 	signals:
 		void saved(bool hasPartsFromBundled);

@@ -37,17 +37,25 @@ public:
 	SearchLineEdit(QWidget * parent = NULL);
 	~SearchLineEdit();
 
+signals:
+    void clicked();
+    void cursorPositionChanged2(int);
+    void selectionChanged2(int, int);
+
 protected:
 	void paintEvent(QPaintEvent *);
-
-public slots:
-    void setPost(const QString & text);
+    void mousePressEvent(QMouseEvent *);
 
 protected slots:
     void syncText(const QString & text);
+    void syncCursor(int newpos);
+    void syncSelection(int, int);
+    void preSyncCursor(int, int);
+    void preSyncSelection();
 
 protected:
-	bool m_initialState;
+    int m_syncCursorCount;
+    int m_syncSelectionCount;
 
 };
 

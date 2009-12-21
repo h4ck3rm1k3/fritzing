@@ -575,12 +575,10 @@ void BinManager::initNames() {
 }
 
 void BinManager::search(const QString & searchText) {
-    QList<ModelPart *> modelParts = m_refModel->search(searchText, false);
-
-    PartsBinPaletteWidget * searchBin = getOrOpenSearchBin();
+    PartsBinPaletteWidget * searchBin = clickedSearch();
     if (searchBin == NULL) return;
 
-    setAsCurrentTab(searchBin);
+    QList<ModelPart *> modelParts = m_refModel->search(searchText, false);
 
     searchBin->removeParts();
     foreach (ModelPart * modelPart, modelParts) {
@@ -589,4 +587,14 @@ void BinManager::search(const QString & searchText) {
     }
 
     setDirtyTab(searchBin);
+}
+
+PartsBinPaletteWidget * BinManager::clickedSearch() {
+    PartsBinPaletteWidget * searchBin = getOrOpenSearchBin();
+    if (searchBin == NULL) return NULL;
+
+    if (m_tabWidgets[searchBin]->currentWidget() == searchBin) return searchBin;
+
+    setAsCurrentTab(searchBin);
+    return searchBin;
 }

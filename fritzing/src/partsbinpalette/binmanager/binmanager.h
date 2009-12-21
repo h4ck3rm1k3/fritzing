@@ -84,6 +84,7 @@ class BinManager : public QFrame {
 
 		MainWindow* mainWindow();
         void search(const QString & searchText);
+        PartsBinPaletteWidget * clickedSearch();
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);

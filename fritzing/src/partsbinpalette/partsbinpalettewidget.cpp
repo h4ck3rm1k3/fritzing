@@ -144,7 +144,7 @@ void PartsBinPaletteWidget::setupFooter() {
 	QFrame *leftButtons = new QFrame(m_footer);
 	QHBoxLayout *leftLayout = new QHBoxLayout(leftButtons);
 	leftLayout->setMargin(0);
-	leftLayout->setSpacing(6);
+    leftLayout->setSpacing(0);
 	leftLayout->addWidget(m_showIconViewButton);
 	leftLayout->addWidget(m_showListViewButton);
 
@@ -152,31 +152,36 @@ void PartsBinPaletteWidget::setupFooter() {
 	QHBoxLayout *rightLayout = new QHBoxLayout(rightButtons);
 	rightLayout->setDirection(QBoxLayout::RightToLeft);
 	rightLayout->setMargin(0);
-	rightLayout->setSpacing(3);
+    rightLayout->setSpacing(0);
 	rightLayout->addWidget(m_binMenuButton);
 	rightLayout->addWidget(m_partMenuButton);
 
 	QHBoxLayout *footerLayout = new QHBoxLayout(m_footer);
-	footerLayout->setMargin(2);
 	footerLayout->setSpacing(0);
+    footerLayout->setMargin(0);
 	footerLayout->addWidget(leftButtons);
 
-	footerLayout->addSpacing(6);
+    footerLayout->addSpacing(8);
 	m_searchLineEdit = new SearchLineEdit(m_footer);
     if (SearchLineEdits.count() > 0) {
-        m_searchLineEdit->setPost("");
         m_searchLineEdit->setText(SearchLineEdits.at(0)->text());
     }
-	m_searchLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+    m_searchLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	connect(m_searchLineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
+    connect(m_searchLineEdit, SIGNAL(clicked()), this, SLOT(clickedSearch()));
 	footerLayout->addWidget(m_searchLineEdit);
     foreach (SearchLineEdit * sel, SearchLineEdits) {
         connect(m_searchLineEdit, SIGNAL(textEdited(const QString &)), sel, SLOT(syncText(const QString &)));
         connect(sel, SIGNAL(textEdited(const QString &)), m_searchLineEdit, SLOT(syncText(const QString &)));
+        connect(m_searchLineEdit, SIGNAL(cursorPositionChanged2(int)), sel, SLOT(syncCursor(int)), Qt::DirectConnection);
+        connect(sel, SIGNAL(cursorPositionChanged2(int)), m_searchLineEdit, SLOT(syncCursor(int)), Qt::DirectConnection);
+        connect(m_searchLineEdit, SIGNAL(selectionChanged2(int, int)), sel, SLOT(syncSelection(int, int)), Qt::DirectConnection);
+        connect(sel, SIGNAL(selectionChanged2(int, int)), m_searchLineEdit, SLOT(syncSelection(int, int)), Qt::DirectConnection);
     }
     SearchLineEdits.append(m_searchLineEdit);
 
-	//footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+    footerLayout->addSpacing(2);
 
 	footerLayout->addWidget(rightButtons);
 }
@@ -908,6 +913,10 @@ void PartsBinPaletteWidget::search() {
 	if (searchText.isEmpty()) return;
 
     m_manager->search(searchText);
+}
+
+void PartsBinPaletteWidget::clickedSearch() {
+    m_manager->clickedSearch();
 }
 
 bool PartsBinPaletteWidget::allowsChanges() {

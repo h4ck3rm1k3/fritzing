@@ -39,8 +39,8 @@ $Date$
 StackWidget::StackWidget(QWidget *parent) : QFrame(parent) {
 	m_current = NULL;
 	m_layout = new QVBoxLayout(this);
-	m_layout->setSpacing(1);
-	m_layout->setMargin(1);
+    m_layout->setSpacing(1);
+    m_layout->setMargin(1);
 }
 
 int StackWidget::addWidget(QWidget *widget) {

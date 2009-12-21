@@ -298,7 +298,7 @@ PartsBinListView {
 }
 
 #partsBinFooter,
-#partsBinContainer,-color
+#partsBinContainer,
 PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
