@@ -51,11 +51,13 @@ $Date$
 
 bool PartsBinPaletteWidget::m_openUserBinMenuCreated = false;
 QHash<QString,QString> PartsBinPaletteWidget::m_userBinsInfo = QHash<QString,QString>();
-static QList<SearchLineEdit *> SearchLineEdits;
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
 {
+	m_searchLineEdit = NULL;
+	m_saveQuietly = false;
+
 	setAcceptDrops(true);
 	setAllowsChanges(true);
 
@@ -111,10 +113,6 @@ PartsBinPaletteWidget::~PartsBinPaletteWidget() {
 		delete m_model;
 		m_model = NULL;
 	}
-
-    if (SearchLineEdits.contains(m_searchLineEdit)) {
-        SearchLineEdits.removeOne(m_searchLineEdit);
-    }
 }
 
 QSize PartsBinPaletteWidget::sizeHint() const {
@@ -163,23 +161,11 @@ void PartsBinPaletteWidget::setupFooter() {
 
     footerLayout->addSpacing(8);
 	m_searchLineEdit = new SearchLineEdit(m_footer);
-    if (SearchLineEdits.count() > 0) {
-        m_searchLineEdit->setText(SearchLineEdits.at(0)->text());
-    }
 
     m_searchLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	connect(m_searchLineEdit, SIGNAL(returnPressed()), this, SLOT(search()));
     connect(m_searchLineEdit, SIGNAL(clicked()), this, SLOT(clickedSearch()));
 	footerLayout->addWidget(m_searchLineEdit);
-    foreach (SearchLineEdit * sel, SearchLineEdits) {
-        connect(m_searchLineEdit, SIGNAL(textEdited(const QString &)), sel, SLOT(syncText(const QString &)));
-        connect(sel, SIGNAL(textEdited(const QString &)), m_searchLineEdit, SLOT(syncText(const QString &)));
-        connect(m_searchLineEdit, SIGNAL(cursorPositionChanged2(int)), sel, SLOT(syncCursor(int)), Qt::DirectConnection);
-        connect(sel, SIGNAL(cursorPositionChanged2(int)), m_searchLineEdit, SLOT(syncCursor(int)), Qt::DirectConnection);
-        connect(m_searchLineEdit, SIGNAL(selectionChanged2(int, int)), sel, SLOT(syncSelection(int, int)), Qt::DirectConnection);
-        connect(sel, SIGNAL(selectionChanged2(int, int)), m_searchLineEdit, SLOT(syncSelection(int, int)), Qt::DirectConnection);
-    }
-    SearchLineEdits.append(m_searchLineEdit);
 
     footerLayout->addSpacing(2);
 
@@ -602,22 +588,27 @@ bool PartsBinPaletteWidget::beforeClosing() {
 	bool retval;
 	if (this->isWindowModified()) {
 		QMessageBox::StandardButton reply;
-		QMessageBox messageBox(
-				tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
-				tr("Do you want to save the changes you made in the bin \"%1\"?")
-					.arg(title()),
-				QMessageBox::Warning,
-				QMessageBox::Yes,
-				QMessageBox::No,
-				QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default,
-				this, Qt::Sheet);
+		if (m_saveQuietly) {
+			reply = QMessageBox::Yes;
+		}
+		else {
+			QMessageBox messageBox(
+					tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
+					tr("Do you want to save the changes you made in the bin \"%1\"?")
+						.arg(title()),
+					QMessageBox::Warning,
+					QMessageBox::Yes,
+					QMessageBox::No,
+					QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default,
+					this, Qt::Sheet);
 
-		messageBox.setButtonText(QMessageBox::Yes, tr("Save"));
-		messageBox.setButtonText(QMessageBox::No, tr("Don't Save"));
-		messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-		messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
+			messageBox.setButtonText(QMessageBox::Yes, tr("Save"));
+			messageBox.setButtonText(QMessageBox::No, tr("Don't Save"));
+			messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
+			messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
 
-		reply = (QMessageBox::StandardButton)messageBox.exec();
+			reply = (QMessageBox::StandardButton)messageBox.exec();
+		}
 
      	if (reply == QMessageBox::Yes) {
      		retval = save();
@@ -916,7 +907,7 @@ void PartsBinPaletteWidget::search() {
 }
 
 void PartsBinPaletteWidget::clickedSearch() {
-    m_manager->clickedSearch();
+    m_manager->clickedSearch(this);
 }
 
 bool PartsBinPaletteWidget::allowsChanges() {
@@ -926,3 +917,22 @@ bool PartsBinPaletteWidget::allowsChanges() {
 void PartsBinPaletteWidget::setAllowsChanges(bool allowsChanges) {
 	m_allowsChanges = allowsChanges;
 }
+
+void PartsBinPaletteWidget::focusSearch() {
+	if (m_searchLineEdit) {
+		QTimer::singleShot(20, this, SLOT(focusSearchAfter()));
+	}
+}
+
+void PartsBinPaletteWidget::focusSearchAfter() {
+	//DebugDialog::debug("focus search after");
+	if (m_searchLineEdit->decoy()) {
+		m_searchLineEdit->setDecoy(false);
+	}
+	m_searchLineEdit->setFocus(Qt::OtherFocusReason);
+}
+
+void PartsBinPaletteWidget::setSaveQuietly(bool saveQuietly) {
+	m_saveQuietly = saveQuietly;
+}
+

@@ -200,7 +200,11 @@ PartsBinPaletteWidget* BinManager::getOrOpenMyPartsBin() {
 }
 
 PartsBinPaletteWidget* BinManager::getOrOpenSearchBin() {
-    return getOrOpenBin(SearchBinLocation, SearchBinTemplateLocation);
+    PartsBinPaletteWidget * bin = getOrOpenBin(SearchBinLocation, SearchBinTemplateLocation);
+	if (bin) {
+		bin->setSaveQuietly(true);
+	}
+	return bin;
 }
 
 PartsBinPaletteWidget* BinManager::getOrOpenBin(const QString & binLocation, const QString & binTemplateLocation) {
@@ -575,7 +579,7 @@ void BinManager::initNames() {
 }
 
 void BinManager::search(const QString & searchText) {
-    PartsBinPaletteWidget * searchBin = clickedSearch();
+    PartsBinPaletteWidget * searchBin = getOrOpenSearchBin();
     if (searchBin == NULL) return;
 
     QList<ModelPart *> modelParts = m_refModel->search(searchText, false);
@@ -589,12 +593,15 @@ void BinManager::search(const QString & searchText) {
     setDirtyTab(searchBin);
 }
 
-PartsBinPaletteWidget * BinManager::clickedSearch() {
+PartsBinPaletteWidget * BinManager::clickedSearch(PartsBinPaletteWidget * bin) {
     PartsBinPaletteWidget * searchBin = getOrOpenSearchBin();
     if (searchBin == NULL) return NULL;
-
-    if (m_tabWidgets[searchBin]->currentWidget() == searchBin) return searchBin;
+	if (searchBin == bin) {
+		searchBin->focusSearch();
+		return searchBin;
+	}
 
     setAsCurrentTab(searchBin);
+	searchBin->focusSearch();
     return searchBin;
 }

@@ -31,19 +31,12 @@ $Date$
 #include <QImage>
 #include <QPixmap>
 
-static QString InitialText;
 static QPixmap * SearchFieldPixmap;
 
 SearchLineEdit::SearchLineEdit(QWidget * parent) : QLineEdit(parent)
 {
-    m_syncSelectionCount = m_syncCursorCount = 0;
-	if (InitialText.isEmpty()) {
-		InitialText = tr("type to search");
-	}
-
     SearchFieldPixmap = NULL;
-    connect(this, SIGNAL(cursorPositionChanged(int, int)), this, SLOT(preSyncCursor(int, int)));
-    connect(this, SIGNAL(selectionChanged()), this, SLOT(preSyncSelection()));
+	setDecoy(true);
 }
 
 SearchLineEdit::~SearchLineEdit()
@@ -71,42 +64,39 @@ void SearchLineEdit::paintEvent(QPaintEvent * event) {
 
 }
 
-void SearchLineEdit::syncText(const QString & txt) {
-    setText(txt);
+void SearchLineEdit::enterEvent(QEvent * event) {
+	QLineEdit::enterEvent(event);
+	if (m_decoy) {
+		setColors(QColor(0xc8, 0xc8, 0xc8), QColor(0x57, 0x57, 0x57));
+	}
 }
 
-
-void SearchLineEdit::syncCursor(int newpos) {
-    if (m_syncCursorCount > 0) return;
-
-    setCursorPosition(newpos);
-    DebugDialog::debug(QString("setcursorposition %1 %2").arg((long) this, 0, 16).arg((long) sender(), 0, 16));
+void SearchLineEdit::leaveEvent(QEvent * event) {
+	QLineEdit::leaveEvent(event);
+	if (m_decoy) {
+		setColors(QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+	}
 }
 
-void SearchLineEdit::syncSelection(int selStart, int selLength) {
-    if (m_syncSelectionCount > 0) return;
-
-    DebugDialog::debug(QString("sync selection %1 %2").arg((long) this, 0, 16).arg((long) sender(), 0, 16));
-
-    this->setSelection(selStart, selLength);
+void SearchLineEdit::setColors(const QColor & base, const QColor & text) {
+	setStyleSheet(QString("background: rgb(%1,%2,%3); color: rgb(%4,%5,%6);")
+		.arg(base.red()).arg(base.green()).arg(base.blue())
+		.arg(text.red()).arg(text.green()).arg(text.blue()) );
 }
 
-void SearchLineEdit::preSyncCursor(int oldPos, int newPos) {
-    if (m_syncCursorCount > 0) return;
-
-    Q_UNUSED(oldPos);
-    m_syncCursorCount++;
-    DebugDialog::debug(QString("emit cursorposition %1").arg((long) this, 0, 16));
-    emit cursorPositionChanged2(newPos);
-    m_syncCursorCount--;
+void SearchLineEdit::setDecoy(bool d) {
+	m_decoy = d;
+	if (m_decoy) {
+		setReadOnly(true);
+		setColors(QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+	}
+	else {
+		setReadOnly(false);
+		setColors(QColor(0xfc, 0xfc, 0xfc), QColor(0x00, 0x00, 0x00));
+	}
+	setCursor(Qt::IBeamCursor);
 }
 
-void SearchLineEdit::preSyncSelection() {
-    if (m_syncSelectionCount > 0) return;
-
-    m_syncSelectionCount++;
-    DebugDialog::debug(QString("emit selection changed %1").arg((long) this, 0, 16));
-    emit selectionChanged2(this->selectionStart(), this->selectedText().length());
-    m_syncSelectionCount--;
+bool SearchLineEdit::decoy() {
+	return m_decoy;
 }
-

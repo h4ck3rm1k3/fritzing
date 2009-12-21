@@ -91,6 +91,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QAction *addPartToMeAction();
 		bool allowsChanges();
 		void setAllowsChanges(bool);
+		void focusSearch();
+		void setSaveQuietly(bool);
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -126,6 +128,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void addSketchPartToMe();
 		void search();
         void clickedSearch();
+		void focusSearchAfter();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -222,7 +225,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		QStringList m_alienParts;
 		bool m_allowsChanges;
+		bool m_saveQuietly;
 
+	protected:
 		static bool m_openUserBinMenuCreated;
 		static QHash<QString /*binFile*/, QString /*binName*/> m_userBinsInfo;
 

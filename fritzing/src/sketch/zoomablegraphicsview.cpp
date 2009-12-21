@@ -91,9 +91,15 @@ void ZoomableGraphicsView::relativeZoom(qreal step) {
 
 	m_scaleValue = tempSize;
 
+	//QPoint p = QCursor::pos();
+	//QPoint q = this->mapFromGlobal(p);
+	QPoint q(this->viewport()->size().width() / 2, this->viewport()->size().height() / 2);
+	QPointF r = this->mapToScene(q);
+
 	QMatrix matrix;
 	matrix.scale(tempScaleValue, tempScaleValue);
 	this->setMatrix(matrix);
+	//this->centerOn(r);
 
 	emit zoomChanged(m_scaleValue);
 }
