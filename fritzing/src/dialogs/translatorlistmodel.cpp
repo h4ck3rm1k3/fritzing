@@ -106,7 +106,7 @@ QVariant TranslatorListModel::data ( const QModelIndex & index, int role) const
 		QString languageString = QLocale::languageToString(m_localeList.at(index.row())->language());
 		QString countryString = QLocale::countryToString(m_localeList.at(index.row())->country());
 
-        DebugDialog::debug(QString("language %1 %2").arg(languageString).arg(countryString));
+        //DebugDialog::debug(QString("language %1 %2").arg(languageString).arg(countryString));
 
 		// QLocale::languageToString() only returns an English string, 
 		// so put it through a language-dependent hash table.

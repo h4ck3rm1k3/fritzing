@@ -99,8 +99,7 @@ void ZoomableGraphicsView::relativeZoom(qreal step, bool centerOnCursor) {
 	matrix.scale(tempScaleValue, tempScaleValue);
 	if (centerOnCursor) {
 		//this->setMatrix(QMatrix().translate(-r.x(), -r.y()) * matrix * QMatrix().translate(r.x(), r.y()));
-		//this->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-		this->setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+        this->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	}
 	else {
 		this->setTransformationAnchor(QGraphicsView::AnchorViewCenter);
