@@ -239,6 +239,7 @@ protected slots:
 	void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void processReadyRead();
 	void processStateChanged(QProcess::ProcessState newState);
+    void throwFakeException();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -402,6 +403,7 @@ protected:
     QAction *m_tipsAndTricksAct;
     QAction *m_preferencesAct;
     QAction *m_quitAct;
+    QAction *m_exceptionAct;
 
     // File Menu
     enum { MaxRecentFiles = 10 };

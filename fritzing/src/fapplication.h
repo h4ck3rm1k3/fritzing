@@ -81,6 +81,7 @@ protected:
 	void registerFont(const QString &fontFile, bool reallyRegister);
 	void clearModels();
     void copyBin(const QString & source, const QString & dest);
+    bool notify(QObject *receiver, QEvent *e);
 
 protected:
 	bool m_spaceBarIsPressed;

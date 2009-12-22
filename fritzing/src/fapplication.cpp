@@ -909,3 +909,17 @@ void FApplication::externalProcessSlot(QString &name, QString &path, QStringList
 	path = m_externalProcessPath;
 	args = m_externalProcessArgs;
 }
+
+bool FApplication::notify(QObject *receiver, QEvent *e)
+{
+    try {
+        return QApplication::notify(receiver, e);
+    }
+    catch (...) {
+        QMessageBox::critical(NULL, tr("Fritzing failure"), tr("Fritzing caught an exception from %1 in event %2").arg(receiver->objectName()).arg(e->type()));
+    }
+    // save files here
+    qFatal("Exiting due to exception");
+    return false;
+}
+

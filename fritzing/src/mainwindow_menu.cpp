@@ -976,6 +976,12 @@ void MainWindow::createFileMenuActions() {
 		connect(m_launchExternalProcessAct, SIGNAL(triggered()), this, SLOT(launchExternalProcess()));
 	}
 
+#ifndef QT_NO_DEBUG
+    m_exceptionAct = new QAction(tr("throw test exception"), this);
+    m_exceptionAct->setStatusTip(tr("throw a fake exception to see what happens"));
+    connect(m_exceptionAct, SIGNAL(triggered()), this, SLOT(throwFakeException()));
+#endif
+
 	m_quitAct = new QAction(tr("&Quit"), this);
 	m_quitAct->setShortcut(tr("Ctrl+Q"));
 	m_quitAct->setStatusTip(tr("Quit the application"));
@@ -1493,6 +1499,11 @@ void MainWindow::createMenus()
 		m_fileMenu->addSeparator();
 		m_fileMenu->addAction(m_launchExternalProcessAct);
 	}
+
+#ifndef QT_NO_DEBUG
+    m_fileMenu->addSeparator();
+    m_fileMenu->addAction(m_exceptionAct);
+#endif
 
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
@@ -3588,3 +3599,11 @@ void MainWindow::swapObsolete() {
 
 }
 
+void MainWindow::throwFakeException() {
+    //throw "feces";
+
+    QAction * action = NULL;
+    if (action->isEnabled()) {
+        DebugDialog::debug("what happens in throw fake exception?");
+    }
+}

@@ -484,5 +484,6 @@ SearchLineEdit {
 	color: #000000;
 	font-size: 11px;
 	font-family: "Lucida Grande", LucidaSans, Tahoma, Arial, sans-serif;
+    border: 1px solid rgb(140,140,140);
 }
 
