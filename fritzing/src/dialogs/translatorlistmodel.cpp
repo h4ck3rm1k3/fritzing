@@ -59,11 +59,10 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 		ushort t5[] = { 0x0939, 0x093f, 0x0928, 0x094d, 0x0926, 0x0940, 0x0020, 0x0028, 0x092d, 0x093e, 0x0930, 0x0924, 0x0029, 0 };
         m_languages.insert("hindi", tr("Hindi - %1").arg(QString::fromUtf16(t5)));
 
-		// TODO: not yet sure how to deal with scripts (as opposed to languages)
 		ushort t6[] = { 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7b80, 0x4f53, 0x0029, 0 };
-        m_languages.insert("chinese-simplified", tr("Chinese (Simplified) - %1").arg(QString::fromUtf16(t6)));
-		//ushort t7[] = { 0x6b63, 0x9ad4, 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7e41, 0x9ad4, 0x0029, 0 };		
-		//m_languages.insert("chinese-traditional", tr("Chinese Trad. - %1").arg(QString::fromUtf16(t7)));
+        m_languages.insert("chinese_china", tr("Chinese (Simplified) - %1").arg(QString::fromUtf16(t6)));
+        ushort t7[] = { 0x6b63, 0x9ad4, 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7e41, 0x9ad4, 0x0029, 0 };
+        m_languages.insert("chinese_taiwan", tr("Chinese (Traditional) - %1").arg(QString::fromUtf16(t7)));
 
         // More languages written in their own language can be found
         // at http://www.mozilla.com/en-US/firefox/all.html
@@ -107,7 +106,7 @@ QVariant TranslatorListModel::data ( const QModelIndex & index, int role) const
 		QString languageString = QLocale::languageToString(m_localeList.at(index.row())->language());
 		QString countryString = QLocale::countryToString(m_localeList.at(index.row())->country());
 
-		//DebugDialog::debug(QString("language %1 %2").arg(languageString).arg(countryString));
+        DebugDialog::debug(QString("language %1 %2").arg(languageString).arg(countryString));
 
 		// QLocale::languageToString() only returns an English string, 
 		// so put it through a language-dependent hash table.
@@ -117,7 +116,6 @@ QVariant TranslatorListModel::data ( const QModelIndex & index, int role) const
 		}
 
 		if (trLanguageString.isEmpty()) {
-			// TODO: this won't distinguish between Chinese (simplified) and Chinese (traditional)
 			foreach (QString key, m_languages.keys()) {
 				if (key.startsWith(languageString.toLower())) {
 					return m_languages.value(key);
