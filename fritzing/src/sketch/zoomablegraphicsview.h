@@ -40,7 +40,7 @@ class ZoomableGraphicsView : public QGraphicsView
 public:
 	ZoomableGraphicsView(QWidget* parent = 0);
 
-    void relativeZoom(qreal step);
+    void relativeZoom(qreal step, bool centerToCursor);
     void absoluteZoom(qreal percent);
  	qreal currentZoom();
 	void setAcceptWheelEvents(bool);

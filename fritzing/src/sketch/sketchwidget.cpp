@@ -103,7 +103,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 	m_bendpointWire = m_connectorDragWire = NULL;
 	m_tempDragWireCommand = m_holdingSelectItemCommand = NULL;
 	m_viewIdentifier = viewIdentifier;
-	setAlignment(Qt::AlignLeft | Qt::AlignTop);
+	//setAlignment(Qt::AlignLeft | Qt::AlignTop);
 	setDragMode(QGraphicsView::RubberBandDrag);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
     setAcceptDrops(true);

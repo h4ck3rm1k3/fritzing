@@ -56,7 +56,7 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 	}*/
 
 	// Scroll zooming relative to the current size
-	relativeZoom(delta);
+	relativeZoom(delta, true);
 
 	//this->verticalScrollBar()->setValue(verticalScrollBar()->value() + 3);
 	//this->horizontalScrollBar()->setValue(horizontalScrollBar()->value() + 3);
@@ -75,7 +75,7 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 	emit wheelSignal();
 }
 
-void ZoomableGraphicsView::relativeZoom(qreal step) {
+void ZoomableGraphicsView::relativeZoom(qreal step, bool centerOnCursor) {
 	qreal tempSize = m_scaleValue + step;
 	if (tempSize < m_minScaleValue) {
 		m_scaleValue = m_minScaleValue;
@@ -93,19 +93,25 @@ void ZoomableGraphicsView::relativeZoom(qreal step) {
 
 	//QPoint p = QCursor::pos();
 	//QPoint q = this->mapFromGlobal(p);
-	QPoint q(this->viewport()->size().width() / 2, this->viewport()->size().height() / 2);
-	QPointF r = this->mapToScene(q);
+	//QPointF r = this->mapToScene(q);
 
 	QMatrix matrix;
 	matrix.scale(tempScaleValue, tempScaleValue);
+	if (centerOnCursor) {
+		//this->setMatrix(QMatrix().translate(-r.x(), -r.y()) * matrix * QMatrix().translate(r.x(), r.y()));
+		//this->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+		this->setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+	}
+	else {
+		this->setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+	}
 	this->setMatrix(matrix);
-	//this->centerOn(r);
 
 	emit zoomChanged(m_scaleValue);
 }
 
 void ZoomableGraphicsView::absoluteZoom(qreal percent) {
-	relativeZoom(percent-m_scaleValue);
+	relativeZoom(percent-m_scaleValue, false);
 }
 
 qreal ZoomableGraphicsView::currentZoom() {
