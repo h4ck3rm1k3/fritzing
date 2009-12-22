@@ -2161,6 +2161,10 @@ Razão: %2 (código do erro %3)</translation>
         <source>All User Parts</source>
         <translation>Todos os Componentes usados</translation>
     </message>
+    <message>
+        <source>Contributed Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PartsEditorMainWindow</name>
@@ -2891,13 +2895,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
 </context>
 <context>
-    <name>SearchLineEdit</name>
-    <message>
-        <source>type to search</source>
-        <translation>tipo a pesquisar</translation>
-    </message>
-</context>
-<context>
     <name>SetColorDialog</name>
     <message>
         <source>Set %1 Color...</source>
@@ -3200,6 +3197,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify or swap a part for a related part.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

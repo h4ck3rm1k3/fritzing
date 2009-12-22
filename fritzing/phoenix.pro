@@ -80,18 +80,5 @@ RESOURCES += phoenixresources.qrc
 	include(pri/sketch.pri)
 TARGET = Fritzing
 TEMPLATE = app
-TRANSLATIONS += translations/fritzing_de.ts \
-	translations/fritzing_fr.ts \
-	translations/fritzing_en.ts \
-	translations/fritzing_es.ts \
-	translations/fritzing_ja.ts \
-	translations/fritzing_pt_br.ts \
-	translations/fritzing_pt_pt.ts \
-	translations/fritzing_it.ts \
-	translations/fritzing_ru.ts \
-	translations/fritzing_zh.ts \
-	translations/fritzing_et.ts \
-	translations/fritzing_hu.ts \
-	translations/fritzing_th.ts \
-	translations/fritzing_nl.ts
+      include(pri/translations.pri)
 	

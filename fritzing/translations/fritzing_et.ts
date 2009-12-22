@@ -93,37 +93,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="270"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="277"/>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="285"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="292"/>
         <source>New bin (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="295"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="302"/>
         <source>Select a Fritzing file to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="297"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="304"/>
         <source>Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="388"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="395"/>
         <source>Cannot set a NULL bin as the current one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="511"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="518"/>
         <source>Select a part to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="513"/>
+        <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="520"/>
         <source>External Part (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -647,17 +647,17 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="691"/>
+        <location filename="../src/items/logoitem.cpp" line="705"/>
         <source>Unable to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="692"/>
+        <location filename="../src/items/logoitem.cpp" line="706"/>
         <source>Unable to load image from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="441"/>
+        <location filename="../src/items/logoitem.cpp" line="455"/>
         <source>Unable to display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -672,7 +672,7 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/items/logoitem.cpp" line="442"/>
+        <location filename="../src/items/logoitem.cpp" line="456"/>
         <source>Unable to display image from %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2520,182 +2520,187 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PartsBinPaletteWidget</name>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="87"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="89"/>
         <source>Untitled Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="284"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="275"/>
         <source>Show as icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="288"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="279"/>
         <source>Show as list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="323"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="426"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="314"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="420"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="324"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="315"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="325"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="607"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="316"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="605"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="326"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="317"/>
         <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="327"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="429"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="318"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="423"/>
         <source>Export...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="328"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="319"/>
         <source>Rename...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="338"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="329"/>
         <source>Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="351"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="342"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="353"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
         <source>From file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="354"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
         <source>Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="355"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
         <source>All Parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="356"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="347"/>
         <source>All User Parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="427"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="348"/>
+        <source>Contributed Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="421"/>
         <source>Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="428"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="422"/>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="430"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="424"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="440"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="434"/>
         <source>Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="487"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="481"/>
         <source>Specify a file name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="491"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="485"/>
         <source>Fritzing Bin (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="531"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="538"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="525"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="532"/>
         <source>Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="532"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="526"/>
         <source>Cannot find file %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="539"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="533"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="598"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="596"/>
         <source>Save &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="599"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="597"/>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="608"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="606"/>
         <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="609"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="607"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="610"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="608"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="712"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="711"/>
         <source>Add to bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="713"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="712"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="737"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="736"/>
         <source>Remove from bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="738"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="737"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="784"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="783"/>
         <source>Rename bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="785"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="784"/>
         <source>Please choose a name for the bin:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3072,11 +3077,11 @@ Please stay tuned.</source>
         <location filename="../src/model/modelbase.cpp" line="89"/>
         <location filename="../src/model/modelbase.cpp" line="103"/>
         <location filename="../src/model/modelbase.cpp" line="279"/>
-        <location filename="../src/model/palettemodel.cpp" line="85"/>
-        <location filename="../src/model/palettemodel.cpp" line="310"/>
-        <location filename="../src/model/palettemodel.cpp" line="325"/>
-        <location filename="../src/model/palettemodel.cpp" line="409"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="569"/>
+        <location filename="../src/model/palettemodel.cpp" line="90"/>
+        <location filename="../src/model/palettemodel.cpp" line="315"/>
+        <location filename="../src/model/palettemodel.cpp" line="330"/>
+        <location filename="../src/model/palettemodel.cpp" line="414"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="563"/>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="249"/>
         <location filename="../src/sketch/sketchwidget.cpp" line="858"/>
         <source>Fritzing</source>
@@ -3084,7 +3089,7 @@ Please stay tuned.</source>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="422"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="569"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="563"/>
         <source>Friting cannot load the parts bin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3134,7 +3139,7 @@ Please stay tuned.</source>
     </message>
     <message>
         <location filename="../src/model/modelbase.cpp" line="61"/>
-        <location filename="../src/model/palettemodel.cpp" line="311"/>
+        <location filename="../src/model/palettemodel.cpp" line="316"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
@@ -3168,19 +3173,19 @@ Please stay tuned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/model/palettemodel.cpp" line="86"/>
+        <location filename="../src/model/palettemodel.cpp" line="91"/>
         <source>No parts found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/model/palettemodel.cpp" line="326"/>
+        <location filename="../src/model/palettemodel.cpp" line="331"/>
         <source>Parse error (2) at line %1, column %2:
 %3
 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/model/palettemodel.cpp" line="410"/>
+        <location filename="../src/model/palettemodel.cpp" line="415"/>
         <source>The part &apos;%1&apos; at &apos;%2&apos; does not have a unique module id &apos;%3&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3601,14 +3606,6 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
 </context>
 <context>
-    <name>SearchLineEdit</name>
-    <message>
-        <location filename="../src/partsbinpalette/searchlineedit.cpp" line="37"/>
-        <source>type to search</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SetColorDialog</name>
     <message>
         <location filename="../src/dialogs/setcolordialog.cpp" line="52"/>
@@ -3947,41 +3944,46 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="54"/>
-        <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
+        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify or swap a part for a related part.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="55"/>
-        <source>&lt;li&gt;Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you&apos;re dragging will snap to make 90 degree angles with the neighboring wire segment.&lt;/li&gt;</source>
+        <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="56"/>
-        <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
+        <source>&lt;li&gt;Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you&apos;re dragging will snap to make 90 degree angles with the neighboring wire segment.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="57"/>
-        <source>&lt;li&gt;To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.&lt;/li&gt;</source>
+        <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="58"/>
-        <source>&lt;li&gt;If you&apos;re having trouble selecting a part or a wire (segment), try selecting the part that&apos;s in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).&lt;/li&gt;</source>
+        <source>&lt;li&gt;To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="59"/>
-        <source>&lt;li&gt;When you export images from Fritzing, you can choose which layers are exported. Before you choose &apos;Export...&apos;, go into the &apos;View&apos; menu and hide the layers you don&apos;t want to be visible.&lt;/li&gt;</source>
+        <source>&lt;li&gt;If you&apos;re having trouble selecting a part or a wire (segment), try selecting the part that&apos;s in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="60"/>
-        <source>&lt;/ul&gt;</source>
+        <source>&lt;li&gt;When you export images from Fritzing, you can choose which layers are exported. Before you choose &apos;Export...&apos;, go into the &apos;View&apos; menu and hide the layers you don&apos;t want to be visible.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="61"/>
+        <source>&lt;/ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/help/tipsandtricks.cpp" line="62"/>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
