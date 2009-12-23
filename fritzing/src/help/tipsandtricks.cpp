@@ -51,7 +51,7 @@ TipsAndTricks::TipsAndTricks(QWidget *parent)
 tr("<html><body>") +
 tr("<h3>Fritzing Tips and Tricks</h3>") +
 tr("<ul>") +
-tr("<li>An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify or swap a part for a related part.</li>") +
+tr("<li>An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.</li>") +
 tr("<li>To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.</li>") +
 tr("<li>Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you're dragging will snap to make 90 degree angles with the neighboring wire segment.</li>") +
 tr("<li>In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.</li>") +
