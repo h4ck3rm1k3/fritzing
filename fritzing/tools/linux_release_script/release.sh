@@ -17,7 +17,7 @@ if [ "$arch_aux" == 'x86_64' ] ; then
 fi
 
 cd compile_folder
-QT_HOME="/usr/share/qt4"
+QT_HOME="/usr/local/Trolltech/Qt-4.6.0"
 
 $QT_HOME/bin/qmake CONFIG+=release -unix
 make
@@ -41,7 +41,7 @@ mkdir translations
 cd lib
 echo "copying libraries"
 
-cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 .
+cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 $QT_HOME/lib/libQtXmlPatterns.so.4 .
 
 
 # seems not to be needed anymore
