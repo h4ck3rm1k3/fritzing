@@ -273,6 +273,7 @@ bool MysteryPart::hasCustomSVG() {
 		case ViewIdentifierClass::BreadboardView:
 		case ViewIdentifierClass::SchematicView:
 		case ViewIdentifierClass::IconView:
+		case ViewIdentifierClass::PCBView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
