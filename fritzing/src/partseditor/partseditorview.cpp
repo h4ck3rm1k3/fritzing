@@ -1280,26 +1280,15 @@ bool PartsEditorView::removeConnectorsIfNeeded(QDomElement &docElem) {
 	if(!m_removedConnIds.isEmpty()) {
 		//Q_ASSERT(docElem.tagName() == "svg");
 
-		QDomNode n = docElem.firstChild();
-		while(!n.isNull()) {
-			bool doRemove = false;
-			QDomElement e = n.toElement();
-			if(!e.isNull()) {
-				QString id = e.attribute("id");
-				if(isSupposedToBeRemoved(id)) {
-					doRemove = true;
-				} else if(n.hasChildNodes()) {
-					removeConnectorsIfNeeded(e);
-				}
+		QDomElement e = docElem.firstChildElement();
+		while(!e.isNull()) {
+			QString id = e.attribute("id");
+			if(isSupposedToBeRemoved(id)) {
+				e.removeAttribute("id");
+			} else if(e.hasChildNodes()) {
+				removeConnectorsIfNeeded(e);
 			}
-			QDomElement e2;
-			if(doRemove) {
-				e2 = e;
-			}
-			n = n.nextSibling();
-			if(doRemove) {
-				e2.removeAttribute("id");
-			}
+			e = e.nextSiblingElement();
 		}
 		return true;
 	}
@@ -1359,9 +1348,21 @@ bool PartsEditorView::addRectToSvgAux(QDomElement &docElem, const QString &conne
 
 
 bool PartsEditorView::isSupposedToBeRemoved(const QString& id) {
+	if (id.isEmpty()) return false;
+
+	// TODO: m_removedConnIds should be svg ids and not connectorSharedIDs (from fzp)
+
 	foreach(QString toBeRemoved, m_removedConnIds) {
 		if(id.startsWith(toBeRemoved)) {
-			return true;
+			QString temp = id;
+			temp = temp.remove(0, toBeRemoved.length());
+			if (temp.length() == 0) return true;
+
+			// assumes svg id is always prefixDsuffix where D is some string of decimal digits 
+			// and prefixD matches toBeRemoved
+			if (!temp.at(0).isDigit()) {
+				return true;
+			}
 		}
 	}
 	return false;
