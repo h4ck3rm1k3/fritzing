@@ -1264,11 +1264,11 @@ QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUr
 	comboBox->setEditable(false);
 	
 	int ix = 0;
-	QString currColor = colorString();
-	foreach(QString colorName, Wire::colorNames) {
-		QString tColorName = Wire::colorTrans.value(colorName);
-		comboBox->addItem(tColorName, QVariant(colorName));
-		if (colorName.compare(currColor, Qt::CaseInsensitive) == 0) {
+	QString englishCurrColor = colorString();
+	foreach(QString transColorName, Wire::colorNames) {
+		QString englishColorName = Wire::colorTrans.value(transColorName);
+		comboBox->addItem(transColorName, QVariant(englishColorName));
+		if (englishColorName.compare(englishCurrColor, Qt::CaseInsensitive) == 0) {
 			comboBox->setCurrentIndex(ix);
 		}
 		ix++;
