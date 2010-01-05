@@ -31,7 +31,6 @@ $Date$
 #include "mainwindow.h"
 #include "debugdialog.h"
 #include "waitpushundostack.h"
-//#include "partseditor/mainpartseditorwindow.h"
 #include "partseditor/partseditormainwindow.h"
 #include "help/aboutbox.h"
 #include "autoroute/autorouter1.h"

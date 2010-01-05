@@ -45,7 +45,6 @@ $Date$
 #include "mainwindow.h"
 #include "debugdialog.h"
 #include "connectors/connector.h"
-#include "partseditor/mainpartseditorwindow.h"
 #include "partsbinpalette/partsbinpalettewidget.h"
 #include "fdockwidget.h"
 #include "infoview/htmlinfoview.h"
