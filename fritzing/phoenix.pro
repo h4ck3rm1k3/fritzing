@@ -33,7 +33,7 @@ win32 {
 macx {
 	CONFIG += x86 ppc
 	QMAKE_INFO_PLIST = FritzingInfo.plist
-	DEFINES += QT_NO_DEBUG
+	#DEFINES += QT_NO_DEBUG   		# uncomment this for xcode
         LIBS += /usr/lib/libz.dylib
 }
 unix {
