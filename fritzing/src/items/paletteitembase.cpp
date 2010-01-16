@@ -98,8 +98,8 @@ QVariant PaletteItemBase::itemChange(GraphicsItemChange change, const QVariant &
 
         // QVariant argument is the new position.
         //QPointF newPos = value.toPointF();
-        //int nx = abs((int) floor(newPos.x() + .5));
-        //int ny = abs((int) floor(newPos.y() + .5));
+        //int nx = abs((int) qFloor(newPos.x() + .5));
+        //int ny = abs((int) qFloor(newPos.y() + .5));
         //nx -= nx % 20;
         //ny -= ny % 20;
         //if (newPos.x() < 0) nx = -nx;

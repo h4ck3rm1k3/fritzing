@@ -39,6 +39,7 @@ $Date$
 #include <QLabel>
 #include <QLineEdit>
 #include <QRegExp>
+#include <qmath.h>
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
@@ -74,7 +75,6 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 
 ResizableBoard::~ResizableBoard() {
 }
-
 
 QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &value)
 {
@@ -514,9 +514,7 @@ bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString 
 	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		if (m_modelPart->prop("height").isValid()) {
-			returnValue.replace(HeightExpr, "height='60px");
-		}
+		returnValue.replace(HeightExpr, "height='60px");
 		returnProp = tr("shape");
 	}
 
@@ -540,8 +538,34 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 
 	QObject * result = PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 
-	if ((classid.compare("shape", Qt::CaseInsensitive) != 0) || (!m_modelPart->prop("height").isValid())) { 
+	if (classid.compare("shape", Qt::CaseInsensitive) != 0) {
 		return result;
+	}
+
+	if (!m_modelPart->prop("height").isValid()) { 
+		// display uneditable width and height
+		QFrame * frame = new QFrame();
+		QVBoxLayout * vboxLayout = new QVBoxLayout();
+		vboxLayout->setAlignment(Qt::AlignLeft);
+		vboxLayout->setSpacing(0);
+		vboxLayout->setContentsMargins(0, 3, 0, 0);
+
+		QRectF r = this->boundingRect();
+		qreal w = qRound(GraphicsUtils::pixels2mm(r.width()) * 100) / 100.0;
+		QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
+		l1->setMargin(0);
+
+		qreal h = qRound(GraphicsUtils::pixels2mm(r.height()) * 100) / 100.0;
+		QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
+		l2->setMargin(0);
+
+		vboxLayout->addWidget(qobject_cast<QWidget *>(result));
+		vboxLayout->addWidget(l1);
+		vboxLayout->addWidget(l2);
+
+		frame->setLayout(vboxLayout);
+
+		return frame;
 	}
 
 	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point

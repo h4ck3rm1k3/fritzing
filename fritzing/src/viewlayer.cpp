@@ -192,5 +192,5 @@ void ViewLayer::cleanup() {
 }
 
 void ViewLayer::resetNextZ(qreal z) {
-	m_nextZ = floor(m_initialZ) + z - floor(z);
+	m_nextZ = qFloor(m_initialZ) + z - floor(z);
 }

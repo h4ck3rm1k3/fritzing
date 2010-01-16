@@ -1417,7 +1417,7 @@ void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &
 }
 
 void ItemBase::slamZ(qreal newZ) {
-	qreal z = floor(m_viewGeometry.z()) + newZ;
+	qreal z = qFloor(m_viewGeometry.z()) + newZ;
 	m_viewGeometry.setZ(z);
 	setZValue(z);
 }

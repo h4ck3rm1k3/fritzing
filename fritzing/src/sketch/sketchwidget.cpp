@@ -242,7 +242,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		if (parentCommand == NULL) {
 			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
 			if (item != NULL) {
-				zmap.insert(viewGeometry.z() - floor(viewGeometry.z()), item);   
+				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), item);   
 				bool gotOne = false;
 				if (!gotOne) {
 					PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
@@ -3128,7 +3128,7 @@ void SketchWidget::continueZChangeAux(QList<ItemBase *> & bases, const QString &
 		qreal oldZ = bases[i]->getViewGeometry().z();
 		if (bases[i]->viewLayerID() != lastViewLayerID) {
 			lastViewLayerID = bases[i]->viewLayerID();
-			z = floor(oldZ);
+			z = qFloor(oldZ);
 		}
 		else {
 			z += ViewLayer::getZIncrement();

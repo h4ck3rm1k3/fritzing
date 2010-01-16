@@ -42,7 +42,7 @@ InfoGraphicsView::InfoGraphicsView( QWidget * parent )
 void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->viewItemInfo(this, item, swappingEnabled(item));
+	m_infoView->viewItemInfo(this, item ? item->layerKinChief() : item, swappingEnabled(item));
 }
 
 void InfoGraphicsView::viewModelPartInfo(ModelPart * modelPart) {
@@ -54,7 +54,7 @@ void InfoGraphicsView::viewModelPartInfo(ModelPart * modelPart) {
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterItem(this, event, item, swappingEnabled(item));
+	m_infoView->hoverEnterItem(this, event, item ? item->layerKinChief() : item, swappingEnabled(item));
 }
 
 void InfoGraphicsView::hoverEnterItem(ModelPart* modelPart) {
@@ -66,7 +66,7 @@ void InfoGraphicsView::hoverEnterItem(ModelPart* modelPart) {
 void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverLeaveItem(this, event, item);
+	m_infoView->hoverLeaveItem(this, event, item ? item->layerKinChief() : item);
 }
 
 void InfoGraphicsView::hoverLeaveItem(ModelPart* modelPart) {
