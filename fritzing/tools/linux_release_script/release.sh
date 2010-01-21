@@ -17,7 +17,7 @@ if [ "$arch_aux" == 'x86_64' ] ; then
 fi
 
 cd compile_folder
-QT_HOME="/usr/local/Trolltech/Qt-4.6.0"
+QT_HOME="/usr/local/Trolltech/Qt-4.6.1"
 
 $QT_HOME/bin/qmake CONFIG+=release -unix
 make
