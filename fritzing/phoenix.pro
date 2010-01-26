@@ -36,8 +36,10 @@ macx {
 	#DEFINES += QT_NO_DEBUG   		# uncomment this for xcode
         LIBS += /usr/lib/libz.dylib
 }
+
+CONFIG += static
 unix {
-    !macx {						# unix is defined on mac
+    !macx { # unix is defined on mac
         HARDWARE_PLATFORM = $$system(uname -m)
         contains( HARDWARE_PLATFORM, x86_64 ) {
             DEFINES += LINUX_64
@@ -46,6 +48,14 @@ unix {
 		}
     }
 }
+contains( CONFIG, static ) {
+    SQLPLUGINS = $$unique(sql-plugins)
+    contains(SQLPLUGINS, sqlite): {
+        QTPLUGIN += qsqlite
+        DEFINES += USE_STATIC_SQLITE_PLUGIN
+    }
+}
+		
 ICON = resources/images/fritzing_icon.icns
 QT += core \
     gui \
