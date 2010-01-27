@@ -90,6 +90,8 @@ public:
 	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
 
+	void exportToGerber(QString dir, ItemBase * board);
+
 public:
 	static void initExportConstants();
 	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress);

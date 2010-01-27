@@ -71,6 +71,7 @@ public:
 	virtual qreal getLabelFontSizeMedium();
 	virtual qreal getLabelFontSizeLarge();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+	ItemBase * findBoard();
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);

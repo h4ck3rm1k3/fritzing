@@ -48,6 +48,7 @@ public:
 
 public:
 	int startup(bool firstRun);
+	int serviceStartup();
 	void finish();
 	void preloadSlowParts();
 
@@ -82,6 +83,10 @@ protected:
 	void clearModels();
     void copyBin(const QString & source, const QString & dest);
     bool notify(QObject *receiver, QEvent *e);
+	class MainWindow * loadWindows(bool showProgress, int & loaded);
+	void loadReferenceModel();
+	void registerFonts();
+	bool loadBin(QString binToOpen);
 
 protected:
 	bool m_spaceBarIsPressed;
@@ -104,6 +109,7 @@ protected:
 	bool m_runAsService;
 	int m_progressIndex;
 	class FSplashScreen * m_splash;
+	QString m_gerberOutputFolder;
 
 public:
 	static QSet<QString> InstalledFonts;

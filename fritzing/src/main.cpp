@@ -101,7 +101,11 @@ int main(int argc, char *argv[])
 	//DebugDialog::setDebugLevel(DebugDialog::Error);
 	bool firstRun = true;
 	int result = 0;
-	if (!app->runAsService()) {
+	if (app->runAsService()) {
+		// for example: -g C:\Users\jonathan\fritzing2\fz\Test_multiple.fz -go C:\Users\jonathan\fritzing2\fz\gerber
+		result = app->serviceStartup();
+	}
+	else {
 		do {
 			result = app->startup(firstRun);
 			if (result == 0) {

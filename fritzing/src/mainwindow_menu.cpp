@@ -184,17 +184,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		fileName += suffix;
 	}
 
-    ItemBase * board = NULL;
-    foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
-        board = dynamic_cast<ItemBase *>(childItem);
-        if (board == NULL) continue;
-
-        //for now take the first board you find
-        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
-            break;
-        }
-        board = NULL;
-    }
+    ItemBase * board = m_pcbGraphicsView->findBoard();
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
@@ -2296,18 +2286,7 @@ void MainWindow::exportToGerber() {
     //TODO: should deal with crazy multi-board setups someday...
 
     // grab the list of parts
-    ItemBase * board = NULL;
-    foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
-        board = dynamic_cast<ItemBase *>(childItem);
-        if (board == NULL) continue;
-
-        //for now take the first board you find
-        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
-            break;
-        }
-        board = NULL;
-    }
-
+    ItemBase * board = m_pcbGraphicsView->findBoard();
     // barf an error if there's no board
     if (!board) {
         QMessageBox::critical(this, tr("Fritzing"),
@@ -2319,6 +2298,19 @@ void MainWindow::exportToGerber() {
                                              defaultSaveFolder(),
                                              QFileDialog::ShowDirsOnly
                                              | QFileDialog::DontResolveSymlinks);
+
+	exportToGerber(exportDir, board);
+}
+
+void MainWindow::exportToGerber(QString exportDir, ItemBase * board) 
+{
+	if (board == NULL) {
+		board = m_pcbGraphicsView->findBoard();
+	}
+	if (board == NULL) {
+		DebugDialog::debug("board not found");
+		return;
+	}
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
@@ -2346,8 +2338,10 @@ void MainWindow::exportToGerber() {
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
                           + "_copperTop.gtl";
     QFile copper0Out(copper0File);
-    if (!copper0Out.open(QIODevice::WriteOnly | QIODevice::Text))
+	if (!copper0Out.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber export: cannot open output file");
+		return;
+	}
 
     QTextStream copperStream(&copper0Out);
     copperStream << copper0Gerber.getGerber();
@@ -2357,8 +2351,10 @@ void MainWindow::exportToGerber() {
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
                           + "_maskTop.gts";
     QFile maskOut(soldermaskFile);
-    if (!maskOut.open(QIODevice::WriteOnly | QIODevice::Text))
+	if (!maskOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber export: cannot open output file");
+		return;
+	}
 
     QTextStream maskStream(&maskOut);
     maskStream << copper0Gerber.getSolderMask();
@@ -2368,8 +2364,10 @@ void MainWindow::exportToGerber() {
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
                           + "_drill.txt";
     QFile drillOut(drillFile);
-    if (!drillOut.open(QIODevice::WriteOnly | QIODevice::Text))
+	if (!drillOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber export: cannot open output file");
+		return;
+	}
 
     QTextStream drillStream(&drillOut);
     drillStream << copper0Gerber.getNCDrill();
@@ -2514,8 +2512,10 @@ void MainWindow::exportToGerber() {
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
                           + "_silkBottom.gbo";
     QFile silk0Out(silk0File);
-    if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text))
+	if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber export: cannot open output file");
+		return;
+	}
 
     QTextStream silkStream(&silk0Out);
     silkStream << silk0Gerber.getGerber();
@@ -2543,8 +2543,10 @@ void MainWindow::exportToGerber() {
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
                           + "_contour.gm1";
     QFile contourOut(contourFile);
-    if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text))
+	if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber export: cannot open output file");
+		return;
+	}
 
     QTextStream contourStream(&contourOut);
     contourStream << outlineGerber.getContour();
@@ -3104,18 +3106,7 @@ void MainWindow::groundFill()
 
 	FileProgressDialog fileProgress("Generating copper fill...", 0, this);
 
-	ItemBase * board = NULL;
-    foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
-        board = dynamic_cast<ItemBase *>(childItem);
-        if (board == NULL) continue;
-
-        //for now take the first board you find
-        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
-            break;
-        }
-        board = NULL;
-    }
-
+	ItemBase * board = m_pcbGraphicsView->findBoard();
     // barf an error if there's no board
     if (!board) {
         QMessageBox::critical(this, tr("Fritzing"),

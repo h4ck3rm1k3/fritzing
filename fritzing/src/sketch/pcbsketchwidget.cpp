@@ -1531,3 +1531,18 @@ void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
 	}
 
 }
+
+ItemBase * PCBSketchWidget::findBoard() {
+    foreach (QGraphicsItem * childItem, items()) {
+        ItemBase * board = dynamic_cast<ItemBase *>(childItem);
+        if (board == NULL) continue;
+
+        //for now take the first board you find
+        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
+            return board;
+        }
+    }
+
+	return NULL;
+}
+

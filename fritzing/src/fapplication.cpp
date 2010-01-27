@@ -122,15 +122,13 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_updateDialog = NULL;
 	m_lastTopmostWindow = NULL;
 	m_runAsService = false;
-	m_splash = NULL;
 
-	m_splash = NULL;
-	m_runAsService = false;
 	m_arguments = arguments();
 	QList<int> toRemove;
 	for (int i = 0; i < m_arguments.length() - 1; i++) {
 		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||
-			(m_arguments[i].compare("-folder", Qt::CaseInsensitive) == 0))
+			(m_arguments[i].compare("-folder", Qt::CaseInsensitive) == 0)||
+			(m_arguments[i].compare("--folder", Qt::CaseInsensitive) == 0))
 		{
 			FolderUtils::setApplicationPath(m_arguments[i + 1]);
 			// delete these so we don't try to process them as files later
@@ -138,10 +136,20 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 			toRemove << i + 1;
 		}
 
-		if (m_arguments[i].compare("-c", Qt::CaseInsensitive) == 0) {
-			//m_runAsService = true;
+		if ((m_arguments[i].compare("-g", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("-gerber", Qt::CaseInsensitive) == 0)||
+			(m_arguments[i].compare("--gerber", Qt::CaseInsensitive) == 0)) {
+			m_runAsService = true;
 			toRemove << i;
 		}
+
+		if ((m_arguments[i].compare("-go", Qt::CaseInsensitive) == 0)) {
+			m_runAsService = true;
+			toRemove << i;
+			toRemove << i + 1;
+			m_gerberOutputFolder = m_arguments[i + 1];
+		}
+
 
 		if (m_arguments[i].compare("-ep", Qt::CaseInsensitive) == 0) {
 			m_externalProcessPath = m_arguments[i + 1];
@@ -338,9 +346,95 @@ bool FApplication::findTranslator(const QString & translationsPath) {
 	return loaded;
 }
 
+void FApplication::registerFonts() {
+	registerFont(":/resources/fonts/DroidSans.ttf", true);
+	registerFont(":/resources/fonts/DroidSans-Bold.ttf", false);
+	//registerFont(":/resources/fonts/ocra10.ttf", true);
+	registerFont(":/resources/fonts/OCRA.otf", true);
+
+	/*
+		QFontDatabase database;
+		QStringList families = database.families (  );
+		foreach (QString string, families) {
+			DebugDialog::debug(string);			// should print out the name of the fonts you loaded
+		}
+	*/
+}
+
+void FApplication::loadReferenceModel() {
+	m_referenceModel = new CurrentReferenceModel();	
+	ItemBase::setReferenceModel(m_referenceModel);
+	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
+	m_referenceModel->loadAll();								// this is very slow
+	//DebugDialog::debug("after new current reference model");
+	m_paletteBinModel = new PaletteModel(true, false);
+	//DebugDialog::debug("after new palette model");
+}
+
+bool FApplication::loadBin(QString binToOpen) {
+	binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? BinManager::CorePartsBinLocation: binToOpen;
+
+	if (!m_paletteBinModel->load(binToOpen, m_referenceModel)) {
+		if(binToOpen == BinManager::CorePartsBinLocation
+		   || !m_paletteBinModel->load(BinManager::CorePartsBinLocation, m_referenceModel)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+MainWindow * FApplication::loadWindows(bool showProgress, int & loaded) {
+	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
+	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);   // this is also slow
+
+	if (showProgress) {
+		m_splash->showProgress(m_progressIndex, 0.9);
+		processEvents();
+	}
+
+	loaded = 0;
+	for (int i = 1; i < m_arguments.length(); i++) {
+		QFileInfo fileinfo(m_arguments[i]);
+		if (fileinfo.exists() && !fileinfo.isDir()) {
+			loadOne(mainWindow, m_arguments[i], loaded++);
+		}
+	}
+
+	//DebugDialog::debug("after argc");
+
+	return mainWindow;
+}
+
+int FApplication::serviceStartup() {
+
+	if (m_gerberOutputFolder.isEmpty()) {
+		return -1;
+	}
+
+	registerFonts();
+	loadReferenceModel();
+	createUserDataStoreFolderStructure();
+	if (!loadBin("")) {
+		return -1;
+	}
+
+	int loaded = 0;
+	MainWindow * mainWindow = loadWindows(false, loaded);
+	m_started = true;
+
+	if (loaded == 0) {
+		return -1;
+	}
+
+	mainWindow->exportToGerber(m_gerberOutputFolder, NULL);
+
+	return 0;
+}
+
 int FApplication::startup(bool firstRun)
 {
-    QPixmap pixmap(":/resources/images/splash_2010.png");
+	QPixmap pixmap(":/resources/images/splash_2010.png");
 	FSplashScreen splash(pixmap);
 	m_splash = &splash;
 	processEvents();								// seems to need this (sometimes?) to display the splash screen
@@ -350,52 +444,36 @@ int FApplication::startup(bool firstRun)
 
 	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
 
-	if(firstRun) {
-		// so we can use ViewGeometry in a Qt::QueueConnection signal
-		
-		registerFont(":/resources/fonts/DroidSans.ttf", true);
-		registerFont(":/resources/fonts/DroidSans-Bold.ttf", false);
-		//registerFont(":/resources/fonts/ocra10.ttf", true);
-		registerFont(":/resources/fonts/OCRA.otf", true);
-
-		/*
-		QFontDatabase database;
-		QStringList families = database.families (  );
-		foreach (QString string, families) {
-			DebugDialog::debug(string);			// should print out the name of the fonts you loaded
-		}
-		*/
+	if(firstRun) {		
+		registerFonts();
 
 		splash.showProgress(m_progressIndex, LoadProgressStart);
 		processEvents();
 
-#ifdef Q_WS_WIN
-		// associate .fz file with fritzing app on windows (xp only--vista is different)
-		// TODO: don't change settings if they're already set?
-		// TODO: only do this at install time?
-		QSettings settings1("HKEY_CLASSES_ROOT\\Fritzing", QSettings::NativeFormat);
-		settings1.setValue(".", "Fritzing Application");
-		foreach (QString extension, fritzingExtensions()) {
-			QSettings settings2("HKEY_CLASSES_ROOT\\" + extension, QSettings::NativeFormat);
-			settings2.setValue(".", "Fritzing");
-		}
-		QSettings settings3("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
-		settings3.setValue(".", QString("\"%1\" \"%2\"")
-						   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
-						   .arg("%1") );
-#endif
-	} else {
+		#ifdef Q_WS_WIN
+			// associate .fz file with fritzing app on windows (xp only--vista is different)
+			// TODO: don't change settings if they're already set?
+			// TODO: only do this at install time?
+			QSettings settings1("HKEY_CLASSES_ROOT\\Fritzing", QSettings::NativeFormat);
+			settings1.setValue(".", "Fritzing Application");
+			foreach (QString extension, fritzingExtensions()) {
+				QSettings settings2("HKEY_CLASSES_ROOT\\" + extension, QSettings::NativeFormat);
+				settings2.setValue(".", "Fritzing");
+			}
+			QSettings settings3("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
+			settings3.setValue(".", QString("\"%1\" \"%2\"")
+							   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
+							   .arg("%1") );
+		#endif
+
+	} 
+	else 
+	{
 		clearModels();
 		FSvgRenderer::cleanup();
 	}
 
-	m_referenceModel = new CurrentReferenceModel();	
-	ItemBase::setReferenceModel(m_referenceModel);
-	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
-	m_referenceModel->loadAll();								// this is very slow
-	//DebugDialog::debug("after new current reference model");
-	m_paletteBinModel = new PaletteModel(true, false);
-	//DebugDialog::debug("after new palette model");
+	loadReferenceModel();
 
 	QSettings settings;
 	QString prevVersion = settings.value("version").toString();
@@ -405,6 +483,7 @@ int FApplication::startup(bool firstRun)
 	}
 
 	splash.showProgress(m_progressIndex, LoadProgressEnd);
+
 	createUserDataStoreFolderStructure();
 
 	//DebugDialog::debug("after createUserDataStoreFolderStructure");
@@ -412,16 +491,10 @@ int FApplication::startup(bool firstRun)
 	splash.showProgress(m_progressIndex, 0.65);
 	processEvents();
 
-	QString binToOpen = settings.value("lastBin").toString();
-    binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? BinManager::CorePartsBinLocation: binToOpen;
-
-	if (!m_paletteBinModel->load(binToOpen, m_referenceModel)) {
-        if(binToOpen == BinManager::CorePartsBinLocation
-           || !m_paletteBinModel->load(BinManager::CorePartsBinLocation, m_referenceModel)) {
+	if (!loadBin(settings.value("lastBin").toString())) {
 			// TODO: we're really screwed, what now?
-			QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
-			return -1;
-		}
+		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
+		return -1;
 	}
 
 	splash.showProgress(m_progressIndex, 0.8);
@@ -450,22 +523,8 @@ int FApplication::startup(bool firstRun)
 
 	splash.showProgress(m_progressIndex, 0.875);
 
-	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
-	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);   // this is also slow
-
-	splash.showProgress(m_progressIndex, 0.9);
-	processEvents();
-
 	int loaded = 0;
-	for (int i = 1; i < m_arguments.length(); i++) {
-		QFileInfo fileinfo(m_arguments[i]);
-		if (fileinfo.exists() && !fileinfo.isDir()) {
-			loadOne(mainWindow, m_arguments[i], loaded++);
-		}
-	}
-
-	//DebugDialog::debug("after argc");
-
+	MainWindow * mainWindow = loadWindows(true, loaded);
 	foreach (QString filename, m_filesToLoad) {
 		loadOne(mainWindow, filename, loaded++);
 	}
@@ -488,15 +547,13 @@ int FApplication::startup(bool firstRun)
 		}
 	}
 
+
 	//DebugDialog::debug("after last open sketch");
 
 	m_started = true;
 
-//#ifndef WIN_DEBUG
-	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
 	splash.showProgress(m_progressIndex, 0.99);
 	processEvents();
-//#endif
 
 	if (!loaded) {
 		mainWindow->addBoard();
@@ -534,7 +591,7 @@ int FApplication::startup(bool firstRun)
 			   QMessageBox::Ok | QMessageBox::Cancel, 
 			   mainWindow, 
 			   Qt::Sheet );
-	    messageBox.setButtonText(QMessageBox::Ok, tr("Import"));
+		messageBox.setButtonText(QMessageBox::Ok, tr("Import"));
 		messageBox.setButtonText(QMessageBox::Cancel, tr("Do not import now"));
 		messageBox.setDefaultButton(QMessageBox::Cancel);
 		QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
