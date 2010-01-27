@@ -28,11 +28,6 @@ $Date$
 #include <QSqlRecord>
 #include <QSqlError>
 
-#if defined(USE_STATIC_SQLITE_PLUGIN)
-	#include <QtPlugin>
-	Q_IMPORT_PLUGIN(qsqlite)
-#endif
-
 #include "sqlitereferencemodel.h"
 #include "../debugdialog.h"
 
