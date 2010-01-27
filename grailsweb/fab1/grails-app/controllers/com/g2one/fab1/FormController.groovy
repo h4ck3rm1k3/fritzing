@@ -25,6 +25,7 @@ class FormController {
 					flow.order1.gid = UUID.randomUUID().toString() 
 					flow.order1.email = "fillThisInFrom@Django.side"
 					flow.order1.paid = false
+					flow.order1.date = new Date()
 				}
 				
 				flow.order1.totalPrice = 0	
@@ -97,6 +98,7 @@ class FormController {
 
 			action { 
 			
+				flow.order1.date = new Date()
 				flow.order1.save(flush:true)
 
 				def commonParameters =  [orderID: flow.order1.id] 

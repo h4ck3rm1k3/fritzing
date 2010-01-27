@@ -16,6 +16,7 @@ class Order1 implements Serializable {
 	Person person
 	String email
 	Boolean paid
+	Date date
 		
 	static constraints = {
 		person(nullable:true)
@@ -30,6 +31,7 @@ class Order1 implements Serializable {
 		shipping(min:0D, scale:2)
 		quantity(min:1, max:100)
 		qualityCheck()
+		date()
 	}
     
 }

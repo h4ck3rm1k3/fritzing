@@ -44,7 +44,11 @@
 						</tbody>
 					</table>	
 				</div>
-				<g:submitButton name="paypal" value="Buy"/>
+				<input type="image" name="_eventId_paypal"  id="_eventId_paypal" src="https://www.paypal.com/en_US/DE/i/btn/btn_buynowCC_LG.gif" /> 
+				
+				%{-- <g:submitButton name="paypal" value="Buy"/>   --}%
+				%{-- <g:actionSubmitImage event="paypal" src="https://www.paypal.com/en_US/DE/i/btn/btn_buynowCC_LG.gif" /> --}%
+				
 			</g:form>
 			
 		</div>

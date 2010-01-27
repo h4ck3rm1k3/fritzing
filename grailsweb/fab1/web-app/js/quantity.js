@@ -2,6 +2,7 @@
 $(document).ready(function(){
 	$("#qualityCheck").change(updateTotal);
 	$("#quantity").change(updateTotal);
+	$("#quantity").keyup(updateTotal);
 	$("#destination").change(updateTotal);
 	updateTotal();
 });

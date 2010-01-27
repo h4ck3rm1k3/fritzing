@@ -45,7 +45,7 @@
 				<g:hiddenField name="shipping" value="${order1.shipping}" />
 				<g:hiddenField name="taxes" value="${order1.taxes}"  />
 				<g:hiddenField name="totalPrice" value="${order1.totalPrice}" />
-				<g:submitButton name="orderBoard" value="Order"/>
+				<g:submitButton name="orderBoard" value="Order" />
 			</g:form>
 			
 		</div>
