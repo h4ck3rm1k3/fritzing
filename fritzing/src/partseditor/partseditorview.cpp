@@ -549,6 +549,7 @@ void PartsEditorView::loadFile() {
 				delete m_startItem;
 				m_startItem = NULL;
 			}
+			m_viewItem = NULL;				// loading a new file, so m_viewItem is obsolete
 			loadSvgFile(origPath);
 		}
 	}
