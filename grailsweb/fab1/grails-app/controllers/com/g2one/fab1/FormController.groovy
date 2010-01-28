@@ -12,7 +12,32 @@ class FormController {
 	// note: event names and state names mustn't match or the state machine mechanism gets confused
 	def buyBoardFlow = {
 	
-		start {			
+		start {
+			action {
+				if (!params.username  || !params.UUID) {
+					response.status = 404;
+					return no()
+				}
+				
+				log.trace("user " + params.username + " " + params.UUID)
+				
+				def user = User.findByUuidAndUsername(params.UUID, params.username)
+				log.trace("user result " + user + " " + user?.username)
+				
+				if (!user) {
+					response.status = 404;
+					return no()
+				}
+					
+				return yes();
+			}
+			
+			on("no").to "errorExit"
+			on("yes").to "uploadReady"
+		}
+		
+		uploadReady {
+			render(view:"start")
 			on("upload").to("uploader")
 		}
 		
@@ -42,7 +67,7 @@ class FormController {
 				return no()
 			}
 			
-			on("no").to("start")
+			on("no").to("uploadReady")
 			on("yes"){
 				log.trace("destinations " + servletContext.destinations)
 			}.to("quantity")
@@ -158,6 +183,9 @@ class FormController {
 		}
 		
 		done {
+		}
+		
+		errorExit {
 		}
 	}
 
