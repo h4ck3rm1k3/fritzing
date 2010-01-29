@@ -5,8 +5,8 @@ datasources = {
 		readOnly(true)
 		driverClassName('com.mysql.jdbc.Driver')
 		url('jdbc:mysql://localhost/django')
-		username('')
-		password('')
+		username('root')
+		password('\$r00t\$')
 		dbCreate('create-drop')
 		logSql(true)
 		hibernate {

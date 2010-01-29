@@ -18,8 +18,8 @@ environments {
 			dbCreate = "update"
 			url = "jdbc:mysql://localhost/fab1"
 			driverClassName = "com.mysql.jdbc.Driver"
-			username = ""
-			password = ""
+			username = "root"
+			password = "\$r00t\$"
 		}
 	}
 	test {

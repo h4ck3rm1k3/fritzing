@@ -19,7 +19,7 @@ class Order1 implements Serializable {
 	Date date
 		
 	static constraints = {
-		person(nullable:true)
+		person()
 		email(nullable:false, email:true, blank:false)
 		filename(nullable:true)
 		width(min:0D)

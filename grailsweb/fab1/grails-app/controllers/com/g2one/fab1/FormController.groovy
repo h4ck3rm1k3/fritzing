@@ -28,6 +28,15 @@ class FormController {
 					response.status = 404;
 					return no()
 				}
+				
+				flow.person = Person.findByUsername(params.username)
+				if (flow.person == null) {
+					flow.person = new Person(username:params.username);
+					flow.person.orders = []
+					flow.person.save(flush:true);
+				}
+				
+				flow.originatingEmail = params.email
 					
 				return yes();
 			}
@@ -45,12 +54,22 @@ class FormController {
 			action {
 				if (!flow.order1) {
 					flow.order1 = new Order1()
+					flow.order1.person = flow.person
 					flow.order1.quantity = 1
 					flow.order1.qualityCheck = false
 					flow.order1.gid = UUID.randomUUID().toString() 
-					flow.order1.email = "fillThisInFrom@Django.side"
 					flow.order1.paid = false
 					flow.order1.date = new Date()
+					flow.order1.email = flow.originatingEmail
+					
+					// if the person is already known, find the most recent order from that person, and use that email
+					if (flow.person.orders) {
+						def sz = flow.person.orders.size()
+						if (sz > 0) {
+							def mostRecentOrder = flow.person.orders[sz - 1]
+							flow.order1.email = mostRecentOrder.email
+						}
+					}	
 				}
 				
 				flow.order1.totalPrice = 0	
@@ -124,7 +143,8 @@ class FormController {
 			action { 
 			
 				flow.order1.date = new Date()
-				flow.order1.save(flush:true)
+				flow.person.addToOrders(flow.order1)
+				flow.person.save(flush:true)
 
 				def commonParameters =  [orderID: flow.order1.id] 
 
