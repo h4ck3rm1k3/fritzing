@@ -43,6 +43,14 @@ SearchLineEdit::~SearchLineEdit()
 {
 }
 
+void SearchLineEdit::cleanup() {
+	if (SearchFieldPixmap != NULL) {
+		delete SearchFieldPixmap;
+		SearchFieldPixmap = NULL;
+	}
+
+}
+
 void SearchLineEdit::mousePressEvent(QMouseEvent * event) {
     QLineEdit::mousePressEvent(event);
     emit clicked();

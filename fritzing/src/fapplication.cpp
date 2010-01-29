@@ -46,6 +46,7 @@ $Date$
 #include "dialogs/translatorlistmodel.h"
 #include "partsbinpalette/svgiconwidget.h"
 #include "items/moduleidnames.h"
+#include "partsbinpalette/searchlineedit.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -247,6 +248,7 @@ FApplication::~FApplication(void)
 	TipsAndTricks::cleanup();
 	TranslatorListModel::cleanup();
 	FolderUtils::cleanup();
+	SearchLineEdit::cleanup();
 }
 
 void FApplication::clearModels() {

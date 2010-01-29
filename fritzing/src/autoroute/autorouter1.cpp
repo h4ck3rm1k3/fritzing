@@ -362,6 +362,7 @@ void Autorouter1::start()
 	addToUndo(parentCommand, jumperItemStructs);
 
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
+		m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false, NULL);
 		delete jumperItemStruct;
 	}
 	jumperItemStructs.clear();
@@ -1772,7 +1773,6 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct
 		m_sketchWidget->createWire(jumperItem->connector0(), jumperItemStruct->from, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
 		m_sketchWidget->createWire(jumperItem->connector1(), jumperItemStruct->to, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
 
-		m_sketchWidget->deleteItem(jumperItem->id(), true, false, false, NULL);
 	}
 
 	addUndoConnections(m_sketchWidget, true, wires, parentCommand);

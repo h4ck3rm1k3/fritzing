@@ -40,6 +40,9 @@ public:
 	void setDecoy(bool);
 	bool decoy();
 
+public:
+	static void cleanup();
+
 signals:
     void clicked();
 
