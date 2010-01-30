@@ -30,12 +30,15 @@ src/utils/familypropertycombobox.h \
 src/utils/fileprogressdialog.h \
 src/utils/flineedit.h \
 src/utils/focusoutcombobox.h \
+src/utils/fsizegrip.h \
 src/utils/misc.h \
 src/utils/resizehandle.h \
 src/utils/folderutils.h \
 src/utils/graphicsutils.h \
+src/utils/ratsnestcolors.h \
 src/utils/svgandpartfilepath.h \
-src/utils/textutils.h
+src/utils/textutils.h \
+src/utils/zoomcombobox.h 
  
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \
@@ -44,10 +47,14 @@ src/utils/clickablelabel.cpp \
 src/utils/fileprogressdialog.cpp \
 src/utils/flineedit.cpp \
 src/utils/focusoutcombobox.cpp \
+src/utils/fsizegrip.cpp \
 src/utils/misc.cpp \
 src/utils/resizehandle.cpp \
 src/utils/folderutils.cpp \
 src/utils/graphicsutils.cpp \
-src/utils/textutils.cpp
+src/utils/ratsnestcolors.cpp \
+src/utils/textutils.cpp \
+src/utils/zoomcombobox.cpp 
+
 
 

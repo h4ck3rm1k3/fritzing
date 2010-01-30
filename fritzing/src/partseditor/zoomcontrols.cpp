@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "zoomcontrols.h"
-#include "../zoomcombobox.h"
+#include "../utils/zoomcombobox.h"
 #include "../debugdialog.h"
 
 ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, ZoomableGraphicsView* view, QWidget *parent) : QLabel(parent)

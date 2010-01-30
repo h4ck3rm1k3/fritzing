@@ -46,6 +46,7 @@ $Date$
 #include "../labels/partlabel.h"
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/ratsnestcolors.h"
 
 #include <stdlib.h>
 
@@ -55,14 +56,11 @@ QHash<QString, QString> Wire::colorTrans;
 QStringList Wire::colorNames;
 QHash<long, QString> Wire::widthTrans;
 QList<long> Wire::widths;
-QList<QColor *> ratsnestColors;
 const qreal Wire::ROUTED_OPACITY = 0.20;
 const qreal Wire::UNROUTED_OPACITY = 1.0;
 qreal Wire::STANDARD_TRACE_WIDTH;
 
 ////////////////////////////////////////////////////////////
-
-static QHash<ViewIdentifierClass::ViewIdentifier, int> netColorIndex;
 
 bool alphaLessThan(QColor * c1, QColor * c2)
 {
@@ -979,26 +977,6 @@ void Wire::initNames() {
 	shadowColors.insert("unrouted", "#000000");
 	shadowColors.insert("schematicGrey", "#1d1d1d");
 	shadowColors.insert("blackblack", "#000000");
-
-	netColorIndex.insert(ViewIdentifierClass::BreadboardView, 0);
-	netColorIndex.insert(ViewIdentifierClass::SchematicView, 0);
-	netColorIndex.insert(ViewIdentifierClass::PCBView, 0);
-
-	QFile file(":/resources/ratsnestcolors.txt");
-	file.open(QFile::ReadOnly);
-	QTextStream stream( &file );
-	while(!stream.atEnd()) {
-		QString line = stream.readLine();
-		if (line.contains(",")) {
-			QStringList strings = line.split(",");
-			if (strings.count() == 2) {
-				QColor * c = new QColor;
-				c->setNamedColor(strings[1]);
-				ratsnestColors.append(c);
-			}
-		}
-	}
-	file.close();
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)
@@ -1049,11 +1027,7 @@ void Wire::setOpacity(qreal opacity) {
 }
 
 const QColor * Wire::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	int csi = netColorIndex.value(viewIdentifier);
-	QColor * c = ratsnestColors[csi];
-	csi = (csi + 1) % ratsnestColors.count();
-	netColorIndex.insert(viewIdentifier, csi);
-	return c;
+	return RatsnestColors::netColor(viewIdentifier);
 }
 
 bool Wire::draggingEnd() {
@@ -1126,11 +1100,6 @@ QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
 }
 
 void Wire::cleanup() {
-	foreach (QColor * color, ratsnestColors) {
-		delete color;
-	}
-
-	ratsnestColors.clear();
 }
 
 void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, qreal & negativePenWidth) {

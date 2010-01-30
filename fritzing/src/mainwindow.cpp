@@ -68,7 +68,7 @@ $Date$
 #include "partsbinpalette/binmanager/binmanager.h"
 
 #include "fsvgrenderer.h"
-#include "fsizegrip.h"
+#include "utils/fsizegrip.h"
 #include "utils/expandinglabel.h"
 #include "viewswitcher/viewswitcher.h"
 #include "viewswitcher/viewswitcherdockwidget.h"
@@ -1620,13 +1620,13 @@ void MainWindow::initExternalConnectors(QList<ConnectorItem *> & externalConnect
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
-	QDomDocument* domDocument = new QDomDocument();
+	QDomDocument domDocument;
 
-	if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
 		return;
 	}
 
-	QDomElement root = domDocument->documentElement();
+	QDomElement root = domDocument.documentElement();
 	if (root.isNull()) {
 		return;
 	}

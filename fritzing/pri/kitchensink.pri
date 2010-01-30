@@ -25,7 +25,6 @@ HEADERS += \
     src/fdockwidget.h \
     src/fgraphicsscene.h \
     src/fritzingwindow.h \
-    src/fsizegrip.h \
     src/fsplashscreen.h \
     src/fsvgrenderer.h \
     src/itemdrag.h \
@@ -36,8 +35,7 @@ HEADERS += \
     src/viewgeometry.h \
     src/viewidentifierclass.h \
     src/viewlayer.h \
-    src/waitpushundostack.h \
-    src/zoomcombobox.h 
+    src/waitpushundostack.h 
     
 SOURCES += \
     src/commands.cpp \
@@ -48,7 +46,6 @@ SOURCES += \
     src/fdockwidget.cpp \
     src/fgraphicsscene.cpp \
     src/fritzingwindow.cpp \
-    src/fsizegrip.cpp \
     src/fsplashscreen.cpp \
     src/fsvgrenderer.cpp \
     src/itemdrag.cpp \
@@ -61,5 +58,5 @@ SOURCES += \
     src/viewgeometry.cpp \
     src/viewidentifierclass.cpp \
     src/viewlayer.cpp \
-    src/waitpushundostack.cpp \
-    src/zoomcombobox.cpp 
+    src/waitpushundostack.cpp 
+

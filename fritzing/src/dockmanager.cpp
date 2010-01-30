@@ -31,7 +31,7 @@ $Date$
 
 #include "dockmanager.h"
 #include "navigator/triplenavigator.h"
-#include "fsizegrip.h"
+#include "utils/fsizegrip.h"
 #include "viewswitcher/viewswitcherdockwidget.h"
 #include "utils/misc.h"
 #include "partsbinpalette/binmanager/binmanager.h"

@@ -26,7 +26,7 @@ $Date$
 
 
 #include "fsizegrip.h"
-#include "utils/misc.h"
+#include "misc.h"
 
 FSizeGrip::FSizeGrip(QMainWindow *parent) : QSizeGrip(parent) {
 	m_mainWindow = parent;

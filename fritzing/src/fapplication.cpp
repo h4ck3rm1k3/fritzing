@@ -47,6 +47,7 @@ $Date$
 #include "partsbinpalette/svgiconwidget.h"
 #include "items/moduleidnames.h"
 #include "partsbinpalette/searchlineedit.h"
+#include "utils/ratsnestcolors.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -224,6 +225,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	PartsEditorMainWindow::initText();
 	BinManager::initNames();
 	PaletteModel::initNames();
+	RatsnestColors::initNames();
 
 }
 
@@ -249,6 +251,7 @@ FApplication::~FApplication(void)
 	TranslatorListModel::cleanup();
 	FolderUtils::cleanup();
 	SearchLineEdit::cleanup();
+	RatsnestColors::cleanup();
 }
 
 void FApplication::clearModels() {

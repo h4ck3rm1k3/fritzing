@@ -35,7 +35,7 @@ $Date$
 #include <QMainWindow>
 
 #include "sketch/sketchwidget.h"
-#include "zoomcombobox.h"
+#include "utils/zoomcombobox.h"
 
 
 class SketchAreaWidget : public QFrame {

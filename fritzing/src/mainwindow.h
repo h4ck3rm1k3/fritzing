@@ -38,7 +38,7 @@ $Date$
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
 #include "viewlayer.h"
-#include "zoomcombobox.h"
+#include "utils/zoomcombobox.h"
 #include "sketchtoolbutton.h"
 
 QT_BEGIN_NAMESPACE
