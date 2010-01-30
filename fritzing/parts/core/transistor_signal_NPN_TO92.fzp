@@ -46,10 +46,10 @@
    <description>emitter</description>
    <views>
     <breadboardView>
-     <p svgId="connector2pin" layer="breadboard" terminalId="connector0terminal" />
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector0pin" layer="copper0" />
@@ -63,7 +63,7 @@
      <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector1pin" layer="copper0" />
@@ -74,10 +74,10 @@
    <description>collector</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" terminalId="connector2terminal" />
+     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+     <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector2pin" layer="copper0" />
