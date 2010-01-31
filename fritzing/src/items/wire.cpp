@@ -839,7 +839,7 @@ bool Wire::getNormal() {
 	return m_viewGeometry.getNormal();
 }
 
-void Wire::setColor(QColor & color, qreal op) {
+void Wire::setColor(const QColor & color, qreal op) {
 	m_pen.setBrush(QBrush(color));
 	m_opacity = op;
 	m_colorName = color.name();

@@ -93,7 +93,7 @@ public:
 	QString colorString();
 	QString hexString();
 	void setColorString(QString, qreal opacity);
-	virtual void setColor(QColor &, qreal opacity);
+	virtual void setColor(const QColor &, qreal opacity);
 	qreal opacity();
 	void setOpacity(qreal opacity);
 	const QColor & color();

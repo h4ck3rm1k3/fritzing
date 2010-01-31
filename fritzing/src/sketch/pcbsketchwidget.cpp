@@ -805,6 +805,51 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 
 {
 	if (!connect) {
+		ItemBase * from = findItem(fromID);
+		if (from == NULL) return;
+
+		ConnectorItem * fromConnectorItem = findConnectorItem(from, fromConnectorID, true);
+		if (fromConnectorItem == NULL) return;
+
+		ItemBase * to = findItem(toID);
+		if (to == NULL) return;
+
+		ConnectorItem * toConnectorItem = findConnectorItem(to, toConnectorID, true);
+		if (toConnectorItem == NULL) return;
+
+		QList<ConnectorItem *> toConnectorItems;
+		toConnectorItems.append(toConnectorItem);
+		ConnectorItem::collectEqualPotential(toConnectorItems, ViewGeometry::NormalFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		QStringList toConnectorNames;
+		collectConnectorNames(toConnectorItems, toConnectorNames);
+		QColor toColor;
+		bool gotToColor = RatsnestColors::findConnectorColor(toConnectorNames, toColor);
+
+		QList<ConnectorItem *> fromConnectorItems;
+		fromConnectorItems.append(fromConnectorItem);
+		ConnectorItem::collectEqualPotential(fromConnectorItems, ViewGeometry::NormalFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		QStringList fromConnectorNames;
+		collectConnectorNames(fromConnectorItems, fromConnectorNames);
+		QColor fromColor;
+		bool gotFromColor = RatsnestColors::findConnectorColor(fromConnectorNames, fromColor);
+
+		if (gotToColor && gotFromColor) {
+			if (toColor != fromColor) {
+				// should only need to call one of these...
+				recolor(fromConnectorItems, fromColor);
+				recolor(toConnectorItems, toColor);
+			}
+		}
+		else if (gotToColor) {
+			recolor(fromConnectorItems, RatsnestColors::netColor(m_viewIdentifier));
+		}
+		else if (gotFromColor) {
+			recolor(toConnectorItems, RatsnestColors::netColor(m_viewIdentifier));
+		}
+		else {
+			// don't need to change anything
+		}
+
 		return;
 	}
 
@@ -836,23 +881,9 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 	Wire * modelWire = NULL;
 
 	makeWires(partsConnectorItems, ratsnestWires, modelWire, ratsnestCommand);
-
-	/*
-	colorWires(onMe);
-
-	if (!connect) {
-		colorWires(onIt);
-	}
-	*/
-
 	if (ratsnestWires.count() > 0) {
 		QStringList connectorNames;
-		foreach(ConnectorItem * connectorItem, partsConnectorItems) {
-			if (!connectorNames.contains(connectorItem->connectorSharedName())) {
-				connectorNames.append(connectorItem->connectorSharedName());
-				DebugDialog::debug("name " + connectorItem->connectorSharedName());
-			}
-		}
+		collectConnectorNames(partsConnectorItems, connectorNames);
 		QColor color;
 		bool gotColor = RatsnestColors::findConnectorColor(connectorNames, color);
 		if (!gotColor) {
@@ -863,10 +894,20 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 				color = RatsnestColors::netColor(m_viewIdentifier);
 			}
 		}
-		DebugDialog::debug(QString("ratsnest color %1 %2 %3 %4").arg(color.red()).arg(color.green()).arg(color.blue()).arg(QTime::currentTime().msec()));
+		//DebugDialog::debug(QString("ratsnest color %1 %2 %3 %4").arg(color.red()).arg(color.green()).arg(color.blue()).arg(QTime::currentTime().msec()));
 		foreach (Wire * wire, ratsnestWires) {
-			wire->setColor(color, getRatsnestOpacity(wire));
+			if (!gotColor) {
+				wire->setColor(color, getRatsnestOpacity(wire));
+			}
 			checkSticky(wire->id(), false, false, NULL);
+		}
+		if (gotColor) {
+			// connectorItems (from above) doesn't have ratsnest wires, so collect them
+			QList<ConnectorItem *> rConnectorItems;
+			rConnectorItems.append(fromConnectorItem);
+			rConnectorItems.append(toConnectorItem);
+			ConnectorItem::collectEqualPotential(rConnectorItems, ViewGeometry::NormalFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+			recolor(rConnectorItems, color);
 		}
 	}
 
@@ -1560,5 +1601,27 @@ ItemBase * PCBSketchWidget::findBoard() {
     }
 
 	return NULL;
+}
+
+void PCBSketchWidget::collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames) 
+{
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		if (!connectorNames.contains(connectorItem->connectorSharedName())) {
+			connectorNames.append(connectorItem->connectorSharedName());
+			//DebugDialog::debug("name " + connectorItem->connectorSharedName());
+		}
+	}
+}
+
+void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, const QColor & color) 
+{
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		if (connectorItem->attachedToItemType() != ModelPart::Wire) continue;
+
+		VirtualWire * vw = dynamic_cast<VirtualWire *>(connectorItem->attachedTo());
+		if (vw == NULL) continue;
+
+		vw->setColor(color, vw->opacity());
+	}
 }
 

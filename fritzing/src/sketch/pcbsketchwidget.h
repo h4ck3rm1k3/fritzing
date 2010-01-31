@@ -130,6 +130,8 @@ protected:
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *, bool select);
+	void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
+	void recolor(QList<ConnectorItem *> & connectorItems, const QColor & color); 
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
