@@ -1,28 +1,47 @@
 <colors>
 	<view name="breadboardView">
 		<color name="black" color="#000000" />
-		<color name="green" color="#1C8C44" hint="gnd"/>
+		<color name="green" color="#1C8C44">
+			<connector name="gnd" />
+			<connector name="ground" />
+		</color>
+		<color name="red" color="#800700" >
+			<connector name="3v3" />
+			<connector name="+5v" />
+		</color>
 	</view>	
 	<view name="schematicView">
 		<color name="black" color="#000000" />
 		<color name="teal" color="#004D4D" />
 		<color name="pink" color="#990066" />
-		<color name="green" color="#1C8C44" hint="gnd"/>
+		<color name="green" color="#1C8C44" >
+			<connector name="gnd" />
+			<connector name="ground" />
+		</color>
 		<color name="white" color="#C2A5A5" />
 		<color name="brown" color="#803400" />
 		<color name="purple" color="#4A1380" />
-		<color name="red" color="#800700" />
+		<color name="red" color="#800700" >
+			<connector name="3v3" />
+			<connector name="+5v" />
+		</color>
 		<color name="olive" color="#768000" />
 		<color name="grey" color="#665252" />
 	</view>
 	<view name="pcbView">
 		<color name="teal" color="#004D4D" />
 		<color name="pink" color="#990066" />
-		<color name="green" color="#1C8C44" hint="gnd"/>
+		<color name="green" color="#1C8C44" >
+			<connector name="gnd" />
+			<connector name="ground" />
+		</color>
 		<color name="white" color="#C2A5A5" />
 		<color name="brown" color="#803400" />
 		<color name="purple" color="#4A1380" />
-		<color name="red" color="#800700" />
+		<color name="red" color="#800700" >
+			<connector name="3v3" />
+			<connector name="+5v" />
+		</color>
 		<color name="olive" color="#768000" />
 		<color name="grey" color="#665252" />
 	</view>

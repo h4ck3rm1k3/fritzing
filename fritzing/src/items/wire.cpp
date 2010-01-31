@@ -46,7 +46,6 @@ $Date$
 #include "../labels/partlabel.h"
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
-#include "../utils/ratsnestcolors.h"
 
 #include <stdlib.h>
 
@@ -857,8 +856,8 @@ void Wire::setShadowColor(QColor & color) {
 	this->update();
 }
 
-const QColor * Wire::color() {
-	return &m_pen.brush().color();
+const QColor & Wire::color() {
+	return m_pen.brush().color();
 }
 
 void Wire::setWireWidth(qreal width, InfoGraphicsView * infoGraphicsView) {
@@ -1020,14 +1019,9 @@ qreal Wire::opacity() {
 	return m_opacity;
 }
 
-
 void Wire::setOpacity(qreal opacity) {
 	m_opacity = opacity;
 	this->update();
-}
-
-const QColor * Wire::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	return RatsnestColors::netColor(viewIdentifier);
 }
 
 bool Wire::draggingEnd() {

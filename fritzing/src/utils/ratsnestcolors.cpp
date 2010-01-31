@@ -28,6 +28,8 @@ $Date: 2009-11-25 11:14:43 +0100 (Wed, 25 Nov 2009) $
 #include <QFile>
 
 QHash<ViewIdentifierClass::ViewIdentifier, RatsnestColors *> RatsnestColors::m_viewList;
+QHash<QString, class RatsnestColor *> RatsnestColors::m_allNames;
+
 QColor ErrorColor(0, 0, 0);
 
 //////////////////////////////////////////////////////
@@ -41,7 +43,7 @@ class RatsnestColor {
 protected:
 	QString m_name;
 	QColor m_color;
-	QString m_hint;
+	QStringList m_connectorNames;
 };
 
 //////////////////////////////////////////////////////
@@ -49,7 +51,11 @@ protected:
 RatsnestColor::RatsnestColor(const QDomElement & color) {
 	m_name = color.attribute("name");
 	m_color.setNamedColor(color.attribute("color"));
-	m_hint = color.attribute("hint");
+	QDomElement connector = color.firstChildElement("connector");
+	while (!connector.isNull()) {
+		m_connectorNames.append(connector.attribute("name"));
+		connector = connector.nextSiblingElement("connector");
+	}
 }
 
 RatsnestColor::~RatsnestColor() {
@@ -65,6 +71,9 @@ RatsnestColors::RatsnestColors(const QDomElement & view)
 	while (!color.isNull()) {
 		RatsnestColor * ratsnestColor = new RatsnestColor(color);
 		m_ratsnestColors.append(ratsnestColor);
+		foreach (QString name, ratsnestColor->m_connectorNames) {
+			m_allNames.insert(name.toLower(), ratsnestColor);
+		}
 		color = color.nextSiblingElement("color");
 	}
 }
@@ -113,17 +122,45 @@ void RatsnestColors::cleanup() {
 	m_viewList.clear();
 }
 
-QColor * RatsnestColors::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+const QColor & RatsnestColors::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
-	if (ratsnestColors == NULL) return &ErrorColor;
+	if (ratsnestColors == NULL) return ErrorColor;
 
 	return ratsnestColors->getNextColor();
 }
 
-QColor * RatsnestColors::getNextColor() {
-	if (m_ratsnestColors.length() <= 0) return &ErrorColor;
+const QColor & RatsnestColors::getNextColor() {
+	if (m_ratsnestColors.length() <= 0) return ErrorColor;
 
-	if (m_index < 0 || m_index >= m_ratsnestColors.length()) m_index = 0;
-	RatsnestColor * ratsnestColor = m_ratsnestColors[m_index++];
-	return &ratsnestColor->m_color;
+	int resetCount = 0;
+	while (true) {
+		if (m_index < 0 || m_index >= m_ratsnestColors.length()) {
+			m_index = 0;
+			if (++resetCount > 2) {
+				// prevent infinite loops if all the colors in the list are for particular connectors
+				return ErrorColor;
+			}
+		}
+		RatsnestColor * ratsnestColor = m_ratsnestColors[m_index++];
+		if (ratsnestColor->m_connectorNames.length() > 0) {
+			// don't use colors designated for particular connectors
+			m_index++;
+		}
+		else {
+			return ratsnestColor->m_color;
+		}
+	}
+}
+
+	
+bool RatsnestColors::findConnectorColor(const QStringList & names, QColor & color) {
+	foreach (QString name, names) {
+		RatsnestColor * ratsnestColor = m_allNames.value(name.toLower(), NULL);
+		if (ratsnestColor == NULL) continue;
+
+		color = ratsnestColor->m_color;
+		return true;
+	}
+
+	return false;
 }

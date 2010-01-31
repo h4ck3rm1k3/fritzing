@@ -26,6 +26,8 @@ $Date$
 
 #include "virtualwire.h"
 #include "../connectors/connectoritem.h"
+#include "../utils/ratsnestcolors.h"
+#include "../model/modelpart.h"
 
 VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
@@ -47,10 +49,11 @@ void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * op
 void VirtualWire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
 	Q_UNUSED(onMe);
 	Q_UNUSED(onIt);
-	Q_UNUSED(connect);
-	//if (connect && !onIt->attachedTo()->isVisible()) {
+	Q_UNUSED(connect);	//if (connect && !onIt->attachedTo()->isVisible()) {
 		//this->setVisible(false);
 	//}
+
+	// note: at this point in fritzing development, the VirtualWire class is only ever used for ratsnest wires
 }
 
 FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
@@ -107,3 +110,38 @@ void VirtualWire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 	ClipableWire::mousePressEvent(event);
 }
+
+void VirtualWire::setColor(QColor & color, qreal op) {
+	m_originalColor = color;
+	Wire::setColor(color, op);
+}
+
+void VirtualWire::setColor2(QColor & color) {
+	Wire::setColor(color, this->opacity());
+}
+
+void VirtualWire::colorWires(ConnectorItem * startingWith) {
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(startingWith);
+	ConnectorItem::collectEqualPotential(connectorItems, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag | ViewGeometry::NormalFlag);
+	QStringList connectorNames;
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		if (!connectorNames.contains(connectorItem->connectorSharedName())) {
+			connectorNames.append(connectorItem->connectorSharedName());
+		}
+	}
+	QColor color;
+	if (!RatsnestColors::findConnectorColor(connectorNames, color)) {
+		color = m_originalColor;
+	}
+	foreach(ConnectorItem * connectorItem, connectorItems) {
+		if (connectorItem->attachedToItemType() != ModelPart::Wire) continue;
+
+		VirtualWire * vw = dynamic_cast<VirtualWire *>(connectorItem->attachedTo());
+		if (vw == NULL) continue;
+
+		DebugDialog::debug(QString("color %1 %2 %3 %4").arg(color.red()).arg(color.green()).arg(color.blue()).arg(QTime::currentTime().msec()));
+		vw->setColor2(color);
+	}
+}
+

@@ -93,10 +93,10 @@ public:
 	QString colorString();
 	QString hexString();
 	void setColorString(QString, qreal opacity);
-	void setColor(QColor &, qreal opacity);
+	virtual void setColor(QColor &, qreal opacity);
 	qreal opacity();
 	void setOpacity(qreal opacity);
-	const QColor * color();
+	const QColor & color();
 	void setWireWidth(qreal, InfoGraphicsView *);
 	void setPenWidth(qreal width, InfoGraphicsView *);
 	qreal width();
@@ -126,7 +126,6 @@ public:
 public:
 	static void initNames();
 	static QRgb getRgb(const QString & name);
-	static const QColor * netColor(ViewIdentifierClass::ViewIdentifier);
 	static void cleanup();
 	static void getColor(QColor & color, const QString & name);
 

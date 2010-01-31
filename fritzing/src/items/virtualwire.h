@@ -45,6 +45,12 @@ protected:
  	class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	void hideConnectors();	
 	qreal calcClipRadius(ConnectorItem *);
+	void setColor(QColor &, qreal opacity);
+	void setColor2(QColor &);
+	void colorWires(class ConnectorItem * startingWith);
+
+protected:
+	QColor m_originalColor;
 };
 
 #endif

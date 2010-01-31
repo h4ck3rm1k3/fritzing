@@ -36,6 +36,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
 #include "../help/sketchmainhelp.h"
+#include "../utils/ratsnestcolors.h"
 
 #include <limits>
 
@@ -803,7 +804,9 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
 {
-	if (!connect) return;
+	if (!connect) {
+		return;
+	}
 
 	ConnectorItem * fromConnectorItem = NULL;
 	ConnectorItem * toConnectorItem = NULL;
@@ -834,17 +837,35 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 
 	makeWires(partsConnectorItems, ratsnestWires, modelWire, ratsnestCommand);
 
+	/*
+	colorWires(onMe);
+
+	if (!connect) {
+		colorWires(onIt);
+	}
+	*/
+
 	if (ratsnestWires.count() > 0) {
-		const QColor * color = NULL;
-		if (modelWire) {
-			color = modelWire->color();
+		QStringList connectorNames;
+		foreach(ConnectorItem * connectorItem, partsConnectorItems) {
+			if (!connectorNames.contains(connectorItem->connectorSharedName())) {
+				connectorNames.append(connectorItem->connectorSharedName());
+				DebugDialog::debug("name " + connectorItem->connectorSharedName());
+			}
 		}
-		else {
-			color = getRatsnestColor();
+		QColor color;
+		bool gotColor = RatsnestColors::findConnectorColor(connectorNames, color);
+		if (!gotColor) {
+			if (modelWire) {
+				color = modelWire->color();
+			}
+			else {
+				color = RatsnestColors::netColor(m_viewIdentifier);
+			}
 		}
+		DebugDialog::debug(QString("ratsnest color %1 %2 %3 %4").arg(color.red()).arg(color.green()).arg(color.blue()).arg(QTime::currentTime().msec()));
 		foreach (Wire * wire, ratsnestWires) {
-			QColor colorAsQColor = (QColor) *color;
-			wire->setColor(colorAsQColor, getRatsnestOpacity(wire));
+			wire->setColor(color, getRatsnestOpacity(wire));
 			checkSticky(wire->id(), false, false, NULL);
 		}
 	}
@@ -1131,11 +1152,6 @@ bool PCBSketchWidget::dealWithRatsnestAux(ConnectorItem * & fromConnectorItem, C
 bool PCBSketchWidget::doRatsnestOnCopy() 
 {
 	return true;
-}
-
-const QColor * PCBSketchWidget::getRatsnestColor() 
-{
-	return Wire::netColor(m_viewIdentifier);
 }
 
 qreal PCBSketchWidget::getRatsnestOpacity(Wire * wire) {

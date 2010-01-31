@@ -113,7 +113,6 @@ protected:
 	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
 	bool doRatsnestOnCopy();
 	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
-	virtual const QColor * getRatsnestColor(); 
 	virtual qreal getRatsnestOpacity(Wire *);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
 	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);

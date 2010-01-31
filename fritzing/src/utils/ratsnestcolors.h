@@ -29,6 +29,8 @@ $Date: 2009-11-25 11:14:43 +0100 (Wed, 25 Nov 2009) $
 
 #include <QColor>
 #include <QDomElement>
+#include <QHash>
+#include <QStringList>
 #include "../viewidentifierclass.h"
 
 class RatsnestColors {
@@ -39,10 +41,11 @@ public:
 
 	static void initNames();
 	static void cleanup();
-	static QColor * netColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier);
+	static const QColor & netColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier);
+	static bool findConnectorColor(const QStringList & names, QColor & color);
 
 protected:
-	QColor * getNextColor();
+	const QColor & getNextColor();
 
 protected:
 	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
@@ -50,6 +53,7 @@ protected:
 	QList<class RatsnestColor *> m_ratsnestColors;
 
 	static QHash<ViewIdentifierClass::ViewIdentifier, RatsnestColors *> m_viewList;
+	static QHash<QString, class RatsnestColor *> m_allNames;
 };
 
 
