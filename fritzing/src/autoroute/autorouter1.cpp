@@ -721,23 +721,19 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 
 void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (!wire->getRatsnest()) continue;
-		
-		if (!routed) {
-			QList<ConnectorItem *>  ends;
-			bool connected = wire->findJumperOrTraced(ViewGeometry::TraceFlag | ViewGeometry::JumperFlag, ends);
-			if (!connected) {
-				// check for jumperitems?
-			}
-			if (connected) routed = true;
+	if (routed) {
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+			Wire * wire = dynamic_cast<Wire *>(item);
+			if (wire == NULL) continue;
+			if (!wire->getRatsnest()) continue;
+			
+			m_sketchWidget->makeChangeRoutedCommand(wire, routed, m_sketchWidget->getRatsnestOpacity(routed), parentCommand);
+			wire->setOpacity(m_sketchWidget->getRatsnestOpacity(routed));	
+			wire->setRouted(routed);
 		}
-
-		m_sketchWidget->makeChangeRoutedCommand(wire, routed, m_sketchWidget->getRatsnestOpacity(routed), parentCommand);
-		wire->setOpacity(m_sketchWidget->getRatsnestOpacity(routed));	
-		wire->setRouted(routed);
+	}
+	else {
+		m_sketchWidget->updateRatsnestColors(NULL, parentCommand);
 	}
 }
 
@@ -934,7 +930,7 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	}
 
 	Wire * jumperWire = dynamic_cast<Wire *>(itemBase);
-	jumperWire->setColorString(m_sketchWidget->jumperColor(), m_sketchWidget->getRatsnestOpacity(false));
+	jumperWire->setColorString(m_sketchWidget->jumperColor(), 1.0);
 	jumperWire->setWireWidth(m_sketchWidget->jumperWidth(), m_sketchWidget);
 	jumperWire->setSelected(false);
 
@@ -1990,7 +1986,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width)
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	m_sketchWidget->setClipEnds(traceWire, false);
-	traceWire->setColorString(m_sketchWidget->traceColor(),m_sketchWidget->getRatsnestOpacity(false));
+	traceWire->setColorString(m_sketchWidget->traceColor(), 1.0);
 	traceWire->setWireWidth(width, m_sketchWidget);
 
 	return traceWire;
