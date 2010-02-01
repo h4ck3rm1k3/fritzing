@@ -520,7 +520,7 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	if (!colorString.isEmpty()) {
 		qreal op = extras.attribute("opacity").toDouble(&ok);
 		if (!ok) {
-			op = Wire::UNROUTED_OPACITY;
+			op = 1.0;
 		}
 		new WireColorChangeCommand(this, newID, colorString, colorString, op, op, parentCommand);
 	}
@@ -1580,7 +1580,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		new ShowLabelFirstTimeCommand(this, crossViewType, fromID, true, true, parentCommand);
 
 		if (modelPart->itemType() == ModelPart::Wire && !m_lastColorSelected.isEmpty()) {
-			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, Wire::UNROUTED_OPACITY, Wire::UNROUTED_OPACITY, parentCommand);
+			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, 1.0, 1.0, parentCommand);
 		}
 
 		bool gotConnector = false;

@@ -84,7 +84,7 @@ void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	}
 	else {
 		wire->setPenWidth(2, this);
-		wire->setColorString("blackblack", Wire::UNROUTED_OPACITY);
+		wire->setColorString("blackblack", 1.0);
 	}
 }
 
@@ -127,8 +127,8 @@ void SchematicSketchWidget::ensureJumperLayerVisible() {
 	ensureLayerVisible(ViewLayer::SchematicTrace);
 }
 
-qreal SchematicSketchWidget::getRatsnestOpacity(Wire * wire) {
-	return (wire->getRouted() ? 0.1 : 0.7);
+qreal SchematicSketchWidget::getRatsnestOpacity(bool routed) {
+	return (routed ? 0.1 : 0.7);
 }
 
 void SchematicSketchWidget::setJumperFlags(ViewGeometry & vg) {

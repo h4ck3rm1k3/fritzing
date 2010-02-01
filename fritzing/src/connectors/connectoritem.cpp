@@ -737,18 +737,18 @@ Wire * ConnectorItem::wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags
 		if (!wire->hasAnyFlag(flags)) continue;
 
 		ConnectorItem * otherEnd = wire->otherConnector(toConnectorItem);
-		bool chained = false;
+		bool isChained = false;
 		foreach (ConnectorItem * otherConnectorItem, otherEnd->m_connectedTo) {
 			if (target == otherConnectorItem) {
 				return wire;
 			}
 			if (otherConnectorItem->attachedToItemType() == ModelPart::Wire) {
 				//DebugDialog::debug(QString("wired from %1 to %2").arg(wire->id()).arg(otherConnectorItem->attachedToID()));
-				chained = true;
+				isChained = true;
 			}
 		}
 
-		if (chained) {
+		if (isChained) {
 			if (otherEnd->wiredToAux(target, flags, visited)) {
 				return wire;
 			}

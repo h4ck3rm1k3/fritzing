@@ -55,8 +55,6 @@ QHash<QString, QString> Wire::colorTrans;
 QStringList Wire::colorNames;
 QHash<long, QString> Wire::widthTrans;
 QList<long> Wire::widths;
-const qreal Wire::ROUTED_OPACITY = 0.20;
-const qreal Wire::UNROUTED_OPACITY = 1.0;
 qreal Wire::STANDARD_TRACE_WIDTH;
 
 ////////////////////////////////////////////////////////////
@@ -76,7 +74,7 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	m_canChainMultiple = false;
     setFlag(QGraphicsItem::ItemIsSelectable, true );
 	m_connectorHover = NULL;
-	m_opacity = UNROUTED_OPACITY;
+	m_opacity = 1.0;
 	m_ignoreSelectionChange = false;
 
 	//DebugDialog::debug(QString("aix line %1 %2 %3 %4").arg(this->viewGeometry().line().x1())
@@ -469,7 +467,7 @@ void Wire::setColor(QDomElement & element) {
 	bool ok;
 	qreal op = element.attribute("opacity").toDouble(&ok);
 	if (!ok) {
-		op = UNROUTED_OPACITY;
+		op = 1.0;
 	}
 
 	setColorString(colorString, op);

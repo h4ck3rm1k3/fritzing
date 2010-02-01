@@ -164,3 +164,17 @@ bool RatsnestColors::findConnectorColor(const QStringList & names, QColor & colo
 
 	return false;
 }
+
+bool RatsnestColors::isConnectorColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier, const QColor & color) {
+	RatsnestColors * ratsnestColors = m_viewList.value(m_viewIdentifier, NULL);
+	if (ratsnestColors == NULL) return false;
+
+	foreach (RatsnestColor * ratsnestColor, ratsnestColors->m_ratsnestColors) {
+		if (ratsnestColor->m_color == color) {
+			return (ratsnestColor->m_connectorNames.length() > 0);
+		}
+	}
+
+	return false;
+}
+

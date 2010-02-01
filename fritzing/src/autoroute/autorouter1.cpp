@@ -689,10 +689,10 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 			}
 			else if (wire->getRatsnest()) {
 				if (parentCommand) {
-					sketchWidget->makeChangeRoutedCommand(wire, false, Wire::UNROUTED_OPACITY, parentCommand);
+					sketchWidget->makeChangeRoutedCommand(wire, false, sketchWidget->getRatsnestOpacity(false), parentCommand);
 				}
 				wire->setRouted(false);
-				wire->setOpacity(Wire::UNROUTED_OPACITY);	
+				wire->setOpacity(sketchWidget->getRatsnestOpacity(false));	
 			}
 			continue;
 		}
@@ -735,8 +735,8 @@ void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 			if (connected) routed = true;
 		}
 
-		m_sketchWidget->makeChangeRoutedCommand(wire, routed, routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY, parentCommand);
-		wire->setOpacity(routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY);	
+		m_sketchWidget->makeChangeRoutedCommand(wire, routed, m_sketchWidget->getRatsnestOpacity(routed), parentCommand);
+		wire->setOpacity(m_sketchWidget->getRatsnestOpacity(routed));	
 		wire->setRouted(routed);
 	}
 }
@@ -934,7 +934,7 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	}
 
 	Wire * jumperWire = dynamic_cast<Wire *>(itemBase);
-	jumperWire->setColorString(m_sketchWidget->jumperColor(), Wire::UNROUTED_OPACITY);
+	jumperWire->setColorString(m_sketchWidget->jumperColor(), m_sketchWidget->getRatsnestOpacity(false));
 	jumperWire->setWireWidth(m_sketchWidget->jumperWidth(), m_sketchWidget);
 	jumperWire->setSelected(false);
 
@@ -1990,7 +1990,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width)
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	m_sketchWidget->setClipEnds(traceWire, false);
-	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
+	traceWire->setColorString(m_sketchWidget->traceColor(),m_sketchWidget->getRatsnestOpacity(false));
 	traceWire->setWireWidth(width, m_sketchWidget);
 
 	return traceWire;

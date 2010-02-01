@@ -285,7 +285,7 @@ bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
 
 void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setPenWidth(penWidth - 2, this);
-	wire->setColorString("blue", Wire::UNROUTED_OPACITY);
+	wire->setColorString("blue", 1.0);
 }
 
 void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color) {

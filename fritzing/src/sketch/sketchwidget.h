@@ -356,7 +356,6 @@ protected:
 	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
 											   QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
-
 protected:
 	static bool lessThan(int a, int b);
 	static bool greaterThan(int a, int b);

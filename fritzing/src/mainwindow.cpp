@@ -637,8 +637,15 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		SLOT(updateTransformationActions())
 	);
 
-
 	m_currentGraphicsView->setCurrent(true);
+
+	// !!!!!! hack alert  !!!!!!!  
+	// this item update loop seems to deal with a qt update bug:
+	// if one view is visible and you change something in another view, 
+	// the change might not appear when you switch views until you move the item in question
+	foreach(QGraphicsItem * item, m_currentGraphicsView->items()) {
+		item->update();
+	}
 
 	//  TODO:  should be a cleaner way to do this
 	switch( index ) {

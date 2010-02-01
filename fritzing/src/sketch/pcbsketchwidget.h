@@ -72,6 +72,8 @@ public:
 	virtual qreal getLabelFontSizeLarge();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	ItemBase * findBoard();
+	qreal getRatsnestOpacity(Wire *);
+	virtual qreal getRatsnestOpacity(bool);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -113,7 +115,6 @@ protected:
 	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
 	bool doRatsnestOnCopy();
 	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
-	virtual qreal getRatsnestOpacity(Wire *);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
 	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
 	long makeModifiedWire(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, BaseCommand::CrossViewType, ViewGeometry::WireFlags, QUndoCommand * parentCommand);
@@ -131,7 +132,8 @@ protected:
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *, bool select);
 	void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
-	void recolor(QList<ConnectorItem *> & connectorItems, const QColor & color); 
+	void recolor(QList<ConnectorItem *> & connectorItems, CleanUpWiresCommand * command); 
+	void updateRatsnestColors(CleanUpWiresCommand * command);
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
@@ -150,6 +152,8 @@ protected:
 	qreal m_jumperWidth;
 	QString m_traceColor;
 	CleanType m_cleanType;
+	bool m_newRats;
+
 };
 
 #endif

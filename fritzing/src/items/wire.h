@@ -119,8 +119,6 @@ protected slots:
 	void colorEntry(const QString & text);
 
 public:
-	static const qreal ROUTED_OPACITY;
-	static const qreal UNROUTED_OPACITY;
 	static qreal STANDARD_TRACE_WIDTH;
 
 public:

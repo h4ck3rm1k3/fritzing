@@ -43,6 +43,7 @@ public:
 	static void cleanup();
 	static const QColor & netColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier);
 	static bool findConnectorColor(const QStringList & names, QColor & color);
+	static bool isConnectorColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier, const QColor &);
 
 protected:
 	const QColor & getNextColor();
