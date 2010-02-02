@@ -28,16 +28,16 @@
         <translation>&lt;p&gt;Отдельное спасибо: Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrell Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Спасибо Kurt Badelt за перевод на испанский, Gianluca Urgese за перевод на итальянский&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar and IxDS.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Fritzing создан при финансировании MWFK Brandenburg, спонсировании кафедры дизайна университета Bauhaus (Веймар) и IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Special thanks goes out as well to all the students and alpha testers who were brave enough to give Fritzing a test spin. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation>&lt;p&gt;Так же большое спасибо всем студентам и альфа-тестерам, которым хватает храбрости работать с тестовой версией Fritzing.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -671,14 +671,6 @@ Do you want to restart now?</source>
     <message>
         <source>Routing completed</source>
         <translation>Трассировка завершена</translation>
-    </message>
-    <message numerus="yes">
-        <source>Routing completed using %n jumper(s)</source>
-        <translation>
-            <numerusform>Маршрут проложен с использованием %n перемычек</numerusform>
-            <numerusform>Маршрут проложен с использованием %n перемычки</numerusform>
-            <numerusform>Маршрут проложен с использованием %n перемычек</numerusform>
-        </translation>
     </message>
     <message numerus="yes">
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
@@ -1866,6 +1858,38 @@ Please check all views for potential side-effects.</source>
         <source>throw a fake exception to see what happens</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Routing completed using %n jumper wire(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source> and %n jumper part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Select All Jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all jumper parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ratsnest colors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2821,6 +2845,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>Select outdated parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all jumpers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

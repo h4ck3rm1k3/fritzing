@@ -28,15 +28,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar and IxDS.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;p&gt;Special thanks goes out as well to all the students and alpha testers who were brave enough to give Fritzing a test spin. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -663,13 +663,6 @@ Do you want to restart now?</source>
     <message>
         <source>Routing completed</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Routing completed using %n jumper(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
     <message numerus="yes">
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
@@ -1844,6 +1837,36 @@ Please check all views for potential side-effects.</source>
         <source>throw a fake exception to see what happens</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Routing completed using %n jumper wire(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source> and %n jumper part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Select All Jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all jumper parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ratsnest colors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2770,6 +2793,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Unknown Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all jumpers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -28,16 +28,16 @@
         <translation>&lt;p&gt;Os nossos agradecimentos especiais vão para: Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrell Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Agradecimento a Kurt Badelt pela tradução para Espanhol, Gianluca Urgese  pela tradução em Italiano, ao Nuno Pessanha Santos pela tradução para Português, ao Yelin e Ninjia pela tradução para chinês (Simplificado),ao Hiroshi Suzuki pela tradução para Japonês e ao Vladimir Savinov pela tradução para Russo.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar and IxDS.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Fritzing foi possível de elaborar devido aos fundos provenientes do MWFK Brandenburg, do sponsorship of the Design Department of Bauhaus-University Weimar e IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Special thanks goes out as well to all the students and alpha testers who were brave enough to give Fritzing a test spin. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation>&lt;p&gt;Agradecimentos especiais vão para todos os estudantes e alpha testers que tiveram coragem para fazerem os testes ao Fritzing.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -646,13 +646,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>Routing completed</source>
         <translation>Encaminhamento completo</translation>
-    </message>
-    <message numerus="yes">
-        <source>Routing completed using %n jumper(s)</source>
-        <translation>
-            <numerusform>Encaminhamento completo utilizando %n jumper(s)</numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
     <message numerus="yes">
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
@@ -1860,6 +1853,36 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>throw a fake exception to see what happens</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Routing completed using %n jumper wire(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source> and %n jumper part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Select All Jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all jumper parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ratsnest colors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2814,6 +2837,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>Select outdated parts</source>
         <translation>Seleccione os componentes desactualizados</translation>
+    </message>
+    <message>
+        <source>Select all jumpers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
