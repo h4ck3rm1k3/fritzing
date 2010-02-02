@@ -141,6 +141,7 @@ tr("<p>Thanks to Kurt Badelt for the Spanish translation, "
 	"to Nuno Pessanha Santos for the Portuguese translation, "
 	"to Yuelin and Ninjia  for the Chinese (Simplified) translation, "
 	"to Hiroshi Suzuki for the Japanese translation, "
+	"to Robert Lee for the Chinese (Traditional) translation, "
 	"and to Vladimir Savinov for the Russian translation.</p>") +
 
 tr("<p>Fritzing is made possible with funding from the "

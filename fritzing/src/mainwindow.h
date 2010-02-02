@@ -197,7 +197,8 @@ protected slots:
 	void excludeFromAutoroute();
 	void selectAllTraces();
 	void selectAllExcludedTraces();
-	void selectAllJumpers();
+	void selectAllJumperWires();
+	void selectAllJumperItems();
 
 	void saveBundledSketch();
 	void shareOnline();
@@ -242,6 +243,7 @@ protected slots:
 	void processReadyRead();
 	void processStateChanged(QProcess::ProcessState newState);
     void throwFakeException();
+	void updateRatsnest();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -517,11 +519,12 @@ protected:
 	QAction *m_excludeFromAutorouteAct;
 	QAction *m_selectAllTracesAct;
 	QAction *m_selectAllExcludedTracesAct;
-	QAction *m_selectAllJumpersAct;
+	QAction *m_selectAllJumperWiresAct;
+	QAction *m_selectAllJumperItemsAct;
 	QAction *m_groundFillAct;
 	QAction *m_removeGroundFillAct;
 	QAction *m_tidyWiresAct;
-
+	QAction *m_updateRatsnestAct;
 
 	// Help Menu
     QMenu *m_helpMenu;

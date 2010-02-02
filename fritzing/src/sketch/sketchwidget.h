@@ -228,6 +228,7 @@ public:
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
+	int selectAllItemType(ModelPart::ItemType);
 	bool partLabelsVisible();
 	void restorePartLabel(long itemID, QDomElement & element);
 	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
@@ -356,6 +357,8 @@ protected:
 	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
 											   QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
+	int selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg);
+
 protected:
 	static bool lessThan(int a, int b);
 	static bool greaterThan(int a, int b);

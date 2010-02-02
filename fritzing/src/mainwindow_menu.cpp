@@ -1592,9 +1592,13 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
-	m_pcbTraceMenu->addAction(m_selectAllJumpersAct);
+	m_pcbTraceMenu->addAction(m_selectAllJumperWiresAct);
+	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 	m_pcbTraceMenu->addAction(m_groundFillAct);
 	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
+#ifndef QT_NO_DEBUG
+	m_pcbTraceMenu->addAction(m_updateRatsnestAct);
+#endif
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
@@ -1605,6 +1609,7 @@ void MainWindow::createMenus()
 
 #ifndef QT_NO_DEBUG
 	m_schematicTraceMenu->addAction(m_tidyWiresAct);
+	m_schematicTraceMenu->addAction(m_updateRatsnestAct);
 #endif
 
 	updateTraceMenu();
@@ -1864,6 +1869,7 @@ void MainWindow::updateEditMenu() {
 void MainWindow::updateTraceMenu() {
 	bool rEnabled = false;
 	bool jEnabled = false;
+	bool jiEnabled = false;
 	bool tEnabled = false;
 	bool ctEnabled = false;
 	bool cjEnabled = false;
@@ -1886,6 +1892,12 @@ void MainWindow::updateTraceMenu() {
 
 					if (itemBase->itemType() == ModelPart::Board ||  itemBase->itemType() == ModelPart::ResizableBoard) {
 						gfEnabled = true;
+					}
+					else if (itemBase->itemType() == ModelPart::Jumper) {
+						jiEnabled = true;
+					}
+					else if (isGroundFill(itemBase)) {
+						gfrEnabled = true;
 					}
 					else if (isGroundFill(itemBase)) {
 						gfrEnabled = true;
@@ -1935,10 +1947,12 @@ void MainWindow::updateTraceMenu() {
 	m_exportEtchableSvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
-	m_selectAllJumpersAct->setEnabled(jEnabled);
+	m_selectAllJumperWiresAct->setEnabled(jEnabled);
+	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
+	m_updateRatsnestAct->setEnabled(true);
 
 }
 
@@ -2880,9 +2894,13 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllExcludedTracesAct->setStatusTip(tr("Select all trace wires excluded from autorouting"));
 	connect(m_selectAllExcludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllExcludedTraces()));
 
-	m_selectAllJumpersAct = new QAction(tr("Select All Jumper Wires"), this);
-	m_selectAllJumpersAct->setStatusTip(tr("Select all jumper wires"));
-	connect(m_selectAllJumpersAct, SIGNAL(triggered()), this, SLOT(selectAllJumpers()));
+	m_selectAllJumperWiresAct = new QAction(tr("Select All Jumper Wires"), this);
+	m_selectAllJumperWiresAct->setStatusTip(tr("Select all jumper wires"));
+	connect(m_selectAllJumperWiresAct, SIGNAL(triggered()), this, SLOT(selectAllJumperWires()));
+
+	m_selectAllJumperItemsAct = new QAction(tr("Select All Jumpers"), this);
+	m_selectAllJumperItemsAct->setStatusTip(tr("Select all jumper parts"));
+	connect(m_selectAllJumperItemsAct, SIGNAL(triggered()), this, SLOT(selectAllJumperItems()));
 
 	m_tidyWiresAct = new QAction(tr("Tidy Wires"), this);
 	m_tidyWiresAct->setStatusTip(tr("Tidy selected wires"));
@@ -2896,6 +2914,9 @@ void MainWindow::createTraceMenuActions() {
 	m_removeGroundFillAct->setStatusTip(tr("Remove the copper fill"));
 	connect(m_removeGroundFillAct, SIGNAL(triggered()), this, SLOT(removeGroundFill()));
 
+	m_updateRatsnestAct = new QAction(tr("Update ratsnest"), this);
+	m_updateRatsnestAct->setStatusTip(tr("Update ratsnest colors"));
+	connect(m_updateRatsnestAct, SIGNAL(triggered()), this, SLOT(updateRatsnest()));
 }
 
 void MainWindow::autoroute() {
@@ -2944,8 +2965,12 @@ void MainWindow::selectAllExcludedTraces() {
 	m_pcbGraphicsView->selectAllExcludedTraces();
 }
 
-void MainWindow::selectAllJumpers() {
+void MainWindow::selectAllJumperWires() {
 	m_currentGraphicsView->selectAllWires(ViewGeometry::JumperFlag);
+}
+
+void MainWindow::selectAllJumperItems() {
+	m_currentGraphicsView->selectAllItemType(ModelPart::Jumper);
 }
 
 void MainWindow::notClosableForAWhile() {
@@ -3576,14 +3601,13 @@ void MainWindow::swapObsolete() {
 		}
 	}
 
-        QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
+	QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
                                                           "Please check all views for potential side-effects.").arg(count) );
-
 	if (count == 0) {
 		delete parentCommand;
 	}
 	else {
-                parentCommand->setText(tr("Update %1 part(s)", "").arg(count));
+        parentCommand->setText(tr("Update %1 part(s)", "").arg(count));
 		m_undoStack->push(parentCommand);
 	}
 
@@ -3596,4 +3620,16 @@ void MainWindow::throwFakeException() {
     if (action->isEnabled()) {
         DebugDialog::debug("what happens in throw fake exception?");
     }
+}
+
+void MainWindow::updateRatsnest() {
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Update ratsnest"));
+	if (m_currentGraphicsView == m_schematicGraphicsView) {
+		m_schematicGraphicsView->updateRatsnestColors(NULL, parentCommand, true);
+	}
+	else if (m_currentGraphicsView == m_pcbGraphicsView) {
+		m_pcbGraphicsView->updateRatsnestColors(NULL, parentCommand, true);
+	}
+	
+	m_undoStack->push(parentCommand);
 }

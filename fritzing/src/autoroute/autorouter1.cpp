@@ -362,7 +362,9 @@ void Autorouter1::start()
 	addToUndo(parentCommand, jumperItemStructs);
 
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-		m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false, NULL);
+		if (jumperItemStruct->jumperItem) {
+			m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false, NULL);
+		}
 		delete jumperItemStruct;
 	}
 	jumperItemStructs.clear();
@@ -734,7 +736,7 @@ void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 		}
 	}
 	else {
-		m_sketchWidget->updateRatsnestColors(NULL, parentCommand);
+		m_sketchWidget->updateRatsnestColors(NULL, parentCommand, false);
 	}
 }
 

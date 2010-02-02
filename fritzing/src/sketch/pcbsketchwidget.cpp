@@ -941,7 +941,7 @@ void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & all
 
 	if (m_newRats || (deleteWires.count() > 0)) {
 		m_newRats = false;
-		updateRatsnestColors(command, NULL);
+		updateRatsnestColors(command, NULL, false);
 	}
 }
 
@@ -1525,7 +1525,7 @@ void PCBSketchWidget::collectConnectorNames(QList<ConnectorItem *> & connectorIt
 	}
 }
 
-void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand) 
+void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate) 
 {
 	QList<ConnectorItem *> virtualWireConnectors;
 	foreach (QGraphicsItem * item, items()) {
@@ -1543,12 +1543,12 @@ void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand *
 		for (int i = 1; i < connectorItems.count(); i++) {
 			virtualWireConnectors.removeOne(connectorItems[i]);
 		}
-		recolor(connectorItems, command, parentCommand);
+		recolor(connectorItems, command, parentCommand, forceUpdate);
 	}
 }
 
 
-void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand) 
+void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate) 
 {
 	QColor standardColor = RatsnestColors::netColor(m_viewIdentifier);
 
@@ -1588,7 +1588,7 @@ void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, BaseComma
 		if (gotColor && isC) {
 			if (color == currentColor) {
 				// no change necessary
-				if (newOpacity == opacity) continue;
+				if (!forceUpdate && (newOpacity == opacity)) continue;
 			}
 			useColor = color;
 		}
@@ -1601,8 +1601,8 @@ void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, BaseComma
 		}
 		else {
 			// no change necessary
-			if (newOpacity == opacity) continue;
-			useColor = currentColor;
+			if (!forceUpdate && (newOpacity == opacity)) continue;
+			useColor = forceUpdate ? standardColor : currentColor;
 		}
 
 		WireColorChangeCommand * cmd = new WireColorChangeCommand(this, vw->id(), currentColor.name(), useColor.name(), vw->opacity(), newOpacity, parentCommand);

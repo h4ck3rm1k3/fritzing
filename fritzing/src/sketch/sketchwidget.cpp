@@ -6165,6 +6165,22 @@ void SketchWidget::resizeJumperItem(long itemID, QPointF pos, QPointF c0, QPoint
 	dynamic_cast<JumperItem *>(item)->resize(pos, c0, c1);
 }
 
+
+int SketchWidget::selectAllItemType(ModelPart::ItemType itemType) 
+{
+	QSet<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->itemType() != itemType) continue;
+
+		itemBases.insert(itemBase->layerKinChief());
+	}
+
+	return selectAllItems(itemBases, QObject::tr("Select all jumpers"));
+
+}
+
 int SketchWidget::selectAllObsolete() 
 {
 	QSet<ItemBase *> itemBases;
@@ -6176,12 +6192,18 @@ int SketchWidget::selectAllObsolete()
 		itemBases.insert(itemBase->layerKinChief());
 	}
 
+	return selectAllItems(itemBases, QObject::tr("Select outdated parts"));
+}
+
+
+int SketchWidget::selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg) 
+{
 	if (itemBases.count() <= 0) {
 		// TODO: tell user?
 		return 0;
 	}
 
-	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select outdated parts"));
+	QUndoCommand * parentCommand = new QUndoCommand(msg);
 
 	stackSelectionState(false, parentCommand);
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);

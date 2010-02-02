@@ -74,7 +74,7 @@ public:
 	ItemBase * findBoard();
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
-	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand);
+	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -133,7 +133,7 @@ protected:
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
 	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *, bool select);
 	void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
-	void recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand); 
+	void recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate); 
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
