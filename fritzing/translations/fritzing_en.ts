@@ -833,8 +833,8 @@ Do you want to restart now?</source>
         <location filename="../src/mainwindow.cpp" line="1259"/>
         <source> and %n jumper part(s)</source>
         <translation type="unfinished">
-            <numerusform>and %n jumper part</numerusform>
-            <numerusform>and %n jumper parts</numerusform>
+            <numerusform> and %n jumper part</numerusform>
+            <numerusform> and %n jumper parts</numerusform>
         </translation>
     </message>
     <message>
@@ -1635,6 +1635,7 @@ All your parts are up-to-date.</source>
         <location filename="../src/mainwindow_menu.cpp" line="3535"/>
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>

@@ -1480,7 +1480,6 @@ void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand *
 
 void traceAdjacency(QVector< QVector<bool> > & adjacency, int count)
 {
-#ifndef QT_NO_DEBUG 
 	QString string = "\n";
 	for (int i = 0; i < count; i++) {
 		for (int j = 0; j < count; j++) {
@@ -1489,7 +1488,6 @@ void traceAdjacency(QVector< QVector<bool> > & adjacency, int count)
 		string += "\n";
 	}
 	DebugDialog::debug(string);
-#endif
 }
 
 void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus & routingStatus) 
@@ -1522,7 +1520,7 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 		}
 	}
 
-	traceAdjacency(adjacency, count);
+	//traceAdjacency(adjacency, count);
 
 	for (int i = 0; i < count; i++) {
 		ConnectorItem * fromConnectorItem = partConnectorItems[i];
@@ -1559,11 +1557,11 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 		}
 	}
 
-	traceAdjacency(adjacency, count);
+	//traceAdjacency(adjacency, count);
 
 	transitiveClosure(adjacency, count);
 
-	traceAdjacency(adjacency, count);
+	//traceAdjacency(adjacency, count);
 
 	int todo = countMissing(adjacency, count);
 	if (todo == 0) {
