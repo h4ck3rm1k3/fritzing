@@ -183,6 +183,9 @@ void Autorouter1::start()
 	// TODO: tighten path between connectors once trace has succeeded
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
 	
+	RoutingStatus routingStatus;
+	routingStatus.zero();
+
 	m_sketchWidget->ensureTraceLayersVisible();
 
 	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
@@ -196,6 +199,8 @@ void Autorouter1::start()
 	if (m_allPartConnectorItems.count() == 0) {
 		return;
 	}
+
+	routingStatus.m_netCount = m_allPartConnectorItems.count();
 
 	QList<Edge *> edges;
 	QVector<int> netCounters(m_allPartConnectorItems.count());
@@ -326,13 +331,15 @@ void Autorouter1::start()
 			}
 		}
 
-		int netsDone = 0;
+		routingStatus.m_netRoutedCount = 0;
+		routingStatus.m_jumperWireCount = jumpers.count();
+		routingStatus.m_connectorsLeftToRoute = edges.count() + 1 - edgesDone;
 		foreach (int c, netCounters) {
 			if (c <= 0) {
-				netsDone++;
+				routingStatus.m_netRoutedCount++;
 			}
 		}
-		m_sketchWidget->forwardRoutingStatus(m_allPartConnectorItems.count(), netsDone, edges.count() + 1 - edgesDone, jumpers.count());
+		m_sketchWidget->forwardRoutingStatus(routingStatus);
 
 		QApplication::processEvents();
 
@@ -369,9 +376,8 @@ void Autorouter1::start()
 	}
 	jumperItemStructs.clear();
 	
-	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
 	m_sketchWidget->pushCommand(parentCommand);
-	updateRatsnest(!m_stopTrace, parentCommand);
+	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand, routingStatus);
 	m_sketchWidget->repaint();
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
@@ -736,7 +742,9 @@ void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 		}
 	}
 	else {
-		m_sketchWidget->updateRatsnestColors(NULL, parentCommand, false);
+		RoutingStatus routingStatus;
+		routingStatus.zero();
+		m_sketchWidget->updateRatsnestColors(NULL, parentCommand, false, routingStatus);
 	}
 }
 

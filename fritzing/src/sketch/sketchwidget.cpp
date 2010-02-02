@@ -4250,7 +4250,8 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 
 void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool skipMe) {
 	if (!skipMe) {
-		updateRatsnestStatus(command, NULL);
+		RoutingStatus routingStatus;
+		updateRatsnestStatus(command, NULL, routingStatus);
 	}
 
 	if (doEmit) {
@@ -4259,7 +4260,8 @@ void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool
 }
 
 void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
-	updateRatsnestStatus(command, NULL);
+	RoutingStatus routingStatus;
+	updateRatsnestStatus(command, NULL, routingStatus);
 }
 
 void SketchWidget::noteChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
@@ -4718,7 +4720,7 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	}
 }
 
-void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand) {
+void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand, RoutingStatus &) {
 	Q_UNUSED(command);
 	Q_UNUSED(undoCommand);
 }
@@ -4932,9 +4934,9 @@ void SketchWidget::setWireVisible(Wire * wire) {
 	Q_UNUSED(wire);
 }
 
-void SketchWidget::forwardRoutingStatus(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) {
+void SketchWidget::forwardRoutingStatus(const RoutingStatus & routingStatus) {
 
-	emit routingStatusSignal(this, netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+	emit routingStatusSignal(this, routingStatus);
 }
 
 void SketchWidget::addFixedToTopLeftItem(QGraphicsItem *item) {

@@ -28,6 +28,7 @@ $Date$
 #define PCBSKETCHWIDGET_H
 
 #include "sketchwidget.h"
+#include <QVector>
 
 class PCBSketchWidget : public SketchWidget
 {
@@ -46,8 +47,8 @@ public:
 	void selectAllExcludedTraces();
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
-	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
-	void forwardRoutingStatus(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
+	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &);
+	void forwardRoutingStatus(const RoutingStatus &);
 	void addBoard();
 	void setCurrent(bool current);
 	void initWire(Wire *, int penWidth);
@@ -74,7 +75,7 @@ public:
 	ItemBase * findBoard();
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
-	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate);
+	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus &);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -134,25 +135,24 @@ protected:
 	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *, bool select);
 	void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
 	void recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate); 
+	void scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus &);
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
 	static void clearDistances();
 	static int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0);
 	static int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
+	static void transitiveClosure(QVector< QVector<bool> > & adjacency, int count);
+	static int countMissing(QVector< QVector<bool> > & adjacency, int count);
 
 protected:
-	int m_netCount;
-	int m_netRoutedCount;
-	int m_connectorsLeftToRoute;
-	int m_jumperCount;
+	RoutingStatus m_routingStatus;
 	bool m_addBoard;
 	QPointer<ItemBase> m_addedBoard;
 	QString m_jumperColor;
 	qreal m_jumperWidth;
 	QString m_traceColor;
 	CleanType m_cleanType;
-	bool m_newRats;
 
 };
 

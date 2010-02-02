@@ -295,10 +295,10 @@ void MainWindow::connectPairs() {
 	connectPair(m_pcbGraphicsView, m_breadboardGraphicsView);
 	connectPair(m_pcbGraphicsView, m_schematicGraphicsView);
 
-	bool succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
-						this, SLOT(routingStatusSlot(SketchWidget *, int, int, int, int)));
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
-						this, SLOT(routingStatusSlot(SketchWidget *, int, int, int, int)));
+	bool succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
+						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, const RoutingStatus &)),
+						this, SLOT(routingStatusSlot(SketchWidget *, const RoutingStatus &)));
 
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
 						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
@@ -485,7 +485,9 @@ ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent)
 	ExpandingLabel * routingStatusLabel = new ExpandingLabel(m_pcbWidget);
 	routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
 	parent->setRoutingStatusLabel(routingStatusLabel);
-	routingStatusSlot(parent->graphicsView(), 0,0,0,0);
+	RoutingStatus routingStatus;
+	routingStatus.zero();
+	routingStatusSlot(parent->graphicsView(), routingStatus);
 	return routingStatusLabel;
 }
 
@@ -1244,21 +1246,22 @@ void MainWindow::resetTempFolder() {
 	m_filesReplacedByAlienOnes.clear();
 }
 
-void MainWindow::routingStatusSlot(SketchWidget * sketchWidget, int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers) {
+void MainWindow::routingStatusSlot(SketchWidget * sketchWidget, const RoutingStatus & routingStatus) {
 	QString theText;
-	if (netCount == 0) {
+	if (routingStatus.m_netCount == 0) {
 		theText = tr("No connections to route");
-	} else if (netCount == netRoutedCount) {
-		if (jumpers == 0) {
+	} else if (routingStatus.m_netCount == routingStatus.m_netRoutedCount) {
+		if (routingStatus.m_jumperWireCount == 0 && routingStatus.m_jumperItemCount == 0) {
 			theText = tr("Routing completed");
 		}
 		else {
-			theText = tr("Routing completed using %n jumper(s)", "", jumpers);
+			theText = tr("Routing completed using %n jumper wire(s)", "", routingStatus.m_jumperWireCount) +
+						tr(" and %n jumper part(s)", "", routingStatus.m_jumperItemCount);
 		}
 	} else {
-		theText = tr("%1 of %2 nets routed - %n connector(s) still to be routed", "", connectorsLeftToRoute)
-			.arg(netRoutedCount)
-			.arg(netCount);
+		theText = tr("%1 of %2 nets routed - %n connector(s) still to be routed", "", routingStatus.m_connectorsLeftToRoute)
+			.arg(routingStatus.m_netRoutedCount)
+			.arg(routingStatus.m_netCount);
 	}
 
 	dynamic_cast<SketchAreaWidget *>(sketchWidget->parent())->routingStatusLabel()->setLabelText(theText);

@@ -642,11 +642,9 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 }
 
 
-void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
-										  int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers)
+void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus)
 {
-	addSubCommand(new RoutingStatusCommand(sketchWidget, oldNetCount, oldNetRoutedCount, oldConnectorsLeftToRoute,  oldJumpers,
-										   newNetCount, newNetRoutedCount, newConnectorsLeftToRoute, newJumpers, NULL));
+	addSubCommand(new RoutingStatusCommand(sketchWidget, oldRoutingStatus, newRoutingStatus, NULL));
 }
 
 QString CleanUpWiresCommand::getParamString() const {
@@ -789,34 +787,27 @@ QString RatsnestCommand::getParamString() const {
 
 ///////////////////////////////////////////
 
-RoutingStatusCommand::RoutingStatusCommand(SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
-												int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers, QUndoCommand * parent)												
+RoutingStatusCommand::RoutingStatusCommand(SketchWidget * sketchWidget, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus, QUndoCommand * parent)												
 	: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_oldNetCount = oldNetCount;
-	m_oldNetRoutedCount = oldNetRoutedCount;
-	m_oldConnectorsLeftToRoute = oldConnectorsLeftToRoute;
-	m_oldJumpers = oldJumpers;
-	m_newNetCount = newNetCount;
-	m_newNetRoutedCount = newNetRoutedCount;
-	m_newConnectorsLeftToRoute = newConnectorsLeftToRoute;
-	m_newJumpers = newJumpers;
+	m_oldRoutingStatus = oldRoutingStatus;
+	m_newRoutingStatus = newRoutingStatus;
 }
 
 void RoutingStatusCommand::undo() {
-	m_sketchWidget->forwardRoutingStatus(m_oldNetCount, m_oldNetRoutedCount, m_oldConnectorsLeftToRoute, m_oldJumpers);
+	m_sketchWidget->forwardRoutingStatus(m_oldRoutingStatus);
 }
 
 void RoutingStatusCommand::redo() {
-	m_sketchWidget->forwardRoutingStatus(m_newNetCount, m_newNetRoutedCount, m_newConnectorsLeftToRoute, m_newJumpers);
+	m_sketchWidget->forwardRoutingStatus(m_newRoutingStatus);
 }
 
 QString RoutingStatusCommand::getParamString() const {
 	return QString("RoutingStatusCommand ") 
 		+ BaseCommand::getParamString()
 		+ QString(" oldnet:%1 oldnetrouted:%2 oldconnectors:%3 oldjumpers:%4 newnet:%51 newnetrouted:%6 newconnectors:%7 newjumpers:%8 ") 
-			.arg(m_oldNetCount).arg(m_oldNetRoutedCount).arg(m_oldConnectorsLeftToRoute).arg(m_oldJumpers)
-			.arg(m_newNetCount).arg(m_newNetRoutedCount).arg(m_newConnectorsLeftToRoute).arg(m_newJumpers);
+			.arg(m_oldRoutingStatus.m_netCount).arg(m_oldRoutingStatus.m_netRoutedCount).arg(m_oldRoutingStatus.m_connectorsLeftToRoute).arg(m_oldRoutingStatus.m_jumperWireCount)
+			.arg(m_newRoutingStatus.m_netCount).arg(m_newRoutingStatus.m_netRoutedCount).arg(m_newRoutingStatus.m_connectorsLeftToRoute).arg(m_newRoutingStatus.m_jumperWireCount);
 
 }
 

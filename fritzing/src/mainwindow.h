@@ -211,7 +211,7 @@ protected slots:
 	void editModule();
 
 	void binSaved(bool hasAlienParts);
-	void routingStatusSlot(SketchWidget *, int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
+	void routingStatusSlot(SketchWidget *, const RoutingStatus &);
 	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
 	void applyReadOnlyChange(bool isReadOnly);

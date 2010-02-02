@@ -3624,11 +3624,12 @@ void MainWindow::throwFakeException() {
 
 void MainWindow::updateRatsnest() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Update ratsnest"));
+	RoutingStatus routingStatus;
 	if (m_currentGraphicsView == m_schematicGraphicsView) {
-		m_schematicGraphicsView->updateRatsnestColors(NULL, parentCommand, true);
+		m_schematicGraphicsView->updateRatsnestColors(NULL, parentCommand, true, routingStatus);
 	}
 	else if (m_currentGraphicsView == m_pcbGraphicsView) {
-		m_pcbGraphicsView->updateRatsnestColors(NULL, parentCommand, true);
+		m_pcbGraphicsView->updateRatsnestColors(NULL, parentCommand, true, routingStatus);
 	}
 	
 	m_undoStack->push(parentCommand);

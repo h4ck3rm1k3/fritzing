@@ -858,8 +858,8 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 		switch (candidate->itemType()) {
 			case ModelPart::Symbol:
 				if (!includeSymbols) break;
-			case ModelPart::Part:
 			case ModelPart::Jumper:
+			case ModelPart::Part:
 			case ModelPart::CopperFill:
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:

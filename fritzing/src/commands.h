@@ -3,7 +3,7 @@
 Part of the Fritzing project - http://fritzing.org
 Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
 
-Fritzing is free software: you can redistribute it and/or modify
+Fritzing is free software: you can redistribute it and/or modify\
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -329,24 +329,6 @@ protected:
 	bool m_checkCurrent;
 };
 
-class CleanUpWiresCommand : public BaseCommand
-{
-public:
-	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool skipMe, QUndoCommand * parent);
-    void undo();
-    void redo();
-	void addWire(SketchWidget *, class Wire *);
-	void addRoutingStatus(SketchWidget *, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
-										  int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers);
-
-protected:
-	QString getParamString() const;
-
-protected:
-
-	bool m_firstTime;
-	bool m_skipMe;
-};
 
 class WireColorChangeCommand : public BaseCommand
 {
@@ -431,11 +413,32 @@ protected:
 
 };
 
+struct RoutingStatus {
+	int m_netCount;
+	int m_netRoutedCount;
+	int m_connectorsLeftToRoute;
+	int m_jumperWireCount;
+	int m_jumperItemCount;
+
+public:
+	void zero() {
+		m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperWireCount = m_jumperItemCount = 0;
+	}
+
+	bool operator!=(const RoutingStatus &other) const {
+		return 
+			(m_netCount != other.m_netCount) ||
+			(m_netRoutedCount != other.m_netRoutedCount) ||
+			(m_connectorsLeftToRoute != other.m_connectorsLeftToRoute) ||
+			(m_jumperWireCount != other.m_jumperWireCount) ||
+			(m_jumperItemCount != other.m_jumperItemCount);
+	}
+};
+
 class RoutingStatusCommand : public BaseCommand 
 {
 public:
-	RoutingStatusCommand(class SketchWidget *, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
-						int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers, QUndoCommand * parent);
+	RoutingStatusCommand(class SketchWidget *, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus, QUndoCommand * parent);
     void undo();
     void redo();
 
@@ -443,15 +446,26 @@ protected:
 	QString getParamString() const;
 
 protected:
-	int m_oldNetCount;
-	int m_oldNetRoutedCount;
-	int m_oldConnectorsLeftToRoute;
-	int m_oldJumpers;
-	int m_newNetCount;
-	int m_newNetRoutedCount;
-	int m_newConnectorsLeftToRoute;
-	int m_newJumpers;
+	RoutingStatus m_oldRoutingStatus;
+	RoutingStatus m_newRoutingStatus;
+};
 
+class CleanUpWiresCommand : public BaseCommand
+{
+public:
+	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool skipMe, QUndoCommand * parent);
+    void undo();
+    void redo();
+	void addWire(SketchWidget *, class Wire *);
+	void addRoutingStatus(SketchWidget *, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus);
+
+protected:
+	QString getParamString() const;
+
+protected:
+
+	bool m_firstTime;
+	bool m_skipMe;
 };
 
 class RestoreLabelCommand : public BaseCommand

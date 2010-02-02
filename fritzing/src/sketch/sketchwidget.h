@@ -166,7 +166,7 @@ public:
 	void hideConnectors(bool hide);
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
-	virtual void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand*);
+	virtual void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand*, RoutingStatus &);
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
 	const QString &selectedModuleID();
@@ -177,7 +177,7 @@ public:
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
-	virtual void forwardRoutingStatus(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
+	virtual void forwardRoutingStatus(const RoutingStatus &);
 
 	void addFixedToTopLeftItem(QGraphicsItem *item);
 	void addFixedToTopRightItem(QGraphicsItem *item);
@@ -379,7 +379,7 @@ signals:
 
 	void resizeSignal();
 	void dropSignal(const QPoint &pos);
-	void routingStatusSignal(SketchWidget *, int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
+	void routingStatusSignal(SketchWidget *, const RoutingStatus &);
 	void ratsnestChangeSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
