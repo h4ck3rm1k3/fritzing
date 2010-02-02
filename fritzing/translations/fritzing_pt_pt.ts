@@ -254,6 +254,14 @@ Nota: Você pode importa-los mais tarde através do menu  &quot;ajuda&quot; &gt;
         <source>Do not import now</source>
         <translation>Não importar agora</translation>
     </message>
+    <message>
+        <source>Fritzing failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing caught an exception from %1 in event %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FixFontsDialog</name>
@@ -1844,6 +1852,14 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>All</source>
         <translation>Todos</translation>
     </message>
+    <message>
+        <source>throw test exception</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>throw a fake exception to see what happens</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2832,6 +2848,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>height(mm):</source>
         <translation>altura(mm):</translation>
     </message>
+    <message>
+        <source>width: %1mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height: %1mm</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ruler</name>
@@ -3199,7 +3223,7 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify or swap a part for a related part.&lt;/li&gt;</source>
+        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3275,6 +3299,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>Estonian - %1</source>
         <translation>Estoniano - %1</translation>
+    </message>
+    <message>
+        <source>Chinese (Traditional) - %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
