@@ -276,7 +276,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		}
 
 		// matrixForElement only grabs parent matrices, not any transforms in the element itself
-		QMatrix matrix0 = renderer->matrixForElement(connectorID) * matrix;  
+		QMatrix matrix0 = matrix * renderer->matrixForElement(connectorID);  
 
 		/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
 						   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
