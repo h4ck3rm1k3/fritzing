@@ -1524,11 +1524,11 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 
 	for (int i = 0; i < count; i++) {
 		ConnectorItem * fromConnectorItem = partConnectorItems[i];
+		if (fromConnectorItem->attachedToItemType() == ModelPart::Jumper) {
+			routingStatus.m_jumperItemCount++;				
+		}
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
-				if (toConnectorItem->attachedToItemType() == ModelPart::Jumper) {
-					routingStatus.m_jumperItemCount++;				
-				}
 				continue;
 			}
 
