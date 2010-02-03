@@ -1,14 +1,17 @@
 #!/bin/bash
-svn export http://fritzing.googlecode.com/svn/trunk/fritzing compile_folder
+arch_aux=`uname -m`
+
+compile_folder="build-$arch_aux"
+svn export http://fritzing.googlecode.com/svn/trunk/fritzing $compile_folder
 
 #let's define some variables that we'll need to in the future
 date=`date +%Y.%m.%d`
-arch_aux=`uname -m`
+
 if [ "$arch_aux" == 'x86_64' ] ; then
 	arch='AMD64'
 	# only creates the source tarball, when running on the 64 platform
 	tarball_folder="fritzing.$date.source"
-	cp -rf compile_folder $tarball_folder
+	cp -rf $compile_folder $tarball_folder
 	echo "making source tarball: $tarball_folder"
 	tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
 	rm -rf $tarball_folder
@@ -16,7 +19,7 @@ if [ "$arch_aux" == 'x86_64' ] ; then
 	else arch='i386'
 fi
 
-cd compile_folder
+cd $compile_folder
 QT_HOME="/usr/local/Trolltech/Qt-4.6.1"
 
 $QT_HOME/bin/qmake CONFIG+=release -unix
@@ -41,7 +44,7 @@ mkdir translations
 cd lib
 echo "copying libraries"
 
-cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 $QT_HOME/lib/libQtXmlPatterns.so.4 .
+cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 $QT_HOME/lib/libQtXmlPatterns.so.4 $QT_HOME/lib/libphonon.so.4 $QT_HOME/lib/libQtDBus.so.4 .
 
 
 # seems not to be needed anymore
@@ -59,7 +62,7 @@ cp $QT_HOME/plugins/imageformats/libqjpeg.so imageformats
 cp $QT_HOME/plugins/sqldrivers/libqsqlite.so sqldrivers
 
 echo "copying translations"
-cp ../../compile_folder/translations/*.qm ../translations
+cp ../../$compile_folder/translations/*.qm ../translations
 cd ../../
 
 echo "compressing...."
@@ -67,6 +70,6 @@ tar -cjf ./$release_folder.tar.bz2 $release_folder
 
 echo "cleaning up"
 rm -rf $release_folder
-rm -rf compile_folder
+rm -rf $compile_folder
 
 echo "done!"
