@@ -1,0 +1,26 @@
+{% extends "site_base.html" %}
+
+{% block extra_script %}
+	<script type="text/javascript">
+		function startGrails() {
+			//alert (window.frames["externalForm"])
+			window.frames["externalForm"].location = " http://localhost:8082/fab1/form/buyBoard?UUID={{uuid}}&username={{username}}&email=some_email@from.django";  
+		}
+	</script>
+{% endblock %}
+
+{% block extra_body_attr %}
+	onload="startGrails()"
+{% endblock %}
+
+{% block title %}
+  Fab form
+{% endblock %}
+
+
+{% block content %}
+	django stuff
+	<iframe name="externalForm" id="externalForm" style="border:0px solid #fff;width:550px;height:80%"  >  
+	</iframe>
+	more django stuff
+{% endblock %}
