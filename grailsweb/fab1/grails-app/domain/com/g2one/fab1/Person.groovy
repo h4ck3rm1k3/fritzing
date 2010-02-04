@@ -9,6 +9,6 @@ class Person implements Serializable {
 	
 	static constraints = {
 		username(unique:true)
-		orders(nullable:true)
+		orders()
 	}
 }

@@ -21,6 +21,9 @@ class FormController {
 				
 				log.trace("user " + params.username + " " + params.UUID)
 				
+				def test = User.findByUsername("jones")
+				log.trace("jones result " + test + " " +  test?.uuid)
+				
 				def user = User.findByUuidAndUsername(params.UUID, params.username)
 				log.trace("user result " + user + " " + user?.username)
 				
