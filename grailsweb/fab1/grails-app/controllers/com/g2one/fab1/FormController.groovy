@@ -2,6 +2,7 @@ package com.g2one.fab1
 
 import java.util.zip.*
 import grails.converters.JSON
+import aesencrypt.AESEncrypt
 
 class FormController {
 	
@@ -14,32 +15,46 @@ class FormController {
 	
 		start {
 			action {
-				if (!params.username  || !params.UUID) {
+				log.trace("entering flow with params " + params)
+				if (!params.x) {
 					response.status = 404;
 					return no()
 				}
 				
-				log.trace("user " + params.username + " " + params.UUID)
+				log.trace("user " + params.x )
 				
-				def test = User.findByUsername("jones")
-				log.trace("jones result " + test + " " +  test?.uuid)
+				def theUser = null
+				for (user in User.list()) {
+					log.trace("user list " + user.username)
+					def result = AESEncrypt.decrypt(user.key, params.x)
+					log.trace("result " + result)
+					if (result == user.uuid) {
+						theUser = user
+						break;
+					}
+				}
 				
-				def user = User.findByUuidAndUsername(params.UUID, params.username)
-				log.trace("user result " + user + " " + user?.username)
+				//def test = User.findByUsername("jones")
+				//log.trace("jones result " + test + " " +  test?.uuid)
+				//test.delete()
 				
-				if (!user) {
+				//def user = User.findByUuidAndUsername(params.UUID, params.username)
+				//log.trace("user result " + user + " " + user?.username)
+				
+				if (!theUser) {
 					response.status = 404;
 					return no()
 				}
 				
-				flow.person = Person.findByUsername(params.username)
+				flow.person = Person.findByUsername(theUser.username)
 				if (flow.person == null) {
-					flow.person = new Person(username:params.username);
+					flow.person = new Person(username:theUser.username);
 					flow.person.orders = []
 					flow.person.save(flush:true);
 				}
 				
-				flow.originatingEmail = params.email
+				flow.originatingEmail = theUser.email
+				theUser.delete()
 					
 				return yes();
 			}
