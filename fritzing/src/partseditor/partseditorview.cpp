@@ -335,21 +335,20 @@ const QStringList PartsEditorView::getLayers(const QString &path) {
 	}
 }
 
-const QStringList PartsEditorView::getLayers(const QDomDocument *dom, bool addDefaultIfNone) {
+const QStringList PartsEditorView::getLayers(const QDomDocument *dom, bool fakeDefaultIfNone) {
 	QStringList retval;
 	QDomElement docElem = dom->documentElement();
 
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement();
-		if(!e.isNull() && e.tagName() == "g") {
+	QDomElement e = docElem.firstChildElement();
+	while(!e.isNull()) {
+		if(e.tagName() == "g") {
 			QString id = e.attribute("id");
 			retval << id;
 		}
-		n = n.nextSibling();
+		e = e.nextSiblingElement();
 	}
 
-	if(addDefaultIfNone && retval.isEmpty()) {
+	if(fakeDefaultIfNone && retval.isEmpty()) {
 		retval << ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 	}
 
@@ -530,9 +529,9 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 }
 
 void PartsEditorView::loadFile() {
-	QString origPath = QFileDialog::getOpenFileName(this,
+	QString origPath = FolderUtils::getOpenFileName(this,
 		tr("Open Image"),
-		m_originalSvgFilePath.isEmpty() ? FolderUtils::getUserDataStorePath("parts")+"/parts/svg/" : m_originalSvgFilePath,
+		m_originalSvgFilePath.isEmpty() ? FolderUtils::openSaveFolder() /* FolderUtils::getUserDataStorePath("parts")+"/parts/svg/" */ : m_originalSvgFilePath,
 		tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)")
 			.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png")
 	);
@@ -1036,7 +1035,7 @@ void PartsEditorView::setMismatching(ViewIdentifierClass::ViewIdentifier viewId,
 	}
 }
 
-void PartsEditorView::aboutToSave() {
+void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 	if(m_item) {
 		FSvgRenderer renderer;
 		if(renderer.load(m_item->flatSvgFilePath(), false)) {
@@ -1046,7 +1045,7 @@ void PartsEditorView::aboutToSave() {
 
 			// this may change the layers defined in the file, so
 			// let's get the connectorsLayer after it
-			bool somethingChanged = addDefaultLayerIfNotIn(svgDom);
+			bool somethingChanged = addDefaultLayerIfNotIn(svgDom, fakeDefaultIfNone);
 
 			QString connectorsLayerId = findConnectorsLayerId(svgDom);
 			QDomElement elem = svgDom->documentElement();
@@ -1105,9 +1104,9 @@ bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &
 	return changed;
 }
 
-bool PartsEditorView::addDefaultLayerIfNotIn(QDomDocument *svgDom) {
+bool PartsEditorView::addDefaultLayerIfNotIn(QDomDocument *svgDom, bool fakeDefaultIfNone) {
 	QString defaultLayer = defaultLayerAsStr();
-	if( !getLayers(svgDom).contains(defaultLayer) ) {
+	if( !getLayers(svgDom, fakeDefaultIfNone).contains(defaultLayer) ) {
 		QDomElement docElem = svgDom->documentElement();
 
 		QDomElement newTopLevel = svgDom->createElement("g");
@@ -1308,7 +1307,7 @@ QRectF PartsEditorView::mapFromSceneToSvg(const QRectF &itemRect, const QSizeF &
 	return QRectF(x,y,width,height);
 }
 
-void PartsEditorView::addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId) {
+bool PartsEditorView::addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId) {
 	QDomElement connElem = svgDom->createElement("rect");
 	connElem.setAttribute("id",id);
 	connElem.setAttribute("x",rect.x());
@@ -1319,11 +1318,10 @@ void PartsEditorView::addRectToSvg(QDomDocument* svgDom, const QString &id, cons
 
 	if(connectorsLayerId == ___emptyString___) {
 		svgDom->firstChildElement("svg").appendChild(connElem);
+		return true;
 	} else {
 		QDomElement docElem = svgDom->documentElement();
-		bool result = addRectToSvgAux(docElem, connectorsLayerId, connElem);
-		Q_UNUSED(result);
-		Q_ASSERT(result);
+		return addRectToSvgAux(docElem, connectorsLayerId, connElem);
 	}
 }
 

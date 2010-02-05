@@ -221,9 +221,9 @@ void PartsEditorViewsWidget::setMismatching(ViewIdentifierClass::ViewIdentifier 
 }
 
 void PartsEditorViewsWidget::aboutToSave() {
-	m_breadView->aboutToSave();
-	m_schemView->aboutToSave();
-	m_pcbView->aboutToSave();
+	m_breadView->aboutToSave(false);
+	m_schemView->aboutToSave(false);
+	m_pcbView->aboutToSave(false);
 }
 
 

@@ -73,7 +73,7 @@ class PartsEditorView : public SketchWidget {
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
-		void aboutToSave();
+		void aboutToSave(bool fakeDefaultIfNotIn);
 		void updatePinsInfo(QList<ConnectorShared*> conns);
 
 		void showTerminalPoints(bool show);
@@ -132,7 +132,7 @@ class PartsEditorView : public SketchWidget {
 		const QHash<QString,ConnectorTerminalSvgIdPair> getConnectorsSvgIds(const QString &path);
 		void getConnectorsSvgIdsAux(QDomElement &docElem);
 		const QStringList getLayers(const QString &path);
-		const QStringList getLayers(const QDomDocument *dom, bool addDefaultIfNone=true);
+		const QStringList getLayers(const QDomDocument *dom, bool fakeDefaultIfNone=true);
 
 		QString getOrCreateViewFolderInTemp();
 		bool ensureFilePath(const QString &filePath);
@@ -176,7 +176,7 @@ class PartsEditorView : public SketchWidget {
 		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
 		bool removeConnectorsIfNeeded(QDomElement &docEle);
 		bool updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
-		bool addDefaultLayerIfNotIn(QDomDocument *svgDom);
+		bool addDefaultLayerIfNotIn(QDomDocument *svgDom, bool fakeDefaultIfNone);
 		QString svgIdForConnector(Connector* conn, const QString &connId);
 
 		void updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId);
@@ -186,7 +186,7 @@ class PartsEditorView : public SketchWidget {
 				const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId
 		);
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
-		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId);
+		bool addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId);
 		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);
 
 

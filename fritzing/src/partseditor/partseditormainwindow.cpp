@@ -669,7 +669,7 @@ ModelPartShared* PartsEditorMainWindow::modelPartShared() {
 	shared->setTags(tags);
 	shared->setProperties(m_properties->hash());
 
-	m_iconViewImage->aboutToSave();
+	m_iconViewImage->aboutToSave(true);
 	m_views->aboutToSave();
 
 	QList<ConnectorShared*> connsShared = m_connsInfo->connectorsShared();
