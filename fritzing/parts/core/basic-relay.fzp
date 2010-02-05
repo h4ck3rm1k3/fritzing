@@ -120,9 +120,15 @@
                     <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector2pin"/>
+                    <p layer="copper0" svgId="connector2pin" />
                 </pcbView>
             </views>
         </connector>
     </connectors>
+   <busses>
+    <bus id="bus0">
+      <nodeMember connectorId="connector2" />
+      <nodeMember connectorId="connector3" />
+    </bus>
+  </buses>
 </module>
