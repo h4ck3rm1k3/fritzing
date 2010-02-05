@@ -52,8 +52,9 @@ class UsernameUUIDModel(models.Model):
     def create_for_user(username, email):
         it = UsernameUUIDModel(username=username, email=email)
         it.save()
-	print encrypt_string(it.uuid, it.key)
-        return it.uuid
+	s = encrypt_string(it.uuid, it.key)
+	print s + '/n' + it.uuid
+        return s
         
     def destroy_for_user(username):
         # if any, just one
