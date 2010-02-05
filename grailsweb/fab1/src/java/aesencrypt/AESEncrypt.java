@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class AESEncrypt {
 	public static final int block_size = 16;
 	
-	public static String decrypt (String encoded_key, String encoded_encrypted_text) throws Exception {
+	public static byte[] decrypt (String encoded_key, String encoded_encrypted_text) throws Exception {
 	    
 		byte [] newPlainText = null;
 		try {
@@ -35,11 +35,16 @@ public class AESEncrypt {
 			AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv);
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec, paramSpec);
 			newPlainText = cipher.doFinal(encrypted_text);
-			return new String(newPlainText);
+			return newPlainText;
 		}
 		catch (Exception ex) {
-			return "";
+			return null;
 		}
+	}
+	
+	public static byte[] decode(String encoded_string) {
+		Base64 base64 = new Base64(true);			// url safe (hope it's the same as Python's)
+		return base64.decode(encoded_string);
 	}
 }
 

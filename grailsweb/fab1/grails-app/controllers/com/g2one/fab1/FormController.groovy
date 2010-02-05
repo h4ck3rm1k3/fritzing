@@ -27,8 +27,9 @@ class FormController {
 				for (user in User.list()) {
 					log.trace("user list " + user.username)
 					def result = AESEncrypt.decrypt(user.key, params.x)
-					log.trace("result " + result)
-					if (result == user.uuid) {
+					def decode = AESEncrypt.decode(user.uuid)
+					log.trace("result " + result + " " + decode)
+					if (Arrays.equals(result, decode)) {
 						theUser = user
 						break;
 					}
