@@ -5,1640 +5,1649 @@
     <name>AboutBox</name>
     <message>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Versie %1 %2 %3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;b&gt;GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;GNU GPL v3 -on the code and CreativeCommons:BY-SA on the rest</translation>
     </message>
     <message>
         <source>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</translation>
     </message>
     <message>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;Fritzing is made by: Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Marcus Paeschke, Omer Yosha, Travis Robertson, Stefan Hermann, Brendan Howell, Mariano Crowe, Johannes Landstorfer, Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;Fritzing werd geschreven door : Prof. reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Marcus Paeschke, Omer Yosha, Travis Robertson, Stefan Hermann, Brendan Howell, Mariano Crowe, Johannes Landstorfer, Jenny Chowdhury, Lionel Michel en Jannis Leidel.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Special thanks goes out to: Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrell Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Speciale dank gaat uit naar : &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrel Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser en Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar and IxDS.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Fritzing is mogelijk gemaakt geweest dankzij de sponsoring van de MWFK Brandenburg,the design department of bauhaus, university Weimar en ik XDS. &lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Special thanks goes out as well to all the students and alpha testers who were brave enough to give Fritzing a test spin. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Speciale dank gaat ook uit naar al de studenten en alpha testers, die moedig genoeg waren om Fritzing uit te testen. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Bedankt aan Kurt Badelt voor de spaanse vertaling, Gianluca Urgese voor de italiaanse vertaling, Nuno Pessanha Santos voor de portugese vertaling, Yuelin en Ninjia voor de chinese (simpele) vertaling, Hiroshi Suzuki voor de Japanse vertaling, Robert Lee voor de chinese (traditionele) vertaling, Vladimir Savinov voor de russische vertaling en Noppe Steven voor de nederlandse vertaling.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Accepteren</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>AutorouteProgressDialog</name>
     <message>
         <source>zoom and pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom en pan</translation>
     </message>
     <message>
         <source>Skip current trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla huidige baan over</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Stop Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop nu</translation>
     </message>
 </context>
 <context>
     <name>BinManager</name>
     <message>
         <source>Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdelen</translation>
     </message>
     <message>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
-        <translation type="unfinished"></translation>
+        <translation>BinManager::setDirtyTab: Kon de mand &apos;%1&apos; niet als vuil zetten</translation>
     </message>
     <message>
         <source>New bin (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe mand (%1)</translation>
     </message>
     <message>
         <source>Select a Fritzing file to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een Fritzing bestand om te openen</translation>
     </message>
     <message>
         <source>Fritzing Bin Files (*%1 *%2);;Fritzing Bin (*%1);;Fritzing Shareable Bin (*%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing mand bestanden (*%1 *%2);;Fritzing mand (*%1);;Fritzing uitwisselbare mand (*%2)</translation>
     </message>
     <message>
         <source>Cannot set a NULL bin as the current one</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan geen NULL mand zetten als de huidige</translation>
     </message>
     <message>
         <source>Select a part to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een onderdeel om te importeren</translation>
     </message>
     <message>
         <source>External Part (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Extern onderdeel (*%1)</translation>
     </message>
 </context>
 <context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet overeenkomende aansluiting IDs</translation>
     </message>
     <message>
         <source>List of Connectors</source>
-        <translation type="unfinished"></translation>
+        <translation>Lijst van aansluitingen</translation>
     </message>
     <message>
         <source>Loading connectors...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden van aansluitingen...</translation>
     </message>
     <message>
         <source>Couldn&apos;t add connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij toevoegen van een aansluiting</translation>
     </message>
     <message>
         <source>Please, first load an image in each view,
 before adding any connectors</source>
-        <translation type="unfinished"></translation>
+        <translation>Laadt a.u.b. eerst een afbeelding in elke view,
+voordat u aansluitingen toevoegt</translation>
     </message>
     <message>
         <source>Couldn&apos;t fix connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij vastmaken van een aansluiting</translation>
     </message>
     <message>
         <source>Please, first load an image in each view,
 in order to fix this connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Laadt a.u.b. eerst een afbeelding in elke view,
+om deze aansluiting in orde te brengen</translation>
     </message>
 </context>
 <context>
     <name>ConnectorsWidget</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuw</translation>
     </message>
     <message>
         <source>Female</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrouwelijk</translation>
     </message>
     <message>
         <source>Male</source>
-        <translation type="unfinished"></translation>
+        <translation>Mannelijk</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Omschrijving</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Breadbord</translation>
     </message>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema</translation>
     </message>
     <message>
         <source>PCB</source>
-        <translation type="unfinished"></translation>
+        <translation>PCB</translation>
     </message>
 </context>
 <context>
     <name>DebugDialog</name>
     <message>
         <source>for debugging</source>
-        <translation type="unfinished"></translation>
+        <translation>Voor debugging</translation>
     </message>
 </context>
 <context>
     <name>Dip</name>
     <message>
         <source>chip label</source>
-        <translation type="unfinished"></translation>
+        <translation>IC label</translation>
     </message>
 </context>
 <context>
     <name>DockManager</name>
     <message>
         <source>View Switcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon switcher</translation>
     </message>
     <message>
         <source>Inspector</source>
-        <translation type="unfinished"></translation>
+        <translation>Inspector</translation>
     </message>
     <message>
         <source>Undo History</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongedaan maken geschiedenis</translation>
     </message>
     <message>
         <source>Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Breadboard</translation>
     </message>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema</translation>
     </message>
     <message>
         <source>PCB</source>
-        <translation type="unfinished"></translation>
+        <translation>PCB</translation>
     </message>
     <message>
         <source>Navigator</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigator</translation>
     </message>
     <message>
         <source>Couldn&apos;t get the dock widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij ophalen dock widget</translation>
     </message>
 </context>
 <context>
     <name>FApplication</name>
     <message>
         <source>Import files from previous version?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestanden importeren van vorige versie?</translation>
     </message>
     <message>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u onderdelen importeren die gemaakt zijn met een vorige versie van Fritzing?
+Nota : U kunt ze later ook nog importeren via &quot;Help&quot; &gt; &quot;Importeer onderdelen en bins van oude versie...&quot; menu action.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren</translation>
     </message>
     <message>
         <source>Do not import now</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu  niet importeren</translation>
     </message>
     <message>
         <source>Fritzing failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing fout</translation>
     </message>
     <message>
         <source>Fritzing caught an exception from %1 in event %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing heeft een exception van %1 gevonden in event %2</translation>
     </message>
 </context>
 <context>
     <name>FixFontsDialog</name>
     <message>
         <source>Unavailable fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet beschikbare lettertypes</translation>
     </message>
     <message>
         <source>-- ignore --</source>
-        <translation type="unfinished"></translation>
+        <translation>-- negeren --</translation>
     </message>
     <message>
         <source>One or more fonts used in this SVG file are not available in Fritzing.
 Please select one of the Fritzing fonts to replace them:</source>
-        <translation type="unfinished"></translation>
+        <translation>Een of meerdere lettertypes gebruikt in het SVG bestand is niet beschikbaar in Fritzing.
+Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     </message>
     <message>
         <source>Replace </source>
-        <translation type="unfinished"></translation>
+        <translation>Vervangen</translation>
     </message>
     <message>
         <source>with </source>
-        <translation type="unfinished"></translation>
+        <translation>met</translation>
     </message>
 </context>
 <context>
     <name>FritzingWindow</name>
     <message>
         <source>&amp;Close Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sluit venster</translation>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <source>Close the current sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluit huidige sketch</translation>
     </message>
     <message>
         <source>%1 - %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <source>Specify a file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifiëer een bestandsnaam</translation>
     </message>
     <message>
         <source>Fritzing (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing (*%1)</translation>
     </message>
     <message>
         <source>Copying file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren van bestand %1</translation>
     </message>
     <message>
         <source>File %1 already exists: it won&apos;t be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand %1 bestaat al : Het zal niet overschreven worden</translation>
     </message>
     <message>
         <source>Save &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u de wijzigingen opslaan in document &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als...</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet opslaan</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <source>Your changes will be lost if you don&apos;t save them.</source>
-        <translation type="unfinished"></translation>
+        <translation>De aangebrachte wijzigingen zullen verloren gaan, indien u niet opslaat.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>Helper</name>
     <message>
         <source>Drag out your &lt;br&gt; parts from here</source>
-        <translation type="unfinished"></translation>
+        <translation>Sleep uw &lt;br&gt; onderdenen vanaf hier</translation>
     </message>
     <message>
         <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Wanneer alles goed staat, &lt;br&gt; gebruik dan Autoroute om &lt;br&gt; je koperen banen te creëren</translation>
     </message>
     <message>
         <source>Use these buttons to &lt;br&gt; toggle between views</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebruik deze knoppen &lt;br&gt; om te switchen tussen de vensters</translation>
     </message>
     <message>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation type="unfinished"></translation>
+        <translation>De&lt;b&gt;Breadbord view&lt;/p&gt; is bedoeld om er uit te zien als een &lt;i&gt;echte&lt;/i&gt; breadbord prototype.&lt;br/&gt;&lt;br/&gt;Begin door een onderdeel te verslepen uit de onderdelen mand, die vanboven rechts staat. Versleep dan nog meer onderdelen en connecteer ze door te klikken op de aansluitingen en de draden te verslepen. Het is het zelfde proces alsof je in het echte leven zou doen. &lt;br/&gt;&lt;br/&gt;Wanneer je klaar bent met je sketch in de breadbord view, probeer dan de andere views. U kunt switchen tussen de andere views door te klikken op de View switcher of de navigator onderaan rechts. Omdat de verschillende views verschillende doelen hebben, zullen de onderdelen er ook anders uitzien.</translation>
     </message>
     <message>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Welkom in de &lt;b&gt;Schema view&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dit is een meer abstracte manier om de componenten en de connecties te zien dan in de Breadbord view. U hebt dezelfde elementen zoals op je breadbord, maar ze zien er gewoon anders uit. Deze voorstelling ligt dichter zoals de traditionele diagrammas die engineers gebruiken.&lt;br/&gt;&lt;br/&gt;U kunt buigpunten maken door te &amp;ltShift&amp;gt-klikken met de muis en je aansluitingen mooier maken. Het schema view kan je helpen om te controleren of je de juiste aansluitingen gemaakt hebt tussen de componenten. U kunt uw schema ook uitprinten als documentatie.</translation>
     </message>
     <message>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;The first thing you will need is a board &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; to place your parts on. To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation type="unfinished"></translation>
+        <translation>De &lt;b&gt;PCB view&lt;/b&gt; is de plaats waar je kiest waar je componenten zullen staan op de echte PCB (Printed Circuit Board). &lt;br/&gt;&lt;br/&gt;PCB&apos;s kunnen gemaakt worden thuis of in een labo met het DIY etching proces. Ze kunnen ook verzonden worden naar een professionele PCB service voor de meer precisere fabrikatie. &lt;br/&gt;Het eerste wat je nodig hebt is een bord &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot;/&gt; om je onderdelen op te zetten. Om je PCB uit te zetten, herschik al je componenten zodat ze mooi op het bord passen. Probeer ze dan te verplaatsen zodat ze de kortste weg nemen en ze geen verwarring kunnen veroorzaken bij de aansluitingen. U kunt ook het bord vergroten en verkleinen. Eenmaal de onderdelen juist staan, kun je rechts-klikken op iedere aansluiting of Autoroute kiezen om de koperen banen te creëren tussen de onderdelen. De Autoroute knop &lt;img src=&quot;:resource/images/icons/toolbarAutorouteEnabled_icon.svg&quot; /&gt; staat onderaan links.</translation>
     </message>
 </context>
 <context>
     <name>HtmlInfoView</name>
     <message>
         <source>Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Aansluitingen</translation>
     </message>
     <message>
         <source>conn.</source>
-        <translation type="unfinished"></translation>
+        <translation>aansl.</translation>
     </message>
     <message numerus="yes">
         <source>connected to %n item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Aangesloten op %n item</numerusform>
+            <numerusform>Aangesloten op %n items</numerusform>
         </translation>
     </message>
     <message>
         <source>name</source>
-        <translation type="unfinished"></translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <source>type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>(autoroutable)</source>
-        <translation type="unfinished"></translation>
+        <translation>(autoroutable)</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Draad</translation>
     </message>
     <message>
         <source>Rat&apos;s nest wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Ratten nest draad</translation>
     </message>
     <message>
         <source>Trace wire %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trace draad %1</translation>
     </message>
     <message>
         <source>Jumper wire %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jumper draad %1</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappen</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Tags</translation>
     </message>
 </context>
 <context>
     <name>ItemBase</name>
     <message>
         <source>family</source>
-        <translation type="unfinished"></translation>
+        <translation>familie</translation>
     </message>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>grootte</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished"></translation>
+        <translation>kleur</translation>
     </message>
     <message>
         <source>resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>weerstand</translation>
     </message>
     <message>
         <source>voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>spanning</translation>
     </message>
     <message>
         <source>pin spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>pin afstanden</translation>
     </message>
     <message>
         <source>rated power</source>
-        <translation type="unfinished"></translation>
+        <translation>nominaal vermogen</translation>
     </message>
     <message>
         <source>rated voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>nominale spanning</translation>
     </message>
     <message>
         <source>rated current</source>
-        <translation type="unfinished"></translation>
+        <translation>nominale stroomsterkte</translation>
     </message>
     <message>
         <source>version</source>
-        <translation type="unfinished"></translation>
+        <translation>versie</translation>
     </message>
     <message>
         <source>package</source>
-        <translation type="unfinished"></translation>
+        <translation>pakket</translation>
     </message>
     <message>
         <source>shape</source>
-        <translation type="unfinished"></translation>
+        <translation>vorm</translation>
     </message>
     <message>
         <source>form</source>
-        <translation type="unfinished"></translation>
+        <translation>formulier</translation>
     </message>
     <message>
         <source>maximum resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>maximume weerstand</translation>
     </message>
     <message>
         <source>Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel</translation>
     </message>
     <message>
         <source>Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Module</translation>
     </message>
 </context>
 <context>
     <name>LinkDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>LogoItem</name>
     <message>
         <source>logo</source>
-        <translation type="unfinished"></translation>
+        <translation>Logo</translation>
     </message>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>grootte</translation>
     </message>
     <message>
         <source>load image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Laad afbeelding</translation>
     </message>
     <message>
         <source>width(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>breedte (mm)</translation>
     </message>
     <message>
         <source>height(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>hoogte (mm)</translation>
     </message>
     <message>
         <source>keep in proportion</source>
-        <translation type="unfinished"></translation>
+        <translation>In proportie houden</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbeeldingen</translation>
     </message>
     <message>
         <source>Select an image file to load</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een afbeelding om te laden</translation>
     </message>
     <message>
         <source>Unable to display</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om te tonen</translation>
     </message>
     <message>
         <source>Unable to display image from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om de afbeeldeing te tonen van %1</translation>
     </message>
     <message>
         <source>Unable to load</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om te laden</translation>
     </message>
     <message>
         <source>Unable to load image from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om de afbeelding te laden van %1</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Delen</translation>
     </message>
     <message>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip</translation>
     </message>
     <message>
         <source>Autoroute</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoroute</translation>
     </message>
     <message>
         <source>Add a note</source>
-        <translation type="unfinished"></translation>
+        <translation>Notitie toevoegen</translation>
     </message>
     <message>
         <source>Export Etchable PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer etchable PDF</translation>
     </message>
     <message>
         <source>%1%</source>
-        <translation type="unfinished"></translation>
+        <translation>%1%</translation>
     </message>
     <message>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Klaar</translation>
     </message>
     <message>
         <source>Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan %1</translation>
     </message>
     <message>
         <source>Updating existing part</source>
-        <translation type="unfinished"></translation>
+        <translation>Updaten van bestaand onderdeel</translation>
     </message>
     <message>
         <source>Some connectors have changed.
 In order to see the changes, you have to restart fritzing.
 Do you want to restart now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sommige aansluitingen zijn gewijzigd.
+Om deze wijzigingen door te voeren moet Fritzing herstart worden.
+Wilt u nu herstarten?</translation>
     </message>
     <message>
         <source>Specify a file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifiëer een bestandsnaam</translation>
     </message>
     <message>
         <source>Fritzing (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing (*%1)</translation>
     </message>
     <message>
         <source>Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <source>Unable to export %1 as shareable</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om %1 te exporteren als een uitwisselbare</translation>
     </message>
     <message>
         <source>Unable to open shareable %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om de uitwisselbare %1 te openen</translation>
     </message>
     <message>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u de onderdelen behouden die werden geladen bij deze uitwisselbare sketch %1?</translation>
     </message>
     <message>
         <source>Select a part to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een onderdeel om te importeren</translation>
     </message>
     <message>
         <source>External Part (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitwendig onderdeel (*%1)</translation>
     </message>
     <message>
         <source>Unable to open shareable part %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om uitwisselbaar onderdeel %1 te openen</translation>
     </message>
     <message>
         <source>Fritzing Part (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing onderdeel (*%1)</translation>
     </message>
     <message>
         <source>Unable to export %1 to shareable sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet mogelijk om %1 te exporteren als uitwisselbare sketch</translation>
     </message>
     <message>
         <source>Do you want to keep the imported parts?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u de geïmporteerde onderelen behouden?</translation>
     </message>
     <message>
         <source>No connections to route</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen aansluitingen om routen</translation>
     </message>
     <message>
         <source>Routing completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Routing klaar</translation>
     </message>
     <message numerus="yes">
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 van de %2 nets gerout - %n aansluitingen te gaan</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>%1 - [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - [%2]</translation>
     </message>
     <message>
         <source>Before you can save a sketch as a module, all traces must be routed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Voordat u de sketch kunt opslaan als een module, moeten alle banen gevolgd worden.</translation>
     </message>
     <message>
         <source>Sorry!</source>
-        <translation type="unfinished"></translation>
+        <translation>Excuseer!</translation>
     </message>
     <message>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen onderdeeel met deze charakteristiek.
+Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tussen eigenschappen die wel bestaan</translation>
     </message>
     <message>
         <source>No exactly matching part found; Fritzing chose the closest match.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen exact passend onderdeel gevonden; Fritzing koos voor de meest passende.</translation>
     </message>
     <message>
         <source>Swapped %1 with module %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 werd omgewisseld met module %2</translation>
     </message>
     <message>
         <source>Open custom board shape SVG file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SVG Files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG bestanden (%1)</translation>
     </message>
     <message>
         <source>Svg file &apos;%1&apos; is missing width, height, or viewbox attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG bestand &apos;%1&apos; mist de breedte, hoogte of viewbox eigenschap</translation>
     </message>
     <message>
         <source>Svg file &apos;%1&apos;: bad width attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG bestand &apos;%1&apos;: slechte breedte eigenschap</translation>
     </message>
     <message>
         <source>Svg file &apos;%1&apos;: bad height attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG bestand &apos;%1&apos;: slecht hoogte eigenschap</translation>
     </message>
     <message>
         <source>Sorry, Fritzing is unable to copy the svg file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry, Fritzing kan het SVG bestand niet kopiêren.</translation>
     </message>
     <message>
         <source>Sorry, Fritzing is unable to load the part template file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry, Fritzing kan het onderdeel template bestand niet laden.</translation>
     </message>
     <message>
         <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>De SVG %1 mist een &apos;%2&apos; laag. Voor meer informatie over hoe je een eigen bord kunt maken, zie de tutorial op &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>PDF (*.pdf)</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF (*.pdf)</translation>
     </message>
     <message>
         <source>PostScript (*.ps)</source>
-        <translation type="unfinished"></translation>
+        <translation>PostScript (*.ps)</translation>
     </message>
     <message>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG afbeelding (*.png)</translation>
     </message>
     <message>
         <source>JPEG Image (*.jpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG afbeelding (*.jpg)</translation>
     </message>
     <message>
         <source>SVG Image (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG afbeelding (*.svg)</translation>
     </message>
     <message>
         <source>BoM Text File (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>BoM tekst bestand (*.txt)</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezig met afdrukken...</translation>
     </message>
     <message>
         <source>All traces have not yet been routed.</source>
-        <translation type="unfinished"></translation>
+        <translation>niet alle banen werden gerout.</translation>
     </message>
     <message>
         <source>Do you want to proceed anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u toch verder gaan?</translation>
     </message>
     <message>
         <source>Proceed</source>
-        <translation type="unfinished"></translation>
+        <translation>Doorgaan</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annnuleren</translation>
     </message>
     <message>
         <source>Export Etchable for DIY...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer etchebel naar DIY...</translation>
     </message>
     <message>
         <source>Sketch exported</source>
-        <translation type="unfinished"></translation>
+        <translation>Sketch geëxporteerd</translation>
     </message>
     <message>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer...</translation>
     </message>
     <message>
         <source>Exporting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren...</translation>
     </message>
     <message>
         <source>Unable to save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij opslaan van %1</translation>
     </message>
     <message>
         <source>Cannot print to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij printen van %1</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan niet schrijven naar bestand %1:
+%2.</translation>
     </message>
     <message>
         <source>Saved &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Opgeslagen %1</translation>
     </message>
     <message>
         <source>Select a Fritzing File to Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een Fritzing bestand om te openen</translation>
     </message>
     <message>
         <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing bestanden (*%1 *%2);;Fritzing (*%1);;Fritzing uitwisselbare (*%2)</translation>
     </message>
     <message>
         <source>Cannot find file %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand niet vinden %1?.</translation>
     </message>
     <message>
         <source>Cannot read file  1 %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand niet lezen %1:
+%2.</translation>
     </message>
     <message>
         <source>directly loading parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Direct inladen van onderdelen</translation>
     </message>
     <message>
         <source>loading %1 (model)</source>
-        <translation type="unfinished"></translation>
+        <translation>laden %1 (model)</translation>
     </message>
     <message>
         <source>loading %1 (breadboard)</source>
-        <translation type="unfinished"></translation>
+        <translation>laden %1 (breadboard)</translation>
     </message>
     <message>
         <source>loading %1 (pcb)</source>
-        <translation type="unfinished"></translation>
+        <translation>laden %1 (pcb)</translation>
     </message>
     <message>
         <source>loading %1 (schematic)</source>
-        <translation type="unfinished"></translation>
+        <translation>laden %1 (schema)</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nieuw</translation>
     </message>
     <message>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Creëer een nieuwe sketch</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Openen...</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <source>Open a sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Open een sketch</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Opslaan</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Save the current sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla huidige sketch op</translation>
     </message>
     <message>
         <source>&amp;Save As...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Oplsaan als...</translation>
     </message>
     <message>
         <source>Shift+Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Ctrl+S</translation>
     </message>
     <message>
         <source>Save As Shareable...</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als uitwisselbare...</translation>
     </message>
     <message>
         <source>Alt+Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+S</translation>
     </message>
     <message>
         <source>Export current sketch and its non-core parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer de huidige sketch en zijn niet-kern onderdelen</translation>
     </message>
     <message>
         <source>Share online...</source>
-        <translation type="unfinished"></translation>
+        <translation>Online delen...</translation>
     </message>
     <message>
         <source>Post a project to the Fritzing website</source>
-        <translation type="unfinished"></translation>
+        <translation>Post a project naar de Fritzing website</translation>
     </message>
     <message>
         <source>Save As Module...</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als module...</translation>
     </message>
     <message>
         <source>Export current sketch as a standalone module</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer huidige sketch als alleenstaande module</translation>
     </message>
     <message>
         <source>Open Module as Sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Open module als sketch</translation>
     </message>
     <message>
         <source>Open selected module as a sketch (for editing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Open geselecteerde module als een sketch (om te wijzigen)</translation>
     </message>
     <message>
         <source>to &amp;JPG...</source>
-        <translation type="unfinished"></translation>
+        <translation>naar &amp;JPG...</translation>
     </message>
     <message>
         <source>Export the visible area of the current sketch as a JPG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een JPG afbeelding</translation>
     </message>
     <message>
         <source>to P&amp;NG...</source>
-        <translation type="unfinished"></translation>
+        <translation>naar P&amp;NG...</translation>
     </message>
     <message>
         <source>Export the visible area of the current sketch as a PNG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een PNG afbeelding</translation>
     </message>
     <message>
         <source>to Post&amp;Script...</source>
-        <translation type="unfinished"></translation>
+        <translation>naar Post&amp;Script...</translation>
     </message>
     <message>
         <source>Export the visible area of the current sketch as a PostScript image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een PostScript afbeelding</translation>
     </message>
     <message>
         <source>to &amp;PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>naar &amp;PDF...</translation>
     </message>
     <message>
         <source>Export the visible area of the current sketch as a PDF image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een PDF afbeelding</translation>
     </message>
     <message>
         <source>to &amp;SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>naar &amp;SVG...</translation>
     </message>
     <message>
         <source>Export the current sketch as an SVG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer de huidige sketch als een SVG afbeelding</translation>
     </message>
     <message>
         <source>List of parts (&amp;Bill of Materials)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lijst van onderdelen (&amp;Bill of materials)...</translation>
     </message>
     <message>
         <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla een Bill of Materials (BoM)/Winkel lijstje op als een tekst bestand</translation>
     </message>
     <message>
         <source>XML Netlist...</source>
-        <translation type="unfinished"></translation>
+        <translation>XML Netlist...</translation>
     </message>
     <message>
         <source>Save a netlist in XML format</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla een netlist op in XML formaat</translation>
     </message>
     <message>
         <source>to &amp;Eagle...</source>
-        <translation type="unfinished"></translation>
+        <translation>naar &amp;Eagle...</translation>
     </message>
     <message>
         <source>Export the current sketch to Eagle CAD</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer de huidige sketch naar Eagle CAD</translation>
     </message>
     <message>
         <source>to &amp;Gerber...</source>
-        <translation type="unfinished"></translation>
+        <translation>naar &amp;Gerber...</translation>
     </message>
     <message>
         <source>Export the current sketch to Gerber</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer de huidige sketch naar Gerber</translation>
     </message>
     <message>
         <source>Etchable PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>Etchabel PDF...</translation>
     </message>
     <message>
         <source>Export the current sketch to PDF for DIY production</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer de huidige sketch naar PDF voor DIY productie</translation>
     </message>
     <message>
         <source>Etchable SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Etchabel SVG...</translation>
     </message>
     <message>
         <source>Export the current sketch to SVG for DIY production</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer de huidige sketch naar SVG voor DIY productie</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Afdrukken...</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>Print the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Druk de huidige view af</translation>
     </message>
     <message>
         <source>Shell launch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Shell lanceren %1</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Afsluiten</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>Quit the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicatie afsluiten</translation>
     </message>
     <message>
         <source>&amp;Open Example</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Open voorbeeld</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles</translation>
     </message>
     <message>
         <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>MainWindow::populateMenuWithIndex:&apos;kon voorbeeld niet laden met id=&apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Open Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Open recente bestanden</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongedaan maken</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Terug gedaan maken</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Knippen</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <source>Cut selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Knip selectie</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopiëren</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <source>Copy selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiëer selectie</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Plakken</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Plak clipbord inhoud</translation>
     </message>
     <message>
         <source>&amp;Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dupliceer</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <source>Duplicate selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Dupliceer selectie</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verwijderen</translation>
     </message>
     <message>
         <source>Delete selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder selectie</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alles selecteren</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <source>Select all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle elementen</translation>
     </message>
     <message>
         <source>&amp;Deselect</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deselecteer</translation>
     </message>
     <message>
         <source>Deselect</source>
-        <translation type="unfinished"></translation>
+        <translation>Deselecteren</translation>
     </message>
     <message>
         <source>Add Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Notitie toevoegen</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eigenschappen...</translation>
     </message>
     <message>
         <source>Show the application&apos;s about box</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon de applicatie about venster</translation>
     </message>
     <message>
         <source>Alt+Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+N</translation>
     </message>
     <message>
         <source>Create new part</source>
-        <translation type="unfinished"></translation>
+        <translation>Creëer een nieuw onderdeel</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editeer</translation>
     </message>
     <message>
         <source>Ctrl+Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Return</translation>
     </message>
     <message>
         <source>Open the old parts editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Open de oude onderdelen editor</translation>
     </message>
     <message>
         <source>&amp;Add to bin...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Toevoegen aan de mand...</translation>
     </message>
     <message>
         <source>Add selected part to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Voeg de geselecteerde onderdelen toe aan de mand</translation>
     </message>
     <message>
         <source>Disconnect All Wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Disconecteer alle draden</translation>
     </message>
     <message>
         <source>Disconnect all wires connected to this connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Disconecteer alle draden die met deze aansluiting aangesloten zijn</translation>
     </message>
     <message>
         <source>Update InfoView on hover</source>
-        <translation type="unfinished"></translation>
+        <translation>Update de InfoView bij overbewegen van de muis</translation>
     </message>
     <message>
         <source>Export Normalized SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer genormaliseerde SVG</translation>
     </message>
     <message>
         <source>Export 1000 dpi SVG of this part in this view</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer 1000 dpi SVG van dit onderdeel in deze view</translation>
     </message>
     <message>
         <source>Export Normalized Flattened SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer Genormaliseerde Platte SVG</translation>
     </message>
     <message>
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer 1000 dpi Platte SVG van dit onderdeel in deze view</translation>
     </message>
     <message>
         <source>&amp;Rotate 90° Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Roteer 90° wijzerzin</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer de geselecteerde onderdelen 90° wijzerzin</translation>
     </message>
     <message>
         <source>&amp;Rotate 180°</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Roteer 180°</translation>
     </message>
     <message>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer de geselecteerde onderdelen 180°</translation>
     </message>
     <message>
         <source>&amp;Rotate 90° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;roteer 90° tegenwijzerzin</translation>
     </message>
     <message>
         <source>Alt+Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer de huidige selectie 90° tegenwijzerzin</translation>
     </message>
     <message>
         <source>&amp;Flip Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Flip horizontaal</translation>
     </message>
     <message>
         <source>Flip current selection horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip huidige selectie horizontaal</translation>
     </message>
     <message>
         <source>&amp;Flip Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Flip verticaal</translation>
     </message>
     <message>
         <source>Flip current selection vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip huidige selectie verticaal</translation>
     </message>
     <message>
         <source>Bring to Front</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng volledig vooruit</translation>
     </message>
     <message>
         <source>Shift+Ctrl+]</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Ctrl+]</translation>
     </message>
     <message>
         <source>Bring selected object(s) to front of their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng de geselecteerde objecten vooruit in hun laag</translation>
     </message>
     <message>
         <source>Bring Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng vooruit</translation>
     </message>
     <message>
         <source>Ctrl+]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+]</translation>
     </message>
     <message>
         <source>Bring selected object(s) forward in their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng de geselecteerde objecten vooruit in hun laag</translation>
     </message>
     <message>
         <source>Send Backward</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng achteruit</translation>
     </message>
     <message>
         <source>Ctrl+[</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+[</translation>
     </message>
     <message>
         <source>Send selected object(s) back in their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Zend de geselecteerde objecten terug naar achter in deze laag</translation>
     </message>
     <message>
         <source>Send to Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zend volledig naar achter</translation>
     </message>
     <message>
         <source>Shift+Ctrl+[</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Ctrl+[</translation>
     </message>
     <message>
         <source>Send selected object(s) to the back of their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Zend de geselecteerde objecten naar achter in deze laag</translation>
     </message>
     <message>
         <source>&amp;Group</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Groepeer</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>Group multiple items</source>
-        <translation type="unfinished"></translation>
+        <translation>Groepeer meerdere items</translation>
     </message>
     <message>
         <source>&amp;Show All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Toon alle lagen</translation>
     </message>
     <message>
         <source>Show all the available layers for the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon alle beschikbare lagen voor de huidige view</translation>
     </message>
     <message>
         <source>&amp;Hide All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verberg alle lagen</translation>
     </message>
     <message>
         <source>Hide all the layers of the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstop alle lagen van de huidige view</translation>
     </message>
     <message>
         <source>&amp;Show part label</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Toon onderdeel label</translation>
     </message>
     <message>
         <source>Show or hide the label for the selected parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon of verstop de label van de geselecteerde onderdelen</translation>
     </message>
     <message>
         <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importeer</translation>
     </message>
     <message>
         <source>Import a part</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeer een onderdeel</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exporteer...</translation>
     </message>
     <message>
         <source>Export selected part</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer geselecteerd onderdeel</translation>
     </message>
     <message>
         <source>Add Bendpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Voeg buigpunt toe</translation>
     </message>
     <message>
         <source>Add a bendpoint to the selected wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Voeg een buigpunt toe aan de geselecteerde draad</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer oude onderdelen</translation>
     </message>
     <message>
         <source>Update selected parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Update de geselecteerde onderdelen</translation>
     </message>
     <message>
         <source>&amp;Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zoom in</translation>
     </message>
     <message>
         <source>Ctrl++</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl++</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Inzoomen</translation>
     </message>
     <message>
         <source>Ctrl+=</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl++</translation>
     </message>
     <message>
         <source>&amp;Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zoom uit</translation>
     </message>
     <message>
         <source>Ctrl+-</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+-</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitzoomen</translation>
     </message>
     <message>
         <source>&amp;Fit in Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pas aan in het venster</translation>
     </message>
     <message>
         <source>Ctrl+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+0</translation>
     </message>
     <message>
         <source>Fit in window</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas aan in het venster</translation>
     </message>
     <message>
         <source>&amp;Actual Size</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Actuele grootte</translation>
     </message>
     <message>
         <source>Shift+Ctrl+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Ctrl+0</translation>
     </message>
     <message>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Actuele grootte</translation>
     </message>
     <message>
         <source>Set Background Color ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies achtergrond kleur...</translation>
     </message>
     <message>
         <source>Set the background color for the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Zet de achtergrond kleur van de huidige view</translation>
     </message>
     <message>
         <source>&amp;Show Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Toon breadboard</translation>
     </message>
     <message>
         <source>Ctrl+1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+1</translation>
     </message>
     <message>
         <source>Show the breadboard view</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon de breadbord view</translation>
     </message>
     <message>
         <source>&amp;Show Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Toon Schema</translation>
     </message>
     <message>
         <source>Ctrl+2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+2</translation>
     </message>
     <message>
         <source>Show the schematic view</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon de schema view</translation>
     </message>
     <message>
         <source>&amp;Show PCB</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Toon PCB</translation>
     </message>
     <message>
         <source>Ctrl+3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+3</translation>
     </message>
     <message>
         <source>Show the PCB view</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon de PCB view</translation>
     </message>
     <message>
         <source>&amp;Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Minimaliseer</translation>
     </message>
     <message>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>Minimize current window</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimaliseer huidig venster</translation>
     </message>
     <message>
         <source>Debugger Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Debugger output</translation>
     </message>
     <message>
         <source>Online Tutorials</source>
-        <translation type="unfinished"></translation>
+        <translation>Online tutorials</translation>
     </message>
     <message>
         <source>Ctrl+?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+?</translation>
     </message>
     <message>
         <source>Open Fritzing help</source>
-        <translation type="unfinished"></translation>
+        <translation>Open Fritzing help</translation>
     </message>
     <message>
         <source>Online Projects Gallery</source>
-        <translation type="unfinished"></translation>
+        <translation>Online projecten gallerij</translation>
     </message>
     <message>
         <source>Open Fritzing examples</source>
-        <translation type="unfinished"></translation>
+        <translation>Open Fritzing voorbeelden</translation>
     </message>
     <message>
         <source>Online Parts Reference</source>
-        <translation type="unfinished"></translation>
+        <translation>Online onderdelen referentie</translation>
     </message>
     <message>
         <source>Open Parts Reference</source>
-        <translation type="unfinished"></translation>
+        <translation>Open onderdelen referentie</translation>
     </message>
     <message>
         <source>First Time Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Eerste keer - help</translation>
     </message>
     <message>
         <source>Show or Hide First Time Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon of verberg eerste keer - help</translation>
     </message>
     <message>
         <source>Check for updates...</source>
-        <translation type="unfinished"></translation>
+        <translation>Controleer op updates...</translation>
     </message>
     <message>
         <source>Check whether a newer version of Fritzing is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Controleer indie  er een nieuwere versie van Fritzing beschikbaar is om te downloaden</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Over Fritzing</translation>
     </message>
     <message>
         <source>Tips and Tricks</source>
-        <translation type="unfinished"></translation>
+        <translation>Tips en trucs</translation>
     </message>
     <message>
         <source>Display some handy Fritzing tips and tricks</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon handige Fritzing tips en trucks</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Over Qt</translation>
     </message>
     <message>
         <source>Show Qt&apos;s about box</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon QT&apos;s about venster</translation>
     </message>
     <message>
         <source>&amp;Report a bug...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Raporteer een bug...</translation>
     </message>
     <message>
         <source>Report a but you&apos;ve found in Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&amp;Import parts and bins from old version...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importeer onderdelen en manden van een oude versie...</translation>
     </message>
     <message>
         <source>Import parts and bins from previous installation</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeer onderdelen en manden van een vorige installatie</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bestand</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exporteer</translation>
     </message>
     <message>
         <source>&amp;Part</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Onderdeel</translation>
     </message>
     <message>
         <source>Raise and Lower</source>
-        <translation type="unfinished"></translation>
+        <translation>Heffen en dalen</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;View</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Venster</translation>
     </message>
     <message>
         <source>&amp;Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Baan</translation>
     </message>
     <message>
         <source>&amp;Diagram</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Diagram</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Help</translation>
     </message>
     <message>
         <source>Page Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Pagina setup</translation>
     </message>
     <message>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry,&quot;%1&quot; is nog niet geïmplementeerd</translation>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uw sketch heeft nog geen bord! Voeg a.u.b. een PCB toe om te kunnen exporteren naar Gerber.</translation>
     </message>
     <message>
         <source>Choose a folder for exporting</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een map om te exporteren</translation>
     </message>
     <message>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zal gauw een export mogelijk zijn van uw Fritzing sketch naar de EAGLE layout software. Als je graag nog andere exports wilt zien naar uw favoriete EDA tool, laat het ons dan weten of help ons mee.</translation>
     </message>
     <message>
         <source>Export SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer SVG...</translation>
     </message>
     <message>
         <source>Fritzing Bill of Materials
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing Winkel lijstje</translation>
     </message>
     <message>
         <source>Sketch: 	</source>
-        <translation type="unfinished"></translation>
+        <translation>Sketch: </translation>
     </message>
     <message>
         <source>Date: 	</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum: </translation>
     </message>
     <message>
         <source>
@@ -1648,707 +1657,724 @@ Shopping List
 Quantity	Part
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+Winkel lijstje
+
+Aantal                   Onderdeel
+
+</translation>
     </message>
     <message>
         <source>Export Bill of Materials (BoM)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer Winkellijst...</translation>
     </message>
     <message>
         <source>Export Netlist...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer NetList...</translation>
     </message>
     <message>
         <source>&amp;Autoroute</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Autoroute</translation>
     </message>
     <message>
         <source>Autoroute...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoroute...</translation>
     </message>
     <message>
         <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Creëer banen van de geselecteerde draden</translation>
     </message>
     <message>
         <source>Create a trace from the selected wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Creëer een baan van de geselecteerde draad</translation>
     </message>
     <message>
         <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Creëer een jumper van de geselecteerde draden</translation>
     </message>
     <message>
         <source>Create a jumper wire from the selected wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Creëer een jumper van de geselecteerde draad</translation>
     </message>
     <message>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Voer geen Autoroute uit voor deze baan</translation>
     </message>
     <message>
         <source>When autorouting, do not rip up this wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Wanneer je autoroute, maak deze draad dan niet stuk</translation>
     </message>
     <message>
         <source>Select All Traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle banen</translation>
     </message>
     <message>
         <source>Select all trace wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle baan draden</translation>
     </message>
     <message>
         <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle banen gemarkeerd met &quot;geen autoroute&quot;</translation>
     </message>
     <message>
         <source>Select all trace wires excluded from autorouting</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle baan draden die geëxcludeerd waren van autoroute</translation>
     </message>
     <message>
         <source>Select All Jumper Wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle jumper draden</translation>
     </message>
     <message>
         <source>Select all jumper wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle jumper draden</translation>
     </message>
     <message>
         <source>Tidy Wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruim draden op</translation>
     </message>
     <message>
         <source>Tidy selected wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruim geselecteerde draden op</translation>
     </message>
     <message>
         <source>Copper Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Koper vulling</translation>
     </message>
     <message>
         <source>Fill empty regions of the copper layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Vul lege locaties van de koper laag</translation>
     </message>
     <message>
         <source>Remove Copper Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder de koper vulling</translation>
     </message>
     <message>
         <source>Remove the copper fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder de koper vulling</translation>
     </message>
     <message>
         <source>Autorouting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouting...</translation>
     </message>
     <message>
         <source>Remove Bendpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder buigpunt</translation>
     </message>
     <message>
         <source>Please choose the previous Fritzing folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies a.u.b. de vorige Fritzing map...</translation>
     </message>
     <message>
         <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
-        <translation type="unfinished"></translation>
+        <translation>De map &quot;%1&quot; is geen Fritzing installatie map</translation>
     </message>
     <message>
         <source>You will have to restart Fritzing in order to use the imported parts</source>
-        <translation type="unfinished"></translation>
+        <translation>U moet Fritzing herstarten om de geïmporteerde onderdelen te kunnen gebruiken</translation>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uw sketch heeft nog geen bord! Voeg a.u.b. een PCB toe om koper vullingen te gebruiken.</translation>
     </message>
     <message>
         <source>Fritzing error: unable to render board svg (1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing fout : Niet mogelijk om het SVG bord te renderen (1).</translation>
     </message>
     <message>
         <source>Fritzing error: unable to render copper svg (1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing fout : Niet mogelijk om de koper SVG te renderen (1).</translation>
     </message>
     <message>
         <source>Fritzing error: unable to write copper fill.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing fout : Niet mogelijk om de koper vulling te schrijven.</translation>
     </message>
     <message>
         <source>Remove copper fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder de koper vullingen</translation>
     </message>
     <message>
         <source>&amp;Wire Color</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Draad kleur</translation>
     </message>
     <message>
         <source>%1 Background</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Achtergrond</translation>
     </message>
     <message>
         <source>Change background color for %1 from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de achtergrond kleur voor %1 van %2 naar %3</translation>
     </message>
     <message>
         <source>Launch %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Start %1...</translation>
     </message>
     <message>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen oude onderdelen gevonden.
+Al uw onderdelen zijn up-to-date.</translation>
     </message>
     <message>
         <source>Outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Oude Onderdelen</translation>
     </message>
     <message numerus="yes">
         <source>Found %n outdated parts. Do you want to update them now?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n oude onderdelen gevonden. Wilt u ze nu updaten?</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>No new part found for %1.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Geen nieuw onderdeel gevonden voor %1.
+</translation>
     </message>
     <message>
         <source>Unknown module id for %1.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende module id voor %1.
+</translation>
     </message>
     <message>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Successvol %1 onderdelen ge-update.
+Controleer a.u.b. alle views voor potentiële fouten.</translation>
     </message>
     <message>
         <source>Update %1 part(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Update %1 onderdeel</translation>
     </message>
     <message>
         <source>throw test exception</source>
-        <translation type="unfinished"></translation>
+        <translation>Gooi een test-exception</translation>
     </message>
     <message>
         <source>throw a fake exception to see what happens</source>
-        <translation type="unfinished"></translation>
+        <translation>Gooi een nep exception om te zien wat er gebeurd</translation>
     </message>
     <message numerus="yes">
         <source>Routing completed using %n jumper wire(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Routing klaar en gebruik gemaakt van %n jumper draden</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source> and %n jumper part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>en %n jumper onderdelen</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>Select All Jumpers</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle jumpers</translation>
     </message>
     <message>
         <source>Select all jumper parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle jumper onderdelen</translation>
     </message>
     <message>
         <source>Update ratsnest</source>
-        <translation type="unfinished"></translation>
+        <translation>Update ratten nest</translation>
     </message>
     <message>
         <source>Update ratsnest colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Update de kleuren van het ratten nest</translation>
     </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
     <message>
         <source>fix this!</source>
-        <translation type="unfinished"></translation>
+        <translation>Herstel dit!</translation>
     </message>
     <message>
         <source>In </source>
-        <translation type="unfinished"></translation>
+        <translation>In</translation>
     </message>
     <message>
         <source>and </source>
-        <translation type="unfinished"></translation>
+        <translation>en</translation>
     </message>
     <message>
         <source>view only</source>
-        <translation type="unfinished"></translation>
+        <translation>alleen tonen</translation>
     </message>
 </context>
 <context>
     <name>ModelBase</name>
     <message>
         <source>File save failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij opslaan!</translation>
     </message>
     <message>
         <source>Couldn&apos;t overwrite file &apos;%1&apos;.
 Reason: %2 (errcode %3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon bestand niet overschrijven &apos;%1&apos;.
+Reden : %2 (errcode %3)</translation>
     </message>
 </context>
 <context>
     <name>MysteryPart</name>
     <message>
         <source>label</source>
-        <translation type="unfinished"></translation>
+        <translation>label</translation>
     </message>
 </context>
 <context>
     <name>Note</name>
     <message>
         <source>[write your note here]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Typ hier uw notitie]</translation>
     </message>
 </context>
 <context>
     <name>PCBSketchWidget</name>
     <message>
         <source>Create Jumper from this Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Creëer jumper van deze draad</translation>
     </message>
     <message>
         <source>Create Trace from this Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Creëer trace van deze draad</translation>
     </message>
     <message>
         <source>Click this connector to drag out a new trace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik op de aansluiting om een nieuwe baan te creëren.</translation>
     </message>
     <message>
         <source>Resize board to %1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de grootte van het bord naar %1 %2</translation>
     </message>
 </context>
 <context>
     <name>PartLabel</name>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeer</translation>
     </message>
     <message>
         <source>Edit label text</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeer label tekst</translation>
     </message>
     <message>
         <source>Display Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon waardes</translation>
     </message>
     <message>
         <source>Flip/Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip/Roteer</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettertype grootte</translation>
     </message>
     <message>
         <source>Rotate 90° Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer 90° wijzerzin</translation>
     </message>
     <message>
         <source>Rotate the label by 90 degrees clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer de label 90° tegenwijzerzin</translation>
     </message>
     <message>
         <source>Rotate 180°</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer 180°</translation>
     </message>
     <message>
         <source>Rotate the label by 180 degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer de label 180°</translation>
     </message>
     <message>
         <source>Rotate 90° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer 90° tegenwijzerzin</translation>
     </message>
     <message>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer de huidige selectie 90° tegenwijzerzin</translation>
     </message>
     <message>
         <source>Flip Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip horizontaal</translation>
     </message>
     <message>
         <source>Flip label horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip label horizontaal</translation>
     </message>
     <message>
         <source>Flip Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip verticaal</translation>
     </message>
     <message>
         <source>Flip label vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip label verticaal</translation>
     </message>
     <message>
         <source>Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Klein</translation>
     </message>
     <message>
         <source>Set font size to small</source>
-        <translation type="unfinished"></translation>
+        <translation>Zet lettertype naar klein</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Medium</translation>
     </message>
     <message>
         <source>Set font size to medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Zet lettertype naar medium</translation>
     </message>
     <message>
         <source>Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Groot</translation>
     </message>
     <message>
         <source>Set font size to large</source>
-        <translation type="unfinished"></translation>
+        <translation>Zet lettertype naar groot</translation>
     </message>
     <message>
         <source>Label text</source>
-        <translation type="unfinished"></translation>
+        <translation>Label tekst</translation>
     </message>
     <message>
         <source>Display the text of the label</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon de tekst van de label</translation>
     </message>
     <message>
         <source>Display the value of property %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon de waarde van de eigenschap %1</translation>
     </message>
     <message>
         <source>Set label for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zet label voor %1</translation>
     </message>
     <message>
         <source>Label text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Label tekst :</translation>
     </message>
 </context>
 <context>
     <name>PartsBinPaletteWidget</name>
     <message>
         <source>Untitled Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Mand zonder naam</translation>
     </message>
     <message>
         <source>Show as icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon als iconen</translation>
     </message>
     <message>
         <source>Show as list</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon als lijst</translation>
     </message>
     <message>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuw...</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan</translation>
     </message>
     <message>
         <source>Save As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als...</translation>
     </message>
     <message>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren...</translation>
     </message>
     <message>
         <source>Rename...</source>
-        <translation type="unfinished"></translation>
+        <translation>Hernoemen...</translation>
     </message>
     <message>
         <source>Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Mand</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Openen</translation>
     </message>
     <message>
         <source>From file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Van bestand...</translation>
     </message>
     <message>
         <source>Core</source>
-        <translation type="unfinished"></translation>
+        <translation>Kern</translation>
     </message>
     <message>
         <source>All Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle onderdelen</translation>
     </message>
     <message>
         <source>All User Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle gebruikers onderdelen</translation>
     </message>
     <message>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren...</translation>
     </message>
     <message>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeer...</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <source>Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel</translation>
     </message>
     <message>
         <source>Specify a file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifiëer een bestandsnaam</translation>
     </message>
     <message>
         <source>Fritzing Bin (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing mand (*%1)</translation>
     </message>
     <message>
         <source>Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <source>Cannot find file %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand %1 niet vinden.</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand %1 niet lezen : %2.</translation>
     </message>
     <message>
         <source>Save &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u de wijzigingen opslaan die u gemaakt heeft in de mand &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet opslaan</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <source>Your changes will be lost if you don&apos;t save them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uw wijzigingen zullen verloren gaan indien u niet opslaat.</translation>
     </message>
     <message>
         <source>Add to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Voeg toe aan mand</translation>
     </message>
     <message>
         <source>Do you really want to add the selected part to the bin?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u zeker de geselecteerde onderdelen toevoegen aan de mand?</translation>
     </message>
     <message>
         <source>Remove from bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder uit mand</translation>
     </message>
     <message>
         <source>Do you really want to remove the selected part from the bin?</source>
-        <translation type="unfinished"></translation>
+        <translation>Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen uit de mand?</translation>
     </message>
     <message>
         <source>Rename bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Hernoem mand</translation>
     </message>
     <message>
         <source>Please choose a name for the bin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies a.u.b. een naam voor de mand :</translation>
     </message>
     <message>
         <source>Contributed Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Bijgedragen onderdelen</translation>
     </message>
 </context>
 <context>
     <name>PartsEditorMainWindow</name>
     <message>
         <source>Untitled Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel zonder naam</translation>
     </message>
     <message>
         <source>Please find a name for me!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vindt a.u.b. een naam voor mij!</translation>
     </message>
     <message>
         <source>Please provide a label</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef a.u.b. een label</translation>
     </message>
     <message>
         <source>You could tell a little bit about this part</source>
-        <translation type="unfinished"></translation>
+        <translation>U kunt iets meer vertellen over dit onderdeel</translation>
     </message>
     <message>
         <source>Please classify this part</source>
-        <translation type="unfinished"></translation>
+        <translation>Classificeer a.u.b. dit onderdeel</translation>
     </message>
     <message>
         <source>You can add your tags to make searching easier</source>
-        <translation type="unfinished"></translation>
+        <translation>U kunt uw tags toevoegen om het zoeken te vergemakkelijken</translation>
     </message>
     <message>
         <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Geschreven door&lt;/i&gt; %1 &lt;i&gt;op&lt;/i&gt; %2</translation>
     </message>
     <message>
         <source>Parts Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdelen editor</translation>
     </message>
     <message>
         <source>Error! Cannot create part file.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Fout! Kan onderdelen bestand niet creëren.
+</translation>
     </message>
     <message>
         <source>Load icon..</source>
-        <translation type="unfinished"></translation>
+        <translation>Laad icoon...</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Label</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Omschrijving</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappen</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Auteur</translation>
     </message>
     <message>
         <source>Created/Updated on</source>
-        <translation type="unfinished"></translation>
+        <translation>Gecreëerd/Gewijzigd op</translation>
     </message>
     <message>
         <source>Specifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificaties</translation>
     </message>
     <message>
         <source>Connectors</source>
-        <translation type="unfinished"></translation>
+        <translation>Aansluitingen</translation>
     </message>
     <message>
         <source>save as new part</source>
-        <translation type="unfinished"></translation>
+        <translation>opslaan als nieuw onderdeel</translation>
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"></translation>
+        <translation>opslaan</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>annuleren</translation>
     </message>
     <message>
         <source>Open Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Open afbeelding</translation>
     </message>
     <message>
         <source>SVG Files (*.fzfp)</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG bestanden (*.fzfp)</translation>
     </message>
     <message>
         <source>close</source>
-        <translation type="unfinished"></translation>
+        <translation>sluiten</translation>
     </message>
     <message>
         <source>Save as new part</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als nieuw ondereel</translation>
     </message>
     <message>
         <source>There&apos;s already a file with this name.
 Please, specify a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Er bestaat reeds een bestand met die naam.
+Specifiëer a.u.b. een nieuwe naam</translation>
     </message>
     <message>
         <source>Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan niet schrijven naar bestand %1 :
+%2.</translation>
     </message>
     <message>
         <source>Saved &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Opgeslagen &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Updating existing part</source>
-        <translation type="unfinished"></translation>
+        <translation>Updaten van bestaand onderdeel</translation>
     </message>
     <message>
         <source>%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <source>Icon needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Icoon nodig</translation>
     </message>
     <message>
         <source>Please, provide an icon image for this part</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifiëer a.ub. een icoon bestand voor dit onderdeel</translation>
     </message>
 </context>
 <context>
     <name>PartsEditorView</name>
     <message>
         <source>Open Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Open afbeelding</translation>
     </message>
     <message>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbeelding bestanden (%1 %2 %3);;;SVG bestanden (%1);;JPEG bestanden(%2);;PNG bestanden (%3)</translation>
     </message>
     <message>
         <source>Couldn&apos;t open svg file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon SVG bestand niet openen</translation>
     </message>
     <message>
         <source>The file couldn&apos;t be opened. If this file defines its dimensions 
 in non-real-world units (e.g. pixels), then they won&apos;t be translated 
 into real life ones.
 Malformed font-family definitions won&apos;t be fixed either.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand kan niet geopend worden. Als dit bestand zijn dimensies definiëert
+in geen echte units (zoals pixels), dan zullen ze niet worden vertaald
+in echte units.
+Misvormde lettertype familie definities zullen ook niet hersteld worden.</translation>
     </message>
     <message>
         <source>Couldn&apos;t write into file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon niet schrijven naar bestand</translation>
     </message>
     <message>
         <source>This file needs to be fixed to fit fritzing needs, but it couldn&apos;t
@@ -2357,1033 +2383,1053 @@ Fritzing is not compatible with this kind of svg files. Please
 check your permissions, and try again.
 
 More information at http://fritzing.org/using-svg-images-new-parts/</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit bestand moest gewijzigd worden om te voldoen aan Fritzing,
+maar kon niet worden opgeslaan.
+Fritzing is niet compatibel met dit soort SVG bestand.
+Controleer a.u.b. uw permissies en probeer opnieuw.
+
+Meer informatie op http://fritzing.org/using-svg-images-new-parts/ </translation>
     </message>
     <message>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdelen editor : Kon eind punt van de aansluiting %1 niet opslaan in %2 view</translation>
     </message>
 </context>
 <context>
     <name>PartsEditorViewsWidget</name>
     <message>
         <source>Show Anchor Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon anker punten</translation>
     </message>
     <message>
         <source>Please refer to the &lt;a style=&apos;color: #52182C&apos; href=&apos;http://fritzing.org/learning/tutorials/creating-custom-parts/&apos;&gt;guidelines&lt;/a&gt; before modifying or creating parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Refereer a.u.b. naar de &lt;a style= color:#52182C&apos; href=&apos;http://fritzing.org/learning/tutorials/creating-custom-parts/&apos;&gt;richtlijnen&lt;/a&gt;voordat u onderdelen wijzigd of creëert</translation>
     </message>
     <message>
         <source>What does this
 part look like on
 the breadboard?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoe ziet dit
+onderdeel eruit
+op het breadbord?</translation>
     </message>
     <message>
         <source>What does this
 part look like in
 a schematic view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoe ziet dit
+onderdeel eruit
+in het schema?</translation>
     </message>
     <message>
         <source>What does this
 part look like in
 the PCB view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoe ziet dit
+onderdeel eruit 
+op de PCB?</translation>
     </message>
     <message>
         <source>Load image..</source>
-        <translation type="unfinished"></translation>
+        <translation>Laad afbeelding...</translation>
     </message>
 </context>
 <context>
     <name>PrefsDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Taal</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Kleuren</translation>
     </message>
     <message>
         <source>%1 (click to change...)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (klik om te wijzigen...)</translation>
     </message>
     <message>
         <source>Coming soon...</source>
-        <translation type="unfinished"></translation>
+        <translation>Binnenkort...</translation>
     </message>
     <message>
         <source>Connected Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Geconecteerde highlight</translation>
     </message>
     <message>
         <source>Unconnected Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet geconecteerde highlight</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Autorouting Progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorooting in voortgang...</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>eigenschappen</translation>
     </message>
     <message>
         <source>&lt;b&gt;Language&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Taal&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
-        <translation type="unfinished"></translation>
+        <translation>De wijziging van taal zal pas werken bij de volgende start van het programma.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Aangesloten highlight kleur&lt;/b&gt;</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unconnected highlight color&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Niet aangesloten highlight kleur&lt;/b&gt;</translation>
     </message>
     <message>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit dialoog venster zal gauw de mogelijkheid geven om andere eigenschappen op te slaan, zoals de standaard sketch map en uw Fritzing.org login naam
+Heb nog even geduld.</translation>
     </message>
     <message>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
-        <translation type="unfinished"></translation>
+        <translation>Wis alle opgeslagen settings en sluit dit dialoog venster (debug mode alleen).</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Wissen</translation>
     </message>
     <message>
         <source>Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <source>Friting cannot load the parts bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing kan de onderdelen mand niet laden</translation>
     </message>
     <message>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
     </message>
     <message>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Versie %1 %2 %3 (%4%5)&lt;/font&gt;</translation>
     </message>
     <message>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand &apos;%1&apos; is alleen-lezen; Specifiëer a.u.b. een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Save as Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als module</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;Om een aansluiting &quot;extern&quot; te maken, zodat de onderdelen buiten de module kunnen aangesloten worden, klik erop; klik er nogmaals op het niet beschikbaar te maken voor aansluiting. Om de selectie gemakkelijker te maken, gebruik het muis wiel om in en uit te zoomen. &lt;/p&gt;&lt;p&gt;Vergeet niet om naar beneden te scrollen en de omschrijving in te vullen en andere velden die uw module beschrijven.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Edit link</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeer link</translation>
     </message>
     <message>
         <source>Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Draad</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand niet lezen %1 :
+%2.</translation>
     </message>
     <message>
         <source>Parse error (1) at line %1, column %2:
 %3
 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Parse fout (1) op lijn %1, kolom %2:
+%3
+%4</translation>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (2).</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand %1 is geen Fritzing bestand (2).</translation>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (4).</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand %1 is geen Fritzing bestand (4).</translation>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (3).</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand %1 is geen Fritzing bestand (3).</translation>
     </message>
     <message>
         <source>Cannot write file temp file:
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan niet schrijven naar het tijdelijke bestand:
+%1.</translation>
     </message>
     <message>
         <source>No parts found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen onderdelen gevonden.</translation>
     </message>
     <message>
         <source>Parse error (2) at line %1, column %2:
 %3
 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Parse fout (2) op lijn %1, kolom %2:
+%3
+%4</translation>
     </message>
     <message>
         <source>The part &apos;%1&apos; at &apos;%2&apos; does not have a unique module id &apos;%3&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het onderdeel &apos;%1&apos; op &apos;%2&apos; heeft geen uniek module id &apos;%3&apos;.</translation>
     </message>
     <message>
         <source>Part already in bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel reeds in mand</translation>
     </message>
     <message>
         <source>The part that you have just added,
 is already there, we won&apos;t add it again, right?</source>
-        <translation type="unfinished"></translation>
+        <translation>Het onderdeel dat u juist heeft toegevoegd,
+bestaat al, we willen het niet nogmaals toevoegen, juist?</translation>
     </message>
     <message>
         <source>Add connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Aansluiting toevoegen</translation>
     </message>
     <message>
         <source>a label</source>
-        <translation type="unfinished"></translation>
+        <translation>een label</translation>
     </message>
     <message>
         <source>a value</source>
-        <translation type="unfinished"></translation>
+        <translation>een waarde</translation>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (11).</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand %1 is geen Fritzing bestand (11).</translation>
     </message>
     <message>
         <source>no name yet</source>
-        <translation type="unfinished"></translation>
+        <translation>nog geen naam</translation>
     </message>
     <message>
         <source>no description yet</source>
-        <translation type="unfinished"></translation>
+        <translation>nog geen omschrijving</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Accepteren</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Oops!</source>
-        <translation type="unfinished"></translation>
+        <translation>Oops!</translation>
     </message>
     <message>
         <source>Sorry, we have a problem with the swapping mechanism.
 Fritzing still works, but you won&apos;t be able to change parts properties.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry, we hebben een probleem met het omwissel mechanisme.
+Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wijzigen.</translation>
     </message>
     <message>
         <source>bb</source>
-        <translation type="unfinished"></translation>
+        <translation>bb</translation>
     </message>
     <message>
         <source>Breadboard View</source>
-        <translation type="unfinished"></translation>
+        <translation>Breadboard view</translation>
     </message>
     <message>
         <source>PCB View</source>
-        <translation type="unfinished"></translation>
+        <translation>PCB view</translation>
     </message>
     <message>
         <source>pcb</source>
-        <translation type="unfinished"></translation>
+        <translation>pcb</translation>
     </message>
     <message>
         <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle banen gemarkeerd met &quot;geen autoroute&quot;</translation>
     </message>
     <message>
         <source>schem</source>
-        <translation type="unfinished"></translation>
+        <translation>schema</translation>
     </message>
     <message>
         <source>Schematic View</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema view</translation>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand %1 is geen Fritzing bestand (1).</translation>
     </message>
     <message>
         <source>%1 %2 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2 %3</translation>
     </message>
     <message>
         <source>%1 Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Laag</translation>
     </message>
     <message>
         <source>Bring forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng vooruit</translation>
     </message>
     <message>
         <source>Send backward</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng achteruit</translation>
     </message>
     <message>
         <source>Bring to front</source>
-        <translation type="unfinished"></translation>
+        <translation>Breng naar voren</translation>
     </message>
     <message>
         <source>Split Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Draad splitsen</translation>
     </message>
     <message>
         <source>Join Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Draad samenvoegen</translation>
     </message>
     <message>
         <source>Jumper wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Jumper draden</translation>
     </message>
     <message>
         <source>Trace wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Volg draden</translation>
     </message>
     <message>
         <source>Ratsnest wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Ratten nest draden</translation>
     </message>
     <message>
         <source>Select all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle %1</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer oude onderdelen</translation>
     </message>
     <message>
         <source>Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Inzoomen</translation>
     </message>
     <message>
         <source>File Progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand voortgang...</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Controleer op updates</translation>
     </message>
     <message>
         <source>icon view</source>
-        <translation type="unfinished"></translation>
+        <translation>Icoon view</translation>
     </message>
     <message>
         <source>breadboard view</source>
-        <translation type="unfinished"></translation>
+        <translation>breadboard view</translation>
     </message>
     <message>
         <source>schematic view</source>
-        <translation type="unfinished"></translation>
+        <translation>schema view</translation>
     </message>
     <message>
         <source>pcb view</source>
-        <translation type="unfinished"></translation>
+        <translation>PCB view</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Icoon</translation>
     </message>
     <message>
         <source>Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Breadboard</translation>
     </message>
     <message>
         <source>Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdelen</translation>
     </message>
     <message>
         <source>Wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Draden</translation>
     </message>
     <message>
         <source>Part Labels</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel labels</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Notities</translation>
     </message>
     <message>
         <source>Rulers</source>
-        <translation type="unfinished"></translation>
+        <translation>Meetlatten</translation>
     </message>
     <message>
         <source>Nets</source>
-        <translation type="unfinished"></translation>
+        <translation>Nets</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="unfinished"></translation>
+        <translation>Bord</translation>
     </message>
     <message>
         <source>Rat&apos;s nest</source>
-        <translation type="unfinished"></translation>
+        <translation>Ratten nest</translation>
     </message>
     <message>
         <source>Silkscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Silkscreen</translation>
     </message>
     <message>
         <source>Part Labels (Silkscreen)</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel labels (Silkscreen)</translation>
     </message>
     <message>
         <source>Ground Plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Grondlaag</translation>
     </message>
     <message>
         <source>Copper 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Koper 0</translation>
     </message>
     <message>
         <source>Copper 0 Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Koper 0 Trace</translation>
     </message>
     <message>
         <source>Copper 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Koper 1</translation>
     </message>
     <message>
         <source>Solder mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Soldeer masker</translation>
     </message>
     <message>
         <source>Outline</source>
-        <translation type="unfinished"></translation>
+        <translation>Omlijning</translation>
     </message>
     <message>
         <source>Vias</source>
-        <translation type="unfinished"></translation>
+        <translation>Vias</translation>
     </message>
     <message>
         <source>Keep out</source>
-        <translation type="unfinished"></translation>
+        <translation>Verboden toegang</translation>
     </message>
     <message>
         <source>Unknown Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende laag</translation>
     </message>
     <message>
         <source>Select all jumpers</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alle jumpers</translation>
     </message>
 </context>
 <context>
     <name>QuaZipFile</name>
     <message>
         <source>ZIP/UNZIP API error %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ZIP/UNZIP API fout %1</translation>
     </message>
 </context>
 <context>
     <name>Resistor</name>
     <message>
         <source>resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>weerstand</translation>
     </message>
 </context>
 <context>
     <name>ResizableBoard</name>
     <message>
         <source>shape</source>
-        <translation type="unfinished"></translation>
+        <translation>vorm</translation>
     </message>
     <message>
         <source>Import Shape...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeer vorm...</translation>
     </message>
     <message>
         <source>width(mm):</source>
-        <translation type="unfinished"></translation>
+        <translation>breedte (mm) :</translation>
     </message>
     <message>
         <source>height(mm):</source>
-        <translation type="unfinished"></translation>
+        <translation>hoogte (mm) :</translation>
     </message>
     <message>
         <source>width: %1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>breedte : %1 mm</translation>
     </message>
     <message>
         <source>height: %1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>hoogte : %1 mm</translation>
     </message>
 </context>
 <context>
     <name>Ruler</name>
     <message>
         <source>width</source>
-        <translation type="unfinished"></translation>
+        <translation>breedte</translation>
     </message>
 </context>
 <context>
     <name>SaveAsModuleDialog</name>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Label</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Omschrijving</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappen</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Auteur</translation>
     </message>
     <message>
         <source>Created/Updated on</source>
-        <translation type="unfinished"></translation>
+        <translation>Gecreëerd/Aangepast op</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>No external connectors have been defined--which means that you won&apos;t be able to connect to this module in Fritzing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen externe aansluitingen werden gedefiniëerd--Wat betekent dat u niet zult kunnen connecteren met deze module in Fritzing.</translation>
     </message>
     <message>
         <source>Do you want to proceed anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u toch doorgaan?</translation>
     </message>
     <message>
         <source>Proceed</source>
-        <translation type="unfinished"></translation>
+        <translation>Doorgaan</translation>
     </message>
 </context>
 <context>
     <name>SchematicSketchWidget</name>
     <message>
         <source>Change voltage from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig spanning van %1 naar %2</translation>
     </message>
 </context>
 <context>
     <name>SetColorDialog</name>
     <message>
         <source>Set %1 Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zet %1 kleur...</translation>
     </message>
     <message>
         <source>Choose a new %1 color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een nieuw %1 kleur.</translation>
     </message>
     <message>
         <source>current %1 color (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>huidige %1 kleur (%2)</translation>
     </message>
     <message>
         <source>standard %1 color (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>standaard %1 kleur (%2)</translation>
     </message>
     <message>
         <source>Make this the default %1 color</source>
-        <translation type="unfinished"></translation>
+        <translation>Maak van deze de standaard %1 kleur</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Select custom %1 color</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer aangepaste kleur %1</translation>
     </message>
     <message>
         <source>custom color (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aangepaste kleur (%1)</translation>
     </message>
     <message>
         <source>selected color (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>geselecteerde kleur (%1)</translation>
     </message>
 </context>
 <context>
     <name>SingleConnectorInfoWidget</name>
     <message>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Naam :</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Omschrijving :</translation>
     </message>
 </context>
 <context>
     <name>SketchWidget</name>
     <message>
         <source>loading part</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderdeel laden</translation>
     </message>
     <message>
         <source>done loading</source>
-        <translation type="unfinished"></translation>
+        <translation>Klaar met laden</translation>
     </message>
     <message>
         <source>%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <source>%1 %2 items</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2 items</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer alles</translation>
     </message>
     <message>
         <source>Deselect</source>
-        <translation type="unfinished"></translation>
+        <translation>Deselecteer</translation>
     </message>
     <message>
         <source>Add %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen %1</translation>
     </message>
     <message>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectie</translation>
     </message>
     <message>
         <source>Move %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verplaats %2 (%1)</translation>
     </message>
     <message>
         <source>Move %2 items (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verplaats %2 items (%1)</translation>
     </message>
     <message>
         <source>Select %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer %1</translation>
     </message>
     <message>
         <source>Select %1 items</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer %1 items</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation>Afsluiten</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Connecteer</translation>
     </message>
     <message>
         <source>to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>naar %1</translation>
     </message>
     <message>
         <source>Create and connect wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Creëer en connecteer een draad</translation>
     </message>
     <message>
         <source>Rotate %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer %2 (%1)</translation>
     </message>
     <message>
         <source>%3 %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>%3 %2 (%1)</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteer</translation>
     </message>
     <message>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Flip</translation>
     </message>
     <message>
         <source>Double-click</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbel klikken</translation>
     </message>
     <message>
         <source>Drag or double-click</source>
-        <translation type="unfinished"></translation>
+        <translation>Verslepen of dubbel klikken</translation>
     </message>
     <message>
         <source>or alt-drag to move the segment</source>
-        <translation type="unfinished"></translation>
+        <translation>of alt-versleep om een segment te verplaatsen</translation>
     </message>
     <message>
         <source>Double-click to delete this bend point</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbel klik om dit plooi punt te verwijderen</translation>
     </message>
     <message>
         <source>Change %note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig %1 notitie naar %2</translation>
     </message>
     <message>
         <source>Change %1 label to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig %1 label naar %2</translation>
     </message>
     <message>
         <source>Change %1 color from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig %1 kleur van %2 naar %3</translation>
     </message>
     <message>
         <source>Change color of %1 wires to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de kleur van %1 draad naar %2</translation>
     </message>
     <message>
         <source>Change %1 width from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de %1 breedte van %2 naar %3</translation>
     </message>
     <message>
         <source>Change width of %1 wires to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de breedte van %1 draden naar %2</translation>
     </message>
     <message>
         <source>Move label &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Verplaats label &apos;%1&apos;</translation>
     </message>
     <message>
         <source>%1 label &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 label &apos;%2&apos;</translation>
     </message>
     <message numerus="yes">
         <source>show part label(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Toon onderdeel label</numerusform>
+            <numerusform>Toon onderdelen labels</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>hide part label(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Verstop onderdeel label</numerusform>
+            <numerusform>Verstop onderdelen labels</numerusform>
         </translation>
     </message>
     <message>
         <source>Resize Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig grootte van notitie</translation>
     </message>
     <message>
         <source>Change pin spacing from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig pin afstanden van %1 naar %2</translation>
     </message>
     <message>
         <source>Change form from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig formulier van %1 naar %2</translation>
     </message>
     <message>
         <source>Change Resistance from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig weerstand van %1 naar %2</translation>
     </message>
     <message>
         <source>Change chip label from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig IC label van %1 naar %2</translation>
     </message>
     <message>
         <source>Change logo from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig logo van %1 naar %2</translation>
     </message>
     <message>
         <source>Resize ruler to %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig grootte van meetlat naar %1 %2</translation>
     </message>
     <message>
         <source>Disconnect all wires from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluit alle draden af van %1</translation>
     </message>
     <message>
         <source>Disconnect all wires from %1 items</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluit alle draden af van %1 items</translation>
     </message>
     <message>
         <source>Resize board to %1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig grootte van het bord naar %1 %2</translation>
     </message>
     <message>
         <source>Change image from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig afbeelding van %1 naar %2</translation>
     </message>
 </context>
 <context>
     <name>SymbolPaletteItem</name>
     <message>
         <source>voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>spanning</translation>
     </message>
 </context>
 <context>
     <name>TipsAndTricks</name>
     <message>
         <source>Tips and Tricks</source>
-        <translation type="unfinished"></translation>
+        <translation>Tips en trucs</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;body&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;body&gt;</translation>
     </message>
     <message>
         <source>&lt;h3&gt;Fritzing Tips and Tricks&lt;/h3&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h3&gt;Fritzing Tips en Trucs&lt;/h3&gt;</translation>
     </message>
     <message>
         <source>&lt;ul&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;ul&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Om een draad segment (een sectie van een draad tussen 2 buigpunten) te verslepen, versleep het met de alt-toets ingedrukt. Als je de shift-toets indrukt, zal de draad segment enkel een exacte vertikale of horizontale beweging volgen.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you&apos;re dragging will snap to make 90 degree angles with the neighboring wire segment.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Gebruik de shift-sleep om een draad einde of een buigpunt vast te houden op zijn draad segment met een hoek van 45° (of een vermenigvuldiging ervan). Als de draad segment aangesloten is op andere draad segmenten, dan zal het gesleepte segment zich vastzetten op een 90° hoek ten opzichte van zijn buur segmenten.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Op het schema of de PCB, als je vanuit een buigpunt versleept met de alt-toets ingedrukt, zal je de nieuwe draad starten vanuit dat buigpunt.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Om de beweging van een onderdeel vast te zetten op horizontaal of vertikaal, houd de shift-toets ingedrukt terwijl je het versleept.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;If you&apos;re having trouble selecting a part or a wire (segment), try selecting the part that&apos;s in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Als u problemen hebt om een onderdeel of een draad (segment) te selecteren, probeer het onderdeel te selecteren die in de weg staat en het naar achter te verplaatsen: Gebruik heffen en dalen functie in het onderdelen menu of de context menu (Rechter muisknop klikken).&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;When you export images from Fritzing, you can choose which layers are exported. Before you choose &apos;Export...&apos;, go into the &apos;View&apos; menu and hide the layers you don&apos;t want to be visible.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Wanneer je afbeeldingen exporteert vanuit Fritzing, kunt u kiezen welke lagen u wilt exportern. Voordat je kiest &apos;Exporteer...&quot;, ga naar het &apos;view&apos; menu en verstop de lagen die je niet wilt tonen.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;/ul&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;/ul&gt;</translation>
     </message>
     <message>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Een icoon in de onderdelen mand kan ook meerdere gerelateerde onderdelen voorstellen. Dus waneer je een icoon versleept van de onderdelen mand naar de sketch, kijk dan zeker naar de inspector. De inspector zal de beschikbare keuzes tonen om je onderdeel te wijzigen of om te wisselen tussen een gerelateerd onderdeel.&lt;/li&gt;</translation>
     </message>
 </context>
 <context>
     <name>TraceWire</name>
     <message>
         <source>width</source>
-        <translation type="unfinished"></translation>
+        <translation>breedte</translation>
     </message>
 </context>
 <context>
     <name>TranslatorListModel</name>
     <message>
         <source>English - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Engels - %1</translation>
     </message>
     <message>
         <source>French - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Frans - %1</translation>
     </message>
     <message>
         <source>German - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>duits - %1</translation>
     </message>
     <message>
         <source>Spanish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spaans - %1</translation>
     </message>
     <message>
         <source>Japanese - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Japans - %1</translation>
     </message>
     <message>
         <source>Portuguese (European)- %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugees (Europees) - %1</translation>
     </message>
     <message>
         <source>Portuguese (Brazilian) - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugees (braziliaans) - %1</translation>
     </message>
     <message>
         <source>Hungarian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hongaars - %1</translation>
     </message>
     <message>
         <source>Estonian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Estoniaans - %1</translation>
     </message>
     <message>
         <source>Dutch - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederlands - %1</translation>
     </message>
     <message>
         <source>Russian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Russich - %1</translation>
     </message>
     <message>
         <source>Italian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Italiaans - %1</translation>
     </message>
     <message>
         <source>Hebrew - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebreeuws - %1</translation>
     </message>
     <message>
         <source>Arabic - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisch -%1</translation>
     </message>
     <message>
         <source>Hindi - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hindisch - %1</translation>
     </message>
     <message>
         <source>Chinese (Simplified) - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinees (simpel) - %1</translation>
     </message>
     <message>
         <source>Chinese (Traditional) - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>chinees (traditioneel) - %1</translation>
     </message>
 </context>
 <context>
     <name>UpdateDialog</name>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <source>No new versions found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen nieuwe versie gevonden.</translation>
     </message>
     <message>
         <source>A new main release is available for downloading:</source>
-        <translation type="unfinished"></translation>
+        <translation>Een nieuwe algemene release is beschikbaar om te downloaden :</translation>
     </message>
     <message>
         <source>A new interim release is available for downloading:</source>
-        <translation type="unfinished"></translation>
+        <translation>een nieuwe test release is beschikbaar om te downloaden :</translation>
     </message>
     <message>
         <source>Checking...</source>
-        <translation type="unfinished"></translation>
+        <translation>Controleren...</translation>
     </message>
     <message>
         <source>Sorry, unable to retrieve update info</source>
-        <translation type="unfinished"></translation>
+        <translation>Excuseer, niet mogelijk om de update info af te halen</translation>
     </message>
 </context>
 <context>
     <name>ViewSwitcher</name>
     <message>
         <source>Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Breadboard</translation>
     </message>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema</translation>
     </message>
     <message>
         <source>PCB</source>
-        <translation type="unfinished"></translation>
+        <translation>PCB</translation>
     </message>
 </context>
 <context>
     <name>Wire</name>
     <message>
         <source>thin (16 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>dun (16mil)</translation>
     </message>
     <message>
         <source>standard (24 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>standaard (24 mil)</translation>
     </message>
     <message>
         <source>thick (32 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>dik (32 mil)</translation>
     </message>
     <message>
         <source>extra thick (48 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>extra dik (48 mil)</translation>
     </message>
     <message>
         <source>blue</source>
-        <translation type="unfinished"></translation>
+        <translation>blauw</translation>
     </message>
     <message>
         <source>red</source>
-        <translation type="unfinished"></translation>
+        <translation>rood</translation>
     </message>
     <message>
         <source>black</source>
-        <translation type="unfinished"></translation>
+        <translation>zwart</translation>
     </message>
     <message>
         <source>yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>geel</translation>
     </message>
     <message>
         <source>green</source>
-        <translation type="unfinished"></translation>
+        <translation>groen</translation>
     </message>
     <message>
         <source>grey</source>
-        <translation type="unfinished"></translation>
+        <translation>grijs</translation>
     </message>
     <message>
         <source>white</source>
-        <translation type="unfinished"></translation>
+        <translation>wit</translation>
     </message>
     <message>
         <source>orange</source>
-        <translation type="unfinished"></translation>
+        <translation>oranje</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished"></translation>
+        <translation>kleur</translation>
     </message>
 </context>
 </TS>

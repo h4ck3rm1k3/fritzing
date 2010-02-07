@@ -142,7 +142,9 @@ tr("<p>Thanks to Kurt Badelt for the Spanish translation, "
 	"to Yuelin and Ninjia  for the Chinese (Simplified) translation, "
 	"to Hiroshi Suzuki for the Japanese translation, "
 	"to Robert Lee for the Chinese (Traditional) translation, "
-	"and to Vladimir Savinov for the Russian translation.</p>") +
+	"to Vladimir Savinov for the Russian translation," 
+	"and to Steven Noppe for the Dutch translation." 
+	"</p>") +
 
 tr("<p>Fritzing is made possible with funding from the "
    "MWFK Brandenburg, the sponsorship of the Design "
