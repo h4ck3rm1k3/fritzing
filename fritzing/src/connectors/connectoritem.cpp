@@ -875,18 +875,34 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 }
 
 void ConnectorItem::updateTooltip() {
-	if (m_connectedTo.count() == 0) {
-		setToolTip(m_baseTooltip);
+	QList<ConnectorItem *> connectors;
+	if (!attachedToItemType() == ModelPart::Wire) {
+		connectors.append(this);
+	}
+
+	foreach(ConnectorItem * toConnectorItem, m_connectedTo) {
+		if (!toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			connectors.append(toConnectorItem);
+		}
+	}
+
+	if (connectors.count() == 0) {
+		setToolTip("");
 		return;
 	}
 
-        QString connections;
-	foreach(ConnectorItem * toConnectorItem, m_connectedTo) {
-            if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
-            connections += QString("<br />") + "<b>" + toConnectorItem->attachedTo()->label() + "</b> " + toConnectorItem->connectorSharedName();
+	if (connectors.count() == 1) {
+		setToolTip(connectors[0]->m_baseTooltip);
+		return;
 	}
 
-        setToolTip(ItemBase::ITEMBASE_FONT_PREFIX + connections + ItemBase::ITEMBASE_FONT_SUFFIX);
+	QString connections = QString("<ul style='margin-left:0;padding-left:0;'>");
+	foreach(ConnectorItem * connectorItem, connectors) {
+		connections += QString("<li style='margin-left:0;padding-left:0;'>") + "<b>" + connectorItem->attachedTo()->label() + "</b> " + connectorItem->connectorSharedName() + "</li>";
+	}
+	connections += "</ul>";
+
+    setToolTip(ItemBase::ITEMBASE_FONT_PREFIX + connections + ItemBase::ITEMBASE_FONT_SUFFIX);
 
 }
 

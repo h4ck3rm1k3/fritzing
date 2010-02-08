@@ -245,10 +245,10 @@ void ItemBase::setConnectorTooltips() {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-                QString tt = QString("<b>%1</b><br />%2" + ITEMBASE_FONT_PREFIX + "%3" + ITEMBASE_FONT_SUFFIX)
-                        .arg(connectorItem->connectorSharedName())
-                        .arg(connectorItem->connector()->connectorShared()->description())
-			.arg(toolTip());
+        QString tt = QString("<b>%1</b><br />%2" + ITEMBASE_FONT_PREFIX + "%3" + ITEMBASE_FONT_SUFFIX)
+                .arg(connectorItem->connectorSharedName())
+                .arg(connectorItem->connector()->connectorShared()->description())
+				.arg(toolTip());
 
 		connectorItem->setBaseTooltip(tt);
 	}
