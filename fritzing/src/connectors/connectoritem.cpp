@@ -880,12 +880,13 @@ void ConnectorItem::updateTooltip() {
 		return;
 	}
 
-	QString connections;
+        QString connections;
 	foreach(ConnectorItem * toConnectorItem, m_connectedTo) {
-		connections += "<br />&nbsp;&nbsp;" + toConnectorItem->attachedToTitle() + ":" + toConnectorItem->connectorSharedName();
+            if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
+            connections += QString("<br />") + "<b>" + toConnectorItem->attachedTo()->label() + "</b> " + toConnectorItem->connectorSharedName();
 	}
 
-	setToolTip(m_baseTooltip + ItemBase::ITEMBASE_FONT_PREFIX + connections + ItemBase::ITEMBASE_FONT_SUFFIX);
+        setToolTip(ItemBase::ITEMBASE_FONT_PREFIX + connections + ItemBase::ITEMBASE_FONT_SUFFIX);
 
 }
 

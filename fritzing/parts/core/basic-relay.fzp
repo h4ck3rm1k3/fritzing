@@ -125,7 +125,7 @@
             </views>
         </connector>
     </connectors>
-   <busses>
+   <buses>
     <bus id="bus0">
       <nodeMember connectorId="connector2" />
       <nodeMember connectorId="connector3" />
