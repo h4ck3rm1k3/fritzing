@@ -213,7 +213,7 @@ om deze aansluiting in orde te brengen</translation>
     </message>
     <message>
         <source>Breadboard</source>
-        <translation>Breadboard</translation>
+        <translation>Breadbord</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -370,7 +370,7 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     </message>
     <message>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation>De&lt;b&gt;Breadbord view&lt;/p&gt; is bedoeld om er uit te zien als een &lt;i&gt;echte&lt;/i&gt; breadbord prototype.&lt;br/&gt;&lt;br/&gt;Begin door een onderdeel te verslepen uit de onderdelen mand, die vanboven rechts staat. Versleep dan nog meer onderdelen en connecteer ze door te klikken op de aansluitingen en de draden te verslepen. Het is het zelfde proces alsof je in het echte leven zou doen. &lt;br/&gt;&lt;br/&gt;Wanneer je klaar bent met je sketch in de breadbord view, probeer dan de andere views. U kunt switchen tussen de andere views door te klikken op de View switcher of de navigator onderaan rechts. Omdat de verschillende views verschillende doelen hebben, zullen de onderdelen er ook anders uitzien.</translation>
+        <translation>De&lt;b&gt; Breadbord view&lt;/b&gt; is bedoeld om er uit te zien als een &lt;i&gt;echte&lt;/i&gt; breadbord prototype.&lt;br/&gt;&lt;br/&gt;Begin door een onderdeel te verslepen uit de onderdelen mand, die onderaan rechts staat. Versleep dan nog meer onderdelen en connecteer ze door te klikken op de aansluitingen en de draden te verslepen. Het is het zelfde proces alsof je in het echte leven zou doen. &lt;br/&gt;&lt;br/&gt;Wanneer je klaar bent met je sketch in de breadbord view, probeer dan de andere views. U kunt switchen tussen de andere views door te klikken op de View switcher of de navigator onderaan rechts. Omdat de verschillende views verschillende doelen hebben, zullen de onderdelen er ook anders uitzien.</translation>
     </message>
     <message>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
@@ -841,7 +841,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>loading %1 (breadboard)</source>
-        <translation>laden %1 (breadboard)</translation>
+        <translation>laden %1 (breadbord)</translation>
     </message>
     <message>
         <source>loading %1 (pcb)</source>
@@ -1305,7 +1305,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Send to Back</source>
-        <translation>Zend volledig naar achter</translation>
+        <translation>Breng volledig naar achter</translation>
     </message>
     <message>
         <source>Shift+Ctrl+[</source>
@@ -1445,7 +1445,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>&amp;Show Breadboard</source>
-        <translation>&amp;Toon breadboard</translation>
+        <translation>&amp;Toon breadbord</translation>
     </message>
     <message>
         <source>Ctrl+1</source>
@@ -2655,7 +2655,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>Breadboard View</source>
-        <translation>Breadboard view</translation>
+        <translation>Breadbord view</translation>
     </message>
     <message>
         <source>PCB View</source>
@@ -2747,7 +2747,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>breadboard view</source>
-        <translation>breadboard view</translation>
+        <translation>breadbord view</translation>
     </message>
     <message>
         <source>schematic view</source>
@@ -2763,7 +2763,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>Breadboard</source>
-        <translation>Breadboard</translation>
+        <translation>Breadbord</translation>
     </message>
     <message>
         <source>Parts</source>
@@ -3106,7 +3106,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>Change %note to &apos;%2&apos;</source>
-        <translation>Wijzig %1 notitie naar %2</translation>
+        <translation>Wijzig %1 notitie naar &apos;%2&apos;</translation>
     </message>
     <message>
         <source>Change %1 label to &apos;%2&apos;</source>
@@ -3234,7 +3234,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>&lt;li&gt;To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Om de beweging van een onderdeel vast te zetten op horizontaal of vertikaal, houd de shift-toets ingedrukt terwijl je het versleept.&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Om de beweging van een onderdeel vast te zetten op horizontaal of verticaal, houd de shift-toets ingedrukt terwijl je het versleept.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;If you&apos;re having trouble selecting a part or a wire (segment), try selecting the part that&apos;s in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).&lt;/li&gt;</source>
@@ -3366,7 +3366,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     <name>ViewSwitcher</name>
     <message>
         <source>Breadboard</source>
-        <translation>Breadboard</translation>
+        <translation>Breadbord</translation>
     </message>
     <message>
         <source>Schematic</source>

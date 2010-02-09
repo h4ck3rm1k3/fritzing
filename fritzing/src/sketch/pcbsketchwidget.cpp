@@ -333,7 +333,7 @@ void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
 
 void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus)
 {
-	DebugDialog::debug("update ratsnest status");
+	//DebugDialog::debug("update ratsnest status");
 
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
@@ -1449,7 +1449,7 @@ void PCBSketchWidget::collectConnectorNames(QList<ConnectorItem *> & connectorIt
 
 void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus & routingStatus) 
 {
-	DebugDialog::debug("update ratsnest colors");
+	//DebugDialog::debug("update ratsnest colors");
 	// TODO: think about ways to optimize this...
 
 	QList<ConnectorItem *> virtualWireConnectors;

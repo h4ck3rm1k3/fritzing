@@ -234,6 +234,7 @@ public:
 	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
 	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename);
 	void loadLogoImage(long itemID, const QString & newFilename, bool addName);
+	void setNoteFocus(QGraphicsItem *, bool inFocus);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -281,7 +282,8 @@ protected:
 										bool connect, bool seekLayerKin, QUndoCommand * parentCommand);
 
 
-	void keyPressEvent ( QKeyEvent * event );
+	void keyPressEvent(QKeyEvent *);
+	void keyReleaseEvent(QKeyEvent *);
 	void clearTemporaries();
 	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	void killDroppingItem();
@@ -300,7 +302,7 @@ protected:
 	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
-	void moveItems(QPoint globalPos);
+	void moveItems(QPoint globalPos, bool checkAutoScroll);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, QDomElement & layers, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
@@ -358,6 +360,7 @@ protected:
 											   QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 	int selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg);
+	bool moveByArrow(int dx, int dy, QKeyEvent * );
 
 protected:
 	static bool lessThan(int a, int b);
@@ -532,9 +535,13 @@ protected:
 	QPoint m_dragBendpointPos;
 	QColor m_standardBackgroundColor;
 	StatusConnectStatus m_statusConnectState;
-
-protected:
+	QList<QGraphicsItem *> m_inFocus;
 	QString m_viewName;
+	bool m_movingByArrow;
+	int m_arrowTotalX;
+	int m_arrowTotalY;
+	bool m_movingByMouse;
+
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

@@ -88,6 +88,7 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_movingByMouse = m_movingByArrow = false;
 	m_statusConnectState = StatusConnectNotTried;
 	m_dragBendpointWire = NULL;
 	m_lastHoverEnterItem = NULL;
@@ -1645,7 +1646,47 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
     return selectItemCommand;
 }
 
+bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
+	DebugDialog::debug(QString("move by arrow %1").arg(event->isAutoRepeat()));
+	if (!event->isAutoRepeat()) {
+		m_dragBendpointWire = NULL;
+		clearHoldingSelectItem();
+		m_savedItems.clear();
+		m_savedWires.clear();
+		m_moveEventCount = 0;
+		m_arrowTotalX = m_arrowTotalY = 0;
+		prepMove();
+		if (m_savedItems.count() == 0) return false;
+
+		m_mousePressScenePos = this->mapToScene(this->rect().center());
+		m_movingByArrow = true;
+	}
+	else {
+		DebugDialog::debug("hello");
+	}
+
+	m_moveEventCount++;
+
+	if (event->modifiers() & Qt::ShiftModifier) {
+		dx *= 10;
+		dy *= 10;
+	}
+
+	m_arrowTotalX += dx;
+	m_arrowTotalY += dy;
+
+	QPoint globalPos = mapFromScene(m_mousePressScenePos + QPoint(m_arrowTotalX, m_arrowTotalY));
+	globalPos = mapToGlobal(globalPos);
+	moveItems(globalPos, false);
+	return true;
+}
+
+
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
+
+	if (m_movingByArrow) return;
+
+	m_movingByMouse = true;
 
 	m_dragBendpointWire = NULL;
 	m_spaceBarWasPressed = m_spaceBarIsPressed;
@@ -2094,6 +2135,8 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// if its just dragging a wire end do default
 	// otherwise handle all move action here
 
+	if (!m_movingByMouse) return;
+
 	if (m_dragBendpointWire != NULL) {
 		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos);
 		m_dragBendpointWire = NULL;
@@ -2114,7 +2157,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 				m_globalPos.setY(p.y());
 			}
 
-			moveItems(m_globalPos);
+			moveItems(m_globalPos, true);
 		}
 	}
 
@@ -2134,10 +2177,12 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	QGraphicsView::mouseMoveEvent(event);
 }
 
-void SketchWidget::moveItems(QPoint globalPos)
+void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScroll)
 {
-	bool result = checkAutoscroll(globalPos);
-	if (!result) return;
+	if (checkAutoScroll) {
+		bool result = checkAutoscroll(globalPos);
+		if (!result) return;
+	}
 
 	QPoint q = mapFromGlobal(globalPos);
 	QPointF scenePos = mapToScene(q);
@@ -2194,6 +2239,10 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
+
+	if (!m_movingByMouse) return;
+
+	m_movingByMouse = false;
 
 	m_dragBendpointWire = NULL;
 	ConnectorItem::clearEqualPotentialDisplay();
@@ -3732,7 +3781,53 @@ void SketchWidget::navigatorScrollChange(double x, double y) {
    	v->setValue((int) ((ymax - ymin) * y) + ymin);
 }
 
+void SketchWidget::keyReleaseEvent(QKeyEvent * event) {
+	//DebugDialog::debug(QString("key release event %1").arg(event->isAutoRepeat()));
+	if (m_movingByArrow) {
+		// strange logic when doing autorepeat
+		// each autorepeat sends both a keyPressEvent and a keyReleaseEvent
+		// in keyPressEvents, the first event has autorepeat = false
+		// but in keyReleaseEvents, the last event has autorepeat = false
+		if (!event->isAutoRepeat()) {
+			m_movingByArrow = false;
+			if (checkMoved()) {
+				m_savedItems.clear();
+				m_savedWires.clear();
+			}
+		}
+	}
+	else {
+		QGraphicsView::keyReleaseEvent(event);
+	}
+}
+
 void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
+	if ((m_inFocus.length() == 0) && !m_movingByMouse) {
+		int dx = 0, dy = 0;
+		switch (event->key()) {
+			case Qt::Key_Up:
+				dy = -1;
+				break;
+			case Qt::Key_Down:
+				dy = 1;
+				break;
+			case Qt::Key_Left:
+				dx = -1;
+				break;
+			case Qt::Key_Right:
+				dx = 1;
+				break;
+			default:
+				break;
+		}
+		if (dx != 0 || dy != 0) {
+			DebugDialog::debug("arrow key event");
+			if (moveByArrow(dx, dy, event)) {
+				return;
+			}
+		}
+	}
+
 	QGraphicsView::keyPressEvent(event);
 }
 
@@ -4771,7 +4866,7 @@ void SketchWidget::dragAutoScrollTimeout()
 void SketchWidget::moveAutoScrollTimeout()
 {
 	autoScrollTimeout();
-	moveItems(m_globalPos);
+	moveItems(m_globalPos, true);
 }
 
 const QString &SketchWidget::selectedModuleID() {
@@ -6281,4 +6376,13 @@ void SketchWidget::paintEvent ( QPaintEvent * event ) {
         ((FGraphicsScene *) scene())->setDisplayHandles(true);
     }
     QGraphicsView::paintEvent(event);
+}
+
+void SketchWidget::setNoteFocus(QGraphicsItem * item, bool inFocus) {
+	if (inFocus) {
+		m_inFocus.append(item);
+	}
+	else {
+		m_inFocus.removeOne(item);
+	}
 }

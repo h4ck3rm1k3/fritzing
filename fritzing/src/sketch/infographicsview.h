@@ -84,6 +84,8 @@ public:
 	virtual LayerHash & viewLayers();
 	virtual void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName);
 
+	virtual void setNoteFocus(QGraphicsItem *, bool inFocus);
+
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
 	virtual void resizeBoard(qreal w, qreal h, bool doEmit);

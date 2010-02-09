@@ -246,3 +246,8 @@ void InfoGraphicsView::loadLogoImage(long itemID, const QString & oldSvg, const 
 	Q_UNUSED(newFilename);
 	Q_UNUSED(addName);
 }
+
+void InfoGraphicsView::setNoteFocus(QGraphicsItem * item, bool inFocus) {
+	Q_UNUSED(item);
+	Q_UNUSED(inFocus);
+}

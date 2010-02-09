@@ -133,13 +133,23 @@ NoteGraphicsTextItem::NoteGraphicsTextItem(QGraphicsItem * parent) : QGraphicsTe
 }
 
 void NoteGraphicsTextItem::focusInEvent(QFocusEvent * event) {
+	InfoGraphicsView * igv = InfoGraphicsView::getInfoGraphicsView(this);
+	if (igv != NULL) {
+		igv->setNoteFocus(this, true);
+	}
 	QApplication::instance()->installEventFilter((Note *) this->parentItem());
 	QGraphicsTextItem::focusInEvent(event);
+	DebugDialog::debug("note focus in");
 }
 
 void NoteGraphicsTextItem::focusOutEvent(QFocusEvent * event) {
+	InfoGraphicsView * igv = InfoGraphicsView::getInfoGraphicsView(this);
+	if (igv != NULL) {
+		igv->setNoteFocus(this, false);
+	}
 	QApplication::instance()->removeEventFilter((Note *) this->parentItem());
 	QGraphicsTextItem::focusOutEvent(event);
+	DebugDialog::debug("note focus out");
 }
 
 //////////////////////////////////////////
