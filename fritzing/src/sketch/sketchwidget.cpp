@@ -2135,7 +2135,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// if its just dragging a wire end do default
 	// otherwise handle all move action here
 
-	if (!m_movingByMouse) return;
+	if (m_movingByArrow) return;
 
 	if (m_dragBendpointWire != NULL) {
 		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos);
@@ -2240,7 +2240,7 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
-	if (!m_movingByMouse) return;
+	if (m_movingByArrow) return;
 
 	m_movingByMouse = false;
 
