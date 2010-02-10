@@ -336,7 +336,7 @@ bool MysteryPart::otherPropsChange(const QMap<QString, QString> & propsMap) {
 
 const QStringList & MysteryPart::spacings() {
 	if (Spacings.count() == 0) {
-		Spacings << "300mil" << "400mil" << "500mil" << "600mil" << "700mil" << "800mil" << "900mil";
+		Spacings << "100mil" << "200mil" << "300mil" << "400mil" << "500mil" << "600mil" << "700mil" << "800mil" << "900mil";
 	}
 	return Spacings;
 }
