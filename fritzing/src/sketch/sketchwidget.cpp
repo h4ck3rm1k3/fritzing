@@ -3847,6 +3847,11 @@ void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass:
 void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) {
 	// TODO: handle this with virtual functions in the itemBase
 
+	if (itemBase->isPartLabelVisible()) {
+		ShowLabelCommand * slc = new ShowLabelCommand(this, parentCommand);
+		slc->add(itemBase->id(), true, true);
+	}
+
 	switch (itemBase->itemType()) {
 		case ModelPart::Wire:
 			{
@@ -4438,6 +4443,10 @@ long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 
 	setUpSwapReconnect(itemBase, newID, newModuleID, master, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, parentCommand);
+	if (itemBase->isPartLabelVisible()) {
+		ShowLabelCommand * slc = new ShowLabelCommand(this, parentCommand);
+		slc->add(newID, true, true);
+	}
 
 	if (master) {		
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
