@@ -38,11 +38,8 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../items/moduleidnames.h"
 
-#ifndef QT_NO_DEBUG
-bool PaletteModel::CreateAllPartsBinFile = false;
-#else
-bool PaletteModel::CreateAllPartsBinFile = false;
-#endif
+bool PaletteModel::CreateAllPartsBinFile = false;  // now generating the all parts bin in advance using a python script:  [fritzing]/part-gen-scripts/misc_scripts/genAllParts.py
+
 bool PaletteModel::CreateNonCorePartsBinFile = true;
 bool PaletteModel::CreateContribPartsBinFile = true;
 

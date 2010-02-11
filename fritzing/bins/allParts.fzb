@@ -142,6 +142,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="3b1a8578c21940dfe27253a7b57c81f5">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="3234DFDC00">
         <views>
           <iconView layer="icon">
@@ -1416,6 +1423,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="4ceb5916759d88ffdf4d1b2960ab825c">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="2010BBCD20113">
         <views>
           <iconView layer="icon">
@@ -2214,6 +2228,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="e89358121bacffbe9b6372e42e4799f4">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="screw_terminal_10_100mil">
         <views>
           <iconView layer="icon">
@@ -2516,6 +2537,13 @@
         </views>
       </instance>
       <instance moduleIdRef="screw_terminal_9_300mil">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="cee49c7a6b94e1759bb995959b72f50c">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>

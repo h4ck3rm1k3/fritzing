@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.3.15b.02.03.3943" moduleId="3b1a8578c21940dfe27253a7b57c81f5">
+    <version>1.1</version>
+    <author>Brendan Howell</author>
+    <title>Slide Potentiometer</title>
+    <label>R</label>
+    <date>2009-10-23</date>
+    <tags>
+        <tag>potentiometer</tag>
+        <tag>poti</tag>
+        <tag>adjustable</tag>
+        <tag>resistor</tag>
+        <tag>user part</tag>
+    </tags>
+    <properties>
+        <property name="family">Potentiometer</property>
+        <property name="track">Linear</property>
+        <property name="type">Slide Potentiometer</property>
+        <property name="maximum resistance">100kΩ</property>
+    </properties>
+    <description>A standard adjustable resistor (potentiometer).</description>
+    <views>
+        <iconView>
+            <layers image="icon/Big_Potentiometer_icon.svg">
+                <layer layerId="icon"/>
+            </layers>
+        </iconView>
+        <breadboardView>
+            <layers image="breadboard/Big_Potentiometer_breadboard.svg">
+                <layer layerId="breadboard"/>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers image="schematic/basic_poti.svg">
+                <layer layerId="schematic"/>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers image="pcb/Big_Potentiometer_pcb.svg">
+                <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
+                <layer layerId="keepout"/>
+                <layer layerId="soldermask"/>
+                <layer layerId="outline"/>
+            </layers>
+        </pcbView>
+    </views>
+    <connectors>
+        <connector id="connector0" type="male" name="leg1">
+            <description>leg1</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector0pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector0pin"/>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector1" type="male" name="wiper">
+            <description>wiper</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector1pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector1pin"/>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector2" type="male" name="leg2">
+            <description>leg2</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector2pin"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector2pin"/>
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>

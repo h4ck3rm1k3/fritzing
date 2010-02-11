@@ -1,2 +1,2 @@
-cd C:\fritzing2\phoenix\part-gen-scripts\misc_scripts
-C:\Python26\python.exe genAllParts.py -d C:\fritzing2\phoenix\parts -d C:\fritzing2\phoenix\resources\parts -a C:\fritzing2\phoenix\bins\allParts.fzb -o f
+cd C:\Users\jonathan\fritzing2\part-gen-scripts\misc_scripts
+C:\Python26\python.exe genAllParts.py -d ..\..\parts -d ..\..\resources\parts -a ..\..\bins\allParts.fzb -o f
