@@ -2,7 +2,7 @@
 <module moduleId="4244TPM6MM" >
  <version>2</version>
  <author>Brendan Howell</author>
- <title>Basic Potentiometer</title>
+ <title>Trimmer Potentiometer</title>
  <label>R</label>
  <date>2009-05-20</date>
  <tags>

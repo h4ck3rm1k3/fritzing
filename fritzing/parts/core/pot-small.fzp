@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.15b.02.03.3943" moduleId="3b1a8578c21940dfe27253a7b57c81f5">
-    <version>1.1</version>
-    <author>Brendan Howell</author>
-    <title>Slide Potentiometer</title>
+<module fritzingVersion="0.3.15b.02.03.3943" moduleId="cee49c7a6b94e1759bb995959b72f50c">
+    <version>1.0</version>
+    <author>Lionel Michel</author>
+    <title>Rotary Potentiometer (Small)</title>
     <label>R</label>
-    <date>2009-10-23</date>
+    <date>2010-02-10</date>
     <tags>
         <tag>potentiometer</tag>
         <tag>poti</tag>
         <tag>adjustable</tag>
         <tag>resistor</tag>
-        <tag>user part</tag>
+				<tag>fritzing core</tag>
     </tags>
     <properties>
         <property name="family">Potentiometer</property>
         <property name="track">Linear</property>
-        <property name="type">Slide Potentiometer</property>
+        <property name="type">Rotary Shaft Potentiometer</property>
+        <property name="size">Small</property>
         <property name="maximum resistance">100kΩ</property>
     </properties>
-    <description>A standard adjustable resistor (potentiometer).</description>
+    <description>A rotary adjustable resistor (potentiometer).</description>
     <views>
         <iconView>
-            <layers image="icon/Big_Potentiometer_icon.svg">
+            <layers image="icon/pot-small.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
-        <breadboardView>
-            <layers image="breadboard/Big_Potentiometer_breadboard.svg">
-                <layer layerId="breadboard"/>
-            </layers>
-        </breadboardView>
         <schematicView>
             <layers image="schematic/basic_poti.svg">
                 <layer layerId="schematic"/>
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/Big_Potentiometer_pcb.svg">
+            <layers image="pcb/jumper_3_100mil_pcb.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
                 <layer layerId="keepout"/>
@@ -44,6 +40,11 @@
                 <layer layerId="outline"/>
             </layers>
         </pcbView>
+        <breadboardView>
+            <layers image="breadboard/pot-small.svg">
+                <layer layerId="breadboard"/>
+            </layers>
+        </breadboardView>
     </views>
     <connectors>
         <connector id="connector0" type="male" name="leg1">
