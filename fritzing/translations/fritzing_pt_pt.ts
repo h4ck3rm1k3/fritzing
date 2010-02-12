@@ -36,7 +36,7 @@
         <translation>&lt;p&gt;Agradecimentos especiais vão para todos os estudantes e alpha testers que tiveram coragem para fazerem os testes ao Fritzing.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, to Vladimir Savinov for the Russian translation,and to Steven Noppe for the Dutch translation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -785,10 +785,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>&amp;New</source>
         <translation>&amp;Novo</translation>
-    </message>
-    <message>
-        <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new sketch</source>
@@ -1883,6 +1879,14 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>Update ratsnest colors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2840,6 +2844,13 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Select all jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QShortcut</name>
+    <message>
+        <source>Ctrl</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

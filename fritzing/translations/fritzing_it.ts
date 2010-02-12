@@ -36,7 +36,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, to Vladimir Savinov for the Russian translation,and to Steven Noppe for the Dutch translation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -811,10 +811,6 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
     <message>
         <source>&amp;New</source>
         <translation>&amp;Nuovo</translation>
-    </message>
-    <message>
-        <source>Ctrl+N</source>
-        <translation></translation>
     </message>
     <message>
         <source>Create a new sketch</source>
@@ -1883,6 +1879,14 @@ Please check all views for potential side-effects.</source>
         <source>Update ratsnest colors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2830,6 +2834,13 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Select all jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QShortcut</name>
+    <message>
+        <source>Ctrl</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -162,6 +162,12 @@ void MainWindow::init() {
 
     m_dockManager = new DockManager(this);
     m_dockManager->createBinAndInfoViewDocks();
+
+	// This is the magic translation that changes all the shortcut text on the menu items
+	// to the native language instead of "Ctrl", so the German menu items will now read "Strg"
+	// You don't actually have to translate every menu item in the .ts file, you can just leave it as "Ctrl".
+	QShortcut::tr("Ctrl");
+
     createActions();
     createMenus();
     createToolBars();

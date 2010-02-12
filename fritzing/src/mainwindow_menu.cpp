@@ -852,7 +852,7 @@ void MainWindow::createActions()
 }
 
 void MainWindow::createFileMenuActions() {
-	m_newAct = new QAction(tr("&New"), this);
+	m_newAct = new QAction(tr("New"), this);
 	m_newAct->setShortcut(tr("Ctrl+N"));
 	m_newAct->setStatusTip(tr("Create a new sketch"));
 	connect(m_newAct, SIGNAL(triggered()), this, SLOT(createNewSketch()));

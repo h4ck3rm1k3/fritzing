@@ -36,8 +36,8 @@
         <translation>&lt;p&gt;Speciale dank gaat ook uit naar al de studenten en alpha testers, die moedig genoeg waren om Fritzing uit te testen. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, and to Vladimir Savinov for the Russian translation.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Bedankt aan Kurt Badelt voor de spaanse vertaling, Gianluca Urgese voor de italiaanse vertaling, Nuno Pessanha Santos voor de portugese vertaling, Yuelin en Ninjia voor de chinese (simpele) vertaling, Hiroshi Suzuki voor de Japanse vertaling, Robert Lee voor de chinese (traditionele) vertaling, Vladimir Savinov voor de russische vertaling en Noppe Steven voor de nederlandse vertaling.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, to Vladimir Savinov for the Russian translation,and to Steven Noppe for the Dutch translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -854,10 +854,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     <message>
         <source>&amp;New</source>
         <translation>&amp;Nieuw</translation>
-    </message>
-    <message>
-        <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new sketch</source>
@@ -1886,6 +1882,14 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>Update ratsnest colors</source>
         <translation>Update de kleuren van het ratten nest</translation>
     </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2844,6 +2848,13 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     <message>
         <source>Select all jumpers</source>
         <translation>Selecteer alle jumpers</translation>
+    </message>
+</context>
+<context>
+    <name>QShortcut</name>
+    <message>
+        <source>Ctrl</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
