@@ -21,7 +21,7 @@ class FormController {
 					return no()
 				}
 				
-				log.trace("user " + params.x )
+				//log.trace("user " + params.x )
 				
 				def theUser = null
 				for (user in User.list()) {
@@ -34,6 +34,8 @@ class FormController {
 						break;
 					}
 				}
+				
+				log.trace("before session " + session.getId())
 				
 				//def test = User.findByUsername("jones")
 				//log.trace("jones result " + test + " " +  test?.uuid)
@@ -165,11 +167,11 @@ class FormController {
 				flow.person.addToOrders(flow.order1)
 				flow.person.save(flush:true)
 
-				def commonParameters =  [orderID: flow.order1.id] 
+				session.orderID = flow.order1.id
 
-				def successURL = g.createLink(absolute: true, controller: 'form', action: 'orderSuccess', params: commonParameters).encodeAsURL() 
-				def notifyURL = g.createLink(absolute: true, controller: 'form', action: 'orderNotify',  params: commonParameters).encodeAsURL() 
-				def cancelURL = g.createLink(absolute: true, controller: 'form', action: 'orderCancel', params: commonParameters).encodeAsURL() 
+				def successURL = g.createLink(absolute: true, controller: 'form', action: 'orderSuccess').encodeAsURL() 
+				def notifyURL = g.createLink(absolute: true, controller: 'form', action: 'orderNotify').encodeAsURL() 
+				def cancelURL = g.createLink(absolute: true, controller: 'form', action: 'orderCancel').encodeAsURL() 
 				
 				//<form id="order-form" action="https://www.paypal.com/cgi-bin/webscr" method="post"> 
 				//<input name="cmd" type="hidden" value="_xclick" /> 
@@ -229,7 +231,10 @@ class FormController {
 	}
 
 	def orderCancel = {
-		log.trace("order cancel params " + params)
+		
+		log.trace("order cancel params " + params +  " " + session.getId())
+		render(view:"orderCancel", model:[order: Order1.get(session.orderID)])
+
 	}
 	
 	def orderSuccess = {

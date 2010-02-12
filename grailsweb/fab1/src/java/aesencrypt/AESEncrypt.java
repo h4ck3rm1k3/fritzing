@@ -10,7 +10,7 @@ import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 import java.security.spec.AlgorithmParameterSpec;
-import org.apache.commons.codec.binary14.Base64;  		// hack because grails uses commons.coded 1.3 and we need 1.4
+import org.apache.commons.codec.binary14.Base64;  		// hack because grails uses commons.codec 1.3 and we need 1.4
 import java.util.Arrays;
  
 public class AESEncrypt {
