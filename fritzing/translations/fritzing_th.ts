@@ -1866,6 +1866,14 @@ Please check all views for potential side-effects.</source>
         <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Align to Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align items to grid when dragging</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3248,6 +3256,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>&lt;li&gt;To precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

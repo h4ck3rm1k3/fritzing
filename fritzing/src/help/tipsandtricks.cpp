@@ -51,6 +51,7 @@ TipsAndTricks::TipsAndTricks(QWidget *parent)
 tr("<html><body>") +
 tr("<h3>Fritzing Tips and Tricks</h3>") +
 tr("<ul>") +
+tr("<li>To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.</li>") +
 tr("<li>An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.</li>") +
 tr("<li>When you export images from Fritzing, you can choose which layers are exported. Before you choose 'Export...', go into the 'View' menu and hide the layers you don't want to be visible.</li>") +
 tr("<li>To edit a part label, double-click it, or use the text input widget in the inspector window.</li>") +

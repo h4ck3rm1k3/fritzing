@@ -1890,6 +1890,14 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Align to Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align items to grid when dragging</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3301,6 +3309,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>&lt;li&gt;To precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
