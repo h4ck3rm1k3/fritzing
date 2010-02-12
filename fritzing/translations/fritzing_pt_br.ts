@@ -2803,6 +2803,22 @@ is already there, we won&apos;t add it again, right?</source>
     <name>QShortcut</name>
     <message>
         <source>Ctrl</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meta</source>
+        <comment>for naming shortcut keys on menu items</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3212,6 +3228,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To drag a new wire out of a bendpoint, hold down the Alt key as you drag the mouse.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

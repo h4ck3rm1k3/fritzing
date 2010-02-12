@@ -2854,6 +2854,22 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     <name>QShortcut</name>
     <message>
         <source>Ctrl</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meta</source>
+        <comment>for naming shortcut keys on menu items</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3266,6 +3282,14 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     <message>
         <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
         <translation>&lt;li&gt;Een icoon in de onderdelen mand kan ook meerdere gerelateerde onderdelen voorstellen. Dus waneer je een icoon versleept van de onderdelen mand naar de sketch, kijk dan zeker naar de inspector. De inspector zal de beschikbare keuzes tonen om je onderdeel te wijzigen of om te wisselen tussen een gerelateerd onderdeel.&lt;/li&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To drag a new wire out of a bendpoint, hold down the Alt key as you drag the mouse.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

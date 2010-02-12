@@ -694,60 +694,60 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="504"/>
+        <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Rotate</source>
         <translation>旋轉</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="513"/>
+        <location filename="../src/mainwindow.cpp" line="516"/>
         <source>Share</source>
         <translation>分享</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="522"/>
+        <location filename="../src/mainwindow.cpp" line="525"/>
         <source>Flip</source>
         <translation>翻轉</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="531"/>
+        <location filename="../src/mainwindow.cpp" line="534"/>
         <source>Autoroute</source>
         <translation>自動佈線</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="538"/>
+        <location filename="../src/mainwindow.cpp" line="541"/>
         <location filename="../src/mainwindow_menu.cpp" line="1214"/>
         <source>Add a note</source>
         <translation>增加註解</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="545"/>
+        <location filename="../src/mainwindow.cpp" line="548"/>
         <source>Export Etchable PDF</source>
         <translation>匯出可蝕刻的 PDF</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="599"/>
-        <location filename="../src/mainwindow.cpp" line="785"/>
+        <location filename="../src/mainwindow.cpp" line="602"/>
+        <location filename="../src/mainwindow.cpp" line="788"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="610"/>
+        <location filename="../src/mainwindow.cpp" line="613"/>
         <location filename="../src/mainwindow_menu.cpp" line="135"/>
         <source>Ready</source>
         <translation>就緒</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="753"/>
+        <location filename="../src/mainwindow.cpp" line="756"/>
         <source>Save %1</source>
         <translation>儲存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="829"/>
+        <location filename="../src/mainwindow.cpp" line="832"/>
         <source>Updating existing part</source>
         <translation>更新目前元件中</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="830"/>
+        <location filename="../src/mainwindow.cpp" line="833"/>
         <source>Some connectors have changed.
 In order to see the changes, you have to restart fritzing.
 Do you want to restart now?</source>
@@ -756,28 +756,28 @@ Do you want to restart now?</source>
 立刻重新啟動？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="930"/>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="933"/>
+        <location filename="../src/mainwindow.cpp" line="1090"/>
         <source>Specify a file name</source>
         <translation>設定檔名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="932"/>
+        <location filename="../src/mainwindow.cpp" line="935"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="969"/>
-        <location filename="../src/mainwindow.cpp" line="990"/>
-        <location filename="../src/mainwindow.cpp" line="1053"/>
-        <location filename="../src/mainwindow.cpp" line="1122"/>
-        <location filename="../src/mainwindow.cpp" line="1437"/>
-        <location filename="../src/mainwindow.cpp" line="1884"/>
-        <location filename="../src/mainwindow.cpp" line="1895"/>
-        <location filename="../src/mainwindow.cpp" line="1905"/>
-        <location filename="../src/mainwindow.cpp" line="1919"/>
-        <location filename="../src/mainwindow.cpp" line="1933"/>
-        <location filename="../src/mainwindow.cpp" line="1976"/>
+        <location filename="../src/mainwindow.cpp" line="972"/>
+        <location filename="../src/mainwindow.cpp" line="993"/>
+        <location filename="../src/mainwindow.cpp" line="1056"/>
+        <location filename="../src/mainwindow.cpp" line="1125"/>
+        <location filename="../src/mainwindow.cpp" line="1440"/>
+        <location filename="../src/mainwindow.cpp" line="1887"/>
+        <location filename="../src/mainwindow.cpp" line="1898"/>
+        <location filename="../src/mainwindow.cpp" line="1908"/>
+        <location filename="../src/mainwindow.cpp" line="1922"/>
+        <location filename="../src/mainwindow.cpp" line="1936"/>
+        <location filename="../src/mainwindow.cpp" line="1979"/>
         <location filename="../src/mainwindow_menu.cpp" line="447"/>
         <location filename="../src/mainwindow_menu.cpp" line="554"/>
         <location filename="../src/mainwindow_menu.cpp" line="562"/>
@@ -796,152 +796,152 @@ Do you want to restart now?</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="970"/>
+        <location filename="../src/mainwindow.cpp" line="973"/>
         <source>Unable to export %1 as shareable</source>
         <translation>無法將 %1 匯出成分享格式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="991"/>
+        <location filename="../src/mainwindow.cpp" line="994"/>
         <source>Unable to open shareable %1</source>
         <translation>無法開啟分享格式 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1017"/>
+        <location filename="../src/mainwindow.cpp" line="1020"/>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
         <translation>保留分享式草圖 %1 所載入的元件？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1035"/>
+        <location filename="../src/mainwindow.cpp" line="1038"/>
         <source>Select a part to import</source>
         <translation>選取匯出元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1037"/>
+        <location filename="../src/mainwindow.cpp" line="1040"/>
         <source>External Part (*%1)</source>
         <translation>外部元件 (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="1057"/>
         <source>Unable to open shareable part %1</source>
         <translation>無法開啟分享元件 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1089"/>
+        <location filename="../src/mainwindow.cpp" line="1092"/>
         <source>Fritzing Part (*%1)</source>
         <translation>Fritzing 元件(*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1123"/>
+        <location filename="../src/mainwindow.cpp" line="1126"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation> %1 無法匯出成為分享式草圖</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1191"/>
+        <location filename="../src/mainwindow.cpp" line="1194"/>
         <source>Do you want to keep the imported parts?</source>
         <translation>保留匯入的元件？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1258"/>
+        <location filename="../src/mainwindow.cpp" line="1261"/>
         <source>No connections to route</source>
         <translation>無連接線路可佈線</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1261"/>
+        <location filename="../src/mainwindow.cpp" line="1264"/>
         <source>Routing completed</source>
         <translation>佈線完成</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1264"/>
+        <location filename="../src/mainwindow.cpp" line="1267"/>
         <source>Routing completed using %n jumper wire(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1265"/>
+        <location filename="../src/mainwindow.cpp" line="1268"/>
         <source> and %n jumper part(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1268"/>
+        <location filename="../src/mainwindow.cpp" line="1271"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation>
             <numerusform>%1 of %2 線路佈線完成 - %n 個連接器等待佈線中</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1312"/>
+        <location filename="../src/mainwindow.cpp" line="1315"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1438"/>
+        <location filename="../src/mainwindow.cpp" line="1441"/>
         <source>Before you can save a sketch as a module, all traces must be routed.</source>
         <translation>草圖儲存為模組前，所有徑跡必須佈線完成。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1719"/>
+        <location filename="../src/mainwindow.cpp" line="1722"/>
         <location filename="../src/mainwindow_menu.cpp" line="3568"/>
         <location filename="../src/mainwindow_menu.cpp" line="3578"/>
         <source>Sorry!</source>
         <translation>抱歉！</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1720"/>
+        <location filename="../src/mainwindow.cpp" line="1723"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation>找不到特性完全一樣的元件，
 正嘗試避免這訊息，現在只能讓您從現存的屬性中選取</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1734"/>
+        <location filename="../src/mainwindow.cpp" line="1737"/>
         <source>No exactly matching part found; Fritzing chose the closest match.</source>
         <translation>找不到完全一樣的元件，Fritzing 將選個較接近的。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1816"/>
+        <location filename="../src/mainwindow.cpp" line="1819"/>
         <source>Swapped %1 with module %2</source>
         <translation>將 %1 置換為模組 %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1860"/>
+        <location filename="../src/mainwindow.cpp" line="1863"/>
         <source>Open custom board shape SVG file</source>
         <translation>開啟自定板形的 SVG 檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1862"/>
+        <location filename="../src/mainwindow.cpp" line="1865"/>
         <source>SVG Files (%1)</source>
         <translation>SVG 檔(%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1885"/>
+        <location filename="../src/mainwindow.cpp" line="1888"/>
         <source>Svg file &apos;%1&apos; is missing width, height, or viewbox attribute</source>
         <translation>Svg 檔 &apos;%1&apos;: 找不到寬度, 高度, 或是檢視箱屬性</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1896"/>
+        <location filename="../src/mainwindow.cpp" line="1899"/>
         <source>Svg file &apos;%1&apos;: bad width attribute</source>
         <translation>Svg 檔 &apos;%1&apos;: 錯誤的寬度屬性</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1906"/>
+        <location filename="../src/mainwindow.cpp" line="1909"/>
         <source>Svg file &apos;%1&apos;: bad height attribute</source>
         <translation>Svg 檔 &apos;%1&apos;: 錯誤的高度屬性</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1920"/>
+        <location filename="../src/mainwindow.cpp" line="1923"/>
         <source>Sorry, Fritzing is unable to copy the svg file.</source>
         <translation>抱歉！Fritzing 無法複製 svg 檔。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1934"/>
+        <location filename="../src/mainwindow.cpp" line="1937"/>
         <source>Sorry, Fritzing is unable to load the part template file.</source>
         <translation>抱歉！Fritzing 無法載入元件框架檔。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1977"/>
+        <location filename="../src/mainwindow.cpp" line="1980"/>
         <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
         <translation>Svg檔 %1 還缺 &apos;%2&apos; 層，如何建立自定的板子大小，詳情請參考(教學手冊) &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</translation>
     </message>
@@ -3594,6 +3594,25 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
     <message>
         <location filename="../src/mainwindow.cpp" line="169"/>
         <source>Ctrl</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="170"/>
+        <source>Alt</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="171"/>
+        <source>Shift</source>
+        <comment>for naming shortcut keys on menu items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="172"/>
+        <source>Meta</source>
+        <comment>for naming shortcut keys on menu items</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4058,46 +4077,56 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="54"/>
-        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
+        <source>&lt;li&gt;To move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="55"/>
+        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/help/tipsandtricks.cpp" line="56"/>
         <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
         <translation>&lt;li&gt;拖曳導線線段(導線兩端點的中間部分)，拖曳時，請同時按下 Alt 鍵。如果又同時按下 Shift 鍵，則導線線段就只會在水平或垂直方向移動。&lt;/li&gt;</translation>
     </message>
     <message>
-        <location filename="../src/help/tipsandtricks.cpp" line="56"/>
+        <location filename="../src/help/tipsandtricks.cpp" line="57"/>
+        <source>&lt;li&gt;To drag a new wire out of a bendpoint, hold down the Alt key as you drag the mouse.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/help/tipsandtricks.cpp" line="58"/>
         <source>&lt;li&gt;Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you&apos;re dragging will snap to make 90 degree angles with the neighboring wire segment.&lt;/li&gt;</source>
         <translation>&lt;li&gt;在導線端點或是轉彎點，使用 Shift-拖曳方式，來限制導線線段的角度成 45 度(或是 45 度的倍數)。如果導線線段是連到其他導線線段上，您所拖曳的導線線段，將與鄰近的線段以 90 度連結。&lt;/li&gt;</translation>
     </message>
     <message>
-        <location filename="../src/help/tipsandtricks.cpp" line="57"/>
+        <location filename="../src/help/tipsandtricks.cpp" line="59"/>
         <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
         <translation>&lt;li&gt;在概要圖或PCB檢視時，要當按下 Alt 鍵，並從轉彎點拖曳，就可以從該轉彎點拉出一條新的導線。&lt;/li&gt;</translation>
     </message>
     <message>
-        <location filename="../src/help/tipsandtricks.cpp" line="58"/>
+        <location filename="../src/help/tipsandtricks.cpp" line="60"/>
         <source>&lt;li&gt;To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.&lt;/li&gt;</source>
         <translation>&lt;li&gt;要想確保元件在水平或垂直方向移動，可以按住 Shift 鍵，同時拖曳該元件。&lt;/li&gt;</translation>
     </message>
     <message>
-        <location filename="../src/help/tipsandtricks.cpp" line="59"/>
+        <location filename="../src/help/tipsandtricks.cpp" line="61"/>
         <source>&lt;li&gt;If you&apos;re having trouble selecting a part or a wire (segment), try selecting the part that&apos;s in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).&lt;/li&gt;</source>
         <translation>&lt;li&gt;如果在選取元件或導線時有困難，試著選同位置上的元件，然後使用&apos;後退一排&apos;的功能。此項使用位在元件選單，或是環境選單(滑鼠右鍵)的&apos;提前與後退&apos;功能&lt;/li&gt;</translation>
     </message>
     <message>
-        <location filename="../src/help/tipsandtricks.cpp" line="60"/>
+        <location filename="../src/help/tipsandtricks.cpp" line="62"/>
         <source>&lt;li&gt;When you export images from Fritzing, you can choose which layers are exported. Before you choose &apos;Export...&apos;, go into the &apos;View&apos; menu and hide the layers you don&apos;t want to be visible.&lt;/li&gt;</source>
         <translation>&lt;li&gt;當您由Fritzing匯出圖檔，您可以選擇要匯出哪一層。提示：選取&apos;匯出...&apos;之前，先進入&apos;檢視&apos;的選單，然後隱藏不想看到的層。</translation>
     </message>
     <message>
-        <location filename="../src/help/tipsandtricks.cpp" line="61"/>
+        <location filename="../src/help/tipsandtricks.cpp" line="63"/>
         <source>&lt;/ul&gt;</source>
         <translation>&lt;/ul&gt;</translation>
     </message>
     <message>
-        <location filename="../src/help/tipsandtricks.cpp" line="62"/>
+        <location filename="../src/help/tipsandtricks.cpp" line="64"/>
         <source>&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
