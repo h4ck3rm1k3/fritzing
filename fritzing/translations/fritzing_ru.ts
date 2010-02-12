@@ -1507,10 +1507,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished">О программе (&amp;A)</translation>
     </message>
     <message>
-        <source>Tips and Tricks</source>
-        <translation>Полезные советы</translation>
-    </message>
-    <message>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>Показать полезные советы Fritzing</translation>
     </message>
@@ -1892,6 +1888,10 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

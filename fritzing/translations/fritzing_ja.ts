@@ -1691,10 +1691,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>このビューの 背景色 を設定します</translation>
     </message>
     <message>
-        <source>Tips and Tricks</source>
-        <translation>ヒントとコツ</translation>
-    </message>
-    <message>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>Fritzingを使う上での Tips and Tricks を表示します</translation>
     </message>
@@ -1892,6 +1888,10 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

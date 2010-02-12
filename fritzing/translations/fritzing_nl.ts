@@ -1540,10 +1540,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
         <translation>&amp;Over Fritzing</translation>
     </message>
     <message>
-        <source>Tips and Tricks</source>
-        <translation>Tips en trucs</translation>
-    </message>
-    <message>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>Toon handige Fritzing tips en trucks</translation>
     </message>
@@ -1888,6 +1884,10 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     </message>
     <message>
         <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

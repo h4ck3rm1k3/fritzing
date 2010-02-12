@@ -1442,7 +1442,7 @@ void MainWindow::createHelpMenuActions() {
 	connect(m_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 	m_aboutAct->setMenuRole(QAction::AboutRole);
 
-	m_tipsAndTricksAct = new QAction(tr("Tips and Tricks"), this);
+	m_tipsAndTricksAct = new QAction(tr("Tips, Tricks and Shortcuts"), this);
 	m_tipsAndTricksAct->setStatusTip(tr("Display some handy Fritzing tips and tricks"));
 	connect(m_tipsAndTricksAct, SIGNAL(triggered()), this, SLOT(tipsAndTricks()));
 

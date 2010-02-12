@@ -1683,10 +1683,6 @@ Estamos a trabalhar para evitar esta mensagem, e apenas deixar-te escolher entre
         <translation>Definir a cor do fundo para a vista actual</translation>
     </message>
     <message>
-        <source>Tips and Tricks</source>
-        <translation>Dicas e Truques</translation>
-    </message>
-    <message>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>Mostra algumas dicas e truques &quot;habilidosos&quot;</translation>
     </message>
@@ -1885,6 +1881,10 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

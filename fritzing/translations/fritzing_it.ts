@@ -1685,10 +1685,6 @@ Quantità	Componente
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tips and Tricks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1885,6 +1881,10 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

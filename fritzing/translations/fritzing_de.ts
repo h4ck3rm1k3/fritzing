@@ -815,12 +815,14 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <source>Routing completed using %n jumper wire(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1268"/>
         <source> and %n jumper part(s)</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1566,6 +1568,11 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <translation>Einen Biegepunkt hinzufügen</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow_menu.cpp" line="1445"/>
+        <source>Tips, Tricks and Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow_menu.cpp" line="2901"/>
         <source>Select All Jumpers</source>
         <translation type="unfinished"></translation>
@@ -1802,11 +1809,6 @@ Please check all views for potential side-effects.</source>
         <location filename="../src/mainwindow_menu.cpp" line="1440"/>
         <source>&amp;About</source>
         <translation>&amp;Über Fritzing</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1445"/>
-        <source>Tips and Tricks</source>
-        <translation>Tipps und Tricks</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1446"/>
@@ -3951,12 +3953,14 @@ im Sortiment.</translation>
         <source>show part label(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/sketch/sketchwidget.cpp" line="5402"/>
         <source>hide part label(s)</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>

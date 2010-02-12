@@ -1981,8 +1981,8 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1445"/>
-        <source>Tips and Tricks</source>
-        <translation>提示與技巧</translation>
+        <source>Tips, Tricks and Shortcuts</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1446"/>

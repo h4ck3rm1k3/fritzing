@@ -1765,6 +1765,11 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow_menu.cpp" line="1445"/>
+        <source>Tips, Tricks and Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow_menu.cpp" line="2901"/>
         <source>Select All Jumpers</source>
         <translation type="unfinished"></translation>
@@ -2023,11 +2028,6 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1440"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1445"/>
-        <source>Tips and Tricks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
