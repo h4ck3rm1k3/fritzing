@@ -51,15 +51,18 @@ TipsAndTricks::TipsAndTricks(QWidget *parent)
 tr("<html><body>") +
 tr("<h3>Fritzing Tips and Tricks</h3>") +
 tr("<ul>") +
-tr("<li>To move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.</li>") +
 tr("<li>An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.</li>") +
+tr("<li>When you export images from Fritzing, you can choose which layers are exported. Before you choose 'Export...', go into the 'View' menu and hide the layers you don't want to be visible.</li>") +
+tr("<li>To edit a part label, double-click it, or use the text input widget in the inspector window.</li>") +
+tr("<li>To add a bendpoint to a wire, double-click where you want the bendpoint.</li>") +
+tr("<li>To delete a bendpoint from a wire, double-click it.</li>") +
+tr("<li>To precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.</li>") +
 tr("<li>To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.</li>") +
 tr("<li>To drag a new wire out of a bendpoint, hold down the Alt key as you drag the mouse.</li>") +
 tr("<li>Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you're dragging will snap to make 90 degree angles with the neighboring wire segment.</li>") +
 tr("<li>In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.</li>") +
 tr("<li>To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.</li>") +
 tr("<li>If you're having trouble selecting a part or a wire (segment), try selecting the part that's in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).</li>") +
-tr("<li>When you export images from Fritzing, you can choose which layers are exported. Before you choose 'Export...', go into the 'View' menu and hide the layers you don't want to be visible.</li>") +
 tr("</ul>") +
 tr("</body></html>") 
 ;
