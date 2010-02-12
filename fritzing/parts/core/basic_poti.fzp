@@ -2,7 +2,7 @@
 <module moduleId="3234DBDC00" >
  <version>2</version>
  <author>Stefan Hermann</author>
- <title>Basic Potentiometer</title>
+ <title>Trimmer Potentiometer</title>
  <label>R</label>
  <date>2008-10-10</date>
  <tags>
@@ -16,8 +16,8 @@
    <property name="family" >Potentiometer</property>
    <property name="type">Trimmer Potentiometer</property>
    <property name="Maximum Resistance" >10k&#8486;</property>
-   <property name="Track" >Linear</property>
-   <property name="Size">12mm</property>
+   <property name="Track">Linear</property>
+   <property name="Size">Trimmer - 12mm</property>
  </properties>
  <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
  <description>A standard adjustable resistor (potentiometer).</description>

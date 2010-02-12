@@ -2,12 +2,13 @@
 <module fritzingVersion="0.3.15b.02.03.3943" moduleId="e89358121bacffbe9b6372e42e4799f4">
     <version>1.0</version>
     <author>Lionel Michel</author>
-    <title>RGB LED</title>
+    <title>RGB LED (6 legs)</title>
     <label>LED</label>
     <date>2010-02-10</date>
     <tags>
         <tag>LED</tag>
         <tag>RGB LED</tag>
+				<tag>RGBB</tag>
         <tag>full color</tag>
         <tag>fritzing core</tag>
     </tags>
@@ -15,9 +16,9 @@
 			<property name="package" >T1.75 (5mm)</property>
 			<property name="family" >LED</property>
 			<property name="forward voltage" >1.8V</property>
-			<property name="color" >RGB</property>
+			<property name="color" >RGBB</property>
     </properties>
-    <description>A full-color LED, combined from four colors.</description>
+    <description>A full-color LED, combined from four colors RGBB.</description>
     <views>
         <iconView>
             <layers image="icon/led-rgb-6pin.svg">

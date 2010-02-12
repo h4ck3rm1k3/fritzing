@@ -15,9 +15,9 @@
  <properties>
   <property name="family" >Potentiometer</property>
   <property name="type">Rotary Shaft Potentiometer</property>
-	<property name="size">Large</property>
+	<property name="size">Rotary - 16mm</property>
   <property name="Maximum Resistance" >100k&#8486;</property>
-  <property name="Track" >Linear</property>
+  <property name="Track">Linear</property>
  </properties>
  <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
  <description>A rotary adjustable resistor (potentiometer).</description>

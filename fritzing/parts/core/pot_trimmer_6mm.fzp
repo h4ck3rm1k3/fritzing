@@ -17,7 +17,7 @@
    <property name="type">Trimmer Potentiometer</property>
    <property name="Maximum Resistance">10k&#8486;</property>
    <property name="Track">Linear</property>
-   <property name="Size">6mm</property>
+   <property name="Size">Trimmer - 6mm</property>
  </properties>
  <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
  <description>A standard 6mm trimmer potentiometer.</description>
