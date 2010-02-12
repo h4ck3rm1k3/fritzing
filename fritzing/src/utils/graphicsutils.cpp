@@ -29,6 +29,7 @@ $Date$
 
 #include <QList>
 #include <QLineF>
+#include <qmath.h>
 
 
 const qreal GraphicsUtils::InchesPerMeter = 39.370078;
@@ -207,5 +208,11 @@ bool GraphicsUtils::loadTransform(const QDomElement & transformElement, QTransfo
 
 	transform.setMatrix(m11, m12, m13, m21, m22, m23, m31, m32, m33);
 	return true;
+}
+
+qreal GraphicsUtils::getNearestOrdinate(qreal ordinate, qreal units) {
+	qreal lo = qFloor(ordinate / units) * units;
+	qreal hi = qCeil(ordinate / units) * units;
+	return (qAbs(lo - ordinate) <= qAbs(hi - ordinate)) ? lo : hi;
 }
 

@@ -108,7 +108,7 @@ public:
 	PaletteItem *getSelectedPart();
 
     void addViewLayer(ViewLayer *);
-    void updateLayerMenu(QMenu * layerMenu, QAction * showAll, QAction * hideAll);
+    void updateLayerMenu(QMenu * layerMenu, QAction * showAllAction, QAction * hideAllAction, QAction * alignAction);
     void setAllLayersVisible(bool visible);
     void setLayerVisible(ViewLayer * viewLayer, bool visible);
 	void setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool visible);
@@ -235,6 +235,9 @@ public:
 	void loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename);
 	void loadLogoImage(long itemID, const QString & newFilename, bool addName);
 	void setNoteFocus(QGraphicsItem *, bool inFocus);
+
+	virtual double gridSizeInches();
+	void alignToGrid(bool);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -541,6 +544,9 @@ protected:
 	int m_arrowTotalX;
 	int m_arrowTotalY;
 	bool m_movingByMouse;
+	bool m_alignToGrid;
+	ConnectorItem * m_alignmentConnectorItem;
+	QPointF m_alignmentConnectorStartPoint;
 
 
 public:

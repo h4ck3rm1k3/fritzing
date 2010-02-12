@@ -74,7 +74,6 @@ public:
 
 protected:
 	QPainterPath shape() const;
- 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);

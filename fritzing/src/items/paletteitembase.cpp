@@ -90,27 +90,6 @@ QPainterPath PaletteItemBase::shape() const
     return path;
 }
 
-QVariant PaletteItemBase::itemChange(GraphicsItemChange change, const QVariant &value)
-{
-     if (change == ItemPositionChange && scene()) {
-
-     	// snap to grid
-
-        // QVariant argument is the new position.
-        //QPointF newPos = value.toPointF();
-        //int nx = abs((int) qFloor(newPos.x() + .5));
-        //int ny = abs((int) qFloor(newPos.y() + .5));
-        //nx -= nx % 20;
-        //ny -= ny % 20;
-        //if (newPos.x() < 0) nx = -nx;
-        //if (newPos.y() < 0) ny = -ny;
-        //newPos.setX(nx);
-        //newPos.setY(ny);
-        //return newPos;
-     }
-     return ItemBase::itemChange(change, value);
-}
-
 void PaletteItemBase::saveGeometry() {
 	m_viewGeometry.setLoc(this->pos());
 	m_viewGeometry.setSelected(this->isSelected());

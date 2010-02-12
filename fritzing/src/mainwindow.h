@@ -136,6 +136,7 @@ protected slots:
     void zoomOut(int steps);
     void fitInWindow();
     void actualSize();
+    void alignToGrid();
 	void setBackgroundColor();
     void showBreadboardView();
     void showSchematicView();
@@ -494,6 +495,7 @@ protected:
     QAction *m_zoomOutAct;
     QAction *m_fitInWindowAct;
     QAction *m_actualSizeAct;
+    QAction *m_alignToGridAct;
     QAction *m_setBackgroundColorAct;
     QAction *m_showBreadboardAct;
     QAction *m_showSchematicAct;

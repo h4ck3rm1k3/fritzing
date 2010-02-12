@@ -43,6 +43,7 @@ public:
 	static qreal pixels2mils(qreal p);
 	static qreal pixels2ins(qreal p);
 	static qreal distance2(QPointF p1, QPointF p2);
+	static qreal getNearestOrdinate(qreal ordinate, qreal units);
 
 	static qreal mm2mils(qreal mm);
 	static qreal pixels2mm(qreal p);

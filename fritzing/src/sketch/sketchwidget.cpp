@@ -88,6 +88,7 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_alignToGrid = false;
 	m_movingByMouse = m_movingByArrow = false;
 	m_statusConnectState = StatusConnectNotTried;
 	m_dragBendpointWire = NULL;
@@ -1852,7 +1853,17 @@ void SketchWidget::prepMove() {
 		categorizeDragWires(wires);
 	}
 
+	m_alignmentConnectorItem = NULL;
 	foreach (ItemBase * itemBase, m_savedItems) {
+		if (m_alignmentConnectorItem == NULL) {
+			foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+				m_alignmentConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
+				if (m_alignmentConnectorItem) {
+					m_alignmentConnectorStartPoint = m_alignmentConnectorItem->sceneAdjustedTerminalPoint(NULL);
+					break;
+				}
+			}
+		}
 		itemBase->saveGeometry();
 	}
 
@@ -2179,6 +2190,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScroll)
 {
+
 	if (checkAutoScroll) {
 		bool result = checkAutoscroll(globalPos);
 		if (!result) return;
@@ -2186,6 +2198,17 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScroll)
 
 	QPoint q = mapFromGlobal(globalPos);
 	QPointF scenePos = mapToScene(q);
+
+	if (m_alignToGrid && (m_alignmentConnectorItem != NULL)) {
+		ItemBase * item = m_alignmentConnectorItem->attachedTo();
+		QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
+		QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
+		QPointF newPos = m_alignmentConnectorStartPoint + currentParentPos - buttonDownParentPos;
+		qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
+		qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+		scenePos.setX(scenePos.x() + nx - newPos.x());
+		scenePos.setY(scenePos.y() + ny - newPos.y());
+	}
 
 /*
 	DebugDialog::debug(QString("scroll 1 sx:%1 sy:%2 sbx:%3 sby:%4 qx:%5 qy:%6")
@@ -2242,6 +2265,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 
 	if (m_movingByArrow) return;
 
+	m_alignmentConnectorItem = NULL;
 	m_movingByMouse = false;
 
 	m_dragBendpointWire = NULL;
@@ -2841,7 +2865,9 @@ void SketchWidget::addViewLayer(ViewLayer * viewLayer) {
     viewLayer->setAction(action);
 }
 
-void SketchWidget::updateLayerMenu(QMenu * layerMenu, QAction * showAllAction, QAction * hideAllAction) {
+void SketchWidget::updateLayerMenu(QMenu * layerMenu, QAction * showAllAction, QAction * hideAllAction, QAction * alignAction) {
+	alignAction->setChecked(m_alignToGrid);
+	
 	QList<ViewLayer::ViewLayerID>keys = m_viewLayers.keys();
 
 	// make sure they're in ascending order when inserting into the menu
@@ -6394,4 +6420,12 @@ void SketchWidget::setNoteFocus(QGraphicsItem * item, bool inFocus) {
 	else {
 		m_inFocus.removeOne(item);
 	}
+}
+
+double SketchWidget::gridSizeInches() {
+	return 0.1;
+}
+
+void SketchWidget::alignToGrid(bool align) {
+	m_alignToGrid = align;
 }

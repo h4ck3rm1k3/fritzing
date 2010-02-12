@@ -1369,6 +1369,11 @@ void MainWindow::createViewMenuActions() {
 	m_actualSizeAct->setStatusTip(tr("Actual size"));
 	connect(m_actualSizeAct, SIGNAL(triggered()), this, SLOT(actualSize()));
 
+	m_alignToGridAct = new QAction(tr("Align to Grid"), this);
+	m_alignToGridAct->setStatusTip(tr("Align items to grid when dragging"));
+	m_alignToGridAct->setCheckable(true);
+	connect(m_alignToGridAct, SIGNAL(triggered()), this, SLOT(alignToGrid()));
+
 	m_setBackgroundColorAct = new QAction(tr("Set Background Color ..."), this);
 	m_setBackgroundColorAct->setStatusTip(tr("Set the background color for the current view"));
 	connect(m_setBackgroundColorAct, SIGNAL(triggered()), this, SLOT(setBackgroundColor()));
@@ -1569,6 +1574,12 @@ void MainWindow::createMenus()
     m_viewMenu->addAction(m_fitInWindowAct);
     m_viewMenu->addAction(m_actualSizeAct);
 	m_viewMenu->addSeparator();
+
+#ifndef QT_NO_DEBUG
+    m_viewMenu->addAction(m_alignToGridAct);
+	m_viewMenu->addSeparator();
+#endif
+
     m_viewMenu->addAction(m_setBackgroundColorAct);
     m_viewMenu->addSeparator();
     m_viewMenu->addAction(m_showBreadboardAct);
@@ -1643,7 +1654,7 @@ void MainWindow::updateLayerMenu() {
 
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->updateLayerMenu(m_viewMenu, m_showAllLayersAct, m_hideAllLayersAct );
+	m_currentGraphicsView->updateLayerMenu(m_viewMenu, m_showAllLayersAct, m_hideAllLayersAct, m_alignToGridAct );
 }
 
 void MainWindow::updateWireMenu() {
@@ -3634,3 +3645,10 @@ void MainWindow::updateRatsnest() {
 	
 	m_undoStack->push(parentCommand);
 }
+
+void MainWindow::alignToGrid() {
+	if (m_currentGraphicsView == NULL) return;
+
+	m_currentGraphicsView->alignToGrid(m_alignToGridAct->isChecked());
+}
+

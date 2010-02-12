@@ -318,3 +318,6 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 	m_undoStack->push(parentCommand);
 }
 
+double SchematicSketchWidget::gridSizeInches() {
+	return 0.3;
+}
