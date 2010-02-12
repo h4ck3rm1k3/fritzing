@@ -17,9 +17,9 @@ TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG
 
 ADMINS = (
-    ('Jannis Leidel', 'jannis@leidel.info'),
     ('Andre Knoerig', 'andre.knoerig@gmail.com'),
     ('Mariano Crowe', 'merunga@gmail.com'),
+    ('Jonathan Cohen', 'cohen@irascible.com'),
 )
 MANAGERS = ADMINS
 
@@ -198,9 +198,9 @@ FILEBROWSER_EXTENSIONS = {
     'Video':['.mov','.wmv','.mpeg','.mpg','.avi','.rm'],
     'Document':['.pdf','.doc','.rtf','.txt','.xls','.csv'],
     'Sound':['.mp3','.mp4','.wav','.aiff','.midi'],
-    'Code':['.html','.py','.js','.css'],
+    'Code':['.html','.py','.js','.css', '.pde'],
     'Archives':['.tgz','.tar', '.zip', '.rar', '.dmg', '.gz', '.bz2'],
-    'Fritzing':['.fz', '.fzb', '.fzp', '.ts'],
+    'Fritzing':['.fz', '.fzb', '.fzp','.fzpz' , '.ts'],
 }
 FILEBROWSER_STRICT_PIL = True
 
