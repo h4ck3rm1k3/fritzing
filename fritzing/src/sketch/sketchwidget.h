@@ -365,6 +365,7 @@ protected:
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
 	virtual double gridSizeInches();
 	virtual bool canAlignToTopLeft(ItemBase *);
+	void findAlignmentAnchor(ItemBase * originatingItem, QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
 
 
 

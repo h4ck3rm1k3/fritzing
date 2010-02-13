@@ -1472,6 +1472,10 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors, m_viewIdentifier);
 
+		QSet<ItemBase *> savedItems;
+		QHash<Wire *, ConnectorItem *> savedWires;
+		findAlignmentAnchor(m_droppingItem, savedItems, savedWires);
+
 		ItemDrag::_cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 		connect(ItemDrag::_itemDrag(), SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
@@ -1529,14 +1533,23 @@ void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 	checkAutoscroll(m_globalPos);
 
 	QPointF loc = this->mapToScene(eventPos) - m_droppingOffset;
+	if (m_alignToGrid && (m_alignmentItem != NULL)) {
+		QPointF newPos = m_alignmentStartPoint + loc - m_alignmentItem->getViewGeometry().loc();
+		qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
+		qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+		loc.setX(loc.x() + nx - newPos.x());
+		loc.setY(loc.y() + ny - newPos.y());
+	}
+
 	m_droppingItem->setItemPos(loc);
 	m_droppingItem->findConnectorsUnder();
 
 }
 
-
 void SketchWidget::dropEvent(QDropEvent *event)
 {
+	m_alignmentItem = NULL;
+
 	turnOffAutoscroll();
 	clearHoldingSelectItem();
 
@@ -1858,55 +1871,60 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		categorizeDragWires(wires);
 	}
 
-	m_alignmentItem = NULL;
-	if (originatingItem) {
-		bool gotOne = false;
-		foreach (QGraphicsItem * childItem, originatingItem->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem) {
-				m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
-				gotOne = true;
-				break;
-			}
-		}
-		if (!gotOne && canAlignToTopLeft(originatingItem)) {
-			m_alignmentStartPoint = originatingItem->pos();
-			gotOne = true;
-		}
-		if (gotOne) {
-			m_alignmentItem = originatingItem;
-		}
-	}
-
 	foreach (ItemBase * itemBase, m_savedItems) {
 		itemBase->saveGeometry();
-		if (m_alignmentItem == NULL) {
-			foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-				if (connectorItem) {
-					m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
-					m_alignmentItem = itemBase;
-					break;
-				}
-			}
-		}
 	}
 
 	foreach (Wire * w, m_savedWires.keys()) {
 		w->saveGeometry();
-		if (m_alignmentItem == NULL) {
-			m_alignmentItem = w;
-			m_alignmentStartPoint = w->connector0()->sceneAdjustedTerminalPoint(NULL);
+	}
+
+	findAlignmentAnchor(originatingItem, m_savedItems, m_savedWires);
+}
+
+void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires) 
+{
+	m_alignmentItem = NULL;
+	if (!m_alignToGrid) return;
+
+	if (originatingItem) {
+		foreach (QGraphicsItem * childItem, originatingItem->childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+			if (connectorItem) {
+				m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
+				m_alignmentItem = originatingItem;
+				return;
+			}
+		}
+		if (canAlignToTopLeft(originatingItem)) {
+			m_alignmentStartPoint = originatingItem->pos();
+			m_alignmentItem = originatingItem;
+			return;
 		}
 	}
 
-	if (m_alignmentItem == NULL) {
-		foreach (ItemBase * itemBase, m_savedItems) {
-			if (canAlignToTopLeft(itemBase)) {
-				m_alignmentStartPoint = itemBase->pos();
+	foreach (ItemBase * itemBase, savedItems) {
+		foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+			if (connectorItem) {
+				m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
 				m_alignmentItem = itemBase;
-				break;
+				return;
 			}
+		}
+	}
+
+	foreach (Wire * w, savedWires.keys()) {
+		m_alignmentItem = w;
+		m_alignmentStartPoint = w->connector0()->sceneAdjustedTerminalPoint(NULL);
+		return;
+	}
+
+	foreach (ItemBase * itemBase, savedItems) {
+		if (canAlignToTopLeft(itemBase)) {
+			m_alignmentStartPoint = itemBase->pos();
+			m_alignmentItem = itemBase;
+			return;
 		}
 	}
 }
@@ -2229,7 +2247,6 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScroll)
 {
-
 	if (checkAutoScroll) {
 		bool result = checkAutoscroll(globalPos);
 		if (!result) return;
@@ -4031,7 +4048,7 @@ void SketchWidget::clearTemporaries() {
 }
 
 void SketchWidget::killDroppingItem() {
-	// was only a temporary placeholder, get rid of it now
+	m_alignmentItem = NULL;
 	if (m_droppingItem != NULL) {
 		m_droppingItem->removeLayerKin();
 		this->scene()->removeItem(m_droppingItem);
