@@ -313,3 +313,7 @@ bool BreadboardSketchWidget::canDisconnectAll() {
 bool BreadboardSketchWidget::ignoreFemale() {
 	return false;
 }
+
+double BreadboardSketchWidget::gridSizeInches() {
+	return 0.1;
+}

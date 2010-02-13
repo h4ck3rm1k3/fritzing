@@ -1656,7 +1656,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 		m_savedWires.clear();
 		m_moveEventCount = 0;
 		m_arrowTotalX = m_arrowTotalY = 0;
-		prepMove();
+		prepMove(NULL);
 		if (m_savedItems.count() == 0) return false;
 
 		m_mousePressScenePos = this->mapToScene(this->rect().center());
@@ -1671,6 +1671,11 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 	if (event->modifiers() & Qt::ShiftModifier) {
 		dx *= 10;
 		dy *= 10;
+	}
+
+	if (m_alignToGrid) {
+		dx *= gridSizeInches() * FSvgRenderer::printerScale();
+		dy *= gridSizeInches() * FSvgRenderer::printerScale();
 	}
 
 	m_arrowTotalX += dx;
@@ -1797,12 +1802,12 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		return;
 	}
 
-	prepMove();
+	prepMove(itemBase ? itemBase : dynamic_cast<ItemBase *>(item->parentItem()));
 
 	setupAutoscroll(true);
 }
 
-void SketchWidget::prepMove() {
+void SketchWidget::prepMove(ItemBase * originatingItem) {
 	QSet<Wire *> wires;
 	QList<ItemBase *> items;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
@@ -1853,22 +1858,56 @@ void SketchWidget::prepMove() {
 		categorizeDragWires(wires);
 	}
 
-	m_alignmentConnectorItem = NULL;
+	m_alignmentItem = NULL;
+	if (originatingItem) {
+		bool gotOne = false;
+		foreach (QGraphicsItem * childItem, originatingItem->childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+			if (connectorItem) {
+				m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
+				gotOne = true;
+				break;
+			}
+		}
+		if (!gotOne && canAlignToTopLeft(originatingItem)) {
+			m_alignmentStartPoint = originatingItem->pos();
+			gotOne = true;
+		}
+		if (gotOne) {
+			m_alignmentItem = originatingItem;
+		}
+	}
+
 	foreach (ItemBase * itemBase, m_savedItems) {
-		if (m_alignmentConnectorItem == NULL) {
+		itemBase->saveGeometry();
+		if (m_alignmentItem == NULL) {
 			foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-				m_alignmentConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-				if (m_alignmentConnectorItem) {
-					m_alignmentConnectorStartPoint = m_alignmentConnectorItem->sceneAdjustedTerminalPoint(NULL);
+				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+				if (connectorItem) {
+					m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
+					m_alignmentItem = itemBase;
 					break;
 				}
 			}
 		}
-		itemBase->saveGeometry();
 	}
 
 	foreach (Wire * w, m_savedWires.keys()) {
 		w->saveGeometry();
+		if (m_alignmentItem == NULL) {
+			m_alignmentItem = w;
+			m_alignmentStartPoint = w->connector0()->sceneAdjustedTerminalPoint(NULL);
+		}
+	}
+
+	if (m_alignmentItem == NULL) {
+		foreach (ItemBase * itemBase, m_savedItems) {
+			if (canAlignToTopLeft(itemBase)) {
+				m_alignmentStartPoint = itemBase->pos();
+				m_alignmentItem = itemBase;
+				break;
+			}
+		}
 	}
 }
 
@@ -2199,11 +2238,10 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScroll)
 	QPoint q = mapFromGlobal(globalPos);
 	QPointF scenePos = mapToScene(q);
 
-	if (m_alignToGrid && (m_alignmentConnectorItem != NULL)) {
-		ItemBase * item = m_alignmentConnectorItem->attachedTo();
-		QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
-		QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
-		QPointF newPos = m_alignmentConnectorStartPoint + currentParentPos - buttonDownParentPos;
+	if (m_alignToGrid && (m_alignmentItem != NULL)) {
+		QPointF currentParentPos = m_alignmentItem->mapToParent(m_alignmentItem->mapFromScene(scenePos));
+		QPointF buttonDownParentPos = m_alignmentItem->mapToParent(m_alignmentItem->mapFromScene(m_mousePressScenePos));
+		QPointF newPos = m_alignmentStartPoint + currentParentPos - buttonDownParentPos;
 		qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
 		qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
 		scenePos.setX(scenePos.x() + nx - newPos.x());
@@ -2265,7 +2303,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 
 	if (m_movingByArrow) return;
 
-	m_alignmentConnectorItem = NULL;
+	m_alignmentItem = NULL;
 	m_movingByMouse = false;
 
 	m_dragBendpointWire = NULL;
@@ -3357,7 +3395,7 @@ void SketchWidget::rotateX(qreal degrees)
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
-	prepMove();
+	prepMove(NULL);
 
 	QRectF itemsBoundingRect;
 	// want the bounding rect of the original selected items, not all the items that are secondarily being rotated
@@ -6423,9 +6461,14 @@ void SketchWidget::setNoteFocus(QGraphicsItem * item, bool inFocus) {
 }
 
 double SketchWidget::gridSizeInches() {
-	return 0.1;
+	return 0.5;
 }
 
 void SketchWidget::alignToGrid(bool align) {
 	m_alignToGrid = align;
+}
+
+bool SketchWidget::canAlignToTopLeft(ItemBase *) 
+{
+	return false;
 }

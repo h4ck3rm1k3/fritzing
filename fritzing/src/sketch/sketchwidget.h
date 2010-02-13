@@ -236,7 +236,6 @@ public:
 	void loadLogoImage(long itemID, const QString & newFilename, bool addName);
 	void setNoteFocus(QGraphicsItem *, bool inFocus);
 
-	virtual double gridSizeInches();
 	void alignToGrid(bool);
 
 protected:
@@ -353,7 +352,7 @@ protected:
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
-	void prepMove();
+	void prepMove(ItemBase * originatingItem);
 	void initBackgroundColor();
 	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
 	long findWire(long itemID);
@@ -364,6 +363,10 @@ protected:
 											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 	int selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg);
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
+	virtual double gridSizeInches();
+	virtual bool canAlignToTopLeft(ItemBase *);
+
+
 
 protected:
 	static bool lessThan(int a, int b);
@@ -545,8 +548,8 @@ protected:
 	int m_arrowTotalY;
 	bool m_movingByMouse;
 	bool m_alignToGrid;
-	ConnectorItem * m_alignmentConnectorItem;
-	QPointF m_alignmentConnectorStartPoint;
+	ItemBase * m_alignmentItem;
+	QPointF m_alignmentStartPoint;
 
 
 public:
