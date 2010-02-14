@@ -74,7 +74,7 @@
     <name>BinManager</name>
     <message>
         <source>Parts</source>
-        <translation>Onderdelen</translation>
+        <translation>Componenten</translation>
     </message>
     <message>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
@@ -242,8 +242,8 @@ om deze aansluiting in orde te brengen</translation>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
-        <translation>Wilt u onderdelen importeren die gemaakt zijn met een vorige versie van Fritzing?
-Nota : U kunt ze later ook nog importeren via &quot;Help&quot; &gt; &quot;Importeer onderdelen en bins van oude versie...&quot; menu action.</translation>
+        <translation>Wilt u componenten importeren die gemaakt zijn met een vorige versie van Fritzing?
+Nota : U kunt ze later ook nog importeren via &quot;Help&quot; &gt; &quot;Importeer componenten en bins van oude versie...&quot; menu action.</translation>
     </message>
     <message>
         <source>Import</source>
@@ -370,7 +370,7 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     </message>
     <message>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation>De&lt;b&gt; Breadbord view&lt;/b&gt; is bedoeld om er uit te zien als een &lt;i&gt;echte&lt;/i&gt; breadbord prototype.&lt;br/&gt;&lt;br/&gt;Begin door een onderdeel te verslepen uit de onderdelen mand, die onderaan rechts staat. Versleep dan nog meer onderdelen en connecteer ze door te klikken op de aansluitingen en de draden te verslepen. Het is het zelfde proces alsof je in het echte leven zou doen. &lt;br/&gt;&lt;br/&gt;Wanneer je klaar bent met je sketch in de breadbord view, probeer dan de andere views. U kunt switchen tussen de andere views door te klikken op de View switcher of de navigator onderaan rechts. Omdat de verschillende views verschillende doelen hebben, zullen de onderdelen er ook anders uitzien.</translation>
+        <translation>De&lt;b&gt; Breadbord view&lt;/b&gt; is bedoeld om er uit te zien als een &lt;i&gt;echte&lt;/i&gt; breadbord prototype.&lt;br/&gt;&lt;br/&gt;Begin door een component te verslepen uit de componenten mand, die onderaan rechts staat. Versleep dan nog meer componenten en connecteer ze door te klikken op de aansluitingen en de draden te verslepen. Het is het zelfde proces alsof je in het echte leven zou doen. &lt;br/&gt;&lt;br/&gt;Wanneer je klaar bent met je sketch in de breadbord view, probeer dan de andere views. U kunt switchen tussen de andere views door te klikken op de View switcher of de navigator onderaan rechts. Omdat de verschillende views verschillende doelen hebben, zullen de componenten er ook anders uitzien.</translation>
     </message>
     <message>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
@@ -378,7 +378,7 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     </message>
     <message>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;The first thing you will need is a board &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; to place your parts on. To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation>De &lt;b&gt;PCB view&lt;/b&gt; is de plaats waar je kiest waar je componenten zullen staan op de echte PCB (Printed Circuit Board). &lt;br/&gt;&lt;br/&gt;PCB&apos;s kunnen gemaakt worden thuis of in een labo met het DIY etching proces. Ze kunnen ook verzonden worden naar een professionele PCB service voor de meer precisere fabrikatie. &lt;br/&gt;Het eerste wat je nodig hebt is een bord &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot;/&gt; om je onderdelen op te zetten. Om je PCB uit te zetten, herschik al je componenten zodat ze mooi op het bord passen. Probeer ze dan te verplaatsen zodat ze de kortste weg nemen en ze geen verwarring kunnen veroorzaken bij de aansluitingen. U kunt ook het bord vergroten en verkleinen. Eenmaal de onderdelen juist staan, kun je rechts-klikken op iedere aansluiting of Autoroute kiezen om de koperen banen te creëren tussen de onderdelen. De Autoroute knop &lt;img src=&quot;:resource/images/icons/toolbarAutorouteEnabled_icon.svg&quot; /&gt; staat onderaan links.</translation>
+        <translation>De &lt;b&gt;PCB view&lt;/b&gt; is de plaats waar je kiest waar je componenten zullen staan op de echte PCB (Printed Circuit Board). &lt;br/&gt;&lt;br/&gt;PCB&apos;s kunnen gemaakt worden thuis of in een labo met het DIY etching proces. Ze kunnen ook verzonden worden naar een professionele PCB service voor de meer precisere fabrikatie. &lt;br/&gt;Het eerste wat je nodig hebt is een bord &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot;/&gt; om je componenten op te zetten. Om je PCB uit te zetten, herschik al je componenten zodat ze mooi op het bord passen. Probeer ze dan te verplaatsen zodat ze de kortste weg nemen en ze geen verwarring kunnen veroorzaken bij de aansluitingen. U kunt ook het bord vergroten en verkleinen. Eenmaal de componenten juist staan, kun je rechts-klikken op iedere aansluiting of Autoroute kiezen om de koperen banen te creëren tussen de componenten. De Autoroute knop &lt;img src=&quot;:resource/images/icons/toolbarAutorouteEnabled_icon.svg&quot; /&gt; staat onderaan links.</translation>
     </message>
 </context>
 <context>
@@ -636,7 +636,7 @@ Wilt u nu herstarten?</translation>
     </message>
     <message>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
-        <translation>Wilt u de onderdelen behouden die werden geladen bij deze uitwisselbare sketch %1?</translation>
+        <translation>Wilt u de componenten behouden die werden geladen bij deze uitwisselbare sketch %1?</translation>
     </message>
     <message>
         <source>Select a part to import</source>
@@ -833,7 +833,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>directly loading parts</source>
-        <translation>Direct inladen van onderdelen</translation>
+        <translation>Direct inladen van componenten</translation>
     </message>
     <message>
         <source>loading %1 (model)</source>
@@ -854,6 +854,10 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     <message>
         <source>&amp;New</source>
         <translation>&amp;Nieuw</translation>
+    </message>
+    <message>
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new sketch</source>
@@ -901,7 +905,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Export current sketch and its non-core parts</source>
-        <translation>Exporteer de huidige sketch en zijn niet-kern onderdelen</translation>
+        <translation>Exporteer de huidige sketch en zijn niet-kern componenten</translation>
     </message>
     <message>
         <source>Share online...</source>
@@ -969,7 +973,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>List of parts (&amp;Bill of Materials)...</source>
-        <translation>Lijst van onderdelen (&amp;Bill of materials)...</translation>
+        <translation>Lijst van componenten (&amp;Bill of materials)...</translation>
     </message>
     <message>
         <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
@@ -1177,7 +1181,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Open the old parts editor</source>
-        <translation>Open de oude onderdelen editor</translation>
+        <translation>Open de oude componenten editor</translation>
     </message>
     <message>
         <source>&amp;Add to bin...</source>
@@ -1185,7 +1189,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Add selected part to bin</source>
-        <translation>Voeg de geselecteerde onderdelen toe aan de mand</translation>
+        <translation>Voeg de geselecteerde componenten toe aan de mand</translation>
     </message>
     <message>
         <source>Disconnect All Wires</source>
@@ -1225,7 +1229,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation>Roteer de geselecteerde onderdelen 90° wijzerzin</translation>
+        <translation>Roteer de geselecteerde componenten 90° wijzerzin</translation>
     </message>
     <message>
         <source>&amp;Rotate 180°</source>
@@ -1233,7 +1237,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation>Roteer de geselecteerde onderdelen 180°</translation>
+        <translation>Roteer de geselecteerde componenten 180°</translation>
     </message>
     <message>
         <source>&amp;Rotate 90° Counter Clockwise</source>
@@ -1345,7 +1349,7 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Show or hide the label for the selected parts</source>
-        <translation>Toon of verstop de label van de geselecteerde onderdelen</translation>
+        <translation>Toon of verstop de label van de geselecteerde componenten</translation>
     </message>
     <message>
         <source>&amp;Import...</source>
@@ -1373,11 +1377,11 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation>Selecteer oude onderdelen</translation>
+        <translation>Selecteer oude componenten</translation>
     </message>
     <message>
         <source>Update selected parts</source>
-        <translation>Update de geselecteerde onderdelen</translation>
+        <translation>Update de geselecteerde componenten</translation>
     </message>
     <message>
         <source>&amp;Zoom In</source>
@@ -1513,11 +1517,11 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>Online Parts Reference</source>
-        <translation>Online onderdelen referentie</translation>
+        <translation>Online componenten referentie</translation>
     </message>
     <message>
         <source>Open Parts Reference</source>
-        <translation>Open onderdelen referentie</translation>
+        <translation>Open componenten referentie</translation>
     </message>
     <message>
         <source>First Time Help</source>
@@ -1561,11 +1565,11 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     </message>
     <message>
         <source>&amp;Import parts and bins from old version...</source>
-        <translation>&amp;Importeer onderdelen en manden van een oude versie...</translation>
+        <translation>&amp;Importeer componenten en manden van een oude versie...</translation>
     </message>
     <message>
         <source>Import parts and bins from previous installation</source>
-        <translation>Importeer onderdelen en manden van een vorige installatie</translation>
+        <translation>Importeer componenten en manden van een vorige installatie</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -1763,7 +1767,7 @@ Aantal                   Onderdeel
     </message>
     <message>
         <source>You will have to restart Fritzing in order to use the imported parts</source>
-        <translation>U moet Fritzing herstarten om de geïmporteerde onderdelen te kunnen gebruiken</translation>
+        <translation>U moet Fritzing herstarten om de geïmporteerde componenten te kunnen gebruiken</translation>
     </message>
     <message>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
@@ -1804,17 +1808,17 @@ Aantal                   Onderdeel
     <message>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
-        <translation>Geen oude onderdelen gevonden.
-Al uw onderdelen zijn up-to-date.</translation>
+        <translation>Geen oude componenten gevonden.
+Al uw componenten zijn up-to-date.</translation>
     </message>
     <message>
         <source>Outdated parts</source>
-        <translation>Oude Onderdelen</translation>
+        <translation>Oude componenten</translation>
     </message>
     <message numerus="yes">
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation>
-            <numerusform>%n oude onderdelen gevonden. Wilt u ze nu updaten?</numerusform>
+            <numerusform>%n oude componenten gevonden. Wilt u ze nu updaten?</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1833,7 +1837,7 @@ Al uw onderdelen zijn up-to-date.</translation>
     <message>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
-        <translation>Successvol %1 onderdelen ge-update.
+        <translation>Successvol %1 componenten ge-update.
 Controleer a.u.b. alle views voor potentiële fouten.</translation>
     </message>
     <message>
@@ -1858,7 +1862,7 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     <message numerus="yes">
         <source> and %n jumper part(s)</source>
         <translation>
-            <numerusform>en %n jumper onderdelen</numerusform>
+            <numerusform>en %n jumper componenten</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1868,7 +1872,7 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     </message>
     <message>
         <source>Select all jumper parts</source>
-        <translation>Selecteer alle jumper onderdelen</translation>
+        <translation>Selecteer alle jumper componenten</translation>
     </message>
     <message>
         <source>Update ratsnest</source>
@@ -1883,19 +1887,15 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tips, Tricks and Shortcuts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Align to Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Align items to grid when dragging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2127,11 +2127,11 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>All Parts</source>
-        <translation>Alle onderdelen</translation>
+        <translation>Alle componenten</translation>
     </message>
     <message>
         <source>All User Parts</source>
-        <translation>Alle gebruikers onderdelen</translation>
+        <translation>Alle gebruikers componenten</translation>
     </message>
     <message>
         <source>Import...</source>
@@ -2196,7 +2196,7 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Do you really want to add the selected part to the bin?</source>
-        <translation>Wilt u zeker de geselecteerde onderdelen toevoegen aan de mand?</translation>
+        <translation>Wilt u zeker de geselecteerde componenten toevoegen aan de mand?</translation>
     </message>
     <message>
         <source>Remove from bin</source>
@@ -2204,7 +2204,7 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Do you really want to remove the selected part from the bin?</source>
-        <translation>Weet u zeker dat u de geselecteerde onderdelen wilt verwijderen uit de mand?</translation>
+        <translation>Weet u zeker dat u de geselecteerde componenten wilt verwijderen uit de mand?</translation>
     </message>
     <message>
         <source>Rename bin</source>
@@ -2216,7 +2216,7 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Contributed Parts</source>
-        <translation>Bijgedragen onderdelen</translation>
+        <translation>Bijgedragen componenten</translation>
     </message>
 </context>
 <context>
@@ -2251,12 +2251,12 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Parts Editor</source>
-        <translation>Onderdelen editor</translation>
+        <translation>componenten editor</translation>
     </message>
     <message>
         <source>Error! Cannot create part file.
 </source>
-        <translation>Fout! Kan onderdelen bestand niet creëren.
+        <translation>Fout! Kan componenten bestand niet creëren.
 </translation>
     </message>
     <message>
@@ -2404,7 +2404,7 @@ Meer informatie op http://fritzing.org/using-svg-images-new-parts/ </translation
     </message>
     <message>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
-        <translation>Onderdelen editor : Kon eind punt van de aansluiting %1 niet opslaan in %2 view</translation>
+        <translation>Componenten editor : Kon eind punt van de aansluiting %1 niet opslaan in %2 view</translation>
     </message>
 </context>
 <context>
@@ -2415,7 +2415,7 @@ Meer informatie op http://fritzing.org/using-svg-images-new-parts/ </translation
     </message>
     <message>
         <source>Please refer to the &lt;a style=&apos;color: #52182C&apos; href=&apos;http://fritzing.org/learning/tutorials/creating-custom-parts/&apos;&gt;guidelines&lt;/a&gt; before modifying or creating parts</source>
-        <translation>Refereer a.u.b. naar de &lt;a style= color:#52182C&apos; href=&apos;http://fritzing.org/learning/tutorials/creating-custom-parts/&apos;&gt;richtlijnen&lt;/a&gt;voordat u onderdelen wijzigd of creëert</translation>
+        <translation>Refereer a.u.b. naar de &lt;a style= color:#52182C&apos; href=&apos;http://fritzing.org/learning/tutorials/creating-custom-parts/&apos;&gt;richtlijnen&lt;/a&gt;voordat u componenten wijzigd of creëert</translation>
     </message>
     <message>
         <source>What does this
@@ -2527,7 +2527,7 @@ Heb nog even geduld.</translation>
     </message>
     <message>
         <source>Friting cannot load the parts bin</source>
-        <translation>Fritzing kan de onderdelen mand niet laden</translation>
+        <translation>Fritzing kan de componenten mand niet laden</translation>
     </message>
     <message>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
@@ -2547,7 +2547,7 @@ Heb nog even geduld.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;Om een aansluiting &quot;extern&quot; te maken, zodat de onderdelen buiten de module kunnen aangesloten worden, klik erop; klik er nogmaals op het niet beschikbaar te maken voor aansluiting. Om de selectie gemakkelijker te maken, gebruik het muis wiel om in en uit te zoomen. &lt;/p&gt;&lt;p&gt;Vergeet niet om naar beneden te scrollen en de omschrijving in te vullen en andere velden die uw module beschrijven.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;Om een aansluiting &quot;extern&quot; te maken, zodat de componenten buiten de module kunnen aangesloten worden, klik erop; klik er nogmaals op het niet beschikbaar te maken voor aansluiting. Om de selectie gemakkelijker te maken, gebruik het muis wiel om in en uit te zoomen. &lt;/p&gt;&lt;p&gt;Vergeet niet om naar beneden te scrollen en de omschrijving in te vullen en andere velden die uw module beschrijven.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Edit link</source>
@@ -2595,7 +2595,7 @@ Heb nog even geduld.</translation>
     </message>
     <message>
         <source>No parts found.</source>
-        <translation>Geen onderdelen gevonden.</translation>
+        <translation>Geen componenten gevonden.</translation>
     </message>
     <message>
         <source>Parse error (2) at line %1, column %2:
@@ -2659,7 +2659,7 @@ bestaat al, we willen het niet nogmaals toevoegen, juist?</translation>
         <source>Sorry, we have a problem with the swapping mechanism.
 Fritzing still works, but you won&apos;t be able to change parts properties.</source>
         <translation>Sorry, we hebben een probleem met het omwissel mechanisme.
-Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wijzigen.</translation>
+Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wijzigen.</translation>
     </message>
     <message>
         <source>bb</source>
@@ -2739,7 +2739,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation>Selecteer oude onderdelen</translation>
+        <translation>Selecteer oude componenten</translation>
     </message>
     <message>
         <source>Zoom</source>
@@ -2779,7 +2779,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>Parts</source>
-        <translation>Onderdelen</translation>
+        <translation>Componenten</translation>
     </message>
     <message>
         <source>Wires</source>
@@ -3273,7 +3273,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>&lt;li&gt;If you&apos;re having trouble selecting a part or a wire (segment), try selecting the part that&apos;s in the way and send it to the back: use the Raise and Lower functions on the Part menu or the context menu (right-click menu).&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Als u problemen hebt om een onderdeel of een draad (segment) te selecteren, probeer het onderdeel te selecteren die in de weg staat en het naar achter te verplaatsen: Gebruik heffen en dalen functie in het onderdelen menu of de context menu (Rechter muisknop klikken).&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Als u problemen hebt om een component of een draad (segment) te selecteren, probeer het component te selecteren die in de weg staat en het naar achter te verplaatsen: Gebruik heffen en dalen functie in het componenten menu of de context menu (Rechter muisknop klikken).&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;When you export images from Fritzing, you can choose which layers are exported. Before you choose &apos;Export...&apos;, go into the &apos;View&apos; menu and hide the layers you don&apos;t want to be visible.&lt;/li&gt;</source>
@@ -3289,10 +3289,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
     </message>
     <message>
         <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Een icoon in de onderdelen mand kan ook meerdere gerelateerde onderdelen voorstellen. Dus waneer je een icoon versleept van de onderdelen mand naar de sketch, kijk dan zeker naar de inspector. De inspector zal de beschikbare keuzes tonen om je onderdeel te wijzigen of om te wisselen tussen een gerelateerd onderdeel.&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Een icoon in de componenten mand kan ook meerdere gerelateerde componenten voorstellen. Dus waneer je een icoon versleept van de componenten mand naar de sketch, kijk dan zeker naar de inspector. De inspector zal de beschikbare keuzes tonen om je component te wijzigen of om te wisselen tussen een gerelateerd component.&lt;/li&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;To drag a new wire out of a bendpoint, hold down the Alt key as you drag the mouse.&lt;/li&gt;</source>
+        <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3312,7 +3312,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de onderdelen wij
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.&lt;/li&gt;</source>
+        <source>&lt;li&gt;To drag a new wire out of a bendpoint, hold down the Alt key as you drag the mouse.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
