@@ -1447,11 +1447,13 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 		long fromID = ItemBase::getNextID();
 
-		// create temporary item
-		// don't need connectors for breadboard
-		// TODO: how to specify which parts don't need connectors during drag and drop from palette?
 
 		bool doConnectors = true;
+
+		/* 
+		// seems to be fast enough now that we don't need this case statement
+		// don't need connectors for breadboard
+		// TODO: how to specify which parts don't need connectors during drag and drop from palette?
 		switch (modelPart->itemType()) {
 			case ModelPart::Breadboard:
 			case ModelPart::Board:
@@ -1463,13 +1465,15 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::Jumper:
 			case ModelPart::CopperFill:
 			case ModelPart::Unknown:
-				doConnectors = false;
+				doConnectors = true;
 				break;
 			default:
 				doConnectors = true;
 				break;
 		}
+		*/
 
+		// create temporary item for dragging
 		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors, m_viewIdentifier);
 
 		QSet<ItemBase *> savedItems;
@@ -1534,17 +1538,23 @@ void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 
 	QPointF loc = this->mapToScene(eventPos) - m_droppingOffset;
 	if (m_alignToGrid && (m_alignmentItem != NULL)) {
-		QPointF newPos = m_alignmentStartPoint + loc - m_alignmentItem->getViewGeometry().loc();
-		qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
-		qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
-		loc.setX(loc.x() + nx - newPos.x());
-		loc.setY(loc.y() + ny - newPos.y());
+		alignLoc(loc, m_alignmentStartPoint, loc, m_alignmentItem->getViewGeometry().loc());
 	}
 
 	m_droppingItem->setItemPos(loc);
 	m_droppingItem->findConnectorsUnder();
 
 }
+
+void SketchWidget::alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc) 
+{
+	QPointF newPos = startPoint + newLoc - originalLoc;
+	qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
+	qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+	loc.setX(loc.x() + nx - newPos.x());
+	loc.setY(loc.y() + ny - newPos.y());
+}
+
 
 void SketchWidget::dropEvent(QDropEvent *event)
 {
@@ -2258,11 +2268,7 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScroll)
 	if (m_alignToGrid && (m_alignmentItem != NULL)) {
 		QPointF currentParentPos = m_alignmentItem->mapToParent(m_alignmentItem->mapFromScene(scenePos));
 		QPointF buttonDownParentPos = m_alignmentItem->mapToParent(m_alignmentItem->mapFromScene(m_mousePressScenePos));
-		QPointF newPos = m_alignmentStartPoint + currentParentPos - buttonDownParentPos;
-		qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
-		qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
-		scenePos.setX(scenePos.x() + nx - newPos.x());
-		scenePos.setY(scenePos.y() + ny - newPos.y());
+		alignLoc(scenePos, m_alignmentStartPoint, currentParentPos, buttonDownParentPos);
 	}
 
 /*
@@ -2523,7 +2529,18 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 		QPointF dp = viewGeometry.loc() - from;
 		ViewGeometry vg(viewGeometry);
 		vg.setLoc(to + dp);
-		addItemAux(modelPart, vg, id, -1, NULL, NULL, true, m_viewIdentifier);
+		ItemBase * itemBase = addItemAux(modelPart, vg, id, -1, NULL, NULL, true, m_viewIdentifier);
+		if (m_alignToGrid && (itemBase != NULL)) {
+			QPointF loc = to + dp;
+			QSet<ItemBase *> savedItems;
+			QHash<Wire *, ConnectorItem *> savedWires;
+			findAlignmentAnchor(itemBase, savedItems, savedWires);
+			if (m_alignmentItem) {
+				m_alignmentItem = NULL;
+				alignLoc(loc, m_alignmentStartPoint, QPointF(0,0), QPointF(0, 0));
+				itemBase->setPos(loc);
+			}
+		}
 	}
 	else {
 		addItemAux(modelPart, viewGeometry, id, -1, NULL, NULL, true, m_viewIdentifier);

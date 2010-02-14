@@ -59,6 +59,8 @@ def main():
     <title>All Parts</title>
     <instances>
 """)
+
+    skip = ['NoteModuleID', 'GroupModuleID']
     
     for inputDir in inputDirs:
         for root, dirs, files in os.walk(inputDir, topdown=False):
@@ -73,9 +75,13 @@ def main():
                         infile.close();
                         match = re.search('moduleId\s*=\s*\"(.+)\"', fzp)
                         if (match != None):
-                            print "{0}".format(os.path.join(root, filename))
-                            outfile.write('      <instance moduleIdRef="' + match.group(1) + '">')
-                            outfile.write("""
+                            g1 = match.group(1)
+                            if g1 in skip:
+                                print " skipping {0}".format(g1)
+                            else:
+                               print "{0}".format(os.path.join(root, filename))
+                               outfile.write('      <instance moduleIdRef="' + g1 + '">')
+                               outfile.write("""
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>

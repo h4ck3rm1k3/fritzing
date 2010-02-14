@@ -366,8 +366,7 @@ protected:
 	virtual double gridSizeInches();
 	virtual bool canAlignToTopLeft(ItemBase *);
 	void findAlignmentAnchor(ItemBase * originatingItem, QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
-
-
+	void alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc);
 
 protected:
 	static bool lessThan(int a, int b);
