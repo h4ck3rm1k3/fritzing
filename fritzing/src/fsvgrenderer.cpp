@@ -108,7 +108,23 @@ bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename,
 
 
 bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors) {
-	QByteArray cleanContents = contents; // if the part has been created through the parts editor, it's clean
+
+	QByteArray cleanContents;
+	bool cleaned = false;
+	if (contents.contains("Illustrator")) {
+		QString string(contents);
+		if (TextUtils::fixPixelDimensionsIn(string)) {
+			cleaned = true;
+			cleanContents = string.toUtf8();
+			DebugDialog::debug("Illustrator " + filename);
+		}
+	}
+	if (!cleaned) {
+		cleanContents = contents; 
+	}
+
+	// no it isn't
+
 
 	/*
 	QString errorStr;
