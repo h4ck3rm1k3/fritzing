@@ -1689,8 +1689,6 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 		DebugDialog::debug("hello");
 	}
 
-	m_moveEventCount++;
-
 	if (event->modifiers() & Qt::ShiftModifier) {
 		dx *= 10;
 		dy *= 10;
@@ -1707,6 +1705,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 	QPoint globalPos = mapFromScene(m_mousePressScenePos + QPoint(m_arrowTotalX, m_arrowTotalY));
 	globalPos = mapToGlobal(globalPos);
 	moveItems(globalPos, false);
+	m_moveEventCount++;
 	return true;
 }
 
@@ -3882,6 +3881,7 @@ void SketchWidget::navigatorScrollChange(double x, double y) {
 void SketchWidget::keyReleaseEvent(QKeyEvent * event) {
 	//DebugDialog::debug(QString("key release event %1").arg(event->isAutoRepeat()));
 	if (m_movingByArrow) {
+		ConnectorItem::clearEqualPotentialDisplay();
 		// strange logic when doing autorepeat
 		// each autorepeat sends both a keyPressEvent and a keyReleaseEvent
 		// in keyPressEvents, the first event has autorepeat = false
