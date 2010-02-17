@@ -237,6 +237,8 @@ public:
 	void setNoteFocus(QGraphicsItem *, bool inFocus);
 
 	void alignToGrid(bool);
+	void saveZoom(qreal);
+	qreal retrieveZoom();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -550,6 +552,7 @@ protected:
 	bool m_alignToGrid;
 	ItemBase * m_alignmentItem;
 	QPointF m_alignmentStartPoint;
+	qreal m_zoom;
 
 
 public:

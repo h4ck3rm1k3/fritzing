@@ -38,7 +38,8 @@ src/utils/graphicsutils.h \
 src/utils/ratsnestcolors.h \
 src/utils/svgandpartfilepath.h \
 src/utils/textutils.h \
-src/utils/zoomcombobox.h 
+src/utils/zoomcombobox.h \
+src/utils/zoomslider.h 
  
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \
@@ -54,7 +55,8 @@ src/utils/folderutils.cpp \
 src/utils/graphicsutils.cpp \
 src/utils/ratsnestcolors.cpp \
 src/utils/textutils.cpp \
-src/utils/zoomcombobox.cpp 
+src/utils/zoomcombobox.cpp \
+src/utils/zoomslider.cpp 
 
 
 

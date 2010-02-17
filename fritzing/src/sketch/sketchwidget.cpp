@@ -88,6 +88,7 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_zoom = 100;
 	m_alignToGrid = false;
 	m_movingByMouse = m_movingByArrow = false;
 	m_statusConnectState = StatusConnectNotTried;
@@ -6505,4 +6506,12 @@ void SketchWidget::alignToGrid(bool align) {
 bool SketchWidget::canAlignToTopLeft(ItemBase *) 
 {
 	return false;
+}
+
+void SketchWidget::saveZoom(qreal zoom) {
+	m_zoom = zoom;
+}
+
+qreal SketchWidget::retrieveZoom() {
+	return m_zoom;
 }

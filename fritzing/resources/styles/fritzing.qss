@@ -82,6 +82,26 @@ qtoolbutton
 	color: rgb(51,0,17); /* doesnt work, why ??? */
 }
 
+#ZoomSliderLabel {
+	color: #CCCCCC;
+}
+
+#ZoomSliderMinusButton {
+	border: none;
+	image: url(:/resources/images/icons/zoomSliderMinus.png);
+}
+#ZoomSliderMinusButton:pressed {
+	border: none;
+	image: url(:/resources/images/icons/zoomSliderMinusPressed.png);
+}
+#ZoomSliderPlusButton {
+	border: none;
+	image: url(:/resources/images/icons/zoomSliderPlus.png);
+}
+#ZoomSliderPlusButton:pressed {
+	border: none;
+	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
+}
 
 ZoomComboBox {
 	position: absolute;

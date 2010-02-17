@@ -185,6 +185,10 @@
         <file>resources/images/icons/toolbarSharePressed_icon.png</file>
         <file>resources/images/icons/toolbarShareDisabled_icon.png</file>
         <file>resources/images/icons/toolbarShareEnabled_icon.png</file>
+        <file>resources/images/icons/zoomSliderMinus.png</file>
+        <file>resources/images/icons/zoomSliderMinusPressed.png</file>
+        <file>resources/images/icons/zoomSliderPlus.png</file>
+        <file>resources/images/icons/zoomSliderPlusPressed.png</file>
         <file>resources/templates/jumper_copper0LayerTemplate.txt</file>
         <file>resources/templates/jumper_jumperwiresLayerTemplate.txt</file>
         <file>resources/templates/resizableBoard_boardLayerTemplate.txt</file>

@@ -78,6 +78,7 @@ $Date$
 #include "items/resizableboard.h"
 #include "items/resistor.h"
 #include "items/symbolpaletteitem.h"
+#include "utils/zoomslider.h"
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
@@ -106,12 +107,14 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_emptyIcon = QIcon();
 
 	m_currentWidget = NULL;
-	m_currentGraphicsView = NULL;
 	m_firstOpen = true;
 
 	m_statusBar = new QStatusBar(this);
 	setStatusBar(m_statusBar);
 	m_statusBar->setSizeGripEnabled(false);
+	m_zoomSlider = new ZoomSlider(m_statusBar);
+	connect(m_zoomSlider, SIGNAL(zoomChanged(qreal)), this, SLOT(updateViewZoom(qreal)));
+	m_statusBar->addPermanentWidget(m_zoomSlider);
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
@@ -631,6 +634,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	SketchWidget *widget = widgetParent->graphicsView();
 
 	if(m_currentGraphicsView) {
+		m_currentGraphicsView->saveZoom(m_zoomSlider->value());
 		disconnect(
 			m_currentGraphicsView,
 			SIGNAL(selectionChangedSignal()),
@@ -640,6 +644,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	}
 	m_currentGraphicsView = widget;
 	if (widget == NULL) return;
+
+	m_zoomSlider->setValue(m_currentGraphicsView->retrieveZoom());
 
 	connect(
 		m_currentGraphicsView,					// don't connect directly to the scene here, connect to the widget's signal

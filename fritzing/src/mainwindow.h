@@ -573,6 +573,7 @@ protected:
 	QTimer m_setUpDockManagerTimer;
 	class DockManager * m_dockManager;
 	class FileProgressDialog * m_fileProgressDialog;
+	class ZoomSlider * m_zoomSlider;
 
 	QByteArray m_externalProcessOutput;
 
