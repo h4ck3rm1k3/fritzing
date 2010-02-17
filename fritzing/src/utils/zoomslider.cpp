@@ -18,16 +18,11 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 3930 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-01-31 00:36:25 +0100 (Sun, 31 Jan 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
-
-// TODO:
-//	+ and - buttons: autorepeat; better art
-//  menu functions: zoom in, zoom out, etc
-//	load the change values from the zoom combo box?
 
 #include <QLineEdit>
 #include <QKeyEvent>
@@ -37,10 +32,12 @@ $Date: 2010-01-31 00:36:25 +0100 (Sun, 31 Jan 2010) $
 #include <QHBoxLayout>
 #include <QValidator>
 #include <QLabel>
+#include <limits>
 
 #include "zoomslider.h"
 
-//qreal ZoomComboBox::ZoomStep;
+qreal ZoomSlider::ZoomStep;
+QList<qreal> ZoomSlider::ZoomFactors;
 
 static const int MIN_VALUE = 10;
 static const int MAX_VALUE = 2010;
@@ -53,14 +50,18 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	// layout doesn't seem to work: the slider appears too far down in the status bar
 	// because the status bar layout is privileged for the message text
 
+	if (ZoomFactors.size() == 0) {
+		loadFactors();
+	}
+
 	this->setStyleSheet("border:0px; margin:0px; padding:0px;");
 
 	int soFar = 0;
-	QLabel * label = new QLabel(tr("Zoom:"), this);
+	QLabel * label = new QLabel(tr("Zoom %:"), this);
 	label->setObjectName("ZoomSliderLabel");
-	label->setGeometry(soFar, 0, 40, HEIGHT);
+	label->setGeometry(soFar, 0, 50, HEIGHT);
 	label->setAlignment(Qt::AlignRight);
-	soFar += 40 + 2;
+	soFar += 50 + 2;
 
 	m_lineEdit = new QLineEdit(this);
 	m_lineEdit->setGeometry(soFar, -1, 35, HEIGHT - 1);
@@ -70,6 +71,7 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 
 	QPixmap temp(":/resources/images/icons/zoomSliderMinus.png");
 	m_minusButton = new QPushButton(this);
+	m_minusButton->setAutoRepeat(true);
 	m_minusButton->setObjectName("ZoomSliderMinusButton");
 	m_minusButton->setGeometry(soFar, 0, temp.width(), temp.height());
 	connect(m_minusButton, SIGNAL(clicked()), this, SLOT(minusClicked()));
@@ -83,6 +85,7 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	soFar += 100 + 5;
 
 	m_plusButton = new QPushButton(this);
+	m_plusButton->setAutoRepeat(true);
 	m_plusButton->setObjectName("ZoomSliderPlusButton");
 	m_plusButton->setGeometry(soFar, 0, temp.width(), temp.height());
 	connect(m_plusButton, SIGNAL(clicked()), this, SLOT(plusClicked()));
@@ -100,10 +103,30 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	//m_indexBackup = itemIndex(m_valueBackup);
 }
 
+void ZoomSlider::loadFactors() {
+	QFile file(":/resources/zoomfactors.txt");
+	file.open(QFile::ReadOnly);
+	QTextStream stream( &file );
+	int lineNumber = 0;
+	while(!stream.atEnd()) {
+		QString line = stream.readLine();
+		if(lineNumber != 0) {
+			ZoomFactors << line.toDouble();
+		} 
+		else 
+		{
+			ZoomStep = line.toDouble();
+		}
+		lineNumber++;
+	}
+	file.close();
+}
+
+
 void ZoomSlider::setValue(qreal value) {
 	QString newText = QString("%1").arg(qRound(value));
 	m_lineEdit->setText(newText);
-	sliderTextEdited(newText);
+	sliderTextEdited(newText, false);
 }
 
 qreal ZoomSlider::value() {
@@ -111,24 +134,35 @@ qreal ZoomSlider::value() {
 }
 
 void ZoomSlider::minusClicked() {
-	step(-STEP);
+	step(-1);
 }
 
 void ZoomSlider::plusClicked() {
-	step(STEP);
+	step(1);
 }
 
-void ZoomSlider::step(qreal inc) {
-	qreal v = value() + inc;
-	v = qRound(v / STEP) * STEP;
-	if (v > MAX_VALUE) {
-		v = MAX_VALUE;
+void ZoomSlider::step(int direction) {
+	int minIndex = 0;
+	qreal minDiff = std::numeric_limits<double>::max();
+	qreal v = value();
+	for (int i = 0; i < ZoomFactors.count(); i++) {
+		qreal f = ZoomFactors[i];
+		if (qAbs(f - v) < minDiff) {
+			minDiff = qAbs(f - v);
+			minIndex = i;
+		}
 	}
-	if (v < MIN_VALUE) {
-		v = MIN_VALUE;
+
+	minIndex += direction;
+	if (minIndex < 0) {
+		minIndex = 0;
 	}
-	setValue(v);
-	emit zoomChanged(v);
+	else if (minIndex >= ZoomFactors.count()) {
+		minIndex = ZoomFactors.count() - 1;
+	}
+
+	setValue(ZoomFactors[minIndex]);
+	emit zoomChanged(ZoomFactors[minIndex]);
 }
 
 void ZoomSlider::sliderValueChanged(int newValue) {
@@ -141,46 +175,30 @@ void ZoomSlider::sliderValueChanged(int newValue) {
 }
 
 void ZoomSlider::sliderTextEdited(const QString & newText) {
+	sliderTextEdited(newText, true);
+}
+
+void ZoomSlider::sliderTextEdited(const QString & newText, bool doEmit) 
+{
 	int value = newText.toInt();
 	if (m_slider->value() != value) {
 		disconnect(m_slider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
 		m_slider->setValue(value);
 		connect(m_slider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
-		emit zoomChanged(value);
+		if (doEmit) emit zoomChanged(value);
 	}
 }
+
+void ZoomSlider::zoomIn () {
+	plusClicked();
+}
+
+void ZoomSlider::zoomOut () {
+	minusClicked();
+}
+
 
 /*
-void ZoomComboBox::itemAdded() {
-	qreal lineEditValue = lineEdit()->text().toFloat();
-
-	addPercentageToInputText();
-
-	// Sort zoom items
-	QList<qreal> options;
-	for(int i=0; i < count(); i++) {
-		QString text = itemText(i);
-		text = text.trimmed();
-		text.remove("%");
-		options << text.toFloat();
-	}
-
-	qSort(options);
-
-	QStringList strOptions;
-	int selIndex = -1;
-	for(int i=0; i<options.size(); i++) {
-		qreal opt = options.at(i);
-		if(opt == lineEditValue) {
-			selIndex = i;
-		}
-		strOptions << QString::number(opt)+"%";
-	}
-
-	clear();
-	addItems(strOptions);
-	setCurrentIndex(selIndex);
-}
 
 
 void ZoomComboBox::inputTextChanged() {
@@ -210,13 +228,6 @@ int ZoomComboBox::itemIndex(QString value) {
 	return retval;
 }
 
-void ZoomComboBox::addPercentageToInputText() {
-	QLineEdit * le = this->lineEdit();
-	if(le->text().indexOf("%") == -1) {
-		le->setText(le->text()+"%");
-	}
-}
-
 void ZoomComboBox::updateBackupFieldsIfOptionSelected(int index) {
 	if(index != -1) {
 		updateBackupFields();
@@ -240,82 +251,4 @@ void ZoomComboBox::updateBackupFields() {
 	connect(this,SIGNAL(editTextChanged(QString)),this,SLOT(inputTextChanged()));
 }
 
-void ZoomComboBox::keyPressEvent ( QKeyEvent * event ) {
-	if(event->key() == Qt::Key_Escape) {
-		setPreviousValue();
-		m_lastKeyPressed = Qt::Key_Escape;
-	}
-	QComboBox::keyPressEvent(event);
-}
-
-void ZoomComboBox::setPreviousValue() {
-	setCurrentIndex(m_indexBackup);
-	setEditText(m_valueBackup);
-}
-
-void ZoomComboBox::zoomIn () {
-	int selIndex = currentIndex();
-	if(selIndex == -1) {
-		setCurrentIndex(findCloserIndexToCurrentValue(true));
-		return;
-	}
-	if(selIndex < count()-1) {
-		selIndex++;
-		setCurrentIndex(selIndex);
-	}
-}
-
-
-void ZoomComboBox::zoomOut () {
-	int selIndex = currentIndex();
-	if(selIndex == -1) {
-		setCurrentIndex(findCloserIndexToCurrentValue(false));
-		return;
-	}
-	if(selIndex > 0) {
-		selIndex--;
-		setCurrentIndex(selIndex);
-	}
-}
-
-int ZoomComboBox::findCloserIndexToCurrentValue(bool upper) {
-	// FIXME: could be don with a binary search, because we assume that the option list is ordered
-	qreal value = editText().remove("%").toFloat();
-	qreal min = 9999999;
-	int idx = -1;
-	for(int i=0; i<count(); i++) {
-		qreal curValue = itemText(i).remove("%").toFloat();
-		qreal curDiff = qAbs(curValue - value);
-		if(curValue > value && upper) {
-			if(curDiff < min) {
-				min = curDiff;
-				idx = i;
-				break;
-			}
-		} else if(curValue < value && !upper) {
-			if(curDiff < min) {
-				idx = i;
-			}
-		}
-	}
-
-	return idx;
-}
-
-void ZoomComboBox::loadFactors() {
-	QFile file(":/resources/zoomfactors.txt");
-	file.open(QFile::ReadOnly);
-	QTextStream stream( &file );
-	int lineNumber = 1;
-	while(!stream.atEnd()) {
-		QString line = stream.readLine();
-		if(lineNumber != 1) {
-			ZoomFactors << line+"%";
-		} else {
-			ZoomStep = line.toFloat();
-		}
-		lineNumber++;
-	}
-	file.close();
-}
 */

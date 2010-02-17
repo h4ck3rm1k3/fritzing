@@ -61,7 +61,6 @@ $Date$
 #include "../itemdrag.h"
 #include "../layerattributes.h"
 #include "../waitpushundostack.h"
-#include "../utils/zoomcombobox.h"
 #include "../autoroute/autorouter1.h"
 #include "../fgraphicsscene.h"
 #include "../version/version.h"
@@ -83,7 +82,30 @@ $Date$
 #include "../items/groundplane.h"
 #include "../items/moduleidnames.h"
 
+static DragBendpointWatcher dragBendpointWatcher;
+
+DragBendpointWatcher::DragBendpointWatcher() : QObject()
+{
+}
+
+void DragBendpointWatcher::setSketchWidget(SketchWidget * sketchWidget) {
+	m_sketchWidget = sketchWidget;
+}
+
+
+bool DragBendpointWatcher::eventFilter(QObject *obj, QEvent *event) {
+	if (event->type() == QEvent::MouseMove) {
+		//QMouseEvent * mouseEvent = static_cast<QMouseEvent *>(event);
+	}
+
+	return false;
+}
+
+/////////////////////////////////////////////////////
+
+
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
+
 
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -2160,6 +2182,7 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	wire->saveGeometry();
 	ViewGeometry vg = m_bendpointVG = wire->getViewGeometry();
 	QPointF newPos = mapToScene(eventPos); 
+
 	QPointF oldPos = wire->pos();
 	QLineF oldLine = wire->line();
 	//DebugDialog::debug(QString("oldpos"), oldPos);
@@ -2184,6 +2207,10 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	m_connectorDragWire->connector0()->tempConnectTo(oldConnector1, false);
 	m_connectorDragConnector = oldConnector1;
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), newPos);
+	if (m_alignToGrid) {
+		dragBendpointWatcher.setSketchWidget(this);
+		m_connectorDragWire->installEventFilter(&dragBendpointWatcher);
+	}
 	m_connectorDragWire->grabMouse();
 }
 
@@ -3172,14 +3199,23 @@ void SketchWidget::bringToFront() {
 
 }
 
-void SketchWidget::fitInWindow() {
-	QRectF itemsRect = this->scene()->itemsBoundingRect();
+qreal SketchWidget::fitInWindow() {
+
+	QRectF itemsRect;
+	foreach(QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		itemsRect |= (itemBase->transform() * QTransform().translate(itemBase->x(), itemBase->y()))
+                            .mapRect(itemBase->boundingRect() | itemBase->childrenBoundingRect());
+	}
+
 	QRectF viewRect = rect();
 
 	//fitInView(itemsRect.x(), itemsRect.y(), itemsRect.width(), itemsRect.height(), Qt::KeepAspectRatio);
 
-	qreal wRelation = (viewRect.width()-this->verticalScrollBar()->width())  / itemsRect.width();
-	qreal hRelation = (viewRect.height()-this->horizontalScrollBar()->height()) / itemsRect.height();
+	qreal wRelation = (viewRect.width() - this->verticalScrollBar()->width() - 5)  / itemsRect.width();
+	qreal hRelation = (viewRect.height() - this->horizontalScrollBar()->height() - 5) / itemsRect.height();
 
 	DebugDialog::debug(QString("scen rect: w%1 h%2").arg(itemsRect.width()).arg(itemsRect.height()));
 	DebugDialog::debug(QString("view rect: w%1 h%2").arg(viewRect.width()).arg(viewRect.height()));
@@ -3191,10 +3227,10 @@ void SketchWidget::fitInWindow() {
 		m_scaleValue = (hRelation * 100);
 	}
 
-	// Actually the zoom hasn't changed...
-	emit zoomChanged(--m_scaleValue);
-
 	this->centerOn(itemsRect.center());
+	this->absoluteZoom(m_scaleValue);
+
+	return m_scaleValue;
 }
 
 bool SketchWidget::startZChange(QList<ItemBase *> & bases) {

@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 3930 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-01-31 00:36:25 +0100 (Sun, 31 Jan 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -43,12 +43,10 @@ public:
 	void setValue(qreal);
 	qreal value();
 
-	//void zoomOut();
-	//void zoomIn();
+	void zoomOut();
+	void zoomIn();
 
 protected slots:
-	//void itemAdded();
-	//void inputTextChanged();
 	//void emitZoomChanged();
 	//void updateBackupFieldsIfOptionSelected(int index);
 	void sliderValueChanged(int newValue);
@@ -57,30 +55,25 @@ protected slots:
 	void plusClicked();
 
 protected:
-	void step(qreal);
-
+	void step(int direction);
+	void sliderTextEdited(const QString & newValue, bool doEmit);
+	static void loadFactors();
 
 protected:
-	//void addPercentageToInputText();
-	//void keyPressEvent ( QKeyEvent * event );
-	//void setPreviousValue();
 	//int itemIndex(QString value);
 	//void updateBackupFields();
-	//int findCloserIndexToCurrentValue(bool upper);
 
-	//static QStringList ZoomFactors;
+	static QList<qreal> ZoomFactors;
 	//bool m_userStillWriting;
 	//QString m_valueBackup;
 	//int m_indexBackup;
-	//int m_lastKeyPressed;
 	QSlider * m_slider;
 	QLineEdit * m_lineEdit;
 	QPushButton * m_plusButton;
 	QPushButton * m_minusButton;
 
 public:
-	//static void loadFactors();
-	//static qreal ZoomStep;
+	static qreal ZoomStep;
 
 signals:
 	void zoomChanged(qreal newZoom);

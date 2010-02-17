@@ -27,7 +27,7 @@ $Date$
 #include <QWheelEvent>
 
 #include "zoomablegraphicsview.h"
-#include "../utils/zoomcombobox.h"
+#include "../utils/zoomslider.h"
 
 ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 	: QGraphicsView(parent)
@@ -45,15 +45,8 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 	}
 
 	QPointF mousePosition = event->pos();
-	qreal delta = ((qreal)event->delta() / 120) * ZoomComboBox::ZoomStep;
+	qreal delta = ((qreal)event->delta() / 120) * ZoomSlider::ZoomStep;
 	if (delta == 0) return;
-
-	// Scroll zooming throw the combobox options
-	/*if(delta < 0) {
-		emit zoomOut(-1*delta);
-	} else {
-		emit zoomIn(delta);
-	}*/
 
 	// Scroll zooming relative to the current size
 	relativeZoom(delta, true);

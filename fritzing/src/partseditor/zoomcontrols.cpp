@@ -25,8 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "zoomcontrols.h"
-#include "../utils/zoomcombobox.h"
 #include "../debugdialog.h"
+#include "../utils/zoomslider.h"
 
 ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, ZoomableGraphicsView* view, QWidget *parent) : QLabel(parent)
 {
@@ -39,7 +39,7 @@ ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType
 		dirStr = "Ver";
 	}
 	imgPath = imgPath.arg(typeStr).arg(dirStr);
-	m_step = 5*ZoomComboBox::ZoomStep;
+	m_step = 5*ZoomSlider::ZoomStep;
 	m_type = type;
 
 	m_owner = view;

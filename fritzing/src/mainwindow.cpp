@@ -186,18 +186,13 @@ void MainWindow::init() {
 
     m_dockManager->createDockWindows();
 
-    m_breadboardWidget->setContent(
-    	getButtonsForView(m_breadboardWidget->viewIdentifier()),
-    	createZoomOptions(m_breadboardWidget)
-    );
-    m_schematicWidget->setContent(
-    	getButtonsForView(m_schematicWidget->viewIdentifier()),
-    	createZoomOptions(m_schematicWidget)
-    );
-	m_pcbWidget->setContent(
-		getButtonsForView(m_pcbWidget->viewIdentifier()),
-		createZoomOptions(m_pcbWidget)
-	);
+	createZoomOptions(m_breadboardWidget);
+	createZoomOptions(m_schematicWidget);
+	createZoomOptions(m_pcbWidget);
+
+    m_breadboardWidget->setContent(getButtonsForView(m_breadboardWidget->viewIdentifier()));
+    m_schematicWidget->setContent(getButtonsForView(m_schematicWidget->viewIdentifier()));
+	m_pcbWidget->setContent(getButtonsForView(m_pcbWidget->viewIdentifier()));
 
 	QFile styleSheet(":/resources/styles/fritzing.qss");
     if (!styleSheet.open(QIODevice::ReadOnly)) {
@@ -441,16 +436,10 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent) {
 }
 
 
-ZoomComboBox *MainWindow::createZoomOptions(SketchAreaWidget* parent) {
-	ZoomComboBox *zoomOptsComboBox = new ZoomComboBox(parent);
+void MainWindow::createZoomOptions(SketchAreaWidget* parent) {
 
-	setZoomComboBoxValue(parent->graphicsView()->currentZoom(), zoomOptsComboBox);
-	connect(zoomOptsComboBox, SIGNAL(zoomChanged(qreal)), this, SLOT(updateViewZoom(qreal)));
-
-    connect(parent->graphicsView(), SIGNAL(zoomChanged(qreal)), this, SLOT(updateZoomOptions(qreal)));
+    connect(parent->graphicsView(), SIGNAL(zoomChanged(qreal)), this, SLOT(updateZoomSlider(qreal)));
     connect(parent->graphicsView(), SIGNAL(zoomOutOfRange(qreal)), this, SLOT(updateZoomOptionsNoMatterWhat(qreal)));
-
-	return zoomOptsComboBox;
 }
 
 void MainWindow::createToolBars() {
@@ -589,12 +578,8 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 	return retval;
 }
 
-void MainWindow::updateZoomOptions(qreal zoom) {
-	if(!m_comboboxChanged) {
-		setZoomComboBoxValue(zoom);
-	} else {
-		m_comboboxChanged = false;
-	}
+void MainWindow::updateZoomSlider(qreal zoom) {
+	m_zoomSlider->setValue(zoom);
 }
 
 SketchAreaWidget *MainWindow::currentSketchArea() {
@@ -602,7 +587,7 @@ SketchAreaWidget *MainWindow::currentSketchArea() {
 }
 
 void MainWindow::updateZoomOptionsNoMatterWhat(qreal zoom) {
-	currentSketchArea()->zoomComboBox()->setEditText(tr("%1%").arg(zoom));
+	m_zoomSlider->setValue(zoom);
 }
 
 void MainWindow::updateViewZoom(qreal newZoom) {
@@ -786,12 +771,6 @@ bool MainWindow::whatToDoWithAlienFiles() {
 
 void MainWindow::acceptAlienFiles() {
 	m_alienFiles.clear();
-}
-
-
-void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
-	if(!zoomComboBox) zoomComboBox = currentSketchArea()->zoomComboBox();
-	zoomComboBox->setEditText(tr("%1%").arg(value,0,'f',2));
 }
 
 void MainWindow::saveDocks()

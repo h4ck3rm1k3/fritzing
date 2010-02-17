@@ -38,7 +38,6 @@ $Date$
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
 #include "viewlayer.h"
-#include "utils/zoomcombobox.h"
 #include "sketchtoolbutton.h"
 
 QT_BEGIN_NAMESPACE
@@ -132,8 +131,6 @@ protected slots:
     void deselect();
     void zoomIn();
     void zoomOut();
-    void zoomIn(int steps);
-    void zoomOut(int steps);
     void fitInWindow();
     void actualSize();
     void alignToGrid();
@@ -183,7 +180,7 @@ protected slots:
 	void openInPartsEditor();
 	void openPartsEditor(PaletteItem *);
 
-	void updateZoomOptions(qreal zoom);
+	void updateZoomSlider(qreal zoom);
 	void updateZoomOptionsNoMatterWhat(qreal zoom);
 	void updateViewZoom(qreal newZoom);
 
@@ -277,7 +274,6 @@ protected:
 	void printAux(QPrinter &printer, bool removeBackground, bool paginate);
 	void exportAux(QString fileName, QImage::Format format, bool removeBackground);
 	void notYetImplemented(QString action);
-	void setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox = NULL);
 	void setCurrentFile(const QString &fileName, bool addToRecent=true);
 	bool eventFilter(QObject *obj, QEvent *event);
 	void setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2);
@@ -319,7 +315,7 @@ protected:
 
 	QMenu *viewItemMenuAux(QMenu* menu);
 
-	ZoomComboBox *createZoomOptions(SketchAreaWidget* parent);
+	void createZoomOptions(SketchAreaWidget* parent);
 	SketchToolButton *createRotateButton(SketchAreaWidget *parent);
 	SketchToolButton *createShareButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);

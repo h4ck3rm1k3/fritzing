@@ -220,7 +220,6 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	ItemBase::initNames();
 	ViewLayer::initNames();
 	Connector::initNames();
-	ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
 	BinManager::initNames();

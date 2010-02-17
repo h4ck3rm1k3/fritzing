@@ -98,7 +98,7 @@ public:
 	void sendBackward();
 	void bringForward();
 	void bringToFront();
-	void fitInWindow();
+	qreal fitInWindow();
 	void rotateX(qreal degrees);
 	void flip(Qt::Orientations orientation);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
@@ -561,5 +561,23 @@ public:
 protected:
 	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;
 };
+
+class DragBendpointWatcher : public QObject
+{
+     Q_OBJECT
+
+public:
+	DragBendpointWatcher();
+	
+	void setSketchWidget(SketchWidget *);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
+protected:
+	SketchWidget * m_sketchWidget;
+
+};
+
 
 #endif

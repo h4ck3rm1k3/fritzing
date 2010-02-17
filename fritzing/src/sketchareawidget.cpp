@@ -38,8 +38,6 @@ SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QMainWindow *pare
 	m_graphicsView = graphicsView;
 	graphicsView->setParent(this);
 
-	m_zoomComboBox = NULL;
-
 	createLayout();
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
@@ -53,10 +51,6 @@ SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QMainWindow *pare
 
 SketchAreaWidget::~SketchAreaWidget() {
 	// TODO Auto-generated destructor stub
-}
-
-ZoomComboBox *SketchAreaWidget::zoomComboBox() {
-	return m_zoomComboBox;
 }
 
 ViewIdentifierClass::ViewIdentifier SketchAreaWidget::viewIdentifier() {
@@ -84,15 +78,6 @@ void SketchAreaWidget::createLayout() {
 	m_labelContainer->setMargin(0);
 
 	QFrame *rightButtons = new QFrame(m_toolbar);
-	m_zoomContainer = new QHBoxLayout(rightButtons);
-	m_zoomContainer->setMargin(0);
-	m_zoomContainer->setSpacing(3);
-	if(viewIdentifier() == ViewIdentifierClass::PCBView) {
-		m_zoomContainer->addWidget(separator(this->parentWidget()));
-	}
-	QLabel *zoomLabel = new QLabel(QObject::tr("Zoom"),this);
-	zoomLabel->setStyleSheet("font-size: 12px;");
-	m_zoomContainer->addWidget(zoomLabel);
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout(m_toolbar);
 	toolbarLayout->setMargin(2);
@@ -108,7 +93,7 @@ void SketchAreaWidget::createLayout() {
 	statusbarlayout->setSpacing(0);
 }
 
-void SketchAreaWidget::setContent(QList<QWidget*> widgets, ZoomComboBox *zoomComboBox) {
+void SketchAreaWidget::setContent(QList<QWidget*> widgets) {
 	foreach(QWidget* widget, widgets) {
 		if(widget->objectName() != RoutingStateLabelName) {
 			m_buttonsContainer->addWidget(widget);
@@ -118,10 +103,6 @@ void SketchAreaWidget::setContent(QList<QWidget*> widgets, ZoomComboBox *zoomCom
 			m_labelContainer->addSpacerItem(new QSpacerItem(0,1,QSizePolicy::Maximum));
 		}
 	}
-
-	m_zoomComboBox = zoomComboBox;
-	m_zoomContainer->addWidget(m_zoomComboBox);
-
 }
 
 void SketchAreaWidget::addStatusBar(QStatusBar *statusBar) {

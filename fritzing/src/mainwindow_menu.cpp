@@ -60,6 +60,7 @@ $Date$
 #include "connectors/ercdata.h"
 #include "items/moduleidnames.h"
 #include "navigator/miniviewcontainer.h"
+#include "utils/zoomslider.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1977,41 +1978,23 @@ void MainWindow::group() {
 }
 
 void MainWindow::zoomIn() {
-	// To zoom throw the combobox options
-	zoomIn(1);
-
-	/*if (m_currentWidget == NULL) return;
-	m_currentWidget->relativeZoom(ZoomComboBox::ZoomStep);*/
-}
-
-void MainWindow::zoomIn(int steps) {
-	for(int i=0; i < steps; i++) {
-		currentSketchArea()->zoomComboBox()->zoomIn();
-	}
+	m_zoomSlider->zoomIn();
 }
 
 void MainWindow::zoomOut() {
-	// To zoom throw the combobox options
-	zoomOut(1);
-
-	/*if (m_currentWidget == NULL) return;
-	m_currentWidget->relativeZoom(-ZoomComboBox::ZoomStep);*/
-}
-
-void MainWindow::zoomOut(int steps) {
-	for(int i=0; i < steps; i++) {
-		currentSketchArea()->zoomComboBox()->zoomOut();
-	}
+	m_zoomSlider->zoomOut();
 }
 
 void MainWindow::fitInWindow() {
 	if (m_currentGraphicsView == NULL) return;
-	m_currentGraphicsView->fitInWindow();
+
+	qreal newZoom = m_currentGraphicsView->fitInWindow();
+	m_zoomSlider->setValue(newZoom);
 }
 
 void MainWindow::actualSize() {
-	if (m_currentGraphicsView == NULL) return;
 	m_currentGraphicsView->absoluteZoom(100);
+	m_zoomSlider->setValue(100);
 }
 
 void MainWindow::showBreadboardView() {

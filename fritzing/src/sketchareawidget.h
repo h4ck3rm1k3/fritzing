@@ -35,7 +35,6 @@ $Date$
 #include <QMainWindow>
 
 #include "sketch/sketchwidget.h"
-#include "utils/zoomcombobox.h"
 
 
 class SketchAreaWidget : public QFrame {
@@ -45,9 +44,8 @@ public:
 
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	SketchWidget* graphicsView();
-	ZoomComboBox *zoomComboBox();
 
-	void setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox);
+	void setContent(QList<QWidget*> buttons);
 	void addStatusBar(QStatusBar *);
 	static QWidget *separator(QWidget* parent);
 	class ExpandingLabel * routingStatusLabel();
@@ -62,12 +60,10 @@ public:
 
 protected:
 	SketchWidget *m_graphicsView;
-	ZoomComboBox *m_zoomComboBox;
 
 	QFrame *m_toolbar;
 	QHBoxLayout *m_buttonsContainer;
 	QVBoxLayout *m_labelContainer;
-	QHBoxLayout *m_zoomContainer;
 	QFrame *m_statusBarArea;
 	class ExpandingLabel * m_routingStatusLabel;
 
