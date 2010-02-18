@@ -1834,7 +1834,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 			if (connectorItem != NULL) {
 				m_draggingBendpoint = (connectorItem->connectionsCount() > 0);
-				this->m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
+				this->m_alignmentStartPoint = mapToScene(event->pos()) - connectorItem->sceneAdjustedTerminalPoint(NULL);
 			}
 		}
 	}
@@ -2270,9 +2270,12 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	if (m_alignToGrid && m_draggingBendpoint) {
 		QPointF sp = mapToScene(event->pos());
 		
-		alignLoc(sp, sp, QPointF(0,0), QPointF(0, 0));
+
+		// not sure where the 0.5 offset comes from, probably has to do with where the center of the bendpoint is
+		// wrt the end of the wire...
+		alignLoc(sp, sp, QPointF(0,0), QPointF(-0.5, -0.5));  
 		QPointF p = mapFromScene(sp);
-		QPoint pp(p.x(), p.y());
+		QPoint pp(qRound(p.x()), qRound(p.y()));
 		QPointF q = mapToGlobal(pp);
 		QMouseEvent alignedEvent(event->type(), pp, QPoint(q.x(), q.y()), event->button(), event->buttons(), event->modifiers());
 		

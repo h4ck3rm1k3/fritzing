@@ -323,7 +323,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 	}
 
 	QPointF temp = this->mapToScene(eventPos);
-	DebugDialog::debug(QString("wire move event %1,%2  %3").arg(temp.x()).arg(temp.y()).arg(m_drag0));
+	//DebugDialog::debug(QString("wire move event %1,%2  %3").arg(temp.x()).arg(temp.y()).arg(m_drag0));
 
 
 	if (m_drag0) {
