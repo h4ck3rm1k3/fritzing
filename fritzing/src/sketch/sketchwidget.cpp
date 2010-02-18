@@ -82,34 +82,12 @@ $Date$
 #include "../items/groundplane.h"
 #include "../items/moduleidnames.h"
 
-static DragBendpointWatcher dragBendpointWatcher;
-
-DragBendpointWatcher::DragBendpointWatcher() : QObject()
-{
-}
-
-void DragBendpointWatcher::setSketchWidget(SketchWidget * sketchWidget) {
-	m_sketchWidget = sketchWidget;
-}
-
-
-bool DragBendpointWatcher::eventFilter(QObject *obj, QEvent *event) {
-	if (event->type() == QEvent::MouseMove) {
-		//QMouseEvent * mouseEvent = static_cast<QMouseEvent *>(event);
-	}
-
-	return false;
-}
-
-/////////////////////////////////////////////////////
-
-
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
-
 
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_draggingBendpoint = false;
 	m_zoom = 100;
 	m_alignToGrid = false;
 	m_movingByMouse = m_movingByArrow = false;
@@ -1735,6 +1713,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
+	m_draggingBendpoint = false;
 	if (m_movingByArrow) return;
 
 	m_movingByMouse = true;
@@ -1848,6 +1827,17 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	}
 
 	prepMove(itemBase ? itemBase : dynamic_cast<ItemBase *>(item->parentItem()));
+
+	if (m_alignToGrid && (itemBase == NULL) && (event->modifiers() == Qt::NoModifier)) {
+		Wire * wire = dynamic_cast<Wire *>(item->parentItem());
+		if (wire != NULL && wire->draggingEnd()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (connectorItem != NULL) {
+				m_draggingBendpoint = (connectorItem->connectionsCount() > 0);
+				this->m_alignmentStartPoint = connectorItem->sceneAdjustedTerminalPoint(NULL);
+			}
+		}
+	}
 
 	setupAutoscroll(true);
 }
@@ -2207,10 +2197,6 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	m_connectorDragWire->connector0()->tempConnectTo(oldConnector1, false);
 	m_connectorDragConnector = oldConnector1;
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), newPos);
-	if (m_alignToGrid) {
-		dragBendpointWatcher.setSketchWidget(this);
-		m_connectorDragWire->installEventFilter(&dragBendpointWatcher);
-	}
 	m_connectorDragWire->grabMouse();
 }
 
@@ -2245,6 +2231,8 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	if (m_dragBendpointWire != NULL) {
 		prepDragBendpoint(m_dragBendpointWire, m_dragBendpointPos);
 		m_dragBendpointWire = NULL;
+		m_draggingBendpoint = true;
+		this->m_alignmentStartPoint = mapToScene(m_dragBendpointPos);		// not sure this will be correct...
 		return;
 	}
 
@@ -2279,6 +2267,20 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	}
 
 	m_moveEventCount++;
+	if (m_alignToGrid && m_draggingBendpoint) {
+		QPointF sp = mapToScene(event->pos());
+		
+		alignLoc(sp, sp, QPointF(0,0), QPointF(0, 0));
+		QPointF p = mapFromScene(sp);
+		QPoint pp(p.x(), p.y());
+		QPointF q = mapToGlobal(pp);
+		QMouseEvent alignedEvent(event->type(), pp, QPoint(q.x(), q.y()), event->button(), event->buttons(), event->modifiers());
+		
+		DebugDialog::debug(QString("sketch move event %1,%2").arg(sp.x()).arg(sp.y()));
+		QGraphicsView::mouseMoveEvent(&alignedEvent);
+		return;
+	}
+		
 	QGraphicsView::mouseMoveEvent(event);
 }
 
@@ -2351,6 +2353,7 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
+	m_draggingBendpoint = false;
 	if (m_movingByArrow) return;
 
 	m_alignmentItem = NULL;

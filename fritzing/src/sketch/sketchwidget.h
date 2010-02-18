@@ -553,6 +553,7 @@ protected:
 	ItemBase * m_alignmentItem;
 	QPointF m_alignmentStartPoint;
 	qreal m_zoom;
+	bool m_draggingBendpoint;
 
 
 public:
@@ -561,23 +562,5 @@ public:
 protected:
 	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;
 };
-
-class DragBendpointWatcher : public QObject
-{
-     Q_OBJECT
-
-public:
-	DragBendpointWatcher();
-	
-	void setSketchWidget(SketchWidget *);
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-
-protected:
-	SketchWidget * m_sketchWidget;
-
-};
-
 
 #endif
