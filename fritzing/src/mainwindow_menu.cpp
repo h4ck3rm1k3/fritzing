@@ -61,6 +61,7 @@ $Date$
 #include "items/moduleidnames.h"
 #include "navigator/miniviewcontainer.h"
 #include "utils/zoomslider.h"
+#include "dialogs/alignsettingsdialog.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -557,14 +558,14 @@ void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginat
 	}
 }
 
-void MainWindow::saveAsAux(const QString & fileName) {
+bool MainWindow::saveAsAux(const QString & fileName) {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Fritzing"),
                              tr("Cannot write file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
-        return;
+        return false;
     }
 
     file.close();
@@ -594,6 +595,8 @@ void MainWindow::saveAsAux(const QString & fileName) {
     m_undoStack->setClean();
 
     m_saveAct->setEnabled(true);
+
+	return true;
 }
 
 
@@ -1375,6 +1378,10 @@ void MainWindow::createViewMenuActions() {
 	m_alignToGridAct->setCheckable(true);
 	connect(m_alignToGridAct, SIGNAL(triggered()), this, SLOT(alignToGrid()));
 
+	m_alignToGridSettingsAct = new QAction(tr("Set Grid Size..."), this);
+	m_alignToGridSettingsAct->setStatusTip(tr("Set the size of the grid to align to"));
+	connect(m_alignToGridSettingsAct, SIGNAL(triggered()), this, SLOT(alignToGridSettings()));
+
 	m_setBackgroundColorAct = new QAction(tr("Set Background Color ..."), this);
 	m_setBackgroundColorAct->setStatusTip(tr("Set the background color for the current view"));
 	connect(m_setBackgroundColorAct, SIGNAL(triggered()), this, SLOT(setBackgroundColor()));
@@ -1576,10 +1583,9 @@ void MainWindow::createMenus()
     m_viewMenu->addAction(m_actualSizeAct);
 	m_viewMenu->addSeparator();
 
-#ifndef QT_NO_DEBUG
     m_viewMenu->addAction(m_alignToGridAct);
+    m_viewMenu->addAction(m_alignToGridSettingsAct);
 	m_viewMenu->addSeparator();
-#endif
 
     m_viewMenu->addAction(m_setBackgroundColorAct);
     m_viewMenu->addSeparator();
@@ -3635,3 +3641,12 @@ void MainWindow::alignToGrid() {
 	m_currentGraphicsView->alignToGrid(m_alignToGridAct->isChecked());
 }
 
+void MainWindow::alignToGridSettings() {
+	if (m_currentGraphicsView == NULL) return;
+
+	AlignSettingsDialog asd(m_currentGraphicsView->viewName(), m_currentGraphicsView->defaultGridSizeInches(), this);
+	int result = asd.exec();
+	if (result == QDialog::Accepted) {
+		m_currentGraphicsView->initGrid();
+	}
+}

@@ -6537,12 +6537,18 @@ void SketchWidget::setNoteFocus(QGraphicsItem * item, bool inFocus) {
 	}
 }
 
+double SketchWidget::defaultGridSizeInches() {
+	return 0.0;			// should never get here
+}
+
 double SketchWidget::gridSizeInches() {
-	return 0.5;
+	return m_gridSizeInches;		
 }
 
 void SketchWidget::alignToGrid(bool align) {
 	m_alignToGrid = align;
+	QSettings settings;
+	settings.setValue(QString("%1AlignToGrid").arg(viewName()), align);
 }
 
 bool SketchWidget::canAlignToTopLeft(ItemBase *) 
@@ -6556,4 +6562,19 @@ void SketchWidget::saveZoom(qreal zoom) {
 
 qreal SketchWidget::retrieveZoom() {
 	return m_zoom;
+}
+
+void SketchWidget::initGrid() {
+	m_alignToGrid = false;
+	m_gridSizeInches = defaultGridSizeInches();
+	QSettings settings;
+	QString szString = settings.value(QString("%1GridSize").arg(viewName()), "").toString();
+	if (!szString.isEmpty()) {
+		bool ok;
+		qreal temp = TextUtils::convertToInches(szString, &ok, false);
+		if (ok) {
+			m_gridSizeInches = temp;
+		}
+	}
+	m_alignToGrid = settings.value(QString("%1AlignToGrid").arg(viewName()), false).toBool();
 }

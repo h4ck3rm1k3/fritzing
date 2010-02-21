@@ -239,6 +239,8 @@ public:
 	void alignToGrid(bool);
 	void saveZoom(qreal);
 	qreal retrieveZoom();
+	void initGrid();
+	virtual double defaultGridSizeInches();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -365,7 +367,7 @@ protected:
 											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 	int selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg);
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
-	virtual double gridSizeInches();
+	double gridSizeInches();
 	virtual bool canAlignToTopLeft(ItemBase *);
 	void findAlignmentAnchor(ItemBase * originatingItem, QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
 	void alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc);
@@ -550,6 +552,7 @@ protected:
 	int m_arrowTotalY;
 	bool m_movingByMouse;
 	bool m_alignToGrid;
+	double m_gridSizeInches;
 	ItemBase * m_alignmentItem;
 	QPointF m_alignmentStartPoint;
 	qreal m_zoom;

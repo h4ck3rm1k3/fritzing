@@ -136,7 +136,7 @@ protected:
 	void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
 	void recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate); 
 	void scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus &);
-	double gridSizeInches();
+	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
 
 protected:

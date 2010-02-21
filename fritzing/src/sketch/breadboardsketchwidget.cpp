@@ -314,6 +314,6 @@ bool BreadboardSketchWidget::ignoreFemale() {
 	return false;
 }
 
-double BreadboardSketchWidget::gridSizeInches() {
+double BreadboardSketchWidget::defaultGridSizeInches() {
 	return 0.1;
 }

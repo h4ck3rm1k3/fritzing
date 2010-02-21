@@ -134,6 +134,7 @@ protected slots:
     void fitInWindow();
     void actualSize();
     void alignToGrid();
+	void alignToGridSettings();
 	void setBackgroundColor();
     void showBreadboardView();
     void showSchematicView();
@@ -270,7 +271,7 @@ protected:
 	void connectPairs();
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
 	void closeEvent(QCloseEvent * event);
-	void saveAsAux(const QString & fileName);
+	bool saveAsAux(const QString & fileName);
 	void printAux(QPrinter &printer, bool removeBackground, bool paginate);
 	void exportAux(QString fileName, QImage::Format format, bool removeBackground);
 	void notYetImplemented(QString action);
@@ -492,6 +493,7 @@ protected:
     QAction *m_fitInWindowAct;
     QAction *m_actualSizeAct;
     QAction *m_alignToGridAct;
+    QAction *m_alignToGridSettingsAct;
     QAction *m_setBackgroundColorAct;
     QAction *m_showBreadboardAct;
     QAction *m_showSchematicAct;

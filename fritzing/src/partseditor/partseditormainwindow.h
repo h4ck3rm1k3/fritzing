@@ -76,7 +76,7 @@ protected slots:
 
 protected:
 	bool createTemplate();
-	void saveAsAux(const QString & fileName);
+	bool saveAsAux(const QString & fileName);
 	const QDir& createTempFolderIfNecessary();
 	void closeEvent(QCloseEvent *event);
 	bool eventFilter(QObject *object, QEvent *event);

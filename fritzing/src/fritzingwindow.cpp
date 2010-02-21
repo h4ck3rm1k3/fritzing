@@ -35,6 +35,7 @@ $Date$
 #include <QIcon>
 #include <QAction>
 #include <QAbstractButton>
+#include <QSettings>
 
 #include "fritzingwindow.h"
 #include "debugdialog.h"
@@ -145,13 +146,14 @@ bool FritzingWindow::saveAs() {
 		fileName += fileExtension();
 	}
 
-    saveAsAux(fileName);
+	if (saveAsAux(fileName)) {
+		QSettings settings;
+		settings.setValue("lastOpenSketch",m_fileName);
+	}
+
     return true;
 }
 
-//void FritzingWindow::saveAsAux(const QString & fileName) {
-	//FolderUtils::setOpenSaveFolder(fileName);
-//}
 
 void FritzingWindow::undoStackCleanChanged(bool isClean) {
 	setWindowModified(!isClean);

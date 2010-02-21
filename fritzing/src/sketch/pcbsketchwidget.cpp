@@ -1682,7 +1682,7 @@ void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, BaseComma
 	}
 }
 
-double PCBSketchWidget::gridSizeInches() {
+double PCBSketchWidget::defaultGridSizeInches() {
 	return 0.1;
 }
 

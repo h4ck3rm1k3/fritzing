@@ -291,6 +291,7 @@ void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->setRefModel(m_refModel);
 	sketchWidget->setUndoStack(m_undoStack);
 	sketchWidget->setChainDrag(true);			// enable bend points
+	sketchWidget->initGrid();
 	sketchWidget->addViewLayers();
 }
 

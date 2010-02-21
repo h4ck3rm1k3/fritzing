@@ -600,14 +600,14 @@ void PartsEditorMainWindow::makeNonCore() {
 	m_tags->setText(newTags);
 }
 
-void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
+bool PartsEditorMainWindow::saveAsAux(const QString & fileName) {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Fritzing"),
                              tr("Cannot write file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
-        return;
+        return false;
     }
     file.close();
 
@@ -641,6 +641,8 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
     	emit alienPartUsed();
     	m_editingAlien = false;
     }
+
+	return true;
 }
 
 void PartsEditorMainWindow::updateDateAndAuthor() {

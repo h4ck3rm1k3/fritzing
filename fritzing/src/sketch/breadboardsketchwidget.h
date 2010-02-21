@@ -58,7 +58,7 @@ protected:
 	bool allowFemaleRotation(ItemBase *);
 	void getLabelFont(QFont &, QColor &);
 	void setNewPartVisible(ItemBase *);
-	double gridSizeInches();
+	double defaultGridSizeInches();
 
 
 };

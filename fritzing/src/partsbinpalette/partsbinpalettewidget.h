@@ -151,7 +151,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void grabTitle(PaletteModel *model);
 
 		void setView(class PartsBinView *view);
-		void saveAsAux(const QString &filename);
+		bool saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
 		bool isOverFooter(QDropEvent* event);

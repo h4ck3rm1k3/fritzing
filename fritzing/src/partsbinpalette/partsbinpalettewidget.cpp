@@ -204,7 +204,7 @@ void PartsBinPaletteWidget::toListView() {
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 }
 
-void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
+bool PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	FileProgressDialog progress("Saving...", 0, this);
 
 	QString oldFilename = m_fileName;
@@ -230,6 +230,8 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 		emit fileNameUpdated(this,m_fileName,oldFilename);
 	}
 	emit saved(hasAlienParts());
+
+	return true;
 }
 
 void PartsBinPaletteWidget::loadFromModel(PaletteModel *model) {
