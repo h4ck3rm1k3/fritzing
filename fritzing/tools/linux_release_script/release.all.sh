@@ -10,5 +10,6 @@ cd /home/mariano/release
 exit
 
 cd /home/mariano/workspace/fritzing/release
-sudo chowm mariano fritzing*
-sudo chgr mariano fritzing*
+sudo chown mariano fritzing*
+sudo chgrp mariano fritzing*
+
