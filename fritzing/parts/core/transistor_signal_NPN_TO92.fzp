@@ -42,45 +42,45 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="emitter" >
-   <description>emitter</description>
+  <connector type="male" id="connector0" name="E" >
+   <description>Emitter</description>
    <views>
     <breadboardView>
      <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
-    </breadboardView>
-    <schematicView>
-     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
-    </schematicView>
-    <pcbView>
-     <p svgId="connector0pin" layer="copper0" />
-    </pcbView>
-   </views>
-  </connector>
-  <connector type="male" id="connector1" name="base" >
-   <description>base</description>
-   <views>
-    <breadboardView>
-     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
-    </breadboardView>
-    <schematicView>
-     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
-    </schematicView>
-    <pcbView>
-     <p svgId="connector1pin" layer="copper0" />
-    </pcbView>
-   </views>
-  </connector>
-  <connector type="male" id="connector2" name="collector" >
-   <description>collector</description>
-   <views>
-    <breadboardView>
-     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector2pin" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="B" >
+   <description>Base</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pin" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector2" name="C" >
+   <description>Collector</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector0pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
