@@ -58,7 +58,6 @@ def main():
                 print "no sockets node found"
                 sys.exit(0)
                 
-                
         rects = []
         for r in root.childNodes:
                 if r.nodeType != g.ELEMENT_NODE:
@@ -139,7 +138,9 @@ def main():
                 p2.unlink()
                        
         outfile = open(output, 'wb')
-        outfile.write(root.toxml("UTF-8"))
+        s = dom.toxml("UTF-8")
+        s = re.sub('\s*\n\s*\n', '', s)   # ghosts of removed (and unlinked) nodes seem to generate newlines, so tighten up the xml
+        outfile.write(s)
         outfile.flush()
         outfile.close()                        
         
