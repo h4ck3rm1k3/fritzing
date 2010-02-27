@@ -101,6 +101,21 @@ def main():
                                         
                 if not c1:
                         continue
+                        
+                if not p1:
+                        q = g.nextSibling
+                        while q:
+                                if q.nodeType == c.ELEMENT_NODE:
+                                        if q.tagName == "path":
+                                                if not p1:
+                                                        p1 = q
+                                                else:
+                                                        p2 = q
+                                                        break
+                                        elif q.tagName == "g":
+                                                break
+                                q = q.nextSibling
+                                
                 if not p1:
                         continue
                 if not p2:
@@ -110,12 +125,14 @@ def main():
                 if id:
                         if id.find("xpin") >= 0:
                                 g.setAttribute("id", id.replace("xpin", "pin"))
+                        elif id.find("pinx") >= 0:
+                                g.setAttribute("id", id.replace("pinx", "pin"))
 
                 print g.getAttribute("id")
                 
-                g.removeChild(p1)
-                g.removeChild(p2)
-                g.removeChild(c1)
+                p1.parentNode.removeChild(p1)
+                p2.parentNode.removeChild(p2)
+                c1.parentNode.removeChild(c1)
                 
                 np1 = dom.createElement("path")
                 g.appendChild(np1)
