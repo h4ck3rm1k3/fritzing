@@ -163,7 +163,7 @@ void PartsEditorConnectorsConnectorItem::paint(QPainter *painter, const QStyleOp
 
 void PartsEditorConnectorsConnectorItem::paintErrorIcon(QPainter *painter) {
 	QRectF trgRect = m_handlers->errorIconRect();
-	QPixmap pm = QPixmap(":resources/images/error_x_mini.png");
+	QPixmap pm(":resources/images/error_x_mini.png");
 	QRectF srcRect = QRectF(pm.rect());
 	painter->drawPixmap(trgRect,pm,srcRect);
 }

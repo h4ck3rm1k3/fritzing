@@ -116,7 +116,7 @@ bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filena
 		if (TextUtils::fixPixelDimensionsIn(string)) {
 			cleaned = true;
 			cleanContents = string.toUtf8();
-			DebugDialog::debug("Illustrator " + filename);
+			//DebugDialog::debug("Illustrator " + filename);
 		}
 	}
 	if (!cleaned) {

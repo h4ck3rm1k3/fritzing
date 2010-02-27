@@ -292,7 +292,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	s += blockHeader(tr("Properties"),PropsBlockId);
 	s += blockContainer(PropsBlockId);
 #ifndef QT_NO_DEBUG
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
+	s += QString("<tr><td class='label'>%1</td><td>%2 %3</td></tr>\n").arg("id").arg(id).arg(modelPart->moduleID());
 #else
 	Q_UNUSED(id);
 #endif
@@ -361,7 +361,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	s += blockHeader(tr("Properties"),PropsBlockId);
 	s += blockContainer(PropsBlockId);
 #ifndef QT_NO_DEBUG
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
+	s += QString("<tr><td class='label'>%1</td><td>%2 %3</td></tr>\n").arg("id").arg(id).arg(modelPart->moduleID());
 	if (itemBase) {
 		PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
 		if (paletteItemBase != NULL) {

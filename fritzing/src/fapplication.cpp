@@ -225,6 +225,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	BinManager::initNames();
 	PaletteModel::initNames();
 	RatsnestColors::initNames();
+	SvgIconWidget::initNames();
 
 }
 

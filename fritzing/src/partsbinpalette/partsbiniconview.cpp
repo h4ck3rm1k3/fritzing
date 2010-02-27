@@ -200,9 +200,10 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	}
 
 	QString moduleID = modelPart->moduleID();
-
 	if(!contains(moduleID)) {
-		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, m_viewLayers, ItemBase::getNextID(), NULL);
+		bool plural = isPlural(modelPart);
+		DebugDialog::debug(QString("plural %1 %2").arg(plural).arg(modelPart->modelPartShared()->title()));
+		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, m_viewLayers, ItemBase::getNextID(), NULL, plural);
 		if(position > -1) {
 			m_layout->insertItem(position, svgicon);
 		} else {
@@ -212,6 +213,51 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	} else {
 		m_partHash[moduleID]->copy(modelPart);
 	}
+}
+
+bool PartsBinIconView::isPlural(ModelPart * modelPart) {
+	QString moduleID = modelPart->moduleID();
+	switch (modelPart->itemType()) {
+		case ModelPart::Breadboard:
+		case ModelPart::ResizableBoard:
+		case ModelPart::Wire:
+		case ModelPart::Board:
+		case ModelPart::Symbol:
+		case ModelPart::Ruler:
+			return true;
+		default:
+			break;
+	}
+
+	if (moduleID.contains("mystery_part")) {
+		return true;
+	}
+	else if (moduleID.contains("screw_terminal")) {
+		return true;
+	}
+	else if (moduleID.contains("_dip")) {
+		return true;
+	}
+	else if (moduleID.contains("_sip")) {
+		return true;
+	}
+	else if (moduleID.contains("header")) {
+		return true;
+	}
+	else if (moduleID.contains("Resistor")) {
+		return true;
+	}
+
+	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
+	QString family = properties.value("family", "").toLower();
+	foreach (QString key, properties.keys()) {
+		QStringList values = m_refModel->values(family, key);
+		if (values.length() > 1) {
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 void PartsBinIconView::setPaletteModel(PaletteModel *model, bool clear) {

@@ -24,6 +24,7 @@ $Date$
 
 ********************************************************************/
 
+#include <QPixmap>
 
 #include "svgiconwidget.h"
 #include "../sketch/infographicsview.h"
@@ -38,11 +39,14 @@ $Date$
 #define SELECTION_THICKNESS 3
 #define ICON_SIZE 32
 
-SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
+static QPixmap * PluralImage = NULL;
+
+SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu, bool isPlural)
 	: QGraphicsWidget() 
 {
 	setAcceptHoverEvents(true);
 	m_moduleId = modelPart->moduleID();
+	m_isPlural = isPlural;
 
 	setFlags(QGraphicsItem::ItemIsSelectable);
 
@@ -67,6 +71,10 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	setToolTip(m_paletteItem->toolTip());
 }
 
+void SvgIconWidget::initNames() {
+	PluralImage = new QPixmap(":/resources/images/icons/plural.png");
+}
+
 SvgIconWidget::~SvgIconWidget() {
 	delete m_paletteItem;
 }
@@ -85,7 +93,11 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	QSizeF size = this->geometry().size();
 	painter->fillRect(0, 0, size.width(), size.height(), c);
 
-	if(isSelected()) {
+	if (m_isPlural) {
+		painter->drawPixmap(0, 0, *PluralImage);
+	}
+
+	if (isSelected()) {
 		painter->save();
 		QPen pen = painter->pen();
 		pen.setColor(QColor(122, 15, 49));

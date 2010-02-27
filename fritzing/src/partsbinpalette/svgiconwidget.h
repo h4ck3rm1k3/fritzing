@@ -42,10 +42,12 @@ class SvgIconWidget : public QGraphicsWidget
 {
 Q_OBJECT
 public:
-	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
+	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu, bool isPlural);
 	~SvgIconWidget();
 	ModelPart *modelPart() const;
 	const QString &moduleID() const;
+
+	static void initNames();
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
@@ -56,6 +58,7 @@ protected:
 	PaletteItem *m_paletteItem;
 	QGraphicsPixmapItem *m_pixmapItem;
 	QString m_moduleId;
+	bool m_isPlural;
 };
 
 
