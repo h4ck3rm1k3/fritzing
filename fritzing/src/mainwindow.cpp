@@ -1047,7 +1047,10 @@ ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	QDir unzipDir(unzipDirPath);
 
 	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
-	Q_ASSERT(mps.count()==1); // if this fails, that means that the bundled was wrong
+	if (mps.count()!=1) {
+		// if this fails, that means that the bundled was wrong
+		throw "bundled count was wrong";
+	}
 
 	rmdir(unzipDirPath);
 
@@ -1134,7 +1137,10 @@ QList<ModelPart*> MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw, 
 	QStringList namefilters;
 	QList<ModelPart*> retval;
 
-	Q_ASSERT(mw);
+	if (mw == NULL) {
+		throw "MainWindow::moveToPartsFolder mainwindow missing";
+	}
+
 	if(mw) {
 		namefilters << ZIP_SVG+"*";
 		foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // svg files

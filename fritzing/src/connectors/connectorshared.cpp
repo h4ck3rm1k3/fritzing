@@ -119,7 +119,9 @@ void ConnectorShared::addPin(ViewIdentifierClass::ViewIdentifier layer, QString 
 
 void ConnectorShared::removePins(ViewIdentifierClass::ViewIdentifier layer) {
 	m_pins.remove(layer);
-	Q_ASSERT(m_pins.values(layer).size() == 0);
+	if (m_pins.values(layer).size() != 0) {
+		throw "ConnectorShared::removePins";
+	}
 }
 
 const QString ConnectorShared::pin(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {

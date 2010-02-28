@@ -30,4 +30,5 @@ HEADERS += \
     src/referencemodel/daos.h 
 
 SOURCES += \
-    src/referencemodel/sqlitereferencemodel.cpp 
+    src/referencemodel/sqlitereferencemodel.cpp \
+    src/referencemodel/daos.cpp 

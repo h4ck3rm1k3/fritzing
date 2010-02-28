@@ -256,7 +256,7 @@ ModelPart * ModelBase::addModelPart(ModelPart * parent, ModelPart * copyChild) {
 ModelPart * ModelBase::addPart(QString newPartPath, bool addToReference) {
 	Q_UNUSED(newPartPath);
 	Q_UNUSED(addToReference);
-	Q_ASSERT(false);
+	throw "ModelBase::addPart should not be invoked";
 	return NULL;
 }
 
@@ -264,7 +264,7 @@ ModelPart * ModelBase::addPart(QString newPartPath, bool addToReference) {
 bool ModelBase::addPart(ModelPart * modelPart, bool update) {
 	Q_UNUSED(modelPart);
 	Q_UNUSED(update);
-	Q_ASSERT(false);
+	throw "ModelBase::addPart should not be invoked";
 	return false;
 }
 

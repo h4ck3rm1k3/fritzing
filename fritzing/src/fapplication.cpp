@@ -911,7 +911,9 @@ disappear, or sometimes none at all.
 So the hack for now is to call the windows in non-random order.
 
 Eventually, maybe the SvgIconWidget class could be rewritten so that it's not using QGraphicsProxyWidget, 
-which is really not intended for hundreds of widgets.
+which is really not intended for hundreds of widgets. 
+
+(SvgIconWidget has been rewritten)
 */
 
 
@@ -977,11 +979,16 @@ bool FApplication::notify(QObject *receiver, QEvent *e)
     try {
         return QApplication::notify(receiver, e);
     }
+	catch (char const *str) {
+        QMessageBox::critical(NULL, tr("Fritzing failure"), tr("Fritzing caught an exception %1 from %2 in event %3")
+			.arg(str).arg(receiver->objectName()).arg(e->type()));
+	}
     catch (...) {
         QMessageBox::critical(NULL, tr("Fritzing failure"), tr("Fritzing caught an exception from %1 in event %2").arg(receiver->objectName()).arg(e->type()));
     }
-    // save files here
-    qFatal("Exiting due to exception");
+	closeAllWindows2();
+	QApplication::exit(-1);
+	abort();
     return false;
 }
 

@@ -40,6 +40,17 @@ $Date$
 
 QtMsgHandler originalMsgHandler;
 
+void writeCrashMessage(const char * msg) {
+	QString path = QCoreApplication::applicationDirPath();
+	path += "/../fritzingcrash.txt";
+	QFile file(path);
+	if (file.open(QIODevice::Append | QIODevice::Text)) {
+		QTextStream out(&file);
+		out << QString(msg) << "\n";
+		file.close();
+	}
+}
+
 void fMessageHandler(QtMsgType type, const char *msg)
  {
 	switch (type) {
@@ -54,20 +65,14 @@ void fMessageHandler(QtMsgType type, const char *msg)
 			break;
 		case QtFatalMsg:
 			{
-				QString path = QCoreApplication::applicationDirPath();
-				path += "/../fritzingcrash.txt";
-				QFile file(path);
-   				if (file.open(QIODevice::Append | QIODevice::Text)) {
-   					QTextStream out(&file);
-   					out << QString(msg) << "\n";
-					file.close();
-				}
+				writeCrashMessage(msg);
 			}
 
 			// don't abort
 			originalMsgHandler(QtWarningMsg, msg);
 	}
  }
+
 
 
 int main(int argc, char *argv[])
@@ -96,26 +101,35 @@ int main(int argc, char *argv[])
 #endif
 #endif
 
-	FApplication * app = new FApplication(argc, argv);
-
-	//DebugDialog::setDebugLevel(DebugDialog::Error);
-	bool firstRun = true;
 	int result = 0;
-	if (app->runAsService()) {
-		// for example: -g C:\Users\jonathan\fritzing2\fz\Test_multiple.fz -go C:\Users\jonathan\fritzing2\fz\gerber
-		result = app->serviceStartup();
+	try {
+		FApplication * app = new FApplication(argc, argv);
+
+		//DebugDialog::setDebugLevel(DebugDialog::Error);
+		bool firstRun = true;
+		if (app->runAsService()) {
+			// for example: -g C:\Users\jonathan\fritzing2\fz\Test_multiple.fz -go C:\Users\jonathan\fritzing2\fz\gerber
+			result = app->serviceStartup();
+		}
+		else {
+			do {
+				result = app->startup(firstRun);
+				if (result == 0) {
+					result = app->exec();
+					firstRun = false;
+				}
+			} while(result == FApplication::RestartNeeded);
+		}
+		app->finish();
+		delete app;
 	}
-	else {
-		do {
-			result = app->startup(firstRun);
-			if (result == 0) {
-				result = app->exec();
-				firstRun = false;
-			}
-		} while(result == FApplication::RestartNeeded);
+	catch (char const *str) {
+		writeCrashMessage(str);
 	}
-	app->finish();
-	delete app;
+	catch (...) {
+		result = -1;
+	}
+
 	return result;
 }
 

@@ -61,25 +61,6 @@ void SqliteReferenceModel::loadAll()
 			QMessageBox::Ok);
 	}
 
-	// just testing
-	if(m_swappingEnabled) {
-		/*ModelPart *mp = retrieveModelPart(new Part("led","color","red"));
-		if(mp) {
-			Q_ASSERT(mp->moduleID().startsWith("1234ABDC24"));
-		}*/
-
-		/*mp = retrieveModelPart(new Part("capacitor","p2","Ceramic Capacitor"));
-		Q_ASSERT(mp->moduleID() != "1001ABDC02");*/
-
-		/*QStringList ledscolors = values("led","color");
-		if(ledscolors.size() > 0) {
-			Q_ASSERT(ledscolors.contains("blue"));
-			Q_ASSERT(ledscolors.contains("green"));
-			Q_ASSERT(ledscolors.contains("red"));
-			Q_ASSERT(ledscolors.contains("white"));
-			Q_ASSERT(ledscolors.contains("yellow"));
-		}*/
-	}
 }
 
 SqliteReferenceModel::~SqliteReferenceModel() {

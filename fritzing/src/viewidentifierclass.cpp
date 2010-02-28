@@ -62,20 +62,26 @@ protected:
 QHash <ViewIdentifierClass::ViewIdentifier, NameTriple * > ViewIdentifierClass::names;
 
 QString & ViewIdentifierClass::viewIdentifierName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	Q_ASSERT(viewIdentifier >= 0);
-	Q_ASSERT(viewIdentifier < ViewIdentifierClass::ViewCount);
+	if (viewIdentifier < 0 || viewIdentifier >= ViewIdentifierClass::ViewCount) {
+		throw "ViewIdentifierClass::viewIdentifierName bad identifier";
+	}
+
 	return names[viewIdentifier]->viewName();
 }
 
 QString & ViewIdentifierClass::viewIdentifierXmlName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	Q_ASSERT(viewIdentifier >= 0);
-	Q_ASSERT(viewIdentifier < ViewIdentifierClass::ViewCount);
+	if (viewIdentifier < 0 || viewIdentifier >= ViewIdentifierClass::ViewCount) {
+		throw "ViewIdentifierClass::viewIdentifierXmlName bad identifier";
+	}
+
 	return names[viewIdentifier]->xmlName();
 }
 
 QString & ViewIdentifierClass::viewIdentifierNaturalName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	Q_ASSERT(viewIdentifier >= 0);
-	Q_ASSERT(viewIdentifier < ViewIdentifierClass::ViewCount);
+	if (viewIdentifier < 0 || viewIdentifier >= ViewIdentifierClass::ViewCount) {
+		throw "ViewIdentifierClass::viewIdentifierNaturalName bad identifier";
+	}
+
 	return names[viewIdentifier]->naturalName();
 }
 

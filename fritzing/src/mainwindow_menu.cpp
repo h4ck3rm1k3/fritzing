@@ -3614,12 +3614,7 @@ void MainWindow::swapObsolete() {
 }
 
 void MainWindow::throwFakeException() {
-    //throw "feces";
-
-    QAction * action = NULL;
-    if (action->isEnabled()) {
-        DebugDialog::debug("what happens in throw fake exception?");
-    }
+    throw "fake exception";
 }
 
 void MainWindow::updateRatsnest() {

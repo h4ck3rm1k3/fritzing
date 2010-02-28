@@ -149,7 +149,8 @@ QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 		case Qt::BottomLeftCorner:
 			cornerPoint=rect.bottomLeft();
 			break;
-		default: Q_ASSERT(false); // this should not happen
+		default: 
+			throw "ConnectorRectangle::handlerRect: unknown corner";
 	}
 	return QRectF(cornerPoint-offset,cornerPoint+offset);
 }

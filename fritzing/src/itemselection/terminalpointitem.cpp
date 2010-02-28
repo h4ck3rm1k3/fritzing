@@ -46,7 +46,10 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent,
 }
 
 void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point, bool loadedFromFile) {
-	Q_ASSERT(parent);
+	if (parent == NULL) {
+		throw "TerminalPointItem::init no parent";
+	}
+
 	m_parent = parent;
 	m_point = point;
 	m_loadedFromFile = loadedFromFile;

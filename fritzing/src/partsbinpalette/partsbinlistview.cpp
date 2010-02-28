@@ -272,7 +272,9 @@ bool PartsBinListView::dropMimeData(int index, const QMimeData *data, Qt::DropAc
 }
 
 QMimeData * PartsBinListView::mimeData(const QList<QListWidgetItem *> items) const {
-	Q_ASSERT(items.count()<=1);
+	if (items.count()>1) {
+		throw "PartsBinListView::mimeData too many items";
+	}
 
 	if(items.count()==1) {
 		ModelPart * modelPart = items[0]->data(Qt::UserRole).value<ModelPart *>();

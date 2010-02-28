@@ -113,7 +113,9 @@ void PartsEditorView::addDefaultLayers() {
 }
 
 void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
-	Q_ASSERT(modelPart);
+	if (modelPart == NULL) {
+		throw "PartsEditorView::addItemInPartsEditor no model part";
+	}
 	clearScene();
 
 	m_item = newPartsEditorPaletteItem(modelPart, svgFilePath);
@@ -138,7 +140,10 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 		paletteItemAux = newPartsEditorPaletteItem(modelPart);
 	}
 	PartsEditorPaletteItem *paletteItem = dynamic_cast<PartsEditorPaletteItem*>(paletteItemAux);
-	Q_ASSERT(paletteItem);
+	if (paletteItem == NULL) {
+		throw "PartsEditorView::addItemAux paletteItem not found";
+	}
+
 	if(paletteItem) {
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 		QString layerFileName = getLayerFileName(modelPart);
@@ -372,8 +377,9 @@ QString PartsEditorView::getOrCreateViewFolderInTemp() {
 
 	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
 		bool mkResult = m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder);
-		Q_UNUSED(mkResult);
-		Q_ASSERT(mkResult);
+		if (!mkResult) {
+			throw "PartsEditorView::getOrCreateViewFolderInTemp failed";
+		}
 	}
 
 	return viewFolder;
@@ -772,7 +778,10 @@ void PartsEditorView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePat
 	} else {
 		QString relPathAux = filePathOrig->relativePath();
 		m_svgFilePath->setAbsolutePath(m_originalSvgFilePath);
-		Q_ASSERT(relPathAux.count("/") <= 2);
+		if (relPathAux.count("/") > 2) {
+			throw "PartsEditorView::copyToTempAndRenameIfNecessary bad path";
+		}
+
 		if(relPathAux.count("/") == 2) { // this means that core/user/contrib is still in the file name
 			m_svgFilePath->setRelativePath(
 				relPathAux.right(// remove user/core/contrib
@@ -1190,7 +1199,10 @@ bool PartsEditorView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &s
 			TerminalPointItem *tp = citem->terminalPointItem();
 			QString connId = citem->connector()->connectorSharedID();
 			QString terminalId = connId+"terminal";
-			Q_ASSERT(tp);
+			if (!tp) {
+				throw "PartsEditorView::updateTerminalPoints tp missing";
+			}
+
 			if(tp && !tp->isInTheCenter()) {
 				if(tp->hasBeenMoved() || citem->hasBeenMoved()) {
 					connsWithNewTPs << citem;
@@ -1257,7 +1269,10 @@ void PartsEditorView::addNewTerminalPoints(
 	foreach(PartsEditorConnectorsConnectorItem* citem, connsWithNewTPs) {
 		QString connId = citem->connector()->connectorSharedID();
 		TerminalPointItem *tp = citem->terminalPointItem();
-		Q_ASSERT(tp);
+		if (tp == NULL) {
+			throw "PartsEditorView::addNewTerminalPoints tp missing";
+		}
+
 		if(tp) {
 			QRectF tpointRect(tp->mappedPoint(), QPointF(0,0));
 			QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
