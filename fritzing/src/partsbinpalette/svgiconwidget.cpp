@@ -93,8 +93,9 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	QSizeF size = this->geometry().size();
 	painter->fillRect(0, 0, size.width(), size.height(), c);
 
-	if (m_isPlural) {
-		painter->drawPixmap(0, 0, *PluralImage);
+	if (m_isPlural ) {
+		QSize p = PluralImage->size();
+		painter->drawPixmap((size.width() - p.width()) / 2, (size.height() - p.height()) / 2, *PluralImage);
 	}
 
 	if (isSelected()) {
