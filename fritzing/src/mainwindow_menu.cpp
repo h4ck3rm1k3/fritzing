@@ -62,6 +62,7 @@ $Date$
 #include "navigator/miniviewcontainer.h"
 #include "utils/zoomslider.h"
 #include "dialogs/alignsettingsdialog.h"
+#include "layerpalette.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1661,7 +1662,75 @@ void MainWindow::updateLayerMenu() {
 
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->updateLayerMenu(m_viewMenu, m_showAllLayersAct, m_hideAllLayersAct, m_alignToGridAct );
+	m_alignToGridAct->setChecked(m_currentGraphicsView->alignedToGrid());
+	
+	LayerHash viewLayers = m_currentGraphicsView->viewLayers();
+	QList<ViewLayer::ViewLayerID> keys = viewLayers.keys();
+
+	// make sure they're in ascending order when inserting into the menu
+	qSort(keys.begin(), keys.end());
+
+	for (int i = 0; i < keys.count(); i++) {
+		ViewLayer * viewLayer = viewLayers.value(keys[i]);
+    	if (viewLayer != NULL) {
+			if (viewLayer->parentLayer()) continue;
+			m_viewMenu->addAction(viewLayer->action());
+			disconnect(viewLayer->action(), SIGNAL(triggered()), this, SLOT(updateLayerMenu()));
+			connect(viewLayer->action(), SIGNAL(triggered()), this, SLOT(updateLayerMenu()));
+		}
+	}
+
+	m_hideAllLayersAct->setEnabled(false);
+	m_showAllLayersAct->setEnabled(false);
+
+	if (keys.count() <= 0) return;
+
+	ViewLayer *prev = viewLayers.value(keys[0]);
+	if (prev == NULL) {
+		// jrc: I think prev == NULL is actually a side effect from an earlier bug
+		// but I haven't figured out the cause yet
+		// at any rate, when this bug occurs, keys[0] is some big negative number that looks like an
+		// uninitialized or scrambled layerID
+		DebugDialog::debug(QString("updateAllLayersActions keys[0] failed %1").arg(keys[0]) );
+		return;
+	}
+
+	bool sameState = prev->action()->isChecked();
+	bool checked = prev->action()->isChecked();
+	//DebugDialog::debug(QString("Layer: %1 is %2").arg(prev->action()->text()).arg(prev->action()->isChecked()));
+	for (int i = 1; i < keys.count(); i++) {
+		ViewLayer *viewLayer = viewLayers.value(keys[i]);
+		//DebugDialog::debug(QString("Layer: %1 is %2").arg(viewLayer->action()->text()).arg(viewLayer->action()->isChecked()));
+		if (viewLayer != NULL) {
+			if (prev != NULL && prev->action()->isChecked() != viewLayer->action()->isChecked() ) {
+				// if the actions aren't all checked or unchecked I don't bother about the "checked" variable
+				sameState = false;
+				break;
+			} 
+			else {
+				sameState = true;
+				checked = viewLayer->action()->isChecked();
+			}
+			prev = viewLayer;
+		}
+	}
+
+	//DebugDialog::debug(QString("sameState: %1").arg(sameState));
+	//DebugDialog::debug(QString("checked: %1").arg(checked));
+	if (sameState) {
+		if(checked) {
+			m_hideAllLayersAct->setEnabled(true);
+		} 
+		else {
+			m_showAllLayersAct->setEnabled(true);
+		}
+	} 
+	else {
+		m_showAllLayersAct->setEnabled(true);
+		m_hideAllLayersAct->setEnabled(true);
+	}
+
+	m_layerPalette->updateLayerPalette(viewLayers, keys);
 }
 
 void MainWindow::updateWireMenu() {
@@ -2257,12 +2326,14 @@ void MainWindow::showAllLayers() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->setAllLayersVisible(true);
+	updateLayerMenu();
 }
 
 void MainWindow::hideAllLayers() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->setAllLayersVisible(false);
+	updateLayerMenu();
 }
 
 void MainWindow::openRecentOrExampleFile() {

@@ -575,6 +575,8 @@ protected:
 
 	QByteArray m_externalProcessOutput;
 
+	class LayerPalette * m_layerPalette;
+
 public:
 	static int RestartNeeded;
 

@@ -60,6 +60,7 @@ $Date$
 #include "utils/graphicsutils.h"
 #include "items/mysterypart.h"
 #include "items/pinheader.h"
+#include "layerpalette.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -163,6 +164,8 @@ void MainWindow::init() {
     m_undoView->setGroup(m_undoGroup);
     m_undoGroup->setActiveStack(m_undoStack);
 
+	m_layerPalette = new LayerPalette(this);
+
     m_dockManager = new DockManager(this);
     m_dockManager->createBinAndInfoViewDocks();
 
@@ -178,6 +181,9 @@ void MainWindow::init() {
     createMenus();
     createToolBars();
     createStatusBar();
+
+	m_layerPalette->setShowAllLayersAction(m_showAllLayersAct);
+	m_layerPalette->setHideAllLayersAction(m_hideAllLayersAct);
 
 	m_viewSwitcher = new ViewSwitcher();
 	connect(m_viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
@@ -649,6 +655,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	foreach(QGraphicsItem * item, m_currentGraphicsView->items()) {
 		item->update();
 	}
+
+	updateLayerMenu();
 
 	//  TODO:  should be a cleaner way to do this
 	switch( index ) {

@@ -29,6 +29,7 @@ HEADERS += \
     src/fsvgrenderer.h \
     src/itemdrag.h \
     src/layerattributes.h \
+    src/layerpalette.h \
     src/mainwindow.h \
     src/sketchareawidget.h \
     src/sketchtoolbutton.h \
@@ -50,6 +51,7 @@ SOURCES += \
     src/fsvgrenderer.cpp \
     src/itemdrag.cpp \
     src/layerattributes.cpp \
+    src/layerpalette.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/mainwindow_menu.cpp \

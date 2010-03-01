@@ -108,7 +108,6 @@ public:
 	PaletteItem *getSelectedPart();
 
     void addViewLayer(ViewLayer *);
-    void updateLayerMenu(QMenu * layerMenu, QAction * showAllAction, QAction * hideAllAction, QAction * alignAction);
     void setAllLayersVisible(bool visible);
     void setLayerVisible(ViewLayer * viewLayer, bool visible);
 	void setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool visible);
@@ -237,6 +236,7 @@ public:
 	void setNoteFocus(QGraphicsItem *, bool inFocus);
 
 	void alignToGrid(bool);
+	bool alignedToGrid();
 	void saveZoom(qreal);
 	qreal retrieveZoom();
 	void initGrid();
@@ -270,7 +270,6 @@ protected:
 
 	void addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerID);
 	ConnectorItem * findConnectorItem(ItemBase * item, const QString & connectorID, bool seekLayerKin);
-	void updateAllLayersActions(QAction * showAllAction, QAction * hideAllAction);
 	bool checkMoved();
 
 	void changeConnectionAux(long fromID, const QString & fromConnectorID,

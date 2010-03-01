@@ -36,6 +36,7 @@ $Date$
 #include "utils/misc.h"
 #include "partsbinpalette/binmanager/binmanager.h"
 #include "infoview/htmlinfoview.h"
+#include "layerpalette.h"
 
 const int DockManager::PartsBinDefaultHeight = 240;
 const int DockManager::PartsBinMinHeight = 100;
@@ -134,6 +135,10 @@ void DockManager::createDockWindows()
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerSchematic, tr("Schematic"));
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerPCB, tr("PCB"));
 	makeDock(tr("Navigator"), m_mainWindow->m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
+
+    makeDock(tr("Layers"), m_mainWindow->m_layerPalette, DockMinWidth, DockMinHeight)->hide();
+    m_mainWindow->m_undoView->setMinimumSize(DockMinWidth, DockMinHeight);
+
 
 	// comment out the console for nows
 	// m_mainWindow->m_consoleView = new Console();

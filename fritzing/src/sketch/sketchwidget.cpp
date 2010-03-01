@@ -2970,25 +2970,6 @@ void SketchWidget::addViewLayer(ViewLayer * viewLayer) {
     viewLayer->setAction(action);
 }
 
-void SketchWidget::updateLayerMenu(QMenu * layerMenu, QAction * showAllAction, QAction * hideAllAction, QAction * alignAction) {
-	alignAction->setChecked(m_alignToGrid);
-	
-	QList<ViewLayer::ViewLayerID>keys = m_viewLayers.keys();
-
-	// make sure they're in ascending order when inserting into the menu
-	qSort(keys.begin(), keys.end());
-
-	for (int i = 0; i < keys.count(); i++) {
-		ViewLayer * viewLayer = m_viewLayers.value(keys[i]);
-    	if (viewLayer != NULL) {
-			if (viewLayer->parentLayer()) continue;
-			layerMenu->addAction(viewLayer->action());
-		}
-	}
-	// TODO: Fix this function, to update the show/hide all actions
-	updateAllLayersActions(showAllAction, hideAllAction);
-}
-
 void SketchWidget::setAllLayersVisible(bool visible) {
 	QList<ViewLayer::ViewLayerID>keys = m_viewLayers.keys();
 
@@ -2997,60 +2978,6 @@ void SketchWidget::setAllLayersVisible(bool visible) {
 		if (viewLayer != NULL) {
 			setLayerVisible(viewLayer, visible);
 		}
-	}
-}
-
-void SketchWidget::updateAllLayersActions(QAction * showAllAction, QAction * hideAllAction) {
-	QList<ViewLayer::ViewLayerID>keys = m_viewLayers.keys();
-
-	if(keys.count()>0) {
-		ViewLayer *prev = m_viewLayers.value(keys[0]);
-		if (prev == NULL) {
-			// jrc: I think prev == NULL is actually a side effect from an earlier bug
-			// but I haven't figured out the cause yet
-			// at any rate, when this bug occurs, keys[0] is some big negative number that looks like an
-			// uninitialized or scrambled layerID
-			DebugDialog::debug(QString("updateAllLayersActions keys[0] failed %1").arg(keys[0]) );
-			showAllAction->setEnabled(false);
-			hideAllAction->setEnabled(false);
-			return;
-		}
-		bool sameState = prev->action()->isChecked();
-		bool checked = prev->action()->isChecked();
-		//DebugDialog::debug(QString("Layer: %1 is %2").arg(prev->action()->text()).arg(prev->action()->isChecked()));
-		for (int i = 1; i < keys.count(); i++) {
-			ViewLayer *viewLayer = m_viewLayers.value(keys[i]);
-			//DebugDialog::debug(QString("Layer: %1 is %2").arg(viewLayer->action()->text()).arg(viewLayer->action()->isChecked()));
-			if (viewLayer != NULL) {
-				if(prev != NULL && prev->action()->isChecked() != viewLayer->action()->isChecked() ) {
-					// if the actions aren't all checked or unchecked I don't bother about the "checked" variable
-					sameState = false;
-					break;
-				} else {
-					sameState = true;
-					checked = viewLayer->action()->isChecked();
-				}
-				prev = viewLayer;
-			}
-		}
-
-		//DebugDialog::debug(QString("sameState: %1").arg(sameState));
-		//DebugDialog::debug(QString("checked: %1").arg(checked));
-		if(sameState) {
-			if(checked) {
-				showAllAction->setEnabled(false);
-				hideAllAction->setEnabled(true);
-			} else {
-				showAllAction->setEnabled(true);
-				hideAllAction->setEnabled(false);
-			}
-		} else {
-			showAllAction->setEnabled(true);
-			hideAllAction->setEnabled(true);
-		}
-	} else {
-		showAllAction->setEnabled(false);
-		hideAllAction->setEnabled(false);
 	}
 }
 
@@ -6549,6 +6476,10 @@ void SketchWidget::alignToGrid(bool align) {
 	m_alignToGrid = align;
 	QSettings settings;
 	settings.setValue(QString("%1AlignToGrid").arg(viewName()), align);
+}
+
+bool SketchWidget::alignedToGrid() {
+	return m_alignToGrid;
 }
 
 bool SketchWidget::canAlignToTopLeft(ItemBase *) 
