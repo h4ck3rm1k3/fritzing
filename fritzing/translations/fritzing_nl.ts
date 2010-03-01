@@ -52,6 +52,37 @@
     </message>
 </context>
 <context>
+    <name>AlignSettingsDialog</name>
+    <message>
+        <source>Set the grid size for %1 only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AutorouteProgressDialog</name>
     <message>
         <source>zoom and pan</source>
@@ -231,6 +262,10 @@ om deze aansluiting in orde te brengen</translation>
         <source>Couldn&apos;t get the dock widget</source>
         <translation>Fout bij ophalen dock widget</translation>
     </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FApplication</name>
@@ -260,6 +295,10 @@ Nota : U kunt ze later ook nog importeren via &quot;Help&quot; &gt; &quot;Import
     <message>
         <source>Fritzing caught an exception from %1 in event %2</source>
         <translation>Fritzing heeft een exception van %1 gevonden in event %2</translation>
+    </message>
+    <message>
+        <source>Fritzing caught an exception %1 from %2 in event %3</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -503,6 +542,17 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     </message>
 </context>
 <context>
+    <name>LayerPalette</name>
+    <message>
+        <source>show all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hide all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinkDialog</name>
     <message>
         <source>Cancel</source>
@@ -589,10 +639,6 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
     <message>
         <source>Export Etchable PDF</source>
         <translation>Exporteer etchable PDF</translation>
-    </message>
-    <message>
-        <source>%1%</source>
-        <translation>%1%</translation>
     </message>
     <message>
         <source>Ready</source>
@@ -1898,6 +1944,14 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Grid Size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the size of the grid to align to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2742,10 +2796,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation>Selecteer oude componenten</translation>
     </message>
     <message>
-        <source>Zoom</source>
-        <translation>Inzoomen</translation>
-    </message>
-    <message>
         <source>File Progress...</source>
         <translation>Bestand voortgang...</translation>
     </message>
@@ -2856,6 +2906,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     <message>
         <source>Select all jumpers</source>
         <translation>Selecteer alle jumpers</translation>
+    </message>
+    <message>
+        <source>Grid Size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3489,6 +3543,13 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     <message>
         <source>color</source>
         <translation>kleur</translation>
+    </message>
+</context>
+<context>
+    <name>ZoomSlider</name>
+    <message>
+        <source>%</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

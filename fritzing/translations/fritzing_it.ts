@@ -52,6 +52,37 @@
     </message>
 </context>
 <context>
+    <name>AlignSettingsDialog</name>
+    <message>
+        <source>Set the grid size for %1 only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AutorouteProgressDialog</name>
     <message>
         <source>Skip current trace</source>
@@ -230,6 +261,10 @@ before adding any connectors</source>
         <source>Couldn&apos;t get the dock widget</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FApplication</name>
@@ -257,6 +292,10 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     </message>
     <message>
         <source>Fritzing caught an exception from %1 in event %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing caught an exception %1 from %2 in event %3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -502,6 +541,17 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
 </context>
 <context>
+    <name>LayerPalette</name>
+    <message>
+        <source>show all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hide all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinkDialog</name>
     <message>
         <source>Cancel</source>
@@ -584,10 +634,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Export Etchable PDF</source>
         <translation>Esporta PDF per l&apos;incisione</translation>
-    </message>
-    <message>
-        <source>%1%</source>
-        <translation></translation>
     </message>
     <message>
         <source>Ready</source>
@@ -1895,6 +1941,14 @@ Please check all views for potential side-effects.</source>
         <source>Align items to grid when dragging</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Grid Size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the size of the grid to align to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2655,10 +2709,6 @@ Fritzing continuerà a funzionare, ma non sarà possibile cambiare le proprietà
         <translation>Vista schema</translation>
     </message>
     <message>
-        <source>Zoom</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>The file %1 is not a Fritzing file (1).</source>
         <translation>Il file %1 non è un file di Fritzing (1).</translation>
     </message>
@@ -2842,6 +2892,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Select all jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3476,6 +3530,13 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>color</source>
         <translation type="unfinished">colore</translation>
+    </message>
+</context>
+<context>
+    <name>ZoomSlider</name>
+    <message>
+        <source>%</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

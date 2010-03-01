@@ -52,6 +52,37 @@
     </message>
 </context>
 <context>
+    <name>AlignSettingsDialog</name>
+    <message>
+        <source>Set the grid size for %1 only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AutorouteProgressDialog</name>
     <message>
         <source>zoom and pan</source>
@@ -231,6 +262,10 @@ in order to fix this connector</source>
         <source>Couldn&apos;t get the dock widget</source>
         <translation>得不到此可停靠控件</translation>
     </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FApplication</name>
@@ -260,6 +295,10 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
     </message>
     <message>
         <source>Fritzing caught an exception from %1 in event %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing caught an exception %1 from %2 in event %3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -504,6 +543,17 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
 </context>
 <context>
+    <name>LayerPalette</name>
+    <message>
+        <source>show all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hide all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinkDialog</name>
     <message>
         <source>Cancel</source>
@@ -590,10 +640,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Export Etchable PDF</source>
         <translation>导出为可蚀刻的PDF</translation>
-    </message>
-    <message>
-        <source>%1%</source>
-        <translation>%1%</translation>
     </message>
     <message>
         <source>Ready</source>
@@ -1893,6 +1939,14 @@ Please check all views for potential side-effects.</source>
         <source>Align items to grid when dragging</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Grid Size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the size of the grid to align to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2684,10 +2738,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>原理图视图</translation>
     </message>
     <message>
-        <source>Zoom</source>
-        <translation>缩放</translation>
-    </message>
-    <message>
         <source>The file %1 is not a Fritzing file (1).</source>
         <translation>文件%1不是Fritzing文件(1).</translation>
     </message>
@@ -2849,6 +2899,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Select all jumpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3481,6 +3535,13 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>color</source>
         <translation type="unfinished">颜色</translation>
+    </message>
+</context>
+<context>
+    <name>ZoomSlider</name>
+    <message>
+        <source>%</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
