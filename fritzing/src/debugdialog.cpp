@@ -38,6 +38,12 @@ $Date$
 DebugDialog* DebugDialog::singleton = NULL;
 QFile DebugDialog::m_file;
 
+#ifdef QT_NO_DEBUG
+bool DebugDialog::m_enabled = false;
+#else
+bool DebugDialog::m_enabled = true;
+#endif
+
 QEvent::Type DebugEventType = (QEvent::Type) (QEvent::User + 1);
 
 class DebugEvent : public QEvent
@@ -125,9 +131,9 @@ void DebugDialog::debug(QString prefix, const QRect &rect, DebugLevel debug, QOb
 }
 
 void DebugDialog::debug(QString message, DebugLevel debugLevel, QObject * ancestor) {
-#ifdef QT_NO_DEBUG
-	return;
-#endif
+
+	if (!m_enabled) return;
+
 
 	if (singleton == NULL) {
 		new DebugDialog();
@@ -199,3 +205,12 @@ void DebugDialog::cleanup() {
 		singleton = NULL;
 	}
 }
+
+bool DebugDialog::enabled() {
+	return m_enabled;
+}
+
+void DebugDialog::setEnabled(bool enabled) {
+	m_enabled = enabled;
+}
+

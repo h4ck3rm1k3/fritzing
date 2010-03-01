@@ -222,6 +222,7 @@ protected slots:
 	void showPartLabels();
 	void addNote();
 	void reportBug();
+	void enableDebug();
 	void tidyWires();
 	void groundFill();
 	void removeGroundFill();
@@ -509,6 +510,7 @@ protected:
 	QAction *m_toggleNavigatorAct;
 	QAction *m_toggleUndoHistoryAct;
 	QAction *m_toggleDebuggerOutputAct;
+	QAction *m_windowMenuSeparator;
 
 	// Trace Menu
 	QMenu *m_pcbTraceMenu;
@@ -536,6 +538,7 @@ protected:
     QAction *m_checkForUpdatesAct;
     QAction *m_aboutQtAct;
     QAction *m_reportBugAct;
+	QAction *m_enableDebugAct;
     QAction *m_importFilesFromPrevInstallAct;
 
 	// Wire Color Menu

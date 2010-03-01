@@ -64,6 +64,8 @@ public:
 	static bool connectToBroadcast(QObject * receiver, const char* slot);
 	static void setDebugLevel(DebugLevel);
 	static void cleanup();
+	static void setEnabled(bool);
+	static bool enabled();
 
 protected:
 	bool event ( QEvent * e );
@@ -72,6 +74,7 @@ protected:
 protected:
 	static DebugDialog* singleton;
 	static QFile m_file;
+	static bool m_enabled;
 
 	QTextEdit* m_textEdit;
 	DebugLevel m_debugLevel;

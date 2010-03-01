@@ -1464,9 +1464,15 @@ void MainWindow::createHelpMenuActions() {
 	m_aboutQtAct->setStatusTip(tr("Show Qt's about box"));
 	connect(m_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-	m_reportBugAct = new QAction(tr("&Report a bug..."), this);
+	m_reportBugAct = new QAction(tr("Report a bug..."), this);
 	m_reportBugAct->setStatusTip(tr("Report a but you've found in Fritzing"));
 	connect(m_reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
+
+	m_enableDebugAct = new QAction(tr("Enable debugging log"), this);
+	m_enableDebugAct->setStatusTip(tr("Report a but you've found in Fritzing"));
+	m_enableDebugAct->setCheckable(true);
+	m_enableDebugAct->setChecked(DebugDialog::enabled());
+	connect(m_enableDebugAct, SIGNAL(triggered()), this, SLOT(enableDebug()));
 
 	m_importFilesFromPrevInstallAct = new QAction(tr("&Import parts and bins from old version..."), this);
 	m_importFilesFromPrevInstallAct->setStatusTip(tr("Import parts and bins from previous installation"));
@@ -1646,7 +1652,9 @@ void MainWindow::createMenus()
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_checkForUpdatesAct);
 	m_helpMenu->addAction(m_importFilesFromPrevInstallAct);
+	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_reportBugAct);
+	m_helpMenu->addAction(m_enableDebugAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
 	m_helpMenu->addAction(m_tipsAndTricksAct);
@@ -2106,6 +2114,15 @@ void MainWindow::visitFritzingDotOrg() {
 
 void MainWindow::reportBug() {
 	 QDesktopServices::openUrl(QString("http://code.google.com/p/fritzing/issues"));
+}
+
+void MainWindow::enableDebug() {
+	DebugDialog::setEnabled(m_enableDebugAct->isChecked());
+	if (!m_windowMenu->actions().contains(m_toggleDebuggerOutputAct)) {
+	    m_windowMenu->insertSeparator(m_windowMenuSeparator);
+		m_windowMenu->insertAction(m_windowMenuSeparator, m_toggleDebuggerOutputAct);
+		toggleDebuggerOutput(true);
+	}
 }
 
 void MainWindow::createNewPart() {

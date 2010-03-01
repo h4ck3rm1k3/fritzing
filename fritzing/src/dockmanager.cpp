@@ -151,7 +151,7 @@ void DockManager::createDockWindows()
     m_mainWindow->m_windowMenu->addAction(m_mainWindow->m_toggleDebuggerOutputAct);
 #endif
 
-    m_mainWindow->m_windowMenu->addSeparator();
+    m_mainWindow->m_windowMenuSeparator = m_mainWindow->m_windowMenu->addSeparator();
 }
 
 FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area, DockFactory dockFactory) {
