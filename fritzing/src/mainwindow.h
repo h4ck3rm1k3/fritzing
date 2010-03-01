@@ -140,7 +140,7 @@ protected slots:
     void showSchematicView();
     void showPCBView();
     void updateEditMenu();
-    void updateLayerMenu();
+    void updateLayerMenu(bool resetLayout = false);
     void updatePartMenu();
     void updateWireMenu();
 	void updateFileMenu();

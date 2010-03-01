@@ -656,7 +656,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		item->update();
 	}
 
-	updateLayerMenu();
+	updateLayerMenu(true);
 
 	//  TODO:  should be a cleaner way to do this
 	switch( index ) {

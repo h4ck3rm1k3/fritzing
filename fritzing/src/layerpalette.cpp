@@ -26,12 +26,7 @@ $Date$
 
 #include "layerpalette.h"
 
-#include <QFormLayout>
-#include <QVBoxLayout>
-#include <QGroupBox>
-#include <QSpacerItem>
 #include <QAction>
-#include <QPushButton>
 
 
 ViewLayerCheckBox::ViewLayerCheckBox(QWidget * parent) : QCheckBox(parent) {
@@ -57,17 +52,18 @@ LayerPalette::LayerPalette(QWidget * parent) : QFrame(parent)
 {
 	m_hideAllLayersAct = m_showAllLayersAct = NULL;
 
-	QVBoxLayout *layout = new QVBoxLayout();
+	m_mainLayout = new QVBoxLayout();
 
 	for (int i = 0; i < ViewLayer::ViewLayerCount; i++) {
-		ViewLayerCheckBox * cb = new ViewLayerCheckBox();
+		ViewLayerCheckBox * cb = new ViewLayerCheckBox(this);
 		connect(cb, SIGNAL(clicked(bool)), this, SLOT(setLayerVisibility(bool)));
 		m_checkBoxes.append(cb);
-		cb->setVisible(true);
-		layout->addWidget(cb);
+		cb->setVisible(false);
+
+		m_spacerItems.append(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
 	}
 
-	QGroupBox * groupBox = new QGroupBox("");
+	m_groupBox = new QGroupBox("");
 	QVBoxLayout * groupLayout = new QVBoxLayout();
 
 	m_showAllWidget = new QPushButton(tr("show all layers"));
@@ -79,20 +75,43 @@ LayerPalette::LayerPalette(QWidget * parent) : QFrame(parent)
 	groupLayout->addWidget(m_showAllWidget);
 	groupLayout->addWidget(m_hideAllWidget);
 
-	groupBox->setLayout(groupLayout);
+	m_groupBox->setLayout(groupLayout);
 
-	layout->addWidget(groupBox);
-	layout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
+	m_mainLayout->addWidget(m_groupBox);
 
-	this->setLayout(layout);
+	this->setLayout(m_mainLayout);
 
-	foreach (QCheckBox * cb, m_checkBoxes) {
-		cb->setVisible(false);
-	}
+
 }
 
 LayerPalette::~LayerPalette() 
 {
+}
+
+void LayerPalette::resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys) {
+	m_mainLayout->removeWidget(m_groupBox);
+	foreach (ViewLayerCheckBox * cb, m_checkBoxes) {
+		m_mainLayout->removeWidget(cb);
+		cb->setVisible(false);
+	}
+	foreach (QSpacerItem * si, m_spacerItems) {
+		m_mainLayout->removeItem(si);
+	}
+
+	int ix = 0;
+	foreach (ViewLayer::ViewLayerID key, keys) {
+		ViewLayer * viewLayer = viewLayers.value(key);
+		ViewLayerCheckBox * cb = m_checkBoxes[ix++];
+		cb->setText(viewLayer->action()->text());
+		cb->setViewLayer(viewLayer);
+		cb->setVisible(true);
+		m_mainLayout->addWidget(cb);
+		m_mainLayout->addSpacerItem(m_spacerItems[ix - 1]);
+	}
+
+	m_mainLayout->addWidget(m_groupBox);
+	m_mainLayout->invalidate();
+
 }
 
 void LayerPalette::updateLayerPalette(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys)
@@ -106,14 +125,7 @@ void LayerPalette::updateLayerPalette(LayerHash & viewLayers, QList<ViewLayer::V
 	foreach (ViewLayer::ViewLayerID key, keys) {
 		ViewLayer * viewLayer = viewLayers.value(key);
 		ViewLayerCheckBox * cb = m_checkBoxes[ix++];
-		cb->setText(viewLayer->action()->text());
 		cb->setChecked(viewLayer->action()->isChecked());
-		cb->setVisible(true);
-		cb->setViewLayer(viewLayer);
-	}
-
-	for (int i = keys.count(); i < ViewLayer::ViewLayerCount; i++) {
-		m_checkBoxes[i]->setVisible(false);
 	}
 }
 

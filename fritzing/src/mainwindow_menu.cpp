@@ -1655,7 +1655,7 @@ void MainWindow::createMenus()
 #endif
 }
 
-void MainWindow::updateLayerMenu() {
+void MainWindow::updateLayerMenu(bool resetLayout) {
 	removeActionsStartingAt(m_viewMenu, m_numFixedActionsInViewMenu);
     m_viewMenu->addAction(m_showAllLayersAct);
     m_viewMenu->addAction(m_hideAllLayersAct);
@@ -1730,6 +1730,9 @@ void MainWindow::updateLayerMenu() {
 		m_hideAllLayersAct->setEnabled(true);
 	}
 
+	if (resetLayout) {
+		m_layerPalette->resetLayout(viewLayers, keys);
+	}
 	m_layerPalette->updateLayerPalette(viewLayers, keys);
 }
 

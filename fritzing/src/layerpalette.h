@@ -30,6 +30,9 @@ $Date$
 #include <QFrame>
 #include <QCheckBox>
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QGroupBox>
+#include <QSpacerItem>
 
 #include "viewlayer.h"
 
@@ -55,6 +58,7 @@ public:
 	~LayerPalette();
 
 	void updateLayerPalette(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys);
+	void resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys);
 	void setShowAllLayersAction(QAction *);
 	void setHideAllLayersAction(QAction *);
 
@@ -67,6 +71,9 @@ protected:
 	QPushButton * m_showAllWidget;
 	QPushButton * m_hideAllWidget;
 	QList <ViewLayerCheckBox *> m_checkBoxes;
+	QList <QSpacerItem *> m_spacerItems;
+	QVBoxLayout * m_mainLayout;
+	QGroupBox * m_groupBox;
 
     QAction *m_showAllLayersAct;
 	QAction *m_hideAllLayersAct;
