@@ -28,10 +28,10 @@ $Date$
 #include "../debugdialog.h"
 #include "../utils/zoomslider.h"
 
-ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, ZoomableGraphicsView* view, QWidget *parent) : QLabel(parent)
+ZoomButton::ZoomButton(QBoxLayout::Direction dir, ZoomButton::ZoomType type, ZoomableGraphicsView* view, QWidget *parent) : QLabel(parent)
 {
 	QString imgPath = ":/resources/images/icons/partsEditorZoom%1%2Button.png";
-	QString typeStr = type==GraphicsZoomControls::ZoomIn? "In": "Out";
+	QString typeStr = type==ZoomButton::ZoomIn? "In": "Out";
 	QString dirStr;
 	if(dir == QBoxLayout::LeftToRight || dir == QBoxLayout::RightToLeft) {
 		dirStr = "Hor";
@@ -48,7 +48,7 @@ ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType
 }
 
 void ZoomButton::zoom() {
-	int inOrOut = m_type == GraphicsZoomControls::ZoomIn? 1: -1;
+	int inOrOut = m_type == ZoomButton::ZoomIn? 1: -1;
 	m_owner->relativeZoom(inOrOut*m_step, false);
 	m_owner->ensureFixedToBottomRightItems();
 }
@@ -74,8 +74,8 @@ ZoomControlsPrivate::ZoomControlsPrivate(ZoomableGraphicsView* view, QBoxLayout:
 {
 	//setObjectName("zoomControls");
 
-	m_zoomInButton = new ZoomButton(dir, GraphicsZoomControls::ZoomIn, view, this);
-	m_zoomOutButton = new ZoomButton(dir, GraphicsZoomControls::ZoomOut, view, this);
+	m_zoomInButton = new ZoomButton(dir, ZoomButton::ZoomIn, view, this);
+	m_zoomOutButton = new ZoomButton(dir, ZoomButton::ZoomOut, view, this);
 
 	m_boxLayout = new QBoxLayout(dir,this);
 	m_boxLayout->addWidget(m_zoomInButton);
@@ -84,16 +84,6 @@ ZoomControlsPrivate::ZoomControlsPrivate(ZoomableGraphicsView* view, QBoxLayout:
 	m_boxLayout->setSpacing(2);
 
 	setStyleSheet("background-color: transparent;");
-}
-
-///////////////////////////////////////////////////////////
-
-GraphicsZoomControls::GraphicsZoomControls(ZoomableGraphicsView *view) : QGraphicsProxyWidget()
-{
-	ZoomControlsPrivate *d = new ZoomControlsPrivate(view);
-	setFlags(QGraphicsItem::ItemIgnoresTransformations);
-	setWidget(d);
-	setZValue(10000);
 }
 
 ///////////////////////////////////////////////////////////

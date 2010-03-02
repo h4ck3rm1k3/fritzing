@@ -36,14 +36,8 @@ $Date$
 QString Helper::BreadboardHelpText;
 QString Helper::SchematicHelpText;
 QString Helper::PCBHelpText;
-QString Helper::PartsBinHelpText;
-QString Helper::AutorouteHelpText;
-QString Helper::SwitchButtonsHelpText;
 
 void Helper::initText() {
-	PartsBinHelpText = tr("Drag out your <br> parts from here");
-	AutorouteHelpText = tr("When done with arranging, <br> use Autoroute to create <br> your copper traces");
-	SwitchButtonsHelpText = tr("Use these buttons to <br> toggle between views");
 
 	BreadboardHelpText = tr(
         "The <b>Breadboard View</b> is meant to look like a <i>real-life</i> breadboard prototype."
@@ -92,17 +86,8 @@ Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {
 	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpText, doShow);
 	//connect(m_pcbMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeAutorouteHelp()));
 
-	//m_partsBinHelp = new ToolHelp(PartsBinHelpText, QString("PartsBin"));
-	//m_autorouteHelp = new ToolHelp(AutorouteHelpText, QString("Autoroute"), QBoxLayout::RightToLeft);
-	//m_switchButtonsHelp = new ToolHelp(SwitchButtonsHelpText, QString("SwitchButtons"), QBoxLayout::BottomToTop);
-
-	m_partsBinHelp = NULL;
-	m_autorouteHelp = NULL;
-	m_switchButtonsHelp = NULL;
-
 	m_stillWaitingFirstDrop = true;
 	m_stillWaitingFirstViewSwitch = true;
-	m_stillWaitingFirstAutoroute = true;
 
 	m_prevVScroolW = 0;
 	m_prevHScroolH = 0;
@@ -137,16 +122,11 @@ Helper::~Helper() {
 	//m_schemMainHelp->doClose();
 	//m_pcbMainHelp->doClose();
 
-	//delete m_partsBinHelp;
-	//delete m_autorouteHelp;
-	//delete m_switchButtonsHelp;
-
 }
 
 void Helper::connectToView(SketchWidget* view) {
 	connect(view, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
 	//connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
-	//connect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 }
 
 
@@ -174,7 +154,6 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 		m_breadMainHelp->doSetVisible(false);
 		m_schemMainHelp->doSetVisible(false);
 		m_pcbMainHelp->doSetVisible(false);
-		//removePartsBinHelp();
 	} else {
 		m_breadMainHelp->setTransparent();
 		m_schemMainHelp->setTransparent();
@@ -183,23 +162,6 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 	}
 }
 
-void Helper::removePartsBinHelp() {
-	//if (m_partsBinHelp) {
-		//m_owner->m_breadboardGraphicsView->scene()->removeItem(m_partsBinHelp);
-	//}
-}
-
-void Helper::removeSwitchButtonsHelp() {
-	//if (m_switchButtonsHelp) {
-		//m_owner->m_breadboardGraphicsView->scene()->removeItem(m_switchButtonsHelp);
-	//}
-}
-
-void Helper::removeAutorouteHelp() {
-	//if (m_autorouteHelp) {
-		//m_owner->m_pcbGraphicsView->scene()->removeItem(m_autorouteHelp);
-	//}
-}
 
 void Helper::viewSwitched() {
 	if(m_stillWaitingFirstViewSwitch) {
@@ -208,15 +170,6 @@ void Helper::viewSwitched() {
 		// QTimer::singleShot(400, this, SLOT(removeSwitchButtonsHelp()));
 	} else {
 		//disconnect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
-	}
-}
-
-void Helper::autorouted() {
-	if(m_stillWaitingFirstAutoroute) {
-		m_stillWaitingFirstAutoroute = false;
-		//removeAutorouteHelp();
-	} else {
-		//disconnect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 	}
 }
 

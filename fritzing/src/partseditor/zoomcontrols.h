@@ -32,20 +32,17 @@ $Date$
 #include <QBoxLayout>
 
 #include "../sketch/zoomablegraphicsview.h"
-#include "../help/inotseeninminiview.h"
-
-
-class GraphicsZoomControls : public QGraphicsProxyWidget, public INotSeenInMiniView {
-public:
-	enum ZoomType {ZoomIn, ZoomOut};
-	GraphicsZoomControls(ZoomableGraphicsView *view);
-};
 
 class ZoomButton : public QLabel {
 	Q_OBJECT
 
 	public:
-		ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, ZoomableGraphicsView* view, QWidget *parent);
+		enum ZoomType {ZoomIn, ZoomOut};
+
+public:
+		ZoomButton(QBoxLayout::Direction dir, ZoomButton::ZoomType type, ZoomableGraphicsView* view, QWidget *parent);
+
+
 
 	signals:
 		void clicked();
@@ -60,7 +57,7 @@ class ZoomButton : public QLabel {
 
 		ZoomableGraphicsView *m_owner;
 		qreal m_step;
-		GraphicsZoomControls::ZoomType m_type;
+		ZoomButton::ZoomType m_type;
 };
 
 class ZoomControlsPrivate : public QFrame {

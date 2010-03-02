@@ -36,8 +36,6 @@ $Date$
 #include <QGraphicsProxyWidget>
 #include <QPixmap>
 
-#include "inotseeninminiview.h"
-
 class SketchMainHelpCloseButton : public QLabel {
 	Q_OBJECT
 	public:
@@ -83,7 +81,7 @@ class SketchMainHelpPrivate : public QFrame {
 		volatile bool m_shouldGetTransparent;
 };
 
-class SketchMainHelp : public QGraphicsProxyWidget, public INotSeenInMiniView {
+class SketchMainHelp : public QGraphicsProxyWidget {
 public:
 	SketchMainHelp(const QString &viewString, const QString &htmlText, bool doShow);
 	~SketchMainHelp();

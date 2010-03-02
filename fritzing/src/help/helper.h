@@ -34,7 +34,6 @@ $Date$
 #include <QObject>
 
 #include "sketchmainhelp.h"
-#include "toolhelp.h"
 #include "../mainwindow.h"
 
 class Helper : public QObject {
@@ -54,11 +53,6 @@ class Helper : public QObject {
 	protected slots:
 		void somethingDroppedIntoView(const QPoint &);
 		void viewSwitched();
-		void autorouted();
-
-		void removePartsBinHelp();
-		void removeSwitchButtonsHelp();
-		void removeAutorouteHelp();
 
 	protected:
 		void connectToView(SketchWidget* view);
@@ -72,13 +66,8 @@ class Helper : public QObject {
 		SketchMainHelp *m_schemMainHelp;
 		SketchMainHelp *m_pcbMainHelp;
 
-		ToolHelp *m_partsBinHelp;
-		ToolHelp *m_autorouteHelp;
-		ToolHelp *m_switchButtonsHelp;
-
 		bool m_stillWaitingFirstDrop;
 		bool m_stillWaitingFirstViewSwitch;
-		bool m_stillWaitingFirstAutoroute;
 
 		qreal m_prevVScroolW;
 		qreal m_prevHScroolH;
@@ -88,9 +77,6 @@ class Helper : public QObject {
 		static QString SchematicHelpText;
 		static QString PCBHelpText;
 
-		static QString PartsBinHelpText;
-		static QString AutorouteHelpText;
-		static QString SwitchButtonsHelpText;
 };
 
 #endif /* HELPER_H_ */
