@@ -33,6 +33,7 @@ $Date$
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QSpacerItem>
+#include <QScrollArea>
 
 #include "viewlayer.h"
 
@@ -50,7 +51,7 @@ protected:
 	ViewLayer * m_viewLayer;
 };
 
-class LayerPalette : public QFrame
+class LayerPalette : public QScrollArea
 {
 Q_OBJECT
 public:

@@ -48,11 +48,15 @@ ViewLayer * ViewLayerCheckBox::viewLayer() {
 
 //////////////////////////////////////
 
-LayerPalette::LayerPalette(QWidget * parent) : QFrame(parent) 
+LayerPalette::LayerPalette(QWidget * parent) : QScrollArea(parent) 
 {
 	m_hideAllLayersAct = m_showAllLayersAct = NULL;
 
+	QFrame * frame = new QFrame(this);
+
+
 	m_mainLayout = new QVBoxLayout();
+	m_mainLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 
 	for (int i = 0; i < ViewLayer::ViewLayerCount; i++) {
 		ViewLayerCheckBox * cb = new ViewLayerCheckBox(this);
@@ -79,7 +83,11 @@ LayerPalette::LayerPalette(QWidget * parent) : QFrame(parent)
 
 	m_mainLayout->addWidget(m_groupBox);
 
-	this->setLayout(m_mainLayout);
+	frame->setLayout(m_mainLayout);
+
+	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	this->setWidget(frame);
+
 
 
 }
