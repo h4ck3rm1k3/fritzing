@@ -47,10 +47,12 @@ QObject * InfoViewWebPage::createPlugin(const QString &classid, const QUrl &url,
 		if (plugin) return plugin;
 	}
 
+	/*
 	if (m_infoView) {
 		QObject * plugin = m_infoView->createPlugin(m_parent, classid, url, paramNames, paramValues);
 		if (plugin) return plugin;
 	}
+	*/
 
     return QWebPage::createPlugin(classid, url, paramNames, paramValues);
 }

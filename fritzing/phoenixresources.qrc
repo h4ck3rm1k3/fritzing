@@ -199,5 +199,6 @@
         <file>resources/bins/search.fzb</file>
         <file>resources/images/icons/searchField.png</file>
         <file>resources/images/icons/plural.png</file>
+        <file>resources/images/icons/noicon.png</file>
     </qresource>
 </RCC>

@@ -50,14 +50,34 @@ QString HtmlInfoView::PropsBlockId = "props_id";
 QString HtmlInfoView::TagsBlockId = "tags_id";
 QString HtmlInfoView::ConnsBlockId = "conns_id";
 
+QPixmap * NoIcon = NULL;
+
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
 const int IconSpace = 3;
 
+/////////////////////////////////////
+
+QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
+	QLabel * label = new QLabel();
+	QPalette palette = label->palette();
+	palette.setColor(QPalette::Window, QColor(0xc2, 0xc2, 0xc2));
+	label->setPalette(palette);
+	label->setAutoFillBackground(true);
+	label->setPixmap(*pixmap);
+	label->setFixedSize(pixmap->size());
+	hboxLayout->addWidget(label);
+	hboxLayout->addSpacing(IconSpace);
+
+	return label;
+}
+
 //////////////////////////////////////
 
-HtmlInfoView::HtmlInfoView(QWidget * parent) : QFrame(parent) 
+HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent) 
 {
+	QFrame * mainFrame = new QFrame(this);
+
 	m_lastModelPartInfoGraphicsView = NULL;
 	m_lastItemBaseInfoGraphicsView = NULL;
 	m_lastModelPart = NULL;
@@ -66,13 +86,49 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QFrame(parent)
 	m_setContentTimer.setSingleShot(true);
 	m_setContentTimer.setInterval(10);
 	connect(&m_setContentTimer, SIGNAL(timeout()), this, SLOT(setContent()));
-	QVBoxLayout *lo = new QVBoxLayout(this);
+	QVBoxLayout *lo = new QVBoxLayout(mainFrame);
 	lo->setMargin(0);
 	lo->setSpacing(0);
-	m_webView = new QWebView(this);
+	lo->setSizeConstraint( QLayout::SetMinAndMaxSize );
+
+	m_titleEdit = new FLineEdit(mainFrame);
+	m_titleEdit->setObjectName("instanceTitleEditor");
+
+	connect(m_titleEdit, SIGNAL(editingFinished()), this, SLOT(setInstanceTitle()));
+	connect(m_titleEdit, SIGNAL(mouseEnter()), this, SLOT(instanceTitleEnter()));
+	connect(m_titleEdit, SIGNAL(mouseLeave()), this, SLOT(instanceTitleLeave()));
+	connect(m_titleEdit, SIGNAL(editable(bool)), this, SLOT(instanceTitleEditable(bool)));
+
+	setInstanceTitleColors(m_titleEdit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+	m_titleEdit->setAutoFillBackground(true);
+	lo->addWidget(m_titleEdit);
+
+	if (NoIcon == NULL) {
+		NoIcon = new QPixmap(":/resources/images/icons/noicon.png");
+	}
+
+	QFrame * frame = new QFrame(mainFrame);
+	frame->setObjectName("IconFrame");
+
+	QHBoxLayout * hboxLayout = new QHBoxLayout();
+	hboxLayout->setContentsMargins (0, 0, 0, 0);
+	hboxLayout->addSpacing(IconSpace);
+	m_icon1 = addLabel(hboxLayout, NoIcon);
+	m_icon2 = addLabel(hboxLayout, NoIcon);
+	m_icon3 = addLabel(hboxLayout, NoIcon);
+	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
+	frame->setLayout(hboxLayout);
+	lo->addWidget(frame);
+
+	m_webView = new QWebView(mainFrame);
+	
 	m_infoViewWebPage = new InfoViewWebPage(this, m_webView);
 	m_webView->setPage(m_infoViewWebPage);
 	lo->addWidget(m_webView);
+
+	mainFrame->setLayout(lo);
+
+	this->setWidget(mainFrame);
 
 	m_webView->setContextMenuPolicy(Qt::PreventContextMenu);
 	m_includes = "";
@@ -271,19 +327,12 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 
 	QString title;
 	prepareTitleStuff(wire, title);
+	setUpTitle(title);
+	m_modelPart = wire->modelPart();
+	setUpIcons(m_modelPart);
 
 	QString s = "";
-	if(!title.isNull() && !title.isEmpty()) {
-		s += QString("<object type='application/x-qt-plugin' classid='title' id='title' width='100%' height='30px'><param name='title' value='%1'/></object>").arg(title);
-	}
 	s += 		 "<div class='parttitle'>\n";
-
-	m_modelPart = wire->modelPart();
-	s += QString("<object type='application/x-qt-plugin' classid='PartIcons' width='%1px' height='%2px'><param name='moduleid' value='%3'/></object>")
-		.arg(3 * (STANDARD_ICON_IMG_WIDTH + IconSpace))
-		.arg(STANDARD_ICON_IMG_HEIGHT)
-		.arg(wire->modelPart()->moduleID());
-
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
 											   .arg(modelPart->modelPartShared()->version());
 	s += 		"</div>\n";
@@ -310,14 +359,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	s += 		 "</table></div>\n";
 	s += "</div>";
 
-	if(!modelPart->modelPartShared()->tags().isEmpty()) {
-		s += "<div class='block'>";
-		s += blockHeader(tr("Tags"),TagsBlockId);
-		s += blockContainer(TagsBlockId);
-		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartShared()->tags().join(", "));
-		s += 		"</table></div>\n";
-		s += "</div>";
-	}
+	addTags(modelPart, s);
 
 	return s;
 }
@@ -339,19 +381,11 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	if (modelPart == NULL) return "missing modelpart";
 	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
 
+	setUpTitle(title);
+	m_modelPart = modelPart;
+	setUpIcons(m_modelPart);
 
 	QString s = "";
-	if(!title.isNull() && !title.isEmpty()) {
-		s += QString("<object type='application/x-qt-plugin' classid='title' id='title' width='100%' height='30px'><param name='title' value='%1'/></object>").arg(title);
-	}
-	s += 		 "<div class='parttitle'>\n";
-
-	m_modelPart = modelPart;
-	s += QString("<object type='application/x-qt-plugin' classid='PartIcons' width='%1px' height='%2px'><param name='moduleid' value='%3'/></object>")
-		.arg(3 * (STANDARD_ICON_IMG_WIDTH + IconSpace))
-		.arg(STANDARD_ICON_IMG_HEIGHT)
-		.arg(modelPart->moduleID());
-
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg((itemBase) ? itemBase->title() : modelPart->title())
 											   .arg("&nbsp;"+modelPart->modelPartShared()->version());
@@ -429,14 +463,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 
 //	s += QString("<tr><td colspan='2'>%1</td></tr>").
 //			arg(QString(modelPart->modelPartShared()->path()).remove(QDir::currentPath()));
-	if(!modelPart->modelPartShared()->tags().isEmpty()) {
-		s += "<div class='block'>";
-		s += blockHeader(tr("Tags"),TagsBlockId);
-		s += blockContainer(TagsBlockId);
-		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartShared()->tags().join(", "));
-		s += 		"</table></div>\n";
-		s += "</div>";
-	}
+	addTags(modelPart, s);
 
 	return s;
 }
@@ -530,114 +557,10 @@ QString HtmlInfoView::blockContainer(const QString &blockId) {
 
 void HtmlInfoView::setNullContent()
 {
+	setUpTitle("");
+	setUpIcons(NULL);
 	setContent("");
 }
-
-void addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
-	QLabel * label = new QLabel();
-	QPalette palette = label->palette();
-	palette.setColor(QPalette::Window, QColor(0xc2, 0xc2, 0xc2));
-	label->setPalette(palette);
-	label->setAutoFillBackground(true);
-	label->setPixmap(*pixmap);
-	label->setFixedSize(pixmap->size());
-	hboxLayout->addWidget(label);
-	hboxLayout->addSpacing(IconSpace);
-}
-
-QObject * HtmlInfoView::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-
-	// TODO (jrc): calling all this icon stuff in htmlInfoView isn't nice but I haven't figured out a better location
-	// since you can't count on having the ItemBase
-
-	if (classid.compare("title", Qt::CaseInsensitive) == 0) {
-		FLineEdit * lineEdit = new FLineEdit(parent);
-		lineEdit->setObjectName("instanceTitleEditor");
-		//QFont font = lineEdit->font();
-		//font.setPointSize(14);
-		//font.setBold(true);
-		//lineEdit->setFont(font);
-		for (int i = 0; i < paramNames.count(); i++) {
-			if (paramNames[i].compare("title", Qt::CaseInsensitive) == 0) {
-				lineEdit->setText(paramValues[i]);
-				break;
-			}
-		}
-
-		connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(setInstanceTitle()));
-		connect(lineEdit, SIGNAL(mouseEnter()), this, SLOT(instanceTitleEnter()));
-		connect(lineEdit, SIGNAL(mouseLeave()), this, SLOT(instanceTitleLeave()));
-		connect(lineEdit, SIGNAL(editable(bool)), this, SLOT(instanceTitleEditable(bool)));
-
-		setInstanceTitleColors(lineEdit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
-		lineEdit->setAutoFillBackground(true);
-
-		return lineEdit;
-	}
-
-	if (classid.compare("PartIcons", Qt::CaseInsensitive) != 0) {
-		return NULL;
-	}
-
-	if (paramValues.count() < 1) return NULL;
-
-	QString moduleID;
-	for (int i = 0; i < paramNames.count(); i++) {
-		if (paramNames[i].compare("moduleid", Qt::CaseInsensitive) == 0) {
-			moduleID = paramValues.at(i);
-			break;
-		}
-	}
-
-	ModelPart * modelPart = m_modelPart;
-	if (modelPart == NULL) return NULL;
-
-	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
-	QPixmap *pixmap1 = FSvgRenderer::getPixmap(moduleID, ViewLayer::Icon, size);
-	QPixmap *pixmap2 = FSvgRenderer::getPixmap(moduleID, ViewLayer::Schematic, size);
-	QPixmap *pixmap3 = FSvgRenderer::getPixmap(moduleID, ViewLayer::Copper0, size);
-
-	if (pixmap1 == NULL) {
-		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
-		pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
-	}
-	if (pixmap2 == NULL) {
-		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic, layerAttributes);
-		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
-	}
-	if (pixmap3 == NULL) {
-		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0, layerAttributes);
-		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
-	}
-
-	if (pixmap1 == NULL && pixmap2 == NULL && pixmap3 == NULL) return NULL;
-
-	QFrame * frame = new QFrame(parent);
-	QHBoxLayout * hboxLayout = new QHBoxLayout();
-	hboxLayout->setContentsMargins (0, 0, 0, 0);
-
-	if(pixmap1 != NULL) {
-		addLabel(hboxLayout, pixmap1);
-		delete pixmap1;
-	}
-	if(pixmap2 != NULL) {
-		addLabel(hboxLayout, pixmap2);
-		delete pixmap2;
-	}
-	if(pixmap3 != NULL) {
-		addLabel(hboxLayout, pixmap3);
-		delete pixmap3;
-	}
-
-	frame->setLayout(hboxLayout);
-
-	return frame;
-}
-
 
 void HtmlInfoView::setInstanceTitle() {
 	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
@@ -688,3 +611,62 @@ QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
 	return "infoView/"+blockId+"Visibility";
 }
 
+void HtmlInfoView::setUpTitle(const QString & title) 
+{
+	if(!title.isNull() && !title.isEmpty()) {
+		m_titleEdit->setText(title);
+		m_titleEdit->setVisible(true);
+	}
+	else {
+		m_titleEdit->setVisible(false);
+	}
+}
+
+void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
+	QPixmap *pixmap1 = NULL;
+	QPixmap *pixmap2 = NULL;
+	QPixmap *pixmap3 = NULL;
+
+	QSize size = NoIcon->size();
+
+	if (modelPart != NULL) {
+		pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
+		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
+		if (pixmap1 == NULL) {
+			LayerAttributes layerAttributes;
+			ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
+			pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+		}
+		if (pixmap2 == NULL) {
+			LayerAttributes layerAttributes;
+			ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic, layerAttributes);
+			pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
+		}
+		if (pixmap3 == NULL) {
+			LayerAttributes layerAttributes;
+			ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0, layerAttributes);
+			pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
+		}
+	}
+
+	if (pixmap1 == NULL) pixmap1 = NoIcon;
+	if (pixmap2 == NULL) pixmap2 = NoIcon;
+	if (pixmap3 == NULL) pixmap3 = NoIcon;
+
+	m_icon1->setPixmap(*pixmap1);
+	m_icon2->setPixmap(*pixmap2);
+	m_icon3->setPixmap(*pixmap3);
+}
+
+void HtmlInfoView::addTags(ModelPart * modelPart, QString & s) {
+	if(!modelPart->modelPartShared()->tags().isEmpty()) {
+		s += "<div class='block'>";
+		s += blockHeader(tr("Tags"),TagsBlockId);
+		s += blockContainer(TagsBlockId);
+		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartShared()->tags().join(", "));
+		s += 		"</table></div>\n";
+		s += "</div>";
+	}
+
+}

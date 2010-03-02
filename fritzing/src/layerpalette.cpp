@@ -54,7 +54,6 @@ LayerPalette::LayerPalette(QWidget * parent) : QScrollArea(parent)
 
 	QFrame * frame = new QFrame(this);
 
-
 	m_mainLayout = new QVBoxLayout();
 	m_mainLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 

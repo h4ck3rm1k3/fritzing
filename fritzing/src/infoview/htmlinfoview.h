@@ -34,13 +34,15 @@ $Date$
 #include <QGraphicsSceneHoverEvent>
 #include <QMutex>
 #include <QTimer>
+#include <QLabel>
+#include <QScrollArea>
 
 #include "../items/itembase.h"
 #include "../items/wire.h"
 #include "../connectors/connectoritem.h"
 #include "../referencemodel/referencemodel.h"
 
-class HtmlInfoView : public QFrame
+class HtmlInfoView : public QScrollArea
 {
 Q_OBJECT
 public:
@@ -67,7 +69,6 @@ public:
 
 	void unregisterCurrentItem();
 	void unregisterCurrentItemIf(long id);
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
 public:
 	static const int STANDARD_ICON_IMG_WIDTH;
@@ -102,6 +103,9 @@ protected:
 	void setNullContent();
 	void viewItemInfoAux(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
 	void viewModelPartInfoAux(class InfoGraphicsView *, ModelPart * modelPart, bool swappingEnabled);
+	void setUpTitle(const QString & title);
+	void setUpIcons(ModelPart *);
+	void addTags(ModelPart * modelPart, QString & s);
 
 protected:
 	QString m_includes;
@@ -123,6 +127,10 @@ protected:
 	QPointer<ItemBase> m_lastItemBase;
 	QPointer<class InfoGraphicsView> m_lastItemBaseInfoGraphicsView;
 	QPointer<class InfoGraphicsView> m_lastModelPartInfoGraphicsView;
+	class FLineEdit * m_titleEdit;
+	QLabel * m_icon1;
+	QLabel * m_icon2;
+	QLabel * m_icon3;
 
 protected:
 	static QString PropsBlockId;
