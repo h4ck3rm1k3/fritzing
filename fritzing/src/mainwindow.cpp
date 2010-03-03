@@ -322,6 +322,12 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &)), 
 						this, SLOT(swapSelectedMap(const QString &, const QString &, QMap<QString, QString> &)));
 
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(dropPasteSignal()), 
+						this, SLOT(dropPaste()));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(dropPasteSignal()), 
+						this, SLOT(dropPaste()));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(dropPasteSignal()), 
+						this, SLOT(dropPaste()));
 	
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
@@ -2042,3 +2048,6 @@ void MainWindow::statusMessage(QString message, int timeout) {
 	}
 }
 
+void MainWindow::dropPaste() {
+	paste();
+}

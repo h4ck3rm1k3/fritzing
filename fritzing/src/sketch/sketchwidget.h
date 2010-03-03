@@ -370,6 +370,9 @@ protected:
 	virtual bool canAlignToTopLeft(ItemBase *);
 	void findAlignmentAnchor(ItemBase * originatingItem, QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
 	void alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc);
+	void copyAux(QList<ItemBase *> & bases);
+	void copyDrop();
+
 
 protected:
 	static bool lessThan(int a, int b);
@@ -409,6 +412,7 @@ signals:
 	void setInstanceTitleSignal(long id, const QString & title, bool isUndoable, bool doEmit);
 	void statusMessageSignal(QString, int timeout);
 	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
+	void dropPasteSignal();
 
 
 protected slots:

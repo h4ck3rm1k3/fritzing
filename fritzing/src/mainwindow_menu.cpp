@@ -3736,3 +3736,4 @@ void MainWindow::alignToGridSettings() {
 		m_currentGraphicsView->initGrid();
 	}
 }
+

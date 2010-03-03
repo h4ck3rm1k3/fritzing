@@ -1311,7 +1311,11 @@ void SketchWidget::copy() {
 
 	// sort them in z-order so the copies also appear in the same order
 	sortSelectedByZ(bases);
+	copyAux(bases);
+}
 
+void SketchWidget::copyAux(QList<ItemBase *> & bases)
+{
     QByteArray itemData;
 	QXmlStreamWriter streamWriter(&itemData);
 
@@ -1408,8 +1412,12 @@ QByteArray SketchWidget::removeOutsideConnections(const QByteArray & itemData, Q
 
 void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 {
+	
 	if (dragEnterEventAux(event)) {
 		setupAutoscroll(false);
+		event->acceptProposedAction();
+	}
+	else if (event->mimeData()->hasFormat("application/x-dndsketchdata")) {
 		event->acceptProposedAction();
 	}
 	else {
@@ -1421,7 +1429,6 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 
 bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	if (!event->mimeData()->hasFormat("application/x-dnditemdata")) return false;
-	if (event->source() == this) return false;
 
 	m_droppingWire = false;
     QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
@@ -1447,7 +1454,6 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		viewGeometry.setLoc(p);
 
 		long fromID = ItemBase::getNextID();
-
 
 		bool doConnectors = true;
 
@@ -1516,17 +1522,38 @@ void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
 		m_droppingItem->setVisible(false);
 		//ItemDrag::_setPixmapVisible(true);
 	}
+	else {
+		// dragging sketch items
+	}
 
 	QGraphicsView::dragLeaveEvent(event);
 }
 
 void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 {
-    if (event->mimeData()->hasFormat("application/x-dnditemdata") && event->source() != this) {
+    if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
     	dragMoveHighlightConnector(event->pos());
         event->acceptProposedAction();
         return;
     }
+
+	if (event->mimeData()->hasFormat("application/x-dndsketchdata")) {
+		if (event->source() == this) {
+			m_globalPos = this->mapToGlobal(event->pos());
+			if ((QApplication::keyboardModifiers() & Qt::ShiftModifier) != 0) {
+				QPointF p = GraphicsUtils::calcConstraint(m_mousePressGlobalPos, m_globalPos);
+				m_globalPos.setX(p.x());
+				m_globalPos.setY(p.y());
+			}
+
+			moveItems(m_globalPos, true);
+			m_moveEventCount++;
+		}
+		else {
+		}
+		event->acceptProposedAction();
+		return;
+	}
 
 	QGraphicsView::dragMoveEvent(event);
 }
@@ -1564,9 +1591,8 @@ void SketchWidget::dropEvent(QDropEvent *event)
 	turnOffAutoscroll();
 	clearHoldingSelectItem();
 
-	if (m_droppingItem == NULL) return;
-
-    if (event->mimeData()->hasFormat("application/x-dnditemdata") && event->source() != this) {
+    if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
+		if (m_droppingItem == NULL) return;
 
     	ModelPart * modelPart = m_droppingItem->modelPart();
     	if (modelPart == NULL) return;
@@ -1634,14 +1660,33 @@ void SketchWidget::dropEvent(QDropEvent *event)
 
 
         event->acceptProposedAction();
-		DebugDialog::debug("after drop event");
 
 		emit dropSignal(event->pos());
     }
+	else if (event->mimeData()->hasFormat("application/x-dndsketchdata")) {
+		ConnectorItem::clearEqualPotentialDisplay();
+		if (event->source() == this) {
+			checkMoved();
+			m_savedItems.clear();
+			m_savedWires.clear();
+		}
+		else {
+			SketchWidget * other = dynamic_cast<SketchWidget *>(event->source());
+			if (other == NULL) {
+				throw "drag and drop from unknown source";
+			}
+
+			other->copyDrop();
+			//other->restoreDrag();
+			emit dropPasteSignal();
+		}
+        event->acceptProposedAction();
+	}
 	else {
 		QGraphicsView::dropEvent(event);
 	}
 
+	DebugDialog::debug("after drop event");
 
 }
 
@@ -2244,13 +2289,19 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	if (m_savedItems.count() > 0) {
 		if ((event->buttons() & Qt::LeftButton) && !draggingWireEnd()) {
 			m_globalPos = event->globalPos();
-			if ((event->modifiers() & Qt::ShiftModifier) != 0) {
-				QPointF p = GraphicsUtils::calcConstraint(m_mousePressGlobalPos, m_globalPos);
-				m_globalPos.setX(p.x());
-				m_globalPos.setY(p.y());
-			}
+			if ((m_globalPos - m_mousePressGlobalPos).manhattanLength() >= QApplication::startDragDistance()) {
+				QMimeData *mimeData = new QMimeData;
+				mimeData->setData("application/x-dndsketchdata", NULL);
+				mimeData->setData("action", "part-moving");
 
-			moveItems(m_globalPos, true);
+				QDrag * drag = new QDrag(this);
+				drag->setMimeData(mimeData);
+
+				m_movingByMouse = false;
+
+				drag->exec();
+				return;
+			}
 		}
 	}
 
@@ -2421,7 +2472,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		return;
 	}
 
-	if ((m_savedItems.size() <= 0) || !checkMoved()) {
+	if (m_savedItems.size() <= 0) {
 		if (this->m_holdingSelectItemCommand != NULL) {
 			if (m_holdingSelectItemCommand->updated()) {
 				SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
@@ -6509,3 +6560,11 @@ void SketchWidget::initGrid() {
 	}
 	m_alignToGrid = settings.value(QString("%1AlignToGrid").arg(viewName()), false).toBool();
 }
+
+
+void SketchWidget::copyDrop() {
+	QList<ItemBase *> itemBases = m_savedItems.values();
+    qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
+	copyAux(itemBases);
+}
+
