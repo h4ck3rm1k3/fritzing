@@ -72,6 +72,8 @@ QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, cons
 		ix++;
 	}
 
+	comboBox->setMaximumWidth(200);
+
 	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
 	return comboBox;
 }

@@ -235,6 +235,8 @@ QObject * Ruler::createPlugin(QWidget * parent, const QString &classid, const QU
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));
 
+		frame->setMaximumWidth(200);
+
 		return frame;
 	}
 

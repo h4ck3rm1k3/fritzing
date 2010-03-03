@@ -1530,6 +1530,7 @@ QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const
 	FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, classid, parent);
 	comboBox->addItems(values);
 	comboBox->setCurrentIndex(comboBox->findText(value));
+	comboBox->setMaximumWidth(200);
 
 	// need to save classid and family
 

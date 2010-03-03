@@ -350,6 +350,8 @@ QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const
 	validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
 	focusOutComboBox->setValidator(validator);
 	connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
+
+	focusOutComboBox->setMaximumWidth(100);
 				
 	return focusOutComboBox;	
 }

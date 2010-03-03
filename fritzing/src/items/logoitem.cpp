@@ -192,12 +192,15 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 		vboxLayout->addWidget(button);
 
 		frame->setLayout(vboxLayout);
+		frame->setMaximumWidth(200);
 		return frame;
 	}
 	else if (classid.compare("logo", Qt::CaseInsensitive) == 0) {
 		QLineEdit * e1 = new QLineEdit(parent);
 		e1->setText(m_logo);
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
+
+		e1->setMaximumWidth(200);
 
 		return e1;
 	}
@@ -214,20 +217,20 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	frame = new QFrame();
 	vboxLayout = new QVBoxLayout();
 	vboxLayout->setAlignment(Qt::AlignLeft);
-	vboxLayout->setSpacing(0);
+	vboxLayout->setSpacing(1);
 	vboxLayout->setContentsMargins(0, 3, 0, 0);
 
 	QFrame * subframe1 = new QFrame();
 	QHBoxLayout * hboxLayout1 = new QHBoxLayout();
 	hboxLayout1->setAlignment(Qt::AlignLeft);
 	hboxLayout1->setContentsMargins(0, 0, 0, 0);
-	hboxLayout1->setSpacing(0);
+	hboxLayout1->setSpacing(2);
 
 	QFrame * subframe2 = new QFrame();
 	QHBoxLayout * hboxLayout2 = new QHBoxLayout();
 	hboxLayout2->setAlignment(Qt::AlignLeft);
 	hboxLayout2->setContentsMargins(0, 0, 0, 0);
-	hboxLayout2->setSpacing(0);
+	hboxLayout2->setSpacing(2);
 
 	QFrame * subframe3 = new QFrame();
 	QHBoxLayout * hboxLayout3 = new QHBoxLayout();
@@ -283,6 +286,8 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 	vboxLayout->addWidget(subframe2);
 	vboxLayout->addWidget(subframe3);
 	frame->setLayout(vboxLayout);
+
+	frame->setMaximumWidth(200);
 
 	return frame;
 }

@@ -1239,6 +1239,8 @@ QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUr
 		ix++;
 	}
 
+	comboBox->setMaximumWidth(200);
+
 	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(colorEntry(const QString &)));
 	return comboBox;
 }

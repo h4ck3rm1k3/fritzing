@@ -296,6 +296,8 @@ QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &class
 	validator->setNotation(QDoubleValidator::StandardNotation);
 	edit->setValidator(validator);
 
+	edit->setMaximumWidth(200);
+
 	connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
 	return edit;	
 }

@@ -565,6 +565,8 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 
 		frame->setLayout(vboxLayout);
 
+		frame->setMaximumWidth(200);
+
 		return frame;
 	}
 
@@ -574,16 +576,16 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	QFrame * frame = new QFrame();
 	QVBoxLayout * vboxLayout = new QVBoxLayout();
 	vboxLayout->setAlignment(Qt::AlignLeft);
-	vboxLayout->setSpacing(0);
+	vboxLayout->setSpacing(1);
 	vboxLayout->setContentsMargins(0, 3, 0, 0);
 
 	QFrame * subframe1 = new QFrame();
 	QHBoxLayout * hboxLayout1 = new QHBoxLayout();
 	hboxLayout1->setAlignment(Qt::AlignLeft);
 	hboxLayout1->setContentsMargins(0, 0, 0, 0);
-	hboxLayout1->setSpacing(0);
+	hboxLayout1->setSpacing(2);
 
-	QLabel * l1 = new QLabel(tr("width(mm):"));	
+	QLabel * l1 = new QLabel(tr("width(mm)"));	
 	l1->setMargin(0);
 	QLineEdit * e1 = new QLineEdit();
 	QDoubleValidator * validator = new QDoubleValidator(e1);
@@ -598,9 +600,9 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	QHBoxLayout * hboxLayout2 = new QHBoxLayout();
 	hboxLayout2->setAlignment(Qt::AlignLeft);
 	hboxLayout2->setContentsMargins(0, 0, 0, 0);
-	hboxLayout2->setSpacing(0);
+	hboxLayout2->setSpacing(2);
 
-	QLabel * l2 = new QLabel(tr("height(mm):"));
+	QLabel * l2 = new QLabel(tr("height(mm)"));
 	l2->setMargin(0);
 	QLineEdit * e2 = new QLineEdit();
 	validator = new QDoubleValidator(e1);
@@ -628,6 +630,8 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 
 	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
 	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
+
+	frame->setMaximumWidth(200);
 
 	return frame;
 }
