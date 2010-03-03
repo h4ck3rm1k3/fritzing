@@ -29,6 +29,7 @@ $Date$
 #include <QRgb>
 #include <QFontMetrics>
 #include <QPainter>
+#include <QResizeEvent>
 #include <QSettings>
 
 #include "viewswitcher.h"

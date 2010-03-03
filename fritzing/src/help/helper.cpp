@@ -173,10 +173,6 @@ void Helper::viewSwitched() {
 	}
 }
 
-void Helper::moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy) {
-	item->moveBy(dx,dy);
-}
-
 void Helper::toggleHelpVisibility(int index) {
 	SketchMainHelp * which = helpForIndex(index);
 	if (which == NULL) return;

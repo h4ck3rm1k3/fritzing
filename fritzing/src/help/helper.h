@@ -56,7 +56,6 @@ class Helper : public QObject {
 
 	protected:
 		void connectToView(SketchWidget* view);
-		void moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy);
 		SketchMainHelp *helpForIndex(int index);
 
 	protected:

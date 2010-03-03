@@ -27,7 +27,6 @@ $Date$
 #ifndef VIEWSWITCHER_H_
 #define VIEWSWITCHER_H_
 
-#include <QGraphicsProxyWidget>
 #include <QLabel>
 #include <QFrame>
 #include <QHBoxLayout>

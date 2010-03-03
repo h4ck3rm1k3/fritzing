@@ -27,7 +27,6 @@ $Date$
 #ifndef ZOOMCONTROLS_H_
 #define ZOOMCONTROLS_H_
 
-#include <QGraphicsProxyWidget>
 #include <QLabel>
 #include <QBoxLayout>
 
