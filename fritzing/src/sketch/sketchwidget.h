@@ -563,6 +563,8 @@ protected:
 	bool m_draggingBendpoint;
 	QGraphicsLineItem * m_sizeItem;
 	int m_autoScrollThreshold;
+	bool m_clearSceneRect;
+
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

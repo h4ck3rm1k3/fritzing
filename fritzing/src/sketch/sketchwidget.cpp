@@ -90,6 +90,7 @@ const int SketchWidget::DragAutoScrollThreshold = 10;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_clearSceneRect = false;
 	m_draggingBendpoint = false;
 	m_zoom = 100;
 	m_alignToGrid = false;
@@ -1434,6 +1435,9 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	if (!event->mimeData()->hasFormat("application/x-dnditemdata")) return false;
 
+	scene()->setSceneRect(scene()->sceneRect());	// prevents inadvertent scrolling when dragging in items from the parts bin
+	m_clearSceneRect = true;
+
 	m_droppingWire = false;
     QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
     QDataStream dataStream(&itemData, QIODevice::ReadOnly);
@@ -1523,6 +1527,10 @@ void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
 	turnOffAutoscroll();
 
 	if (m_droppingItem != NULL) {
+		if (m_clearSceneRect) {
+			m_clearSceneRect = false;
+			scene()->setSceneRect(QRectF());
+		}
 		m_droppingItem->setVisible(false);
 		//ItemDrag::_setPixmapVisible(true);
 	}
@@ -1625,6 +1633,11 @@ void SketchWidget::dropEvent(QDropEvent *event)
 
 void SketchWidget::dropItemEvent(QDropEvent *event) {
 	if (m_droppingItem == NULL) return;
+
+	if (m_clearSceneRect) {
+		m_clearSceneRect = false;
+		scene()->setSceneRect(QRectF());
+	}
 
 	ModelPart * modelPart = m_droppingItem->modelPart();
 	if (modelPart == NULL) return;
@@ -5132,6 +5145,11 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 			m_autoScrollX = m_autoScrollY = 0;
 			DebugDialog::debug("in autoscrollThreshold");
 			return true;
+		}
+
+		if (m_clearSceneRect) {
+			scene()->setSceneRect(QRectF());
+			m_clearSceneRect = true;
 		}
 
 		int dx = 0, dy = 0;
