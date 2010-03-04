@@ -84,6 +84,9 @@ $Date$
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
+const int SketchWidget::MoveAutoScrollThreshold = 5;
+const int SketchWidget::DragAutoScrollThreshold = 10;
+
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
@@ -122,7 +125,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     FGraphicsScene* scene = new FGraphicsScene(this);
     this->setScene(scene);
 
-    //this->scene()->setSceneRect(0,0, 1000, 1000);
+    //this->scene()->setSceneRect(0,0, rect().width(), rect().height());
 
     // Setting the scene rect here seems to mean it never resizes when the user drags an object
     // outside the sceneRect bounds.  So catch some signal and do the resize manually?
@@ -134,11 +137,12 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     // a bit of a hack so that, when there is no scenerect set,
     // the first item dropped into the scene doesn't leap to the top left corner
     // as the scene resizes to fit the new item
-   	QGraphicsLineItem * item = new QGraphicsLineItem();
-    item->setLine(0, 0, rect().width(), rect().height());
-    this->scene()->addItem(item);
-    item->setVisible(false);
-
+   	m_sizeItem = new QGraphicsLineItem();
+    m_sizeItem->setLine(0, 0, rect().width(), rect().height());
+	DebugDialog::debug(QString("initial rect %1 %2").arg(rect().width()).arg(rect().height()));
+    this->scene()->addItem(m_sizeItem);
+    m_sizeItem->setVisible(false);
+	
 	connect(this->scene(), SIGNAL(selectionChanged()), this, SLOT(scene_selectionChanged()));
 
     connect(QApplication::clipboard(),SIGNAL(changed(QClipboard::Mode)),this,SLOT(restartPasteCount()));
@@ -1583,7 +1587,6 @@ void SketchWidget::alignLoc(QPointF & loc, const QPointF startPoint, const QPoin
 	loc.setY(loc.y() + ny - newPos.y());
 }
 
-
 void SketchWidget::dropEvent(QDropEvent *event)
 {
 	m_alignmentItem = NULL;
@@ -1592,76 +1595,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 	clearHoldingSelectItem();
 
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
-		if (m_droppingItem == NULL) return;
-
-    	ModelPart * modelPart = m_droppingItem->modelPart();
-    	if (modelPart == NULL) return;
-    	if (modelPart->modelPartShared() == NULL) return;
-
-		QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(m_droppingItem->title()));
-    	stackSelectionState(false, parentCommand);
-
-		m_droppingItem->saveGeometry();
-    	ViewGeometry viewGeometry = m_droppingItem->getViewGeometry();
-
-		long fromID = m_droppingItem->id();
-
-		BaseCommand::CrossViewType crossViewType = BaseCommand::CrossView;
-		switch (modelPart->itemType()) {
-			case ModelPart::Ruler:
-			case ModelPart::Logo:
-				// rulers and logos are local to a particular view
-				crossViewType = BaseCommand::SingleView;
-				break;
-			default:
-				break;				
-		}
-		AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
-		addItemCommand->setDropOrigin(this);
-		
-		new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
-
-		if (modelPart->itemType() == ModelPart::Module) {
-			RestoreIndexesCommand * restoreIndexesCommand = new RestoreIndexesCommand(this, fromID, NULL, true, parentCommand);
-			addItemCommand->addRestoreIndexesCommand(restoreIndexesCommand);
-		}
-
-		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
-		selectItemCommand->addRedo(fromID);
-
-		new ShowLabelFirstTimeCommand(this, crossViewType, fromID, true, true, parentCommand);
-
-		if (modelPart->itemType() == ModelPart::Wire && !m_lastColorSelected.isEmpty()) {
-			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, 1.0, 1.0, parentCommand);
-		}
-
-		bool gotConnector = false;
-		foreach (QGraphicsItem * childItem, m_droppingItem->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem == NULL) continue;
-
-			ConnectorItem * to = connectorItem->overConnectorItem();
-			if (to != NULL) {
-				to->connectorHover(to->attachedTo(), false);
-				connectorItem->setOverConnectorItem(NULL);   // clean up
-				extendChangeConnectionCommand(connectorItem, to, true, false, parentCommand);
-				gotConnector = true;
-			}
-			connectorItem->clearConnectorHover();
-		}
-
-		clearTemporaries();
-
-		killDroppingItem();
-
-		emit ratsnestChangeSignal(this, parentCommand);
-		new CleanUpWiresCommand(this, false, parentCommand);
-        m_undoStack->waitPush(parentCommand, 10);
-
-
-        event->acceptProposedAction();
-
-		emit dropSignal(event->pos());
+		dropItemEvent(event);
     }
 	else if (event->mimeData()->hasFormat("application/x-dndsketchdata")) {
 		ConnectorItem::clearEqualPotentialDisplay();
@@ -1677,7 +1611,6 @@ void SketchWidget::dropEvent(QDropEvent *event)
 			}
 
 			other->copyDrop();
-			//other->restoreDrag();
 			emit dropPasteSignal();
 		}
         event->acceptProposedAction();
@@ -1688,6 +1621,79 @@ void SketchWidget::dropEvent(QDropEvent *event)
 
 	DebugDialog::debug("after drop event");
 
+}
+
+void SketchWidget::dropItemEvent(QDropEvent *event) {
+	if (m_droppingItem == NULL) return;
+
+	ModelPart * modelPart = m_droppingItem->modelPart();
+	if (modelPart == NULL) return;
+	if (modelPart->modelPartShared() == NULL) return;
+
+	QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(m_droppingItem->title()));
+	stackSelectionState(false, parentCommand);
+
+	m_droppingItem->saveGeometry();
+	ViewGeometry viewGeometry = m_droppingItem->getViewGeometry();
+
+	long fromID = m_droppingItem->id();
+
+	BaseCommand::CrossViewType crossViewType = BaseCommand::CrossView;
+	switch (modelPart->itemType()) {
+		case ModelPart::Ruler:
+		case ModelPart::Logo:
+			// rulers and logos are local to a particular view
+			crossViewType = BaseCommand::SingleView;
+			break;
+		default:
+			break;				
+	}
+	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
+	addItemCommand->setDropOrigin(this);
+	
+	new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
+
+	if (modelPart->itemType() == ModelPart::Module) {
+		RestoreIndexesCommand * restoreIndexesCommand = new RestoreIndexesCommand(this, fromID, NULL, true, parentCommand);
+		addItemCommand->addRestoreIndexesCommand(restoreIndexesCommand);
+	}
+
+	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+	selectItemCommand->addRedo(fromID);
+
+	new ShowLabelFirstTimeCommand(this, crossViewType, fromID, true, true, parentCommand);
+
+	if (modelPart->itemType() == ModelPart::Wire && !m_lastColorSelected.isEmpty()) {
+		new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, 1.0, 1.0, parentCommand);
+	}
+
+	bool gotConnector = false;
+	foreach (QGraphicsItem * childItem, m_droppingItem->childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (connectorItem == NULL) continue;
+
+		ConnectorItem * to = connectorItem->overConnectorItem();
+		if (to != NULL) {
+			to->connectorHover(to->attachedTo(), false);
+			connectorItem->setOverConnectorItem(NULL);   // clean up
+			extendChangeConnectionCommand(connectorItem, to, true, false, parentCommand);
+			gotConnector = true;
+		}
+		connectorItem->clearConnectorHover();
+	}
+
+	clearTemporaries();
+
+	killDroppingItem();
+
+	emit ratsnestChangeSignal(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
+    m_undoStack->waitPush(parentCommand, 10);
+
+
+    event->acceptProposedAction();
+
+	emit dropSignal(event->pos());
 }
 
 SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand * parentCommand) {
@@ -4807,6 +4813,22 @@ bool SketchWidget::swappingEnabled(ItemBase * itemBase) {
 
 void SketchWidget::resizeEvent(QResizeEvent * event) {
 	InfoGraphicsView::resizeEvent(event);
+
+	QPoint s(event->size().width(), event->size().height());
+	QPointF p = this->mapToScene(s);
+
+	QPointF z = this->mapToScene(QPoint(0,0));
+
+	DebugDialog::debug(QString("resize event %1 %2, %3 %4, %5 %6")		/* , %3 %4 %5 %6, %7 %8 %9 %10 */
+		.arg(event->size().width()).arg(event->size().height())
+		.arg(p.x()).arg(p.y())
+		.arg(z.x()).arg(z.y())
+//		.arg(sr.left()).arg(sr.top()).arg(sr.width()).arg(sr.height())
+//		.arg(sr.left()).arg(sr.top()).arg(ir.width()).arg(ir.height())
+			
+	);
+
+	m_sizeItem->setLine(z.x(), z.y(), p.x(), p.y()); 
 	emit resizeSignal();
 }
 
@@ -4982,6 +5004,8 @@ void SketchWidget::autoScrollTimeout()
 		QScrollBar * v = verticalScrollBar();
 		v->setValue(m_autoScrollY + v->value());
 	}
+
+	DebugDialog::debug(QString("autoscrolling %1 %2").arg(m_autoScrollX).arg(m_autoScrollX));
 }
 
 void SketchWidget::dragAutoScrollTimeout()
@@ -5063,6 +5087,8 @@ bool SketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fro
 
 void SketchWidget::setupAutoscroll(bool moving) {
 	m_autoScrollX = m_autoScrollY = 0;
+	m_autoScrollThreshold = (moving) ? MoveAutoScrollThreshold : DragAutoScrollThreshold;
+	m_autoScrollCount = 0;
 	connect(&m_autoScrollTimer, SIGNAL(timeout()), this,
 		moving ? SLOT(moveAutoScrollTimeout()) : SLOT(dragAutoScrollTimeout()));
 	//DebugDialog::debug("set up autoscroll");
@@ -5071,6 +5097,7 @@ void SketchWidget::setupAutoscroll(bool moving) {
 void SketchWidget::turnOffAutoscroll() {
 	m_autoScrollTimer.stop();
 	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
+	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(dragAutoScrollTimeout()));
 	//DebugDialog::debug("turn off autoscroll");
 
 }
@@ -5090,6 +5117,9 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 
 	if (!r.contains(q)) {
 		m_autoScrollX = m_autoScrollY = 0;
+		if (m_autoScrollCount < m_autoScrollThreshold) {
+			m_autoScrollCount = 0;
+		}
 		return false;
 	}
 
@@ -5098,6 +5128,12 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 	r.adjust(16,16,-16,-16);						// these should be set someplace
 	bool autoScroll = !r.contains(q);
 	if (autoScroll) {
+		if (++m_autoScrollCount < m_autoScrollThreshold) {
+			m_autoScrollX = m_autoScrollY = 0;
+			DebugDialog::debug("in autoscrollThreshold");
+			return true;
+		}
+
 		int dx = 0, dy = 0;
 		if (q.x() > r.right()) {
 			dx = q.x() - r.right();
@@ -5128,6 +5164,9 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 	}
 	else {
 		m_autoScrollX = m_autoScrollY = 0;
+		if (m_autoScrollCount < m_autoScrollThreshold) {
+			m_autoScrollCount = 0;
+		}
 	}
 
 	//DebugDialog::debug(QString("autoscroll %1 %2").arg(m_autoScrollX).arg(m_autoScrollY) );
@@ -6565,6 +6604,14 @@ void SketchWidget::initGrid() {
 void SketchWidget::copyDrop() {
 	QList<ItemBase *> itemBases = m_savedItems.values();
     qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
+	foreach (ItemBase * itemBase, itemBases) {
+		ViewGeometry vg = itemBase->getViewGeometry();
+		itemBase->setItemPos(vg.loc());
+	}
 	copyAux(itemBases);
+
+	m_savedItems.clear();
+	m_savedWires.clear();
 }
+
 

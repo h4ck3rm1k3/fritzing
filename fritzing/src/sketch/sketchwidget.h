@@ -372,7 +372,7 @@ protected:
 	void alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc);
 	void copyAux(QList<ItemBase *> & bases);
 	void copyDrop();
-
+	void dropItemEvent(QDropEvent *event);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -507,6 +507,7 @@ protected:
 	QTimer m_autoScrollTimer;
 	volatile int m_autoScrollX;
 	volatile int m_autoScrollY;
+	volatile int m_autoScrollCount;
 	QPoint m_globalPos;
 
 	QPointer<PaletteItem> m_lastPaletteItemSelected;
@@ -560,13 +561,16 @@ protected:
 	QPointF m_alignmentStartPoint;
 	qreal m_zoom;
 	bool m_draggingBendpoint;
-
+	QGraphicsLineItem * m_sizeItem;
+	int m_autoScrollThreshold;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);
 
 protected:
 	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;
+	static const int MoveAutoScrollThreshold;
+	static const int DragAutoScrollThreshold;
 };
 
 #endif

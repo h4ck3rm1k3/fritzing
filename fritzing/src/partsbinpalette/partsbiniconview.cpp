@@ -202,7 +202,7 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
 		bool plural = isPlural(modelPart);
-		DebugDialog::debug(QString("plural %1 %2").arg(plural).arg(modelPart->modelPartShared()->title()));
+		//DebugDialog::debug(QString("plural %1 %2").arg(plural).arg(modelPart->modelPartShared()->title()));
 		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, m_viewLayers, ItemBase::getNextID(), NULL, plural);
 		if(position > -1) {
 			m_layout->insertItem(position, svgicon);
