@@ -5096,7 +5096,7 @@ void SketchWidget::setupAutoscroll(bool moving) {
 
 void SketchWidget::turnOffAutoscroll() {
 	m_autoScrollTimer.stop();
-	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
+	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(moveAutoScrollTimeout()));
 	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(dragAutoScrollTimeout()));
 	//DebugDialog::debug("turn off autoscroll");
 
