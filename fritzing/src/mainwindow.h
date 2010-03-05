@@ -245,7 +245,7 @@ protected slots:
     void throwFakeException();
 	void updateRatsnest();
 
-	void dropPaste();
+	void dropPaste(SketchWidget *);
 
 protected:
 	void initSketchWidget(SketchWidget *);

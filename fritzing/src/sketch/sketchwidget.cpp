@@ -90,6 +90,7 @@ const int SketchWidget::DragAutoScrollThreshold = 10;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	clearPasteOffset();
 	m_clearSceneRect = false;
 	m_draggingBendpoint = false;
 	m_zoom = 100;
@@ -291,7 +292,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		else {
 			// offset pasted items so we can differentiate them from the originals
 			if (offsetPaste) {
-				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
+				viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
 			}
 			AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
 			if (mp->itemType() == ModelPart::ResizableBoard) {
@@ -322,12 +323,12 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				bool ok;
 				qreal x = clone.attribute("x").toDouble(&ok);
 				if (ok) {
-					x += (20 * m_pasteCount);
+					x += (20 * m_pasteCount) + m_pasteOffset.x();
 					clone.setAttribute("x", QString::number(x));
 				}
 				qreal y = clone.attribute("y").toDouble(&ok);
 				if (ok) {
-					y += (20 * m_pasteCount);
+					y += (20 * m_pasteCount) + m_pasteOffset.y();
 					clone.setAttribute("y", QString::number(y));
 				}
 				new RestoreLabelCommand(this, newID, clone, parentCommand);
@@ -1618,8 +1619,20 @@ void SketchWidget::dropEvent(QDropEvent *event)
 				throw "drag and drop from unknown source";
 			}
 
+			ItemBase * ref = other->m_moveReferenceItem;
+			QPointF originalPos = ref->getViewGeometry().loc();
 			other->copyDrop();
-			emit dropPasteSignal();
+			QPointF startLocal = other->mapFromGlobal(QPoint(other->m_mousePressGlobalPos.x(), other->m_mousePressGlobalPos.y()));
+			QPointF sceneLocal = other->mapToScene(startLocal.x(), startLocal.y());
+			QPointF offset = sceneLocal - originalPos;
+			m_pasteOffset = this->mapToScene(event->pos()) - offset - originalPos;
+
+			DebugDialog::debug(QString("other %1 %2, event %3 %4")
+				.arg(startLocal.x()).arg(startLocal.y())
+				.arg(event->pos().x()).arg(event->pos().y())
+			);
+			m_pasteCount = 0;
+			emit dropPasteSignal(this);
 		}
         event->acceptProposedAction();
 	}
@@ -1902,6 +1915,8 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 			}
 		}
 	}
+
+	m_moveReferenceItem = m_savedItems.count() > 0 ? m_savedItems.values().at(0) : NULL;
 
 	setupAutoscroll(true);
 }
@@ -6632,4 +6647,6 @@ void SketchWidget::copyDrop() {
 	m_savedWires.clear();
 }
 
-
+void SketchWidget::clearPasteOffset() {
+	m_pasteOffset = QPointF(0, 0);
+}

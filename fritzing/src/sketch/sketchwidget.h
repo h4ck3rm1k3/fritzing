@@ -241,6 +241,7 @@ public:
 	qreal retrieveZoom();
 	void initGrid();
 	virtual double defaultGridSizeInches();
+	void clearPasteOffset();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -412,7 +413,7 @@ signals:
 	void setInstanceTitleSignal(long id, const QString & title, bool isUndoable, bool doEmit);
 	void statusMessageSignal(QString, int timeout);
 	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
-	void dropPasteSignal();
+	void dropPasteSignal(SketchWidget *);
 
 
 protected slots:
@@ -513,6 +514,7 @@ protected:
 	QPointer<PaletteItem> m_lastPaletteItemSelected;
 
 	int m_pasteCount;
+	QPointF m_pasteOffset;
 
 	// Part Menu
 	QMenu *m_itemMenu;
@@ -564,6 +566,7 @@ protected:
 	QGraphicsLineItem * m_sizeItem;
 	int m_autoScrollThreshold;
 	bool m_clearSceneRect;
+	ItemBase * m_moveReferenceItem;
 
 
 public:
