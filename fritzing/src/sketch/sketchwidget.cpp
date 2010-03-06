@@ -1919,6 +1919,8 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	m_moveReferenceItem = m_savedItems.count() > 0 ? m_savedItems.values().at(0) : NULL;
 
 	setupAutoscroll(true);
+
+
 }
 
 void SketchWidget::prepMove(ItemBase * originatingItem) {
@@ -1981,6 +1983,8 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 	}
 
 	findAlignmentAnchor(originatingItem, m_savedItems, m_savedWires);
+
+
 }
 
 void SketchWidget::findAlignmentAnchor(ItemBase * originatingItem, 	QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires) 
@@ -2275,8 +2279,12 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	oldConnector1->tempConnectTo(m_connectorDragWire->connector0(), false);
 	m_connectorDragWire->connector0()->tempConnectTo(oldConnector1, false);
 	m_connectorDragConnector = oldConnector1;
+
+	setupAutoscroll(true);
+
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0(), newPos);
 	m_connectorDragWire->grabMouse();
+
 }
 
 
@@ -2304,6 +2312,7 @@ bool SketchWidget::draggingWireEnd() {
 void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// if its just dragging a wire end do default
 	// otherwise handle all move action here
+
 
 	if (m_movingByArrow) return;
 
@@ -2368,13 +2377,18 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 		QGraphicsView::mouseMoveEvent(&alignedEvent);
 		return;
 	}
+
+	if (draggingWireEnd()) {
+		checkAutoscroll(event->globalPos());
+	}
+
 		
 	QGraphicsView::mouseMoveEvent(event);
 }
 
-void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScroll)
+void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 {
-	if (checkAutoScroll) {
+	if (checkAutoScrollFlag) {
 		bool result = checkAutoscroll(globalPos);
 		if (!result) return;
 	}
@@ -3466,6 +3480,8 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 		clearDragWireTempCommand();
 		return;
 	}
+
+	setupAutoscroll(true);
 
 	// give connector item the mouse, so wire doesn't get mouse moved events
 	m_connectorDragWire->setVisible(true);
