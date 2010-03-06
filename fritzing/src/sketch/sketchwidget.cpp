@@ -6655,8 +6655,8 @@ void SketchWidget::copyDrop() {
 	QList<ItemBase *> itemBases = m_savedItems.values();
     qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
 	foreach (ItemBase * itemBase, itemBases) {
-		ViewGeometry vg = itemBase->getViewGeometry();
-		itemBase->setItemPos(vg.loc());
+                QPointF loc = itemBase->getViewGeometry().loc();
+                itemBase->setItemPos(loc);
 	}
 	copyAux(itemBases);
 
