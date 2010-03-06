@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.6b.08.14.3340" moduleId="3746667c843a2127a0e499f8a0b3ef6a">
+<module fritzingVersion="0.3.18" moduleId="37asdf3c843a2127a0e499f8a0b3ef6a">
 <version>1</version>
-    <author>Lionel Michel</author>
-    <title>Crystal</title>
-    <label>XTAL</label>
-    <date>2009-02-26</date>
+    <author>André Knörig</author>
+    <title>Resonator</title>
+    <label>Y</label>
+    <date>2010-03-06</date>
     <tags>
         <tag>clock</tag>
-        <tag>crystal</tag>
-        <tag>quartz</tag>
+        <tag>resonator</tag>
         <tag>oscillator</tag>
-	<tag>piezoelectric</tag>
+        <tag>ceramic</tag>
     </tags>
     <properties>
         <property name="family">oscillator</property>
-        <property name="type">crystal</property>
-        <property name="profile">low</property>
+        <property name="type">ceramic resonator</property>
         <property name="frequency">16 Mhz</property>
+	<property name="features">built-in capacitors</property>
     </properties>
-    <description>Crystal</description>
+    <description>Ceramic resonator with built-in capacitors</description>
     <views>
         <iconView>
-            <layers image="icon/crystal.svg">
+            <layers image="icon/resonator-3pin.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/crystal.svg">
+            <layers image="breadboard/resonator-3pin.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
         <pcbView>
-            <layers image="pcb/crystal_hc49u.svg">
+            <layers image="pcb/resonator-3pin.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
             </layers>
         </pcbView>
         <schematicView>
-            <layers image="schematic/crystal.svg">
+            <layers image="schematic/resonator-3pin.svg">
                 <layer layerId="schematic"/>
             </layers>
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="pin 0">
-            <description>pin 0</description>
+        <connector id="connector0" type="male" name="0">
+            <description>Pin 0</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -57,8 +56,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin 1">
-            <description>pin 1</description>
+        <connector id="connector1" type="male" name="GND">
+            <description>Ground</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -68,6 +67,20 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pin"/>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector2" type="male" name="pin 1">
+            <description>Pin 1</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector2pin"/>
                 </pcbView>
             </views>
         </connector>
