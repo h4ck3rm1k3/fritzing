@@ -2340,6 +2340,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 				QDrag * drag = new QDrag(this);
 				drag->setMimeData(mimeData);
 
+				m_moveEventCount = 0;					// reset this to make sure that equal potential highlights are cleared
 				m_movingByMouse = false;
 
 				drag->exec();
