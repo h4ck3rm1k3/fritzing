@@ -3557,6 +3557,10 @@ void SketchWidget::rotateX(qreal degrees)
 				QPointF mc = tc.map(QPointF(0,0));
 				vg2.setLoc(vg1.loc() + mp - mc);
 			}
+
+			QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
+			ConnectorPairHash connectorHash;
+			disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand);
 			new MoveItemCommand(this, item->id(), vg1, vg1, parentCommand);
 			new RotateItemCommand(this, item->id(), degrees, parentCommand);
 			new MoveItemCommand(this, item->id(), vg2, vg2, parentCommand);
@@ -3607,6 +3611,8 @@ void SketchWidget::flip(Qt::Orientations orientation) {
 
 void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 {
+	// note: rotateFlip is now only called for flips; rotation uses a different path
+
 	if (!this->isVisible()) return;
 
 	clearHoldingSelectItem();
@@ -4986,7 +4992,7 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 
 bool SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
 {
-	// schematic and pcb view connections are always via wires so this is a no-op.  breadboard view has it's own version.
+	// schematic and pcb view connections are always via wires so this is a no-op.  breadboard view has its own version.
 
 	Q_UNUSED(item);
 	Q_UNUSED(savedItems);
