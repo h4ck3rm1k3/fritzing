@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.1201" moduleId="2011BBEC12B" >
+<module fritzingVersion="0.1.1201" moduleId="824659BBEC12B" >
  <version>2</version>
  <author>Brendan Howell</author>
  <title>Ceramic Disk Capacitor</title>
@@ -12,12 +12,12 @@
  </tags>
  <properties>
   <property name="family" >Capacitor</property>
-  <property name="Capacitance" >22 pF</property>
+  <property name="Capacitance" >220 pF</property>
   <property name="Capacitor Type" >Ceramic Disk</property>
   <property name="Rated Voltage" >500 V</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
- <description>A 22 pF Ceramic Disk Capacitor</description>
+ <description>A 220 pF Ceramic Disk Capacitor</description>
  <views>
   <iconView>
    <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg" >

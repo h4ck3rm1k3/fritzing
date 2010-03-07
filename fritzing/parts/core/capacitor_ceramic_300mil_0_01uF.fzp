@@ -13,8 +13,8 @@
  <properties>
   <property name="family" >Capacitor</property>
   <property name="Capacitance" >0.01 &#181;F</property>
-  <property name="Capacitor Type" >Ceramic</property>
-  <property name="Rated Voltage" >50 v</property>
+  <property name="Capacitor Type" >Ceramic Disk</property>
+  <property name="Rated Voltage" >500 V</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>0.01 &#181;F Ceramic Disk Capacitor</description>

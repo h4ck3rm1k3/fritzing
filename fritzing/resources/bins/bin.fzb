@@ -16,6 +16,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="2013BasfdBEC12" modelIndex="7" path="parts/core/capacitor_ceramic_200mil_0_1uF.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1001ABDC03F" modelIndex="7" path="parts/core/electrolytic_capacitor_100uF.fzp">
             <views>
                 <iconView layer="icon">
