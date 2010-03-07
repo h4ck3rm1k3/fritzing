@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion="0.3.18" moduleId="145554CBFC44diode" >
+ <version>1</version>
+ <author>André Knörig</author>
+ <title>Schottky Diode</title>
+ <label>D</label>
+ <date>2010-03-07</date>
+ <tags>
+  <tag>diode</tag>
+  <tag>schottky</tag>
+  <tag>semiconductor</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="family" >Diode</property>
+  <property name="type">Schottky</property>
+  <property name="nominal current" >1 A</property>
+  <property name="reverse voltage" >20 V</property>
+  <property name="part" >1N5817</property>
+ </properties>
+ <description>A standard schottky barrier rectifier diode</description>
+ <views>
+  <iconView>
+   <layers image="icon/basic-diode.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView fliphorizontal="true" flipvertical="true" >
+   <layers image="breadboard/basic_diode.svg" >
+    <layer layerId="breadboard" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/diode_schottky.svg" >
+    <layer layerId="schematic" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="pcb/DO-41_diode_2_300mil_pcb.svg" >
+    <layer layerId="copper0" />
+    <layer layerId="silkscreen" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors>
+  <connector type="male" id="connector0" name="cathode" >
+   <description>Cathode Pin</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector0pin" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="anode" >
+   <description>Anode Pin</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pin" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
+</module>
