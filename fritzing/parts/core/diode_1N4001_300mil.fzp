@@ -6,12 +6,16 @@
  <label>D</label>
  <date>2009-12-01</date>
  <tags>
-  <tag>Diode</tag>
-  <tag>Rectifier Diode</tag>
+  <tag>diode</tag>
+  <tag>rectifier</tag>
+  <tag>semiconductor</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
   <property name="family" >Diode</property>
+  <property name="type">Rectifier</property>
+  <property name="nominal current" >1 A</property>
+  <property name="reverse voltage" >50 V</property>
   <property name="part" >1N4001</property>
  </properties>
  <description>A standard rectifier diode</description>
@@ -22,7 +26,7 @@
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/basic-diode.svg" >
+   <layers image="breadboard/basic_diode.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
@@ -54,7 +58,7 @@
    </views>
   </connector>
   <connector type="male" id="connector1" name="anode" >
-   <description>Anode Ppin</description>
+   <description>Anode Pin</description>
    <views>
     <breadboardView>
      <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />

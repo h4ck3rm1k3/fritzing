@@ -1,21 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.2" baseProfile="tiny"
-	 x="0px" y="0px" width="0.144in" height="0.712in"
-	 id="svg2">
-
-<rect id="connector0pin" x="5.618" y="2.004" width="1.893" height="9.783"/>
-<rect id="connector0terminal" x="6.097" y="1.32" width="0.867" height="0.684"/>
-<rect id="connector1pin" x="5.621" y="52.72" width="1.894" height="9.783"/>
-<rect id="connector1terminal" x="6.101" y="62.433" width="0.867" height="0.686"/>
-
-<g id="schematic"
-	 style="display:inline">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="12.559px"
+	 height="65.175px" viewBox="0 0 12.559 65.175" enable-background="new 0 0 12.559 65.175" xml:space="preserve">
+<rect id="connector0pin" x="5.474" y="1.089" width="1.893" height="9.783"/>
+<rect id="connector0terminal" x="5.952" y="0.406" width="0.866" height="0.686"/>
+<rect id="connector1pin" x="5.477" y="54.369" width="1.894" height="9.783"/>
+<rect id="connector1terminal" x="5.956" y="64.082" width="0.866" height="0.688"/>
+<g id="schematic">
 	<g>
-	<polyline fill="#FFFFFF" stroke="#000000" stroke-width="2.2284" stroke-linecap="round" points="6.55,2.046 6.55,20.103 
-		10.05,21.965 2.799,26 10.05,30.034 2.799,34.069 10.05,38.103 2.799,42.138 6.55,44.31 6.55,62.212 "/>
+		<polyline fill="#FFFFFF" stroke="#000000" stroke-width="2.2284" stroke-linecap="round" points="6.405,1.132 6.405,20.392 
+			9.905,22.255 2.655,26.291 9.905,30.324 2.655,34.359 9.905,38.392 2.655,42.427 6.405,44.599 6.405,63.861 		"/>
 	</g>
 </g>
 </svg>
