@@ -5,8 +5,7 @@
 
 #	TODO:
 #		check for conflicting names
-#		input folder instead of input file
-#		output to part folder structure
+#		check for incomplete parts (missing views, broken links)
 
 # lots of borrowing from http://code.activestate.com/recipes/252508-file-unzip/
 
@@ -72,24 +71,29 @@ def main():
                                 outname = re.sub('^part\.', '', outname, 1)
                                 outname = re.sub('__[0-9a-fA-F]{32}', '', outname)
                                 outname = re.sub('__[0-9a-fA-F]{27}', '', outname)
-                                middle = None
+                                outname = re.sub('__[0-9a-fA-F]{20}', '', outname)
+                                subdir = None
                                 fzp = 0
                                 if outname.endswith('.fzp'):
-                                        middle = 'fzp'
+                                        subdir = 'contrib'
                                         fzp = 1;
                                 elif outname.find('icon') >= 0:
-                                        middle = 'icon'
+                                        subdir = 'svg/contrib/icon'
                                 elif outname.find('pcb') >= 0:
-                                        middle = 'pcb'
+                                        subdir = 'svg/contrib/pcb'
                                 elif outname.find('schem') >= 0:
-                                        middle = 'schem'
+                                        subdir = 'svg/contrib/schematic'
                                 elif outname.find('bread') >= 0:
-                                        middle = 'bb'
-                                outfile = open(os.path.join(outputdir, middle, outname), 'wb')
+                                        subdir = 'svg/contrib/breadboard'
+                                outname = re.sub('__((icon)|(breadboard)|(schematic)|(pcb))', '', outname)
+                                outfile = open(os.path.join(outputdir, subdir, outname), 'wb')
+                                
                                 if fzp:
                                         s = zf.read(name)
                                         s = re.sub('__[0-9a-fA-F]{32}', '', s)
                                         s = re.sub('__[0-9a-fA-F]{27}', '', s)
+                                        s = re.sub('__[0-9a-fA-F]{20}', '', s)
+                                        s = re.sub('__((icon)|(breadboard)|(schematic)|(pcb))', '', s)
                                         outfile.write(s)
                                 else:
                                         outfile.write(zf.read(name))
@@ -99,7 +103,7 @@ def main():
         
 def createstructure(file, dir):
     # makedirs(listdirs(file), dir)
-    dirs = ['fzp', 'icon', 'bb', 'schem', 'pcb']
+    dirs = ['contrib', 'svg/contrib/icon', 'svg/contrib/breadboard', 'svg/contrib/schematic', 'svg\contrib\pcb']
     makedirs(dirs, dir)
 
 
@@ -108,7 +112,7 @@ def makedirs(directories, basedir):
     for dir in directories:
         curdir = os.path.join(basedir, dir)
         if not os.path.exists(curdir):
-            os.mkdir(curdir)
+            os.makedirs(curdir)
 
 def listdirs(file):
     """ Grabs all the directories in the zip structure
