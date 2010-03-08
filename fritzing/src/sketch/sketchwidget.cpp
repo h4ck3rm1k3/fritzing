@@ -91,6 +91,8 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     : InfoGraphicsView(parent)
 {
 	clearPasteOffset();
+	m_movingItem = NULL;
+	m_movingSVGRenderer = NULL;
 	m_clearSceneRect = false;
 	m_draggingBendpoint = false;
 	m_zoom = 100;
@@ -1424,6 +1426,18 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 		event->acceptProposedAction();
 	}
 	else if (event->mimeData()->hasFormat("application/x-dndsketchdata")) {
+		if (event->source() != this) {
+			m_movingItem = NULL;
+			SketchWidget * other = dynamic_cast<SketchWidget *>(event->source());
+			if (other == NULL) {
+				throw "drag enter event from unknown source";
+			}
+
+			m_movingItem = new QGraphicsSvgItem();
+			m_movingItem->setSharedRenderer(other->m_movingSVGRenderer);
+			this->scene()->addItem(m_movingItem);
+			m_movingItem->setPos(mapToScene(event->pos()) - other->m_movingSVGOffset);
+		}
 		event->acceptProposedAction();
 	}
 	else {
@@ -1537,6 +1551,10 @@ void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
 	}
 	else {
 		// dragging sketch items
+		if (m_movingItem) {
+			delete m_movingItem;
+			m_movingItem = NULL;
+		}
 	}
 
 	QGraphicsView::dragLeaveEvent(event);
@@ -1563,6 +1581,11 @@ void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 			m_moveEventCount++;
 		}
 		else {
+			SketchWidget * other = dynamic_cast<SketchWidget *>(event->source());
+			if (other == NULL) {
+				throw "drag move event from unknown source";
+			}
+			m_movingItem->setPos(mapToScene(event->pos()) - other->m_movingSVGOffset);
 		}
 		event->acceptProposedAction();
 		return;
@@ -1607,6 +1630,11 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		dropItemEvent(event);
     }
 	else if (event->mimeData()->hasFormat("application/x-dndsketchdata")) {
+		if (m_movingItem) {
+			delete m_movingItem;
+			m_movingItem = NULL;
+		}
+
 		ConnectorItem::clearEqualPotentialDisplay();
 		if (event->source() == this) {
 			checkMoved();
@@ -2335,15 +2363,23 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 			if ((m_globalPos - m_mousePressGlobalPos).manhattanLength() >= QApplication::startDragDistance()) {
 				QMimeData *mimeData = new QMimeData;
 				mimeData->setData("application/x-dndsketchdata", NULL);
-				mimeData->setData("action", "part-moving");
 
 				QDrag * drag = new QDrag(this);
 				drag->setMimeData(mimeData);
 
-				m_moveEventCount = 0;					// reset this to make sure that equal potential highlights are cleared
+				QPointF offset;
+				QString svg = makeMoveSVG(FSvgRenderer::printerScale(),  GraphicsUtils::StandardFritzingDPI, offset);
+				m_movingSVGRenderer = new QSvgRenderer(new QXmlStreamReader(svg));
+				m_movingSVGOffset = m_mousePressScenePos - offset;
+
+				m_moveEventCount = 0;					// reset m_moveEventCount to make sure that equal potential highlights are cleared
 				m_movingByMouse = false;
 
 				drag->exec();
+
+				delete m_movingSVGRenderer;
+				m_movingSVGRenderer = NULL;
+				delete drag;
 				return;
 			}
 		}
@@ -2386,6 +2422,54 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 		
 	QGraphicsView::mouseMoveEvent(event);
 }
+
+QString SketchWidget::makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset) 
+{
+
+	QRectF itemsBoundingRect;
+	foreach (ItemBase * itemBase, m_savedItems.values()) {
+		itemsBoundingRect |= itemBase->sceneBoundingRect();
+	}
+
+	qreal width = itemsBoundingRect.width();
+	qreal height = itemsBoundingRect.height();
+	offset = itemsBoundingRect.topLeft();
+
+	QString outputSVG = TextUtils::makeSVGHeader(printerScale, dpi, width, height);
+
+	foreach (ItemBase * itemBase, m_savedItems.values()) {
+		Wire * wire = dynamic_cast<Wire *>(itemBase);
+		if (wire != NULL) {
+			outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, true));
+		}
+		else {
+			outputSVG.append(makeRectSVG(itemBase->sceneBoundingRect(), offset, dpi, printerScale));
+		}
+	}
+	//outputSVG.append(makeRectSVG(itemsBoundingRect, offset, dpi, printerScale));
+
+	outputSVG += "</svg>";
+
+	return outputSVG;
+
+
+
+	/*
+	// this is too slow:
+	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	foreach (ViewLayer * viewLayer, viewLayers()) {
+		if (viewLayer == NULL) continue;
+
+		viewLayerIDs << viewLayer->viewLayerID();
+	}
+
+	QSizeF imageSize;
+	return renderToSVG(printerScale, viewLayerIDs, viewLayerIDs, true, imageSize, NULL, dpi, false, itemBases, itemsBoundingRect);
+
+	*/
+}
+
+
 
 void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 {
@@ -5643,8 +5727,6 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten)
 {
-	qreal width =  scene()->width();
-	qreal height =  scene()->height();
 
 	QList<ItemBase *> itemBases;
 	QRectF itemsBoundingRect;
@@ -5674,6 +5756,17 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 		// TODO: make sure this does the right thing with grouped items
 		itemsBoundingRect |= item->sceneBoundingRect();
 	}
+
+	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, itemBases, itemsBoundingRect);
+}
+
+QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
+								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
+{
+
+	qreal width =  scene()->width();
+	qreal height =  scene()->height();
 
 	width = itemsBoundingRect.width();
 	height = itemsBoundingRect.height();
@@ -5760,23 +5853,8 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 				if (wire == NULL) continue;
 				if (wire->viewLayerID() != viewLayerID) continue;
 
-				QLineF line = wire->getPaintLine();
-				QPointF p1 = wire->scenePos() + line.p1() - offset;
-				QPointF p2 = wire->scenePos() + line.p2() - offset;
-				p1.setX(p1.x() * dpi / printerScale);
-				p1.setY(p1.y() * dpi / printerScale);
-				p2.setX(p2.x() * dpi / printerScale);
-				p2.setY(p2.y() * dpi / printerScale);
-				// TODO: use original colors, not just black
-				QString stroke = (blackOnly) ? "black" : wire->hexString();
-				QString lineString = QString("<line style=\"stroke-linecap: round\" stroke=\"%6\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
-								.arg(p1.x())
-								.arg(p1.y())
-								.arg(p2.x())
-								.arg(p2.y())
-								.arg(wire->width() * dpi / printerScale)
-								.arg(stroke);
-				outputSVG.append(lineString);
+				outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, blackOnly));
+
 			}
 		}
 	}
@@ -5790,6 +5868,43 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 	return outputSVG;
 
+}
+
+QString SketchWidget::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerScale)
+{
+	r.translate(-offset.x(), -offset.y());
+	qreal l = r.left() * dpi / printerScale;
+	qreal t = r.top() * dpi / printerScale;
+	qreal w = r.width() * dpi / printerScale;
+	qreal h = r.height() * dpi / printerScale;
+
+	QString stroke = "black";
+	return QString("<rect style=\"stroke-linecap: round\" stroke=\"%6\" x=\"%1\" y=\"%2\" width=\"%3\" height=\"%4\" stroke-width=\"%5\" fill=\"none\" />")
+			.arg(l)
+			.arg(t)
+			.arg(w)
+			.arg(h)
+			.arg(1 * dpi / printerScale)
+			.arg(stroke);
+}
+
+QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerScale, bool blackOnly) {
+	QLineF line = wire->getPaintLine();
+	QPointF p1 = wire->scenePos() + line.p1() - offset;
+	QPointF p2 = wire->scenePos() + line.p2() - offset;
+	p1.setX(p1.x() * dpi / printerScale);
+	p1.setY(p1.y() * dpi / printerScale);
+	p2.setX(p2.x() * dpi / printerScale);
+	p2.setY(p2.y() * dpi / printerScale);
+	// TODO: use original colors, not just black
+	QString stroke = (blackOnly) ? "black" : wire->hexString();
+	return QString("<line style=\"stroke-linecap: round\" stroke=\"%6\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
+					.arg(p1.x())
+					.arg(p1.y())
+					.arg(p2.x())
+					.arg(p2.y())
+					.arg(wire->width() * dpi / printerScale)
+					.arg(stroke);
 }
 
 void SketchWidget::addFixedToCenterItem2(SketchMainHelp * item) {

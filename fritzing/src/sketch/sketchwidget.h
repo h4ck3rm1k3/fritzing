@@ -206,6 +206,10 @@ public:
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
 	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
 						bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten);
+	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
+								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect);
+
 	bool spaceBarIsPressed();
 	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
 	long setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
@@ -374,6 +378,10 @@ protected:
 	void copyAux(QList<ItemBase *> & bases);
 	void copyDrop();
 	void dropItemEvent(QDropEvent *event);
+	QString makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerscale, bool blackOnly);
+	QString makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerscale);
+	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
+
 
 protected:
 	static bool lessThan(int a, int b);
@@ -567,6 +575,9 @@ protected:
 	int m_autoScrollThreshold;
 	bool m_clearSceneRect;
 	ItemBase * m_moveReferenceItem;
+	QSvgRenderer * m_movingSVGRenderer;
+	QPointF m_movingSVGOffset;
+	QGraphicsSvgItem * m_movingItem;
 
 
 public:
