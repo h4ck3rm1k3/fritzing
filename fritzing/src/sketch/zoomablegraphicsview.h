@@ -44,8 +44,12 @@ public:
     void absoluteZoom(qreal percent);
  	qreal currentZoom();
 	void setAcceptWheelEvents(bool);
-
 	virtual void ensureFixedToBottomRightItems() {}
+	
+public:	
+	static bool useWheelForZoom();
+	static void setUseWheelForZoom(bool);
+
 
 signals:
 	void zoomChanged(qreal zoom);
@@ -60,6 +64,9 @@ protected:
 	int m_maxScaleValue;
 	int m_minScaleValue;
 	bool m_acceptWheelEvents;
+
+protected:
+	static bool m_useWheelForZoom;
 };
 
 #endif

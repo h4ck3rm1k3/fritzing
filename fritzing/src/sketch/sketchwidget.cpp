@@ -141,7 +141,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     // a bit of a hack so that, when there is no scenerect set,
     // the first item dropped into the scene doesn't leap to the top left corner
     // as the scene resizes to fit the new item
-   	m_sizeItem = new QGraphicsLineItem();
+   	m_sizeItem = new GraphicsSvgLineItem();
     m_sizeItem->setLine(0, 0, rect().width(), rect().height());
 	DebugDialog::debug(QString("initial rect %1 %2").arg(rect().width()).arg(rect().height()));
     this->scene()->addItem(m_sizeItem);
@@ -4963,7 +4963,10 @@ void SketchWidget::resizeEvent(QResizeEvent * event) {
 			
 	);
 
-	m_sizeItem->setLine(z.x(), z.y(), p.x(), p.y()); 
+	if (m_sizeItem != NULL) {
+		m_sizeItem->setLine(z.x(), z.y(), p.x(), p.y()); 
+	}
+
 	emit resizeSignal();
 }
 

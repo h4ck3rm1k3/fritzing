@@ -30,6 +30,7 @@ $Date$
 #include "../items/itembase.h"
 #include "../utils/clickablelabel.h"
 #include "setcolordialog.h"
+#include "../sketch/zoomablegraphicsview.h"
 
 #include <QFormLayout>
 #include <QLabel>
@@ -38,6 +39,7 @@ $Date$
 #include <QLocale>
 #include <QDialogButtonBox>
 #include <QGroupBox>
+#include <QRadioButton>
 
 #define MARGIN 5
 
@@ -55,6 +57,36 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 	vLayout->addWidget(createLanguageForm(list));
 	vLayout->addWidget(createColorForm());
+
+	QGroupBox * zoomer = new QGroupBox(tr("Mouse Wheel"), this );
+	QVBoxLayout * zvlayout = new QVBoxLayout(this);
+
+	QFrame * zframe = new QFrame(this);
+
+	QHBoxLayout * zhlayout = new QHBoxLayout(this);
+	QRadioButton * z1 = new QRadioButton(this);
+	z1->setText(tr("Zooms"));
+	z1->setChecked(ZoomableGraphicsView::useWheelForZoom());
+	connect(z1, SIGNAL(clicked()), this, SLOT(useWheelForZoom()));
+	zhlayout->addWidget(z1);
+
+	QRadioButton * z2 = new QRadioButton(this);
+	z2->setText(tr("Scrolls"));
+	z2->setChecked(!ZoomableGraphicsView::useWheelForZoom());
+	connect(z2, SIGNAL(clicked()), this, SLOT(useWheelForScroll()));
+	zhlayout->addWidget(z2);
+	zframe->setLayout(zhlayout);
+
+	zvlayout->addWidget(zframe);
+	QLabel * l = new QLabel(tr("You can always use the control (command) key with the mouse wheel to invoke the unselected action."));
+	l->setFixedWidth(250);
+	l->setMinimumHeight(45);
+	l->setWordWrap(true);
+	zvlayout->addWidget(l);
+	zoomer->setLayout(zvlayout);
+
+	vLayout->addWidget(zoomer);
+
 	vLayout->addWidget(createOtherForm());
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -93,7 +125,7 @@ QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list)
 
 	QLabel * ll = new QLabel(this);
 	ll->setFixedWidth(250);
-	ll->setMinimumHeight(75);
+	ll->setMinimumHeight(45);
 	ll->setWordWrap(true);
 	ll->setText(QObject::tr("Please note that a new language setting will not take effect "
 		"until the next time you run Fritzing."));
@@ -224,3 +256,10 @@ QHash<QString, QString> & PrefsDialog::settings() {
 	return m_settings;
 }
 
+void PrefsDialog::useWheelForZoom() {
+	m_settings.insert("useWheelForZoom", "true");
+}
+
+void PrefsDialog::useWheelForScroll() {
+	m_settings.insert("useWheelForZoom", "false");
+}

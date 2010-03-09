@@ -25,9 +25,14 @@ $Date$
 ********************************************************************/
 
 #include <QWheelEvent>
+#include <QScrollBar>
+#include <QSettings>
 
 #include "zoomablegraphicsview.h"
 #include "../utils/zoomslider.h"
+
+bool ZoomableGraphicsView::m_useWheelForZoom = true;
+bool FirstTime = true;
 
 ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 	: QGraphicsView(parent)
@@ -36,6 +41,11 @@ ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 	m_maxScaleValue = 2000;
 	m_minScaleValue = 1;
 	m_acceptWheelEvents = true;
+	if (FirstTime) {
+		FirstTime = false;
+		QSettings settings;
+		m_useWheelForZoom = settings.value("useWheelForZoom", "true").toBool();
+	}
 }
 
 void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
@@ -44,28 +54,25 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 		return;
 	}
 
-	QPointF mousePosition = event->pos();
-	qreal delta = ((qreal)event->delta() / 120) * ZoomSlider::ZoomStep;
-	if (delta == 0) return;
+	bool control = event->modifiers() & Qt::ControlModifier;
 
-	// Scroll zooming relative to the current size
-	relativeZoom(delta, true);
+	if ((m_useWheelForZoom && !control) || (!m_useWheelForZoom && control)) {
+		qreal delta = ((qreal) event->delta() / 120) * ZoomSlider::ZoomStep;
+		if (delta == 0) return;
 
-	//this->verticalScrollBar()->setValue(verticalScrollBar()->value() + 3);
-	//this->horizontalScrollBar()->setValue(horizontalScrollBar()->value() + 3);
+		// Scroll zooming relative to the current size
+		relativeZoom(delta, true);
 
-
-	//to do: center zoom around mouse location
-
-
-
-	//QPointF pos = event->pos();
-	//QPointF spos = this->mapToScene((int) pos.x(), (int) pos.y());
-
-
-	//DebugDialog::debug(QString("translate %1 %2").arg(spos.x()).arg(spos.y()) );
-
-	emit wheelSignal();
+		emit wheelSignal();
+	}
+	else {
+		int numSteps = event->delta() / 8;
+		if (event->orientation() == Qt::Horizontal) {
+			horizontalScrollBar()->setValue( horizontalScrollBar()->value() - numSteps);
+		} else {
+			verticalScrollBar()->setValue( verticalScrollBar()->value() - numSteps);
+		}
+	}
 }
 
 void ZoomableGraphicsView::relativeZoom(qreal step, bool centerOnCursor) {
@@ -113,3 +120,12 @@ qreal ZoomableGraphicsView::currentZoom() {
 void ZoomableGraphicsView::setAcceptWheelEvents(bool accept) {
 	m_acceptWheelEvents = accept;
 }
+
+void ZoomableGraphicsView::setUseWheelForZoom(bool use) {
+	m_useWheelForZoom = use;
+}
+
+bool ZoomableGraphicsView::useWheelForZoom() {
+	return m_useWheelForZoom;
+}
+

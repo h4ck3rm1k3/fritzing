@@ -53,6 +53,8 @@ protected slots:
 	void clear();
 	void setConnectedColor();
 	void setUnconnectedColor();
+	void useWheelForZoom();
+	void useWheelForScroll();
 
 protected:
 	QHash<QString, QString> m_settings;

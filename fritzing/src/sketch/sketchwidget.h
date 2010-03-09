@@ -555,7 +555,7 @@ protected:
 	QPointer<ConnectorItem> m_lastHoverEnterConnectorItem;
 	QPointer<ItemBase> m_lastHoverEnterItem;
 	QString m_shortName;
-	Wire * m_dragBendpointWire;
+	QPointer<Wire> m_dragBendpointWire;
 	QPoint m_dragBendpointPos;
 	QColor m_standardBackgroundColor;
 	StatusConnectStatus m_statusConnectState;
@@ -567,17 +567,17 @@ protected:
 	bool m_movingByMouse;
 	bool m_alignToGrid;
 	double m_gridSizeInches;
-	ItemBase * m_alignmentItem;
+	QPointer<ItemBase> m_alignmentItem;
 	QPointF m_alignmentStartPoint;
 	qreal m_zoom;
 	bool m_draggingBendpoint;
-	QGraphicsLineItem * m_sizeItem;
+	QPointer<GraphicsSvgLineItem> m_sizeItem;
 	int m_autoScrollThreshold;
 	bool m_clearSceneRect;
-	ItemBase * m_moveReferenceItem;
-	QSvgRenderer * m_movingSVGRenderer;
+	QPointer<ItemBase> m_moveReferenceItem;
+	QPointer<QSvgRenderer> m_movingSVGRenderer;
 	QPointF m_movingSVGOffset;
-	QGraphicsSvgItem * m_movingItem;
+	QPointer<QGraphicsSvgItem> m_movingItem;
 
 
 public:
