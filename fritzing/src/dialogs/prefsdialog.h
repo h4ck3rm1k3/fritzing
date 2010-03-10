@@ -31,6 +31,7 @@ $Date$
 #include <QDialog>
 #include <QFileInfoList>
 #include <QHash>
+#include <QLabel>
 
 class PrefsDialog : public QDialog
 {
@@ -47,20 +48,22 @@ protected:
 	QWidget * createLanguageForm(QFileInfoList & list);
 	QWidget* createOtherForm();
 	QWidget* createColorForm();
+	void updateWheelText();
 
 protected slots:
 	void changeLanguage(int);
 	void clear();
 	void setConnectedColor();
 	void setUnconnectedColor();
-	void useWheelForZoom();
-	void useWheelForScroll();
+	void changeWheelBehavior();
 
 protected:
+	QLabel * m_wheelLabel;
 	QHash<QString, QString> m_settings;
 	QString m_name;
 	class TranslatorListModel * m_translatorListModel;
 	bool m_cleared;
+	int m_wheelMapping;
 };
 
 #endif 

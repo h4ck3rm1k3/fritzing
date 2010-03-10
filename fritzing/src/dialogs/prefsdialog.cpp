@@ -51,6 +51,7 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 
 	m_name = language;
 	m_cleared = false;
+	m_wheelMapping = (int) ZoomableGraphicsView::wheelMapping();
 
 	this->setWindowTitle(QObject::tr("Preferences"));
 
@@ -58,32 +59,31 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	vLayout->addWidget(createLanguageForm(list));
 	vLayout->addWidget(createColorForm());
 
-	QGroupBox * zoomer = new QGroupBox(tr("Mouse Wheel"), this );
-	QVBoxLayout * zvlayout = new QVBoxLayout(this);
-
-	QFrame * zframe = new QFrame(this);
+	QGroupBox * zoomer = new QGroupBox(tr("Mouse Wheel Behavior"), this );
 
 	QHBoxLayout * zhlayout = new QHBoxLayout(this);
-	QRadioButton * z1 = new QRadioButton(this);
-	z1->setText(tr("Zooms"));
-	z1->setChecked(ZoomableGraphicsView::useWheelForZoom());
-	connect(z1, SIGNAL(clicked()), this, SLOT(useWheelForZoom()));
-	zhlayout->addWidget(z1);
+	zhlayout->setSpacing(5);
 
-	QRadioButton * z2 = new QRadioButton(this);
-	z2->setText(tr("Scrolls"));
-	z2->setChecked(!ZoomableGraphicsView::useWheelForZoom());
-	connect(z2, SIGNAL(clicked()), this, SLOT(useWheelForScroll()));
-	zhlayout->addWidget(z2);
-	zframe->setLayout(zhlayout);
+#ifdef Q_WS_MAC
+	QString cKey = tr("Command");
+#else
+	QString cKey = tr("Control");
+#endif
 
-	zvlayout->addWidget(zframe);
-	QLabel * l = new QLabel(tr("You can always use the control (command) key with the mouse wheel to invoke the unselected action."));
-	l->setFixedWidth(250);
-	l->setMinimumHeight(45);
+	QLabel * l = new QLabel(tr("No keys down:\n%1 key down:\nAlt key down:").arg(cKey), this);
 	l->setWordWrap(true);
-	zvlayout->addWidget(l);
-	zoomer->setLayout(zvlayout);
+	zhlayout->addWidget(l);
+
+	m_wheelLabel = new QLabel(this);
+	m_wheelLabel->setWordWrap(true);
+	updateWheelText();
+	zhlayout->addWidget(m_wheelLabel);
+
+	QPushButton * pushButton = new QPushButton(tr("Change Wheel Behavior"), this);
+	connect(pushButton, SIGNAL(clicked()), this, SLOT(changeWheelBehavior()));
+	zhlayout->addWidget(pushButton);
+
+	zoomer->setLayout(zhlayout);
 
 	vLayout->addWidget(zoomer);
 
@@ -256,10 +256,43 @@ QHash<QString, QString> & PrefsDialog::settings() {
 	return m_settings;
 }
 
-void PrefsDialog::useWheelForZoom() {
-	m_settings.insert("useWheelForZoom", "true");
+void PrefsDialog::changeWheelBehavior() {
+	if (++m_wheelMapping >= ZoomableGraphicsView::WheelMappingCount) {
+		m_wheelMapping = 0;
+	}
+
+	m_settings.insert("wheelMapping", QString("%1").arg(m_wheelMapping));
+	updateWheelText();
+
+
 }
 
-void PrefsDialog::useWheelForScroll() {
-	m_settings.insert("useWheelForZoom", "false");
+void PrefsDialog::updateWheelText() {
+	QString text;
+	switch((ZoomableGraphicsView::WheelMapping) m_wheelMapping) {
+		case ZoomableGraphicsView::MapNoZCtrlVAltH:
+			text = tr("Zoom\nVertical scroll\nHorizontal scroll");
+			break;
+		case ZoomableGraphicsView::MapNoZCtrlHAltV:
+			text = tr("Zoom\nHorizontal scroll\nVertical scroll");
+			break;
+		case ZoomableGraphicsView::MapNoVCtrlZAltH:
+			text = tr("Vertical scroll\nZoom\nHorizontal scroll");
+			break;
+		case ZoomableGraphicsView::MapNoVCtrlHAltZ:
+			text = tr("Vertical scroll\nHorizontal scroll\nZoom");
+			break;
+		case ZoomableGraphicsView::MapNoHCtrlVAltZ:
+			text = tr("Horizontal scroll\nVertical scroll\nZoom");
+			break;
+		case ZoomableGraphicsView::MapNoHCtrlZAltV:
+			text = tr("Horizontal scroll\nZoom\nVertical scroll");
+			break;
+		default:
+			// shouldn't happen
+			return;
+
+	}
+	m_wheelLabel->setText(text);
 }
+

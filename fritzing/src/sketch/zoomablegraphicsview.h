@@ -45,11 +45,22 @@ public:
  	qreal currentZoom();
 	void setAcceptWheelEvents(bool);
 	virtual void ensureFixedToBottomRightItems() {}
+
+
 	
 public:	
-	static bool useWheelForZoom();
-	static void setUseWheelForZoom(bool);
+	enum WheelMapping {
+		MapNoVCtrlZAltH,
+		MapNoZCtrlVAltH,
+		MapNoZCtrlHAltV,
+		MapNoVCtrlHAltZ,
+		MapNoHCtrlVAltZ,
+		MapNoHCtrlZAltV,
+		WheelMappingCount
+	};
 
+	static WheelMapping wheelMapping();
+	static void setWheelMapping(WheelMapping);
 
 signals:
 	void zoomChanged(qreal zoom);
@@ -66,7 +77,7 @@ protected:
 	bool m_acceptWheelEvents;
 
 protected:
-	static bool m_useWheelForZoom;
+	static WheelMapping m_wheelMapping;
 };
 
 #endif

@@ -31,7 +31,7 @@ $Date$
 #include "zoomablegraphicsview.h"
 #include "../utils/zoomslider.h"
 
-bool ZoomableGraphicsView::m_useWheelForZoom = true;
+ZoomableGraphicsView::WheelMapping ZoomableGraphicsView::m_wheelMapping = MapNoVCtrlZAltH;
 bool FirstTime = true;
 
 ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
@@ -44,7 +44,7 @@ ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 	if (FirstTime) {
 		FirstTime = false;
 		QSettings settings;
-		m_useWheelForZoom = settings.value("useWheelForZoom", "true").toBool();
+		m_wheelMapping = (WheelMapping) settings.value("wheelMapping", m_wheelMapping).toInt();
 	}
 }
 
@@ -54,9 +54,51 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 		return;
 	}
 
-	bool control = event->modifiers() & Qt::ControlModifier;
+	bool doZoom = false;
+	bool doHorizontal = false;
+	bool doVertical = false;
 
-	if ((m_useWheelForZoom && !control) || (!m_useWheelForZoom && control)) {
+	bool control = event->modifiers() & Qt::ControlModifier;
+	bool alt = event->modifiers() & Qt::AltModifier;
+
+	switch (m_wheelMapping) {
+		case MapNoZCtrlVAltH:
+			if (control) doVertical = true;
+			else if (alt) doHorizontal = true;
+			else doZoom = true;
+			break;
+		case MapNoZCtrlHAltV:
+			if (control) doHorizontal = true;
+			else if (alt) doVertical = true;
+			else doZoom = true;
+			break;
+		case MapNoVCtrlZAltH:
+			if (control) doZoom = true;
+			else if (alt) doHorizontal = true;
+			else doVertical = true;
+			break;
+		case MapNoVCtrlHAltZ:
+			if (control) doHorizontal = true;
+			else if (alt) doZoom = true;
+			else doVertical = true;
+			break;
+		case MapNoHCtrlVAltZ:
+			if (control) doVertical = true;
+			else if (alt) doZoom = true;
+			else doHorizontal = true;
+			break;
+		case MapNoHCtrlZAltV:
+			if (control) doZoom = true;
+			else if (alt) doVertical = true;
+			else doHorizontal = true;
+			break;
+		default:
+			// shouldn't happen
+			return;
+	}
+
+	int numSteps = event->delta() / 8;
+	if (doZoom) {
 		qreal delta = ((qreal) event->delta() / 120) * ZoomSlider::ZoomStep;
 		if (delta == 0) return;
 
@@ -65,13 +107,11 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 
 		emit wheelSignal();
 	}
-	else {
-		int numSteps = event->delta() / 8;
-		if (event->orientation() == Qt::Horizontal) {
-			horizontalScrollBar()->setValue( horizontalScrollBar()->value() - numSteps);
-		} else {
-			verticalScrollBar()->setValue( verticalScrollBar()->value() - numSteps);
-		}
+	else if (doVertical) {
+		verticalScrollBar()->setValue( verticalScrollBar()->value() - numSteps);
+	}
+	else if (doHorizontal) {
+		horizontalScrollBar()->setValue( horizontalScrollBar()->value() - numSteps);
 	}
 }
 
@@ -121,11 +161,11 @@ void ZoomableGraphicsView::setAcceptWheelEvents(bool accept) {
 	m_acceptWheelEvents = accept;
 }
 
-void ZoomableGraphicsView::setUseWheelForZoom(bool use) {
-	m_useWheelForZoom = use;
+void ZoomableGraphicsView::setWheelMapping(WheelMapping wm) {
+	m_wheelMapping = wm;
 }
 
-bool ZoomableGraphicsView::useWheelForZoom() {
-	return m_useWheelForZoom;
+ZoomableGraphicsView::WheelMapping ZoomableGraphicsView::wheelMapping() {
+	return m_wheelMapping;
 }
 

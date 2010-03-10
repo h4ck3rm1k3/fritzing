@@ -696,8 +696,8 @@ void FApplication::preferences() {
 						((MainWindow *) widget)->redrawSketch();
 					}
 				}
-				else if (key.compare("useWheelForZoom")) {
-					ZoomableGraphicsView::setUseWheelForZoom(hash.value(key).compare("true", Qt::CaseInsensitive) == 0 ? true : false);
+				else if (key.compare("wheelMapping") == 0) {
+					ZoomableGraphicsView::setWheelMapping((ZoomableGraphicsView::WheelMapping) hash.value(key).toInt());
 				}
 			}
 		}
