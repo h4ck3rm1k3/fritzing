@@ -8,26 +8,28 @@ public:
   enum {
     EOF_SYMBOL = 0,
     ELEMENT = 1,
-    ELEMENTARC = 5,
-    ELEMENTLINE = 4,
-    LEFTBRACKET = 8,
-    LEFTPAREN = 6,
-    NUMBER = 10,
+    ELEMENTARC = 6,
+    ELEMENTLINE = 5,
+    HEXNUMBER = 13,
+    LEFTBRACKET = 9,
+    LEFTPAREN = 7,
+    MARK = 4,
+    NUMBER = 11,
     PAD = 2,
     PIN = 3,
-    RIGHTBRACKET = 9,
-    RIGHTPAREN = 7,
-    STRING = 11,
+    RIGHTBRACKET = 10,
+    RIGHTPAREN = 8,
+    STRING = 12,
 
-    ACCEPT_STATE = 131,
-    RULE_COUNT = 69,
-    STATE_COUNT = 132,
-    TERMINAL_COUNT = 12,
-    NON_TERMINAL_COUNT = 61,
+    ACCEPT_STATE = 179,
+    RULE_COUNT = 98,
+    STATE_COUNT = 180,
+    TERMINAL_COUNT = 14,
+    NON_TERMINAL_COUNT = 80,
 
-    GOTO_INDEX_OFFSET = 132,
-    GOTO_INFO_OFFSET = 48,
-    GOTO_CHECK_OFFSET = 48
+    GOTO_INDEX_OFFSET = 180,
+    GOTO_INFO_OFFSET = 73,
+    GOTO_CHECK_OFFSET = 73
   };
 
   static const char  *const spell [];

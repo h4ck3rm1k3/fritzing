@@ -31,6 +31,7 @@ win32 {
 	DEFINES += _CRT_SECURE_NO_DEPRECATE
 }
 macx {
+	MOC_DIR = build/moc
 	CONFIG += x86 ppc
 	QMAKE_INFO_PLIST = FritzingInfo.plist
 	#DEFINES += QT_NO_DEBUG   		# uncomment this for xcode
@@ -79,7 +80,8 @@ RESOURCES += phoenixresources.qrc
 	include(pri/infoview.pri)
 	include(pri/model.pri)
 	include(pri/sketch.pri)
+	include(pri/translations.pri)
 TARGET = Fritzing
 TEMPLATE = app
-      include(pri/translations.pri)
+
 	

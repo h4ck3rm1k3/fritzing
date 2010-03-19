@@ -5,6 +5,7 @@
 %token ELEMENT
 %token PAD
 %token PIN
+%token MARK
 %token ELEMENTLINE
 %token ELEMENTARC
 %token LEFTPAREN
@@ -13,6 +14,7 @@
 %token RIGHTBRACKET
 %token NUMBER
 %token STRING
+%token HEXNUMBER
 
 %start geda_element
 
@@ -173,12 +175,44 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 ./
 
 
-geda_element ::=  element_command LEFTPAREN element_arguments RIGHTPAREN LEFTPAREN sub_element_groups RIGHTPAREN ;
+geda_element ::=  element_command element_command_sequence sub_element_sequence ;
 /. case $rule_number: {
     qDebug() << "got geda_element ";
 } break; ./
 
-element_arguments ::= element_flags description pcb_name value mark_x mark_y text_x text_y text_direction text_scale text_flags ;
+sub_element_sequence ::= sub_element_sequence_paren | sub_element_sequence_bracket ;
+/. case $rule_number: {
+} break; ./
+
+sub_element_sequence_paren ::= LEFTPAREN sub_element_groups RIGHTPAREN ;
+/. case $rule_number: {
+	m_symStack.append(")");
+} break; ./
+
+sub_element_sequence_bracket ::= LEFTBRACKET sub_element_groups RIGHTBRACKET ;
+/. case $rule_number: {
+	m_symStack.append("]");
+} break; ./
+
+element_command_sequence ::= element_command_sequence_paren | element_command_sequence_bracket ;
+/. case $rule_number: {
+	m_symStack.append(")");
+    qDebug() << "    got element_command sequence ";
+} break; ./
+
+element_command_sequence_paren ::= LEFTPAREN element_arguments RIGHTPAREN ;
+/. case $rule_number: {
+	m_symStack.append(")");
+    qDebug() << "    got element_command sequence ";
+} break; ./
+
+element_command_sequence_bracket ::= LEFTBRACKET element_arguments RIGHTBRACKET ;
+/. case $rule_number: {
+	m_symStack.append("]");
+    qDebug() << "    got element_command sequence ";
+} break; ./
+
+element_arguments ::= SFlags description pcb_name value mark_x mark_y text_x text_y text_direction text_scale SFlags ;
 /. case $rule_number: {
     qDebug() << "    got element_arguments ";
 } break; ./
@@ -188,9 +222,36 @@ sub_element_groups ::= sub_element_group | sub_element_group sub_element_groups 
     qDebug() << "    got sub_element_groups ";
 } break; ./
 
-sub_element_group ::= pin_element | pad_element | element_arc_element | element_line_element ;
+sub_element_group ::= pin_element | pad_element | element_arc_element | element_line_element | mark_element ;
 /. case $rule_number: {
     qDebug() << "    got sub_element_group ";
+} break; ./
+
+mark_element ::= mark_command mark_sequence ;
+/. case $rule_number: {
+    qDebug() << "got mark_element ";
+} break; ./
+
+mark_sequence ::= mark_paren_sequence | mark_bracket_sequence ;
+/. case $rule_number: {
+    qDebug() << "    got mark_sequence ";
+} break; ./
+
+mark_paren_sequence ::= LEFTPAREN mark_arguments RIGHTPAREN ;
+/. case $rule_number: {
+	m_symStack.append(")");
+    qDebug() << "    got mark_paren_sequence ";
+} break; ./
+
+mark_bracket_sequence ::= LEFTBRACKET mark_arguments RIGHTBRACKET ;
+/. case $rule_number: {
+	m_symStack.append("]");
+    qDebug() << "    got mark_bracket_sequence ";
+} break; ./
+
+mark_arguments ::= x y ;
+/. case $rule_number: {
+    qDebug() << "    got mark_arguments";
 } break; ./
 
 pin_element ::= pin_command pin_sequence ;
@@ -215,9 +276,29 @@ pin_bracket_sequence ::= LEFTBRACKET pin_arguments RIGHTBRACKET ;
     qDebug() << "    got pin_bracket_sequence ";
 } break; ./
 
-pin_arguments ::= x y Thickness Clearance Mask DrillHole Name pin_number Flags ;
+pin_arguments ::= pin_arguments_1 | pin_arguments_2 | pin_arguments_3 | pin_arguments_4;
 /. case $rule_number: {
     qDebug() << "    got pin_arguments ";
+} break; ./
+
+pin_arguments_1 ::= x y Thickness Clearance Mask DrillHole Name pin_number SFlags ;
+/. case $rule_number: {
+    qDebug() << "    got pin_arguments 1";
+} break; ./
+
+pin_arguments_2 ::= x y Thickness DrillHole Name pin_number NFlags ;
+/. case $rule_number: {
+    qDebug() << "    got pin_arguments 2";
+} break; ./
+
+pin_arguments_3 ::= x y Thickness  DrillHole Name NFlags ;
+/. case $rule_number: {
+    qDebug() << "    got pin_arguments 3";
+} break; ./
+
+pin_arguments_4 ::= x y Thickness Name NFlags ;
+/. case $rule_number: {
+    qDebug() << "    got pin_arguments 4 ";
 } break; ./
 
 pad_element ::= pad_command pad_sequence ;
@@ -242,9 +323,24 @@ pad_bracket_sequence ::= LEFTBRACKET pad_arguments RIGHTBRACKET ;
     qDebug() << "    got pad_bracket_sequence ";
 } break; ./
 
-pad_arguments ::= x1 y1 x2 y2 Thickness Clearance Mask Name pad_number Flags ;
+pad_arguments ::= pad_arguments_1 | pad_arguments_2 | pad_arguments_3 ;
 /. case $rule_number: {
     qDebug() << "    got pad_arguments ";
+} break; ./
+
+pad_arguments_1 ::= x1 y1 x2 y2 Thickness Clearance Mask Name pad_number SFlags ;
+/. case $rule_number: {
+    qDebug() << "    got pad_arguments 1";
+} break; ./
+
+pad_arguments_2 ::= x1 y1 x2 y2 Thickness Name pad_number NFlags ;
+/. case $rule_number: {
+    qDebug() << "    got pad_arguments 2";
+} break; ./
+
+pad_arguments_3 ::= x1 y1 x2 y2 Thickness Name NFlags ;
+/. case $rule_number: {
+    qDebug() << "    got pad_arguments 3";
 } break; ./
 
 element_line_element ::= element_line_command element_line_sequence ;
@@ -279,7 +375,7 @@ element_arc_element ::= element_arc_command element_arc_sequence ;
     qDebug() << "got element_arc_element ";
 } break; ./
 
-element_arc_sequence ::= LEFTPAREN element_arc_arguments RIGHTPAREN | LEFTBRACKET element_arc_arguments RIGHTBRACKET ;
+element_arc_sequence ::= element_arc_paren_sequence | element_arc_bracket_sequence ;
 /. case $rule_number: {
     qDebug() << "    got element_arc_sequence ";
 } break; ./
@@ -353,10 +449,6 @@ pin_number ::= string_value ;
 /. case $rule_number: {
 } break; ./
 
-Flags ::= number_value ;
-/. case $rule_number: {
-} break; ./
-
 Width ::= number_value ;
 /. case $rule_number: {
 } break; ./
@@ -373,7 +465,11 @@ Delta ::= number_value ;
 /. case $rule_number: {
 } break; ./
 
-element_flags ::= number_value ;
+SFlags ::= string_value | hex_number_value ;
+/. case $rule_number: {
+} break; ./
+
+NFlags ::= hex_number_value ;
 /. case $rule_number: {
 } break; ./
 
@@ -413,14 +509,18 @@ text_scale ::= number_value ;
 /. case $rule_number: {
 } break; ./
 
-text_flags ::= number_value ;
-/. case $rule_number: {
-} break; ./
-
 number_value ::= NUMBER ;
 /. 
 case $rule_number: {
-    qDebug() << "        got NUMBER ";
+    qDebug() << "        got NUMBER " << lexer->currentNumber();
+    m_symStack.append(lexer->currentNumber());
+} break; 
+./
+
+hex_number_value ::= HEXNUMBER ;
+/. 
+case $rule_number: {
+    qDebug() << "        got HEXNUMBER " << lexer->currentNumber();
     m_symStack.append(lexer->currentNumber());
 } break; 
 ./
@@ -428,7 +528,7 @@ case $rule_number: {
 string_value ::= STRING ;
 /. 
 case $rule_number: {
-    qDebug() << "        got STRING ";
+    qDebug() << "        got STRING " << lexer->currentString();
     m_symStack.append(lexer->currentString());
 } break; 
 ./
@@ -453,6 +553,14 @@ pad_command ::= PAD ;
 /. 
 case $rule_number: {
     qDebug() << "got PAD command ";
+    m_symStack.append(lexer->currentCommand());
+} break; 
+./
+
+mark_command::= MARK ;
+/. 
+case $rule_number: {
+    qDebug() << "got MARK command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./

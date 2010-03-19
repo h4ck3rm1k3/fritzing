@@ -491,28 +491,6 @@ const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
 	return m_tempDir;
 }
 
-void PartsEditorMainWindow::loadPcbFootprint(){
-	QString pcbFootprintFile;
-	//this->loadFileIntoView(m_pcbSvgFile, m_pcbView, ItemBase::PCBView, "copper0");
-	pcbFootprintFile = QFileDialog::getOpenFileName(this,
-       tr("Open Image"), QApplication::applicationFilePath(), tr("SVG Files (*.fzfp)"));
-
-    QFile file(pcbFootprintFile);
-    QDomDocument doc("footprint");
-    if (!file.open(QIODevice::ReadOnly)) {
-    	 DebugDialog::debug("cannot open fzfp file");
-         return;
-    }
-    if (!doc.setContent(&file)) {
-    	DebugDialog::debug("cannot parse fzfp xml");
-        file.close();
-        return;
-    }
-    file.close();
-    //PcbXML *footprint = new PcbXML(doc.documentElement());
-    //DebugDialog::debug(footprint->getSvgFile());
-}
-
 bool PartsEditorMainWindow::save() {
 	if(validateMinRequirements() && wannaSaveAfterWarning(false)) {
 		bool result = FritzingWindow::save();

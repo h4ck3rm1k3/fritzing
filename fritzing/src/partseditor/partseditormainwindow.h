@@ -70,7 +70,6 @@ public slots:
 	bool save();
 
 protected slots:
-	void loadPcbFootprint();
 	void updateDateAndAuthor();
 	bool saveAs();
 

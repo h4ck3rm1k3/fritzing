@@ -27,8 +27,8 @@ $Date$
 #ifndef GEDAELEMENTLEXER_H
 #define GEDAELEMENTLEXER_H
 
-#include <QtCore/QString>
-#include <QtCore/QHash>
+#include <QString>
+#include <QHash>
 #include <QRegExp>
 
 class GedaElementLexer
@@ -53,10 +53,13 @@ protected:
     QChar m_current;
 	QString m_currentCommand;
 	long m_currentNumber;
+	long m_currentHexString;
 	QString m_currentString;
 	QRegExp m_integerMatcher;
 	QRegExp m_hexMatcher;
 	QRegExp m_stringMatcher;
+	QRegExp m_elementMatcher;
+	QRegExp m_commentMatcher;
 };
 
 #endif

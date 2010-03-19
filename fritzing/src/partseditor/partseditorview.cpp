@@ -44,6 +44,7 @@ $Date$
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
+#include "../svg/gedaelement2svg.h"
 
 
 int PartsEditorView::ConnDefaultWidth = 5;
@@ -535,28 +536,42 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 }
 
 void PartsEditorView::loadFile() {
+	QString imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)")
+			.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png");
+	if (m_viewIdentifier == ViewIdentifierClass::PCBView) {
+		imageFiles += tr(";;Geda Footprint files(%1)").arg("*.fp");
+	}
 	QString origPath = FolderUtils::getOpenFileName(this,
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? FolderUtils::openSaveFolder() /* FolderUtils::getUserDataStorePath("parts")+"/parts/svg/" */ : m_originalSvgFilePath,
-		tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)")
-			.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png")
+		imageFiles
 	);
 
 	if(origPath.isEmpty()) {
 		return; // Cancel pressed
-	} else {
-		if(!origPath.endsWith(".svg")) {
+	} 
+
+	if(!origPath.endsWith(".svg")) {
+		try {
 			origPath = createSvgFromImage(origPath);
 		}
-		if(origPath != ___emptyString___) {
-			if(m_startItem) {
-				m_fixedToCenterItems.removeAll(m_startItem);
-				delete m_startItem;
-				m_startItem = NULL;
-			}
-			m_viewItem = NULL;				// loading a new file, so m_viewItem is obsolete
-			loadSvgFile(origPath);
+		catch (const QString & msg) {
+    		QMessageBox::warning(
+    			this,
+    			tr("Conversion problem"),
+    			tr("Unable to load image file: \n%1").arg(msg)
+    		);
+			return;
 		}
+	}
+	if(origPath != ___emptyString___) {
+		if(m_startItem) {
+			m_fixedToCenterItems.removeAll(m_startItem);
+			delete m_startItem;
+			m_startItem = NULL;
+		}
+		m_viewItem = NULL;				// loading a new file, so m_viewItem is obsolete
+		loadSvgFile(origPath);
 	}
 }
 
@@ -842,6 +857,20 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 
 	QString newFilePath = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
 	ensureFilePath(newFilePath);
+
+	if (origFilePath.endsWith(".fp")) {
+		// this is a geda footprint file
+		QString svg = GedaElement2Svg::convert(origFilePath);
+		QFile file(newFilePath);
+		if (!file.open(QFile::WriteOnly)) {
+			throw tr("unable to open temp file %1").arg(newFilePath);
+		}
+
+		QTextStream stream(&file);
+		stream << svg;
+		file.close();
+		return newFilePath;
+	}
 
 /* %1=witdh in mm
  * %2=height in mm
