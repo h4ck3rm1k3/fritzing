@@ -186,29 +186,28 @@ sub_element_sequence ::= sub_element_sequence_paren | sub_element_sequence_brack
 
 sub_element_sequence_paren ::= LEFTPAREN sub_element_groups RIGHTPAREN ;
 /. case $rule_number: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
 } break; ./
 
 sub_element_sequence_bracket ::= LEFTBRACKET sub_element_groups RIGHTBRACKET ;
 /. case $rule_number: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
 } break; ./
 
 element_command_sequence ::= element_command_sequence_paren | element_command_sequence_bracket ;
 /. case $rule_number: {
-	m_symStack.append(")");
     qDebug() << "    got element_command sequence ";
 } break; ./
 
 element_command_sequence_paren ::= LEFTPAREN element_arguments RIGHTPAREN ;
 /. case $rule_number: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got element_command sequence ";
 } break; ./
 
 element_command_sequence_bracket ::= LEFTBRACKET element_arguments RIGHTBRACKET ;
 /. case $rule_number: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got element_command sequence ";
 } break; ./
 
@@ -239,13 +238,13 @@ mark_sequence ::= mark_paren_sequence | mark_bracket_sequence ;
 
 mark_paren_sequence ::= LEFTPAREN mark_arguments RIGHTPAREN ;
 /. case $rule_number: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got mark_paren_sequence ";
 } break; ./
 
 mark_bracket_sequence ::= LEFTBRACKET mark_arguments RIGHTBRACKET ;
 /. case $rule_number: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got mark_bracket_sequence ";
 } break; ./
 
@@ -266,13 +265,13 @@ pin_sequence ::= pin_paren_sequence | pin_bracket_sequence ;
 
 pin_paren_sequence ::= LEFTPAREN pin_arguments RIGHTPAREN ;
 /. case $rule_number: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got pin_paren_sequence ";
 } break; ./
 
 pin_bracket_sequence ::= LEFTBRACKET pin_arguments RIGHTBRACKET ;
 /. case $rule_number: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got pin_bracket_sequence ";
 } break; ./
 
@@ -313,13 +312,13 @@ pad_sequence ::= pad_paren_sequence | pad_bracket_sequence ;
 
 pad_paren_sequence ::= LEFTPAREN pad_arguments RIGHTPAREN ;
 /. case $rule_number: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got pad_paren_sequence ";
 } break; ./
 
 pad_bracket_sequence ::= LEFTBRACKET pad_arguments RIGHTBRACKET ;
 /. case $rule_number: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got pad_bracket_sequence ";
 } break; ./
 
@@ -355,13 +354,13 @@ element_line_sequence ::= element_line_paren_sequence | element_line_bracket_seq
 
 element_line_paren_sequence ::= LEFTPAREN element_line_arguments RIGHTPAREN ;
 /. case $rule_number: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got element_line_paren_sequence ";
 } break; ./
 
 element_line_bracket_sequence ::= LEFTBRACKET element_line_arguments RIGHTBRACKET ;
 /. case $rule_number: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got element_line_bracket_sequence ";
 } break; ./
 
@@ -382,13 +381,13 @@ element_arc_sequence ::= element_arc_paren_sequence | element_arc_bracket_sequen
 
 element_arc_paren_sequence ::= LEFTPAREN element_arc_arguments RIGHTPAREN ;
 /. case $rule_number: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got element_arc_paren_sequence ";
 } break; ./
 
 element_arc_bracket_sequence ::= LEFTBRACKET element_arc_arguments RIGHTBRACKET ;
 /. case $rule_number: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got element_arc_bracket_sequence ";
 } break; ./
 

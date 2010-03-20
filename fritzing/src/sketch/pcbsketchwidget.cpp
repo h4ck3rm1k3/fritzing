@@ -40,7 +40,7 @@ $Date$
 
 #include <limits>
 
-static int MAX_INT = std::numeric_limits<int>::max();
+static const int MAX_INT = std::numeric_limits<int>::max();
 
 struct DistanceThing {
 	int distance;

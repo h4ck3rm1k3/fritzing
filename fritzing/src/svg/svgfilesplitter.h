@@ -80,7 +80,6 @@ protected:
 						qreal vbWidth, qreal vbHeight, bool blackOnly);
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
 	virtual void shiftChild(QDomElement & element, qreal x, qreal y);
-	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void painterPathChild(QDomElement & element, QPainterPath & ppath);			// note: only partially implemented
 	void normalizeTranslation(QDomElement & element, 

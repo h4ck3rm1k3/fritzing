@@ -459,25 +459,26 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
 
 void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 {
-	if (element.nodeName().compare("circle") == 0 || element.nodeName().compare("ellipse") == 0) {
-		shiftAttribute(element, "cx", x);
-		shiftAttribute(element, "cy", y);
+	QString nodeName = element.nodeName();
+	if (nodeName.compare("circle") == 0 || nodeName.compare("ellipse") == 0) {
+		TextUtils::shiftAttribute(element, "cx", x);
+		TextUtils::shiftAttribute(element, "cy", y);
 	}
-	else if (element.nodeName().compare("line") == 0) {
-		shiftAttribute(element, "x1", x);
-		shiftAttribute(element, "y1", y);
-		shiftAttribute(element, "x2", x);
-		shiftAttribute(element, "y2", y);
+	else if (nodeName.compare("line") == 0) {
+		TextUtils::shiftAttribute(element, "x1", x);
+		TextUtils::shiftAttribute(element, "y1", y);
+		TextUtils::shiftAttribute(element, "x2", x);
+		TextUtils::shiftAttribute(element, "y2", y);
 	}
-	else if (element.nodeName().compare("rect") == 0) {
-		shiftAttribute(element, "x", x);
-		shiftAttribute(element, "y", y);
+	else if (nodeName.compare("rect") == 0) {
+		TextUtils::shiftAttribute(element, "x", x);
+		TextUtils::shiftAttribute(element, "y", y);
 	}
-	else if (element.nodeName().compare("text") == 0) {
-		shiftAttribute(element, "x", x);
-		shiftAttribute(element, "y", y);
+	else if (nodeName.compare("text") == 0) {
+		TextUtils::shiftAttribute(element, "x", x);
+		TextUtils::shiftAttribute(element, "y", y);
 	}
-	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
+	else if (nodeName.compare("polygon") == 0 || nodeName.compare("polyline") == 0) {
 		QString data = element.attribute("points");
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
@@ -490,7 +491,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 			}
 		}
 	}
-	else if (element.nodeName().compare("path") == 0) {
+	else if (nodeName.compare("path") == 0) {
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
@@ -509,13 +510,6 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 			childElement = childElement.nextSiblingElement();
 		}
 	}
-}
-
-bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attributeName, qreal d)
-{
-	qreal n = element.attribute(attributeName).toDouble() + d;
-	element.setAttribute(attributeName, QString::number(n));
-	return true;
 }
 
 void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {

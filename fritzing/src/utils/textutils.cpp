@@ -391,4 +391,9 @@ bool TextUtils::pxToInches(QDomElement &elem, const QString &attrName, bool isIl
 	return false;
 }
 
-
+bool TextUtils::shiftAttribute(QDomElement & element, const char * attributeName, qreal d)
+{
+	qreal n = element.attribute(attributeName).toDouble() + d;
+	element.setAttribute(attributeName, QString::number(n));
+	return true;
+}

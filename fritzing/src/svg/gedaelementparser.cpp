@@ -98,17 +98,16 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
     qDebug() << "got geda_element ";
 } break;  case 2: {
 } break;  case 3: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
 } break;  case 4: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
 } break;  case 6: {
-	m_symStack.append(")");
     qDebug() << "    got element_command sequence ";
 } break;  case 7: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got element_command sequence ";
 } break;  case 8: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got element_command sequence ";
 } break;  case 9: {
     qDebug() << "    got element_arguments ";
@@ -121,10 +120,10 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 } break;  case 19: {
     qDebug() << "    got mark_sequence ";
 } break;  case 20: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got mark_paren_sequence ";
 } break;  case 21: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got mark_bracket_sequence ";
 } break;  case 22: {
     qDebug() << "    got mark_arguments";
@@ -133,10 +132,10 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 } break;  case 25: {
     qDebug() << "    got pin_sequence ";
 } break;  case 26: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got pin_paren_sequence ";
 } break;  case 27: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got pin_bracket_sequence ";
 } break;  case 31: {
     qDebug() << "    got pin_arguments ";
@@ -153,10 +152,10 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 } break;  case 38: {
     qDebug() << "    got pad_sequence ";
 } break;  case 39: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got pad_paren_sequence ";
 } break;  case 40: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got pad_bracket_sequence ";
 } break;  case 43: {
     qDebug() << "    got pad_arguments ";
@@ -171,10 +170,10 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 } break;  case 49: {
     qDebug() << "    got element_line_sequence ";
 } break;  case 50: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got element_line_paren_sequence ";
 } break;  case 51: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got element_line_bracket_sequence ";
 } break;  case 52: {
     qDebug() << "    got element_line_arguments ";
@@ -183,10 +182,10 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 } break;  case 55: {
     qDebug() << "    got element_arc_sequence ";
 } break;  case 56: {
-	m_symStack.append(")");
+	m_symStack.append(QChar(')'));
     qDebug() << "    got element_arc_paren_sequence ";
 } break;  case 57: {
-	m_symStack.append("]");
+	m_symStack.append(QChar(']'));
     qDebug() << "    got element_arc_bracket_sequence ";
 } break;  case 58: {
     qDebug() << "    got element_arc_arguments ";
