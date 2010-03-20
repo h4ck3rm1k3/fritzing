@@ -61,7 +61,8 @@ QString GedaElement2Svg::convert(QString filename)
 	}
 
 	// TODO: other layers
-	QString copper;
+	QString copper0;
+	QString copper1;
 	QString silkscreen;
 
 	m_maxX = MIN_INT;
@@ -79,12 +80,13 @@ QString GedaElement2Svg::convert(QString filename)
 			if (thing.compare("element", Qt::CaseInsensitive) == 0) {
 			}
 			else if (thing.compare("pad", Qt::CaseInsensitive) == 0) {
-				//copper += convertPad(stack, ix, argCount, mils);
+				copper1 += convertPad(stack, ix, argCount, mils);
 			}
 			else if (thing.compare("pin", Qt::CaseInsensitive) == 0) {
-				copper += convertPin(stack, ix, argCount, mils);
+				copper0 += convertPin(stack, ix, argCount, mils);
 			}
 			else if (thing.compare("elementline", Qt::CaseInsensitive) == 0) {
+				silkscreen += convertPad(stack, ix, argCount, mils);
 			}
 			else if (thing.compare("elementarc", Qt::CaseInsensitive) == 0) {
 			}
@@ -103,10 +105,10 @@ QString GedaElement2Svg::convert(QString filename)
 	}
 
 	// TODO: offset everything if minx or miny < 0
-	copper = offsetMin("<g id='copper0'>" + copper + "</g>");
+	copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
 	silkscreen = offsetMin("<g id='silkscreen'>" + silkscreen + "</g>");
 
-	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) + copper +  silkscreen + "</svg>";
+	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) + copper0 +  silkscreen + "</svg>";
 
 	return svg;
 }
@@ -222,9 +224,9 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 
 QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils)
 {
-	QString name;
+	QString name; 
 
-	int flags = stack[ix + argCount].toInt();
+	int flags = (argCount > 5) ? stack[ix + argCount].toInt() : 0;
 	bool square = (flags & 0x0100) != 0;
 	int x1 = stack[ix + 1].toInt();
 	int y1 = stack[ix + 2].toInt();
@@ -244,6 +246,9 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 	}
 	else if (argCount == 7) {
 		name = stack[ix + 6].toString();
+	}
+	else if (argCount == 5) {
+		// this is an elementline
 	}
 	else {
 		throw QObject::tr("bad pad argument count");
@@ -265,14 +270,22 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 	if (y1 - halft < m_minY) m_minY = y1 - halft;
 	if (y1 + halft > m_maxY) m_maxY = y1 + halft;
 	  
-	QString line = QString("<line fill='none' id='%8' x1='%1' y1='%2' x2='%3' y2='%4' stroke='rgb(255, 191, 0)' stroke-width='%5' stroke-linecap='%6' stroke-linejoin='%7' />")
+	QString line = QString("<line fill='none' id='%8' x1='%1' y1='%2' x2='%3' y2='%4' stroke-width='%5' ")
 					.arg(x1)
 					.arg(y1)
 					.arg(x2)
 					.arg(y2)
-					.arg(thickness)
+					.arg(thickness);
+	if (argCount == 5) {
+		line += "stroke='white' ";
+	}
+	else {
+		line += QString("stroke='rgb(255, 191, 0)' stroke-linecap='%6' stroke-linejoin='%7' ")
 					.arg(square ? "square" : "round")
 					.arg(square ? "miter" : "round")
 					.arg(name);
+	}
+
+	line += "/>";
 	return line;
 }
