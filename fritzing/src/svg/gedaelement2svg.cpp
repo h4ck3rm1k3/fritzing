@@ -253,10 +253,15 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 
 	qreal halft = thickness / 2.0;
 
+	// don't know which of the coordinates is larger so check them all
 	if (x1 - halft < m_minX) m_minX = x1 - halft;
+	if (x2 - halft < m_minX) m_minX = x2 - halft;
+	if (x1 + halft > m_maxX) m_maxX = x1 + halft;
 	if (x2 + halft > m_maxX) m_maxX = x2 + halft;
 	if (y1 - halft < m_minY) m_minY = y1 - halft;
+	if (y2 - halft < m_minY) m_minY = y2 - halft;
 	if (y1 + halft > m_maxY) m_maxY = y1 + halft;
+	if (y2 + halft > m_maxY) m_maxY = y2 + halft;
 	  
 	QString line = QString("<line fill='none' x1='%1' y1='%2' x2='%3' y2='%4' stroke-width='%5' ")
 					.arg(x1)
