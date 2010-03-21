@@ -28,6 +28,7 @@ $Date: 2009-09-11 19:39:43 +0200 (Fri, 11 Sep 2009) $
 #include "gedaelementparser.h"
 #include "gedaelementlexer.h"
 #include "../utils/textutils.h"
+#include "svgfilesplitter.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -35,6 +36,7 @@ $Date: 2009-09-11 19:39:43 +0200 (Fri, 11 Sep 2009) $
 #include <limits>
 #include <QDomDocument>
 #include <QDomElement>
+#include <qmath.h>
 
 static const int MAX_INT = std::numeric_limits<int>::max();
 static const int MIN_INT = std::numeric_limits<int>::min();
@@ -89,6 +91,7 @@ QString GedaElement2Svg::convert(QString filename)
 				silkscreen += convertPad(stack, ix, argCount, mils);
 			}
 			else if (thing.compare("elementarc", Qt::CaseInsensitive) == 0) {
+				silkscreen += convertArc(stack, ix, argCount, mils);
 			}
 			else if (thing.compare("mark", Qt::CaseInsensitive) == 0) {
 			}
@@ -129,24 +132,9 @@ QString GedaElement2Svg::offsetMin(const QString & svg) {
 		throw QObject::tr("failure in svg conversion 2: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn);
 	}
 
-	QDomElement child = root.firstChildElement();
-	while (!child.isNull()) {
-		QString tagName = child.nodeName();
-		if (tagName.compare("circle") == 0) {
-			TextUtils::shiftAttribute(child, "cx", -m_minX);
-			TextUtils::shiftAttribute(child, "cy", -m_minY);
-		}
-		else if (tagName.compare("line") == 0) {
-			TextUtils::shiftAttribute(child, "x1", -m_minX);
-			TextUtils::shiftAttribute(child, "y1", -m_minY);
-			TextUtils::shiftAttribute(child, "x2", -m_minX);
-			TextUtils::shiftAttribute(child, "y2", -m_minY);
-		}
-		child = child.nextSiblingElement();
-	}
-
+	SvgFileSplitter splitter;
+	splitter.shiftChild(root, -m_minX, -m_minY);
 	return TextUtils::removeXMLEntities(domDocument.toString());
-
 }
 
 int GedaElement2Svg::countArgs(QVector<QVariant> & stack, int ix) {
@@ -217,7 +205,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 					.arg(cx)
 					.arg(cy)
 					.arg(r - (w / 2))
-					.arg(name)
+					.arg(unquote(name))
 					.arg(w);
 	return circle;
 }
@@ -270,22 +258,150 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 	if (y1 - halft < m_minY) m_minY = y1 - halft;
 	if (y1 + halft > m_maxY) m_maxY = y1 + halft;
 	  
-	QString line = QString("<line fill='none' id='%8' x1='%1' y1='%2' x2='%3' y2='%4' stroke-width='%5' ")
+	QString line = QString("<line fill='none' x1='%1' y1='%2' x2='%3' y2='%4' stroke-width='%5' ")
 					.arg(x1)
 					.arg(y1)
 					.arg(x2)
 					.arg(y2)
 					.arg(thickness);
 	if (argCount == 5) {
+		// elementline
 		line += "stroke='white' ";
 	}
 	else {
-		line += QString("stroke='rgb(255, 191, 0)' stroke-linecap='%6' stroke-linejoin='%7' ")
+		line += QString("stroke='rgb(255, 191, 0)' stroke-linecap='%1' stroke-linejoin='%2' id='%3' ")
 					.arg(square ? "square" : "round")
 					.arg(square ? "miter" : "round")
-					.arg(name);
+					.arg(unquote(name));
 	}
 
 	line += "/>";
 	return line;
+}
+
+QString GedaElement2Svg::convertArc(QVector<QVariant> & stack, int ix, int argCount, bool mils)
+{
+	Q_UNUSED(argCount);
+
+	int x = stack[ix + 1].toInt();
+	int y = stack[ix + 2].toInt();
+	qreal w = stack[ix + 3].toInt();
+	qreal h = stack[ix + 4].toInt();
+
+	// In PCB, an angle of zero points left (negative X direction), and 90 degrees points down (positive Y direction)
+	int startAngle = (stack[ix + 5].toInt()) + 180;
+	//  Positive angles sweep counterclockwise
+	int deltaAngle = stack[ix + 6].toInt();
+
+	int thickness = stack[ix + 7].toInt();
+
+	if (mils) {
+		// lo res
+		x *= 100;
+		y *= 100;
+		w *= 100;
+		h *= 100;
+		thickness *= 100;
+	}
+
+	qreal halft = thickness / 2.0;
+	if (x - w - halft < m_minX) m_minX = x - w - halft;
+	if (x + w + halft > m_maxX) m_maxX = x + w + halft;
+	if (y - h - halft < m_minY) m_minY = y - h - halft;
+	if (y + h + halft > m_maxY) m_maxY = y + h + halft;
+
+	if (deltaAngle == 360) {
+		if (w == h) {
+			QString circle = QString("<circle fill='none' cx='%1' cy='%2' stroke='white' r='%3' stroke-width='%4' />")
+							.arg(x)
+							.arg(y)
+							.arg(w)
+							.arg(thickness);
+
+			return circle;
+		}
+
+		QString ellipse = QString("<ellipse fill='none' cx='%1' cy='%2' stroke='white' rx='%3' ry='%4' stroke-width='%5' />")
+						.arg(x)
+						.arg(y)
+						.arg(w)
+						.arg(h)
+						.arg(thickness);
+
+		return ellipse;
+	}
+
+	int quad = 0;
+	int startAngleQ1 = reflectQuad(startAngle, quad);
+	qreal q = atan(w * tan(2 * M_PI * startAngleQ1 / 360.0) / h);
+	qreal px = w * cos(q);
+	qreal py = -h * sin(q);
+	fixQuad(quad, px, py);
+	int endAngleQ1 = reflectQuad(startAngle + deltaAngle, quad);
+	q = atan(w * tan(2 * M_PI * endAngleQ1 / 360.0) / h);
+	qreal qx = w * cos(q);
+	qreal qy = -h * sin(q);
+	fixQuad(quad, qx, qy);
+
+	QString arc = QString("<path fill='none' stroke-width='%1' stroke='white' d='M%2,%3a%4,%5 0 %6,%7 %8,%9' />")
+			.arg(thickness)
+			.arg(px + x)
+			.arg(py + y)
+			.arg(w)
+			.arg(h)
+			.arg(qAbs(deltaAngle) >= 180 ? 1 : 0)
+			.arg(deltaAngle > 0 ? 0 : 1)
+			.arg(qx - px)
+			.arg(qy - py);
+
+	return arc;
+}
+
+QString GedaElement2Svg::unquote(const QString & string) {
+	QString s = string;
+	if (s.endsWith('"')) {
+		s.chop(1);
+	}
+	if (s.startsWith('"')) {
+		s = s.remove(0, 1);
+	}
+
+	return s;
+
+}
+
+void GedaElement2Svg::fixQuad(int quad, qreal & px, qreal & py) {
+	switch (quad) {
+		case 0:
+			break;
+		case 1:
+			px = -px;
+			break;
+		case 2:
+			px = -px;
+			py = -py;
+			break;
+		case 3:
+			py = -py;
+			break;
+	}
+}
+
+int GedaElement2Svg::reflectQuad(int angle, int & quad) {
+	angle = angle %360;
+	if (angle < 0) angle += 360;
+	quad = angle / 90;
+	switch (quad) {
+		case 0:
+			return angle;
+		case 1:
+			return 180 - angle;
+		case 2:
+			return angle - 180;
+		case 3:
+			return 360 - angle;
+	}
+
+	// never gets here, but keeps compiler happy
+	return angle;
 }

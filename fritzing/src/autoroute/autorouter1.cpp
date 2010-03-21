@@ -1019,7 +1019,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 			}
 
 			bool intersected = false;
-			qreal radians = angle * 2 * 3.141592654 / 360.0;
+			qreal radians = angle * 2 * M_PI / 360.0;
 			candidate.setX(radius * cos(radians));
 			candidate.setY(radius * sin(radians));
 			candidate += c;

@@ -62,6 +62,7 @@ public:
 	QString elementString(const QString & elementID);
     virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget, bool convertHV);
 	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
+	void shiftChild(QDomElement & element, qreal x, qreal y);
 
 public:
 	static bool getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox);
@@ -79,7 +80,6 @@ protected:
 						qreal sNewWidth, qreal sNewHeight,
 						qreal vbWidth, qreal vbHeight, bool blackOnly);
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
-	virtual void shiftChild(QDomElement & element, qreal x, qreal y);
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void painterPathChild(QDomElement & element, QPainterPath & ppath);			// note: only partially implemented
 	void normalizeTranslation(QDomElement & element, 
@@ -89,6 +89,7 @@ protected:
 protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);
 	static void fixStyleAttribute(QDomElement & element);
+	static bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

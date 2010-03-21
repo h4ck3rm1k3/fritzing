@@ -50,7 +50,6 @@ public:
 	static bool cleanSodipodi(QString &bytes);
 	static bool fixViewboxOrigin(QString &fileContent);
 	static bool fixPixelDimensionsIn(QString &fileContent);
-	static bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 
 public:
 	static const QRegExp FindWhitespace;

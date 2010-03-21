@@ -42,7 +42,11 @@ protected:
 	int countArgs(QVector<QVariant> & stack, int ix);
 	QString convertPin(QVector<QVariant> & stack, int ix, int argCount, bool mils);
 	QString convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils);
+	QString convertArc(QVector<QVariant> & stack, int ix, int argCount, bool mils);
 	QString offsetMin(const QString & svg);
+	QString unquote(const QString &);
+	void fixQuad(int quad, qreal & px, qreal & py);
+	int reflectQuad(int angle, int & quad);
 
 protected:
 	int m_maxX;
@@ -51,4 +55,4 @@ protected:
 	int m_minY;
 };
 
-#endif // SVGPATHRUNNER_H
+#endif // GEDAELEMENT2SVG_H
