@@ -65,12 +65,10 @@ public:
 
 protected slots:
 	void setLayerVisibility(bool vis);
-	void setAllLayersVisible();
-	void setAllLayersNotVisible();
+	void setAllLayersVisible(bool vis);
 
 protected:
-	QPushButton * m_showAllWidget;
-	QPushButton * m_hideAllWidget;
+	QCheckBox * m_showAllWidget;
 	QList <ViewLayerCheckBox *> m_checkBoxes;
 	QList <QSpacerItem *> m_spacerItems;
 	QVBoxLayout * m_mainLayout;

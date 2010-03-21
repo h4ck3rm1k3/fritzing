@@ -69,14 +69,10 @@ LayerPalette::LayerPalette(QWidget * parent) : QScrollArea(parent)
 	m_groupBox = new QGroupBox("");
 	QVBoxLayout * groupLayout = new QVBoxLayout();
 
-	m_showAllWidget = new QPushButton(tr("show all layers"));
-	connect(m_showAllWidget, SIGNAL(clicked()), this, SLOT(setAllLayersVisible()));
-
-	m_hideAllWidget = new QPushButton(tr("hide all layers"));
-	connect(m_hideAllWidget, SIGNAL(clicked()), this, SLOT(setAllLayersNotVisible()));
+	m_showAllWidget = new QCheckBox(tr("show all layers"));
+	connect(m_showAllWidget, SIGNAL(clicked(bool)), this, SLOT(setAllLayersVisible(bool)));
 
 	groupLayout->addWidget(m_showAllWidget);
-	groupLayout->addWidget(m_hideAllWidget);
 
 	m_groupBox->setLayout(groupLayout);
 
@@ -86,8 +82,6 @@ LayerPalette::LayerPalette(QWidget * parent) : QScrollArea(parent)
 
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setWidget(frame);
-
-
 
 }
 
@@ -123,10 +117,8 @@ void LayerPalette::resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLaye
 
 void LayerPalette::updateLayerPalette(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys)
 {
-	m_showAllWidget->setEnabled(m_showAllLayersAct->isEnabled());
+	m_showAllWidget->setEnabled(m_showAllLayersAct->isEnabled() || m_hideAllLayersAct->isEnabled());
 	m_showAllWidget->setChecked(!m_showAllLayersAct->isEnabled());
-	m_hideAllWidget->setEnabled(m_hideAllLayersAct->isEnabled());
-	m_hideAllWidget->setChecked(!m_hideAllLayersAct->isEnabled());
 
 	int ix = 0;
 	foreach (ViewLayer::ViewLayerID key, keys) {
@@ -153,15 +145,16 @@ void LayerPalette::setHideAllLayersAction(QAction * action)
 	m_hideAllLayersAct = action;
 }
 
-void LayerPalette::setAllLayersVisible() {
-	if (m_showAllLayersAct) {
-		m_showAllLayersAct->trigger();
+void LayerPalette::setAllLayersVisible(bool vis) {
+	if (vis) {
+		if (m_showAllLayersAct) {
+			m_showAllLayersAct->trigger();
+		}
+	}
+	else {
+		if (m_hideAllLayersAct) {
+			m_hideAllLayersAct->trigger();
+		}
 	}
 }
 
-
-void LayerPalette::setAllLayersNotVisible() {
-	if (m_hideAllLayersAct) {
-		m_hideAllLayersAct->trigger();
-	}
-}
