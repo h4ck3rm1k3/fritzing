@@ -536,15 +536,18 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 }
 
 void PartsEditorView::loadFile() {
-	QString imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)")
-			.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png");
+	QString imageFiles;
 	if (m_viewIdentifier == ViewIdentifierClass::PCBView) {
-		imageFiles += tr(";;Geda Footprint files(%1)").arg("*.fp");
+		imageFiles = tr("Image & gEDA fp Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4)");
 	}
+	else {
+		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)");
+	}
+
 	QString origPath = FolderUtils::getOpenFileName(this,
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? FolderUtils::openSaveFolder() /* FolderUtils::getUserDataStorePath("parts")+"/parts/svg/" */ : m_originalSvgFilePath,
-		imageFiles
+		imageFiles.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png").arg("*.fp")
 	);
 
 	if(origPath.isEmpty()) {
