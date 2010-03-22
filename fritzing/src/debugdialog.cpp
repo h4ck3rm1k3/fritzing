@@ -82,6 +82,9 @@ DebugDialog::DebugDialog(QWidget *parent)
 
 DebugDialog::~DebugDialog()
 {
+	if (m_textEdit) {
+		delete m_textEdit;
+	}
 }
 
 bool DebugDialog::event(QEvent *e) {

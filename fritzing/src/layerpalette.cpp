@@ -63,7 +63,6 @@ LayerPalette::LayerPalette(QWidget * parent) : QScrollArea(parent)
 		m_checkBoxes.append(cb);
 		cb->setVisible(false);
 
-		m_spacerItems.append(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
 	}
 
 	m_groupBox = new QGroupBox("");
@@ -95,9 +94,6 @@ void LayerPalette::resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLaye
 		m_mainLayout->removeWidget(cb);
 		cb->setVisible(false);
 	}
-	foreach (QSpacerItem * si, m_spacerItems) {
-		m_mainLayout->removeItem(si);
-	}
 
 	int ix = 0;
 	foreach (ViewLayer::ViewLayerID key, keys) {
@@ -107,7 +103,6 @@ void LayerPalette::resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLaye
 		cb->setViewLayer(viewLayer);
 		cb->setVisible(true);
 		m_mainLayout->addWidget(cb);
-		m_mainLayout->addSpacerItem(m_spacerItems[ix - 1]);
 	}
 
 	m_mainLayout->addWidget(m_groupBox);

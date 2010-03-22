@@ -48,6 +48,7 @@ public:
 	const QString &moduleID() const;
 
 	static void initNames();
+	static void cleanup();
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);

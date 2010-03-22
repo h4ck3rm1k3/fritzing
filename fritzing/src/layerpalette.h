@@ -70,7 +70,6 @@ protected slots:
 protected:
 	QCheckBox * m_showAllWidget;
 	QList <ViewLayerCheckBox *> m_checkBoxes;
-	QList <QSpacerItem *> m_spacerItems;
 	QVBoxLayout * m_mainLayout;
 	QGroupBox * m_groupBox;
 

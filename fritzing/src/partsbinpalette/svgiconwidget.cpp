@@ -79,6 +79,13 @@ SvgIconWidget::~SvgIconWidget() {
 	delete m_paletteItem;
 }
 
+void SvgIconWidget::cleanup() {
+	if (PluralImage) {
+		delete PluralImage;
+		PluralImage = NULL;
+	}
+}
+
 ModelPart *SvgIconWidget::modelPart() const {
 	return m_paletteItem->modelPart();
 }

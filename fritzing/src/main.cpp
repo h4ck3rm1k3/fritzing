@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
 	_CrtSetReportFile(_CRT_ASSERT, hLogFile);
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	//_CrtSetBreakAlloc(24378);					// sets a break when this memory id is allocated
+	//_CrtSetBreakAlloc(323809);					// sets a break when this memory id is allocated
 #endif
 #endif
 #endif

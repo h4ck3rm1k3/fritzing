@@ -167,6 +167,14 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 HtmlInfoView::~HtmlInfoView() {
 }
 
+void HtmlInfoView::cleanup() {
+	if (NoIcon) {
+		delete NoIcon;
+		NoIcon = NULL;
+	}
+}
+
+
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
 	//DebugDialog::debug(QString("hoverEnterItem modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
 	viewModelPartInfoAux(igv, modelPart, swappingEnabled);
@@ -657,6 +665,10 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	m_icon1->setPixmap(*pixmap1);
 	m_icon2->setPixmap(*pixmap2);
 	m_icon3->setPixmap(*pixmap3);
+
+	if (pixmap1 != NoIcon) delete pixmap1;
+	if (pixmap2 != NoIcon) delete pixmap2;
+	if (pixmap3 != NoIcon) delete pixmap3;
 }
 
 void HtmlInfoView::addTags(ModelPart * modelPart, QString & s) {

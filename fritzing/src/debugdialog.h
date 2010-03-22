@@ -32,6 +32,7 @@ $Date$
 #include <QEvent>
 #include <QTextEdit>
 #include <QFile>
+#include <QPointer>
 
 #include "utils/misc.h"
 
@@ -76,7 +77,7 @@ protected:
 	static QFile m_file;
 	static bool m_enabled;
 
-	QTextEdit* m_textEdit;
+	QPointer<QTextEdit> m_textEdit;
 	DebugLevel m_debugLevel;
 
 signals:

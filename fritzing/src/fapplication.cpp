@@ -48,6 +48,7 @@ $Date$
 #include "items/moduleidnames.h"
 #include "partsbinpalette/searchlineedit.h"
 #include "utils/ratsnestcolors.h"
+#include "infoview/htmlinfoview.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -252,6 +253,8 @@ FApplication::~FApplication(void)
 	FolderUtils::cleanup();
 	SearchLineEdit::cleanup();
 	RatsnestColors::cleanup();
+	HtmlInfoView::cleanup();
+	SvgIconWidget::cleanup();
 }
 
 void FApplication::clearModels() {

@@ -74,6 +74,8 @@ public:
 	static const int STANDARD_ICON_IMG_WIDTH;
 	static const int STANDARD_ICON_IMG_HEIGHT;
 
+	static void cleanup();
+
 protected slots:
 	void jsRegister();
 	void setBlockVisibility(const QString &blockId, bool value);
