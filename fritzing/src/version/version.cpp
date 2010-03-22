@@ -31,7 +31,7 @@ $Date$
 			
 #include "../debugdialog.h"
 	
-QString Version::m_majorVersion("0");
+QString Version::m_majorVersion("0");				
 QString Version::m_minorVersion("3");
 QString Version::m_minorSubVersion("17");
 QString Version::m_modifier("b");
