@@ -475,7 +475,7 @@ const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
 		QString randext = getRandText();
 		m_tempDir = QDir(QDir::tempPath());
 		bool dirCreation = m_tempDir.mkdir(randext);
-		if (dirCreation == NULL) {
+                if (!dirCreation) {
 			throw "PartsEditorMainWindow::createTempFolderIfNecessary creation failure";
 		}
 		if(dirCreation) {
