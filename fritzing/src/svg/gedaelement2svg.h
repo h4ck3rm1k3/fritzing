@@ -47,6 +47,7 @@ protected:
 	QString unquote(const QString &);
 	void fixQuad(int quad, qreal & px, qreal & py);
 	int reflectQuad(int angle, int & quad);
+	QString getPinID(QString & number, QString & name);
 
 protected:
 	int m_maxX;

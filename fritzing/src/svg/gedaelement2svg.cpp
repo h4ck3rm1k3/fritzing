@@ -158,17 +158,20 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 {
 	qreal drill = 0;
 	QString name;
+	QString number;
 
-	int flags = stack[ix + argCount].toInt();
-	bool useNumber = (flags & 1) != 0;
+	//int flags = stack[ix + argCount].toInt();
+	//bool useNumber = (flags & 1) != 0;
 
 	if (argCount == 9) {
 		drill = stack[ix + 6].toInt();
-		name = stack[ix + (useNumber ? 7 : 8)].toString();
+		name = stack[ix + 7].toString();
+		number = stack[ix + 8].toString();
 	}
 	else if (argCount == 7) {
 		drill = stack[ix + 4].toInt();
-		name = stack[ix + (useNumber ? 5 : 6)].toString();
+		name = stack[ix + 5].toString();
+		number = stack[ix + 6].toString();
 	}
 	else if (argCount == 6) {
 		drill = stack[ix + 4].toInt();
@@ -201,11 +204,14 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 
 	qreal w = r - drill;
 
-	QString circle = QString("<circle fill='none' cx='%1' cy='%2' stroke='rgb(255, 191, 0)' r='%3' id='%4' stroke-width='%5' />")
+	QString pinID = getPinID(number, name);
+
+	QString circle = QString("<circle fill='none' cx='%1' cy='%2' stroke='rgb(255, 191, 0)' r='%3' id='%4' connectorname='%5' stroke-width='%6' />")
 					.arg(cx)
 					.arg(cy)
 					.arg(r - (w / 2))
-					.arg(unquote(name))
+					.arg(pinID)
+					.arg(name)
 					.arg(w);
 	return circle;
 }
@@ -409,4 +415,32 @@ int GedaElement2Svg::reflectQuad(int angle, int & quad) {
 
 	// never gets here, but keeps compiler happy
 	return angle;
+}
+
+QString GedaElement2Svg::getPinID(QString & number, QString & name) {
+
+	if (!number.isEmpty()) {
+		number = unquote(number);
+	}
+	if (!name.isEmpty()) {
+		name = unquote(name);
+	}
+
+	if (!number.isEmpty()) {
+		bool ok;
+		int n = number.toInt(&ok);
+		return (ok ? QString("connector%1pin").arg(n - 1) : QString("connector%1pin").arg(number));
+	}
+
+	if (!name.isEmpty()) {
+		if (number.isEmpty()) {
+			bool ok;
+			int n = name.toInt(&ok);
+			if (ok) {
+				return QString("connector%1pin").arg(n - 1);
+			}
+		}
+	}
+
+	return "";
 }
