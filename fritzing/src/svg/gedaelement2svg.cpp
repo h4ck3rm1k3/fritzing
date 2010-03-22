@@ -204,6 +204,9 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 
 	qreal w = r - drill;
 
+	// TODO: what if multiple pins have the same id--need to clear or increment the other ids. also put the pins on a bus?
+	// TODO:  if the pin has a name, post it up to the fz as the connector name
+
 	QString pinID = getPinID(number, name);
 
 	QString circle = QString("<circle fill='none' cx='%1' cy='%2' stroke='rgb(255, 191, 0)' r='%3' id='%4' connectorname='%5' stroke-width='%6' />")
