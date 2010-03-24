@@ -5,8 +5,8 @@ class User {
 	String uuid
 	String username
 	String email
-	String key
-
+	String ekey
+	
 	static mapping = {
 		table "externals_usernameuuidmodel"
 		version false
