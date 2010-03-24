@@ -40,19 +40,19 @@ def make_uuid():
 class UsernameUUIDModel(models.Model):
     username = models.CharField(max_length=255, primary_key=True,
                      unique=True, blank=False, null=False)
-    uuid = models.CharField(max_length=127,
+    uuid = models.CharField(max_length=255,
              default=make_uuid, editable=False,
              unique=True, blank=False, null=False)
-    email = models.CharField(max_length=127,
+    email = models.CharField(max_length=255,
                default='', null=False)
-    key = models.CharField(max_length=127,
+    ekey = models.CharField(max_length=255,
              default=generate_key_string, 
 	     blank=False, null=False)
     
     def create_for_user(username, email):
         it = UsernameUUIDModel(username=username, email=email)
         it.save()
-	s = encrypt_string(it.uuid, it.key)
+	s = encrypt_string(it.uuid, it.ekey)
 	print s + '/n' + it.uuid
         return s
         
@@ -62,7 +62,7 @@ class UsernameUUIDModel(models.Model):
         to_destroy.delete()
         
     def __unicode__(self):
-        return self.username+":"+self.uuid+":"+self.email+":"+self.key
+        return self.username+":"+self.uuid+":"+self.email+":"+self.ekey
     
     create_for_user = staticmethod(create_for_user)
     destroy_for_user = staticmethod(destroy_for_user)
