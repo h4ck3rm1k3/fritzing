@@ -20,7 +20,7 @@ class Order1 implements Serializable {
 		
 	static constraints = {
 		person()
-		email(nullable:false, email:true, blank:false)
+		email(nullable:false, email:true, blank:true)
 		filename(nullable:true)
 		width(min:0D)
 		height(min:0D)
