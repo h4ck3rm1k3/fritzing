@@ -17,11 +17,12 @@ class FormController {
 			action {
 				log.trace("entering flow with params " + params)
 				if (!params.x) {
+					log.trace("no params x")
 					response.status = 404;
 					return no()
 				}
 				
-				//log.trace("user " + params.x )
+				log.trace("user " + params.x )
 				
 				def theUser = null
 				for (user in User.list()) {
@@ -59,18 +60,21 @@ class FormController {
 				flow.originatingEmail = theUser.email
 				theUser.delete()
 					
-				return yes();
+				return yes()
 			}
 			
-			on("no").to "errorExit"
+			on("no"){
+				log.trace("should be to error exit")
+			}.to "errorExit"
 			on("yes").to "uploadReady"
 		}
 		
 		uploadReady {
+			log.trace("upload ready")
 			render(view:"start")
 			on("upload").to("uploader")
 		}
-		
+				
 		uploader {
 			action {
 				if (!flow.order1) {
@@ -227,6 +231,8 @@ class FormController {
 		}
 		
 		errorExit {
+			log.trace("error exit")
+			//render text:"not allowed"
 		}
 	}
 
