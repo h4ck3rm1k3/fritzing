@@ -4,7 +4,7 @@
 	<script type="text/javascript">
 		function startGrails() {
 			//alert (window.frames["externalForm"])
-			window.frames["externalForm"].location = " http://localhost:8082/fab1/form/buyBoard?x={{uuid}}";  
+			window.frames["externalForm"].location = "{{grails_server}}/fab1/form/buyBoard?x={{uuid}}";  
 		}
 	</script>
 {% endblock %}
@@ -19,8 +19,6 @@
 
 
 {% block content %}
-	django stuff
-	<iframe name="externalForm" id="externalForm" style="border:0px solid #fff;width:550px;height:80%"  >  
+	<iframe name="externalForm" id="externalForm" style="border:0px solid #fff;width:100%;height:650px"  >  
 	</iframe>
-	more django stuff
 {% endblock %}

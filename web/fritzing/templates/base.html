@@ -30,7 +30,7 @@
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{% url ticker_feeds "atom" %}" />
         {% endblock %}
     </head>
-    <body class="section-learning template-folder_listing" dir="ltr">
+    <body class="section-learning template-folder_listing" dir="ltr" {% block extra_body_attr %}{% endblock %}>
         <div id="visual-portal-wrapper">
             <div id="portal-top">
                 <div id="portal-header">
@@ -204,6 +204,28 @@
                             </dl>
                         </div>&nbsp;
                         {% endcache %}
+                        
+                        {% get_latest_objects projects.project 6 as latest_projects %}
+                        <div class="portletWrapper">
+                            <dl class="portlet portletPloneboardRecent">
+                                <dt class="portletHeader">
+                                    <a href="/projects/" class="tile">Recent projets</a>
+                                </dt>
+                                {% for p in latest_projects %}
+                                <dd class="portletItem">
+                                    <div class="contenttype-ploneboardconversation">
+                                        <a href="/projects/{{ p.slug }}"
+                                           class="state-active tile"
+                                           title="{{ p.tittle }}"
+                                        >{{ p.title }}</a>
+                                    </div>
+                                </dd>
+                                {% endfor %}
+                                <dd class="portletFooter">
+                                    <a class="title" href="/projects/">More…</a>
+                                </dd>
+                            </dl>
+                        </div>&nbsp;
                     </div>
                 </div>
                 {% endblock sidebar %}
