@@ -117,6 +117,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_icon2 = addLabel(hboxLayout, NoIcon);
 	m_icon3 = addLabel(hboxLayout, NoIcon);
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
+	hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 	frame->setLayout(hboxLayout);
 	lo->addWidget(frame);
 
