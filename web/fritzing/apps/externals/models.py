@@ -2,6 +2,8 @@ from django.db import models
 import uuid
 import os
 import random
+from datetime import datetime
+
 
 # borrowed code from http://code.activestate.com/recipes/576980/
 # and http://www.codekoala.com/blog/2009/aes-encryption-python-using-pycrypto/
@@ -39,15 +41,16 @@ def make_uuid():
 
 class UsernameUUIDModel(models.Model):
     username = models.CharField(max_length=255, primary_key=True,
-                     unique=True, blank=False, null=False)
+                     unique=True, blank=False, null=False, editable=False)
     uuid = models.CharField(max_length=255,
              default=make_uuid, editable=False,
              unique=True, blank=False, null=False)
     email = models.CharField(max_length=255,
-               default='', null=False)
+               default='', null=False, editable=False)
     ekey = models.CharField(max_length=255,
              default=generate_key_string, 
-	     blank=False, null=False)
+	     blank=False, null=False, editable=False)
+    created_on = models.DateTimeField(default=datetime.now, editable=False)
     
     def create_for_user(username, email):
         it = UsernameUUIDModel(username=username, email=email)
