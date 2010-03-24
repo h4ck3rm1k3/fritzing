@@ -7,6 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    #(r'^externals/', include('fritzing.apps.externals.urls')),
     (r'^account/', include('account.urls')),
     (r'^openid/(.*)', PinaxConsumer()),
     (r'^profiles/', include('fritzing.apps.profiles.urls')),
@@ -26,7 +27,7 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^markitup/', include('markitup.urls')),
     (r'^projects/', include('projects.urls')),
-    (r'^fab/', include('fab.urls')),
+    #(r'^fab/', include('fab.urls')),
     (r'^parts/generator/', include('fritzing.apps.parts.urls.generator')),
     (r'^admin/(.*)', admin.site.root),
     url(r'^faq/$', 'faq.views.faq_list', name='faq_list'),

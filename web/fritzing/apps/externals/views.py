@@ -3,6 +3,7 @@ from django.template import RequestContext
 
 from fritzing.apps.externals.models import UsernameUUIDModel
 from django.contrib.auth.decorators import login_required
+from fritzing import settings
 
 @login_required
 def index(request):
@@ -17,5 +18,5 @@ def index(request):
         uuid = UsernameUUIDModel.create_for_user(username, email)
     
         return render_to_response("externals/index.html", 
-                {'uuid': uuid,}, context_instance=RequestContext(request))
+                {'uuid': uuid, "grails_server":settings.GRAILS_SERVER}, context_instance=RequestContext(request))
     

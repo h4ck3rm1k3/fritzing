@@ -253,6 +253,8 @@ VCSTORAGE_DEFAULT_BACKEND = 'git'
 
 USER_FILES_FOLDER = "fritzing-repo"
 
+GRAILS_SERVER = "http://192.168.2.172:8082"
+
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:
