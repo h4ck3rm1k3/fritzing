@@ -960,7 +960,7 @@ void Wire::initNames() {
 	colors.insert("white",	"#ffffff");
 	colors.insert("orange", "#ff7033");
     colors.insert("jumper", "#6699cc");
-	colors.insert("trace",  "#ffbf00");
+	colors.insert("trace",  "#ffbf00");    // (255, 191, 0)  vs.  (255, 148, 0)
 	colors.insert("unrouted", "#000000");
 	colors.insert("blackblack", "#000000");
 	colors.insert("schematicGrey", "#9d9d9d");

@@ -303,28 +303,25 @@ const QHash<QString,ConnectorTerminalSvgIdPair> PartsEditorView::getConnectorsSv
 }
 
 void PartsEditorView::getConnectorsSvgIdsAux(QDomElement &docElem) {
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement(); // try to convert the node to an element.
-		if(!e.isNull()) {
-			QString id = e.attribute("id");
-			if(id.startsWith("connector") && id.endsWith("terminal")) {
-				QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
-				ConnectorTerminalSvgIdPair pair = m_svgIds.contains(conn) ? m_svgIds[conn] : ConnectorTerminalSvgIdPair();
-				pair.terminalId = id;
-				m_svgIds[conn] = pair;
-			}
-			else if(id.startsWith("connector") /*&& id.endsWith("pin") */ ) {
-				QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
-				ConnectorTerminalSvgIdPair pair = m_svgIds.contains(conn) ? m_svgIds[conn] : ConnectorTerminalSvgIdPair();
-				pair.connectorId = id;
-				m_svgIds[conn] = pair;
-			}
-			else if(n.hasChildNodes()) {
-				getConnectorsSvgIdsAux(e);
-			}
+	QDomElement e = docElem.firstChildElement();
+	while(!e.isNull()) {
+		QString id = e.attribute("id");
+		if(id.startsWith("connector") && id.endsWith("terminal")) {
+			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
+			ConnectorTerminalSvgIdPair pair = m_svgIds.contains(conn) ? m_svgIds[conn] : ConnectorTerminalSvgIdPair();
+			pair.terminalId = id;
+			m_svgIds[conn] = pair;
 		}
-		n = n.nextSibling();
+		else if(id.startsWith("connector") /*&& id.endsWith("pin") */ ) {
+			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
+			ConnectorTerminalSvgIdPair pair = m_svgIds.contains(conn) ? m_svgIds[conn] : ConnectorTerminalSvgIdPair();
+			pair.connectorId = id;
+			m_svgIds[conn] = pair;
+		}
+		else if(e.hasChildNodes()) {
+			getConnectorsSvgIdsAux(e);
+		}
+		e = e.nextSiblingElement();
 	}
 }
 
@@ -425,23 +422,20 @@ QString PartsEditorView::terminalIdForConnector(const QString &connId) {
 }
 
 bool PartsEditorView::terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem, bool wantTerminal) {
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement();
-		if(!e.isNull()) {
-			QString id = e.attribute("id");
-			if(id.startsWith(connId) && ((wantTerminal && id.endsWith("terminal")) || (!wantTerminal && !id.endsWith("terminal")))) {
-				// the id is the one from the previous iteration
-				result = id;
+	QDomElement e = docElem.firstChildElement();
+	while(!e.isNull()) {
+		QString id = e.attribute("id");
+		if(id.startsWith(connId) && ((wantTerminal && id.endsWith("terminal")) || (!wantTerminal && !id.endsWith("terminal")))) {
+			// the id is the one from the previous iteration
+			result = id;
+			return true;
+		} else if(e.hasChildNodes()) {
+			// potencial solution, if the next iteration returns true
+			if(terminalIdForConnectorIdAux(result, connId, e, wantTerminal)) {
 				return true;
-			} else if(n.hasChildNodes()) {
-				// potencial solution, if the next iteration returns true
-				if(terminalIdForConnectorIdAux(result, connId, e, wantTerminal)) {
-					return true;
-				}
 			}
 		}
-		n = n.nextSibling();
+		e = e.nextSiblingElement();
 	}
 	return false;
 }
@@ -464,7 +458,7 @@ QString PartsEditorView::findConnectorsLayerId(QDomDocument *svgDom) {
 	QStringList layers;
 	QDomElement docElem = svgDom->documentElement();
 	if(findConnectorsLayerIdAux(result, docElem, layers)) {
-		if(ViewLayer::viewLayerIDFromString(result) == ViewLayer::UnknownLayer) {
+		if(ViewLayer::viewLayerIDFromXmlString(result) == ViewLayer::UnknownLayer) {
 			foreach(QString layer, layers) {
 				ViewLayer::ViewLayerID vlid = ViewLayer::viewLayerIDFromXmlString(layer);
 				if(m_viewLayers.keys().contains(vlid)) {
@@ -479,24 +473,21 @@ QString PartsEditorView::findConnectorsLayerId(QDomDocument *svgDom) {
 }
 
 bool PartsEditorView::findConnectorsLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers) {
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement();
-		if(!e.isNull()) {
-			QString id = e.attribute("id");
-			if(id.startsWith("connector")) {
-				// the id is the one from the previous iteration
+	QDomElement e = docElem.firstChildElement();
+	while(!e.isNull()) {
+		QString id = e.attribute("id");
+		if(id.startsWith("connector")) {
+			// the id is the one from the previous iteration
+			return true;
+		} else if(e.hasChildNodes()) {
+			// potencial solution, if the next iteration returns true
+			result = id;
+			prevLayers << id;
+			if(findConnectorsLayerIdAux(result, e, prevLayers)) {
 				return true;
-			} else if(n.hasChildNodes()) {
-				// potencial solution, if the next iteration returns true
-				result = id;
-				prevLayers << id;
-				if(findConnectorsLayerIdAux(result, e, prevLayers)) {
-					return true;
-				}
 			}
 		}
-		n = n.nextSibling();
+		e = e.nextSiblingElement();
 	}
 	return false;
 }
@@ -1146,7 +1137,9 @@ bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &
 	return changed;
 }
 
-bool PartsEditorView::addDefaultLayerIfNotIn(QDomDocument *svgDom, bool fakeDefaultIfNone) {
+
+bool PartsEditorView::addDefaultLayerIfNotIn(QDomDocument *svgDom, bool fakeDefaultIfNone) 
+{
 	QString defaultLayer = defaultLayerAsStr();
 	if( !getLayers(svgDom, fakeDefaultIfNone).contains(defaultLayer) ) {
 		QDomElement docElem = svgDom->documentElement();
@@ -1272,23 +1265,20 @@ void PartsEditorView::updateSvgIdLayer(const QString &connId, const QString &ter
 }
 
 void PartsEditorView::removeTerminalPoints(const QStringList &tpIdsToRemove, QDomElement &docElem) {
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
+	QDomElement e = docElem.firstChildElement();
+	while(!e.isNull()) {
 		bool doRemove = false;
-		QDomElement e = n.toElement();
-		if(!e.isNull()) {
-			QString id = e.attribute("id");
-			if(tpIdsToRemove.contains(id)) {
-				doRemove = true;
-			} else if(n.hasChildNodes()) {
-				removeTerminalPoints(tpIdsToRemove,e);
-			}
+		QString id = e.attribute("id");
+		if(tpIdsToRemove.contains(id)) {
+			doRemove = true;
+		} else if(e.hasChildNodes()) {
+			removeTerminalPoints(tpIdsToRemove,e);
 		}
 		QDomElement e2;
 		if(doRemove) {
 			e2 = e;
 		}
-		n = n.nextSibling();
+		e = e.nextSiblingElement();
 		if(doRemove) {
 			e2.removeAttribute("id");
 		}
@@ -1374,21 +1364,18 @@ bool PartsEditorView::addRectToSvg(QDomDocument* svgDom, const QString &id, cons
 }
 
 bool PartsEditorView::addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem) {
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement();
-		if(!e.isNull()) {
-			QString id = e.attribute("id");
-			if(id == connectorsLayerId) {
-				e.appendChild(rectElem);
+	QDomElement e = docElem.firstChildElement();
+	while(!e.isNull()) {
+		QString id = e.attribute("id");
+		if(id == connectorsLayerId) {
+			e.appendChild(rectElem);
+			return true;
+		} else if(e.hasChildNodes()) {
+			if(addRectToSvgAux(e, connectorsLayerId, rectElem)) {
 				return true;
-			} else if(n.hasChildNodes()) {
-				if(addRectToSvgAux(e, connectorsLayerId, rectElem)) {
-					return true;
-				}
 			}
 		}
-		n = n.nextSibling();
+		e = e.nextSiblingElement();
 	}
 	return false;
 }
@@ -1514,16 +1501,47 @@ void PartsEditorView::setViewItem(ItemBase * item) {
 }
 
 void PartsEditorView::updatePinsInfo(QList<ConnectorShared*> connsShared) {
-	if(m_svgLodaded) { // if the user has not changed the svg file, there's nothing to update
-		connectorsLayerId();
-		foreach(ConnectorShared* cs, connsShared) {
-			QString connId = cs->id();
-			SvgIdLayer* pinInfo = cs->fullPinInfo(m_viewIdentifier, m_connsLayerID);
-			if(pinInfo != NULL && m_svgIds[connId].connectorId != ___emptyString___) {
-				pinInfo->m_svgId = m_svgIds[connId].connectorId;
-				// terminal points are already updated (by the function updateTerminalPoints)
-					// pinInfo->m_terminalId = m_svgIds[connId].terminalId;
-			}
+	if(!m_svgLodaded) return;  // if the user has not changed the svg file, there's nothing to update
+
+	ViewLayer::ViewLayerID layerID = connectorsLayerId();
+	QList<ConnectorShared *> notFound;
+
+	foreach(ConnectorShared* cs, connsShared) {
+		QString connId = cs->id();
+		SvgIdLayer* pinInfo = cs->fullPinInfo(m_viewIdentifier, layerID);
+		if (pinInfo == NULL) {
+			notFound << cs;
+		}
+		else if(m_svgIds[connId].connectorId != ___emptyString___) {
+			pinInfo->m_svgId = m_svgIds[connId].connectorId;
+			// terminal points are already updated (by the function updateTerminalPoints)
+				// pinInfo->m_terminalId = m_svgIds[connId].terminalId;
 		}
 	}
+
+	if (notFound.length() == 0) return;
+
+	// not sure this is the right place to handle the change of connector layers...
+
+	QList<ViewLayer::ViewLayerID> alts = ViewLayer::findAlternativeLayers(layerID);
+	if (alts.length() == 0) return;
+
+	foreach (ViewLayer::ViewLayerID vlid, alts) {
+		QList<ConnectorShared*> found;
+		foreach(ConnectorShared* cs, notFound) {
+			QString connId = cs->id();
+			SvgIdLayer* pinInfo = cs->fullPinInfo(m_viewIdentifier, vlid);
+			if (pinInfo != NULL && m_svgIds[connId].connectorId != ___emptyString___) {
+				pinInfo->m_svgId = m_svgIds[connId].connectorId;
+				pinInfo->m_viewLayerID = layerID;
+				found << cs;
+			}
+		}
+
+		foreach (ConnectorShared * cs, found) {
+			notFound.removeOne(cs);
+		}
+	}
+
+
 }

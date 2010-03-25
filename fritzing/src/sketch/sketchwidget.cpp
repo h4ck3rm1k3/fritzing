@@ -3150,6 +3150,7 @@ void SketchWidget::addViewLayer(ViewLayer * viewLayer) {
 	action->setData(QVariant::fromValue<ViewLayer *>(viewLayer));
 	action->setCheckable(true);
 	action->setChecked(viewLayer->visible());
+	action->setEnabled(true);
     connect(action, SIGNAL(triggered()), this, SLOT(toggleLayerVisibility()));
     viewLayer->setAction(action);
 }
@@ -4993,7 +4994,7 @@ void SketchWidget::addPcbViewLayers() {
 	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Board << ViewLayer::GroundPlane << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
+	layers << ViewLayer::Board << ViewLayer::GroundPlane << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
 		/* << ViewLayer::Keepout */ << ViewLayer::Vias /* << ViewLayer::Soldermask */  
 		<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
 		<< ViewLayer::Jumperwires << ViewLayer::PcbNote << ViewLayer::PcbRuler;
@@ -5007,12 +5008,17 @@ void SketchWidget::addPcbViewLayers() {
 	}
 	ViewLayer * copper0 = m_viewLayers.value(ViewLayer::Copper0);
 	ViewLayer * copper0Trace = m_viewLayers.value(ViewLayer::Copper0Trace);
+	ViewLayer * copper1 = m_viewLayers.value(ViewLayer::Copper1);
+	ViewLayer * copper1Trace = m_viewLayers.value(ViewLayer::Copper1Trace);
 	if (copper0 && copper0Trace) {
 		copper0Trace->setParentLayer(copper0);
 	}
 	ViewLayer * groundPlane = m_viewLayers.value(ViewLayer::GroundPlane);
 	if (copper0 && groundPlane) {
 		groundPlane->setParentLayer(copper0);
+	}
+	if (copper1 && copper1Trace) {
+		copper1Trace->setParentLayer(copper1);
 	}
 }
 
@@ -5623,6 +5629,8 @@ void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool i
 		}
 	}
 	else {
+		if (oldText.compare(newText) == 0) return;
+
 		partLabelChangedAux(itemBase, oldText, newText);
 	}
 }

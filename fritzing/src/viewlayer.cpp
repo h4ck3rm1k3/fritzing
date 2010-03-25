@@ -31,7 +31,7 @@ $Date$
 qreal ViewLayer::zIncrement = 0.00001;  // 0.000000001;
 
 QHash<ViewLayer::ViewLayerID, StringPair * > ViewLayer::names;
-
+QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::alternatives;
 
 ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 {
@@ -71,6 +71,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Copper0,  new StringPair("copper0", QObject::tr("Copper 0")));
 		names.insert(ViewLayer::Copper0Trace,  new StringPair("copper0trace", QObject::tr("Copper 0 Trace")));
 		names.insert(ViewLayer::Copper1,  new StringPair("copper1", QObject::tr("Copper 1")));
+		names.insert(ViewLayer::Copper1Trace,  new StringPair("copper1trace", QObject::tr("Copper 1 Trace")));
 		names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));
 		names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));
 		names.insert(ViewLayer::Vias, new StringPair("vias", QObject::tr("Vias")));
@@ -80,6 +81,9 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::PcbRuler,  new StringPair("pcbRuler", QObject::tr("Rulers")));
 
 		names.insert(ViewLayer::UnknownLayer,  new StringPair("unknown", QObject::tr("Unknown Layer")));
+
+		alternatives.insert(ViewLayer::Copper0, ViewLayer::Copper1);
+		alternatives.insert(ViewLayer::Copper1, ViewLayer::Copper0);
 	}
 
 }
@@ -194,3 +198,10 @@ void ViewLayer::cleanup() {
 void ViewLayer::resetNextZ(qreal z) {
 	m_nextZ = qFloor(m_initialZ) + z - floor(z);
 }
+
+QList<ViewLayer::ViewLayerID> ViewLayer::findAlternativeLayers(ViewLayer::ViewLayerID id)
+{
+	QList<ViewLayer::ViewLayerID> alts = alternatives.values(id);
+	return alts;
+}
+

@@ -28,6 +28,7 @@ $Date$
 #define GEDAELEMENT2SVG_H
 
 #include <QString>
+#include <QStringList>
 #include <QVector>
 #include <QVariant>
 
@@ -47,13 +48,15 @@ protected:
 	QString unquote(const QString &);
 	void fixQuad(int quad, qreal & px, qreal & py);
 	int reflectQuad(int angle, int & quad);
-	QString getPinID(QString & number, QString & name);
+	QString getPinID(QString & number, QString & name, bool & repeat);
 
 protected:
 	int m_maxX;
 	int m_maxY;
 	int m_minX;
 	int m_minY;
+	QStringList m_nameList;
+	QStringList m_numberList;
 };
 
 #endif // GEDAELEMENT2SVG_H

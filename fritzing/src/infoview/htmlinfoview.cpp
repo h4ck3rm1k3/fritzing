@@ -574,20 +574,26 @@ void HtmlInfoView::setNullContent()
 void HtmlInfoView::setInstanceTitle() {
 	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
 	if (edit == NULL) return;
+	if (!edit->isEnabled()) return;
 	if (m_infoGraphicsView == NULL) return;
 	if (m_currentItem == NULL) return;
 
+	DebugDialog::debug(QString("set instance title to %1").arg(edit->text()));
 	m_infoGraphicsView->setInstanceTitle(m_currentItem->id(), edit->text(), true, false);
 }
 
 void HtmlInfoView::instanceTitleEnter() {
 	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
-	setInstanceTitleColors(edit, QColor(0xc8, 0xc8, 0xc8), QColor(0x57, 0x57, 0x57));
+	if (edit->isEnabled()) {
+		setInstanceTitleColors(edit, QColor(0xc8, 0xc8, 0xc8), QColor(0x57, 0x57, 0x57));
+	}
 }
 
 void HtmlInfoView::instanceTitleLeave() {
 	FLineEdit * edit = dynamic_cast<FLineEdit *>(sender());
-	setInstanceTitleColors(edit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+	if (edit->isEnabled()) {
+		setInstanceTitleColors(edit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
+	}
 }
 
 void HtmlInfoView::instanceTitleEditable(bool editable) {
@@ -624,10 +630,11 @@ void HtmlInfoView::setUpTitle(const QString & title)
 {
 	if(!title.isNull() && !title.isEmpty()) {
 		m_titleEdit->setText(title);
-		m_titleEdit->setVisible(true);
+		m_titleEdit->setEnabled(true);
 	}
 	else {
-		m_titleEdit->setVisible(false);
+		m_titleEdit->setEnabled(false);
+		m_titleEdit->setText("");
 	}
 }
 

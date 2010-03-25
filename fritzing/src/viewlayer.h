@@ -30,6 +30,7 @@ $Date$
 #include <QString>
 #include <QAction>
 #include <QHash>
+#include <QMultiHash>
 
 #include "utils/misc.h"
 
@@ -54,6 +55,7 @@ public:
 		SchematicRuler,
 		Board,
 		Copper1,
+		Copper1Trace,
 		GroundPlane,
 		Copper0,
 		Copper0Trace,
@@ -74,6 +76,7 @@ public:
 protected:
 	static qreal zIncrement;
 	static QHash<ViewLayerID, StringPair *> names;
+	static QMultiHash<ViewLayerID, ViewLayerID> alternatives;
 
 public:
 	ViewLayer(ViewLayerID, bool visible, qreal initialZ);
@@ -101,6 +104,7 @@ public:
 	static void initNames();
 	static qreal getZIncrement();
 	static void cleanup();
+	static QList<ViewLayerID> findAlternativeLayers(ViewLayerID);
 
 protected:
 	bool m_visible;

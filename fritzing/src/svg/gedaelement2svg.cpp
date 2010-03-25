@@ -71,8 +71,11 @@ QString GedaElement2Svg::convert(QString filename)
 	m_maxY = MIN_INT;
 	m_minX = MAX_INT;
 	m_minY = MAX_INT;
+	m_nameList.clear();
+	m_numberList.clear();
 	QVector<QVariant> stack = parser.symStack();
 
+	QStringList already;
 	for (int ix = 0; ix < stack.size(); ) { 
 		QVariant var = stack[ix];
 		if (var.type() == QVariant::String) {
@@ -82,10 +85,18 @@ QString GedaElement2Svg::convert(QString filename)
 			if (thing.compare("element", Qt::CaseInsensitive) == 0) {
 			}
 			else if (thing.compare("pad", Qt::CaseInsensitive) == 0) {
-				copper1 += convertPad(stack, ix, argCount, mils);
+				QString s = convertPad(stack, ix, argCount, mils);
+				if (!already.contains(s)) {
+					copper1 += s;
+					already.append(s);
+				}
 			}
 			else if (thing.compare("pin", Qt::CaseInsensitive) == 0) {
-				copper0 += convertPin(stack, ix, argCount, mils);
+				QString s = convertPin(stack, ix, argCount, mils);
+				if (!already.contains(s)) {
+					copper0 += s;
+					already.append(s);
+				}
 			}
 			else if (thing.compare("elementline", Qt::CaseInsensitive) == 0) {
 				silkscreen += convertPad(stack, ix, argCount, mils);
@@ -109,9 +120,10 @@ QString GedaElement2Svg::convert(QString filename)
 
 	// TODO: offset everything if minx or miny < 0
 	copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
+	copper1 = offsetMin("<g id='copper1'>" + copper1 + "</g>");
 	silkscreen = offsetMin("<g id='silkscreen'>" + silkscreen + "</g>");
 
-	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) + copper0 +  silkscreen + "</svg>";
+	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) + copper0 + copper1 + silkscreen + "</svg>";
 
 	return svg;
 }
@@ -184,6 +196,12 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 		throw QObject::tr("bad pin argument count");
 	}
 
+	bool repeat;
+	QString pinID = getPinID(number, name, repeat);
+	if (repeat) {
+		// TODO:  increment the id...
+	}
+
 	int cx = stack[ix + 1].toInt();
 	int cy = stack[ix + 2].toInt();
 	qreal r = stack[ix + 3].toInt() / 2.0;
@@ -207,7 +225,6 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 	// TODO: what if multiple pins have the same id--need to clear or increment the other ids. also put the pins on a bus?
 	// TODO:  if the pin has a name, post it up to the fz as the connector name
 
-	QString pinID = getPinID(number, name);
 
 	QString circle = QString("<circle fill='none' cx='%1' cy='%2' stroke='rgb(255, 191, 0)' r='%3' id='%4' connectorname='%5' stroke-width='%6' />")
 					.arg(cx)
@@ -222,6 +239,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils)
 {
 	QString name; 
+	QString number;
 
 	int flags = (argCount > 5) ? stack[ix + argCount].toInt() : 0;
 	bool square = (flags & 0x0100) != 0;
@@ -231,8 +249,10 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 	int y2 = stack[ix + 4].toInt();
 	int thickness = stack[ix + 5].toInt();
 
+	bool isPad = true;
 	if (argCount == 10) {
 		name = stack[ix + 8].toString();
+		number = stack[ix + 9].toString();
 		QString sflags = stack[ix + argCount].toString();
 		if (sflags.contains("square", Qt::CaseInsensitive)) {
 			square = true;
@@ -240,15 +260,26 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 	}
 	else if (argCount == 8) {
 		name = stack[ix + 6].toString();
+		number = stack[ix + 7].toString();
 	}
 	else if (argCount == 7) {
 		name = stack[ix + 6].toString();
 	}
 	else if (argCount == 5) {
 		// this is an elementline
+		isPad = false;
 	}
 	else {
 		throw QObject::tr("bad pad argument count");
+	}
+
+	QString pinID;
+	if (isPad) {
+		bool repeat;
+		pinID = getPinID(number, name, repeat);
+		if (repeat) {
+			// TODO: increment id number
+		}
 	}
 
 	if (mils) {
@@ -278,15 +309,16 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 					.arg(x2)
 					.arg(y2)
 					.arg(thickness);
-	if (argCount == 5) {
+	if (!isPad) {
 		// elementline
 		line += "stroke='white' ";
 	}
 	else {
-		line += QString("stroke='rgb(255, 191, 0)' stroke-linecap='%1' stroke-linejoin='%2' id='%3' ")
+		line += QString("stroke='rgb(255, 148, 0)' stroke-linecap='%1' stroke-linejoin='%2' id='%3' connectorname='%4' ")
 					.arg(square ? "square" : "round")
 					.arg(square ? "miter" : "round")
-					.arg(unquote(name));
+					.arg(pinID)
+					.arg(name);
 	}
 
 	line += "/>";
@@ -420,7 +452,9 @@ int GedaElement2Svg::reflectQuad(int angle, int & quad) {
 	return angle;
 }
 
-QString GedaElement2Svg::getPinID(QString & number, QString & name) {
+QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repeat) {
+
+	repeat = false;
 
 	if (!number.isEmpty()) {
 		number = unquote(number);
@@ -430,12 +464,26 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name) {
 	}
 
 	if (!number.isEmpty()) {
+		if (m_numberList.contains(number)) {
+			repeat = true;
+		}
+		else {
+			m_numberList.append(number);
+		}
+
 		bool ok;
 		int n = number.toInt(&ok);
 		return (ok ? QString("connector%1pin").arg(n - 1) : QString("connector%1pin").arg(number));
 	}
 
 	if (!name.isEmpty()) {
+		if (m_nameList.contains(name)) {
+			repeat = true;
+		}
+		else {
+			m_nameList.append(name);
+		}
+
 		if (number.isEmpty()) {
 			bool ok;
 			int n = name.toInt(&ok);
