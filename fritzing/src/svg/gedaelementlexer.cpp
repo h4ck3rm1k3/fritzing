@@ -33,7 +33,8 @@ static QRegExp findWhitespace("[\\s]+");
 
 GedaElementLexer::GedaElementLexer(const QString &source)
 {
-	m_commentMatcher.setPattern("^\\s*\\#");
+	m_nonWhitespaceMatcher.setPattern("[^\\s]");
+	m_commentMatcher.setPattern("(^\\s*\\#)");
 	m_elementMatcher.setPattern("Element\\s*([\\(\\[])");
 	//m_stringMatcher.setPattern("\"([^\"]*)\"");
 	m_stringMatcher.setPattern("\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"");
@@ -56,8 +57,13 @@ QString GedaElementLexer::clean(const QString & source) {
 
 	QStringList s = source.split("\n");
 	for (int i = s.length() - 1; i >= 0; i--) {
-		if (m_commentMatcher.indexIn(s[i]) == 0) {
+		QString str = s[i];
+		if (m_commentMatcher.indexIn(str) == 0) {
 			s.removeAt(i);
+			str = str.remove(0, m_commentMatcher.matchedLength());
+			if (m_nonWhitespaceMatcher.indexIn(str) >= 0) {
+				m_comments.push_front(str.trimmed());
+			}
 		}
 	}
 	QString s1 = s.join("\n");
@@ -202,6 +208,12 @@ int GedaElementLexer::lex()
 			next();
 			return GedaElementGrammar::ELEMENTARC;
 		} 
+		else if (m_source.indexOf("attribute", m_pos - 1, Qt::CaseInsensitive) == m_pos - 1) {
+			m_currentCommand = "attribute";
+			m_pos += m_currentCommand.length() - 1;
+			next();
+			return GedaElementGrammar::ATTRIBUTE;
+		} 
 		else if (m_source.indexOf("element", m_pos - 1, Qt::CaseInsensitive) == m_pos - 1) {
 			m_currentCommand = "element";
 			m_pos += m_currentCommand.length() - 1;
@@ -251,4 +263,8 @@ double GedaElementLexer::currentNumber() {
 
 QString GedaElementLexer::currentString() {
 	return m_currentString;
+}
+
+const QStringList & GedaElementLexer::comments() {
+	return m_comments;
 }

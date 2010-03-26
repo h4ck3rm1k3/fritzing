@@ -31,6 +31,7 @@ $Date$
 #include "../version/version.h"
 #include "../utils/folderutils.h"
 #include "../utils/graphicsutils.h"
+#include "../items/wire.h"
 
 #include <QPainter>
 #include <QSvgRenderer>
@@ -106,7 +107,7 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	scanImage(image, bWidth, bHeight, MILS, res, "#ffbf00", "groundplane");
+	scanImage(image, bWidth, bHeight, MILS, res, Wire::TraceColorCopper0String, "groundplane");
 	return true;
 }
 
@@ -151,12 +152,13 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 
 	ix = 0;
 	foreach (QRectF r, rects) {
-		newSvg += QString("<rect fill='#ffbf00' x='%1' y='%2' width='%3' height='%4' id='connector%5pad' />\n")
+		newSvg += QString("<rect x='%1' y='%2' width='%3' height='%4' id='connector%5pad' fill='%6'  />\n")
 			.arg(r.left() * MILS)
 			.arg(r.top() * MILS)
 			.arg(r.width() * MILS)
 			.arg(MILS)
-			.arg(ix++);
+			.arg(ix++).
+			.arg(Wire::TraceColorCopper0String);
 	}
 	newSvg += "</g>\n</svg>\n";
 	*/

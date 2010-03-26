@@ -3507,7 +3507,7 @@ void SketchWidget::changeZ(QHash<long, RealPair * > triplets, qreal (*pairAccess
 	}
 }
 
-ViewLayer::ViewLayerID SketchWidget::getDragWireViewLayerID() {
+ViewLayer::ViewLayerID SketchWidget::getDragWireViewLayerID(ConnectorItem *) {
 	return m_wireViewLayerID;
 }
 
@@ -3547,7 +3547,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	clearHoldingSelectItem();
 
 	// make sure wire layer is visible
-	ViewLayer::ViewLayerID viewLayerID = getDragWireViewLayerID();
+	ViewLayer::ViewLayerID viewLayerID = getDragWireViewLayerID(connectorItem);
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer != NULL && !viewLayer->visible()) {
 		setLayerVisible(viewLayer, true);

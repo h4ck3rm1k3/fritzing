@@ -77,6 +77,7 @@ protected:
 	static qreal zIncrement;
 	static QHash<ViewLayerID, StringPair *> names;
 	static QMultiHash<ViewLayerID, ViewLayerID> alternatives;
+	static QMultiHash<ViewLayerID, ViewLayerID> unconnectables;
 
 public:
 	ViewLayer(ViewLayerID, bool visible, qreal initialZ);
@@ -105,6 +106,7 @@ public:
 	static qreal getZIncrement();
 	static void cleanup();
 	static QList<ViewLayerID> findAlternativeLayers(ViewLayerID);
+	static bool canConnect(ViewLayerID, ViewLayerID);
 
 protected:
 	bool m_visible;

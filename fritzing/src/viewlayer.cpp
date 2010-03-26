@@ -32,6 +32,7 @@ qreal ViewLayer::zIncrement = 0.00001;  // 0.000000001;
 
 QHash<ViewLayer::ViewLayerID, StringPair * > ViewLayer::names;
 QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::alternatives;
+QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::unconnectables;
 
 ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 {
@@ -84,6 +85,15 @@ void ViewLayer::initNames() {
 
 		alternatives.insert(ViewLayer::Copper0, ViewLayer::Copper1);
 		alternatives.insert(ViewLayer::Copper1, ViewLayer::Copper0);
+
+		unconnectables.insert(ViewLayer::Copper0, ViewLayer::Copper1);
+		unconnectables.insert(ViewLayer::Copper0, ViewLayer::Copper1Trace);
+		unconnectables.insert(ViewLayer::Copper0Trace, ViewLayer::Copper1);
+		unconnectables.insert(ViewLayer::Copper0Trace, ViewLayer::Copper1Trace);
+		unconnectables.insert(ViewLayer::Copper1, ViewLayer::Copper0);
+		unconnectables.insert(ViewLayer::Copper1, ViewLayer::Copper0Trace);
+		unconnectables.insert(ViewLayer::Copper1Trace, ViewLayer::Copper0);
+		unconnectables.insert(ViewLayer::Copper1Trace, ViewLayer::Copper0Trace);
 	}
 
 }
@@ -205,3 +215,9 @@ QList<ViewLayer::ViewLayerID> ViewLayer::findAlternativeLayers(ViewLayer::ViewLa
 	return alts;
 }
 
+bool ViewLayer::canConnect(ViewLayer::ViewLayerID v1, ViewLayer::ViewLayerID v2) {
+	if (v1 == v2) return true;
+
+ 	QList<ViewLayer::ViewLayerID> uncs = unconnectables.values(v1);
+	return (!uncs.contains(v2));
+}

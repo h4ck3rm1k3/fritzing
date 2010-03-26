@@ -101,7 +101,7 @@ protected:
 								QUndoCommand * & parentCommand, const QString & commandString, const QString & colorString);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
-	ViewLayer::ViewLayerID getDragWireViewLayerID();
+	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);

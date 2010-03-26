@@ -60,7 +60,7 @@ void SchematicSketchWidget::addViewLayers() {
 	addSchematicViewLayers();
 }
 
-ViewLayer::ViewLayerID SchematicSketchWidget::getDragWireViewLayerID() {
+ViewLayer::ViewLayerID SchematicSketchWidget::getDragWireViewLayerID(ConnectorItem *) {
 	return ViewLayer::SchematicTrace;
 }
 

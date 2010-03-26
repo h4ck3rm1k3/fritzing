@@ -28,6 +28,7 @@ $Date$
 #define GEDAELEMENTLEXER_H
 
 #include <QString>
+#include <QStringList>
 #include <QHash>
 #include <QRegExp>
 
@@ -40,6 +41,7 @@ public:
 	QString currentCommand();
 	double currentNumber();
 	QString currentString();
+	const QStringList & comments();
 
 protected:
     QChar next();
@@ -60,6 +62,8 @@ protected:
 	QRegExp m_stringMatcher;
 	QRegExp m_elementMatcher;
 	QRegExp m_commentMatcher;
+	QRegExp m_nonWhitespaceMatcher;
+	QStringList m_comments;
 };
 
 #endif

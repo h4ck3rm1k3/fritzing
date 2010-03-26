@@ -29,13 +29,17 @@ $Date$
 #include "gedaelementlexer.h"
 #include "../utils/textutils.h"
 #include "svgfilesplitter.h"
+#include "../version/version.h"
+#include "../items/wire.h"
 
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QObject>
 #include <limits>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QDateTime>
 #include <qmath.h>
 
 static const int MAX_INT = std::numeric_limits<int>::max();
@@ -54,6 +58,7 @@ QString GedaElement2Svg::convert(QString filename)
 	QString text;
 	QTextStream textStream(&file);
 	text = textStream.readAll();
+	file.close();
 
 	GedaElementLexer lexer(text);
 	GedaElementParser parser;
@@ -61,6 +66,25 @@ QString GedaElement2Svg::convert(QString filename)
 	if (!parser.parse(&lexer)) {
 		throw QObject::tr("unable to parse %1").arg(filename);
 	}
+
+	QFileInfo fileInfo(filename);
+
+	QDateTime now = QDateTime::currentDateTime();
+	QString dt = now.toString("dd/MM/yyyy hh:mm:ss");
+
+	QString title = QString("<title>%1</title>").arg(fileInfo.fileName());
+	QString description = QString("<desc>Geda footprint file '%1' converted by Fritzing</desc>")
+			.arg(fileInfo.fileName());
+
+	QString attribute("<fz:attr name='%1'>%2</fz:attr>");
+	QString comment("<fz:comment>%2</fz:comment>");
+
+	QString metadata("<metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>");
+	metadata += "<rdf:RDF>";
+	metadata += "<rdf:Description rdf:about=''>";
+	metadata += attribute.arg("geda filename").arg(fileInfo.fileName());
+	metadata += attribute.arg("fritzing version").arg(Version::versionString());
+	metadata += attribute.arg("conversion date").arg(dt);
 
 	// TODO: other layers
 	QString copper0;
@@ -106,6 +130,9 @@ QString GedaElement2Svg::convert(QString filename)
 			}
 			else if (thing.compare("mark", Qt::CaseInsensitive) == 0) {
 			}
+			else if (thing.compare("attribute", Qt::CaseInsensitive) == 0) {
+				metadata += attribute.arg(unquote(stack[ix + 1].toString()), unquote(stack[ix + 2].toString()));
+			}
 			ix += argCount + 2;
 		}
 		else if (var.type() == QVariant::Char) {
@@ -118,12 +145,21 @@ QString GedaElement2Svg::convert(QString filename)
 		}
 	}
 
+	foreach (QString c, lexer.comments()) {
+		metadata += comment.arg(c);
+	}
+
+	metadata += "</rdf:Description>";
+	metadata += "</rdf:RDF>";
+	metadata += "</metadata>";
+
 	// TODO: offset everything if minx or miny < 0
 	copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
 	copper1 = offsetMin("<g id='copper1'>" + copper1 + "</g>");
 	silkscreen = offsetMin("<g id='silkscreen'>" + silkscreen + "</g>");
 
-	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) + copper0 + copper1 + silkscreen + "</svg>";
+	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) 
+					+ title + description + metadata + copper0 + copper1 + silkscreen + "</svg>";
 
 	return svg;
 }
@@ -226,13 +262,14 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 	// TODO:  if the pin has a name, post it up to the fz as the connector name
 
 
-	QString circle = QString("<circle fill='none' cx='%1' cy='%2' stroke='rgb(255, 191, 0)' r='%3' id='%4' connectorname='%5' stroke-width='%6' />")
+	QString circle = QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='%4' connectorname='%5' stroke-width='%6' stroke='%7' />")
 					.arg(cx)
 					.arg(cy)
 					.arg(r - (w / 2))
 					.arg(pinID)
 					.arg(name)
-					.arg(w);
+					.arg(w)
+					.arg(Wire::TraceColorCopper0String);
 	return circle;
 }
 
@@ -314,11 +351,12 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 		line += "stroke='white' ";
 	}
 	else {
-		line += QString("stroke='rgb(255, 148, 0)' stroke-linecap='%1' stroke-linejoin='%2' id='%3' connectorname='%4' ")
+		line += QString("stroke-linecap='%1' stroke-linejoin='%2' id='%3' connectorname='%4' stroke='%5' ")
 					.arg(square ? "square" : "round")
 					.arg(square ? "miter" : "round")
 					.arg(pinID)
-					.arg(name);
+					.arg(name)
+					.arg(Wire::TraceColorCopper1String);
 	}
 
 	line += "/>";

@@ -56,6 +56,8 @@ QStringList Wire::colorNames;
 QHash<long, QString> Wire::widthTrans;
 QList<long> Wire::widths;
 qreal Wire::STANDARD_TRACE_WIDTH;
+const QString Wire::TraceColorCopper1String = "#ff9400";
+const QString Wire::TraceColorCopper0String = "#ffbf00";
 
 ////////////////////////////////////////////////////////////
 
@@ -960,7 +962,7 @@ void Wire::initNames() {
 	colors.insert("white",	"#ffffff");
 	colors.insert("orange", "#ff7033");
     colors.insert("jumper", "#6699cc");
-	colors.insert("trace",  "#ffbf00");    // (255, 191, 0)  vs.  (255, 148, 0)
+	colors.insert("trace",  TraceColorCopper0String);    
 	colors.insert("unrouted", "#000000");
 	colors.insert("blackblack", "#000000");
 	colors.insert("schematicGrey", "#9d9d9d");
@@ -1171,6 +1173,8 @@ void Wire::getColor(QColor & color, const QString & name) {
 }
 
 bool Wire::connectionIsAllowed(ConnectorItem * to) {
+	if (!ItemBase::connectionIsAllowed(to)) return false;
+
 	Wire * w = dynamic_cast<Wire *>(to->attachedTo());
 	if (w == NULL) return true;
 

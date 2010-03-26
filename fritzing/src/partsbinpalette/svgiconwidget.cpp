@@ -39,8 +39,6 @@ $Date$
 #define SELECTION_THICKNESS 3
 #define ICON_SIZE 32
 
-static QPixmap * PluralImage = NULL;
-
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu, bool isPlural)
 	: QGraphicsWidget() 
 {
@@ -72,7 +70,6 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 }
 
 void SvgIconWidget::initNames() {
-	PluralImage = new QPixmap(":/resources/images/icons/plural.png");
 }
 
 SvgIconWidget::~SvgIconWidget() {
@@ -80,10 +77,6 @@ SvgIconWidget::~SvgIconWidget() {
 }
 
 void SvgIconWidget::cleanup() {
-	if (PluralImage) {
-		delete PluralImage;
-		PluralImage = NULL;
-	}
 }
 
 ModelPart *SvgIconWidget::modelPart() const {
@@ -101,8 +94,6 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	painter->fillRect(0, 0, size.width(), size.height(), c);
 
 	if (m_isPlural ) {
-		QSize p = PluralImage->size();
-		painter->drawPixmap((size.width() - p.width()) / 2, (size.height() - p.height()) / 2, *PluralImage);
 	}
 
 	if (isSelected()) {

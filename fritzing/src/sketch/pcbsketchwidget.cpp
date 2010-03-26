@@ -601,8 +601,14 @@ void PCBSketchWidget::setClipEnds(ClipableWire * vw, bool clipEnds) {
 	vw->setClipEnds(clipEnds);
 }
 
-ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID() {
-	return ViewLayer::Copper0Trace;
+ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID(ConnectorItem * connectorItem) {
+	switch (connectorItem->attachedTo()->viewLayerID()) {
+		case ViewLayer::Copper1:
+		case ViewLayer::Copper1Trace:
+			return ViewLayer::Copper1Trace;
+		default:
+			return ViewLayer::Copper0Trace;
+	}
 }
 
 ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {

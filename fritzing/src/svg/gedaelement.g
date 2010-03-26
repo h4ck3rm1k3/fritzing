@@ -8,6 +8,7 @@
 %token MARK
 %token ELEMENTLINE
 %token ELEMENTARC
+%token ATTRIBUTE
 %token LEFTPAREN
 %token RIGHTPAREN
 %token LEFTBRACKET
@@ -221,7 +222,7 @@ sub_element_groups ::= sub_element_group | sub_element_group sub_element_groups 
     qDebug() << "    got sub_element_groups ";
 } break; ./
 
-sub_element_group ::= pin_element | pad_element | element_arc_element | element_line_element | mark_element ;
+sub_element_group ::= pin_element | pad_element | element_arc_element | element_line_element | mark_element | attribute_element;
 /. case $rule_number: {
     qDebug() << "    got sub_element_group ";
 } break; ./
@@ -394,6 +395,27 @@ element_arc_bracket_sequence ::= LEFTBRACKET element_arc_arguments RIGHTBRACKET 
 element_arc_arguments ::= x y Width Height StartAngle Delta Thickness ;
 /. case $rule_number: {
     qDebug() << "    got element_arc_arguments ";
+} break; ./
+
+attribute_element ::= attribute_command attribute_sequence ;
+/. case $rule_number: {
+    qDebug() << "got attribute_element ";
+} break; ./
+
+attribute_sequence ::= attribute_paren_sequence ;
+/. case $rule_number: {
+    qDebug() << "    got attribute_sequence ";
+} break; ./
+
+attribute_paren_sequence ::= LEFTPAREN attribute_arguments RIGHTPAREN ;
+/. case $rule_number: {
+	m_symStack.append(QChar(')'));
+    qDebug() << "    got attribute_paren_sequence ";
+} break; ./
+
+attribute_arguments ::= Name value ;
+/. case $rule_number: {
+    qDebug() << "    got attribute_arguments ";
 } break; ./
 
 pad_number ::= string_value ;
@@ -576,6 +598,14 @@ element_arc_command ::= ELEMENTARC ;
 /. 
 case $rule_number: {
     qDebug() << "got ELEMENTARC command ";
+    m_symStack.append(lexer->currentCommand());
+} break; 
+./
+
+attribute_command ::= ATTRIBUTE ;
+/. 
+case $rule_number: {
+    qDebug() << "got ATTRIBUTE command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 ./

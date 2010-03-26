@@ -265,7 +265,7 @@ protected:
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
 	void continueZChangeMax(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
 	void continueZChangeAux(QList<ItemBase *> & bases, const QString & text);
-	virtual ViewLayer::ViewLayerID getDragWireViewLayerID();
+	virtual ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	ViewLayer::ViewLayerID getPartViewLayerID();
 	ViewLayer::ViewLayerID getRulerViewLayerID();
 	ViewLayer::ViewLayerID getConnectorViewLayerID();

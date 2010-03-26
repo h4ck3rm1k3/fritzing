@@ -647,6 +647,7 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 		}
 		if (exclude.contains(connectorItemUnder)) continue;
 
+
 		candidates.append(connectorItemUnder);
 	}
 
@@ -1430,8 +1431,8 @@ void ItemBase::setEverVisible(bool v) {
 	m_everVisible = v;
 }
 
-bool ItemBase::connectionIsAllowed(ConnectorItem *) {
-	return true;
+bool ItemBase::connectionIsAllowed(ConnectorItem * other) {
+	return ViewLayer::canConnect(this->viewLayerID(), other->attachedTo()->viewLayerID());
 }
 
 QString ItemBase::getProperty(const QString & key) {
