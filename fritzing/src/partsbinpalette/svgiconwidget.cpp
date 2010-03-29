@@ -31,7 +31,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../utils/misc.h"
 #include "../fsvgrenderer.h"
-#include "iconwidgetpaletteitem.h"
+#include "../items/partfactory.h"
 
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
@@ -39,19 +39,21 @@ $Date$
 #define SELECTION_THICKNESS 3
 #define ICON_SIZE 32
 
-SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu, bool isPlural)
+SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, long id, QMenu * itemMenu)
 	: QGraphicsWidget() 
 {
 	setAcceptHoverEvents(true);
 	m_moduleId = modelPart->moduleID();
-	m_isPlural = isPlural;
 
 	setFlags(QGraphicsItem::ItemIsSelectable);
 
 	this->setMaximumSize(QSize(ICON_SIZE + (2 * SELECTION_THICKNESS), ICON_SIZE + (2 * SELECTION_THICKNESS)));
 
-	m_paletteItem = new IconWidgetPaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
-	m_paletteItem->renderImage(modelPart, ViewIdentifierClass::IconView, viewLayers,ViewLayer::Icon, false);
+	m_itemBase = PartFactory::createPart(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu, itemMenu);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon);
+	if (renderer && m_itemBase) {
+		m_itemBase->setFilename(renderer->filename());
+	}
 
 	QPixmap * pixmap = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
 	if (pixmap) {
@@ -65,22 +67,26 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	m_pixmapItem->setFlags(0);
 	m_pixmapItem->setPos(SELECTION_THICKNESS, SELECTION_THICKNESS);
 
-	m_paletteItem->setTooltip();
-	setToolTip(m_paletteItem->toolTip());
+	m_itemBase->setTooltip();
+	setToolTip(m_itemBase->toolTip());
 }
 
 void SvgIconWidget::initNames() {
 }
 
 SvgIconWidget::~SvgIconWidget() {
-	delete m_paletteItem;
+	delete m_itemBase;
 }
 
 void SvgIconWidget::cleanup() {
 }
 
+ItemBase *SvgIconWidget::itemBase() const {
+	return m_itemBase;
+}
+
 ModelPart *SvgIconWidget::modelPart() const {
-	return m_paletteItem->modelPart();
+	return m_itemBase->modelPart();
 }
 
 const QString &SvgIconWidget::moduleID() const {
@@ -92,9 +98,6 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	QColor c(0xc2, 0xc2,0xc2);
 	QSizeF size = this->geometry().size();
 	painter->fillRect(0, 0, size.width(), size.height(), c);
-
-	if (m_isPlural ) {
-	}
 
 	if (isSelected()) {
 		painter->save();
@@ -113,7 +116,7 @@ void SvgIconWidget::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ){
 	QGraphicsWidget::hoverEnterEvent(event);
 	InfoGraphicsView * igv = InfoGraphicsView::getInfoGraphicsView(this);
 	if (igv) {
-		igv->hoverEnterItem(this->modelPart());
+		igv->hoverEnterItem(event, m_itemBase);
 	}
 }
 
@@ -121,6 +124,6 @@ void SvgIconWidget::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	QGraphicsWidget::hoverLeaveEvent(event);
 	InfoGraphicsView * igv = InfoGraphicsView::getInfoGraphicsView(this);
 	if (igv) {
-		igv->hoverLeaveItem(this->modelPart());
+		igv->hoverLeaveItem(event, m_itemBase);
 	}
 }

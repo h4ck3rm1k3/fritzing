@@ -32,7 +32,7 @@ $Date$
 #include "../commands.h"
 #include "../utils/textutils.h"
 #include "../layerattributes.h"
-#include "../labels/partlabel.h"
+#include "partlabel.h"
 
 #include <QDomNodeList>
 #include <QDomDocument>
@@ -221,15 +221,16 @@ QStringList MysteryPart::collectValues(const QString & family, const QString & p
 	return PaletteItem::collectValues(family, prop, value);
 }
 
-bool MysteryPart::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+bool MysteryPart::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("label");
-		returnValue = "<object type='application/x-qt-plugin' classid='ChipLabelInput' width='100%' height='22px'></object>";  
+		returnValue = QString("<object type='application/x-qt-plugin' classid='ChipLabelInput' swappingenabled='%1' width='100%' height='22px'></object>")
+			.arg(swappingEnabled);  
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 }
 
 QString MysteryPart::getProperty(const QString & key) {
@@ -286,6 +287,8 @@ QObject * MysteryPart::createPlugin(QWidget * parent, const QString &classid, co
 	}
 
 	QLineEdit * e1 = new QLineEdit(parent);
+	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
+	e1->setEnabled(swappingEnabled);
 	e1->setText(m_chipLabel);
 	connect(e1, SIGNAL(editingFinished()), this, SLOT(chipLabelEntry()));
 	e1->setMaximumWidth(200);

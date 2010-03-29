@@ -41,9 +41,8 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../connectors/connectoritem.h"
 #include "../connectors/connectorshared.h"
-#include "../layerattributes.h"
 #include "../fsvgrenderer.h"
-#include "../labels/partlabel.h"
+#include "partlabel.h"
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 
@@ -660,8 +659,7 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 
 FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 
-	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, layerAttributes);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID);
 	if (renderer == NULL) {
 		return NULL;
 	}
@@ -1205,7 +1203,7 @@ void Wire::setIgnoreSelectionChange(bool ignore) {
 
 
 
-bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) {
+bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) {
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		// don't display width property
 		return false;
@@ -1214,7 +1212,8 @@ bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, co
 	if (prop.compare("color", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("color");
 		if (canChangeColor()) {
-			returnValue = "<object type='application/x-qt-plugin' classid='WireColorInput' width='100%' height='22px'></object>";
+			returnValue = QString("<object type='application/x-qt-plugin' classid='WireColorInput' swappingenabled='%1' width='100%' height='22px'></object>")
+				.arg(swappingEnabled);
 		}
 		else {
 			returnValue = colorString();
@@ -1222,7 +1221,7 @@ bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, co
 		return true;
 	}
 
-	return ItemBase::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	return ItemBase::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 }
 
 QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
@@ -1232,8 +1231,10 @@ QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUr
 		return ItemBase::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 
+	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 	QComboBox * comboBox = new QComboBox(parent);
 	comboBox->setEditable(false);
+	comboBox->setEnabled(swappingEnabled);
 	
 	int ix = 0;
 	QString englishCurrColor = colorString();

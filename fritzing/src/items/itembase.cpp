@@ -33,7 +33,7 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../connectors/connector.h"
 #include "../connectors/bus.h"
-#include "../labels/partlabel.h"
+#include "partlabel.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"
 #include "../svg/svgfilesplitter.h"
@@ -902,6 +902,19 @@ void ItemBase::setInstanceTitleTooltip(const QString &text) {
 
 void ItemBase::setDefaultTooltip() {
 	if (m_modelPart) {
+		if (m_viewIdentifier == ViewIdentifierClass::IconView) {
+			QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
+			if(m_modelPart->itemType() != ModelPart::Wire) {
+				this->setToolTip(base.arg(m_modelPart->title()));
+			} else {
+				this->setToolTip(base.arg(m_modelPart->modelPartShared()->title() + " (" + m_modelPart->modelPartShared()->moduleID() + ")"));
+			}
+			return;
+		}
+
+
+
+
 		QString title = (m_modelPart->itemType() == ModelPart::Module) ? ItemBase::moduleInstanceDefaultTitle : ItemBase::partInstanceDefaultTitle;
 		QString inst = instanceTitle();
 		if(!inst.isNull() && !inst.isEmpty()) {
@@ -1210,6 +1223,12 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 	GraphicsUtils::saveTransform(streamWriter, m_viewGeometry.transform());
 }
 
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID)
+{
+	LayerAttributes layerAttributes;
+	return setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
+}
+
 FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
 {
 #ifndef QT_NO_DEBUG
@@ -1494,18 +1513,19 @@ bool ItemBase::isObsolete() {
 	return modelPart()->isObsolete();
 }
 
-bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValuesFlag, QString & returnProp, QString & returnValue) {
+bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) {
 	returnProp = ItemBase::translatePropertyName(prop);
 	returnValue = value;	
 
-	if (collectValuesFlag) {
-		QString tempValue;
-		QStringList values = collectValues(family, prop, tempValue);
-		if (values.count() > 1) {
-			returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2', value='%3' width='100%' height='18px'></object>")
-									.arg(prop).arg(family).arg(value);
-			m_propsMap.insert(prop, value);
-		}
+	if (prop.compare("family", Qt::CaseInsensitive) == 0) return true;
+	if (prop.compare("id", Qt::CaseInsensitive) == 0) return true;
+
+	QString tempValue;
+	QStringList values = collectValues(family, prop, tempValue);
+	if (values.count() > 1) {
+		returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2' value='%3' swappingenabled='%4' width='100%' height='18px'></object>")
+								.arg(prop).arg(family).arg(value).arg(swappingEnabled);
+		m_propsMap.insert(prop, value);
 	}
 		
 	return true;
@@ -1525,6 +1545,8 @@ QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const
 		}
 	}
 
+	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
+
 	QStringList values = collectValues(family, classid, value);
 	if (values.count() <= 1) return NULL;
 
@@ -1532,6 +1554,7 @@ QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const
 	comboBox->addItems(values);
 	comboBox->setCurrentIndex(comboBox->findText(value));
 	comboBox->setMaximumWidth(200);
+	comboBox->setEnabled(swappingEnabled);
 
 	// need to save classid and family
 
@@ -1616,3 +1639,25 @@ void ItemBase::resetValues(const QString & family, const QString & prop) {
 bool ItemBase::hasPartLabel() {
 	return true;
 }
+
+const QString & ItemBase::filename() {
+	return m_filename;
+}
+
+void ItemBase::setFilename(const QString & fn) {
+	m_filename = fn;
+}
+
+bool ItemBase::getSwappingEnabled(const QStringList &paramNames, const QStringList &paramValues)
+{
+	QString family, value;
+	for (int i = 0; i < paramNames.count(); i++) {
+		DebugDialog::debug(QString("param %1 %2").arg(paramNames[i]).arg(paramValues[i]));
+		if (paramNames[i].compare("swappingenabled", Qt::CaseInsensitive) == 0) {
+			return paramValues.at(i).compare("1", Qt::CaseInsensitive) == 0;
+		}
+	}
+
+	return false;
+}
+

@@ -28,8 +28,11 @@ HEADERS += \
     src/items/logoitem.h \
     src/items/moduleidnames.h \
     src/items/mysterypart.h \
+	src/items/note.h \
     src/items/paletteitem.h \
     src/items/paletteitembase.h \
+    src/items/partfactory.h \
+    src/items/partlabel.h \
     src/items/pinheader.h \
     src/items/resistor.h \
     src/items/resizableboard.h \
@@ -50,8 +53,11 @@ SOURCES += \
     src/items/logoitem.cpp \
     src/items/moduleidnames.cpp \
     src/items/mysterypart.cpp \
+	src/items/note.cpp \
     src/items/paletteitem.cpp \
     src/items/paletteitembase.cpp \
+    src/items/partfactory.cpp \
+    src/items/partlabel.cpp \
     src/items/pinheader.cpp \
     src/items/resistor.cpp \
     src/items/resizableboard.cpp \

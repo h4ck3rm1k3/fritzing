@@ -39,7 +39,6 @@ $Date$
 #include "../connectors/connectorshared.h"
 #include "../connectors/connector.h"
 #include "../fsvgrenderer.h"
-#include "../layerattributes.h"
 #include "../dockmanager.h"
 #include "../utils/flineedit.h"
 
@@ -78,9 +77,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 {
 	QFrame * mainFrame = new QFrame(this);
 
-	m_lastModelPartInfoGraphicsView = NULL;
-	m_lastItemBaseInfoGraphicsView = NULL;
-	m_lastModelPart = NULL;
+	m_lastSwappingEnabled = false;
 	m_lastItemBase = NULL;
 	m_infoGraphicsView = NULL;
 	m_setContentTimer.setSingleShot(true);
@@ -175,37 +172,11 @@ void HtmlInfoView::cleanup() {
 	}
 }
 
-
-void HtmlInfoView::hoverEnterItem(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
-	//DebugDialog::debug(QString("hoverEnterItem modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
-	viewModelPartInfoAux(igv, modelPart, swappingEnabled);
-}
-
-void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, ModelPart * modelPart) {
-	Q_UNUSED(modelPart);
-	//DebugDialog::debug(QString("hoverLeaveItem modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
-	if (m_lastModelPart) {
-		viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
-	}
-	else {
-		viewItemInfoAux(m_lastItemBaseInfoGraphicsView, m_lastItemBase, true);
-	}
-}
-
-void HtmlInfoView::viewModelPartInfo(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
-	//DebugDialog::debug(QString("viewModelPartInfo modelpart %1").arg(modelPart ? modelPart->modelPartShared()->title() : "NULL"));
-	viewModelPartInfoAux(igv, modelPart, swappingEnabled);
-	m_lastModelPart = modelPart;
-	m_lastItemBase = NULL;
-	m_lastModelPartInfoGraphicsView = igv;
-}
-
 void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) 
 {
 	viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
 	m_lastItemBase = item;
-	m_lastModelPart = NULL;
-	m_lastItemBaseInfoGraphicsView = infoGraphicsView;
+	m_lastSwappingEnabled = swappingEnabled;
 }
 
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * item, bool swappingEnabled) {
@@ -215,12 +186,8 @@ void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphics
 void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * itemBase){
 	Q_UNUSED(itemBase);
 	//DebugDialog::debug(QString("hoverLeaveItem itembase %1").arg(itemBase ? itemBase->instanceTitle() : "NULL"));
-	if (m_lastItemBase == NULL) {
-		viewModelPartInfoAux(infoGraphicsView, m_lastModelPart, false);
-	}
-	else {
-		viewItemInfoAux(infoGraphicsView, m_lastItemBase, true);
-	}
+	viewItemInfoAux(infoGraphicsView, m_lastItemBase, m_lastSwappingEnabled);
+
 }
 
 void HtmlInfoView::viewConnectorItemInfo(InfoGraphicsView * infoGraphicsView, ConnectorItem * item, bool swappingEnabled) {
@@ -258,34 +225,10 @@ void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsScene
 	Q_UNUSED(connItem);
 }
 
-void HtmlInfoView::viewModelPartInfoAux(InfoGraphicsView * igv, ModelPart * modelPart, bool swappingEnabled) {
-	if (modelPart == NULL) {
-		if (m_lastItemBase) {
-			viewItemInfoAux(m_lastItemBaseInfoGraphicsView, m_lastItemBase, true);
-		}
-		else {
-			setNullContent();
-		}
-
-		return;
-	}
-
-	m_currentSwappingEnabled = swappingEnabled;
-	QString s = "";
-	s += appendItemStuff(NULL, modelPart, 0, swappingEnabled, "", false);
-	m_infoGraphicsView = igv;
-	setContent(s);
-}
-
 void HtmlInfoView::viewItemInfoAux(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
 
 	if (item == NULL) {
-		if (m_lastModelPart) {
-			viewModelPartInfoAux(m_lastModelPartInfoGraphicsView, m_lastModelPart, true);
-		}
-		else {
-			setNullContent();
-		}
+		setNullContent();
 		return;
 	}
 
@@ -300,7 +243,7 @@ void HtmlInfoView::viewItemInfoAux(InfoGraphicsView * infoGraphicsView, ItemBase
 QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
 	Wire *wire = dynamic_cast<Wire*>(item);
 	if(wire) {
-		return appendWireStuff(wire, wire->id());
+		return appendWireStuff(wire, wire->id(), swappingEnabled);
 	} else {
 		return appendItemStuff(item, item->id(), swappingEnabled);
 	}
@@ -317,7 +260,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnab
 }
 
 
-QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
+QString HtmlInfoView::appendWireStuff(Wire* wire, long id, bool swappingEnabled) {
 	if (wire == NULL) return "missing base";
 
 	ModelPart *modelPart = wire->modelPart();
@@ -337,8 +280,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	QString title;
 	prepareTitleStuff(wire, title);
 	setUpTitle(title);
-	m_modelPart = wire->modelPart();
-	setUpIcons(m_modelPart);
+	setUpIcons(wire->modelPart());
 
 	QString s = "";
 	s += 		 "<div class='parttitle'>\n";
@@ -359,7 +301,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	foreach (QString prop, properties.keys()) {
 		QString returnProp, returnValue;
 		QStringList nothing;
-		bool display = wire->collectExtraInfoHtml(family, prop, properties.value(prop, ""), false, returnProp, returnValue);
+		bool display = wire->collectExtraInfoHtml(family, prop, properties.value(prop, ""), swappingEnabled, returnProp, returnValue);
 		if (display) {
 			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(returnProp).arg(returnValue);
 		}
@@ -391,8 +333,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
 
 	setUpTitle(title);
-	m_modelPart = modelPart;
-	setUpIcons(m_modelPart);
+	setUpIcons(modelPart);
 
 	QString s = "";
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
@@ -448,10 +389,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 		QString resultKey, resultValue;
 		bool result = false;
 		if (itemBase != NULL) {
-			bool collectValues = swappingEnabled && 
-								 (key.compare("family", Qt::CaseInsensitive) != 0) &&
-								 (key.compare("id", Qt::CaseInsensitive) != 0); 
-			result = itemBase->collectExtraInfoHtml(family, key, value, collectValues, resultKey, resultValue);
+			result = itemBase->collectExtraInfoHtml(family, key, value, swappingEnabled, resultKey, resultValue);
 		}
 		if (result) {
 			s += basis.arg(resultKey).arg(resultValue);
@@ -650,18 +588,15 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
 		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 		if (pixmap1 == NULL) {
-			LayerAttributes layerAttributes;
-			ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
+			ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon);
 			pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
 		}
 		if (pixmap2 == NULL) {
-			LayerAttributes layerAttributes;
-			ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic, layerAttributes);
+			ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic);
 			pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
 		}
 		if (pixmap3 == NULL) {
-			LayerAttributes layerAttributes;
-			ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0, layerAttributes);
+			ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0);
 			pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 		}
 	}

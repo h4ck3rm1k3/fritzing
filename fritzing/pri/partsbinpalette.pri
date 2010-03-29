@@ -23,7 +23,6 @@ HEADERS += src/partsbinpalette/simpleeditablelabelwidget.h \
     src/partsbinpalette/partsbiniconview.h \
     src/partsbinpalette/graphicsflowlayout.h \
     src/partsbinpalette/svgiconwidget.h \
-    src/partsbinpalette/iconwidgetpaletteitem.h \
     src/partsbinpalette/partsbincommands.h \
     src/partsbinpalette/searchlineedit.h \
     src/partsbinpalette/binmanager/binmanager.h \
@@ -37,7 +36,6 @@ SOURCES += src/partsbinpalette/simpleeditablelabelwidget.cpp \
     src/partsbinpalette/partsbinlistview.cpp \
     src/partsbinpalette/partsbiniconview.cpp \
     src/partsbinpalette/graphicsflowlayout.cpp \
-    src/partsbinpalette/iconwidgetpaletteitem.cpp \
     src/partsbinpalette/svgiconwidget.cpp \
     src/partsbinpalette/partsbincommands.cpp \
     src/partsbinpalette/searchlineedit.cpp \

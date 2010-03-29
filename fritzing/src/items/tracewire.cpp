@@ -37,15 +37,16 @@ TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 	m_canChainMultiple = true;
 }
 
-bool TraceWire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+bool TraceWire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
-		returnValue = "<object type='application/x-qt-plugin' classid='WireWidthInput' width='100%' height='22px'></object>";
+		returnValue = QString("<object type='application/x-qt-plugin' classid='WireWidthInput' swappingenabled='%1' width='100%' height='22px'></object>")
+			.arg(swappingEnabled);
 		return true;
 	}
 
-	return ClipableWire::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	return ClipableWire::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 }
 
 QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
@@ -57,8 +58,10 @@ QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, cons
 		return ClipableWire::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 
+	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 	QComboBox * comboBox = new QComboBox(parent);
 	comboBox->setEditable(false);
+	comboBox->setEnabled(swappingEnabled);
 	
 	int ix = 0;
 	qreal m = mils();

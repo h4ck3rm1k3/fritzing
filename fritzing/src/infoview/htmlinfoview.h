@@ -56,10 +56,7 @@ public:
 	void reloadContent(class InfoGraphicsView *);
 
 	void viewItemInfo(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
-	void viewModelPartInfo(class InfoGraphicsView *, ModelPart * modelPart, bool swappingEnabled);
 
-	void hoverEnterItem(class InfoGraphicsView *, ModelPart *, bool swappingEnabled);
-	void hoverLeaveItem(class InfoGraphicsView *, ModelPart *);
 	void hoverEnterItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item, bool swappingEnabled);
 	void hoverLeaveItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item);
 
@@ -87,7 +84,7 @@ protected slots:
 
 protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
-	QString appendWireStuff(Wire* wire, long itemID);
+	QString appendWireStuff(Wire* wire, long itemID, bool swappingEnabled);
 	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
 	QString appendItemStuff(ItemBase * base, ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
 
@@ -104,7 +101,6 @@ protected:
 	void registerAsCurrentItem(ItemBase *item);
 	void setNullContent();
 	void viewItemInfoAux(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
-	void viewModelPartInfoAux(class InfoGraphicsView *, ModelPart * modelPart, bool swappingEnabled);
 	void setUpTitle(const QString & title);
 	void setUpIcons(ModelPart *);
 	void addTags(ModelPart * modelPart, QString & s);
@@ -124,11 +120,8 @@ protected:
 	QString m_savedContent;
 	QTimer m_setContentTimer;
 	QPointer<class InfoGraphicsView> m_infoGraphicsView;
-	QPointer<ModelPart> m_modelPart;
-	QPointer<ModelPart> m_lastModelPart;
 	QPointer<ItemBase> m_lastItemBase;
-	QPointer<class InfoGraphicsView> m_lastItemBaseInfoGraphicsView;
-	QPointer<class InfoGraphicsView> m_lastModelPartInfoGraphicsView;
+	bool m_lastSwappingEnabled;
 	class FLineEdit * m_titleEdit;
 	QLabel * m_icon1;
 	QLabel * m_icon2;

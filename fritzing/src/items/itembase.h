@@ -161,7 +161,7 @@ public:
 	bool isEverVisible();
 	void setEverVisible(bool);
 	virtual bool connectionIsAllowed(ConnectorItem *);
-	virtual bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue);
+	virtual bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
 	virtual QString getProperty(const QString & key);
 	ConnectorItem * rightClickedConnector();
 	virtual bool canEditPart();
@@ -171,7 +171,8 @@ public:
 	virtual QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	void prepareProps();
 	void resetValues(const QString & family, const QString & prop);
-
+	const QString & filename();
+	void setFilename(const QString &);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
@@ -240,6 +241,7 @@ public:
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
 	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
+	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -257,6 +259,7 @@ protected:
 	void ensureUniqueTitle(QString &title);
 	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
+	static bool getSwappingEnabled(const QStringList &paramNames, const QStringList &paramValues);
 
 protected:
  	QSizeF m_size;
@@ -282,6 +285,7 @@ protected:
 	bool m_everVisible;
 	ConnectorItem * m_rightClickedConnector;
 	QMap<QString, QString> m_propsMap;
+	QString m_filename;
 
 protected:
 	static long nextID;
@@ -293,4 +297,9 @@ protected:
 	static QPointer<class ReferenceModel> referenceModel;
 
 };
+
+
+Q_DECLARE_METATYPE( ItemBase* );			// so we can stash them in a QVariant
+
+
 #endif

@@ -509,9 +509,9 @@ bool ResizableBoard::hasCustomSVG() {
 	}
 }
 
-bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
-	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		returnValue.replace(HeightExpr, "height='60px");
@@ -542,6 +542,7 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 		return result;
 	}
 
+	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 	if (!m_modelPart->prop("height").isValid()) { 
 		// display uneditable width and height
 		QFrame * frame = new QFrame();
@@ -588,6 +589,7 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	QLabel * l1 = new QLabel(tr("width(mm)"));	
 	l1->setMargin(0);
 	QLineEdit * e1 = new QLineEdit();
+	e1->setEnabled(swappingEnabled);
 	QDoubleValidator * validator = new QDoubleValidator(e1);
 	validator->setRange(0.1, 999.9, 1);
 	validator->setNotation(QDoubleValidator::StandardNotation);
@@ -605,6 +607,7 @@ QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid,
 	QLabel * l2 = new QLabel(tr("height(mm)"));
 	l2->setMargin(0);
 	QLineEdit * e2 = new QLineEdit();
+	e2->setEnabled(swappingEnabled);
 	validator = new QDoubleValidator(e1);
 	validator->setRange(0.1, 999.9, 1);
 	validator->setNotation(QDoubleValidator::StandardNotation);

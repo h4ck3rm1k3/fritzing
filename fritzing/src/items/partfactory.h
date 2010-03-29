@@ -24,24 +24,16 @@ $Date$
 
 ********************************************************************/
 
+#ifndef PARTFACTORY_H
+#define PARTFACTORY_H
 
+#include <QMenu>
+#include "../viewidentifierclass.h"
 
+class PartFactory
+{
+public:
+	static class ItemBase * createPart(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu);
+};
 
-
-#include "iconwidgetpaletteitem.h"
-#include "../utils/misc.h"
-
-IconWidgetPaletteItem::IconWidgetPaletteItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
-	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel) {
-}
-
-void IconWidgetPaletteItem::setDefaultTooltip() {
-	if (m_modelPart) {
-		QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
-		if(m_modelPart->itemType() != ModelPart::Wire) {
-			this->setToolTip(base.arg(m_modelPart->title()));
-		} else {
-			this->setToolTip(base.arg(m_modelPart->modelPartShared()->title() + " (" + m_modelPart->modelPartShared()->moduleID() + ")"));
-		}
-	}
-}
+#endif

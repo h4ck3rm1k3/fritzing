@@ -319,11 +319,6 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 	}
 }
 
-
-const QString & PaletteItemBase::filename() {
-	return m_filename;
-}
-
 void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	if (from->connectorType() != Connector::Female) return;
 	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;			// these only really exist in breadboard view

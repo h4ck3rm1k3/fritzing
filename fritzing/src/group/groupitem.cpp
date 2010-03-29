@@ -99,7 +99,7 @@ $Date$
 
 #include "groupitem.h"
 #include "groupitemkin.h"
-#include "../labels/partlabel.h"
+#include "../items/partlabel.h"
 #include "../connectors/connectoritem.h"
 #include "../items/wire.h"
 #include "../debugdialog.h"

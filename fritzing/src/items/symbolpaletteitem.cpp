@@ -33,7 +33,7 @@ $Date$
 #include "../utils/textutils.h"
 #include "../utils/focusoutcombobox.h"
 #include "../sketch/infographicsview.h"
-#include "../labels/partlabel.h"
+#include "partlabel.h"
 
 #include <QLineEdit>
 #include <QMultiHash>
@@ -262,17 +262,18 @@ QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash
 	return svg; 
 }
 
-bool SymbolPaletteItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+bool SymbolPaletteItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
 	if ((prop.compare("voltage", Qt::CaseInsensitive) == 0) && 
 		(modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) != 0)) 
 	{
-		returnValue = "<object type='application/x-qt-plugin' classid='VoltageInput' width='100%' height='22px'></object>"; 
+		returnValue = QString("<object type='application/x-qt-plugin' classid='VoltageInput' swappingenabled='%1' width='100%' height='22px'></object>")
+			.arg(swappingEnabled); 
 		returnProp = tr("voltage");
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 }
 
 
@@ -281,7 +282,9 @@ QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &class
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 	
+	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 	FocusOutComboBox * edit = new FocusOutComboBox(parent);
+	edit->setEnabled(swappingEnabled);
 	int ix = 0;
 	foreach (qreal v, Voltages) {
 		edit->addItem(QString::number(v));

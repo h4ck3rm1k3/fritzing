@@ -33,7 +33,7 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "../layerattributes.h"
-#include "../labels/partlabel.h"
+#include "partlabel.h"
 
 #include <qmath.h>
 #include <QRegExpValidator>
@@ -217,15 +217,16 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 		.arg(ColorBands.value(thirdband, Qt::black).name());
 }
 
-bool Resistor::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+bool Resistor::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("resistance");
-		returnValue = "<object type='application/x-qt-plugin' classid='ResistanceInput' width='100%' height='22px'></object>";  
+		returnValue = QString("<object type='application/x-qt-plugin' classid='ResistanceInput' swappingenabled='%1' width='100%' height='22px'></object>")
+			.arg(swappingEnabled);  
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 }
 
 QString Resistor::getProperty(const QString & key) {
@@ -339,7 +340,9 @@ QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const
 		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 	}
 	
+	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 	FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
+	focusOutComboBox->setEnabled(swappingEnabled);
 	focusOutComboBox->setEditable(true);
 	QString current = m_ohms + OhmSymbol;
 	focusOutComboBox->addItems(Resistances);

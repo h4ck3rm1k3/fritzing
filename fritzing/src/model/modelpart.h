@@ -39,7 +39,6 @@ $Date$
 #include <QList>
 #include <QPointer>
 
-#include "../items/itembase.h"
 #include "modelpartshared.h"
 #include "../connectors/connector.h"
 #include "../utils/svgandpartfilepath.h"
@@ -80,9 +79,9 @@ public:
 	void setModelPartShared(ModelPartShared *modelPartShared);
 	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument);
 	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
-	void addViewItem(ItemBase *);
-	void removeViewItem(ItemBase *);
-	ItemBase * viewItem(QGraphicsScene * scene);
+	void addViewItem(class ItemBase *);
+	void removeViewItem(class ItemBase *);
+	class ItemBase * viewItem(QGraphicsScene * scene);
 	void initConnectors(bool force=false);
 	const QHash<QString, Connector *> & connectors();
 	long modelIndex();
@@ -150,7 +149,7 @@ protected:
 
 
 protected:
-	QList<ItemBase *> m_viewItems;
+	QList<class ItemBase *> m_viewItems;
 
 	ItemType m_type;
 	QPointer<ModelPartShared> m_modelPartShared;

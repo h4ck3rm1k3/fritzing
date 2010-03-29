@@ -106,7 +106,7 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 	if (icon == NULL || event->button() != Qt::LeftButton) {
 		QGraphicsView::mousePressEvent(event);
 		if (icon == NULL) {
-			viewModelPartInfo(NULL);
+			viewItemInfo(NULL);
 		}
 	} else {
 		if (icon != NULL) {
@@ -123,12 +123,12 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 			QString moduleID = icon->moduleID();
 			QPoint hotspot = (mts.toPoint()-icon->pos().toPoint());
 
-			viewModelPartInfo(icon->modelPart());
+			viewItemInfo(icon->itemBase());
 
 			mousePressOnItem(event->pos(), moduleID, icon->rect().size().toSize(), (mts - icon->pos()), hotspot );
 		}
 		else {
-			viewModelPartInfo(NULL);
+			viewItemInfo(NULL);
 		}
 	}
 	informNewSelection();
@@ -201,9 +201,7 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
-		bool plural = isPlural(modelPart);
-		//DebugDialog::debug(QString("plural %1 %2").arg(plural).arg(modelPart->modelPartShared()->title()));
-		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, m_viewLayers, ItemBase::getNextID(), NULL, plural);
+		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, ItemBase::getNextID(), NULL);
 		if(position > -1) {
 			m_layout->insertItem(position, svgicon);
 		} else {
@@ -213,51 +211,6 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	} else {
 		m_partHash[moduleID]->copy(modelPart);
 	}
-}
-
-bool PartsBinIconView::isPlural(ModelPart * modelPart) {
-	QString moduleID = modelPart->moduleID();
-	switch (modelPart->itemType()) {
-		case ModelPart::Breadboard:
-		case ModelPart::ResizableBoard:
-		case ModelPart::Wire:
-		case ModelPart::Board:
-		case ModelPart::Symbol:
-		case ModelPart::Ruler:
-			return true;
-		default:
-			break;
-	}
-
-	if (moduleID.contains("mystery_part")) {
-		return true;
-	}
-	else if (moduleID.contains("screw_terminal")) {
-		return true;
-	}
-	else if (moduleID.contains("_dip")) {
-		return true;
-	}
-	else if (moduleID.contains("_sip")) {
-		return true;
-	}
-	else if (moduleID.contains("header")) {
-		return true;
-	}
-	else if (moduleID.contains("Resistor")) {
-		return true;
-	}
-
-	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
-	QString family = properties.value("family", "").toLower();
-	foreach (QString key, properties.keys()) {
-		QStringList values = m_refModel->values(family, key);
-		if (values.length() > 1) {
-			return true;
-		}
-	}
-	
-	return false;
 }
 
 void PartsBinIconView::setPaletteModel(PaletteModel *model, bool clear) {

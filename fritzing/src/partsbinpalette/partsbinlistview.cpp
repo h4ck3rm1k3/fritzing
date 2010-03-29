@@ -30,9 +30,9 @@ $Date$
 #include "../debugdialog.h"
 #include "../infoview/htmlinfoview.h"
 #include "../items/itembase.h"
-#include "../layerattributes.h"
 #include "../fsvgrenderer.h"
 #include "../itemdrag.h"
+#include "../items/partfactory.h"
 
 #include "partsbinlistview.h"
 
@@ -78,11 +78,13 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
 		QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartShared()->title());
-		lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
-
-		LayerAttributes layerAttributes;
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
+		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL);
+		lwi->setData(Qt::UserRole, qVariantFromValue( itemBase ) );
+		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon);
 		if (renderer != NULL) {
+			if (itemBase) {
+				itemBase->setFilename(renderer->filename());
+			}
 			QSize size(HtmlInfoView::STANDARD_ICON_IMG_WIDTH, HtmlInfoView::STANDARD_ICON_IMG_HEIGHT);
 			QPixmap * pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
 			lwi->setIcon(QIcon(*pixmap));
@@ -120,9 +122,9 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 	}
 
 	if (m_hoverItem != NULL) {
-		ModelPart * modelPart = m_hoverItem->data(Qt::UserRole).value<ModelPart *>();
-		if (modelPart != NULL) {
-			m_infoView->hoverLeaveItem(NULL, modelPart);
+		ItemBase * itemBase = m_hoverItem->data(Qt::UserRole).value<ItemBase *>();
+		if (itemBase != NULL) {
+			m_infoView->hoverLeaveItem(NULL, NULL, itemBase);
 		}
 	}
 
@@ -132,10 +134,10 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 
 	m_hoverItem = item;
 
-	ModelPart * modelPart = item->data(Qt::UserRole).value<ModelPart *>();
-	if (modelPart == NULL) return;
+	ItemBase * itemBase = item->data(Qt::UserRole).value<ItemBase *>();
+	if (itemBase == NULL) return;
 
-	m_infoView->hoverEnterItem(NULL, modelPart, swappingEnabled());
+	m_infoView->hoverEnterItem(NULL, NULL, itemBase, swappingEnabled());
 }
 
 
@@ -145,12 +147,12 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 
 	QListWidgetItem * current = currentItem();
 	if (current == NULL) {
-		m_infoView->viewModelPartInfo(NULL, NULL, false);
+		m_infoView->viewItemInfo(NULL, NULL, false);
 		return;
 	}
 
 	showInfo(current);
-	m_infoView->viewModelPartInfo(NULL, current->data(Qt::UserRole).value<ModelPart *>(), false);
+	m_infoView->viewItemInfo(NULL, current->data(Qt::UserRole).value<ItemBase *>(), false);
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
@@ -181,8 +183,11 @@ int PartsBinListView::position(const QString &moduleID) {
 	return -1;
 }
 
-ModelPart *PartsBinListView::itemModelPart(const QListWidgetItem *item) {
-	return item->data(Qt::UserRole).value<ModelPart *>();
+ModelPart *PartsBinListView::itemModelPart(const QListWidgetItem *item) const {
+	ItemBase * itemBase = item->data(Qt::UserRole).value<ItemBase *>();
+	if (itemBase == NULL) return NULL;
+
+	return itemBase->modelPart();
 }
 
 const QString &PartsBinListView::itemModuleID(const QListWidgetItem *item) {
@@ -277,7 +282,8 @@ QMimeData * PartsBinListView::mimeData(const QList<QListWidgetItem *> items) con
 	}
 
 	if(items.count()==1) {
-		ModelPart * modelPart = items[0]->data(Qt::UserRole).value<ModelPart *>();
+		QListWidgetItem * item = items.at(0);
+		ModelPart * modelPart = itemModelPart(item);
 		QByteArray itemData;
 		QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
@@ -302,7 +308,7 @@ QStringList PartsBinListView::mimeTypes() const {
 QList<QObject*> PartsBinListView::orderedChildren() {
 	QList<QObject*> result;
 	for(int i=0; i < count(); i++) {
-		ModelPart *mp = item(i)->data(Qt::UserRole).value<ModelPart *>();
+		ModelPart *mp = itemModelPart(item(i));
 		if(mp) {
 			result << mp;
 		}

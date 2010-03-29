@@ -137,30 +137,33 @@ QStringList LogoItem::collectValues(const QString & family, const QString & prop
 	return PaletteItem::collectValues(family, prop, value);
 }
 
-bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
 	if (m_hasLogo) {
 		if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
 			returnProp = tr("logo");
-			returnValue = "<object type='application/x-qt-plugin' classid='logo' width='100%' height='22px'></object>";  
+			returnValue = QString("<object type='application/x-qt-plugin' classid='logo' swappingenabled='%1' width='100%' height='22px'></object>")
+				.arg(swappingEnabled);  
 			return true;
 		}
 	}
 	else {
 		if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
-			returnValue = QString("<object type='application/x-qt-plugin' classid='filename' width='100%' height='44px'></object>");
+			returnValue = QString("<object type='application/x-qt-plugin' classid='filename' swappingenabled='%1' width='100%' height='44px'></object>")
+				.arg(swappingEnabled);
 			returnProp = "";
 			return true;
 		}
 	}
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' width='100%' height='60px'></object>");
+		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' swappingenabled='%1' width='100%' height='60px'></object>")
+			.arg(swappingEnabled);
 		returnProp = tr("size");
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 
 }
 
@@ -170,6 +173,7 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 		// implemented below
 	}
 	else if (classid.compare("filename", Qt::CaseInsensitive) == 0) { 
+		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 		QFrame * frame = new QFrame();
 		QVBoxLayout * vboxLayout = new QVBoxLayout();
 		vboxLayout->setAlignment(Qt::AlignLeft);
@@ -178,6 +182,7 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 
 		QComboBox * comboBox = new QComboBox();
 		comboBox->setEditable(false);
+		comboBox->setEnabled(swappingEnabled);
 		m_fileNameComboBox = comboBox;
 
 		setFileNameItems();
@@ -187,6 +192,7 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 		QPushButton * button = new QPushButton (tr("load image file"));
 		connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
 		button->setMinimumWidth(100);
+		button->setEnabled(swappingEnabled);
 
 		vboxLayout->addWidget(comboBox);
 		vboxLayout->addWidget(button);
@@ -196,8 +202,10 @@ QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const
 		return frame;
 	}
 	else if (classid.compare("logo", Qt::CaseInsensitive) == 0) {
+		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 		QLineEdit * e1 = new QLineEdit(parent);
 		e1->setText(m_logo);
+		e1->setEnabled(swappingEnabled);
 		connect(e1, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
 
 		e1->setMaximumWidth(200);

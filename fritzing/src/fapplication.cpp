@@ -33,7 +33,6 @@ $Date$
 #include "dialogs/prefsdialog.h"
 #include "help/helper.h"
 #include "partseditor/partseditormainwindow.h"
-#include "layerattributes.h"
 #include "fsvgrenderer.h"
 #include "version/versionchecker.h"
 #include "version/updatedialog.h"
@@ -751,8 +750,7 @@ void FApplication::preloadSlowParts() {
 		return;
 	}
 
-	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard);
 	//DebugDialog::debug(QString("preload set up image"));
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;

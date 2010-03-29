@@ -65,7 +65,6 @@ RESOURCES += phoenixresources.qrc
 	include(pri/referencemodel.pri)
 	include(pri/svg.pri)
 	include(pri/help.pri)
-	include(pri/labels.pri)
 	include(pri/itemselection.pri)
 	include(pri/version.pri)
 	include(pri/group.pri)

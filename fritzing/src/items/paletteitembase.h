@@ -55,7 +55,6 @@ public:
 	void mousePressConnectorEvent(class ConnectorItem *, QGraphicsSceneMouseEvent *);
 	bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	virtual bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
-	const QString & filename();
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
@@ -93,8 +92,6 @@ protected:
  	bool m_syncSelected;
  	QPointF m_syncMoved;
  	bool m_svg;
-	QString m_filename;
-
 };
 
 

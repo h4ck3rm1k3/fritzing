@@ -32,7 +32,7 @@ $Date$
 #include "../commands.h"
 #include "../utils/textutils.h"
 #include "../layerattributes.h"
-#include "../labels/partlabel.h"
+#include "partlabel.h"
 
 #include <QDomNodeList>
 #include <QDomDocument>

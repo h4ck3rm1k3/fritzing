@@ -32,9 +32,10 @@ $Date$
 #include <QGraphicsWidget>
 #include <QGraphicsPixmapItem>
 #include <QToolTip>
+#include <QPointer>
 
 #include "../model/modelpart.h"
-#include "../items/paletteitem.h"
+#include "../items/itembase.h"
 
 class SvgIconWidgetContainer;
 
@@ -42,9 +43,10 @@ class SvgIconWidget : public QGraphicsWidget
 {
 Q_OBJECT
 public:
-	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu, bool isPlural);
+	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, long id, QMenu * itemMenu);
 	~SvgIconWidget();
-	ModelPart *modelPart() const;
+	ItemBase * itemBase() const;
+	ModelPart * modelPart() const;
 	const QString &moduleID() const;
 
 	static void initNames();
@@ -56,10 +58,9 @@ protected:
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 
 protected:
-	PaletteItem *m_paletteItem;
-	QGraphicsPixmapItem *m_pixmapItem;
+	QPointer<ItemBase> m_itemBase;
+	QGraphicsPixmapItem * m_pixmapItem;
 	QString m_moduleId;
-	bool m_isPlural;
 };
 
 

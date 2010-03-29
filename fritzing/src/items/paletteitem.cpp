@@ -30,9 +30,8 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "layerkinpaletteitem.h"
 #include "../fsvgrenderer.h"
-#include "../layerattributes.h"
 #include "../connectors/connectorshared.h"
-#include "../labels/partlabel.h"
+#include "partlabel.h"
 #include "../commands.h"
 #include "../connectors/connectoritem.h"
 

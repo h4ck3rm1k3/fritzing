@@ -72,7 +72,7 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 
 		void setItemAux(ModelPart * modelPart, int position = -1);
 
-		ModelPart *itemModelPart(const QListWidgetItem *item);
+		ModelPart *itemModelPart(const QListWidgetItem *item) const;
 		const QString& itemModuleID(const QListWidgetItem *item);
 
 		void showInfo(QListWidgetItem * item);

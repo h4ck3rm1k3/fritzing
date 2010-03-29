@@ -186,12 +186,13 @@ bool Ruler::hasCustomSVG() {
 	}
 }
 
-bool Ruler::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool collectValues, QString & returnProp, QString & returnValue) 
+bool Ruler::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
-	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, collectValues, returnProp, returnValue);
+	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
 
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
-		returnValue = "<object type='application/x-qt-plugin' classid='width' width='100%' height='22px'></object>";  
+		returnValue = QString("<object type='application/x-qt-plugin' classid='width' swappingenabled='%1' width='100%' height='22px'></object>")
+			.arg(swappingEnabled);  
 		returnProp = tr("width");
 		return true;
 	}
@@ -202,12 +203,15 @@ bool Ruler::collectExtraInfoHtml(const QString & family, const QString & prop, c
 QObject * Ruler::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
 
 	if (classid.compare("width", Qt::CaseInsensitive) == 0) {
+		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
+
 		int units = m_modelPart->prop("width").toString().contains("cm") ? IndexCm : IndexIn;
 		QLineEdit * e1 = new QLineEdit();
 		QDoubleValidator * validator = new QDoubleValidator(e1);
 		validator->setRange(1.0, 20 * ((units == IndexCm) ? 2.54 : 1), 2);
 		validator->setNotation(QDoubleValidator::StandardNotation);
 		e1->setValidator(validator);
+		e1->setEnabled(swappingEnabled);
 		QString temp = m_modelPart->prop("width").toString();
 		temp.chop(2);
 		e1->setText(temp);
@@ -216,6 +220,7 @@ QObject * Ruler::createPlugin(QWidget * parent, const QString &classid, const QU
 
 		QComboBox * comboBox = new QComboBox(parent);
 		comboBox->setEditable(false);
+		comboBox->setEnabled(swappingEnabled);
 		comboBox->addItem("cm");
 		comboBox->addItem("in");
 		comboBox->setCurrentIndex(units);

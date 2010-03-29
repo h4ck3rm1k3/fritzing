@@ -31,6 +31,7 @@ $Date$
 #include "../connectors/bus.h"
 #include "../version/version.h"
 #include "../utils/folderutils.h"
+#include "../items/itembase.h"
 
 #include <QDomElement>
 

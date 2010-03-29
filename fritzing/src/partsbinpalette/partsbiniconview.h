@@ -79,8 +79,6 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		class SvgIconWidget * svgIconWidgetAt(const QPoint & pos);
 		class SvgIconWidget * svgIconWidgetAt(int x, int y);
 
-		bool isPlural(ModelPart * modelPart);
-
 	public slots:
 		void setSelected(int position, bool doEmit=false);
 		void informNewSelection();

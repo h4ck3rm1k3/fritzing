@@ -43,6 +43,7 @@ $Date$
 #include <QDomElement>
 #include <QSettings>
 
+#include "../items/partfactory.h"
 #include "../items/paletteitem.h"
 #include "../items/logoitem.h"
 #include "../items/ruler.h"
@@ -64,8 +65,8 @@ $Date$
 #include "../autoroute/autorouter1.h"
 #include "../fgraphicsscene.h"
 #include "../version/version.h"
-#include "../labels/partlabel.h"
-#include "../labels/note.h"
+#include "../items/partlabel.h"
+#include "../items/note.h"
 #include "../group/groupitem.h"
 #include "../svg/svgfilesplitter.h"
 #include "../svg/svgflattener.h"
@@ -681,126 +682,78 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 	}
 
-	PaletteItem* paletteItem = NULL;
-	switch (modelPart->itemType()) {
-		case ModelPart::Module:
-			if (doConnectors || originatingCommand || originalModelIndex > 0)
-			{
-				QList<ModelPart *>  modelParts;
-				return makeModule(modelPart, originalModelIndex, modelParts, viewGeometry, id);
-			}
-			break;					// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
-		case ModelPart::Wire:
+	if (modelPart->itemType() == ModelPart::Module) {
+		if (doConnectors || originatingCommand || originalModelIndex > 0)
 		{
-			bool virtualWire = viewGeometry.getVirtual();
-			Wire * wire = NULL;
-			if (virtualWire) {
-				VirtualWire * vw = new VirtualWire(modelPart, viewIdentifier, viewGeometry, id, m_wireMenu);
-				setClipEnds(vw, true);
-				wire = vw;
-             	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
-				
-				// prevents virtual wires from flashing up on screen
+			QList<ModelPart *>  modelParts;
+			return makeModule(modelPart, originalModelIndex, modelParts, viewGeometry, id);
+		}
+		
+		// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
+	}
+
+	ItemBase * newItem = PartFactory::createPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu);
+	Wire * wire = dynamic_cast<Wire *>(newItem);
+	if (wire) {
+		bool virtualWire = viewGeometry.getVirtual();
+		if (virtualWire) {
+			setClipEnds((ClipableWire *) wire, true);
+		}
+		else {
+			if (viewGeometry.getTrace()) {
+				setClipEnds((ClipableWire *) wire, true);
 			}
 			else {
-				if (viewGeometry.getTrace()) {
-					TraceWire * traceWire = new TraceWire(modelPart, viewIdentifier, viewGeometry, id, m_wireMenu);
-					setClipEnds(traceWire, true);
-					wire = traceWire;
+				if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
+					wire->setNormal(true);
 				}
-				else {
-					wire = new Wire(modelPart, viewIdentifier, viewGeometry, id, m_wireMenu);
-					if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
-						wire->setNormal(true);
-					}
-				}
-				wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
 			}
-
-			setWireVisible(wire);
-
-			bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
-					this, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
-					Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-			succeeded = succeeded && connect(wire, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, QLineF)),
-					this, SLOT(wire_wireSplit(Wire*, QPointF, QPointF, QLineF)));
-			succeeded = succeeded && connect(wire, SIGNAL(wireJoinSignal(Wire*, ConnectorItem *)),
-					this, SLOT(wire_wireJoin(Wire*, ConnectorItem*)));
-			if (!succeeded) {
-				DebugDialog::debug("wire signal connect failed");
-			}
-
-			addToScene(wire, wire->viewLayerID());
-			DebugDialog::debug(QString("adding wire %1 %2 %3 %4 %5")
-				.arg(wire->id())
-				.arg(viewIdentifier)
-				.arg(viewGeometry.flagsAsInt())
-				.arg((long) wire, 0, 16)
-				.arg((long) static_cast<QGraphicsItem *>(wire), 0, 16)
-				);
-
-
-			return wire;
 		}
-		case ModelPart::Note:
-		{
-			Note * note = new Note(modelPart, viewIdentifier, viewGeometry, id, NULL);
-			note->setViewLayerID(getNoteViewLayerID(), m_viewLayers);
-			note->setZValue(note->z());
-			note->setVisible(true);
-			addToScene(note, getNoteViewLayerID());
-			return note;
+
+		wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
+		setWireVisible(wire);
+
+		bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
+				this, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
+				Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
+		succeeded = succeeded && connect(wire, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, QLineF)),
+				this, SLOT(wire_wireSplit(Wire*, QPointF, QPointF, QLineF)));
+		succeeded = succeeded && connect(wire, SIGNAL(wireJoinSignal(Wire*, ConnectorItem *)),
+				this, SLOT(wire_wireJoin(Wire*, ConnectorItem*)));
+		if (!succeeded) {
+			DebugDialog::debug("wire signal connect failed");
 		}
-		case ModelPart::CopperFill:
-			paletteItem = new GroundPlane(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
-			break;
-		case ModelPart::Jumper:
-			paletteItem = new JumperItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
-			break;
-		case ModelPart::ResizableBoard:
-			paletteItem = new ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
-			break;
-		case ModelPart::Logo:
-			paletteItem = new LogoItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
-			break;
-		case ModelPart::Ruler:
-			paletteItem = new Ruler(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
-			break;
-		case ModelPart::Symbol:
-			paletteItem = new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
-			break;
-		default:
-			{
-				QString family = modelPart->properties().value("family", "");
-				if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) == 0) {
-					paletteItem = new Resistor(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
-				}
-				else if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
-					paletteItem = new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
-				}
-				else if (family.compare("pin header", Qt::CaseInsensitive) == 0) {
-					paletteItem = new PinHeader(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
-				}
-				else if (family.compare("generic IC", Qt::CaseInsensitive) == 0) {
-					paletteItem = new Dip(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, true);
-				}
-				else {
-					paletteItem = new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu);
-				}
-			}
-			break;
+
+		addToScene(wire, wire->viewLayerID());
+		DebugDialog::debug(QString("adding wire %1 %2 %3 %4 %5")
+			.arg(wire->id())
+			.arg(viewIdentifier)
+			.arg(viewGeometry.flagsAsInt())
+			.arg((long) wire, 0, 16)
+			.arg((long) static_cast<QGraphicsItem *>(wire), 0, 16)
+			);
+
+		return wire;
+	}
+
+	if (modelPart->itemType() == ModelPart::Note) {
+		newItem->setViewLayerID(getNoteViewLayerID(), m_viewLayers);
+		newItem->setZValue(newItem->z());
+		newItem->setVisible(true);
+		addToScene(newItem, getNoteViewLayerID());
+		return newItem;
 	}
 
 	bool ok;
-	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors, ok, viewIdentifier);
+	addPartItem(modelPart, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
 	DebugDialog::debug(QString("adding part %1 %2 %4 %5 %3")
 		.arg(id)
-		.arg(paletteItem->title())
+		.arg(newItem->title())
 		.arg(viewIdentifier)
-		.arg((long) itemBase, 0, 16)
-		.arg((long) static_cast<QGraphicsItem *>(itemBase), 0, 16));
-	setNewPartVisible(itemBase);
-	return itemBase;
+		.arg((long) newItem, 0, 16)
+		.arg((long) static_cast<QGraphicsItem *>(newItem), 0, 16));
+	setNewPartVisible(newItem);
+	return newItem;
 }
 
 

@@ -45,34 +45,16 @@ void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 	m_infoView->viewItemInfo(this, item ? item->layerKinChief() : item, swappingEnabled(item));
 }
 
-void InfoGraphicsView::viewModelPartInfo(ModelPart * modelPart) {
-	if (m_infoView == NULL) return;
-
-	m_infoView->viewModelPartInfo(this, modelPart, false);
-}
-
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {
 	if (m_infoView == NULL) return;
 
 	m_infoView->hoverEnterItem(this, event, item ? item->layerKinChief() : item, swappingEnabled(item));
 }
 
-void InfoGraphicsView::hoverEnterItem(ModelPart* modelPart) {
-	if (m_infoView == NULL) return;
-
-	m_infoView->hoverEnterItem(this, modelPart, swappingEnabled(NULL));
-}
-
 void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
 	if (m_infoView == NULL) return;
 
 	m_infoView->hoverLeaveItem(this, event, item ? item->layerKinChief() : item);
-}
-
-void InfoGraphicsView::hoverLeaveItem(ModelPart* modelPart) {
-	if (m_infoView == NULL) return;
-
-	m_infoView->hoverLeaveItem(this, modelPart);
 }
 
 void InfoGraphicsView::viewConnectorItemInfo(ConnectorItem * item) {
