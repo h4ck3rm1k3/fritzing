@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.581in" height="0.581in" viewBox="0 0 58100 58100" ><title>PQFP52_10X10 52.fp</title><desc>Geda footprint file 'PQFP52_10X10 52.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>PQFP52_10X10 52.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.03.22.4055</fz:attr><fz:attr name='conversion date'>30/03/2010 15:38:52</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper0"/>
+<g id="copper1">
+ <line fill="none" connectorname="1" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector0pin" y1="13700" x1="800" y2="13700" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="2" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector1pin" y1="16300" x1="800" y2="16300" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="3" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector2pin" y1="18800" x1="800" y2="18800" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="4" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector3pin" y1="21400" x1="800" y2="21400" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="5" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector4pin" y1="24000" x1="800" y2="24000" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="6" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector5pin" y1="26500" x1="800" y2="26500" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="7" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector6pin" y1="29100" x1="800" y2="29100" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="8" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector7pin" y1="31600" x1="800" y2="31600" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="9" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector8pin" y1="34200" x1="800" y2="34200" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="10" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector9pin" y1="36700" x1="800" y2="36700" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="11" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector10pin" y1="39300" x1="800" y2="39300" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="12" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector11pin" y1="41900" x1="800" y2="41900" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="13" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector12pin" y1="44400" x1="800" y2="44400" stroke-width="1600" x2="8800"/>
+ <line fill="none" connectorname="14" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector13pin" y1="57300" x1="13700" y2="49300" stroke-width="1600" x2="13700"/>
+ <line fill="none" connectorname="15" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector14pin" y1="57300" x1="16300" y2="49300" stroke-width="1600" x2="16300"/>
+ <line fill="none" connectorname="16" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector15pin" y1="57300" x1="18800" y2="49300" stroke-width="1600" x2="18800"/>
+ <line fill="none" connectorname="17" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector16pin" y1="57300" x1="21400" y2="49300" stroke-width="1600" x2="21400"/>
+ <line fill="none" connectorname="18" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector17pin" y1="57300" x1="24000" y2="49300" stroke-width="1600" x2="24000"/>
+ <line fill="none" connectorname="19" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector18pin" y1="57300" x1="26500" y2="49300" stroke-width="1600" x2="26500"/>
+ <line fill="none" connectorname="20" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector19pin" y1="57300" x1="29100" y2="49300" stroke-width="1600" x2="29100"/>
+ <line fill="none" connectorname="21" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector20pin" y1="57300" x1="31600" y2="49300" stroke-width="1600" x2="31600"/>
+ <line fill="none" connectorname="22" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector21pin" y1="57300" x1="34200" y2="49300" stroke-width="1600" x2="34200"/>
+ <line fill="none" connectorname="23" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector22pin" y1="57300" x1="36700" y2="49300" stroke-width="1600" x2="36700"/>
+ <line fill="none" connectorname="24" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector23pin" y1="57300" x1="39300" y2="49300" stroke-width="1600" x2="39300"/>
+ <line fill="none" connectorname="25" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector24pin" y1="57300" x1="41900" y2="49300" stroke-width="1600" x2="41900"/>
+ <line fill="none" connectorname="26" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector25pin" y1="57300" x1="44400" y2="49300" stroke-width="1600" x2="44400"/>
+ <line fill="none" connectorname="27" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector26pin" y1="44400" x1="49300" y2="44400" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="28" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector27pin" y1="41900" x1="49300" y2="41900" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="29" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector28pin" y1="39300" x1="49300" y2="39300" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="30" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector29pin" y1="36700" x1="49300" y2="36700" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="31" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector30pin" y1="34200" x1="49300" y2="34200" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="32" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector31pin" y1="31600" x1="49300" y2="31600" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="33" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector32pin" y1="29100" x1="49300" y2="29100" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="34" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector33pin" y1="26500" x1="49300" y2="26500" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="35" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector34pin" y1="24000" x1="49300" y2="24000" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="36" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector35pin" y1="21400" x1="49300" y2="21400" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="37" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector36pin" y1="18800" x1="49300" y2="18800" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="38" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector37pin" y1="16300" x1="49300" y2="16300" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="39" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector38pin" y1="13700" x1="49300" y2="13700" stroke-width="1600" x2="57300"/>
+ <line fill="none" connectorname="40" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector39pin" y1="800" x1="44400" y2="8800" stroke-width="1600" x2="44400"/>
+ <line fill="none" connectorname="41" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector40pin" y1="800" x1="41900" y2="8800" stroke-width="1600" x2="41900"/>
+ <line fill="none" connectorname="42" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector41pin" y1="800" x1="39300" y2="8800" stroke-width="1600" x2="39300"/>
+ <line fill="none" connectorname="43" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector42pin" y1="800" x1="36700" y2="8800" stroke-width="1600" x2="36700"/>
+ <line fill="none" connectorname="44" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector43pin" y1="800" x1="34200" y2="8800" stroke-width="1600" x2="34200"/>
+ <line fill="none" connectorname="45" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector44pin" y1="800" x1="31600" y2="8800" stroke-width="1600" x2="31600"/>
+ <line fill="none" connectorname="46" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector45pin" y1="800" x1="29100" y2="8800" stroke-width="1600" x2="29100"/>
+ <line fill="none" connectorname="47" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector46pin" y1="800" x1="26500" y2="8800" stroke-width="1600" x2="26500"/>
+ <line fill="none" connectorname="48" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector47pin" y1="800" x1="24000" y2="8800" stroke-width="1600" x2="24000"/>
+ <line fill="none" connectorname="49" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector48pin" y1="800" x1="21400" y2="8800" stroke-width="1600" x2="21400"/>
+ <line fill="none" connectorname="50" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector49pin" y1="800" x1="18800" y2="8800" stroke-width="1600" x2="18800"/>
+ <line fill="none" connectorname="51" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector50pin" y1="800" x1="16300" y2="8800" stroke-width="1600" x2="16300"/>
+ <line fill="none" connectorname="52" stroke="#ff9400" stroke-linejoin="round" stroke-linecap="round" id="connector51pin" y1="800" x1="13700" y2="8800" stroke-width="1600" x2="13700"/>
+</g>
+<g id="silkscreen">
+ <line fill="none" stroke="white" y1="13700" x1="14300" y2="13700" stroke-width="2000" x2="44400"/>
+ <line fill="none" stroke="white" y1="14300" x1="13700" y2="44400" stroke-width="2000" x2="13700"/>
+ <line fill="none" stroke="white" y1="44400" x1="13700" y2="44400" stroke-width="2000" x2="44400"/>
+ <line fill="none" stroke="white" y1="44400" x1="44400" y2="13700" stroke-width="2000" x2="44400"/>
+ <line fill="none" stroke="white" y1="14300" x1="13700" y2="13700" stroke-width="2000" x2="14300"/>
+</g>
+</svg>

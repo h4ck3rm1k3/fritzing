@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.4937in" height="0.4937in" viewBox="0 0 49370 49370" ><title>LQFP72_10.fp</title><desc>Geda footprint file 'LQFP72_10.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>LQFP72_10.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.03.22.4055</fz:attr><fz:attr name='conversion date'>30/03/2010 15:38:44</fz:attr><fz:comment>left row</fz:comment><fz:comment>bottom row</fz:comment><fz:comment>right row</fz:comment><fz:comment>top row</fz:comment><fz:comment>exposed paddle (if this is an exposed paddle part)</fz:comment><fz:comment>top</fz:comment><fz:comment>right</fz:comment><fz:comment>bottom</fz:comment><fz:comment>left</fz:comment><fz:comment>angled corner</fz:comment></rdf:Description></rdf:RDF></metadata><g id="copper0"/>
+<g id="copper1">
+ <line fill="none" connectorname="1" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector0pin" y1="7953" x1="551" y2="7953" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="2" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector1pin" y1="9921" x1="551" y2="9921" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="3" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector2pin" y1="11890" x1="551" y2="11890" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="4" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector3pin" y1="13858" x1="551" y2="13858" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="5" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector4pin" y1="15827" x1="551" y2="15827" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="6" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector5pin" y1="17795" x1="551" y2="17795" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="7" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector6pin" y1="19764" x1="551" y2="19764" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="8" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector7pin" y1="21732" x1="551" y2="21732" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="9" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector8pin" y1="23701" x1="551" y2="23701" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="10" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector9pin" y1="25669" x1="551" y2="25669" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="11" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector10pin" y1="27638" x1="551" y2="27638" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="12" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector11pin" y1="29606" x1="551" y2="29606" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="13" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector12pin" y1="31575" x1="551" y2="31575" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="14" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector13pin" y1="33543" x1="551" y2="33543" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="15" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector14pin" y1="35512" x1="551" y2="35512" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="16" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector15pin" y1="37480" x1="551" y2="37480" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="17" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector16pin" y1="39449" x1="551" y2="39449" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="18" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector17pin" y1="41417" x1="551" y2="41417" stroke-width="1102" x2="3949"/>
+ <line fill="none" connectorname="19" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector18pin" y1="48819" x1="7953" y2="45421" stroke-width="1102" x2="7953"/>
+ <line fill="none" connectorname="20" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector19pin" y1="48819" x1="9921" y2="45421" stroke-width="1102" x2="9921"/>
+ <line fill="none" connectorname="21" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector20pin" y1="48819" x1="11890" y2="45421" stroke-width="1102" x2="11890"/>
+ <line fill="none" connectorname="22" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector21pin" y1="48819" x1="13858" y2="45421" stroke-width="1102" x2="13858"/>
+ <line fill="none" connectorname="23" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector22pin" y1="48819" x1="15827" y2="45421" stroke-width="1102" x2="15827"/>
+ <line fill="none" connectorname="24" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector23pin" y1="48819" x1="17795" y2="45421" stroke-width="1102" x2="17795"/>
+ <line fill="none" connectorname="25" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector24pin" y1="48819" x1="19764" y2="45421" stroke-width="1102" x2="19764"/>
+ <line fill="none" connectorname="26" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector25pin" y1="48819" x1="21732" y2="45421" stroke-width="1102" x2="21732"/>
+ <line fill="none" connectorname="27" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector26pin" y1="48819" x1="23701" y2="45421" stroke-width="1102" x2="23701"/>
+ <line fill="none" connectorname="28" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector27pin" y1="48819" x1="25669" y2="45421" stroke-width="1102" x2="25669"/>
+ <line fill="none" connectorname="29" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector28pin" y1="48819" x1="27638" y2="45421" stroke-width="1102" x2="27638"/>
+ <line fill="none" connectorname="30" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector29pin" y1="48819" x1="29606" y2="45421" stroke-width="1102" x2="29606"/>
+ <line fill="none" connectorname="31" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector30pin" y1="48819" x1="31575" y2="45421" stroke-width="1102" x2="31575"/>
+ <line fill="none" connectorname="32" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector31pin" y1="48819" x1="33543" y2="45421" stroke-width="1102" x2="33543"/>
+ <line fill="none" connectorname="33" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector32pin" y1="48819" x1="35512" y2="45421" stroke-width="1102" x2="35512"/>
+ <line fill="none" connectorname="34" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector33pin" y1="48819" x1="37480" y2="45421" stroke-width="1102" x2="37480"/>
+ <line fill="none" connectorname="35" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector34pin" y1="48819" x1="39449" y2="45421" stroke-width="1102" x2="39449"/>
+ <line fill="none" connectorname="36" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector35pin" y1="48819" x1="41417" y2="45421" stroke-width="1102" x2="41417"/>
+ <line fill="none" connectorname="37" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector36pin" y1="41417" x1="48819" y2="41417" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="38" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector37pin" y1="39449" x1="48819" y2="39449" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="39" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector38pin" y1="37480" x1="48819" y2="37480" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="40" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector39pin" y1="35512" x1="48819" y2="35512" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="41" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector40pin" y1="33543" x1="48819" y2="33543" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="42" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector41pin" y1="31575" x1="48819" y2="31575" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="43" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector42pin" y1="29606" x1="48819" y2="29606" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="44" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector43pin" y1="27638" x1="48819" y2="27638" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="45" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector44pin" y1="25669" x1="48819" y2="25669" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="46" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector45pin" y1="23701" x1="48819" y2="23701" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="47" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector46pin" y1="21732" x1="48819" y2="21732" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="48" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector47pin" y1="19764" x1="48819" y2="19764" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="49" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector48pin" y1="17795" x1="48819" y2="17795" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="50" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector49pin" y1="15827" x1="48819" y2="15827" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="51" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector50pin" y1="13858" x1="48819" y2="13858" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="52" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector51pin" y1="11890" x1="48819" y2="11890" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="53" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector52pin" y1="9921" x1="48819" y2="9921" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="54" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector53pin" y1="7953" x1="48819" y2="7953" stroke-width="1102" x2="45421"/>
+ <line fill="none" connectorname="55" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector54pin" y1="551" x1="41417" y2="3949" stroke-width="1102" x2="41417"/>
+ <line fill="none" connectorname="56" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector55pin" y1="551" x1="39449" y2="3949" stroke-width="1102" x2="39449"/>
+ <line fill="none" connectorname="57" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector56pin" y1="551" x1="37480" y2="3949" stroke-width="1102" x2="37480"/>
+ <line fill="none" connectorname="58" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector57pin" y1="551" x1="35512" y2="3949" stroke-width="1102" x2="35512"/>
+ <line fill="none" connectorname="59" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector58pin" y1="551" x1="33543" y2="3949" stroke-width="1102" x2="33543"/>
+ <line fill="none" connectorname="60" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector59pin" y1="551" x1="31575" y2="3949" stroke-width="1102" x2="31575"/>
+ <line fill="none" connectorname="61" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector60pin" y1="551" x1="29606" y2="3949" stroke-width="1102" x2="29606"/>
+ <line fill="none" connectorname="62" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector61pin" y1="551" x1="27638" y2="3949" stroke-width="1102" x2="27638"/>
+ <line fill="none" connectorname="63" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector62pin" y1="551" x1="25669" y2="3949" stroke-width="1102" x2="25669"/>
+ <line fill="none" connectorname="64" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector63pin" y1="551" x1="23701" y2="3949" stroke-width="1102" x2="23701"/>
+ <line fill="none" connectorname="65" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector64pin" y1="551" x1="21732" y2="3949" stroke-width="1102" x2="21732"/>
+ <line fill="none" connectorname="66" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector65pin" y1="551" x1="19764" y2="3949" stroke-width="1102" x2="19764"/>
+ <line fill="none" connectorname="67" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector66pin" y1="551" x1="17795" y2="3949" stroke-width="1102" x2="17795"/>
+ <line fill="none" connectorname="68" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector67pin" y1="551" x1="15827" y2="3949" stroke-width="1102" x2="15827"/>
+ <line fill="none" connectorname="69" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector68pin" y1="551" x1="13858" y2="3949" stroke-width="1102" x2="13858"/>
+ <line fill="none" connectorname="70" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector69pin" y1="551" x1="11890" y2="3949" stroke-width="1102" x2="11890"/>
+ <line fill="none" connectorname="71" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector70pin" y1="551" x1="9921" y2="3949" stroke-width="1102" x2="9921"/>
+ <line fill="none" connectorname="72" stroke="#ff9400" stroke-linejoin="miter" stroke-linecap="square" id="connector71pin" y1="551" x1="7953" y2="3949" stroke-width="1102" x2="7953"/>
+</g>
+<g id="silkscreen">
+ <line fill="none" stroke="white" y1="5400" x1="8300" y2="5400" stroke-width="800" x2="43970"/>
+ <line fill="none" stroke="white" y1="5400" x1="43970" y2="43970" stroke-width="800" x2="43970"/>
+ <line fill="none" stroke="white" y1="43970" x1="43970" y2="43970" stroke-width="800" x2="5400"/>
+ <line fill="none" stroke="white" y1="43970" x1="5400" y2="8300" stroke-width="800" x2="5400"/>
+ <line fill="none" stroke="white" y1="8300" x1="5400" y2="5400" stroke-width="800" x2="8300"/>
+ <circle fill="none" cx="8300" cy="8300" stroke="white" r="1000" stroke-width="800"/>
+</g>
+</svg>
