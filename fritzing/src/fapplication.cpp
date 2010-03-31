@@ -48,6 +48,7 @@ $Date$
 #include "partsbinpalette/searchlineedit.h"
 #include "utils/ratsnestcolors.h"
 #include "infoview/htmlinfoview.h"
+#include "svg/gedaelement2svg.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -124,6 +125,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_updateDialog = NULL;
 	m_lastTopmostWindow = NULL;
 	m_runAsService = false;
+	m_gerberService = false;
+	m_gedaService = false;
 
 	m_arguments = arguments();
 	QList<int> toRemove;
@@ -138,10 +141,20 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 			toRemove << i + 1;
 		}
 
+		if ((m_arguments[i].compare("-geda", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("--geda", Qt::CaseInsensitive) == 0)) {
+			m_runAsService = true;
+			m_gedaService = true;
+			m_outputFolder = m_arguments[i + 1];
+			toRemove << i;
+			toRemove << i + 1;
+		}
+
 		if ((m_arguments[i].compare("-g", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("-gerber", Qt::CaseInsensitive) == 0)||
 			(m_arguments[i].compare("--gerber", Qt::CaseInsensitive) == 0)) {
 			m_runAsService = true;
+			m_gerberService = true;
 			toRemove << i;
 		}
 
@@ -149,9 +162,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 			m_runAsService = true;
 			toRemove << i;
 			toRemove << i + 1;
-			m_gerberOutputFolder = m_arguments[i + 1];
+			m_outputFolder = m_arguments[i + 1];
 		}
-
 
 		if (m_arguments[i].compare("-ep", Qt::CaseInsensitive) == 0) {
 			m_externalProcessPath = m_arguments[i + 1];
@@ -415,8 +427,38 @@ MainWindow * FApplication::loadWindows(bool showProgress, int & loaded) {
 
 int FApplication::serviceStartup() {
 
-	if (m_gerberOutputFolder.isEmpty()) {
+	if (m_outputFolder.isEmpty()) {
 		return -1;
+	}
+
+	if (m_gedaService) {
+		try {
+			QDir dir(m_outputFolder);
+			QStringList filters;
+			filters << "*.fp";
+			QStringList filenames = dir.entryList(filters, QDir::Files);
+			foreach (QString filename, filenames) {
+				QString filepath = dir.absoluteFilePath(filename);
+				QString newfilepath = filepath;
+				newfilepath.replace(".fp", ".svg");
+				GedaElement2Svg g;
+				QString svg = g.convert(filepath, false);
+				QFile file(newfilepath);
+				if (file.open(QFile::WriteOnly)) {
+					QTextStream stream(&file);
+					stream << svg;
+					file.close();
+				}
+			}
+		}
+		catch (const QString & msg) {
+			DebugDialog::debug(msg);
+		}
+		catch (...) {
+			DebugDialog::debug("who knows");
+		}
+
+		return 0;
 	}
 
 	registerFonts();
@@ -434,7 +476,7 @@ int FApplication::serviceStartup() {
 		return -1;
 	}
 
-	mainWindow->exportToGerber(m_gerberOutputFolder, NULL);
+	mainWindow->exportToGerber(m_outputFolder, NULL);
 
 	return 0;
 }

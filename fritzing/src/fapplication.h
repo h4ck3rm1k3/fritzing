@@ -107,9 +107,11 @@ protected:
 	QString m_externalProcessName;
 	QString m_externalProcessPath;
 	bool m_runAsService;
+	bool m_gerberService;
+	bool m_gedaService;
 	int m_progressIndex;
 	class FSplashScreen * m_splash;
-	QString m_gerberOutputFolder;
+	QString m_outputFolder;
 
 public:
 	static QSet<QString> InstalledFonts;

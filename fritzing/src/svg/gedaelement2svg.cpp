@@ -48,7 +48,7 @@ static const int MIN_INT = std::numeric_limits<int>::min();
 GedaElement2Svg::GedaElement2Svg() {
 }
 
-QString GedaElement2Svg::convert(QString filename) 
+QString GedaElement2Svg::convert(QString filename, bool allowPadsAndPins) 
 {
 	QFile file(filename);
 	if (!file.open(QFile::ReadOnly)) {
@@ -100,6 +100,8 @@ QString GedaElement2Svg::convert(QString filename)
 	QVector<QVariant> stack = parser.symStack();
 
 	QStringList already;
+	int pins = 0;
+	int pads = 0;
 	for (int ix = 0; ix < stack.size(); ) { 
 		QVariant var = stack[ix];
 		if (var.type() == QVariant::String) {
@@ -114,6 +116,7 @@ QString GedaElement2Svg::convert(QString filename)
 					copper1 += s;
 					already.append(s);
 				}
+				pads++;
 			}
 			else if (thing.compare("pin", Qt::CaseInsensitive) == 0) {
 				QString s = convertPin(stack, ix, argCount, mils);
@@ -121,6 +124,7 @@ QString GedaElement2Svg::convert(QString filename)
 					copper0 += s;
 					already.append(s);
 				}
+				pins++;
 			}
 			else if (thing.compare("elementline", Qt::CaseInsensitive) == 0) {
 				silkscreen += convertPad(stack, ix, argCount, mils);
@@ -143,6 +147,10 @@ QString GedaElement2Svg::convert(QString filename)
 		else {
 			throw QObject::tr("parse failure in %1").arg(filename);
 		}
+	}
+
+	if (!allowPadsAndPins && pins > 0 && pads > 0) {
+		throw QObject::tr("Sorry, Fritzing can't yet handle both pins and pads together (in %1)").arg(filename);
 	}
 
 	foreach (QString c, lexer.comments()) {

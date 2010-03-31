@@ -37,7 +37,7 @@ class GedaElement2Svg
 
 public:
 	GedaElement2Svg();
-	QString convert(QString filename);
+	QString convert(QString filename, bool allowPadsAndPins);
 
 protected:
 	int countArgs(QVector<QVariant> & stack, int ix);

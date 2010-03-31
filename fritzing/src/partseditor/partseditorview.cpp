@@ -855,7 +855,7 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 	if (origFilePath.endsWith(".fp")) {
 		// this is a geda footprint file
 		GedaElement2Svg g;
-		QString svg = g.convert(origFilePath);
+		QString svg = g.convert(origFilePath, false);
 		QFile file(newFilePath);
 		if (!file.open(QFile::WriteOnly)) {
 			throw tr("unable to open temp file %1").arg(newFilePath);
