@@ -1804,38 +1804,39 @@ void MainWindow::updatePartMenu() {
 	ItemCount itemCount = m_currentGraphicsView->calcItemCount();
 
 	bool enable = true;
+	bool zenable = true;
 
 	m_groupAct->setEnabled(itemCount.selCount > 1);
 
 	if (itemCount.selCount <= 0) {
-		enable = false;
+		zenable = enable = false;
 	}
 	else {
 		if (itemCount.itemsCount == itemCount.selCount) {
 			// if all items are selected
 			// z-reordering is a no-op
-			enable = false;
+			zenable = false;
 		}
 	}
 
 	//DebugDialog::debug(QString("enable layer actions %1").arg(enable));
-	m_bringToFrontAct->setEnabled(enable);
-	m_bringForwardAct->setEnabled(enable);
-	m_sendBackwardAct->setEnabled(enable);
-	m_sendToBackAct->setEnabled(enable);
+	m_bringToFrontAct->setEnabled(zenable);
+	m_bringForwardAct->setEnabled(zenable);
+	m_sendBackwardAct->setEnabled(zenable);
+	m_sendToBackAct->setEnabled(zenable);
 
 	m_showPartLabelAct->setEnabled((itemCount.hasLabelCount > 0) && enable);
 	m_showPartLabelAct->setChecked(itemCount.visLabelCount == itemCount.hasLabelCount);
 
-	enable = (itemCount.selRotatable > 0);
+	bool renable = (itemCount.selRotatable > 0);
 
 	//DebugDialog::debug(QString("enable rotate (2) %1").arg(enable));
-	m_rotate90cwAct->setEnabled(enable);
-	m_rotate180Act->setEnabled(enable);
-	m_rotate90ccwAct->setEnabled(enable);
+	m_rotate90cwAct->setEnabled(renable && enable);
+	m_rotate180Act->setEnabled(renable && enable);
+	m_rotate90ccwAct->setEnabled(renable && enable);
 
-	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
-	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
+	m_flipHorizontalAct->setEnabled(enable && (itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
+	m_flipVerticalAct->setEnabled(enable && (itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 
 	updateItemMenu();
 	updateEditMenu();
