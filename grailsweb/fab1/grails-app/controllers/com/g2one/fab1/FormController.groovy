@@ -124,8 +124,16 @@ class FormController {
 				log.trace("order params " + params)
 								
 				bindData(flow.order1, params, [include:["quantity", "qualityCheck", "qualityCheckPrice", "destination", "totalPrice", "taxes", "shipping"]])
-				flow.order1.validate()
-				if (flow.order1.hasErrors()) {
+				def errors = false
+				try {
+					flow.order1.validate()
+				}
+				catch(Exception e) 
+				{
+					errors = true
+					e.printStackTrace()
+				}
+				if (errors || flow.order1.hasErrors()) {
 					flow.order1.errors.allErrors.each {
 						log.trace("order error " + it)
 					}
@@ -139,9 +147,16 @@ class FormController {
 		
 		buy {
 			on("paypal") {
+				if (params["email"] == "") {
+					flow.order1.errors.rejectValue('email', 
+						"",  // Error code within the grails-app/i18n/message.properties
+						['email', 'class com.g2one.fapp3.Order1'] as Object[],                          		// Groovy list cast to Object[]
+						'[Property [{0}] of class [{1}] cannot be empty]')					
+					return error()
+				}
 				if (params["confirm email"] != params["email"]) {
 					flow.order1.errors.rejectValue('email', 
-						"",														// Error code within the grails-app/i18n/message.properties
+						"",  // Error code within the grails-app/i18n/message.properties
 						['email', 'class com.g2one.fapp3.Order1'] as Object[],                          		// Groovy list cast to Object[]
 						'[Property [{0}] of class [{1}] does not match confirmation]')					
 					flow.order1.errors.allErrors.each {
@@ -151,8 +166,17 @@ class FormController {
 				}
 				
 				bindData(flow.order1, params, [include:["email"]])
-				flow.order1.validate()
-				if (flow.order1.hasErrors()) {
+				def errors = false
+				try {
+					flow.order1.validate()
+				}
+				catch(Exception e) 
+				{
+					errors = true
+					e.printStackTrace()
+				}
+
+				if (errors || flow.order1.hasErrors()) {
 					flow.order1.errors.allErrors.each {
 						log.trace("order error " + it)
 					}
