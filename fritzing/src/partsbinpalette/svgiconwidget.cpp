@@ -37,6 +37,7 @@ $Date$
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
 
 #define SELECTION_THICKNESS 3
+#define HALF_SELECTION_THICKNESS (SELECTION_THICKNESS / 2)
 #define ICON_SIZE 32
 
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, long id, QMenu * itemMenu)
@@ -105,7 +106,7 @@ void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 		pen.setColor(QColor(122, 15, 49));
 		pen.setWidth(SELECTION_THICKNESS);
 		painter->setPen(pen);
-		painter->drawRect(0, 0, size.width(), size.height());
+		painter->drawRect(HALF_SELECTION_THICKNESS, HALF_SELECTION_THICKNESS, size.width() - SELECTION_THICKNESS, size.height() - SELECTION_THICKNESS);
 		painter->restore();
 	} 
 
