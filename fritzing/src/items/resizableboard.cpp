@@ -663,3 +663,6 @@ bool ResizableBoard::stickyEnabled() {
 	return false;
 }
 
+bool ResizableBoard::isPlural() {
+	return true;
+}

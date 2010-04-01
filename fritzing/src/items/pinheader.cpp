@@ -224,3 +224,8 @@ bool PinHeader::hasCustomSVG() {
 			return ItemBase::hasCustomSVG();
 	}
 }
+
+bool PinHeader::isPlural() {
+	return true;
+}
+

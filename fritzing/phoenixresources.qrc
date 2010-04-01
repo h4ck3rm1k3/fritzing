@@ -198,6 +198,8 @@
         <file>resources/images/splitterHandle.png</file>
         <file>resources/bins/search.fzb</file>
         <file>resources/images/icons/searchField.png</file>
-         <file>resources/images/icons/noicon.png</file>
-    </qresource>
+	<file>resources/images/icons/noicon.png</file>
+	<file>resources/images/icons/parts_plural_v3_plur.png</file>
+	<file>resources/images/icons/parts_plural_v3_sing.png</file>
+   </qresource>
 </RCC>

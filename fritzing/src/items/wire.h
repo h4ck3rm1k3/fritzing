@@ -114,14 +114,15 @@ public:
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	bool hasPartLabel();
+	bool isPlural();
 
 protected slots:
 	void colorEntry(const QString & text);
 
 public:
 	static qreal STANDARD_TRACE_WIDTH;
-	static const QString Wire::TraceColorCopper1String;
-	static const QString Wire::TraceColorCopper0String;
+	static const QString TraceColorCopper1String;
+	static const QString TraceColorCopper0String;
 
 public:
 	static void initNames();

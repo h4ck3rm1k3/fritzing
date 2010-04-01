@@ -296,3 +296,8 @@ bool Ruler::stickyEnabled() {
 bool Ruler::hasPartLabel() {
     return false;
 }
+
+bool Ruler::isPlural() {
+	return true;
+}
+

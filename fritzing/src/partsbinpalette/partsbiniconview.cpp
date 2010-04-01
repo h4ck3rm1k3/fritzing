@@ -24,9 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
-
 #include <QtGui>
 #include <QGraphicsScene>
 #include <QPoint>
@@ -39,8 +36,9 @@ $Date$
 #include "../debugdialog.h"
 #include "svgiconwidget.h"
 #include "../model/palettemodel.h"
+#include "../items/partfactory.h"
 
-#define ICON_SPACING 3
+#define ICON_SPACING 2
 
 PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu)
     : InfoGraphicsView((QWidget*)parent), PartsBinView(refModel, parent, binMenu, partMenu)
@@ -201,7 +199,21 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
-		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, ItemBase::getNextID(), NULL);
+		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL);
+		bool plural = itemBase->isPlural();
+		if (!plural) {
+			QHash<QString,QString> properties = modelPart->properties();
+			QString family = properties.value("family", "").toLower();
+			foreach (QString key, properties.keys()) {
+				QStringList values = m_refModel->values(family, key);
+				if (values.length() > 1) {
+					plural = true;
+					break;
+				}
+			}
+		}
+
+		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, itemBase, plural);
 		if(position > -1) {
 			m_layout->insertItem(position, svgicon);
 		} else {

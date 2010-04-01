@@ -344,3 +344,7 @@ const QStringList & MysteryPart::spacings() {
 	}
 	return Spacings;
 }
+
+bool MysteryPart::isPlural() {
+	return true;
+}

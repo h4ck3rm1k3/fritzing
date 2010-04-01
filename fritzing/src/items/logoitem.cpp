@@ -760,8 +760,11 @@ void LogoItem::setFileNameItems() {
 	}
 }
 
-
 bool LogoItem::stickyEnabled() {
+	return true;
+}
+
+bool LogoItem::isPlural() {
 	return true;
 }
 

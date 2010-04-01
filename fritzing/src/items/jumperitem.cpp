@@ -368,3 +368,8 @@ void JumperItem::loadLayerKin( const LayerHash & viewLayers) {
 	PaletteItem::loadLayerKin(viewLayers);
 	resize();
 }
+
+bool JumperItem::isPlural() {
+	return true;
+}
+

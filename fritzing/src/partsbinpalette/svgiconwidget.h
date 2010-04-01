@@ -33,17 +33,28 @@ $Date$
 #include <QGraphicsPixmapItem>
 #include <QToolTip>
 #include <QPointer>
+#include <QPixmap>
 
 #include "../model/modelpart.h"
 #include "../items/itembase.h"
 
-class SvgIconWidgetContainer;
+
+class SvgIconPixmapItem : public QGraphicsPixmapItem {
+
+public:
+	SvgIconPixmapItem(const QPixmap & pixmap, QGraphicsItem * parent = 0);
+	void setPlural(bool);
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
+
+protected:
+	bool m_plural;
+};
 
 class SvgIconWidget : public QGraphicsWidget
 {
 Q_OBJECT
 public:
-	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, long id, QMenu * itemMenu);
+	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, ItemBase *, bool plural);
 	~SvgIconWidget();
 	ItemBase * itemBase() const;
 	ModelPart * modelPart() const;
@@ -53,13 +64,12 @@ public:
 	static void cleanup();
 
 protected:
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
 
 protected:
 	QPointer<ItemBase> m_itemBase;
-	QGraphicsPixmapItem * m_pixmapItem;
+	SvgIconPixmapItem * m_pixmapItem;
 	QString m_moduleId;
 };
 

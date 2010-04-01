@@ -61,4 +61,3 @@ const QStringList & Dip::spacings() {
 
 	return Spacings;
 }
-

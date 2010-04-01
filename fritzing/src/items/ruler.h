@@ -52,6 +52,7 @@ public:
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	bool stickyEnabled();
     bool hasPartLabel();
+	bool isPlural();
 
 public slots:
 	void widthEntry();

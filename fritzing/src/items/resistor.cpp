@@ -365,3 +365,7 @@ void Resistor::resistanceEntry(const QString & text) {
 		infoGraphicsView->setResistance(text, "");
 	}
 }
+
+bool Resistor::isPlural() {
+	return true;
+}

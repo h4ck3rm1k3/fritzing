@@ -1271,3 +1271,8 @@ bool Wire::hasPartLabel() {
 	
 	return false;
 }
+
+bool Wire::isPlural() {
+	return true;
+}
+

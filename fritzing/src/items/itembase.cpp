@@ -1661,3 +1661,39 @@ bool ItemBase::getSwappingEnabled(const QStringList &paramNames, const QStringLi
 	return false;
 }
 
+bool ItemBase::isPlural() {
+	switch (modelPart()->itemType()) {
+		case ModelPart::Breadboard:
+		case ModelPart::ResizableBoard:
+		case ModelPart::Wire:
+		case ModelPart::Board:
+		case ModelPart::Symbol:
+		case ModelPart::Ruler:
+			return true;
+		default:
+			break;
+	}
+
+	QString moduleID = modelPart()->moduleID();
+	if (moduleID.contains("mystery_part")) {
+		return true;
+	}
+	else if (moduleID.contains("screw_terminal")) {
+		return true;
+	}
+	else if (moduleID.contains("_dip")) {
+		return true;
+	}
+	else if (moduleID.contains("_sip")) {
+		return true;
+	}
+	else if (moduleID.contains("header")) {
+		return true;
+	}
+	else if (moduleID.contains("Resistor")) {
+		return true;
+	}
+
+	return false;
+}
+

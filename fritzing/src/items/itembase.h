@@ -173,6 +173,7 @@ public:
 	void resetValues(const QString & family, const QString & prop);
 	const QString & filename();
 	void setFilename(const QString &);
+	virtual bool isPlural();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

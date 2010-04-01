@@ -25,54 +25,105 @@ $Date$
 ********************************************************************/
 
 #include <QPixmap>
+#include <QPainter>
 
 #include "svgiconwidget.h"
 #include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 #include "../utils/misc.h"
 #include "../fsvgrenderer.h"
-#include "../items/partfactory.h"
 
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #C2C2C2;"
 
-#define SELECTION_THICKNESS 3
-#define HALF_SELECTION_THICKNESS (SELECTION_THICKNESS / 2)
+#define SELECTION_THICKNESS 2
+#define HALF_SELECTION_THICKNESS 1
 #define ICON_SIZE 32
+#define SINGULAR_OFFSET 3
+#define PLURAL_OFFSET 2
 
-SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, long id, QMenu * itemMenu)
+static QPixmap * PluralImage = NULL;
+static QPixmap * SingularImage = NULL;
+
+////////////////////////////////////////////////////////////
+
+SvgIconPixmapItem::SvgIconPixmapItem(const QPixmap & pixmap, QGraphicsItem * parent) : QGraphicsPixmapItem(pixmap, parent) 
+{
+}
+
+void  SvgIconPixmapItem::setPlural(bool plural) {
+	m_plural = plural;
+}
+
+void SvgIconPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+
+	QGraphicsPixmapItem::paint(painter, option, widget);
+
+	if (this->parentItem()->isSelected()) {
+		painter->save();
+		QPen pen = painter->pen();
+		pen.setColor(QColor(122, 15, 49));
+		pen.setWidth(SELECTION_THICKNESS);
+		painter->setPen(pen);
+		painter->drawRect(m_plural ? HALF_SELECTION_THICKNESS : HALF_SELECTION_THICKNESS + 1, 
+						  m_plural ? HALF_SELECTION_THICKNESS : HALF_SELECTION_THICKNESS + 1, 
+						  ICON_SIZE + SELECTION_THICKNESS, ICON_SIZE + SELECTION_THICKNESS);
+		painter->restore();
+	} 
+
+}
+
+////////////////////////////////////////////////////////////
+
+SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ItemBase * itemBase, bool plural)
 	: QGraphicsWidget() 
 {
 	setAcceptHoverEvents(true);
 	m_moduleId = modelPart->moduleID();
+	m_itemBase = itemBase;
 
 	setFlags(QGraphicsItem::ItemIsSelectable);
 
-	this->setMaximumSize(QSize(ICON_SIZE + (2 * SELECTION_THICKNESS), ICON_SIZE + (2 * SELECTION_THICKNESS)));
+	this->setMaximumSize(PluralImage->size());
 
-	m_itemBase = PartFactory::createPart(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu, itemMenu);
 	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon);
 	if (renderer && m_itemBase) {
 		m_itemBase->setFilename(renderer->filename());
 	}
 
-	QPixmap * pixmap = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
-	if (pixmap) {
-		m_pixmapItem = new QGraphicsPixmapItem(*pixmap, this);
-		delete pixmap;
-	}
-	else {
-		m_pixmapItem = new QGraphicsPixmapItem(this);
+	QPixmap pixmap(plural ? *PluralImage : *SingularImage);
+	DebugDialog::debug(QString("pixmap %1 %2").arg(pixmap.size().width()).arg(pixmap.size().height()));
+	QPixmap * icon = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
+	if (icon) {
+		QPainter painter;
+		painter.begin(&pixmap);
+		if (plural) {
+			painter.drawPixmap(PLURAL_OFFSET, PLURAL_OFFSET, *icon);
+		}
+		else {
+			painter.drawPixmap(SINGULAR_OFFSET, SINGULAR_OFFSET, *icon);
+		}
+		painter.end();
+		delete icon;
 	}
 
+	m_pixmapItem = new SvgIconPixmapItem(pixmap, this);
+	m_pixmapItem->setPlural(plural);
+
 	m_pixmapItem->setFlags(0);
-	m_pixmapItem->setPos(SELECTION_THICKNESS, SELECTION_THICKNESS);
+	m_pixmapItem->setPos(0, 0);
 
 	m_itemBase->setTooltip();
 	setToolTip(m_itemBase->toolTip());
 }
 
 void SvgIconWidget::initNames() {
+	if (PluralImage == NULL) {
+		PluralImage = new QPixmap(":/resources/images/icons/parts_plural_v3_plur.png");
+	}
+	if (SingularImage == NULL) {
+		SingularImage = new QPixmap(":/resources/images/icons/parts_plural_v3_sing.png");
+	}
 }
 
 SvgIconWidget::~SvgIconWidget() {
@@ -80,6 +131,14 @@ SvgIconWidget::~SvgIconWidget() {
 }
 
 void SvgIconWidget::cleanup() {
+	if (PluralImage) {
+		delete PluralImage;
+		PluralImage = NULL;
+	}
+	if (SingularImage) {
+		delete SingularImage;
+		SingularImage = NULL;
+	}
 }
 
 ItemBase *SvgIconWidget::itemBase() const {
@@ -92,25 +151,6 @@ ModelPart *SvgIconWidget::modelPart() const {
 
 const QString &SvgIconWidget::moduleID() const {
 	return m_moduleId;
-}
-
-void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-
-	QColor c(0xc2, 0xc2,0xc2);
-	QSizeF size = this->geometry().size();
-	painter->fillRect(0, 0, size.width(), size.height(), c);
-
-	if (isSelected()) {
-		painter->save();
-		QPen pen = painter->pen();
-		pen.setColor(QColor(122, 15, 49));
-		pen.setWidth(SELECTION_THICKNESS);
-		painter->setPen(pen);
-		painter->drawRect(HALF_SELECTION_THICKNESS, HALF_SELECTION_THICKNESS, size.width() - SELECTION_THICKNESS, size.height() - SELECTION_THICKNESS);
-		painter->restore();
-	} 
-
-	QGraphicsWidget::paint(painter, option, widget);
 }
 
 void SvgIconWidget::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ){

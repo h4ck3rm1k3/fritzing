@@ -8,7 +8,7 @@ darkest red:	rgb(51,0,17);
 
 light grey:		rgb(217,217,217);
 medium grey_l:	rgb(190,190,190); (lighter grey for hovers)
-medium grey:	rgb(179,179,179);
+medium grey:	rgb(164,164,164);
 medium grey_d:	rgb(117,117,117); (shadowish border around widgets)
 dark grey:		rgb(126,126,126);
 darker grey		rgb(87,87,87); (used as font color only so far)
@@ -109,77 +109,6 @@ qtoolbutton
 	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
 }
 
-ZoomComboBox {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	margin: 5px 5px;
-	min-width: 5em;
-	border: 1px solid #888;
-
-	color: #CCC;
-	background-color: #888;
-}
-
-/* this is the drop-down button only */
-ZoomComboBox::drop-down  {
-	width: 14px;
-	border-left: 1px solid #CCC;
-
-	color: #CCC;
-	background-color: #888;
-}
-
-ZoomComboBox:focus {
-	color: rgb(255,255,255); /* ??? doesnt work so far */
-}
-
-/* this is the unfolded list */
-ZoomComboBox QAbstractItemView  {
-	width: 11px;
-	border: 1px solid black;
-
-	color: #CCC;
-	background-color: #888;
-	selection-background-color: #CCC;
-	selection-color: black;
-}
-
-ZoomComboBox QScrollBar:vertical {
-	border: 1px solid #CCC;
-	width: 15px;
-	margin: 15px 0 15px 0;
-
-	background-color: black;
-}
-ZoomComboBox QScrollBar::handle:vertical {
-	border: 0px;
-	min-height: 20px;
-
-	background-color: #CCC;
-}
-ZoomComboBox QScrollBar::add-line:vertical {
-	border: 1px solid #CCC;
-	height: 13px;
-	subcontrol-position: bottom;
-	subcontrol-origin: margin;
-}
-ZoomComboBox QScrollBar::sub-line:vertical {
-	border: 1px solid #CCC;
-	height: 13px;
-	subcontrol-position: top;
-	subcontrol-origin: margin;
-
-	background: none;
-}
-ZoomComboBox QScrollBar::up-arrow:vertical,
-ZoomComboBox QScrollBar::down-arrow:vertical {
-	background: none;
-}
-ZoomComboBox QScrollBar::add-page:vertical,
-ZoomComboBox QScrollBar::sub-page:vertical {
-	background: none;
-}
 
 
 /* ################### the palettes #################### */
@@ -187,7 +116,7 @@ FDockWidget {
 	/* only relevant if palette is floating
 	   and only visible with tabs inside the widget
 	   such as Parts Library */
-	background-color: rgb(179,179,179);
+	background-color: rgb(164,164,164);
 	
 	/* this defines the title text! */
 	font-size: 10px;
@@ -276,7 +205,7 @@ HtmlInfoView {
 #instanceTitleEditor {
 	font-size: 14px;
 	font-weight: 600;
-	border: 1px solid rgb(179,179,179);
+	border: 1px solid rgb(164,164,164);
 	margin-left: 2px;
 	margin-right: 2px;
 	margin-top: 3px;
@@ -289,7 +218,7 @@ HtmlInfoView {
 /*
 light grey:		rgb(217,217,217);
 medium grey_l:	rgb(190,190,190); (lighter grey for hovers)
-medium grey:	rgb(179,179,179);
+medium grey:	rgb(164,164,164);
 medium grey_d:	rgb(117,117,117); (shadowish border around widgets)
 dark grey:		rgb(126,126,126);
 */
@@ -332,7 +261,7 @@ PartsBinListView {
 PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
-	background-color: rgb(179,179,179);
+	background-color: rgb(164,164,164);
 }
 
 StackTabWidget::pane {
@@ -351,7 +280,7 @@ StackTabBar::tab {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border: 1px solid rgb(217,217,217);
-	background: rgb(179,179,179);
+	background: rgb(164,164,164);
 
 	font-weight: bold;
 }
@@ -370,7 +299,7 @@ StackTabBar::tab:!selected {
 }
 
 StackTabBar::tab:!selected:hover {
-	background-color: rgb(179,179,179);
+	background-color: rgb(164,164,164);
 }
 
 StackTabBar[current="true"]::tab:selected {
@@ -473,7 +402,7 @@ SketchWidget {
 }
 
 TripleNavigator {
-	background-color: rgb(179,179,179);
+	background-color: rgb(164,164,164);
 }
 
 #tripleNavigatorBottomMargin {

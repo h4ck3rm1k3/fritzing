@@ -48,7 +48,8 @@ public:
 	void setForm(QString form, bool force);
 	const QString & form();
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
-        bool hasCustomSVG();
+    bool hasCustomSVG();
+	bool isPlural();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

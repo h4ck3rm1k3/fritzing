@@ -49,6 +49,7 @@ public:
 	ConnectorItem * connector1();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+	bool isPlural();
 
 public:
 	static qreal DefaultVoltage;
