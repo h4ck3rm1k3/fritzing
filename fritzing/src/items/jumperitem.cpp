@@ -369,7 +369,7 @@ void JumperItem::loadLayerKin( const LayerHash & viewLayers) {
 	resize();
 }
 
-bool JumperItem::isPlural() {
-	return true;
+ItemBase::PluralType JumperItem::isPlural() {
+	return Singular;
 }
 

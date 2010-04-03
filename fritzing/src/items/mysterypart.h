@@ -55,7 +55,7 @@ public:
 	void setSpacing(QString spacing, bool force);
 	const QString & spacing();
 	bool onlySpacingChanges(QMap<QString, QString> & propsMap);
-	bool isPlural();
+	PluralType isPlural();
 
 public slots:
 	void chipLabelEntry();

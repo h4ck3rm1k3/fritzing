@@ -67,6 +67,13 @@ public:
 	static void setReferenceModel(class ReferenceModel *);
 
 public:
+	enum PluralType {
+		Singular,
+		Plural,
+		NotSure
+	};
+
+public:
 	ItemBase(class ModelPart*, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	virtual ~ItemBase();
 
@@ -173,7 +180,7 @@ public:
 	void resetValues(const QString & family, const QString & prop);
 	const QString & filename();
 	void setFilename(const QString &);
-	virtual bool isPlural();
+	virtual PluralType isPlural();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

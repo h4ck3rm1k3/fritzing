@@ -764,7 +764,7 @@ bool LogoItem::stickyEnabled() {
 	return true;
 }
 
-bool LogoItem::isPlural() {
-	return true;
+ItemBase::PluralType LogoItem::isPlural() {
+	return Singular;
 }
 

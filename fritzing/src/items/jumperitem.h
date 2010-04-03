@@ -51,7 +51,7 @@ public:
 	bool hasCustomSVG();
 	bool inDrag();
 	void loadLayerKin( const LayerHash & viewLayers);
-	bool isPlural();
+	PluralType isPlural();
 
 protected:
 	void resize();

@@ -53,7 +53,7 @@ public:
 	bool hasCustomSVG();
 	bool canEditPart();
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
-	bool isPlural();
+	PluralType isPlural();
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);

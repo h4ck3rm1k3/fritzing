@@ -200,20 +200,20 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
 		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL);
-		bool plural = itemBase->isPlural();
-		if (!plural) {
+		ItemBase::PluralType plural = itemBase->isPlural();
+		if (plural == ItemBase::NotSure) {
 			QHash<QString,QString> properties = modelPart->properties();
 			QString family = properties.value("family", "").toLower();
 			foreach (QString key, properties.keys()) {
 				QStringList values = m_refModel->values(family, key);
 				if (values.length() > 1) {
-					plural = true;
+					plural = ItemBase::Plural;
 					break;
 				}
 			}
 		}
 
-		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, itemBase, plural);
+		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, itemBase, plural == ItemBase::Plural);
 		if(position > -1) {
 			m_layout->insertItem(position, svgicon);
 		} else {

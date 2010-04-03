@@ -1272,7 +1272,7 @@ bool Wire::hasPartLabel() {
 	return false;
 }
 
-bool Wire::isPlural() {
-	return true;
+ItemBase::PluralType Wire::isPlural() {
+	return Plural;
 }
 

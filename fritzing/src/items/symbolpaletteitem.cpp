@@ -312,7 +312,7 @@ void SymbolPaletteItem::voltageEntry(const QString & text) {
 	}
 }
 
-bool SymbolPaletteItem::isPlural() {
-	return true;
+ItemBase::PluralType SymbolPaletteItem::isPlural() {
+	return Singular;
 }
 

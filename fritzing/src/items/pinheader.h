@@ -49,7 +49,7 @@ public:
 	const QString & form();
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
     bool hasCustomSVG();
-	bool isPlural();
+	PluralType isPlural();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

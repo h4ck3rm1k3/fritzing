@@ -225,7 +225,7 @@ bool PinHeader::hasCustomSVG() {
 	}
 }
 
-bool PinHeader::isPlural() {
-	return true;
+ItemBase::PluralType PinHeader::isPlural() {
+	return Plural;
 }
 

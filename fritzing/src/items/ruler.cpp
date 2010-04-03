@@ -297,7 +297,7 @@ bool Ruler::hasPartLabel() {
     return false;
 }
 
-bool Ruler::isPlural() {
-	return true;
+ItemBase::PluralType Ruler::isPlural() {
+	return Singular;
 }
 

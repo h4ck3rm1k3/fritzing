@@ -366,6 +366,6 @@ void Resistor::resistanceEntry(const QString & text) {
 	}
 }
 
-bool Resistor::isPlural() {
-	return true;
+ItemBase::PluralType Resistor::isPlural() {
+	return Plural;
 }

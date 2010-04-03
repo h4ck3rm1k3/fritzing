@@ -61,7 +61,7 @@ public:
 	void loadImage(const QString & fileName, bool addName);
 	void reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName);
 	bool stickyEnabled();
-	bool isPlural();
+	PluralType isPlural();
 
 protected slots:
 	void prepLoadImage();
