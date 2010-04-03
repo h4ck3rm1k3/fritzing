@@ -202,6 +202,10 @@ HtmlInfoView {
 	border-top: 0px;
 }
 
+#infoViewMainFrame {
+	background-color: rgb(179,179,179);
+}
+
 #instanceTitleEditor {
 	font-size: 14px;
 	font-weight: 600;
@@ -209,6 +213,10 @@ HtmlInfoView {
 	margin-left: 2px;
 	margin-right: 2px;
 	margin-top: 3px;
+}
+
+#infoViewWebView {
+	background-color: rgb(179,179,179);
 }
 
 #IconFrame {

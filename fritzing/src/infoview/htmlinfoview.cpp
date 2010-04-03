@@ -76,6 +76,7 @@ QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
 HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent) 
 {
 	QFrame * mainFrame = new QFrame(this);
+	mainFrame->setObjectName("infoViewMainFrame");
 
 	m_lastSwappingEnabled = false;
 	m_lastItemBase = NULL;
@@ -119,6 +120,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	lo->addWidget(frame);
 
 	m_webView = new QWebView(mainFrame);
+	m_webView->setObjectName("infoViewWebView");
 	
 	m_infoViewWebPage = new InfoViewWebPage(this, m_webView);
 	m_webView->setPage(m_infoViewWebPage);
@@ -153,8 +155,6 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_currentSwappingEnabled = false;
 
 	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
-
-	m_maxPropCount = 0;
 
 	QSettings settings;
 	m_blocksVisibility[PropsBlockId] = settings.value(settingsBlockVisibilityName(PropsBlockId),true).toBool();
@@ -249,17 +249,6 @@ QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
 	}
 }
 
-QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnabled) {
-	if (base == NULL) return "missing base";
-
-	QString title;
-	prepareTitleStuff(base, title);
-
-	QString retval = appendItemStuff(base, base->modelPart(), id, swappingEnabled, title, base->isPartLabelVisible());
-	return retval;
-}
-
-
 QString HtmlInfoView::appendWireStuff(Wire* wire, long id, bool swappingEnabled) {
 	if (wire == NULL) return "missing base";
 
@@ -277,75 +266,49 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id, bool swappingEnabled)
 		nameString = tr("Jumper wire %1").arg(autoroutable);
 	}
 
-	QString title;
-	prepareTitleStuff(wire, title);
-	setUpTitle(title);
+	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
 
 	QString s = "";
-	s += 		 "<div class='parttitle'>\n";
-	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
-											   .arg(modelPart->modelPartShared()->version());
-	s += 		"</div>\n";
+	s += partTitle(nameString, modelPart->modelPartShared()->version());
 
 	s += "<div class='block'>";
 	s += blockHeader(tr("Properties"),PropsBlockId);
 	s += blockContainer(PropsBlockId);
 #ifndef QT_NO_DEBUG
-	s += QString("<tr><td class='label'>%1</td><td>%2 %3</td></tr>\n").arg("id").arg(id).arg(modelPart->moduleID());
+	s += idString(id, modelPart->moduleID());
 #else
 	Q_UNUSED(id);
 #endif
-	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
-	QString family = properties.value("family", "");
-	foreach (QString prop, properties.keys()) {
-		QString returnProp, returnValue;
-		QStringList nothing;
-		bool display = wire->collectExtraInfoHtml(family, prop, properties.value(prop, ""), swappingEnabled, returnProp, returnValue);
-		if (display) {
-			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(returnProp).arg(returnValue);
-		}
-	}
-
-	s += 		 "</table></div>\n";
-	s += "</div>";
-
+	displayProps(modelPart, wire, swappingEnabled, s);
 	addTags(modelPart, s);
 
 	return s;
 }
 
-void HtmlInfoView::prepareTitleStuff(ItemBase *base, QString &title) {
+QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnabled) {
+	if (base == NULL) return "missing base";
 
-	if(base) {
-		title = base->instanceTitle();
-	}
-	else {
-		title = ItemBase::partInstanceDefaultTitle;
-	}
+	return appendItemStuff(base, base->modelPart(), id, swappingEnabled, base->isPartLabelVisible());
 }
 
-
-QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, long id, bool swappingEnabled, const QString title, bool labelIsVisible) {
+QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, long id, bool swappingEnabled,bool labelIsVisible) {
 	Q_UNUSED(labelIsVisible);
 
 	if (modelPart == NULL) return "missing modelpart";
 	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
 
-	setUpTitle(title);
+	setUpTitle(itemBase);
 	setUpIcons(modelPart);
 
 	QString s = "";
-	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
-	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg((itemBase) ? itemBase->title() : modelPart->title())
-											   .arg("&nbsp;"+modelPart->modelPartShared()->version());
-	s += 		"</div>\n";
+	s += partTitle((itemBase) ? itemBase->title() : modelPart->title(), modelPart->modelPartShared()->version());
 
 	s += "<div class='block'>";
 	s += blockHeader(tr("Properties"),PropsBlockId);
 	s += blockContainer(PropsBlockId);
 #ifndef QT_NO_DEBUG
-	s += QString("<tr><td class='label'>%1</td><td>%2 %3</td></tr>\n").arg("id").arg(id).arg(modelPart->moduleID());
+	s += idString(id, modelPart->moduleID());
 	if (itemBase) {
 		PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
 		if (paletteItemBase != NULL) {
@@ -374,42 +337,8 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 #else
 	Q_UNUSED(id)
 #endif
-	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
-	QString family = properties["family"].toLower();
 
-	m_maxPropCount = properties.keys().size() > m_maxPropCount ? properties.keys().size() : m_maxPropCount;
-	int rowsLeft = m_maxPropCount;
-	QString basis("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n");
-	if (itemBase) {
-		itemBase->prepareProps();
-	}
-	foreach(QString key, properties.keys()) {
-		QString value = properties.value(key,"");
-		QString translatedName = ItemBase::translatePropertyName(key);
-		QString resultKey, resultValue;
-		bool result = false;
-		if (itemBase != NULL) {
-			result = itemBase->collectExtraInfoHtml(family, key, value, swappingEnabled, resultKey, resultValue);
-		}
-		if (result) {
-			s += basis.arg(resultKey).arg(resultValue);
-		}
-		else {
-			s += basis.arg(translatedName).arg(value);
-		}
-
-		rowsLeft--;
-	}
-
-	// always keep the same number of rows in the table even if there are fewer properties
-	for(int i = 0; i < rowsLeft; i++) {
-		s += "<tr style='height: 35px; '><td style='border-bottom: 0px;' colspan='2'>&nbsp;</td></tr>\n";
-	}
-	s += 		 "</table></div>\n";
-	s += "</div>";
-
-//	s += QString("<tr><td colspan='2'>%1</td></tr>").
-//			arg(QString(modelPart->modelPartShared()->path()).remove(QDir::currentPath()));
+	displayProps(modelPart, itemBase, swappingEnabled, s);
 	addTags(modelPart, s);
 
 	return s;
@@ -504,7 +433,7 @@ QString HtmlInfoView::blockContainer(const QString &blockId) {
 
 void HtmlInfoView::setNullContent()
 {
-	setUpTitle("");
+	setUpTitle(NULL);
 	setUpIcons(NULL);
 	setContent("");
 }
@@ -564,16 +493,25 @@ QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
 	return "infoView/"+blockId+"Visibility";
 }
 
-void HtmlInfoView::setUpTitle(const QString & title) 
+void HtmlInfoView::setUpTitle(ItemBase * itemBase) 
 {
-	if(!title.isNull() && !title.isEmpty()) {
+	if(itemBase) {
+		QString title = itemBase->instanceTitle();
+		if (title.isEmpty()) {
+			// assumes a part with an empty title only comes from the parts bin palette
+			m_titleEdit->setEnabled(false);
+			title = itemBase->title();
+		}
+		else {
+			m_titleEdit->setEnabled(true);
+		}
 		m_titleEdit->setText(title);
-		m_titleEdit->setEnabled(true);
 	}
 	else {
 		m_titleEdit->setEnabled(false);
 		m_titleEdit->setText("");
 	}
+
 }
 
 void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
@@ -624,4 +562,41 @@ void HtmlInfoView::addTags(ModelPart * modelPart, QString & s) {
 		s += "</div>";
 	}
 
+}
+
+QString HtmlInfoView::partTitle(const QString & title, const QString & version) {
+	QString s = "<div class='parttitle'>\n";
+	s += QString("<h2>%1</h2>\n<p>%2</p>\n").arg(title) .arg(version);
+	s += "</div>\n";
+	return s;
+}
+
+void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled, QString & s) 
+{
+	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
+	QString family = properties.value("family", "").toLower();
+	QString basis("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n");
+	if (itemBase) {
+		itemBase->prepareProps();
+	}
+	foreach(QString key, properties.keys()) {
+		QString value = properties.value(key,"");
+		QString translatedName = ItemBase::translatePropertyName(key);
+		QString resultKey, resultValue;
+		bool result = false;
+		if (itemBase != NULL) {
+			result = itemBase->collectExtraInfoHtml(family, key, value, swappingEnabled, resultKey, resultValue);
+		}
+		if (result) {
+			s += basis.arg(resultKey).arg(resultValue);
+		}
+		else {
+			s += basis.arg(translatedName).arg(value);
+		}
+	}
+}
+
+
+QString HtmlInfoView::idString(long id, const QString & moduleID) {
+	return QString("<tr><td class='label'>%1</td><td>%2 %3</td></tr>\n").arg("id").arg(id).arg(moduleID);
 }

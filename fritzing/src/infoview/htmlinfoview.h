@@ -86,11 +86,9 @@ protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
 	QString appendWireStuff(Wire* wire, long itemID, bool swappingEnabled);
 	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
-	QString appendItemStuff(ItemBase * base, ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
+	QString appendItemStuff(ItemBase * base, ModelPart * modelPart, long itemID, bool swappingEnabled, bool labelIsVisible = false);
 
-	void prepareTitleStuff(ItemBase *base, QString &title);
 	void setInstanceTitleColors(class FLineEdit * edit, const QColor & base, const QColor & text);
-
 
 	QString blockHeader(const QString &title, const QString &blockId);
 	QString blockVisibility(const QString &blockId);
@@ -101,17 +99,19 @@ protected:
 	void registerAsCurrentItem(ItemBase *item);
 	void setNullContent();
 	void viewItemInfoAux(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
-	void setUpTitle(const QString & title);
+	void setUpTitle(ItemBase *);
 	void setUpIcons(ModelPart *);
 	void addTags(ModelPart * modelPart, QString & s);
+	QString partTitle(const QString & title, const QString & version);
+	QString idString(long id, const QString & moduleID);
+	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled, QString & s);
 
 protected:
 	QString m_includes;
 	bool m_alreadyset;
 
 	QPointer<ItemBase> m_currentItem;
-	bool m_currentSwappingEnabled;
-	int m_maxPropCount;
+	bool m_currentSwappingEnabled;					// previous item (possibly hovered over)
 
 	QWebView *m_webView;
 	QHash<QString, bool> m_blocksVisibility;
@@ -121,7 +121,7 @@ protected:
 	QTimer m_setContentTimer;
 	QPointer<class InfoGraphicsView> m_infoGraphicsView;
 	QPointer<ItemBase> m_lastItemBase;
-	bool m_lastSwappingEnabled;
+	bool m_lastSwappingEnabled;						// previous item (selected)
 	class FLineEdit * m_titleEdit;
 	QLabel * m_icon1;
 	QLabel * m_icon2;

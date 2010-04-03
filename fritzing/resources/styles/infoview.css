@@ -18,17 +18,15 @@ h1 {
 .parttitle {
 	position: relative;
 	margin: 2px 3px;
-}
-
-.parttitle img {
-	background-color: rgb(205,205,210);
+	padding-top: 8px; 
+	height: 15px;
 }
 
 .parttitle h2 {
 	display: inline;
 	position: relative;
 	top: -0.4em;
-	margin-left: 1em;
+	margin-left: 0em;
 
 	font-size: 10px;
 	font-weight: normal;

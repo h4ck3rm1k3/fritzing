@@ -912,9 +912,6 @@ void ItemBase::setDefaultTooltip() {
 			return;
 		}
 
-
-
-
 		QString title = (m_modelPart->itemType() == ModelPart::Module) ? ItemBase::moduleInstanceDefaultTitle : ItemBase::partInstanceDefaultTitle;
 		QString inst = instanceTitle();
 		if(!inst.isNull() && !inst.isEmpty()) {
