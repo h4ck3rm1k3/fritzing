@@ -212,13 +212,7 @@ void PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
 			if (!toConnectorItem->attachedTo()->isVisible()) continue;
 
-			// walk up the tree in case it's a group
-			ItemBase * parent = toConnectorItem->attachedTo();
-			while (parent->parentItem() != NULL) {
-				parent = dynamic_cast<ItemBase *>(parent->parentItem());
-			}
-
-			items.insert(parent);
+			items.insert(toConnectorItem->attachedTo());
 		}
 	}
 }

@@ -124,7 +124,7 @@ class PartsEditorView : public SketchWidget {
 		void wheelEvent(QWheelEvent* event);
 		void drawBackground(QPainter *painter, const QRectF &rect);
 
-		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
+		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, PaletteItem* paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
 
 		ModelPart *createFakeModelPart(SvgAndPartFilePath *svgpath);
 		ModelPart *createFakeModelPart(const QHash<QString,ConnectorTerminalSvgIdPair> &connIds, const QStringList &layers, const QString &svgFilePath);

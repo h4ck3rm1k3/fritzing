@@ -62,7 +62,6 @@ LayerPalette::LayerPalette(QWidget * parent) : QScrollArea(parent)
 		connect(cb, SIGNAL(clicked(bool)), this, SLOT(setLayerVisibility(bool)));
 		m_checkBoxes.append(cb);
 		cb->setVisible(false);
-
 	}
 
 	m_groupBox = new QGroupBox("");
@@ -98,6 +97,8 @@ void LayerPalette::resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLaye
 	int ix = 0;
 	foreach (ViewLayer::ViewLayerID key, keys) {
 		ViewLayer * viewLayer = viewLayers.value(key);
+		if (viewLayer->parentLayer()) continue;
+
 		ViewLayerCheckBox * cb = m_checkBoxes[ix++];
 		cb->setText(viewLayer->action()->text());
 		cb->setViewLayer(viewLayer);
@@ -118,6 +119,8 @@ void LayerPalette::updateLayerPalette(LayerHash & viewLayers, QList<ViewLayer::V
 	int ix = 0;
 	foreach (ViewLayer::ViewLayerID key, keys) {
 		ViewLayer * viewLayer = viewLayers.value(key);
+		if (viewLayer->parentLayer()) continue;
+
 		ViewLayerCheckBox * cb = m_checkBoxes[ix++];
 		cb->setChecked(viewLayer->action()->isChecked());
 	}

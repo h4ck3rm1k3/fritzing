@@ -54,6 +54,7 @@ SOURCES += \
     src/layerpalette.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
+    src/mainwindow_gerber.cpp \
     src/mainwindow_menu.cpp \
     src/sketchareawidget.cpp \
     src/sketchtoolbutton.cpp \

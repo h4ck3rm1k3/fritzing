@@ -42,9 +42,8 @@ public:
 
 	void removeModelPart(ModelPart *);
 	ModelPart * findModelPart(const QString & moduleID, long id);
-	bool paste(ModelBase * refModel, const QString & filePath, QList<ModelPart *> & modelParts, QHash<QList<long> *, QString> * externalConnectors);
+	bool paste(ModelBase * refModel, const QString & filePath, QList<ModelPart *> & modelParts);
 	void walk(ModelPart *, int indent);
-	ModelPartTiny * makeTiny(ModelPart * modelPart);
 	ModelPart * findModelPartFromOriginal(ModelPart * parent, long originalModelIndex);
 
 protected:

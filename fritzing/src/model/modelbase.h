@@ -46,14 +46,13 @@ public:
 	void save(class QXmlStreamWriter &, bool asPart);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
-	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QList<long> *, QString > * externalConnectors);
+	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
 
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);
 
 protected:
 	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);
-	void renewExternalIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QList<long> *, QString > * externalConnectors);
 	bool loadInstances(QDomDocument &, QDomElement & root, QList<ModelPart *> & modelParts);
 	ModelPart * fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef);
 

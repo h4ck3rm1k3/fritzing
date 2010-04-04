@@ -87,12 +87,9 @@ public:
 	class Wire * wiredTo(ConnectorItem *, ViewGeometry::WireFlags);
 	void setBaseTooltip(const QString &);
 	void clearConnector();
-	void setIgnoreAncestorFlag(bool);
-	void setIgnoreAncestorFlagIfExternal(bool);
 	bool connectionIsAllowed(ConnectorItem * other);
 	void setChosen(bool);
 	void prepareGeometryChange();
-	bool isExternal();
 	void setRadius(qreal radius, qreal strokeWidth);
 	qreal radius();
 	qreal strokeWidth();
@@ -120,9 +117,8 @@ protected:
 	void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	void writeOtherElements(QXmlStreamWriter & writer);
 	void updateTooltip();
-	bool sceneEvent(QEvent *event);
-        class Wire * wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
-        bool wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
+    class Wire * wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
+    bool wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
 	QPainterPath shape() const;
 	bool isEverVisible();
 
@@ -139,7 +135,6 @@ protected:
 	bool m_circular;
 	QString m_baseTooltip;
 	bool m_connectorHovering;
-	bool m_ignoreAncestorFlag;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 	qreal m_radius;

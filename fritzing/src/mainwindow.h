@@ -124,7 +124,6 @@ protected slots:
     void copy();
     void cut();
     void paste();
-    void group();
     void duplicate();
     void doDelete();
     void selectAll();
@@ -206,8 +205,6 @@ protected slots:
 	void loadBundledSketch(const QString &fileName);
 	void loadBundledPart();
 	void loadBundledPartFromWeb();
-	void saveAsModule();
-	void editModule();
 
 	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(SketchWidget *, const RoutingStatus &);
@@ -337,7 +334,6 @@ protected:
 	bool event(QEvent *);
 	void resizeEvent(QResizeEvent * event);
 	QString genIcon(SketchWidget *, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs);
-	void initExternalConnectors(QList<ConnectorItem *> & externalConnectors);
 
 	bool alreadyOpen(const QString & fileName);
 	bool loadCustomBoardShape();
@@ -425,8 +421,6 @@ protected:
 	QAction *m_printAct;
 	QAction *m_saveAsBundledAct;
 	QAction *m_shareOnlineAct;
-	QAction *m_saveAsModuleAct;
-	QAction *m_editModuleAct;
 
 	QAction * m_launchExternalProcessAct;
 
@@ -476,7 +470,6 @@ protected:
 	QAction *m_rotate90ccwAct;
 	QAction *m_flipHorizontalAct;
 	QAction *m_flipVerticalAct;
-	QAction *m_groupAct;
 	QAction *m_showPartLabelAct;
 	QAction *m_loadBundledPart;
 	QAction *m_saveBundledPart;

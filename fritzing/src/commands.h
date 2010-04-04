@@ -589,25 +589,6 @@ protected:
 	QSizeF m_newSize;
 };
 
-
-class GroupCommand : public BaseCommand 
-{
-public:
-	GroupCommand(class SketchWidget * sketchWidget, const QString & moduleID, long id, const ViewGeometry & , QUndoCommand * parent);
-	void undo();
-	void redo();
-	void addItemID(long id);
-
-protected:
-	QString getParamString() const;
-
-protected:
-	long m_itemID;
-	ViewGeometry m_viewGeometry;
-	QList<long> m_itemIDs;
-	QString m_moduleID;
-};
-
 class ModuleChangeConnectionCommand : public ChangeConnectionCommand
 {
 public:
@@ -627,23 +608,6 @@ protected:
 	bool m_doRatsnest;
 };
 
-class RestoreIndexesCommand : public BaseCommand
-{
-public:
-	RestoreIndexesCommand(class SketchWidget * sketchWidget, long id, struct ModelPartTiny *, bool addType, QUndoCommand * parent);
-	void undo();
-	void redo();
-	struct ModelPartTiny * modelPartTiny();
-	void setModelPartTiny(ModelPartTiny * );
-
-protected:
-	QString getParamString() const;
-
-protected:
-	struct ModelPartTiny * m_modelPartTiny;
-	long m_itemID;
-	bool m_addType;
-};
 
 class ResizeBoardCommand : public BaseCommand
 {

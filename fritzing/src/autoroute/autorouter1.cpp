@@ -370,7 +370,7 @@ void Autorouter1::start()
 
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 		if (jumperItemStruct->jumperItem) {
-			m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false, NULL);
+			m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false);
 		}
 		delete jumperItemStruct;
 	}
@@ -934,7 +934,7 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+												BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase == NULL) {
 		// we're in trouble
 		return NULL;
@@ -963,7 +963,7 @@ JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * t
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+												BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (temp == NULL) {
 		// we're in trouble
 		return NULL;
@@ -1986,7 +1986,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width)
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+												BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
 		return NULL;

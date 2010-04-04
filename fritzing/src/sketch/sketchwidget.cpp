@@ -67,7 +67,6 @@ $Date$
 #include "../version/version.h"
 #include "../items/partlabel.h"
 #include "../items/note.h"
-#include "../group/groupitem.h"
 #include "../svg/svgfilesplitter.h"
 #include "../svg/svgflattener.h"
 #include "../help/sketchmainhelp.h"
@@ -214,7 +213,7 @@ void SketchWidget::setUndoStack(WaitPushUndoStack * undoStack) {
 ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& viewGeometry){
 	// assumes modelPart has already been added to the sketch
 	// or you're in big trouble when you delete the item
-	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true, m_viewIdentifier);
+	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier);
 }
 
 void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
@@ -252,7 +251,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		// use a function of the model index to ensure the same parts have the same ID across views
 		long newID = ItemBase::getNextID(mp->modelIndex());
 		if (parentCommand == NULL) {
-			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
+			ItemBase * item = addItemAux(mp, viewGeometry, newID, NULL, true, m_viewIdentifier);
 			if (item != NULL) {
 				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), item);   
 				bool gotOne = false;
@@ -279,13 +278,6 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 						gotOne = true;
 					}
 				}
-				if (!gotOne) {
-					GroupItem * groupItem = dynamic_cast<GroupItem *>(item);
-					if (groupItem != NULL) {
-						groupItem->setTransforms();
-						gotOne = true;
-					}
-				}
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
 				newItems.insert(mp->modelIndex(), item);
@@ -297,7 +289,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (offsetPaste) {
 				viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
 			}
-			AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
+			newAddItemCommand(crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
 			if (mp->itemType() == ModelPart::ResizableBoard) {
 				bool ok;
 				qreal w = mp->prop("width").toDouble(&ok);
@@ -340,10 +332,6 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 			if (mp->moduleID() == ModuleIDNames::wireModuleIDName) {
 				addWireExtras(newID, view, parentCommand);
-			}
-			else if (mp->itemType() == ModelPart::Module) {
-				RestoreIndexesCommand * restoreIndexesCommand = new RestoreIndexesCommand(this, newID, NULL, true, parentCommand);
-				addItemCommand->addRestoreIndexesCommand(restoreIndexesCommand);
 			}
 		}
 	}
@@ -546,7 +534,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	if (modelPart != NULL) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		statusMessage(tr("loading part"));
-		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, originalModelIndex, originatingCommand, NULL);
+		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, originatingCommand, NULL);
 		if (itemBase != NULL && originalModelIndex > 0) {
 			itemBase->modelPart()->setOriginalModelIndex(originalModelIndex);
 			// DebugDialog::debug(QString("additem original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
@@ -559,96 +547,8 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	return itemBase;
 }
 
-ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelIndex, QList<ModelPart *> & modelParts, const ViewGeometry & viewGeometry, long id)
-{
-	modelPart->setModelIndexFromMultiplied(id);
-	if (originalModelIndex > 0) {
-		modelPart->setOriginalModelIndex(originalModelIndex);
-		// DebugDialog::debug(QString("group original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
-	}
-	if (modelParts.count() <= 0) {
-		foreach (QObject * object, modelPart->children()) {
-			ModelPart * cmp = dynamic_cast<ModelPart *>(object);
-			if (cmp != NULL) {
-				modelParts.append(cmp);
-			}
-		}
-	}
 
-	DebugDialog::debug(QString("mp:%1, omi:%2, view:%3, id:%4").arg(modelPart->modelIndex()).arg(originalModelIndex).arg(m_viewIdentifier).arg(id));
-
-	bool doExternals = false;
-	QHash<QList<long> *, QString > externalConnectors;
-	if (modelParts.count() <= 0) {
-		doExternals = modelPart->parent() == m_sketchModel->root();  // only need external connectors for top level modules (not for modules-in-modules)
-		if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, doExternals ? &externalConnectors : NULL)) {
-			return NULL;
-		}
-
-		foreach (ModelPart * sub, modelParts) {
-			sub->setParent(modelPart);
-		}
-	}
-
-	loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
-
-	QHash<long, ModelPart *> newItems;
-	QList<long> ids;
-	foreach (ModelPart * mp, modelParts) {
-		ItemBase * item = mp->viewItem(scene());
-		if (item) {
-			if (doExternals) {
-				newItems.insert(mp->modelIndex(), mp);
-			}
-			ids.append(item->id());
-		}
-	}
-
-	group(modelPart->moduleID(), id, ids, viewGeometry, false);
-	ItemBase * toBase = modelPart->viewItem(scene());
-
-	if (doExternals) {
-		if (toBase) {
-			foreach (QList<long> * indexes, externalConnectors.keys()) {
-				QString connectorID = externalConnectors.value(indexes, "");
-				if (connectorID.isEmpty()) continue;
-
-				ModelPart * first = newItems.value(indexes->at(0));
-				if (first == NULL) continue;
-
-				ItemBase * target = first->viewItem(scene());
-				if (target == NULL) continue;
-
-				target = findModulePart(target, *indexes);
-				if (target == NULL) continue;
-
-				ConnectorItem * connectorItem = findConnectorItem(target, connectorID, true);
-				if (connectorItem == NULL) continue;
-
-				connectorItem->connector()->setExternal(true);
-
-				// must call setIgnoreAncestorFlag here, since group() is called previously,
-				// externals weren't set up
-				// and group() calls setIgnoreAncestorFlagIfExternal
-				connectorItem->setIgnoreAncestorFlag(true);
-			}
-		}
-
-		foreach (QList<long> * l, externalConnectors.keys()) {
-			delete l;
-		}
-	}
-
-	if (toBase) {
-		if (modelPart->parent() == m_sketchModel->root()) {
-			dynamic_cast<GroupItem *>(toBase)->collectExternalConnectorItems();
-		}
-	}
-
-	return toBase;
-}
-
-ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem) {
+ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem) {
 
 	ModelPart * mp = NULL;
 	if (modelIndex >= 0) {
@@ -663,7 +563,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 	}
 	if (modelPart == NULL) return NULL;
 
-	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, originalModelIndex, originatingCommand, partsEditorPaletteItem, true, m_viewIdentifier);
+	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, partsEditorPaletteItem, true, m_viewIdentifier);
 	if (crossViewType == BaseCommand::CrossView) {
 		emit itemAddedSignal(modelPart, viewGeometry, id, originatingCommand ? originatingCommand->dropOrigin() : NULL);
 	}
@@ -671,7 +571,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 	return newItem;
 }
 
-ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier viewIdentifier)
+ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier viewIdentifier)
 {
 	Q_UNUSED(partsEditorPaletteItem);
 	if (viewIdentifier == ViewIdentifierClass::UnknownView) {
@@ -680,16 +580,6 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 
 	if (doConnectors) {
 		modelPart->initConnectors();    // is a no-op if connectors already in place
-	}
-
-	if (modelPart->itemType() == ModelPart::Module) {
-		if (doConnectors || originatingCommand || originalModelIndex > 0)
-		{
-			QList<ModelPart *>  modelParts;
-			return makeModule(modelPart, originalModelIndex, modelParts, viewGeometry, id);
-		}
-		
-		// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
 	}
 
 	ItemBase * newItem = PartFactory::createPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu);
@@ -859,19 +749,13 @@ ItemBase * SketchWidget::findItem(long id) {
 	return NULL;
 }
 
-void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool later, RestoreIndexesCommand * restore) {
+void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool later) {
 	ItemBase * pitem = findItem(id);
 	DebugDialog::debug(QString("delete item (1) %1 %2 %3 %4").arg(id).arg(doEmit).arg(m_viewIdentifier).arg((long) pitem, 0, 16) );
 	if (pitem != NULL) {
 		//if (pitem->itemType() == ModelPart::Module) {
 		//	m_sketchModel->walk(m_sketchModel->root(),0);
 		//}
-		if (restore != NULL) {
-			if (restore->modelPartTiny() == NULL) {
-				ModelPartTiny * mpt = m_sketchModel->makeTiny(pitem->modelPart());
-				restore->setModelPartTiny(mpt);
-			}
-		}
 		deleteItem(pitem, deleteModelPart, doEmit, later);
 	}
 	else {
@@ -969,19 +853,6 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackM
 	bool skipMe = deleteMiddle(deletedItems, parentCommand);
 
 	foreach (ItemBase * itemBase, deletedItems) {
-		if (itemBase->itemType() == ModelPart::Module) {
-			// TODO: do these need reviewDeletedConnections?
-			ConnectorPairHash externalConnectors;
-			collectModuleExternalConnectors(itemBase, itemBase, externalConnectors);
-			foreach (ConnectorItem * fromConnectorItem, externalConnectors.uniqueKeys()) {
-				foreach (ConnectorItem * toConnectorItem, externalConnectors.values(fromConnectorItem)) {
-					extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
-				}
-			}
-		}
-	}
-
-	foreach (ItemBase * itemBase, deletedItems) {
 		Note * note = dynamic_cast<Note *>(itemBase);
 		if (note != NULL) {
 			new ChangeNoteTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
@@ -995,13 +866,6 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackM
 	emit ratsnestChangeSignal(this, parentCommand);
 
 	new CleanUpWiresCommand(this, skipMe, parentCommand);
-
-	foreach (ItemBase * itemBase, deletedItems) {
-		if (itemBase->itemType() == ModelPart::Module) {
-			ModelPartTiny * mpt = m_sketchModel->makeTiny(itemBase->modelPart());
-			new RestoreIndexesCommand(this, itemBase->id(), mpt, false, parentCommand);
-		}
-	}
 
 	// actual delete commands must come last for undo to work properly
 	foreach (ItemBase * itemBase, deletedItems) {
@@ -1149,7 +1013,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 	}
 
 	if (addItNow) {
-		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), viewGeometry, newID, -1, NULL, NULL, true, m_viewIdentifier);
+		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), viewGeometry, newID, NULL, true, m_viewIdentifier);
 		if (newItemBase) {
 			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
@@ -1457,7 +1321,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		*/
 
 		// create temporary item for dragging
-		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors, m_viewIdentifier);
+		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, doConnectors, m_viewIdentifier);
 
 		QSet<ItemBase *> savedItems;
 		QHash<Wire *, ConnectorItem *> savedWires;
@@ -1659,11 +1523,6 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	addItemCommand->setDropOrigin(this);
 	
 	new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
-
-	if (modelPart->itemType() == ModelPart::Module) {
-		RestoreIndexesCommand * restoreIndexesCommand = new RestoreIndexesCommand(this, fromID, NULL, true, parentCommand);
-		addItemCommand->addRestoreIndexesCommand(restoreIndexesCommand);
-	}
 
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	selectItemCommand->addRedo(fromID);
@@ -2249,7 +2108,7 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	vg.setLine(newLine2);
 	long newID = ItemBase::getNextID();
 	ConnectorItem * oldConnector1 = wire->connector1();
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), vg, newID, -1, NULL, NULL, true, m_viewIdentifier));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), vg, newID, NULL, true, m_viewIdentifier));
 	ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
 		oldConnector1->tempRemove(toConnectorItem, false);
@@ -2699,7 +2558,7 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 		QPointF dp = viewGeometry.loc() - from;
 		ViewGeometry vg(viewGeometry);
 		vg.setLoc(to + dp);
-		ItemBase * itemBase = addItemAux(modelPart, vg, id, -1, NULL, NULL, true, m_viewIdentifier);
+		ItemBase * itemBase = addItemAux(modelPart, vg, id, NULL, true, m_viewIdentifier);
 		if (m_alignToGrid && (itemBase != NULL)) {
 			QPointF loc = to + dp;
 			QSet<ItemBase *> savedItems;
@@ -2713,7 +2572,7 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 		}
 	}
 	else {
-		addItemAux(modelPart, viewGeometry, id, -1, NULL, NULL, true, m_viewIdentifier);
+		addItemAux(modelPart, viewGeometry, id, NULL, true, m_viewIdentifier);
 	}
 }
 
@@ -2802,79 +2661,6 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	}
 }
 
-void SketchWidget::group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry & viewGeometry, bool doEmit)
-{
-	ModelPart * modelPart = m_sketchModel->findModelPart(moduleID, itemID);
-	if (modelPart == NULL) {
-		return;
-	}
-
-	QList<ItemBase *> itemBases;
-	foreach (long id, itemIDs) {
-		ItemBase * itemBase = findItem(id);
-		if (itemBase == NULL) return;
-
-		itemBases.append(itemBase);
-	}
-
-	if (itemBases.count() < 1) return;
-
-	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, viewGeometry, itemID, NULL);
-	scene()->addItem(groupItem);
-
-	// sort by z
-    qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
-	foreach (ItemBase * itemBase, itemBases) {
-		groupItem->addToGroup(itemBase);
-	}
-	groupItem->doneAdding(m_viewLayers, defaultConnectorLayer(m_viewIdentifier));
-	//groupItem->setSelected(true);
-
-	groupItem->setPos(viewGeometry.loc());
-
-	if (doEmit) {
-		emit groupSignal(moduleID, itemID, itemIDs, viewGeometry, false);
-	}
-}
-
-ModelPart * SketchWidget::group(ModelPart * modelPart) {
-	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
-	if (sitems.size() < 2) return NULL;
-
-	QList<ItemBase *> itemBases;
-	foreach (QGraphicsItem * item, sitems) {
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase == NULL) continue;
-
-		itemBase = itemBase->layerKinChief();
-		if (itemBases.contains(itemBase)) continue;
-
-		itemBases.append(itemBase);
-	}
-
-	if (itemBases.count() < 2) return NULL;
-
-	if (modelPart == NULL) {
-		modelPart = m_paletteModel->retrieveModelPart(ModuleIDNames::groupModuleIDName);
-	}
-	if (modelPart == NULL) return NULL;
-
-	modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
-	ViewGeometry vg;
-	vg.setLoc(itemBases[0]->pos());		// temporary position
-	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, ItemBase::getNextID(), NULL);
-	scene()->addItem(groupItem);
-
-	// sort by z
-    qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
-	foreach (ItemBase * itemBase, itemBases) {
-		groupItem->addToGroup(itemBase);
-	}
-	groupItem->doneAdding(m_viewLayers, defaultConnectorLayer(m_viewIdentifier));
-	groupItem->setSelected(true);
-
-	return modelPart;
-}
 
 void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to) {
 	this->clearHoldingSelectItem();
@@ -3513,7 +3299,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 
 	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true, m_viewIdentifier));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier));
 	DebugDialog::debug("creating connector drag wire");
 	if (m_connectorDragWire == NULL) {
 		clearDragWireTempCommand();
@@ -4224,29 +4010,13 @@ ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelP
 ItemBase * SketchWidget::overSticky(ItemBase * itemBase) {
 	if (!itemBase->stickyEnabled()) return NULL;
 
-	if (itemBase->itemType() != ModelPart::Module) {
-		foreach (QGraphicsItem * item, scene()->collidingItems(itemBase)) {
-			ItemBase * s = dynamic_cast<ItemBase *>(item);
-			if (s == NULL) continue;
-			if (s == itemBase) continue;
-			if (!s->sticky()) continue;
+	foreach (QGraphicsItem * item, scene()->collidingItems(itemBase)) {
+		ItemBase * s = dynamic_cast<ItemBase *>(item);
+		if (s == NULL) continue;
+		if (s == itemBase) continue;
+		if (!s->sticky()) continue;
 
-			return s->layerKinChief();
-		}
-
-		return NULL;
-	}
-
-	// if it's a module, look at connectors inside the module
-
-	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-		ItemBase * subItemBase = dynamic_cast<ItemBase *>(childItem);
-		if (subItemBase != NULL) {
-			ItemBase * result = overSticky(subItemBase);
-			if (result != NULL) {
-				return result;
-			}
-		}
+		return s->layerKinChief();
 	}
 
 	return NULL;
@@ -4947,8 +4717,11 @@ void SketchWidget::addPcbViewLayers() {
 	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Board << ViewLayer::GroundPlane << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
+	layers << ViewLayer::Board << ViewLayer::GroundPlane 
+		<< ViewLayer::SilkscreenBottom << ViewLayer::SilkscreenBottomLabel
+		<< ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
 		/* << ViewLayer::Keepout */ << ViewLayer::Vias /* << ViewLayer::Soldermask */  
+		<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
 		<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
 		<< ViewLayer::Jumperwires << ViewLayer::PcbNote << ViewLayer::PcbRuler;
 
@@ -4959,6 +4732,12 @@ void SketchWidget::addPcbViewLayers() {
 	if (silkscreen && silkscreenLabel) {
 		//silkscreenLabel->setParentLayer(silkscreen);
 	}
+	ViewLayer * silkscreenBottom = m_viewLayers.value(ViewLayer::SilkscreenBottom);
+	ViewLayer * silkscreenBottomLabel = m_viewLayers.value(ViewLayer::SilkscreenBottomLabel);
+	if (silkscreenBottom && silkscreenBottomLabel) {
+		//silkscreenBottomLabel->setParentLayer(silkscreenBottom);
+	}
+
 	ViewLayer * copper0 = m_viewLayers.value(ViewLayer::Copper0);
 	ViewLayer * copper0Trace = m_viewLayers.value(ViewLayer::Copper0Trace);
 	ViewLayer * copper1 = m_viewLayers.value(ViewLayer::Copper1);
@@ -5706,7 +5485,6 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 					continue;
 				}
 				break;
-			case ModelPart::Module:
 			case ModelPart::Unknown:
 				continue;
 			default:
@@ -5945,54 +5723,6 @@ ItemBase * SketchWidget::findModulePart(ItemBase * toBase, QList<long> & indexes
 bool SketchWidget::spaceBarIsPressed() {
 	return m_spaceBarIsPressed;
 }
-
-void SketchWidget::restoreIndexes(long id, ModelPartTiny * modelPartTiny, bool doEmit)
-{
-	ItemBase * itemBase = findItem(id);
-	if (itemBase == NULL) return;
-
-	restoreIndexes(itemBase->modelPart(), modelPartTiny, doEmit);
-	//m_sketchModel->walk(m_sketchModel->root(), 0);
-}
-
-void SketchWidget::restoreIndexes(ModelPart * modelPart, ModelPartTiny * modelPartTiny, bool doEmit)
-{
-	modelPart->setModelIndex(modelPartTiny->m_index);
-	modelPart->setOriginalModelIndex(modelPartTiny->m_originalIndex);
-	ItemBase * itemBase = modelPart->viewItem(scene());
-	if (itemBase != NULL) {
-		itemBase->resetID();
-	}
-	for (int i = 0; i < modelPart->children().count(); i++) {
-		QObject * object = modelPart->children().at(i);
-		restoreIndexes(dynamic_cast<ModelPart *>(object), modelPartTiny->m_children.at(i), false);
-	}
-
-	if (doEmit) {
-		emit restoreIndexesSignal(modelPart, modelPartTiny, false);
-	}
-}
-
-void SketchWidget::collectModuleExternalConnectors(ItemBase * itemBase, ItemBase * parent, ConnectorPairHash & connectorHash)
-{
-	foreach (QGraphicsItem * item, itemBase->childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (fromConnectorItem) {
-			foreach (ConnectorItem* toConnectorItem, fromConnectorItem->connectedToItems()) {
-				if (parent->isAncestorOf(toConnectorItem)) continue;
-
-				connectorHash.insert(fromConnectorItem, toConnectorItem);
-			}
-		}
-		else {
-			ItemBase * childBase = dynamic_cast<ItemBase *>(item);
-			if (childBase == NULL) continue;
-
-			collectModuleExternalConnectors(childBase, parent, connectorHash);
-		}
-	}
-}
-
 
 ViewLayer::ViewLayerID SketchWidget::defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId) {
 	switch(viewId) {

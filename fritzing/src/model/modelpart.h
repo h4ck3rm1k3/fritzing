@@ -54,7 +54,6 @@ public:
 		 Breadboard,
 		 Board,
 		 ResizableBoard,
-		 Module,
 		 Note,
 		 Symbol,
 		 Jumper,
@@ -179,10 +178,5 @@ protected:
 
 Q_DECLARE_METATYPE( ModelPart* );			// so we can stash them in a QVariant
 
-struct ModelPartTiny {
-	long m_index;
-	long m_originalIndex;
-	QList<ModelPartTiny *> m_children;
-};
 
 #endif

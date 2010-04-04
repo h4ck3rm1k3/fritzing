@@ -93,7 +93,7 @@ ModelPart * SketchModel::findModelPartAux(ModelPart * modelPart, const QString &
 	return NULL;
 }
 
-bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<ModelPart *> & modelParts, QHash<QList<long> *, QString > * externalConnectors) 
+bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<ModelPart *> & modelParts) 
 {
 	QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -103,7 +103,7 @@ bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<Mo
 	QByteArray itemData = file.readAll();
 	file.close();
 
-	return ModelBase::paste(refModel, itemData, modelParts, externalConnectors);
+	return ModelBase::paste(refModel, itemData, modelParts);
 }
 
 void SketchModel::walk(ModelPart * modelPart, int indent) 
@@ -121,17 +121,3 @@ void SketchModel::walk(ModelPart * modelPart, int indent)
 	}
 }
 
-ModelPartTiny * SketchModel::makeTiny(ModelPart * modelPart) {
-	ModelPartTiny * modelPartTiny = new ModelPartTiny();
-	modelPartTiny->m_index = modelPart->modelIndex();
-	modelPartTiny->m_originalIndex = modelPart->originalModelIndex();
-	foreach (QObject * child, modelPart->children()) {
-		ModelPart * mp = dynamic_cast<ModelPart *>(child);
-		if (mp == NULL) continue;
-
-		ModelPartTiny * mpt = makeTiny(mp);
-		modelPartTiny->m_children.append(mpt);
-	}
-
-	return modelPartTiny;
-}

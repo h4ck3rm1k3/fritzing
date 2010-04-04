@@ -35,7 +35,6 @@ public:
 	static const QString rulerModuleIDName;
 	static const QString breadboardModuleIDName;
 	static const QString tinyBreadboardModuleIDName;
-	static const QString groupModuleIDName;
 	static const QString rectangleModuleIDName;
 	static const QString noteModuleIDName;
 	static const QString wireModuleIDName;

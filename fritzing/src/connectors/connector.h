@@ -73,8 +73,6 @@ public:
 	long modelIndex();
 	ModelPart * modelPart();
 	int connectorItemCount();
-	bool external();
-	void setExternal(bool);
 	void unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID);
 
 public:
@@ -95,7 +93,6 @@ protected:
 	QList<Connector *> m_toConnectors;
 	QPointer<class ModelPart> m_modelPart;
 	class Bus * m_bus;
-	bool m_external;
 
 protected:
 	static QHash<ConnectorType, QString> names;

@@ -61,7 +61,6 @@ public:
 	static void cleanup();
 	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
 	static QString partInstanceDefaultTitle;
-	static QString moduleInstanceDefaultTitle;
 	static QList<ItemBase *> emptyList;
 	static QString translatePropertyName(const QString & key);
 	static void setReferenceModel(class ReferenceModel *);
@@ -155,7 +154,6 @@ public:
 	void prepareGeometryChange();
 	virtual void resetID();
 	void updateConnectionsAux();
-	void updateExternalConnections();
 	virtual void blockSyncKinMoved(bool block);
 	virtual ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

@@ -33,7 +33,6 @@ $Date$
 const QString ModuleIDNames::rulerModuleIDName = "RulerModuleID";
 const QString ModuleIDNames::breadboardModuleIDName = "BreadboardModuleID";
 const QString ModuleIDNames::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
-const QString ModuleIDNames::groupModuleIDName = "GroupModuleID";
 const QString ModuleIDNames::rectangleModuleIDName = "RectanglePCBModuleID";
 const QString ModuleIDNames::noteModuleIDName = "NoteModuleID";
 const QString ModuleIDNames::wireModuleIDName = "WireModuleID";

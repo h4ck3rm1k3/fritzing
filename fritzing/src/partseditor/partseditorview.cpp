@@ -120,7 +120,7 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 	clearScene();
 
 	m_item = newPartsEditorPaletteItem(modelPart, svgFilePath);
-	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, -1, NULL, m_item);
+	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, NULL, m_item);
 
 	fitCenterAndDeselect();
 
@@ -136,7 +136,7 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 	emit connectorsFound(this->m_viewIdentifier,m_item->connectors());
 }
 
-ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry &, long /*id*/, long /*originalModelIndex*/, AddDeleteItemCommand *, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier) {
+ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry &, long /*id*/, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier) {
 	if(paletteItemAux == NULL) {
 		paletteItemAux = newPartsEditorPaletteItem(modelPart);
 	}

@@ -171,12 +171,11 @@ AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossVie
 	m_doFirstRedo = m_firstRedo = true;
 	m_module = false;
 	m_updateInfoView = updateInfoView;
-	m_restoreIndexesCommand = NULL;
 }
 
 void AddItemCommand::undo()
 {
-    m_sketchWidget->deleteItem(m_itemID, true, true, false, m_restoreIndexesCommand);
+    m_sketchWidget->deleteItem(m_itemID, true, true, false);
 }
 
 void AddItemCommand::redo()
@@ -189,10 +188,6 @@ void AddItemCommand::redo()
 
 void AddItemCommand::turnOffFirstRedo() {
 	m_doFirstRedo = false;
-}
-
-void AddItemCommand::addRestoreIndexesCommand(RestoreIndexesCommand * restoreIndexesCommand) {
-	m_restoreIndexesCommand = restoreIndexesCommand;
 }
 
 QString AddItemCommand::getParamString() const {
@@ -213,7 +208,7 @@ void DeleteItemCommand::undo()
 
 void DeleteItemCommand::redo()
 {
-	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView, false, NULL);
+	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView, false);
 }
 
 QString DeleteItemCommand::getParamString() const {
@@ -1054,36 +1049,6 @@ QString ResizeNoteCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-GroupCommand::GroupCommand(SketchWidget* sketchWidget, const QString & moduleID, long itemID, const ViewGeometry & viewGeometry, QUndoCommand *parent)
-    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
-{
-    m_itemID = itemID;
-	m_moduleID = moduleID;
-	m_viewGeometry = viewGeometry;
-}
-
-void GroupCommand::undo()
-{
-	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView, false, NULL);
-}
-
-void GroupCommand::redo()
-{
-    m_sketchWidget->group(m_moduleID, m_itemID, m_itemIDs, m_viewGeometry, m_crossViewType == BaseCommand::CrossView);
-}
-
-void GroupCommand::addItemID(long itemID) {
-	m_itemIDs.append(itemID);
-}
-
-QString GroupCommand::getParamString() const {
-	return QString("GroupCommand ") 
-		+ BaseCommand::getParamString()
-		+ QString(" id:%1 moduleID:%2").arg(m_itemID).arg(m_moduleID);
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 ModuleChangeConnectionCommand::ModuleChangeConnectionCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType cv,
 							long fromID, const QString & fromConnectorID,
@@ -1119,43 +1084,6 @@ QString ModuleChangeConnectionCommand::getParamString() const {
 		.arg(m_connect);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-RestoreIndexesCommand::RestoreIndexesCommand(SketchWidget * sketchWidget, long id, ModelPartTiny * modelPartTiny, bool addType, QUndoCommand * parent) 
-	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
-{
-	m_modelPartTiny = modelPartTiny;
-	m_itemID = id;
-	m_addType = addType;
-}
-
-void RestoreIndexesCommand::undo() 
-{
-	if (m_modelPartTiny  && !m_addType) {
-		m_sketchWidget->restoreIndexes(m_itemID, m_modelPartTiny, true);		
-	}
-}
-
-void RestoreIndexesCommand::redo() {
-	if (m_modelPartTiny && m_addType) {
-		m_sketchWidget->restoreIndexes(m_itemID, m_modelPartTiny, true);		
-	}
-}
-
-struct ModelPartTiny * RestoreIndexesCommand::modelPartTiny() {
-	return m_modelPartTiny;
-}
-
-void RestoreIndexesCommand::setModelPartTiny(ModelPartTiny * modelPartTiny) {
-	m_modelPartTiny = modelPartTiny;
-}
-
-QString RestoreIndexesCommand::getParamString() const {
-	return QString("RestoreIndexesCommand ") 
-		+ BaseCommand::getParamString() + 
-		QString(" id:%1 5")
-		.arg(m_itemID);
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

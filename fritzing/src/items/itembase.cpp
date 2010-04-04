@@ -102,7 +102,6 @@ QHash<QString, QString> ItemBase::TranslatedPropertyNames;
 QPointer<ReferenceModel> ItemBase::referenceModel = NULL;
 
 QString ItemBase::partInstanceDefaultTitle;
-QString ItemBase::moduleInstanceDefaultTitle;
 QList<ItemBase *> ItemBase::emptyList;
 QString ItemBase::SvgFilesDir = "svg";
 
@@ -324,7 +323,6 @@ void ItemBase::initNames() {
 	}
 
 	partInstanceDefaultTitle = tr("Part");
-	moduleInstanceDefaultTitle = tr("Module");
 
 	QSettings settings;
 	QString colorName = settings.value("ConnectedColor").toString();
@@ -912,7 +910,7 @@ void ItemBase::setDefaultTooltip() {
 			return;
 		}
 
-		QString title = (m_modelPart->itemType() == ModelPart::Module) ? ItemBase::moduleInstanceDefaultTitle : ItemBase::partInstanceDefaultTitle;
+		QString title = ItemBase::partInstanceDefaultTitle;
 		QString inst = instanceTitle();
 		if(!inst.isNull() && !inst.isEmpty()) {
 			title = inst;
@@ -1340,21 +1338,6 @@ void ItemBase::updateConnectionsAux() {
 		if (connectorItem == NULL) continue;
 
 		updateConnections(connectorItem);
-	}
-}
-
-void ItemBase::updateExternalConnections() {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem != NULL && connectorItem->isExternal()) {
-			updateConnections(connectorItem);
-			continue;
-		}
-
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(childItem);
-		if (itemBase != NULL) {
-			itemBase->updateExternalConnections();
-		}
 	}
 }
 

@@ -317,7 +317,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
     }
 
 
-	//DebugDialog::debug(QString("loading %1 %2").arg(path).arg(QTime::currentTime().toString("HH:mm:ss")));
+	DebugDialog::debug(QString("loading %1 %2").arg(path).arg(QTime::currentTime().toString("HH:mm:ss")));
     QString errorStr;
     int errorLine;
     int errorColumn;

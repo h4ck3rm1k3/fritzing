@@ -310,7 +310,7 @@ void ModelBase::save(QXmlStreamWriter & streamWriter, bool asPart) {
     }
 }
 
-bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QList<long> *, QString > * externalConnectors)
+bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts)
 {
 	m_referenceModel = refModel;
 
@@ -340,12 +340,6 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 		instance = instance.nextSiblingElement("instance");
 	}
 	renewModelIndexes(instances, "instance", oldToNew);
-	if (externalConnectors) {
-		QDomElement externals = module.firstChildElement("externals");
-   		if (!externals.isNull()) {
-			renewExternalIndexes(externals, "external", oldToNew, externalConnectors);
-		}
-	}
 
 	//QFile file("test.xml");
 	//file.open(QFile::WriteOnly);
@@ -397,41 +391,6 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 				view = view.nextSiblingElement();
 			}
 		}
-
-		instance = instance.nextSiblingElement(childName);
-	}
-}
-
-
-void ModelBase::renewExternalIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QList<long> *, QString > * externalConnectors)
-{
-	QDomElement instance = parentElement.firstChildElement(childName);
-	while (!instance.isNull()) {
-		bool ok;
-		QString connectorID = instance.attribute("connectorId");
-		long oldModelIndex = instance.attribute("modelIndex").toLong(&ok);
-		QList<long> * l = new QList<long>;
-		if (ok) {
-			instance.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
-			l->append(oldToNew.value(oldModelIndex));
-		}
-		else {
-			// we're connected to something inside a module; fixup the first modelIndex
-			QDomElement p = instance.firstChildElement("mp");
-			if (!p.isNull()) {
-				oldModelIndex = p.attribute("i").toLong();
-				p.setAttribute("i", QString::number(oldToNew.value(oldModelIndex)));
-				l->append(oldToNew.value(oldModelIndex));
-
-				while (true) {
-					p = p.firstChildElement("mp");
-					if (p.isNull()) break;
-
-					l->append(p.attribute("i").toLong());
-				}
-			}
-		}
-		externalConnectors->insert(l, connectorID);
 
 		instance = instance.nextSiblingElement(childName);
 	}

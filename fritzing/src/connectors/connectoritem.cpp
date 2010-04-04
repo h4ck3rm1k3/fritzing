@@ -53,7 +53,6 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	m_radius = m_strokeWidth = 0;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_chosen = false;
-	m_ignoreAncestorFlag = false;
 	m_circular = false;
 	m_overConnectorItem = NULL;
 	m_connectorHovering = false;
@@ -915,137 +914,16 @@ void ConnectorItem::clearConnector() {
 	m_connector = NULL;
 }
 
-bool ConnectorItem::sceneEvent(QEvent *event)
-{
-	if (!m_ignoreAncestorFlag) {
-		return QGraphicsRectItem::sceneEvent(event);
-	}
-
-	// the rest of this is copied from QGraphicsItem::sceneEvent
-	// this seemed to be the only way to be able to allow some items in a group to respond directly to events
-	// while others pass their events up to the parent
-
-	if (!this->isVisible()) {
-		return true;
-	}
-
-    switch (event->type()) {
-    case QEvent::FocusIn:
-        focusInEvent(static_cast<QFocusEvent *>(event));
-        break;
-    case QEvent::FocusOut:
-        focusOutEvent(static_cast<QFocusEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneContextMenu:
-        contextMenuEvent(static_cast<QGraphicsSceneContextMenuEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneDragEnter:
-        dragEnterEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneDragMove:
-        dragMoveEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneDragLeave:
-        dragLeaveEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneDrop:
-        dropEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneHoverEnter:
-        hoverEnterEvent(static_cast<QGraphicsSceneHoverEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneHoverMove:
-        hoverMoveEvent(static_cast<QGraphicsSceneHoverEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneHoverLeave:
-        hoverLeaveEvent(static_cast<QGraphicsSceneHoverEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneMouseMove:
-        mouseMoveEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneMousePress:
-        mousePressEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneMouseRelease:
-        mouseReleaseEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneMouseDoubleClick:
-        mouseDoubleClickEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
-        break;
-    case QEvent::GraphicsSceneWheel:
-        wheelEvent(static_cast<QGraphicsSceneWheelEvent *>(event));
-        break;
-    case QEvent::KeyPress:
-        keyPressEvent(static_cast<QKeyEvent *>(event));
-        break;
-    case QEvent::KeyRelease:
-        keyReleaseEvent(static_cast<QKeyEvent *>(event));
-        break;
-    case QEvent::InputMethod:
-        inputMethodEvent(static_cast<QInputMethodEvent *>(event));
-        break;
-    default:
-        return false;
-    }
-
-    return true;
-}
-
-void ConnectorItem::setIgnoreAncestorFlag(bool ignore) {
-	m_ignoreAncestorFlag = ignore;
-}
-
-void ConnectorItem::setIgnoreAncestorFlagIfExternal(bool ignore) {
-	if (m_connector == NULL) {
-		DebugDialog::debug("setIgnoreAncestorFlagIfExternal: connector is null");
-		return;
-	}
-
-	if (m_connector->external()) {
-		m_ignoreAncestorFlag = ignore;
-	}
-}
 
 bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 	if (!connector()->connectionIsAllowed(other->connector())) return false;
 	if (!m_attachedTo->connectionIsAllowed(other)) return false;
-
-	if (other->attachedTo()->parentItem() != NULL) {
-		// other's part is in a group
-		// TODO: what to do with external connectors once a group is inside a group?
-		if (!other->connector()->external()) {
-			return false;
-		}
-	}
-
-	/*
-	// code to disallow a wire connecting two items in the same group, but why not?
-	if (other->m_ignoreAncestorFlag) {
-		if (this->attachedToItemType() == ModelPart::Wire) {
-			ConnectorItem * wireOther = dynamic_cast<Wire *>(this->attachedTo())->otherConnector(this);
-			foreach (ConnectorItem * wireOtherConnectedToItem, wireOther->connectedToItems()) {
-				if (wireOtherConnectedToItem->m_ignoreAncestorFlag) {
-					if (other->commonAncestorItem(wireOtherConnectedToItem) != NULL) {
-						// don't allow wire connection between grouped items
-						return false;
-					}
-				}
-			}
-		}
-	}
-	*/
 
 	return true;
 }
 
 void ConnectorItem::prepareGeometryChange() {
 	QGraphicsRectItem::prepareGeometryChange();
-}
-
-bool ConnectorItem::isExternal() {
-	if (m_connector == NULL) return false;
-
-	return m_connector->external();
 }
 
 void ConnectorItem::setRadius(qreal radius, qreal strokeWidth) {

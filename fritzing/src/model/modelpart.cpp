@@ -201,21 +201,19 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		streamWriter.writeEndElement();		//instance
 	}
 
-	if (this->itemType() != ModelPart::Module) {
-
-		QList<QObject *> children = this->children();
-		if(m_orderedChildren.count() > 0) {
-			children = m_orderedChildren;
-		}
-
-		QList<QObject *>::const_iterator i;
-		for (i = children.constBegin(); i != children.constEnd(); ++i) {
-			ModelPart* mp = qobject_cast<ModelPart *>(*i);
-			if (mp == NULL) continue;
-
-			mp->saveInstances(streamWriter, false);
-		}
+	QList<QObject *> children = this->children();
+	if(m_orderedChildren.count() > 0) {
+		children = m_orderedChildren;
 	}
+
+	QList<QObject *>::const_iterator i;
+	for (i = children.constBegin(); i != children.constEnd(); ++i) {
+		ModelPart* mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+
+		mp->saveInstances(streamWriter, false);
+	}
+
 
 	if (startDocument) {
 		streamWriter.writeEndElement();	  //  instances

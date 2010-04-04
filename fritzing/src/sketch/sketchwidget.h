@@ -73,9 +73,9 @@ public:
 
 	void pushCommand(QUndoCommand *);
     class WaitPushUndoStack * undoStack();
-    ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
+    ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
 	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand);
-    void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later, RestoreIndexesCommand * restoreIndexesCommand);
+    void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
     void rotateItem(long id, qreal degrees);
@@ -103,7 +103,6 @@ public:
 	void flip(Qt::Orientations orientation);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
-	ModelPart * group(ModelPart *);
 	void deleteItem();
 	PaletteItem *getSelectedPart();
 
@@ -149,7 +148,7 @@ public:
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
-	virtual ItemBase * addItemAux(ModelPart *, const ViewGeometry &, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
+	virtual ItemBase * addItemAux(ModelPart *, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
 
     bool swappingEnabled(ItemBase *);
 
@@ -211,7 +210,6 @@ public:
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect);
 
 	bool spaceBarIsPressed();
-	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
 	long setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
@@ -348,8 +346,6 @@ protected:
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
-	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, const ViewGeometry &, long id); 
-	void collectModuleExternalConnectors(ItemBase *, ItemBase * parent, ConnectorPairHash &);
 	void setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand);
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
@@ -411,8 +407,6 @@ signals:
 	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID,
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
-	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
-	void restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool doEmit);
 	void checkStickySignal(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
@@ -462,8 +456,6 @@ public slots:
 	void setNoteText(long itemID, const QString & newText);
 	void setInstanceTitle(long id, const QString & title, bool isUndoable, bool doEmit);
 	void showPartLabel(long id, bool showIt);
-	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
-	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);
 	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void resizeBoard(long id, qreal w, qreal h);
 	void resizeJumperItem(long id, QPointF pos, QPointF c0, QPointF c1);
