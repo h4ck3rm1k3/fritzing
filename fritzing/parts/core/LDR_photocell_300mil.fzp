@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.7b.08.26.3377" moduleId="2010BBCD20113">
-    <version>3</version>
-    <title>Basic Photo-Resistor (Photocell)</title>
+    <version>3.1</version>
+    <title>Photocell (LDR)</title>
     <label>R</label>
-    <date>2008-09-25</date>
+    <date>2010-04-06</date>
     <tags>
         <tag>LDR</tag>
         <tag>light dependent resistor</tag>
@@ -17,7 +17,7 @@
         <property name="family">Photo-Resistor</property>
         <property name="resistance@ luminance">16 kOhms@ 10 lux</property>
     </properties>
-    <description>A generic light dependent resistor</description>
+    <description>A generic light dependent resistor (LDR)</description>
     <views>
         <iconView>
             <layers image="icon/basic_ldr.svg">
