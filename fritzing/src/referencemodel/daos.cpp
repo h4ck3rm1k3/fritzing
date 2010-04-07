@@ -227,7 +227,7 @@ Part *Part::from(ModelPart *modelPart) {
 	}
 	//Q_ASSERT(!moduleID.isNull());
 
-	QHash<QString,QString> props = modelPart->modelPartShared()->properties();
+	QHash<QString,QString> props = modelPart->properties();
 	if (!props.contains("family")) {
 		throw "Part from props missing family";
 	}

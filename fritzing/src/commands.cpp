@@ -132,7 +132,7 @@ int BaseCommand::index() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent)
+AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
     : BaseCommand(crossViewType, sketchWidget, parent)
 {
  	m_dropOrigin = NULL;
@@ -140,7 +140,7 @@ AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseComma
     m_viewGeometry = viewGeometry;
     m_itemID = id;
 	m_modelIndex = modelIndex;
-	m_originalModelIndex = originalModelIndex;
+	m_flippedSMD = flippedSMD;
 }
 
 QString AddDeleteItemCommand::getParamString() const {
@@ -165,8 +165,8 @@ SketchWidget * AddDeleteItemCommand::dropOrigin() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent)
-    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, modelIndex, originalModelIndex, parent)
+AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
+    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, flippedSMD, viewGeometry, id, modelIndex, parent)
 {
 	m_doFirstRedo = m_firstRedo = true;
 	m_module = false;
@@ -181,7 +181,7 @@ void AddItemCommand::undo()
 void AddItemCommand::redo()
 {
 	if (!m_firstRedo || m_doFirstRedo) {
-		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, m_originalModelIndex, this);
+		m_sketchWidget->addItem(m_moduleID, m_flippedSMD, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
 	}
 	m_firstRedo = false;
 }
@@ -196,14 +196,14 @@ QString AddItemCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent)
-    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, modelIndex, originalModelIndex, parent)
+DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
+    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, flippedSMD, viewGeometry, id, modelIndex, parent)
 {
 }
 
 void DeleteItemCommand::undo()
 {
-    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, m_originalModelIndex, this);
+    m_sketchWidget->addItem(m_moduleID, m_flippedSMD, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
 }
 
 void DeleteItemCommand::redo()
@@ -633,7 +633,7 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 				wire->id(), "connector1", false, true, NULL));
 	}
 
-	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), -1, NULL));
+	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, false, wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
 }
 
 
@@ -758,7 +758,7 @@ void RatsnestCommand::redo() {
 
 void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest, bool select) 
 {
-	addSubCommand(new AddItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->getViewGeometry(), wire->id(), true, -1, -1, NULL));
+	addSubCommand(new AddItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, false, wire->getViewGeometry(), wire->id(), true, -1, NULL));
 	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorSharedID(),
@@ -1045,43 +1045,6 @@ QString ResizeNoteCommand::getParamString() const {
 		+ QString(" id:%1 oldsz:%2 %3 newsz:%4 %5") 
 			.arg(m_itemID).arg(m_oldSize.width()).arg(m_oldSize.height()).arg(m_newSize.width()).arg(m_newSize.height());
 
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-ModuleChangeConnectionCommand::ModuleChangeConnectionCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType cv,
-							long fromID, const QString & fromConnectorID,
-							QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
-							bool connect, bool seekLayerKin,
-							QUndoCommand * parent)
-	: ChangeConnectionCommand(sketchWidget, cv, fromID, fromConnectorID, 0, toConnectorID, connect, seekLayerKin, parent)
-{
-	m_doRatsnest = doRatsnest;
-	foreach (long ix, toIDs) {
-		m_toIDs.append(ix);
-	}
-}
-
-void ModuleChangeConnectionCommand::undo()
-{
-    m_sketchWidget->moduleChangeConnection(m_fromID, m_fromConnectorID, m_toIDs, m_toConnectorID, m_doRatsnest, !m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_updateConnections);
-}
-
-void ModuleChangeConnectionCommand::redo()
-{
-    m_sketchWidget->moduleChangeConnection(m_fromID, m_fromConnectorID, m_toIDs, m_toConnectorID, m_doRatsnest, m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_updateConnections);
-}
-
-QString ModuleChangeConnectionCommand::getParamString() const {
-	return QString("ModuleChangeConnectionCommand ") 
-		+ BaseCommand::getParamString() + 
-		QString(" fromid:%1 connid:%2 toid:%3 connid:%4 connect:%5")
-		.arg(m_fromID)
-		.arg(m_fromConnectorID)
-		.arg(m_toID)
-		.arg(m_toConnectorID)
-		.arg(m_connect);
 }
 
 

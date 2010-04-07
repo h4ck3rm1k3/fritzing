@@ -200,15 +200,6 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 			// set the index so we can find the same model part later, as we continue loading
 			modelPart->setModelIndex(index);
   		}
-   		long oindex = instance.attribute("originalModelIndex").toLong(&ok);
-   		if (ok) {
-			// used for saving connections to parts in modules
-			modelPart->setOriginalModelIndex(oindex);
-			//DebugDialog::debug(QString("loadinstances original model index %1 %2").arg(oindex).arg((long) modelPart, 0, 16));
-  		}
-		else {
-			modelPart->setOriginalModelIndex(index);
-		}
 
 		// note: this QDomNamedNodeMap loop is obsolete, but leaving it here so that old sketches don't get broken (jc, 22 Oct 2009)
 		QDomNamedNodeMap map = instance.attributes();
@@ -355,7 +346,6 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 	while (!instance.isNull()) {
 		long oldModelIndex = instance.attribute("modelIndex").toLong();
 		instance.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
-		instance.setAttribute("originalModelIndex", QString::number(oldModelIndex));
 		QDomElement views = instance.firstChildElement("views");
 		if (!views.isNull()) {
 			QDomElement view = views.firstChildElement();

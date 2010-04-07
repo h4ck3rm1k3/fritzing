@@ -34,6 +34,9 @@ $Date$
 #include "partseditorconnectorspaletteitem.h"
 #include "partseditorconnectorsconnectoritem.h"
 
+#include <QList>
+#include <QStringList>
+
 
 struct ConnectorTerminalSvgIdPair {
 	ConnectorTerminalSvgIdPair() {
@@ -106,7 +109,7 @@ class PartsEditorView : public SketchWidget {
 
 	signals:
 		// conns
-		void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns);
+		void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
 		void svgFileLoadNeeded(const QString &filepath);
 		void connectorSelected(const QString& connId);
 		void removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid);
@@ -142,8 +145,8 @@ class PartsEditorView : public SketchWidget {
 		bool findConnectorsLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
 		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem, bool wantTerminal);
 		QString getLayerFileName(ModelPart * modelPart);
-		ViewLayer::ViewLayerID defaultLayer();
-		QString defaultLayerAsStr();
+		QList<ViewLayer::ViewLayerID> defaultLayers();
+		QStringList defaultLayerAsStringlist();
 
 
 		// SVG fixing
@@ -176,7 +179,7 @@ class PartsEditorView : public SketchWidget {
 		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
 		bool removeConnectorsIfNeeded(QDomElement &docEle);
 		bool updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
-		bool addDefaultLayerIfNotIn(QDomDocument *svgDom, bool fakeDefaultIfNone);
+		bool addDefaultLayerIfNotInSvg(QDomDocument *svgDom, bool fakeDefaultIfNone);
 		QString svgIdForConnector(Connector* conn, const QString &connId);
 
 		void updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId);

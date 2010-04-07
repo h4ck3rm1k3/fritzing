@@ -991,7 +991,6 @@ void MainWindow::populateMenuFromXMLFile(
 	QDomDocument dom;
 	QFile file(folderPath+indexFileName);
 	dom.setContent(&file);
-	file.close();
 
 	QDomElement domElem = dom.documentElement();
 	QDomElement indexDomElem = domElem.firstChildElement("sketches");
@@ -2778,7 +2777,7 @@ void MainWindow::addNote() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
 	m_currentGraphicsView->stackSelectionState(false, parentCommand);
 	m_currentGraphicsView->scene()->clearSelection();
-	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, false, vg, ItemBase::getNextID(), false, -1, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -2954,7 +2953,7 @@ void MainWindow::groundFill()
 		ViewGeometry vg;
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
-		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, vg, newID, false, -1, -1, parentCommand);
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, false, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
 	}
 

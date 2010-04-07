@@ -216,9 +216,11 @@ void SchematicSketchWidget::changeConnection(long fromID, const QString & fromCo
 	m_updateDotsTimer.start();
 }
 
-AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent)
+AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, bool flippedSMD, 
+														  ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, 
+														  long modelIndex, QUndoCommand *parent)
 {
-	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, viewGeometry, id, updateInfoView, modelIndex, originalModelIndex, parent);
+	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, flippedSMD, viewGeometry, id, updateInfoView, modelIndex, parent);
 	qreal v = 0;
 	bool gotV = false;
 	if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
@@ -238,7 +240,7 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	}
 
 	// create the item temporarily, then delete it
-	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, BaseCommand::SingleView, viewGeometry, id, modelIndex, originalModelIndex, NULL));
+	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, flippedSMD, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
 	
 	foreach (QGraphicsItem * item, scene()->items()) {
 		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);

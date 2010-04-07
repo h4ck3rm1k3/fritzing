@@ -41,6 +41,7 @@ $Date$
 
 #include "modelpartshared.h"
 #include "../connectors/connector.h"
+#include "../connectors/bus.h"
 #include "../utils/svgandpartfilepath.h"
 
 class ModelPart : public QObject
@@ -82,12 +83,10 @@ public:
 	void removeViewItem(class ItemBase *);
 	class ItemBase * viewItem(QGraphicsScene * scene);
 	void initConnectors(bool force=false);
-	const QHash<QString, Connector *> & connectors();
+	const QHash<QString, QPointer<Connector> > & connectors();
 	long modelIndex();
-	long originalModelIndex();
 	void setModelIndex(long index);
 	void setModelIndexFromMultiplied(long multipliedIndex);
-	void setOriginalModelIndex(long index);
 	void setInstanceDomElement(const QDomElement &);
 	const QDomElement & instanceDomElement();
 	Connector * getConnector(const QString & id);
@@ -96,9 +95,16 @@ public:
 	const QString & description();
 	const QStringList & tags();
 	const QHash<QString,QString> & properties() const;
-	const QHash<QString, class Bus *> & buses();
+	const QHash<QString, QPointer<Bus> > & buses();
+	QDomDocument * domDocument();
+	const QString & version();
+	const QString & path();
+	const QString & label();
+	const QString & author();
+	const QString & uri();
+	const QDate & date();
 
-	class Bus * bus(const QString & busID);
+	Bus * bus(const QString & busID);
 	bool ignoreTerminalPoints();
 
 	bool isCore();
@@ -129,6 +135,9 @@ public:
 	const QString & replacedby();
 	bool isObsolete();
 
+	void setFlippedSMD(bool);
+	bool flippedSMD();
+
 public:
 	static long nextIndex();
 	static void updateIndex(long index);
@@ -145,18 +154,18 @@ protected:
 
 	void grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId);
 	QString inWhichFolder(const QString &partspath, const QString &imagepath);
+	void commonInit(ItemType type);
 
 
 protected:
-	QList<class ItemBase *> m_viewItems;
+	QList< QPointer<class ItemBase> > m_viewItems;
 
 	ItemType m_type;
 	QPointer<ModelPartShared> m_modelPartShared;
-	QHash<QString, Connector *> m_connectorHash;
-	QList<Connector *> m_deletedConnectors;
-	QHash<QString, class Bus *> m_busHash;
+	QHash<QString, QPointer<Connector> > m_connectorHash;
+	QList< QPointer<Connector> > m_deletedConnectors;
+	QHash<QString, QPointer<Bus> > m_busHash;
 	long m_index;						// only used at save time to identify model parts in the xml
-	long m_originalIndex;				// only used at save time to identify model parts in the xml (for modules)
 	QDomElement m_instanceDomElement;	// only used at load time (so far)
 
 	bool m_core;

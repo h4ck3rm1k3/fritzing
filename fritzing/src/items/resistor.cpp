@@ -138,7 +138,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 
 				// hack the dom element and call setUpImage
 				FSvgRenderer::removeFromHash(this->modelPart()->moduleID(), "");
-				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->modelPartShared()->domDocument(), m_viewIdentifier);
+				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
 				if (element.isNull()) break;
 
 				QString filename = element.attribute("image");

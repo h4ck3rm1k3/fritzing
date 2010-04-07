@@ -309,7 +309,7 @@ QVBoxLayout *ConnectorsInfoWidget::scrollContentLayout() {
 	return (QVBoxLayout*)m_scrollContent->layout();
 }
 
-void ConnectorsInfoWidget::connectorsFound(QList<Connector *> conns) {
+void ConnectorsInfoWidget::connectorsFound(QList< QPointer<Connector> > conns) {
 	qSort(conns);
 
 	QProgressDialog progress(tr("Loading connectors..."), 0, 0, conns.size(), this);
@@ -390,7 +390,7 @@ void ConnectorsInfoWidget::singleToMismatchingNotInView(ViewIdentifierClass::Vie
 	updateLayout();
 }
 
-void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns) {
+void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns) {
 	clearMismatchingForView(viewId);
 
 	// clean the old pins for this view

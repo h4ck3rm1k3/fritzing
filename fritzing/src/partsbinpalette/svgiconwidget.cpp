@@ -92,7 +92,6 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 	}
 
 	QPixmap pixmap(plural ? *PluralImage : *SingularImage);
-	DebugDialog::debug(QString("pixmap %1 %2").arg(pixmap.size().width()).arg(pixmap.size().height()));
 	QPixmap * icon = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, QSize(ICON_SIZE, ICON_SIZE));
 	if (icon) {
 		QPainter painter;

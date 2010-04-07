@@ -78,7 +78,7 @@ protected:
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
-    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent);
+    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, bool flippedSMD, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
 
 	long itemID() const;
 	void setDropOrigin(class SketchWidget *);
@@ -92,14 +92,14 @@ protected:
     long m_itemID;
     ViewGeometry m_viewGeometry;
 	long m_modelIndex;
-	long m_originalModelIndex;
 	class SketchWidget * m_dropOrigin;
+	bool m_flippedSMD;
 };
 
 class AddItemCommand : public AddDeleteItemCommand
 {
 public:
-    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
+    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, bool flippedSMD, ViewGeometry &, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent);
     void undo();
     void redo();
 	void turnOffFirstRedo();
@@ -119,7 +119,7 @@ protected:
 class DeleteItemCommand : public AddDeleteItemCommand
 {
 public:
-    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent);
+    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, bool flippedSMD, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -588,26 +588,6 @@ protected:
     QSizeF m_oldSize;
 	QSizeF m_newSize;
 };
-
-class ModuleChangeConnectionCommand : public ChangeConnectionCommand
-{
-public:
-	ModuleChangeConnectionCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType,
-							long fromID, const QString & fromConnectorID,
-							QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
-							bool connect, bool seekLayerKin,
-							QUndoCommand * parent);
-	void undo();
-	void redo();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	QList <long> m_toIDs;
-	bool m_doRatsnest;
-};
-
 
 class ResizeBoardCommand : public BaseCommand
 {

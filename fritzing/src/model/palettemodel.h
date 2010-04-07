@@ -82,6 +82,8 @@ protected:
 	void writeCommonBinsFooterAux(bool doIt, const QString &filename);
 	void writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool doIt, const QString &filename);
 	void writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool doIt, const QString &filename);
+	void flipSMD(ModelPart * modelPart, QDomDocument * domDocument, const QString & path, ModelPart::ItemType);
+
 
 protected:
 	static bool CreateAllPartsBinFile;

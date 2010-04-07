@@ -45,7 +45,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 
 		virtual void writeXml(QXmlStreamWriter &);
 		virtual void writeXmlLocation(QXmlStreamWriter & streamWriter);
-		const QList<Connector *> &connectors();
+		const QList< QPointer<Connector> > &connectors();
 		SvgAndPartFilePath* svgFilePath();
 		void setSvgFilePath(SvgAndPartFilePath *sp);
 
@@ -76,7 +76,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 
 		SvgAndPartFilePath *m_svgStrings;
 		QList< QPointer<Connector> > m_connectors;
-		QList<Connector*> m_connectorsTemp;
+		QList< QPointer<Connector> > m_connectorsTemp;
 
 		PartsEditorView *m_owner;
 		bool m_shouldDeletePath;

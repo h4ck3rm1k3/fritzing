@@ -676,31 +676,7 @@ void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & el
 	//DebugDialog::debug(QString("write connector %1").arg(this->attachedToID()));
 	writer.writeStartElement(elementName);
 	writer.writeAttribute("connectorId", connectorSharedID());
-	if (attachedTo()->parentItem() == NULL) {
-		writer.writeAttribute("modelIndex", QString::number(connector()->modelIndex()));
-	}
-	else {
-		// if connectorItem is part of a module, then we need to save references up the tree
-		QList<QGraphicsItem *> parents;
-		QGraphicsItem * parent = attachedTo();
-		while (parent) {
-			parents.push_front(parent);
-			parent = parent->parentItem();
-		}
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(parents[0]);
-		writer.writeStartElement("mp");
-		// write the local file modelIndex first
-		writer.writeAttribute("i", QString::number(itemBase->modelPart()->modelIndex()));
-		for (int i = 1; i < parents.count(); i++) {
-			itemBase = dynamic_cast<ItemBase *>(parents[i]);
-			writer.writeStartElement("mp");
-			// now write the indices from the original file
-			writer.writeAttribute("i", QString::number(itemBase->modelPart()->originalModelIndex()));
-		}
-		for (int i = 0; i < parents.count(); i++) {
-			writer.writeEndElement();
-		}
-	}
+	writer.writeAttribute("modelIndex", QString::number(connector()->modelIndex()));
 	writer.writeEndElement();
 }
 

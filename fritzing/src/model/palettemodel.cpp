@@ -36,6 +36,7 @@ $Date$
 #include "../version/version.h"
 #include "../layerattributes.h"
 #include "../utils/folderutils.h"
+#include "../utils/textutils.h"
 #include "../items/moduleidnames.h"
 
 bool PaletteModel::CreateAllPartsBinFile = false;  // now generating the all parts bin in advance using a python script:  [fritzing]/part-gen-scripts/misc_scripts/genAllParts.py
@@ -219,7 +220,6 @@ void PaletteModel::writeInstanceInCommonBin(const QString &moduleID, const QStri
 		QDomDocument domDocument;
 
 		QFile file(filename);
-
 		if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
 			return;
 		}
@@ -316,8 +316,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
         return NULL;
     }
 
-
-	DebugDialog::debug(QString("loading %1 %2").arg(path).arg(QTime::currentTime().toString("HH:mm:ss")));
+	DebugDialog::debug(QString("loading %2 %1").arg(path).arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
     QString errorStr;
     int errorLine;
     int errorColumn;
@@ -385,9 +384,6 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (moduleID.compare(ModuleIDNames::noteModuleIDName) == 0) {
 		type = ModelPart::Note;
 	}
-	/*else if (propertiesText.equals("module", Qt::CaseInsensitive)) {
-		type = ModelPart::Module;
-	}*/
 	else if (moduleID.compare(ModuleIDNames::justPowerModuleIDName) == 0) {
 		type = ModelPart::Symbol;
 	}
@@ -400,6 +396,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (moduleID.compare(ModuleIDNames::rulerModuleIDName) == 0) {
 		type = ModelPart::Ruler;
 	}
+
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);
 	if (modelPart == NULL) return NULL;
 
@@ -444,7 +441,110 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 		}
 	}
 
+	flipSMD(modelPart, domDocument, path, type);
+
     return modelPart;
+}
+
+void PaletteModel::flipSMD(ModelPart * modelPart, QDomDocument * domDocument, const QString & path, ModelPart::ItemType type) {
+	QDomElement root = domDocument->documentElement();
+	QDomElement views = root.firstChildElement("views");
+	if (views.isNull()) return;
+
+	QDomElement pcb = views.firstChildElement("pcbView");
+	if (pcb.isNull()) return;
+
+	QDomElement layers = pcb.firstChildElement("layers");
+	if (layers.isNull()) return;
+
+	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
+
+	QDomElement layer = layers.firstChildElement("layer");
+	while (!layer.isNull()) {
+		QString layerID = layer.attribute("layerId");
+		if (layerID.compare(c1String) == 0) {
+			break;
+		}
+
+		layer = layer.nextSiblingElement("layer");
+	}
+
+	if (layer.isNull()) return;
+
+	modelPart->setFlippedSMD(true);
+
+	layer = layers.firstChildElement("layer");
+
+	QString c0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0);
+	QString s0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0);
+	QString s1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen);
+	QDomElement c0;
+	QDomElement c1;
+	QDomElement s0;
+	QDomElement s1;
+
+	while (!layer.isNull()) {
+		QString layerID = layer.attribute("layerId");
+		if (layerID.compare(c0String) == 0) {
+			c0 = layer;
+		}
+		else if (layerID.compare(s0String) == 0) {
+			s0 = layer;
+		}
+		else if (layerID.compare(s1String) == 0) {
+			s1 = layer;
+		}
+		layer = layer.nextSiblingElement("layer");
+	}
+
+	if (c0.isNull()) {
+		c0 = domDocument->createElement("layer");
+		c0.setAttribute("layerId", c0String);
+		layers.appendChild(c0);
+	}
+
+	c0.setAttribute("flipSMD", "true");
+
+	if (!s1.isNull() && s0.isNull()) {
+		s0 = domDocument->createElement("layer");
+		s0.setAttribute("layerId", s0String);
+		layers.appendChild(s0);
+	}
+
+	if (!s0.isNull()) {
+		s0.setAttribute("flipSMD", "true");
+	}
+
+	QDomElement connectors = root.firstChildElement("connectors");
+	QDomElement connector = connectors.firstChildElement("connector");
+	while (!connector.isNull()) {
+		views = connector.firstChildElement("views");
+		pcb = views.firstChildElement("pcbView");
+		QDomElement p = pcb.firstChildElement("p");
+		QList<QDomElement> newPs;
+		while (!p.isNull()) {
+			QString l = p.attribute("layer");
+			if (l == c1String) {
+				QDomElement newP = domDocument->createElement("p");
+				newPs.append(newP);
+				newP.setAttribute("layer", c0String);
+				newP.setAttribute("flipSMD", "true");
+				newP.setAttribute("svgId", p.attribute("svgId"));
+				QString terminalId = p.attribute("terminalId");
+				if (!terminalId.isEmpty()) {
+					newP.setAttribute("svgId", terminalId);
+				}
+			}
+			p = p.nextSiblingElement("p");
+		}
+		foreach(QDomElement p, newPs) {
+			pcb.appendChild(p);
+		}
+
+		connector = connector.nextSiblingElement("connector");
+	}
+
+	DebugDialog::debug(domDocument->toString());
 }
 
 bool PaletteModel::load(const QString & fileName, ModelBase * refModel) {

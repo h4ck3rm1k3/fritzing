@@ -52,23 +52,6 @@ ModelPart * SketchModel::findModelPart(const QString & moduleID, long id) {
 	return findModelPartAux(m_root, moduleID, id);
 }
 
-ModelPart * SketchModel::findModelPartFromOriginal(ModelPart * parent, long originalModelIndex) {
-	if (parent->originalModelIndex() == originalModelIndex) return parent;
-
-	foreach (QObject * child, parent->children()) {
-		ModelPart * mp = dynamic_cast<ModelPart *>(child);
-		if (mp == NULL) continue;
-
-		mp = findModelPartFromOriginal(mp, originalModelIndex);
-		if (mp != NULL) {
-			return mp;
-		}
-	}
-
-	return NULL;
-}
-
-
 ModelPart * SketchModel::findModelPartAux(ModelPart * modelPart, const QString & moduleID, long id) 
 {
 	if (modelPart->moduleID().compare(moduleID) == 0) {
@@ -106,18 +89,4 @@ bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<Mo
 	return ModelBase::paste(refModel, itemData, modelParts);
 }
 
-void SketchModel::walk(ModelPart * modelPart, int indent) 
-{
-	DebugDialog::debug(QString("%1 %2 mi:%3 omi:%4 %5 %6")
-		.arg(indent)
-		.arg(QString(indent * 4, ' '))
-		.arg(modelPart->modelIndex())
-		.arg(modelPart->originalModelIndex())
-		.arg(modelPart->moduleID())
-		.arg(modelPart->title()) );
-
-	foreach (QObject * child, modelPart->children()) {
-		walk(dynamic_cast<ModelPart *>(child), indent + 1);
-	}
-}
 

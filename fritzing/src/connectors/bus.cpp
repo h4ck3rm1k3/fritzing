@@ -32,10 +32,10 @@ $Date$
 #include "../model/modelpart.h"
 
 
-QHash<QString, class Bus *> Bus::___emptyBusList___;
+QHash<QString, QPointer<Bus> > Bus::___emptyBusList___;
 
 
-Bus::Bus(BusShared * busShared, ModelPart * modelPart)
+Bus::Bus(BusShared * busShared, ModelPart * modelPart) : QObject()
 {
 	m_busShared = busShared;
 	m_modelPart = modelPart;

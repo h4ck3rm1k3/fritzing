@@ -75,8 +75,8 @@ protected slots:
 protected:
 	qreal getRatsnestOpacity(bool);
 	AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
-										QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
-										bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
+										QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, 
+										bool updateInfoView, long modelIndex, QUndoCommand *parent);
 
 
 protected:

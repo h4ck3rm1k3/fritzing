@@ -53,10 +53,10 @@ class ConnectorsInfoWidget : public QFrame {
 		bool hasMismatchingConnectors();
 
 	public slots:
-		void connectorsFound(QList<Connector *>);
+		void connectorsFound(QList< QPointer<Connector> >);
 		void informConnectorSelection(const QString &);
 		void informEditionCompleted();
-		void syncNewConnectors(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns);
+		void syncNewConnectors(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
 		void emitPaintNeeded();
 		void addConnector();
 		void removeSelectedConnector();

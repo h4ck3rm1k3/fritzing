@@ -149,7 +149,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 		QString layerFileName = getLayerFileName(modelPart);
 		if(layerFileName != ___emptyString___) {
-			if(paletteItem->createSvgPath(modelPart->modelPartShared()->path(), layerFileName)) {
+			if(paletteItem->createSvgPath(modelPart->path(), layerFileName)) {
 				paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
 				ViewLayer::ViewLayerID viewLayerID =
 					ViewLayer::viewLayerIDFromXmlString(
@@ -294,7 +294,6 @@ const QHash<QString,ConnectorTerminalSvgIdPair> PartsEditorView::getConnectorsSv
 	QDomDocument dom ;
 	QFile file(path);
 	dom.setContent(&file);
-	file.close();
 
 	QDomElement docElem = dom.documentElement();
 	getConnectorsSvgIdsAux(docElem);
@@ -327,13 +326,11 @@ void PartsEditorView::getConnectorsSvgIdsAux(QDomElement &docElem) {
 
 const QStringList PartsEditorView::getLayers(const QString &path) {
 	if(m_viewIdentifier == ViewIdentifierClass::IconView) { // defaulting layer to icon for iconview
-		QStringList retval; retval << defaultLayerAsStr();
-		return retval;
+		return defaultLayerAsStringlist();
 	} else {
 		QDomDocument dom;
 		QFile file(path);
 		dom.setContent(&file);
-		file.close();
 		return getLayers(&dom);
 	}
 }
@@ -468,7 +465,7 @@ QString PartsEditorView::findConnectorsLayerId(QDomDocument *svgDom) {
 		}
 		return result;
 	} else {
-		return defaultLayerAsStr();
+		return defaultLayerAsStringlist().at(0);
 	}
 }
 
@@ -493,7 +490,7 @@ bool PartsEditorView::findConnectorsLayerIdAux(QString &result, QDomElement &doc
 }
 
 QString PartsEditorView::getLayerFileName(ModelPart * modelPart) {
-	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->modelPartShared()->domDocument(), m_viewIdentifier);
+	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->domDocument(), m_viewIdentifier);
 	if (layers.isNull()) return ___emptyString___;
 
 	return layers.attribute("image");
@@ -1078,7 +1075,7 @@ void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 
 			// this may change the layers defined in the file, so
 			// let's get the connectorsLayer after it
-			bool somethingChanged = addDefaultLayerIfNotIn(svgDom, fakeDefaultIfNone);
+			bool somethingChanged = addDefaultLayerIfNotInSvg(svgDom, fakeDefaultIfNone);
 
 			QString connectorsLayerId = findConnectorsLayerId(svgDom);
 			QDomElement elem = svgDom->documentElement();
@@ -1138,47 +1135,68 @@ bool PartsEditorView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &
 }
 
 
-bool PartsEditorView::addDefaultLayerIfNotIn(QDomDocument *svgDom, bool fakeDefaultIfNone) 
+bool PartsEditorView::addDefaultLayerIfNotInSvg(QDomDocument *svgDom, bool fakeDefaultIfNone) 
 {
-	QString defaultLayer = defaultLayerAsStr();
-	if( !getLayers(svgDom, fakeDefaultIfNone).contains(defaultLayer) ) {
-		QDomElement docElem = svgDom->documentElement();
-
-		QDomElement newTopLevel = svgDom->createElement("g");
-		newTopLevel.setAttribute("id",defaultLayer);
-
-		// place the child in a aux list, cause the
-		// qdomnodelist takes care of the references
-		QList<QDomNode> children;
-		for(QDomNode child=docElem.firstChild(); !child.isNull(); child=child.nextSibling()) {
-			children << child;
-		}
-
-		foreach(QDomNode child, children) {
-			newTopLevel.appendChild(child);
-		}
-
-		docElem.appendChild(newTopLevel);
-
-		return true;
-	} else {
-		return false;
+	QStringList defaultLayers = defaultLayerAsStringlist();
+	QStringList layers = getLayers(svgDom, fakeDefaultIfNone);
+	foreach (QString defaultLayer, defaultLayers) {
+		if (layers.contains(defaultLayer)) return false;
 	}
+
+	// jrc 4/7/2010: not sure if making a new top level layer is correct
+	// since it could swallow other layers
+
+	QDomElement docElem = svgDom->documentElement();
+
+	QDomElement newTopLevel = svgDom->createElement("g");
+	newTopLevel.setAttribute("id", defaultLayers.at(0));
+
+	// place the child in a aux list, cause the
+	// qdomnodelist takes care of the references
+	QList<QDomNode> children;
+	for(QDomNode child=docElem.firstChild(); !child.isNull(); child=child.nextSibling()) {
+		children << child;
+	}
+
+	foreach(QDomNode child, children) {
+		newTopLevel.appendChild(child);
+	}
+
+	docElem.appendChild(newTopLevel);
+
+	return true;
 }
 
-ViewLayer::ViewLayerID PartsEditorView::defaultLayer() {
+QList<ViewLayer::ViewLayerID> PartsEditorView::defaultLayers() {
+	QList<ViewLayer::ViewLayerID> layers;
 	switch( m_viewIdentifier ) {
-		case ViewIdentifierClass::IconView: return ViewLayer::Icon; break;
-		case ViewIdentifierClass::BreadboardView: return ViewLayer::Breadboard; break;
-		case ViewIdentifierClass::SchematicView: return ViewLayer::Schematic; break;
-		case ViewIdentifierClass::PCBView: return ViewLayer::Copper0; break;
-		default: break;
+		case ViewIdentifierClass::IconView: 
+			layers << ViewLayer::Icon; 
+			break;
+		case ViewIdentifierClass::BreadboardView: 
+			layers << ViewLayer::Breadboard; 
+			break;
+		case ViewIdentifierClass::SchematicView: 
+			layers << ViewLayer::Schematic; 
+			break;
+		case ViewIdentifierClass::PCBView: 
+			layers << ViewLayer::Copper0; 
+			layers << ViewLayer::Copper1;
+			break;
+		default: 
+			layers << ViewLayer::UnknownLayer;
+			break;
 	}
-	return ViewLayer::UnknownLayer;
+	return layers;
 }
 
-QString PartsEditorView::defaultLayerAsStr() {
-	return ViewLayer::viewLayerXmlNameFromID(defaultLayer());
+QStringList PartsEditorView::defaultLayerAsStringlist() {
+	QStringList layers;
+	foreach (ViewLayer::ViewLayerID viewLayerID, defaultLayers()) {
+		layers << ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+	}
+
+	return layers;
 }
 
 QString PartsEditorView::svgIdForConnector(const QString &connId) {

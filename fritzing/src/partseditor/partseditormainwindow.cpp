@@ -148,7 +148,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 		m_updateEnabled = modelPart->isCore()?
 							CORE_EDITION_ENABLED:
 							(modelPart->isContrib() || modelPart->isAlien()? false: true);
-		m_fileName = modelPart->modelPartShared()->path();
+		m_fileName = modelPart->path();
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough
 	}
@@ -246,7 +246,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	//m_iconViewImage->addFixedToBottomRight(button);
 	connect(button, SIGNAL(linkActivated(const QString&)), m_iconViewImage, SLOT(loadFile()));
 
-	QString title = modelPart ? modelPart->modelPartShared()->title() : TitleFreshStartText;
+	QString title = modelPart ? modelPart->title() : TitleFreshStartText;
 	m_title = new EditableLineWidget(title,m_undoStack,m_headerFrame,"",modelPart,true);
 	m_title->setObjectName("partTitle");
 	m_title->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::MinimumExpanding));
@@ -261,9 +261,9 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 }
 
 void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
-	m_moduleId = modelPart ? modelPart->modelPartShared()->moduleID() : "";
-	m_version  = modelPart ? modelPart->modelPartShared()->version() : "";
-	m_uri      = modelPart ? modelPart->modelPartShared()->uri() : "";
+	m_moduleId = modelPart ? modelPart->moduleID() : "";
+	m_version  = modelPart ? modelPart->version() : "";
+	m_uri      = modelPart ? modelPart->uri() : "";
 
 	m_centerFrame = new QFrame();
 	m_centerFrame->setObjectName("center");
@@ -273,10 +273,10 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	m_connsInfo = new ConnectorsInfoWidget(m_undoStack,this);
 	m_views = new PartsEditorViewsWidget(m_sketchModel, m_undoStack, m_connsInfo, this);
 
-	QString label = modelPart ? modelPart->modelPartShared()->label() : LabelFreshStartText;
+	QString label = modelPart ? modelPart->label() : LabelFreshStartText;
 	m_label = new EditableLineWidget(label,m_undoStack,this,tr("Label"),modelPart);
 
-	QString description = modelPart ? modelPart->modelPartShared()->description() : DescriptionFreshStartText;
+	QString description = modelPart ? modelPart->description() : DescriptionFreshStartText;
 	m_description = new EditableTextWidget(description,m_undoStack,this,tr("Description"),modelPart);
 
 	/*QString taxonomy = modelPart ? modelPart->modelPartShared()->taxonomy() : TAXONOMY_FRESH_START_TEXT;
@@ -289,7 +289,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	QHash<QString,QString> initValues;
 	if(modelPart) {
-		initValues = modelPart->modelPartShared()->properties();
+		initValues = modelPart->properties();
 	} else {
 		initValues["family"] = "";
 		//initValues["voltage"] = "";
@@ -298,19 +298,19 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	m_properties = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,this);
 
-	QString tags = modelPart ? modelPart->modelPartShared()->tags().join(", ") : TagsFreshStartText;
+	QString tags = modelPart ? modelPart->tags().join(", ") : TagsFreshStartText;
 	m_tags = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
 
 
 	m_author = new EditableLineWidget(
-		modelPart ? modelPart->modelPartShared()->author() : QString(getenvUser()),
+		modelPart ? modelPart->author() : QString(getenvUser()),
 		m_undoStack, this, tr("Author"),true);
 	connect(
 		m_author,SIGNAL(editionCompleted(QString)),
 		this,SLOT(updateDateAndAuthor()));
 
 	m_createdOn = new EditableDateWidget(
-		modelPart ? modelPart->modelPartShared()->date() : QDate::currentDate(),
+		modelPart ? modelPart->date() : QDate::currentDate(),
 		m_undoStack,this, tr("Created/Updated on"),true);
 	connect(
 		m_createdOn,SIGNAL(editionCompleted(QString)),
@@ -342,8 +342,8 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	m_views->connectTerminalRemoval(m_connsInfo);
 
 	connect(
-		m_views, SIGNAL(connectorsFound(QList<Connector*>)),
-		m_connsInfo, SLOT(connectorsFound(QList<Connector*>))
+		m_views, SIGNAL(connectorsFound(QList< QPointer<Connector> >)),
+		m_connsInfo, SLOT(connectorsFound(QList< QPointer<Connector> >))
 	);
 
 	m_tabWidget = new QTabWidget(m_centerFrame);

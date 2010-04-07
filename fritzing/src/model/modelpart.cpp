@@ -42,24 +42,18 @@ QStringList ModelPart::m_possibleFolders;
 ModelPart::ModelPart(ItemType type)
 	: QObject()
 {
-	m_type = type;
+	commonInit(type);
 	m_modelPartShared = NULL;
 	m_index = m_nextIndex++;
-	m_originalIndex = -1;
-	m_core = false;
-	m_alien = false;
 	m_originalModelPartShared = false;
 }
 
 ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)
 	: QObject()
 {
-	m_type = type;
+	commonInit(type);
 	m_modelPartShared = new ModelPartShared(domDocument, path);
 	m_originalModelPartShared = true;
-	m_core = false;
-	m_alien = false;
-	m_originalIndex = -1;
 
 	//TODO Mariano: enough for now
 	QDomElement viewsElems = domDocument->documentElement().firstChildElement("views");
@@ -68,6 +62,12 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	} else {
 		m_valid = false;
 	}
+}
+
+void ModelPart::commonInit(ItemType type) {
+	m_type = type;
+	m_core = false;
+	m_alien = false;
 }
 
 ModelPart::~ModelPart() {
@@ -88,7 +88,7 @@ ModelPart::~ModelPart() {
 	}
 	m_deletedConnectors.clear();
 
-	foreach (Bus* bus, m_busHash.values()) {
+	foreach (Bus * bus, m_busHash.values()) {
 		delete bus;
 	}
 	m_busHash.clear();
@@ -100,10 +100,35 @@ const QString & ModelPart::moduleID() {
 	return ___emptyString___;
 }
 
+const QString & ModelPart::label() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->label();
+
+	return ___emptyString___;
+}
+
+const QString & ModelPart::author() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->author();
+
+	return ___emptyString___;
+}
+
+const QString & ModelPart::uri() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->uri();
+
+	return ___emptyString___;
+}
+
+const QDate & ModelPart::date() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->date();
+
+	static QDate tempDate;
+	tempDate = QDate::currentDate();
+	return tempDate;
+}
+
 void ModelPart::setItemType(ItemType t) {
 	m_type = t;
 }
-
 
 void ModelPart::copy(ModelPart * modelPart) {
 	m_type = modelPart->itemType();
@@ -171,6 +196,9 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
 			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
 			streamWriter.writeAttribute("path", m_modelPartShared->path());
+			if (m_modelPartShared->flippedSMD()) {
+				streamWriter.writeAttribute("flippedSMD", "true");
+			}
 		}
 
 		foreach (QByteArray byteArray, dynamicPropertyNames()) {
@@ -339,16 +367,12 @@ void ModelPart::initConnectors(bool force) {
 	}
 }
 
-const QHash<QString, Connector *> & ModelPart::connectors() {
+const QHash<QString, QPointer<Connector> > & ModelPart::connectors() {
 	return m_connectorHash;
 }
 
 long ModelPart::modelIndex() {
 	return m_index;
-}
-
-long ModelPart::originalModelIndex() {
-	return m_originalIndex;
 }
 
 void ModelPart::setModelIndex(long index) {
@@ -367,14 +391,6 @@ void ModelPart::updateIndex(long index)
 	}
 }
 
-void ModelPart::setOriginalModelIndex(long index) {
-	if (m_originalIndex > 0) {
-		return;
-	}
-
-	m_originalIndex = index;
-}
-
 long ModelPart::nextIndex() {
 	return m_nextIndex++;
 }
@@ -390,6 +406,18 @@ const QDomElement & ModelPart::instanceDomElement() {
 
 const QString & ModelPart::title() {
 	if (m_modelPartShared != NULL) return m_modelPartShared->title();
+
+	return ___emptyString___;
+}
+
+const QString & ModelPart::version() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->version();
+
+	return ___emptyString___;
+}
+
+const QString & ModelPart::path() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->path();
 
 	return ___emptyString___;
 }
@@ -416,7 +444,7 @@ Connector * ModelPart::getConnector(const QString & id) {
 	return m_connectorHash.value(id);
 }
 
-const QHash<QString, Bus *> & ModelPart::buses() {
+const QHash<QString, QPointer<Bus> > & ModelPart::buses() {
 	return  m_busHash;
 }
 
@@ -579,3 +607,20 @@ bool ModelPart::isObsolete() {
 	return false;
 }
 
+void ModelPart::setFlippedSMD(bool f) {
+	if (m_modelPartShared != NULL) m_modelPartShared->setFlippedSMD(f);
+}
+
+bool ModelPart::flippedSMD() {
+	if (m_modelPartShared != NULL) {
+		return m_modelPartShared->flippedSMD();
+	}
+
+	return false;
+}
+
+QDomDocument* ModelPart::domDocument() {
+	if (m_modelPartShared == NULL) return NULL;
+
+	return m_modelPartShared->domDocument();
+}

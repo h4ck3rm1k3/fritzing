@@ -323,8 +323,9 @@ void SvgFileSplitter::normalizeTranslation(QDomElement & element,
 	qreal dy = matrix.dy() * sNewHeight / vbHeight;
 	if (dx == 0 && dy == 0) return;
 
-	QString m = QString("matrix(%1, %2, %3, %4, %5, %6)").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(dx).arg(dy);
-	element.setAttribute("transform", m);
+	matrix.setMatrix(matrix.m11(), matrix.m12(), matrix.m21(), matrix.m22(), dx, dy);
+
+	TextUtils::setSVGTransform(element, matrix);
 }
 
 

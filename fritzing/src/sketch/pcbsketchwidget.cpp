@@ -1092,7 +1092,7 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 	ViewGeometry viewGeometry;
 	makeRatsnestViewGeometry(viewGeometry, fromConnectorItem, toConnectorItem);
 	viewGeometry.setWireFlags(wireFlags);
-	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, viewGeometry, newID, true, -1, -1, parentCommand);
+	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, false, viewGeometry, newID, true, -1, parentCommand);
 	new CheckStickyCommand(this, cvt, newID, false, parentCommand);
 
 	new ChangeConnectionCommand(this, cvt,
@@ -1145,7 +1145,7 @@ void PCBSketchWidget::makeTwoWires(ConnectorItem * originalFromConnectorItem, Co
 		}
 
 		if (newBreadboard) {
-			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, -1, parentCommand);
+			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), false, newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
 			m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
 		}
 	}
@@ -1198,13 +1198,13 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 	vg.setLoc(QPointF(0, maxY + 50));
 
 	long id = ItemBase::getNextID();
-	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, BaseCommand::SingleView, vg, id, -1, 0, NULL);
+	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, false, BaseCommand::SingleView, vg, id, -1, NULL);
 	busConnectorItem = findEmptyBus(newBreadboard);
 	return busConnectorItem;
 }
 
 ConnectorItem * PCBSketchWidget::findEmptyBus(ItemBase * breadboard) {
-	foreach (Bus * bus, breadboard->buses()) {
+	foreach (Bus * bus, breadboard->buses().values()) {
 		QList<ConnectorItem *> busConnectorItems;
 		breadboard->busConnectorItems(bus, busConnectorItems);
 		bool allEmpty = true;

@@ -162,9 +162,15 @@ QString GedaElement2Svg::convert(QString filename, bool allowPadsAndPins)
 	metadata += "</metadata>";
 
 	// TODO: offset everything if minx or miny < 0
-	copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
-	copper1 = offsetMin("<g id='copper1'>" + copper1 + "</g>");
-	silkscreen = offsetMin("<g id='silkscreen'>" + silkscreen + "</g>");
+	if (!copper0.isEmpty()) {
+		copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
+	}
+	if (!copper1.isEmpty()) {
+		copper1 = offsetMin("<g id='copper1'>" + copper1 + "</g>");
+	}
+	if (!silkscreen.isEmpty()) {
+		silkscreen = offsetMin("<g id='silkscreen'>" + silkscreen + "</g>");
+	}
 
 	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) 
 					+ title + description + metadata + copper0 + copper1 + silkscreen + "</svg>";

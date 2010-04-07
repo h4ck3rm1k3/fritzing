@@ -38,6 +38,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../svg/svgfilesplitter.h"
 #include "../utils/folderutils.h"
+#include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/familypropertycombobox.h"
 #include "../referencemodel/referencemodel.h"
@@ -698,7 +699,7 @@ bool ItemBase::getVirtual() {
 	return m_viewGeometry.getVirtual();
 }
 
-const QHash<QString, Bus *> & ItemBase::buses() {
+const QHash<QString, QPointer<Bus> > & ItemBase::buses() {
 	if (m_modelPart != NULL) return m_modelPart->buses();
 
 	return Bus::___emptyBusList___;
@@ -885,7 +886,7 @@ void ItemBase::setInstanceTitleAux(const QString &title)
 
 QString ItemBase::label() {
 	if(m_modelPart && m_modelPart->modelPartShared()) {
-		return m_modelPart->modelPartShared()->label();
+		return m_modelPart->label();
 	}
 	return ___emptyString___;
 }
@@ -905,7 +906,7 @@ void ItemBase::setDefaultTooltip() {
 			if(m_modelPart->itemType() != ModelPart::Wire) {
 				this->setToolTip(base.arg(m_modelPart->title()));
 			} else {
-				this->setToolTip(base.arg(m_modelPart->modelPartShared()->title() + " (" + m_modelPart->modelPartShared()->moduleID() + ")"));
+				this->setToolTip(base.arg(m_modelPart->title() + " (" + m_modelPart->moduleID() + ")"));
 			}
 			return;
 		}
@@ -1271,7 +1272,8 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 			if (QFileInfo(filename).exists()) {
 				gotOne = true;
 				break;
-			} else {
+			} 
+			else {
 				filename = tempPath2.arg(possibleFolder);
 				if (QFileInfo(filename).exists()) {
 					gotOne = true;
@@ -1287,13 +1289,36 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		if (gotOne) {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
 			if (renderer == NULL) {
-				bool readConnectors = (viewLayerID == ViewLayer::Copper0) && (viewIdentifier == ViewIdentifierClass::PCBView);
+				bool readConnectors = ((viewLayerID == ViewLayer::Copper0) || (viewLayerID == ViewLayer::Copper1))  
+										&& (viewIdentifier == ViewIdentifierClass::PCBView);
 				gotOne = false;
 				renderer = new FSvgRenderer();
+				QDomDocument flipDoc;
+				if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD()) {
+					QStringList elementIDs;
+					elementIDs << ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
+					QStringList altElementIDs;
+					altElementIDs << ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0);
+					TextUtils::flipSMDSvg(filename, flipDoc, elementIDs, altElementIDs);
+				}
+				else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD()) {
+					QStringList elementIDs;
+					elementIDs << ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen);
+					QStringList altElementIDs;
+					altElementIDs << ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0);
+					TextUtils::flipSMDSvg(filename, flipDoc, elementIDs, altElementIDs);
+				}
 				if (layerAttributes.multiLayer()) {
 					// need to treat create "virtual" svg file for each layer
 					SvgFileSplitter svgFileSplitter;
-					if (svgFileSplitter.split(filename, layerAttributes.layerName())) {
+					bool result;
+					if (flipDoc.isNull()) {
+						result = svgFileSplitter.split(filename, layerAttributes.layerName());
+					}
+					else {
+						result = svgFileSplitter.splitString(flipDoc.toString(), layerAttributes.layerName());
+					}
+					if (result) {
 						if (renderer->load(svgFileSplitter.byteArray(), filename, readConnectors)) {
 							gotOne = true;
 						}
@@ -1304,7 +1329,14 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 //					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
 //#endif
 					// only one layer, just load it directly
-					if (renderer->load(filename, readConnectors)) {
+					bool result;
+					if (flipDoc.isNull()) {
+						result = renderer->load(filename, readConnectors);
+					}
+					else {
+						result = renderer->load(flipDoc.toByteArray(), readConnectors);
+					}
+					if (result) {
 						gotOne = true;
 					}
 //#ifndef QT_NO_DEBUG
@@ -1632,7 +1664,7 @@ bool ItemBase::getSwappingEnabled(const QStringList &paramNames, const QStringLi
 {
 	QString family, value;
 	for (int i = 0; i < paramNames.count(); i++) {
-		DebugDialog::debug(QString("param %1 %2").arg(paramNames[i]).arg(paramValues[i]));
+		//DebugDialog::debug(QString("param %1 %2").arg(paramNames[i]).arg(paramValues[i]));
 		if (paramNames[i].compare("swappingenabled", Qt::CaseInsensitive) == 0) {
 			return paramValues.at(i).compare("1", Qt::CaseInsensitive) == 0;
 		}

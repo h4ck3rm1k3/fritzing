@@ -92,7 +92,7 @@ protected:
 	QList< QPointer<class ConnectorItem> > m_connectorItems;
 	QList<Connector *> m_toConnectors;
 	QPointer<class ModelPart> m_modelPart;
-	class Bus * m_bus;
+	QPointer<class Bus> m_bus;
 
 protected:
 	static QHash<ConnectorType, QString> names;

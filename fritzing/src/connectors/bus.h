@@ -35,7 +35,9 @@ $Date$
 #include <QGraphicsScene>
 #include <QPointer>
 
-class Bus {
+class Bus : public QObject 
+{
+	Q_OBJECT
 	
 public:
 	Bus(class BusShared *, class ModelPart *);
@@ -49,7 +51,7 @@ public:
 	class ModelPart * modelPart();
 	
 public:
-	static QHash<QString, class Bus *> ___emptyBusList___;
+	static QHash<QString, QPointer<Bus> > ___emptyBusList___;
 
 	
 protected:

@@ -31,6 +31,8 @@ $Date$
 #include <QDomElement>
 #include <QSet>
 #include <QPixmap>
+#include <QMatrix>
+#include <QSvgRenderer>
 
 class TextUtils
 {
@@ -50,16 +52,19 @@ public:
 	static bool cleanSodipodi(QString &bytes);
 	static bool fixViewboxOrigin(QString &fileContent);
 	static bool fixPixelDimensionsIn(QString &fileContent);
+	static void flipSMDSvg(const QString & filename, QDomDocument & flipDoc, const QStringList & elementIDS, const QStringList & altElementIDs);
+	static void setSVGTransform(QDomElement &, QMatrix &);
 
 public:
 	static const QRegExp FindWhitespace;
 	static const QRegExp SodipodiDetector;
+	static const QString SMDFlipSuffix;
 
 protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);
 	static bool pxToInches(QDomElement &elem, const QString &attrName, bool isIllustrator);
     static void squashNotElement(QDomElement & element, const QString & elementName, const QString & attName, const QRegExp & matchContent, bool & result);
-
+	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID);
 
 };
 

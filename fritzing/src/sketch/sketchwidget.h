@@ -74,7 +74,7 @@ public:
 	void pushCommand(QUndoCommand *);
     class WaitPushUndoStack * undoStack();
     ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
-	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand);
+	ItemBase * addItem(const QString & moduleID, bool flippedSMD, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
@@ -122,11 +122,6 @@ public:
 	virtual void changeConnection(long fromID,
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
-						  bool connect, bool doEmit, bool seekLayerKin,
-						  bool updateConnections);
-	void moduleChangeConnection(long fromID,
-						  const QString & fromConnectorID,
-						  QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
 						  bool connect, bool doEmit, bool seekLayerKin,
 						  bool updateConnections);
 
@@ -345,7 +340,6 @@ protected:
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText);
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
-	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
 	void setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand);
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
@@ -363,8 +357,8 @@ protected:
 	void resizeBoard();
 	void resizeJumperItem();
 	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
-											   QString moduleID, ViewGeometry & viewGeometry, qint64 id, 
-											   bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
+											   QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, 
+											   bool updateInfoView, long modelIndex, QUndoCommand *parent);
 	int selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg);
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
 	double gridSizeInches();

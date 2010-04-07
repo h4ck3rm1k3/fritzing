@@ -92,14 +92,13 @@ void PartsEditorPaletteItem::createSvgFile(QString path) {
 	}
 
     QFile file(path);
-    if (!file.open(QIODevice::ReadOnly))
+	if (!file.open(QIODevice::ReadOnly)) {
         return;
+	}
     if (!m_svgDom->setContent(&file)) {
-        file.close();
         return;
     }
     m_originalSvgPath = path;
-    file.close();
 }
 
 bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, const QString &layerFileName) {
@@ -177,7 +176,7 @@ void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter)
 	streamWriter.writeEndElement();
 }
 
-const QList<Connector*> &PartsEditorPaletteItem::connectors() {
+const QList< QPointer<Connector> > &PartsEditorPaletteItem::connectors() {
 	if(m_connectors.size() == 0) {
 		QList<QString> connNames = modelPart()->connectors().keys();
 		qSort(connNames);

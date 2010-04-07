@@ -112,7 +112,7 @@ public:
 	virtual void updateConnections();
 	virtual const QString & title();
 	bool getVirtual();
-	const QHash<QString, class Bus *> & buses();
+	const QHash<QString, QPointer<class Bus> > & buses();
 	void addBusConnectorItem(class Bus *, ConnectorItem *);
 	void clearBusConnectorItems();
 	int itemType() const;					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile

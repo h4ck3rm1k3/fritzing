@@ -270,7 +270,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id, bool swappingEnabled)
 	setUpIcons(wire->modelPart());
 
 	QString s = "";
-	s += partTitle(nameString, modelPart->modelPartShared()->version());
+	s += partTitle(nameString, modelPart->version());
 
 	s += "<div class='block'>";
 	s += blockHeader(tr("Properties"),PropsBlockId);
@@ -302,7 +302,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 	setUpIcons(modelPart);
 
 	QString s = "";
-	s += partTitle((itemBase) ? itemBase->title() : modelPart->title(), modelPart->modelPartShared()->version());
+	s += partTitle((itemBase) ? itemBase->title() : modelPart->title(), modelPart->version());
 
 	s += "<div class='block'>";
 	s += blockHeader(tr("Properties"),PropsBlockId);
@@ -328,7 +328,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart
 		}
 	}
 	if (modelPart->modelPartShared()) {
-		QString fzppath = modelPart->modelPartShared()->path();
+		QString fzppath = modelPart->path();
 		if (!fzppath.isEmpty()) {
 			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("fzp").arg(fzppath);
 		}
@@ -553,11 +553,11 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 }
 
 void HtmlInfoView::addTags(ModelPart * modelPart, QString & s) {
-	if(!modelPart->modelPartShared()->tags().isEmpty()) {
+	if(!modelPart->tags().isEmpty()) {
 		s += "<div class='block'>";
 		s += blockHeader(tr("Tags"),TagsBlockId);
 		s += blockContainer(TagsBlockId);
-		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartShared()->tags().join(", "));
+		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->tags().join(", "));
 		s += 		"</table></div>\n";
 		s += "</div>";
 	}
@@ -573,7 +573,7 @@ QString HtmlInfoView::partTitle(const QString & title, const QString & version) 
 
 void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled, QString & s) 
 {
-	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
+	QHash<QString,QString> properties = modelPart->properties();
 	QString family = properties.value("family", "").toLower();
 	QString basis("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n");
 	if (itemBase) {

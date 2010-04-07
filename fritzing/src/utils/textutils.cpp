@@ -26,11 +26,14 @@ $Date$
 
 #include "textutils.h"
 #include "misc.h"
+#include "../debugdialog.h"
+
 #include <QRegExp>
 #include <QBuffer>
 
 const QRegExp TextUtils::FindWhitespace("[\\s]+");
 const QRegExp TextUtils::SodipodiDetector("((inkscape)|(sodipodi)):[^=\\s]+=\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"");
+const QString TextUtils::SMDFlipSuffix("___");
 
 const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
 
@@ -391,3 +394,55 @@ bool TextUtils::pxToInches(QDomElement &elem, const QString &attrName, bool isIl
 	return false;
 }
 
+void TextUtils::setSVGTransform(QDomElement & element, QMatrix & matrix)
+{
+	QString m = QString("matrix(%1, %2, %3, %4, %5, %6)").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy());
+	element.setAttribute("transform", m);
+}
+
+void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument, const QStringList & elementIDs, const QStringList & altElementIDs) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QFile file(filename);
+	bool result = domDocument.setContent(&file, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		domDocument.clear();			// probably redundant
+		return;
+	}
+
+	QSvgRenderer renderer(filename);
+
+	QDomElement root = domDocument.documentElement();
+	for (int i = 0; i < elementIDs.length(); i++) {
+		QString elementID = elementIDs[i];
+		QDomElement element = TextUtils::findElementWithAttribute(root, "id", elementID);
+		if (!element.isNull()) {
+			QString altElementID = altElementIDs[i];
+			QDomElement altElement = TextUtils::findElementWithAttribute(root, "id", altElementID);
+			flipSMDElement(domDocument, renderer, element, elementID, altElement, altElementID);
+		}
+	}
+
+	DebugDialog::debug(domDocument.toString());
+}
+
+void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID) {
+	QRectF bounds = renderer.boundsOnElement(elementID);
+	QMatrix cm;
+	cm.translate(-bounds.center().x(), -bounds.center().y());
+	cm.scale(-1, 1);
+	cm.translate(bounds.center().x(), bounds.center().y());
+	QDomElement newElement = element.cloneNode(true).toElement();
+	newElement.removeAttribute("id");
+	QDomElement pElement = domDocument.createElement("g");
+	pElement.appendChild(newElement);
+	//setSVGTransform(pElement, cm);
+	pElement.setAttribute("id", altElementID);
+	pElement.setAttribute("flipped", true);
+	if (!altElement.isNull()) {
+		pElement.appendChild(altElement);
+		altElement.removeAttribute("id");
+	}
+	element.parentNode().appendChild(pElement);
+}

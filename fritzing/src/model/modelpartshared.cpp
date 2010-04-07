@@ -32,19 +32,17 @@ $Date$
 #include <QHash>
 
 ModelPartShared::ModelPartShared() {
-	m_moduleID = "";
+	commonInit();
+
 	m_domDocument = NULL;
 	m_path = "";
-	m_connectorsInitialized = false;
-	m_ignoreTerminalPoints = false;
 }
 
 ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & path) {
-	m_moduleID = "";
+	commonInit();
+
 	m_domDocument = domDocument;
 	m_path = path;
-	m_connectorsInitialized = false;
-	m_ignoreTerminalPoints = false;
 
 	QDomElement root = domDocument->documentElement();
 	if (root.isNull()) {
@@ -71,6 +69,13 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 	populateTagCollection(root, m_properties, "properties", "name");
 
 	m_moduleID = root.attribute("moduleId", "");
+}
+
+void ModelPartShared::commonInit() {
+	m_flippedSMD = false;
+	m_moduleID = "";
+	m_connectorsInitialized = false;
+	m_ignoreTerminalPoints = false;
 }
 
 ModelPartShared::~ModelPartShared() {
@@ -151,6 +156,7 @@ void ModelPartShared::setTitle(QString title) {
 const QString & ModelPartShared::label() {
 	return m_label;
 }
+
 void ModelPartShared::setLabel(QString label) {
 	m_label = label;
 }
@@ -342,4 +348,12 @@ void ModelPartShared::setProperty(const QString & key, const QString & value) {
 
 const QString & ModelPartShared::replacedby() {
 	return m_replacedby;
+}
+
+void ModelPartShared::setFlippedSMD(bool f) {
+	m_flippedSMD = f;
+}
+
+bool ModelPartShared::flippedSMD() {
+	return m_flippedSMD;
 }

@@ -55,8 +55,8 @@ public:
 		SchematicRuler,
 		Board,
 		GroundPlane,
-		SilkscreenBottom,
-		SilkscreenBottomLabel,
+		Silkscreen0,
+		Silkscreen0Label,
 		Copper0,
 		Copper0Trace,
 		Keepout,
@@ -80,6 +80,7 @@ protected:
 	static QHash<ViewLayerID, StringPair *> names;
 	static QMultiHash<ViewLayerID, ViewLayerID> alternatives;
 	static QMultiHash<ViewLayerID, ViewLayerID> unconnectables;
+	static QHash<QString, ViewLayerID> xmlHash;
 
 public:
 	ViewLayer(ViewLayerID, bool visible, qreal initialZ);
@@ -100,7 +101,6 @@ public:
 	void resetNextZ(qreal z);
 
 public:
-	static ViewLayerID viewLayerIDFromString(const QString &);
 	static ViewLayerID viewLayerIDFromXmlString(const QString &);
 	static const QString & viewLayerNameFromID(ViewLayerID);
 	static const QString & viewLayerXmlNameFromID(ViewLayerID);

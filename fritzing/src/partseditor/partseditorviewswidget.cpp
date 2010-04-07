@@ -135,8 +135,8 @@ PartsEditorView * PartsEditorViewsWidget::createViewImageWidget(
 		viw, SLOT(informConnectorSelection(const QString&))
 	);
 	connect(
-		viw, SIGNAL(connectorsFound(ViewIdentifierClass::ViewIdentifier, const QList<Connector*> &)),
-		info, SLOT(syncNewConnectors(ViewIdentifierClass::ViewIdentifier, const QList<Connector*> &))
+		viw, SIGNAL(connectorsFound(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &)),
+		info, SLOT(syncNewConnectors(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &))
 	);
 	/*connect(
 		info, SIGNAL(existingConnector(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*)),

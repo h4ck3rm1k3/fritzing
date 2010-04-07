@@ -289,7 +289,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (offsetPaste) {
 				viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
 			}
-			newAddItemCommand(crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
+			newAddItemCommand(crossViewType, mp->moduleID(), mp->flippedSMD(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
 			if (mp->itemType() == ModelPart::ResizableBoard) {
 				bool ok;
 				qreal w = mp->prop("width").toDouble(&ok);
@@ -413,62 +413,11 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 	QHash<long, ItemBase *> otherNewItems;
 	long modelIndex = connect.attribute("modelIndex").toLong(&ok);
 	QString toConnectorID = connect.attribute("connectorId");
-	if (ok) {
-		QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
-							.arg(mp->modelIndex()).arg(fromConnectorID).arg(modelIndex).arg(toConnectorID);
-		if (alreadyConnected.contains(already)) return;
+	QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+						.arg(mp->modelIndex()).arg(fromConnectorID).arg(modelIndex).arg(toConnectorID);
+	if (alreadyConnected.contains(already)) return;
 
-		alreadyConnected.append(already);
-	}
-	else {
-		// connected inside a module
-		QDomElement p = connect.firstChildElement("mp");
-		if (p.isNull()) return;
-
-		modelIndex = p.attribute("i").toLong(&ok);
-		if (!ok) return;
-
-		QList<long> indexes;
-		indexes.append(modelIndex);
-		QString s = QString::number(modelIndex);
-		while (true) {
-			p = p.firstChildElement("mp");
-			if (p.isNull()) break;
-
-			long originalModelIndex = p.attribute("i").toLong(&ok);
-			if (!ok) return;
-
-			indexes.append(originalModelIndex);
-			s.append(".");
-			s.append(QString::number(originalModelIndex));
-		}
-
-		QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
-					.arg(mp->modelIndex()).arg(fromConnectorID).arg(s).arg(toConnectorID);
-		if (alreadyConnected.contains(already)) return;
-
-		alreadyConnected.append(already);
-
-		if (parentCommand == NULL) {
-			// walk down the tree of original model indexes until you find the part that you actually connect to
-			ItemBase * toBase = newItems.value(modelIndex, NULL);
-			if (toBase == NULL) return;
-
-			toBase = findModulePart(toBase, indexes);
-			if (toBase == NULL) return;
-
-			modelIndex = toBase->modelPart()->modelIndex();
-			otherNewItems.insert(modelIndex, toBase);
-		}
-		else {
-			new ModuleChangeConnectionCommand(this, BaseCommand::SingleView,
-											ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
-											indexes, toConnectorID, doRatsnest && doRatsnestOnCopy(),
-											true, true, parentCommand);
-
-			return;
-		}
-	}
+	alreadyConnected.append(already);
 
 	if (parentCommand == NULL) {
 		ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
@@ -526,20 +475,18 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	}
 }
 
-ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand) {
+ItemBase * SketchWidget::addItem(const QString & moduleID, bool flippedSMD, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand) {
 	if (m_paletteModel == NULL) return NULL;
 
 	ItemBase * itemBase = NULL;
 	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
+	if (flippedSMD) {
+	}
+
 	if (modelPart != NULL) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		statusMessage(tr("loading part"));
 		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, originatingCommand, NULL);
-		if (itemBase != NULL && originalModelIndex > 0) {
-			itemBase->modelPart()->setOriginalModelIndex(originalModelIndex);
-			// DebugDialog::debug(QString("additem original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
-
-		}
 		statusMessage(tr("done loading"), 2000);
 		QApplication::restoreOverrideCursor();
 	}
@@ -710,7 +657,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * pale
 			// nobody falls through to here now?
 
 			QMessageBox::information(dynamic_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
-									 QObject::tr("The file %1 is not a Fritzing file (1).").arg(modelPart->modelPartShared()->path()) );
+									 QObject::tr("The file %1 is not a Fritzing file (1).").arg(modelPart->path()) );
 
 
 			DebugDialog::debug(QString("addPartItem renderImage failed %1").arg(modelPart->moduleID()) );
@@ -753,9 +700,6 @@ void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool l
 	ItemBase * pitem = findItem(id);
 	DebugDialog::debug(QString("delete item (1) %1 %2 %3 %4").arg(id).arg(doEmit).arg(m_viewIdentifier).arg((long) pitem, 0, 16) );
 	if (pitem != NULL) {
-		//if (pitem->itemType() == ModelPart::Module) {
-		//	m_sketchModel->walk(m_sketchModel->root(),0);
-		//}
 		deleteItem(pitem, deleteModelPart, doEmit, later);
 	}
 	else {
@@ -811,7 +755,6 @@ void SketchWidget::deleteItem() {
 void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	//DebugDialog::debug("before delete");
-	//m_sketchModel->walk(m_sketchModel->root(), 0);
 
     // get sitems first, before calling stackSelectionState
     // because selectedItems will return an empty list
@@ -999,7 +942,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, viewGeometry, newID, false, -1, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, false, viewGeometry, newID, false, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
@@ -1237,7 +1180,6 @@ QByteArray SketchWidget::removeOutsideConnections(const QByteArray & itemData, Q
 
 void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	
 	if (dragEnterEventAux(event)) {
 		setupAutoscroll(false);
 		event->acceptProposedAction();
@@ -1288,7 +1230,8 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 	if (ItemDrag::_cache().contains(this)) {
 		m_droppingItem->setVisible(true);
-	} else {
+	} 
+	else {
 		ViewGeometry viewGeometry;
 		QPointF p = QPointF(this->mapToScene(event->pos())) - offset;
 		viewGeometry.setLoc(p);
@@ -1307,7 +1250,6 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::ResizableBoard:
 			case ModelPart::Logo:
 			case ModelPart::Ruler:
-			case ModelPart::Module:
 			case ModelPart::Symbol:
 			case ModelPart::Jumper:
 			case ModelPart::CopperFill:
@@ -1519,7 +1461,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 		default:
 			break;				
 	}
-	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
+	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), modelPart->flippedSMD(), viewGeometry, fromID, true, -1, parentCommand);
 	addItemCommand->setDropOrigin(this);
 	
 	new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
@@ -2810,7 +2752,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 
 		// create a new wire with the same id as the temporary wire
-		new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, -1, parentCommand);
+		new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), false, m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
 		new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(fromID);
@@ -3671,29 +3613,6 @@ void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID
 	}
 }
 
-void SketchWidget::moduleChangeConnection(long fromID, const QString & fromConnectorID,
-									QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
-									bool connect, bool doEmit, bool seekLayerKin, bool updateConnections)
-{
-	// figure out what part we're actually pointing at, then call changeConnection
-	long id = ItemBase::getNextID(toIDs[0]);
-	ItemBase * superBase = findItem(id);
-	if (superBase == NULL) {
-		return;
-	}
-
-	ItemBase * toBase = findModulePart(superBase, toIDs);
-	if (toBase == NULL) {
-		return;
-	}
-
-	changeConnection(fromID, fromConnectorID, toBase->id(), toConnectorID, connect, doEmit, seekLayerKin, updateConnections);
-
-	if (doRatsnest) {
-		DebugDialog::debug("moduleChangeConnection: doRatsnest not yet implemented");
-	}
-}
-
 void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
 									bool connect, bool seekLayerKin, bool updateConnections)
@@ -3915,7 +3834,8 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 		emit rememberStickySignal(itemBase->id(), parentCommand);
 	}
 
-	new DeleteItemCommand(this, crossView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
+	ModelPart * mp = itemBase->modelPart();
+	new DeleteItemCommand(this, crossView, mp->moduleID(), mp->flippedSMD(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
 }
 
 void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
@@ -3978,7 +3898,7 @@ void SketchWidget::killDroppingItem() {
 
 ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 
-	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->modelPartShared()->domDocument(), viewIdentifier);
+	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->domDocument(), viewIdentifier);
 	if (layers.isNull()) return ViewLayer::UnknownLayer;
 
 	QDomElement layer = layers.firstChildElement("layer");
@@ -4115,7 +4035,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
-	new AddItemCommand(this, crossView, ModuleIDNames::wireModuleIDName, vg, newID, true, -1, -1, parentCommand);
+	new AddItemCommand(this, crossView, ModuleIDNames::wireModuleIDName, false, vg, newID, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossView, newID, false, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
@@ -4417,7 +4337,8 @@ long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		needsTransform = true;
 	}
 
-	newAddItemCommand(BaseCommand::SingleView, newModuleID, vg, newID, true, newModelIndex, -1, parentCommand);
+#pragma message("FlippedSMD param needs to be determined here")
+	newAddItemCommand(BaseCommand::SingleView, newModuleID, false, vg, newID, true, newModelIndex, parentCommand);
 
 	if (needsTransform) {
 		QMatrix m;
@@ -4468,7 +4389,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	if (newModelPart == NULL) return;
 
 	newModelPart->initConnectors();			//  make sure the connectors are set up
-	QHash<QString, Connector *> newConnectors = newModelPart->connectors();
+	QHash<QString, QPointer<Connector> > newConnectors = newModelPart->connectors();
 
 	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
 		QList<Connector *> candidates;
@@ -4529,7 +4450,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			if (cleanup && master) {
 				long wireID = ItemBase::getNextID();
 				ViewGeometry vg;
-				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, vg, wireID, false, -1, -1, parentCommand);
+				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, false, vg, wireID, false, -1, parentCommand);
 				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 						wireID, "connector0", true, true, parentCommand);
@@ -4718,7 +4639,7 @@ void SketchWidget::addPcbViewLayers() {
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::Board << ViewLayer::GroundPlane 
-		<< ViewLayer::SilkscreenBottom << ViewLayer::SilkscreenBottomLabel
+		<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
 		<< ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
 		/* << ViewLayer::Keepout */ << ViewLayer::Vias /* << ViewLayer::Soldermask */  
 		<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
@@ -4732,10 +4653,10 @@ void SketchWidget::addPcbViewLayers() {
 	if (silkscreen && silkscreenLabel) {
 		//silkscreenLabel->setParentLayer(silkscreen);
 	}
-	ViewLayer * silkscreenBottom = m_viewLayers.value(ViewLayer::SilkscreenBottom);
-	ViewLayer * silkscreenBottomLabel = m_viewLayers.value(ViewLayer::SilkscreenBottomLabel);
-	if (silkscreenBottom && silkscreenBottomLabel) {
-		//silkscreenBottomLabel->setParentLayer(silkscreenBottom);
+	ViewLayer * silkscreen0 = m_viewLayers.value(ViewLayer::Silkscreen0);
+	ViewLayer * silkscreen0Label = m_viewLayers.value(ViewLayer::Silkscreen0Label);
+	if (silkscreen0 && silkscreen0Label) {
+		//silkscreen0Label->setParentLayer(silkscreen0);
 	}
 
 	ViewLayer * copper0 = m_viewLayers.value(ViewLayer::Copper0);
@@ -5296,7 +5217,7 @@ void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem
 }
 
 bool SketchWidget::matchesLayer(ModelPart * modelPart) {
-	QDomDocument * domDocument = modelPart->modelPartShared()->domDocument();
+	QDomDocument * domDocument = modelPart->domDocument();
 	if (domDocument->isNull()) return false;
 
 	QDomElement views = domDocument->documentElement().firstChildElement("views");
@@ -5694,30 +5615,6 @@ void SketchWidget::pushCommand(QUndoCommand * command) {
 	if (m_undoStack) {
 		m_undoStack->push(command);
 	}
-}
-
-ItemBase * SketchWidget::findModulePart(ItemBase * toBase, QList<long> & indexes)
-{
-	for (int i = 1; i < indexes.count(); i++) {
-		long originalModelIndex = indexes[i];
-
-		bool gotOne = false;
-		foreach (QGraphicsItem * child, toBase->childItems()) {
-			ItemBase * itemBase = dynamic_cast<ItemBase *>(child);
-			if (itemBase == NULL) continue;
-
-			if (itemBase->modelPart()->originalModelIndex() == originalModelIndex) {
-				toBase = itemBase;
-				gotOne = true;
-				break;
-			}
-		}
-		if (!gotOne) {
-			return NULL;
-		}
-	}
-
-	return toBase;
 }
 
 bool SketchWidget::spaceBarIsPressed() {
@@ -6346,9 +6243,9 @@ int SketchWidget::selectAllItems(QSet<ItemBase *> & itemBases, const QString & m
 	return itemBases.count();
 }
 
-AddItemCommand * SketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent)
+AddItemCommand * SketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
 {
-	return new AddItemCommand(this, crossViewType, moduleID, viewGeometry, id, updateInfoView, modelIndex, originalModelIndex, parent);
+	return new AddItemCommand(this, crossViewType, moduleID, flippedSMD, viewGeometry, id, updateInfoView, modelIndex, parent);
 }
 
 bool SketchWidget::partLabelsVisible() {

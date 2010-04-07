@@ -33,7 +33,7 @@ $Date$
 #include <QStringList>
 #include <QHash>
 #include <QDate>
-
+#include <QPointer>
 
 class ModelPartShared : public QObject
 {
@@ -94,12 +94,15 @@ public:
 	void setProperty(const QString & key, const QString & value);
 	const QString & replacedby();
 
+	void setFlippedSMD(bool);
+	bool flippedSMD();
 
 protected:
 	void loadTagText(QDomElement parent, QString tagName, QString &field);
 	// used to populate de StringList that contains both the <tags> and the <properties> values
 	void populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName);
 	void populateTagCollection(QDomElement parent, QHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
+	void commonInit();
 
 	QDomDocument* m_domDocument;
 
@@ -125,6 +128,8 @@ protected:
 
 	bool m_connectorsInitialized;
 	bool m_ignoreTerminalPoints;
+
+	bool m_flippedSMD;
 };
 
 
