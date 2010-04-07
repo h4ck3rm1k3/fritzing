@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.49in" height="4.555in" viewBox="0 0 49000 455500" ><title>72pin45degreeSIMMconnector.fp</title><desc>Geda footprint file '72pin45degreeSIMMconnector.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>72pin45degreeSIMMconnector.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.03.22.4055</fz:attr><fz:attr name='conversion date'>30/03/2010 15:38:26</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper0">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.49in" height="4.555in" viewBox="0 0 49000 455500" ><title>72pin45degreeSIMMconnector.fp</title><desc>Geda footprint file '72pin45degreeSIMMconnector.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>72pin45degreeSIMMconnector.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.03.22.4055</fz:attr><fz:attr name='conversion date'>06/04/2010 23:44:25</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper0">
  <circle fill="none" cx="26750" cy="415250" connectorname="" stroke="#ffbf00" r="2750" id="connector0pin" stroke-width="1500"/>
  <circle fill="none" cx="36750" cy="410250" connectorname="" stroke="#ffbf00" r="2750" id="connector1pin" stroke-width="1500"/>
  <circle fill="none" cx="26750" cy="405250" connectorname="" stroke="#ffbf00" r="2750" id="connector2pin" stroke-width="1500"/>
@@ -75,7 +75,6 @@
  <circle fill="none" cx="31750" cy="447750" connectorname="" stroke="#ffbf00" r="4000" id="connector73pin" stroke-width="0"/>
  <circle fill="none" cx="31750" cy="7750" connectorname="" stroke="#ffbf00" r="4000" id="connector74pin" stroke-width="0"/>
 </g>
-<g id="copper1"/>
 <g id="silkscreen">
  <line fill="none" stroke="white" y1="435250" x1="250" y2="422750" stroke-width="500" x2="250"/>
  <line fill="none" stroke="white" y1="455250" x1="2750" y2="455250" stroke-width="500" x2="250"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="4.2535in" height="3.981in" viewBox="0 0 425350 398100" ><title>ISA8.fp</title><desc>Geda footprint file 'ISA8.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>ISA8.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.03.22.4055</fz:attr><fz:attr name='conversion date'>30/03/2010 15:38:41</fz:attr><fz:comment>Pins, entspr. Anschl. auf Loetseite (b31..b1)</fz:comment><fz:comment>Pins, entspr. Anschl. auf Bestueckseite</fz:comment><fz:comment>Umrahmung</fz:comment><fz:comment>Markierung == Pin B1</fz:comment></rdf:Description></rdf:RDF></metadata><g id="copper0">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="4.2535in" height="3.981in" viewBox="0 0 425350 398100" ><title>ISA8.fp</title><desc>Geda footprint file 'ISA8.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>ISA8.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.03.22.4055</fz:attr><fz:attr name='conversion date'>06/04/2010 23:44:39</fz:attr><fz:comment>Pins, entspr. Anschl. auf Loetseite (b31..b1)</fz:comment><fz:comment>Pins, entspr. Anschl. auf Bestueckseite</fz:comment><fz:comment>Umrahmung</fz:comment><fz:comment>Markierung == Pin B1</fz:comment></rdf:Description></rdf:RDF></metadata><g id="copper0">
  <circle fill="none" cx="20100" cy="385100" connectorname="Gnd (b31)" stroke="#ffbf00" r="2375" id="" stroke-width="1250"/>
  <circle fill="none" cx="30100" cy="385100" connectorname="Osc" stroke="#ffbf00" r="2375" id="" stroke-width="1250"/>
  <circle fill="none" cx="40100" cy="385100" connectorname="+5V" stroke="#ffbf00" r="2375" id="" stroke-width="1250"/>
@@ -62,7 +62,6 @@
  <circle fill="none" cx="310100" cy="395100" connectorname="SD7" stroke="#ffbf00" r="2375" id="" stroke-width="1250"/>
  <circle fill="none" cx="320100" cy="395100" connectorname="/IOChCk (a1)" stroke="#ffbf00" r="2375" id="" stroke-width="1250"/>
 </g>
-<g id="copper1"/>
 <g id="silkscreen">
  <line fill="none" stroke="white" y1="10100" x1="100" y2="10100" stroke-width="200" x2="10100"/>
  <line fill="none" stroke="white" y1="100" x1="10100" y2="10100" stroke-width="200" x2="10100"/>
