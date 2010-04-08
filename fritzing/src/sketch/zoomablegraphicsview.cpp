@@ -31,7 +31,7 @@ $Date$
 #include "zoomablegraphicsview.h"
 #include "../utils/zoomslider.h"
 
-ZoomableGraphicsView::WheelMapping ZoomableGraphicsView::m_wheelMapping = MapNoVCtrlZAltH;
+ZoomableGraphicsView::WheelMapping ZoomableGraphicsView::m_wheelMapping = MapNoZCtrlVAltH;
 bool FirstTime = true;
 
 ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )

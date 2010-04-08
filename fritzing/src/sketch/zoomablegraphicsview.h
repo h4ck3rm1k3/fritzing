@@ -50,8 +50,8 @@ public:
 	
 public:	
 	enum WheelMapping {
-		MapNoVCtrlZAltH,
 		MapNoZCtrlVAltH,
+		MapNoVCtrlZAltH,
 		MapNoZCtrlHAltV,
 		MapNoVCtrlHAltZ,
 		MapNoHCtrlVAltZ,
