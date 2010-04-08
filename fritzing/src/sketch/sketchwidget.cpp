@@ -5421,6 +5421,18 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, itemBases, itemsBoundingRect);
 }
 
+QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) {
+	loc.setX(loc.x() * dpi / printerScale);
+	loc.setY(loc.y() * dpi / printerScale);
+	if (loc.x() != 0 || loc.y() != 0) {
+		svg = QString("<g transform=\"translate(%1,%2)\" >%3</g>")
+			.arg(loc.x())
+			.arg(loc.y())
+			.arg(svg);
+	}
+	return svg;
+}
+
 QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
@@ -5450,27 +5462,22 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 	// put them in z order
 	qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
 
+	QList<ItemBase *> gotLabel;
 	foreach (ItemBase * itemBase, itemBases) {
-		if (itemBase->isPartLabelVisible()) {
-			ViewLayer::ViewLayerID viewLayerID = itemBase->partLabelViewLayerID();
-			if (viewLayerID != ViewLayer::UnknownLayer) {
-				if (partLayers.contains(viewLayerID)) {
-					QString labelSvg = itemBase->makePartLabelSvg(blackOnly, dpi, printerScale);
-					if (!labelSvg.isEmpty()) {
-						QPointF loc = itemBase->partLabelScenePos() - offset;
-						loc.setX(loc.x() * dpi / printerScale);
-						loc.setY(loc.y() * dpi / printerScale);
-						if (loc.x() != 0 || loc.y() != 0) {
-							labelSvg = QString("<g transform=\"translate(%1,%2)\" >%3</g>")
-								.arg(loc.x())
-								.arg(loc.y())
-								.arg(labelSvg);
+		ItemBase * chief = itemBase->layerKinChief();
+		if (!gotLabel.contains(chief)) {
+			gotLabel.append(chief);
+			if (chief->isPartLabelVisible()) {
+				ViewLayer::ViewLayerID viewLayerID = chief->partLabelViewLayerID();
+				if (viewLayerID != ViewLayer::UnknownLayer) {
+					if (partLayers.contains(viewLayerID)) {
+						QString labelSvg = chief->makePartLabelSvg(blackOnly, dpi, printerScale);
+						if (!labelSvg.isEmpty()) {
+							outputSVG.append(translateSVG(labelSvg, chief->partLabelScenePos() - offset, dpi, printerScale));
 						}
-
-						outputSVG.append(labelSvg);
 					}
-				}
-			}		
+				}		
+			}
 		}
 		if (itemBase->itemType() != ModelPart::Wire) {
 			foreach (ViewLayer::ViewLayerID viewLayerID, partLayers) {
@@ -5495,18 +5502,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 				}
 
 				TextUtils::svgTransform(itemSvg, itemBase->transform(), false);
-
-				QPointF loc = itemBase->scenePos() - offset;
-				loc.setX(loc.x() * dpi / printerScale);
-				loc.setY(loc.y() * dpi / printerScale);
-				if (loc.x() != 0 || loc.y() != 0) {
-					itemSvg = QString("<g transform=\"translate(%1,%2)\" >%3</g>")
-						.arg(loc.x())
-						.arg(loc.y())
-						.arg(itemSvg);
-				}
-
-				outputSVG.append(itemSvg);
+				outputSVG.append(translateSVG(itemSvg, itemBase->scenePos() - offset, dpi, printerScale));
 
 				/*
 				// TODO:  deal with rotations and flips
