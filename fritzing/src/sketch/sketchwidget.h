@@ -127,7 +127,7 @@ public:
  	ItemCount calcItemCount();
 
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
-	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note);
+	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID note);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
 	void stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckStickyCommand *);
 	void setChainDrag(bool);
@@ -262,7 +262,7 @@ protected:
 	ViewLayer::ViewLayerID getPartViewLayerID();
 	ViewLayer::ViewLayerID getRulerViewLayerID();
 	ViewLayer::ViewLayerID getConnectorViewLayerID();
-	ViewLayer::ViewLayerID getLabelViewLayerID();
+	virtual ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
 	ViewLayer::ViewLayerID getNoteViewLayerID();
 	void dragMoveHighlightConnector(QPoint eventPos);
 
@@ -493,7 +493,6 @@ protected:
 	ViewLayer::ViewLayerID m_partViewLayerID;
 	ViewLayer::ViewLayerID m_rulerViewLayerID;
 	ViewLayer::ViewLayerID m_connectorViewLayerID;
-	ViewLayer::ViewLayerID m_labelViewLayerID;
 	ViewLayer::ViewLayerID m_noteViewLayerID;
 	QList<QGraphicsItem *> m_temporaries;
 	bool m_chainDrag;

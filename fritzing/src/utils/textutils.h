@@ -53,9 +53,10 @@ public:
 	static bool cleanSodipodi(QString &bytes);
 	static bool fixViewboxOrigin(QString &fileContent);
 	static bool fixPixelDimensionsIn(QString &fileContent);
-	static void flipSMDSvg(const QString & filename, QDomDocument & flipDoc, const QStringList & elementIDS, const QStringList & altElementIDs);
+	static void flipSMDSvg(const QString & filename, QDomDocument & flipDoc, const QString & elementID, const QString & altElementID, qreal printerScale);
 	static void setSVGTransform(QDomElement &, QMatrix &);
 	static QString svgTransform(const QString & svg, QTransform & transform, bool translate);
+	static bool getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight);
 
 public:
 	static const QRegExp FindWhitespace;
@@ -66,7 +67,7 @@ protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);
 	static bool pxToInches(QDomElement &elem, const QString &attrName, bool isIllustrator);
     static void squashNotElement(QDomElement & element, const QString & elementName, const QString & attName, const QRegExp & matchContent, bool & result);
-	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID);
+	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID, qreal printerScale);
 
 };
 

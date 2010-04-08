@@ -413,7 +413,7 @@ QString TextUtils::svgTransform(const QString & svg, QTransform & transform, boo
 			.arg(svg);
 }
 
-void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument, const QStringList & elementIDs, const QStringList & altElementIDs) {
+void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument, const QString & elementID, const QString & altElementID, qreal printerScale) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -427,30 +427,29 @@ void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument,
 	QSvgRenderer renderer(filename);
 
 	QDomElement root = domDocument.documentElement();
-	for (int i = 0; i < elementIDs.length(); i++) {
-		QString elementID = elementIDs[i];
-		QDomElement element = TextUtils::findElementWithAttribute(root, "id", elementID);
-		if (!element.isNull()) {
-			QString altElementID = altElementIDs[i];
-			QDomElement altElement = TextUtils::findElementWithAttribute(root, "id", altElementID);
-			flipSMDElement(domDocument, renderer, element, elementID, altElement, altElementID);
-		}
+	QDomElement element = TextUtils::findElementWithAttribute(root, "id", elementID);
+	if (!element.isNull()) {
+		QDomElement altElement = TextUtils::findElementWithAttribute(root, "id", altElementID);
+		flipSMDElement(domDocument, renderer, element, elementID, altElement, altElementID, printerScale);
 	}
 
 	DebugDialog::debug(domDocument.toString());
 }
 
-void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID) {
-	QRectF bounds = renderer.boundsOnElement(elementID);
-	QMatrix cm;
-	cm.translate(-bounds.center().x(), -bounds.center().y());
-	cm.scale(-1, 1);
-	cm.translate(bounds.center().x(), bounds.center().y());
+void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID, qreal printerScale) 
+{
+	Q_UNUSED(printerScale);
+	Q_UNUSED(elementID);
+
+	QRectF bounds = renderer.viewBoxF();
+	QMatrix cm = QMatrix().translate(-bounds.center().x(), -bounds.center().y()) * 
+				 QMatrix().scale(-1, 1) * 
+				 QMatrix().translate(bounds.center().x(), bounds.center().y());
 	QDomElement newElement = element.cloneNode(true).toElement();
 	newElement.removeAttribute("id");
 	QDomElement pElement = domDocument.createElement("g");
 	pElement.appendChild(newElement);
-	//setSVGTransform(pElement, cm);
+	setSVGTransform(pElement, cm);
 	pElement.setAttribute("id", altElementID);
 	pElement.setAttribute("flipped", true);
 	if (!altElement.isNull()) {
@@ -459,3 +458,52 @@ void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & render
 	}
 	element.parentNode().appendChild(pElement);
 }
+
+bool TextUtils::getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight) 
+{
+	QDomElement root = doc.documentElement();
+	QString swidthStr = root.attribute("width");
+	if (swidthStr.isEmpty()) return false;
+
+	QString sheightStr = root.attribute("height");
+	if (sheightStr.isEmpty()) return false;
+
+	bool ok;
+	sWidth = TextUtils::convertToInches(swidthStr, &ok);
+	if (!ok) return false;
+
+	sHeight = TextUtils::convertToInches(sheightStr, &ok);
+	if (!ok) return false;
+
+	bool vbWidthOK = false;
+	bool vbHeightOK = false;
+	QString sviewboxStr = root.attribute("viewBox");
+	if (!sviewboxStr.isEmpty()) {
+		QStringList strings = sviewboxStr.split(" ");
+		if (strings.size() == 4) {
+			qreal tempWidth = strings[2].toDouble(&vbWidthOK);
+			if (vbWidthOK) {
+				vbWidth = tempWidth;
+			}
+
+			qreal tempHeight= strings[3].toDouble(&vbHeightOK);
+			if (vbHeightOK) {
+				vbHeight = tempHeight;
+			}
+		}
+	}
+
+	if (vbWidthOK && vbHeightOK) return true;
+
+	// assume that if there's no viewBox, the viewbox is at the right dpi?
+	// or should the assumption be 90 or 100?  Illustrator would be 72...
+	int multiplier = 90;
+	if (isIllustratorFile(doc.toString())) {
+		multiplier = 72;
+	}
+
+	vbWidth = sWidth * multiplier;
+	vbHeight = sHeight * multiplier;
+	return true;
+}
+

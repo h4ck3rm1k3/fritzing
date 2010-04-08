@@ -276,7 +276,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
 				newItems.insert(mp->modelIndex(), item);
-				item->restorePartLabel(labelGeometry, getLabelViewLayerID());
+				item->restorePartLabel(labelGeometry, getLabelViewLayerID(item->notLayers()));
 			}
 		}
 		else {
@@ -523,7 +523,15 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const LayerList & not
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 	}
 
-	ItemBase * newItem = PartFactory::createPart(modelPart, notLayers, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu);
+	LayerList tempNotLayers;
+	if (modelPart->flippedSMD()) {
+		tempNotLayers << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
+	}
+	else {
+		tempNotLayers = notLayers;
+	}
+
+	ItemBase * newItem = PartFactory::createPart(modelPart, tempNotLayers, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu);
 	Wire * wire = dynamic_cast<Wire *>(newItem);
 	if (wire) {
 		bool virtualWire = viewGeometry.getVirtual();
@@ -576,7 +584,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const LayerList & not
 	}
 
 	bool ok;
-	addPartItem(modelPart, notLayers, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
+	addPartItem(modelPart, tempNotLayers, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
 	DebugDialog::debug(QString("adding part %1 %2 %4 %5 %3")
 		.arg(id)
 		.arg(newItem->title())
@@ -3204,8 +3212,9 @@ ViewLayer::ViewLayerID SketchWidget::getConnectorViewLayerID() {
 	return m_connectorViewLayerID;
 }
 
-ViewLayer::ViewLayerID SketchWidget::getLabelViewLayerID() {
-	return m_labelViewLayerID;
+ViewLayer::ViewLayerID SketchWidget::getLabelViewLayerID(const LayerList & notLayers) {
+	Q_UNUSED(notLayers);
+	return ViewLayer::UnknownLayer;
 }
 
 ViewLayer::ViewLayerID SketchWidget::getNoteViewLayerID() {
@@ -3856,12 +3865,11 @@ ViewIdentifierClass::ViewIdentifier SketchWidget::viewIdentifier() {
 }
 
 
-void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note) {
+void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID note) {
 	m_partViewLayerID = part;
 	m_wireViewLayerID = wire;
 	m_connectorViewLayerID = connector;
 	m_rulerViewLayerID = ruler;
-	m_labelViewLayerID = label;
 	m_noteViewLayerID = note;
 }
 
@@ -4611,7 +4619,7 @@ void SketchWidget::resizeEvent(QResizeEvent * event) {
 }
 
 void SketchWidget::addBreadboardViewLayers() {
-	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel, ViewLayer::BreadboardNote);
+	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardNote);
 
 	LayerList layers;
 	layers << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard
@@ -4621,7 +4629,7 @@ void SketchWidget::addBreadboardViewLayers() {
 }
 
 void SketchWidget::addSchematicViewLayers() {
-	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicTrace, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
+	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicTrace, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicNote);
 
 	LayerList layers;
 	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
@@ -4630,7 +4638,7 @@ void SketchWidget::addSchematicViewLayers() {
 }
 
 void SketchWidget::addPcbViewLayers() {
-	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
+	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::PcbNote);
 
 	LayerList layers;
 	layers << ViewLayer::Board << ViewLayer::GroundPlane 
@@ -5287,7 +5295,7 @@ void SketchWidget::showPartLabel(long itemID, bool showIt) {
 
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase != NULL) {
-		itemBase->showPartLabel(showIt, m_viewLayers.value(getLabelViewLayerID()));
+		itemBase->showPartLabel(showIt, m_viewLayers.value(getLabelViewLayerID(itemBase->notLayers())));
 	}
 }
 
@@ -6272,7 +6280,7 @@ void SketchWidget::restorePartLabel(long itemID, QDomElement & element) {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) return;
 
-	itemBase->restorePartLabel(element, getLabelViewLayerID());
+	itemBase->restorePartLabel(element, getLabelViewLayerID(itemBase->notLayers()));
 }
 
 void SketchWidget::loadLogoImage(long itemID, const QString & oldSvg, const QSizeF oldAspectRatio, const QString & oldFilename, const QString & newFilename, bool addName) {
@@ -6386,6 +6394,7 @@ const LayerList & SketchWidget::defaultNotLayers() {
 	static LayerList ll;
 	if (ll.count() == 0) {
 		ll << ViewLayer::Copper1;
+		ll << ViewLayer::Copper1Trace;
 		ll << ViewLayer::Silkscreen0;
 		ll << ViewLayer::Silkscreen0Label;
 	}

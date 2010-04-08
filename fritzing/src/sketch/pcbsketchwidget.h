@@ -138,6 +138,7 @@ protected:
 	void scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus &);
 	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
+	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);

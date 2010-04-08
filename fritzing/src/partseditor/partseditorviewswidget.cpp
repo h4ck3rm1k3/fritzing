@@ -51,9 +51,9 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	m_schemView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic);
 	m_pcbView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0);
 
-	m_breadView->setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel, ViewLayer::BreadboardNote);
-	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
-	m_pcbView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
+	m_breadView->setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardNote);
+	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicNote);
+	m_pcbView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::PcbNote);
 
 	connectPair(m_breadView,m_schemView);
 	connectPair(m_schemView,m_pcbView);

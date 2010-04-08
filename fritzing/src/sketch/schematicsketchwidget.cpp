@@ -323,3 +323,9 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 double SchematicSketchWidget::defaultGridSizeInches() {
 	return 0.3;
 }
+
+ViewLayer::ViewLayerID SchematicSketchWidget::getLabelViewLayerID(const LayerList & notLayers) {
+	Q_UNUSED(notLayers);
+	return ViewLayer::SchematicLabel;
+}
+

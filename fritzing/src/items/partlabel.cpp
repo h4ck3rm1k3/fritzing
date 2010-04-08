@@ -135,14 +135,22 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 		if (m_owner == NULL) return;
 		if (m_owner->scene() == NULL) return;
 
+		bool flipped = (viewLayer->viewLayerID() == ViewLayer::Silkscreen0Label);
+
 		m_owner->scene()->addItem(this);
 		this->setZValue(viewLayer->nextZ());
 		m_viewLayerID = viewLayer->viewLayerID();
-		QRectF br = m_owner->boundingRect();
-		QPointF initial = m_owner->pos() + QPointF(br.width(), -QGraphicsSimpleTextItem::boundingRect().height());
+		QRectF obr = m_owner->boundingRect();
+		QRectF tbr = QGraphicsSimpleTextItem::boundingRect();
+		QPointF initial = (flipped) 
+			? m_owner->pos() + QPointF(-tbr.width(), -tbr.height())
+			: m_owner->pos() + QPointF(obr.width(), -tbr.height());
 		this->setPos(initial);
 		m_offset = initial - m_owner->pos();
 		m_initialized = true;
+		if (flipped) {
+			transformLabel(QTransform().scale(-1,1));
+		}
 	}
 
 	setVisible(showIt);
@@ -358,8 +366,6 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	if (GraphicsUtils::loadTransform(labelGeometry.firstChildElement("transform"), t)) {
 		setTransform(t);
 	}
-
-
 }
 
 void PartLabel::moveLabel(QPointF newPos, QPointF newOffset) 

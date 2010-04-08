@@ -317,3 +317,8 @@ bool BreadboardSketchWidget::ignoreFemale() {
 double BreadboardSketchWidget::defaultGridSizeInches() {
 	return 0.1;
 }
+
+ViewLayer::ViewLayerID BreadboardSketchWidget::getLabelViewLayerID(const LayerList & notLayers) {
+	Q_UNUSED(notLayers);
+	return ViewLayer::BreadboardLabel;
+}

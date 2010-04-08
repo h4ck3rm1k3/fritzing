@@ -155,42 +155,11 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	QDomElement root = m_domDocument.documentElement();
 	if (root.isNull()) return false;
 
-	QString swidthStr = root.attribute("width");
-	if (swidthStr.isEmpty()) return false;
-
-	QString sheightStr = root.attribute("height");
-	if (sheightStr.isEmpty()) return false;
-
-	bool ok;
-	qreal sWidth = TextUtils::convertToInches(swidthStr, &ok);
-	if (!ok) return false;
-
-	qreal sHeight = TextUtils::convertToInches(sheightStr, &ok);
-	if (!ok) return false;
+	qreal sWidth, sHeight, vbWidth, vbHeight;
+	if (!TextUtils::getSvgSizes(m_domDocument, sWidth, sHeight, vbWidth, vbHeight)) return false;
 
 	root.setAttribute("width", QString::number(sWidth));
 	root.setAttribute("height", QString::number(sHeight));
-
-	// assume that if there's no viewBox, the viewbox is at the right dpi?
-	// or should the assumption be 90 or 100?
-	qreal vbWidth = sWidth * 90;
-	qreal vbHeight = sHeight * 90;
-
-	QString sviewboxStr = root.attribute("viewBox");
-	if (!sviewboxStr.isEmpty()) {
-		QStringList strings = sviewboxStr.split(" ");
-		if (strings.size() == 4) {
-			qreal tempWidth = strings[2].toDouble(&ok);
-			if (ok) {
-				vbWidth = tempWidth;
-			}
-
-			qreal tempHeight= strings[3].toDouble(&ok);
-			if (ok) {
-				vbHeight = tempHeight;
-			}
-		}
-	}
 
 	root.setAttribute("viewBox", QString("%1 %2 %3 %4").arg(0).arg(0).arg(vbWidth).arg(vbHeight) );
 

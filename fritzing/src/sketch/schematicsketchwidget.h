@@ -77,6 +77,7 @@ protected:
 	AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
 										QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, 
 										bool updateInfoView, long modelIndex, QUndoCommand *parent);
+	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
 
 
 protected:

@@ -1419,7 +1419,7 @@ void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
 
 	switch (itemBase->itemType()) {
 		case ModelPart::Part:
-			itemBase->showPartLabel(true, m_viewLayers.value(getLabelViewLayerID()));
+			itemBase->showPartLabel(true, m_viewLayers.value(getLabelViewLayerID(itemBase->notLayers())));
 			break;
 		default:
 			break;
@@ -1701,3 +1701,10 @@ bool PCBSketchWidget::canAlignToTopLeft(ItemBase * itemBase)
 			return false;
 	}
 }
+
+ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(const LayerList & notLayers) {
+	if (notLayers.contains(ViewLayer::SilkscreenLabel)) return ViewLayer::Silkscreen0Label;
+
+	return ViewLayer::SilkscreenLabel;
+}
+

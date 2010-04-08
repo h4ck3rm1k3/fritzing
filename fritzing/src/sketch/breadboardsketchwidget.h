@@ -59,7 +59,7 @@ protected:
 	void getLabelFont(QFont &, QColor &);
 	void setNewPartVisible(ItemBase *);
 	double defaultGridSizeInches();
-
+	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
 
 };
 
