@@ -5509,7 +5509,8 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 					itemSvg = domDocument.toString();
 				}
 
-				TextUtils::svgTransform(itemSvg, itemBase->transform(), false);
+                                QTransform t = itemBase->transform();
+                                TextUtils::svgTransform(itemSvg, t, false);
 				outputSVG.append(translateSVG(itemSvg, itemBase->scenePos() - offset, dpi, printerScale));
 
 				/*
