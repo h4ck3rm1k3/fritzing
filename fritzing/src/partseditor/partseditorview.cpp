@@ -120,7 +120,7 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 	clearScene();
 
 	m_item = newPartsEditorPaletteItem(modelPart, svgFilePath);
-	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, NULL, m_item);
+	this->addItem(modelPart, defaultNotLayers(), BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, NULL, m_item);
 
 	fitCenterAndDeselect();
 
@@ -136,7 +136,7 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 	emit connectorsFound(this->m_viewIdentifier,m_item->connectors());
 }
 
-ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry &, long /*id*/, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier) {
+ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const LayerList & notLayers, const ViewGeometry &, long /*id*/, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier) {
 	if(paletteItemAux == NULL) {
 		paletteItemAux = newPartsEditorPaletteItem(modelPart);
 	}
@@ -156,7 +156,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 						findConnectorsLayerId(paletteItem->svgDom())
 					);
 				if(viewLayerID == ViewLayer::UnknownLayer) {
-					viewLayerID = getViewLayerID(modelPart, m_viewIdentifier);
+					viewLayerID = getViewLayerID(modelPart, m_viewIdentifier, notLayers);
 				}
 				addDefaultLayers();
 				if (m_viewItem != NULL) {
@@ -172,7 +172,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const ViewGeometry
 				if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
 					addToScene(paletteItemAux, paletteItemAux->viewLayerID());
 					// layers are not needed on the parts editor (so far)
-					/*paletteItem->loadLayerKin(m_viewLayers);
+					/*paletteItem->loadLayerKin(m_viewLayers, notLayers);
 					for (int i = 0; i < paletteItem->layerKin().count(); i++) {
 						LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
 						this->scene()->addItem(lkpi);
@@ -732,7 +732,8 @@ void PartsEditorView::loadFromModel(PaletteModel *paletteModel, ModelPart * mode
 
 	ViewGeometry viewGeometry;
 	this->setPaletteModel(paletteModel);
-	m_item = (PartsEditorPaletteItem*)SketchWidget::loadFromModel(modelPart, viewGeometry);
+	m_item = (PartsEditorPaletteItem*) addItemAux(modelPart, defaultNotLayers(), viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier);
+
 	fitCenterAndDeselect();
 
 	setItemProperties();
@@ -1167,8 +1168,8 @@ bool PartsEditorView::addDefaultLayerIfNotInSvg(QDomDocument *svgDom, bool fakeD
 	return true;
 }
 
-QList<ViewLayer::ViewLayerID> PartsEditorView::defaultLayers() {
-	QList<ViewLayer::ViewLayerID> layers;
+LayerList PartsEditorView::defaultLayers() {
+	LayerList layers;
 	switch( m_viewIdentifier ) {
 		case ViewIdentifierClass::IconView: 
 			layers << ViewLayer::Icon; 
@@ -1541,7 +1542,7 @@ void PartsEditorView::updatePinsInfo(QList<ConnectorShared*> connsShared) {
 
 	// not sure this is the right place to handle the change of connector layers...
 
-	QList<ViewLayer::ViewLayerID> alts = ViewLayer::findAlternativeLayers(layerID);
+	LayerList alts = ViewLayer::findAlternativeLayers(layerID);
 	if (alts.length() == 0) return;
 
 	foreach (ViewLayer::ViewLayerID vlid, alts) {

@@ -73,8 +73,8 @@ public:
 
 	void pushCommand(QUndoCommand *);
     class WaitPushUndoStack * undoStack();
-    ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
-	ItemBase * addItem(const QString & moduleID, bool flippedSMD, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
+    ItemBase * addItem(ModelPart *, const LayerList & notLayers, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
+	ItemBase * addItem(const QString & moduleID, const LayerList & notLayers, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
@@ -91,8 +91,7 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
-    ItemBase* loadFromModel(ModelPart *, const ViewGeometry&);
+	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
 	void sendBackward();
@@ -143,7 +142,7 @@ public:
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
-	virtual ItemBase * addItemAux(ModelPart *, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
+	virtual ItemBase * addItemAux(ModelPart *, const LayerList & notLayers, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
 
     bool swappingEnabled(ItemBase *);
 
@@ -198,9 +197,9 @@ public:
 	void noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize);
 	void resizeNote(long itemID, const QSizeF & );
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
-	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
+	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 						bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten);
-	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
+	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect);
 
@@ -220,7 +219,7 @@ public:
 	void disconnectAll();
 	virtual bool canDisconnectAll();
 	virtual bool ignoreFemale();
-	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers);
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
@@ -239,6 +238,7 @@ public:
 	void initGrid();
 	virtual double defaultGridSizeInches();
 	void clearPasteOffset();
+	const LayerList & defaultNotLayers();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -252,7 +252,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *);
-    PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier);
+    PaletteItem* addPartItem(ModelPart * modelPart, const LayerList & notLayers, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier);
 	void clearHoldingSelectItem();
 	bool startZChange(QList<ItemBase *> & bases);
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
@@ -290,7 +290,7 @@ protected:
 	void clearTemporaries();
 	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	void killDroppingItem();
-	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier);
+	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerList & notLayers);
 	ItemBase * overSticky(ItemBase *);
 	virtual void setNewPartVisible(ItemBase *);
 	virtual void collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
@@ -299,14 +299,14 @@ protected:
 	bool currentlyInfoviewed(ItemBase *item);
 	void resizeEvent(QResizeEvent *);
 
-	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
+	void addViewLayersAux(const LayerList &layers, float startZ = 1.5);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos, bool checkAutoScroll);
-	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, QDomElement & layers, QString & layerName);
+	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, const LayerList & notLayers, QDomElement & layers, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
@@ -357,7 +357,7 @@ protected:
 	void resizeBoard();
 	void resizeJumperItem();
 	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
-											   QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, 
+											   QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, QUndoCommand *parent);
 	int selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg);
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
@@ -378,7 +378,7 @@ protected:
 	static bool greaterThan(int a, int b);
 
 signals:
-	void itemAddedSignal(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
+	void itemAddedSignal(ModelPart *, const LayerList & notLayers, const ViewGeometry &, long id, SketchWidget * dropOrigin);
 	void itemDeletedSignal(long id);
 	void clearSelectionSignal();
 	void itemSelectedSignal(long id, bool state);
@@ -413,7 +413,7 @@ signals:
 
 
 protected slots:
-	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
+	void sketchWidget_itemAdded(ModelPart *, const LayerList & notLayers, const ViewGeometry &, long id, SketchWidget * dropOrigin);
 	void sketchWidget_itemDeleted(long id);
 	void sketchWidget_clearSelection();
 	void sketchWidget_itemSelected(long id, bool state);

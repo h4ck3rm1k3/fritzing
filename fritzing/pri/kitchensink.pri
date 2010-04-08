@@ -27,6 +27,7 @@ HEADERS += \
     src/fritzingwindow.h \
     src/fsplashscreen.h \
     src/fsvgrenderer.h \
+    src/installedfonts.h \
     src/itemdrag.h \
     src/layerattributes.h \
     src/layerpalette.h \

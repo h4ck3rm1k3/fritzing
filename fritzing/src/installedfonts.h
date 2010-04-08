@@ -24,20 +24,20 @@ $Date$
 
 ********************************************************************/
 
-#ifndef PARTFACTORY_H
-#define PARTFACTORY_H
+#ifndef INSTALLEDFONTS_H
+#define INSTALLEDFONTS_H
 
-#include <QMenu>
-#include "../viewidentifierclass.h"
-#include "../viewlayer.h"
+#include <QSet>
+#include <QString>
+#include <QMultiHash>
 
-class PartFactory
+class InstalledFonts
 {
-public:
-	static class ItemBase * createPart(class ModelPart *, const LayerList &, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu);
 
-protected:
-	static class ItemBase * createPartAux(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu);
+public:
+	static QSet<QString> InstalledFontsList;
+	static QMultiHash<QString, QString> InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
+	// note: these static variables are initialized in fapplication.cpp
 };
 
 #endif

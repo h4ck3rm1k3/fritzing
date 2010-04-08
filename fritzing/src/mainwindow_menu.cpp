@@ -189,7 +189,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
     ItemBase * board = m_pcbGraphicsView->findBoard();
 
-	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	if (wantSVG) {
@@ -324,7 +324,7 @@ QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & im
 		item->setSelected(false);
 	}
 	board->setSelected(true);
-	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::Silkscreen;
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, true, false);
 	board->setSelected(false);
@@ -731,7 +731,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(fileInfo.fileName()));
 	}
 
-	m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -739,7 +739,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(fileInfo.fileName()));
 	}
 
-	m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -747,7 +747,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(fileInfo.fileName()));
 	}
 
-	m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -793,9 +793,9 @@ void MainWindow::paste() {
 	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts)) {
 		QUndoCommand * parentCommand = new QUndoCommand("Paste");
 
-		m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true);
-		m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true);
-		m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true);
+		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true);
+		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true);
+		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true);
 
 		m_undoStack->push(parentCommand);
 	}
@@ -1639,7 +1639,7 @@ void MainWindow::updateLayerMenu(bool resetLayout) {
 	m_alignToGridAct->setChecked(m_currentGraphicsView->alignedToGrid());
 	
 	LayerHash viewLayers = m_currentGraphicsView->viewLayers();
-	QList<ViewLayer::ViewLayerID> keys = viewLayers.keys();
+	LayerList keys = viewLayers.keys();
 
 	// make sure they're in ascending order when inserting into the menu
 	qSort(keys.begin(), keys.end());
@@ -2099,7 +2099,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 
 	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(this);
 	if (fromItem != NULL) {
-		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView);
+		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, fromItem->notLayers(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView);
 		if (ii != NULL) {
 			m_breadboardGraphicsView->scene()->removeItem(ii);
 			if (!ii->hasCustomSVG()) {
@@ -2416,7 +2416,7 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 	if (fileName.isEmpty()) return;
 
 	FileProgressDialog * fileProgressDialog = exportProgress();
-	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	LayerList viewLayerIDs;
 	foreach (ViewLayer * viewLayer, m_currentGraphicsView->viewLayers()) {
 		if (viewLayer == NULL) continue;
 
@@ -2777,7 +2777,7 @@ void MainWindow::addNote() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
 	m_currentGraphicsView->stackSelectionState(false, parentCommand);
 	m_currentGraphicsView->scene()->clearSelection();
-	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, false, vg, ItemBase::getNextID(), false, -1, parentCommand);
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, m_currentGraphicsView->defaultNotLayers(), vg, ItemBase::getNextID(), false, -1, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -2914,7 +2914,7 @@ void MainWindow::groundFill()
     }
 
 
-	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::Board;
 	QSizeF boardImageSize;
 	QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
@@ -2953,7 +2953,7 @@ void MainWindow::groundFill()
 		ViewGeometry vg;
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
-		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, false, vg, newID, false, -1, parentCommand);
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, m_pcbGraphicsView->defaultNotLayers(), vg, newID, false, -1, parentCommand);
 		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
 	}
 

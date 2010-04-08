@@ -58,8 +58,8 @@ public:
 	LayerPalette(QWidget * parent = NULL);
 	~LayerPalette();
 
-	void updateLayerPalette(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys);
-	void resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys);
+	void updateLayerPalette(LayerHash & viewLayers, LayerList & keys);
+	void resetLayout(LayerHash & viewLayers, LayerList & keys);
 	void setShowAllLayersAction(QAction *);
 	void setHideAllLayersAction(QAction *);
 

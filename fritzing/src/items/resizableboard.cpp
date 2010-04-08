@@ -397,8 +397,8 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	}
 }
 
-void ResizableBoard::loadLayerKin( const LayerHash & viewLayers) {
-	PaletteItem::loadLayerKin(viewLayers);
+void ResizableBoard::loadLayerKin( const LayerHash & viewLayers, const LayerList & notLayers) {
+	PaletteItem::loadLayerKin(viewLayers, notLayers);
 	qreal w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {
 		resizeMM(w, m_modelPart->prop("height").toDouble(), viewLayers);

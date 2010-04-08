@@ -50,7 +50,7 @@ public:
 	class ConnectorItem * connector1();
 	bool hasCustomSVG();
 	bool inDrag();
-	void loadLayerKin( const LayerHash & viewLayers);
+	void loadLayerKin( const LayerHash & viewLayers, const LayerList & notLayers);
 	PluralType isPlural();
 
 protected:

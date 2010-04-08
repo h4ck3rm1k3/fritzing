@@ -141,7 +141,7 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 }
 
 
-ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, QDomElement & layers, QString & layerName) {
+ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerList & notLayers, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
 	Q_UNUSED(viewIdentifier);
 
@@ -566,7 +566,7 @@ void PCBSketchWidget::addBoard() {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
-	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultNotLayers(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
 	// so position it in setCurrent()
@@ -611,7 +611,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID(ConnectorItem * c
 	}
 }
 
-ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
+ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers) {
 	if (viewGeometry.getJumper()) {
 		return ViewLayer::Jumperwires;
 	}
@@ -624,7 +624,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 		return ViewLayer::Ratsnest;
 	}
 
-	return SketchWidget::getWireViewLayerID(viewGeometry);
+	return SketchWidget::getWireViewLayerID(viewGeometry, notLayers);
 }
 
 void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
@@ -973,7 +973,7 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), source->attachedTo()->notLayers(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 	if (!select) {
@@ -1092,7 +1092,7 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 	ViewGeometry viewGeometry;
 	makeRatsnestViewGeometry(viewGeometry, fromConnectorItem, toConnectorItem);
 	viewGeometry.setWireFlags(wireFlags);
-	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, false, viewGeometry, newID, true, -1, parentCommand);
+	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, fromConnectorItem->attachedTo()->notLayers(), viewGeometry, newID, true, -1, parentCommand);
 	new CheckStickyCommand(this, cvt, newID, false, parentCommand);
 
 	new ChangeConnectionCommand(this, cvt,
@@ -1145,7 +1145,7 @@ void PCBSketchWidget::makeTwoWires(ConnectorItem * originalFromConnectorItem, Co
 		}
 
 		if (newBreadboard) {
-			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), false, newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
+			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), originalFromConnectorItem->attachedTo()->notLayers(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
 			m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
 		}
 	}
@@ -1198,7 +1198,7 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 	vg.setLoc(QPointF(0, maxY + 50));
 
 	long id = ItemBase::getNextID();
-	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, false, BaseCommand::SingleView, vg, id, -1, NULL);
+	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, defaultNotLayers(), BaseCommand::SingleView, vg, id, -1, NULL);
 	busConnectorItem = findEmptyBus(newBreadboard);
 	return busConnectorItem;
 }

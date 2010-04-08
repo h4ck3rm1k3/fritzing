@@ -1316,7 +1316,8 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 						result = svgFileSplitter.split(filename, layerAttributes.layerName());
 					}
 					else {
-						result = svgFileSplitter.splitString(flipDoc.toString(), layerAttributes.layerName());
+						QString f = flipDoc.toString(); 
+						result = svgFileSplitter.splitString(f, layerAttributes.layerName());
 					}
 					if (result) {
 						if (renderer->load(svgFileSplitter.byteArray(), filename, readConnectors)) {
@@ -1685,3 +1686,34 @@ ItemBase::PluralType ItemBase::isPlural() {
 	return ItemBase::NotSure;
 }
 
+const LayerList & ItemBase::notLayers() {
+	return m_notLayers;
+}
+
+void ItemBase::setNotLayers(const LayerList & notLayers) {
+	m_notLayers = notLayers;
+}
+
+ViewLayer::ViewLayerID ItemBase::partLabelViewLayerID() {
+	if (m_partLabel == NULL) return ViewLayer::UnknownLayer;
+	if (!m_partLabel->initialized()) return ViewLayer::UnknownLayer;
+	return m_partLabel->viewLayerID();
+}
+
+QString ItemBase::makePartLabelSvg(bool blackOnly, qreal dpi, qreal printerScale) {
+	if (m_partLabel == NULL) return "";
+	if (!m_partLabel->initialized()) return "";
+	return m_partLabel->makeSvg(blackOnly, dpi, printerScale);
+}
+
+QPointF ItemBase::partLabelScenePos() {
+	if (m_partLabel == NULL) return QPointF();
+	if (!m_partLabel->initialized()) return QPointF();
+	return m_partLabel->scenePos();
+}
+
+QRectF ItemBase::partLabelSceneBoundingRect() {
+	if (m_partLabel == NULL) return QRectF();
+	if (!m_partLabel->initialized()) return QRectF();
+	return m_partLabel->sceneBoundingRect();
+}

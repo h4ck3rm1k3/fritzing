@@ -64,6 +64,7 @@ public:
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 	void ownerSelected(bool selected);
     void displayTexts();
+	QString makeSvg(bool blackOnly, qreal dpi, qreal printerScale);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);

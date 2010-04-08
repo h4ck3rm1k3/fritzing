@@ -333,7 +333,7 @@ protected:
 	void moveEvent(QMoveEvent * event);
 	bool event(QEvent *);
 	void resizeEvent(QResizeEvent * event);
-	QString genIcon(SketchWidget *, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs);
+	QString genIcon(SketchWidget *, LayerList &  partViewLayerIDs, LayerList & wireViewLayerIDs);
 
 	bool alreadyOpen(const QString & fileName);
 	bool loadCustomBoardShape();

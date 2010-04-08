@@ -48,7 +48,7 @@ public:
 	void removeLayerKin();
 	void addLayerKin(class LayerKinPaletteItem * lkpi);
 	const QList<class ItemBase *> & layerKin();
- 	virtual void loadLayerKin(const LayerHash & viewLayers);
+ 	virtual void loadLayerKin(const LayerHash & viewLayers, const LayerList & notLayers);
 	void rotateItem(qreal degrees);
 	void flipItem(Qt::Orientations orientation);
 	void moveItem(ViewGeometry & viewGeometry);

@@ -64,7 +64,7 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getDragWireViewLayerID(ConnectorIt
 	return ViewLayer::SchematicTrace;
 }
 
-ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
+ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers) {
 	if (viewGeometry.getTrace()) {
 		return ViewLayer::SchematicTrace;
 	}
@@ -73,7 +73,7 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 		return ViewLayer::SchematicWire;
 	}
 
-	return SketchWidget::getWireViewLayerID(viewGeometry);
+	return SketchWidget::getWireViewLayerID(viewGeometry, notLayers);
 }
 
 void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
@@ -216,11 +216,11 @@ void SchematicSketchWidget::changeConnection(long fromID, const QString & fromCo
 	m_updateDotsTimer.start();
 }
 
-AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, bool flippedSMD, 
+AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, const LayerList & notLayers, 
 														  ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, 
 														  long modelIndex, QUndoCommand *parent)
 {
-	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, flippedSMD, viewGeometry, id, updateInfoView, modelIndex, parent);
+	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, notLayers, viewGeometry, id, updateInfoView, modelIndex, parent);
 	qreal v = 0;
 	bool gotV = false;
 	if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
@@ -240,7 +240,7 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	}
 
 	// create the item temporarily, then delete it
-	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, flippedSMD, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
+	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, notLayers, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
 	
 	foreach (QGraphicsItem * item, scene()->items()) {
 		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);

@@ -210,13 +210,7 @@ void SketchWidget::setUndoStack(WaitPushUndoStack * undoStack) {
 	m_undoStack = undoStack;
 }
 
-ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& viewGeometry){
-	// assumes modelPart has already been added to the sketch
-	// or you're in big trouble when you delete the item
-	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier);
-}
-
-void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
+void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
@@ -251,7 +245,8 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		// use a function of the model index to ensure the same parts have the same ID across views
 		long newID = ItemBase::getNextID(mp->modelIndex());
 		if (parentCommand == NULL) {
-			ItemBase * item = addItemAux(mp, viewGeometry, newID, NULL, true, m_viewIdentifier);
+#pragma message("eventually defaultNotLayers will have to be carried in each modelpart")
+			ItemBase * item = addItemAux(mp, defaultNotLayers(), viewGeometry, newID, NULL, true, m_viewIdentifier);
 			if (item != NULL) {
 				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), item);   
 				bool gotOne = false;
@@ -289,7 +284,8 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (offsetPaste) {
 				viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
 			}
-			newAddItemCommand(crossViewType, mp->moduleID(), mp->flippedSMD(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
+#pragma message("eventually defaultNotLayers will have to be carried in each modelpart")
+			newAddItemCommand(crossViewType, mp->moduleID(), defaultNotLayers(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
 			if (mp->itemType() == ModelPart::ResizableBoard) {
 				bool ok;
 				qreal w = mp->prop("width").toDouble(&ok);
@@ -475,18 +471,16 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	}
 }
 
-ItemBase * SketchWidget::addItem(const QString & moduleID, bool flippedSMD, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand) {
+ItemBase * SketchWidget::addItem(const QString & moduleID, const LayerList & notLayers, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand) {
 	if (m_paletteModel == NULL) return NULL;
 
 	ItemBase * itemBase = NULL;
 	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
-	if (flippedSMD) {
-	}
 
 	if (modelPart != NULL) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		statusMessage(tr("loading part"));
-		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, originatingCommand, NULL);
+		itemBase = addItem(modelPart, notLayers, crossViewType, viewGeometry, id, modelIndex, originatingCommand, NULL);
 		statusMessage(tr("done loading"), 2000);
 		QApplication::restoreOverrideCursor();
 	}
@@ -495,7 +489,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, bool flippedSMD, Base
 }
 
 
-ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem) {
+ItemBase * SketchWidget::addItem(ModelPart * modelPart, const LayerList & notLayers, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem) {
 
 	ModelPart * mp = NULL;
 	if (modelIndex >= 0) {
@@ -510,15 +504,15 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 	}
 	if (modelPart == NULL) return NULL;
 
-	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, partsEditorPaletteItem, true, m_viewIdentifier);
+	ItemBase * newItem = addItemAux(modelPart, notLayers, viewGeometry, id, partsEditorPaletteItem, true, m_viewIdentifier);
 	if (crossViewType == BaseCommand::CrossView) {
-		emit itemAddedSignal(modelPart, viewGeometry, id, originatingCommand ? originatingCommand->dropOrigin() : NULL);
+		emit itemAddedSignal(modelPart, notLayers, viewGeometry, id, originatingCommand ? originatingCommand->dropOrigin() : NULL);
 	}
 
 	return newItem;
 }
 
-ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier viewIdentifier)
+ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const LayerList & notLayers, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier viewIdentifier)
 {
 	Q_UNUSED(partsEditorPaletteItem);
 	if (viewIdentifier == ViewIdentifierClass::UnknownView) {
@@ -529,7 +523,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 	}
 
-	ItemBase * newItem = PartFactory::createPart(modelPart, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu);
+	ItemBase * newItem = PartFactory::createPart(modelPart, notLayers, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu);
 	Wire * wire = dynamic_cast<Wire *>(newItem);
 	if (wire) {
 		bool virtualWire = viewGeometry.getVirtual();
@@ -547,7 +541,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			}
 		}
 
-		wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
+		wire->setUp(getWireViewLayerID(viewGeometry, wire->notLayers()), m_viewLayers, this);
 		setWireVisible(wire);
 
 		bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
@@ -582,7 +576,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 	}
 
 	bool ok;
-	addPartItem(modelPart, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
+	addPartItem(modelPart, notLayers, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
 	DebugDialog::debug(QString("adding part %1 %2 %4 %5 %3")
 		.arg(id)
 		.arg(newItem->title())
@@ -633,10 +627,10 @@ void SketchWidget::checkSticky(long id, bool doEmit, bool checkCurrent, CheckSti
 	}
 }
 
-PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, const LayerList & notLayers, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 
 	ok = false;
-	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart, viewIdentifier);
+	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart, viewIdentifier, notLayers);
 
 	// render it, only if the layer is defined in the fzp file
 	// if the view is not defined in the part file, without this condition
@@ -644,7 +638,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * pale
 	if(viewLayerID != ViewLayer::UnknownLayer) {
 		if (paletteItem->renderImage(modelPart, viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
 			addToScene(paletteItem, paletteItem->viewLayerID());
-			paletteItem->loadLayerKin(m_viewLayers);
+			paletteItem->loadLayerKin(m_viewLayers, notLayers);
 			foreach (ItemBase * lkpi, paletteItem->layerKin()) {
 				this->scene()->addItem(lkpi);
 				lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
@@ -942,7 +936,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, false, viewGeometry, newID, false, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, from->attachedTo()->notLayers(), viewGeometry, newID, false, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
@@ -956,7 +950,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 	}
 
 	if (addItNow) {
-		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), viewGeometry, newID, NULL, true, m_viewIdentifier);
+		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), from->attachedTo()->notLayers(), viewGeometry, newID, NULL, true, m_viewIdentifier);
 		if (newItemBase) {
 			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
@@ -1263,7 +1257,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		*/
 
 		// create temporary item for dragging
-		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, doConnectors, m_viewIdentifier);
+		m_droppingItem = addItemAux(modelPart, defaultNotLayers(), viewGeometry, fromID, NULL, doConnectors, m_viewIdentifier);
 
 		QSet<ItemBase *> savedItems;
 		QHash<Wire *, ConnectorItem *> savedWires;
@@ -1279,7 +1273,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 // make sure relevant layer is visible
 	ViewLayer::ViewLayerID viewLayerID;
 	if (m_droppingWire) {
-		viewLayerID = getWireViewLayerID(m_droppingItem->getViewGeometry());
+		viewLayerID = getWireViewLayerID(m_droppingItem->getViewGeometry(), m_droppingItem->notLayers());
 	}
 	else if(modelPart->tags().contains("ruler",Qt::CaseInsensitive)) {
 		viewLayerID = getRulerViewLayerID();
@@ -1461,7 +1455,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 		default:
 			break;				
 	}
-	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), modelPart->flippedSMD(), viewGeometry, fromID, true, -1, parentCommand);
+	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), m_droppingItem->notLayers(), viewGeometry, fromID, true, -1, parentCommand);
 	addItemCommand->setDropOrigin(this);
 	
 	new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
@@ -2050,7 +2044,7 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 	vg.setLine(newLine2);
 	long newID = ItemBase::getNextID();
 	ConnectorItem * oldConnector1 = wire->connector1();
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), vg, newID, NULL, true, m_viewIdentifier));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), wire->notLayers(), vg, newID, NULL, true, m_viewIdentifier));
 	ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
 		oldConnector1->tempRemove(toConnectorItem, false);
@@ -2210,7 +2204,7 @@ QString SketchWidget::makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offse
 
 	/*
 	// this is too slow:
-	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	LayerList viewLayerIDs;
 	foreach (ViewLayer * viewLayer, viewLayers()) {
 		if (viewLayer == NULL) continue;
 
@@ -2492,7 +2486,7 @@ void SketchWidget::setSketchModel(SketchModel * sketchModel) {
 	m_sketchModel = sketchModel;
 }
 
-void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) {
+void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const LayerList & notLayers, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) {
 	if (dropOrigin != NULL && dropOrigin != this) {
 		// offset the part 
 		QPointF from = dropOrigin->mapToScene(QPoint(0, 0));
@@ -2500,7 +2494,7 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 		QPointF dp = viewGeometry.loc() - from;
 		ViewGeometry vg(viewGeometry);
 		vg.setLoc(to + dp);
-		ItemBase * itemBase = addItemAux(modelPart, vg, id, NULL, true, m_viewIdentifier);
+		ItemBase * itemBase = addItemAux(modelPart, notLayers, vg, id, NULL, true, m_viewIdentifier);
 		if (m_alignToGrid && (itemBase != NULL)) {
 			QPointF loc = to + dp;
 			QSet<ItemBase *> savedItems;
@@ -2514,7 +2508,7 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 		}
 	}
 	else {
-		addItemAux(modelPart, viewGeometry, id, NULL, true, m_viewIdentifier);
+		addItemAux(modelPart, notLayers, viewGeometry, id, NULL, true, m_viewIdentifier);
 	}
 }
 
@@ -2752,7 +2746,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 
 		// create a new wire with the same id as the temporary wire
-		new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), false, m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
+		new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->notLayers(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
 		new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(fromID);
@@ -2837,7 +2831,7 @@ void SketchWidget::addViewLayer(ViewLayer * viewLayer) {
 }
 
 void SketchWidget::setAllLayersVisible(bool visible) {
-	QList<ViewLayer::ViewLayerID>keys = m_viewLayers.keys();
+	LayerList keys = m_viewLayers.keys();
 
 	for (int i = 0; i < keys.count(); i++) {
 		ViewLayer * viewLayer = m_viewLayers.value(keys[i]);
@@ -2938,7 +2932,7 @@ void SketchWidget::toggleLayerVisibility() {
 
 void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible) {
 
-	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	LayerList viewLayerIDs;
 	viewLayerIDs.append(viewLayer->viewLayerID());
 
 	viewLayer->setVisible(visible);
@@ -3192,8 +3186,9 @@ ViewLayer::ViewLayerID SketchWidget::getDragWireViewLayerID(ConnectorItem *) {
 	return m_wireViewLayerID;
 }
 
-ViewLayer::ViewLayerID SketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
+ViewLayer::ViewLayerID SketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers) {
 	Q_UNUSED(viewGeometry);
+	Q_UNUSED(notLayers);
 	return m_wireViewLayerID;
 }
 
@@ -3241,7 +3236,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 
 	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, connectorItem->attachedTo()->notLayers(), viewGeometry, ItemBase::getNextID(), NULL, true, m_viewIdentifier));
 	DebugDialog::debug("creating connector drag wire");
 	if (m_connectorDragWire == NULL) {
 		clearDragWireTempCommand();
@@ -3835,7 +3830,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 	}
 
 	ModelPart * mp = itemBase->modelPart();
-	new DeleteItemCommand(this, crossView, mp->moduleID(), mp->flippedSMD(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
+	new DeleteItemCommand(this, crossView, mp->moduleID(), itemBase->notLayers(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
 }
 
 void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
@@ -3896,7 +3891,7 @@ void SketchWidget::killDroppingItem() {
 	}
 }
 
-ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerList & notLayers) {
 
 	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->domDocument(), viewIdentifier);
 	if (layers.isNull()) return ViewLayer::UnknownLayer;
@@ -3916,13 +3911,14 @@ ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart, ViewI
 		return ViewLayer::viewLayerIDFromXmlString(layerName);
 	}
 
-	return multiLayerGetViewLayerID(modelPart, viewIdentifier, layers, layerName);
+	return multiLayerGetViewLayerID(modelPart, viewIdentifier, notLayers, layers, layerName);
 }
 
-ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, QDomElement & layers, QString & layerName) {
+ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerList & notLayers, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
 	Q_UNUSED(layers);
 	Q_UNUSED(viewIdentifier);
+	Q_UNUSED(notLayers);
 
 	return ViewLayer::viewLayerIDFromXmlString(layerName);
 }
@@ -4035,7 +4031,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
-	new AddItemCommand(this, crossView, ModuleIDNames::wireModuleIDName, false, vg, newID, true, -1, parentCommand);
+	new AddItemCommand(this, crossView, ModuleIDNames::wireModuleIDName, wire->notLayers(), vg, newID, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossView, newID, false, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
@@ -4337,8 +4333,7 @@ long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		needsTransform = true;
 	}
 
-#pragma message("FlippedSMD param needs to be determined here")
-	newAddItemCommand(BaseCommand::SingleView, newModuleID, false, vg, newID, true, newModelIndex, parentCommand);
+	newAddItemCommand(BaseCommand::SingleView, newModuleID, itemBase->notLayers(), vg, newID, true, newModelIndex, parentCommand);
 
 	if (needsTransform) {
 		QMatrix m;
@@ -4450,7 +4445,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			if (cleanup && master) {
 				long wireID = ItemBase::getNextID();
 				ViewGeometry vg;
-				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, false, vg, wireID, false, -1, parentCommand);
+				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, itemBase->notLayers(), vg, wireID, false, -1, parentCommand);
 				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 						wireID, "connector0", true, true, parentCommand);
@@ -4618,7 +4613,7 @@ void SketchWidget::resizeEvent(QResizeEvent * event) {
 void SketchWidget::addBreadboardViewLayers() {
 	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel, ViewLayer::BreadboardNote);
 
-	QList<ViewLayer::ViewLayerID> layers;
+	LayerList layers;
 	layers << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard
 		<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel << ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
 
@@ -4628,7 +4623,7 @@ void SketchWidget::addBreadboardViewLayers() {
 void SketchWidget::addSchematicViewLayers() {
 	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicTrace, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 
-	QList<ViewLayer::ViewLayerID> layers;
+	LayerList layers;
 	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
 
 	addViewLayersAux(layers);
@@ -4637,7 +4632,7 @@ void SketchWidget::addSchematicViewLayers() {
 void SketchWidget::addPcbViewLayers() {
 	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
-	QList<ViewLayer::ViewLayerID> layers;
+	LayerList layers;
 	layers << ViewLayer::Board << ViewLayer::GroundPlane 
 		<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
 		<< ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
@@ -4678,7 +4673,7 @@ void SketchWidget::addPcbViewLayers() {
 void SketchWidget::addViewLayers() {
 }
 
-void SketchWidget::addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ) {
+void SketchWidget::addViewLayersAux(const LayerList &layers, float startZ) {
 	float z = startZ;
 	foreach(ViewLayer::ViewLayerID vlId, layers) {
 		addViewLayer(new ViewLayer(vlId, true, z));
@@ -5388,7 +5383,7 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 	note->setSize(size);
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
+QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten)
 {
 
@@ -5416,18 +5411,20 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 		itemBases.append(itemBase);
 
-		// TODO: make sure this does the right thing with grouped items
+		// TODO: if the itembase or part label isn't in the selected view layers, this could be the wrong rect
 		itemsBoundingRect |= item->sceneBoundingRect();
+		if (itemBase->isPartLabelVisible()) {
+			itemsBoundingRect |= itemBase->partLabelSceneBoundingRect();
+		}
 	}
 
 	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, itemBases, itemsBoundingRect);
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, 
+QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
 {
-
 	qreal width =  scene()->width();
 	qreal height =  scene()->height();
 
@@ -5454,6 +5451,27 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 	qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
 
 	foreach (ItemBase * itemBase, itemBases) {
+		if (itemBase->isPartLabelVisible()) {
+			ViewLayer::ViewLayerID viewLayerID = itemBase->partLabelViewLayerID();
+			if (viewLayerID != ViewLayer::UnknownLayer) {
+				if (partLayers.contains(viewLayerID)) {
+					QString labelSvg = itemBase->makePartLabelSvg(blackOnly, dpi, printerScale);
+					if (!labelSvg.isEmpty()) {
+						QPointF loc = itemBase->partLabelScenePos() - offset;
+						loc.setX(loc.x() * dpi / printerScale);
+						loc.setY(loc.y() * dpi / printerScale);
+						if (loc.x() != 0 || loc.y() != 0) {
+							labelSvg = QString("<g transform=\"translate(%1,%2)\" >%3</g>")
+								.arg(loc.x())
+								.arg(loc.y())
+								.arg(labelSvg);
+						}
+
+						outputSVG.append(labelSvg);
+					}
+				}
+			}		
+		}
 		if (itemBase->itemType() != ModelPart::Wire) {
 			foreach (ViewLayer::ViewLayerID viewLayerID, partLayers) {
 				if (itemBase->viewLayerID() != viewLayerID) continue;
@@ -5476,28 +5494,16 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 					itemSvg = domDocument.toString();
 				}
 
-				if (!itemBase->transform().isIdentity()) {
-					QTransform transform = itemBase->transform();
-					itemSvg = QString("<g transform=\"matrix(%1,%2,%3,%4,%5,%6)\" >")
-						.arg(transform.m11())
-						.arg(transform.m12())
-						.arg(transform.m21())
-						.arg(transform.m22())
-						.arg(0.0)  // transform.dx()			// don't understand why but SVG doesn't like this transform
-						.arg(0.0)  // transform.dy()			// maybe it's redundant--already dealt with in the translate used next?
-						.append(itemSvg)
-						.append("</g>");
-				}
+				TextUtils::svgTransform(itemSvg, itemBase->transform(), false);
 
 				QPointF loc = itemBase->scenePos() - offset;
 				loc.setX(loc.x() * dpi / printerScale);
 				loc.setY(loc.y() * dpi / printerScale);
 				if (loc.x() != 0 || loc.y() != 0) {
-					itemSvg = QString("<g transform=\"translate(%1,%2)\" >")
+					itemSvg = QString("<g transform=\"translate(%1,%2)\" >%3</g>")
 						.arg(loc.x())
 						.arg(loc.y())
-						.append(itemSvg)
-						.append("</g>");
+						.arg(itemSvg);
 				}
 
 				outputSVG.append(itemSvg);
@@ -6243,9 +6249,9 @@ int SketchWidget::selectAllItems(QSet<ItemBase *> & itemBases, const QString & m
 	return itemBases.count();
 }
 
-AddItemCommand * SketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
+AddItemCommand * SketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
 {
-	return new AddItemCommand(this, crossViewType, moduleID, flippedSMD, viewGeometry, id, updateInfoView, modelIndex, parent);
+	return new AddItemCommand(this, crossViewType, moduleID, notLayers, viewGeometry, id, updateInfoView, modelIndex, parent);
 }
 
 bool SketchWidget::partLabelsVisible() {
@@ -6378,4 +6384,15 @@ void SketchWidget::copyDrop() {
 
 void SketchWidget::clearPasteOffset() {
 	m_pasteOffset = QPointF(0, 0);
+}
+
+const LayerList & SketchWidget::defaultNotLayers() {
+	static LayerList ll;
+	if (ll.count() == 0) {
+		ll << ViewLayer::Copper1;
+		ll << ViewLayer::Silkscreen0;
+		ll << ViewLayer::Silkscreen0Label;
+	}
+
+	return ll;
 }

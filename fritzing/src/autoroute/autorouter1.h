@@ -75,7 +75,7 @@ protected:
 	bool clean90(QPointF fromPos, QPointF toPos, QList<Wire *> & newWires, int level);
 	QPointF calcPrimePoint(ConnectorItem *);
 	void findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance); 
-	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width);
+	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, const LayerList & notLayers);
 	bool hitsObstacle(ItemBase * traceWire, ItemBase * ignore); 
 	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> & newWires, int level, bool recurse);
 	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> & newWires, int level, bool recurse);

@@ -87,7 +87,7 @@ LayerPalette::~LayerPalette()
 {
 }
 
-void LayerPalette::resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys) {
+void LayerPalette::resetLayout(LayerHash & viewLayers, LayerList & keys) {
 	m_mainLayout->removeWidget(m_groupBox);
 	foreach (ViewLayerCheckBox * cb, m_checkBoxes) {
 		m_mainLayout->removeWidget(cb);
@@ -111,7 +111,7 @@ void LayerPalette::resetLayout(LayerHash & viewLayers, QList<ViewLayer::ViewLaye
 
 }
 
-void LayerPalette::updateLayerPalette(LayerHash & viewLayers, QList<ViewLayer::ViewLayerID> & keys)
+void LayerPalette::updateLayerPalette(LayerHash & viewLayers, LayerList & keys)
 {
 	m_showAllWidget->setEnabled(m_showAllLayersAct->isEnabled() || m_hideAllLayersAct->isEnabled());
 	m_showAllWidget->setChecked(!m_showAllLayersAct->isEnabled());

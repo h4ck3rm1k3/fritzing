@@ -114,8 +114,6 @@ protected:
 	QString m_outputFolder;
 
 public:
-	static QSet<QString> InstalledFonts;
-	static QMultiHash<QString, QString> InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
 	static int RestartNeeded;
 
 };

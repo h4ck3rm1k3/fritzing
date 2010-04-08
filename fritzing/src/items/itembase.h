@@ -139,6 +139,7 @@ public:
 	void setCanFlipVertical(bool);
 	virtual void clearModelPart();
 	virtual bool hasPartLabel();
+	ViewLayer::ViewLayerID partLabelViewLayerID();
 	void clearPartLabel();
 	bool isPartLabelVisible();
 	void restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);				// on loading from a file
@@ -146,6 +147,9 @@ public:
 	void partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);			// coming up from the label
 	void rotateFlipPartLabel(qreal degrees, Qt::Orientations);				// coming up from the label
 	void doRotateFlipPartLabel(qreal degrees, Qt::Orientations);			// coming down from the command object
+	QString makePartLabelSvg(bool blackOnly, qreal dpi, qreal printerScale);
+	QPointF partLabelScenePos();
+	QRectF partLabelSceneBoundingRect();
 	bool isSwappable();
 	virtual QString toolTip2();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -179,6 +183,9 @@ public:
 	const QString & filename();
 	void setFilename(const QString &);
 	virtual PluralType isPlural();
+	const LayerList & notLayers();
+	void setNotLayers(const LayerList & notLayers);
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
@@ -292,6 +299,7 @@ protected:
 	ConnectorItem * m_rightClickedConnector;
 	QMap<QString, QString> m_propsMap;
 	QString m_filename;
+	LayerList m_notLayers;
 
 protected:
 	static long nextID;

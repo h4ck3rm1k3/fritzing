@@ -32,6 +32,7 @@ $Date$
 #include <QSet>
 #include <QPixmap>
 #include <QMatrix>
+#include <QTransform>
 #include <QSvgRenderer>
 
 class TextUtils
@@ -54,6 +55,7 @@ public:
 	static bool fixPixelDimensionsIn(QString &fileContent);
 	static void flipSMDSvg(const QString & filename, QDomDocument & flipDoc, const QStringList & elementIDS, const QStringList & altElementIDs);
 	static void setSVGTransform(QDomElement &, QMatrix &);
+	static QString svgTransform(const QString & svg, QTransform & transform, bool translate);
 
 public:
 	static const QRegExp FindWhitespace;

@@ -123,6 +123,7 @@ protected:
 
 
 typedef QHash<ViewLayer::ViewLayerID, ViewLayer *> LayerHash;
+typedef QList<ViewLayer::ViewLayerID> LayerList;
 
 Q_DECLARE_METATYPE( ViewLayer* );
 

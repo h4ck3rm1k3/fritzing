@@ -75,7 +75,7 @@ void MainWindow::exportToGerber(QString exportDir, ItemBase * board)
 		return;
 	}
 
-	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
@@ -136,7 +136,7 @@ void MainWindow::exportToGerber(QString exportDir, ItemBase * board)
     drillStream << copper0Gerber.getNCDrill();
 
     // now do it for silk
-    QList<ViewLayer::ViewLayerID> silkLayerIDs;
+    LayerList silkLayerIDs;
     silkLayerIDs << ViewLayer::Silkscreen /* TODO:  << ViewLayer::SilkscreenLabel  */;
 	QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
     if (svgSilk.isEmpty()) {
@@ -284,7 +284,7 @@ void MainWindow::exportToGerber(QString exportDir, ItemBase * board)
     silkStream << silk0Gerber.getGerber();
 
     // now do it for the outline/contour
-    QList<ViewLayer::ViewLayerID> outlineLayerIDs;
+    LayerList outlineLayerIDs;
     outlineLayerIDs << ViewLayer::Board;
 	QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
     if (svgOutline.isEmpty()) {

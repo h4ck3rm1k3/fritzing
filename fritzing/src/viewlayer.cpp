@@ -196,15 +196,15 @@ void ViewLayer::resetNextZ(qreal z) {
 	m_nextZ = qFloor(m_initialZ) + z - floor(z);
 }
 
-QList<ViewLayer::ViewLayerID> ViewLayer::findAlternativeLayers(ViewLayer::ViewLayerID id)
+LayerList ViewLayer::findAlternativeLayers(ViewLayer::ViewLayerID id)
 {
-	QList<ViewLayer::ViewLayerID> alts = alternatives.values(id);
+	LayerList alts = alternatives.values(id);
 	return alts;
 }
 
 bool ViewLayer::canConnect(ViewLayer::ViewLayerID v1, ViewLayer::ViewLayerID v2) {
 	if (v1 == v2) return true;
 
- 	QList<ViewLayer::ViewLayerID> uncs = unconnectables.values(v1);
+ 	LayerList uncs = unconnectables.values(v1);
 	return (!uncs.contains(v2));
 }

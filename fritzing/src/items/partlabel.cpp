@@ -31,6 +31,8 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
+#include "../installedfonts.h"
 
 #include <QGraphicsScene>
 #include <QTextDocument>
@@ -40,6 +42,9 @@ $Date$
 #include <QMenu>
 #include <QApplication>
 #include <QInputDialog>
+#include <QFontMetricsF>
+#include <QStringList>
+#include <QFont>
 
 // TODO:
 //		** selection: coordinate with part selection: it's a layerkin
@@ -666,4 +671,53 @@ void PartLabel::setLabelDisplay(const QString & key) {
 		m_displayKeys.append(key);
 	}
 	displayTexts();
+}
+
+int mapToSVGWeight(int w) {
+	int v = 400;
+	switch (w) {
+		case QFont::Light: v = 25; break;
+		case QFont::Normal:	v = 50; break;
+		case QFont::DemiBold: v = 63; break;
+		case QFont::Bold: v = 75; break;
+		case QFont::Black: v = 87; break;
+		default:
+			return v;
+	}
+
+	return (qRound(8 * v / 100.0) * 100) + 100;
+}
+
+QString mapToSVGStyle(QFont::Style style) {
+	switch (style) {
+		case QFont::StyleNormal: return "normal";
+		case QFont::StyleOblique: return "oblique";
+		case QFont::StyleItalic: return "italic";
+		default: return "normal";
+	}
+}
+
+QString PartLabel::makeSvg(bool blackOnly, qreal dpi, qreal printerScale) {
+	if (this->text().isEmpty()) return "";
+
+	QFont f = font();
+	QFontMetricsF fm(f);
+	qreal y = fm.ascent();
+	
+	QString svg = QString("<text font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" fill-opacity='1' stroke='none' >")
+		.arg(f.pointSizeF() * dpi / 72)
+		.arg(mapToSVGStyle(f.style()))
+		.arg(mapToSVGWeight(f.weight()))
+		.arg(blackOnly ? "#000000" : brush().color().name())
+		.arg(InstalledFonts::InstalledFontsNameMapper.value(f.family()));
+
+	QStringList texts = text().split("\n");
+	foreach (QString t, texts) {
+		svg += QString("<tspan x='0' y='%1'>%2</tspan>").arg(y * dpi / printerScale).arg(QString(t.toUtf8()));
+		y += fm.height();
+	}
+
+	svg += "</text>";
+
+	return TextUtils::svgTransform(svg, transform(), false);
 }

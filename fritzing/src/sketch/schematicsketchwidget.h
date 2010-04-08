@@ -39,7 +39,7 @@ public:
     SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
-	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	void initWire(Wire *, int penWidth);
 	bool autorouteNeedsBounds();
@@ -75,7 +75,7 @@ protected slots:
 protected:
 	qreal getRatsnestOpacity(bool);
 	AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
-										QString moduleID, bool flippedSMD, ViewGeometry & viewGeometry, qint64 id, 
+										QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, 
 										bool updateInfoView, long modelIndex, QUndoCommand *parent);
 
 

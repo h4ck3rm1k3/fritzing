@@ -49,6 +49,7 @@ $Date$
 #include "utils/ratsnestcolors.h"
 #include "infoview/htmlinfoview.h"
 #include "svg/gedaelement2svg.h"
+#include "installedfonts.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -87,8 +88,9 @@ static int kBottomOfAlpha = 204;
 #endif
 
 int FApplication::RestartNeeded = 9999;
-QSet<QString> FApplication::InstalledFonts;
-QMultiHash<QString, QString> FApplication::InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
+
+QSet<QString> InstalledFonts::InstalledFontsList;
+QMultiHash<QString, QString> InstalledFonts::InstalledFontsNameMapper;   // family name to filename; SVG files seem to have to use filename
 
 static const qreal LoadProgressStart = 0.085;
 static const qreal LoadProgressEnd = 0.6;
@@ -674,8 +676,8 @@ void FApplication::registerFont(const QString &fontFile, bool reallyRegister) {
 		QStringList familyNames = QFontDatabase::applicationFontFamilies(id);
 		QFileInfo finfo(fontFile);
 		foreach (QString family, familyNames) {
-			InstalledFontsNameMapper.insert(family, finfo.baseName());
-			InstalledFonts << family;
+			InstalledFonts::InstalledFontsNameMapper.insert(family, finfo.baseName());
+			InstalledFonts::InstalledFontsList << family;
 			DebugDialog::debug("registering font family: "+family);
 		}
 	}

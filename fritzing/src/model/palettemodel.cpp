@@ -441,12 +441,12 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 		}
 	}
 
-	flipSMD(modelPart, domDocument, path, type);
+	flipSMD(modelPart, domDocument);
 
     return modelPart;
 }
 
-void PaletteModel::flipSMD(ModelPart * modelPart, QDomDocument * domDocument, const QString & path, ModelPart::ItemType type) {
+void PaletteModel::flipSMD(ModelPart * modelPart, QDomDocument * domDocument) {
 	QDomElement root = domDocument->documentElement();
 	QDomElement views = root.firstChildElement("views");
 	if (views.isNull()) return;
@@ -458,34 +458,22 @@ void PaletteModel::flipSMD(ModelPart * modelPart, QDomDocument * domDocument, co
 	if (layers.isNull()) return;
 
 	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
-
-	QDomElement layer = layers.firstChildElement("layer");
-	while (!layer.isNull()) {
-		QString layerID = layer.attribute("layerId");
-		if (layerID.compare(c1String) == 0) {
-			break;
-		}
-
-		layer = layer.nextSiblingElement("layer");
-	}
-
-	if (layer.isNull()) return;
-
-	modelPart->setFlippedSMD(true);
-
-	layer = layers.firstChildElement("layer");
-
 	QString c0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0);
 	QString s0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0);
 	QString s1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen);
+	
 	QDomElement c0;
 	QDomElement c1;
 	QDomElement s0;
 	QDomElement s1;
 
+	QDomElement layer = layers.firstChildElement("layer");
 	while (!layer.isNull()) {
 		QString layerID = layer.attribute("layerId");
-		if (layerID.compare(c0String) == 0) {
+		if (layerID.compare(c1String) == 0) {
+			c1 = layer;
+		}
+		else if (layerID.compare(c0String) == 0) {
 			c0 = layer;
 		}
 		else if (layerID.compare(s0String) == 0) {
@@ -494,8 +482,14 @@ void PaletteModel::flipSMD(ModelPart * modelPart, QDomDocument * domDocument, co
 		else if (layerID.compare(s1String) == 0) {
 			s1 = layer;
 		}
+
 		layer = layer.nextSiblingElement("layer");
 	}
+
+	if (!c0.isNull()) return;
+	if (c1.isNull()) return;
+
+	modelPart->setFlippedSMD(true);
 
 	if (c0.isNull()) {
 		c0 = domDocument->createElement("layer");

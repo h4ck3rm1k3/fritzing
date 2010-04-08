@@ -400,6 +400,19 @@ void TextUtils::setSVGTransform(QDomElement & element, QMatrix & matrix)
 	element.setAttribute("transform", m);
 }
 
+QString TextUtils::svgTransform(const QString & svg, QTransform & transform, bool translate) {
+	if (transform.isIdentity()) return svg;
+
+	return QString("<g transform=\"matrix(%1,%2,%3,%4,%5,%6)\" >%7</g>")
+			.arg(transform.m11())
+			.arg(transform.m12())
+			.arg(transform.m21())
+			.arg(transform.m22())
+			.arg(translate ? transform.dx() : 0.0)   			
+			.arg(translate ? transform.dy() : 0.0)  		
+			.arg(svg);
+}
+
 void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument, const QStringList & elementIDs, const QStringList & altElementIDs) {
 	QString errorStr;
 	int errorLine;

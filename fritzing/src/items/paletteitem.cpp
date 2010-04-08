@@ -69,7 +69,7 @@ bool PaletteItem::renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewId
 	return result;
 }
 
-void PaletteItem::loadLayerKin( const LayerHash & viewLayers) {
+void PaletteItem::loadLayerKin(const LayerHash & viewLayers, const LayerList & notLayers) {
 
 	if (m_modelPart == NULL) return;
 
@@ -84,6 +84,7 @@ void PaletteItem::loadLayerKin( const LayerHash & viewLayers) {
 	// the palette item already used the zeroth child "layer" element
 	foreach (ViewLayer::ViewLayerID viewLayerID, viewLayers.keys()) {
 		if (viewLayerID == m_viewLayerID) continue;
+		if (notLayers.contains(viewLayerID)) continue;
 
 		LayerKinPaletteItem * lkpi = newLayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, m_itemMenu, viewLayers);
 		if (lkpi->ok()) {

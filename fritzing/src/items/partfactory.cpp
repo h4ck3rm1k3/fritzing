@@ -45,7 +45,16 @@ $Date$
 #include "pinheader.h"
 
 
-ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu)
+ItemBase * PartFactory::createPart( ModelPart * modelPart, const LayerList & notLayers, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu)
+{
+	ItemBase * itemBase = createPartAux(modelPart, viewIdentifier, viewGeometry, id, itemMenu, wireMenu);
+	if (itemBase) {
+		itemBase->setNotLayers(notLayers);
+	}
+	return itemBase;
+}
+
+ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu)
 {
 	switch (modelPart->itemType()) {
 		case ModelPart::Wire:
