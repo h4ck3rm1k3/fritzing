@@ -1187,4 +1187,13 @@
             </views>
         </connector>
     </connectors>
+     <buses>
+    <bus id="ground">
+      <nodeMember connectorId="connector1" />
+      <nodeMember connectorId="connector19" />
+      <nodeMember connectorId="connector20" />
+      <nodeMember connectorId="connector68" />
+      <nodeMember connectorId="connector69" />
+    </bus>
+  </buses>
 </module>
