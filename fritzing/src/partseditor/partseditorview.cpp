@@ -161,7 +161,10 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, const LayerList & 
 				addDefaultLayers();
 				if (m_viewItem != NULL) {
 					QHash<QString, SvgFileSplitter *> svgHash;
-					QString svg = m_viewItem->retrieveSvg(viewLayerID, svgHash, false, GraphicsUtils::StandardFritzingDPI);
+					QString svg = "";
+					foreach (ViewLayer * vl, m_viewLayers.values()) {
+						svg += m_viewItem->retrieveSvg(vl->viewLayerID(), svgHash, false, GraphicsUtils::StandardFritzingDPI);
+					}
 					if (!svg.isEmpty()) {
 						QSizeF size = m_viewItem->size();
 						svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
