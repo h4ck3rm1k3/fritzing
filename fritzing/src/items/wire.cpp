@@ -55,8 +55,8 @@ QStringList Wire::colorNames;
 QHash<long, QString> Wire::widthTrans;
 QList<long> Wire::widths;
 qreal Wire::STANDARD_TRACE_WIDTH;
-const QString Wire::TraceColorCopper0String = ViewLayer::Copper0Color;
-const QString Wire::TraceColorCopper1String = ViewLayer::Copper1Color;
+const QString Wire::TraceColorCopper0String = "#ff9400";
+const QString Wire::TraceColorCopper1String = "#ffbf00";
 
 ////////////////////////////////////////////////////////////
 
