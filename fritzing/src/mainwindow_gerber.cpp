@@ -65,7 +65,7 @@ void MainWindow::exportToGerber() {
 	exportToGerber(exportDir, board);
 }
 
-void MainWindow::exportToGerber(QString exportDir, ItemBase * board) 
+void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board) 
 {
 	if (board == NULL) {
 		board = m_pcbGraphicsView->findBoard();
@@ -135,9 +135,47 @@ void MainWindow::exportToGerber(QString exportDir, ItemBase * board)
     QTextStream drillStream(&drillOut);
     drillStream << copper0Gerber.getNCDrill();
 
-    // now do it for silk
     LayerList silkLayerIDs;
-    silkLayerIDs << ViewLayer::Silkscreen /* TODO:  << ViewLayer::SilkscreenLabel  */;
+    silkLayerIDs << ViewLayer::Silkscreen  << ViewLayer::SilkscreenLabel;
+	doSilk(silkLayerIDs, "_silkBottom.gbo", imageSize, board, exportDir);
+    silkLayerIDs.clear();
+    silkLayerIDs << ViewLayer::Silkscreen0  << ViewLayer::Silkscreen0Label;
+	doSilk(silkLayerIDs, "_silkTop.gbo", imageSize, board, exportDir);
+
+    // now do it for the outline/contour
+    LayerList outlineLayerIDs;
+    outlineLayerIDs << ViewLayer::Board;
+	QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
+    if (svgOutline.isEmpty()) {
+        // tell the user something reasonable
+        return;
+    }
+
+    result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
+    if (!result) {
+            // tell the user something reasonable
+            return;
+    }
+
+    // create copper0 gerber from svg
+    SVG2gerber outlineGerber(svgOutline, "board");
+
+    // contour / board outline
+    QString contourFile = exportDir + "/" +
+                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                          + "_contour.gm1";
+    QFile contourOut(contourFile);
+	if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        DebugDialog::debug("gerber export: cannot open output file");
+		return;
+	}
+
+    QTextStream contourStream(&contourOut);
+    contourStream << outlineGerber.getContour();
+}
+
+void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QSizeF imageSize, ItemBase * board, const QString & exportDir ) 
+{
 	QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
     if (svgSilk.isEmpty()) {
         // tell the user something reasonable
@@ -177,13 +215,10 @@ void MainWindow::exportToGerber(QString exportDir, ItemBase * board)
         svgToConvert = true;
     }
 
-	bool partLabelsVisible = m_pcbGraphicsView->partLabelsVisible();
 
-    if (partLabelsVisible || svgToConvert) {
-		// add labels to silkscreen layer
+    if (svgToConvert) {
 		m_pcbGraphicsView->saveLayerVisibility();
 		m_pcbGraphicsView->setAllLayersVisible(false);
-		m_pcbGraphicsView->setLayerVisible(ViewLayer::SilkscreenLabel, true);
 
 		QList<QGraphicsItem*> selItems = m_pcbGraphicsView->scene()->selectedItems();
 		foreach(QGraphicsItem *item, selItems) {
@@ -262,18 +297,12 @@ void MainWindow::exportToGerber(QString exportDir, ItemBase * board)
 	}
 #endif
 
-    result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
-    if (!result) {
-            // tell the user something reasonable
-            return;
-    }
-
     // create copper0 gerber from svg
     SVG2gerber silk0Gerber(svgSilk, "silk");
 
     QString silk0File = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                          + "_silkBottom.gbo";
+                          + gerberSuffix;
     QFile silk0Out(silk0File);
 	if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber export: cannot open output file");
@@ -282,36 +311,4 @@ void MainWindow::exportToGerber(QString exportDir, ItemBase * board)
 
     QTextStream silkStream(&silk0Out);
     silkStream << silk0Gerber.getGerber();
-
-    // now do it for the outline/contour
-    LayerList outlineLayerIDs;
-    outlineLayerIDs << ViewLayer::Board;
-	QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
-    if (svgOutline.isEmpty()) {
-        // tell the user something reasonable
-        return;
-    }
-
-    result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
-    if (!result) {
-            // tell the user something reasonable
-            return;
-    }
-
-    // create copper0 gerber from svg
-    SVG2gerber outlineGerber(svgOutline, "board");
-
-    // contour / board outline
-    QString contourFile = exportDir + "/" +
-                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                          + "_contour.gm1";
-    QFile contourOut(contourFile);
-	if (!contourOut.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        DebugDialog::debug("gerber export: cannot open output file");
-		return;
-	}
-
-    QTextStream contourStream(&contourOut);
-    contourStream << outlineGerber.getContour();
 }
-

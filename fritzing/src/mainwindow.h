@@ -88,8 +88,8 @@ public:
 	// on the complex entities: sketches, bins, modules (?)
 	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
+	void exportToGerber(const QString & exportDir, ItemBase * board);
 
-	void exportToGerber(QString dir, ItemBase * board);
 
 public:
 	static void initExportConstants();
@@ -351,6 +351,7 @@ protected:
 	QString mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize);
 
 	bool wannaRestart();
+	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QSizeF imageSize, ItemBase * board, const QString & exportDir);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
