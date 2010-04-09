@@ -288,7 +288,8 @@ void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setColorString("blue", 1.0);
 }
 
-void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color) {
+void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color, const LayerList & notLayers) {
+	Q_UNUSED(notLayers);
 	font.setFamily("Droid Sans");
 	font.setPointSize(9);
 	color.setAlpha(255);

@@ -70,6 +70,7 @@ public:
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
 	static void fixStyleAttributeRecurse(QDomElement & element);
+	static void fixColorRecurse(QDomElement & element, const QString & newColor);
 	static void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
     static QList<qreal> getTransformFloats(QDomElement & element);
 	static QList<qreal> getTransformFloats(const QString & transform);
@@ -80,7 +81,6 @@ protected:
 						qreal sNewWidth, qreal sNewHeight,
 						qreal vbWidth, qreal vbHeight, bool blackOnly);
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
-	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void painterPathChild(QDomElement & element, QPainterPath & ppath);			// note: only partially implemented
 	void normalizeTranslation(QDomElement & element, 
 							qreal sNewWidth, qreal sNewHeight,
@@ -90,6 +90,7 @@ protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);
 	static void fixStyleAttribute(QDomElement & element);
 	static bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
+	static void setStrokeOrFill(QDomElement & element, bool doIt, const QString & color);
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

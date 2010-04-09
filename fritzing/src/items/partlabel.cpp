@@ -333,9 +333,10 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	qreal z = labelGeometry.attribute("z").toDouble(&ok);
 	if (ok) this->setZValue(z);
 
-	QColor c;
-	c.setNamedColor(labelGeometry.attribute("textColor"));
-	setBrush(QBrush(c));
+	//ignore the textColor attribute so the labels are always set from standard colors
+	//QColor c;
+	//c.setNamedColor(labelGeometry.attribute("textColor"));
+	//setBrush(QBrush(c));
 
 	qreal fs = labelGeometry.attribute("fontSize").toDouble(&ok);
 	if (!ok) {
@@ -481,7 +482,7 @@ void PartLabel::setUpText() {
 	if (infographics != NULL) {
 		QFont font;
 		QColor color;
-		infographics->getLabelFont(font, color);
+		infographics->getLabelFont(font, color, m_owner->notLayers());
 		setBrush(QBrush(color));
 		setFont(font);		
 	}

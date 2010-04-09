@@ -35,6 +35,9 @@ $Date$
 #include <QDate>
 #include <QPointer>
 
+#include "../viewidentifierclass.h"
+#include "../viewlayer.h"
+
 class ModelPartShared : public QObject
 {
 Q_OBJECT
@@ -74,6 +77,7 @@ public:
 
 	const QList<class ConnectorShared *> connectors();
 	void setConnectorsShared(QList<class ConnectorShared *> connectors);
+	void connectorIDs(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs);
 
 	const QStringList &tags();
 	void setTags(const QStringList &tags);

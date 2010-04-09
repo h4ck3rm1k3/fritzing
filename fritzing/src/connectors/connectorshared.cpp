@@ -73,6 +73,7 @@ ConnectorShared::~ConnectorShared() {
 const QString & ConnectorShared::id() {
 	return m_id;
 }
+
 void ConnectorShared::setId(QString id) {
 	m_id = id;
 }
@@ -80,6 +81,7 @@ void ConnectorShared::setId(QString id) {
 const QString & ConnectorShared::description() {
 	return m_description;
 }
+
 void ConnectorShared::setDescription(QString description) {
 	m_description = description;
 }

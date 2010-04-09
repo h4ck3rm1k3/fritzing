@@ -1332,11 +1332,16 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 	}
 }
 
-void PCBSketchWidget::getLabelFont(QFont & font, QColor & color) {
+void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, const LayerList & notLayers) {
 	font.setFamily("OCRA");			// ocra10
 	font.setPointSize(getLabelFontSizeMedium());
 	color.setAlpha(255);
-	color.setRgb(0xffffff);
+	if (notLayers.contains(ViewLayer::Silkscreen)) {
+		color.setNamedColor(ViewLayer::Silkscreen0Color);
+	}
+	else {
+		color.setNamedColor(ViewLayer::SilkscreenColor);
+	}
 }
 
 void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand)

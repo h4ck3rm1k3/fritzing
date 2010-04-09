@@ -75,6 +75,12 @@ public:
 		ViewLayerCount
 	};
 
+public:
+	static const QString Copper0Color;
+	static const QString Copper1Color;
+	static const QString SilkscreenColor;
+	static const QString Silkscreen0Color;
+
 protected:
 	static qreal zIncrement;
 	static QHash<ViewLayerID, StringPair *> names;

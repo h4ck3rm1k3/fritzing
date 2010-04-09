@@ -248,7 +248,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		svgIdLayer->m_processed = true;
 
-		QString connectorID = svgIdLayer->m_svgId; // + "pin" ;
+		QString connectorID = svgIdLayer->m_svgId;
 
 		QRectF bounds = renderer->boundsOnElement(connectorID);
 		if (bounds.isNull()) {
@@ -265,17 +265,15 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		QRectF viewBox = renderer->viewBoxF();
 
-		qreal rad = 0;
-		qreal sw = 0;
-		QMatrix matrix, terminalMatrix;
-		bool gotCircle = renderer->getSvgCircleConnectorInfo(viewLayerID, connectorID, bounds, rad, sw, matrix, svgIdLayer->m_terminalId, terminalMatrix);		
-		if (gotCircle && (rad != 0)) {
-			radius = svgIdLayer->m_radius = rad * defaultSizeF.width() / viewBox.width();
-			strokeWidth = svgIdLayer->m_strokeWidth = sw * defaultSizeF.width() / viewBox.width();
+		ConnectorInfo * connectorInfo = renderer->getConnectorInfo(connectorID);		
+		if (connectorInfo && connectorInfo->gotCircle && (connectorInfo->radius != 0)) {
+			radius = svgIdLayer->m_radius = connectorInfo->radius * defaultSizeF.width() / viewBox.width();
+			strokeWidth = svgIdLayer->m_strokeWidth = connectorInfo->strokeWidth * defaultSizeF.width() / viewBox.width();
+			bounds = connectorInfo->bounds;
 		}
 
 		// matrixForElement only grabs parent matrices, not any transforms in the element itself
-		QMatrix matrix0 = matrix * renderer->matrixForElement(connectorID);  
+		QMatrix matrix0 = connectorInfo->matrix * renderer->matrixForElement(connectorID);  
 
 		/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
 						   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
@@ -290,7 +288,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		svgIdLayer->m_visible = true;
 		svgIdLayer->m_rect = connectorRect;
-		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, ignoreTerminalPoint, viewBox, terminalMatrix);
+		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix);
 	}
 
 	return true;

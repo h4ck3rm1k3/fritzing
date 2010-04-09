@@ -1289,8 +1289,31 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		if (gotOne) {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
 			if (renderer == NULL) {
-				bool readConnectors = ((viewLayerID == ViewLayer::Copper0) || (viewLayerID == ViewLayer::Copper1))  
-										&& (viewIdentifier == ViewIdentifierClass::PCBView);
+				QStringList connectorIDs, terminalIDs;
+				QString setColor;
+				QString colorElementID;
+				if (viewIdentifier == ViewIdentifierClass::PCBView) {
+					colorElementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+					switch (viewLayerID) {
+						case ViewLayer::Copper0:
+							modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs);
+							setColor = ViewLayer::Copper0Color;
+							break;
+						case ViewLayer::Copper1:
+							modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs);
+							setColor = ViewLayer::Copper1Color;
+							break;
+						case ViewLayer::Silkscreen:
+							setColor = ViewLayer::SilkscreenColor;
+							break;
+						case ViewLayer::Silkscreen0:
+							setColor = ViewLayer::Silkscreen0Color;
+							break;
+						default:
+							break;
+					}
+				}
+
 				gotOne = false;
 				renderer = new FSvgRenderer();
 				QDomDocument flipDoc;
@@ -1312,7 +1335,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 						result = svgFileSplitter.splitString(f, layerAttributes.layerName());
 					}
 					if (result) {
-						if (renderer->load(svgFileSplitter.byteArray(), filename, readConnectors)) {
+						if (renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID)) {
 							gotOne = true;
 						}
 					}
@@ -1324,10 +1347,10 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 					// only one layer, just load it directly
 					bool result;
 					if (flipDoc.isNull()) {
-						result = renderer->load(filename, readConnectors);
+						result = renderer->loadSvg(filename, connectorIDs, terminalIDs, setColor, colorElementID);
 					}
 					else {
-						result = renderer->load(flipDoc.toByteArray(), readConnectors);
+						result = renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID);
 					}
 					if (result) {
 						gotOne = true;

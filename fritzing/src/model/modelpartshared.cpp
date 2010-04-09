@@ -251,6 +251,7 @@ void ModelPartShared::setModuleID(QString moduleID) {
 const QList<ConnectorShared *> ModelPartShared::connectors() {
 	return m_connectorSharedHash.values();
 }
+
 void ModelPartShared::setConnectorsShared(QList<ConnectorShared *> connectors) {
 	for (int i = 0; i < connectors.size(); i++) {
 		ConnectorShared* cs = connectors[i];
@@ -356,4 +357,11 @@ void ModelPartShared::setFlippedSMD(bool f) {
 
 bool ModelPartShared::flippedSMD() {
 	return m_flippedSMD;
+}
+
+void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs) {
+	foreach (ConnectorShared * connector, m_connectorSharedHash.values()) {
+		connectorIDs.append(connector->pin(viewIdentifier, viewLayerID));
+		terminalIDs.append(connector->terminal(viewIdentifier, viewLayerID));
+	}
 }

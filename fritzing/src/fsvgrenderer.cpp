@@ -41,9 +41,19 @@ QSet<RendererHash * > FSvgRenderer::m_deleted;
 
 qreal FSvgRenderer::m_printerScale = 90.0;
 
+static ConnectorInfo VanillaConnectorInfo;
+
 FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
 {
 	m_defaultSizeF = QSizeF(0,0);
+}
+
+FSvgRenderer::~FSvgRenderer()
+{
+	foreach (ConnectorInfo * connectorInfo, m_connectorInfoHash.values()) {
+		delete connectorInfo;
+	}
+	m_connectorInfoHash.clear();
 }
 
 void FSvgRenderer::cleanup() {
@@ -65,7 +75,13 @@ void FSvgRenderer::cleanup() {
 	m_deleted.clear();
 }
 
-bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
+bool FSvgRenderer::loadSvg(const QString & filename) {
+	QStringList strings;
+	QString string;
+	return loadSvg(filename, strings, strings, string, string);
+}
+
+bool FSvgRenderer::loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID) {
 	if (!QFileInfo(filename).exists() || !QFileInfo(filename).isFile()) {
 		return false;
 	}
@@ -80,7 +96,7 @@ bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 
 	if (contents.length() <= 0) return false;
 
-	return loadAux(contents, filename, readConnectors);
+	return loadAux(contents, filename, connectorIDs, terminalIDs, setColor, colorElementID);
 
 	/*
 
@@ -102,12 +118,17 @@ bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 
 }
 
-bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename, bool readConnectors) {
-	return loadAux(contents, filename, readConnectors);
+bool FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename) {
+	QStringList strings;
+	QString string;
+	return loadSvg(contents, filename, strings, strings, string, string);
 }
 
+bool FSvgRenderer::loadSvg(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID) {
+	return loadAux(contents, filename, connectorIDs, terminalIDs, setColor, colorElementID);
+}
 
-bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors) {
+bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID) {
 
 	QByteArray cleanContents;
 	bool cleaned = false;
@@ -125,15 +146,27 @@ bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filena
 
 	// no it isn't
 
+	if (connectorIDs.count() > 0 || !setColor.isEmpty()) {
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+		QDomDocument doc;
+		doc.setContent(cleanContents, &errorStr, &errorLine, &errorColumn);
+		QDomElement root = doc.documentElement();
+		if (!setColor.isEmpty()) {
+			QDomElement element = TextUtils::findElementWithAttribute(root, "id", colorElementID);
+			if (!element.isNull()) {
+				SvgFileSplitter::fixColorRecurse(element, setColor);
+				cleanContents = TextUtils::removeXMLEntities(doc.toString()).toUtf8();
+			}
+		}
+		if (connectorIDs.count() > 0) {
+			initConnectorInfo(doc, connectorIDs, terminalIDs);
+		}
+	}
+
 
 	/*
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument doc;
-	doc.setContent(cleanContents, &errorStr, &errorLine, &errorColumn);
-	QDomElement root = doc.documentElement();
-	SvgFileSplitter::fixStyleAttributeRecurse(root);
 	cleanContents = doc.toByteArray();
 
 	//QFile file("all.txt");
@@ -149,9 +182,6 @@ bool FSvgRenderer::loadAux ( const QByteArray & contents, const QString & filena
 
 	QXmlStreamReader xml(cleanContents);
 	determineDefaultSize(xml);
-	if (readConnectors) {
-		m_svgXml =  cleanContents;
-	}
 
 	/*
 	QString path = QCoreApplication::applicationDirPath();
@@ -271,8 +301,6 @@ QSizeF FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 	return size;
 }
 
-
-
 QSizeF FSvgRenderer::defaultSizeF() {
 	if (m_defaultSizeF.width() == 0 && m_defaultSizeF.height() == 0) {
 		return defaultSize();
@@ -288,6 +316,7 @@ void FSvgRenderer::calcPrinterScale() {
 	// note: calculation result depends on the svg used; if the svg size is a float, the scale will vary a little
 	// using an svg file with exactly a 1-inch width (like 'wire.svg') gives exactly a 90.0 printerscale value.
 
+	VanillaConnectorInfo.gotCircle = false;				// TODO: only needs to happen once
 	m_printerScale = 90.0;
 
 	/*
@@ -312,80 +341,72 @@ qreal FSvgRenderer::printerScale() {
 	return m_printerScale;
 }
 
-bool FSvgRenderer::getSvgCircleConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth, QMatrix & matrix, const QString & terminalName, QMatrix & terminalMatrix)
+void FSvgRenderer::initConnectorInfo(QDomDocument & domDocument, const QStringList & connectorIDs, const QStringList & terminalIDs)
 {
-	Q_UNUSED(viewLayerID);
+	QDomElement root = domDocument.documentElement();
+	QDomElement cachedElement = root;
 
-	radius = strokeWidth = 0;
+	for (int i = 0; i < connectorIDs.count(); i++) {
+		QString connectorID = connectorIDs[i];
+		QString terminalID = terminalIDs[i];
+
+		ConnectorInfo * connectorInfo = new ConnectorInfo();
+		connectorInfo->radius = connectorInfo->strokeWidth = 0;
+		connectorInfo->gotCircle = false;
+		m_connectorInfoHash.insert(connectorID, connectorInfo);
+
+		QDomElement connectorElement = TextUtils::findElementWithAttribute(cachedElement, "id", connectorID);
+		if (connectorElement.isNull()) {
+			connectorElement = TextUtils::findElementWithAttribute(root, "id", connectorID);
+		}
+		if (connectorElement.isNull()) continue;
 	
-	if (m_svgXml.size() == 0 && m_svgDomDocument.isNull()) {
-		return false;
-	}
-
-	if (m_svgXml.size() > 0) {
-		QString errorStr;
-		int errorLine;
-		int errorColumn;
-		bool result = m_svgDomDocument.setContent(m_svgXml, &errorStr, &errorLine, &errorColumn);
-		m_svgXml.clear();
-		if (!result) {
-			return false;
+		cachedElement = connectorElement.parentNode().toElement();
+		QDomElement terminalElement;
+		if (!terminalID.isEmpty()) {
+			terminalElement = TextUtils::findElementWithAttribute(cachedElement, "id", terminalID);
+			if (terminalElement.isNull()) {
+				terminalElement = TextUtils::findElementWithAttribute(root, "id", terminalID);
+			}
 		}
-	}
 
-	QDomElement element, terminalElement;
-	if (!m_cachedElement.isNull()) {
-		element = TextUtils::findElementWithAttribute(m_cachedElement.parentNode().toElement(), "id", connectorName);
-		if (!terminalName.isEmpty()) {
-			terminalElement = TextUtils::findElementWithAttribute(m_cachedElement.parentNode().toElement(), "id", terminalName);
+		if (!terminalElement.isNull()) {
+			connectorInfo->terminalMatrix = SvgFileSplitter::elementToMatrix(terminalElement);
 		}
-	}
-	if (element.isNull()) {
-		element = TextUtils::findElementWithAttribute(m_svgDomDocument.documentElement(), "id", connectorName);
-		if (!terminalName.isEmpty() && terminalElement.isNull()) {
-			terminalElement = TextUtils::findElementWithAttribute(element.parentNode().toElement(), "id", terminalName);
-		}
-	}
-	if (!terminalName.isEmpty() && terminalElement.isNull()) {
-		terminalElement = TextUtils::findElementWithAttribute(m_svgDomDocument.documentElement(), "id", terminalName);
-	}
 
-	if (!terminalElement.isNull()) {
-		terminalMatrix = SvgFileSplitter::elementToMatrix(terminalElement);
-	}
+		if (connectorElement.isNull()) continue;
 
-	if (element.isNull()) return false;
+		connectorInfo->matrix = SvgFileSplitter::elementToMatrix(connectorElement);
 
-	matrix = SvgFileSplitter::elementToMatrix(element);
+		// right now we only handle circles
+		if (connectorElement.nodeName().compare("circle") != 0) continue;
 
-	if (element.nodeName().compare("circle") != 0) return false;
+		bool ok;
+		qreal cx = connectorElement.attribute("cx").toDouble(&ok);
+		if (!ok) continue;
 
-	// right now we only handle circles
+		qreal cy = connectorElement.attribute("cy").toDouble(&ok);
+		if (!ok) continue;
 
-	bool ok;
-	qreal cx = element.attribute("cx").toDouble(&ok);
-	if (!ok) return false;
-	qreal cy = element.attribute("cy").toDouble(&ok);
-	if (!ok) return false;
-	qreal r = element.attribute("r").toDouble(&ok);
-	if (!ok) return false;
-	qreal sw = element.attribute("stroke-width").toDouble(&ok);	
-	if (!ok) {
-        QString strokewidth("stroke-width");
-        QString s = element.attribute("style");
-        SvgFileSplitter::fixStyleAttribute(element, s, strokewidth);
-		sw = element.attribute("stroke-width").toDouble(&ok);
+		qreal r = connectorElement.attribute("r").toDouble(&ok);
+		if (!ok) continue;
+
+		qreal sw = connectorElement.attribute("stroke-width").toDouble(&ok);	
 		if (!ok) {
-			return false;
+			//QString strokewidth("stroke-width");
+			//QString s = element.attribute("style");
+			//SvgFileSplitter::fixStyleAttribute(connectorElement, s, strokewidth);
+			sw = connectorElement.attribute("stroke-width").toDouble(&ok);
+			if (!ok) {
+				continue;
+			}
 		}
+
+		connectorInfo->gotCircle = true;
+		connectorInfo->bounds.setRect(cx - r - (sw / 2.0), cy - r - (sw / 2.0), (r * 2) + sw, (r * 2) + sw);
+		connectorInfo->radius = r;
+		connectorInfo->strokeWidth = sw;
 	}
-
-	m_cachedElement = element;
-
-	bounds.setRect(cx - r - (sw / 2.0), cy - r - (sw / 2.0), (r * 2) + sw, (r * 2) + sw);
-	radius = r;
-	strokeWidth = sw;
-	return true;
 }
 
 void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filename) {
@@ -401,3 +422,6 @@ void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filenam
 	}
 }
 
+ConnectorInfo * FSvgRenderer::getConnectorInfo(const QString & connectorID) {
+	return m_connectorInfoHash.value(connectorID, &VanillaConnectorInfo);
+}

@@ -102,7 +102,6 @@ public:
 	qreal width();
 	qreal mils();
 	void setExtras(QDomElement &, InfoGraphicsView *);
-	void setColor(QDomElement & element);
 	Wire * findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
 	bool draggingEnd();
 	void simpleConnectedMoved(ConnectorItem * to);
@@ -160,7 +159,7 @@ protected:
 	bool connectionIsAllowed(ConnectorItem *);
 	bool releaseDrag();
 	void setIgnoreSelectionChange(bool);
-
+	virtual void setColorFromElement(QDomElement & element);
 
 protected:
 	QPointF m_wireDragOrigin;

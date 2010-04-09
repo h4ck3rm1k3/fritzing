@@ -1026,7 +1026,7 @@ void FApplication::externalProcessSlot(QString &name, QString &path, QStringList
 bool FApplication::notify(QObject *receiver, QEvent *e)
 {
     try {
-        qDebug() << QString("notify %1 %2").arg(receiver->metaObject()->className()).arg(e->type());
+        //qDebug() << QString("notify %1 %2").arg(receiver->metaObject()->className()).arg(e->type());
         return QApplication::notify(receiver, e);
     }
 	catch (char const *str) {

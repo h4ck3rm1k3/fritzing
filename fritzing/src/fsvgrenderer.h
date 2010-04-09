@@ -32,8 +32,18 @@ $Date$
 #include <QXmlStreamReader>
 #include <QDomDocument>
 #include <QMatrix>
+#include <QStringList>
 
 #include "viewlayer.h"
+
+struct ConnectorInfo {
+	qreal radius;
+	qreal strokeWidth;
+	QMatrix matrix;
+	QRectF bounds;
+	QMatrix terminalMatrix;
+	bool gotCircle;
+};
 
 typedef QHash<ViewLayer::ViewLayerID, class FSvgRenderer *> RendererHash;
 
@@ -41,14 +51,17 @@ class FSvgRenderer : public QSvgRenderer
 {
 public:
 	FSvgRenderer(QObject * parent = 0);
+	~FSvgRenderer();
 
-	bool load(const QString & filename, bool readConnectors);
-	bool load ( const QByteArray & contents, const QString & filename, bool readConnectors );     // for SvgSplitter loads
+	bool loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID);
+	bool loadSvg(const QString & filename);
+	bool loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID);     // for SvgSplitter loads
+	bool loadSvg( const QByteArray & contents, const QString & filename);						// for SvgSplitter loads
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
-	bool getSvgCircleConnectorInfo(ViewLayer::ViewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth, QMatrix & matrix, const QString & terminalName, QMatrix & terminalMatrix);
-	static void removeFromHash(const QString &moduleId, const QString filename);
+	void initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs);
+	ConnectorInfo * getConnectorInfo(const QString & connectorID);
 
 public:
 	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);
@@ -59,18 +72,17 @@ public:
 	static qreal printerScale();
 	static void cleanup();
 	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
+	static void removeFromHash(const QString &moduleId, const QString filename);
 
 protected:
 	void determineDefaultSize(QXmlStreamReader &);
 	QByteArray cleanXml(const QByteArray & contents, const QString & filename);
-	bool loadAux ( const QByteArray & contents, const QString & filename, bool readConnectors);
+	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID);
 
 protected:
 	QString m_filename;
 	QSizeF m_defaultSizeF;
-	QByteArray m_svgXml;
-	QDomDocument m_svgDomDocument;
-	QDomElement m_cachedElement;
+	QHash<QString, ConnectorInfo *> m_connectorInfoHash;
 
 protected:
 	static qreal m_printerScale;

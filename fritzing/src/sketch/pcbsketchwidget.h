@@ -128,7 +128,7 @@ protected:
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
 	ConnectorItem * findEmptyBus(ItemBase * breadboard);
 	bool bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems, QList<Wire *> & visited);
-	void getLabelFont(QFont &, QColor &);
+	void getLabelFont(QFont &, QColor &, const LayerList & notLayers);
 	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);

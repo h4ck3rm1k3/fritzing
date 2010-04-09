@@ -95,3 +95,8 @@ void TraceWire::widthEntry(const QString & text) {
 		infoGraphicsView->changeWireWidthMils(QString::number(w));
 	}
 }
+
+void TraceWire::setColorFromElement(QDomElement & element) {
+	element.setAttribute("color", (m_viewLayerID == ViewLayer::Copper0Trace) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color);
+	Wire::setColorFromElement(element);	
+}

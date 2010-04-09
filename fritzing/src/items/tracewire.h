@@ -38,6 +38,9 @@ public:
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 
+protected:
+	void setColorFromElement(QDomElement & element);
+
 protected slots:
 	void widthEntry(const QString & text);
 

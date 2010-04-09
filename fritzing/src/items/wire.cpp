@@ -55,8 +55,8 @@ QStringList Wire::colorNames;
 QHash<long, QString> Wire::widthTrans;
 QList<long> Wire::widths;
 qreal Wire::STANDARD_TRACE_WIDTH;
-const QString Wire::TraceColorCopper1String = "#ff9400";
-const QString Wire::TraceColorCopper0String = "#ffbf00";
+const QString Wire::TraceColorCopper0String = ViewLayer::Copper0Color;
+const QString Wire::TraceColorCopper1String = ViewLayer::Copper1Color;
 
 ////////////////////////////////////////////////////////////
 
@@ -462,10 +462,10 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 		}
 	}
 
-	setColor(element);
+	setColorFromElement(element);
 }
 
-void Wire::setColor(QDomElement & element) {
+void Wire::setColorFromElement(QDomElement & element) {
 	QString colorString = element.attribute("color");
 	if (colorString.isNull() || colorString.isEmpty()) return;
 

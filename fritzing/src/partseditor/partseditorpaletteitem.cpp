@@ -242,10 +242,10 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 			renderer = new FSvgRenderer();
 			bool loaded = false;
 			if (!m_itemSVG.isEmpty()) {
-				loaded = renderer->load(m_itemSVG.toUtf8(), m_svgStrings->absolutePath(), false);
+				loaded = renderer->loadSvg(m_itemSVG.toUtf8(), m_svgStrings->absolutePath());
 			}
 			if (!loaded) {
-				loaded = renderer->load(m_svgStrings->absolutePath(), false);
+				loaded = renderer->loadSvg(m_svgStrings->absolutePath());
 			}
 			if (!loaded) {
 				QMessageBox::information( NULL, QObject::tr("Fritzing"),

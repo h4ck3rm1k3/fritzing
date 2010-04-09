@@ -310,7 +310,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
 		normalizeAttribute(element, "r", sNewWidth, vbWidth);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly);
+		setStrokeOrFill(element, blackOnly, "black");
 	}
 	else if (element.nodeName().compare("line") == 0) {
 		fixStyleAttribute(element);
@@ -319,7 +319,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "x2", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y2", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly);
+		setStrokeOrFill(element, blackOnly, "black");
 	}
 	else if (element.nodeName().compare("rect") == 0) {
 		fixStyleAttribute(element);
@@ -336,7 +336,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		if (!element.attribute("ry").isEmpty()) {
 			normalizeAttribute(element, "ry", sNewHeight, vbHeight);
 		}
-		setStrokeOrFill(element, blackOnly);
+		setStrokeOrFill(element, blackOnly, "black");
 	}
 	else if (element.nodeName().compare("ellipse") == 0) {
 		fixStyleAttribute(element);
@@ -345,7 +345,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "rx", sNewWidth, vbWidth);
 		normalizeAttribute(element, "ry", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly);
+		setStrokeOrFill(element, blackOnly, "black");
 	}
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
 		fixStyleAttribute(element);
@@ -363,12 +363,12 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 				element.setAttribute("points", pathUserData.string);
 			}
 		}
-		setStrokeOrFill(element, blackOnly);
+		setStrokeOrFill(element, blackOnly, "black");
 	}
 	else if (element.nodeName().compare("path") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly);
+		setStrokeOrFill(element, blackOnly, "black");
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
@@ -388,7 +388,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "y", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		normalizeAttribute(element, "font-size", sNewWidth, vbWidth);
-		setStrokeOrFill(element, blackOnly);
+		setStrokeOrFill(element, blackOnly, "black");
 	}
 	else {
 		QDomElement childElement = element.firstChildElement();
@@ -874,7 +874,7 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 	}
 }
 
-void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly)
+void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly, const QString & color)
 {
 	if (!blackOnly) return;
 
@@ -882,12 +882,12 @@ void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly)
 	// if fill attribute is not empty and not "none" make it black
 	QString stroke = element.attribute("stroke");
 	if (!stroke.isEmpty()) {
-		element.setAttribute("stroke", "black");
+		element.setAttribute("stroke", color);
 	}
 	QString fill = element.attribute("fill");
 	if (!fill.isEmpty()) {
 		if (fill.compare("none") != 0) {
-			element.setAttribute("fill", "black");
+			element.setAttribute("fill", color);
 		}
 	}
 }
@@ -897,6 +897,17 @@ void SvgFileSplitter::fixStyleAttributeRecurse(QDomElement & element) {
 	QDomElement childElement = element.firstChildElement();
 	while (!childElement.isNull()) {
 		fixStyleAttributeRecurse(childElement);
+		childElement = childElement.nextSiblingElement();
+	}
+}
+
+void SvgFileSplitter::fixColorRecurse(QDomElement & element, const QString & newColor) {
+	fixStyleAttribute(element);
+	setStrokeOrFill(element, true, newColor);
+
+	QDomElement childElement = element.firstChildElement();
+	while (!childElement.isNull()) {
+		fixColorRecurse(childElement, newColor);
 		childElement = childElement.nextSiblingElement();
 	}
 }
