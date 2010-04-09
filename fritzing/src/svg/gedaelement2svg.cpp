@@ -283,7 +283,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 					.arg(pinID)
 					.arg(name)
 					.arg(w)
-					.arg(Wire::TraceColorCopper0String);
+					.arg(ViewLayer::Copper0Color);
 	return circle;
 }
 
@@ -370,7 +370,7 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 					.arg(square ? "miter" : "round")
 					.arg(pinID)
 					.arg(name)
-					.arg(Wire::TraceColorCopper1String);
+					.arg(ViewLayer::Copper1Color);
 	}
 
 	line += "/>";

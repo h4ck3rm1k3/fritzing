@@ -107,7 +107,7 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	scanImage(image, bWidth, bHeight, MILS, res, Wire::TraceColorCopper0String, "groundplane");
+	scanImage(image, bWidth, bHeight, MILS, res, ViewLayer::Copper0Color, "groundplane");
 	return true;
 }
 
@@ -158,7 +158,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 			.arg(r.width() * MILS)
 			.arg(MILS)
 			.arg(ix++).
-			.arg(Wire::TraceColorCopper0String);
+			.arg(ViewLayer::Copper0Color);
 	}
 	newSvg += "</g>\n</svg>\n";
 	*/

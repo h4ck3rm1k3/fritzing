@@ -120,8 +120,6 @@ protected slots:
 
 public:
 	static qreal STANDARD_TRACE_WIDTH;
-	static const QString TraceColorCopper1String;
-	static const QString TraceColorCopper0String;
 
 public:
 	static void initNames();
