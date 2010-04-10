@@ -75,7 +75,8 @@ QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
 
 HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent) 
 {
-	QFrame * mainFrame = new QFrame(this);
+        this->setWidgetResizable(true);
+        QFrame * mainFrame = new QFrame(this);
 	mainFrame->setObjectName("infoViewMainFrame");
 
 	m_lastSwappingEnabled = false;
@@ -89,6 +90,8 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	lo->setSpacing(0);
 	lo->setSizeConstraint( QLayout::SetMinAndMaxSize );
 
+        /* Part Title */
+
 	m_titleEdit = new FLineEdit(mainFrame);
 	m_titleEdit->setObjectName("instanceTitleEditor");
 
@@ -100,6 +103,8 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	setInstanceTitleColors(m_titleEdit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
 	m_titleEdit->setAutoFillBackground(true);
 	lo->addWidget(m_titleEdit);
+
+        /* Part Icons */
 
 	if (NoIcon == NULL) {
 		NoIcon = new QPixmap(":/resources/images/icons/noicon.png");
@@ -118,6 +123,8 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 	frame->setLayout(hboxLayout);
 	lo->addWidget(frame);
+
+        /* Part Properties (WebKit) */
 
 	m_webView = new QWebView(mainFrame);
 	m_webView->setObjectName("infoViewWebView");
