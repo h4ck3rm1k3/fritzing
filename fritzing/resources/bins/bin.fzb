@@ -416,7 +416,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="0d68adbdf34156383180850897173015" modelIndex="48" path="parts/core/controller_pico.fzp">
+        <instance moduleIdRef="2c9d427b475ef8d07dc752a4362af0ae" modelIndex="48" path="parts/core/controller_wiring.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -424,6 +424,13 @@
             </views>
         </instance>
         <instance moduleIdRef="346b613c666d64fc5ac622407ace7130" modelIndex="48" path="parts/core/controller_mbed.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="d30f97b6fbe1asdad59ea7f0d636a7a" modelIndex="48" path="parts/core/controller_propeller_d40.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
