@@ -24,34 +24,39 @@ $Date$
 
 ********************************************************************/
 
-#ifndef GEDAELEMENT2SVG_H
-#define GEDAELEMENT2SVG_H
+#ifndef KICADMODULE2SVG_H
+#define KICADMODULE2SVG_H
 
 #include <QString>
 #include <QStringList>
-#include <QVariant>
+#include <QTextStream>
 
 #include "x2svg.h"
 
-class GedaElement2Svg : public X2Svg
+class KicadModule2Svg : public X2Svg
 {
 
 public:
-	GedaElement2Svg();
-	QString convert(const QString & filename, bool allowPadsAndPins);
+	KicadModule2Svg();
+	QString convert(const QString & filename, const QString & moduleName, bool allowPadsAndPins);
+
+public:
+	static QStringList listModules(const QString & filename);
+
+public:
+	enum PadLayer {
+		ToCopper0,
+		ToCopper1,
+		UnableToTranslate
+	};
 
 protected:
-	int countArgs(QVector<QVariant> & stack, int ix);
-	QString convertPin(QVector<QVariant> & stack, int ix, int argCount, bool mils);
-	QString convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils);
-	QString convertArc(QVector<QVariant> & stack, int ix, int argCount, bool mils);
-	void fixQuad(int quad, qreal & px, qreal & py);
-	int reflectQuad(int angle, int & quad);
-	QString getPinID(QString & number, QString & name, bool & repeat);
+	KicadModule2Svg::PadLayer convertPad(QTextStream & stream, QString & pad);
+	int drawSegment(const QString & ds, QString & line);
+	int drawArc(const QString & ds, QString & arc);
+	int drawCircle(const QString & ds, QString & arc);
 
-protected:
-	QStringList m_nameList;
-	QStringList m_numberList;
 };
 
-#endif // GEDAELEMENT2SVG_H
+
+#endif // KICADMODULE2SVG_H

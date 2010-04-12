@@ -24,34 +24,30 @@ $Date$
 
 ********************************************************************/
 
-#ifndef GEDAELEMENT2SVG_H
-#define GEDAELEMENT2SVG_H
+#ifndef X2SVG_H
+#define X2SVG_H
 
 #include <QString>
-#include <QStringList>
-#include <QVariant>
 
-#include "x2svg.h"
-
-class GedaElement2Svg : public X2Svg
+class X2Svg
 {
 
 public:
-	GedaElement2Svg();
-	QString convert(const QString & filename, bool allowPadsAndPins);
+	X2Svg();
+
+	void checkXLimit(qreal x);
+	void checkYLimit(qreal y);
 
 protected:
-	int countArgs(QVector<QVariant> & stack, int ix);
-	QString convertPin(QVector<QVariant> & stack, int ix, int argCount, bool mils);
-	QString convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils);
-	QString convertArc(QVector<QVariant> & stack, int ix, int argCount, bool mils);
-	void fixQuad(int quad, qreal & px, qreal & py);
-	int reflectQuad(int angle, int & quad);
-	QString getPinID(QString & number, QString & name, bool & repeat);
+	QString offsetMin(const QString & svg);
+	void initLimits();
+	QString unquote(const QString &);
 
 protected:
-	QStringList m_nameList;
-	QStringList m_numberList;
+	qreal m_maxX;
+	qreal m_maxY;
+	qreal m_minX;
+	qreal m_minY;
 };
 
 #endif // GEDAELEMENT2SVG_H

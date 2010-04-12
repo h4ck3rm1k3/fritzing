@@ -191,9 +191,10 @@ class PartsEditorView : public SketchWidget {
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
 		bool addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId);
 		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);
+		QString saveSvg(const QString & svg, const QString & newFilePath);
 
 
-
+protected:
 		QPointer<PartsEditorPaletteItem> m_item; // just one item per view
 		QDir m_tempFolder;
 		bool m_deleteModelPartOnSceneClear;

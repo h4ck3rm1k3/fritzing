@@ -42,14 +42,13 @@ $Date$
 #include <QDateTime>
 #include <qmath.h>
 
-static const int MAX_INT = std::numeric_limits<int>::max();
-static const int MIN_INT = std::numeric_limits<int>::min();
-
-GedaElement2Svg::GedaElement2Svg() {
+GedaElement2Svg::GedaElement2Svg() : X2Svg() {
 }
 
-QString GedaElement2Svg::convert(QString filename, bool allowPadsAndPins) 
+QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins) 
 {
+	initLimits();
+
 	QFile file(filename);
 	if (!file.open(QFile::ReadOnly)) {
 		throw QObject::tr("unable to open %1").arg(filename);
@@ -91,10 +90,6 @@ QString GedaElement2Svg::convert(QString filename, bool allowPadsAndPins)
 	QString copper1;
 	QString silkscreen;
 
-	m_maxX = MIN_INT;
-	m_maxY = MIN_INT;
-	m_minX = MAX_INT;
-	m_minY = MAX_INT;
 	m_nameList.clear();
 	m_numberList.clear();
 	QVector<QVariant> stack = parser.symStack();
@@ -161,7 +156,6 @@ QString GedaElement2Svg::convert(QString filename, bool allowPadsAndPins)
 	metadata += "</rdf:RDF>";
 	metadata += "</metadata>";
 
-	// TODO: offset everything if minx or miny < 0
 	if (!copper0.isEmpty()) {
 		copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
 	}
@@ -176,27 +170,6 @@ QString GedaElement2Svg::convert(QString filename, bool allowPadsAndPins)
 					+ title + description + metadata + copper0 + copper1 + silkscreen + "</svg>";
 
 	return svg;
-}
-
-QString GedaElement2Svg::offsetMin(const QString & svg) {
-	if (m_minX == 0 && m_minY == 0) return svg;
-
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument domDocument;
-	if (!domDocument.setContent(svg, true, &errorStr, &errorLine, &errorColumn)) {
-		throw QObject::tr("failure in svg conversion 1: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn);
-	}
-
-	QDomElement root = domDocument.documentElement();
-	if (root.isNull()) {
-		throw QObject::tr("failure in svg conversion 2: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn);
-	}
-
-	SvgFileSplitter splitter;
-	splitter.shiftChild(root, -m_minX, -m_minY);
-	return TextUtils::removeXMLEntities(domDocument.toString());
 }
 
 int GedaElement2Svg::countArgs(QVector<QVariant> & stack, int ix) {
@@ -265,10 +238,10 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 		drill *= 100;
 	}
 
-	if (cx - r < m_minX) m_minX = cx - r;
-	if (cx + r > m_maxX) m_maxX = cx + r;
-	if (cy - r < m_minY) m_minY = cy - r;
-	if (cy + r > m_maxY) m_maxY = cy + r;
+	checkXLimit(cx - r);
+	checkXLimit(cx + r);
+	checkYLimit(cy - r);
+	checkYLimit(cy + r);
 
 	qreal w = r - drill;
 
@@ -345,14 +318,14 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 	qreal halft = thickness / 2.0;
 
 	// don't know which of the coordinates is larger so check them all
-	if (x1 - halft < m_minX) m_minX = x1 - halft;
-	if (x2 - halft < m_minX) m_minX = x2 - halft;
-	if (x1 + halft > m_maxX) m_maxX = x1 + halft;
-	if (x2 + halft > m_maxX) m_maxX = x2 + halft;
-	if (y1 - halft < m_minY) m_minY = y1 - halft;
-	if (y2 - halft < m_minY) m_minY = y2 - halft;
-	if (y1 + halft > m_maxY) m_maxY = y1 + halft;
-	if (y2 + halft > m_maxY) m_maxY = y2 + halft;
+	checkXLimit(x1 - halft);
+	checkXLimit(x2 - halft);
+	checkXLimit(x1 + halft);
+	checkXLimit(x2 + halft);
+	checkYLimit(y1 - halft);
+	checkYLimit(y2 - halft);
+	checkYLimit(y1 + halft);
+	checkYLimit(y2 + halft);
 	  
 	QString line = QString("<line fill='none' x1='%1' y1='%2' x2='%3' y2='%4' stroke-width='%5' ")
 					.arg(x1)
@@ -403,10 +376,10 @@ QString GedaElement2Svg::convertArc(QVector<QVariant> & stack, int ix, int argCo
 	}
 
 	qreal halft = thickness / 2.0;
-	if (x - w - halft < m_minX) m_minX = x - w - halft;
-	if (x + w + halft > m_maxX) m_maxX = x + w + halft;
-	if (y - h - halft < m_minY) m_minY = y - h - halft;
-	if (y + h + halft > m_maxY) m_maxY = y + h + halft;
+	checkXLimit(x - w - halft);
+	checkXLimit(x + w + halft);
+	checkYLimit(y - h - halft);
+	checkYLimit(y + h + halft);
 
 	if (deltaAngle == 360) {
 		if (w == h) {
@@ -453,19 +426,6 @@ QString GedaElement2Svg::convertArc(QVector<QVariant> & stack, int ix, int argCo
 			.arg(qy - py);
 
 	return arc;
-}
-
-QString GedaElement2Svg::unquote(const QString & string) {
-	QString s = string;
-	if (s.endsWith('"')) {
-		s.chop(1);
-	}
-	if (s.startsWith('"')) {
-		s = s.remove(0, 1);
-	}
-
-	return s;
-
 }
 
 void GedaElement2Svg::fixQuad(int quad, qreal & px, qreal & py) {

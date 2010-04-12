@@ -45,6 +45,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
 #include "../svg/gedaelement2svg.h"
+#include "../svg/kicadmodule2svg.h"
 
 
 int PartsEditorView::ConnDefaultWidth = 5;
@@ -529,7 +530,7 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 void PartsEditorView::loadFile() {
 	QString imageFiles;
 	if (m_viewIdentifier == ViewIdentifierClass::PCBView) {
-		imageFiles = tr("Image & gEDA fp Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4)");
+		imageFiles = tr("Image & gEDA fp Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)");
 	}
 	else {
 		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)");
@@ -538,7 +539,7 @@ void PartsEditorView::loadFile() {
 	QString origPath = FolderUtils::getOpenFileName(this,
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? FolderUtils::openSaveFolder() /* FolderUtils::getUserDataStorePath("parts")+"/parts/svg/" */ : m_originalSvgFilePath,
-		imageFiles.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png").arg("*.fp")
+		imageFiles.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png").arg("*.fp").arg("*.mod")
 	);
 
 	if(origPath.isEmpty()) {
@@ -857,16 +858,24 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 		// this is a geda footprint file
 		GedaElement2Svg g;
 		QString svg = g.convert(origFilePath, false);
-		QFile file(newFilePath);
-		if (!file.open(QFile::WriteOnly)) {
-			throw tr("unable to open temp file %1").arg(newFilePath);
+		return saveSvg(svg, newFilePath);
+	}
+
+	if (origFilePath.endsWith(".mod")) {
+		QStringList modules = KicadModule2Svg::listModules(origFilePath);
+		if (modules.count() == 0) {
+			throw tr("no footprints found in %1").arg(origFilePath);
 		}
 
-		QTextStream stream(&file);
-		stream << svg;
-		file.close();
-		return newFilePath;
+		// if (modules.count() > 1) ask the user which one
+
+		KicadModule2Svg k;
+		QString svg = k.convert(origFilePath, modules.at(0), false);
+		return saveSvg(svg, newFilePath);
 	}
+
+	// deal with png, jpg, etc.:
+
 
 /* %1=witdh in mm
  * %2=height in mm
@@ -1564,6 +1573,16 @@ void PartsEditorView::updatePinsInfo(QList<ConnectorShared*> connsShared) {
 			notFound.removeOne(cs);
 		}
 	}
+}
 
+QString PartsEditorView::saveSvg(const QString & svg, const QString & newFilePath) {
+	QFile file(newFilePath);
+	if (!file.open(QFile::WriteOnly)) {
+		throw tr("unable to open temp file %1").arg(newFilePath);
+	}
 
+	QTextStream stream(&file);
+	stream << svg;
+	file.close();
+	return newFilePath;
 }
