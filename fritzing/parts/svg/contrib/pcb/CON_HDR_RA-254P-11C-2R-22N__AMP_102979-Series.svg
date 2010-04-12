@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="1.084in" height="0.584in" viewBox="0 0 108400 58400" ><title>CON_HDR_RA-254P-11C-2R-22N__AMP_102979-Series.fp</title><desc>Geda footprint file 'CON_HDR_RA-254P-11C-2R-22N__AMP_102979-Series.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>CON_HDR_RA-254P-11C-2R-22N__AMP_102979-Series.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.03.22.4055</fz:attr><fz:attr name='conversion date'>06/04/2010 23:44:29</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper0">
- <circle fill="none" cx="4200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector0pin" stroke-width="850"/>
- <circle fill="none" cx="4200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector1pin" stroke-width="850"/>
- <circle fill="none" cx="14200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector2pin" stroke-width="850"/>
- <circle fill="none" cx="14200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector3pin" stroke-width="850"/>
- <circle fill="none" cx="24200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector4pin" stroke-width="850"/>
- <circle fill="none" cx="24200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector5pin" stroke-width="850"/>
- <circle fill="none" cx="34200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector6pin" stroke-width="850"/>
- <circle fill="none" cx="34200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector7pin" stroke-width="850"/>
- <circle fill="none" cx="44200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector8pin" stroke-width="850"/>
- <circle fill="none" cx="44200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector9pin" stroke-width="850"/>
- <circle fill="none" cx="54200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector10pin" stroke-width="850"/>
- <circle fill="none" cx="54200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector11pin" stroke-width="850"/>
- <circle fill="none" cx="64200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector12pin" stroke-width="850"/>
- <circle fill="none" cx="64200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector13pin" stroke-width="850"/>
- <circle fill="none" cx="74200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector14pin" stroke-width="850"/>
- <circle fill="none" cx="74200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector15pin" stroke-width="850"/>
- <circle fill="none" cx="84200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector16pin" stroke-width="850"/>
- <circle fill="none" cx="84200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector17pin" stroke-width="850"/>
- <circle fill="none" cx="94200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector18pin" stroke-width="850"/>
- <circle fill="none" cx="94200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector19pin" stroke-width="850"/>
- <circle fill="none" cx="104200" cy="12600" connectorname="" stroke="#ffbf00" r="2175" id="connector20pin" stroke-width="850"/>
- <circle fill="none" cx="104200" cy="2600" connectorname="" stroke="#ffbf00" r="2175" id="connector21pin" stroke-width="850"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="1.084in" height="0.584in" viewBox="0 0 108400 58400" ><title>CON_HDR_RA-254P-11C-2R-22N__AMP_102979-Series.fp</title><desc>Geda footprint file 'CON_HDR_RA-254P-11C-2R-22N__AMP_102979-Series.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>CON_HDR_RA-254P-11C-2R-22N__AMP_102979-Series.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.04.07.4081</fz:attr><fz:attr name='conversion date'>12/04/2010 13:02:33</fz:attr><fz:attr name='dist-license'>GPL</fz:attr><fz:attr name='use-license'>unlimited</fz:attr><fz:attr name='author'>gEDA project</fz:attr><fz:attr name='license-url'>http://www.gnu.org/licenses/gpl.html</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper0">
+ <circle fill="none" cx="4200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector0pin" stroke-width="850"/>
+ <circle fill="none" cx="4200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector1pin" stroke-width="850"/>
+ <circle fill="none" cx="14200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector2pin" stroke-width="850"/>
+ <circle fill="none" cx="14200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector3pin" stroke-width="850"/>
+ <circle fill="none" cx="24200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector4pin" stroke-width="850"/>
+ <circle fill="none" cx="24200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector5pin" stroke-width="850"/>
+ <circle fill="none" cx="34200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector6pin" stroke-width="850"/>
+ <circle fill="none" cx="34200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector7pin" stroke-width="850"/>
+ <circle fill="none" cx="44200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector8pin" stroke-width="850"/>
+ <circle fill="none" cx="44200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector9pin" stroke-width="850"/>
+ <circle fill="none" cx="54200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector10pin" stroke-width="850"/>
+ <circle fill="none" cx="54200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector11pin" stroke-width="850"/>
+ <circle fill="none" cx="64200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector12pin" stroke-width="850"/>
+ <circle fill="none" cx="64200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector13pin" stroke-width="850"/>
+ <circle fill="none" cx="74200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector14pin" stroke-width="850"/>
+ <circle fill="none" cx="74200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector15pin" stroke-width="850"/>
+ <circle fill="none" cx="84200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector16pin" stroke-width="850"/>
+ <circle fill="none" cx="84200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector17pin" stroke-width="850"/>
+ <circle fill="none" cx="94200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector18pin" stroke-width="850"/>
+ <circle fill="none" cx="94200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector19pin" stroke-width="850"/>
+ <circle fill="none" cx="104200" cy="12600" connectorname="" stroke="#ff9400" r="2175" id="connector20pin" stroke-width="850"/>
+ <circle fill="none" cx="104200" cy="2600" connectorname="" stroke="#ff9400" r="2175" id="connector21pin" stroke-width="850"/>
 </g>
 <g id="silkscreen">
  <line fill="none" stroke="white" y1="22100" x1="4500" y2="22100" stroke-width="9000" x2="103900"/>
