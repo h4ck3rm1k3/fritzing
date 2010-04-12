@@ -127,7 +127,7 @@
 				<p>{% trans "This user has no posts" %}</p>
 			{% endif %}
     	</div>
-    	
+    	{% comment %}
     	{% if user.is_authenticated and is_me %}
     	 <div class="data_col col1">
 	    	<h3 style="margin-bottom:  10px;">{% trans "Fab Orders" %}</h3>
@@ -148,6 +148,7 @@
 			{% endif %}
     	</div>
     	{% endif %}
+		{% endcomment %}
     </div>
 {% endblock %}
 
