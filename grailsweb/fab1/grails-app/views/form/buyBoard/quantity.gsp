@@ -20,6 +20,9 @@
 	</head>
 	<body>
 		<div class="body">
+			<div class="prompt">
+				<p>Choose a different Fritzing sketch file (*.fzz):</p>
+			</div>
 			<g:render template="fzzupload" />
 			<g:render template="boardDescription" />
 			<g:form action="buyBoard">

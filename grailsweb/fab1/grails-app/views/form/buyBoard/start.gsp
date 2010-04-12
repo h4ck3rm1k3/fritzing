@@ -7,6 +7,9 @@
 	</head>
 	<body>
 		<div class="body">
+			<div class="prompt">
+			<p>Step 1: choose and upload the sharable Fritzing sketch file (*.fzz) you want to make into a printed circuit board:</p>
+			</div>
 			<g:render template="fzzupload" />
 		</div>
 	</body>
