@@ -263,8 +263,19 @@ class FormController {
 	def orderCancel = {
 		
 		log.trace("order cancel params " + params +  " " + session.getId())
-		render(view:"orderCancel", model:[order: Order1.get(session.orderID)])
+		def theOrder = Order1.get(session.orderID)
+		render(view:"orderCancel", model:[order: theOrder])
+		def fn = theOrder.gid + "_" + theOrder.filename
+		def path = "./uploads/" + fn
+		sendMail {
+			multipart true
+			from "order@ixds.de"
+			to theOrder.email
+            subject "order cancelled"
+			body "blah blah blah"
+			attachBytes fn, "application/zip", new File(path).readBytes()
 
+		}
 	}
 	
 	def orderSuccess = {

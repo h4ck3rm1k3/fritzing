@@ -56,6 +56,17 @@ environments {
 
 }
 
+grails.mail.default.from = "order@ixds.de"
+grails {
+	mail {
+		host = ""
+		port = 25
+		username = ""
+		password = ""
+		
+	}
+}
+
 // log4j configuration
 log4j = {
     // Example of changing the log pattern for the default console
