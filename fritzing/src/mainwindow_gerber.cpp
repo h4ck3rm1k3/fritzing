@@ -140,7 +140,7 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board)
 	doSilk(silkLayerIDs, "_silkBottom.gbo", imageSize, board, exportDir);
     silkLayerIDs.clear();
     silkLayerIDs << ViewLayer::Silkscreen0  << ViewLayer::Silkscreen0Label;
-	doSilk(silkLayerIDs, "_silkTop.gbo", imageSize, board, exportDir);
+	doSilk(silkLayerIDs, "_silkTop.gto", imageSize, board, exportDir);
 
     // now do it for the outline/contour
     LayerList outlineLayerIDs;

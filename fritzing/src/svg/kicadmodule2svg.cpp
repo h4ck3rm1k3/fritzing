@@ -385,17 +385,16 @@ int KicadModule2Svg::drawArc(const QString & ds, QString & arc) {
 
 	int layer = params.at(7).toInt();
 
-	angle = -angle;
 	arc = QString("<path stroke-width='%1' stroke='white' d='M%2,%3a%4,%5 0 %6,%7 %8,%9' fill='none' />")
 			.arg(params.at(6))
-			.arg(x2)
-			.arg(y2)
-			.arg(radius * 2)
-			.arg(radius * 2)
+			.arg(x1)
+			.arg(y1)
+			.arg(radius)
+			.arg(radius)
 			.arg(qAbs(angle) >= 180 ? 1 : 0)
 			.arg(angle > 0 ? 0 : 1)
-			.arg(x1)
-			.arg(y1);
+			.arg(x2 - x1)
+			.arg(y2 - y1);
 
 	return layer;
 }
@@ -506,6 +505,10 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	int orientation = shapeStrings.at(7).toInt();
 
 	if (shapeIdentifier == "C") {
+		checkXLimit(posX - (xSize / 2.0));
+		checkXLimit(posX + (xSize / 2.0));
+		checkYLimit(posY - (ySize / 2.0));
+		checkYLimit(posY + (ySize / 2.0));
 		if (padType == "SMD") {
 			pad = QString("<circle cx='%1' cy='%2' r='%3' id='connector%4pin' fill='%5' stroke-width='0' />")
 							.arg(posX)
@@ -519,13 +522,17 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 			pad = QString("<circle cx='%1' cy='%2' r='%3' id='connector%4pad' stroke-width='%5' stroke='%6' fill='none' />")
 							.arg(posX)
 							.arg(posY)
-							.arg(xSize - (w / 2))
+							.arg((xSize / 2.0) - (w / 2.0))
 							.arg(padName)
 							.arg(w)
 							.arg(ViewLayer::Copper0Color);
 		}
 	}
 	else if (shapeIdentifier == "R") {
+		checkXLimit(posX - (xSize / 2.0));
+		checkXLimit(posX + (xSize / 2.0));
+		checkYLimit(posY - (ySize / 2.0));
+		checkYLimit(posY + (ySize / 2.0));
 		if (padType == "SMD") {
 			pad = QString("<rect x='%1' y='%2' width='%3' height='%4' id='connector%5pin' stroke-width='0' fill='%6' />")
 							.arg(posX - (xSize / 2.0))
@@ -540,7 +547,7 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 			pad += QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pad' stroke-width='%5' stroke='%6' />")
 							.arg(posX)
 							.arg(posY)
-							.arg(xSize - (w / 2))
+							.arg((xSize / 2.0) - (w / 2.0))
 							.arg(padName)
 							.arg(w)
 							.arg(ViewLayer::Copper0Color);

@@ -94,6 +94,7 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	m_numberList.clear();
 	QVector<QVariant> stack = parser.symStack();
 
+	bool hasAuthor = false;
 	QStringList already;
 	int pins = 0;
 	int pads = 0;
@@ -130,7 +131,11 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 			else if (thing.compare("mark", Qt::CaseInsensitive) == 0) {
 			}
 			else if (thing.compare("attribute", Qt::CaseInsensitive) == 0) {
-				metadata += attribute.arg(unquote(stack[ix + 1].toString()), unquote(stack[ix + 2].toString()));
+				QString aname = unquote(stack[ix + 1].toString());
+				metadata += attribute.arg(aname, unquote(stack[ix + 2].toString()));
+				if (aname.compare("author", Qt::CaseInsensitive) == 0) {
+					hasAuthor = true;
+				}
 			}
 			ix += argCount + 2;
 		}
@@ -150,6 +155,13 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 
 	foreach (QString c, lexer.comments()) {
 		metadata += comment.arg(c);
+	}
+
+	if (!hasAuthor) {
+		metadata += attribute.arg("dist-license").arg("GPL");
+		metadata += attribute.arg("use-license").arg("unlimited");
+		metadata += attribute.arg("author").arg("gEDA project");
+		metadata += attribute.arg("license-url").arg("http://www.gnu.org/licenses/gpl.html");
 	}
 
 	metadata += "</rdf:Description>";
