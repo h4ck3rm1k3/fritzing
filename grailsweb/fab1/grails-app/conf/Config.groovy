@@ -56,6 +56,8 @@ environments {
 
 }
 
+com.g2one.fab1.orderNotificationEmailAddress = "cohen@rawbw.com"
+
 grails.mail.default.from = "order@ixds.de"
 grails {
 	mail {

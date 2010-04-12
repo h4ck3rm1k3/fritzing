@@ -270,9 +270,9 @@ class FormController {
 		sendMail {
 			multipart true
 			from "order@ixds.de"
-			to theOrder.email
+			to grailsApplication.config.com.g2one.fab1.orderNotificationEmailAddress
             subject "order cancelled"
-			body "blah blah blah"
+			html g.render(template: "confirmOrder", model:[theOrder:theOrder])
 			attachBytes fn, "application/zip", new File(path).readBytes()
 
 		}
