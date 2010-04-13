@@ -26,6 +26,8 @@ $Date: 2010-03-31 18:11:02 +0200 (Wed, 31 Mar 2010) $
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QWebPage>
+#include <QWebFrame>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -182,103 +184,85 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QS
         return;
     }
 
-    bool svgToConvert = false;
-	QString textOnly = svgSilk;
+	bool anyConverted = false;
+	bool converted[3];
+	converted[0] = converted[1] = converted[2] = false;
+	QString text[3];
+	text[0] = text[1] = text[2] = svgSilk;
     if (TextUtils::squashElement(svgSilk, "text", "", QRegExp())) {
-        TextUtils::squashNotElement(textOnly, "text", "", QRegExp());
-        svgToConvert = true;
+        TextUtils::squashNotElement(text[0], "text", "", QRegExp());
+        anyConverted = converted[0] = true; 
 	}
 
 	// gerber can't handle ellipses that are rotated, so cull them all
-	QString ellipseOnly = svgSilk;
     if (TextUtils::squashElement(svgSilk, "ellipse", "", QRegExp())) {
-        TextUtils::squashNotElement(ellipseOnly, "ellipse", "", QRegExp());
-        if (!svgToConvert) {
-            textOnly = ellipseOnly;
-        }
-        else {
-            textOnly = TextUtils::mergeSvg(textOnly, ellipseOnly);
-        }
-        svgToConvert = true;
+        TextUtils::squashNotElement(text[1], "ellipse", "", QRegExp());
+		anyConverted = converted[1] = true;
     }
 
 	// gerber can't handle paths with curves
-	QString curvesOnly = svgSilk;
     if (TextUtils::squashElement(svgSilk, "path", "d", AaCc)) {
-        TextUtils::squashNotElement(curvesOnly, "path", "d", AaCc);
-        if (!svgToConvert) {
-            textOnly = curvesOnly;
-        }
-        else {
-            textOnly = TextUtils::mergeSvg(textOnly, curvesOnly);
-        }
-        svgToConvert = true;
+        TextUtils::squashNotElement(text[2], "path", "d", AaCc);
+		anyConverted = converted[2] = true;
     }
 
+    if (anyConverted) {
 
-    if (svgToConvert) {
-		m_pcbGraphicsView->saveLayerVisibility();
-		m_pcbGraphicsView->setAllLayersVisible(false);
-
-		QList<QGraphicsItem*> selItems = m_pcbGraphicsView->scene()->selectedItems();
-		foreach(QGraphicsItem *item, selItems) {
-			item->setSelected(false);
+		QString svg;
+		bool firstTime = true;
+		for (int i = 0; i < 3; i++) {
+			if (converted[i]) {
+				if (firstTime) {
+					firstTime = false;
+					svg = text[i];
+				}
+				else {
+					svg = TextUtils::mergeSvg(svg, text[i]);
+				}
+			}
 		}
 
-		QSizeF boardImageSize = board->size();
 		qreal res = GraphicsUtils::StandardFritzingDPI;
-
 		QRectF source = board->boundingRect();
-		QPointF p = board->mapToScene(QPointF(0,0));
-		source.moveTo(p.x(), p.y());
 		int swidth = source.width();
 		int sheight = source.height();
 		int twidth = res * swidth / FSvgRenderer::printerScale();
 		int theight = res * sheight / FSvgRenderer::printerScale();
 
 		QSize imgSize(twidth, theight);
+
+		// expand the svg to fill the space of the image
+		QRegExp widthFinder("width=([^i]+)in");
+		svg.replace(widthFinder, QString("width=\"%1px").arg(twidth));
+		QRegExp heightFinder("height=([^i]+)in");
+		svg.replace(heightFinder, QString("height=\"%1px").arg(theight));
+
+		QStringList exceptions;
+		exceptions << "none" << "";
+		QString toColor("#000000");
+		QByteArray svgByteArray;
+		SvgFileSplitter::changeColors(svg, toColor, exceptions, svgByteArray);
+
 		QImage image(imgSize, QImage::Format_RGB32);
 		image.fill(0);
 		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
 		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
 		QRectF target(0, 0, twidth, theight);
 
-		QBrush brush = m_pcbGraphicsView->scene()->backgroundBrush();
-		m_pcbGraphicsView->scene()->setBackgroundBrush(Qt::black);
+		//QString simple = "<html>"
+			//"<body><font color='#ff0000'>hello world</font>"
+			//"</body></html>";
 
+		QWebPage webpage;
+		webpage.setViewportSize(image.size());
+		webpage.mainFrame()->setContent(svgByteArray, "image/svg+xml");
+		//webpage.mainFrame()->setContent(simple.toUtf8());
 		QPainter painter;
 		painter.begin(&image);
-		QGraphicsSvgItem * textItem = NULL;
-		QSvgRenderer * textRenderer = NULL;
-        if (svgToConvert) {
-			QStringList exceptions;
-			exceptions << "none" << "";
-			QString toColor("#FFFFFF");
-			QByteArray textByteArray;
-			SvgFileSplitter::changeColors(textOnly, toColor, exceptions, textByteArray);
-			textItem = new QGraphicsSvgItem();
-			textRenderer = new QSvgRenderer(textByteArray);
-			textItem->setSharedRenderer(textRenderer);
-			textItem->setPos(p);								// the rendering is offset from the board, so move the textItem to the board location
-			textItem->setVisible(true);
-			textItem->setZValue(-999999);				// underneath
-			m_pcbGraphicsView->scene()->addItem(textItem);
-		}
-
-		m_pcbGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+		webpage.mainFrame()->render(&painter);
 		painter.end();
-
-		if (textItem) {
-			delete textItem;
-			delete textRenderer;
-		}
-
-		foreach(QGraphicsItem *item, selItems) {
-			item->setSelected(true);
-		}
-
-		m_pcbGraphicsView->scene()->setBackgroundBrush(brush);
-		m_pcbGraphicsView->restoreLayerVisibility();
+		image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
+		//image.save("output.png");
 
 		GroundPlaneGenerator gpg;
 		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen");
@@ -289,7 +273,7 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QS
 
 #ifndef QT_NO_DEBUG
 	// for debugging silkscreen svg
-    QFile silkout(QDir::temp().absoluteFilePath("silk.svg"));
+    QFile silkout(QDir::temp().absoluteFilePath(gerberSuffix + ".svg"));
 	if (silkout.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		QTextStream silkStream(&silkout);
 		silkStream << svgSilk;
@@ -311,4 +295,22 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QS
 
     QTextStream silkStream(&silk0Out);
     silkStream << silk0Gerber.getGerber();
+}
+
+
+void MainWindow::addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers) {
+	QStringList exceptions;
+	exceptions << "none" << "";
+	QString toColor("#FFFF00");
+	QByteArray byteArray;
+	SvgFileSplitter::changeColors(svg, toColor, exceptions, byteArray);
+	QGraphicsSvgItem * item = new QGraphicsSvgItem();
+	QSvgRenderer * renderer = new QSvgRenderer(byteArray);
+	item->setSharedRenderer(renderer);
+	item->setPos(p);								// the rendering is offset from the board, so move the textItem to the board location
+	item->setVisible(true);
+	item->setZValue(-999999);				// underneath
+	m_pcbGraphicsView->scene()->addItem(item);
+	items.append(item);
+	renderers.append(renderer);
 }

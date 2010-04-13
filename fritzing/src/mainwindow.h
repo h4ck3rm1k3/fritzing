@@ -352,6 +352,7 @@ protected:
 
 	bool wannaRestart();
 	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QSizeF imageSize, ItemBase * board, const QString & exportDir);
+	void addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

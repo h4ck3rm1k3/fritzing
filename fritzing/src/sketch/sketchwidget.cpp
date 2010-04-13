@@ -5445,18 +5445,15 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
 {
-	qreal width =  scene()->width();
-	qreal height =  scene()->height();
-
-	width = itemsBoundingRect.width();
-	height = itemsBoundingRect.height();
+	qreal width = itemsBoundingRect.width();
+	qreal height = itemsBoundingRect.height();
 	QPointF offset = itemsBoundingRect.topLeft();
 
 	if (offsetPart) {
 		QPointF p = offsetPart->scenePos();
 		QPointF dp = offset - p;
-		width += dp.x();
-		height += dp.y();
+		width = offsetPart->boundingRect().width();
+		height = offsetPart->boundingRect().height();
 		offset = p;
 	}
 
