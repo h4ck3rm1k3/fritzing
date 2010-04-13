@@ -118,27 +118,34 @@ bool TextUtils::squashNotElement(QString & svg, const QString & elementName, con
 }
 
 void TextUtils::squashNotElement(QDomElement & element, const QString & elementName, const QString &attName, const QRegExp &matchContent, bool & result) {
+	bool setG = false;
 	if (element.tagName().compare(elementName) != 0) {
 		element.setTagName("g");
-		result = true;
+		setG = result = true;
+
 	}
     else {
         if (!attName.isEmpty()) {
             QString att = element.attribute(attName);
             if (att.isEmpty()) {
                 element.setTagName("g");
-                result = true;
+                setG = result = true;
             }
             else {
                 if (!matchContent.isEmpty()) {
                     if (matchContent.indexIn(att) < 0) {
                         element.setTagName("g");
-                        result = true;
+                        setG = result = true;
                     }
                 }
             }
         }
     }
+
+	if (!setG) {
+		// don't recurse deeper if element is matched
+		return;
+	}
 
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {

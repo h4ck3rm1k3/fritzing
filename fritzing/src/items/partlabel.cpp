@@ -711,12 +711,14 @@ QString PartLabel::makeSvg(bool blackOnly, qreal dpi, qreal printerScale) {
 	QFontMetricsF fm(f);
 	qreal y = fm.ascent();
 	
-	QString svg = QString("<text font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" fill-opacity='1' stroke='none' >")
+	QString svg = QString("<text font-size='%1' font-style='%2' font-weight='%3' fill='%4' font-family=\"'%5'\" id='%6' fill-opacity='1' stroke='none' >")
 		.arg(f.pointSizeF() * dpi / 72)
 		.arg(mapToSVGStyle(f.style()))
 		.arg(mapToSVGWeight(f.weight()))
 		.arg(blackOnly ? "#000000" : brush().color().name())
-		.arg(InstalledFonts::InstalledFontsNameMapper.value(f.family()));
+		.arg(InstalledFonts::InstalledFontsNameMapper.value(f.family()))
+		.arg(ViewLayer::viewLayerXmlNameFromID(m_viewLayerID)
+		);
 
 	QStringList texts = text().split("\n");
 	foreach (QString t, texts) {
