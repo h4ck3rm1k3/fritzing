@@ -135,6 +135,62 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="c624c0ff7a2eb1ca7994123ee87f58fb">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="760832bc79fe1f34e99f420ad872a0b8">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="2d3cbb853835749c51cc0d6e4bfd2c90">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="4d5dcc6408079f54cbda4d35e4d0b8fa">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="5f7b51547fafb902305f5b3cbb81bb74">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="f0d627984e1614e5c1c797471f529619">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="5cc9de9cdfa593d8e073514cde1c7c77">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="145b5412a0ffbe91a876166139419e15">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="1000AFDF10011">
         <views>
           <iconView layer="icon">
@@ -163,6 +219,41 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="2012BasfdBEC12">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="2013BasfdBEC12">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="2014BasfdBEC12">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="2015BasfdBEC12">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="2011BasfdBEC12">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="2011BBEC12">
         <views>
           <iconView layer="icon">
@@ -177,7 +268,49 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="204579BBEC12B">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="824659BBEC12B">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="2011BBEC12B">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="f9ebae3551b49029499a70593456637">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="f9asdf12ce2b49029499a70593456637">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="f124bae12ce2b49029499a70593456637">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="f9ebae12ce2b49029499a70593456637">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -192,6 +325,27 @@
         </views>
       </instance>
       <instance moduleIdRef="0d68adbdf34156383180850897173015">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="d30f97b6fbe1asdad59ea7f0d636a7a">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="2c9d427b475ef8d07dc752a4362af0ae">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="9801da71ed31be24b64d311bc9a1b0b0">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -226,6 +380,27 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="145554CBFC44diode">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="c307sadf951b6bdd0d67c0d2ad67eab">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="25270912c951b6bdd0d67c0d2ad67eab">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="1001ABDC03G">
         <views>
           <iconView layer="icon">
@@ -234,6 +409,13 @@
         </views>
       </instance>
       <instance moduleIdRef="1001ABDC03F">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="1001A436733I">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -2242,6 +2424,20 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="37asdf3c843a342134a0e499f8a0b3ef6a">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="37asdf3c843a2127a0e499f8a0b3ef6a">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="a975d1270bd55d6fc3916947793f1a57">
         <views>
           <iconView layer="icon">
@@ -2614,6 +2810,13 @@
         </views>
       </instance>
       <instance moduleIdRef="5e3b9f7a14a1627168e700bfc9a03b3c">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="81591c6c31ccf12f0f3ccec5f150df2d">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
