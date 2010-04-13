@@ -8,11 +8,11 @@
         <tag>arduino</tag>
         <tag>mega</tag>
         <tag>controller</tag>
-        <tag>shield</tag>
     </tags>
     <properties>
         <property name="family">Microcontroller Board</property>
-        <property name="type">Arduino Mega</property>
+        <property name="processor">ATmega</property>
+        <property name="variant">Arduino Mega</property>
     </properties>
     <description>The biggest, baddest Arduino board yet.</description>
     <views>

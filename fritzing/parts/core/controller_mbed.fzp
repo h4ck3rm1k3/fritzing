@@ -9,13 +9,15 @@
         <tag>mbed</tag>
         <tag>ARM</tag>
         <tag>NXP</tag>
+        <tag>Cortex</tag>
         <tag>microcontroller</tag>
     </tags>
     <properties>
         <property name="family">Microcontroller Board</property>
-        <property name="type">mbed</property>
+        <property name="processor">NXP/ARM Cortex</property>
+        <property name="variant">mbed</property>
     </properties>
-    <description>A powerful microcontroller based on the NXP LPC processor. See http://mbed.org for more info.</description>
+    <description>A powerful microcontroller board based on the NXP LPC processor with an ARM Cortex core. See http://mbed.org for more info.</description>
     <views>
         <iconView>
             <layers image="icon/controller_mbed.svg">

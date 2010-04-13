@@ -6,12 +6,13 @@
     <date>2009-03-06</date>
     <tags>
         <tag>Arduino</tag>
-        <tag>controller</tag>
+        <tag>Nano</tag>
         <tag>microcontroller</tag>
     </tags>
     <properties>
         <property name="family">Microcontroller Board</property>
-        <property name="type">Arduino Nano</property>
+        <property name="processor">ATmega</property>
+        <property name="variant">Arduino Nano</property>
     </properties>
     <views>
         <iconView>
