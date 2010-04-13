@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.3.17b.04.07.4081" moduleId="81591c6c31ccf12f0f3ccec5f150df2d">
     <author>andre</author>
-    <title>Wiring USBAdapter</title>
+    <title>Wiring USB Adapter</title>
     <label>USB</label>
     <date>2010-04-11</date>
     <tags>
@@ -11,11 +11,10 @@
         <tag>Serial</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller Board</property>
-        <property name="type">Wiring</property>
+        <property name="family">USB-to-Serial Adapter</property>
         <property name="type">Wiring USB Adapter</property>
     </properties>
-    <description>The Wiring USB Adapter connects the Wiring Mini to a host computer.</description>
+    <description>The Wiring USB Adapter connects the Wiring Mini to a host computer. It uses an FTDI FT232R to convert between USB and RS-232 serial commands.</description>
     <views>
         <iconView>
             <layers image="icon/controller_wiring.svg">
