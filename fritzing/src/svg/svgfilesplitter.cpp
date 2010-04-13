@@ -118,7 +118,7 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 	root.appendChild(element);
 	m_byteArray = m_domDocument.toByteArray();
 
-	QString s = m_domDocument.toString();
+	//QString s = m_domDocument.toString();
 	//DebugDialog::debug(s);
 
 	return true;
@@ -166,11 +166,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (mainElement.isNull()) return false;
 
-	QDomElement childElement = mainElement.firstChildElement();
-	while (!childElement.isNull()) {
-		normalizeChild(childElement, sWidth * dpi, sHeight * dpi, vbWidth, vbHeight, blackOnly);
-		childElement = childElement.nextSiblingElement();
-	}
+	normalizeChild(mainElement, sWidth * dpi, sHeight * dpi, vbWidth, vbHeight, blackOnly);
 
 	return true;
 }

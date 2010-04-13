@@ -1317,12 +1317,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 				gotOne = false;
 				renderer = new FSvgRenderer();
 				QDomDocument flipDoc;
-				if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD()) {
-					TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), FSvgRenderer::printerScale());
-				}
-				else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD()) {
-					TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), FSvgRenderer::printerScale());
-				}
+				getFlipDoc(modelPart, filename, viewLayerID, flipDoc);
 				if (layerAttributes.multiLayer()) {
 					// need to treat create "virtual" svg file for each layer
 					SvgFileSplitter svgFileSplitter;
@@ -1732,3 +1727,14 @@ QRectF ItemBase::partLabelSceneBoundingRect() {
 	if (!m_partLabel->initialized()) return QRectF();
 	return m_partLabel->sceneBoundingRect();
 }
+
+void ItemBase::getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, QDomDocument & flipDoc)
+{
+	if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD()) {
+		TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), FSvgRenderer::printerScale());
+	}
+	else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD()) {
+		TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), FSvgRenderer::printerScale());
+	}
+}
+

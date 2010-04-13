@@ -272,7 +272,10 @@ protected:
 	void ensureUniqueTitle(QString &title);
 	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
+
+protected:
 	static bool getSwappingEnabled(const QStringList &paramNames, const QStringList &paramValues);
+	static void getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, QDomDocument & flipDoc);
 
 protected:
  	QSizeF m_size;

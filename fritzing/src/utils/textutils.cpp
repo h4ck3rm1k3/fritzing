@@ -433,7 +433,7 @@ void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument,
 		flipSMDElement(domDocument, renderer, element, elementID, altElement, altElementID, printerScale);
 	}
 
-	DebugDialog::debug(domDocument.toString());
+	//DebugDialog::debug(domDocument.toString());
 }
 
 void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID, qreal printerScale) 

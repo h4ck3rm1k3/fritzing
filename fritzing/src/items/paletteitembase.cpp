@@ -363,13 +363,25 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 {
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 	QString path = filename();
+
+	QDomDocument flipDoc;
+	getFlipDoc(modelPart(), path, viewLayerID, flipDoc);
 	
 	//DebugDialog::debug(QString("path: %1").arg(path));
 
 	SvgFileSplitter * splitter = svgHash.value(path + xmlName, NULL);
 	if (splitter == NULL) {
 		splitter = new SvgFileSplitter();
-		bool result = splitter->split(path, xmlName);
+
+		bool result;
+		if (flipDoc.isNull()) {
+			result = splitter->split(path, xmlName);
+		}
+		else {
+			QString f = flipDoc.toString(); 
+			result = splitter->splitString(f, xmlName);
+		}
+
 		if (!result) {
 			delete splitter;
 			return "";
