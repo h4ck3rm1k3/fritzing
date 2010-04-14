@@ -268,7 +268,7 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	}
 
 
-	QString svg = TextUtils::makeSVGHeader(1000, 1000, m_maxX - m_minX, m_maxY - m_minY) 
+	QString svg = TextUtils::makeSVGHeader(10000, 10000, m_maxX - m_minX, m_maxY - m_minY) 
 					+ title + description + metadata + copper0 + copper1 + silkscreen0 + silkscreen1 + "</svg>";
 
 	return svg;
@@ -333,49 +333,19 @@ int KicadModule2Svg::drawArc(const QString & ds, QString & arc) {
 	QStringList params = ds.split(" ");
 	if (params.count() < 8) return -1;
 
-	int x1 = params.at(1).toInt();
-	int y1 = params.at(2).toInt();
+	int cx = params.at(1).toInt();
+	int cy = params.at(2).toInt();
 	int x2 = params.at(3).toInt();
 	int y2 = params.at(4).toInt();
-	qreal angle = (params.at(5).toInt() % 3600) / 10.0;
-	if (angle < 0) angle += 360;
-
-	qreal opposite = qSqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-	qreal radius = opposite / tan(angle);
-
-	qreal midX = (x1 + x2) / 2.0;
-	qreal midY = (y1 + y2) / 2.0;
-
-	// what we know:
-
-	//x1 - cx = R * cos(S)
-	//y1 - cy = R * sin(S)
-	//x2 - cx = R * cos(S + angle)
-	//y2 - cy = R * sin(S + angle)
-
-	// equation for the perpendicular bisector
-	//2 * (x2 - x1) * x + 2 * (y2 - y1) * y = x2 * x2 - x1 * x1 + y2 * y2 - y1 * y1
-
-	qreal xmult = 2 * (x2 - x1);
-	qreal ymult = 2 * (y2 - y1);
-
-	// perpendicular bisector in slope-intercept form
-	//rightSide = x2 * x2 - x1 * x1 + y2 * y2 - y1 * y1
-	//x * xmult + y * ymult = rightSide;
-	//y = (rightSide / ymult) - x * (xmult / ymult);
-
-	bool originalIsHorizontal = qAbs(y2 - y1) < .00001;				// means bisector is vertical
-	qreal slope = (originalIsHorizontal) ? 0 : -xmult / ymult;
-
-	qreal cx, cy;
-	qreal cosineAngle = 0;
-	qreal sineAngle = 1.0;
-	if (!originalIsHorizontal) {
-		sineAngle = qSqrt( 1 / (1 + 1 / (slope * slope)));
-		cosineAngle = qSqrt(1 / (1 + (slope * slope)));
+	qreal diffAngle = (params.at(5).toInt() % 3600) / 10.0;
+	qreal radius = qSqrt((cx - x2) * (cx - x2) + (cy - y2) * (cy - y2));
+	qreal endAngle = asin((y2 - cy) / radius);
+	if (x2 < cx) {
+		endAngle += M_PI;
 	}
-	cx = midX + (sineAngle * radius);
-	cy = midY + (cosineAngle * radius);
+	qreal startAngle = endAngle + (diffAngle * M_PI / 180.0);
+	qreal x1 = (radius * cos(startAngle)) + cx;
+	qreal y1 = (radius * sin(startAngle)) + cy;
 
 	// TODO: figure out bounding box for circular arc and set min and max accordingly
 	checkXLimit(cx + radius);
@@ -391,8 +361,8 @@ int KicadModule2Svg::drawArc(const QString & ds, QString & arc) {
 			.arg(y1)
 			.arg(radius)
 			.arg(radius)
-			.arg(qAbs(angle) >= 180 ? 1 : 0)
-			.arg(angle > 0 ? 0 : 1)
+			.arg(qAbs(diffAngle) >= 180 ? 1 : 0)
+			.arg(diffAngle > 0 ? 0 : 1)
 			.arg(x2 - x1)
 			.arg(y2 - y1);
 
@@ -518,13 +488,12 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 							.arg(ViewLayer::Copper1Color);
 		}
 		else {
-			qreal w = xSize - drillX;
 			pad = QString("<circle cx='%1' cy='%2' r='%3' id='connector%4pad' stroke-width='%5' stroke='%6' fill='none' />")
 							.arg(posX)
 							.arg(posY)
-							.arg((xSize / 2.0) - (w / 2.0))
+							.arg((xSize / 2.0) - (drillX / 4.0))
 							.arg(padName)
-							.arg(w)
+							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper0Color);
 		}
 	}
@@ -543,21 +512,19 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 							.arg(ViewLayer::Copper1Color);
 		}
 		else {
-			qreal w = xSize - drillX;
-			pad += QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pad' stroke-width='%5' stroke='%6' />")
+			pad += QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
 							.arg(posX)
 							.arg(posY)
-							.arg((xSize / 2.0) - (w / 2.0))
+							.arg((xSize / 2.0) - (drillX / 4.0))
 							.arg(padName)
-							.arg(w)
+							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper0Color);
-			pad += QString("<rect x='%1' y='%2' width='%3' height='%4' id='connector%5pin' fill='none' stroke-width='%6' stroke='%7' />")
-							.arg(posX - (xSize / 2.0))
-							.arg(posY - (ySize / 2.0))
-							.arg(xSize)
-							.arg(ySize)
-							.arg(padName)
-							.arg(w)
+			pad += QString("<rect x='%1' y='%2' width='%3' height='%4' fill='none' stroke-width='%5' stroke='%6' />")
+							.arg(posX - (xSize / 2.0) + (drillX / 4.0))
+							.arg(posY - (ySize / 2.0) + (drillX / 4.0))
+							.arg(xSize - (drillX / 2.0))
+							.arg(ySize - (drillX / 2.0))
+							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper1Color);
 		}
 
