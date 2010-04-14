@@ -337,6 +337,7 @@ int KicadModule2Svg::drawArc(const QString & ds, QString & arc) {
 	int cy = params.at(2).toInt();
 	int x2 = params.at(3).toInt();
 	int y2 = params.at(4).toInt();
+	int width = params.at(6).toInt();
 	qreal diffAngle = (params.at(5).toInt() % 3600) / 10.0;
 	qreal radius = qSqrt((cx - x2) * (cx - x2) + (cy - y2) * (cy - y2));
 	qreal endAngle = asin((y2 - cy) / radius);
@@ -356,7 +357,7 @@ int KicadModule2Svg::drawArc(const QString & ds, QString & arc) {
 	int layer = params.at(7).toInt();
 
 	arc = QString("<path stroke-width='%1' stroke='white' d='M%2,%3a%4,%5 0 %6,%7 %8,%9' fill='none' />")
-			.arg(params.at(6))
+			.arg(width / 2.0)
 			.arg(x1)
 			.arg(y1)
 			.arg(radius)
@@ -436,12 +437,18 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	int drillYOffset = drillStrings.at(3).toInt();
 	int drillY = drillX;
 
+	if (drillXOffset != 0 || drillYOffset != 0) {
+		throw QObject::tr("drill offset not implemented");
+	}
+
 	if (drillStrings.count() > 4) {
 		if (drillStrings.at(4) == "O") {
 			if (drillStrings.count() < 7) {
 				throw QObject::tr("drill missing ellipse params");
 			}
-			drillY = drillStrings.at(7).toInt();
+			drillY = drillStrings.at(6).toInt();
+
+			throw QObject::tr("ellipsoidal drill holes not implemented");
 		}
 	}
 
@@ -473,6 +480,10 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	int xDelta = shapeStrings.at(5).toInt();
 	int yDelta = shapeStrings.at(6).toInt();
 	int orientation = shapeStrings.at(7).toInt();
+
+	if (xDelta != 0 || yDelta != 0) {
+		throw QObject::tr("shape delta not implemented");
+	}
 
 	if (shapeIdentifier == "C") {
 		checkXLimit(posX - (xSize / 2.0));
@@ -531,14 +542,22 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	}
 	else if (shapeIdentifier == "O") {
 		// ellipse
+		throw QObject::tr("ellipsoidal pads not yet implemented");
 	}
 	else if (shapeIdentifier == "T") {
-		throw QObject::tr("unable to handle trapezoidal pads");
+		throw QObject::tr("trapezoidal pads not implemented");
 
 		// eventually polyline?
 	}
 	else {
 		throw QObject::tr("unable to handle pad shape %1").arg(shapeIdentifier);
+	}
+
+	if (orientation != 0) {
+		QTransform t = QTransform().translate(-posX, -posY) * 
+						QTransform().rotate(orientation / 10.0) * 
+						QTransform().translate(posX, posY);
+		pad = TextUtils::svgTransform(pad, t, true);
 	}
 
 

@@ -49,6 +49,7 @@ $Date$
 #include "utils/ratsnestcolors.h"
 #include "infoview/htmlinfoview.h"
 #include "svg/gedaelement2svg.h"
+#include "svg/kicadmodule2svg.h"
 #include "installedfonts.h"
 
 // dependency injection :P
@@ -130,6 +131,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_runAsService = false;
 	m_gerberService = false;
 	m_gedaService = false;
+	m_kicadService = false;
 
 	m_arguments = arguments();
 	QList<int> toRemove;
@@ -148,6 +150,15 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 			(m_arguments[i].compare("--geda", Qt::CaseInsensitive) == 0)) {
 			m_runAsService = true;
 			m_gedaService = true;
+			m_outputFolder = m_arguments[i + 1];
+			toRemove << i;
+			toRemove << i + 1;
+		}
+
+		if ((m_arguments[i].compare("-kicad", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("--kicad", Qt::CaseInsensitive) == 0)) {
+			m_runAsService = true;
+			m_kicadService = true;
 			m_outputFolder = m_arguments[i + 1];
 			toRemove << i;
 			toRemove << i + 1;
@@ -435,32 +446,11 @@ int FApplication::serviceStartup() {
 	}
 
 	if (m_gedaService) {
-		try {
-			QDir dir(m_outputFolder);
-			QStringList filters;
-			filters << "*.fp";
-			QStringList filenames = dir.entryList(filters, QDir::Files);
-			foreach (QString filename, filenames) {
-				QString filepath = dir.absoluteFilePath(filename);
-				QString newfilepath = filepath;
-				newfilepath.replace(".fp", ".svg");
-				GedaElement2Svg g;
-				QString svg = g.convert(filepath, false);
-				QFile file(newfilepath);
-				if (file.open(QFile::WriteOnly)) {
-					QTextStream stream(&file);
-					stream << svg;
-					file.close();
-				}
-			}
-		}
-		catch (const QString & msg) {
-			DebugDialog::debug(msg);
-		}
-		catch (...) {
-			DebugDialog::debug("who knows");
-		}
-
+		runGedaService();
+		return 0;
+	}
+	else if (m_kicadService) {
+		runKicadService();
 		return 0;
 	}
 
@@ -482,6 +472,69 @@ int FApplication::serviceStartup() {
 	mainWindow->exportToGerber(m_outputFolder, NULL);
 
 	return 0;
+}
+
+void FApplication::runGedaService() {
+	try {
+		QDir dir(m_outputFolder);
+		QStringList filters;
+		filters << "*.fp";
+		QStringList filenames = dir.entryList(filters, QDir::Files);
+		foreach (QString filename, filenames) {
+			QString filepath = dir.absoluteFilePath(filename);
+			QString newfilepath = filepath;
+			newfilepath.replace(".fp", ".svg");
+			GedaElement2Svg g;
+			QString svg = g.convert(filepath, false);
+			QFile file(newfilepath);
+			if (file.open(QFile::WriteOnly)) {
+				QTextStream stream(&file);
+				stream << svg;
+				file.close();
+			}
+		}
+	}
+	catch (const QString & msg) {
+		DebugDialog::debug(msg);
+	}
+	catch (...) {
+		DebugDialog::debug("who knows");
+	}
+}
+
+void FApplication::runKicadService() {
+	QDir dir(m_outputFolder);
+	QStringList filters;
+	filters << "*.mod";
+	QStringList filenames = dir.entryList(filters, QDir::Files);
+	foreach (QString filename, filenames) {
+		QString filepath = dir.absoluteFilePath(filename);
+		QStringList moduleNames = KicadModule2Svg::listModules(filepath);
+		foreach (QString moduleName, moduleNames) {
+			KicadModule2Svg k;
+			try {
+				QString svg = k.convert(filepath, moduleName, false);
+				if (svg.isEmpty()) {
+					continue;
+				}
+
+				QString newFilePath = dir.absoluteFilePath(moduleName + "_" + filename);
+				newFilePath.replace(".mod", ".svg");
+				QFile file(newFilePath);
+				if (file.open(QFile::WriteOnly)) {
+					QTextStream stream(&file);
+					stream << svg;
+					file.close();
+				}
+			}
+			catch (const QString & msg) {
+				DebugDialog::debug(msg);
+			}
+			catch (...) {
+				DebugDialog::debug("who knows");
+			}
+		}
+	}
 }
 
 int FApplication::startup(bool firstRun)

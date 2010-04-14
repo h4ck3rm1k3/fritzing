@@ -87,6 +87,8 @@ protected:
 	void loadReferenceModel();
 	void registerFonts();
 	bool loadBin(QString binToOpen);
+	void runGedaService();
+	void runKicadService();
 
 protected:
 	bool m_spaceBarIsPressed;
@@ -109,6 +111,7 @@ protected:
 	bool m_runAsService;
 	bool m_gerberService;
 	bool m_gedaService;
+	bool m_kicadService;
 	int m_progressIndex;
 	class FSplashScreen * m_splash;
 	QString m_outputFolder;
