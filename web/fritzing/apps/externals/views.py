@@ -7,6 +7,7 @@ from fritzing import settings
 
 @login_required
 def index(request):
+        print "alive in views"
         # username = "jonathan"
         # email = "jonathan@jonathan.com"
         if request.user.is_authenticated():
