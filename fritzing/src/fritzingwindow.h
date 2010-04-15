@@ -37,68 +37,54 @@ $Date$
 #include "utils/misc.h"
 #include "utils/bundler.h"
 
-class FritzingWindow : public QMainWindow, public Bundler {
+class FritzingWindow : public QMainWindow, public Bundler 
+{
 	Q_OBJECT
-	public:
-		FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent = 0, Qt::WFlags f = 0);
-		const QString &fileName() {
-			return m_fileName;
-		}
-
-	signals:
-		void readOnlyChanged(bool isReadOnly);
-
-	protected slots:
-		virtual bool save();
-		virtual bool saveAs();
-		void undoStackCleanChanged(bool isClean);
-
-	protected:
-		void setTitle();
-		virtual const QString fritzingTitle();
-		virtual const QString fileExtension() = 0;
-		virtual const QString untitledFileName() = 0;
-		virtual int &untitledFileCount() = 0;
-		virtual const QString defaultSaveFolder() = 0;
-
-		virtual bool saveAsAux(const QString & fileName) = 0;
-		bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
-
-		void createCloseAction();
-
-		void setReadOnly(bool readOnly);
-
-	protected:
-		class WaitPushUndoStack * m_undoStack;
-		QString m_fileName;
-		bool m_readOnly;
-		QAction *m_closeAct;
-		QDir m_tempDir;
-		QStatusBar *m_statusBar;
-
-protected:
-		static QStringList OtherKnownExtensions;
-
-	public:
-		// TODO: these probably belong in some separate file i/o class
-		static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);
-		static bool alreadyHasExtension(const QString &fileName, const QString &extension=___emptyString___);
-		static QString getExtFromFileDialog(const QString &extOpt);
-		static void rmdir(const QString &dirPath);
-		static void rmdir(QDir & dir);
-		static bool createZipAndSaveTo(const QDir &dirToCompress, const QString &filename);
-		static bool unzipTo(const QString &filepath, const QString &dirToDecompress);
-		static void replicateDir(QDir srcDir, QDir targDir);
-		static QString getRandText();
 
 public:
-		static const QString QtFunkyPlaceholder;
+	FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent = 0, Qt::WFlags f = 0);
+	const QString &fileName();
 
-	public:
-		virtual void notClosableForAWhile() {}
+	virtual void notClosableForAWhile();
+	static bool alreadyHasExtension(const QString &fileName, const QString &extension=___emptyString___);
 
-	public:
-		static QString ReadOnlyPlaceholder;
+signals:
+	void readOnlyChanged(bool isReadOnly);
+
+protected slots:
+	virtual bool save();
+	virtual bool saveAs();
+	void undoStackCleanChanged(bool isClean);
+
+protected:
+	void setTitle();
+	virtual const QString fritzingTitle();
+	virtual const QString fileExtension() = 0;
+	virtual const QString untitledFileName() = 0;
+	virtual int &untitledFileCount() = 0;
+	virtual const QString defaultSaveFolder() = 0;
+
+	virtual bool saveAsAux(const QString & fileName) = 0;
+	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
+
+	void createCloseAction();
+
+	void setReadOnly(bool readOnly);
+
+protected:
+	class WaitPushUndoStack * m_undoStack;
+	QString m_fileName;
+	bool m_readOnly;
+	QAction *m_closeAct;
+	QDir m_tempDir;
+	QStatusBar *m_statusBar;
+
+protected:
+	static QStringList OtherKnownExtensions;
+
+public:
+	static QString ReadOnlyPlaceholder;
+	static const QString QtFunkyPlaceholder;
 };
 
 #endif /* FRITZINGWINDOW_H_ */

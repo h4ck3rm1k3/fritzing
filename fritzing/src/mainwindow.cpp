@@ -942,7 +942,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	QApplication::processEvents();
 
 	QDir destFolder = QDir::temp();
-	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
 	QString dirToRemove = destFolder.path();
 
 	QString aux = QFileInfo(bundledFileName).fileName();
@@ -961,7 +961,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 
 	QApplication::processEvents();
 
-	if(!createZipAndSaveTo(destFolder, bundledFileName)) {
+	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
@@ -969,7 +969,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 		);
 	}
 
-	rmdir(dirToRemove);
+	FolderUtils::rmdir(dirToRemove);
 }
 
 void MainWindow::loadBundledSketch(const QString &fileName) {
@@ -979,10 +979,10 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bundler, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
-	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
 	QString unzipDirPath = destFolder.path();
 
-	if(!unzipTo(fileName, unzipDirPath)) {
+	if(!FolderUtils::unzipTo(fileName, unzipDirPath)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
@@ -1000,7 +1000,7 @@ void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bu
 	bundler->loadBundledAux(unzipDir,mps);
 	m_fileName.clear();							// clear m_fileName, so "save" will become "save as"; otherwise it will attempt to save this in the unzipDirPath that you're about to rmdir
 
-	rmdir(unzipDirPath);
+	FolderUtils::rmdir(unzipDirPath);
 }
 
 void MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
@@ -1042,10 +1042,10 @@ void MainWindow::loadBundledPart() {
 ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
-	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
 	QString unzipDirPath = destFolder.path();
 
-	if(!unzipTo(fileName, unzipDirPath)) {
+	if(!FolderUtils::unzipTo(fileName, unzipDirPath)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
@@ -1061,7 +1061,7 @@ ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 		throw "bundled count was wrong";
 	}
 
-	rmdir(unzipDirPath);
+	FolderUtils::rmdir(unzipDirPath);
 
 	return mps[0];
 }
@@ -1099,7 +1099,7 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 
 	QDir destFolder = QDir::temp();
 
-	FolderUtils::createFolderAnCdIntoIt(destFolder, getRandText());
+	FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
 	QString dirToRemove = destFolder.path();
 
 	QString aux = QFileInfo(bundledFileName).fileName();
@@ -1117,7 +1117,7 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 	saveBundledAux(mp, destFolder);
 
 
-	if(!createZipAndSaveTo(destFolder, bundledFileName)) {
+	if(!FolderUtils::createZipAndSaveTo(destFolder, bundledFileName)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
@@ -1125,7 +1125,7 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 		);
 	}
 
-	rmdir(dirToRemove);
+	FolderUtils::rmdir(dirToRemove);
 }
 
 void MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
@@ -1221,7 +1221,7 @@ void MainWindow::backupExistingFileIfExists(const QString &destFilePath) {
 	if(QFileInfo(destFilePath).exists()) {
 		if(m_tempDir.path() == ".") {
 			m_tempDir = QDir::temp();
-			FolderUtils::createFolderAnCdIntoIt(m_tempDir, getRandText());
+			FolderUtils::createFolderAnCdIntoIt(m_tempDir, FolderUtils::getRandText());
 			DebugDialog::debug("debug folder for overwritten files: "+m_tempDir.path());
 		}
 
@@ -1250,7 +1250,7 @@ void MainWindow::recoverBackupedFiles() {
 
 void MainWindow::resetTempFolder() {
 	if(m_tempDir.path() != ".") {
-		rmdir(m_tempDir);
+		FolderUtils::rmdir(m_tempDir);
 		m_tempDir = QDir::temp();
 	}
 	m_filesReplacedByAlienOnes.clear();
@@ -1624,7 +1624,7 @@ bool MainWindow::loadCustomBoardShape()
 	}
 
 
-	QString moduleID = FritzingWindow::getRandText();
+	QString moduleID = FolderUtils::getRandText();
 	QString userPartsSvgFolderPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
 	QString newName = userPartsSvgFolderPath + "pcb" + "/" + moduleID + ".svg";
 	bool result = QFile(path).copy(newName);

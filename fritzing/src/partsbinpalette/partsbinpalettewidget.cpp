@@ -467,7 +467,7 @@ bool PartsBinPaletteWidget::removeSelected() {
 
 bool PartsBinPaletteWidget::save() {
 	bool result = true;
-	if (FritzingWindow::isEmptyFileName(m_fileName,m_untitledFileName) || currentBinIsCore()) {
+	if (FolderUtils::isEmptyFileName(m_fileName,m_untitledFileName) || currentBinIsCore()) {
 		result = saveAs();
 	} else {
 		saveAsAux(m_fileName);

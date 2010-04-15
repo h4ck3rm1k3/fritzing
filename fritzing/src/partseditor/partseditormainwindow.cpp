@@ -459,7 +459,7 @@ bool PartsEditorMainWindow::createTemplate(){
 
 	QDir randDir = createTempFolderIfNecessary();
 
-	replicateDir(srcDir,randDir);
+	FolderUtils::replicateDir(srcDir,randDir);
 
 	QFile tempFile(QCoreApplication::applicationDirPath() + templatePath);
 	tempFile.copy(randDir.path() + "/core/template" + FritzingPartExtension);
@@ -472,7 +472,7 @@ bool PartsEditorMainWindow::createTemplate(){
 
 const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
 	if(m_tempDir.path() == ".") {
-		QString randext = getRandText();
+		QString randext = FolderUtils::getRandText();
 		m_tempDir = QDir(QDir::tempPath());
 		bool dirCreation = m_tempDir.mkdir(randext);
                 if (!dirCreation) {
@@ -521,7 +521,7 @@ bool PartsEditorMainWindow::saveAs() {
 		bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
 		while(m_fileName.isEmpty()
 			  || QFileInfo(userPartsFolderPath+m_fileName).exists()
-			  || (isEmptyFileName(m_fileName,untitledFileName()) && firstTime)
+			  || (FolderUtils::isEmptyFileName(m_fileName,untitledFileName()) && firstTime)
 			) {
 			bool ok;
 			m_fileName = QInputDialog::getText(
@@ -551,7 +551,7 @@ bool PartsEditorMainWindow::saveAs() {
 						&& !m_fileName.startsWith(partsFolderPath, cs)
 				? userPartsFolderPath+m_fileName
 				: m_fileName;
-		QString guid = "__"+getRandText()+FritzingPartExtension;
+		QString guid = "__"+FolderUtils::getRandText()+FritzingPartExtension;
 		if(!alreadyHasExtension(filename, FritzingPartExtension)) {
 			filename += guid;
 		} else {
@@ -634,7 +634,7 @@ ModelPartShared* PartsEditorMainWindow::modelPartShared() {
 	ModelPartShared* shared = new ModelPartShared();
 
 	if(m_moduleId.isNull() || m_moduleId.isEmpty()) {
-		m_moduleId = getRandText();
+		m_moduleId = FolderUtils::getRandText();
 	}
 
 	shared->setModuleID(m_moduleId);
@@ -674,7 +674,7 @@ void PartsEditorMainWindow::cleanUp() {
 		}
 	}
 	if(m_tempDir.path() != ".") {
-		rmdir(m_tempDir);
+		FolderUtils::rmdir(m_tempDir);
 		m_tempDir = QDir();
 	}
 }

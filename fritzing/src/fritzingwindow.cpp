@@ -30,8 +30,6 @@ $Date$
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QFileDialog>
-#include <QUuid>
-#include <QCryptographicHash>
 #include <QIcon>
 #include <QAction>
 #include <QAbstractButton>
@@ -42,8 +40,6 @@ $Date$
 #include "utils/misc.h"
 #include "utils/folderutils.h"
 
-#include "lib/quazip/quazip.h"
-#include "lib/quazip/quazipfile.h"
 #include "utils/fileprogressdialog.h"
 
 const QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some weird hack Qt uses in window titles as a placeholder to setr the modified state
@@ -89,7 +85,7 @@ void FritzingWindow::setTitle() {
 
 // returns true if the user wanted to save the file
 bool FritzingWindow::save() {
-	if (isEmptyFileName(m_fileName,untitledFileName())) {
+	if (FolderUtils::isEmptyFileName(m_fileName,untitledFileName())) {
 		return saveAs();
 	} else if (m_readOnly) {
 		return saveAs();
@@ -97,10 +93,6 @@ bool FritzingWindow::save() {
 		saveAsAux(m_fileName);
 		return true;
 	}
-}
-
-bool FritzingWindow::isEmptyFileName(const QString &fileName, const QString &untitledFileName) {
-	return (fileName.isEmpty() || fileName.isNull() || fileName.startsWith(untitledFileName));
 }
 
 bool FritzingWindow::saveAs() {
@@ -159,27 +151,6 @@ void FritzingWindow::undoStackCleanChanged(bool isClean) {
 	setWindowModified(!isClean);
 }
 
-void FritzingWindow::replicateDir(QDir srcDir, QDir targDir) {
-	// copy all files from srcDir source to tagDir
-	QStringList files = srcDir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
-	for(int i=0; i < files.size(); i++) {
-		QFile tempFile(srcDir.path() + "/" +files.at(i));
-		DebugDialog::debug(tr("Copying file %1").arg(tempFile.fileName()));
-		QFileInfo fi(files.at(i));
-		QString newFilePath = targDir.path() + "/" + fi.fileName();
-		if(QFileInfo(tempFile.fileName()).isDir()) {
-			QDir newTargDir = QDir(newFilePath);
-			newTargDir.mkpath(newTargDir.absolutePath());
-			newTargDir.cd(files.at(i));
-			replicateDir(QDir(tempFile.fileName()),newTargDir);
-		} else {
-			if(!tempFile.copy(newFilePath)) {
-				DebugDialog::debug(tr("File %1 already exists: it won't be overwritten").arg(newFilePath));
-			}
-		}
-	}
-}
-
 bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString &fileExt) {
 	// TODO: Make something preattier to manage all the supported formats at once
 	if(fileExt != ___emptyString___) {
@@ -194,28 +165,6 @@ bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString 
 		
 		return false;
 	}
-}
-
-QString FritzingWindow::getRandText() {
-	QString rand = QUuid::createUuid().toString();
-	QString randext = QCryptographicHash::hash(rand.toAscii(),QCryptographicHash::Md4).toHex();
-	return randext;
-}
-
-/*QString FritzingWindow::getBase64RandText() {
-	QString rand = QUuid::createUuid().toString();
-	QString randext = QCryptographicHash::hash(rand.toAscii(),QCryptographicHash::Md4).toHex();
-	return randext;
-}*/
-
-/**
- * Is assumed that the options of the possible extensions are defined this way:
- * <Description of the file type> (*.<extension>)
- */
-QString FritzingWindow::getExtFromFileDialog(const QString &extOpt) {
-	return extOpt.mid(
-			extOpt.indexOf("*")+1,
-			extOpt.indexOf(")")-extOpt.indexOf("(")-2);
 }
 
 bool FritzingWindow::beforeClosing(bool showCancel) {
@@ -252,170 +201,6 @@ bool FritzingWindow::beforeClosing(bool showCancel) {
 	}
 }
 
-void FritzingWindow::rmdir(const QString &dirPath) {
-	QDir dir = QDir(dirPath);
-	rmdir(dir);
-}
-
-void FritzingWindow::rmdir(QDir & dir) {
-	DebugDialog::debug(QString("removing folder: %1").arg(dir.path()));
-
-	QStringList files = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
-	for(int i=0; i < files.size(); i++) {
-		QFile tempFile(dir.path() + "/" +files.at(i));
-		DebugDialog::debug(QString("removing from original folder: %1").arg(tempFile.fileName()));
-		if(QFileInfo(tempFile.fileName()).isDir()) {
-			QDir dir = QDir(tempFile.fileName());
-			rmdir(dir);
-		} else {
-			tempFile.remove(tempFile.fileName());
-		}
-	}
-	dir.rmdir(dir.path());
-}
-
-bool FritzingWindow::createZipAndSaveTo(const QDir &dirToCompress, const QString &filepath) {
-	DebugDialog::debug("zipping "+dirToCompress.path()+" into "+filepath);
-
-	QString tempZipFile = QDir::temp().path()+"/"+getRandText()+".zip";
-	DebugDialog::debug("temp file: "+tempZipFile);
-	QuaZip zip(tempZipFile);
-	if(!zip.open(QuaZip::mdCreate)) {
-		qWarning("zip.open(): %d", zip.getZipError());
-		return false;
-	}
-
-	QFileInfoList files=dirToCompress.entryInfoList();
-	QFile inFile;
-	QuaZipFile outFile(&zip);
-	char c;
-
-	QString currFolderBU = QDir::currentPath();
-	QDir::setCurrent(dirToCompress.path());
-	foreach(QFileInfo file, files) {
-		if(!file.isFile()||file.fileName()==filepath) continue;
-
-		inFile.setFileName(file.fileName());
-
-		if(!inFile.open(QIODevice::ReadOnly)) {
-			qWarning("inFile.open(): %s", inFile.errorString().toLocal8Bit().constData());
-			return false;
-		}
-		if(!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(inFile.fileName(), inFile.fileName()))) {
-			qWarning("outFile.open(): %d", outFile.getZipError());
-			return false;
-		}
-
-		while(inFile.getChar(&c)&&outFile.putChar(c)){}
-
-		if(outFile.getZipError()!=UNZ_OK) {
-			qWarning("outFile.putChar(): %d", outFile.getZipError());
-			return false;
-		}
-		outFile.close();
-		if(outFile.getZipError()!=UNZ_OK) {
-			qWarning("outFile.close(): %d", outFile.getZipError());
-			return false;
-		}
-		inFile.close();
-	}
-	zip.close();
-	QDir::setCurrent(currFolderBU);
-
-	if(QFileInfo(filepath).exists()) {
-		// if we're here the usr has already accepted to overwrite
-		QFile::remove(filepath);
-	}
-	QFile file(tempZipFile);
-	file.copy(filepath);
-	file.remove();
-
-	if(zip.getZipError()!=0) {
-		qWarning("zip.close(): %d", zip.getZipError());
-		return false;
-	}
-	return true;
-}
-
-
-bool FritzingWindow::unzipTo(const QString &filepath, const QString &dirToDecompress) {
-	QuaZip zip(filepath);
-	if(!zip.open(QuaZip::mdUnzip)) {
-		qWarning("zip.open(): %d", zip.getZipError());
-		return false;
-	}
-	zip.setFileNameCodec("IBM866");
-	DebugDialog::debug(QString("unzipping %1 entries from %2").arg(zip.getEntriesCount()).arg(filepath));
-	QuaZipFileInfo info;
-	QuaZipFile file(&zip);
-	QFile out;
-	QString name;
-	char c;
-	for(bool more=zip.goToFirstFile(); more; more=zip.goToNextFile()) {
-		if(!zip.getCurrentFileInfo(&info)) {
-			qWarning("getCurrentFileInfo(): %d\n", zip.getZipError());
-			return false;
-		}
-
-		if(!file.open(QIODevice::ReadOnly)) {
-			qWarning("file.open(): %d", file.getZipError());
-			return false;
-		}
-		name=file.getActualFileName();
-		if(file.getZipError()!=UNZ_OK) {
-			qWarning("file.getFileName(): %d", file.getZipError());
-			return false;
-		}
-
-		out.setFileName(dirToDecompress+"/"+name);
-		// this will fail if "name" contains subdirectories, but we don't mind that
-		if(!out.open(QIODevice::WriteOnly)) {
-			qWarning("out.open(): %s", out.errorString().toLocal8Bit().constData());
-			return false;
-		}
-
-		// Slow like hell (on GNU/Linux at least), but it is not my fault.
-		// Not ZIP/UNZIP package's fault either.
-		// The slowest thing here is out.putChar(c).
-		// TODO: now that out.putChar has been replaced with a buffered write, is it still slow under Linux?
-
-#define BUFFERSIZE 1024
-		char buffer[BUFFERSIZE];
-		int ix = 0;
-		while(file.getChar(&c)) {
-			buffer[ix++] = c;
-			if (ix == BUFFERSIZE) {
-				out.write(buffer, ix);
-				ix = 0;
-			}
-		}
-		if (ix > 0) {
-			out.write(buffer, ix);
-		}
-
-		out.close();
-		if(file.getZipError()!=UNZ_OK) {
-			qWarning("file.getFileName(): %d", file.getZipError());
-			return false;
-		}
-		if(!file.atEnd()) {
-			qWarning("read all but not EOF");
-			return false;
-		}
-		file.close();
-		if(file.getZipError()!=UNZ_OK) {
-			qWarning("file.close(): %d", file.getZipError());
-			return false;
-		}
-	}
-	zip.close();
-	if(zip.getZipError()!=UNZ_OK) {
-		qWarning("zip.close(): %d", zip.getZipError());
-		return false;
-	}
-	return true;
-}
-
 void FritzingWindow::setReadOnly(bool readOnly) {
 	bool hasChanged = m_readOnly != readOnly;
 	m_readOnly = readOnly;
@@ -426,4 +211,11 @@ void FritzingWindow::setReadOnly(bool readOnly) {
 
 const QString FritzingWindow::fritzingTitle() {
 	return ___fritzingTitle___;
+}
+
+const QString & FritzingWindow::fileName() {
+	return m_fileName;
+}
+
+void FritzingWindow::notClosableForAWhile() {
 }

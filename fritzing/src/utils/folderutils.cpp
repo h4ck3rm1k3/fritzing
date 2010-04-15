@@ -29,8 +29,12 @@ $Date$
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTextStream>
+#include <QUuid>
+#include <QCryptographicHash>
 
 #include "../debugdialog.h"
+#include "../lib/quazip/quazip.h"
+#include "../lib/quazip/quazipfile.h"
 
 FolderUtils* FolderUtils::singleton = NULL;
 QString FolderUtils::m_openSaveFolder = "";
@@ -235,3 +239,205 @@ QString FolderUtils::getSaveFileName( QWidget * parent, const QString & caption,
 	}
 	return result;
 }
+
+bool FolderUtils::isEmptyFileName(const QString &fileName, const QString &untitledFileName) {
+	return (fileName.isEmpty() || fileName.isNull() || fileName.startsWith(untitledFileName));
+}
+
+void FolderUtils::replicateDir(QDir srcDir, QDir targDir) {
+	// copy all files from srcDir source to tagDir
+	QStringList files = srcDir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
+	for(int i=0; i < files.size(); i++) {
+		QFile tempFile(srcDir.path() + "/" +files.at(i));
+		DebugDialog::debug(QObject::tr("Copying file %1").arg(tempFile.fileName()));
+		QFileInfo fi(files.at(i));
+		QString newFilePath = targDir.path() + "/" + fi.fileName();
+		if(QFileInfo(tempFile.fileName()).isDir()) {
+			QDir newTargDir = QDir(newFilePath);
+			newTargDir.mkpath(newTargDir.absolutePath());
+			newTargDir.cd(files.at(i));
+			replicateDir(QDir(tempFile.fileName()),newTargDir);
+		} else {
+			if(!tempFile.copy(newFilePath)) {
+				DebugDialog::debug(QObject::tr("File %1 already exists: it won't be overwritten").arg(newFilePath));
+			}
+		}
+	}
+}
+
+QString FolderUtils::getRandText() {
+	QString rand = QUuid::createUuid().toString();
+	QString randext = QCryptographicHash::hash(rand.toAscii(),QCryptographicHash::Md4).toHex();
+	return randext;
+}
+
+/*QString FolderUtils::getBase64RandText() {
+	QString rand = QUuid::createUuid().toString();
+	QString randext = QCryptographicHash::hash(rand.toAscii(),QCryptographicHash::Md4).toHex();
+	return randext;
+}*/
+
+void FolderUtils::rmdir(const QString &dirPath) {
+	QDir dir = QDir(dirPath);
+	rmdir(dir);
+}
+
+void FolderUtils::rmdir(QDir & dir) {
+	DebugDialog::debug(QString("removing folder: %1").arg(dir.path()));
+
+	QStringList files = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
+	for(int i=0; i < files.size(); i++) {
+		QFile tempFile(dir.path() + "/" +files.at(i));
+		DebugDialog::debug(QString("removing from original folder: %1").arg(tempFile.fileName()));
+		if(QFileInfo(tempFile.fileName()).isDir()) {
+			QDir dir = QDir(tempFile.fileName());
+			rmdir(dir);
+		} else {
+			tempFile.remove(tempFile.fileName());
+		}
+	}
+	dir.rmdir(dir.path());
+}
+
+bool FolderUtils::createZipAndSaveTo(const QDir &dirToCompress, const QString &filepath) {
+	DebugDialog::debug("zipping "+dirToCompress.path()+" into "+filepath);
+
+	QString tempZipFile = QDir::temp().path()+"/"+getRandText()+".zip";
+	DebugDialog::debug("temp file: "+tempZipFile);
+	QuaZip zip(tempZipFile);
+	if(!zip.open(QuaZip::mdCreate)) {
+		qWarning("zip.open(): %d", zip.getZipError());
+		return false;
+	}
+
+	QFileInfoList files=dirToCompress.entryInfoList();
+	QFile inFile;
+	QuaZipFile outFile(&zip);
+	char c;
+
+	QString currFolderBU = QDir::currentPath();
+	QDir::setCurrent(dirToCompress.path());
+	foreach(QFileInfo file, files) {
+		if(!file.isFile()||file.fileName()==filepath) continue;
+
+		inFile.setFileName(file.fileName());
+
+		if(!inFile.open(QIODevice::ReadOnly)) {
+			qWarning("inFile.open(): %s", inFile.errorString().toLocal8Bit().constData());
+			return false;
+		}
+		if(!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(inFile.fileName(), inFile.fileName()))) {
+			qWarning("outFile.open(): %d", outFile.getZipError());
+			return false;
+		}
+
+		while(inFile.getChar(&c)&&outFile.putChar(c)){}
+
+		if(outFile.getZipError()!=UNZ_OK) {
+			qWarning("outFile.putChar(): %d", outFile.getZipError());
+			return false;
+		}
+		outFile.close();
+		if(outFile.getZipError()!=UNZ_OK) {
+			qWarning("outFile.close(): %d", outFile.getZipError());
+			return false;
+		}
+		inFile.close();
+	}
+	zip.close();
+	QDir::setCurrent(currFolderBU);
+
+	if(QFileInfo(filepath).exists()) {
+		// if we're here the usr has already accepted to overwrite
+		QFile::remove(filepath);
+	}
+	QFile file(tempZipFile);
+	file.copy(filepath);
+	file.remove();
+
+	if(zip.getZipError()!=0) {
+		qWarning("zip.close(): %d", zip.getZipError());
+		return false;
+	}
+	return true;
+}
+
+
+bool FolderUtils::unzipTo(const QString &filepath, const QString &dirToDecompress) {
+	QuaZip zip(filepath);
+	if(!zip.open(QuaZip::mdUnzip)) {
+		qWarning("zip.open(): %d", zip.getZipError());
+		return false;
+	}
+	zip.setFileNameCodec("IBM866");
+	DebugDialog::debug(QString("unzipping %1 entries from %2").arg(zip.getEntriesCount()).arg(filepath));
+	QuaZipFileInfo info;
+	QuaZipFile file(&zip);
+	QFile out;
+	QString name;
+	char c;
+	for(bool more=zip.goToFirstFile(); more; more=zip.goToNextFile()) {
+		if(!zip.getCurrentFileInfo(&info)) {
+			qWarning("getCurrentFileInfo(): %d\n", zip.getZipError());
+			return false;
+		}
+
+		if(!file.open(QIODevice::ReadOnly)) {
+			qWarning("file.open(): %d", file.getZipError());
+			return false;
+		}
+		name=file.getActualFileName();
+		if(file.getZipError()!=UNZ_OK) {
+			qWarning("file.getFileName(): %d", file.getZipError());
+			return false;
+		}
+
+		out.setFileName(dirToDecompress+"/"+name);
+		// this will fail if "name" contains subdirectories, but we don't mind that
+		if(!out.open(QIODevice::WriteOnly)) {
+			qWarning("out.open(): %s", out.errorString().toLocal8Bit().constData());
+			return false;
+		}
+
+		// Slow like hell (on GNU/Linux at least), but it is not my fault.
+		// Not ZIP/UNZIP package's fault either.
+		// The slowest thing here is out.putChar(c).
+		// TODO: now that out.putChar has been replaced with a buffered write, is it still slow under Linux?
+
+#define BUFFERSIZE 1024
+		char buffer[BUFFERSIZE];
+		int ix = 0;
+		while(file.getChar(&c)) {
+			buffer[ix++] = c;
+			if (ix == BUFFERSIZE) {
+				out.write(buffer, ix);
+				ix = 0;
+			}
+		}
+		if (ix > 0) {
+			out.write(buffer, ix);
+		}
+
+		out.close();
+		if(file.getZipError()!=UNZ_OK) {
+			qWarning("file.getFileName(): %d", file.getZipError());
+			return false;
+		}
+		if(!file.atEnd()) {
+			qWarning("read all but not EOF");
+			return false;
+		}
+		file.close();
+		if(file.getZipError()!=UNZ_OK) {
+			qWarning("file.close(): %d", file.getZipError());
+			return false;
+		}
+	}
+	zip.close();
+	if(zip.getZipError()!=UNZ_OK) {
+		qWarning("zip.close(): %d", zip.getZipError());
+		return false;
+	}
+	return true;
+}
+

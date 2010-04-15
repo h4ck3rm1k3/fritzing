@@ -604,7 +604,7 @@ bool MainWindow::saveAsAux(const QString & fileName) {
 void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 	int cascFactorX; int cascFactorY;
 	// close empty sketch window if user opens from a file
-	if (isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty()) {
+	if (FolderUtils::isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty()) {
 		QTimer::singleShot(0, this, SLOT(close()) );
 		cascFactorX = 0;
 		cascFactorY = 0;
@@ -2862,7 +2862,7 @@ void MainWindow::importFilesFromPrevInstall() {
 	// replicate dirs
 	QStringList foldersToCopy = FolderUtils::getUserDataStoreFolders();
 	foreach(QString folder, foldersToCopy) {
-		replicateDir(prevInstallPath+folder, userDataPath+folder);
+		FolderUtils::replicateDir(prevInstallPath+folder, userDataPath+folder);
 	}
 
 	// cleanup old bins

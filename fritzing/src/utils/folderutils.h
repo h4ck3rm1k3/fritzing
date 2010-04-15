@@ -46,17 +46,25 @@ public:
 	static bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 	static bool setApplicationPath(const QString & path);
 	static const QString getLibraryPath();
-	static void cleanup();
 	static bool containsText(const QString &filepath, const QString &searchText);
 	static QString getOpenFileName( QWidget * parent = 0, const QString & caption = QString(), const QString & dir = QString(), const QString & filter = QString(), QString * selectedFilter = 0, QFileDialog::Options options = 0 );
 	static QString getSaveFileName( QWidget * parent = 0, const QString & caption = QString(), const QString & dir = QString(), const QString & filter = QString(), QString * selectedFilter = 0, QFileDialog::Options options = 0 );
 	static void setOpenSaveFolder(const QString& path);
 	static const QString openSaveFolder();
+	static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);
+	static void rmdir(const QString &dirPath);
+	static void rmdir(QDir & dir);
+	static bool createZipAndSaveTo(const QDir &dirToCompress, const QString &filename);
+	static bool unzipTo(const QString &filepath, const QString &dirToDecompress);
+	static void replicateDir(QDir srcDir, QDir targDir);
+	static QString getRandText();
 
+	static void cleanup();
 
 protected:
 	FolderUtils();
 	~FolderUtils();
+
 	const QStringList & userDataStoreFolders();
 	bool setApplicationPath2(const QString & path);
 	const QString applicationDirPath();

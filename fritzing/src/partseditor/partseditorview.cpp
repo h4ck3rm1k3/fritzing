@@ -530,7 +530,7 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 void PartsEditorView::loadFile() {
 	QString imageFiles;
 	if (m_viewIdentifier == ViewIdentifierClass::PCBView) {
-		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4)");   // ;;Kicad Module Files (%5)
+		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)");   //
 	}
 	else {
 		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)");
@@ -772,7 +772,7 @@ void PartsEditorView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePat
 		   && !m_tempFolder.mkdir(viewFolder)) return;
 		if(!m_tempFolder.cd(viewFolder)) return;
 
-		QString destFilePath = FritzingWindow::getRandText()+".svg";
+		QString destFilePath = FolderUtils::getRandText()+".svg";
 		DebugDialog::debug(QString("dest file: %1").arg(m_tempFolder.absolutePath()+"/"+destFilePath));
 
 		ensureFilePath(m_tempFolder.absolutePath()+"/"+destFilePath);
@@ -851,7 +851,7 @@ const SvgAndPartFilePath& PartsEditorView::svgFileSplit() {
 QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 	QString viewFolder = getOrCreateViewFolderInTemp();
 
-	QString newFilePath = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
+	QString newFilePath = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FolderUtils::getRandText()+".svg";
 	ensureFilePath(newFilePath);
 
 	if (origFilePath.endsWith(".fp")) {
@@ -940,7 +940,7 @@ QString PartsEditorView::setFriendlierSvgFileName(const QString &partFileName) {
 	if(aux.length()>40) aux.truncate(40);
 	aux+=QString("__%1__%2.svg")
 			.arg(ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier))
-			.arg(FritzingWindow::getRandText());
+			.arg(FolderUtils::getRandText());
 	int slashIdx = m_svgFilePath->relativePath().indexOf("/");
 	QString relpath = m_svgFilePath->relativePath();
 	QString relpath2 = relpath;
@@ -1101,7 +1101,7 @@ void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 			if(somethingChanged) {
 				QString viewFolder = getOrCreateViewFolderInTemp();
 
-				QString tempFile = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
+				QString tempFile = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FolderUtils::getRandText()+".svg";
 
 				ensureFilePath(tempFile);
 
