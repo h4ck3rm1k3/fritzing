@@ -276,6 +276,12 @@ class FormController {
 			attachBytes fn, "application/zip", new File(path).readBytes()
 
 		}
+		sendMail {
+			from "order@ixds.de"
+			to theOrder.email
+            subject "order cancelled"
+			html g.render(template: "confirmOrder", model:[theOrder:theOrder])
+		}
 	}
 	
 	def orderSuccess = {
