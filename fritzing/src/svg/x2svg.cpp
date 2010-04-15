@@ -78,7 +78,7 @@ QString X2Svg::offsetMin(const QString & svg) {
 	}
 
 	SvgFileSplitter splitter;
-	splitter.shiftChild(root, -m_minX, -m_minY);
+	splitter.shiftChild(root, -m_minX, -m_minY, true);
 	return TextUtils::removeXMLEntities(domDocument.toString());
 }
 

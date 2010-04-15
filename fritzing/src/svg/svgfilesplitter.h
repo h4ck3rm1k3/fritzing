@@ -58,11 +58,11 @@ public:
 	const QByteArray & byteArray();
 	const QDomDocument & domDocument();
 	bool normalize(qreal dpi, const QString & elementID, bool blackOnly);
-	QString shift(qreal x, qreal y, const QString & elementID);
+	QString shift(qreal x, qreal y, const QString & elementID, bool shiftTransforms);
 	QString elementString(const QString & elementID);
     virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget, bool convertHV);
 	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
-	void shiftChild(QDomElement & element, qreal x, qreal y);
+	void shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms);
 
 public:
 	static bool getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox);
@@ -85,6 +85,7 @@ protected:
 	void normalizeTranslation(QDomElement & element, 
 							qreal sNewWidth, qreal sNewHeight,
 							qreal vbWidth, qreal vbHeight);
+	void shiftTranslation(QDomElement & element, qreal x, qreal y);
 
 protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);

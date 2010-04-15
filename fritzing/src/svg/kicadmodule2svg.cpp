@@ -118,6 +118,7 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	while (true) {
 		QString line = textStream.readLine();
 		if (line.isNull()) {
+			break;
 		}
 
 		if (line.contains("$MODULE") && line.contains(moduleName)) {
@@ -538,11 +539,37 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper1Color);
 		}
-
 	}
 	else if (shapeIdentifier == "O") {
-		// ellipse
-		throw QObject::tr("ellipsoidal pads not yet implemented");
+		checkXLimit(posX - (xSize / 2.0));
+		checkXLimit(posX + (xSize / 2.0));
+		checkYLimit(posY - (ySize / 2.0));
+		checkYLimit(posY + (ySize / 2.0));
+		if (padType == "SMD") {
+			pad = QString("<ellipse cx='%1' cy='%2' rx='%3' ry='%4' id='connector%5pin' stroke-width='0' fill='%6' />")
+							.arg(posX)
+							.arg(posY)
+							.arg(xSize / 2.0)
+							.arg(ySize / 2.0)
+							.arg(padName)
+							.arg(ViewLayer::Copper1Color);
+		}
+		else {
+			pad += QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
+							.arg(posX)
+							.arg(posY)
+							.arg((qMin(xSize, ySize) / 2.0) - (drillX / 4.0))
+							.arg(padName)
+							.arg(drillX / 2.0)
+							.arg(ViewLayer::Copper0Color);
+			pad += QString("<ellipse cx='%1' cy='%2' rx='%3' ry='%4' fill='none' stroke-width='%5' stroke='%6' />")
+							.arg(posX)
+							.arg(posY)
+							.arg((xSize / 2.0) - (drillX / 4.0))
+							.arg((ySize / 2.0) - (drillX / 4.0))
+							.arg(drillX / 2.0)
+							.arg(ViewLayer::Copper1Color);
+		}
 	}
 	else if (shapeIdentifier == "T") {
 		throw QObject::tr("trapezoidal pads not implemented");

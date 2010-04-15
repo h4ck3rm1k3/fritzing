@@ -284,6 +284,8 @@ void SvgFileSplitter::normalizeTranslation(QDomElement & element,
 	if (attr.isEmpty()) return;
 
 	QMatrix matrix = elementToMatrix(element);
+	if (matrix.dx() == 0 && matrix.dy() == 0) return;
+
 	qreal dx = matrix.dx() * sNewWidth / vbWidth;
 	qreal dy = matrix.dy() * sNewHeight / vbHeight;
 	if (dx == 0 && dy == 0) return;
@@ -402,7 +404,7 @@ bool SvgFileSplitter::normalizeAttribute(QDomElement & element, const char * att
 	return true;
 }
 
-QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
+QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID, bool shiftTransforms)
 {
 	QDomElement root = m_domDocument.documentElement();
 
@@ -411,7 +413,7 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
 
 	QDomElement childElement = mainElement.firstChildElement();
 	while (!childElement.isNull()) {
-		shiftChild(childElement, x, y);
+		shiftChild(childElement, x, y, shiftTransforms);
 		childElement = childElement.nextSiblingElement();
 	}
 
@@ -423,8 +425,25 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
 
 }
 
-void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
+void SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
 {
+	QString attr = element.attribute("transform");
+	if (attr.isEmpty()) return;
+
+	QMatrix matrix = elementToMatrix(element);
+	if (matrix.dx() == 0 && matrix.dy() == 0) return;
+
+	matrix.setMatrix(matrix.m11(), matrix.m12(), matrix.m21(), matrix.m22(), matrix.dx() + x, matrix.dy() + y);
+
+	TextUtils::setSVGTransform(element, matrix);
+}
+
+
+void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms)
+{
+	if (shiftTransforms) {
+		shiftTranslation(element, x, y);
+	}
 	QString nodeName = element.nodeName();
 	if (nodeName.compare("circle") == 0 || nodeName.compare("ellipse") == 0) {
 		shiftAttribute(element, "cx", x);
@@ -472,7 +491,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 	else {
 		QDomElement childElement = element.firstChildElement();
 		while (!childElement.isNull()) {
-			shiftChild(childElement, x, y);
+			shiftChild(childElement, x, y, shiftTransforms);
 			childElement = childElement.nextSiblingElement();
 		}
 	}

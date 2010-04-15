@@ -48,11 +48,11 @@ void SvgFlattener::flattenChildren(QDomElement &element){
     if(hasTranslate(element)){
 		QList<qreal> params = getTransformFloats(element);
 		if(params.size() > 1) {
-            shiftChild(element, params.at(0), params.at(1));
+            shiftChild(element, params.at(0), params.at(1), false);
 			DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
 		}
 		else {
-            shiftChild(element, params.at(0), 0);
+            shiftChild(element, params.at(0), 0, false);
 			DebugDialog::debug(QString("translating %1").arg(params.at(0)));
 		}
     }
