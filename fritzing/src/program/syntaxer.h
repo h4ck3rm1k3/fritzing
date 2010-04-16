@@ -33,7 +33,7 @@ $Date: 2010-03-19 13:06:00 +0100 (Fri, 19 Mar 2010) $
 
 class Syntaxer : public QObject
 {
-Q_OBJECT
+	Q_OBJECT
 
 public:
 	Syntaxer();
@@ -44,4 +44,4 @@ public:
 	bool loadSyntax(const QString & filename);
 };
 
-#endif /* HIGHLIGHTER_H_ */
+#endif /* SYNTAXER_H_ */

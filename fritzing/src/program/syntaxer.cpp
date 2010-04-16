@@ -31,8 +31,6 @@ $Date: 2010-04-15 15:12:52 +0200 (Thu, 15 Apr 2010) $
 
 #include <QRegExp>
 #include <QXmlStreamReader>
-#include <stdlib.h>
-
 
 Syntaxer::Syntaxer() : QObject()
 {
