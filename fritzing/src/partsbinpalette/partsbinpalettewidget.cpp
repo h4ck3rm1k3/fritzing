@@ -41,7 +41,6 @@ $Date$
 #include "simpleeditablelabelwidget.h"
 #include "binmanager/binmanager.h"
 #include "searchlineedit.h"
-#include "../fritzingwindow.h"
 #include "../utils/misc.h"
 #include "../debugdialog.h"
 #include "../dockmanager.h"

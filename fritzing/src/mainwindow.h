@@ -39,6 +39,8 @@ $Date$
 #include "sketchareawidget.h"
 #include "viewlayer.h"
 #include "sketchtoolbutton.h"
+#include "program/programmainwindow.h"
+#include "viewswitcher/viewswitcher.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -244,6 +246,8 @@ protected slots:
 
 	void dropPaste(SketchWidget *);
 
+	void openProgramWindow();
+
 protected:
 	void initSketchWidget(SketchWidget *);
 
@@ -363,37 +367,37 @@ protected:
 	QUndoGroup *m_undoGroup;
 	QUndoView *m_undoView;
 
-	SketchAreaWidget *m_breadboardWidget;
-	class BreadboardSketchWidget *m_breadboardGraphicsView;
+	QPointer<SketchAreaWidget> m_breadboardWidget;
+	QPointer<class BreadboardSketchWidget> m_breadboardGraphicsView;
 
-	SketchAreaWidget *m_schematicWidget;
-	class SchematicSketchWidget *m_schematicGraphicsView;
+	QPointer<SketchAreaWidget> m_schematicWidget;
+	QPointer<class SchematicSketchWidget> m_schematicGraphicsView;
 
-	SketchAreaWidget *m_pcbWidget;
-	class PCBSketchWidget *m_pcbGraphicsView;
+	QPointer<SketchAreaWidget> m_pcbWidget;
+	QPointer<class PCBSketchWidget> m_pcbGraphicsView;
 
-    class BinManager *m_paletteWidget;
-    class MiniViewContainer *m_miniViewContainerBreadboard;
-    class MiniViewContainer *m_miniViewContainerSchematic;
-    class MiniViewContainer *m_miniViewContainerPCB;
+    QPointer<class BinManager> m_paletteWidget;
+    QPointer<class MiniViewContainer> m_miniViewContainerBreadboard;
+    QPointer<class MiniViewContainer> m_miniViewContainerSchematic;
+    QPointer<class MiniViewContainer> m_miniViewContainerPCB;
 	QList <class MiniViewContainer *> m_navigators;
-	QStackedWidget * m_tabWidget;
-    class PaletteModel *m_paletteModel;
-    ReferenceModel *m_refModel;
-    class SketchModel *m_sketchModel;
-    class HtmlInfoView * m_infoView;
-    QToolBar *m_toolbar;
+	QPointer<QStackedWidget> m_tabWidget;
+    QPointer<class PaletteModel> m_paletteModel;
+    QPointer<ReferenceModel> m_refModel;
+    QPointer<class SketchModel> m_sketchModel;
+    QPointer<class HtmlInfoView> m_infoView;
+    QPointer<QToolBar> m_toolbar;
 
     QHash <long,class PartsEditorMainWindow*> m_partsEditorWindows;
     QHash <long,class PartsBinPaletteWidget*> m_binsWithPartsEditorRequests;
 
-    class Console * m_consoleView;
+    QPointer<class Console> m_consoleView;
     bool m_closing;
 	bool m_dontClose;
     bool m_firstOpen;
 
-    SketchAreaWidget *m_currentWidget;
-    SketchWidget * m_currentGraphicsView;
+    QPointer<SketchAreaWidget> m_currentWidget;
+    QPointer<SketchWidget> m_currentGraphicsView;
 
     //QToolBar *m_fileToolBar;
     //QToolBar *m_editToolBar;
@@ -478,6 +482,7 @@ protected:
 	QAction *m_disconnectAllAct;
 	QAction *m_selectAllObsoleteAct;
 	QAction *m_swapObsoleteAct;
+	QAction * m_openProgramWindowAct;
 
 	QAction *m_addBendpointAct;
 
@@ -541,7 +546,6 @@ protected:
 	// Wire Color Menu
 	QMenu * m_wireColorMenu;
 
-
     // Dot icons
     QIcon m_dotIcon;
     QIcon m_emptyIcon;
@@ -558,24 +562,25 @@ protected:
 
     QStringList m_openExampleActions;
 
-	class TripleNavigator * m_tripleNavigator;
-	class FSizeGrip *m_sizeGrip;
+	QPointer<class TripleNavigator> m_tripleNavigator;
+	QPointer<class FSizeGrip> m_sizeGrip;
 
 	friend class Helper;
 	friend class DockManager;
 
-	class ViewSwitcher * m_viewSwitcher;
-	class ViewSwitcherDockWidget * m_viewSwitcherDock;
+	QPointer<class ViewSwitcher> m_viewSwitcher;
+	QPointer<class ViewSwitcherDockWidget> m_viewSwitcherDock;
 
-	Helper *m_helper;
+	QPointer<Helper> m_helper;
 	QTimer m_setUpDockManagerTimer;
-	class DockManager * m_dockManager;
-	class FileProgressDialog * m_fileProgressDialog;
-	class ZoomSlider * m_zoomSlider;
+	QPointer<class DockManager> m_dockManager;
+	QPointer<class FileProgressDialog> m_fileProgressDialog;
+	QPointer<class ZoomSlider> m_zoomSlider;
 
 	QByteArray m_externalProcessOutput;
 
-	class LayerPalette * m_layerPalette;
+	QPointer<class LayerPalette> m_layerPalette;
+	QPointer<class ProgramMainWindow> m_programMainWindow;
 
 public:
 	static int RestartNeeded;

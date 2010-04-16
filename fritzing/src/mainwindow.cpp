@@ -92,6 +92,7 @@ static const int MainWindowDefaultHeight = 600;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_programMainWindow = NULL;
 	m_windowMenuSeparator = NULL;
 	m_wireColorMenu = NULL;
 	m_viewSwitcherDock = NULL;

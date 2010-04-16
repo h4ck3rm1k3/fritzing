@@ -63,6 +63,7 @@ $Date$
 #include "utils/zoomslider.h"
 #include "dialogs/alignsettingsdialog.h"
 #include "layerpalette.h"
+#include "program/programmainwindow.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1312,13 +1313,18 @@ void MainWindow::createPartMenuActions() {
 	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
 	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
 
-        m_selectAllObsoleteAct = new QAction(tr("Select outdated parts"), this);
-        m_selectAllObsoleteAct->setStatusTip(tr("Select outdated parts"));
+    m_selectAllObsoleteAct = new QAction(tr("Select outdated parts"), this);
+    m_selectAllObsoleteAct->setStatusTip(tr("Select outdated parts"));
 	connect(m_selectAllObsoleteAct, SIGNAL(triggered()), this, SLOT(selectAllObsolete()));
 
-        m_swapObsoleteAct = new QAction(tr("Update selected parts"), this);
-        m_swapObsoleteAct->setStatusTip(tr("Update selected parts"));
+    m_swapObsoleteAct = new QAction(tr("Update selected parts"), this);
+    m_swapObsoleteAct->setStatusTip(tr("Update selected parts"));
 	connect(m_swapObsoleteAct, SIGNAL(triggered()), this, SLOT(swapObsolete()));
+
+    m_openProgramWindowAct = new QAction(tr("Open programming window"), this);
+    m_openProgramWindowAct->setStatusTip(tr("Open microcontroller programming window"));
+	connect(m_openProgramWindowAct, SIGNAL(triggered()), this, SLOT(openProgramWindow()));
+
 }
 
 void MainWindow::createViewMenuActions() {
@@ -1543,6 +1549,8 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_selectAllObsoleteAct);
 	m_partMenu->addAction(m_swapObsoleteAct);
+	//m_partMenu->addSeparator();
+	//m_partMenu->addAction(m_openProgramWindowAct);
 
 	m_zOrderMenu->addAction(m_bringToFrontAct);
 	m_zOrderMenu->addAction(m_bringForwardAct);
@@ -1812,7 +1820,7 @@ void MainWindow::updatePartMenu() {
 	// TODO: only enable if there is an obsolete part in the sketch
 	m_selectAllObsoleteAct->setEnabled(true);
 	m_swapObsoleteAct->setEnabled(itemCount.obsoleteCount > 0);
-
+	m_openProgramWindowAct->setEnabled(true);
 }
 
 void MainWindow::updateTransformationActions() {
@@ -3420,3 +3428,14 @@ void MainWindow::alignToGridSettings() {
 	}
 }
 
+void MainWindow::openProgramWindow() {
+	if (m_programMainWindow) {
+		m_programMainWindow->setVisible(true);
+		m_programMainWindow->raise();
+		return;
+	}
+
+	m_programMainWindow = new ProgramMainWindow(this);
+	m_programMainWindow->setup();
+	m_programMainWindow->setVisible(true);
+}
