@@ -1,0 +1,1525 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.2"
+   width="164.7"
+   height="433.70001"
+   viewBox="0 0 1830 4818.8886"
+   id="svg3620"
+   
+   >
+  <metadata
+     id="metadata3770">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3768">
+    <inkscape:perspective
+       
+       
+       
+       
+       
+       id="perspective3772" />
+    <inkscape:perspective
+       id="perspective3420"
+       
+       
+       
+       
+        />
+    <inkscape:perspective
+       id="perspective3877"
+       
+       
+       
+       
+        />
+    <inkscape:perspective
+       id="perspective4004"
+       
+       
+       
+       
+        />
+    <inkscape:perspective
+       id="perspective4004-1"
+       
+       
+       
+       
+        />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     
+     
+     
+     
+     id="namedview3766"
+     showgrid="false"
+     
+     
+     
+     
+     
+     
+      />
+  <g
+     id="schematic"
+     transform="translate(0,288.8853)">
+    <rect
+       x="315"
+       y="15"
+       width="1200"
+       height="4500"
+       id="rect3623"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <text
+       id="label"
+       x="905.40253"
+       y="-62.860195"
+       font-size="235"
+       style="font-size:235px;text-align:center;line-height:125%;writing-mode:lr;text-anchor:middle;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4170">PICAXE-28X2-3V</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="315"
+       x2="300"
+       y2="315"
+       id="line3626"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="300"
+       width="300"
+       height="30"
+       id="connector0pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="300"
+       width="30"
+       height="30"
+       id="connector0terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label0"
+       x="390"
+       y="350"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4060">Reset</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="315"
+       x2="1815"
+       y2="315"
+       id="line3631"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="300"
+       width="300"
+       height="30"
+       id="connector27pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="300"
+       width="30"
+       height="30"
+       id="connector27terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label27"
+       x="1440"
+       y="350"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4138">B.7</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="615"
+       x2="300"
+       y2="615"
+       id="line3636"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="600"
+       width="300"
+       height="30"
+       id="connector1pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="600"
+       width="30"
+       height="30"
+       id="connector1terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label1"
+       x="390"
+       y="650"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4130">A.0</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="615"
+       x2="1815"
+       y2="615"
+       id="line3641"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="600"
+       width="300"
+       height="30"
+       id="connector26pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="600"
+       width="30"
+       height="30"
+       id="connector26terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label26"
+       x="1440"
+       y="650"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4140">B.6</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="915"
+       x2="300"
+       y2="915"
+       id="line3646"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="900"
+       width="300"
+       height="30"
+       id="connector2pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="900"
+       width="30"
+       height="30"
+       id="connector2terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label2"
+       x="390"
+       y="950"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4132">A.1</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="915"
+       x2="1815"
+       y2="915"
+       id="line3651"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="900"
+       width="300"
+       height="30"
+       id="connector25pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="900"
+       width="30"
+       height="30"
+       id="connector25terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label25"
+       x="1440"
+       y="950"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4142">B.5</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="1215"
+       x2="300"
+       y2="1215"
+       id="line3656"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="1200"
+       width="300"
+       height="30"
+       id="connector3pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="1200"
+       width="30"
+       height="30"
+       id="connector3terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label3"
+       x="390"
+       y="1250"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4134">A.2</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="1215"
+       x2="1815"
+       y2="1215"
+       id="line3661"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="1200"
+       width="300"
+       height="30"
+       id="connector24pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="1200"
+       width="30"
+       height="30"
+       id="connector24terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label24"
+       x="1440"
+       y="1250"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4144">B.4</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="1515"
+       x2="300"
+       y2="1515"
+       id="line3666"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="1500"
+       width="300"
+       height="30"
+       id="connector4pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="1500"
+       width="30"
+       height="30"
+       id="connector4terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label4"
+       x="390"
+       y="1550"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4136">A.3</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="1515"
+       x2="1815"
+       y2="1515"
+       id="line3671"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="1500"
+       width="300"
+       height="30"
+       id="connector23pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="1500"
+       width="30"
+       height="30"
+       id="connector23terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label23"
+       x="1440"
+       y="1550"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4146">B.3</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="1815"
+       x2="300"
+       y2="1815"
+       id="line3676"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="1800"
+       width="300"
+       height="30"
+       id="connector5pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="1800"
+       width="30"
+       height="30"
+       id="connector5terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label5"
+       x="390"
+       y="1850"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4086">Serial In</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="1815"
+       x2="1815"
+       y2="1815"
+       id="line3681"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="1800"
+       width="300"
+       height="30"
+       id="connector22pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="1800"
+       width="30"
+       height="30"
+       id="connector22terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label22"
+       x="1440"
+       y="1850"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4148">B.2</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="2115"
+       x2="300"
+       y2="2115"
+       id="line3686"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="2100"
+       width="300"
+       height="30"
+       id="connector6pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="2100"
+       width="30"
+       height="30"
+       id="connector6terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label6"
+       x="390"
+       y="2150"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4088">Serial Out</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="2115"
+       x2="1815"
+       y2="2115"
+       id="line3691"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="2100"
+       width="300"
+       height="30"
+       id="connector21pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="2100"
+       width="30"
+       height="30"
+       id="connector21terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label21"
+       x="1440"
+       y="2150"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4150">B.1</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="2415"
+       x2="300"
+       y2="2415"
+       id="line3696"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="2400"
+       width="300"
+       height="30"
+       id="connector7pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="2400"
+       width="30"
+       height="30"
+       id="connector7terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label7"
+       x="390"
+       y="2450"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4090">0V</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="2415"
+       x2="1815"
+       y2="2415"
+       id="line3701"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="2400"
+       width="300"
+       height="30"
+       id="connector20pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="2400"
+       width="30"
+       height="30"
+       id="connector20terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label20"
+       x="1440"
+       y="2450"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4152">B.0</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="2715"
+       x2="300"
+       y2="2715"
+       id="line3706"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="2700"
+       width="300"
+       height="30"
+       id="connector8pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="2700"
+       width="30"
+       height="30"
+       id="connector8terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label8"
+       x="390"
+       y="2750"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4092">Resonator</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="2715"
+       x2="1815"
+       y2="2715"
+       id="line3711"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="2700"
+       width="300"
+       height="30"
+       id="connector19pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="2700"
+       width="30"
+       height="30"
+       id="connector19terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label19"
+       x="1440"
+       y="2750"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan3594">+3V6</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="3015"
+       x2="300"
+       y2="3015"
+       id="line3716"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="3000"
+       width="300"
+       height="30"
+       id="connector9pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="3000"
+       width="30"
+       height="30"
+       id="connector9terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label9"
+       x="390"
+       y="3050"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4094">Resonator</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="3015"
+       x2="1815"
+       y2="3015"
+       id="line3721"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="3000"
+       width="300"
+       height="30"
+       id="connector18pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="3000"
+       width="30"
+       height="30"
+       id="connector18terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label18"
+       x="1440"
+       y="3050"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4118">0V</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="3315"
+       x2="300"
+       y2="3315"
+       id="line3726"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="3300"
+       width="300"
+       height="30"
+       id="connector10pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="3300"
+       width="30"
+       height="30"
+       id="connector10terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label10"
+       x="390"
+       y="3350"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4154">C.0</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="3315"
+       x2="1815"
+       y2="3315"
+       id="line3731"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="3300"
+       width="300"
+       height="30"
+       id="connector17pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="3300"
+       width="30"
+       height="30"
+       id="connector17terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label17"
+       x="1440"
+       y="3350"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4168">C.7</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="3615"
+       x2="300"
+       y2="3615"
+       id="line3736"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="3600"
+       width="300"
+       height="30"
+       id="connector11pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="3600"
+       width="30"
+       height="30"
+       id="connector11terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label11"
+       x="390"
+       y="3650"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4156">C.1</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="3615"
+       x2="1815"
+       y2="3615"
+       id="line3741"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="3600"
+       width="300"
+       height="30"
+       id="connector16pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="3600"
+       width="30"
+       height="30"
+       id="connector16terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label16"
+       x="1440"
+       y="3650"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4166">C.6</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="3915"
+       x2="300"
+       y2="3915"
+       id="line3746"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="3900"
+       width="300"
+       height="30"
+       id="connector12pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="3900"
+       width="30"
+       height="30"
+       id="connector12terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label12"
+       x="390"
+       y="3950"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4158">C.2</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="3915"
+       x2="1815"
+       y2="3915"
+       id="line3751"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="3900"
+       width="300"
+       height="30"
+       id="connector15pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="3900"
+       width="30"
+       height="30"
+       id="connector15terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label15"
+       x="1440"
+       y="3950"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4164">C.5</tspan>
+    </text>
+    <line
+       x1="15"
+       y1="4215"
+       x2="300"
+       y2="4215"
+       id="line3756"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="0"
+       y="4200"
+       width="300"
+       height="30"
+       id="connector13pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="0"
+       y="4200"
+       width="30"
+       height="30"
+       id="connector13terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label13"
+       x="390"
+       y="4250"
+       font-size="130"
+       style="font-size:130px;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans;text-align:start;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4160">C.3</tspan>
+    </text>
+    <line
+       x1="1515"
+       y1="4215"
+       x2="1815"
+       y2="4215"
+       id="line3761"
+       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-linejoin:round" />
+    <rect
+       x="1530"
+       y="4200"
+       width="300"
+       height="30"
+       id="connector14pin"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1830"
+       y="4200"
+       width="30"
+       height="30"
+       id="connector14terminal"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label14"
+       x="1440"
+       y="4250"
+       font-size="130"
+       style="font-size:130px;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans;text-align:end;writing-mode:lr;line-height:125%"
+       >
+      <tspan
+         
+         id="tspan4162">C.4</tspan>
+    </text>
+    <rect
+       x="1829.2106"
+       y="890.08331"
+       width="30.000002"
+       height="30.000002"
+       id="connector35terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="1190.0831"
+       width="30.000002"
+       height="30.000002"
+       id="connector34terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="1490.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector33terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="1790.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector32terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="2090.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector31terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="2390.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector30terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="2690.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector29terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="2990.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector28terminal"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="3290.083"
+       width="30.000002"
+       height="30.000002"
+       id="connector27terminal-1"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="3590.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector26terminal-1"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="3890.0833"
+       width="30.000002"
+       height="30.000002"
+       id="connector25terminal-5"
+       style="fill:none;stroke-width:0" />
+    <rect
+       x="1829.2106"
+       y="4190.0835"
+       width="30.000002"
+       height="30.000002"
+       id="connector24terminal-2"
+       style="fill:none;stroke-width:0" />
+    <text
+       id="label0-1-2-4"
+       x="1626.6927"
+       y="2067.2244"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4044">22</tspan>
+    </text>
+    <text
+       id="label0-0-3-5"
+       x="1620.7408"
+       y="2359.29"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4046">21</tspan>
+    </text>
+    <text
+       id="label0-5-1-7"
+       x="1619.566"
+       y="1773.6865"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4042">23</tspan>
+    </text>
+    <text
+       id="label0-11-87-1"
+       x="1625.2523"
+       y="1470.842"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4040">24</tspan>
+    </text>
+    <text
+       id="label0-7-27-2"
+       x="1630.4288"
+       y="1165.8698"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4038">25</tspan>
+    </text>
+    <text
+       id="label0-4-3-6"
+       x="1629.9042"
+       y="864.03912"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4036">26</tspan>
+    </text>
+    <text
+       id="label0-7-27-50"
+       x="1611.2606"
+       y="4163.1997"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4058">15</tspan>
+    </text>
+    <text
+       id="label0-4-3-8"
+       x="1620.8942"
+       y="3861.9558"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4056">16</tspan>
+    </text>
+    <text
+       id="label0-2-9-02"
+       x="1630.3893"
+       y="3559.8147"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4054">17</tspan>
+    </text>
+    <text
+       id="label0-2-9-1-8"
+       x="1632.993"
+       y="3256.1624"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4052">18</tspan>
+    </text>
+    <text
+       id="label0-2-9-0-5"
+       x="1628.2159"
+       y="2966.1184"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4050">19</tspan>
+    </text>
+    <text
+       id="label0-2-9-8-9"
+       x="1620.3593"
+       y="2666.5315"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4048">20</tspan>
+    </text>
+    <text
+       id="label0-4-3-6-7"
+       x="1626.6724"
+       y="554.56219"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4034">27</tspan>
+    </text>
+    <text
+       id="label0-4-3-6-4"
+       x="1617.075"
+       y="257.04095"
+       font-size="130"
+       style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+       >
+      <tspan
+         
+         id="tspan4032">28</tspan>
+    </text>
+  </g>
+  <rect
+     x="23.213112"
+     y="610.50391"
+     width="30.000002"
+     height="30.000002"
+     id="connector0terminal-1"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="910.50385"
+     width="30.000002"
+     height="30.000002"
+     id="connector1terminal-7"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="1210.5038"
+     width="30.000002"
+     height="30.000002"
+     id="connector2terminal-4"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="1510.5039"
+     width="30.000002"
+     height="30.000002"
+     id="connector3terminal-0"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="1810.5039"
+     width="30.000002"
+     height="30.000002"
+     id="connector4terminal-9"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="2110.5046"
+     width="30.000002"
+     height="30.000002"
+     id="connector5terminal-4"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="2410.5068"
+     width="30.000002"
+     height="30.000002"
+     id="connector6terminal-8"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="2710.5068"
+     width="30.000002"
+     height="30.000002"
+     id="connector7terminal-8"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="3010.5068"
+     width="30.000002"
+     height="30.000002"
+     id="connector8terminal-2"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="3310.5068"
+     width="30.000002"
+     height="30.000002"
+     id="connector9terminal-4"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="3610.5068"
+     width="30.000002"
+     height="30.000002"
+     id="connector10terminal-5"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="3910.5068"
+     width="30.000002"
+     height="30.000002"
+     id="connector11terminal-5"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="4210.5044"
+     width="30.000002"
+     height="30.000002"
+     id="connector12terminal-1"
+     style="fill:none;stroke-width:0" />
+  <rect
+     x="23.213112"
+     y="4510.5005"
+     width="30.000002"
+     height="30.000002"
+     id="connector13terminal-7"
+     style="fill:none;stroke-width:0" />
+  <text
+     id="label0-1-2"
+     x="142.155"
+     y="865.31146"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3194"
+       x="142.155"
+       y="865.31146">2</tspan>
+  </text>
+  <text
+     id="label0-0-3"
+     x="152.86984"
+     y="564.72888"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3192"
+       x="152.86984"
+       y="564.72888">1</tspan>
+  </text>
+  <text
+     id="label0-5-1"
+     x="150.32004"
+     y="1165.2083"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3196"
+       x="150.32004"
+       y="1165.2083">3</tspan>
+  </text>
+  <text
+     id="label0-11-87"
+     x="138.83493"
+     y="1462.8688"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     
+     
+     >
+    <tspan
+       
+       id="tspan3198"
+       x="138.83493"
+       y="1462.8688">4</tspan>
+  </text>
+  <text
+     id="label0-7-27"
+     x="145.89108"
+     y="1760.7858"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3200"
+       x="145.89108"
+       y="1760.7858">5</tspan>
+  </text>
+  <text
+     id="label0-4-3"
+     x="139.811"
+     y="2071.947"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3202"
+       x="139.811"
+       y="2071.947">6</tspan>
+  </text>
+  <text
+     id="label0-2-9"
+     x="127.2424"
+     y="2367.3452"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3204"
+       x="127.2424"
+       y="2367.3452">7</tspan>
+  </text>
+  <text
+     id="label0-2-9-1"
+     x="137.28122"
+     y="2661.6482"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3229"
+       x="137.28122"
+       y="2661.6482">8</tspan>
+  </text>
+  <text
+     id="label0-2-9-0"
+     x="153.24899"
+     y="2968.1772"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3231"
+       x="153.24899"
+       y="2968.1772">9</tspan>
+  </text>
+  <text
+     id="label0-2-9-8"
+     x="71.462135"
+     y="3267.3889"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3556"
+       x="71.462135"
+       y="3267.3889">10</tspan>
+  </text>
+  <text
+     id="label0-1-2-7"
+     x="76.391335"
+     y="3868.459"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3552"
+       x="76.391335"
+       y="3868.459">12</tspan>
+  </text>
+  <text
+     id="label0-0-3-1"
+     x="79.671364"
+     y="3560.4409"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3554"
+       x="79.671364"
+       y="3560.4409">11</tspan>
+  </text>
+  <text
+     id="label0-5-1-9"
+     x="84.556618"
+     y="4168.3521"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3546"
+       x="84.556618"
+       y="4168.3521">13</tspan>
+  </text>
+  <text
+     id="label0-11-87-7"
+     x="87.941879"
+     y="4466.0034"
+     font-size="130"
+     style="font-size:130px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:DroidSans"
+     >
+    <tspan
+       
+       id="tspan3548"
+       x="87.941879"
+       y="4466.0034">14</tspan>
+  </text>
+</svg>
