@@ -36,8 +36,6 @@ class Syntaxer : public QObject
 	Q_OBJECT
 
 public:
-	Syntaxer();
-	~Syntaxer();
 
 	static QString parseForName(const QString & filename);
 
