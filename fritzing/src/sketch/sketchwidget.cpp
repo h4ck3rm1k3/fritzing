@@ -2133,9 +2133,8 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 				drag->exec();
 
-				delete m_movingSVGRenderer;
+                                delete m_movingSVGRenderer;
 				m_movingSVGRenderer = NULL;
-				delete drag;
 				return;
 			}
 		}
