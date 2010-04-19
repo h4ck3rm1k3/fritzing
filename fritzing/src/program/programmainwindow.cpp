@@ -42,8 +42,10 @@ $Date$
 //		undo
 //		text search
 //		serial port plugins
-//		comments, numbers, etc.
+//		numbers, etc.
 //		hook up char formats for highlighting
+//		linking vs loading?
+//		save as part of fzz
 
 // linux: finding serial ports using the shell:  "dmesg | grep tty", then clean up the response
 

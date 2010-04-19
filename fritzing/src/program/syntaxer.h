@@ -59,6 +59,8 @@ public:
 	bool matches(const QString & string, TrieLeaf * & leaf);
 	const CommentInfo * getCommentInfo(int ix);
 	bool matchCommentStart(const QString & text, int offset, int & result, const CommentInfo * & resultCommentInfo);
+	int matchStringStart(const QString & text, int offset);
+	int matchStringEnd(const QString & text, int offset);
 	const QString & extensions();
 
 public:
@@ -73,6 +75,7 @@ protected:
 	QString m_name;
 	QString m_extensions;
 	QList<CommentInfo *> m_commentInfo;
+	QChar m_stringDelimiter;
 };
 
 class SyntaxerTrieLeaf : public TrieLeaf

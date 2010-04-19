@@ -49,6 +49,7 @@ protected:
 	void highlightBlock(const QString & text);
 	bool isWordChar(QChar c);
 	void highlightTerms(const QString & text);
+	void highlightStrings(int startStringIndex, QString & text);
 
 protected:
 	QPointer<class Syntaxer> m_syntaxer;

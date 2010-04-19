@@ -32,9 +32,12 @@ $Date$
 #include <QRegExp>
 #include <stdlib.h>
 
+#define STRINGOFFSET 10
+#define COMMENTOFFSET 100
 
 QTextCharFormat myClassFormat;
 QTextCharFormat commentFormat;
+QTextCharFormat stringFormat;
 
 Highlighter::Highlighter(QTextEdit * textEdit) : QSyntaxHighlighter(textEdit)
 {
@@ -42,10 +45,10 @@ Highlighter::Highlighter(QTextEdit * textEdit) : QSyntaxHighlighter(textEdit)
 
 	// just temporary
     myClassFormat.setFontWeight(QFont::Bold);
-    myClassFormat.setForeground(Qt::darkMagenta);
-    commentFormat.setFontWeight(QFont::Bold);
-    commentFormat.setForeground(Qt::gray);
+    myClassFormat.setForeground(Qt::blue);
 	commentFormat.setFontItalic(true);
+    commentFormat.setForeground(Qt::gray);
+	stringFormat.setForeground(Qt::red);
 }
 
 Highlighter::~Highlighter()
@@ -70,36 +73,62 @@ void Highlighter::highlightBlock(const QString &text)
 	}
 
 	setCurrentBlockState(0);
-	int startIndex = -1;
+	int startCommentIndex = -1;
+	int startStringIndex = -1;
 	const CommentInfo * currentCommentInfo = NULL;
-	if (previousBlockState() <= 0) {
-		m_syntaxer->matchCommentStart(text, 0, startIndex, currentCommentInfo);
+	int pbs = previousBlockState();
+	if (pbs <= 0) {
+		m_syntaxer->matchCommentStart(text, 0, startCommentIndex, currentCommentInfo);
 	}
-	else {
-		currentCommentInfo = m_syntaxer->getCommentInfo(previousBlockState() - 1);
-		startIndex = 0;
+	else if (pbs >= COMMENTOFFSET) {
+		currentCommentInfo = m_syntaxer->getCommentInfo(previousBlockState() - COMMENTOFFSET);
+		startCommentIndex = 0;
+	}
+	else if (pbs == STRINGOFFSET) {
+		startStringIndex = 0;
 	}
 
 	QString noComment = text;
 
-	while (startIndex >= 0) {
-		int endIndex = currentCommentInfo->m_multiLine ? text.indexOf(currentCommentInfo->m_end, startIndex, currentCommentInfo->m_caseSensitive) : text.length();
+	while (startCommentIndex >= 0) {
+		int endIndex = currentCommentInfo->m_multiLine ? text.indexOf(currentCommentInfo->m_end, startCommentIndex, currentCommentInfo->m_caseSensitive) : text.length();
 		int commentLength;
 		if (endIndex == -1) {
-			setCurrentBlockState(currentCommentInfo->m_index + 1);
-			commentLength = text.length() - startIndex;
+			setCurrentBlockState(currentCommentInfo->m_index + COMMENTOFFSET);
+			commentLength = text.length() - startCommentIndex;
 		} 
 		else {
-			commentLength = endIndex - startIndex + currentCommentInfo->m_end.length();
+			commentLength = endIndex - startCommentIndex + currentCommentInfo->m_end.length();
 		}
-		noComment.replace(startIndex, commentLength, QString(commentLength, ' '));
-		setFormat(startIndex, commentLength, commentFormat);
-		m_syntaxer->matchCommentStart(text, startIndex + commentLength, startIndex, currentCommentInfo);
+		noComment.replace(startCommentIndex, commentLength, QString(commentLength, ' '));
+		setFormat(startCommentIndex, commentLength, commentFormat);
+		m_syntaxer->matchCommentStart(text, startCommentIndex + commentLength, startCommentIndex, currentCommentInfo);
 	}
 
+	highlightStrings(startStringIndex, noComment);
 	highlightTerms(noComment);
 }
 
+void Highlighter::highlightStrings(int startStringIndex, QString & text) {
+	if (startStringIndex < 0) {
+		startStringIndex = m_syntaxer->matchStringStart(text, 0);
+	}
+
+	while (startStringIndex >= 0) {
+		int endIndex = m_syntaxer->matchStringEnd(text, startStringIndex + 1);
+		int stringLength;
+		if (endIndex == -1) {
+			setCurrentBlockState(STRINGOFFSET);
+			stringLength = text.length() - startStringIndex;
+		} 
+		else {
+			stringLength = endIndex - startStringIndex + 1;
+		}
+		text.replace(startStringIndex, stringLength, QString(stringLength, ' '));
+		setFormat(startStringIndex, stringLength, stringFormat);
+		startStringIndex = m_syntaxer->matchStringStart(text, startStringIndex + stringLength);
+	}
+}
 
 void Highlighter::highlightTerms(const QString & text) {
 	int lastWordBreak = 0;

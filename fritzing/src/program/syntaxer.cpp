@@ -64,6 +64,28 @@ bool Syntaxer::loadSyntax(const QString &filename)
 	QDomElement general = root.firstChildElement("general");
 	if (general.isNull()) return false;
 
+	QDomElement contexts = highlighting.firstChildElement("contexts");
+	if (contexts.isNull()) return false;
+
+	QDomElement context = contexts.firstChildElement("context");
+	while (!context.isNull()) {
+		if (context.attribute("attribute").compare("Normal Text") == 0) {
+			QDomElement detectChar = context.firstChildElement("DetectChar");
+			while (!detectChar.isNull()) {
+				if (detectChar.attribute("attribute").compare("String") == 0) {
+					QString c = detectChar.attribute("char");
+					if (c.length() > 0) {
+						m_stringDelimiter = c.at(0);
+					}
+					break;
+				}
+				detectChar = detectChar.nextSiblingElement("DetectChar");
+			}
+			break;
+		}
+		context = context.nextSiblingElement("context");
+	}
+
 	m_name = root.attribute("name");
 	QStringList extensions = root.attribute("extensions").split(";", QString::SkipEmptyParts);
 	if (extensions.count() > 0) {
@@ -154,6 +176,16 @@ bool Syntaxer::matchCommentStart(const QString & text, int offset, int & result,
 	}
 
 	return (result >= offset);
+}
+
+int Syntaxer::matchStringStart(const QString & text, int offset) {
+	if (m_stringDelimiter.isNull()) return -1;
+
+	return text.indexOf(m_stringDelimiter, offset);
+}
+
+int Syntaxer::matchStringEnd(const QString & text, int offset) {
+	return matchStringStart(text, offset);
 }
 
 const QString & Syntaxer::extensions() {
