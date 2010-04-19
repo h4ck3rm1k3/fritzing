@@ -30,6 +30,7 @@ $Date$
 #include "../sketch/infographicsview.h"
 #include "../model/modelpart.h"
 #include "../utils/resizehandle.h"
+#include "../utils/textutils.h"
 
 #include <QTextFrame>
 #include <QTextFrameFormat>
@@ -76,24 +77,6 @@ const int borderWidth = 3;
 QString Note::initialTextString;
 
 QRegExp urlTag("<a.*href=[\"']([^\"]+[.\\s]*)[\"'].*>");    
-
-///////////////////////////////////////
-
-bool findText(QDomNode node, QDomNode & textNode) {
-	if (node.isText()) {
-		textNode = node;
-		return true;
-	}
-
-	QDomNode cnode = node.firstChild();
-	while (!cnode.isNull()) {
-		if (findText(cnode, textNode)) return true;
-
-		cnode = cnode.nextSibling();
-	}
-
-	return false;
-}
 
 ///////////////////////////////////////
 
@@ -644,10 +627,9 @@ void Note::linkDialog() {
 				href = a.attribute("HREF");
 			}
 			if (href.compare(originalUrl) == 0) {
-				QDomNode textNode;
-				if (findText(a, textNode)) {
-					originalText = textNode.nodeValue();
-					ld.setText(originalText);
+				QString text;
+				if (TextUtils::findText(a, text)) {
+					ld.setText(text);
 					break;
 				}
 				else {

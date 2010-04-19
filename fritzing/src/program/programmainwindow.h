@@ -56,11 +56,13 @@ signals:
 	void saveButtonClicked();
 
 public slots:
-	void parentAboutToClose();
 	bool save();
 
 protected slots:
 	bool saveAs();
+	void changeLanguage(const QString &);
+	void parentAboutToClose();
+	void loadProgramFile();
 
 protected:
 	bool saveAsAux(const QString & fileName);
@@ -99,9 +101,11 @@ protected:
 
 	bool m_updateEnabled;
 
+	QPointer<class Highlighter> m_highlighter;
+
+
 protected:
-	static QHash<QString, QString> m_languagesAvailable;
-	static QHash<QString, QString> m_processorsToLanguages;
+	static QHash<QString, QString> m_languages;
 	static QHash<QString, class Syntaxer *> m_syntaxers;
 };
 

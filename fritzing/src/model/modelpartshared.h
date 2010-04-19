@@ -69,6 +69,7 @@ public:
 	void setDate(QDate date);
 	const QString & dateAsStr();
 	void setDate(QString date);
+	const QString & language();
 
 	const QString & path();
 	void setPath(QString path);
@@ -114,6 +115,7 @@ protected:
 	QString m_moduleID;
 	QString m_version;
 	QString m_author;
+	QString m_language;
 	QString m_title;
 	QString m_label;
 	QString m_description;

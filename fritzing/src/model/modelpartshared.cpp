@@ -53,6 +53,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 		return;
 	}
 
+	loadTagText(root, "title", m_language);
 	loadTagText(root, "title", m_title);
 	loadTagText(root, "label", m_label);
 	loadTagText(root, "version", m_version);
@@ -164,13 +165,19 @@ void ModelPartShared::setLabel(QString label) {
 const QString & ModelPartShared::uri() {
 	return m_uri;
 }
+
 void ModelPartShared::setUri(QString uri) {
 	m_uri = uri;
+}
+
+const QString & ModelPartShared::language() {
+	return m_language;
 }
 
 const QString & ModelPartShared::version() {
 	return m_version;
 }
+
 void ModelPartShared::setVersion(QString version) {
 	m_version = version;
 }
@@ -178,6 +185,7 @@ void ModelPartShared::setVersion(QString version) {
 const QString & ModelPartShared::author() {
 	return m_author;
 }
+
 void ModelPartShared::setAuthor(QString author) {
 	m_author = author;
 }
@@ -185,6 +193,7 @@ void ModelPartShared::setAuthor(QString author) {
 const QString & ModelPartShared::description() {
 	return m_description;
 }
+
 void ModelPartShared::setDescription(QString description) {
 	m_description = description;
 }
@@ -199,9 +208,11 @@ const QDate & ModelPartShared::date() {
 void ModelPartShared::setDate(QDate date) {
 	m_date = date.toString(Qt::ISODate);
 }
+
 const QString & ModelPartShared::dateAsStr() {
 	return m_date;
 }
+
 void ModelPartShared::setDate(QString date) {
 	m_date = date;
 }
@@ -237,6 +248,7 @@ void ModelPartShared::setPath(QString path) {
 const QString & ModelPartShared::taxonomy() {
 	return m_taxonomy;
 }
+
 void ModelPartShared::setTaxonomy(QString taxonomy) {
 	m_taxonomy = taxonomy;
 }

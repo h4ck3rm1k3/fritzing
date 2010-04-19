@@ -25,32 +25,37 @@ $Date: 2010-03-19 13:06:00 +0100 (Fri, 19 Mar 2010) $
 ********************************************************************/
 
 
-#ifndef HIGHLIGHTER_H_
-#define HIGHLIGHTER_H_
+#ifndef TRIENODE_H_
+#define TRIENODE_H_
 
-#include <QSyntaxHighlighter>
-#include <QTextEdit>
-#include <QPointer>
-#include <QString>
 #include <QChar>
+#include <QList>
 
-class Highlighter : public QSyntaxHighlighter
-{
-Q_OBJECT
-
+class TrieLeaf {
 public:
-	Highlighter(QTextEdit * parent);
-	~Highlighter();
-
-	void setSyntaxer(class Syntaxer *);
-
-protected:
-	void highlightBlock(const QString & text);
-	bool isWordChar(QChar c);
-
-protected:
-	QPointer<class Syntaxer> m_syntaxer;
-
+	TrieLeaf();
+	virtual ~TrieLeaf();
 };
 
-#endif /* HIGHLIGHTER_H_ */
+class TrieNode
+{
+public:
+	TrieNode(QChar);
+	virtual ~TrieNode();
+
+	virtual void addString(QString & s, bool caseInsensitive, TrieLeaf * leaf);
+	virtual bool matches(QString & string, TrieLeaf * & leaf);
+
+protected:
+	virtual void addStringAux(QChar c, QString & next, bool caseInsensitive, TrieLeaf * leaf);
+	virtual bool matchesChar(QChar c);
+
+protected:
+	QChar m_char;
+	bool m_caseInsensitive;
+	QList<TrieNode *> m_children;
+	TrieLeaf * m_leafData;
+	bool m_isLeaf;
+};
+
+#endif /* TRIENODE_H_ */

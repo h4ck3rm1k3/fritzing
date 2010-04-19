@@ -530,7 +530,7 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 void PartsEditorView::loadFile() {
 	QString imageFiles;
 	if (m_viewIdentifier == ViewIdentifierClass::PCBView) {
-		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4)");   // ;;Kicad Module Files (%5)
+		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)");   // 
 	}
 	else {
 		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)");

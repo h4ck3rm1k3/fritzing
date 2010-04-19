@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="PICAXE" version="0.01" kateversion="2.3" section="Sources" extensions="*.bas;*.BAS" priority="10" mimetype="text/x-picaxe" author="PICAXE Technical Support (picaxe@rev-ed.co.uk)" license="GPL">
+  <highlighting>
+    <list name="preproc">  
+      <item> #picaxe </item>
+      <item> #error </item>
+      <item> #freq </item>
+      <item> #gosubs </item>
+      <item> #define </item>
+      <item> #undefine </item>
+      <item> #include </item>
+      <item> #ifdef </item>
+      <item> #ifndef </item>
+      <item> #simspeed </item>
+      <item> #sim </item>
+      <item> #terminal </item>
+      <item> #com </item>
+      <item> #slot </item>
+    </list>
+    
+    <list name="keyword"> 
+      <item> backward </item>
+      <item> branch </item>
+      <item> button </item>
+      <item> bintoascii </item>
+      <item> bcdtoascii </item>
+      <item> calibfreq </item>
+      <item> count </item>
+      <item> data </item>
+      <item> debug </item>
+      <item> disablebod </item>
+      <item> enablebod </item>
+      <item> eeprom </item>
+      <item> end </item>
+      <item> endif </item>
+      <item> for </item>
+      <item> forward </item>
+      <item> gosub </item>
+      <item> goto </item>
+      <item> halt </item>
+      <item> high </item>
+      <item> hpwm </item>
+      <item> i2cslave </item>
+      <item> i2cwrite </item>
+      <item> i2cread </item>
+      <item> if </item>
+      <item> infrain </item>
+      <item> infrain2 </item>
+      <item> infraout </item>
+      <item> input </item>
+      <item> keyin </item>
+      <item> keyled </item>
+      <item> let </item>
+      <item> lookdown </item>
+      <item> lookup </item>
+      <item> low </item>
+      <item> nap </item>
+      <item> next </item>
+      <item> output </item>
+      <item> pause </item>
+      <item> peek </item>
+      <item> play </item>
+      <item> poke </item>
+      <item> porta </item>
+      <item> portb </item>
+      <item> portc </item>
+      <item> pot </item>
+      <item> pulsin </item>
+      <item> pulsout </item>
+      <item> pwm </item>
+      <item> pwmout </item>
+      <item> random </item>
+      <item> read </item>
+      <item> readadc </item>
+      <item> readadc10 </item>
+      <item> readi2c </item>
+      <item> readmem </item>
+      <item> readoutputs </item>
+      <item> readowclk </item>
+      <item> resetowclk </item>
+      <item> readowsn </item>
+      <item> readtemp </item>
+      <item> readtemp12 </item>
+      <item> return </item>
+      <item> reverse </item>
+      <item> serin </item>
+      <item> serout </item>
+      <item> sertxd </item>
+      <item> servo </item>
+      <item> servopos </item>
+      <item> setint </item>
+      <item> setfreq </item>
+      <item> sensor </item>
+      <item> sleep </item>
+      <item> sound </item>
+      <item> stop </item>
+      <item> switch </item>
+      <item> switchoff </item>
+      <item> switchon </item>
+      <item> symbol </item>
+      <item> toggle </item>
+      <item> tune </item>
+      <item> wait </item>
+      <item> write </item>
+      <item> writei2c </item>
+      <item> writemem </item>
+      <item> porta </item>
+      <item> portc </item>
+      <item> to </item>
+      <item> then </item>
+      <item> step </item>
+      <item> on </item>
+      <item> off </item>
+      <item> is </item>
+      <item> not </item>
+      <item> and </item>
+      <item> andnot </item>
+      <item> nand </item>
+      <item> or </item>
+      <item> ornot </item>
+      <item> nor </item>
+      <item> xnor </item>
+      <item> xor </item>
+      <item> xornot </item>
+      <item> a </item>
+      <item> b </item>
+      <item> c </item>
+      <item> d </item>
+      <item> m </item>
+      <item> x </item>
+
+      <item> calibadc </item>
+      <item> calibadc10 </item>
+      <item> owin </item>
+      <item> owout </item>
+      <item> shiftin </item>
+      <item> shin </item>
+      <item> spiin </item>
+      <item> shiftout </item>
+      <item> shout </item>
+      <item> spiout </item>
+      <item> get </item>
+      <item> put </item>
+      <item> reset </item>
+      <item> irin </item>
+      <item> irout </item>
+      <item> pauseus </item>
+      <item> serrxd </item>
+      <item> disconnect </item>
+      <item> reconnect </item>
+      <item> run </item>
+      <item> reset </item>
+      <item> kbin </item>
+      <item> kbled </item>
+      <item> doze </item>
+      <item> hibernate </item>
+      <item> hserin </item>
+      <item> hserout </item>
+      <item> hshin </item>
+      <item> hshout </item>
+      <item> hspiin </item>
+      <item> hspiout </item>
+      <item> hi2cin </item>
+      <item> hi2cout </item>
+      <item> hi2csetup </item>
+      <item> i2cmaster </item>
+      <item> hspisetup </item>
+      <item> hsersetup </item>
+      <item> settimer </item>
+      <item> table </item>
+      <item> readtable </item>
+      <item> pwmduty </item>
+      <item> hpwmduty </item>
+      <item> setintflags </item>
+      <item> swap </item>
+      <item> sin </item>
+      <item> cos </item>
+      <item> sqr </item>
+      <item> inv </item>
+      <item> ncd </item>
+      <item> cd </item>
+      <item> bintobcd </item>
+      <item> bcdtobin </item>
+      <item> rev </item>
+      <item> dig </item>
+      <item> swap </item>
+    </list>
+    
+
+    <list name="variable">
+
+      <item> b0 </item>
+      <item> b1 </item>
+      <item> b2 </item>
+      <item> b3 </item>
+      <item> b4 </item>
+      <item> b5 </item>
+      <item> b6 </item>
+      <item> b7 </item>
+      <item> b8 </item>
+      <item> b9 </item>
+      <item> b10 </item>
+      <item> b11 </item>
+      <item> b12 </item>
+      <item> b13 </item>
+      <item> bit0 </item>
+      <item> bit1 </item>
+      <item> bit2 </item>
+      <item> bit3 </item>
+      <item> bit4 </item>
+      <item> bit5 </item>
+      <item> bit6 </item>
+      <item> bit7 </item>
+      <item> bit8 </item>
+      <item> bit9 </item>
+      <item> bit10 </item>
+      <item> bit11 </item>
+      <item> bit12 </item>
+      <item> bit13 </item>
+      <item> bit14 </item>
+      <item> bit15 </item>
+      <item> dirs </item>
+      <item> dirsc </item>
+      <item> dir0 </item>
+      <item> dir1 </item>
+      <item> dir2 </item>
+      <item> dir3 </item>
+      <item> dir4 </item>
+      <item> dir5 </item>
+      <item> dir6 </item>
+      <item> dir7 </item>
+      <item> infra </item>
+      <item> input0 </item>
+      <item> input1 </item>
+      <item> input2 </item>
+      <item> input3 </item>
+      <item> input4 </item>
+      <item> input5 </item>
+      <item> input6 </item>
+      <item> input7 </item>
+      <item> keyvalue </item>
+      <item> outpin0 </item>
+      <item> outpin1 </item>
+      <item> outpin2 </item>
+      <item> outpin3 </item>
+      <item> outpin4 </item>
+      <item> outpin5 </item>
+      <item> outpin6 </item>
+      <item> outpin7 </item>
+      <item> outpins </item>
+      <item> pins </item>
+      <item> pinsc </item>
+      <item> pin0 </item>
+      <item> pin1 </item>
+      <item> pin2 </item>
+      <item> pin3 </item>
+      <item> pin4 </item>
+      <item> pin5 </item>
+      <item> pin6 </item>
+      <item> pin7 </item>
+      <item> port </item>
+      <item> trisc </item>
+      <item> w0 </item>
+      <item> w1 </item>
+      <item> w2 </item>
+      <item> w3 </item>
+      <item> w4 </item>
+      <item> w5 </item>
+      <item> w6 </item>
+      <item> w7 </item>
+
+      <item> b14 </item>
+      <item> b15 </item>
+      <item> b16 </item>
+      <item> b17 </item>
+      <item> b18 </item>
+      <item> b19 </item>
+      <item> b20 </item>
+      <item> b21 </item>
+      <item> b22 </item>
+      <item> b23 </item>
+      <item> b24 </item>
+      <item> b25 </item>
+      <item> b26 </item>
+      <item> b27 </item>
+      <item> bit16 </item>
+      <item> bit17 </item>
+      <item> bit18 </item>
+      <item> bit19 </item>
+      <item> bit20 </item>
+      <item> bit21 </item>
+      <item> bit22 </item>
+      <item> bit23 </item>
+      <item> bit24 </item>
+      <item> bit25 </item>
+      <item> bit26 </item>
+      <item> bit27 </item>
+      <item> bit28 </item>
+      <item> bit29 </item>
+      <item> bit30 </item>
+      <item> bit31 </item>
+      <item> w8 </item>
+      <item> w9 </item>
+      <item> w10 </item>
+      <item> w11 </item>
+      <item> w12 </item>
+      <item> w13 </item>
+      <item> w14 </item>
+      <item> s_w0 </item>
+      <item> s_w1 </item>
+      <item> s_w2 </item>
+      <item> s_w3 </item>
+      <item> s_w4 </item>
+      <item> s_w5 </item>
+      <item> s_w6 </item>
+      <item> s_w7 </item>
+      <item> hi2clast </item>
+      <item> hserptr </item>
+      <item> timer </item>
+      <item> ptr0 </item>
+      <item> tr1 </item>
+      <item> ptr2 </item>
+      <item> ptr3 </item>
+      <item> ptr4 </item>
+      <item> ptr5 </item>
+      <item> ptr6 </item>
+      <item> ptr7 </item>
+      <item> ptr </item>
+      <item> @ptr </item>
+      <item> @ptrinc </item>
+      <item> @ptrdec </item>
+      <item> ptrinc </item>
+      <item> ptrdec </item>
+      <item> flag0 </item>
+      <item> flag1 </item>
+      <item> flag2 </item>
+      <item> flag3 </item>
+      <item> flag4 </item>
+      <item> flag5 </item>
+      <item> flag6 </item>
+      <item> flag7 </item>
+      <item> flags </item>
+      <item> toflag </item>
+      <item> hserinflag </item>
+      <item> hserflag </item>
+      <item> hi2cflag </item>
+    </list>
+
+    <list name="datatype">  
+      <item> Integer </item>
+      <item> Long </item>
+      <item> Single </item>
+      <item> Double </item>
+      <item> String </item>
+      <item> Byte PTR </item>
+      <item> Dword PTR </item>
+      <item> Qword PTR </item>
+      <item> Word PTR </item>
+    </list>
+        
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Normal">
+
+        <RegExpr attribute="Keyword" context="#stay" String="\b(exit (function|sub|for|do|while|type|select))([\s]|$)" insensitive="true" />
+        <RegExpr attribute="Keyword" context="#stay" String="\b(declare (function|sub))([\s]|$)" insensitive="true" />
+
+        <RegExpr attribute="Keyword" context="#stay" String="\b(while)([\s]|$)" insensitive="true" beginRegion="WhileRegion"/>
+        <RegExpr attribute="Keyword" context="#stay" String="\b(wend)([\s]|$)" insensitive="true" endRegion="WhileRegion"/>
+        
+        <RegExpr attribute="Keyword" context="#stay" String="\b(do)([\s]|$)" insensitive="true" beginRegion="DoRegion"/>
+        <RegExpr attribute="Keyword" context="#stay" String="\b(loop)([\s]|$)" insensitive="true" endRegion="DoRegion"/>
+
+        <RegExpr attribute="Keyword" context="#stay" String="\b(select)([\s]|$)" insensitive="true" beginRegion="SelectRegion"/>
+        <RegExpr attribute="Keyword" context="#stay" String="\b(end select)([\s]|$)" insensitive="true" endRegion="SelectRegion"/>
+
+        <RegExpr attribute="Keyword" context="#stay" String="\b(for)([\s]|$)" insensitive="true" beginRegion="ForRegion"/>
+        <RegExpr attribute="Keyword" context="#stay" String="\b(next)([\s]|$)" insensitive="true" endRegion="ForRegion"/>
+
+        <RegExpr attribute="Keyword" context="#stay" String="\b(if)([\s]|$)" insensitive="true" beginRegion="IfRegion"/>
+        <RegExpr attribute="Keyword" context="#stay" String="\b(then )[a-zA-Z_\x7f-\xff]." insensitive="true" endRegion="IfRegion"/>
+        <RegExpr attribute="Keyword" context="#stay" String="\b(end if)([\s]|$)" insensitive="true" endRegion="IfRegion"/>
+	  <RegExpr attribute="Keyword" context="#stay" String="\b(endif)([\s]|$)" insensitive="true" endRegion="IfRegion"/>
+
+	  <keyword attribute="Keyword" context="#stay" String="keyword"/>
+        <keyword attribute="Data Types" context="#stay" String="datatype"/>
+	  <keyword attribute="Functions" context="#stay" String="variable"/>
+	  <keyword attribute="Preprocessor" context="#stay" String="preproc"/>
+
+        <RegExpr attribute="Constant" context="#stay" String="\#+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*"/>
+        <Float attribute="Number" context="#stay"/>
+        <Int attribute="Number" context="#stay"/>
+        <DetectChar attribute="String" context="String" char="&quot;" />
+        <RegExpr attribute="Region Marker" context="#stay" String="^\s*;+\s*BEGIN.*$" beginRegion="marker"/>
+        <RegExpr attribute="Region Marker" context="#stay" String="^\s*;+\s*END.*$" endRegion="marker"/>
+        <DetectChar attribute="Comment" context="Comment1" char="'"/>
+      </context>
+
+      <context attribute="String" lineEndContext="#pop" name="String">
+        <DetectChar attribute="String" context="#pop" char="&quot;"/>
+      </context>
+
+      <context attribute="Comment" lineEndContext="#pop" name="Comment1">
+        <keyword attribute="Number" context="#stay" String="attention" />
+      </context>
+    </contexts>
+
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+      <itemData name="Keyword" defStyleNum="dsKeyword"/>
+      <itemData name="Functions" defStyleNum="dsFunction"/>
+      <itemData name="Data Types" defStyleNum="dsDataType"/>
+      <itemData name="Constant" defStyleNum="dsConstant"/>
+      <itemData name="Number" defStyleNum="dsDecVal"/>
+      <itemData name="String" defStyleNum="dsString"/>
+      <itemData name="Comment" defStyleNum="dsComment"/>
+      <itemData name="Region Marker " defStyleNum="dsRegionMarker"/>
+      <itemData name="Preprocessor" defStyleNum="dsPreProc"/>
+    </itemDatas>
+
+  </highlighting>
+
+
+  <general>
+    <keywords casesensitive="0" />
+    <comments>
+      <comment name="singleLine" start="'" />
+      <comment name="singleLine" start=";" />
+      <comment name="remark" start="REM " />
+      <comment name="multiLine" start="#REM" end="#ENDREM" />
+    </comments>
+  </general>
+
+</language>
+<!-- // kate: space-indent on; indent-width 2; replace-tabs on; -->

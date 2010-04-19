@@ -1549,8 +1549,8 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_selectAllObsoleteAct);
 	m_partMenu->addAction(m_swapObsoleteAct);
-	//m_partMenu->addSeparator();
-	//m_partMenu->addAction(m_openProgramWindowAct);
+	m_partMenu->addSeparator();
+	m_partMenu->addAction(m_openProgramWindowAct);
 
 	m_zOrderMenu->addAction(m_bringToFrontAct);
 	m_zOrderMenu->addAction(m_bringForwardAct);

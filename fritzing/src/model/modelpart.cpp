@@ -112,6 +112,12 @@ const QString & ModelPart::author() {
 	return ___emptyString___;
 }
 
+const QString & ModelPart::language() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->language();
+
+	return ___emptyString___;
+}
+
 const QString & ModelPart::uri() {
 	if (m_modelPartShared != NULL) return m_modelPartShared->uri();
 

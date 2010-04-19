@@ -36,29 +36,34 @@ $Date: 2010-04-15 15:12:52 +0200 (Thu, 15 Apr 2010) $
 #include <QRegExp>
 #include <QtGui>
 #include <QSettings>
+#include <QComboBox>
 
-// linux finding serial ports, in the shell:  dmesg | grep tty: then clean up the response
+// TODO: 
+//		undo
+//		text search
+//		serial port plugins
+//		comments, numbers, etc.
+//		hook up char formats for highlighting
 
-QHash<QString, QString> ProgramMainWindow::m_languagesAvailable;
-QHash<QString, QString> ProgramMainWindow::m_processorsToLanguages;
+// linux: finding serial ports using the shell:  "dmesg | grep tty", then clean up the response
+
+QHash<QString, QString> ProgramMainWindow::m_languages;
 QHash<QString, class Syntaxer *> ProgramMainWindow::m_syntaxers;
-
-void ProgramMainWindow::initText() {
-}
 
 ProgramMainWindow::ProgramMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
 	m_updateEnabled = false;
-	if (m_languagesAvailable.count() == 0) {
+	if (m_languages.count() == 0) {
 		QDir dir(FolderUtils::getApplicationSubFolderPath("translations"));
+		dir.cd("syntax");
 		QStringList nameFilters;
 		nameFilters << "*.xml";
 		QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
 		foreach (QFileInfo fileInfo, list) {
 			QString name = Syntaxer::parseForName(fileInfo.absoluteFilePath());
 			if (!name.isEmpty()) {
-				m_languagesAvailable.insert(name, fileInfo.absoluteFilePath());
+				m_languages.insert(name, fileInfo.absoluteFilePath());
 			}
 		}
 	}
@@ -66,6 +71,9 @@ ProgramMainWindow::ProgramMainWindow(QWidget *parent)
 
 ProgramMainWindow::~ProgramMainWindow()
 {
+}
+
+void ProgramMainWindow::initText() {
 }
 
 void ProgramMainWindow::setup()
@@ -127,7 +135,7 @@ void ProgramMainWindow::createCenter() {
 	m_centerFrame->setObjectName("center");
 
 	m_textEdit = new QTextEdit;
-	new Highlighter(m_textEdit);
+	m_highlighter = new Highlighter(m_textEdit);
 
 	m_textEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
@@ -149,18 +157,28 @@ void ProgramMainWindow::createFooter() {
 	m_footerFrame->setObjectName("footer");
 	m_footerFrame->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
-	m_saveAsNewPartButton = new QPushButton(tr("save as new part"));
+	QPushButton * loadButton = new QPushButton(tr("Open..."));
+	loadButton->setObjectName("loadButton");
+	loadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	connect(loadButton, SIGNAL(clicked()), this, SLOT(loadProgramFile()));
+
+	m_saveAsNewPartButton = new QPushButton(tr("save as"));
 	m_saveAsNewPartButton->setObjectName("saveAsPartButton");
 	m_saveAsNewPartButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_saveAsNewPartButton, SIGNAL(clicked()), this, SLOT(saveAs()));
 
 	m_saveButton = new QPushButton(tr("save"));
 	m_saveButton->setObjectName("saveAsButton");
 	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
+
+	QComboBox * comboBox = new QComboBox();
+	comboBox->setEditable(false);
+	comboBox->setEnabled(true);
+	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
+	comboBox->addItems(m_languages.keys());
 
 	updateSaveButton();
-
-	connect(m_saveAsNewPartButton, SIGNAL(clicked()), this, SLOT(saveAs()));
-	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 
 	m_cancelCloseButton = new QPushButton(tr("cancel"));
 	m_cancelCloseButton->setObjectName("cancelButton");
@@ -171,13 +189,17 @@ void ProgramMainWindow::createFooter() {
 
 	footerLayout->setMargin(0);
 	footerLayout->setSpacing(0);
-	footerLayout->addSpacerItem(new QSpacerItem(40,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(comboBox);
+	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(loadButton);
+	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveAsNewPartButton);
 	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
 	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_cancelCloseButton);
-	footerLayout->addSpacerItem(new QSpacerItem(40,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	m_footerFrame->setLayout(footerLayout);
 }
 
@@ -316,7 +338,6 @@ void ProgramMainWindow::updateSaveButton() {
 	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
 }
 
-
 void ProgramMainWindow::updateButtons() {
 	m_saveAsNewPartButton->setEnabled(false);
 	m_cancelCloseButton->setText(tr("close"));
@@ -363,5 +384,32 @@ bool ProgramMainWindow::event(QEvent * e) {
 int & ProgramMainWindow::untitledFileCount() {
 	static int whatever = 1;
 	return whatever;
+}
+
+void ProgramMainWindow::changeLanguage(const QString & newLanguage) {
+	Syntaxer * syntaxer = m_syntaxers.value(newLanguage, NULL);
+	if (syntaxer == NULL) {
+		syntaxer = new Syntaxer();
+		if (syntaxer->loadSyntax(m_languages.value(newLanguage))) {
+			m_syntaxers.insert(newLanguage, syntaxer);
+		}
+	}
+	m_highlighter->setSyntaxer(syntaxer);
+}
+
+void ProgramMainWindow::loadProgramFile() {
+	QString fileName = FolderUtils::getOpenFileName(
+		this,
+		tr("Select an programming file to load"),
+		""
+	);
+
+	if (fileName.isEmpty()) return;
+
+	QFile file(fileName);
+	if (file.open(QFile::ReadOnly)) {
+		QString text = file.readAll();
+		m_textEdit->setText(text);
+	}
 }
 

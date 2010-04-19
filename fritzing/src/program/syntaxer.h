@@ -31,15 +31,51 @@ $Date: 2010-03-19 13:06:00 +0100 (Fri, 19 Mar 2010) $
 #include <QDomDocument>
 #include <QObject>
 
+#include "trienode.h"
+
+class CommentInfo {
+public:
+	CommentInfo(bool, const QString & start, const QString & end);
+
+public:
+	bool m_multiLine;
+	QString m_start;
+	QString m_end;
+};
+
 class Syntaxer : public QObject
 {
 	Q_OBJECT
 
-public:
 
-	static QString parseForName(const QString & filename);
+public:
+	Syntaxer();
+	virtual ~Syntaxer();
 
 	bool loadSyntax(const QString & filename);
+	bool matches(const QString & string, TrieLeaf * & leaf);
+
+public:
+	static QString parseForName(const QString & filename);
+
+protected:
+	void loadList(QDomElement & list);
+
+
+protected:
+	TrieNode * m_trieRoot;
+	QString m_name;
+	QList<CommentInfo *> m_commentInfo;
+};
+
+class SyntaxerTrieLeaf : public TrieLeaf
+{
+public:
+	SyntaxerTrieLeaf(QString name);
+	~SyntaxerTrieLeaf();
+
+protected:
+	QString m_name;
 };
 
 #endif /* SYNTAXER_H_ */

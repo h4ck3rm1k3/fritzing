@@ -101,6 +101,7 @@ public:
 	const QString & path();
 	const QString & label();
 	const QString & author();
+	const QString & language();
 	const QString & uri();
 	const QDate & date();
 

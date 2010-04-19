@@ -24,35 +24,61 @@ $Date: 2010-04-15 15:12:52 +0200 (Thu, 15 Apr 2010) $
 
 ********************************************************************/
 
-
-
 #include "highlighter.h"
+#include "syntaxer.h"
+
 #include "../debugdialog.h"
 
 #include <QRegExp>
 #include <stdlib.h>
 
+enum BlockState {
+	InComment = 1
+};
+
 
 Highlighter::Highlighter(QTextEdit * textEdit) : QSyntaxHighlighter(textEdit)
 {
+	m_syntaxer = NULL;
 }
 
 Highlighter::~Highlighter()
 {
 }
 
-void Highlighter::highlightBlock(const QString &text)
- {
-     QTextCharFormat myClassFormat;
-     myClassFormat.setFontWeight(QFont::Bold);
-     myClassFormat.setForeground(Qt::darkMagenta);
-     QString pattern = "\\bhello\\b";
+void Highlighter::setSyntaxer(Syntaxer * syntaxer) {
+	m_syntaxer = syntaxer;
+}
 
-     QRegExp expression(pattern);
-     int index = text.indexOf(expression);
-     while (index >= 0) {
-         int length = expression.matchedLength();
-         setFormat(index, length, myClassFormat);
-         index = text.indexOf(expression, index + length);
-     }
- }
+void Highlighter::highlightBlock(const QString &text)
+{
+	if (!m_syntaxer) return;
+
+    QTextCharFormat myClassFormat;
+    myClassFormat.setFontWeight(QFont::Bold);
+    myClassFormat.setForeground(Qt::darkMagenta);
+
+
+
+	int lastWordBreak = 0;
+	int textLength = text.length();
+	int b;
+	while (lastWordBreak < textLength) {
+		for (b = lastWordBreak; b < textLength; b++) {
+			if (!isWordChar(text.at(b))) break;
+		}
+		
+		if (b > lastWordBreak) {
+			TrieLeaf * leaf = NULL;
+			if (m_syntaxer->matches(text.mid(lastWordBreak, b - lastWordBreak), leaf)) {
+				setFormat(lastWordBreak, b - lastWordBreak, myClassFormat);
+			}
+		}
+		
+		lastWordBreak = b + 1;
+	}
+}
+
+bool Highlighter::isWordChar(QChar c) {
+	return c.isLetterOrNumber() || c == '#' || c == '_';
+}
