@@ -9,6 +9,8 @@
 #    gridsize is the distance from the center of one pin to the center of another pin
 #    drillhole is the diameter of the pin's drillhole
 #    ring thickness is the width of the ring (not including the drillhole)
+#
+#    example: footprintgrid.py -o arduino_mini.svg -u in -l 0.1 -t 0.1 -r0.1 -b 0.1 -x 12 -y 7 -g 0.1 -c 0.02 -d 0.035
  
 
 

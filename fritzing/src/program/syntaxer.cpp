@@ -148,7 +148,8 @@ void Syntaxer::loadList(QDomElement & list) {
 	while (!item.isNull()) {
 		QString text;
 		if (TextUtils::findText(item, text)) {
-			m_trieRoot->addString(text.trimmed(), false, new SyntaxerTrieLeaf(name));
+            QString s = text.trimmed();
+            m_trieRoot->addString(s, false, new SyntaxerTrieLeaf(name));
 		}
 		item = item.nextSiblingElement("item");
 	}
