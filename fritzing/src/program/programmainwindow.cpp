@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 4116 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-04-15 15:12:52 +0200 (Thu, 15 Apr 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -363,8 +363,7 @@ bool ProgramMainWindow::eventFilter(QObject *object, QEvent *event) {
 }
 
 const QString ProgramMainWindow::fritzingTitle() {
-	QString fritzing = FritzingWindow::fritzingTitle();
-	return tr("%1 %2").arg(fritzing).arg("What is this");
+	return FritzingWindow::fritzingTitle();
 }
 
 bool ProgramMainWindow::event(QEvent * e) {
@@ -399,10 +398,11 @@ void ProgramMainWindow::changeLanguage(const QString & newLanguage) {
 
 void ProgramMainWindow::loadProgramFile() {
 	QString fileName = FolderUtils::getOpenFileName(
-		this,
-		tr("Select an programming file to load"),
-		""
-	);
+							this,
+							tr("Select an programming file to load"),
+							defaultSaveFolder(),
+							m_highlighter->syntaxer()->extensions()
+		);
 
 	if (fileName.isEmpty()) return;
 
@@ -410,6 +410,7 @@ void ProgramMainWindow::loadProgramFile() {
 	if (file.open(QFile::ReadOnly)) {
 		QString text = file.readAll();
 		m_textEdit->setText(text);
+		m_fileName = fileName;
+		this->setTitle();
 	}
 }
-

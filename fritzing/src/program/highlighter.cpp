@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 4116 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-04-15 15:12:52 +0200 (Thu, 15 Apr 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -32,14 +32,20 @@ $Date: 2010-04-15 15:12:52 +0200 (Thu, 15 Apr 2010) $
 #include <QRegExp>
 #include <stdlib.h>
 
-enum BlockState {
-	InComment = 1
-};
 
+QTextCharFormat myClassFormat;
+QTextCharFormat commentFormat;
 
 Highlighter::Highlighter(QTextEdit * textEdit) : QSyntaxHighlighter(textEdit)
 {
 	m_syntaxer = NULL;
+
+	// just temporary
+    myClassFormat.setFontWeight(QFont::Bold);
+    myClassFormat.setForeground(Qt::darkMagenta);
+    commentFormat.setFontWeight(QFont::Bold);
+    commentFormat.setForeground(Qt::gray);
+	commentFormat.setFontItalic(true);
 }
 
 Highlighter::~Highlighter()
@@ -50,16 +56,52 @@ void Highlighter::setSyntaxer(Syntaxer * syntaxer) {
 	m_syntaxer = syntaxer;
 }
 
+Syntaxer * Highlighter::syntaxer() {
+	return m_syntaxer;
+}
+
 void Highlighter::highlightBlock(const QString &text)
 {
 	if (!m_syntaxer) return;
+	
+	if (text.isEmpty()) {
+		setCurrentBlockState(previousBlockState());
+		return;
+	}
 
-    QTextCharFormat myClassFormat;
-    myClassFormat.setFontWeight(QFont::Bold);
-    myClassFormat.setForeground(Qt::darkMagenta);
+	setCurrentBlockState(0);
+	int startIndex = -1;
+	const CommentInfo * currentCommentInfo = NULL;
+	if (previousBlockState() <= 0) {
+		m_syntaxer->matchCommentStart(text, 0, startIndex, currentCommentInfo);
+	}
+	else {
+		currentCommentInfo = m_syntaxer->getCommentInfo(previousBlockState() - 1);
+		startIndex = 0;
+	}
+
+	QString noComment = text;
+
+	while (startIndex >= 0) {
+		int endIndex = currentCommentInfo->m_multiLine ? text.indexOf(currentCommentInfo->m_end, startIndex, currentCommentInfo->m_caseSensitive) : text.length();
+		int commentLength;
+		if (endIndex == -1) {
+			setCurrentBlockState(currentCommentInfo->m_index + 1);
+			commentLength = text.length() - startIndex;
+		} 
+		else {
+			commentLength = endIndex - startIndex + currentCommentInfo->m_end.length();
+		}
+		noComment.replace(startIndex, commentLength, QString(commentLength, ' '));
+		setFormat(startIndex, commentLength, commentFormat);
+		m_syntaxer->matchCommentStart(text, startIndex + commentLength, startIndex, currentCommentInfo);
+	}
+
+	highlightTerms(noComment);
+}
 
 
-
+void Highlighter::highlightTerms(const QString & text) {
 	int lastWordBreak = 0;
 	int textLength = text.length();
 	int b;

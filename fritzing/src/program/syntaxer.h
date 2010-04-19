@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 4043 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-03-19 13:06:00 +0100 (Fri, 19 Mar 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -33,14 +33,17 @@ $Date: 2010-03-19 13:06:00 +0100 (Fri, 19 Mar 2010) $
 
 #include "trienode.h"
 
-class CommentInfo {
+class CommentInfo 
+{
 public:
-	CommentInfo(bool, const QString & start, const QString & end);
+	CommentInfo(const QString & start, const QString & end, Qt::CaseSensitivity);
 
 public:
 	bool m_multiLine;
 	QString m_start;
 	QString m_end;
+	int m_index;
+	Qt::CaseSensitivity m_caseSensitive;
 };
 
 class Syntaxer : public QObject
@@ -54,6 +57,9 @@ public:
 
 	bool loadSyntax(const QString & filename);
 	bool matches(const QString & string, TrieLeaf * & leaf);
+	const CommentInfo * getCommentInfo(int ix);
+	bool matchCommentStart(const QString & text, int offset, int & result, const CommentInfo * & resultCommentInfo);
+	const QString & extensions();
 
 public:
 	static QString parseForName(const QString & filename);
@@ -65,6 +71,7 @@ protected:
 protected:
 	TrieNode * m_trieRoot;
 	QString m_name;
+	QString m_extensions;
 	QList<CommentInfo *> m_commentInfo;
 };
 

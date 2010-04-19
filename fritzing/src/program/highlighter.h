@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 4043 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-03-19 13:06:00 +0100 (Fri, 19 Mar 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -43,10 +43,12 @@ public:
 	~Highlighter();
 
 	void setSyntaxer(class Syntaxer *);
+	class Syntaxer * syntaxer();
 
 protected:
 	void highlightBlock(const QString & text);
 	bool isWordChar(QChar c);
+	void highlightTerms(const QString & text);
 
 protected:
 	QPointer<class Syntaxer> m_syntaxer;

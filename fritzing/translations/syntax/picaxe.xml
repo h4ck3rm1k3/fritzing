@@ -45,6 +45,7 @@
       <item> i2cwrite </item>
       <item> i2cread </item>
       <item> if </item>
+      <item> inc </item>
       <item> infrain </item>
       <item> infrain2 </item>
       <item> infraout </item>
@@ -423,7 +424,7 @@
 
   <general>
     <keywords casesensitive="0" />
-    <comments>
+    <comments casesensitive="0" >
       <comment name="singleLine" start="'" />
       <comment name="singleLine" start=";" />
       <comment name="remark" start="REM " />

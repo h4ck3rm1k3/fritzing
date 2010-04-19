@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 4116 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-04-15 15:12:52 +0200 (Thu, 15 Apr 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -65,6 +65,16 @@ bool Syntaxer::loadSyntax(const QString &filename)
 	if (general.isNull()) return false;
 
 	m_name = root.attribute("name");
+	QStringList extensions = root.attribute("extensions").split(";", QString::SkipEmptyParts);
+	if (extensions.count() > 0) {
+		m_extensions = m_name + " " + QObject::tr("files") + " (";
+		foreach (QString ext, extensions) {
+			m_extensions += ext + " ";
+		}
+		m_extensions.chop(1);
+		m_extensions += ")";
+	}
+	
 	m_trieRoot = new TrieNode('\0');
 
 	QDomElement list = highlighting.firstChildElement("list");
@@ -75,18 +85,17 @@ bool Syntaxer::loadSyntax(const QString &filename)
 
 	QDomElement comments = general.firstChildElement("comments");
 	if (!comments.isNull()) {
+		Qt::CaseSensitivity caseSensitivity = comments.attribute("casesensitive").compare("1") == 0 ? Qt::CaseSensitive : Qt::CaseInsensitive;
 		QDomElement comment = comments.firstChildElement("comment");
 		while (!comment.isNull()) {
-			CommentInfo * commentInfo = new CommentInfo(comment.attribute("start"), comment.attribute("end"));
+			CommentInfo * commentInfo = new CommentInfo(comment.attribute("start"), comment.attribute("end"), caseSensitivity);
+			commentInfo->m_index = m_commentInfo.count();
 			m_commentInfo.append(commentInfo);
 			comment = comment.nextSiblingElement("comment");
 		}
 	}
 
-
-
 	return false;
-
  }
 
 QString Syntaxer::parseForName(const QString & filename)
@@ -130,6 +139,27 @@ bool Syntaxer::matches(const QString & string, TrieLeaf * & leaf) {
 	return m_trieRoot->matches(temp, leaf);
 }
 
+const CommentInfo * Syntaxer::getCommentInfo(int ix) {
+	return m_commentInfo.at(ix);
+}
+
+bool Syntaxer::matchCommentStart(const QString & text, int offset, int & result, const CommentInfo * & resultCommentInfo) {
+	result = -1;
+	foreach (CommentInfo * commentInfo, m_commentInfo) {
+		int si = text.indexOf(commentInfo->m_start, offset, commentInfo->m_caseSensitive);
+		if (si >= 0 && (result < 0 || si < result)) {
+			result = si;
+			resultCommentInfo = commentInfo;
+		}
+	}
+
+	return (result >= offset);
+}
+
+const QString & Syntaxer::extensions() {
+	return m_extensions;
+}
+
 //////////////////////////////////////////////
 
 SyntaxerTrieLeaf::SyntaxerTrieLeaf(QString name) {
@@ -142,14 +172,10 @@ SyntaxerTrieLeaf::~SyntaxerTrieLeaf()
 
 //////////////////////////////////////////////
 
-CommentInfo::CommentInfo(const QString & start, const QString & end) {
+CommentInfo::CommentInfo(const QString & start, const QString & end, Qt::CaseSensitivity caseSensitive) {
 	m_start = start;
 	m_end = end;
-	if (end.isEmpty()) {
-		m_multiLine = false;
-	}
-	else {
-		m_multiLine = true;
-	}
+	m_multiLine = !end.isEmpty();
+	m_caseSensitive = caseSensitive;
 }
 
