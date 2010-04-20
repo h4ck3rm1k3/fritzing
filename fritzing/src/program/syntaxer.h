@@ -30,6 +30,7 @@ $Date$
 
 #include <QDomDocument>
 #include <QObject>
+#include <QHash>
 
 #include "trienode.h"
 
@@ -65,10 +66,15 @@ public:
 
 public:
 	static QString parseForName(const QString & filename);
+	static QString formatFromList(const QString & list);
 
 protected:
 	void loadList(QDomElement & list);
+	QChar getStringDelimiter(QDomElement & context);
+	void initListsToFormats(QDomElement & context);
 
+protected:
+	static QHash<QString, QString> m_listsToFormats;
 
 protected:
 	TrieNode * m_trieRoot;
@@ -83,6 +89,8 @@ class SyntaxerTrieLeaf : public TrieLeaf
 public:
 	SyntaxerTrieLeaf(QString name);
 	~SyntaxerTrieLeaf();
+
+	const QString & name();
 
 protected:
 	QString m_name;

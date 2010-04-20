@@ -35,20 +35,11 @@ $Date$
 #define STRINGOFFSET 10
 #define COMMENTOFFSET 100
 
-QTextCharFormat keywordFormat;
-QTextCharFormat commentFormat;
-QTextCharFormat stringFormat;
+QHash <QString, QTextCharFormat *> Highlighter::m_styleFormats;
 
 Highlighter::Highlighter(QTextEdit * textEdit) : QSyntaxHighlighter(textEdit)
 {
 	m_syntaxer = NULL;
-
-	// just temporary
-    keywordFormat.setFontWeight(QFont::Bold);
-    keywordFormat.setForeground(Qt::blue);
-	commentFormat.setFontItalic(true);
-    commentFormat.setForeground(Qt::gray);
-	stringFormat.setForeground(Qt::red);
 }
 
 Highlighter::~Highlighter()
@@ -92,10 +83,11 @@ void Highlighter::loadStyles(const QString & filename) {
 		if (underlineString.compare("1") == 0) {
 			tcf->setFontUnderline(true);
 		}
+
+		m_styleFormats.insert(style.attribute("name"), tcf);
 		
 		style = style.nextSiblingElement("style");
 	}
-
 }
 
 void Highlighter::setSyntaxer(Syntaxer * syntaxer) {
@@ -144,7 +136,10 @@ void Highlighter::highlightBlock(const QString &text)
 			commentLength = endIndex - startCommentIndex + currentCommentInfo->m_end.length();
 		}
 		noComment.replace(startCommentIndex, commentLength, QString(commentLength, ' '));
-		setFormat(startCommentIndex, commentLength, commentFormat);
+		QTextCharFormat * cf = m_styleFormats.value("Comment", NULL);
+		if (cf != NULL) {
+			setFormat(startCommentIndex, commentLength, *cf);
+		}
 		m_syntaxer->matchCommentStart(text, startCommentIndex + commentLength, startCommentIndex, currentCommentInfo);
 	}
 
@@ -168,7 +163,10 @@ void Highlighter::highlightStrings(int startStringIndex, QString & text) {
 			stringLength = endIndex - startStringIndex + 1;
 		}
 		text.replace(startStringIndex, stringLength, QString(stringLength, ' '));
-		setFormat(startStringIndex, stringLength, stringFormat);
+		QTextCharFormat * sf = m_styleFormats.value("String", NULL);
+		if (sf != NULL) {
+			setFormat(startStringIndex, stringLength, *sf);
+		}
 		startStringIndex = m_syntaxer->matchStringStart(text, startStringIndex + stringLength);
 	}
 }
@@ -185,7 +183,14 @@ void Highlighter::highlightTerms(const QString & text) {
 		if (b > lastWordBreak) {
 			TrieLeaf * leaf = NULL;
 			if (m_syntaxer->matches(text.mid(lastWordBreak, b - lastWordBreak), leaf)) {
-				setFormat(lastWordBreak, b - lastWordBreak, keywordFormat);
+				SyntaxerTrieLeaf * stl = dynamic_cast<SyntaxerTrieLeaf *>(leaf);
+				if (stl != NULL) {
+					QString format = Syntaxer::formatFromList(stl->name());
+					QTextCharFormat * tcf = m_styleFormats.value(format, NULL);
+					if (tcf != NULL) {
+						setFormat(lastWordBreak, b - lastWordBreak, *tcf);
+					}
+				}
 			}
 		}
 		

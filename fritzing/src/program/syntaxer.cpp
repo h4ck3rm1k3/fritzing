@@ -31,6 +31,8 @@ $Date$
 #include <QRegExp>
 #include <QXmlStreamReader>
 
+QHash<QString, QString> Syntaxer::m_listsToFormats;
+
 Syntaxer::Syntaxer() : QObject() {
 	m_trieRoot = NULL;
 }
@@ -70,17 +72,8 @@ bool Syntaxer::loadSyntax(const QString &filename)
 	QDomElement context = contexts.firstChildElement("context");
 	while (!context.isNull()) {
 		if (context.attribute("attribute").compare("Normal Text") == 0) {
-			QDomElement detectChar = context.firstChildElement("DetectChar");
-			while (!detectChar.isNull()) {
-				if (detectChar.attribute("attribute").compare("String") == 0) {
-					QString c = detectChar.attribute("char");
-					if (c.length() > 0) {
-						m_stringDelimiter = c.at(0);
-					}
-					break;
-				}
-				detectChar = detectChar.nextSiblingElement("DetectChar");
-			}
+			m_stringDelimiter = getStringDelimiter(context);
+			initListsToFormats(context);
 			break;
 		}
 		context = context.nextSiblingElement("context");
@@ -118,7 +111,7 @@ bool Syntaxer::loadSyntax(const QString &filename)
 	}
 
 	return false;
- }
+}
 
 QString Syntaxer::parseForName(const QString & filename)
 {
@@ -144,12 +137,13 @@ QString Syntaxer::parseForName(const QString & filename)
 
 void Syntaxer::loadList(QDomElement & list) {
 	QString name = list.attribute("name");
+	SyntaxerTrieLeaf * stf = new SyntaxerTrieLeaf(name);
 	QDomElement item = list.firstChildElement("item");
 	while (!item.isNull()) {
 		QString text;
 		if (TextUtils::findText(item, text)) {
             QString s = text.trimmed();
-            m_trieRoot->addString(s, false, new SyntaxerTrieLeaf(name));
+            m_trieRoot->addString(s, false, stf);
 		}
 		item = item.nextSiblingElement("item");
 	}
@@ -193,6 +187,38 @@ const QString & Syntaxer::extensions() {
 	return m_extensions;
 }
 
+QChar Syntaxer::getStringDelimiter(QDomElement & context) {
+	QDomElement detectChar = context.firstChildElement("DetectChar");
+	while (!detectChar.isNull()) {
+		if (detectChar.attribute("attribute").compare("String") == 0) {
+			QString c = detectChar.attribute("char");
+			if (c.length() > 0) {
+				return c.at(0);
+			}
+			return QChar();
+		}
+		detectChar = detectChar.nextSiblingElement("DetectChar");
+	}
+
+	return QChar();
+}
+
+void Syntaxer::initListsToFormats(QDomElement & context) {
+	QDomElement keyword = context.firstChildElement("keyword");
+	while (!keyword.isNull()) {
+		QString format = keyword.attribute("attribute");
+		QString list = keyword.attribute("String");
+		if (!format.isEmpty() && !list.isEmpty()) {
+			m_listsToFormats.insert(list, format);
+		}
+		keyword = keyword.nextSiblingElement("keyword");
+	}
+}
+
+QString Syntaxer::formatFromList(const QString & list) {
+	return m_listsToFormats.value(list, ___emptyString___);
+}
+
 //////////////////////////////////////////////
 
 SyntaxerTrieLeaf::SyntaxerTrieLeaf(QString name) {
@@ -201,6 +227,11 @@ SyntaxerTrieLeaf::SyntaxerTrieLeaf(QString name) {
 
 SyntaxerTrieLeaf::~SyntaxerTrieLeaf()
 {
+}
+
+const QString & SyntaxerTrieLeaf::name()
+{
+	return m_name;
 }
 
 //////////////////////////////////////////////

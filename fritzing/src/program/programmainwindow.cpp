@@ -38,16 +38,18 @@ $Date$
 #include <QSettings>
 #include <QComboBox>
 
+#ifdef Q_WS_WIN
+#include "windows.h"
+#endif
+
 // TODO: 
-//		undo
 //		text search
 //		serial port plugins
 //		numbers, string escape chars...
 //		hook up char formats for highlighting
-//		linking vs loading?
-//		save as part of fzz
-
-// linux: finding serial ports using the shell:  "dmesg | grep tty", then clean up the response
+//		save message if stack dirty
+//		include in fzz
+//		how do multiple?
 
 QHash<QString, QString> ProgramMainWindow::m_languages;
 QHash<QString, class Syntaxer *> ProgramMainWindow::m_syntaxers;
@@ -114,7 +116,6 @@ void ProgramMainWindow::setup()
 	layout->addWidget(m_footerFrame,2,0);
 	setCentralWidget(m_mainFrame);
 
-
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	QSettings settings;
@@ -167,23 +168,15 @@ void ProgramMainWindow::createFooter() {
 	m_footerFrame->setObjectName("footer");
 	m_footerFrame->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
-	QPushButton * loadButton = new QPushButton(tr("Open..."));
-	loadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect(loadButton, SIGNAL(clicked()), this, SLOT(loadProgramFile()));
-
-	m_saveAsButton = new QPushButton(tr("save as"));
-	m_saveAsButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_saveAsButton, SIGNAL(clicked()), this, SLOT(saveAs()));
-
-	m_saveButton = new QPushButton(tr("save"));
-	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
-
 	QComboBox * comboBox = new QComboBox();
 	comboBox->setEditable(false);
 	comboBox->setEnabled(true);
 	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
 	comboBox->addItems(m_languages.keys());
+
+	QPushButton * loadButton = new QPushButton(tr("Open..."));
+	loadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	connect(loadButton, SIGNAL(clicked()), this, SLOT(loadProgramFile()));
 
 	m_undoButton = new QPushButton(tr("undo"));
 	m_undoButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
@@ -195,12 +188,30 @@ void ProgramMainWindow::createFooter() {
 	connect(m_redoButton, SIGNAL(clicked()), this, SLOT(redoText()));
 	m_redoButton->setEnabled(false);
 
+	m_saveAsButton = new QPushButton(tr("save as"));
+	m_saveAsButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_saveAsButton, SIGNAL(clicked()), this, SLOT(saveAs()));
+
+	m_saveButton = new QPushButton(tr("save"));
+	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
+
 	updateSaveButton();
 
 	m_cancelCloseButton = new QPushButton(tr("cancel"));
 	m_cancelCloseButton->setObjectName("cancelButton");
 	m_cancelCloseButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 	connect(m_cancelCloseButton, SIGNAL(clicked()), this, SLOT(close()));
+
+	QComboBox * comboBox2 = new QComboBox();
+	comboBox2->setEditable(false);
+	comboBox2->setEnabled(true);
+	//connect(comboBox2, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
+	comboBox2->addItems(getSerialPorts());
+
+	QPushButton * programButton = new QPushButton(tr("Program"));
+	programButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	//connect(programButton, SIGNAL(clicked()), this, SLOT(program()));
 
 	QHBoxLayout *footerLayout = new QHBoxLayout;
 
@@ -214,12 +225,16 @@ void ProgramMainWindow::createFooter() {
 	footerLayout->addWidget(m_undoButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_redoButton);
-	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveAsButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_cancelCloseButton);
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+	footerLayout->addWidget(comboBox2);
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(programButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	m_footerFrame->setLayout(footerLayout);
 }
@@ -455,4 +470,37 @@ void ProgramMainWindow::undoText() {
 
 void ProgramMainWindow::redoText() {
 	m_textEdit->redo();
+}
+
+QStringList ProgramMainWindow::getSerialPorts() {
+	// TODO: make this call a plugin
+#ifdef Q_WS_WIN
+	QStringList ports;
+	for (int i = 1; i < 256; i++)
+	{
+		QString port = QString("COM%1").arg(i);
+		QString sport = QString("\\\\.\\%1").arg(port);
+		HANDLE hPort = ::CreateFileA(sport.toLatin1().constData(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
+		if (hPort == INVALID_HANDLE_VALUE) {
+			DWORD dwError = GetLastError();
+			if (dwError == ERROR_ACCESS_DENIED || dwError == ERROR_GEN_FAILURE || dwError == ERROR_SHARING_VIOLATION || dwError == ERROR_SEM_TIMEOUT) {
+				ports.append(port);
+			}
+		}
+		else {
+			CloseHandle(hPort);
+			ports.append(port);
+		}
+	}
+	return ports;
+#endif
+#ifdef Q_WS_MAC
+	return ___emptyStringList___;
+#endif
+#ifdef Q_WS_X11
+	// linux: finding serial ports using the shell:  "dmesg | grep tty", then clean up the response
+	return ___emptyStringList___;
+#endif
+
+
 }

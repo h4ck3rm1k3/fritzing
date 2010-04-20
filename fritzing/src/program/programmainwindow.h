@@ -90,6 +90,7 @@ protected:
 	void cleanUp();
 	bool event(QEvent *);
 	int &untitledFileCount();
+	QStringList getSerialPorts();
 
 protected:
 

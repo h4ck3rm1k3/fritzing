@@ -57,7 +57,7 @@ protected:
 protected:
 	QPointer<class Syntaxer> m_syntaxer;
 
-	static QHash <QString, QTextCharFormat *> m_formats;
+	static QHash<QString, QTextCharFormat *> m_styleFormats;
 };
 
 #endif /* HIGHLIGHTER_H_ */
