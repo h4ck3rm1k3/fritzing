@@ -93,13 +93,13 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setAllowsChanges(bool);
 		void focusSearch();
 		void setSaveQuietly(bool);
+		bool save();
+		bool open(QString fileName="");
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
 		void removePartCommand(const QString& moduleID);
 		void removeAlienParts();
-		bool save();
-		bool open(QString fileName="");
 		void openCore();
 		void itemMoved();
 		void saveAsLastBin();
@@ -109,8 +109,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 	protected slots:
 		void toIconView();
 		void toListView();
-		bool removeSelected();
-		bool saveAs();
 		void saveBundledBin();
 		void undoStackCleanChanged(bool isClean);
 		void newBin();
@@ -168,6 +166,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setFilename(const QString &filename);
 		QHash<QString,QString> getUserBinsInfo();
 		QString getBinName(const QFileInfo &info);
+		bool removeSelected();
+		bool saveAs();
 
 	protected:
 		PaletteModel *m_model;

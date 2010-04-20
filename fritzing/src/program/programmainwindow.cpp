@@ -142,9 +142,12 @@ void ProgramMainWindow::createCenter() {
 	m_centerFrame->setObjectName("center");
 
 	m_textEdit = new QTextEdit;
-	m_highlighter = new Highlighter(m_textEdit);
-
 	m_textEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	m_textEdit->setUndoRedoEnabled(true);
+	connect(m_textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
+	connect(m_textEdit, SIGNAL(undoAvailable(bool)), this, SLOT(textUndoAvailable(bool)));
+	connect(m_textEdit, SIGNAL(redoAvailable(bool)), this, SLOT(textRedoAvailable(bool)));
+	m_highlighter = new Highlighter(m_textEdit);
 
 	QGridLayout *tabLayout = new QGridLayout(m_textEdit);
 	tabLayout->setMargin(0);
@@ -165,17 +168,14 @@ void ProgramMainWindow::createFooter() {
 	m_footerFrame->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
 	QPushButton * loadButton = new QPushButton(tr("Open..."));
-	loadButton->setObjectName("loadButton");
 	loadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	connect(loadButton, SIGNAL(clicked()), this, SLOT(loadProgramFile()));
 
-	m_saveAsNewPartButton = new QPushButton(tr("save as"));
-	m_saveAsNewPartButton->setObjectName("saveAsPartButton");
-	m_saveAsNewPartButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_saveAsNewPartButton, SIGNAL(clicked()), this, SLOT(saveAs()));
+	m_saveAsButton = new QPushButton(tr("save as"));
+	m_saveAsButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_saveAsButton, SIGNAL(clicked()), this, SLOT(saveAs()));
 
 	m_saveButton = new QPushButton(tr("save"));
-	m_saveButton->setObjectName("saveAsButton");
 	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 
@@ -184,6 +184,16 @@ void ProgramMainWindow::createFooter() {
 	comboBox->setEnabled(true);
 	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
 	comboBox->addItems(m_languages.keys());
+
+	m_undoButton = new QPushButton(tr("undo"));
+	m_undoButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_undoButton, SIGNAL(clicked()), this, SLOT(undoText()));
+	m_undoButton->setEnabled(false);
+
+	m_redoButton = new QPushButton(tr("redo"));
+	m_undoButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(m_redoButton, SIGNAL(clicked()), this, SLOT(redoText()));
+	m_redoButton->setEnabled(false);
 
 	updateSaveButton();
 
@@ -196,17 +206,21 @@ void ProgramMainWindow::createFooter() {
 
 	footerLayout->setMargin(0);
 	footerLayout->setSpacing(0);
-	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(comboBox);
-	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(loadButton);
-	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_saveAsNewPartButton);
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(m_undoButton);
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(m_redoButton);
 	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+	footerLayout->addWidget(m_saveAsButton);
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
-	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_cancelCloseButton);
-	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	m_footerFrame->setLayout(footerLayout);
 }
 
@@ -346,7 +360,7 @@ void ProgramMainWindow::updateSaveButton() {
 }
 
 void ProgramMainWindow::updateButtons() {
-	m_saveAsNewPartButton->setEnabled(false);
+	m_saveAsButton->setEnabled(false);
 	m_cancelCloseButton->setText(tr("close"));
 }
 
@@ -416,8 +430,29 @@ void ProgramMainWindow::loadProgramFile() {
 	QFile file(fileName);
 	if (file.open(QFile::ReadOnly)) {
 		QString text = file.readAll();
+		m_textEdit->setUndoRedoEnabled(false);
 		m_textEdit->setText(text);
+		m_textEdit->setUndoRedoEnabled(true);
 		m_fileName = fileName;
 		this->setTitle();
 	}
+}
+
+void ProgramMainWindow::textChanged() {
+}
+
+void ProgramMainWindow::textUndoAvailable(bool b) {
+	m_undoButton->setEnabled(b);
+}
+
+void ProgramMainWindow::textRedoAvailable(bool b) {
+	m_redoButton->setEnabled(b);
+}
+
+void ProgramMainWindow::undoText() {
+	m_textEdit->undo();
+}
+
+void ProgramMainWindow::redoText() {
+	m_textEdit->redo();
 }

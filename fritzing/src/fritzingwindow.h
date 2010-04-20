@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 
-
 #ifndef FRITZINGWINDOW_H_
 #define FRITZINGWINDOW_H_
 
@@ -52,11 +51,11 @@ signals:
 	void readOnlyChanged(bool isReadOnly);
 
 protected slots:
-	virtual bool save();
-	virtual bool saveAs();
 	void undoStackCleanChanged(bool isClean);
 
 protected:
+	virtual bool save();
+	virtual bool saveAs();
 	void setTitle();
 	virtual const QString fritzingTitle();
 	virtual const QString fileExtension() = 0;

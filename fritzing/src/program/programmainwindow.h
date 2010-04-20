@@ -46,6 +46,7 @@ public:
 
 	void setup();
 	const QDir& tempDir();
+	bool save();
 
 public:
 	static void initText();
@@ -56,13 +57,17 @@ signals:
 	void saveButtonClicked();
 
 public slots:
-	bool save();
 
 protected slots:
 	bool saveAs();
 	void changeLanguage(const QString &);
 	void parentAboutToClose();
 	void loadProgramFile();
+	void textUndoAvailable(bool b);
+	void textRedoAvailable(bool b);
+	void textChanged();
+	void redoText();
+	void undoText();
 
 protected:
 	bool saveAsAux(const QString & fileName);
@@ -88,9 +93,11 @@ protected:
 
 protected:
 
-	QPointer<QPushButton> m_saveAsNewPartButton;
+	QPointer<QPushButton> m_saveAsButton;
 	QPointer<QPushButton> m_saveButton;
 	QPointer<QPushButton> m_cancelCloseButton;
+	QPointer<QPushButton> m_undoButton;
+	QPointer<QPushButton> m_redoButton;
 
 	QPointer<QTextEdit> m_textEdit;
 

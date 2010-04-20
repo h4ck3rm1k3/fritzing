@@ -57,6 +57,7 @@ public:
 	const QDir& tempDir();
 
 	bool validateMinRequirements();
+	bool save();
 
 signals:
 	void partUpdated(const QString &filename, long myId, bool connectorsChanged);
@@ -67,13 +68,12 @@ signals:
 
 public slots:
 	void parentAboutToClose();
-	bool save();
 
 protected slots:
 	void updateDateAndAuthor();
-	bool saveAs();
 
 protected:
+	bool saveAs();
 	bool createTemplate();
 	bool saveAsAux(const QString & fileName);
 	const QDir& createTempFolderIfNecessary();
