@@ -35,7 +35,7 @@ $Date$
 #define STRINGOFFSET 10
 #define COMMENTOFFSET 100
 
-QTextCharFormat myClassFormat;
+QTextCharFormat keywordFormat;
 QTextCharFormat commentFormat;
 QTextCharFormat stringFormat;
 
@@ -44,8 +44,8 @@ Highlighter::Highlighter(QTextEdit * textEdit) : QSyntaxHighlighter(textEdit)
 	m_syntaxer = NULL;
 
 	// just temporary
-    myClassFormat.setFontWeight(QFont::Bold);
-    myClassFormat.setForeground(Qt::blue);
+    keywordFormat.setFontWeight(QFont::Bold);
+    keywordFormat.setForeground(Qt::blue);
 	commentFormat.setFontItalic(true);
     commentFormat.setForeground(Qt::gray);
 	stringFormat.setForeground(Qt::red);
@@ -53,6 +53,49 @@ Highlighter::Highlighter(QTextEdit * textEdit) : QSyntaxHighlighter(textEdit)
 
 Highlighter::~Highlighter()
 {
+}
+
+void Highlighter::loadStyles(const QString & filename) {
+	QFile file(filename);
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		return;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) return;
+	if (root.tagName() != "styles") return;
+
+	QDomElement style = root.firstChildElement("style");
+	while (!style.isNull()) {
+		QTextCharFormat * tcf = new QTextCharFormat();
+		QColor color(Qt::black);
+		QString colorString = style.attribute("color");
+		if (!colorString.isEmpty()) {
+			color.setNamedColor(colorString);
+			tcf->setForeground(QBrush(color));
+		}
+		QString italicString = style.attribute("italic");
+		if (italicString.compare("1") == 0) {
+			tcf->setFontItalic(true);
+		}
+		QString boldString = style.attribute("bold");
+		if (boldString.compare("1") == 0) {
+			tcf->setFontWeight(QFont::Bold);
+		}
+		QString underlineString = style.attribute("underline");
+		if (underlineString.compare("1") == 0) {
+			tcf->setFontUnderline(true);
+		}
+		
+		style = style.nextSiblingElement("style");
+	}
+
 }
 
 void Highlighter::setSyntaxer(Syntaxer * syntaxer) {
@@ -142,7 +185,7 @@ void Highlighter::highlightTerms(const QString & text) {
 		if (b > lastWordBreak) {
 			TrieLeaf * leaf = NULL;
 			if (m_syntaxer->matches(text.mid(lastWordBreak, b - lastWordBreak), leaf)) {
-				setFormat(lastWordBreak, b - lastWordBreak, myClassFormat);
+				setFormat(lastWordBreak, b - lastWordBreak, keywordFormat);
 			}
 		}
 		

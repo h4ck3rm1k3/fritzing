@@ -45,6 +45,9 @@ public:
 	void setSyntaxer(class Syntaxer *);
 	class Syntaxer * syntaxer();
 
+public:
+	static void loadStyles(const QString & filename);
+
 protected:
 	void highlightBlock(const QString & text);
 	bool isWordChar(QChar c);
@@ -54,6 +57,7 @@ protected:
 protected:
 	QPointer<class Syntaxer> m_syntaxer;
 
+	static QHash <QString, QTextCharFormat *> m_formats;
 };
 
 #endif /* HIGHLIGHTER_H_ */

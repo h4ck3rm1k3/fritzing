@@ -42,7 +42,7 @@ $Date$
 //		undo
 //		text search
 //		serial port plugins
-//		numbers, etc.
+//		numbers, string escape chars...
 //		hook up char formats for highlighting
 //		linking vs loading?
 //		save as part of fzz
@@ -63,9 +63,14 @@ ProgramMainWindow::ProgramMainWindow(QWidget *parent)
 		nameFilters << "*.xml";
 		QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
 		foreach (QFileInfo fileInfo, list) {
-			QString name = Syntaxer::parseForName(fileInfo.absoluteFilePath());
-			if (!name.isEmpty()) {
-				m_languages.insert(name, fileInfo.absoluteFilePath());
+			if (fileInfo.baseName().compare("styles") == 0) {
+				Highlighter::loadStyles(fileInfo.absoluteFilePath());
+			}
+			else {
+				QString name = Syntaxer::parseForName(fileInfo.absoluteFilePath());
+				if (!name.isEmpty()) {
+					m_languages.insert(name, fileInfo.absoluteFilePath());
+				}
 			}
 		}
 	}

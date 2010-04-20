@@ -97,6 +97,18 @@ void TraceWire::widthEntry(const QString & text) {
 }
 
 void TraceWire::setColorFromElement(QDomElement & element) {
-	element.setAttribute("color", (m_viewLayerID == ViewLayer::Copper0Trace) ? ViewLayer::Copper0Color : ViewLayer::Copper1Color);
+	switch (m_viewLayerID) {
+		case ViewLayer::Copper0Trace:
+			element.setAttribute("color", ViewLayer::Copper0Color);
+			break;
+		case ViewLayer::Copper1Trace:
+			element.setAttribute("color", ViewLayer::Copper1Color);
+			break;
+		case ViewLayer::SchematicTrace:
+			element.setAttribute("color", "#000000");
+		default:
+			break;
+	}
+
 	Wire::setColorFromElement(element);	
 }
