@@ -382,16 +382,17 @@ bool FApplication::findTranslator(const QString & translationsPath) {
 void FApplication::registerFonts() {
 	registerFont(":/resources/fonts/DroidSans.ttf", true);
 	registerFont(":/resources/fonts/DroidSans-Bold.ttf", false);
+	registerFont(":/resources/fonts/DroidSansMono.ttf", false);
 	//registerFont(":/resources/fonts/ocra10.ttf", true);
 	registerFont(":/resources/fonts/OCRA.otf", true);
 
-	/*
+	/*	
 		QFontDatabase database;
 		QStringList families = database.families (  );
 		foreach (QString string, families) {
 			DebugDialog::debug(string);			// should print out the name of the fonts you loaded
 		}
-	*/
+	*/	
 }
 
 void FApplication::loadReferenceModel() {

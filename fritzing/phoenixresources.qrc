@@ -173,6 +173,7 @@
         <file>resources/images/itemselection/selectionRingTopLeft.png</file>
         <file>resources/images/itemselection/selectionRingTopRight.png</file>
         <file>resources/fonts/DroidSans.ttf</file>
+        <file>resources/fonts/DroidSansMono.ttf</file>
         <file>resources/fonts/DroidSans-Bold.ttf</file>
         <file>resources/fonts/NOTICE</file>
         <file>resources/fonts/OCRA.otf</file>

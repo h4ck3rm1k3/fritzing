@@ -37,6 +37,7 @@ $Date$
 #include <QtGui>
 #include <QSettings>
 #include <QComboBox>
+#include <QFontMetrics>
 
 #ifdef Q_WS_WIN
 #include "windows.h"
@@ -46,10 +47,12 @@ $Date$
 //		text search
 //		serial port plugins
 //		numbers, string escape chars...
-//		hook up char formats for highlighting
-//		save message if stack dirty
+//		save message if stack dirty at closing
+//		program (shell)
+//		include in fz
 //		include in fzz
-//		how do multiple?
+//		how to do multiple?
+//		how to delete from sketch?
 
 QHash<QString, QString> ProgramMainWindow::m_languages;
 QHash<QString, class Syntaxer *> ProgramMainWindow::m_syntaxers;
@@ -143,6 +146,9 @@ void ProgramMainWindow::createCenter() {
 	m_centerFrame->setObjectName("center");
 
 	m_textEdit = new QTextEdit;
+	m_textEdit->setFontFamily("Droid Sans Mono");
+	QFontMetrics fm(m_textEdit->currentFont());
+	m_textEdit->setTabStopWidth(fm.averageCharWidth() * 4);
 	m_textEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	m_textEdit->setUndoRedoEnabled(true);
 	connect(m_textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
@@ -473,7 +479,7 @@ void ProgramMainWindow::redoText() {
 }
 
 QStringList ProgramMainWindow::getSerialPorts() {
-	// TODO: make this call a plugin
+	// TODO: make this call a plugin?
 #ifdef Q_WS_WIN
 	QStringList ports;
 	for (int i = 1; i < 256; i++)
@@ -495,12 +501,38 @@ QStringList ProgramMainWindow::getSerialPorts() {
 	return ports;
 #endif
 #ifdef Q_WS_MAC
+
+	CFDictionarySetValue(classesToMatch,
+                             CFSTR(kIOSerialBSDTypeKey),
+                             CFSTR(kIOSerialBSDRS232Type));
+
 	return ___emptyStringList___;
 #endif
 #ifdef Q_WS_X11
-	// linux: finding serial ports using the shell:  "dmesg | grep tty", then clean up the response
+	QProcess * process = new QProcess(this);
+	process->setProcessChannelMode(QProcess::MergedChannels);
+	process->setReadChannel(QProcess::StandardOutput);
+
+	connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(portProcessFinished(int, QProcess::ExitStatus)));
+	connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(portProcessReadyRead()));
+
+	process->start("dmesg | grep tty");
+
 	return ___emptyStringList___;
 #endif
 
+}
 
+void ProgramMainWindow::portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus) {
+	DebugDialog::debug(QString("process finished %1 %2").arg(exitCode).arg(exitStatus));
+
+	// parse the text and update the combo box
+
+	sender()->deleteLater();
+}
+
+void ProgramMainWindow::portProcessReadyRead() {
+	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+
+	DebugDialog::debug(byteArray.data());
 }

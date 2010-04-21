@@ -33,6 +33,7 @@ $Date$
 #include <QPushButton>
 #include <QFrame>
 #include <QTextEdit>
+#include <QProcess>
 
 #include "../fritzingwindow.h"
 
@@ -56,10 +57,7 @@ signals:
 	void changeActivationSignal(bool activate, QWidget * originator);
 	void saveButtonClicked();
 
-public slots:
-
 protected slots:
-	bool saveAs();
 	void changeLanguage(const QString &);
 	void parentAboutToClose();
 	void loadProgramFile();
@@ -68,8 +66,11 @@ protected slots:
 	void textChanged();
 	void redoText();
 	void undoText();
+	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+	void portProcessReadyRead();
 
 protected:
+	bool saveAs();
 	bool saveAsAux(const QString & fileName);
 	const QDir& createTempFolderIfNecessary();
 	void closeEvent(QCloseEvent *event);
