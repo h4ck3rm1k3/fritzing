@@ -51,7 +51,7 @@ $Date$
 //		program (shell)
 //		include in fz
 //		include in fzz
-//		how to do multiple?
+//		how to do multiple? tabs?
 //		how to delete from sketch?
 
 QHash<QString, QString> ProgramMainWindow::m_languages;
@@ -60,6 +60,7 @@ QHash<QString, class Syntaxer *> ProgramMainWindow::m_syntaxers;
 ProgramMainWindow::ProgramMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
+	ProgramMainWindow::setTitle();
 	m_updateEnabled = false;
 	if (m_languages.count() == 0) {
 		QDir dir(FolderUtils::getApplicationSubFolderPath("translations"));
@@ -90,12 +91,12 @@ void ProgramMainWindow::initText() {
 
 void ProgramMainWindow::setup()
 {
-    QFile styleSheet(":/resources/styles/partseditor.qss");
+    QFile styleSheet(":/resources/styles/programmingwindow.qss");
     m_mainFrame = new QFrame(this);
-    m_mainFrame->setObjectName("partsEditor");
+    m_mainFrame->setObjectName("programmingWindow");
 
     if (!styleSheet.open(QIODevice::ReadOnly)) {
-        qWarning("Unable to open :/resources/styles/partseditor.qss");
+        qWarning("Unable to open :/resources/styles/programmingwindow.qss");
     } else {
     	m_mainFrame->setStyleSheet(styleSheet.readAll());
     }
@@ -145,6 +146,11 @@ void ProgramMainWindow::createCenter() {
 	m_centerFrame = new QFrame();
 	m_centerFrame->setObjectName("center");
 
+	m_tabWidget = new PTabWidget(m_centerFrame);
+	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	m_tabWidget->addTab(m_textEdit, tr("Untitled"));
+	m_tabWidget->setMovable(false);
+
 	m_textEdit = new QTextEdit;
 	m_textEdit->setFontFamily("Droid Sans Mono");
 	QFontMetrics fm(m_textEdit->currentFont());
@@ -156,17 +162,20 @@ void ProgramMainWindow::createCenter() {
 	connect(m_textEdit, SIGNAL(redoAvailable(bool)), this, SLOT(textRedoAvailable(bool)));
 	m_highlighter = new Highlighter(m_textEdit);
 
-	QGridLayout *tabLayout = new QGridLayout(m_textEdit);
+	m_addButton = new QPushButton("+", m_tabWidget);
+	m_addButton->setObjectName("addButton");
+	connect(m_addButton, SIGNAL(triggered()), this, SLOT(addTab()));
+	QTabBar * tabBar = m_tabWidget->tabBar();
+	tabBar->setTabButton(0, QTabBar::RightSide, m_addButton);
+
+	QGridLayout *tabLayout = new QGridLayout(m_tabWidget);
 	tabLayout->setMargin(0);
 	tabLayout->setSpacing(0);
-
-	QSplitter *splitter = new QSplitter(Qt::Vertical,this);
-	splitter->addWidget(m_textEdit);
 
 	QGridLayout *mainLayout = new QGridLayout(m_centerFrame);
 	mainLayout->setMargin(0);
 	mainLayout->setSpacing(0);
-	mainLayout->addWidget(splitter,0,0,1,1);
+	mainLayout->addWidget(m_tabWidget,0,0,1,1);
 }
 
 void ProgramMainWindow::createFooter() {
@@ -204,11 +213,6 @@ void ProgramMainWindow::createFooter() {
 
 	updateSaveButton();
 
-	m_cancelCloseButton = new QPushButton(tr("cancel"));
-	m_cancelCloseButton->setObjectName("cancelButton");
-	m_cancelCloseButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_cancelCloseButton, SIGNAL(clicked()), this, SLOT(close()));
-
 	QComboBox * comboBox2 = new QComboBox();
 	comboBox2->setEditable(false);
 	comboBox2->setEnabled(true);
@@ -235,8 +239,6 @@ void ProgramMainWindow::createFooter() {
 	footerLayout->addWidget(m_saveAsButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_cancelCloseButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
 	footerLayout->addWidget(comboBox2);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
@@ -246,11 +248,7 @@ void ProgramMainWindow::createFooter() {
 }
 
 bool ProgramMainWindow::save() {
-	bool result = FritzingWindow::save();
-	if(result) {
-		m_cancelCloseButton->setText(tr("close"));
-	}
-	return result;
+	return FritzingWindow::save();
 }
 
 bool ProgramMainWindow::saveAs() {
@@ -328,14 +326,12 @@ bool ProgramMainWindow::saveAsAux(const QString & fileName) {
 
     statusBar()->showMessage(tr("Saved '%1'").arg(fileName), 2000);
 
-
     m_fileName = fileName;
     //setCurrentFile(fileName);
 
    // mark the stack clean so we update the window dirty flag
     m_undoStack->setClean();
-    setTitle();
-
+    m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileNameAux);
 
 	return true;
 }
@@ -365,7 +361,7 @@ void ProgramMainWindow::closeEvent(QCloseEvent *event) {
 }
 
 const QString ProgramMainWindow::untitledFileName() {
-	return "What is this?";
+	return "Programming Window";
 }
 
 const QString ProgramMainWindow::fileExtension() {
@@ -378,11 +374,6 @@ const QString ProgramMainWindow::defaultSaveFolder() {
 
 void ProgramMainWindow::updateSaveButton() {
 	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
-}
-
-void ProgramMainWindow::updateButtons() {
-	m_saveAsButton->setEnabled(false);
-	m_cancelCloseButton->setText(tr("close"));
 }
 
 bool ProgramMainWindow::eventFilter(QObject *object, QEvent *event) {
@@ -402,10 +393,6 @@ bool ProgramMainWindow::eventFilter(QObject *object, QEvent *event) {
 		}
 	}
 	return QMainWindow::eventFilter(object, event);
-}
-
-const QString ProgramMainWindow::fritzingTitle() {
-	return FritzingWindow::fritzingTitle();
 }
 
 bool ProgramMainWindow::event(QEvent * e) {
@@ -455,7 +442,8 @@ void ProgramMainWindow::loadProgramFile() {
 		m_textEdit->setText(text);
 		m_textEdit->setUndoRedoEnabled(true);
 		m_fileName = fileName;
-		this->setTitle();
+		QFileInfo fileInfo(m_fileName);
+		m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
 	}
 }
 
@@ -535,4 +523,20 @@ void ProgramMainWindow::portProcessReadyRead() {
 	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
 
 	DebugDialog::debug(byteArray.data());
+}
+
+void ProgramMainWindow::setTitle() {
+	setWindowTitle(tr("Programming Window"));
+}
+
+void ProgramMainWindow::addTab() {
+}
+
+///////////////////////////////////////////////
+
+PTabWidget::PTabWidget(QWidget * parent) : QTabWidget(parent) {
+}
+
+QTabBar * PTabWidget::tabBar() {
+	return QTabWidget::tabBar();
 }

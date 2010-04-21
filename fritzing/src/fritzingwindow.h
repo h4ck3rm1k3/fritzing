@@ -56,7 +56,7 @@ protected slots:
 protected:
 	virtual bool save();
 	virtual bool saveAs();
-	void setTitle();
+	virtual void setTitle();
 	virtual const QString fritzingTitle();
 	virtual const QString fileExtension() = 0;
 	virtual const QString untitledFileName() = 0;

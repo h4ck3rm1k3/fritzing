@@ -34,8 +34,17 @@ $Date$
 #include <QFrame>
 #include <QTextEdit>
 #include <QProcess>
+#include <QTabWidget>
 
 #include "../fritzingwindow.h"
+
+class PTabWidget : public QTabWidget 
+{
+	Q_OBJECT
+public:
+	PTabWidget(QWidget * parent);
+	QTabBar * tabBar();
+};
 
 class ProgramMainWindow : public FritzingWindow
 {
@@ -68,6 +77,7 @@ protected slots:
 	void undoText();
 	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void portProcessReadyRead();
+	void addTab();
 
 protected:
 	bool saveAs();
@@ -85,13 +95,12 @@ protected:
 	const QString defaultSaveFolder();
 
 	void updateSaveButton();
-	void updateButtons();
-	const QString fritzingTitle();
 
 	void cleanUp();
 	bool event(QEvent *);
 	int &untitledFileCount();
 	QStringList getSerialPorts();
+	void setTitle();
 
 protected:
 
@@ -100,8 +109,10 @@ protected:
 	QPointer<QPushButton> m_cancelCloseButton;
 	QPointer<QPushButton> m_undoButton;
 	QPointer<QPushButton> m_redoButton;
+	QPointer<QPushButton> m_addButton;
 
 	QPointer<QTextEdit> m_textEdit;
+	QPointer<PTabWidget> m_tabWidget;
 
 	QPointer<QFrame> m_mainFrame;
     QPointer<QFrame> m_headerFrame;
