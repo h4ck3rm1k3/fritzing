@@ -146,11 +146,6 @@ void ProgramMainWindow::createCenter() {
 	m_centerFrame = new QFrame();
 	m_centerFrame->setObjectName("center");
 
-	m_tabWidget = new PTabWidget(m_centerFrame);
-	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	m_tabWidget->addTab(m_textEdit, tr("Untitled"));
-	m_tabWidget->setMovable(false);
-
 	m_textEdit = new QTextEdit;
 	m_textEdit->setFontFamily("Droid Sans Mono");
 	QFontMetrics fm(m_textEdit->currentFont());
@@ -161,6 +156,11 @@ void ProgramMainWindow::createCenter() {
 	connect(m_textEdit, SIGNAL(undoAvailable(bool)), this, SLOT(textUndoAvailable(bool)));
 	connect(m_textEdit, SIGNAL(redoAvailable(bool)), this, SLOT(textRedoAvailable(bool)));
 	m_highlighter = new Highlighter(m_textEdit);
+
+	m_tabWidget = new PTabWidget(m_centerFrame);
+	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	m_tabWidget->addTab(m_textEdit, tr("Untitled"));
+	m_tabWidget->setMovable(false);
 
 	m_addButton = new QPushButton("+", m_tabWidget);
 	m_addButton->setObjectName("addButton");
