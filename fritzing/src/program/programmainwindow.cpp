@@ -36,8 +36,8 @@ $Date$
 #include <QRegExp>
 #include <QtGui>
 #include <QSettings>
-#include <QComboBox>
 #include <QFontMetrics>
+#include <QTextStream>
 
 #ifdef Q_WS_WIN
 #include "windows.h"
@@ -213,11 +213,11 @@ void ProgramMainWindow::createFooter() {
 
 	updateSaveButton();
 
-	QComboBox * comboBox2 = new QComboBox();
-	comboBox2->setEditable(false);
-	comboBox2->setEnabled(true);
-	//connect(comboBox2, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
-	comboBox2->addItems(getSerialPorts());
+        m_portComboBox = new QComboBox();
+        m_portComboBox->setEditable(false);
+        m_portComboBox->setEnabled(true);
+        //connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
+        m_portComboBox->addItems(getSerialPorts());
 
 	QPushButton * programButton = new QPushButton(tr("Program"));
 	programButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -240,7 +240,7 @@ void ProgramMainWindow::createFooter() {
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
-	footerLayout->addWidget(comboBox2);
+        footerLayout->addWidget(m_portComboBox);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(programButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
@@ -504,7 +504,7 @@ QStringList ProgramMainWindow::getSerialPorts() {
 	connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(portProcessFinished(int, QProcess::ExitStatus)));
 	connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(portProcessReadyRead()));
 
-	process->start("dmesg | grep tty");
+        process->start("dmesg");
 
 	return ___emptyStringList___;
 #endif
@@ -520,9 +520,26 @@ void ProgramMainWindow::portProcessFinished(int exitCode, QProcess::ExitStatus e
 }
 
 void ProgramMainWindow::portProcessReadyRead() {
-	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+        QStringList ports;
 
-	DebugDialog::debug(byteArray.data());
+	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+        QTextStream textStream(byteArray, QIODevice::ReadOnly);
+        while (true) {
+            QString line = textStream.readLine();
+            if (line.isNull()) break;
+
+            if (!line.contains("tty")) continue;
+            if (!line.contains("serial", Qt::CaseInsensitive)) continue;
+
+            QStringList candidates = line.split(" ");
+            foreach (QString candidate, candidates) {
+                if (candidate.contains("tty")) {
+                    ports.append(candidate);
+                    break;
+                }
+            }
+        }
+        m_portComboBox->addItems(ports);
 }
 
 void ProgramMainWindow::setTitle() {

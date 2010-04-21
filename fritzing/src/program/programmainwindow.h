@@ -35,6 +35,7 @@ $Date$
 #include <QTextEdit>
 #include <QProcess>
 #include <QTabWidget>
+#include <QComboBox>
 
 #include "../fritzingwindow.h"
 
@@ -110,6 +111,7 @@ protected:
 	QPointer<QPushButton> m_undoButton;
 	QPointer<QPushButton> m_redoButton;
 	QPointer<QPushButton> m_addButton;
+        QPointer<QComboBox> m_portComboBox;
 
 	QPointer<QTextEdit> m_textEdit;
 	QPointer<PTabWidget> m_tabWidget;
