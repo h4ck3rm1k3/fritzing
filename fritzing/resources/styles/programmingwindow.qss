@@ -1,9 +1,10 @@
 
 #header {
 	background-color: #330011;
+	padding: 2px; padding-bottom: 0;
 }
 
-#center, #footer {
+#center {
 	background-color: #52182C;
 }
 
@@ -11,6 +12,7 @@
 	padding: 5px 0px 5px 0px;
 	margin: 0px;
 	border: 0px;
+	background-color: #802643;
 }
 
 #programmingWindow QTabWidget::pane {

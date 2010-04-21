@@ -25,8 +25,8 @@ $Date$
 ********************************************************************/
 
 
-#ifndef PROGRAMMAINWINDOW_H_
-#define PROGRAMMAINWINDOW_H_
+#ifndef PROGRAMTAB_H_
+#define PROGRAMTAB_H_
 
 #include <QMainWindow>
 #include <QPointer>
@@ -36,63 +36,58 @@ $Date$
 #include <QProcess>
 #include <QTabWidget>
 #include <QComboBox>
+#include <QTabWidget>
 
-#include "../fritzingwindow.h"
+#include "programtab.h"
 
-class PTabWidget : public QTabWidget 
+class ProgramTab : public QFrame 
 {
 	Q_OBJECT
-public:
-	PTabWidget(QWidget * parent);
-	QTabBar * tabBar();
-};
-
-class ProgramMainWindow : public FritzingWindow
-{
-Q_OBJECT
 
 public:
-	ProgramMainWindow(QWidget *parent=0);
-	~ProgramMainWindow();
-
-	void setup();
-	bool save();
-	const QString defaultSaveFolder();
-
-public:
-	static void initText();
-
-signals:
-	void closed();
-	void changeActivationSignal(bool activate, QWidget * originator);
+	ProgramTab(QWidget * parent);
+	~ProgramTab();
 
 protected slots:
-	void parentAboutToClose();
-	void addTab();
+	void changeLanguage(const QString &);
+	void loadProgramFile();
+	void textUndoAvailable(bool b);
+	void textRedoAvailable(bool b);
+	void textChanged();
+	void redoText();
+	void undoText();
+	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+	void portProcessReadyRead();
 
 protected:
 	bool saveAs();
 	bool saveAsAux(const QString & fileName);
-	void closeEvent(QCloseEvent *event);
-	bool eventFilter(QObject *object, QEvent *event);
-
-	QFrame * createHeader();
-	QFrame * createCenter();
-
-	const QString untitledFileName();
-	const QString fileExtension();
-
+	QFrame * createFooter();
 	void updateSaveButton();
-
-	void cleanUp();
-	bool event(QEvent *);
-	int &untitledFileCount();
 	QStringList getSerialPorts();
-	void setTitle();
+	void initLanguages();
 
 protected:
-	QPointer<PTabWidget> m_tabWidget;
-	QPointer<QPushButton> m_addButton;
+	static QHash<QString, QString> m_languages;
+	static QHash<QString, class Syntaxer *> m_syntaxers;
+
+protected:
+	QPointer<QPushButton> m_saveAsButton;
+	QPointer<QPushButton> m_saveButton;
+	QPointer<QPushButton> m_cancelCloseButton;
+	QPointer<QPushButton> m_undoButton;
+	QPointer<QPushButton> m_redoButton;
+    QPointer<QComboBox> m_portComboBox;
+	QPointer<QComboBox> m_languageComboBox;
+
+	QPointer<QTextEdit> m_textEdit;
+	QPointer<QTabWidget> m_tabWidget;
+
+	bool m_updateEnabled;
+
+	QPointer<class Highlighter> m_highlighter;
+	QString m_filename;
+
 };
 
 #endif /* PROGRAMMAINWINDOW_H_ */

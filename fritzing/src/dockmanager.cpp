@@ -145,6 +145,8 @@ void DockManager::createDockWindows()
 	// FDockWidget * dock = makeDock(tr("Console"), m_mainWindow->m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
 	// dock->hide();
 
+    m_mainWindow->m_windowMenu->addSeparator();
+    m_mainWindow->m_windowMenu->addAction(m_mainWindow->m_openProgramWindowAct);
 
 #ifndef QT_NO_DEBUG
     m_mainWindow->m_windowMenu->addSeparator();

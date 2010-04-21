@@ -27,6 +27,8 @@ $Date$
 #include "programmainwindow.h"
 #include "highlighter.h"
 #include "syntaxer.h"
+#include "programtab.h"
+
 #include "../debugdialog.h"
 #include "../waitpushundostack.h"
 #include "../utils/folderutils.h"
@@ -54,32 +56,10 @@ $Date$
 //		how to do multiple? tabs?
 //		how to delete from sketch?
 
-QHash<QString, QString> ProgramMainWindow::m_languages;
-QHash<QString, class Syntaxer *> ProgramMainWindow::m_syntaxers;
-
 ProgramMainWindow::ProgramMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
 	ProgramMainWindow::setTitle();
-	m_updateEnabled = false;
-	if (m_languages.count() == 0) {
-		QDir dir(FolderUtils::getApplicationSubFolderPath("translations"));
-		dir.cd("syntax");
-		QStringList nameFilters;
-		nameFilters << "*.xml";
-		QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
-		foreach (QFileInfo fileInfo, list) {
-			if (fileInfo.baseName().compare("styles") == 0) {
-				Highlighter::loadStyles(fileInfo.absoluteFilePath());
-			}
-			else {
-				QString name = Syntaxer::parseForName(fileInfo.absoluteFilePath());
-				if (!name.isEmpty()) {
-					m_languages.insert(name, fileInfo.absoluteFilePath());
-				}
-			}
-		}
-	}
 }
 
 ProgramMainWindow::~ProgramMainWindow()
@@ -92,33 +72,32 @@ void ProgramMainWindow::initText() {
 void ProgramMainWindow::setup()
 {
     QFile styleSheet(":/resources/styles/programmingwindow.qss");
-    m_mainFrame = new QFrame(this);
-    m_mainFrame->setObjectName("programmingWindow");
+    QFrame * mainFrame = new QFrame(this);
+    mainFrame->setObjectName("programmingWindow");
 
     if (!styleSheet.open(QIODevice::ReadOnly)) {
         qWarning("Unable to open :/resources/styles/programmingwindow.qss");
     } else {
-    	m_mainFrame->setStyleSheet(styleSheet.readAll());
+    	mainFrame->setStyleSheet(styleSheet.readAll());
     }
 
     resize(500,700);
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
-	createHeader();
-	createCenter();
-	createFooter();
+	QFrame * headerFrame = createHeader();
+	QFrame * centerFrame = createCenter();
 
 	layout()->setMargin(0);
 	layout()->setSpacing(0);
 
-	QGridLayout *layout = new QGridLayout(m_mainFrame);
+	QGridLayout *layout = new QGridLayout(mainFrame);
 	layout->setMargin(0);
 	layout->setSpacing(0);
-	layout->addWidget(m_headerFrame,0,0);
-	layout->addWidget(m_centerFrame,1,0);
-	layout->addWidget(m_footerFrame,2,0);
-	setCentralWidget(m_mainFrame);
+	layout->addWidget(headerFrame,0,0);
+	layout->addWidget(centerFrame,1,0);
+
+	setCentralWidget(mainFrame);
 
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
@@ -131,36 +110,26 @@ void ProgramMainWindow::setup()
 	//}
 
 	installEventFilter(this);
-
 }
 
-void ProgramMainWindow::createHeader() {
-	m_headerFrame = new QFrame();
-	m_headerFrame->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
-	m_headerFrame->setObjectName("header");
-	m_headerFrame->setStyleSheet("padding: 2px; padding-bottom: 0;");
+QFrame * ProgramMainWindow::createHeader() {
+	QFrame * headerFrame = new QFrame();
+	headerFrame->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
+	headerFrame->setObjectName("header");
+	return headerFrame;
 }
 
-void ProgramMainWindow::createCenter() {
+QFrame * ProgramMainWindow::createCenter() {
 
-	m_centerFrame = new QFrame();
-	m_centerFrame->setObjectName("center");
+	QFrame * centerFrame = new QFrame();
+	centerFrame->setObjectName("center");
 
-	m_textEdit = new QTextEdit;
-	m_textEdit->setFontFamily("Droid Sans Mono");
-	QFontMetrics fm(m_textEdit->currentFont());
-	m_textEdit->setTabStopWidth(fm.averageCharWidth() * 4);
-	m_textEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	m_textEdit->setUndoRedoEnabled(true);
-	connect(m_textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
-	connect(m_textEdit, SIGNAL(undoAvailable(bool)), this, SLOT(textUndoAvailable(bool)));
-	connect(m_textEdit, SIGNAL(redoAvailable(bool)), this, SLOT(textRedoAvailable(bool)));
-	m_highlighter = new Highlighter(m_textEdit);
-
-	m_tabWidget = new PTabWidget(m_centerFrame);
+	m_tabWidget = new PTabWidget(centerFrame);
 	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	m_tabWidget->addTab(m_textEdit, tr("Untitled"));
 	m_tabWidget->setMovable(false);
+
+	QFrame * editFrame = new ProgramTab(this);
+	m_tabWidget->addTab(editFrame, tr("Untitled"));
 
 	m_addButton = new QPushButton("+", m_tabWidget);
 	m_addButton->setObjectName("addButton");
@@ -172,80 +141,15 @@ void ProgramMainWindow::createCenter() {
 	tabLayout->setMargin(0);
 	tabLayout->setSpacing(0);
 
-	QGridLayout *mainLayout = new QGridLayout(m_centerFrame);
+	QGridLayout *mainLayout = new QGridLayout(centerFrame);
 	mainLayout->setMargin(0);
 	mainLayout->setSpacing(0);
 	mainLayout->addWidget(m_tabWidget,0,0,1,1);
+
+	return centerFrame;
 }
 
-void ProgramMainWindow::createFooter() {
-	m_footerFrame = new QFrame();
-	m_footerFrame->setObjectName("footer");
-	m_footerFrame->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
-	QComboBox * comboBox = new QComboBox();
-	comboBox->setEditable(false);
-	comboBox->setEnabled(true);
-	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
-	comboBox->addItems(m_languages.keys());
-
-	QPushButton * loadButton = new QPushButton(tr("Open..."));
-	loadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect(loadButton, SIGNAL(clicked()), this, SLOT(loadProgramFile()));
-
-	m_undoButton = new QPushButton(tr("undo"));
-	m_undoButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_undoButton, SIGNAL(clicked()), this, SLOT(undoText()));
-	m_undoButton->setEnabled(false);
-
-	m_redoButton = new QPushButton(tr("redo"));
-	m_undoButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_redoButton, SIGNAL(clicked()), this, SLOT(redoText()));
-	m_redoButton->setEnabled(false);
-
-	m_saveAsButton = new QPushButton(tr("save as"));
-	m_saveAsButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_saveAsButton, SIGNAL(clicked()), this, SLOT(saveAs()));
-
-	m_saveButton = new QPushButton(tr("save"));
-	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
-
-	updateSaveButton();
-
-        m_portComboBox = new QComboBox();
-        m_portComboBox->setEditable(false);
-        m_portComboBox->setEnabled(true);
-        //connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
-        m_portComboBox->addItems(getSerialPorts());
-
-	QPushButton * programButton = new QPushButton(tr("Program"));
-	programButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	//connect(programButton, SIGNAL(clicked()), this, SLOT(program()));
-
-	QHBoxLayout *footerLayout = new QHBoxLayout;
-
-	footerLayout->setMargin(0);
-	footerLayout->setSpacing(0);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(comboBox);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(loadButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_undoButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_redoButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_saveAsButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_saveButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
-        footerLayout->addWidget(m_portComboBox);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(programButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	m_footerFrame->setLayout(footerLayout);
-}
 
 bool ProgramMainWindow::save() {
 	return FritzingWindow::save();
@@ -369,11 +273,7 @@ const QString ProgramMainWindow::fileExtension() {
 }
 
 const QString ProgramMainWindow::defaultSaveFolder() {
-	return QDir::currentPath()+"/parts/user/";
-}
-
-void ProgramMainWindow::updateSaveButton() {
-	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
+	return FolderUtils::openSaveFolder();
 }
 
 bool ProgramMainWindow::eventFilter(QObject *object, QEvent *event) {
@@ -412,134 +312,6 @@ bool ProgramMainWindow::event(QEvent * e) {
 int & ProgramMainWindow::untitledFileCount() {
 	static int whatever = 1;
 	return whatever;
-}
-
-void ProgramMainWindow::changeLanguage(const QString & newLanguage) {
-	Syntaxer * syntaxer = m_syntaxers.value(newLanguage, NULL);
-	if (syntaxer == NULL) {
-		syntaxer = new Syntaxer();
-		if (syntaxer->loadSyntax(m_languages.value(newLanguage))) {
-			m_syntaxers.insert(newLanguage, syntaxer);
-		}
-	}
-	m_highlighter->setSyntaxer(syntaxer);
-}
-
-void ProgramMainWindow::loadProgramFile() {
-	QString fileName = FolderUtils::getOpenFileName(
-							this,
-							tr("Select an programming file to load"),
-							defaultSaveFolder(),
-							m_highlighter->syntaxer()->extensions()
-		);
-
-	if (fileName.isEmpty()) return;
-
-	QFile file(fileName);
-	if (file.open(QFile::ReadOnly)) {
-		QString text = file.readAll();
-		m_textEdit->setUndoRedoEnabled(false);
-		m_textEdit->setText(text);
-		m_textEdit->setUndoRedoEnabled(true);
-		m_fileName = fileName;
-		QFileInfo fileInfo(m_fileName);
-		m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
-	}
-}
-
-void ProgramMainWindow::textChanged() {
-}
-
-void ProgramMainWindow::textUndoAvailable(bool b) {
-	m_undoButton->setEnabled(b);
-}
-
-void ProgramMainWindow::textRedoAvailable(bool b) {
-	m_redoButton->setEnabled(b);
-}
-
-void ProgramMainWindow::undoText() {
-	m_textEdit->undo();
-}
-
-void ProgramMainWindow::redoText() {
-	m_textEdit->redo();
-}
-
-QStringList ProgramMainWindow::getSerialPorts() {
-	// TODO: make this call a plugin?
-#ifdef Q_WS_WIN
-	QStringList ports;
-	for (int i = 1; i < 256; i++)
-	{
-		QString port = QString("COM%1").arg(i);
-		QString sport = QString("\\\\.\\%1").arg(port);
-		HANDLE hPort = ::CreateFileA(sport.toLatin1().constData(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
-		if (hPort == INVALID_HANDLE_VALUE) {
-			DWORD dwError = GetLastError();
-			if (dwError == ERROR_ACCESS_DENIED || dwError == ERROR_GEN_FAILURE || dwError == ERROR_SHARING_VIOLATION || dwError == ERROR_SEM_TIMEOUT) {
-				ports.append(port);
-			}
-		}
-		else {
-			CloseHandle(hPort);
-			ports.append(port);
-		}
-	}
-	return ports;
-#endif
-#ifdef Q_WS_MAC
-
-	CFDictionarySetValue(classesToMatch,
-                             CFSTR(kIOSerialBSDTypeKey),
-                             CFSTR(kIOSerialBSDRS232Type));
-
-	return ___emptyStringList___;
-#endif
-#ifdef Q_WS_X11
-	QProcess * process = new QProcess(this);
-	process->setProcessChannelMode(QProcess::MergedChannels);
-	process->setReadChannel(QProcess::StandardOutput);
-
-	connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(portProcessFinished(int, QProcess::ExitStatus)));
-	connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(portProcessReadyRead()));
-
-        process->start("dmesg");
-
-	return ___emptyStringList___;
-#endif
-
-}
-
-void ProgramMainWindow::portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus) {
-	DebugDialog::debug(QString("process finished %1 %2").arg(exitCode).arg(exitStatus));
-
-	// parse the text and update the combo box
-
-	sender()->deleteLater();
-}
-
-void ProgramMainWindow::portProcessReadyRead() {
-        QStringList ports;
-
-	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
-        QTextStream textStream(byteArray, QIODevice::ReadOnly);
-        while (true) {
-            QString line = textStream.readLine();
-            if (line.isNull()) break;
-
-            if (!line.contains("tty")) continue;
-            if (!line.contains("serial", Qt::CaseInsensitive)) continue;
-
-            QStringList candidates = line.split(" ");
-            foreach (QString candidate, candidates) {
-                if (candidate.contains("tty")) {
-                    ports.append(candidate);
-                    break;
-                }
-            }
-        }
-        m_portComboBox->addItems(ports);
 }
 
 void ProgramMainWindow::setTitle() {

@@ -26,12 +26,14 @@
 
 HEADERS += \
     src/program/highlighter.h \
+    src/program/programtab.h \
     src/program/programmainwindow.h \
     src/program/syntaxer.h \
     src/program/trienode.h 
  
 SOURCES += \
     src/program/highlighter.cpp \
+    src/program/programtab.cpp \
     src/program/programmainwindow.cpp \
     src/program/syntaxer.cpp \
     src/program/trienode.cpp 

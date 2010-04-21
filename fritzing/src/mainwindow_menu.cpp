@@ -1549,8 +1549,6 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_selectAllObsoleteAct);
 	m_partMenu->addAction(m_swapObsoleteAct);
-	m_partMenu->addSeparator();
-	m_partMenu->addAction(m_openProgramWindowAct);
 
 	m_zOrderMenu->addAction(m_bringToFrontAct);
 	m_zOrderMenu->addAction(m_bringForwardAct);
@@ -2229,8 +2227,9 @@ void MainWindow::toggleUndoHistory(bool toggle) {
 void MainWindow::toggleDebuggerOutput(bool toggle) {
 	if (toggle) {
 		DebugDialog::showDebug();
-	} else {
-		DebugDialog::hideDebug();
+	} 
+	else 
+	{
 	}
 }
 
@@ -2244,6 +2243,10 @@ void MainWindow::updateWindowMenu() {
 		action->setChecked(action == m_raiseWindowAct);
 		m_windowMenu->addAction(action);
 	}
+
+	//m_windowMenu->addSeparator();
+	//m_windowMenu->addAction(m_openProgramWindowAct);
+
 }
 
 void MainWindow::pageSetup() {
