@@ -47,14 +47,15 @@ $Date$
 
 // TODO: 
 //		text search
-//		serial port plugins
+//		serial port plugins?
 //		numbers, string escape chars...
 //		save message if stack dirty at closing
 //		program (shell)
 //		include in fz
 //		include in fzz
-//		how to do multiple? tabs?
-//		how to delete from sketch?
+//		* in tab representing dirty
+
+static int UntitledIndex = 1;
 
 ProgramMainWindow::ProgramMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
@@ -126,16 +127,14 @@ QFrame * ProgramMainWindow::createCenter() {
 
 	m_tabWidget = new PTabWidget(centerFrame);
 	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	m_tabWidget->setMovable(false);
-
-	QFrame * editFrame = new ProgramTab(this);
-	m_tabWidget->addTab(editFrame, tr("Untitled"));
+	m_tabWidget->setMovable(true);
 
 	m_addButton = new QPushButton("+", m_tabWidget);
 	m_addButton->setObjectName("addButton");
-	connect(m_addButton, SIGNAL(triggered()), this, SLOT(addTab()));
-	QTabBar * tabBar = m_tabWidget->tabBar();
-	tabBar->setTabButton(0, QTabBar::RightSide, m_addButton);
+	connect(m_addButton, SIGNAL(clicked()), this, SLOT(addTab()));
+	m_tabWidget->setCornerWidget(m_addButton, Qt::TopRightCorner);
+
+	addTab();
 
 	QGridLayout *tabLayout = new QGridLayout(m_tabWidget);
 	tabLayout->setMargin(0);
@@ -148,8 +147,6 @@ QFrame * ProgramMainWindow::createCenter() {
 
 	return centerFrame;
 }
-
-
 
 bool ProgramMainWindow::save() {
 	return FritzingWindow::save();
@@ -310,8 +307,7 @@ bool ProgramMainWindow::event(QEvent * e) {
 }
 
 int & ProgramMainWindow::untitledFileCount() {
-	static int whatever = 1;
-	return whatever;
+	return UntitledIndex;
 }
 
 void ProgramMainWindow::setTitle() {
@@ -319,6 +315,10 @@ void ProgramMainWindow::setTitle() {
 }
 
 void ProgramMainWindow::addTab() {
+	QFrame * editFrame = new ProgramTab(m_tabWidget);
+	QString name = (UntitledIndex == 1) ? tr("Untitled") : tr("Untitled %1").arg(UntitledIndex);
+	m_tabWidget->addTab(editFrame, name);
+	UntitledIndex++;
 }
 
 ///////////////////////////////////////////////

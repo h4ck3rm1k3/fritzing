@@ -58,6 +58,7 @@ protected slots:
 	void undoText();
 	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void portProcessReadyRead();
+	void deleteTab();
 
 protected:
 	bool saveAs();

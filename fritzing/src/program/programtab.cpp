@@ -37,6 +37,7 @@ $Date$
 #include <QSettings>
 #include <QFontMetrics>
 #include <QTextStream>
+#include <QMessageBox>
 
 #ifdef Q_WS_WIN
 #include "windows.h"
@@ -54,7 +55,6 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 			m_tabWidget = tabWidget;
 			break;
 		}
-
 		parent = parent->parentWidget();
 	}
 
@@ -142,6 +142,10 @@ QFrame * ProgramTab::createFooter() {
 	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 
+	QPushButton * deleteButton = new QPushButton(tr("delete"));
+	deleteButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+	connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteTab()));
+
 	updateSaveButton();
 
     m_portComboBox = new QComboBox();
@@ -170,6 +174,8 @@ QFrame * ProgramTab::createFooter() {
 	footerLayout->addWidget(m_saveAsButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(deleteButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
     footerLayout->addWidget(m_portComboBox);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
@@ -179,8 +185,6 @@ QFrame * ProgramTab::createFooter() {
 
 	return footerFrame;
 }
-
-
 
 void ProgramTab::updateSaveButton() {
 	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
@@ -314,4 +318,38 @@ void ProgramTab::portProcessReadyRead() {
             }
         }
         m_portComboBox->addItems(ports);
+}
+
+void ProgramTab::deleteTab() {
+	if (!m_textEdit->toPlainText().isEmpty()) {
+		QString name = QFileInfo(m_filename).baseName();
+		if (name.isEmpty()) {
+			name = m_tabWidget->tabText(m_tabWidget->currentIndex());
+		}
+		QMessageBox messageBox(
+				tr("Delete \"%1\"?").arg(name),
+				tr("Are you sure you want to delete \"%1\"?").arg(name),
+				QMessageBox::Warning,
+				QMessageBox::Yes,
+				QMessageBox::No,
+				QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default,
+				this->window(), Qt::Sheet);
+
+		messageBox.setButtonText(QMessageBox::Yes, tr("Delete"));
+		messageBox.setButtonText(QMessageBox::No, tr("Don't Delete"));
+		messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
+		messageBox.setInformativeText(tr("This program will be unlinked from the sketch, but the file won't be deleted."));
+
+		QMessageBox::StandardButton reply = (QMessageBox::StandardButton) messageBox.exec();
+
+ 		if (reply != QMessageBox::Yes) {
+     		return;
+		}
+
+	}
+
+	if (m_tabWidget) {
+		m_tabWidget->removeTab(m_tabWidget->currentIndex());
+		this->deleteLater();
+	}
 }
