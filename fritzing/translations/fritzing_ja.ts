@@ -386,29 +386,9 @@ Fritzingのフォントを指定してください:</translation>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
-    <message>
-        <source>Copying file %1</source>
-        <translation>%1をコピー中</translation>
-    </message>
-    <message>
-        <source>File %1 already exists: it won&apos;t be overwritten</source>
-        <translation>ファイル %1 はすでに存在します。上書きできません</translation>
-    </message>
 </context>
 <context>
     <name>Helper</name>
-    <message>
-        <source>Drag out your &lt;br&gt; parts from here</source>
-        <translation>あなたのパーツをここから &lt;br&gt; ドラッグしてください</translation>
-    </message>
-    <message>
-        <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
-        <translation>アレンジを終了したら &lt;br&gt; オートルーターを使って &lt;br&gt; 配線のトレースをしてください</translation>
-    </message>
-    <message>
-        <source>Use these buttons to &lt;br&gt; toggle between views</source>
-        <translation>表示の切り替えには &lt;br&gt; このボタンを使用してください</translation>
-    </message>
     <message>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
         <translation>&lt;b&gt;ブレットボード ビュー&lt;/b&gt; は実際のブレッドボードを使っているかのようにプロトタイピングができます.&lt;br/&gt;&lt;br/&gt;右上にあるパーツ・ビンからパーツを取り出してドラッグしてください。. 他のパーツも引っ張りだしてコネクタをクリックして接続し、ワイヤをドラッグして配線してください。.現実世界と似た感覚で作業が出来るでしょう。. &lt;br/&gt;&lt;br/&gt;ボレッドボードビューのスケッチを終了したら, 他のビューも試してみてください. ビューの切り替えは画面左上のスイッチャーか右下のナビゲータで切り替えることができます. ビューによって目的が異なり、パーツの外見も変わって表示されます.</translation>
@@ -482,10 +462,6 @@ Fritzingのフォントを指定してください:</translation>
         <translation>パーツ</translation>
     </message>
     <message>
-        <source>Module</source>
-        <translation>モジュール</translation>
-    </message>
-    <message>
         <source>family</source>
         <translation>ファミリー</translation>
     </message>
@@ -546,10 +522,6 @@ Fritzingのフォントを指定してください:</translation>
     <name>LayerPalette</name>
     <message>
         <source>show all layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hide all layers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -872,14 +844,6 @@ Fritzingのフォントを指定してください:</translation>
         <translation>現在のスケッチをコアではない状態でエクスポート</translation>
     </message>
     <message>
-        <source>Save As Module...</source>
-        <translation>モジュールとして保存 ...</translation>
-    </message>
-    <message>
-        <source>Export current sketch as a standalone module</source>
-        <translation>現在のスケッチをスタンドアロンモジュールとしてエクスポート</translation>
-    </message>
-    <message>
         <source>to &amp;JPG...</source>
         <translation>&amp;JPG ...</translation>
     </message>
@@ -1169,18 +1133,6 @@ Fritzingのフォントを指定してください:</translation>
         <translation>選択したオブジェクトを再背面のレイヤへ送る</translation>
     </message>
     <message>
-        <source>&amp;Group</source>
-        <translation>グループ(&amp;G)</translation>
-    </message>
-    <message>
-        <source>Ctrl+G</source>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
-        <source>Group multiple items</source>
-        <translation>複数のアイテムをグループ化</translation>
-    </message>
-    <message>
         <source>&amp;Show All Layers</source>
         <translation>すべてのレイヤを表示(&amp;S)</translation>
     </message>
@@ -1381,10 +1333,6 @@ Fritzingのフォントを指定してください:</translation>
         <translation>オンラインパーツリファレンス</translation>
     </message>
     <message>
-        <source>&amp;Report a bug...</source>
-        <translation>バグの報告(&amp;R) ...</translation>
-    </message>
-    <message>
         <source>&amp;Part</source>
         <translation>パーツ(&amp;P)</translation>
     </message>
@@ -1550,10 +1498,6 @@ Quantity	Part
         <translation>まもなく Fritzing のスケッチを EAGLE用にエクスポートできるでしょう。他にもお好みのEDAツールがあれば知らせていただくか寄付してください.</translation>
     </message>
     <message>
-        <source>Before you can save a sketch as a module, all traces must be routed.</source>
-        <translation>スケッチをモジュールとして保存する前に全ての配線を接続しなければなりません.</translation>
-    </message>
-    <message>
         <source>Sorry!</source>
         <translatorcomment>使用箇所不明</translatorcomment>
         <translation>申し訳ありません!</translation>
@@ -1576,14 +1520,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Do you want to proceed anyway?</source>
         <translation>続行しますか?</translation>
-    </message>
-    <message>
-        <source>Open Module as Sketch</source>
-        <translation>スケッチとしてモジュールを開く</translation>
-    </message>
-    <message>
-        <source>Open selected module as a sketch (for editing)</source>
-        <translation>選択されたモジュールを(編集のための)スケッチ用として開く</translation>
     </message>
     <message>
         <source>Raise and Lower</source>
@@ -1954,6 +1890,22 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Set the size of the grid to align to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open programming window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open microcontroller programming window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Report a bug...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable debugging log</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2356,14 +2308,6 @@ Reason: %2 (errcode %3)</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <source>Open Image</source>
-        <translation>イメージを開く</translation>
-    </message>
-    <message>
-        <source>SVG Files (*.fzfp)</source>
-        <translation>SVG ファイル (*.fzfp)</translation>
-    </message>
-    <message>
         <source>Save as new part</source>
         <translation>新しいパーツとして保存</translation>
     </message>
@@ -2427,10 +2371,6 @@ Please, specify a new filename</source>
         <translation>イメージを開く</translation>
     </message>
     <message>
-        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
-        <translation>イメージファイル (%1 %2 %3);;SVG ファイル (%1);;JPEG ファイル (%2);;PNG ファイル(%3)</translation>
-    </message>
-    <message>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
         <translation>パーツエディタ: %2 ビューのターミナルポイント %1 を保存できません</translation>
     </message>
@@ -2463,6 +2403,31 @@ Fritzingの互換性のため svg 用として書き込むことが出ません�
 あなたの権限を確認してから再度お試しください。
 
 追加情報は  http://fritzing.org/using-svg-images-new-parts/ にあります</translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conversion problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image file: 
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no footprints found in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to open temp file %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2538,6 +2503,138 @@ the PCB view?</source>
         <source>Unconnected Highlight</source>
         <translation>強調部分と非接続</translation>
     </message>
+    <message>
+        <source>Mouse Wheel Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No keys down:
+%1 key down:
+Alt key down:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Wheel Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom
+Vertical scroll
+Horizontal scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom
+Horizontal scroll
+Vertical scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical scroll
+Zoom
+Horizontal scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical scroll
+Horizontal scroll
+Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal scroll
+Vertical scroll
+Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal scroll
+Zoom
+Vertical scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgramMainWindow</name>
+    <message>
+        <source>Programming Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgramTab</name>
+    <message>
+        <source>Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save as</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a programming file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program will be unlinked from the sketch, but the file won&apos;t be deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2564,10 +2661,6 @@ the PCB view?</source>
     <message>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
         <translation>ファイル &apos;%1&apos; は読み取り専用です別のファイル名を使用してください.</translation>
-    </message>
-    <message>
-        <source>Save as Module</source>
-        <translation>モジュールとして保存</translation>
     </message>
     <message>
         <source>icon view</source>
@@ -2805,22 +2898,6 @@ Fritzingはまだ作業中のためパーツのプロパティを変更するこ
         <translation>ラッツネスト</translation>
     </message>
     <message>
-        <source>Silkscreen</source>
-        <translation>シルクスクリーン</translation>
-    </message>
-    <message>
-        <source>Part Labels (Silkscreen)</source>
-        <translation>パーツラベル (シルク)</translation>
-    </message>
-    <message>
-        <source>Copper 0</source>
-        <translation>プリント基板裏側の配線</translation>
-    </message>
-    <message>
-        <source>Copper 1</source>
-        <translation>プリント基板表側の配線</translation>
-    </message>
-    <message>
         <source>Solder mask</source>
         <translation>はんだマスク</translation>
     </message>
@@ -2839,10 +2916,6 @@ Fritzingはまだ作業中のためパーツのプロパティを変更するこ
     <message>
         <source>Unknown Layer</source>
         <translation>不明なレイヤ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;この部品がモジュール外で接続できるように、モジュールの&quot;拡張&quot;コネクタを作るためにクリックし、もう一度クリックして接続できないようにしてください。.  選択をより簡単にするためにマウスホイールを使って拡大/縮小し&lt;/p&gt;&lt;p&gt;モジュール内に説明を書いてください.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
@@ -2890,10 +2963,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation>グランドプレーン</translation>
     </message>
     <message>
-        <source>Copper 0 Trace</source>
-        <translation>銅面 </translation>
-    </message>
-    <message>
         <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
         <translation>&lt;b&gt;接続された強調色&lt;/b&gt;</translation>
     </message>
@@ -2911,6 +2980,158 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Grid Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to open %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to parse %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parse failure in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing can&apos;t yet handle both pins and pads together (in %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad pin argument count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad pad argument count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>footprint %1 not found in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected end of file in footprint %1 in file %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected format (1) in %1 from %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected end of file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing drill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>position missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill offset not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill missing ellipse params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipsoidal drill holes not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attributes missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, can&apos;t handle pad type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad shape missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape delta not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trapezoidal pads not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to handle pad shape %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failure in svg conversion 1: %1 %2 %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failure in svg conversion 2: %1 %2 %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copying file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File %1 already exists: it won&apos;t be overwritten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Top (Part Labels)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Bottom Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Bottom (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2962,19 +3183,19 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished">シェイプ</translation>
     </message>
     <message>
-        <source>width(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>height(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>width: %1mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>height: %1mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2983,53 +3204,6 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>width</source>
         <translation type="unfinished">幅</translation>
-    </message>
-</context>
-<context>
-    <name>SaveAsModuleDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation>キャンセル</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation>ラベル</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>説明</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>プロパティ</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>タグ</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>作者名</translation>
-    </message>
-    <message>
-        <source>Created/Updated on</source>
-        <translation>作成／アップデート日時</translation>
-    </message>
-    <message>
-        <source>No external connectors have been defined--which means that you won&apos;t be able to connect to this module in Fritzing.</source>
-        <translation>外部コネクターは定義されていません--Fritzingでこのモジュールに接続することはできません.</translation>
-    </message>
-    <message>
-        <source>Do you want to proceed anyway?</source>
-        <translation>続行しますか?</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
-        <translation>処理終了</translation>
     </message>
 </context>
 <context>
@@ -3543,6 +3717,14 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>color</source>
         <translation type="unfinished">カラー</translation>
+    </message>
+    <message>
+        <source>brown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>purple</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

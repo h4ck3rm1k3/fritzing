@@ -354,14 +354,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <source>Copying file %1</source>
-        <translation>复制文件 %1中</translation>
-    </message>
-    <message>
-        <source>File %1 already exists: it won&apos;t be overwritten</source>
-        <translation>文件 %1 已经存在:不能够被覆盖</translation>
-    </message>
-    <message>
         <source>Save &quot;%1&quot;</source>
         <translation>保存 &quot;%1&quot;</translation>
     </message>
@@ -396,19 +388,6 @@ Please select one of the Fritzing fonts to replace them:</source>
 </context>
 <context>
     <name>Helper</name>
-    <message>
-        <source>Drag out your &lt;br&gt; parts from here</source>
-        <translation>从这里&lt;br&gt;拖出元件</translation>
-    </message>
-    <message>
-        <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
-        <translation>排列完元件后, &lt;br&gt;使用自动布线&lt;br&gt;生成铜的线迹</translation>
-    </message>
-    <message>
-        <source>Use these buttons to &lt;br&gt; toggle between views</source>
-        <translatorcomment>使用这些按钮&lt;br&gt;在不同的视图间切换。</translatorcomment>
-        <translation>Use these buttons to &lt;br&gt; toggle between views</translation>
-    </message>
     <message>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
         <translation>&lt;b&gt;面包板视图&lt;/b&gt;的意思就是看来像&lt;i&gt;现实中&lt;/i&gt;的面包板原型.&lt;br/&gt;&lt;br/&gt;开始从位于右上角的元件库中拖出一个元件，然后引入更多的元件，通过点击接插件和拉动导线来连接他们。这个过程类似于在真实世界中的布线。&lt;br/&gt;&lt;br/&gt;在面包板视图上的创作完成后，尝试下其他视图。可以通过点击视图切换器或者右下角的导航栏点选其他视图。因为不同的视图有不同的目的，元件在其他视图中看起来时不一样的。</translation>
@@ -482,10 +461,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>元件</translation>
     </message>
     <message>
-        <source>Module</source>
-        <translation>模块</translation>
-    </message>
-    <message>
         <source>family</source>
         <translation type="unfinished">类族</translation>
     </message>
@@ -546,10 +521,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <name>LayerPalette</name>
     <message>
         <source>show all layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hide all layers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -726,10 +697,6 @@ Do you want to restart now?</source>
     <message>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
-    </message>
-    <message>
-        <source>Before you can save a sketch as a module, all traces must be routed.</source>
-        <translation>在保存设计为模块前，所有的布线必须完成。</translation>
     </message>
     <message>
         <source>Sorry!</source>
@@ -952,22 +919,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Post a project to the Fritzing website</source>
         <translation>向Fritzing网址发布工程</translation>
-    </message>
-    <message>
-        <source>Save As Module...</source>
-        <translation>另存为模块...</translation>
-    </message>
-    <message>
-        <source>Export current sketch as a standalone module</source>
-        <translation>将当前的设计保存为一个标准的模块</translation>
-    </message>
-    <message>
-        <source>Open Module as Sketch</source>
-        <translation>将模块作为设计打开</translation>
-    </message>
-    <message>
-        <source>Open selected module as a sketch (for editing)</source>
-        <translation>将选择的模块作为可编辑的设计打开</translation>
     </message>
     <message>
         <source>to &amp;JPG...</source>
@@ -1330,18 +1281,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>将选择对象移至所在层的下面</translation>
     </message>
     <message>
-        <source>&amp;Group</source>
-        <translation>组合(&amp;G)</translation>
-    </message>
-    <message>
-        <source>Ctrl+G</source>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
-        <source>Group multiple items</source>
-        <translation>组合多个物件</translation>
-    </message>
-    <message>
         <source>&amp;Show All Layers</source>
         <translation>显示所有层(&amp;S)</translation>
     </message>
@@ -1560,10 +1499,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Show Qt&apos;s about box</source>
         <translation>显示 Qt 的关于对话框</translation>
-    </message>
-    <message>
-        <source>&amp;Report a bug...</source>
-        <translation>报告bug(&amp;R)...</translation>
     </message>
     <message>
         <source>Report a but you&apos;ve found in Fritzing</source>
@@ -1945,6 +1880,22 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Set the size of the grid to align to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open programming window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open microcontroller programming window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Report a bug...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable debugging log</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2358,14 +2309,6 @@ Reason: %2 (errcode %3)</source>
         <translation>取消</translation>
     </message>
     <message>
-        <source>Open Image</source>
-        <translation>打开图像</translation>
-    </message>
-    <message>
-        <source>SVG Files (*.fzfp)</source>
-        <translation>SVG文件(*.fzfp)</translation>
-    </message>
-    <message>
         <source>close</source>
         <translation>关闭</translation>
     </message>
@@ -2417,10 +2360,6 @@ Please, specify a new filename</source>
         <translation>打开图像</translation>
     </message>
     <message>
-        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
-        <translation>图像文件(%1 %2 %3);;SVG 文件(%1);;JPEG 文件(%2);;PNG 文件(%3)</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t open svg file</source>
         <translation>不能打开svg文件</translation>
     </message>
@@ -2453,6 +2392,31 @@ Fritzing和这种svg文件不兼容。请检查你的权限并重试。
     <message>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
         <translation>元件编辑器:在视图%2中不能保存接插件%1的终端</translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conversion problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image file: 
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no footprints found in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to open temp file %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2528,6 +2492,138 @@ the PCB view?</source>
         <source>Unconnected Highlight</source>
         <translation>高亮未连接的</translation>
     </message>
+    <message>
+        <source>Mouse Wheel Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No keys down:
+%1 key down:
+Alt key down:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Wheel Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom
+Vertical scroll
+Horizontal scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom
+Horizontal scroll
+Vertical scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical scroll
+Zoom
+Horizontal scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical scroll
+Horizontal scroll
+Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal scroll
+Vertical scroll
+Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal scroll
+Zoom
+Vertical scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgramMainWindow</name>
+    <message>
+        <source>Programming Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgramTab</name>
+    <message>
+        <source>Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save as</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a programming file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program will be unlinked from the sketch, but the file won&apos;t be deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2596,14 +2692,6 @@ Please stay tuned.</source>
     <message>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
         <translation>文件&apos;%1&apos;是只读文件;请使用一个不同的文件名.</translation>
-    </message>
-    <message>
-        <source>Save as Module</source>
-        <translation>保存为组建</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;为了使接插件为&quot;外部的&quot;,以便模块外的元件可以连接到他，点击它；再次点击可以使连接不可用。 为了使选择更加容易，使用鼠标滚轮放大缩小。&lt;/p&gt;&lt;p&gt;记得向下拖动，填充描述和这个模块的其他部分.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Edit link</source>
@@ -2850,28 +2938,8 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>鼠巢</translation>
     </message>
     <message>
-        <source>Silkscreen</source>
-        <translation>丝印</translation>
-    </message>
-    <message>
-        <source>Part Labels (Silkscreen)</source>
-        <translation>元件标签(丝印)</translation>
-    </message>
-    <message>
         <source>Ground Plane</source>
         <translation>地面</translation>
-    </message>
-    <message>
-        <source>Copper 0</source>
-        <translation>铜0</translation>
-    </message>
-    <message>
-        <source>Copper 0 Trace</source>
-        <translation>铜0迹线</translation>
-    </message>
-    <message>
-        <source>Copper 1</source>
-        <translation>铜1</translation>
     </message>
     <message>
         <source>Solder mask</source>
@@ -2903,6 +2971,158 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Grid Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to open %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to parse %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parse failure in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing can&apos;t yet handle both pins and pads together (in %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad pin argument count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad pad argument count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>footprint %1 not found in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected end of file in footprint %1 in file %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected format (1) in %1 from %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected end of file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing drill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>position missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill offset not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill missing ellipse params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipsoidal drill holes not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attributes missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, can&apos;t handle pad type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad shape missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape delta not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trapezoidal pads not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to handle pad shape %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failure in svg conversion 1: %1 %2 %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failure in svg conversion 2: %1 %2 %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copying file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File %1 already exists: it won&apos;t be overwritten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Top (Part Labels)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Bottom Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Bottom (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2954,19 +3174,19 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>width(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>height(mm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>width: %1mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>height: %1mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2975,53 +3195,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>width</source>
         <translation type="unfinished">宽度</translation>
-    </message>
-</context>
-<context>
-    <name>SaveAsModuleDialog</name>
-    <message>
-        <source>Label</source>
-        <translation>标签</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>描述</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>属性</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>标签</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>作者</translation>
-    </message>
-    <message>
-        <source>Created/Updated on</source>
-        <translation>创建/更新于</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-    <message>
-        <source>No external connectors have been defined--which means that you won&apos;t be able to connect to this module in Fritzing.</source>
-        <translation>未定义外部接插件--不能在Fritzing中连接这个模块.</translation>
-    </message>
-    <message>
-        <source>Do you want to proceed anyway?</source>
-        <translation>无论如何都要继续么?</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
-        <translation>进行</translation>
     </message>
 </context>
 <context>
@@ -3535,6 +3708,14 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>color</source>
         <translation type="unfinished">颜色</translation>
+    </message>
+    <message>
+        <source>brown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>purple</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

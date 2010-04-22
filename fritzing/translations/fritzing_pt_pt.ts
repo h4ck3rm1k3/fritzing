@@ -385,29 +385,9 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
-    <message>
-        <source>Copying file %1</source>
-        <translation>A copiar ficheiro %1</translation>
-    </message>
-    <message>
-        <source>File %1 already exists: it won&apos;t be overwritten</source>
-        <translation>O Ficheiro %1 já existe: ele não vai ser criado novamente</translation>
-    </message>
 </context>
 <context>
     <name>Helper</name>
-    <message>
-        <source>Drag out your &lt;br&gt; parts from here</source>
-        <translation>Arraste os seus &lt;b&gt; componentes para aqui</translation>
-    </message>
-    <message>
-        <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
-        <translation>Quando acabares de organizar os teus componentes, &lt;br&gt; utiliza a função Autoroute para criar&lt;br&gt; as tuas linhas de cobre</translation>
-    </message>
-    <message>
-        <source>Use these buttons to &lt;br&gt; toggle between views</source>
-        <translation>Utiliza estes botões para &lt;br&gt; mudar entre os modos de visualização</translation>
-    </message>
     <message>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
         <translation>A &lt;b&gt; vista do tipo Breadboard &lt;/b&gt; tem como objectivo parecer como &lt;i&gt; na vida real &lt;/i&gt; um protótipo efectuado numa breadbord. &lt;br/&gt;&lt;br/&gt;Começa por arrastar um componente do compartimento onde eles se encontram, que se situa no topo à direita. Depois pega em mais componentes, e liga-os clicando nos conectores e arrastando fios. O processo é similar ao processo como se organizam as coisas no Mundo real. &lt;br/&gt;&lt;br/&gt;Depois de terminares a criação do teu sketch nesta vista, experimenta as outras vistas. Podes mudar facilmente do tipo de vista clicando no botão para mudar de vista ou carregar no navigator no canto inferior direito. Diferentes tipos de vista têm diferentes objectivos, e os componentes vão parecer diferentes nos outros tipos de vista.</translation>
@@ -482,10 +462,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>Componente</translation>
     </message>
     <message>
-        <source>Module</source>
-        <translation>Módulo</translation>
-    </message>
-    <message>
         <source>family</source>
         <translation>família</translation>
     </message>
@@ -546,10 +522,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <name>LayerPalette</name>
     <message>
         <source>show all layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hide all layers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -893,14 +865,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>Exportar o sketch actual e os seus componentes</translation>
     </message>
     <message>
-        <source>Save As Module...</source>
-        <translation>Guardar como um módulo...</translation>
-    </message>
-    <message>
-        <source>Export current sketch as a standalone module</source>
-        <translation>Exportar o sketch actual como um módulo standalone</translation>
-    </message>
-    <message>
         <source>to &amp;JPG...</source>
         <translation>para &amp;JPG...</translation>
     </message>
@@ -1189,18 +1153,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>Trazer os objectos seleccionados para trás da camada</translation>
     </message>
     <message>
-        <source>&amp;Group</source>
-        <translation>&amp;Agrupar</translation>
-    </message>
-    <message>
-        <source>Ctrl+G</source>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
-        <source>Group multiple items</source>
-        <translation>Agrupar múltiplos itens</translation>
-    </message>
-    <message>
         <source>&amp;Show All Layers</source>
         <translation>&amp;Mostrar todas as camadas</translation>
     </message>
@@ -1405,10 +1357,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>Referência de componentes online</translation>
     </message>
     <message>
-        <source>&amp;Report a bug...</source>
-        <translation>&amp;Reportar um erro...</translation>
-    </message>
-    <message>
         <source>&amp;Part</source>
         <translation>&amp;Componente</translation>
     </message>
@@ -1547,10 +1495,6 @@ Quantidade	Componente</translation>
         <translation>Vai ser providenciada a exportação do sketch criado pelo Fritzing para o software EAGLE. Se desejares ter a exportação para outro tipo de software de desenvolvimento, diz-nos, ou contribui.</translation>
     </message>
     <message>
-        <source>Before you can save a sketch as a module, all traces must be routed.</source>
-        <translation>Antes de guardares o sketch actual como módulo, tens de encaminhar(route) todos os traços.</translation>
-    </message>
-    <message>
         <source>Sorry!</source>
         <translation>Desculpa!</translation>
     </message>
@@ -1571,14 +1515,6 @@ Estamos a trabalhar para evitar esta mensagem, e apenas deixar-te escolher entre
     <message>
         <source>Do you want to proceed anyway?</source>
         <translation>Quer continuar na mesma?</translation>
-    </message>
-    <message>
-        <source>Open Module as Sketch</source>
-        <translation>Abrir um módulo como um Sketch</translation>
-    </message>
-    <message>
-        <source>Open selected module as a sketch (for editing)</source>
-        <translation>Abrir o módulo seleccionado como um sketch (para modificar)</translation>
     </message>
     <message>
         <source>Raise and Lower</source>
@@ -1947,6 +1883,22 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
     </message>
     <message>
         <source>Set the size of the grid to align to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open programming window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open microcontroller programming window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Report a bug...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable debugging log</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2355,14 +2307,6 @@ Razão: %2 (código do erro %3)</translation>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Open Image</source>
-        <translation>Abrir Imagem</translation>
-    </message>
-    <message>
-        <source>SVG Files (*.fzfp)</source>
-        <translation>Ficheiro SVG (*.fzfp)</translation>
-    </message>
-    <message>
         <source>Save as new part</source>
         <translation>Guardar um novo componente</translation>
     </message>
@@ -2418,10 +2362,6 @@ Por favor, especifique um novo nome para o ficheiro</translation>
         <translation>Abrir Imagem</translation>
     </message>
     <message>
-        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
-        <translation>Ficheiros de imagem (%1 %2 %3);;Ficheiros SVG (%1);;Ficheiros JPEG (%2);;Ficheiros PNG (%3)</translation>
-    </message>
-    <message>
         <source>Parts Editor: couldn&apos;t save terminal point for connector %1 in %2 view</source>
         <translation>Editor de componentes: impossível gravar o ponto terminal do conector %1 na vista %2</translation>
     </message>
@@ -2456,6 +2396,31 @@ O Fritzing não é compatível com este tipo de ficheiro svg. Por favor
 verifique as suas permissões e tente novamente.
 
 Mais informações consulte o site  http://fritzing.org/using-svg-images-new-parts/</translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conversion problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load image file: 
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no footprints found in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to open temp file %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2531,6 +2496,138 @@ numa PCB (Placa de Circuito Impresso)?</translation>
         <source>Unconnected Highlight</source>
         <translation>Destaque o não ligado/conectado</translation>
     </message>
+    <message>
+        <source>Mouse Wheel Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No keys down:
+%1 key down:
+Alt key down:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Wheel Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom
+Vertical scroll
+Horizontal scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom
+Horizontal scroll
+Vertical scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical scroll
+Zoom
+Horizontal scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical scroll
+Horizontal scroll
+Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal scroll
+Vertical scroll
+Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal scroll
+Zoom
+Vertical scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgramMainWindow</name>
+    <message>
+        <source>Programming Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgramTab</name>
+    <message>
+        <source>Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save as</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a programming file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program will be unlinked from the sketch, but the file won&apos;t be deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2557,14 +2654,6 @@ numa PCB (Placa de Circuito Impresso)?</translation>
     <message>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
         <translation>O ficheiro &apos;%1&apos; é apenas de leitura; por favor especifique um nome de ficheiro diferente.</translation>
-    </message>
-    <message>
-        <source>Save as Module</source>
-        <translation>Guardar como um módulo</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;Para fazer a ligação externa (&quot;external&quot;), para fazer com que partes exteriores ao módulo se ligam, clica nele;clica outravez para o tornar disponível para ligação. Para tornares a selecção mais fácil, usa a roda do rato para introduzir mais ou menos zoom. &lt;/p&gt;&lt;p&gt;Não te esqueças de preencher a descrição e os outros campos que descrevem o teu módulo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>icon view</source>
@@ -2807,22 +2896,6 @@ O Fritzing ainda trabalha, mas não vais poder modificar as propriedas dos compo
         <translation>Ninho de ratos</translation>
     </message>
     <message>
-        <source>Silkscreen</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Part Labels (Silkscreen)</source>
-        <translation>Etiquetas do componente (Silkscreen)</translation>
-    </message>
-    <message>
-        <source>Copper 0</source>
-        <translation>Cobre 0</translation>
-    </message>
-    <message>
-        <source>Copper 1</source>
-        <translation>Cobre 1</translation>
-    </message>
-    <message>
         <source>Solder mask</source>
         <translation>Máscara de solda</translation>
     </message>
@@ -2885,10 +2958,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>Plano terra</translation>
     </message>
     <message>
-        <source>Copper 0 Trace</source>
-        <translation>Traço Cobre 0</translation>
-    </message>
-    <message>
         <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
         <translation>&lt;b&gt; Cor de destaque do conectado&lt;/b&gt;</translation>
     </message>
@@ -2906,6 +2975,158 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Grid Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to open %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to parse %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parse failure in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing can&apos;t yet handle both pins and pads together (in %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad pin argument count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad pad argument count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>footprint %1 not found in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected end of file in footprint %1 in file %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected format (1) in %1 from %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unexpected end of file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing drill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad missing shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>position missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill offset not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drill missing ellipse params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipsoidal drill holes not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attributes missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, can&apos;t handle pad type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad shape missing params</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shape delta not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trapezoidal pads not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to handle pad shape %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failure in svg conversion 1: %1 %2 %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failure in svg conversion 2: %1 %2 %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copying file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File %1 already exists: it won&apos;t be overwritten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Top (Part Labels)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Bottom Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top Trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silkscreen Bottom (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2957,19 +3178,19 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>forma</translation>
     </message>
     <message>
-        <source>width(mm):</source>
-        <translation>largura(mm):</translation>
-    </message>
-    <message>
-        <source>height(mm):</source>
-        <translation>altura(mm):</translation>
-    </message>
-    <message>
         <source>width: %1mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>height: %1mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height(mm)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2978,53 +3199,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>width</source>
         <translation>largura</translation>
-    </message>
-</context>
-<context>
-    <name>SaveAsModuleDialog</name>
-    <message>
-        <source>Label</source>
-        <translation>Etiqueta</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Descrição</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propriedades</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>Tags</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>Autor</translation>
-    </message>
-    <message>
-        <source>Created/Updated on</source>
-        <translation>Criado/Actualizado em</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>No external connectors have been defined--which means that you won&apos;t be able to connect to this module in Fritzing.</source>
-        <translation>Não foram definidos conectores externos - o que significa que não vai ser possível conectar a este módulo utilizando o Fritzing.</translation>
-    </message>
-    <message>
-        <source>Do you want to proceed anyway?</source>
-        <translation>Quer continuar na mesma?</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
-        <translation>Continuar</translation>
     </message>
 </context>
 <context>
@@ -3540,6 +3714,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>color</source>
         <translation>cor</translation>
+    </message>
+    <message>
+        <source>brown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>purple</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
