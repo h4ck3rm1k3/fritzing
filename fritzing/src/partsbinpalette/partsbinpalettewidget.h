@@ -93,7 +93,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setAllowsChanges(bool);
 		void focusSearch();
 		void setSaveQuietly(bool);
-		bool save();
 		bool open(QString fileName="");
 
 	public slots:
@@ -107,6 +106,9 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void openNewBin(const QString &filename = ___emptyString___);
 
 	protected slots:
+		bool save();
+		bool removeSelected();
+		bool saveAs();
 		void toIconView();
 		void toListView();
 		void saveBundledBin();
@@ -166,8 +168,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void setFilename(const QString &filename);
 		QHash<QString,QString> getUserBinsInfo();
 		QString getBinName(const QFileInfo &info);
-		bool removeSelected();
-		bool saveAs();
 
 	protected:
 		PaletteModel *m_model;

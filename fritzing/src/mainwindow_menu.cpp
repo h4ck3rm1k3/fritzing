@@ -63,7 +63,7 @@ $Date$
 #include "utils/zoomslider.h"
 #include "dialogs/alignsettingsdialog.h"
 #include "layerpalette.h"
-#include "program/programmainwindow.h"
+#include "program/programwindow.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -3178,6 +3178,18 @@ void MainWindow::setBackgroundColor() {
 }
 
 void MainWindow::startSaveInstancesSlot(ModelPart *, QXmlStreamWriter & streamWriter) {
+	if (m_linkedProgramFiles.count() > 0) {
+		QFileInfo fileInfo(m_fileName);
+		QDir dir = fileInfo.absoluteDir();
+		streamWriter.writeStartElement("programs");
+		foreach (QString filename, m_linkedProgramFiles) {
+			streamWriter.writeStartElement("program");
+			streamWriter.writeCharacters(dir.relativeFilePath(filename));
+			streamWriter.writeEndElement();
+		}
+		streamWriter.writeEndElement();
+	}
+
 	streamWriter.writeStartElement("views");
 	QList<SketchWidget *> views;
 	views << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView;
@@ -3432,13 +3444,37 @@ void MainWindow::alignToGridSettings() {
 }
 
 void MainWindow::openProgramWindow() {
-	if (m_programMainWindow) {
-		m_programMainWindow->setVisible(true);
-		m_programMainWindow->raise();
+	if (m_programWindow) {
+		m_programWindow->setVisible(true);
+		m_programWindow->raise();
 		return;
 	}
 
-	m_programMainWindow = new ProgramMainWindow(this);
-	m_programMainWindow->setup();
-	m_programMainWindow->setVisible(true);
+	m_programWindow = new ProgramWindow(this);
+	connect(m_programWindow, SIGNAL(linkToProgramFile(const QString &, bool)), this, SLOT(linkToProgramFile(const QString &, bool)));
+	m_programWindow->setup();
+	m_programWindow->setVisible(true);
+}
+
+void MainWindow::linkToProgramFile(const QString & filename, bool addLink) {
+#ifdef Q_WS_WIN
+	Qt::CaseSensitivity sensitivity = Qt::CaseInsensitive;
+#else
+	Qt::CaseSensitivity sensitivity = Qt::CaseSensitive;
+#endif
+
+	if (addLink) {
+		if (!m_linkedProgramFiles.contains(filename, sensitivity)) {
+
+			m_linkedProgramFiles.append(filename);
+		}
+	}
+	else {
+		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
+			if (m_linkedProgramFiles.at(i).compare(filename, sensitivity) == 0) {
+				m_linkedProgramFiles.removeAt(i);
+				return;
+			}
+		}
+	}
 }

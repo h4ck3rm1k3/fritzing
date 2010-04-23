@@ -45,6 +45,7 @@ $Date$
 
 QHash<QString, QString> ProgramTab::m_languages;
 QHash<QString, class Syntaxer *> ProgramTab::m_syntaxers;
+QIcon * AsteriskIcon = NULL;
 
 ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 {
@@ -62,6 +63,10 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 		initLanguages();
 	}
 
+	if (AsteriskIcon == NULL) {
+		AsteriskIcon = new QIcon(":/resources/images/icons/asterisk.png");
+	}
+
 	m_updateEnabled = false;
 	QGridLayout *editLayout = new QGridLayout(this);
 	editLayout->setMargin(0);
@@ -72,6 +77,7 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 
 	m_textEdit = new QTextEdit;
 	m_textEdit->setFontFamily("Droid Sans Mono");
+	m_textEdit->setLineWrapMode(QTextEdit::NoWrap);
 	QFontMetrics fm(m_textEdit->currentFont());
 	m_textEdit->setTabStopWidth(fm.averageCharWidth() * 4);
 	m_textEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -142,11 +148,9 @@ QFrame * ProgramTab::createFooter() {
 	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 
-	QPushButton * deleteButton = new QPushButton(tr("delete"));
+	QPushButton * deleteButton = new QPushButton(tr("remove"));
 	deleteButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 	connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteTab()));
-
-	updateSaveButton();
 
     m_portComboBox = new QComboBox();
     m_portComboBox->setEditable(false);
@@ -186,10 +190,6 @@ QFrame * ProgramTab::createFooter() {
 	return footerFrame;
 }
 
-void ProgramTab::updateSaveButton() {
-	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
-}
-
 void ProgramTab::changeLanguage(const QString & newLanguage) {
 	Syntaxer * syntaxer = m_syntaxers.value(newLanguage, NULL);
 	if (syntaxer == NULL) {
@@ -202,9 +202,15 @@ void ProgramTab::changeLanguage(const QString & newLanguage) {
 }
 
 void ProgramTab::loadProgramFile() {
+	if (isModified()) {
+		bool ok = false;
+		emit wantBeforeClosing(m_tabWidget->currentIndex(), ok);
+		if (!ok) return;
+	}
+
 	QString fileName = FolderUtils::getOpenFileName(
 							this,
-							tr("Select a programming file to load"),
+							tr("Select a program file to load"),
 							FolderUtils::openSaveFolder(),
 							m_highlighter->syntaxer()->extensions()
 		);
@@ -214,9 +220,8 @@ void ProgramTab::loadProgramFile() {
 	QFile file(fileName);
 	if (file.open(QFile::ReadOnly)) {
 		QString text = file.readAll();
-		m_textEdit->setUndoRedoEnabled(false);
 		m_textEdit->setText(text);
-		m_textEdit->setUndoRedoEnabled(true);
+		setClean();
 		m_filename = fileName;
 		QFileInfo fileInfo(m_filename);
 		if (m_tabWidget) {
@@ -226,6 +231,20 @@ void ProgramTab::loadProgramFile() {
 }
 
 void ProgramTab::textChanged() {
+	QIcon tabIcon = m_tabWidget->tabIcon(m_tabWidget->currentIndex());
+	bool modified = m_textEdit->document()->isModified();
+
+	m_saveButton->setEnabled(modified);
+	if (tabIcon.isNull()) {
+		if (modified) {
+			m_tabWidget->setTabIcon(m_tabWidget->currentIndex(), *AsteriskIcon);
+		}
+	}
+	else {
+		if (!modified) {
+			m_tabWidget->setTabIcon(m_tabWidget->currentIndex(), QIcon());
+		}
+	}
 }
 
 void ProgramTab::textUndoAvailable(bool b) {
@@ -326,6 +345,14 @@ void ProgramTab::deleteTab() {
 		if (name.isEmpty()) {
 			name = m_tabWidget->tabText(m_tabWidget->currentIndex());
 		}
+
+		DeleteDialog deleteDialog(tr("Delete \"%1\"?").arg(name),
+								  tr("Are you sure you want to delete \"%1\"?").arg(name),
+								  NULL, 0);
+		int reply = deleteDialog.exec();
+
+		/*
+
 		QMessageBox messageBox(
 				tr("Delete \"%1\"?").arg(name),
 				tr("Are you sure you want to delete \"%1\"?").arg(name),
@@ -342,6 +369,8 @@ void ProgramTab::deleteTab() {
 
 		QMessageBox::StandardButton reply = (QMessageBox::StandardButton) messageBox.exec();
 
+		*/
+
  		if (reply != QMessageBox::Yes) {
      		return;
 		}
@@ -349,7 +378,139 @@ void ProgramTab::deleteTab() {
 	}
 
 	if (m_tabWidget) {
-		m_tabWidget->removeTab(m_tabWidget->currentIndex());
+		emit wantToDelete(m_tabWidget->currentIndex());
 		this->deleteLater();
 	}
+}
+
+bool ProgramTab::isModified() {
+	return m_textEdit->document()->isModified();
+}
+
+const QString & ProgramTab::filename() {
+	return m_filename;
+}
+
+void ProgramTab::setFilename(const QString & name) {
+	m_filename = name;
+}
+
+QString ProgramTab::extension() {
+	if (m_highlighter == NULL) return "";
+
+	Syntaxer * syntaxer = m_highlighter->syntaxer();
+	if (syntaxer == NULL) return "";
+
+	return syntaxer->extension();
+}
+
+void ProgramTab::setClean() {
+	m_textEdit->document()->setModified(false);
+	textChanged();
+}
+
+void ProgramTab::save() {
+	emit wantToSave(m_tabWidget->currentIndex());
+}
+
+void ProgramTab::saveAs() {
+	emit wantToSaveAs(m_tabWidget->currentIndex());
+}
+
+bool ProgramTab::readOnly() {
+	// TODO: return true if it's a sample file
+	return false;
+}
+
+bool ProgramTab::save(const QString & filename) {
+	QFile file(filename);
+	if (!file.open(QFile::WriteOnly)) {
+		return false;
+	}
+
+	QByteArray b = m_textEdit->toPlainText().toLatin1();
+	qint64 written = file.write(b);
+	file.close();
+	bool result = (b.length() == written);
+	if (result) {
+		setFilename(filename);
+	}
+	return result;
+}
+
+/////////////////////////////////////////
+
+DeleteDialog::DeleteDialog(const QString & title, const QString & text, QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
+{
+	this->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |  Qt::WindowCloseButtonHint);
+
+// code borrowed from QMessageBox
+
+    QLabel * label = new QLabel;
+    label->setObjectName(QLatin1String("qt_msgbox_label"));
+    label->setTextInteractionFlags(Qt::TextInteractionFlags(this->style()->styleHint(QStyle::SH_MessageBox_TextInteractionFlags, 0, this)));
+    label->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    label->setOpenExternalLinks(true);
+#if defined(Q_WS_MAC)
+    label->setContentsMargins(16, 0, 0, 0);
+#elif !defined(Q_WS_QWS)
+    label->setContentsMargins(2, 0, 0, 0);
+    label->setIndent(9);
+#endif
+    QLabel * iconLabel = new QLabel;
+    iconLabel->setObjectName(QLatin1String("qt_msgboxex_icon_label"));
+    iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    m_buttonBox = new QDialogButtonBox;
+    m_buttonBox->setObjectName(QLatin1String("qt_msgbox_buttonbox"));
+    m_buttonBox->setCenterButtons(this->style()->styleHint(QStyle::SH_MessageBox_CenterButtons, 0, this));
+    QObject::connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+
+    QGridLayout *grid = new QGridLayout;
+#ifndef Q_WS_MAC
+    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop);
+    grid->addWidget(label, 0, 1, 1, 1);
+    // -- leave space for information label --
+    grid->addWidget(m_buttonBox, 2, 0, 1, 2);
+#else
+    grid->setMargin(0);
+    grid->setVerticalSpacing(8);
+    grid->setHorizontalSpacing(0);
+    q->setContentsMargins(24, 15, 24, 20);
+    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignLeft);
+    grid->addWidget(label, 0, 1, 1, 1);
+    // -- leave space for information label --
+    grid->setRowStretch(1, 100);
+    grid->setRowMinimumHeight(2, 6);
+    grid->addWidget(buttonBox, 3, 1, 1, 1);
+#endif
+
+    grid->setSizeConstraint(QLayout::SetNoConstraint);
+    this->setLayout(grid);
+
+    if (!title.isEmpty() || !text.isEmpty()) {
+        this->setWindowTitle(title);
+        label->setText(text);
+    }
+    this->setModal(true);
+
+#ifdef Q_WS_MAC
+    QFont f = this->font();
+    f.setBold(true);
+    label->setFont(f);
+#endif
+
+	m_buttonBox->addButton(QDialogButtonBox::Yes);
+	m_buttonBox->addButton(QDialogButtonBox::No);
+	m_buttonBox->addButton(QDialogButtonBox::Cancel);
+	m_buttonBox->button(QDialogButtonBox::Yes)->setText(tr("Delete"));
+	m_buttonBox->button(QDialogButtonBox::No)->setText(tr("Don't Delete"));
+
+	iconLabel->setPixmap(QMessageBox::standardIcon(QMessageBox::Warning));
+
+	this->resize(300, 150);
+}
+
+void DeleteDialog::buttonClicked(QAbstractButton * button) {
+	this->done(m_buttonBox->standardButton(button));
 }

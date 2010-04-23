@@ -24,7 +24,7 @@ $Date$
 
 ********************************************************************/
 
-#include "programmainwindow.h"
+#include "programwindow.h"
 #include "highlighter.h"
 #include "syntaxer.h"
 #include "programtab.h"
@@ -49,35 +49,38 @@ $Date$
 //		text search
 //		serial port plugins?
 //		numbers, string escape chars...
-//		save message if stack dirty at closing
 //		program (shell)
+//		shell output to console
 //		include in fz
 //		include in fzz
-//		* in tab representing dirty
+//		mark parent dirty...
+//		when removing last tab either close the window or add a new tab
 
-static int UntitledIndex = 1;
+static int UntitledIndex = 1;				
 
-ProgramMainWindow::ProgramMainWindow(QWidget *parent)
-	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
+ProgramWindow::ProgramWindow(QWidget *parent)
+	: FritzingWindow("", untitledFileCount(), "", parent)
 {
-	ProgramMainWindow::setTitle();
+	m_savingProgramTab = NULL;
+	UntitledIndex--;						// incremented by FritzingWindow
+	ProgramWindow::setTitle();			// set to something weird by FritzingWindow
 }
 
-ProgramMainWindow::~ProgramMainWindow()
+ProgramWindow::~ProgramWindow()
 {
 }
 
-void ProgramMainWindow::initText() {
+void ProgramWindow::initText() {
 }
 
-void ProgramMainWindow::setup()
+void ProgramWindow::setup()
 {
-    QFile styleSheet(":/resources/styles/programmingwindow.qss");
+    QFile styleSheet(":/resources/styles/programwindow.qss");
     QFrame * mainFrame = new QFrame(this);
     mainFrame->setObjectName("programmingWindow");
 
     if (!styleSheet.open(QIODevice::ReadOnly)) {
-        qWarning("Unable to open :/resources/styles/programmingwindow.qss");
+        qWarning("Unable to open :/resources/styles/programwindow.qss");
     } else {
     	mainFrame->setStyleSheet(styleSheet.readAll());
     }
@@ -113,14 +116,14 @@ void ProgramMainWindow::setup()
 	installEventFilter(this);
 }
 
-QFrame * ProgramMainWindow::createHeader() {
+QFrame * ProgramWindow::createHeader() {
 	QFrame * headerFrame = new QFrame();
 	headerFrame->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
 	headerFrame->setObjectName("header");
 	return headerFrame;
 }
 
-QFrame * ProgramMainWindow::createCenter() {
+QFrame * ProgramWindow::createCenter() {
 
 	QFrame * centerFrame = new QFrame();
 	centerFrame->setObjectName("center");
@@ -128,6 +131,8 @@ QFrame * ProgramMainWindow::createCenter() {
 	m_tabWidget = new PTabWidget(centerFrame);
 	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	m_tabWidget->setMovable(true);
+	m_tabWidget->setUsesScrollButtons(false);
+	m_tabWidget->setElideMode(Qt::ElideLeft);
 
 	m_addButton = new QPushButton("+", m_tabWidget);
 	m_addButton->setObjectName("addButton");
@@ -148,106 +153,17 @@ QFrame * ProgramMainWindow::createCenter() {
 	return centerFrame;
 }
 
-bool ProgramMainWindow::save() {
-	return FritzingWindow::save();
+
+void ProgramWindow::cleanUp() {
 }
 
-bool ProgramMainWindow::saveAs() {
-	QString fileNameBU = m_fileName;
-
-	QString title = "what's this";
-	m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
-
-	// TODO Mariano: This folder should be defined in the preferences... some day
-	QString partsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/";
-	QString userPartsFolderPath = partsFolderPath+"user/";
-
-	bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
-	while(m_fileName.isEmpty()
-		  || QFileInfo(userPartsFolderPath+m_fileName).exists()
-		  || (FolderUtils::isEmptyFileName(m_fileName,untitledFileName()) && firstTime)
-		) 
-	{
-		bool ok;
-		m_fileName = QInputDialog::getText(
-			this,
-			tr("Save as new part"),
-			tr("There's already a file with this name.\nPlease, specify a new filename"),
-			QLineEdit::Normal,
-			m_fileName,
-			&ok
-		);
-		firstTime = false;
-		if (!ok) {
-			m_fileName = fileNameBU;
-			return false;
-		}
-	}
-
-	Qt::CaseSensitivity cs = Qt::CaseSensitive;
-#ifdef Q_WS_WIN
-	// seems to be necessary for Windows: getUserDataStorePath() returns a string starting with "c:"
-	// but the file dialog returns a string beginning with "C:"
-	cs = Qt::CaseInsensitive;
-#endif
-
-	QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
-					&& !m_fileName.startsWith(partsFolderPath, cs)
-			? userPartsFolderPath+m_fileName
-			: m_fileName;
-	QString guid = "__"+FolderUtils::getRandText()+FritzingPartExtension;
-	if(!alreadyHasExtension(filename, FritzingPartExtension)) {
-		filename += guid;
-	} else {
-		filename.replace(FritzingPartExtension,guid);
-	}
-
-	saveAsAux(filename);
-
-	return false;
-}
-
-bool ProgramMainWindow::saveAsAux(const QString & fileName) {
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Fritzing"),
-                             tr("Cannot write file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
-        return false;
-    }
-    file.close();
-
-
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
-
-	QString fileNameAux = QFileInfo(fileName).fileName();
-    QApplication::restoreOverrideCursor();
-
-    statusBar()->showMessage(tr("Saved '%1'").arg(fileName), 2000);
-
-    m_fileName = fileName;
-    //setCurrentFile(fileName);
-
-   // mark the stack clean so we update the window dirty flag
-    m_undoStack->setClean();
-    m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileNameAux);
-
-	return true;
-}
-
-
-void ProgramMainWindow::cleanUp() {
-}
-
-void ProgramMainWindow::parentAboutToClose() {
+void ProgramWindow::parentAboutToClose() {
 	if(beforeClosing(false)) {
 		cleanUp();
 	}
 }
 
-void ProgramMainWindow::closeEvent(QCloseEvent *event) {
+void ProgramWindow::closeEvent(QCloseEvent *event) {
 	if(beforeClosing()) {
 		cleanUp();
 		QMainWindow::closeEvent(event);
@@ -261,19 +177,19 @@ void ProgramMainWindow::closeEvent(QCloseEvent *event) {
 	//settings.setValue("peditor/geometry",saveGeometry());
 }
 
-const QString ProgramMainWindow::untitledFileName() {
-	return "Programming Window";
+const QString ProgramWindow::untitledFileName() {
+	return "Untitled";
 }
 
-const QString ProgramMainWindow::fileExtension() {
-	return FritzingPartExtension;
+const QString ProgramWindow::fileExtension() {
+	return "";
 }
 
-const QString ProgramMainWindow::defaultSaveFolder() {
+const QString ProgramWindow::defaultSaveFolder() {
 	return FolderUtils::openSaveFolder();
 }
 
-bool ProgramMainWindow::eventFilter(QObject *object, QEvent *event) {
+bool ProgramWindow::eventFilter(QObject *object, QEvent *event) {
 	if (object == this && event->type() == QEvent::ShortcutOverride) {
 		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
 		if(keyEvent && keyEvent->matches(QKeySequence::Close)) {
@@ -292,7 +208,7 @@ bool ProgramMainWindow::eventFilter(QObject *object, QEvent *event) {
 	return QMainWindow::eventFilter(object, event);
 }
 
-bool ProgramMainWindow::event(QEvent * e) {
+bool ProgramWindow::event(QEvent * e) {
 	switch (e->type()) {
 		case QEvent::WindowActivate:
 			emit changeActivationSignal(true, this);
@@ -306,19 +222,108 @@ bool ProgramMainWindow::event(QEvent * e) {
 	return FritzingWindow::event(e);
 }
 
-int & ProgramMainWindow::untitledFileCount() {
+int & ProgramWindow::untitledFileCount() {
 	return UntitledIndex;
 }
 
-void ProgramMainWindow::setTitle() {
+void ProgramWindow::setTitle() {
 	setWindowTitle(tr("Programming Window"));
 }
 
-void ProgramMainWindow::addTab() {
-	QFrame * editFrame = new ProgramTab(m_tabWidget);
-	QString name = (UntitledIndex == 1) ? tr("Untitled") : tr("Untitled %1").arg(UntitledIndex);
-	m_tabWidget->addTab(editFrame, name);
+void ProgramWindow::addTab() {
+	ProgramTab * programTab = new ProgramTab(m_tabWidget);
+	connect(programTab, SIGNAL(wantToSaveAs(int)), this, SLOT(tabSaveAs(int)));
+	connect(programTab, SIGNAL(wantToSave(int)), this, SLOT(tabSave(int)));
+	connect(programTab, SIGNAL(wantBeforeClosing(int, bool &)), this, SLOT(tabBeforeClosing(int, bool &)), Qt::DirectConnection);
+	connect(programTab, SIGNAL(wantToDelete(int)), this, SLOT(tabDelete(int)), Qt::DirectConnection);
+	QString name = (UntitledIndex == 1) ? untitledFileName() : tr("%1 %2").arg(untitledFileName()).arg(UntitledIndex);
+	programTab->setFilename(name);
+	int ix = m_tabWidget->addTab(programTab, name);
+	m_tabWidget->setCurrentIndex(ix);
 	UntitledIndex++;
+}
+
+bool ProgramWindow::beforeClosing(bool showCancel) {
+	for (int i = 0; i < m_tabWidget->count(); i++) {
+		if (!beforeClosingTab(i, showCancel)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool ProgramWindow::beforeClosingTab(int index, bool showCancel) 
+{
+	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	if (programTab == NULL) return true;
+
+	if (!programTab->isModified()) return true;
+
+	QMessageBox::StandardButton reply = beforeClosingMessage(programTab->filename(), showCancel);
+	if (reply == QMessageBox::Yes) {
+		return prepSave(programTab, false);
+	} 
+	
+	if (reply == QMessageBox::No) {
+		return true;
+	}
+ 		
+	return false;
+}
+
+bool ProgramWindow::saveAsAux(const QString & fileName) {
+	if (!m_savingProgramTab) return false;
+
+	bool result = m_savingProgramTab->save(fileName);
+	m_savingProgramTab = NULL;
+	return result;
+}
+
+
+void ProgramWindow::tabDelete(int index) {
+	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	if (programTab != NULL) {
+		emit linkToProgramFile(programTab->filename(), false);
+	}
+	m_tabWidget->removeTab(index);
+}
+
+void ProgramWindow::tabSave(int index) {
+	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	if (programTab == NULL) return;
+
+    prepSave(programTab, false);
+}
+
+void ProgramWindow::tabSaveAs(int index) {
+	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	if (programTab == NULL) return;
+
+	QString formerFilename = programTab->filename();
+	if (prepSave(programTab, true)) {
+		emit linkToProgramFile(formerFilename, false);
+	}
+}
+
+void ProgramWindow::tabBeforeClosing(int index, bool & ok) {
+	ok = beforeClosingTab(index, true);
+}
+
+
+bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag) 
+{
+	m_savingProgramTab = programTab;				// need this for the saveAsAux call
+
+	bool result = (saveAsFlag) 
+		? saveAs(programTab->filename(), programTab->extension(), programTab->readOnly())
+		: save(programTab->filename(), programTab->extension(), programTab->readOnly());
+
+	if (result) {
+		programTab->setClean();
+		emit linkToProgramFile(programTab->filename(), true);
+	}
+	return result;
 }
 
 ///////////////////////////////////////////////

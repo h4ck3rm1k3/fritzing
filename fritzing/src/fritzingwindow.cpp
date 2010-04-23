@@ -85,67 +85,86 @@ void FritzingWindow::setTitle() {
 
 // returns true if the user wanted to save the file
 bool FritzingWindow::save() {
-	if (FolderUtils::isEmptyFileName(m_fileName,untitledFileName())) {
-		return saveAs();
+	bool result;
+	if (FolderUtils::isEmptyFileName(m_fileName, untitledFileName())) {
+		result = saveAs();
 	} else if (m_readOnly) {
-		return saveAs();
+		result = saveAs();
 	} else {
-		saveAsAux(m_fileName);
-		return true;
+		result = saveAsAux(m_fileName);
 	}
+
+	if (result) {
+		QSettings settings;
+		settings.setValue("lastOpenSketch", m_fileName);
+	}
+	return result;
 }
 
 bool FritzingWindow::saveAs() {
+	bool result = saveAs(m_fileName, fileExtension(), m_readOnly);
+	if (result) {
+		QSettings settings;
+		settings.setValue("lastOpenSketch", m_fileName);
+	}
+	return result;
+}
+
+bool FritzingWindow::save(const QString & filename, const QString & extension, bool readOnly) {
+	if (FolderUtils::isEmptyFileName(filename, untitledFileName())) {
+		return saveAs(filename, extension, readOnly);
+	} else if (m_readOnly) {
+		return saveAs(filename, extension, readOnly);
+	} else {
+		return saveAsAux(filename);
+	}
+}
+
+bool FritzingWindow::saveAs(const QString & filename, const QString & extension, bool readOnly) {
 	DebugDialog::debug(QString("current path: %1").arg(QDir::currentPath()));
 	QString fileExt;
     QString path;
     QString untitledBase = untitledFileName();
 
-	if(m_readOnly) {
-		path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName();
+	if(readOnly) {
+		path = defaultSaveFolder() + "/" + QFileInfo(filename).fileName();
     }
-	else if(m_fileName.startsWith(untitledBase, Qt::CaseInsensitive)) {
-		path = defaultSaveFolder() + "/" + m_fileName;
+	else if(filename.startsWith(untitledBase, Qt::CaseInsensitive)) {
+		path = defaultSaveFolder() + "/" + filename;
 	}
-	else if(m_fileName.isNull() || m_fileName.isEmpty()) {
+	else if(filename.isNull() || filename.isEmpty()) {
 		path = defaultSaveFolder();
 	}
 	else {
-		path = m_fileName;
+		path = filename;
 	}
-	DebugDialog::debug(QString("current file: %1").arg(m_fileName));
-    QString fileName = FolderUtils::getSaveFileName(
+	DebugDialog::debug(QString("current file: %1").arg(filename));
+    QString newFilename = FolderUtils::getSaveFileName(
 						this,
                         tr("Specify a file name"),
                         path,
-                        tr("Fritzing (*%1)").arg(fileExtension()),
+                        tr("Fritzing (*%1)").arg(extension),
                         &fileExt
                       );
 
-    if (fileName.isEmpty()) return false; // Cancel pressed
+    if (newFilename.isEmpty()) return false; // Cancel pressed
 
-	if (m_readOnly && (fileName.compare(m_fileName, Qt::CaseInsensitive) == 0)) {
+	if (readOnly && (newFilename.compare(filename, Qt::CaseInsensitive) == 0)) {
         QMessageBox::warning(NULL, QObject::tr("Fritzing"),
                      QObject::tr("The file '%1' is read-only; please use a different filename.")
-                     .arg(fileName) );
+                     .arg(newFilename) );
 		return false;
 
 	}
 
 	FileProgressDialog progress("Saving...", 0, this);
 
-    if(!alreadyHasExtension(fileName, fileExtension())) {
-		fileName += fileExtension();
+    if(!alreadyHasExtension(newFilename, extension)) {
+		newFilename += extension;
 	}
 
-	if (saveAsAux(fileName)) {
-		QSettings settings;
-		settings.setValue("lastOpenSketch",m_fileName);
-	}
-
-    return true;
+	return saveAsAux(newFilename);
 }
-
 
 void FritzingWindow::undoStackCleanChanged(bool isClean) {
 	setWindowModified(!isClean);
@@ -169,36 +188,43 @@ bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString 
 
 bool FritzingWindow::beforeClosing(bool showCancel) {
 	if (this->isWindowModified()) {
-     	QMessageBox messageBox(
-     			tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
-     			tr("Do you want to save the changes you made in the document \"%1\"?")
-					.arg(QFileInfo(m_fileName).baseName()),
-     			QMessageBox::Warning,
-				showCancel ? QMessageBox::Yes : QMessageBox::Yes | QMessageBox::Default,
-     			QMessageBox::No,
-     			showCancel ? QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default : QMessageBox::NoButton,
-     			this, Qt::Sheet);
-
-		messageBox.setButtonText(QMessageBox::Yes,
-			m_fileName.startsWith(untitledFileName()) ? tr("Save...") : tr("Save"));
-		messageBox.setButtonText(QMessageBox::No, tr("Don't Save"));
-		messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-		messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
-		if (showCancel) {
-			messageBox.setButtonText(QMessageBox::Cancel, tr("Cancel"));
-		}
-		QMessageBox::StandardButton reply = (QMessageBox::StandardButton)messageBox.exec();
+		QMessageBox::StandardButton reply = beforeClosingMessage(m_fileName, showCancel);
      	if (reply == QMessageBox::Yes) {
      		return save();
-    	} else if (reply == QMessageBox::No) {
+    	} 
+		else if (reply == QMessageBox::No) {
      		return true;
         }
      	else {
          	return false;
         }
-	} else {
+	} 
+	else {
 		return true;
 	}
+}
+
+QMessageBox::StandardButton FritzingWindow::beforeClosingMessage(const QString & filename, bool showCancel) 
+{
+	QString basename = QFileInfo(filename).baseName();
+ 	QMessageBox messageBox(
+ 			tr("Save \"%1\"").arg(basename),
+ 			tr("Do you want to save the changes you made in the document \"%1\"?").arg(basename),
+ 			QMessageBox::Warning,
+			showCancel ? QMessageBox::Yes : QMessageBox::Yes | QMessageBox::Default,
+ 			QMessageBox::No,
+ 			showCancel ? QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default : QMessageBox::NoButton,
+ 			this, Qt::Sheet);
+
+	messageBox.setButtonText(QMessageBox::Yes,
+		m_fileName.startsWith(untitledFileName()) ? tr("Save...") : tr("Save"));
+	messageBox.setButtonText(QMessageBox::No, tr("Don't Save"));
+	messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
+	messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
+	if (showCancel) {
+		messageBox.setButtonText(QMessageBox::Cancel, tr("Cancel"));
+	}
+	return (QMessageBox::StandardButton) messageBox.exec();
 }
 
 void FritzingWindow::setReadOnly(bool readOnly) {

@@ -31,6 +31,7 @@ $Date$
 #include <QMainWindow>
 #include <QDir>
 #include <QStatusBar>
+#include <QMessageBox>
 
 #include "waitpushundostack.h"
 #include "utils/misc.h"
@@ -52,10 +53,12 @@ signals:
 
 protected slots:
 	void undoStackCleanChanged(bool isClean);
-
-protected:
 	virtual bool save();
 	virtual bool saveAs();
+
+protected:
+	bool save(const QString & filename, const QString & extension, bool readOnly);
+	bool saveAs(const QString & filename, const QString & extension, bool readOnly);
 	virtual void setTitle();
 	virtual const QString fritzingTitle();
 	virtual const QString fileExtension() = 0;
@@ -64,7 +67,8 @@ protected:
 	virtual const QString defaultSaveFolder() = 0;
 
 	virtual bool saveAsAux(const QString & fileName) = 0;
-	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
+	virtual bool beforeClosing(bool showCancel=true);			// returns true if close, false if cancel
+	QMessageBox::StandardButton FritzingWindow::beforeClosingMessage(const QString & filename, bool showCancel);
 
 	void createCloseAction();
 

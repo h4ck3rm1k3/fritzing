@@ -70,7 +70,7 @@ class SqliteReferenceModel : public ReferenceModel {
 	protected:
 		void initParts();
 
-	private:
+	protected:
 		bool addPartAux(ModelPart * newModel);
 
 		QString closestMatchId(const Part *examplePart, const QString &propertyName, const QString &propertyValue);

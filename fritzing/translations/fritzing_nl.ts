@@ -222,6 +222,17 @@ om deze aansluiting in orde te brengen</translation>
     </message>
 </context>
 <context>
+    <name>DeleteDialog</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Dip</name>
     <message>
         <source>chip label</source>
@@ -2559,21 +2570,6 @@ Vertical scroll</source>
     </message>
 </context>
 <context>
-    <name>ProgramMainWindow</name>
-    <message>
-        <source>Programming Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ProgramTab</name>
     <message>
         <source>Open...</source>
@@ -2596,15 +2592,7 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a programming file to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2616,19 +2604,22 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete</source>
+        <source>remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t Delete</source>
+        <source>Select a program file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgramWindow</name>
+    <message>
+        <source>Programming Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This program will be unlinked from the sketch, but the file won&apos;t be deleted.</source>
+        <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

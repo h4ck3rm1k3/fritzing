@@ -269,6 +269,19 @@ para poder reparar este conector</translation>
     </message>
 </context>
 <context>
+    <name>DeleteDialog</name>
+    <message>
+        <location filename="../src/program/programtab.cpp" line="506"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/program/programtab.cpp" line="507"/>
+        <source>Don&apos;t Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Dip</name>
     <message>
         <location filename="../src/items/dip.cpp" line="42"/>
@@ -417,52 +430,52 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>%1 - %2</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="127"/>
+        <location filename="../src/fritzingwindow.cpp" line="144"/>
         <source>Specify a file name</source>
         <translation>Especifica un nombre para el archivo</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="129"/>
+        <location filename="../src/fritzingwindow.cpp" line="146"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="200"/>
+        <location filename="../src/fritzingwindow.cpp" line="211"/>
         <source>Save &quot;%1&quot;</source>
         <translation>Guardar &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="201"/>
+        <location filename="../src/fritzingwindow.cpp" line="212"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation>¿Deseas guardar los cambios realizados al documento &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="209"/>
+        <location filename="../src/fritzingwindow.cpp" line="220"/>
         <source>Save...</source>
         <translation>Guardar...</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="209"/>
+        <location filename="../src/fritzingwindow.cpp" line="220"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="210"/>
+        <location filename="../src/fritzingwindow.cpp" line="221"/>
         <source>Don&apos;t Save</source>
         <translation>No Guardar</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="211"/>
+        <location filename="../src/fritzingwindow.cpp" line="222"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="212"/>
+        <location filename="../src/fritzingwindow.cpp" line="223"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation>Los cambios se perderan si no se guardan.</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="214"/>
+        <location filename="../src/fritzingwindow.cpp" line="225"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -792,8 +805,8 @@ Please select one of the Fritzing fonts to replace them:</source>
         <location filename="../src/mainwindow_menu.cpp" line="2933"/>
         <location filename="../src/mainwindow_menu.cpp" line="2945"/>
         <location filename="../src/mainwindow_menu.cpp" line="2957"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3315"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3389"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3327"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3401"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
@@ -1647,7 +1660,7 @@ Do you want to restart now?</source>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2702"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3406"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3418"/>
         <source>Update ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1657,23 +1670,23 @@ Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3233"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3245"/>
         <source>Launch %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3315"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3327"/>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3319"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3331"/>
         <source>Outdated parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow_menu.cpp" line="3320"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3332"/>
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1681,19 +1694,19 @@ All your parts are up-to-date.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3364"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3376"/>
         <source>Unknown module id for %1.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3389"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3401"/>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3395"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3407"/>
         <source>Update %1 part(s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1973,7 +1986,7 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3354"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3366"/>
         <source>No new part found for %1.
 </source>
         <translation type="unfinished"></translation>
@@ -2355,8 +2368,8 @@ Cantidad	Parte
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1435"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3353"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3363"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3365"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3375"/>
         <source>Sorry!</source>
         <translation>Disculpa!</translation>
     </message>
@@ -2610,35 +2623,35 @@ Reason: %2 (errcode %3)</source>
         <translation>Mostrar como Lista</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="486"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="482"/>
         <source>Specify a file name</source>
         <translation>Especifica un nombre para el archivo</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="530"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="537"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="526"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="533"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="531"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="527"/>
         <source>Cannot find file %1.</source>
         <translation>Imposible encontrar archivo %1.</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="538"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="534"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Imposible leer archivo %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="601"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="597"/>
         <source>Save &quot;%1&quot;</source>
         <translation>Guardar &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="317"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="610"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="606"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
@@ -2725,52 +2738,52 @@ Reason: %2 (errcode %3)</source>
         <translation>Parte</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="490"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="486"/>
         <source>Fritzing Bin (*%1)</source>
         <translation>Compartimiento de Fritzing(*%1)</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="602"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="598"/>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="611"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="607"/>
         <source>Don&apos;t Save</source>
         <translation>No Guardar</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="612"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="608"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="716"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="712"/>
         <source>Add to bin</source>
         <translation>Agregar al catálogo</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="717"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="713"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation>¿Realmente quieres agregar la parte seleccionada al catálogo?</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="741"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="737"/>
         <source>Remove from bin</source>
         <translation>Quitar del catálogo</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="742"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="738"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation>¿Realmente quieres quitar la parte seleccionada del catálogo?</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="789"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="785"/>
         <source>Please choose a name for the bin:</source>
         <translation>Por favor selecciona un nombre para este compartimiento:</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="613"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="609"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation>Los cambios se perderán si no se guardan.</translation>
     </message>
@@ -2780,7 +2793,7 @@ Reason: %2 (errcode %3)</source>
         <translation>Catalogo Sin Nombre</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="788"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="784"/>
         <source>Rename bin</source>
         <translation>Re nombrar compartimiento</translation>
     </message>
@@ -2880,39 +2893,39 @@ Reason: %2 (errcode %3)</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="532"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="529"/>
         <source>Save as new part</source>
         <translation>Guardar como parte nueva</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="590"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="587"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="591"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="588"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>No se puede escribir el Archivo %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="612"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="609"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>Guardado &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="753"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="750"/>
         <source>Updating existing part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="498"/>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="767"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="764"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="791"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="788"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
@@ -2922,12 +2935,12 @@ Reason: %2 (errcode %3)</source>
         <translation>Parte Sin Nombre</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="812"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="809"/>
         <source>Icon needed</source>
         <translation>Se necesita un icono</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="812"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="809"/>
         <source>Please, provide an icon image for this part</source>
         <translation>Por favor provee un icono para esta parte</translation>
     </message>
@@ -2942,7 +2955,7 @@ Reason: %2 (errcode %3)</source>
         <translation>Puedes agreagar tus etiquetas para hacer la busqueda más sencilla</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="533"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="530"/>
         <source>There&apos;s already a file with this name.
 Please, specify a new filename</source>
         <translation>Ya existe un archivo con este nombre
@@ -3178,24 +3191,6 @@ Vertical scroll</source>
     </message>
 </context>
 <context>
-    <name>ProgramMainWindow</name>
-    <message>
-        <location filename="../src/program/programmainwindow.cpp" line="228"/>
-        <source>Programming Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programmainwindow.cpp" line="233"/>
-        <source>Untitled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programmainwindow.cpp" line="233"/>
-        <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ProgramTab</name>
     <message>
         <location filename="../src/program/programtab.cpp" line="129"/>
@@ -3224,17 +3219,17 @@ Vertical scroll</source>
     </message>
     <message>
         <location filename="../src/program/programtab.cpp" line="151"/>
-        <source>delete</source>
+        <source>remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/program/programtab.cpp" line="163"/>
+        <location filename="../src/program/programtab.cpp" line="213"/>
+        <source>Select a program file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/program/programtab.cpp" line="161"/>
         <source>Program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programtab.cpp" line="214"/>
-        <source>Select a programming file to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3247,24 +3242,17 @@ Vertical scroll</source>
         <source>Are you sure you want to delete &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ProgramWindow</name>
     <message>
-        <location filename="../src/program/programtab.cpp" line="357"/>
-        <source>Delete</source>
+        <location filename="../src/program/programwindow.cpp" line="230"/>
+        <source>Programming Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/program/programtab.cpp" line="358"/>
-        <source>Don&apos;t Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programtab.cpp" line="359"/>
-        <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programtab.cpp" line="360"/>
-        <source>This program will be unlinked from the sketch, but the file won&apos;t be deleted.</source>
+        <location filename="../src/program/programwindow.cpp" line="239"/>
+        <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3298,7 +3286,7 @@ Vertical scroll</source>
     <message>
         <location filename="../src/fapplication.cpp" line="602"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
-        <location filename="../src/fritzingwindow.cpp" line="136"/>
+        <location filename="../src/fritzingwindow.cpp" line="153"/>
         <location filename="../src/mainwindow_menu.cpp" line="2866"/>
         <location filename="../src/mainwindow_menu.cpp" line="2900"/>
         <location filename="../src/model/modelbase.cpp" line="60"/>
@@ -3311,7 +3299,7 @@ Vertical scroll</source>
         <location filename="../src/model/palettemodel.cpp" line="312"/>
         <location filename="../src/model/palettemodel.cpp" line="326"/>
         <location filename="../src/model/palettemodel.cpp" line="408"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="568"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="564"/>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="251"/>
         <location filename="../src/sketch/sketchwidget.cpp" line="661"/>
         <source>Fritzing</source>
@@ -3319,7 +3307,7 @@ Vertical scroll</source>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="602"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="568"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="564"/>
         <source>Friting cannot load the parts bin</source>
         <translation>Fritzing no pudo cargar el catalogo de partes</translation>
     </message>
@@ -3717,7 +3705,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <translation>Buscar actualizaciones</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="137"/>
+        <location filename="../src/fritzingwindow.cpp" line="154"/>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
         <translation>El archivo &apos;%1&apos; es de sólo lectura; por favor, selecciona otro nombre.</translation>
     </message>
@@ -3769,7 +3757,7 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/program/syntaxer.cpp" line="85"/>
+        <location filename="../src/program/syntaxer.cpp" line="90"/>
         <source>files</source>
         <translation type="unfinished"></translation>
     </message>

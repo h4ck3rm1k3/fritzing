@@ -270,6 +270,19 @@ in order to fix this connector</source>
     </message>
 </context>
 <context>
+    <name>DeleteDialog</name>
+    <message>
+        <location filename="../src/program/programtab.cpp" line="506"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/program/programtab.cpp" line="507"/>
+        <source>Don&apos;t Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Dip</name>
     <message>
         <location filename="../src/items/dip.cpp" line="42"/>
@@ -421,52 +434,52 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>%1 - %2</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="127"/>
+        <location filename="../src/fritzingwindow.cpp" line="144"/>
         <source>Specify a file name</source>
         <translation>設定檔名</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="129"/>
+        <location filename="../src/fritzingwindow.cpp" line="146"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="200"/>
+        <location filename="../src/fritzingwindow.cpp" line="211"/>
         <source>Save &quot;%1&quot;</source>
         <translation>存檔 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="201"/>
+        <location filename="../src/fritzingwindow.cpp" line="212"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation>檔案 &quot;%1&quot; 已異動過，是否存檔?</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="209"/>
+        <location filename="../src/fritzingwindow.cpp" line="220"/>
         <source>Save...</source>
         <translation>存檔...</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="209"/>
+        <location filename="../src/fritzingwindow.cpp" line="220"/>
         <source>Save</source>
         <translation>存檔</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="210"/>
+        <location filename="../src/fritzingwindow.cpp" line="221"/>
         <source>Don&apos;t Save</source>
         <translation>不存檔</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="211"/>
+        <location filename="../src/fritzingwindow.cpp" line="222"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="212"/>
+        <location filename="../src/fritzingwindow.cpp" line="223"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation>若不存檔，所有異動就會消失.</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="214"/>
+        <location filename="../src/fritzingwindow.cpp" line="225"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -809,8 +822,8 @@ Do you want to restart now?</source>
         <location filename="../src/mainwindow_menu.cpp" line="2933"/>
         <location filename="../src/mainwindow_menu.cpp" line="2945"/>
         <location filename="../src/mainwindow_menu.cpp" line="2957"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3315"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3389"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3327"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3401"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
@@ -897,8 +910,8 @@ Do you want to restart now?</source>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1435"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3353"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3363"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3365"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3375"/>
         <source>Sorry!</source>
         <translation>抱歉！</translation>
     </message>
@@ -2268,7 +2281,7 @@ Quantity	Part
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2702"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3406"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3418"/>
         <source>Update ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2343,50 +2356,50 @@ Quantity	Part
         <translation> %1 的背景顏色由 %2 變更為 %3 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3233"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3245"/>
         <source>Launch %1...</source>
         <translation>啟動 %1...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3315"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3327"/>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
         <translation>沒有發現舊元件！
 您目前所使用的都是最新的元件。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3319"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3331"/>
         <source>Outdated parts</source>
         <translation>舊元件</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow_menu.cpp" line="3320"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3332"/>
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation>
             <numerusform>發現 %n 個舊元件，是否現在就更新？</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3354"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3366"/>
         <source>No new part found for %1.
 </source>
         <translation> %1 已是最新元件。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3364"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3376"/>
         <source>Unknown module id for %1.
 </source>
         <translation> %1 含有未知的模組 ID </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3389"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3401"/>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
         <translation> %1 個元件更新成功。
 請檢查所有檢視，是否產生副作用！</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3395"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3407"/>
         <source>Update %1 part(s)</source>
         <translation>更新第 %1 個元件</translation>
     </message>
@@ -2631,7 +2644,7 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="317"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="610"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="606"/>
         <source>Save</source>
         <translation>存檔</translation>
     </message>
@@ -2707,85 +2720,85 @@ Reason: %2 (errcode %3)</source>
         <translation>元件</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="486"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="482"/>
         <source>Specify a file name</source>
         <translation>設定檔名</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="490"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="486"/>
         <source>Fritzing Bin (*%1)</source>
         <translation>Fritzing 元件庫 (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="530"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="537"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="526"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="533"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="531"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="527"/>
         <source>Cannot find file %1.</source>
         <translation>無此檔案: %1。</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="538"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="534"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>無法讀取檔案 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="601"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="597"/>
         <source>Save &quot;%1&quot;</source>
         <translation>存檔 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="602"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="598"/>
         <source>Do you want to save the changes you made in the bin &quot;%1&quot;?</source>
         <translation>要儲存在元件庫所做的更動&quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="611"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="607"/>
         <source>Don&apos;t Save</source>
         <translation>無法儲存</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="612"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="608"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="613"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="609"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation>如不存檔，所做過的異動將消失。</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="716"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="712"/>
         <source>Add to bin</source>
         <translation>加入元件庫</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="717"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="713"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation>確定要將選取的元件加入元件庫？</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="741"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="737"/>
         <source>Remove from bin</source>
         <translation>移出元件庫</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="742"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="738"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation>確定要將選取的元件移出元件庫？</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="788"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="784"/>
         <source>Rename bin</source>
         <translation>移除元件庫</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="789"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="785"/>
         <source>Please choose a name for the bin:</source>
         <translation>命名元件庫:</translation>
     </message>
@@ -2902,56 +2915,56 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="498"/>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="767"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="764"/>
         <source>close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="532"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="529"/>
         <source>Save as new part</source>
         <translation>存為新元件</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="533"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="530"/>
         <source>There&apos;s already a file with this name.
 Please, specify a new filename</source>
         <translation>檔名已存在，
 請另外命名</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="590"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="587"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="591"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="588"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>無法寫入檔案 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="612"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="609"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>已存檔 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="753"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="750"/>
         <source>Updating existing part</source>
         <translation>更新目前元件中</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="791"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="788"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="812"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="809"/>
         <source>Icon needed</source>
         <translation>需有圖示</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="812"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="809"/>
         <source>Please, provide an icon image for this part</source>
         <translation>請為此元件增加圖示</translation>
     </message>
@@ -3192,24 +3205,6 @@ Vertical scroll</source>
     </message>
 </context>
 <context>
-    <name>ProgramMainWindow</name>
-    <message>
-        <location filename="../src/program/programmainwindow.cpp" line="228"/>
-        <source>Programming Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programmainwindow.cpp" line="233"/>
-        <source>Untitled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programmainwindow.cpp" line="233"/>
-        <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ProgramTab</name>
     <message>
         <location filename="../src/program/programtab.cpp" line="129"/>
@@ -3238,17 +3233,17 @@ Vertical scroll</source>
     </message>
     <message>
         <location filename="../src/program/programtab.cpp" line="151"/>
-        <source>delete</source>
+        <source>remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/program/programtab.cpp" line="163"/>
+        <location filename="../src/program/programtab.cpp" line="213"/>
+        <source>Select a program file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/program/programtab.cpp" line="161"/>
         <source>Program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programtab.cpp" line="214"/>
-        <source>Select a programming file to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3261,24 +3256,17 @@ Vertical scroll</source>
         <source>Are you sure you want to delete &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ProgramWindow</name>
     <message>
-        <location filename="../src/program/programtab.cpp" line="357"/>
-        <source>Delete</source>
+        <location filename="../src/program/programwindow.cpp" line="230"/>
+        <source>Programming Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/program/programtab.cpp" line="358"/>
-        <source>Don&apos;t Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programtab.cpp" line="359"/>
-        <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/program/programtab.cpp" line="360"/>
-        <source>This program will be unlinked from the sketch, but the file won&apos;t be deleted.</source>
+        <location filename="../src/program/programwindow.cpp" line="239"/>
+        <source>%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3334,7 +3322,7 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/fapplication.cpp" line="602"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
-        <location filename="../src/fritzingwindow.cpp" line="136"/>
+        <location filename="../src/fritzingwindow.cpp" line="153"/>
         <location filename="../src/mainwindow_menu.cpp" line="2866"/>
         <location filename="../src/mainwindow_menu.cpp" line="2900"/>
         <location filename="../src/model/modelbase.cpp" line="60"/>
@@ -3347,7 +3335,7 @@ Please stay tuned.</source>
         <location filename="../src/model/palettemodel.cpp" line="312"/>
         <location filename="../src/model/palettemodel.cpp" line="326"/>
         <location filename="../src/model/palettemodel.cpp" line="408"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="568"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="564"/>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="251"/>
         <location filename="../src/sketch/sketchwidget.cpp" line="661"/>
         <source>Fritzing</source>
@@ -3355,7 +3343,7 @@ Please stay tuned.</source>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="602"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="568"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="564"/>
         <source>Friting cannot load the parts bin</source>
         <translation>Fritzing 無法載入元件庫</translation>
     </message>
@@ -3370,7 +3358,7 @@ Please stay tuned.</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;版本 %1.%2.%3 (%4%5)&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="137"/>
+        <location filename="../src/fritzingwindow.cpp" line="154"/>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
         <translation>檔案 &apos;%1&apos; 目前是唯讀模式，請使用不同檔名。</translation>
     </message>
@@ -3785,7 +3773,7 @@ Fritzing 還可以運作，但此時，您無法變更元件的屬性。</transl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/program/syntaxer.cpp" line="85"/>
+        <location filename="../src/program/syntaxer.cpp" line="90"/>
         <source>files</source>
         <translation type="unfinished"></translation>
     </message>

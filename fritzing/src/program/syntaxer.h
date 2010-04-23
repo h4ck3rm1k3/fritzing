@@ -63,6 +63,7 @@ public:
 	int matchStringStart(const QString & text, int offset);
 	int matchStringEnd(const QString & text, int offset);
 	const QString & extensions();
+	const QString & extension();
 
 public:
 	static QString parseForName(const QString & filename);
@@ -80,6 +81,7 @@ protected:
 	TrieNode * m_trieRoot;
 	QString m_name;
 	QString m_extensions;
+	QString m_extension;
 	QList<CommentInfo *> m_commentInfo;
 	QChar m_stringDelimiter;
 };

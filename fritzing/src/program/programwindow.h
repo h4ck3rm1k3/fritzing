@@ -25,8 +25,8 @@ $Date$
 ********************************************************************/
 
 
-#ifndef PROGRAMMAINWINDOW_H_
-#define PROGRAMMAINWINDOW_H_
+#ifndef PROGRAMWINDOW_H_
+#define PROGRAMWINDOW_H_
 
 #include <QMainWindow>
 #include <QPointer>
@@ -47,16 +47,15 @@ public:
 	QTabBar * tabBar();
 };
 
-class ProgramMainWindow : public FritzingWindow
+class ProgramWindow : public FritzingWindow
 {
 Q_OBJECT
 
 public:
-	ProgramMainWindow(QWidget *parent=0);
-	~ProgramMainWindow();
+	ProgramWindow(QWidget *parent=0);
+	~ProgramWindow();
 
 	void setup();
-	bool save();
 	const QString defaultSaveFolder();
 
 public:
@@ -65,14 +64,17 @@ public:
 signals:
 	void closed();
 	void changeActivationSignal(bool activate, QWidget * originator);
+	void linkToProgramFile(const QString & filename, bool addLink);
 
 protected slots:
 	void parentAboutToClose();
 	void addTab();
+	void tabSaveAs(int);
+	void tabSave(int);
+	void tabBeforeClosing(int, bool & ok);
+	void tabDelete(int index);
 
 protected:
-	bool saveAs();
-	bool saveAsAux(const QString & fileName);
 	void closeEvent(QCloseEvent *event);
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -82,17 +84,20 @@ protected:
 	const QString untitledFileName();
 	const QString fileExtension();
 
-	void updateSaveButton();
-
 	void cleanUp();
 	bool event(QEvent *);
 	int &untitledFileCount();
 	QStringList getSerialPorts();
 	void setTitle();
+	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
+	bool saveAsAux(const QString & fileName);
+	bool prepSave(class ProgramTab *, bool saveAsFlag);
+	bool beforeClosingTab(int index, bool showCancel);
 
 protected:
 	QPointer<PTabWidget> m_tabWidget;
 	QPointer<QPushButton> m_addButton;
+	QPointer<class ProgramTab> m_savingProgramTab;
 };
 
-#endif /* PROGRAMMAINWINDOW_H_ */
+#endif /* ProgramWindow_H_ */

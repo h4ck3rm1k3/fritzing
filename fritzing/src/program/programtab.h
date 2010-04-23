@@ -37,6 +37,8 @@ $Date$
 #include <QTabWidget>
 #include <QComboBox>
 #include <QTabWidget>
+#include <QDialog>
+#include <QDialogButtonBox>
 
 #include "programtab.h"
 
@@ -47,6 +49,14 @@ class ProgramTab : public QFrame
 public:
 	ProgramTab(QWidget * parent);
 	~ProgramTab();
+
+	bool isModified();
+	const QString & filename();
+	void setFilename(const QString &);
+	QString extension();
+	bool readOnly();
+	void setClean();
+	bool save(const QString & filename);
 
 protected slots:
 	void changeLanguage(const QString &);
@@ -59,12 +69,17 @@ protected slots:
 	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void portProcessReadyRead();
 	void deleteTab();
+	void save();
+	void saveAs();
+
+signals:
+	void wantToSave(int);
+	void wantToSaveAs(int);
+	void wantBeforeClosing(int, bool & ok);
+	void wantToDelete(int);
 
 protected:
-	bool saveAs();
-	bool saveAsAux(const QString & fileName);
 	QFrame * createFooter();
-	void updateSaveButton();
 	QStringList getSerialPorts();
 	void initLanguages();
 
@@ -91,4 +106,18 @@ protected:
 
 };
 
-#endif /* PROGRAMMAINWINDOW_H_ */
+class DeleteDialog : public QDialog {
+	Q_OBJECT
+
+public:
+	DeleteDialog(const QString & title, const QString & text, QWidget * parent = 0, Qt::WindowFlags f = 0);
+
+protected slots:
+	void buttonClicked(QAbstractButton * button);
+
+protected:
+	QDialogButtonBox * m_buttonBox;
+
+};
+
+#endif /* PROGRAMTAB_H_ */

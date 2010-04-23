@@ -39,7 +39,7 @@ $Date$
 #include "sketchareawidget.h"
 #include "viewlayer.h"
 #include "sketchtoolbutton.h"
-#include "program/programmainwindow.h"
+#include "program/programwindow.h"
 #include "viewswitcher/viewswitcher.h"
 
 QT_BEGIN_NAMESPACE
@@ -247,6 +247,7 @@ protected slots:
 	void dropPaste(SketchWidget *);
 
 	void openProgramWindow();
+	void linkToProgramFile(const QString & filename, bool addLink);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -580,7 +581,8 @@ protected:
 	QByteArray m_externalProcessOutput;
 
 	QPointer<class LayerPalette> m_layerPalette;
-	QPointer<class ProgramMainWindow> m_programMainWindow;
+	QPointer<class ProgramWindow> m_programWindow;
+	QStringList m_linkedProgramFiles;
 
 public:
 	static int RestartNeeded;
