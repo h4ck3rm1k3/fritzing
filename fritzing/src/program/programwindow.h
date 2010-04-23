@@ -55,7 +55,7 @@ public:
 	ProgramWindow(QWidget *parent=0);
 	~ProgramWindow();
 
-	void setup();
+	void setup(const QStringList & programs);
 	const QString defaultSaveFolder();
 
 public:
@@ -68,11 +68,12 @@ signals:
 
 protected slots:
 	void parentAboutToClose();
-	void addTab();
+	class ProgramTab * addTab();
 	void tabSaveAs(int);
 	void tabSave(int);
 	void tabBeforeClosing(int, bool & ok);
 	void tabDelete(int index);
+	void tabLinkTo(const QString & filename);
 
 protected:
 	void closeEvent(QCloseEvent *event);

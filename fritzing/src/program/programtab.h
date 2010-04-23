@@ -57,6 +57,7 @@ public:
 	bool readOnly();
 	void setClean();
 	bool save(const QString & filename);
+	void loadProgramFile(const QString & filename);
 
 protected slots:
 	void changeLanguage(const QString &);
@@ -77,6 +78,7 @@ signals:
 	void wantToSaveAs(int);
 	void wantBeforeClosing(int, bool & ok);
 	void wantToDelete(int);
+	void wantToLink(const QString & filename);
 
 protected:
 	QFrame * createFooter();

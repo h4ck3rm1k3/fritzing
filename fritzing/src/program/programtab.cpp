@@ -217,6 +217,10 @@ void ProgramTab::loadProgramFile() {
 
 	if (fileName.isEmpty()) return;
 
+	loadProgramFile(fileName);
+}
+
+void ProgramTab::loadProgramFile(const QString & fileName) {
 	QFile file(fileName);
 	if (file.open(QFile::ReadOnly)) {
 		QString text = file.readAll();
@@ -224,9 +228,13 @@ void ProgramTab::loadProgramFile() {
 		setClean();
 		m_filename = fileName;
 		QFileInfo fileInfo(m_filename);
-		if (m_tabWidget) {
-			m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
-		}
+		m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
+		emit wantToLink(fileName);
+	}
+	else {
+		// try the same folder as the fz
+		// if still not found, warn the user;
+
 	}
 }
 

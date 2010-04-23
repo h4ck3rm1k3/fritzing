@@ -54,7 +54,7 @@ $Date$
 //		include in fz
 //		include in fzz
 //		mark parent dirty...
-//		when removing last tab either close the window or add a new tab
+//		warn user if can't find file
 
 static int UntitledIndex = 1;				
 
@@ -63,7 +63,7 @@ ProgramWindow::ProgramWindow(QWidget *parent)
 {
 	m_savingProgramTab = NULL;
 	UntitledIndex--;						// incremented by FritzingWindow
-	ProgramWindow::setTitle();			// set to something weird by FritzingWindow
+	ProgramWindow::setTitle();				// set to something weird by FritzingWindow
 }
 
 ProgramWindow::~ProgramWindow()
@@ -73,7 +73,7 @@ ProgramWindow::~ProgramWindow()
 void ProgramWindow::initText() {
 }
 
-void ProgramWindow::setup()
+void ProgramWindow::setup(const QStringList & programs)
 {
     QFile styleSheet(":/resources/styles/programwindow.qss");
     QFrame * mainFrame = new QFrame(this);
@@ -114,6 +114,21 @@ void ProgramWindow::setup()
 	//}
 
 	installEventFilter(this);
+
+	if (programs.count() == 0) return;
+
+	bool firstTime = true;
+	foreach (QString program, programs) {
+		ProgramTab * programTab = NULL;
+		if (firstTime) {
+			firstTime = false;
+			programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(0));
+		}
+		else {
+			programTab = addTab();
+		}
+		programTab->loadProgramFile(program);
+	}
 }
 
 QFrame * ProgramWindow::createHeader() {
@@ -230,17 +245,20 @@ void ProgramWindow::setTitle() {
 	setWindowTitle(tr("Programming Window"));
 }
 
-void ProgramWindow::addTab() {
+ProgramTab * ProgramWindow::addTab() {
 	ProgramTab * programTab = new ProgramTab(m_tabWidget);
 	connect(programTab, SIGNAL(wantToSaveAs(int)), this, SLOT(tabSaveAs(int)));
 	connect(programTab, SIGNAL(wantToSave(int)), this, SLOT(tabSave(int)));
 	connect(programTab, SIGNAL(wantBeforeClosing(int, bool &)), this, SLOT(tabBeforeClosing(int, bool &)), Qt::DirectConnection);
 	connect(programTab, SIGNAL(wantToDelete(int)), this, SLOT(tabDelete(int)), Qt::DirectConnection);
+	connect(programTab, SIGNAL(wantToLink(const QString &)), this, SLOT(tabLinkTo(const QString &)));
 	QString name = (UntitledIndex == 1) ? untitledFileName() : tr("%1 %2").arg(untitledFileName()).arg(UntitledIndex);
 	programTab->setFilename(name);
 	int ix = m_tabWidget->addTab(programTab, name);
 	m_tabWidget->setCurrentIndex(ix);
 	UntitledIndex++;
+
+	return programTab;
 }
 
 bool ProgramWindow::beforeClosing(bool showCancel) {
@@ -287,6 +305,9 @@ void ProgramWindow::tabDelete(int index) {
 		emit linkToProgramFile(programTab->filename(), false);
 	}
 	m_tabWidget->removeTab(index);
+	if (m_tabWidget->count() == 0) {
+		addTab();
+	}
 }
 
 void ProgramWindow::tabSave(int index) {
@@ -325,6 +346,12 @@ bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag)
 	}
 	return result;
 }
+
+void ProgramWindow::tabLinkTo(const QString & filename) 
+{
+	emit linkToProgramFile(filename, true);
+}
+
 
 ///////////////////////////////////////////////
 

@@ -3452,7 +3452,7 @@ void MainWindow::openProgramWindow() {
 
 	m_programWindow = new ProgramWindow(this);
 	connect(m_programWindow, SIGNAL(linkToProgramFile(const QString &, bool)), this, SLOT(linkToProgramFile(const QString &, bool)));
-	m_programWindow->setup();
+	m_programWindow->setup(m_linkedProgramFiles);
 	m_programWindow->setVisible(true);
 }
 
