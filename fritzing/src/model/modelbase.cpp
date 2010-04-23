@@ -85,6 +85,8 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
    		return false;
 	}
 
+	emit loadedRoot(fileName, this, root);
+
     if (root.tagName() != "module") {
         QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file (4).").arg(fileName));
         return false;
@@ -274,7 +276,7 @@ void ModelBase::save(const QString & fileName, bool asPart) {
     }
 
     QXmlStreamWriter streamWriter(&file1);
-	save(streamWriter, asPart);
+	save(fileName, streamWriter, asPart);
 	file1.close();
 	QFile original(fileName);
 	if(original.exists() && !original.remove()) {
@@ -292,12 +294,12 @@ void ModelBase::save(const QString & fileName, bool asPart) {
 	file1.rename(fileName);
 }
 
-void ModelBase::save(QXmlStreamWriter & streamWriter, bool asPart) {
+void ModelBase::save(const QString & fileName, QXmlStreamWriter & streamWriter, bool asPart) {
     streamWriter.setAutoFormatting(true);
     if(asPart) {
     	m_root->saveAsPart(streamWriter, true);
     } else {
-    	m_root->saveInstances(streamWriter, true);
+    	m_root->saveInstances(fileName, streamWriter, true);
     }
 }
 

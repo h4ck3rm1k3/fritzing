@@ -57,7 +57,7 @@ public:
 	bool readOnly();
 	void setClean();
 	bool save(const QString & filename);
-	void loadProgramFile(const QString & filename);
+	bool loadProgramFile(const QString & filename, const QString & altFilename);
 
 protected slots:
 	void changeLanguage(const QString &);
@@ -72,13 +72,17 @@ protected slots:
 	void deleteTab();
 	void save();
 	void saveAs();
+	void sendProgram();
+	void chooseProgrammer();
+	void programProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+	void programProcessReadyRead();
 
 signals:
 	void wantToSave(int);
 	void wantToSaveAs(int);
 	void wantBeforeClosing(int, bool & ok);
 	void wantToDelete(int);
-	void wantToLink(const QString & filename);
+	void wantToLink(const QString & filename, bool);
 
 protected:
 	QFrame * createFooter();
@@ -95,16 +99,19 @@ protected:
 	QPointer<QPushButton> m_cancelCloseButton;
 	QPointer<QPushButton> m_undoButton;
 	QPointer<QPushButton> m_redoButton;
+	QPointer<QPushButton> m_programButton;
     QPointer<QComboBox> m_portComboBox;
 	QPointer<QComboBox> m_languageComboBox;
 
 	QPointer<QTextEdit> m_textEdit;
+	QPointer<QTextEdit> m_console;
 	QPointer<QTabWidget> m_tabWidget;
 
 	bool m_updateEnabled;
 
 	QPointer<class Highlighter> m_highlighter;
 	QString m_filename;
+	QString m_programmerPath;
 
 };
 

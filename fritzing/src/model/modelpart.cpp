@@ -180,7 +180,7 @@ ItemBase * ModelPart::viewItem(QGraphicsScene * scene) {
 	return NULL;
 }
 
-void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocument) {
+void ModelPart::saveInstances(const QString & fileName, QXmlStreamWriter & streamWriter, bool startDocument) {
 	if (startDocument) {
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
@@ -190,7 +190,7 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			streamWriter.writeTextElement("title",title);
 		}
 		
-		emit startSaveInstances(this, streamWriter);
+		emit startSaveInstances(fileName, this, streamWriter);
 
 		streamWriter.writeStartElement("instances");
 	}
@@ -245,7 +245,7 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		ModelPart* mp = qobject_cast<ModelPart *>(*i);
 		if (mp == NULL) continue;
 
-		mp->saveInstances(streamWriter, false);
+		mp->saveInstances(fileName, streamWriter, false);
 	}
 
 

@@ -227,8 +227,9 @@ protected slots:
 	void removeGroundFill();
 	void changeWireColor(bool checked);
 
-	void startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &);
+	void startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter &);
 	void loadedViewsSlot(ModelBase *, QDomElement & views);
+	void loadedRootSlot(const QString & filename, ModelBase *, QDomElement & views);
 	void exportNormalizedSVG();
 	void exportNormalizedFlattenedSVG();
 

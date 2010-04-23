@@ -77,7 +77,7 @@ public:
 	void copyStuff(ModelPart * modelPart);
 	ModelPartShared * modelPartShared();
 	void setModelPartShared(ModelPartShared *modelPartShared);
-	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument);
+	void saveInstances(const QString & fileName, QXmlStreamWriter & streamWriter, bool startDocument);
 	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
 	void addViewItem(class ItemBase *);
 	void removeViewItem(class ItemBase *);
@@ -146,7 +146,7 @@ public:
 	static const QStringList & possibleFolders();
 
 signals:
-	void startSaveInstances(ModelPart *, QXmlStreamWriter &);
+	void startSaveInstances(const QString & fileName, ModelPart *, QXmlStreamWriter &);
 
 protected:
 	void writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue);

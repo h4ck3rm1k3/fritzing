@@ -576,13 +576,13 @@ bool MainWindow::saveAsAux(const QString & fileName) {
     //FritzingWindow::saveAsAux(fileName);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-	connect(m_sketchModel->root(), SIGNAL(startSaveInstances(ModelPart *, QXmlStreamWriter &)),
-		this, SLOT(startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
+	connect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
+		this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
 
 	m_sketchModel->save(fileName, false);
 
-	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(ModelPart *, QXmlStreamWriter &)),
-			   this, SLOT(startSaveInstancesSlot(ModelPart *, QXmlStreamWriter &)));
+	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
+			   this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
 	QApplication::restoreOverrideCursor();
 
     m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
@@ -595,6 +595,9 @@ bool MainWindow::saveAsAux(const QString & fileName) {
 
    // mark the stack clean so we update the window dirty flag
     m_undoStack->setClean();
+
+	// slam it here in case we were modified due to m_linkedProgramFiles changes
+	setWindowModified(false);
 
     m_saveAct->setEnabled(true);
 
@@ -721,10 +724,14 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	QList<ModelPart *> modelParts;
 
 	connect(m_sketchModel, SIGNAL(loadedViews(ModelBase *, QDomElement &)),
-		this, SLOT(loadedViewsSlot(ModelBase *, QDomElement &)), Qt::DirectConnection);
+				this, SLOT(loadedViewsSlot(ModelBase *, QDomElement &)), Qt::DirectConnection);
+	connect(m_sketchModel, SIGNAL(loadedRoot(const QString &, ModelBase *, QDomElement &)),
+				this, SLOT(loadedRootSlot(const QString &, ModelBase *, QDomElement &)), Qt::DirectConnection);
 	m_sketchModel->load(fileName, m_paletteModel, modelParts);
 	disconnect(m_sketchModel, SIGNAL(loadedViews(ModelBase *, QDomElement &)),
-		this, SLOT(loadedViewsSlot(ModelBase *, QDomElement &)));
+				this, SLOT(loadedViewsSlot(ModelBase *, QDomElement &)));
+	disconnect(m_sketchModel, SIGNAL(loadedRoot(const QString &, ModelBase *, QDomElement &)),
+				this, SLOT(loadedRootSlot(const QString &, ModelBase *, QDomElement &)));
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -3177,9 +3184,9 @@ void MainWindow::setBackgroundColor() {
 	m_undoStack->push(cmd);
 }
 
-void MainWindow::startSaveInstancesSlot(ModelPart *, QXmlStreamWriter & streamWriter) {
+void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter & streamWriter) {
 	if (m_linkedProgramFiles.count() > 0) {
-		QFileInfo fileInfo(m_fileName);
+		QFileInfo fileInfo(fileName);
 		QDir dir = fileInfo.absoluteDir();
 		streamWriter.writeStartElement("programs");
 		foreach (QString filename, m_linkedProgramFiles) {
@@ -3201,6 +3208,32 @@ void MainWindow::startSaveInstancesSlot(ModelPart *, QXmlStreamWriter & streamWr
 	}
 	streamWriter.writeEndElement();
 }
+
+
+void MainWindow::loadedRootSlot(const QString & fname, ModelBase *, QDomElement & root) {
+	if (root.isNull()) return;
+
+	QDomElement programs = root.firstChildElement("programs");
+	if (programs.isNull()) return;
+
+	QFileInfo fileInfo(fname);
+
+	QDomElement program = programs.firstChildElement("program");
+	while (!program.isNull()) {
+		QString text;
+		TextUtils::findText(program, text);
+		if (!text.isEmpty()) {
+			QDir dir = fileInfo.absoluteDir();
+			QFileInfo newFileInfo(text);
+			dir.cd(newFileInfo.dir().path());
+			QString path = dir.absoluteFilePath(newFileInfo.fileName());
+			m_linkedProgramFiles.append(path);
+		}
+		program = program.nextSiblingElement("program");
+	}
+
+}
+
 
 void MainWindow::loadedViewsSlot(ModelBase *, QDomElement & views) {
 	if (views.isNull()) return;
@@ -3452,7 +3485,8 @@ void MainWindow::openProgramWindow() {
 
 	m_programWindow = new ProgramWindow(this);
 	connect(m_programWindow, SIGNAL(linkToProgramFile(const QString &, bool)), this, SLOT(linkToProgramFile(const QString &, bool)));
-	m_programWindow->setup(m_linkedProgramFiles);
+	QFileInfo fileInfo(m_fileName);
+	m_programWindow->setup(m_linkedProgramFiles, fileInfo.absoluteDir().absolutePath());
 	m_programWindow->setVisible(true);
 }
 
@@ -3465,14 +3499,15 @@ void MainWindow::linkToProgramFile(const QString & filename, bool addLink) {
 
 	if (addLink) {
 		if (!m_linkedProgramFiles.contains(filename, sensitivity)) {
-
 			m_linkedProgramFiles.append(filename);
+			this->setWindowModified(true);
 		}
 	}
 	else {
 		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
 			if (m_linkedProgramFiles.at(i).compare(filename, sensitivity) == 0) {
 				m_linkedProgramFiles.removeAt(i);
+				this->setWindowModified(true);
 				return;
 			}
 		}

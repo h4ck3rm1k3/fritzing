@@ -38,6 +38,7 @@ $Date$
 #include <QFontMetrics>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QSplitter>
 
 #ifdef Q_WS_WIN
 #include "windows.h"
@@ -75,6 +76,11 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 	QFrame * footerFrame = createFooter();
 	editLayout->addWidget(footerFrame,0,0);
 
+	QSplitter * splitter = new QSplitter;
+	splitter->setObjectName("splitter");
+	splitter->setOrientation(Qt::Vertical);
+	editLayout->addWidget(splitter, 1, 0);
+
 	m_textEdit = new QTextEdit;
 	m_textEdit->setFontFamily("Droid Sans Mono");
 	m_textEdit->setLineWrapMode(QTextEdit::NoWrap);
@@ -87,7 +93,17 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 	connect(m_textEdit, SIGNAL(redoAvailable(bool)), this, SLOT(textRedoAvailable(bool)));
 	m_highlighter = new Highlighter(m_textEdit);
 
-	editLayout->addWidget(m_textEdit, 1, 0);
+	splitter->addWidget(m_textEdit);
+
+	m_console = new QTextEdit();
+	m_console->setLineWrapMode(QTextEdit::NoWrap);
+	m_console->setObjectName("console");
+	m_console->setReadOnly(true);
+
+	splitter->addWidget(m_console);
+
+	splitter->setStretchFactor(0, 8);
+	splitter->setStretchFactor(1, 2);
 
 	changeLanguage(m_languageComboBox->currentText());
 }
@@ -158,9 +174,14 @@ QFrame * ProgramTab::createFooter() {
     //connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
     m_portComboBox->addItems(getSerialPorts());
 
-	QPushButton * programButton = new QPushButton(tr("Program"));
-	programButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	//connect(programButton, SIGNAL(clicked()), this, SLOT(program()));
+	QPushButton * programmerButton = new QPushButton(tr("Programmer"));
+	programmerButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	connect(programmerButton, SIGNAL(clicked()), this, SLOT(chooseProgrammer()));
+
+	m_programButton = new QPushButton(tr("Program"));
+	m_programButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	connect(m_programButton, SIGNAL(clicked()), this, SLOT(sendProgram()));
+	m_programButton->setEnabled(false);
 
 	QHBoxLayout *footerLayout = new QHBoxLayout;
 
@@ -183,7 +204,9 @@ QFrame * ProgramTab::createFooter() {
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
     footerLayout->addWidget(m_portComboBox);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(programButton);
+	footerLayout->addWidget(programmerButton);
+	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(m_programButton);
 	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerFrame->setLayout(footerLayout);
 
@@ -217,25 +240,42 @@ void ProgramTab::loadProgramFile() {
 
 	if (fileName.isEmpty()) return;
 
-	loadProgramFile(fileName);
+	loadProgramFile(fileName, "");
 }
 
-void ProgramTab::loadProgramFile(const QString & fileName) {
+bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFileName) {
 	QFile file(fileName);
-	if (file.open(QFile::ReadOnly)) {
-		QString text = file.readAll();
-		m_textEdit->setText(text);
-		setClean();
-		m_filename = fileName;
-		QFileInfo fileInfo(m_filename);
-		m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
-		emit wantToLink(fileName);
-	}
-	else {
-		// try the same folder as the fz
-		// if still not found, warn the user;
+	if (!file.open(QFile::ReadOnly)) {
+		emit wantToLink(fileName, false);
+		if (!altFileName.isEmpty()) {
+			file.setFileName(altFileName);
+			if (!file.open(QFile::ReadOnly)) {
+				QFileInfo fileInfo(fileName);
+				QString fn = FolderUtils::getOpenFileName(
+										NULL,
+										tr("Fritzing is unable to find '%1', please locate it").arg(fileInfo.fileName()),
+										FolderUtils::openSaveFolder(),
+										tr("Program (*.%1)").arg(fileInfo.suffix())
+								);
+				if (fn.isEmpty()) return false;
 
+				file.setFileName(fn);
+				if (!file.open(QFile::ReadOnly)) {
+					return false;
+				}
+
+			}
+		}
 	}
+
+	m_filename = file.fileName();
+	QString text = file.readAll();
+	m_textEdit->setText(text);
+	setClean();
+	QFileInfo fileInfo(m_filename);
+	m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
+	emit wantToLink(m_filename, true);
+	return true;
 }
 
 void ProgramTab::textChanged() {
@@ -325,26 +365,26 @@ void ProgramTab::portProcessFinished(int exitCode, QProcess::ExitStatus exitStat
 }
 
 void ProgramTab::portProcessReadyRead() {
-        QStringList ports;
+    QStringList ports;
 
 	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
-        QTextStream textStream(byteArray, QIODevice::ReadOnly);
-        while (true) {
-            QString line = textStream.readLine();
-            if (line.isNull()) break;
+    QTextStream textStream(byteArray, QIODevice::ReadOnly);
+    while (true) {
+        QString line = textStream.readLine();
+        if (line.isNull()) break;
 
-            if (!line.contains("tty")) continue;
-            if (!line.contains("serial", Qt::CaseInsensitive)) continue;
+        if (!line.contains("tty")) continue;
+        if (!line.contains("serial", Qt::CaseInsensitive)) continue;
 
-            QStringList candidates = line.split(" ");
-            foreach (QString candidate, candidates) {
-                if (candidate.contains("tty")) {
-                    ports.append(candidate);
-                    break;
-                }
+        QStringList candidates = line.split(" ");
+        foreach (QString candidate, candidates) {
+            if (candidate.contains("tty")) {
+                ports.append(candidate);
+                break;
             }
         }
-        m_portComboBox->addItems(ports);
+    }
+    m_portComboBox->addItems(ports);
 }
 
 void ProgramTab::deleteTab() {
@@ -444,6 +484,58 @@ bool ProgramTab::save(const QString & filename) {
 		setFilename(filename);
 	}
 	return result;
+}
+
+void ProgramTab::sendProgram() {
+	if (m_programmerPath.isEmpty()) return;
+
+	m_programButton->setEnabled(false);
+
+	QString language = m_languageComboBox->currentText();
+	if (language.compare("picaxe", Qt::CaseInsensitive) == 0) {
+		QProcess * process = new QProcess(this);
+		process->setProcessChannelMode(QProcess::MergedChannels);
+		process->setReadChannel(QProcess::StandardOutput);
+
+		connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(programProcessFinished(int, QProcess::ExitStatus)));
+		connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(programProcessReadyRead()));
+
+		QStringList args;
+		args.append(QString("-c%1").arg(m_portComboBox->currentText()));
+		args.append(m_filename);
+		m_console->setPlainText("");
+		
+        process->start(m_programmerPath, args);
+	}
+
+}
+
+void ProgramTab::chooseProgrammer() {
+	QString filename = FolderUtils::getOpenFileName(
+							this,
+							tr("Select a program file to load"),
+							FolderUtils::openSaveFolder(),
+							"(Programmer *.exe)"
+		);
+
+	m_programmerPath = filename;
+	m_programButton->setEnabled(true);
+}
+
+
+void ProgramTab::programProcessFinished(int exitCode, QProcess::ExitStatus exitStatus) {
+	DebugDialog::debug(QString("program process finished %1 %2").arg(exitCode).arg(exitStatus));
+
+	m_programButton->setEnabled(true);
+
+	sender()->deleteLater();
+}
+
+void ProgramTab::programProcessReadyRead() {
+    QStringList ports;
+
+	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+    m_console->append(byteArray);
 }
 
 /////////////////////////////////////////

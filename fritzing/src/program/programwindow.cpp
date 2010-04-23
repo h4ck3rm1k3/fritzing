@@ -51,10 +51,9 @@ $Date$
 //		numbers, string escape chars...
 //		program (shell)
 //		shell output to console
-//		include in fz
 //		include in fzz
-//		mark parent dirty...
-//		warn user if can't find file
+//		delete file checkbox
+//		update serial ports every time
 
 static int UntitledIndex = 1;				
 
@@ -73,7 +72,7 @@ ProgramWindow::~ProgramWindow()
 void ProgramWindow::initText() {
 }
 
-void ProgramWindow::setup(const QStringList & programs)
+void ProgramWindow::setup(const QStringList & programs, const QString & alternativePath)
 {
     QFile styleSheet(":/resources/styles/programwindow.qss");
     QFrame * mainFrame = new QFrame(this);
@@ -127,7 +126,9 @@ void ProgramWindow::setup(const QStringList & programs)
 		else {
 			programTab = addTab();
 		}
-		programTab->loadProgramFile(program);
+		QDir dir(alternativePath);
+		QFileInfo fileInfo(program);
+		programTab->loadProgramFile(program, dir.absoluteFilePath(fileInfo.fileName()));
 	}
 }
 
@@ -251,7 +252,7 @@ ProgramTab * ProgramWindow::addTab() {
 	connect(programTab, SIGNAL(wantToSave(int)), this, SLOT(tabSave(int)));
 	connect(programTab, SIGNAL(wantBeforeClosing(int, bool &)), this, SLOT(tabBeforeClosing(int, bool &)), Qt::DirectConnection);
 	connect(programTab, SIGNAL(wantToDelete(int)), this, SLOT(tabDelete(int)), Qt::DirectConnection);
-	connect(programTab, SIGNAL(wantToLink(const QString &)), this, SLOT(tabLinkTo(const QString &)));
+	connect(programTab, SIGNAL(wantToLink(const QString &, bool)), this, SLOT(tabLinkTo(const QString &, bool)));
 	QString name = (UntitledIndex == 1) ? untitledFileName() : tr("%1 %2").arg(untitledFileName()).arg(UntitledIndex);
 	programTab->setFilename(name);
 	int ix = m_tabWidget->addTab(programTab, name);
@@ -347,9 +348,9 @@ bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag)
 	return result;
 }
 
-void ProgramWindow::tabLinkTo(const QString & filename) 
+void ProgramWindow::tabLinkTo(const QString & filename, bool link) 
 {
-	emit linkToProgramFile(filename, true);
+	emit linkToProgramFile(filename, link);
 }
 
 

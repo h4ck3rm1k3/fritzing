@@ -1094,7 +1094,7 @@ void SketchWidget::copyAux(QList<ItemBase *> & bases)
 	streamWriter.writeAttribute("fritzingVersion", Version::versionString());
 	streamWriter.writeStartElement("instances");
 	foreach (ItemBase * base, bases) {
-		base->modelPart()->saveInstances(streamWriter, false);
+		base->modelPart()->saveInstances("", streamWriter, false);
 		modelIndexes.append(base->modelPart()->modelIndex());
 	}
 	streamWriter.writeEndElement();

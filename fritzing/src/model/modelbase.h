@@ -43,13 +43,14 @@ public:
 	virtual ModelPart * addModelPart(ModelPart * parent, ModelPart * copyChild);
 	virtual bool load(const QString & fileName, ModelBase* refModel, QList<ModelPart *> & modelParts);
 	void save(const QString & fileName, bool asPart);
-	void save(class QXmlStreamWriter &, bool asPart);
+	void save(const QString & fileName, class QXmlStreamWriter &, bool asPart);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
 	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
 
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);
+	void loadedRoot(const QString & fileName, ModelBase *, QDomElement & root);
 
 protected:
 	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);
