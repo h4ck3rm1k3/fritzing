@@ -388,6 +388,7 @@ void ProgramTab::portProcessReadyRead() {
 }
 
 void ProgramTab::deleteTab() {
+	bool deleteFile = false;
 	if (!m_textEdit->toPlainText().isEmpty()) {
 		QString name = QFileInfo(m_filename).baseName();
 		if (name.isEmpty()) {
@@ -396,6 +397,7 @@ void ProgramTab::deleteTab() {
 
 		DeleteDialog deleteDialog(tr("Delete \"%1\"?").arg(name),
 								  tr("Are you sure you want to delete \"%1\"?").arg(name),
+								  !FolderUtils::isEmptyFileName(m_filename, "Untitled"),
 								  NULL, 0);
 		int reply = deleteDialog.exec();
 
@@ -423,10 +425,11 @@ void ProgramTab::deleteTab() {
      		return;
 		}
 
+		deleteFile = deleteDialog.deleteFileChecked();
 	}
 
 	if (m_tabWidget) {
-		emit wantToDelete(m_tabWidget->currentIndex());
+		emit wantToDelete(m_tabWidget->currentIndex(), deleteFile);
 		this->deleteLater();
 	}
 }
@@ -540,7 +543,7 @@ void ProgramTab::programProcessReadyRead() {
 
 /////////////////////////////////////////
 
-DeleteDialog::DeleteDialog(const QString & title, const QString & text, QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
+DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	this->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |  Qt::WindowCloseButtonHint);
 
@@ -566,11 +569,11 @@ DeleteDialog::DeleteDialog(const QString & title, const QString & text, QWidget 
     m_buttonBox->setCenterButtons(this->style()->styleHint(QStyle::SH_MessageBox_CenterButtons, 0, this));
     QObject::connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 
+
     QGridLayout *grid = new QGridLayout;
 #ifndef Q_WS_MAC
     grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop);
     grid->addWidget(label, 0, 1, 1, 1);
-    // -- leave space for information label --
     grid->addWidget(m_buttonBox, 2, 0, 1, 2);
 #else
     grid->setMargin(0);
@@ -584,6 +587,12 @@ DeleteDialog::DeleteDialog(const QString & title, const QString & text, QWidget 
     grid->setRowMinimumHeight(2, 6);
     grid->addWidget(buttonBox, 3, 1, 1, 1);
 #endif
+
+	m_checkBox = NULL;
+	if (deleteFileCheckBox) {
+		m_checkBox = new QCheckBox(tr("Delete the file"));
+		grid->addWidget(m_checkBox, 1, 0, 2, 1);
+	}
 
     grid->setSizeConstraint(QLayout::SetNoConstraint);
     this->setLayout(grid);
@@ -613,4 +622,10 @@ DeleteDialog::DeleteDialog(const QString & title, const QString & text, QWidget 
 
 void DeleteDialog::buttonClicked(QAbstractButton * button) {
 	this->done(m_buttonBox->standardButton(button));
+}
+
+bool DeleteDialog::deleteFileChecked() {
+	if (m_checkBox == NULL) return false;
+
+	return m_checkBox->isChecked();
 }

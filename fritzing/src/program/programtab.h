@@ -39,6 +39,7 @@ $Date$
 #include <QTabWidget>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QCheckBox>
 
 #include "programtab.h"
 
@@ -81,7 +82,7 @@ signals:
 	void wantToSave(int);
 	void wantToSaveAs(int);
 	void wantBeforeClosing(int, bool & ok);
-	void wantToDelete(int);
+	void wantToDelete(int, bool deleteFile);
 	void wantToLink(const QString & filename, bool);
 
 protected:
@@ -119,13 +120,16 @@ class DeleteDialog : public QDialog {
 	Q_OBJECT
 
 public:
-	DeleteDialog(const QString & title, const QString & text, QWidget * parent = 0, Qt::WindowFlags f = 0);
+	DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget * parent = 0, Qt::WindowFlags f = 0);
+
+	bool deleteFileChecked();
 
 protected slots:
 	void buttonClicked(QAbstractButton * button);
 
 protected:
 	QDialogButtonBox * m_buttonBox;
+	QCheckBox * m_checkBox;
 
 };
 

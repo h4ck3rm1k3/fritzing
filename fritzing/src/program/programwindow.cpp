@@ -49,7 +49,7 @@ $Date$
 //		text search
 //		serial port plugins?
 //		numbers, string escape chars...
-//		include in fzz
+//		where to store program files when opening fzz
 //		delete-file checkbox
 //		update serial port list (when?)
 
@@ -249,7 +249,7 @@ ProgramTab * ProgramWindow::addTab() {
 	connect(programTab, SIGNAL(wantToSaveAs(int)), this, SLOT(tabSaveAs(int)));
 	connect(programTab, SIGNAL(wantToSave(int)), this, SLOT(tabSave(int)));
 	connect(programTab, SIGNAL(wantBeforeClosing(int, bool &)), this, SLOT(tabBeforeClosing(int, bool &)), Qt::DirectConnection);
-	connect(programTab, SIGNAL(wantToDelete(int)), this, SLOT(tabDelete(int)), Qt::DirectConnection);
+	connect(programTab, SIGNAL(wantToDelete(int, bool)), this, SLOT(tabDelete(int, bool)), Qt::DirectConnection);
 	connect(programTab, SIGNAL(wantToLink(const QString &, bool)), this, SLOT(tabLinkTo(const QString &, bool)));
 	QString name = (UntitledIndex == 1) ? untitledFileName() : tr("%1 %2").arg(untitledFileName()).arg(UntitledIndex);
 	programTab->setFilename(name);
@@ -298,14 +298,20 @@ bool ProgramWindow::saveAsAux(const QString & fileName) {
 }
 
 
-void ProgramWindow::tabDelete(int index) {
+void ProgramWindow::tabDelete(int index, bool deleteFile) {
 	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	QString fname = programTab->filename();
 	if (programTab != NULL) {
-		emit linkToProgramFile(programTab->filename(), false);
+		emit linkToProgramFile(fname, false);
 	}
 	m_tabWidget->removeTab(index);
 	if (m_tabWidget->count() == 0) {
 		addTab();
+	}
+
+	if (deleteFile) {
+		QFile file(fname);
+		file.remove();
 	}
 }
 

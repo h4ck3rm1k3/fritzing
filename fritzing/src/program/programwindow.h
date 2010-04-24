@@ -72,7 +72,7 @@ protected slots:
 	void tabSaveAs(int);
 	void tabSave(int);
 	void tabBeforeClosing(int, bool & ok);
-	void tabDelete(int index);
+	void tabDelete(int index, bool deleteFile);
 	void tabLinkTo(const QString & filename, bool);
 
 protected:
