@@ -41,11 +41,11 @@ class PaletteModel : public ModelBase
 Q_OBJECT
 public:
 	PaletteModel();
-	PaletteModel(bool makeRoot, bool doInit=true);
+	PaletteModel(bool makeRoot, bool doInit, bool fastLoad);
 	ModelPart * retrieveModelPart(const QString & moduleID);
 	void updateOrAddModelPart(const QString & moduleID, ModelPart *modelPart);
 	virtual bool containsModelPart(const QString & moduleID);
-	virtual ModelPart * loadPart(const QString & path, bool update=false);
+	virtual ModelPart * loadPart(const QString & path, bool update, bool fastLoad);
 	void clear();
 	bool loadedFromFile();
 	QString loadedFrom();
@@ -70,9 +70,9 @@ signals:
 	void loadedPart(int i, int total);
 
 protected:
-	virtual void initParts();
-	void loadParts();
-	void loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadedPart, int totalParts);
+	virtual void initParts(bool fastLoad);
+	void loadParts(bool fastLoad);
+	void loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadedPart, int totalParts, bool fastLoad);
 	void countParts(QDir & dir, QStringList & nameFilters, int & partCount);
     void search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts, bool allowObsolete);
 
@@ -82,8 +82,6 @@ protected:
 	void writeCommonBinsFooterAux(bool doIt, const QString &filename);
 	void writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool doIt, const QString &filename);
 	void writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool doIt, const QString &filename);
-	void flipSMD(ModelPart * modelPart, QDomDocument * domDocument);
-
 
 protected:
 	static bool CreateAllPartsBinFile;

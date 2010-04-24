@@ -68,22 +68,22 @@ PaletteModel::PaletteModel() : ModelBase(true) {
 	m_loadingContrib = false;
 }
 
-PaletteModel::PaletteModel(bool makeRoot, bool doInit) : ModelBase( makeRoot ) {
+PaletteModel::PaletteModel(bool makeRoot, bool doInit, bool fastLoad) : ModelBase( makeRoot ) {
 	m_loadedFromFile = false;
 	m_loadingCore = false;
 	m_loadingContrib = false;
 
 	if (doInit) {
-		initParts();
+		initParts(fastLoad);
 	}
 }
 
-void PaletteModel::initParts() {
+void PaletteModel::initParts(bool fastLoad) {
 	QDir * dir = FolderUtils::getApplicationSubFolder("parts");
 	FritzingContribPath = dir->absoluteFilePath("contrib");
 	delete dir;
 
-	loadParts();
+	loadParts(fastLoad);
 	if (m_root == NULL) {
 	    QMessageBox::information(NULL, QObject::tr("Fritzing"),
 	                             QObject::tr("No parts found.") );
@@ -120,9 +120,9 @@ void PaletteModel::updateOrAddModelPart(const QString & moduleID, ModelPart *new
 	}
 }
 
-void PaletteModel::loadParts() {
+void PaletteModel::loadParts(bool fastLoad) {
 	QStringList nameFilters;
-	nameFilters << "*" + FritzingPartExtension << "*" + FritzingModuleExtension;
+	nameFilters << "*" + FritzingPartExtension;
 
 	JustAppendAllPartsInstances = true;   
 	/// !!!!!!!!!!!!!!!!  "JustAppendAllPartsInstances = CreateAllPartsBinFile"
@@ -155,12 +155,12 @@ void PaletteModel::loadParts() {
 
 	int loadingPart = 0;
 	if (dir1 != NULL) {
-		loadPartsAux(*dir1, nameFilters, loadingPart, totalPartCount);
+		loadPartsAux(*dir1, nameFilters, loadingPart, totalPartCount, fastLoad);
 		delete dir1;
 	}
 
-	loadPartsAux(dir2, nameFilters, loadingPart, totalPartCount);
-	loadPartsAux(dir3, nameFilters, loadingPart, totalPartCount);
+	loadPartsAux(dir2, nameFilters, loadingPart, totalPartCount, fastLoad);
+	loadPartsAux(dir3, nameFilters, loadingPart, totalPartCount, fastLoad);  
 
 	if (FirstTime) {
 		writeCommonBinsFooter();
@@ -266,8 +266,7 @@ void PaletteModel::writeToCommonBinAux(const QString &textToWrite, QIODevice::Op
 }
 
 void PaletteModel::countParts(QDir & dir, QStringList & nameFilters, int & partCount) {
-    QString temp = dir.absolutePath();
-    QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+    QStringList list = dir.entryList(nameFilters, QDir::Files | QDir::NoSymLinks);
 	partCount += list.size();
 
     QStringList dirs = dir.entryList(QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
@@ -280,14 +279,14 @@ void PaletteModel::countParts(QDir & dir, QStringList & nameFilters, int & partC
     }
 }
 
-void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadingPart, int totalPartCount) {
+void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadingPart, int totalPartCount, bool fastLoad) {
     QString temp = dir.absolutePath();
     QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
         QString path = fileInfo.absoluteFilePath ();
         // DebugDialog::debug(QString("part path:%1 core? %2").arg(path).arg(m_loadingCore? "true" : "false"));
-        loadPart(path);
+        loadPart(path, fastLoad, fastLoad);
 		emit loadedPart(++loadingPart, totalPartCount);
     }
 
@@ -301,12 +300,12 @@ void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters, int & loa
 			m_loadingContrib = temp2=="contrib";
        	//}
 
-    	loadPartsAux(dir, nameFilters, loadingPart, totalPartCount);
+    	loadPartsAux(dir, nameFilters, loadingPart, totalPartCount, fastLoad);
     	dir.cdUp();
     }
 }
 
-ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
+ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastLoad) {
     QFile file(path);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(NULL, QObject::tr("Fritzing"),
@@ -317,54 +316,120 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
     }
 
 	DebugDialog::debug(QString("loading %2 %1").arg(path).arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
-    QString errorStr;
-    int errorLine;
-    int errorColumn;
-    QDomDocument* domDocument = new QDomDocument();
 
-    if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-        QMessageBox::information(NULL, QObject::tr("Fritzing"),
-							 QObject::tr("Parse error (2) at line %1, column %2:\n%3\n%4")
-							 .arg(errorLine)
-							 .arg(errorColumn)
-							 .arg(errorStr)
-							 .arg(path));
-        return NULL;
-    }
+	ModelPart::ItemType type = ModelPart::Part;
+	QString moduleID;
+	QString propertiesText;
+	QDomDocument* domDocument = NULL;
+	QString title, label, date, author, description, taxonomy, replacedBy, version;
+	QStringList tags;
+	QHash<QString, QString> properties;
 
-    QDomElement root = domDocument->documentElement();
-   	if (root.isNull()) {
-        //QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (8)."));
-   		return NULL;
+	if (fastLoad) {
+		QXmlStreamReader xml(&file);
+		xml.setNamespaceProcessing(false);
+		while (!xml.atEnd()) {
+			bool done = false;
+			switch (xml.readNext()) {
+				case QXmlStreamReader::StartElement:
+				{
+					QString name = xml.name().toString();
+					if (name.compare("module") == 0) {
+						moduleID = xml.attributes().value("moduleId").toString();
+					}
+					else if (name.compare("title") == 0) {
+						title = xml.readElementText();
+					}
+					else if (name.compare("tag") == 0) {
+						QString tag = xml.readElementText();
+						tags.append(tag);
+					}
+					else if (name.compare("property") == 0) {
+						QString name = xml.attributes().value("name").toString().toLower().trimmed();
+						QString value = xml.readElementText();
+						if (value.isNull()) {
+							value = "";
+						}
+						properties.insert(name, value);
+						propertiesText += (name + value);
+					}
+					else if (name.compare("label") == 0) {
+						label = xml.readElementText();
+					}
+					else if (name.compare("author") == 0) {
+						author = xml.readElementText();
+					}
+					else if (name.compare("version") == 0) {
+						replacedBy = xml.attributes().value("replacedBy").toString();
+						version = xml.readElementText();
+					}
+					else if (name.compare("description") == 0) {
+						description = xml.readElementText();
+					}
+					else if (name.compare("taxonomy") == 0) {
+						taxonomy = xml.readElementText();
+					}
+					else if (name.compare("date") == 0) {
+						date = xml.readElementText();
+					}
+					else if (name.compare("views") == 0) {
+						done = true;
+					}
+					else if (name.compare("connectors") == 0) {
+						done = true;
+					}
+				}
+				break;
+			}
+			if (done) break;
+		}
+
+	}
+	else {
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+		domDocument = new QDomDocument();
+
+		if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+			QMessageBox::information(NULL, QObject::tr("Fritzing"),
+								 QObject::tr("Parse error (2) at line %1, column %2:\n%3\n%4")
+								 .arg(errorLine)
+								 .arg(errorColumn)
+								 .arg(errorStr)
+								 .arg(path));
+			delete domDocument;
+			return NULL;
+		}
+
+		QDomElement root = domDocument->documentElement();
+   		if (root.isNull()) {
+			//QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (8)."));
+   			return NULL;
+		}
+
+		if (root.tagName() != "module") {
+			//QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (9)."));
+			return NULL;
+		}
+
+		moduleID = root.attribute("moduleId");
+		if (moduleID.isNull() || moduleID.isEmpty()) {
+			//QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (10)."));
+			return NULL;
+		}
+
+		// check if it's a wire
+		QDomElement properties = root.firstChildElement("properties");
+		propertiesText = properties.text();
 	}
 
-    if (root.tagName() != "module") {
-        //QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (9)."));
-        return NULL;
-    }
-
-	QString moduleID = root.attribute("moduleId");
-	if (moduleID.isNull() || moduleID.isEmpty()) {
-		//QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (10)."));
-		return NULL;
-	}
-
-    ModelPart::ItemType type = ModelPart::Part;
-    // check if it's a wire
-	QDomElement properties = root.firstChildElement("properties");
-	QString propertiesText = properties.text();
 	// FIXME: properties is nested right now
 	if (moduleID.compare(ModuleIDNames::wireModuleIDName) == 0) {
 		type = ModelPart::Wire;
 	}
 	else if (moduleID.compare(ModuleIDNames::jumperModuleIDName) == 0) {
 		type = ModelPart::Jumper;
-	}
-	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {
-		type = ModelPart::Breadboard;
-	}
-	else if (propertiesText.contains("plain vanilla pcb", Qt::CaseInsensitive)) {
-		type = ModelPart::ResizableBoard;
 	}
 	else if (moduleID.compare(ModuleIDNames::logoImageModuleIDName) == 0) {
 		type = ModelPart::Logo;
@@ -374,12 +439,6 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	}
 	else if (moduleID.compare(ModuleIDNames::groundPlaneModuleIDName) == 0) {
 		type = ModelPart::CopperFill;
-	}
-	else if (propertiesText.contains("arduino", Qt::CaseInsensitive)) {
-		LayerAttributes la;
-		if (la.getSvgElementID(domDocument, ViewIdentifierClass::PCBView, ViewLayer::Board)) {
-			type = ModelPart::Board;
-		}
 	}
 	else if (moduleID.compare(ModuleIDNames::noteModuleIDName) == 0) {
 		type = ModelPart::Note;
@@ -395,6 +454,18 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	}
 	else if (moduleID.compare(ModuleIDNames::rulerModuleIDName) == 0) {
 		type = ModelPart::Ruler;
+	}
+	else if (propertiesText.contains("arduino", Qt::CaseInsensitive)) {
+		LayerAttributes la;
+		if (la.getSvgElementID(domDocument, ViewIdentifierClass::PCBView, ViewLayer::Board)) {
+			type = ModelPart::Board;
+		}
+	}
+	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {
+		type = ModelPart::Breadboard;
+	}
+	else if (propertiesText.contains("plain vanilla pcb", Qt::CaseInsensitive)) {
+		type = ModelPart::ResizableBoard;
 	}
 
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);
@@ -441,105 +512,28 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 		}
 	}
 
-	flipSMD(modelPart, domDocument);
+	if (fastLoad) {
+		ModelPartShared * modelPartShared = modelPart->modelPartShared();
+		modelPartShared->setModuleID(moduleID);
+		modelPartShared->setPartlyLoaded(true);
+		modelPartShared->setTitle(title);
+		modelPartShared->setDate(date);
+		modelPartShared->setAuthor(author);
+		modelPartShared->setLabel(label);
+		modelPartShared->setDescription(description);
+		modelPartShared->setTaxonomy(taxonomy);
+		modelPartShared->setVersion(version);
+		modelPartShared->setReplacedBy(replacedBy);
+		modelPartShared->setTags(tags);
+		modelPartShared->setProperties(properties);
+	}
+	else {
+		modelPart->modelPartShared()->flipSMD();
+	}
 
     return modelPart;
 }
 
-void PaletteModel::flipSMD(ModelPart * modelPart, QDomDocument * domDocument) {
-	QDomElement root = domDocument->documentElement();
-	QDomElement views = root.firstChildElement("views");
-	if (views.isNull()) return;
-
-	QDomElement pcb = views.firstChildElement("pcbView");
-	if (pcb.isNull()) return;
-
-	QDomElement layers = pcb.firstChildElement("layers");
-	if (layers.isNull()) return;
-
-	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
-	QString c0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0);
-	QString s0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0);
-	QString s1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen);
-	
-	QDomElement c0;
-	QDomElement c1;
-	QDomElement s0;
-	QDomElement s1;
-
-	QDomElement layer = layers.firstChildElement("layer");
-	while (!layer.isNull()) {
-		QString layerID = layer.attribute("layerId");
-		if (layerID.compare(c1String) == 0) {
-			c1 = layer;
-		}
-		else if (layerID.compare(c0String) == 0) {
-			c0 = layer;
-		}
-		else if (layerID.compare(s0String) == 0) {
-			s0 = layer;
-		}
-		else if (layerID.compare(s1String) == 0) {
-			s1 = layer;
-		}
-
-		layer = layer.nextSiblingElement("layer");
-	}
-
-	if (!c0.isNull()) return;
-	if (c1.isNull()) return;
-
-	modelPart->setFlippedSMD(true);
-
-	if (c0.isNull()) {
-		c0 = domDocument->createElement("layer");
-		c0.setAttribute("layerId", c0String);
-		layers.appendChild(c0);
-	}
-
-	c0.setAttribute("flipSMD", "true");
-
-	if (!s1.isNull() && s0.isNull()) {
-		s0 = domDocument->createElement("layer");
-		s0.setAttribute("layerId", s0String);
-		layers.appendChild(s0);
-	}
-
-	if (!s0.isNull()) {
-		s0.setAttribute("flipSMD", "true");
-	}
-
-	QDomElement connectors = root.firstChildElement("connectors");
-	QDomElement connector = connectors.firstChildElement("connector");
-	while (!connector.isNull()) {
-		views = connector.firstChildElement("views");
-		pcb = views.firstChildElement("pcbView");
-		QDomElement p = pcb.firstChildElement("p");
-		QList<QDomElement> newPs;
-		while (!p.isNull()) {
-			QString l = p.attribute("layer");
-			if (l == c1String) {
-				QDomElement newP = domDocument->createElement("p");
-				newPs.append(newP);
-				newP.setAttribute("layer", c0String);
-				newP.setAttribute("flipSMD", "true");
-				newP.setAttribute("svgId", p.attribute("svgId"));
-				QString terminalId = p.attribute("terminalId");
-				if (!terminalId.isEmpty()) {
-					newP.setAttribute("svgId", terminalId);
-				}
-			}
-			p = p.nextSiblingElement("p");
-		}
-		foreach(QDomElement p, newPs) {
-			pcb.appendChild(p);
-		}
-
-		connector = connector.nextSiblingElement("connector");
-	}
-
-	DebugDialog::debug(domDocument->toString());
-}
 
 bool PaletteModel::load(const QString & fileName, ModelBase * refModel) {
 	QList<ModelPart *> modelParts;
@@ -572,7 +566,7 @@ ModelPart * PaletteModel::addPart(QString newPartPath, bool addToReference, bool
 		}
 	}*/
 
-	ModelPart * modelPart = loadPart(newPartPath, updateIdAlreadyExists);
+	ModelPart * modelPart = loadPart(newPartPath, updateIdAlreadyExists, false);
 	if (m_referenceModel && addToReference) {
 		m_referenceModel->addPart(modelPart,updateIdAlreadyExists);
 	}

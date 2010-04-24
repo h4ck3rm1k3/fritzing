@@ -50,7 +50,6 @@ $Date$
 //		serial port plugins?
 //		numbers, string escape chars...
 //		where to store program files when opening fzz
-//		delete-file checkbox
 //		update serial port list (when?)
 
 static int UntitledIndex = 1;				

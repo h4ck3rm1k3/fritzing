@@ -46,6 +46,9 @@ public:
 	ModelPartShared(QDomDocument *, const QString & path);
 	~ModelPartShared();
 
+	bool partlyLoaded();
+	void setPartlyLoaded(bool);
+
 	void setDomDocument(QDomDocument *);
 	QDomDocument * domDocument();
 
@@ -69,7 +72,6 @@ public:
 	void setDate(QDate date);
 	const QString & dateAsStr();
 	void setDate(QString date);
-	const QString & language();
 
 	const QString & path();
 	void setPath(QString path);
@@ -87,7 +89,7 @@ public:
 	void setFamily(const QString &family);
 
 	QHash<QString,QString> & properties();
-	void setProperties(const QMultiHash<QString,QString> &properties);
+	void setProperties(const QHash<QString,QString> &properties);
 
 	void initConnectors();
 	void resetConnectorsInitialization();
@@ -98,7 +100,9 @@ public:
 
 	void setProperty(const QString & key, const QString & value);
 	const QString & replacedby();
+	void setReplacedBy(const QString & replacedBy);
 
+	void flipSMD();
 	void setFlippedSMD(bool);
 	bool flippedSMD();
 
@@ -108,6 +112,9 @@ protected:
 	void populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName);
 	void populateTagCollection(QDomElement parent, QHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
 	void commonInit();
+	void loadDocument();
+
+protected:
 
 	QDomDocument* m_domDocument;
 
@@ -115,7 +122,6 @@ protected:
 	QString m_moduleID;
 	QString m_version;
 	QString m_author;
-	QString m_language;
 	QString m_title;
 	QString m_label;
 	QString m_description;
@@ -136,6 +142,7 @@ protected:
 	bool m_ignoreTerminalPoints;
 
 	bool m_flippedSMD;
+	bool m_partlyLoaded;
 };
 
 

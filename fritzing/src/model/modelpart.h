@@ -117,7 +117,7 @@ public:
 	bool isAlien(); // from "outside" ?
 	void setAlien(bool alien);
 
-	bool isValid();
+	bool hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier);
 
 	QList<ModelPart*> getAllParts();
 	QList<ModelPart*> getAllNonCoreParts();
@@ -171,7 +171,6 @@ protected:
 
 	bool m_core;
 	bool m_contrib;
-	bool m_valid;
 	bool m_alien;
 	bool m_originalModelPartShared;
 

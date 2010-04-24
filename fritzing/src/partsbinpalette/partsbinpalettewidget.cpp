@@ -559,7 +559,7 @@ void PartsBinPaletteWidget::load(const QString &filename) {
 	//PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
 
 	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
-	PaletteModel * paletteBinModel = new PaletteModel(true, false);
+	PaletteModel * paletteBinModel = new PaletteModel(true, false, false);
 	if (!paletteBinModel->load(filename, m_refModel)) {		// paletteReferenceModel
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 		return;

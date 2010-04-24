@@ -288,7 +288,7 @@ void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) 
 
 PartsBinPaletteWidget* BinManager::newBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = newBin();
-	bin->setPaletteModel(new PaletteModel(true,false),true);
+	bin->setPaletteModel(new PaletteModel(true, false, false),true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBinsCount));
 	insertBin(bin, tb->currentIndex(), tb);
 	bin->rename();

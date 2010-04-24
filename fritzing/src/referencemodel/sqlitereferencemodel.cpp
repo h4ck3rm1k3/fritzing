@@ -38,9 +38,9 @@ SqliteReferenceModel::SqliteReferenceModel() {
 	m_lastWasExactMatch = true;
 }
 
-void SqliteReferenceModel::loadAll()
+void SqliteReferenceModel::loadAll(bool fastLoad)
 {
-	initParts();
+	initParts(fastLoad);
 
 	int tries = 0;
 	while(!m_swappingEnabled && tries < MAX_CONN_TRIES) {
@@ -67,9 +67,9 @@ SqliteReferenceModel::~SqliteReferenceModel() {
 	deleteConnection();
 }
 
-void SqliteReferenceModel::initParts() {
+void SqliteReferenceModel::initParts(bool fastLoad) {
 	m_init = true;
-	PaletteModel::initParts();
+	PaletteModel::initParts(fastLoad);
 	m_init = false;
 }
 
@@ -120,8 +120,8 @@ void SqliteReferenceModel::deleteConnection() {
 	QSqlDatabase::removeDatabase("SQLITE");
 }
 
-ModelPart *SqliteReferenceModel::loadPart(const QString & path, bool update) {
-	ModelPart *modelPart = PaletteModel::loadPart(path, update);
+ModelPart *SqliteReferenceModel::loadPart(const QString & path, bool update, bool fastLoad) {
+	ModelPart *modelPart = PaletteModel::loadPart(path, update, fastLoad);
 	if(!m_init) addPart(modelPart, update);
 	return modelPart;
 }

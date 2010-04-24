@@ -284,8 +284,6 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,ConnectorTer
 	fakeFzFile += QString("</connectors></module>\n");
   	domDoc->setContent(fakeFzFile, &errorStr, &errorLine, &errorColumn);
 
-
-
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartShared()->setDomDocument(domDoc);
   	retval->modelPartShared()->resetConnectorsInitialization();

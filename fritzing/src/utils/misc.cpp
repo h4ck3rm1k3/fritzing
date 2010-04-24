@@ -40,7 +40,7 @@ const QStringList & fritzingExtensions() {
 	if (___fritzingExtensions___.count() == 0) {
 		___fritzingExtensions___
 			<< FritzingSketchExtension << FritzingBinExtension
-			<< FritzingPartExtension << FritzingModuleExtension
+			<< FritzingPartExtension
 			<< FritzingBundleExtension << FritzingBundledPartExtension
 			<< FritzingBundledBinExtension;
 	}

@@ -843,7 +843,7 @@ bool MainWindow::wannaRestart() {
 
 void MainWindow::loadPart(const QString &newPartPath, long partsEditorId, bool connectorsChanged) {
 	ModelPart * modelPart = loadPartFromFile(newPartPath, connectorsChanged);
-	if(modelPart && modelPart->isValid()) {
+	if(modelPart && modelPart->hasViewIdentifier(ViewIdentifierClass::IconView)) {
 		if(m_binsWithPartsEditorRequests.contains(partsEditorId)
 		   && !m_binsWithPartsEditorRequests[partsEditorId]->currentBinIsCore()	) {
 			m_paletteWidget->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart);
@@ -1218,7 +1218,7 @@ ModelPart* MainWindow::copyToPartsFolder(const QFileInfo& file, bool addToBin, c
 		m_alienFiles << destFilePath;
 		m_alienPartsMsg = tr("Do you want to keep the imported parts?");
 	}
-	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
+	ModelPart *mp = m_refModel->loadPart(destFilePath, true, false);
 	mp->setAlien(true);
 
 	if(addToBin) {

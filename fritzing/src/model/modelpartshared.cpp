@@ -44,32 +44,33 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 	m_domDocument = domDocument;
 	m_path = path;
 
-	QDomElement root = domDocument->documentElement();
-	if (root.isNull()) {
-		return;
+	if (domDocument) {
+		QDomElement root = domDocument->documentElement();
+		if (root.isNull()) {
+			return;
+		}
+
+		if (root.tagName() != "module") {
+			return;
+		}
+
+		loadTagText(root, "title", m_title);
+		loadTagText(root, "label", m_label);
+		loadTagText(root, "version", m_version);
+		loadTagText(root, "author", m_author);
+		loadTagText(root, "description", m_description);
+		loadTagText(root, "taxonomy", m_taxonomy);
+		loadTagText(root, "date", m_date);
+		QDomElement version = root.firstChildElement("version");
+		if (!version.isNull()) {
+			m_replacedby = version.attribute("replacedby");
+		}
+
+		populateTagCollection(root, m_tags, "tags");
+		populateTagCollection(root, m_properties, "properties", "name");
+
+		m_moduleID = root.attribute("moduleId", "");
 	}
-
-	if (root.tagName() != "module") {
-		return;
-	}
-
-	loadTagText(root, "title", m_language);
-	loadTagText(root, "title", m_title);
-	loadTagText(root, "label", m_label);
-	loadTagText(root, "version", m_version);
-	loadTagText(root, "author", m_author);
-	loadTagText(root, "description", m_description);
-	loadTagText(root, "taxonomy", m_taxonomy);
-	loadTagText(root, "date", m_date);
-	QDomElement version = root.firstChildElement("version");
-	if (!version.isNull()) {
-		m_replacedby = version.attribute("replacedby");
-	}
-
-	populateTagCollection(root, m_tags, "tags");
-	populateTagCollection(root, m_properties, "properties", "name");
-
-	m_moduleID = root.attribute("moduleId", "");
 }
 
 void ModelPartShared::commonInit() {
@@ -77,6 +78,7 @@ void ModelPartShared::commonInit() {
 	m_moduleID = "";
 	m_connectorsInitialized = false;
 	m_ignoreTerminalPoints = false;
+	m_partlyLoaded = false;
 }
 
 ModelPartShared::~ModelPartShared() {
@@ -144,12 +146,17 @@ void ModelPartShared::setDomDocument(QDomDocument * domDocument) {
 }
 
 QDomDocument* ModelPartShared::domDocument() {
+	if (m_partlyLoaded) {
+		loadDocument();
+	}
+
 	return m_domDocument;
 }
 
 const QString & ModelPartShared::title() {
 	return m_title;
 }
+
 void ModelPartShared::setTitle(QString title) {
 	m_title = title;
 }
@@ -168,10 +175,6 @@ const QString & ModelPartShared::uri() {
 
 void ModelPartShared::setUri(QString uri) {
 	m_uri = uri;
-}
-
-const QString & ModelPartShared::language() {
-	return m_language;
 }
 
 const QString & ModelPartShared::version() {
@@ -234,7 +237,7 @@ void ModelPartShared::setFamily(const QString &family) {
 QHash<QString,QString> & ModelPartShared::properties() {
 	return m_properties;
 }
-void ModelPartShared::setProperties(const QMultiHash<QString,QString> &properties) {
+void ModelPartShared::setProperties(const QHash<QString,QString> &properties) {
 	m_properties = properties;
 }
 
@@ -281,11 +284,16 @@ void ModelPartShared::resetConnectorsInitialization() {
 }
 
 void ModelPartShared::initConnectors() {
-	if (m_domDocument == NULL)
-		return;
-
 	if (m_connectorsInitialized)
 		return;
+
+	if (m_partlyLoaded) {
+		loadDocument();
+	}
+
+	if (m_domDocument == NULL) {
+		return;
+	}
 
 	m_connectorsInitialized = true;
 	QDomElement root = m_domDocument->documentElement();
@@ -363,6 +371,10 @@ const QString & ModelPartShared::replacedby() {
 	return m_replacedby;
 }
 
+void ModelPartShared::setReplacedBy(const QString & replacedBy) {
+	m_replacedby = replacedBy;
+}
+
 void ModelPartShared::setFlippedSMD(bool f) {
 	m_flippedSMD = f;
 }
@@ -377,3 +389,123 @@ void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdent
 		terminalIDs.append(connector->terminal(viewIdentifier, viewLayerID));
 	}
 }
+
+void ModelPartShared::setPartlyLoaded(bool partlyLoaded) {
+	m_partlyLoaded = partlyLoaded;
+}
+
+void ModelPartShared::loadDocument() {
+	m_partlyLoaded = false;
+
+	DebugDialog::debug("loading document " + m_moduleID);
+
+	QFile file(m_path);
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument * doc = new QDomDocument();
+
+	if (!doc->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		delete doc;
+	}
+	else {
+		m_domDocument = doc;
+		flipSMD();
+	}
+}
+
+void ModelPartShared::flipSMD() {
+	QDomElement root = m_domDocument->documentElement();
+	QDomElement views = root.firstChildElement("views");
+	if (views.isNull()) return;
+
+	QDomElement pcb = views.firstChildElement("pcbView");
+	if (pcb.isNull()) return;
+
+	QDomElement layers = pcb.firstChildElement("layers");
+	if (layers.isNull()) return;
+
+	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
+	QString c0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0);
+	QString s0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0);
+	QString s1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen);
+	
+	QDomElement c0;
+	QDomElement c1;
+	QDomElement s0;
+	QDomElement s1;
+
+	QDomElement layer = layers.firstChildElement("layer");
+	while (!layer.isNull()) {
+		QString layerID = layer.attribute("layerId");
+		if (layerID.compare(c1String) == 0) {
+			c1 = layer;
+		}
+		else if (layerID.compare(c0String) == 0) {
+			c0 = layer;
+		}
+		else if (layerID.compare(s0String) == 0) {
+			s0 = layer;
+		}
+		else if (layerID.compare(s1String) == 0) {
+			s1 = layer;
+		}
+
+		layer = layer.nextSiblingElement("layer");
+	}
+
+	if (!c0.isNull()) return;
+	if (c1.isNull()) return;
+
+	setFlippedSMD(true);
+
+	if (c0.isNull()) {
+		c0 = m_domDocument->createElement("layer");
+		c0.setAttribute("layerId", c0String);
+		layers.appendChild(c0);
+	}
+
+	c0.setAttribute("flipSMD", "true");
+
+	if (!s1.isNull() && s0.isNull()) {
+		s0 = m_domDocument->createElement("layer");
+		s0.setAttribute("layerId", s0String);
+		layers.appendChild(s0);
+	}
+
+	if (!s0.isNull()) {
+		s0.setAttribute("flipSMD", "true");
+	}
+
+	QDomElement connectors = root.firstChildElement("connectors");
+	QDomElement connector = connectors.firstChildElement("connector");
+	while (!connector.isNull()) {
+		views = connector.firstChildElement("views");
+		pcb = views.firstChildElement("pcbView");
+		QDomElement p = pcb.firstChildElement("p");
+		QList<QDomElement> newPs;
+		while (!p.isNull()) {
+			QString l = p.attribute("layer");
+			if (l == c1String) {
+				QDomElement newP = m_domDocument->createElement("p");
+				newPs.append(newP);
+				newP.setAttribute("layer", c0String);
+				newP.setAttribute("flipSMD", "true");
+				newP.setAttribute("svgId", p.attribute("svgId"));
+				QString terminalId = p.attribute("terminalId");
+				if (!terminalId.isEmpty()) {
+					newP.setAttribute("svgId", terminalId);
+				}
+			}
+			p = p.nextSiblingElement("p");
+		}
+		foreach(QDomElement p, newPs) {
+			pcb.appendChild(p);
+		}
+
+		connector = connector.nextSiblingElement("connector");
+	}
+
+	DebugDialog::debug(m_domDocument->toString());
+}
+

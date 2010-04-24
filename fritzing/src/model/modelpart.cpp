@@ -54,14 +54,6 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	commonInit(type);
 	m_modelPartShared = new ModelPartShared(domDocument, path);
 	m_originalModelPartShared = true;
-
-	//TODO Mariano: enough for now
-	QDomElement viewsElems = domDocument->documentElement().firstChildElement("views");
-	if(!viewsElems.isNull()) {
-		m_valid = !viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(ViewIdentifierClass::IconView)).isNull();
-	} else {
-		m_valid = false;
-	}
 }
 
 void ModelPart::commonInit(ItemType type) {
@@ -108,12 +100,6 @@ const QString & ModelPart::label() {
 
 const QString & ModelPart::author() {
 	if (m_modelPartShared != NULL) return m_modelPartShared->author();
-
-	return ___emptyString___;
-}
-
-const QString & ModelPart::language() {
-	if (m_modelPartShared != NULL) return m_modelPartShared->language();
 
 	return ___emptyString___;
 }
@@ -488,9 +474,16 @@ void ModelPart::setAlien(bool alien) {
 	m_alien = alien;
 }
 
-bool ModelPart::isValid() {
-	return m_valid;
+bool ModelPart::hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	QDomDocument * doc = domDocument();
+	if (doc == NULL) return false;
+
+	QDomElement viewsElems = doc->documentElement().firstChildElement("views");
+	if(viewsElems.isNull()) return false;
+
+	return !viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(viewIdentifier)).isNull();
 }
+
 
 QList<ModelPart*> ModelPart::getAllParts() {
 	QList<ModelPart*> retval;

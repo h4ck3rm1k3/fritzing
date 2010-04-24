@@ -130,7 +130,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
-	m_paletteModel = new PaletteModel(false, false);
+	m_paletteModel = new PaletteModel(false, false, false);
 
 	if(modelPart == NULL){
 		if (fromTemplate && !createTemplate()){
@@ -156,7 +156,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 	if(!fromTemplate) {
 		m_sketchModel = new SketchModel(true);
 	} else {
-		ModelPart * mp = m_paletteModel->loadPart(m_fileName);
+		ModelPart * mp = m_paletteModel->loadPart(m_fileName, false, false);
 		QHash<QString,QString> properties = mp->modelPartShared()->properties();
 		foreach (QString key, properties.keys()) {
 			QVariant prop = modelPart->prop(key.toUtf8().constData());

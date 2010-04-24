@@ -79,7 +79,6 @@ static const QString FritzingBinExtension(".fzb");
 static const QString FritzingBundledBinExtension(".fzbz");
 static const QString FritzingPartExtension(".fzp");
 static const QString FritzingBundledPartExtension(".fzpz");
-static const QString FritzingModuleExtension(".fzm");
 static const QString FritzingBundleExtension(".fzz");
 
 const QStringList & fritzingExtensions();

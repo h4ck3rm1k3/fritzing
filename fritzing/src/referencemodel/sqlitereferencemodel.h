@@ -43,8 +43,8 @@ class SqliteReferenceModel : public ReferenceModel {
 		SqliteReferenceModel();
 		~SqliteReferenceModel();
 
-		void loadAll();
-		ModelPart *loadPart(const QString & path, bool update);
+		void loadAll(bool fastLoad);
+		ModelPart *loadPart(const QString & path, bool update, bool fastLoad);
 
 		ModelPart *retrieveModelPart(const QString &moduleID);
 		ModelPart *retrieveModelPart(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties);
@@ -68,7 +68,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		bool lastWasExactMatch();
 
 	protected:
-		void initParts();
+		void initParts(bool fastLoad);
 
 	protected:
 		bool addPartAux(ModelPart * newModel);

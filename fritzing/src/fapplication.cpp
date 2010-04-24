@@ -399,9 +399,9 @@ void FApplication::loadReferenceModel() {
 	m_referenceModel = new CurrentReferenceModel();	
 	ItemBase::setReferenceModel(m_referenceModel);
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
-	m_referenceModel->loadAll();								// this is very slow
+	m_referenceModel->loadAll(true);								// this is very slow
 	//DebugDialog::debug("after new current reference model");
-	m_paletteBinModel = new PaletteModel(true, false);
+	m_paletteBinModel = new PaletteModel(true, false, false);
 	//DebugDialog::debug("after new palette model");
 }
 
