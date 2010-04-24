@@ -49,11 +49,9 @@ $Date$
 //		text search
 //		serial port plugins?
 //		numbers, string escape chars...
-//		program (shell)
-//		shell output to console
 //		include in fzz
-//		delete file checkbox
-//		update serial ports every time
+//		delete-file checkbox
+//		update serial port list (when?)
 
 static int UntitledIndex = 1;				
 
@@ -281,7 +279,7 @@ bool ProgramWindow::beforeClosingTab(int index, bool showCancel)
 
 	QMessageBox::StandardButton reply = beforeClosingMessage(programTab->filename(), showCancel);
 	if (reply == QMessageBox::Yes) {
-		return prepSave(programTab, false);
+		return prepSave(index, programTab, false);
 	} 
 	
 	if (reply == QMessageBox::No) {
@@ -315,7 +313,7 @@ void ProgramWindow::tabSave(int index) {
 	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
 	if (programTab == NULL) return;
 
-    prepSave(programTab, false);
+    prepSave(index, programTab, false);
 }
 
 void ProgramWindow::tabSaveAs(int index) {
@@ -323,7 +321,7 @@ void ProgramWindow::tabSaveAs(int index) {
 	if (programTab == NULL) return;
 
 	QString formerFilename = programTab->filename();
-	if (prepSave(programTab, true)) {
+	if (prepSave(index, programTab, true)) {
 		emit linkToProgramFile(formerFilename, false);
 	}
 }
@@ -333,7 +331,7 @@ void ProgramWindow::tabBeforeClosing(int index, bool & ok) {
 }
 
 
-bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag) 
+bool ProgramWindow::prepSave(int index, ProgramTab * programTab, bool saveAsFlag) 
 {
 	m_savingProgramTab = programTab;				// need this for the saveAsAux call
 
@@ -342,6 +340,7 @@ bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag)
 		: save(programTab->filename(), programTab->extension(), programTab->readOnly());
 
 	if (result) {
+		m_tabWidget->setTabText(index, programTab->filename());
 		programTab->setClean();
 		emit linkToProgramFile(programTab->filename(), true);
 	}
@@ -352,7 +351,6 @@ void ProgramWindow::tabLinkTo(const QString & filename, bool link)
 {
 	emit linkToProgramFile(filename, link);
 }
-
 
 ///////////////////////////////////////////////
 

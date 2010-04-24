@@ -951,6 +951,13 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 			destFolder.path()+"/"+aux.left(aux.size()-1);
 	DebugDialog::debug("saving entity temporarily to "+destSketchPath);
 
+	for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
+		QString program = m_linkedProgramFiles.at(i);
+		QFileInfo fileInfo(program);
+		QFile file(program);
+		file.copy(destFolder.absoluteFilePath(fileInfo.fileName()));
+	}
+
 	QString prevFileName = filename;
 	QApplication::processEvents();
 	bundler->saveAsAux(destSketchPath);
@@ -1000,6 +1007,22 @@ void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bu
 	// the bundled itself
 	bundler->loadBundledAux(unzipDir,mps);
 	m_fileName.clear();							// clear m_fileName, so "save" will become "save as"; otherwise it will attempt to save this in the unzipDirPath that you're about to rmdir
+
+	if (m_linkedProgramFiles.count() > 0) {
+		// since the temporary dir containing the program files is about to be deleted
+		// copy these to the fzz directory (for lack of a better idea)
+		// another possibility is to ask the user for a directory
+		QFileInfo fileInfo(fileName);
+		QDir newdir = fileInfo.absoluteDir();
+		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
+			QString program = m_linkedProgramFiles.at(i);
+			QFileInfo p(program);
+			QFile file(unzipDir.absoluteFilePath(p.fileName()));
+			QString newPath = newdir.absoluteFilePath(p.fileName());
+			file.copy(newPath);
+			m_linkedProgramFiles.replace(i, newPath);
+		}
+	}
 
 	FolderUtils::rmdir(unzipDirPath);
 }

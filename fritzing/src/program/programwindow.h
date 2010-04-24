@@ -92,7 +92,7 @@ protected:
 	void setTitle();
 	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 	bool saveAsAux(const QString & fileName);
-	bool prepSave(class ProgramTab *, bool saveAsFlag);
+	bool prepSave(int index, class ProgramTab *, bool saveAsFlag);
 	bool beforeClosingTab(int index, bool showCancel);
 
 protected:
