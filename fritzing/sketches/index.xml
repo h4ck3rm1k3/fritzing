@@ -6,11 +6,13 @@
 		<sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
 		<sketch id="AnalogInputThermistor" name="Thermistor" src="core/AnalogInputThermistor.fz"/>
 		<sketch id="AnalogInputToServo" name="Servo (with Pot)" src="core/AnalogInputToServo.fz"/>
+		<sketch id="ArduinoISP" name="Arduino ISP" src="core/ArduinoISP.fz"/>
 		<sketch id="Arduino-no-FTDI" name="Barebones Arduino" src="core/Arduino-no-FTDI.fz"/>
 		<sketch id="Blink" name="Blink" src="core/Blink.fz"/>
 		<sketch id="Button" name="Button" src="core/Button.fz"/>
 		<sketch id="DC_motor_control" name="DC Motor" src="core/DC_motor_control.fz"/>
 		<sketch id="Knock" name="Knock (Piezo)" src="core/Knock.fz"/>
+		<sketch id="LCD" name="Liquid Crystal Display" src="core/LiquidCrystalDisplay.fz"/>
 		<sketch id="Loop" name="Loop" src="core/Loop.fz"/>
 		<sketch id="Melody" name="Melody" src="core/Melody.fz"/>
 		<sketch id="MidiDrumKit" name="Midi Drum Kit" src="core/MidiDrumKit.fz"/>
@@ -98,6 +100,7 @@
 					<sketch id="AnalogInputOutput"/>
 				</category>
 				<category name="Display">
+					<sketch id="LCD"/>
 				</category>
 			</category>
 			<category name="Motion">
@@ -127,6 +130,7 @@
 			</category>
 			<category name="Processing">
 				<sketch id="Arduino-no-FTDI"/>
+				<sketch id="ArduinoISP"/>
 			</category>
 		</category>
 		<category name="Picaxe">
