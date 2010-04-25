@@ -95,7 +95,7 @@ bool SVGPathParser::parse(SVGPathLexer *lexer)
 
           switch (r) {
  case 0: {
-    qDebug() << " got path_data ";
+    //qDebug() << " got path_data ";
 } break;  case 2: {
     //qDebug() << " got moveto_drawto_command_groups ";
 } break;  case 4: {
@@ -139,7 +139,7 @@ bool SVGPathParser::parse(SVGPathLexer *lexer)
 } break;  case 52: {
     //qDebug() << " got quadratic_bezier_curveto_argument ";
 } break;  case 53: {
-    qDebug() << "							got elliptical_arc ";
+    //qDebug() << "							got elliptical_arc ";
 } break;  case 56: {
     //qDebug() << " got elliptical_arc_argument_sequence ";
 } break;  case 57: {

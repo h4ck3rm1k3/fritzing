@@ -55,6 +55,8 @@ protected:
 	int drawSegment(const QString & ds, QString & line);
 	int drawArc(const QString & ds, QString & arc);
 	int drawCircle(const QString & ds, QString & arc);
+	QString drawVerticalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
+	QString drawHorizontalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
 
 };
 

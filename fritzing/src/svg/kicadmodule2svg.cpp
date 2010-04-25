@@ -475,6 +475,11 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	}
 
 	QString padName = unquote(shapeStrings.at(1));
+	bool ok;
+	int padNumber = padName.toInt(&ok);
+	if (ok) {
+		padName = QString("%1").arg(padNumber - 1);
+	}
 	QString shapeIdentifier = shapeStrings.at(2);
 	int xSize = shapeStrings.at(3).toInt();
 	int ySize = shapeStrings.at(4).toInt();
@@ -527,7 +532,7 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 			pad += QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
 							.arg(posX)
 							.arg(posY)
-							.arg((xSize / 2.0) - (drillX / 4.0))
+							.arg((qMin(xSize, ySize) / 2.0) - (drillX / 4.0))
 							.arg(padName)
 							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper0Color);
@@ -545,30 +550,11 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 		checkXLimit(posX + (xSize / 2.0));
 		checkYLimit(posY - (ySize / 2.0));
 		checkYLimit(posY + (ySize / 2.0));
-		if (padType == "SMD") {
-			pad = QString("<ellipse cx='%1' cy='%2' rx='%3' ry='%4' id='connector%5pin' stroke-width='0' fill='%6' />")
-							.arg(posX)
-							.arg(posY)
-							.arg(xSize / 2.0)
-							.arg(ySize / 2.0)
-							.arg(padName)
-							.arg(ViewLayer::Copper1Color);
+		if (xSize <= ySize) {
+			pad += drawVerticalLosenge(posX, posY, xSize, ySize, drillX, drillY, padName, padType);
 		}
 		else {
-			pad += QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
-							.arg(posX)
-							.arg(posY)
-							.arg((qMin(xSize, ySize) / 2.0) - (drillX / 4.0))
-							.arg(padName)
-							.arg(drillX / 2.0)
-							.arg(ViewLayer::Copper0Color);
-			pad += QString("<ellipse cx='%1' cy='%2' rx='%3' ry='%4' fill='none' stroke-width='%5' stroke='%6' />")
-							.arg(posX)
-							.arg(posY)
-							.arg((xSize / 2.0) - (drillX / 4.0))
-							.arg((ySize / 2.0) - (drillX / 4.0))
-							.arg(drillX / 2.0)
-							.arg(ViewLayer::Copper1Color);
+			pad += drawHorizontalLosenge(posX, posY, xSize, ySize, drillX, drillY, padName, padType);
 		}
 	}
 	else if (shapeIdentifier == "T") {
@@ -581,6 +567,8 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	}
 
 	if (orientation != 0) {
+		throw QObject::tr("unable to handle orientation %1").arg(orientation);
+	
 		QTransform t = QTransform().translate(-posX, -posY) * 
 						QTransform().rotate(orientation / 10.0) * 
 						QTransform().translate(posX, posY);
@@ -589,4 +577,134 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 
 
 	return padLayer;
+}
+
+QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType) {
+	qreal r = (xSize - drillX) / 2.0;
+	qreal cx = posX;
+	qreal cy = posY - (drillX / 2.0);
+
+
+	QString top = QString("<path d='M%1,%2a%3,%3 0 0 1 %4,0' fill='%5' stroke-width='0' />")
+					.arg(cx - r - r)
+					.arg(cy)
+					.arg(r * 2)
+					.arg(r * 4)
+					.arg(ViewLayer::Copper1Color);
+	QString bot = QString("<path d='M%1,%2a%3,%3 0 1 1 %4,0' fill='%5' stroke-width='0' />")
+					.arg(cx + r + r)
+					.arg(cy + drillY)
+					.arg(r * 2)
+					.arg(-r * 4)
+					.arg(ViewLayer::Copper1Color);
+
+	QString middle;
+	QString g;
+	QString afterg;
+
+	if (padType == "SMD") {
+		g = QString("<g id='connector%1pin' >").arg(padName);
+		afterg = "</g>";
+		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5 />")
+							.arg(posX - (xSize / 2.0))
+							.arg(posY - (drillY / 2.0))
+							.arg(xSize)
+							.arg(drillY)
+							.arg(ViewLayer::Copper1Color);
+	}
+	else {
+		middle = QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
+							.arg(posX)
+							.arg(posY)
+							.arg((qMin(xSize, ySize) / 2.0) - (drillX / 4.0))
+							.arg(padName)
+							.arg(drillX / 2.0)
+							.arg(ViewLayer::Copper0Color);
+
+		middle += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(posX - (xSize / 2.0) + (drillX / 4.0))
+							.arg(posY - (drillY / 2.0))
+							.arg(posY + (drillY / 2.0))
+							.arg(drillX / 2.0)
+							.arg(ViewLayer::Copper1Color);
+		middle += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(posX + (xSize / 2.0) - (drillX / 4.0))
+							.arg(posY - (drillY / 2.0))
+							.arg(posY + (drillY / 2.0))
+							.arg(drillX / 2.0)
+							.arg(ViewLayer::Copper1Color);
+	}
+
+	QString pad = g;
+	pad += middle;
+	pad += top;
+	pad += bot;
+	pad += afterg;
+	return pad;
+}
+
+QString KicadModule2Svg::drawHorizontalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType) {
+	qreal r = (ySize - drillY) / 2.0;
+	qreal cx = posX - (drillX / 2.0);
+	qreal cy = posY;
+	
+	QString top = QString("<path d='M%1,%2a%3,%3 0 0 0 0,%4' fill='%5' stroke-width='0' />")
+					.arg(cx)
+					.arg(cy - r - r)
+					.arg(r * 2)
+					.arg(r * 4)
+					.arg(ViewLayer::Copper1Color);
+					
+	
+	QString bot = QString("<path d='M%1,%2a%3,%3 0 1 0 0,%4' fill='%5' stroke-width='0' />")
+					.arg(cx + drillX)
+					.arg(cy + r + r)
+					.arg(r * 2)
+					.arg(-r * 4)
+					.arg(ViewLayer::Copper1Color);
+
+
+	QString middle;
+	QString g;
+	QString afterg;
+
+	if (padType == "SMD") {
+		g = QString("<g id='connector%1pin' >").arg(padName);
+		afterg = "</g>";
+		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5 />")
+							.arg(posX - (drillY / 2.0))
+							.arg(posY - (ySize / 2.0))
+							.arg(drillX)
+							.arg(ySize)
+							.arg(ViewLayer::Copper1Color);
+	}
+	else {
+		middle = QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
+							.arg(posX)
+							.arg(posY)
+							.arg((qMin(xSize, ySize) / 2.0) - (drillY / 4.0))
+							.arg(padName)
+							.arg(drillY / 2.0)
+							.arg(ViewLayer::Copper0Color);
+		middle += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(posX - (drillX / 2.0))
+							.arg(posY - (ySize / 2.0) + (drillY / 4.0))
+							.arg(posX + (drillX / 2.0))
+							.arg(drillY / 2.0)
+							.arg(ViewLayer::Copper1Color);
+		middle += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(posX - (drillX / 2.0))
+							.arg(posY + (ySize / 2.0) - (drillY / 4.0))
+							.arg(posX + (drillX / 2.0))
+							.arg(drillY / 2.0)
+							.arg(ViewLayer::Copper1Color);
+
+	}
+
+	QString pad = g;
+	pad += middle;
+	pad += top;
+	pad += bot;
+	pad += afterg;
+	return pad;
 }
