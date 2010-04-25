@@ -605,7 +605,7 @@ QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int 
 	if (padType == "SMD") {
 		g = QString("<g id='connector%1pin' >").arg(padName);
 		afterg = "</g>";
-		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5 />")
+		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5' />")
 							.arg(posX - (xSize / 2.0))
 							.arg(posY - (drillY / 2.0))
 							.arg(xSize)
@@ -671,7 +671,7 @@ QString KicadModule2Svg::drawHorizontalLosenge(int posX, int posY, int xSize, in
 	if (padType == "SMD") {
 		g = QString("<g id='connector%1pin' >").arg(padName);
 		afterg = "</g>";
-		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5 />")
+		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5' />")
 							.arg(posX - (drillY / 2.0))
 							.arg(posY - (ySize / 2.0))
 							.arg(drillX)
