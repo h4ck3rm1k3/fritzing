@@ -68,7 +68,7 @@ protected:
 
 	virtual bool saveAsAux(const QString & fileName) = 0;
 	virtual bool beforeClosing(bool showCancel=true);			// returns true if close, false if cancel
-	QMessageBox::StandardButton FritzingWindow::beforeClosingMessage(const QString & filename, bool showCancel);
+    QMessageBox::StandardButton beforeClosingMessage(const QString & filename, bool showCancel);
 
 	void createCloseAction();
 
