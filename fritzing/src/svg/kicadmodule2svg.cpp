@@ -583,26 +583,19 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 }
 
 QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType) {
-	if (drillX == 0 && padType == "SMD") {
-		drillY = drillX = qMin(xSize, ySize) / 2;
-	}
-
-	qreal r = (xSize - drillX) / 2.0;
-	qreal cx = posX;
-	qreal cy = posY - (drillX / 2.0);
-
+	qreal rad = xSize / 4.0;
 
 	QString top = QString("<path d='M%1,%2a%3,%3 0 0 1 %4,0' fill='%5' stroke-width='0' />")
-					.arg(cx - r - r)
-					.arg(cy)
-					.arg(r * 2)
-					.arg(r * 4)
+					.arg(posX - rad - rad)
+					.arg(posY - (ySize / 2.0) + (xSize / 2.0))
+					.arg(rad * 2)
+					.arg(rad * 4)
 					.arg(ViewLayer::Copper1Color);
 	QString bot = QString("<path d='M%1,%2a%3,%3 0 1 1 %4,0' fill='%5' stroke-width='0' />")
-					.arg(cx + r + r)
-					.arg(cy + drillY)
-					.arg(r * 2)
-					.arg(-r * 4)
+					.arg(posX + rad + rad)
+					.arg(posY + (ySize / 2.0) - (xSize / 2.0))
+					.arg(rad * 2)
+					.arg(-rad * 4)
 					.arg(ViewLayer::Copper1Color);
 
 	QString middle;
@@ -614,9 +607,9 @@ QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int 
 		afterg = "</g>";
 		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5' />")
 							.arg(posX - (xSize / 2.0))
-							.arg(posY - (drillY / 2.0))
+							.arg(posY - (ySize / 2.0) + (xSize / 2.0))
 							.arg(xSize)
-							.arg(drillY)
+							.arg(ySize - xSize)
 							.arg(ViewLayer::Copper1Color);
 	}
 	else {
@@ -630,14 +623,14 @@ QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int 
 
 		middle += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' fill='none' stroke-width='%4' stroke='%5' />")
 							.arg(posX - (xSize / 2.0) + (drillX / 4.0))
-							.arg(posY - (drillY / 2.0))
-							.arg(posY + (drillY / 2.0))
+							.arg(posY - (ySize / 2.0) + (xSize / 2.0))
+							.arg(posY + (ySize / 2.0) - (xSize / 2.0))
 							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper1Color);
 		middle += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' fill='none' stroke-width='%4' stroke='%5' />")
 							.arg(posX + (xSize / 2.0) - (drillX / 4.0))
-							.arg(posY - (drillY / 2.0))
-							.arg(posY + (drillY / 2.0))
+							.arg(posY - (ySize / 2.0) + (xSize / 2.0))
+							.arg(posY + (ySize / 2.0) - (xSize / 2.0))
 							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper1Color);
 	}
@@ -651,27 +644,19 @@ QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int 
 }
 
 QString KicadModule2Svg::drawHorizontalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType) {
-	if (drillX == 0 && padType == "SMD") {
-		drillY = drillX = qMin(xSize, ySize) / 2;
-	}
-
-	qreal r = (ySize - drillY) / 2.0;
-	qreal cx = posX - (drillX / 2.0);
-	qreal cy = posY;
+	qreal rad = ySize / 4.0;
 	
 	QString top = QString("<path d='M%1,%2a%3,%3 0 0 0 0,%4' fill='%5' stroke-width='0' />")
-					.arg(cx)
-					.arg(cy - r - r)
-					.arg(r * 2)
-					.arg(r * 4)
+					.arg(posX - (xSize / 2.0) + (ySize / 2.0))
+					.arg(posY - rad - rad)
+					.arg(rad * 2)
+					.arg(rad * 4)
 					.arg(ViewLayer::Copper1Color);
-					
-	
 	QString bot = QString("<path d='M%1,%2a%3,%3 0 1 0 0,%4' fill='%5' stroke-width='0' />")
-					.arg(cx + drillX)
-					.arg(cy + r + r)
-					.arg(r * 2)
-					.arg(-r * 4)
+					.arg(posX + (xSize / 2.0) - (ySize / 2.0))
+					.arg(posY + rad + rad)
+					.arg(rad * 2)
+					.arg(-rad * 4)
 					.arg(ViewLayer::Copper1Color);
 
 
@@ -683,9 +668,9 @@ QString KicadModule2Svg::drawHorizontalLosenge(int posX, int posY, int xSize, in
 		g = QString("<g id='connector%1pin' >").arg(padName);
 		afterg = "</g>";
 		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5' />")
-							.arg(posX - (drillY / 2.0))
+							.arg(posX - (xSize / 2.0) + (ySize / 2.0))
 							.arg(posY - (ySize / 2.0))
-							.arg(drillX)
+							.arg(xSize - ySize)
 							.arg(ySize)
 							.arg(ViewLayer::Copper1Color);
 	}
@@ -697,16 +682,18 @@ QString KicadModule2Svg::drawHorizontalLosenge(int posX, int posY, int xSize, in
 							.arg(padName)
 							.arg(drillY / 2.0)
 							.arg(ViewLayer::Copper0Color);
+
+
 		middle += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' fill='none' stroke-width='%4' stroke='%5' />")
-							.arg(posX - (drillX / 2.0))
+							.arg(posX - (xSize / 2.0) + (ySize / 2.0))
 							.arg(posY - (ySize / 2.0) + (drillY / 4.0))
-							.arg(posX + (drillX / 2.0))
+							.arg(posX + (xSize / 2.0) - (ySize / 2.0))
 							.arg(drillY / 2.0)
 							.arg(ViewLayer::Copper1Color);
 		middle += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' fill='none' stroke-width='%4' stroke='%5' />")
-							.arg(posX - (drillX / 2.0))
+							.arg(posX - (xSize / 2.0) + (ySize / 2.0))
 							.arg(posY + (ySize / 2.0) - (drillY / 4.0))
-							.arg(posX + (drillX / 2.0))
+							.arg(posX + (xSize / 2.0) - (ySize / 2.0))
 							.arg(drillY / 2.0)
 							.arg(ViewLayer::Copper1Color);
 
