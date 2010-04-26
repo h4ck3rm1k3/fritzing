@@ -44,6 +44,13 @@ $Date$
 #define KicadSilkscreenTop 21
 #define KicadSilkscreenBottom 20
 
+// TODO:
+//		drawing a circle inside a non-square rectangle can leave gaps (see OPTORESISTOR)
+//		MECA, HOLE type pads
+//		non-centered drill holes
+//		'ellipsoidal' drill holes
+//		trapezoidal pads (shape delta may or may not be a separate issue)
+
 
 KicadModule2Svg::KicadModule2Svg() : X2Svg() {
 }
@@ -252,7 +259,7 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	}
 
 	if (!allowPadsAndPins && pins > 0 && pads > 0) {
-		throw QObject::tr("Sorry, Fritzing can't yet handle both pins and pads together (in %1)").arg(filename);
+		throw QObject::tr("Sorry, Fritzing can't yet handle both pins and pads together (in %1 in %2)").arg(moduleName).arg(filename);
 	}
 
 	if (!copper0.isEmpty()) {
@@ -458,12 +465,26 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 		throw QObject::tr("attributes missing params");
 	}
 
+	bool ok;
+	int layerMask = attributeStrings.at(3).toInt(&ok, 16);
+	if (!ok) {
+		throw QObject::tr("bad layer mask parameter");
+	}
+
 	QString padType = attributeStrings.at(1);
 	if (padType == "STD") {
 		padLayer = ToCopper0;
 	}
 	else if (padType == "SMD") {
 		padLayer = ToCopper1;
+	}
+	else if (padType == "CONN") {
+		if (layerMask & 1) {
+			padLayer = ToCopper0;
+		}
+		else {
+			padLayer = ToCopper1;
+		}
 	}
 	else {
 		throw QObject::tr("Sorry, can't handle pad type %1").arg(padType);
@@ -475,7 +496,6 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	}
 
 	QString padName = unquote(shapeStrings.at(1));
-	bool ok;
 	int padNumber = padName.toInt(&ok);
 	if (ok) {
 		padName = QString("%1").arg(padNumber - 1);
@@ -569,9 +589,6 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 
 		
 	if (orientation != 0) {
-		//throw QObject::tr("unable to handle orientation %1").arg(orientation);
-	
-		
 		QTransform t = QTransform().translate(-posX, -posY) * 
 						QTransform().rotate(orientation / 10.0) * 
 						QTransform().translate(posX, posY);
