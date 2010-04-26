@@ -334,10 +334,12 @@ QStringList ProgramTab::getSerialPorts() {
 	return ports;
 #endif
 #ifdef Q_WS_MAC
+	/*
 
 	CFDictionarySetValue(classesToMatch,
                              CFSTR(kIOSerialBSDTypeKey),
                              CFSTR(kIOSerialBSDRS232Type));
+	*/
 
 	return ___emptyStringList___;
 #endif
@@ -579,13 +581,13 @@ DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool del
     grid->setMargin(0);
     grid->setVerticalSpacing(8);
     grid->setHorizontalSpacing(0);
-    q->setContentsMargins(24, 15, 24, 20);
+    this->setContentsMargins(24, 15, 24, 20);
     grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignLeft);
     grid->addWidget(label, 0, 1, 1, 1);
     // -- leave space for information label --
     grid->setRowStretch(1, 100);
     grid->setRowMinimumHeight(2, 6);
-    grid->addWidget(buttonBox, 3, 1, 1, 1);
+    grid->addWidget(m_buttonBox, 3, 1, 1, 1);
 #endif
 
 	m_checkBox = NULL;
