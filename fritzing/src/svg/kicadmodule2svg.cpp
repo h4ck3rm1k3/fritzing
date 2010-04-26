@@ -139,13 +139,14 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	}
 
 	bool gotT0;
+	QString line;
 	while (true) {
-		QString line = textStream.readLine();
+		line = textStream.readLine();
 		if (line.isNull()) {
 			throw QObject::tr("unexpected end of file in footprint %1 in file %2").arg(moduleName).arg(filename);
 		}
 
-		if (line.startsWith("T0")) {
+		if (line.startsWith("T0") || line.startsWith("DS") || line.startsWith("DA") || line.startsWith("DC")) {
 			gotT0 = true;
 			break;
 		}
@@ -168,14 +169,11 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 		throw QObject::tr("unexpected format (1) in %1 from %2").arg(moduleName).arg(filename);
 	}
 
-	QString line;
-	while (true) {
+	while (line.startsWith("T")) {
 		line = textStream.readLine();
 		if (line.isNull()) {
 			throw QObject::tr("unexpected end of file in footprint %1 in file %2").arg(moduleName).arg(filename);
 		}
-
-		if (!line.startsWith("T")) break;
 	}
 
 	QString copper0;
@@ -557,12 +555,37 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 							.arg(padName)
 							.arg(drillX / 2.0)
 							.arg(ViewLayer::Copper0Color);
-			pad += QString("<rect x='%1' y='%2' width='%3' height='%4' fill='none' stroke-width='%5' stroke='%6' />")
-							.arg(posX - (xSize / 2.0) + (drillX / 4.0))
-							.arg(posY - (ySize / 2.0) + (drillX / 4.0))
-							.arg(xSize - (drillX / 2.0))
-							.arg(ySize - (drillX / 2.0))
-							.arg(drillX / 2.0)
+			// draw 4 lines otherwise there may be gaps if one pair of sides is much longer than the other pair of sides
+
+
+			qreal w = (ySize - drillY) / 2.0;
+			qreal tlx = posX - xSize / 2.0;
+			qreal tly = posY - ySize / 2.0;
+			pad += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(tlx)
+							.arg(tly + w / 2)
+							.arg(tlx + xSize)
+							.arg(w)
+							.arg(ViewLayer::Copper1Color);
+			pad += QString("<line x1='%1' y1='%2' x2='%3' y2='%2' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(tlx)
+							.arg(tly + ySize - w / 2)
+							.arg(tlx + xSize)
+							.arg(w)
+							.arg(ViewLayer::Copper1Color);
+
+			w = (xSize - drillX) / 2.0;
+			pad += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(tlx + w / 2)
+							.arg(tly)
+							.arg(tly + ySize)
+							.arg(w)
+							.arg(ViewLayer::Copper1Color);
+			pad += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' fill='none' stroke-width='%4' stroke='%5' />")
+							.arg(tlx + xSize - w / 2)
+							.arg(tly)
+							.arg(tly + ySize)
+							.arg(w)
 							.arg(ViewLayer::Copper1Color);
 		}
 	}

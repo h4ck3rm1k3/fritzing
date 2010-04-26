@@ -865,7 +865,9 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 			throw tr("no footprints found in %1").arg(origFilePath);
 		}
 
-		// if (modules.count() > 1) ask the user which one
+		if (modules.count() > 1) {
+
+		}
 
 		KicadModule2Svg k;
 		QString svg = k.convert(origFilePath, modules.at(0), false);

@@ -516,7 +516,11 @@ void FApplication::runKicadService() {
 			try {
 				QString svg = k.convert(filepath, moduleName, false);
 				if (svg.isEmpty()) {
+					DebugDialog::debug("svg is empty " + filepath + " " + moduleName);
 					continue;
+				}
+				foreach (QChar c, QString("<>:\"/\\|?*")) {
+					moduleName.remove(c);
 				}
 
 				QString newFilePath = dir.absoluteFilePath(moduleName + "_" + filename);
@@ -526,6 +530,9 @@ void FApplication::runKicadService() {
 					QTextStream stream(&file);
 					stream << svg;
 					file.close();
+				}
+				else {
+					DebugDialog::debug("unable to open file " + newFilePath);
 				}
 			}
 			catch (const QString & msg) {
