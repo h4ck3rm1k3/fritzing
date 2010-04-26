@@ -55,7 +55,7 @@ public:
 	static bool fixPixelDimensionsIn(QString &fileContent);
 	static void flipSMDSvg(const QString & filename, QDomDocument & flipDoc, const QString & elementID, const QString & altElementID, qreal printerScale);
 	static void setSVGTransform(QDomElement &, QMatrix &);
-	static QString svgTransform(const QString & svg, QTransform & transform, bool translate);
+	static QString svgTransform(const QString & svg, QTransform & transform, bool translate, const QString extra);
 	static bool getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight);
 	static bool findText(QDomNode & node, QString & text);
 

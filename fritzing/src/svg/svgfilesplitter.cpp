@@ -425,17 +425,45 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID, bool
 
 }
 
-void SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
+bool SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
 {
 	QString attr = element.attribute("transform");
-	if (attr.isEmpty()) return;
+	if (attr.isEmpty()) return false;
 
-	QMatrix matrix = elementToMatrix(element);
-	if (matrix.dx() == 0 && matrix.dy() == 0) return;
+	QMatrix m0 = elementToMatrix(element);
 
-	matrix.setMatrix(matrix.m11(), matrix.m12(), matrix.m21(), matrix.m22(), matrix.dx() + x, matrix.dy() + y);
+	bool ok1, ok2, ok3;
+	qreal _x = element.attribute("_x").toDouble(&ok1);
+	qreal _y = element.attribute("_y").toDouble(&ok2);
+	qreal _r = element.attribute("_r").toDouble(&ok3);
+	if (ok1 && ok2 && ok3) {
+		QMatrix mx = QMatrix().translate(-_x - x, -_y - y) * QMatrix().rotate(_r) * QMatrix().translate(_x + x, _y + y);
+		TextUtils::setSVGTransform(element, mx);
+		element.removeAttribute("_x");
+		element.removeAttribute("_y");
+		element.removeAttribute("_r");
+		return false;
+	}
 
-	TextUtils::setSVGTransform(element, matrix);
+	// calculate the original cx and cy and retranslate (there must be an easier way)
+	// and this doesn't seem to work...
+
+	qreal sinTheta = m0.m21();
+	qreal cosTheta = m0.m11();
+	qreal cosThetaMinusOne = cosTheta - 1;
+
+	qreal cx = (m0.dx() + (sinTheta * m0.dy() / cosThetaMinusOne)) / 
+			    (cosThetaMinusOne + (sinTheta * sinTheta / cosThetaMinusOne));
+	qreal cy = (m0.dy() - (sinTheta * cx)) / cosThetaMinusOne;
+
+	cx += x;
+	cy += y;
+
+	QMatrix m1(m0.m11(), m0.m12(), m0.m21(), m0.m22(), 0, 0);
+	QMatrix mx = QMatrix().translate(-cx, -cy) * m1 * QMatrix().translate(cx, cy);
+
+	TextUtils::setSVGTransform(element, mx);
+	return false;
 }
 
 
@@ -444,6 +472,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y, bool s
 	if (shiftTransforms) {
 		shiftTranslation(element, x, y);
 	}
+
 	QString nodeName = element.nodeName();
 	if (nodeName.compare("circle") == 0 || nodeName.compare("ellipse") == 0) {
 		shiftAttribute(element, "cx", x);

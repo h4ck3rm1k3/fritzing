@@ -51,6 +51,7 @@ $Date$
 //		numbers, string escape chars...
 //		where to store program files when opening fzz
 //		update serial port list (when?)
+//		when you hit program, warn the user to save
 
 static int UntitledIndex = 1;				
 

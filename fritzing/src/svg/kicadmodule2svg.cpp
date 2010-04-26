@@ -488,6 +488,7 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	int orientation = shapeStrings.at(7).toInt();
 
 	if (xDelta != 0 || yDelta != 0) {
+		// note: so far, all cases of non-zero delta go with shape "T"
 		throw QObject::tr("shape delta not implemented");
 	}
 
@@ -566,13 +567,15 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 		throw QObject::tr("unable to handle pad shape %1").arg(shapeIdentifier);
 	}
 
+		
 	if (orientation != 0) {
-		throw QObject::tr("unable to handle orientation %1").arg(orientation);
+		//throw QObject::tr("unable to handle orientation %1").arg(orientation);
 	
+		
 		QTransform t = QTransform().translate(-posX, -posY) * 
 						QTransform().rotate(orientation / 10.0) * 
 						QTransform().translate(posX, posY);
-		pad = TextUtils::svgTransform(pad, t, true);
+		pad = TextUtils::svgTransform(pad, t, true, QString("_x='%1' _y='%2' _r='%3'").arg(posX).arg(posY).arg(orientation / 10.0));
 	}
 
 
@@ -580,6 +583,10 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 }
 
 QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType) {
+	if (drillX == 0 && padType == "SMD") {
+		drillY = drillX = qMin(xSize, ySize) / 2;
+	}
+
 	qreal r = (xSize - drillX) / 2.0;
 	qreal cx = posX;
 	qreal cy = posY - (drillX / 2.0);
@@ -644,6 +651,10 @@ QString KicadModule2Svg::drawVerticalLosenge(int posX, int posY, int xSize, int 
 }
 
 QString KicadModule2Svg::drawHorizontalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType) {
+	if (drillX == 0 && padType == "SMD") {
+		drillY = drillX = qMin(xSize, ySize) / 2;
+	}
+
 	qreal r = (ySize - drillY) / 2.0;
 	qreal cx = posX - (drillX / 2.0);
 	qreal cy = posY;

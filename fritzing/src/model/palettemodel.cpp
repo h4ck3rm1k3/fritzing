@@ -315,7 +315,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
         return NULL;
     }
 
-	DebugDialog::debug(QString("loading %2 %1").arg(path).arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
+	//DebugDialog::debug(QString("loading %2 %1").arg(path).arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
 
 	ModelPart::ItemType type = ModelPart::Part;
 	QString moduleID;

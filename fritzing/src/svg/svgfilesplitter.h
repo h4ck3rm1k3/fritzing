@@ -85,7 +85,7 @@ protected:
 	void normalizeTranslation(QDomElement & element, 
 							qreal sNewWidth, qreal sNewHeight,
 							qreal vbWidth, qreal vbHeight);
-	void shiftTranslation(QDomElement & element, qreal x, qreal y);
+	bool shiftTranslation(QDomElement & element, qreal x, qreal y);
 
 protected:
 	static void changeStrokeWidth(QDomElement & element, qreal delta, bool absolute);

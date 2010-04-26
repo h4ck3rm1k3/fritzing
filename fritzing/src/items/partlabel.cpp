@@ -728,5 +728,5 @@ QString PartLabel::makeSvg(bool blackOnly, qreal dpi, qreal printerScale) {
 
 	svg += "</text>";
         QTransform t = transform();
-        return TextUtils::svgTransform(svg, t, false);
+        return TextUtils::svgTransform(svg, t, false, QString());
 }
