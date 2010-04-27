@@ -52,12 +52,14 @@ public:
 
 protected:
 	KicadModule2Svg::PadLayer convertPad(QTextStream & stream, QString & pad);
-	int drawSegment(const QString & ds, QString & line);
-	int drawArc(const QString & ds, QString & arc);
-	int drawCircle(const QString & ds, QString & arc);
-	QString drawVerticalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
-	QString drawHorizontalLosenge(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
-
+	int drawDSegment(const QString & ds, QString & line);
+	int drawDArc(const QString & ds, QString & arc);
+	int drawDCircle(const QString & ds, QString & arc);
+	QString drawVerticalOblong(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
+	QString drawHorizontalOblong(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
+	void checkLimits(int posX, int xSize, int posY, int ySize);
+	QString drawRPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
+	QString drawCPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
 };
 
 
