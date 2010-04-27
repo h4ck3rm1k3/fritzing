@@ -43,6 +43,12 @@ $Date$
 #ifdef Q_WS_WIN
 #include "windows.h"
 #endif
+#ifdef Q_WS_MAC
+#include <IOKit/IOKitLib.h>
+#include <IOKit/IOBSD.h>
+#include <IOKit/serial/IOSerialKeys.h>
+#include <CoreFoundation/CoreFoundation.h>
+#endif
 
 QHash<QString, QString> ProgramTab::m_languages;
 QHash<QString, class Syntaxer *> ProgramTab::m_syntaxers;
@@ -313,8 +319,8 @@ void ProgramTab::redoText() {
 
 QStringList ProgramTab::getSerialPorts() {
 	// TODO: make this call a plugin?
+    QStringList ports;
 #ifdef Q_WS_WIN
-	QStringList ports;
 	for (int i = 1; i < 256; i++)
 	{
 		QString port = QString("COM%1").arg(i);
@@ -334,14 +340,59 @@ QStringList ProgramTab::getSerialPorts() {
 	return ports;
 #endif
 #ifdef Q_WS_MAC
-	/*
+        mach_port_t         masterPort;
+        io_iterator_t       matchingServices;
 
-	CFDictionarySetValue(classesToMatch,
-                             CFSTR(kIOSerialBSDTypeKey),
-                             CFSTR(kIOSerialBSDRS232Type));
-	*/
+        kern_return_t kernResult = IOMasterPort(MACH_PORT_NULL, &masterPort);
+        if (KERN_SUCCESS != kernResult)
+        {
+            DebugDialog::debug(QString("IOMasterPort returned %1").arg(kernResult));
+            return ports;
+        }
 
-	return ___emptyStringList___;
+        // Serial devices are instances of class IOSerialBSDClient.
+        CFMutableDictionaryRef  classesToMatch = IOServiceMatching(kIOSerialBSDServiceValue);
+        if (classesToMatch == NULL)
+        {
+            DebugDialog::debug("IOServiceMatching returned a NULL dictionary.");
+            return ports;
+        }
+
+        CFDictionarySetValue(classesToMatch, CFSTR(kIOSerialBSDTypeKey), CFSTR(kIOSerialBSDRS232Type));
+
+        kernResult = IOServiceGetMatchingServices(masterPort, classesToMatch, &matchingServices);
+        if (KERN_SUCCESS != kernResult)
+        {
+            DebugDialog::debug(QString("IOServiceGetMatchingServices returned %1").arg(kernResult));
+            return ports;
+        }
+
+        io_object_t modemService;
+        while ((modemService = IOIteratorNext(matchingServices)))
+        {
+            CFTypeRef deviceFilePathAsCFString = IORegistryEntryCreateCFProperty(modemService,
+                                CFSTR(kIOCalloutDeviceKey),
+                                kCFAllocatorDefault,
+                                0);
+            if (deviceFilePathAsCFString)
+            {
+                char deviceFilePath[1024];
+                Boolean result = CFStringGetCString((CFStringRef) deviceFilePathAsCFString,
+                                            deviceFilePath,
+                                            1024,
+                                            kCFStringEncodingASCII);
+                CFRelease(deviceFilePathAsCFString);
+                if (result)
+                {
+                    ports.append(deviceFilePath);
+                }
+            }
+
+            // Release the io_service_t now that we are done with it.
+            (void) IOObjectRelease(modemService);
+        }
+
+        return ports;
 #endif
 #ifdef Q_WS_X11
 	QProcess * process = new QProcess(this);
@@ -353,7 +404,7 @@ QStringList ProgramTab::getSerialPorts() {
 
         process->start("dmesg");
 
-	return ___emptyStringList___;
+        return ports;
 #endif
 
 }
