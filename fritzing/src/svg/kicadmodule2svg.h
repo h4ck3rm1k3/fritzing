@@ -55,8 +55,9 @@ protected:
 	int drawDSegment(const QString & ds, QString & line);
 	int drawDArc(const QString & ds, QString & arc);
 	int drawDCircle(const QString & ds, QString & arc);
-	QString drawVerticalOblong(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
-	QString drawHorizontalOblong(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
+	QString drawOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType);
+	QString drawVerticalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType);
+	QString drawHorizontalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType);
 	void checkLimits(int posX, int xSize, int posY, int ySize);
 	QString drawRPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
 	QString drawCPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType);
