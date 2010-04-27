@@ -455,10 +455,6 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 				throw QObject::tr("drill missing ellipse params");
 			}
 			drillY = drillStrings.at(6).toInt();
-
-			DebugDialog::debug("oblong holes not yet supported");
-
-			//throw QObject::tr("oblong drill holes not implemented");
 		}
 	}
 

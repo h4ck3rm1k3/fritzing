@@ -310,10 +310,23 @@ bool SqliteReferenceModel::lastWasExactMatch() {
 }
 
 bool SqliteReferenceModel::addPartAux(ModelPart * newModel) {
-	Part *part = Part::from(newModel);
-	bool result = addPart(part);
-	delete part;
-	return result;
+	try {
+		Part *part = Part::from(newModel);
+		bool result = addPart(part);
+		delete part;
+		return result;
+	}
+	catch (const char * msg) {
+		DebugDialog::debug(msg);
+	}
+	catch (const QString & msg) {
+		DebugDialog::debug(msg);
+	}
+	catch (...) {
+		DebugDialog::debug("SqliteReferenceModel::addPartAux failure");
+	}
+
+	return NULL;
 }
 
 bool SqliteReferenceModel::addPart(ModelPart * newModel, bool update) {

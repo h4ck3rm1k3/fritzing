@@ -286,7 +286,7 @@ void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters, int & loa
         QFileInfo fileInfo = list.at(i);
         QString path = fileInfo.absoluteFilePath ();
         // DebugDialog::debug(QString("part path:%1 core? %2").arg(path).arg(m_loadingCore? "true" : "false"));
-        loadPart(path, fastLoad, fastLoad);
+        loadPart(path, false, fastLoad);
 		emit loadedPart(++loadingPart, totalPartCount);
     }
 
@@ -379,9 +379,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 						done = true;
 					}
 				}
-                                break;
-                            default:
-                                break;
+                break;
+            default:
+                break;
 			}
 			if (done) break;
 		}
