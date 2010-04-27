@@ -379,7 +379,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 						done = true;
 					}
 				}
-				break;
+                                break;
+                            default:
+                                break;
 			}
 			if (done) break;
 		}

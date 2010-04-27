@@ -545,7 +545,7 @@ void ProgramTab::programProcessReadyRead() {
 
 /////////////////////////////////////////
 
-DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
+DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags)
 {
 	this->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |  Qt::WindowCloseButtonHint);
 
