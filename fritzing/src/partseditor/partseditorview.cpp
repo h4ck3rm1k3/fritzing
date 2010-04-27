@@ -30,6 +30,11 @@ $Date$
 #include <QSvgGenerator>
 #include <QGraphicsProxyWidget>
 #include <QVarLengthArray>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QComboBox>
+#include <QLabel>
+#include <QPushButton>
 
 #include "partseditorview.h"
 #include "partseditorconnectoritem.h"
@@ -865,12 +870,22 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 			throw tr("no footprints found in %1").arg(origFilePath);
 		}
 
+		QString module;
 		if (modules.count() > 1) {
+			KicadModuleDialog kmd(origFilePath, modules, this);
+			int result = kmd.exec();
+			if (result != QDialog::Accepted) {
+				return "";
+			}
 
+			module = kmd.selectedModule();
+		}
+		else {
+			module = modules.at(0);
 		}
 
 		KicadModule2Svg k;
-		QString svg = k.convert(origFilePath, modules.at(0), false);
+		QString svg = k.convert(origFilePath, module, false);
 		return saveSvg(svg, newFilePath);
 	}
 
@@ -1586,3 +1601,47 @@ QString PartsEditorView::saveSvg(const QString & svg, const QString & newFilePat
 	file.close();
 	return newFilePath;
 }
+
+//////////////////////////////////////////////////////////
+
+KicadModuleDialog::KicadModuleDialog(const QString & filename, const QStringList & modules, QWidget *parent) : QDialog(parent) 
+{
+	this->setWindowTitle(QObject::tr("Select footprint"));
+
+	QVBoxLayout * vLayout = new QVBoxLayout(this);
+
+	QFrame * frame = new QFrame(this);
+
+	QFormLayout * formLayout = new QFormLayout();
+
+	m_comboBox = new QComboBox(this);
+	m_comboBox->addItems(modules);
+	formLayout->addRow( "footprint:", m_comboBox );
+
+	frame->setLayout(formLayout);
+
+	QLabel * label = new QLabel(QString("There are %1 footprints in '%2'.  Please select one.").arg(modules.count()).arg(filename));
+	vLayout->addWidget(label);
+
+	vLayout->addWidget(frame);
+
+    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
+
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+	vLayout->addWidget(buttonBox);
+
+	this->setLayout(vLayout);
+}
+
+KicadModuleDialog::~KicadModuleDialog() {
+}
+
+const QString KicadModuleDialog::selectedModule() {
+	return m_comboBox->currentText();
+}
+
+

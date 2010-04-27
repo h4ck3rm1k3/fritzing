@@ -224,4 +224,20 @@ protected:
 		static int ConnDefaultHeight;
 };
 
+
+
+class KicadModuleDialog : public QDialog
+{
+Q_OBJECT
+
+public:
+	KicadModuleDialog(const QString & filename, const QStringList & moduleNames, QWidget *parent = 0);
+	~KicadModuleDialog();
+
+	const QString selectedModule();
+
+protected:
+	QComboBox * m_comboBox;
+};
+
 #endif /* PARTSEDITORVIEW_H_ */

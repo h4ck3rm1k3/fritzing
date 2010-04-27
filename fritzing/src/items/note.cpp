@@ -150,12 +150,12 @@ LinkDialog::LinkDialog(QWidget *parent) : QDialog(parent)
 	m_urlEdit = new QLineEdit(this);
 	m_urlEdit->setFixedHeight(25);
 	m_urlEdit->setFixedWidth(200);
-	formLayout->addRow( "url:", m_urlEdit );
+	formLayout->addRow(tr("url:"), m_urlEdit );
 
 	m_textEdit = new QLineEdit(this);
 	m_textEdit->setFixedHeight(25);
 	m_textEdit->setFixedWidth(200);
-	formLayout->addRow( "text:", m_textEdit );
+	formLayout->addRow(tr("text:"), m_textEdit );
 
 	formGroupBox->setLayout(formLayout);
 

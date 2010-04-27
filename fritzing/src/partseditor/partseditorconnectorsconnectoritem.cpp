@@ -24,6 +24,7 @@ $Date$
 
 ********************************************************************/
 
+#include <QTimer>
 
 #include "partseditorconnectorsconnectoritem.h"
 #include "partseditorview.h"

@@ -31,7 +31,7 @@ $Date$
 
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectoritem.h"
-#include "partseditorview.h"
+#include "../sketch/sketchwidget.h"
 #include "partseditorlayerkinpaletteitem.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
