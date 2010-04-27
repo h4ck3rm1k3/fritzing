@@ -340,7 +340,9 @@ QStringList ProgramTab::getSerialPorts() {
 	return ports;
 #endif
 #ifdef Q_WS_MAC
-        mach_port_t         masterPort;
+		// see http://developer.apple.com/Mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
+
+		mach_port_t         masterPort;
         io_iterator_t       matchingServices;
 
         kern_return_t kernResult = IOMasterPort(MACH_PORT_NULL, &masterPort);

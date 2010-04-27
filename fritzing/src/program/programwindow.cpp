@@ -47,7 +47,6 @@ $Date$
 
 // TODO: 
 //		text search
-//		serial port plugins?
 //		numbers, string escape chars...
 //		where to store program files when opening fzz
 //		update serial port list (when?)

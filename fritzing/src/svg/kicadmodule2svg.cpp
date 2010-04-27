@@ -591,12 +591,9 @@ QString KicadModule2Svg::drawVerticalOblong(int posX, int posY, qreal xSize, qre
 	}
 
 	QString middle;
-	QString g;
-	QString afterg;
+	bool gotID = false;
 
 	if (padType == "SMD") {
-		g = QString("<g id='connector%1pin' >").arg(padName);
-		afterg = "</g>";
 		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5' />")
 							.arg(posX - (xSize / 2.0))
 							.arg(posY - (ySize / 2.0) + (xSize / 2.0))
@@ -606,6 +603,7 @@ QString KicadModule2Svg::drawVerticalOblong(int posX, int posY, qreal xSize, qre
 	}
 	else {
 		if (drillX == drillY) {
+			gotID = true;
 			middle = QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
 								.arg(posX)
 								.arg(posY)
@@ -629,11 +627,16 @@ QString KicadModule2Svg::drawVerticalOblong(int posX, int posY, qreal xSize, qre
 							.arg(ViewLayer::Copper0Color);
 	}
 
-	QString pad = g;
+	QString pad;
+	if (!gotID && !padName.isEmpty()) {
+		pad += QString("<g id='connector%1pin' >").arg(padName);
+	}
 	pad += middle;
 	pad += top;
 	pad += bot;
-	pad += afterg;
+	if (!gotID && !padName.isEmpty()) {
+		pad +="</g>";
+	}
 	return pad;
 }
 
@@ -677,12 +680,9 @@ QString KicadModule2Svg::drawHorizontalOblong(int posX, int posY, qreal xSize, q
 	}
 
 	QString middle;
-	QString g;
-	QString afterg;
+	bool gotID = false;
 
 	if (padType == "SMD") {
-		g = QString("<g id='connector%1pin' >").arg(padName);
-		afterg = "</g>";
 		middle = QString("<rect x='%1' y='%2' width='%3' height='%4' stroke-width='0' fill='%5' />")
 							.arg(posX - (xSize / 2.0) + (ySize / 2.0))
 							.arg(posY - (ySize / 2.0))
@@ -692,6 +692,7 @@ QString KicadModule2Svg::drawHorizontalOblong(int posX, int posY, qreal xSize, q
 	}
 	else {
 		if (drillX == drillY) {
+			gotID = true;
 			middle = QString("<circle fill='none' cx='%1' cy='%2' r='%3' id='connector%4pin' stroke-width='%5' stroke='%6' />")
 								.arg(posX)
 								.arg(posY)
@@ -715,11 +716,16 @@ QString KicadModule2Svg::drawHorizontalOblong(int posX, int posY, qreal xSize, q
 							.arg(ViewLayer::Copper0Color);
 	}
 
-	QString pad = g;
+	QString pad;
+	if (!gotID && !padName.isEmpty()) {
+		pad += QString("<g id='connector%1pin' >").arg(padName);
+	}
 	pad += middle;
 	pad += top;
 	pad += bot;
-	pad += afterg;
+	if (!gotID && !padName.isEmpty()) {
+		pad += "</g>";
+	}
 	return pad;
 }
 
@@ -762,6 +768,49 @@ QString KicadModule2Svg::drawCPad(int posX, int posY, int xSize, int ySize, int 
 						.arg(w)
 						.arg(ViewLayer::Copper0Color);
 	pad += drawOblong(posX, posY, drillX + w, drillY + w, drillX, drillY, "", "");
+
+	// now fill the gaps between the oblong and the circle
+	if (drillX >= drillY) {
+		qreal angle = asin(((drillY + w) / 2) / (ySize / 2.0));
+		qreal opp = (ySize / 2.0) * cos(angle);
+		pad += QString("<polygon stroke-width='0' fill='%1' points='%2,%3,%4,%5,%6,%7' />")
+			.arg(ViewLayer::Copper0Color)
+			.arg(posX)
+			.arg(posY - (ySize / 2.0))
+			.arg(posX - opp)
+			.arg(posY - (drillY / 2.0))
+			.arg(posX + opp)
+			.arg(posY - (drillY / 2.0));
+		pad += QString("<polygon stroke-width='0' fill='%1' points='%2,%3,%4,%5,%6,%7' />")
+			.arg(ViewLayer::Copper0Color)
+			.arg(posX)
+			.arg(posY + (ySize / 2.0))
+			.arg(posX - opp)
+			.arg(posY + (drillY / 2.0))
+			.arg(posX + opp)
+			.arg(posY + (drillY / 2.0));
+	}
+	else {
+		qreal angle = acos(((drillX + w) / 2) / (xSize / 2.0));
+		qreal adj = (xSize / 2.0) * sin(angle);
+		pad += QString("<polygon stroke-width='0' fill='%1' points='%2,%3,%4,%5,%6,%7' />")
+			.arg(ViewLayer::Copper0Color)
+			.arg(posX - (xSize / 2.0))
+			.arg(posY)
+			.arg(posX - (drillX / 2.0))
+			.arg(posY - adj)
+			.arg(posX - (drillX / 2.0))
+			.arg(posY + adj);
+		pad += QString("<polygon stroke-width='0' fill='%1' points='%2,%3,%4,%5,%6,%7' />")
+			.arg(ViewLayer::Copper0Color)
+			.arg(posX + (xSize / 2.0))
+			.arg(posY)
+			.arg(posX + (drillX / 2.0))
+			.arg(posY - adj)
+			.arg(posX + (drillX / 2.0))
+			.arg(posY + adj);
+	}
+
 	return pad;
 }
 
@@ -789,7 +838,7 @@ QString KicadModule2Svg::drawRPad(int posX, int posY, int xSize, int ySize, int 
 	}
 	else {
 		qreal w = (drillX >= drillY) ? (xSize - drillX) / 2.0 : (ySize - drillY) / 2.0 ;
-		pad = drawOblong(posX, posY, drillX + w, drillY + w, drillX, drillY, "", "");
+		pad = drawOblong(posX, posY, drillX + w, drillY + w, drillX, drillY, padName, "");
 	}
 			
 	// draw 4 lines otherwise there may be gaps if one pair of sides is much longer than the other pair of sides
