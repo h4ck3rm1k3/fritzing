@@ -51,6 +51,7 @@ $Date$
 //		where to store program files when opening fzz
 //		update serial port list (when?)
 //		when you hit program, warn the user to save
+//		^s and other standard shortcuts
 
 static int UntitledIndex = 1;				
 

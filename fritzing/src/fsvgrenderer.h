@@ -53,15 +53,15 @@ public:
 	FSvgRenderer(QObject * parent = 0);
 	~FSvgRenderer();
 
-	bool loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID);
+	bool loadSvg(const QString & filename, const QStringList & connectorIDs, const QStringList & terminalIDs, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
 	bool loadSvg(const QString & filename);
-	bool loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID);     // for SvgSplitter loads
+	bool loadSvg( const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID, bool findNonConnectors);     // for SvgSplitter loads
 	bool loadSvg( const QByteArray & contents, const QString & filename);						// for SvgSplitter loads
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
-	void initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs);
 	ConnectorInfo * getConnectorInfo(const QString & connectorID);
+	bool FSvgRenderer::setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint);
 
 public:
 	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);
@@ -77,12 +77,20 @@ public:
 protected:
 	void determineDefaultSize(QXmlStreamReader &);
 	QByteArray cleanXml(const QByteArray & contents, const QString & filename);
-	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID);
+	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
+	void initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs);
+	ConnectorInfo * initConnectorInfo(QDomElement & connectorElement);
+	void initNonConnectorInfo(QDomDocument & domDocument);
+	void initNonConnectorInfoAux(QDomElement & element);
+	void initTerminalInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & terminalIDs);
+	void initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs);
+	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix);
 
 protected:
 	QString m_filename;
 	QSizeF m_defaultSizeF;
 	QHash<QString, ConnectorInfo *> m_connectorInfoHash;
+	QHash<QString, ConnectorInfo *> m_nonConnectorInfoHash;
 
 protected:
 	static qreal m_printerScale;

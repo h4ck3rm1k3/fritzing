@@ -1330,7 +1330,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 						result = svgFileSplitter.splitString(f, layerAttributes.layerName());
 					}
 					if (result) {
-						if (renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID)) {
+						if (renderer->loadSvg(svgFileSplitter.byteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView)) {
 							gotOne = true;
 						}
 					}
@@ -1342,10 +1342,10 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 					// only one layer, just load it directly
 					bool result;
 					if (flipDoc.isNull()) {
-						result = renderer->loadSvg(filename, connectorIDs, terminalIDs, setColor, colorElementID);
+						result = renderer->loadSvg(filename, connectorIDs, terminalIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
 					}
 					else {
-						result = renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID);
+						result = renderer->loadSvg(flipDoc.toByteArray(), filename, connectorIDs, terminalIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
 					}
 					if (result) {
 						gotOne = true;

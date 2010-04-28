@@ -54,6 +54,7 @@ public:
 		SchematicNote,
 		SchematicRuler,
 		Board,
+		Holes,
 		GroundPlane,
 		Silkscreen0,
 		Silkscreen0Label,
@@ -76,6 +77,7 @@ public:
 	};
 
 public:
+	static const QString HolesColor;
 	static const QString Copper0Color;
 	static const QString Copper1Color;
 	static const QString SilkscreenColor;

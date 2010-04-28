@@ -28,6 +28,7 @@ $Date$
 #include "connectorsinfowidget.h"
 #include "singleconnectorinfowidget.h"
 #include "connectorinforemovebutton.h"
+#include "../connectors/connectorshared.h"
 #include "../debugdialog.h"
 
 const QString ConnectorTypeWidget::FemaleSymbol = QString("%1").arg(QChar(0x2640));

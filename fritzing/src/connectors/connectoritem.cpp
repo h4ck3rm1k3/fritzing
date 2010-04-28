@@ -48,16 +48,11 @@ static double MAX_DOUBLE = std::numeric_limits<double>::max();
 /////////////////////////////////////////////////////////
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
-	: QGraphicsRectItem(attachedTo)
+	: NonConnectorItem(attachedTo)
 {
-	m_radius = m_strokeWidth = 0;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
-	m_chosen = false;
-	m_circular = false;
 	m_overConnectorItem = NULL;
 	m_connectorHovering = false;
-	m_hidden = false;
-	m_attachedTo = attachedTo;
 	m_connector = connector;
 	if (connector != NULL) {
 		connector->addViewItem(this);
@@ -132,10 +127,6 @@ void ConnectorItem::hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) {
 
 Connector * ConnectorItem::connector() {
 	return m_connector;
-}
-
-ItemBase * ConnectorItem::attachedTo() {
-	return m_attachedTo;
 }
 
 void ConnectorItem::clearConnectorHover() {
@@ -224,11 +215,6 @@ void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 
 void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount) {
 	
-	if (m_chosen) {
-		setChosenColor();
-		return;
-	}
-
 	QList<ConnectorItem *> busConnectedItems;
 	if (attachedToItemType() == ModelPart::Wire) {
 		doBuses = false;
@@ -313,15 +299,6 @@ void ConnectorItem::setUnconnectedColor() {
 	setColorAux(*brush, *pen, true);
 }
 
-void ConnectorItem::setChosenColor() {
-	if (m_attachedTo == NULL) return;
-
-	QBrush * brush = NULL;
-	QPen * pen = NULL;
-	m_attachedTo->getChosenColor(this, brush, pen, m_opacity, m_negativePenWidth);
-	setColorAux(*brush, *pen, true);
-}
-
 void ConnectorItem::setHoverColor() {
 	if (m_attachedTo == NULL) return;
 
@@ -330,13 +307,6 @@ void ConnectorItem::setHoverColor() {
 	m_attachedTo->getHoverColor(this, brush, pen, m_opacity, m_negativePenWidth);
 	setColorAux(*brush, *pen, true);
 }
-
-void ConnectorItem::setChosen(bool chosen)
-{
-	m_chosen = chosen;
-	restoreColor(false, -1);
-}
-
 
 void ConnectorItem::setColorAux(QBrush brush, QPen pen, bool paint) {
 	m_paint = paint;
@@ -444,35 +414,6 @@ ConnectorItem * ConnectorItem::firstConnectedToIsh() {
 	return NULL;
 }
 
-void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
-	if (m_hidden  || !m_paint) return;
-
-	painter->setOpacity(m_opacity);
-	if (m_circular) {
-		//DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
-		painter->setBrush(brush());
-		if (m_negativePenWidth < 0) {
-			int pw = m_negativePenWidth + 1;
-			painter->setPen(Qt::NoPen);
-			painter->drawEllipse(rect().adjusted(-pw, -pw, pw, pw));
-		}
-		else
-		{
-			painter->setPen(pen());
-			painter->drawEllipse(rect());
-		}
-	}
-	else if (!m_shape.isEmpty()) {
-		painter->setBrush(brush());  
-		painter->setPen(pen());
-		painter->drawPath(m_shape);
-	}
-	else {
-		QGraphicsRectItem::paint(painter, option, widget);
-	}
-
-}
-
 void ConnectorItem::setTerminalPoint(QPointF p) {
 	m_terminalPoint = p;
 }
@@ -557,15 +498,6 @@ void ConnectorItem::setOverConnectorItem(ConnectorItem * connectorItem) {
 	m_overConnectorItem = connectorItem;
 }
 
-long ConnectorItem::attachedToID() {
-	if (attachedTo() == NULL) return -1;
-	return attachedTo()->id();
-}
-
-const QString & ConnectorItem::attachedToTitle() {
-	if (attachedTo() == NULL) return ___emptyString___;
-	return attachedTo()->title();
-}
 
 const QString & ConnectorItem::connectorSharedID() {
 	if (m_connector == NULL) return ___emptyString___;
@@ -610,16 +542,11 @@ Bus * ConnectorItem::bus() {
 	return m_connector->bus();
 }
 
-void ConnectorItem::setCircular(bool circular) {
-	m_circular = circular;
-}
-
 int ConnectorItem::attachedToItemType() {
 	if (m_attachedTo == NULL) return ModelPart::Unknown;
 
 	return m_attachedTo->itemType();
 }
-
 
 Connector::ConnectorType ConnectorItem::connectorType() {
 	if (m_connector == NULL) return Connector::Unknown;
@@ -902,19 +829,6 @@ void ConnectorItem::prepareGeometryChange() {
 	QGraphicsRectItem::prepareGeometryChange();
 }
 
-void ConnectorItem::setRadius(qreal radius, qreal strokeWidth) {
-	m_radius = radius;
-	m_strokeWidth = strokeWidth;
-}
-
-qreal ConnectorItem::radius() {
-	return m_radius;
-}
-
-qreal ConnectorItem::strokeWidth() {
-	return m_strokeWidth;
-}
-
 void ConnectorItem::showEqualPotential(bool show) {
 	if (!show) {
 		restoreColor(false, -1);
@@ -934,25 +848,6 @@ void ConnectorItem::clearEqualPotentialDisplay() {
 		connectorItem->showEqualPotential(false);
 	}
 	m_equalPotentialDisplayItems.clear();
-}
-
-
-QPainterPath ConnectorItem::shape() const
-{
-	if (m_circular) {
-		QPainterPath path;
-		path.addEllipse(rect());
-		return GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, pen(), 1);
-	}
-	else if (!m_shape.isEmpty()) {
-		return m_shape;
-	}
-
-	return QGraphicsRectItem::shape();
-}
-
-void ConnectorItem::setShape(QPainterPath & pp) {
-	m_shape = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(pp, pen(), 1);
 }
 
 bool ConnectorItem::isEverVisible() {

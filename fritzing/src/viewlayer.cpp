@@ -35,6 +35,7 @@ QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::alternativ
 QMultiHash<ViewLayer::ViewLayerID, ViewLayer::ViewLayerID> ViewLayer::unconnectables;
 QHash<QString, ViewLayer::ViewLayerID> ViewLayer::xmlHash;
 
+const QString ViewLayer::HolesColor = "#000000";   
 const QString ViewLayer::Copper0Color = "#ff9400";   
 const QString ViewLayer::Copper1Color = "#ffbf00";
 const QString ViewLayer::SilkscreenColor = "#ffffff";
@@ -84,6 +85,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));
 		names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));
 		names.insert(ViewLayer::Vias, new StringPair("vias", QObject::tr("Vias")));
+		names.insert(ViewLayer::Holes, new StringPair("holes", QObject::tr("Holes")));
 		names.insert(ViewLayer::Keepout, new StringPair("keepout", QObject::tr("Keep out")));
 		names.insert(ViewLayer::Jumperwires, new StringPair("jumperwires", QObject::tr("Jumper wires")));
 		names.insert(ViewLayer::PcbNote,  new StringPair("pcbNote", QObject::tr("Notes")));

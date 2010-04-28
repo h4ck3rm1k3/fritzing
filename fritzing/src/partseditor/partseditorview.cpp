@@ -51,6 +51,7 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../svg/gedaelement2svg.h"
 #include "../svg/kicadmodule2svg.h"
+#include "../connectors/connectorshared.h"
 
 
 int PartsEditorView::ConnDefaultWidth = 5;

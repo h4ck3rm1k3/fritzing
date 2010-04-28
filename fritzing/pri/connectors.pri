@@ -22,13 +22,16 @@ src/connectors/bus.h \
 src/connectors/busshared.h \
 src/connectors/connector.h \
 src/connectors/connectoritem.h \
+src/connectors/nonconnectoritem.h \
 src/connectors/connectorshared.h \
-src/connectors/ercdata.h 
+src/connectors/ercdata.h \
+src/connectors/svgidlayer.h 
  
 SOURCES += \
 src/connectors/bus.cpp \
 src/connectors/busshared.cpp \
 src/connectors/connector.cpp \
 src/connectors/connectoritem.cpp \ 
+src/connectors/nonconnectoritem.cpp \ 
 src/connectors/connectorshared.cpp \
 src/connectors/ercdata.cpp 

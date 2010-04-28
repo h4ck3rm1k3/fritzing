@@ -33,19 +33,7 @@ $Date$
 
 #include "../viewlayer.h"
 #include "connector.h"
-
-
-struct SvgIdLayer {
-	QString m_svgId;
-	QString m_terminalId;
-	ViewLayer::ViewLayerID m_viewLayerID;
-	bool m_visible;
-	bool m_processed;
-	QRectF m_rect;		
-	QPointF m_point;	
-	qreal m_radius;
-	qreal m_strokeWidth;
-};
+#include "svgidlayer.h"
 
 class ConnectorShared : public QObject
 {

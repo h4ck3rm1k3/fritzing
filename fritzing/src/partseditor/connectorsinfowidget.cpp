@@ -35,7 +35,7 @@ $Date$
 #include "addremoveconnectorbutton.h"
 #include "partseditorviewswidget.h"
 #include "../debugdialog.h"
-
+#include "../connectors/connectorshared.h"
 
 ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent)
 	: QFrame(parent)

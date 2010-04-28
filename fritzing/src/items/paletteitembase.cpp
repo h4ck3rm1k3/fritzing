@@ -29,10 +29,10 @@ $Date$
 #include "../debugdialog.h"
 #include "../fsvgrenderer.h"
 #include "../svg/svgfilesplitter.h"
-#include "../connectors/connectorshared.h"
 #include "../layerattributes.h"
 #include "layerkinpaletteitem.h"
 #include "../connectors/connectoritem.h"
+#include "../connectors/svgidlayer.h"
 #include "wire.h"
 
 #include <QBrush>
@@ -278,11 +278,10 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 	foreach (Connector * connector, m_modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
-		QRectF connectorRect;
-		QPointF terminalPoint;
-		qreal radius = 0;
-		qreal strokeWidth = 0;
-		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, radius, strokeWidth, ignoreTerminalPoints);
+		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
+		if (svgIdLayer == NULL) continue;
+
+		bool result = renderer->setUpConnector(svgIdLayer, ignoreTerminalPoints);
 		if (!result) continue;
 
 		//DebugDialog::debug(QString("<rect view=\"%6\" id=\"%1pin\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
@@ -301,9 +300,9 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 			//.arg(ViewLayer::viewLayerNameFromID(m_viewLayerID))
 			//.arg(this->zValue()) );
 
-		connectorItem->setRect(connectorRect);
-		connectorItem->setTerminalPoint(terminalPoint);
-		connectorItem->setRadius(radius, strokeWidth);
+		connectorItem->setRect(svgIdLayer->m_rect);
+		connectorItem->setTerminalPoint(svgIdLayer->m_point);
+		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
 
 		Bus * bus = connectorItem->bus();

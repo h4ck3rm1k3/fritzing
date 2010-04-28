@@ -844,11 +844,12 @@ void FApplication::initSplash(FSplashScreen & splash, QPixmap & pixmap) {
 }
 
 void FApplication::preloadSlowParts() {
+
 	// loads the part into a renderer and sets up its connectors
 	// so this doesn't have to happen the first time the part is dragged into the sketch
 
-	//QTime t;
-	//t.start();
+	QTime t;
+	t.start();
 	//DebugDialog::debug(QString("preload slow parts"));
 	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ModuleIDNames::breadboardModuleIDName);
 	if (modelPart == NULL) {
@@ -864,10 +865,11 @@ void FApplication::preloadSlowParts() {
 		QRectF connectorRect;
 		QPointF terminalPoint;
 		qreal radius, strokeWidth;
-		connector->setUpConnector(renderer, modelPart->moduleID(), ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, radius, strokeWidth, false);
+		SvgIdLayer * svgIdLayer = connector->fullPinInfo(ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard);
+		renderer->setUpConnector(svgIdLayer, false);
 		//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorSharedID()));
 	}
-	//DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
+	DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
 	//DebugDialog::debug(QString("preload slow parts done") );
 }
 

@@ -69,11 +69,11 @@ public:
 	const QString & busID();
 	class Bus * bus();
 	void setBus(class Bus *);
-	bool setUpConnector(class FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, qreal & radius, qreal & strokeWidth, bool ignoreTerminalPoint);
 	long modelIndex();
 	ModelPart * modelPart();
 	int connectorItemCount();
 	void unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID);
+	struct SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 
 public:
 	static void initNames();
@@ -84,8 +84,6 @@ protected:
 	void writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID);
 	void writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId);
 	void writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId);
-	QPointF calcTerminalPoint(const QString & terminalId, class FSvgRenderer * renderer, 
-							  const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix &);
 
 protected:
 	QPointer<class ConnectorShared> m_connectorShared;

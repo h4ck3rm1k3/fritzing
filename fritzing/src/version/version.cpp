@@ -33,7 +33,7 @@ $Date$
 	
 QString Version::m_majorVersion("0");				
 QString Version::m_minorVersion("3");
-QString Version::m_minorSubVersion("20");
+QString Version::m_minorSubVersion("21");
 QString Version::m_modifier("b");
 QString Version::m_svnRevision("$Revision$:");
 QString Version::m_svnDate("$Date$");

@@ -40,7 +40,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../sketch/infographicsview.h"
 #include "../connectors/connectoritem.h"
-#include "../connectors/connectorshared.h"
+#include "../connectors/svgidlayer.h"
 #include "../fsvgrenderer.h"
 #include "partlabel.h"
 #include "../model/modelpart.h"
@@ -665,20 +665,19 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 	foreach (Connector * connector, m_modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
-		QRectF connectorRect;
-		QPointF terminalPoint;
-		qreal radius, strokeWidth;
-		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, radius, strokeWidth, false);
+		SvgIdLayer * svgIdLayer = connector->fullPinInfo(viewIdentifier, m_viewLayerID);
+		if (svgIdLayer == NULL) continue;
+
+		bool result = renderer->setUpConnector(svgIdLayer, false);
 		if (!result) continue;
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);
 
-		connectorItem->setRect(connectorRect);
-		connectorItem->setTerminalPoint(terminalPoint);
+		connectorItem->setRect(svgIdLayer->m_rect);
+		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 
 		connectorItem->setCircular(true);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
-
 
 		Bus * bus = connectorItem->bus();
 		if (bus != NULL) {

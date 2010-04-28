@@ -29,7 +29,6 @@ $Date$
 #define PARTSEDITORVIEW_H_
 
 #include "../sketch/sketchwidget.h"
-#include "../connectors/connectorshared.h"
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectorspaletteitem.h"
 #include "partseditorconnectorsconnectoritem.h"
@@ -77,7 +76,7 @@ class PartsEditorView : public SketchWidget {
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
 		void aboutToSave(bool fakeDefaultIfNotIn);
-		void updatePinsInfo(QList<ConnectorShared*> conns);
+		void updatePinsInfo(QList<class ConnectorShared*> conns);
 
 		void showTerminalPoints(bool show);
 		bool showingTerminalPoints();
