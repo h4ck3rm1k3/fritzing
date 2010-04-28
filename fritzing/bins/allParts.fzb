@@ -1864,6 +1864,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="f5sadfcefde5f807268983b38d37da5d">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="e89358121bacffbe9b6372e42e4799f4">
         <views>
           <iconView layer="icon">
@@ -3125,6 +3132,13 @@
         </views>
       </instance>
       <instance moduleIdRef="a22e371d3e8c77a58fdfe4dd2799c449">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="40a05d9dc2asdf9c6e50e467c97a50e">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
