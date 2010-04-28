@@ -6,17 +6,16 @@
     <label>LED</label>
     <date>2010-02-10</date>
     <tags>
-        <tag>LED</tag>
         <tag>RGB LED</tag>
-				<tag>RGBB</tag>
+        <tag>RGBB</tag>
         <tag>full color</tag>
         <tag>fritzing core</tag>
     </tags>
     <properties>
-			<property name="package" >T1.75 (5mm)</property>
-			<property name="family" >LED</property>
-			<property name="forward voltage" >1.8V</property>
-			<property name="color" >RGBB</property>
+	<property name="package" >T1.75 (5mm)</property>
+	<property name="family" >LED</property>
+	<property name="forward voltage" >1.8V</property>
+	<property name="color" >RGBB</property>
     </properties>
     <description>A full-color LED, combined from four colors RGBB.</description>
     <views>
