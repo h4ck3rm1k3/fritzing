@@ -925,9 +925,6 @@ QString KicadModule2Svg::getColor(KicadModule2Svg::PadLayer padLayer) {
 		case ToCopper1:
 			return ViewLayer::Copper1Color;
 			break;
-		case ToHoles:
-			return ViewLayer::HolesColor;
-			break;
 		default:
 			DebugDialog::debug("kicad getcolor with unknown layer");
 			return "#FF0000";

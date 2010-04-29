@@ -45,4 +45,3 @@ const QString ModuleIDNames::resistorModuleIDName = "ResistorModuleID";
 const QString ModuleIDNames::logoTextModuleIDName = "LogoTextModuleID";
 const QString ModuleIDNames::logoImageModuleIDName = "LogoImageModuleID";
 
-

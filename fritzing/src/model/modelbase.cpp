@@ -215,7 +215,7 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 			if (nodeName.compare("originalModelIndex") == 0) continue;
 			if (nodeName.compare("path") == 0) continue;
 
-			modelPart->setProp(nodeName.toUtf8().constData(), node.nodeValue());
+			modelPart->setProp(nodeName, node.nodeValue());
 		}
 
 		// "property" loop replaces previous QDomNamedNodeMap loop (jc, 22 Oct 2009)
@@ -225,7 +225,7 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 			if (!name.isEmpty()) {
 				QString value = prop.attribute("value");
 				if (!value.isEmpty()) {
-					modelPart->setProp(name.toUtf8().constData(), value);
+					modelPart->setProp(name, value);
 				}
 			}
 

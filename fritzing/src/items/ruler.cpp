@@ -63,9 +63,9 @@ Ruler::~Ruler() {
 void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers) {
 	Q_UNUSED(viewLayers);
 
-	qreal w = convertToInches(modelPart()->prop("width").toString());
+	qreal w = TextUtils::convertToInches(modelPart()->prop("width").toString());
 	QString units((unitsFlag == IndexCm) ? "cm" : "in");
-	qreal newW = convertToInches(QString::number(magnitude) + units);
+	qreal newW = TextUtils::convertToInches(QString::number(magnitude) + units);
 	if (w == newW) return;
 
 	QString s = makeSvg(newW);
@@ -85,7 +85,7 @@ void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLay
 
 QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
-	qreal w = convertToInches(m_modelPart->prop("width").toString());
+	qreal w = TextUtils::convertToInches(m_modelPart->prop("width").toString());
 	if (w != 0) {
 		QString xml;
 		switch (viewLayerID) {
@@ -268,7 +268,7 @@ void Ruler::widthEntry() {
 }
 
 void Ruler::unitsEntry(const QString & units) {
-	qreal inches = convertToInches(modelPart()->prop("width").toString());
+	qreal inches = TextUtils::convertToInches(modelPart()->prop("width").toString());
 	if (units == "in") {
 		modelPart()->setProp("width", QString::number(inches) + "in");
 		m_widthEditor->setText(QString::number(inches));
@@ -279,14 +279,6 @@ void Ruler::unitsEntry(const QString & units) {
 		m_widthEditor->setText(QString::number(inches * 2.54));
 		m_widthValidator->setTop(20 * 2.54);
 	}
-}
-
-qreal Ruler::convertToInches(const QString & string) {
-	bool ok;
-	qreal retval = TextUtils::convertToInches(string, &ok, false);
-	if (!ok) return 0;
-
-	return retval;
 }
 
 bool Ruler::stickyEnabled() {

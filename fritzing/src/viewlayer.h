@@ -54,7 +54,6 @@ public:
 		SchematicNote,
 		SchematicRuler,
 		Board,
-		Holes,
 		GroundPlane,
 		Silkscreen0,
 		Silkscreen0Label,

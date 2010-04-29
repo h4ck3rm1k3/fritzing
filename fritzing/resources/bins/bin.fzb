@@ -529,7 +529,14 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="RulerModuleID" modelIndex="58" path=":/resources/parts/core/cmRuler.fzp">
+      <instance moduleIdRef="HoleModuleID" modelIndex="58" path=":/resources/parts/core/hole.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+      <instance moduleIdRef="RulerModuleID" modelIndex="59" path=":/resources/parts/core/cmRuler.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

@@ -42,6 +42,8 @@ public:
 	static QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
+	static qreal convertToInches(const QString & string);
+
 	static QString replaceTextElement(const QString & svg, const QString & label);
     static bool squashElement(QString & svg, const QString & elementName, const QString & attName, const QRegExp & matchContent);
     static bool squashNotElement(QString & svg, const QString & elementName, const QString & attName, const QRegExp & matchContent);

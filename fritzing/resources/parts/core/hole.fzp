@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module moduleId="HoleModuleID" >
+ <version>1</version>
+ <author>Jonathan Cohen</author>
+ <title>Hole</title>
+ <date>2010-04-29</date>
+ <label>Hole</label>
+ <tags>
+  <tag>pcb</tag>
+  <tag>hole</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="hole diameter" >0.055in</property>
+  <property name="ring thickness" >0.01in</property>
+  <property name="family" >Hole</property>
+ </properties>
+ <taxonomy>discreteParts.pcb.hole</taxonomy>
+ <description>Hole with or without copper</description>
+ <views>
+  <defaultUnits>mm</defaultUnits>
+  <iconView>
+   <layers image="pcb/hole.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers image="pcb/hole.svg" >
+    <layer layerId="unknown" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="pcb/hole.svg" >
+    <layer layerId="unknown" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <label/>
+   <layers image="pcb/hole.svg" >
+    <layer layerId="copper0" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors/>
+ <buses/>
+</module>

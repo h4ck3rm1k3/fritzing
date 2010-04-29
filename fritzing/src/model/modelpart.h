@@ -130,6 +130,8 @@ public:
 	void setInstanceText(QString);
 
 	void setOrderedChildren(QList<QObject*> children);
+	void setProp(const QString & name, const QVariant & value);
+	QVariant prop(const QString & name) const;
 	void setProp(const char * name, const QVariant & value);
 	QVariant prop(const char * name) const;
 
@@ -156,7 +158,6 @@ protected:
 	void grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId);
 	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 	void commonInit(ItemType type);
-
 
 protected:
 	QList< QPointer<class ItemBase> > m_viewItems;

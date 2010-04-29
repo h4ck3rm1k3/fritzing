@@ -273,8 +273,6 @@ void PaletteItemBase::setSharedRenderer(FSvgRenderer * renderer) {
 }
 
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
-	if (m_modelPart->connectors().count() <= 0) return;
-
 	foreach (Connector * connector, m_modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 

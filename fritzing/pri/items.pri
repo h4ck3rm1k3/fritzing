@@ -22,6 +22,7 @@ HEADERS += \
     src/items/dip.h \
     src/items/graphicssvglineitem.h \
     src/items/groundplane.h \
+    src/items/hole.h \
     src/items/itembase.h \
     src/items/jumperitem.h \
     src/items/layerkinpaletteitem.h \
@@ -47,6 +48,7 @@ SOURCES += \
     src/items/dip.cpp \
     src/items/graphicssvglineitem.cpp \
     src/items/groundplane.cpp \
+    src/items/hole.cpp \
     src/items/itembase.cpp \
     src/items/jumperitem.cpp \
     src/items/layerkinpaletteitem.cpp \

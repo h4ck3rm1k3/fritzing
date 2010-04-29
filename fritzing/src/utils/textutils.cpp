@@ -530,3 +530,11 @@ bool TextUtils::findText(QDomNode & node, QString & text) {
 
 	return false;
 }
+
+qreal TextUtils::convertToInches(const QString & string) {
+	bool ok;
+	qreal retval = TextUtils::convertToInches(string, &ok, false);
+	if (!ok) return 0;
+
+	return retval;
+}

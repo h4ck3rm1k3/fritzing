@@ -586,6 +586,16 @@ QVariant ModelPart::prop(const char * name) const {
 	return property(name);
 }
 
+void ModelPart::setProp(const QString & name, const QVariant & value) {
+	QByteArray b = name.toLatin1();
+	setProp(b.data(), value);
+}
+
+QVariant ModelPart::prop(const QString & name) const {
+	QByteArray b = name.toLatin1();
+	return prop(b.data());
+}
+
 const QStringList & ModelPart::possibleFolders() {
 	if (m_possibleFolders.count() == 0) {
 		m_possibleFolders << "core" << "obsolete" << "contrib" << "user";

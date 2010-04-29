@@ -4647,7 +4647,6 @@ void SketchWidget::addPcbViewLayers() {
 		<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
 		<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
 		<< ViewLayer::Jumperwires 
-		//<< ViewLayer::Holes
 		<< ViewLayer::PcbNote << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);

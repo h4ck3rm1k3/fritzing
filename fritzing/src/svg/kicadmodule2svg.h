@@ -47,7 +47,6 @@ public:
 	enum PadLayer {
 		ToCopper0,
 		ToCopper1,
-		ToHoles,
 		UnableToTranslate
 	};
 
