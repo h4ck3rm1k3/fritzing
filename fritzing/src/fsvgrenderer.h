@@ -60,8 +60,8 @@ public:
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
-	bool FSvgRenderer::setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint);
-	QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors();
+	bool setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint);
+	QList<SvgIdLayer *> setUpNonConnectors();
 
 public:
 	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);

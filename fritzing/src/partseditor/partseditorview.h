@@ -35,6 +35,7 @@ $Date$
 
 #include <QList>
 #include <QStringList>
+#include <QComboBox>
 
 
 struct ConnectorTerminalSvgIdPair {
