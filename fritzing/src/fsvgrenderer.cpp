@@ -36,7 +36,7 @@ $Date$
 #include <QCoreApplication>
 #include <QGraphicsSvgItem>
 
-QString NonConnectorName("cu_only");
+QString FSvgRenderer::NonConnectorName("nonconn");
 
 QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
 QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
@@ -465,6 +465,7 @@ ConnectorInfo * FSvgRenderer::getConnectorInfo(const QString & connectorID) {
 }
 
 bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint) {
+
 	if (svgIdLayer == NULL) return false;
 
 	if (svgIdLayer->m_processed) {
@@ -557,4 +558,51 @@ QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF
 										//arg(terminalID) );
 
 	return terminalPoint;
+}
+
+QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors() {
+
+	QList<SvgIdLayer *> list;
+	if (m_nonConnectorInfoHash.count() == 0) return list;
+
+	foreach (QString nonConnectorID, m_nonConnectorInfoHash.keys()) {
+		SvgIdLayer * svgIdLayer = new SvgIdLayer();
+		svgIdLayer->m_processed = true;
+		svgIdLayer->m_svgId = nonConnectorID;
+		QRectF bounds = this->boundsOnElement(nonConnectorID);
+		if (bounds.isNull()) {
+			delete svgIdLayer;
+			continue;
+		}
+
+		QSizeF defaultSizeF = this->defaultSizeF();
+		QSize defaultSize = this->defaultSize();
+		if ((bounds.width()) == defaultSizeF.width() && (bounds.height()) == defaultSizeF.height()) {
+			delete svgIdLayer;
+			continue;
+		}
+
+		QRectF viewBox = this->viewBoxF();
+
+		ConnectorInfo * connectorInfo = m_nonConnectorInfoHash.value(nonConnectorID, NULL);		
+		if (connectorInfo && connectorInfo->gotCircle && (connectorInfo->radius != 0)) {
+			svgIdLayer->m_radius = connectorInfo->radius * defaultSizeF.width() / viewBox.width();
+			svgIdLayer->m_strokeWidth = connectorInfo->strokeWidth * defaultSizeF.width() / viewBox.width();
+			bounds = connectorInfo->bounds;
+		}
+
+		// matrixForElement only grabs parent matrices, not any transforms in the element itself
+		QMatrix matrix0 = connectorInfo->matrix * this->matrixForElement(nonConnectorID);  
+
+
+		QRectF r1 = matrix0.mapRect(bounds);
+		svgIdLayer->m_rect.setRect(r1.x() * defaultSize.width() / viewBox.width(), r1.y() * defaultSize.height() / viewBox.height(), r1.width() * defaultSize.width() / viewBox.width(), r1.height() * defaultSize.height() / viewBox.height());
+		svgIdLayer->m_point = svgIdLayer->m_rect.center() - svgIdLayer->m_rect.topLeft();
+		svgIdLayer->m_visible = true;
+
+		list.append(svgIdLayer);
+	}
+
+	return list;
+
 }

@@ -862,9 +862,6 @@ void FApplication::preloadSlowParts() {
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
-		QRectF connectorRect;
-		QPointF terminalPoint;
-		qreal radius, strokeWidth;
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard);
 		renderer->setUpConnector(svgIdLayer, false);
 		//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorSharedID()));

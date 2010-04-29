@@ -80,7 +80,7 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board)
 	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -147,7 +147,7 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board)
     // now do it for the outline/contour
     LayerList outlineLayerIDs;
     outlineLayerIDs << ViewLayer::Board;
-	QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
+	QString svgOutline = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), outlineLayerIDs, outlineLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false);
     if (svgOutline.isEmpty()) {
         // tell the user something reasonable
         return;
@@ -178,7 +178,7 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board)
 
 void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QSizeF imageSize, ItemBase * board, const QString & exportDir ) 
 {
-	QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
+	QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false);
     if (svgSilk.isEmpty()) {
         // tell the user something reasonable
         return;

@@ -194,7 +194,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	if (wantSVG) {
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false);
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false);
 		svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize);
 		
 		QString svgFileName = fileName;
@@ -210,7 +210,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		printer.setOutputFormat(filePrintFormats[fileExt]);
 		printer.setOutputFileName(fileName);
 		int res = printer.resolution();
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false);
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false);
 		svg = mergeBoardSvg(svg, board, res, imageSize);
 		
 		// now convert to pdf
@@ -327,7 +327,7 @@ QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & im
 	board->setSelected(true);
 	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::Silkscreen;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, true, false);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, true, false, false);
 	board->setSelected(false);
 	foreach (QGraphicsItem * item, items) {
 		item->setSelected(true);
@@ -2440,7 +2440,7 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 	}
 
 	QSizeF imageSize;
-	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL, res, selectedItems, flatten);
+	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL, res, selectedItems, flatten, false);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -2933,7 +2933,7 @@ void MainWindow::groundFill()
 	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::Board;
 	QSizeF boardImageSize;
-	QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
+	QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false);
 	if (boardSvg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return;
@@ -2945,7 +2945,7 @@ void MainWindow::groundFill()
 
 	m_pcbGraphicsView->showGroundTraces(false);
 
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true);
 	if (svg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 		return;

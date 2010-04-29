@@ -1283,6 +1283,13 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 			}
 		}
 		if (!gotOne) {
+			NonConnectorItem * candidateNonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+			if (candidateNonConnectorItem != NULL) {
+				// make sure it's not just a ConnectorItem again
+				gotOne = dynamic_cast<ConnectorItem *>(item) == NULL;
+			}
+		}
+		if (!gotOne) {
 			ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
 			if (candidateItemBase != NULL) {
 				if (candidateItemBase->itemType() == ModelPart::Wire) {

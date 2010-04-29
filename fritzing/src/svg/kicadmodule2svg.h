@@ -66,7 +66,7 @@ protected:
 	QString getID(const QString & padName, KicadModule2Svg::PadLayer padLayer);
 
 protected:
-	int m_cuOnlyNumber;
+	int m_nonConnectorNumber;
 };
 
 

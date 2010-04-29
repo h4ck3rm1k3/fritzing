@@ -5393,7 +5393,7 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 }
 
 QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten)
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten, bool fillHoles)
 {
 
 	QList<ItemBase *> itemBases;
@@ -5427,7 +5427,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 		}
 	}
 
-	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, itemBases, itemsBoundingRect);
+	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, fillHoles, itemBases, itemsBoundingRect);
 }
 
 QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) {
@@ -5444,6 +5444,7 @@ QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) 
 
 QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
+								  bool fillHoles, 
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
 {
 	qreal width = itemsBoundingRect.width();
@@ -5504,6 +5505,24 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 					SvgFlattener flattener;
 					flattener.flattenChildren(root);
 					SvgFileSplitter::fixStyleAttributeRecurse(root);
+					itemSvg = domDocument.toString();
+				}
+				if (fillHoles) {
+					QDomDocument domDocument;
+					QString errorStr;
+					int errorLine;
+					int errorColumn;
+					bool result = domDocument.setContent(itemSvg, &errorStr, &errorLine, &errorColumn);
+					if (!result) continue;
+
+					QDomNodeList circleList = domDocument.elementsByTagName("circle");
+					for(uint i = 0; i < circleList.length(); i++) {
+						QDomElement circle = circleList.item(i).toElement();
+						QString fill = circle.attribute("fill");
+						if (fill.isEmpty() || fill.compare("none") == 0) {
+							circle.setAttribute("fill", circle.attribute("stroke"));
+						}
+					}
 					itemSvg = domDocument.toString();
 				}
 

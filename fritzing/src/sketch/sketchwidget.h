@@ -198,9 +198,9 @@ public:
 	void resizeNote(long itemID, const QSizeF & );
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
 	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-						bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten);
+						bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten, bool fillHoles);
 	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten, bool fillHoles,
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect);
 
 	bool spaceBarIsPressed();

@@ -30,6 +30,7 @@ $Date$
 #include "../version/version.h"
 #include "../debugdialog.h"
 #include "../viewlayer.h"
+#include "../fsvgrenderer.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -90,7 +91,7 @@ QStringList KicadModule2Svg::listModules(const QString & filename) {
 
 QString KicadModule2Svg::convert(const QString & filename, const QString & moduleName, bool allowPadsAndPins) 
 {
-	m_cuOnlyNumber = 0;
+	m_nonConnectorNumber = 0;
 	initLimits();
 
 	QFile file(filename);
@@ -910,7 +911,7 @@ QString KicadModule2Svg::drawOblong(int posX, int posY, qreal xSize, qreal ySize
 
 QString KicadModule2Svg::getID(const QString & padName, KicadModule2Svg::PadLayer padLayer) {
 	if (padName.isEmpty()) {
-		return QString("id='cu_only%1'").arg(m_cuOnlyNumber++);
+		return QString("id='%1%2'").arg(FSvgRenderer::NonConnectorName).arg(m_nonConnectorNumber++);
 	}
 
 	return QString("id='connector%1%2'").arg(padName).arg((padLayer == ToCopper1) ? "pad" : "pin");

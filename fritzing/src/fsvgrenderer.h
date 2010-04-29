@@ -60,8 +60,8 @@ public:
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
-	ConnectorInfo * getConnectorInfo(const QString & connectorID);
 	bool FSvgRenderer::setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint);
+	QList<SvgIdLayer *> FSvgRenderer::setUpNonConnectors();
 
 public:
 	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);
@@ -85,6 +85,7 @@ protected:
 	void initTerminalInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & terminalIDs);
 	void initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs);
 	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix);
+	ConnectorInfo * getConnectorInfo(const QString & connectorID);
 
 protected:
 	QString m_filename;
@@ -97,6 +98,10 @@ protected:
 	static QHash<QString, RendererHash * > m_filenameRendererHash;
 	static QHash<QString, RendererHash * > m_moduleIDRendererHash;
 	static QSet<RendererHash *> m_deleted;
+
+public:
+	static QString NonConnectorName;
+
 };
 
 

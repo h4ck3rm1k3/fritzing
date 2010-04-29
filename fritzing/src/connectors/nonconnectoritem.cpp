@@ -56,19 +56,19 @@ ItemBase * NonConnectorItem::attachedTo() {
 }
 
 void NonConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	Q_UNUSED(event);
+	event->ignore();
 }
 
 void NonConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
-	Q_UNUSED(event);
+	event->ignore();
 }
 
 void NonConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	Q_UNUSED(event);
+	event->ignore();
 }
 
 void NonConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	Q_UNUSED(event);
+	event->ignore();
 }
 
 void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
