@@ -40,7 +40,7 @@ struct HoleWidgetSet {
 	QComboBox * valueEditor;
 	class BoundedRegExpValidator * validator;
 	QComboBox * unitsEditor;
-	QStringList * values;
+	QStringList & (*getValues)();
 };
 
 class Hole : public PaletteItem 
@@ -63,20 +63,22 @@ public:
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi); 
 
 protected slots:
-	void valueEntry();
+	void valueEntry(const QString &);
 	void unitsEntry(const QString &);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	void setBoth(const QString & holeDiameter, const QString &  thickness);
-	const QStringList & holeDiameters();
-	const QStringList & ringThicknesses();
 	QString makeSvg(const QString & holeDiameter, const QString & ringThickness);
-	QFrame * makePlugin(const QString & propName, const QString & otherPropName, const QStringList & values, QWidget * parent, const QStringList &paramNames, const QStringList &paramValues); 
+	QFrame * makePlugin(const QString & propName, const QString & otherPropName, QStringList & values, QWidget * parent, const QStringList &paramNames, const QStringList &paramValues); 
 	void setValidatorBounds(class BoundedRegExpValidator * validator, const QString & otherPropName, int units);
 	void setValidatorBounds(QComboBox *, const QString & propName);
 	void setCurrentValue(QComboBox * comboBox, const QString & propName);
+
+protected:
+	static QStringList & holeDiameters();
+	static QStringList & ringThicknesses();
 
 protected:
 	class FSvgRenderer * m_renderer;

@@ -1051,6 +1051,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 								 jsz.width(), jsz.height());
 			}
 			QApplication::processEvents();
+
 			foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(ellipse)) {
 				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 				if (connectorItem != NULL) {
@@ -1070,6 +1071,14 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 					}
 					else {
 						continue;
+					}
+				}
+
+				NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+				if (nonConnectorItem != NULL) {
+					if (dynamic_cast<ConnectorItem *>(item) == NULL) {
+						intersected = true;
+						break;
 					}
 				}
 
@@ -1095,6 +1104,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 				lineItem->setLine(c.x(), c.y(), candidate.x(), candidate.y());
 			}
 			QApplication::processEvents();
+
 			foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(lineItem)) {
 				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 				if (connectorItem != NULL) {
@@ -1118,6 +1128,13 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 					}
 				}
 
+				NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+				if (nonConnectorItem != NULL) {
+					if (dynamic_cast<ConnectorItem *>(item) == NULL) {
+						intersected = true;
+						break;
+					}
+				}
 
 				TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 				if (traceWire == NULL) {
@@ -1286,7 +1303,10 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 			NonConnectorItem * candidateNonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
 			if (candidateNonConnectorItem != NULL) {
 				// make sure it's not just a ConnectorItem again
-				gotOne = dynamic_cast<ConnectorItem *>(item) == NULL;
+				gotOne = (dynamic_cast<ConnectorItem *>(item) == NULL);
+				if (gotOne) {
+					DebugDialog::debug("got one");
+				}
 			}
 		}
 		if (!gotOne) {
@@ -1925,6 +1945,14 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 
 			intersects = true;
 			break;
+		}
+
+		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+		if (nonConnectorItem) {
+			if (dynamic_cast<ConnectorItem *>(item) == NULL) {
+				intersects = true;
+				break;
+			}
 		}
 	}	
 	if (intersects) {

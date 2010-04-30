@@ -36,6 +36,8 @@ $Date$
 #include "partlabel.h"
 #include "../utils/focusoutcombobox.h"
 #include "../utils/boundedregexpvalidator.h"
+#include "../connectors/nonconnectoritem.h"
+#include "../connectors/svgidlayer.h"
 
 #include <QDomNodeList>
 #include <QDomDocument>
@@ -43,8 +45,8 @@ $Date$
 #include <QLineEdit>
 #include <QHBoxLayout>
 
-QStringList HoleDiameters;
-QStringList RingThicknesses;
+static QStringList HoleDiameters;
+static QStringList RingThicknesses;
 
 static const int IndexMm = 0;
 static const int IndexIn = 1;
@@ -69,14 +71,14 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 Hole::~Hole() {
 }
 
-const QStringList & Hole::holeDiameters() {
+QStringList & Hole::holeDiameters() {
 	if (HoleDiameters.count() == 0) {
 		HoleDiameters << "1mm" << "2mm" << "3mm" << "4mm" << "5mm" << "6mm";
 	}
 	return HoleDiameters;
 }
 
-const QStringList & Hole::ringThicknesses() {
+QStringList & Hole::ringThicknesses() {
 	if (RingThicknesses.count() == 0) {
 		RingThicknesses << "1mm" << "2mm" << "3mm";
 	}
@@ -129,12 +131,34 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	bool result = m_renderer->fastLoad(svg.toUtf8());
+	QString setColor;
+	QStringList noIDs;
+	if (m_viewLayerID == ViewLayer::Copper0) {
+		setColor = ViewLayer::Copper0Color;
+	}
+	else if (m_viewLayerID == ViewLayer::Copper1) {
+		setColor = ViewLayer::Copper1Color;
+	}
+	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, noIDs, noIDs, setColor, ViewLayer::viewLayerXmlNameFromID(m_viewLayerID), true);
 	if (result) {
 		setSharedRenderer(m_renderer);
 	}
 
-	// TODO:  update the nonconnectoritem
+	// there's only one NonConnectorItem
+	foreach (SvgIdLayer * svgIdLayer, m_renderer->setUpNonConnectors()) {
+		if (svgIdLayer == NULL) continue;
+
+		foreach (QGraphicsItem * child, childItems()) {
+			NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(child);
+			if (nonConnectorItem == NULL) continue;
+
+			nonConnectorItem->setRect(svgIdLayer->m_rect);
+			nonConnectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
+			break;
+		}
+
+		delete svgIdLayer;
+	}
 }
 
 QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThickness) 
@@ -142,8 +166,8 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 	qreal hd = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
 	qreal rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
 
-	qreal wInches = (hd + rt + rt) * FSvgRenderer::printerScale() / GraphicsUtils::StandardFritzingDPI;
-	QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, wInches, wInches);
+	qreal wInches = (hd + rt + rt) / GraphicsUtils::StandardFritzingDPI;
+	QString svg = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, wInches, wInches);
 	svg += "<g id='copper0' >";
 	
 	QString id = FSvgRenderer::NonConnectorName + "0";
@@ -282,18 +306,18 @@ QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUr
 {
 	if (classid.compare("HoleDiameter", Qt::CaseInsensitive) == 0) {
 
-		return makePlugin("hole diameter", "ring thickness", HoleDiameters, parent, paramNames, paramValues);
+		return makePlugin("hole diameter", "ring thickness", holeDiameters(), parent, paramNames, paramValues);
 	}
 
 	if (classid.compare("RingThickness", Qt::CaseInsensitive) == 0) {
 
-		return makePlugin("ring thickness", "holeDiameter", RingThicknesses, parent, paramNames, paramValues);
+		return makePlugin("ring thickness", "holeDiameter", ringThicknesses(), parent, paramNames, paramValues);
 	}
 
 	return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 }
 
-QFrame * Hole::makePlugin(const QString & propName, const QString & otherPropName, const QStringList & values, QWidget * parent, const QStringList &paramNames, const QStringList &paramValues) 
+QFrame * Hole::makePlugin(const QString & propName, const QString & otherPropName, QStringList & values, QWidget * parent, const QStringList &paramNames, const QStringList &paramValues) 
 {
 	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 	int units = m_modelPart->prop(propName).toString().contains("mm") ? IndexMm : IndexIn;
@@ -308,8 +332,6 @@ QFrame * Hole::makePlugin(const QString & propName, const QString & otherPropNam
 	e1->setValidator(validator);
 	e1->setEnabled(swappingEnabled);
 	
-	setCurrentValue(e1, propName);
-
 	QComboBox * comboBox = new QComboBox();
 	comboBox->setEditable(false);
 	comboBox->setEnabled(swappingEnabled);
@@ -321,8 +343,10 @@ QFrame * Hole::makePlugin(const QString & propName, const QString & otherPropNam
 	holeWidgetSet->valueEditor = e1;
 	holeWidgetSet->validator = validator;
 	holeWidgetSet->unitsEditor = comboBox;
-	holeWidgetSet->values = propName.compare("hole diameter") == 0 ? &HoleDiameters : &RingThicknesses;
+	holeWidgetSet->getValues = propName.compare("hole diameter") == 0 ? &Hole::holeDiameters : &Hole::ringThicknesses;
 	m_holeWidgetSets.insert(propName, holeWidgetSet);
+
+	setCurrentValue(e1, propName);
 
 	QHBoxLayout * hboxLayout = new QHBoxLayout();
 	hboxLayout->setAlignment(Qt::AlignLeft);
@@ -335,7 +359,7 @@ QFrame * Hole::makePlugin(const QString & propName, const QString & otherPropNam
 	QFrame * frame = new QFrame(parent);
 	frame->setLayout(hboxLayout);
 
-	connect(e1, SIGNAL(editingFinished()), this, SLOT(valueEntry()));
+	connect(e1, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(valueEntry(const QString &)));
 	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));
 
 	frame->setMaximumWidth(200);
@@ -343,10 +367,11 @@ QFrame * Hole::makePlugin(const QString & propName, const QString & otherPropNam
 	return frame;
 }
 
-void Hole::valueEntry() {
+void Hole::valueEntry(const QString & text) {
 	QString propName;
 	QString otherPropName;
 	HoleWidgetSet * holeWidgetSet = NULL;
+	HoleWidgetSet * otherHoleWidgetSet = NULL;
 
 	foreach (QString key, m_holeWidgetSets.keys()) {
 		HoleWidgetSet * hws = m_holeWidgetSets.value(key);
@@ -356,19 +381,27 @@ void Hole::valueEntry() {
 		}
 		else {
 			otherPropName = key;
+			otherHoleWidgetSet = hws;
 		}
 	}
 
 	if (holeWidgetSet == NULL) return;
-	if (otherPropName.isEmpty()) return;
+	if (otherHoleWidgetSet == NULL) return;
 
-	QString newValue = holeWidgetSet->valueEditor->currentText();
+	QString newValue = text;
 	if (!newValue.endsWith("in") && !newValue.endsWith("mm")) {
 		newValue += holeWidgetSet->unitsEditor->currentText();
 	}
 
+	int units = newValue.endsWith("in") ? IndexIn : IndexMm;
 	modelPart()->setProp(propName, newValue);
 	setCurrentValue(holeWidgetSet->valueEditor, propName);
+	setBoth(modelPart()->prop("hole diameter").toString(), modelPart()->prop("ring thickness").toString());
+	setValidatorBounds(otherHoleWidgetSet->validator, propName, units);
+
+	if (!newValue.endsWith(holeWidgetSet->unitsEditor->currentText())) {
+		unitsEntry(units == IndexIn ? "in" : "mm");
+	}
 }
 
 void Hole::unitsEntry(const QString & units) 
@@ -379,7 +412,7 @@ void Hole::unitsEntry(const QString & units)
 
 	foreach (QString key, m_holeWidgetSets.keys()) {
 		HoleWidgetSet * hws = m_holeWidgetSets.value(key);
-		if (sender() == hws->valueEditor) {
+		if (sender() == hws->unitsEditor) {
 			propName = key;
 			holeWidgetSet = hws;
 		}
@@ -416,14 +449,16 @@ void Hole::setCurrentValue(QComboBox * comboBox, const QString & propName)
 	HoleWidgetSet * holeWidgetSet = m_holeWidgetSets.value(propName);
 	if (holeWidgetSet == NULL) return;
 
-	for (int ix = 0; ix < holeWidgetSet->values->count(); ix++) {
-		if (holeWidgetSet->values->at(ix).compare(value) == 0) {
+	int count = holeWidgetSet->getValues().count();
+
+	for (int ix = 0; ix < count; ix++) {
+		if (holeWidgetSet->getValues().at(ix).compare(value) == 0) {
 			comboBox->setCurrentIndex(ix);
 			return;
 		}
 	}
 
-	holeWidgetSet->values->append(value);
+	holeWidgetSet->getValues().append(value);
 	comboBox->addItem(value);
-	comboBox->setCurrentIndex(holeWidgetSet->values->count() - 1);
+	comboBox->setCurrentIndex(count);
 }

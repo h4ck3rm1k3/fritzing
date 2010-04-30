@@ -86,6 +86,7 @@ protected:
 	void initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs);
 	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix);
 	ConnectorInfo * getConnectorInfo(const QString & connectorID);
+	void clearConnectorInfoHash(QHash<QString, ConnectorInfo *> & hash);
 
 protected:
 	QString m_filename;

@@ -321,6 +321,8 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		nonConnectorItem->setRect(svgIdLayer->m_rect);
 		nonConnectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
+
+		delete svgIdLayer;
 	}
 }
 

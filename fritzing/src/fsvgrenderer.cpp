@@ -53,10 +53,15 @@ FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
 
 FSvgRenderer::~FSvgRenderer()
 {
-	foreach (ConnectorInfo * connectorInfo, m_connectorInfoHash.values()) {
+	clearConnectorInfoHash(m_connectorInfoHash);
+	clearConnectorInfoHash(m_nonConnectorInfoHash);
+}
+
+void FSvgRenderer::clearConnectorInfoHash(QHash<QString, ConnectorInfo *> & hash) {
+	foreach (ConnectorInfo * connectorInfo, hash.values()) {
 		delete connectorInfo;
 	}
-	m_connectorInfoHash.clear();
+	hash.clear();
 }
 
 void FSvgRenderer::cleanup() {
@@ -349,6 +354,7 @@ qreal FSvgRenderer::printerScale() {
 
 void FSvgRenderer::initNonConnectorInfo(QDomDocument & domDocument)
 {
+	clearConnectorInfoHash(m_nonConnectorInfoHash);
 	QDomElement root = domDocument.documentElement();
 	initNonConnectorInfoAux(root);
 }
@@ -369,6 +375,7 @@ void FSvgRenderer::initNonConnectorInfoAux(QDomElement & element)
 
 void FSvgRenderer::initConnectorInfo(QDomDocument & domDocument, const QStringList & connectorIDs, const QStringList & terminalIDs)
 {
+	clearConnectorInfoHash(m_connectorInfoHash);
 	QDomElement root = domDocument.documentElement();
 	initConnectorInfoAux(root, connectorIDs);
 	if (terminalIDs.count() > 0) {
