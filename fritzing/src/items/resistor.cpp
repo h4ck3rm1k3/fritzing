@@ -205,7 +205,7 @@ QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 }
 
 QString Resistor::makeBreadboardSvg(const QString & resistance) {
-	qreal ohms = toOhms(resistance);
+	qreal ohms = toOhms(resistance, NULL);
 	QString sohms = QString::number(ohms, 'e', 3);
 	int firstband = sohms.at(0).toAscii() - '0';
 	int secondband = sohms.at(2).toAscii() - '0';
@@ -249,8 +249,10 @@ QString Resistor::pinSpacing() {
 	return m_pinSpacing;
 }
 
-qreal Resistor::toOhms(const QString & ohms) 
+qreal Resistor::toOhms(const QString & ohms, void * data) 
 {
+	Q_UNUSED(data);
+
 	qreal multiplier = 1;
 	QString temp = ohms;
 	if (temp.endsWith(OhmSymbol)) {

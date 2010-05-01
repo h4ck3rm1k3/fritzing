@@ -74,7 +74,7 @@ public:
 	virtual qreal getLabelFontSizeLarge();
 	virtual bool hasBigDots();
 	virtual void setResistance(QString resistance, QString pinSpacing);
-	virtual void setChipLabel(QString label);
+	virtual void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue);
 	virtual void changeWireWidthMils(const QString newWidth);
 	virtual void changeWireColor(const QString newColor);
 	virtual void swap(const QString & family, const QString & prop, QMap<QString, QString> & propsMap);

@@ -36,13 +36,6 @@ $Date$
 
 #include "paletteitem.h"
 
-struct HoleWidgetSet {
-	QComboBox * valueEditor;
-	class BoundedRegExpValidator * validator;
-	QComboBox * unitsEditor;
-	QStringList & (*getValues)();
-};
-
 class Hole : public PaletteItem 
 {
 	Q_OBJECT
@@ -54,8 +47,8 @@ public:
 
 	QString getProperty(const QString & key);
 	void setProp(const QString & prop, const QString & value);
-	void setHoleDiameter(QString diameter, bool force);
-	void setRingThickness(QString thickness, bool force);
+	void setHoleSize(QString holeSize, bool force);
+	QString holeSize();
 	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
 	bool hasCustomSVG();
 	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
@@ -63,28 +56,33 @@ public:
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi); 
 
 protected slots:
-	void valueEntry(const QString &);
-	void unitsEntry(const QString &);
+	void changeDiameter();
+	void changeThickness();
+	void changeUnits(const QString &);
+	void changeHoleSize(const QString &);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	void setBoth(const QString & holeDiameter, const QString &  thickness);
 	QString makeSvg(const QString & holeDiameter, const QString & ringThickness);
-	QFrame * makePlugin(const QString & propName, const QString & otherPropName, QStringList & values, QWidget * parent, const QStringList &paramNames, const QStringList &paramValues); 
-	void setValidatorBounds(class BoundedRegExpValidator * validator, const QString & otherPropName, int units);
-	void setValidatorBounds(QComboBox *, const QString & propName);
-	void setCurrentValue(QComboBox * comboBox, const QString & propName);
-
-protected:
-	static QStringList & holeDiameters();
-	static QStringList & ringThicknesses();
+	void updateValidators();
+	void updateEditTexts();
+	void updateSizes();
 
 protected:
 	class FSvgRenderer * m_renderer;
 	QString m_holeDiameter;
 	QString m_ringThickness;
-	QHash<QString, HoleWidgetSet *> m_holeWidgetSets;
+	QPointer<QDoubleValidator> m_diameterValidator;
+	QPointer<QDoubleValidator> m_thicknessValidator;
+	QPointer<QLineEdit> m_diameterEdit;
+	QPointer<QLineEdit> m_thicknessEdit;
+	QPointer<QComboBox> m_unitsComboBox;
+	QPointer<QComboBox> m_sizesComboBox;
+
+protected:
+	static QHash<QString, QString> m_holeSizes;
+	static QHash<QString, QString> m_holeSizeTranslations;
 };
 
 #endif

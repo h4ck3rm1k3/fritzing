@@ -302,7 +302,7 @@ void MysteryPart::chipLabelEntry() {
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setChipLabel(edit->text());
+		infoGraphicsView->setProp(this, "chip label", tr("chip label"), this->chipLabel(), edit->text());
 	}
 }
 

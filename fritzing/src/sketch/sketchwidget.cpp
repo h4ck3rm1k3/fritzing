@@ -81,6 +81,7 @@ $Date$
 #include "../items/dip.h"
 #include "../items/groundplane.h"
 #include "../items/moduleidnames.h"
+#include "../items/hole.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
@@ -3774,63 +3775,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 		slc->add(itemBase->id(), true, true);
 	}
 
-	switch (itemBase->itemType()) {
-		case ModelPart::Wire:
-			{
-			Wire * wire = dynamic_cast<Wire *>(itemBase);
-			new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
-			new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
-			}
-			break;
-		
-		// TODO: LogoItem and Ruler
-
-		case ModelPart::ResizableBoard:
-			{
-			ResizableBoard * rb = dynamic_cast<ResizableBoard *>(itemBase);
-			rb->saveParams();
-			QPointF p;
-			QSizeF sz;
-			rb->getParams(p, sz);
-			new ResizeBoardCommand(this, rb->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
-			}
-			break;
-		case ModelPart::Jumper:
-			{
-			JumperItem * jumper = dynamic_cast<JumperItem *>(itemBase);
-			jumper->saveParams();
-			QPointF p;
-			QPointF c0, c1;
-			jumper->getParams(p, c0, c1);
-			new ResizeJumperItemCommand(this, jumper->id(), p, c0, c1, p, c0, c1, parentCommand);
-			}
-			break;
-		case ModelPart::CopperFill:
-			{
-			GroundPlane * groundPlane = dynamic_cast<GroundPlane *>(itemBase);
-			new SetPropCommand(this, itemBase->id(), "svg", groundPlane->svg(), groundPlane->svg(), parentCommand);
-			}
-			break;
-		default:
-			break;
-	}
-
-	// TODO: does this need to be generalized to the whole set of modelpart props?
-	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
-	if (mysteryPart != NULL) {
-		new SetPropCommand(this, itemBase->id(), "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
-		new SetPropCommand(this, itemBase->id(), "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
-	}
-
-	PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
-	if (pinHeader != NULL) {
-		new SetPropCommand(this, itemBase->id(), "form", pinHeader->form(), pinHeader->form(), parentCommand);
-	}
-
-	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
-	if (resistor != NULL) {
-		new SetResistanceCommand(this, itemBase->id(), resistor->resistance(), resistor->resistance(), resistor->pinSpacing(), resistor->pinSpacing(), parentCommand);
-	}
+	prepDeleteProps(itemBase, parentCommand);
 
 	rememberSticky(itemBase->id(), parentCommand);
 	if (crossView == BaseCommand::CrossView) {
@@ -3840,6 +3785,80 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 	ModelPart * mp = itemBase->modelPart();
 	new DeleteItemCommand(this, crossView, mp->moduleID(), itemBase->notLayers(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
 }
+
+void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand) 
+{
+	// TODO: does this need to be generalized to the whole set of modelpart props?
+	// TODO: LogoItem and Ruler
+
+	switch (itemBase->itemType()) {
+		case ModelPart::Wire:
+			{
+			Wire * wire = dynamic_cast<Wire *>(itemBase);
+			new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
+			new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
+			}
+			return;
+		
+		case ModelPart::ResizableBoard:
+			{
+			ResizableBoard * rb = dynamic_cast<ResizableBoard *>(itemBase);
+			rb->saveParams();
+			QPointF p;
+			QSizeF sz;
+			rb->getParams(p, sz);
+			new ResizeBoardCommand(this, rb->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+			}
+			return;
+
+		case ModelPart::Jumper:
+			{
+			JumperItem * jumper = dynamic_cast<JumperItem *>(itemBase);
+			jumper->saveParams();
+			QPointF p;
+			QPointF c0, c1;
+			jumper->getParams(p, c0, c1);
+			new ResizeJumperItemCommand(this, jumper->id(), p, c0, c1, p, c0, c1, parentCommand);
+			}
+			return;
+
+		case ModelPart::CopperFill:
+			{
+			GroundPlane * groundPlane = dynamic_cast<GroundPlane *>(itemBase);
+			new SetPropCommand(this, itemBase->id(), "svg", groundPlane->svg(), groundPlane->svg(), parentCommand);
+			}
+			return;
+
+		default:
+			break;
+	}
+
+	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
+	if (mysteryPart != NULL) {
+		new SetPropCommand(this, itemBase->id(), "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
+		new SetPropCommand(this, itemBase->id(), "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
+		return;
+	}
+
+	PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
+	if (pinHeader != NULL) {
+		new SetPropCommand(this, itemBase->id(), "form", pinHeader->form(), pinHeader->form(), parentCommand);
+		return;
+	}
+
+	Resistor * resistor =  dynamic_cast<Resistor *>(itemBase);
+	if (resistor != NULL) {
+		new SetResistanceCommand(this, itemBase->id(), resistor->resistance(), resistor->resistance(), resistor->pinSpacing(), resistor->pinSpacing(), parentCommand);
+		return;
+	}
+
+	Hole * hole = dynamic_cast<Hole *>(itemBase);
+	if (hole != NULL) {
+		new SetPropCommand(this, itemBase->id(), "hole size", hole->holeSize(), hole->holeSize(), parentCommand);
+		return;
+	}
+}
+
 
 void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 	ItemBase * itemBase = findItem(id);
@@ -4361,18 +4380,7 @@ long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		selectItemCommand->addUndo(itemBase->id());
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
 		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
-			
-		MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
-		if (mysteryPart != NULL) {
-			new SetPropCommand(this, newID, "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
-			new SetPropCommand(this, newID, "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
-		}
-	
-		PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
-		if (pinHeader != NULL) {
-			new SetPropCommand(this, newID, "form", pinHeader->form(), pinHeader->form(), parentCommand);
-		}
-	
+				
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
@@ -5742,27 +5750,10 @@ void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpa
 	}
 }
 
-void SketchWidget::setChipLabel(QString label)
+void SketchWidget::setProp(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue)
 {
-	PaletteItem * item = getSelectedPart();
-	if (item == NULL) return;
-
-	SetPropCommand * cmd = NULL;
-
-	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
-	if (mysteryPart != NULL) {
-		cmd = new SetPropCommand(this, item->id(), "chip label", mysteryPart->chipLabel(), label, NULL);
-		cmd->setText(tr("Change chip label from %1 to %2").arg(mysteryPart->chipLabel()).arg(label));
-	}
-
-	LogoItem * logoItem = dynamic_cast<LogoItem *>(item);
-	if (logoItem != NULL) {
-		cmd = new SetPropCommand(this, item->id(), "logo", logoItem->logo(), label, NULL);
-		cmd->setText(tr("Change logo from %1 to %2").arg(logoItem->logo()).arg(label));
-	}
-
-	if (cmd == NULL) return;
-
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), prop, oldValue, newValue, NULL);
+	cmd->setText(tr("Change %1 from %2 to %3").arg(trProp).arg(oldValue).arg(newValue));
 	m_undoStack->push(cmd);
 }
 

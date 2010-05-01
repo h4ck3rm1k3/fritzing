@@ -46,6 +46,8 @@ public:
 	static const QString resistorModuleIDName;
 	static const QString logoTextModuleIDName;
 	static const QString logoImageModuleIDName;
+	static const QString holeModuleIDName;
+
 };
 
 #endif

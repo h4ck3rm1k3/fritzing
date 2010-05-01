@@ -192,9 +192,13 @@ void InfoGraphicsView::setResistance(QString resistance, QString pinSpacing)
 	Q_UNUSED(pinSpacing);
 }
 
-void InfoGraphicsView::setChipLabel(QString label)
+void InfoGraphicsView::setProp(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue)
 {
-	Q_UNUSED(label);
+	Q_UNUSED(item);
+	Q_UNUSED(prop);
+	Q_UNUSED(trProp);
+	Q_UNUSED(oldValue);
+	Q_UNUSED(newValue);
 }
 
 void InfoGraphicsView::changeWireWidthMils(const QString newWidth) {

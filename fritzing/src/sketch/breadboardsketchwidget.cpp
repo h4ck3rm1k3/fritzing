@@ -29,6 +29,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../items/virtualwire.h"
 #include "../connectors/connectoritem.h"
+#include "../items/moduleidnames.h"
 
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
@@ -273,6 +274,8 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Symbol) return false;
 	if (modelPart->itemType() == ModelPart::Jumper) return false;
 	if (modelPart->itemType() == ModelPart::CopperFill) return false;
+
+	if (modelPart->moduleID().compare(ModuleIDNames::holeModuleIDName) == 0) return false;
 
 	return true;
 }

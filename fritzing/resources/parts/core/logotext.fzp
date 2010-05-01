@@ -20,7 +20,6 @@
  <taxonomy>discreteParts.pcb.logo</taxonomy>
  <description>For adding text to the silkscreen layer of the board</description>
  <views>
-  <defaultUnits>mm</defaultUnits>
   <iconView>
    <layers image="icon/silkscreen_text.svg" >
     <layer layerId="icon" />

@@ -634,7 +634,7 @@ void LogoItem::logoEntry() {
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setChipLabel(edit->text());
+		infoGraphicsView->setProp(this, "logo", tr("logo"), this->logo(), edit->text());
 	}
 }
 

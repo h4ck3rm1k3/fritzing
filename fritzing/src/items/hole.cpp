@@ -43,10 +43,14 @@ $Date$
 #include <QDomDocument>
 #include <QDomElement>
 #include <QLineEdit>
-#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QLabel>
+#include <QSpacerItem>
 
-static QStringList HoleDiameters;
-static QStringList RingThicknesses;
+
+QHash<QString, QString> Hole::m_holeSizes;
+QHash<QString, QString> Hole::m_holeSizeTranslations;
 
 static const int IndexMm = 0;
 static const int IndexIn = 1;
@@ -54,16 +58,45 @@ static const int IndexIn = 1;
 Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_holeDiameter = modelPart->prop("hole diameter").toString();
-	if (m_holeDiameter.isEmpty()) {
-		m_holeDiameter = modelPart->properties().value("hole diameter", ".055in");
-		modelPart->setProp("hole diameter", m_holeDiameter);
+	m_diameterEdit = m_thicknessEdit = NULL;
+	m_diameterValidator = m_thicknessValidator = NULL;
+	m_unitsComboBox = m_sizesComboBox = NULL;
+
+	if (m_holeSizes.count() == 0) {
+		QString name = "pin header";
+		m_holeSizes.insert(name, ".038in,.02in");
+		m_holeSizeTranslations.insert(tr("Pin Header"), name);
+
+		name = "std through-hole";
+		m_holeSizes.insert(name, ".035in,.02in");
+		m_holeSizeTranslations.insert(tr("Standard Through-hole"), name);
+
+		name = "big through-hole";
+		m_holeSizes.insert(name, ".042in,.02in");
+		m_holeSizeTranslations.insert(tr("Big Through-hole"), name);
+
+		name = "mounting hole";
+		m_holeSizes.insert(name, ".086in,.02in");
+		m_holeSizeTranslations.insert(tr("Mounting Hole"), name);
+
+		name = "fine lead";
+		m_holeSizes.insert(name, ".028in,.02in");
+		m_holeSizeTranslations.insert(tr("Fine Lead Parts"), name);
+
+		name = "thick lead";
+		m_holeSizes.insert(name, ".052in,.02in");
+		m_holeSizeTranslations.insert(tr("Thick Lead Parts"), name);
 	}
-	m_ringThickness = modelPart->prop("ring thickness").toString();
-	if (m_ringThickness.isEmpty()) {
-		m_ringThickness = modelPart->properties().value("ring thickness", ".01in");
-		modelPart->setProp("ring thickness", m_ringThickness);
+
+	QString holeSize = modelPart->prop("hole size").toString();
+	if (holeSize.isEmpty()) {
+		holeSize = modelPart->properties().value("hole size", ".035in,0.2in");
+		modelPart->setProp("hole size", holeSize);
 	}
+
+	QStringList sizes = holeSize.split(",");
+	m_holeDiameter = sizes.at(0);
+	m_ringThickness = sizes.at(1);
 
 	m_renderer = NULL;
 }
@@ -71,53 +104,44 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 Hole::~Hole() {
 }
 
-QStringList & Hole::holeDiameters() {
-	if (HoleDiameters.count() == 0) {
-		HoleDiameters << "1mm" << "2mm" << "3mm" << "4mm" << "5mm" << "6mm";
-	}
-	return HoleDiameters;
-}
-
-QStringList & Hole::ringThicknesses() {
-	if (RingThicknesses.count() == 0) {
-		RingThicknesses << "1mm" << "2mm" << "3mm";
-	}
-	return RingThicknesses;
-}
 
 void Hole::setProp(const QString & prop, const QString & value) {
-	if (prop.compare("hole diameter", Qt::CaseInsensitive) == 0) {
-		setHoleDiameter(value, false);
-		return;
-	}
-
-	if (prop.compare("ring thickness", Qt::CaseInsensitive) == 0) {
-		setRingThickness(value, false);
+	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
+		setHoleSize(value, false);
 		return;
 	}
 
 	PaletteItem::setProp(prop, value);
 }
 
-void Hole::setHoleDiameter(QString holeDiameter, bool force) {
-	if (!force && m_holeDiameter.compare(holeDiameter) == 0) return;
-
-	setBoth(holeDiameter, m_ringThickness);
-
-	m_holeDiameter = holeDiameter;
-	modelPart()->setProp("hole diameter", holeDiameter);
-
-	updateTooltip();
-    if (m_partLabel) m_partLabel->displayTexts();
+QString Hole::holeSize() {
+	return QString("%1,%2").arg(m_holeDiameter).arg(m_ringThickness);
 }
 
-void Hole::setRingThickness(QString ringThickness, bool force) {
-	if (!force && m_ringThickness.compare(ringThickness) == 0) return;
+void Hole::setHoleSize(QString holeSize, bool force) {
+	QString hashedHoleSize = m_holeSizes.value(holeSize);
+	QStringList sizes;
+	if (hashedHoleSize.isEmpty()) {
+		sizes = holeSize.split(",");
+	}
+	else {
+		sizes = hashedHoleSize.split(",");
+	}
+	if (sizes.count() < 2) return;
 
-	setBoth(m_holeDiameter, ringThickness);
+	if (!force && (m_holeDiameter.compare(sizes.at(0)) == 0) && (m_ringThickness.compare(sizes.at(1)) == 0)) 
+	{
+		return;
+	}
 
-	m_ringThickness = ringThickness;
-	modelPart()->setProp("ring thickness", ringThickness);
+	m_holeDiameter = sizes.at(0);
+	m_ringThickness = sizes.at(1);
+	setBoth(m_holeDiameter, m_ringThickness);
+	updateEditTexts();
+	updateValidators();
+	updateSizes();
+
+	modelPart()->setProp("hole size", holeSize);
 
 	updateTooltip();
     if (m_partLabel) m_partLabel->displayTexts();
@@ -133,13 +157,7 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 
 	QString setColor;
 	QStringList noIDs;
-	if (m_viewLayerID == ViewLayer::Copper0) {
-		setColor = ViewLayer::Copper0Color;
-	}
-	else if (m_viewLayerID == ViewLayer::Copper1) {
-		setColor = ViewLayer::Copper1Color;
-	}
-	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, noIDs, noIDs, setColor, ViewLayer::viewLayerXmlNameFromID(m_viewLayerID), true);
+	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, noIDs, noIDs, "", "", true);
 	if (result) {
 		setSharedRenderer(m_renderer);
 	}
@@ -168,7 +186,16 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 
 	qreal wInches = (hd + rt + rt) / GraphicsUtils::StandardFritzingDPI;
 	QString svg = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, wInches, wInches);
-	svg += "<g id='copper0' >";
+
+	QString setColor;
+	if (m_viewLayerID == ViewLayer::Copper0) {
+		setColor = ViewLayer::Copper0Color;
+	}
+	else if (m_viewLayerID == ViewLayer::Copper1) {
+		setColor = ViewLayer::Copper1Color;
+	}
+
+	svg += QString("<g id='%1'>").arg(ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 	
 	QString id = FSvgRenderer::NonConnectorName + "0";
 	if (rt == 0) {
@@ -179,7 +206,7 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 	else if (hd == 0) {
 		svg += QString("<circle cx='%1' cy='%1' r='%1' fill='%2' id='%3' />")
 					.arg(rt)
-					.arg(ViewLayer::Copper0Color)
+					.arg(setColor)
 					.arg(id);
 	}
 	else {
@@ -187,7 +214,7 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 			.arg((hd / 2) + rt)
 			.arg((hd / 2) + (rt / 2))
 			.arg(rt)
-			.arg(ViewLayer::Copper0Color)
+			.arg(setColor)
 			.arg(id);
 	}
   		
@@ -195,36 +222,9 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 	return svg;
 }
 
-QStringList Hole::collectValues(const QString & family, const QString & prop, QString & value) {
-	if (prop.compare("hole diameter", Qt::CaseInsensitive) == 0) {
-		QStringList values;
-		foreach (QString f, holeDiameters()) {
-			values.append(f);
-		}
-		value = m_holeDiameter;
-		return values;
-	}
-
-	if (prop.compare("ring thickness", Qt::CaseInsensitive) == 0) {
-		QStringList values;
-		foreach (QString f, ringThicknesses()) {
-			values.append(f);
-		}
-
-		value = m_ringThickness;
-		return values;
-	}
-
-	return PaletteItem::collectValues(family, prop, value);
-}
-
 QString Hole::getProperty(const QString & key) {
-	if (key.compare("hole diameter", Qt::CaseInsensitive) == 0) {
+	if (key.compare("hole size", Qt::CaseInsensitive) == 0) {
 		return m_holeDiameter;
-	}
-
-	if (key.compare("ring thickness", Qt::CaseInsensitive) == 0) {
-		return m_ringThickness;
 	}
 
 	return PaletteItem::getProperty(key);
@@ -235,8 +235,7 @@ QVariant Hole::itemChange(GraphicsItemChange change, const QVariant &value)
 	switch (change) {
 		case ItemSceneHasChanged:
 			if (this->scene()) {
-				setHoleDiameter(m_holeDiameter, true);
-				setRingThickness(m_ringThickness, true);
+				setHoleSize(QString("%1,%2").arg(m_holeDiameter).arg(m_ringThickness), true);
 			}
 			break;
 		default:
@@ -265,7 +264,8 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, Svg
 		return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
-	QString svg = makeSvg(m_modelPart->prop("hole diameter").toString(), m_modelPart->prop("ring thickness").toString());
+	QStringList holeSize = m_modelPart->prop("hole diameter").toString().split(",");
+	QString svg = makeSvg(holeSize.at(0), holeSize.at(1));
 	if (!svg.isEmpty()) {
 		QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 		SvgFileSplitter splitter;
@@ -285,16 +285,9 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, Svg
 
 bool Hole::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
 {
-	if (prop.compare("hole diameter", Qt::CaseInsensitive) == 0) {
-		returnProp = tr("hole diameter");
-		returnValue = QString("<object type='application/x-qt-plugin' classid='HoleDiameter' swappingenabled='%1' width='100%' height='22px'></object>")
-			.arg(swappingEnabled);  
-		return true;
-	}
-
-	if (prop.compare("ring thickness", Qt::CaseInsensitive) == 0) {
-		returnProp = tr("ring thickness");
-		returnValue = QString("<object type='application/x-qt-plugin' classid='RingThickness' swappingenabled='%1' width='100%' height='22px'></object>")
+	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
+		returnProp = tr("hole size");
+		returnValue = QString("<object type='application/x-qt-plugin' classid='holesize' swappingenabled='%1' width='100%' height='90px'></object>")
 			.arg(swappingEnabled);  
 		return true;
 	}
@@ -304,161 +297,195 @@ bool Hole::collectExtraInfoHtml(const QString & family, const QString & prop, co
 
 QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) 
 {
-	if (classid.compare("HoleDiameter", Qt::CaseInsensitive) == 0) {
+	static const int rowHeight = 21;
 
-		return makePlugin("hole diameter", "ring thickness", holeDiameters(), parent, paramNames, paramValues);
-	}
+	if (classid.compare("holesize", Qt::CaseInsensitive) == 0) {
+		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 
-	if (classid.compare("RingThickness", Qt::CaseInsensitive) == 0) {
+		QFrame * frame = new QFrame(parent);
+		QVBoxLayout * vBoxLayout = new QVBoxLayout(frame);
 
-		return makePlugin("ring thickness", "holeDiameter", ringThicknesses(), parent, paramNames, paramValues);
+		m_sizesComboBox = new QComboBox(frame);
+		m_sizesComboBox->setMaximumWidth(200);
+		m_sizesComboBox->setEditable(false);
+		m_sizesComboBox->setEnabled(swappingEnabled);
+		m_sizesComboBox->addItems(m_holeSizes.keys());
+
+		vBoxLayout->addWidget(m_sizesComboBox);
+
+		QFrame * subFrame = new QFrame(frame);
+		QGridLayout * gridLayout = new QGridLayout(subFrame);
+
+		int units = m_modelPart->prop("hole size").toString().contains("in") ? IndexIn : IndexMm;
+		m_unitsComboBox = new QComboBox(subFrame);
+		m_unitsComboBox->setMaximumWidth(40);
+		m_unitsComboBox->setMinimumHeight(rowHeight);
+		m_unitsComboBox->setMaximumHeight(rowHeight);
+		m_unitsComboBox->setEditable(false);
+		m_unitsComboBox->setEnabled(swappingEnabled);
+		m_unitsComboBox->addItem("mm");
+		m_unitsComboBox->addItem("in");
+		m_unitsComboBox->setCurrentIndex(units);
+		gridLayout->addWidget(m_unitsComboBox, 0, 2, 2, 1);
+
+		m_diameterEdit = new QLineEdit(subFrame);
+		m_diameterEdit->setMaximumWidth(50);
+		m_diameterEdit->setMinimumHeight(rowHeight);
+		m_diameterValidator = new QDoubleValidator(m_diameterEdit);
+		m_diameterValidator->setNotation(QDoubleValidator::StandardNotation);
+		m_diameterEdit->setValidator(m_diameterValidator);
+		m_diameterEdit->setEnabled(swappingEnabled);
+		gridLayout->addWidget(m_diameterEdit, 0, 1);
+
+		QLabel * label = new QLabel(tr("Hole Diameter"));
+		label->setMinimumHeight(rowHeight);
+		gridLayout->addWidget(label, 0, 0);
+
+		m_thicknessEdit = new QLineEdit(subFrame);
+		m_thicknessEdit->setMaximumWidth(50);
+		m_thicknessEdit->setMinimumHeight(rowHeight);
+		m_thicknessValidator = new QDoubleValidator(m_thicknessEdit);
+		m_thicknessValidator->setNotation(QDoubleValidator::StandardNotation);
+		m_thicknessEdit->setValidator(m_thicknessValidator);
+		m_thicknessEdit->setEnabled(swappingEnabled);
+		gridLayout->addWidget(m_thicknessEdit, 1, 1);
+
+		label = new QLabel(tr("Ring Thickness"));
+		label->setMinimumHeight(rowHeight);
+		gridLayout->addWidget(label, 1, 0);
+
+		gridLayout->setContentsMargins(5, 0, 0, 0);
+		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);
+		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
+
+		updateEditTexts();
+		updateValidators();
+		updateSizes();
+
+		connect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
+		connect(m_unitsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeUnits(const QString &)));
+		connect(m_diameterEdit, SIGNAL(editingFinished()), this, SLOT(changeDiameter()));
+		connect(m_thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
+
+		vBoxLayout->addWidget(subFrame);
+
+		return frame;
+
 	}
 
 	return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
 }
 
-QFrame * Hole::makePlugin(const QString & propName, const QString & otherPropName, QStringList & values, QWidget * parent, const QStringList &paramNames, const QStringList &paramValues) 
+void Hole::changeThickness() 
 {
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-	int units = m_modelPart->prop(propName).toString().contains("mm") ? IndexMm : IndexIn;
-	FocusOutComboBox * e1 = new FocusOutComboBox();
-	e1->addItems(values);
-	e1->setEditable(true);
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
 
-	BoundedRegExpValidator * validator = new BoundedRegExpValidator(e1);
-	validator->setConverter(TextUtils::convertToInches);
-	setValidatorBounds(validator, otherPropName, units);
-	validator->setRegExp(QRegExp("((\\d{1,2})|(\\d{1,2}\\.)|(\\d{1,2}\\.\\d{1,3}))(in|mm){0,1}"));
-	e1->setValidator(validator);
-	e1->setEnabled(swappingEnabled);
-	
-	QComboBox * comboBox = new QComboBox();
-	comboBox->setEditable(false);
-	comboBox->setEnabled(swappingEnabled);
-	comboBox->addItem("mm");
-	comboBox->addItem("in");
-	comboBox->setCurrentIndex(units);
-
-	HoleWidgetSet * holeWidgetSet = new HoleWidgetSet;
-	holeWidgetSet->valueEditor = e1;
-	holeWidgetSet->validator = validator;
-	holeWidgetSet->unitsEditor = comboBox;
-	holeWidgetSet->getValues = propName.compare("hole diameter") == 0 ? &Hole::holeDiameters : &Hole::ringThicknesses;
-	m_holeWidgetSets.insert(propName, holeWidgetSet);
-
-	setCurrentValue(e1, propName);
-
-	QHBoxLayout * hboxLayout = new QHBoxLayout();
-	hboxLayout->setAlignment(Qt::AlignLeft);
-	hboxLayout->setContentsMargins(0, 0, 0, 0);
-	hboxLayout->setSpacing(0);
-
-	hboxLayout->addWidget(e1);
-	hboxLayout->addWidget(comboBox);
-
-	QFrame * frame = new QFrame(parent);
-	frame->setLayout(hboxLayout);
-
-	connect(e1, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(valueEntry(const QString &)));
-	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(unitsEntry(const QString &)));
-
-	frame->setMaximumWidth(200);
-
-	return frame;
+	QString newValue = m_holeDiameter + "," + edit->text() + m_unitsComboBox->currentText();
+	changeHoleSize(newValue);
 }
 
-void Hole::valueEntry(const QString & text) {
-	QString propName;
-	QString otherPropName;
-	HoleWidgetSet * holeWidgetSet = NULL;
-	HoleWidgetSet * otherHoleWidgetSet = NULL;
+void Hole::changeDiameter() 
+{
+	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
+	if (edit == NULL) return;
 
-	foreach (QString key, m_holeWidgetSets.keys()) {
-		HoleWidgetSet * hws = m_holeWidgetSets.value(key);
-		if (sender() == hws->valueEditor) {
-			propName = key;
-			holeWidgetSet = hws;
-		}
-		else {
-			otherPropName = key;
-			otherHoleWidgetSet = hws;
-		}
-	}
+	QString newValue = edit->text() + m_unitsComboBox->currentText() + "," + m_ringThickness;
+	changeHoleSize(newValue);
 
-	if (holeWidgetSet == NULL) return;
-	if (otherHoleWidgetSet == NULL) return;
-
-	QString newValue = text;
-	if (!newValue.endsWith("in") && !newValue.endsWith("mm")) {
-		newValue += holeWidgetSet->unitsEditor->currentText();
-	}
-
-	int units = newValue.endsWith("in") ? IndexIn : IndexMm;
-	modelPart()->setProp(propName, newValue);
-	setCurrentValue(holeWidgetSet->valueEditor, propName);
-	setBoth(modelPart()->prop("hole diameter").toString(), modelPart()->prop("ring thickness").toString());
-	setValidatorBounds(otherHoleWidgetSet->validator, propName, units);
-
-	if (!newValue.endsWith(holeWidgetSet->unitsEditor->currentText())) {
-		unitsEntry(units == IndexIn ? "in" : "mm");
-	}
 }
 
-void Hole::unitsEntry(const QString & units) 
+void Hole::changeUnits(const QString & units) 
 {
-	QString propName;
-	QString otherPropName;
-	HoleWidgetSet * holeWidgetSet = NULL;
-
-	foreach (QString key, m_holeWidgetSets.keys()) {
-		HoleWidgetSet * hws = m_holeWidgetSets.value(key);
-		if (sender() == hws->unitsEditor) {
-			propName = key;
-			holeWidgetSet = hws;
-		}
-		else {
-			otherPropName = key;
-		}
-	}
-
-	if (holeWidgetSet == NULL) return;
-	if (otherPropName.isEmpty()) return;
-
-	qreal inches = TextUtils::convertToInches(modelPart()->prop(propName).toString());
+	qreal hd = TextUtils::convertToInches(m_holeDiameter);
+	qreal rt = TextUtils::convertToInches(m_ringThickness);
+	QString newVal;
 	if (units == "in") {
-		modelPart()->setProp(propName, QString::number(inches) + "in");
-		setCurrentValue(holeWidgetSet->valueEditor, propName);
-		setValidatorBounds(holeWidgetSet->validator, otherPropName, IndexIn);
+		newVal = QString("%1in,%2in").arg(hd).arg(rt);
 	}
 	else {
-		modelPart()->setProp(propName, QString::number(inches * 25.4) + "mm");
-		setCurrentValue(holeWidgetSet->valueEditor, propName);
-		setValidatorBounds(holeWidgetSet->validator, otherPropName, IndexMm);
+		newVal = QString("%1mm,%2mm").arg(hd * 25.4).arg(rt * 25.4);
+	}
+
+	QStringList sizes = newVal.split(",");
+	m_ringThickness = sizes.at(1);
+	m_holeDiameter = sizes.at(0);
+	modelPart()->setProp("hole size", newVal);
+
+	updateValidators();
+	updateSizes();
+	updateEditTexts();
+}
+
+void Hole::updateValidators()
+{
+	if (m_diameterValidator == NULL) return;
+	if (m_thicknessValidator == NULL) return;
+	if (m_unitsComboBox == NULL) return;
+
+	qreal hd = TextUtils::convertToInches(m_holeDiameter);
+	qreal rt = TextUtils::convertToInches(m_ringThickness);
+	QString units = m_unitsComboBox->currentText();
+
+	qreal multiplier = (units == "mm") ? 25.4 : 1.0;
+	m_diameterValidator->setRange(rt > 0 ? 0 : .001 * multiplier, 1 * multiplier, 3);
+	m_thicknessValidator->setRange(hd > 0 ? 0 : .001 * multiplier, 1 * multiplier, 3);
+}
+
+void Hole::changeHoleSize(const QString & newSize) {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setProp(this, "hole size", tr("hole size"), this->holeSize(), newSize);
 	}
 }
 
-void Hole::setValidatorBounds(BoundedRegExpValidator * validator, const QString & otherPropName, int units)
-{
-	qreal otherValue = TextUtils::convertToInches(m_modelPart->prop(otherPropName).toString());
-	validator->setBounds(((otherValue == 0) ? .001 : 0) * ((units == IndexMm) ? 25.4 : 1), 1 * ((units == IndexMm) ? 25.4 : 1));
+void Hole::updateEditTexts() {
+	if (m_diameterEdit == NULL) return;
+	if (m_thicknessEdit == NULL) return;
+	if (m_unitsComboBox == NULL) return;
+
+	qreal hd = TextUtils::convertToInches(m_holeDiameter);
+	qreal rt = TextUtils::convertToInches(m_ringThickness);
+
+	QString newVal;
+	if (m_unitsComboBox->currentText() == "in") {
+		newVal = QString("%1,%2").arg(hd).arg(rt);
+	}
+	else {
+		newVal = QString("%1,%2").arg(hd * 25.4).arg(rt * 25.4);
+	}
+
+	QStringList sizes = newVal.split(",");
+	m_diameterEdit->setText(sizes.at(0));
+	m_thicknessEdit->setText(sizes.at(1));
 }
 
-void Hole::setCurrentValue(QComboBox * comboBox, const QString & propName) 
-{
-	QString value = m_modelPart->prop(propName).toString();
-	HoleWidgetSet * holeWidgetSet = m_holeWidgetSets.value(propName);
-	if (holeWidgetSet == NULL) return;
+void Hole::updateSizes() {
+	if (m_sizesComboBox == NULL) return;
 
-	int count = holeWidgetSet->getValues().count();
+	QPointF current(TextUtils::convertToInches(m_holeDiameter), TextUtils::convertToInches(m_ringThickness));
+	for (int ix = 0; ix < m_sizesComboBox->count(); ix++) {
+		QString key = m_sizesComboBox->itemText(ix);
+		QString value = m_holeSizes.value(key, "");
+		QStringList sizes;
+		if (value.isEmpty()) {
+			sizes = key.split(",");
+		}
+		else {
+			sizes = value.split(",");
+		}
+		if (sizes.count() < 2) continue;
 
-	for (int ix = 0; ix < count; ix++) {
-		if (holeWidgetSet->getValues().at(ix).compare(value) == 0) {
-			comboBox->setCurrentIndex(ix);
+		QPointF p(TextUtils::convertToInches(sizes.at(0)), TextUtils::convertToInches(sizes.at(1)));
+		if (p == current) {
+			m_sizesComboBox->setCurrentIndex(ix);
 			return;
 		}
 	}
 
-	holeWidgetSet->getValues().append(value);
-	comboBox->addItem(value);
-	comboBox->setCurrentIndex(count);
+	QString newItem = m_holeDiameter + "," + m_ringThickness;
+	m_sizesComboBox->addItem(newItem);
+	int ix = m_sizesComboBox->findText(newItem);
+	m_sizesComboBox->setCurrentIndex(ix);
 }
+

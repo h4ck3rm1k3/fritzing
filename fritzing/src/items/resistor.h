@@ -67,7 +67,7 @@ public slots:
 
 
 public:
-	static qreal toOhms(const QString & ohmsString);
+	static qreal toOhms(const QString & ohmsString, void * data);
 
 protected:
 	class FSvgRenderer * m_renderer;
