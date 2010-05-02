@@ -2,28 +2,28 @@
 <module>
 	<title>Core</title>
     <instances>
-      <instance moduleIdRef="ResistorModuleID" modelIndex="5" path=":/resources/parts/core/resistor.fzp">
+      <instance moduleIdRef="ResistorModuleID" modelIndex="3" path=":/resources/parts/core/resistor.fzp">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="2010BABA11" modelIndex="6" path="parts/core/capacitor_ceramic_disk_0_1uF.fzp">
+      <instance moduleIdRef="2010BABA11" modelIndex="4" path="parts/core/capacitor_ceramic_disk_0_1uF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="2013BasfdBEC12" modelIndex="7" path="parts/core/capacitor_ceramic_0_1uF.fzp">
+        <instance moduleIdRef="2013BasfdBEC12" modelIndex="5" path="parts/core/capacitor_ceramic_0_1uF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="f124bae12ce2b49029499a70593456637" modelIndex="7" path="parts/core/capacitor_tantalum_10uF.fzp">
+        <instance moduleIdRef="f124bae12ce2b49029499a70593456637" modelIndex="6" path="parts/core/capacitor_tantalum_10uF.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -530,13 +530,20 @@
         </views>
       </instance>
       <instance moduleIdRef="HoleModuleID" modelIndex="58" path=":/resources/parts/core/hole.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"/>
-                </iconView>
-            </views>
-        </instance>
-      <instance moduleIdRef="RulerModuleID" modelIndex="59" path=":/resources/parts/core/cmRuler.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"/>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="ViaModuleID" modelIndex="59" path=":/resources/parts/core/via.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"/>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="RulerModuleID" modelIndex="60" path=":/resources/parts/core/cmRuler.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

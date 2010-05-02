@@ -176,6 +176,7 @@ bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Logo) return false;
 
 	if (modelPart->moduleID().compare(ModuleIDNames::holeModuleIDName) == 0) return false;
+	if (modelPart->moduleID().compare(ModuleIDNames::viaModuleIDName) == 0) return false;
 
 	bool result = PCBSketchWidget::canDropModelPart(modelPart);
 	if (result) return result;

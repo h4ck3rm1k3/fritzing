@@ -34,8 +34,6 @@ $Date$
 #include "../layerattributes.h"
 #include "../viewlayer.h"
 #include "partlabel.h"
-#include "../utils/focusoutcombobox.h"
-#include "../utils/boundedregexpvalidator.h"
 #include "../connectors/nonconnectoritem.h"
 #include "../connectors/svgidlayer.h"
 
@@ -48,12 +46,8 @@ $Date$
 #include <QLabel>
 #include <QSpacerItem>
 
-
 QHash<QString, QString> Hole::m_holeSizes;
 QHash<QString, QString> Hole::m_holeSizeTranslations;
-
-static const int IndexMm = 0;
-static const int IndexIn = 1;
 
 Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -197,7 +191,7 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 
 	svg += QString("<g id='%1'>").arg(ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 	
-	QString id = FSvgRenderer::NonConnectorName + "0";
+	QString id = makeID();
 	if (rt == 0) {
 		svg += QString("<circle cx='%1' cy='%1' r='%1' fill='black' id='%2' />")
 					.arg(hd / 2)
@@ -220,6 +214,10 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
   		
 	svg += "</g></svg>";
 	return svg;
+}
+
+QString Hole::makeID() {
+	return FSvgRenderer::NonConnectorName + "0";
 }
 
 QString Hole::getProperty(const QString & key) {
@@ -316,7 +314,6 @@ QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUr
 		QFrame * subFrame = new QFrame(frame);
 		QGridLayout * gridLayout = new QGridLayout(subFrame);
 
-		int units = m_modelPart->prop("hole size").toString().contains("in") ? IndexIn : IndexMm;
 		m_unitsComboBox = new QComboBox(subFrame);
 		m_unitsComboBox->setMaximumWidth(40);
 		m_unitsComboBox->setMinimumHeight(rowHeight);
@@ -325,7 +322,7 @@ QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUr
 		m_unitsComboBox->setEnabled(swappingEnabled);
 		m_unitsComboBox->addItem("mm");
 		m_unitsComboBox->addItem("in");
-		m_unitsComboBox->setCurrentIndex(units);
+		m_unitsComboBox->setCurrentIndex(m_modelPart->prop("hole size").toString().contains("in") ? 1 : 0);
 		gridLayout->addWidget(m_unitsComboBox, 0, 2, 2, 1);
 
 		m_diameterEdit = new QLineEdit(subFrame);
@@ -433,14 +430,28 @@ void Hole::updateValidators()
 	if (m_thicknessValidator == NULL) return;
 	if (m_unitsComboBox == NULL) return;
 
-	qreal hd = TextUtils::convertToInches(m_holeDiameter);
-	qreal rt = TextUtils::convertToInches(m_ringThickness);
 	QString units = m_unitsComboBox->currentText();
+	QPointF hdRange = holeDiameterRange();
+	QPointF rtRange = ringThicknessRange();
 
 	qreal multiplier = (units == "mm") ? 25.4 : 1.0;
-	m_diameterValidator->setRange(rt > 0 ? 0 : .001 * multiplier, 1 * multiplier, 3);
-	m_thicknessValidator->setRange(hd > 0 ? 0 : .001 * multiplier, 1 * multiplier, 3);
+	m_diameterValidator->setRange(hdRange.x() * multiplier, hdRange.y() * multiplier, 3);
+	m_thicknessValidator->setRange(rtRange.x() * multiplier, rtRange.y() * multiplier, 3);
 }
+
+
+QPointF Hole::ringThicknessRange() {
+	qreal hd = TextUtils::convertToInches(m_holeDiameter);
+	QPointF p(hd > 0 ? 0 : .001, 1.0);
+	return p;
+}
+
+QPointF Hole::holeDiameterRange() {
+	qreal rt = TextUtils::convertToInches(m_ringThickness);
+	QPointF p(rt > 0 ? 0 : .001, 1.0);
+	return p;
+}
+
 
 void Hole::changeHoleSize(const QString & newSize) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);

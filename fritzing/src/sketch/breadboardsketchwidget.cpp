@@ -276,6 +276,7 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::CopperFill) return false;
 
 	if (modelPart->moduleID().compare(ModuleIDNames::holeModuleIDName) == 0) return false;
+	if (modelPart->moduleID().compare(ModuleIDNames::viaModuleIDName) == 0) return false;
 
 	return true;
 }

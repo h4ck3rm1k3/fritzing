@@ -40,6 +40,7 @@ HEADERS += \
     src/items/ruler.h \
     src/items/symbolpaletteitem.h \
     src/items/tracewire.h \
+    src/items/via.h \
     src/items/virtualwire.h \
     src/items/wire.h 
 
@@ -65,6 +66,7 @@ SOURCES += \
     src/items/resizableboard.cpp \
     src/items/ruler.cpp \
     src/items/symbolpaletteitem.cpp \
-    src/items/tracewire.cpp \
+    src/items/tracewire.cpp \    
+    src/items/via.cpp \
     src/items/virtualwire.cpp \
     src/items/wire.cpp 

@@ -63,11 +63,14 @@ protected slots:
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	void setBoth(const QString & holeDiameter, const QString &  thickness);
 	QString makeSvg(const QString & holeDiameter, const QString & ringThickness);
 	void updateValidators();
 	void updateEditTexts();
 	void updateSizes();
+	virtual QString makeID();
+	virtual QPointF ringThicknessRange();
+	virtual QPointF holeDiameterRange();
+	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
 
 protected:
 	class FSvgRenderer * m_renderer;

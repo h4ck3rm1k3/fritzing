@@ -44,6 +44,7 @@ $Date$
 #include "dip.h"
 #include "pinheader.h"
 #include "hole.h"
+#include "via.h"
 
 
 ItemBase * PartFactory::createPart( ModelPart * modelPart, const LayerList & notLayers, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu)
@@ -107,6 +108,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 				}
 				if (family.compare("hole", Qt::CaseInsensitive) == 0) {
 					return new Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
+				}
+				if (family.compare("via", Qt::CaseInsensitive) == 0) {
+					return new Via(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
 				}
 				return new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
 

@@ -13,7 +13,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public Licensetriple
+You should have received a copy of the GNU General Public License
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
@@ -24,30 +24,24 @@ $Date$
 
 ********************************************************************/
 
-#ifndef MODULEIDNAMES_H
-#define MODULEIDNAMES_H
+#ifndef VIA_H
+#define VIA_H
 
-#include <QString>
+#include "hole.h"
 
-class ModuleIDNames
+class Via : public Hole 
 {
+	Q_OBJECT
+
 public:
-	static const QString rulerModuleIDName;
-	static const QString breadboardModuleIDName;
-	static const QString tinyBreadboardModuleIDName;
-	static const QString rectangleModuleIDName;
-	static const QString noteModuleIDName;
-	static const QString wireModuleIDName;
-	static const QString jumperModuleIDName;
-	static const QString groundPlaneModuleIDName;
-	static const QString groundModuleIDName;
-	static const QString powerModuleIDName;
-	static const QString justPowerModuleIDName;
-	static const QString resistorModuleIDName;
-	static const QString logoTextModuleIDName;
-	static const QString logoImageModuleIDName;
-	static const QString holeModuleIDName;
-	static const QString viaModuleIDName;
+	Via(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~Via();
+
+protected:
+	void setBoth(const QString & holeDiameter, const QString &  thickness);
+	QString makeID();
+	QPointF ringThicknessRange();
+	QPointF holeDiameterRange();
 
 };
 
