@@ -632,6 +632,8 @@ void LogoItem::logoEntry() {
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
+	if (edit->text().compare(this->logo()) == 0) return;
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->setProp(this, "logo", tr("logo"), this->logo(), edit->text());

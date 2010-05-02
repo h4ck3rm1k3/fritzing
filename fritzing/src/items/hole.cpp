@@ -381,8 +381,13 @@ void Hole::changeThickness()
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	QString newValue = m_holeDiameter + "," + edit->text() + m_unitsComboBox->currentText();
-	changeHoleSize(newValue);
+	double newValue = edit->text().toDouble();
+	QString temp = m_ringThickness;
+	temp.chop(2);
+	double oldValue = temp.toDouble();
+	if (newValue == oldValue) return;
+
+	changeHoleSize(m_holeDiameter + "," + edit->text() + m_unitsComboBox->currentText());
 }
 
 void Hole::changeDiameter() 
@@ -390,9 +395,14 @@ void Hole::changeDiameter()
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
-	QString newValue = edit->text() + m_unitsComboBox->currentText() + "," + m_ringThickness;
-	changeHoleSize(newValue);
 
+	double newValue = edit->text().toDouble();
+	QString temp = m_holeDiameter;
+	temp.chop(2);
+	double oldValue = temp.toDouble();
+	if (newValue == oldValue) return;
+
+	changeHoleSize(edit->text() + m_unitsComboBox->currentText() + "," + m_ringThickness);
 }
 
 void Hole::changeUnits(const QString & units) 
@@ -463,6 +473,8 @@ void Hole::updateEditTexts() {
 void Hole::updateSizes() {
 	if (m_sizesComboBox == NULL) return;
 
+	int newIndex = -1;
+
 	QPointF current(TextUtils::convertToInches(m_holeDiameter), TextUtils::convertToInches(m_ringThickness));
 	for (int ix = 0; ix < m_sizesComboBox->count(); ix++) {
 		QString key = m_sizesComboBox->itemText(ix);
@@ -478,14 +490,20 @@ void Hole::updateSizes() {
 
 		QPointF p(TextUtils::convertToInches(sizes.at(0)), TextUtils::convertToInches(sizes.at(1)));
 		if (p == current) {
-			m_sizesComboBox->setCurrentIndex(ix);
-			return;
+			newIndex = ix;
+			break;
 		}
 	}
 
-	QString newItem = m_holeDiameter + "," + m_ringThickness;
-	m_sizesComboBox->addItem(newItem);
-	int ix = m_sizesComboBox->findText(newItem);
-	m_sizesComboBox->setCurrentIndex(ix);
+	if (newIndex < 0) {
+		QString newItem = m_holeDiameter + "," + m_ringThickness;
+		m_sizesComboBox->addItem(newItem);
+		newIndex = m_sizesComboBox->findText(newItem);
+	}
+
+	// don't want to trigger another undo command
+	disconnect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
+	m_sizesComboBox->setCurrentIndex(newIndex);
+	connect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
 }
 

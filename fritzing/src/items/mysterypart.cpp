@@ -300,6 +300,8 @@ void MysteryPart::chipLabelEntry() {
 	QLineEdit * edit = dynamic_cast<QLineEdit *>(sender());
 	if (edit == NULL) return;
 
+	if (edit->text().compare(this->chipLabel()) == 0) return;
+
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->setProp(this, "chip label", tr("chip label"), this->chipLabel(), edit->text());
