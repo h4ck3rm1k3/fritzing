@@ -45,7 +45,10 @@ NonConnectorItem::NonConnectorItem(ItemBase * attachedTo) : QGraphicsRectItem(at
 	m_hidden = false;
 	m_attachedTo = attachedTo;
     setAcceptHoverEvents(false);
-
+	setAcceptedMouseButtons(Qt::NoButton);
+	setFlag(QGraphicsItem::ItemIsMovable, false);
+	setFlag(QGraphicsItem::ItemIsSelectable, false);
+	setFlag(QGraphicsItem::ItemIsFocusable, false);
 }
 
 NonConnectorItem::~NonConnectorItem() {
@@ -53,22 +56,6 @@ NonConnectorItem::~NonConnectorItem() {
 
 ItemBase * NonConnectorItem::attachedTo() {
 	return m_attachedTo;
-}
-
-void NonConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	event->ignore();
-}
-
-void NonConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
-	event->ignore();
-}
-
-void NonConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	event->ignore();
-}
-
-void NonConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	event->ignore();
 }
 
 void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {

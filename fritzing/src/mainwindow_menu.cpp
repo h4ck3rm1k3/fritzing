@@ -1356,9 +1356,13 @@ void MainWindow::createViewMenuActions() {
 	connect(m_fitInWindowAct, SIGNAL(triggered()), this, SLOT(fitInWindow()));
 
 	m_actualSizeAct = new QAction(tr("&Actual Size"), this);
-	m_actualSizeAct->setShortcut(tr("Shift+Ctrl+0"));
-	m_actualSizeAct->setStatusTip(tr("Actual size"));
+	m_actualSizeAct->setStatusTip(tr("Actual (real world physical) size"));
 	connect(m_actualSizeAct, SIGNAL(triggered()), this, SLOT(actualSize()));
+
+	m_100PercentSizeAct = new QAction(tr("100% Size"), this);
+	m_100PercentSizeAct->setShortcut(tr("Shift+Ctrl+0"));
+	m_100PercentSizeAct->setStatusTip(tr("100% (pixel) size"));
+	connect(m_100PercentSizeAct, SIGNAL(triggered()), this, SLOT(hundredPercentSize()));
 
 	m_alignToGridAct = new QAction(tr("Align to Grid"), this);
 	m_alignToGridAct->setStatusTip(tr("Align items to grid when dragging"));
@@ -1565,6 +1569,7 @@ void MainWindow::createMenus()
     m_viewMenu->addAction(m_zoomOutAct);
     m_viewMenu->addAction(m_fitInWindowAct);
     m_viewMenu->addAction(m_actualSizeAct);
+    m_viewMenu->addAction(m_100PercentSizeAct);
 	m_viewMenu->addSeparator();
 
     m_viewMenu->addAction(m_alignToGridAct);
@@ -2045,9 +2050,17 @@ void MainWindow::fitInWindow() {
 	m_zoomSlider->setValue(newZoom);
 }
 
-void MainWindow::actualSize() {
+void MainWindow::hundredPercentSize() {
 	m_currentGraphicsView->absoluteZoom(100);
 	m_zoomSlider->setValue(100);
+}
+
+void MainWindow::actualSize() {
+	int dpi = this->physicalDpiX();
+
+	// remember the parameter to the next two functions is a percent
+	m_currentGraphicsView->absoluteZoom(dpi * 100.0 / FSvgRenderer::printerScale());
+	m_zoomSlider->setValue(dpi * 100.0 / FSvgRenderer::printerScale());
 }
 
 void MainWindow::showBreadboardView() {

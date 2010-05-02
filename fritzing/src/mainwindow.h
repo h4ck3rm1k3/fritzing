@@ -134,6 +134,7 @@ protected slots:
     void zoomOut();
     void fitInWindow();
     void actualSize();
+	void hundredPercentSize();
     void alignToGrid();
 	void alignToGridSettings();
 	void setBackgroundColor();
@@ -497,6 +498,7 @@ protected:
     QAction *m_zoomOutAct;
     QAction *m_fitInWindowAct;
     QAction *m_actualSizeAct;
+    QAction *m_100PercentSizeAct;
     QAction *m_alignToGridAct;
     QAction *m_alignToGridSettingsAct;
     QAction *m_setBackgroundColorAct;

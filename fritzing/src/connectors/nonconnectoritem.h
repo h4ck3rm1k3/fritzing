@@ -55,10 +55,6 @@ public:
 	void setShape(QPainterPath &);
 
 protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	QPainterPath shape() const;
 
