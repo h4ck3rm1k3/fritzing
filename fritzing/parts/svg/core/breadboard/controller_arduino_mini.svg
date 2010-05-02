@@ -7,7 +7,7 @@
 <circle id="connector33pin" fill="none" cx="10.88" cy="82.792" r="1.387"/>
 <circle id="connector32pin" fill="none" cx="18.08" cy="75.592" r="1.387"/>
 <circle id="connector31pin" fill="none" cx="10.88" cy="75.592" r="1.387"/>
-<rect id="connector30pin_11_" x="3.091" y="82.21" fill="none" width="1.184" height="1.184"/>
+<rect id="connector30pin" x="3.091" y="82.21" fill="none" width="1.184" height="1.184"/>
 <rect id="connector29pin" x="3.091" y="75.01" fill="none" width="1.184" height="1.184"/>
 <rect id="connector28pin" x="3.091" y="67.81" fill="none" width="1.184" height="1.184"/>
 <rect id="connector27pin" x="3.091" y="60.608" fill="none" width="1.184" height="1.184"/>
@@ -318,7 +318,7 @@
 	<text transform="matrix(1 0 0 1 8.6519 80.2246)" fill="#FFFFFF" font-family="OCRA" font-size="2">AD4</text>
 	<text transform="matrix(1 0 0 1 15.7803 80.2246)" fill="#FFFFFF" font-family="OCRA" font-size="2">AD5</text>
 	<text transform="matrix(1 0 0 1 44.5356 45.498)" fill="#FFFFFF" font-family="OCRA" font-size="2">AD1</text>
-	<text transform="matrix(1 0 0 1 44.5356 38.1377)" fill="#FFFFFF" font-family="OCRA" font-size="2">AD1</text>
+	<text transform="matrix(1 0 0 1 44.5356 38.1377)" fill="#FFFFFF" font-family="OCRA" font-size="2">AD2</text>
 	<text transform="matrix(1 0 0 1 44.5356 30.8242)" fill="#FFFFFF" font-family="OCRA" font-size="2">AD3</text>
 	<text transform="matrix(1 0 0 1 44.5356 23.5449)" fill="#FFFFFF" font-family="OCRA" font-size="2">+5V</text>
 	<text transform="matrix(1 0 0 1 44.5356 16.5117)" fill="#FFFFFF" font-family="OCRA" font-size="2">RST</text>
