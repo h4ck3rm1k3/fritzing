@@ -45,6 +45,7 @@ $Date$
 #include <QGridLayout>
 #include <QLabel>
 #include <QSpacerItem>
+#include <QGroupBox>
 
 QHash<QString, QString> Hole::m_holeSizes;
 QHash<QString, QString> Hole::m_holeSizeTranslations;
@@ -285,7 +286,7 @@ bool Hole::collectExtraInfoHtml(const QString & family, const QString & prop, co
 {
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("hole size");
-		returnValue = QString("<object type='application/x-qt-plugin' classid='holesize' swappingenabled='%1' width='100%' height='90px'></object>")
+		returnValue = QString("<object type='application/x-qt-plugin' classid='holesize' swappingenabled='%1' width='100%' height='120px'></object>")
 			.arg(swappingEnabled);  
 		return true;
 	}
@@ -311,7 +312,7 @@ QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUr
 
 		vBoxLayout->addWidget(m_sizesComboBox);
 
-		QFrame * subFrame = new QFrame(frame);
+		QGroupBox * subFrame = new QGroupBox(tr("custom settings"), frame);
 		QGridLayout * gridLayout = new QGridLayout(subFrame);
 
 		m_unitsComboBox = new QComboBox(subFrame);
@@ -351,7 +352,7 @@ QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUr
 		label->setMinimumHeight(rowHeight);
 		gridLayout->addWidget(label, 1, 0);
 
-		gridLayout->setContentsMargins(5, 0, 0, 0);
+		gridLayout->setContentsMargins(10, 2, 0, 2);
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
 
