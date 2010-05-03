@@ -61,6 +61,7 @@ public:
 	QString shift(qreal x, qreal y, const QString & elementID, bool shiftTransforms);
 	QString elementString(const QString & elementID);
     virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget, bool convertHV);
+	QVector<QVariant> simpleParsePath(const QString & data);
 	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
 	void shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms);
 

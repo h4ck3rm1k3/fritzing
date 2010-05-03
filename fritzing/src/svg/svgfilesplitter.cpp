@@ -302,7 +302,15 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 {
 	normalizeTranslation(element, sNewWidth, sNewHeight, vbWidth, vbHeight);
 
-	if (element.nodeName().compare("circle") == 0) {
+	bool doChildren = false;
+	QString nodeName = element.nodeName();
+	if (nodeName.compare("g") == 0) {
+		fixStyleAttribute(element);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
+		setStrokeOrFill(element, blackOnly, "black");
+		doChildren = true;
+	}
+	else if (nodeName.compare("circle") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "cx", sNewWidth, vbWidth);
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
@@ -310,7 +318,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		setStrokeOrFill(element, blackOnly, "black");
 	}
-	else if (element.nodeName().compare("line") == 0) {
+	else if (nodeName.compare("line") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "x1", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y1", sNewHeight, vbHeight);
@@ -319,7 +327,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		setStrokeOrFill(element, blackOnly, "black");
 	}
-	else if (element.nodeName().compare("rect") == 0) {
+	else if (nodeName.compare("rect") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "width", sNewWidth, vbWidth);
 		normalizeAttribute(element, "height", sNewHeight, vbHeight);
@@ -336,7 +344,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		}
 		setStrokeOrFill(element, blackOnly, "black");
 	}
-	else if (element.nodeName().compare("ellipse") == 0) {
+	else if (nodeName.compare("ellipse") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "cx", sNewWidth, vbWidth);
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
@@ -345,7 +353,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		setStrokeOrFill(element, blackOnly, "black");
 	}
-	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
+	else if (nodeName.compare("polygon") == 0 || nodeName.compare("polyline") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		QString data = element.attribute("points");
@@ -363,7 +371,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		}
 		setStrokeOrFill(element, blackOnly, "black");
 	}
-	else if (element.nodeName().compare("path") == 0) {
+	else if (nodeName.compare("path") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		setStrokeOrFill(element, blackOnly, "black");
@@ -380,7 +388,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			}
 		}
 	}
-	else if (element.nodeName().compare("text") == 0) {
+	else if (nodeName.compare("text") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "x", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y", sNewHeight, vbHeight);
@@ -389,6 +397,10 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly, "black");
 	}
 	else {
+		doChildren = true;
+	}
+
+	if (doChildren) {
 		QDomElement childElement = element.firstChildElement();
 		while (!childElement.isNull()) {
 			normalizeChild(childElement, sNewWidth, sNewHeight, vbWidth, vbHeight, blackOnly);
@@ -700,7 +712,9 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 	}
 }
 
-bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData, QObject * slotTarget, bool convertHV) {
+QVector<QVariant> SvgFileSplitter::simpleParsePath(const QString & data) {
+	static QVector<QVariant> emptyStack;
+	
 	QString dataCopy(data);
 
 	if (!dataCopy.startsWith('M', Qt::CaseInsensitive)) {
@@ -719,8 +733,15 @@ bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUse
 	bool result = parser.parse(&lexer);
 	if (!result) {
 		DebugDialog::debug(QString("svg path parse failed %1").arg(dataCopy));
-		return false;
+		return emptyStack;
 	}
+
+	return parser.symStack();
+}
+
+
+bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData, QObject * slotTarget, bool convertHV) {
+	QVector<QVariant> symStack = simpleParsePath(data);
 
 	if (convertHV) {
 		SVGPathRunner svgPathRunner;
@@ -730,13 +751,13 @@ bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUse
 		connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)), 
 				this, SLOT(convertHVSlot(QChar, bool, QList<double> &, void *)), 
 				Qt::DirectConnection);
-		svgPathRunner.runPath(parser.symStack(), &data);
+		svgPathRunner.runPath(symStack, &data);
 		return parsePath(data.path, slot, pathUserData, slotTarget, false);
 	}
 
 	SVGPathRunner svgPathRunner;
     connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)), slotTarget, slot, Qt::DirectConnection);
-	return svgPathRunner.runPath(parser.symStack(), &pathUserData);
+	return svgPathRunner.runPath(symStack, &pathUserData);
 }
 
 void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> & args, void * userData) {

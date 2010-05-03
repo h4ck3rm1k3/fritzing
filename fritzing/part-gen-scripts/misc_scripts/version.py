@@ -1,5 +1,5 @@
 # usage:
-#    verion.py -d <directory> 
+#    version.py -d <directory> 
 #    
 #    <directory> is a folder, with subfolders, containing .fzp files.  In each fzp file in the directory or its children
 #    look for a <version> element

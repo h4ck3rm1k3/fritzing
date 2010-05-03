@@ -90,7 +90,7 @@ QString SVG2gerber::getContour(){
 }
 
 QString SVG2gerber::getNCDrill(){
-    return m_drill_header + m_drill_paths;
+    return m_drill_header + m_drill_paths + m_drill_slots + m_drill_footer;
 }
 
 void SVG2gerber::renderGerber(){
@@ -128,6 +128,11 @@ void SVG2gerber::renderGerber(){
     // set to english (inches) units, with trailing zeros
     m_drill_header += "M72,TZ\n";
 
+	// drill file unload tool and end of program
+    m_drill_footer = "T00\n";
+    m_drill_footer += "M30\n";
+
+
     // define apertures and draw em
     allPaths2gerber();
 
@@ -155,9 +160,6 @@ void SVG2gerber::renderGerber(){
     m_soldermask_paths += "M02*";
     m_contour_paths += "M02*";
 
-    // drill file unload tool and end of program
-    m_drill_paths += "T00\n";
-    m_drill_paths += "M30\n";
 }
 
 void SVG2gerber::normalizeSVG(){
@@ -186,11 +188,9 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
             path = poly2path(element);
         }
         else if(tag=="rect"){
-            //path = rect2path(element);
             path = element;
         }
         else if(tag=="circle"){
-            //path = circle2path(element);
             path = element;
         }
         else if(tag=="line"){
@@ -266,15 +266,19 @@ void SVG2gerber::allPaths2gerber() {
         QString mask_aperture;
         QString drill_aperture;
 
-        qreal centerx = circle.attribute("cx").toFloat();
-        qreal centery = circle.attribute("cy").toFloat();
+		if (circle.attribute("drill").compare("0") == 0) {
+			continue;
+		}
+
+        qreal centerx = circle.attribute("cx").toDouble();
+        qreal centery = circle.attribute("cy").toDouble();
         QString cx = QString::number(qRound(centerx));
         QString cy = QString::number(qRound(centery));
-        QString drill_cx = QString::number(qRound(centerx)*10);
-        QString drill_cy = QString::number(qRound(centery)*10);
-        qreal r = circle.attribute("r").toFloat();
+        QString drill_cx = QString::number(centerx / 1000);				// drill file seems to be in inches
+        QString drill_cy = QString::number(centery / 1000);				// drill file seems to be in inches
+        qreal r = circle.attribute("r").toDouble();
         QString fill = circle.attribute("fill");
-        qreal stroke_width = circle.attribute("stroke-width").toFloat();
+        qreal stroke_width = circle.attribute("stroke-width").toDouble();
 
         qreal diam = ((2*r) + stroke_width)/1000;
         qreal hole = ((2*r) - stroke_width)/1000;
@@ -312,8 +316,9 @@ void SVG2gerber::allPaths2gerber() {
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
         m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
-        if(drill_aperture != "")
+		if(drill_aperture != "") {
             m_drill_paths += "X" + drill_cx + "Y" + drill_cy + "\n";
+		}
     }
 
     // rects
@@ -325,16 +330,16 @@ void SVG2gerber::allPaths2gerber() {
         QString aperture;
         QString mask_aperture;
 
-        qreal width = rect.attribute("width").toFloat();
-        qreal height = rect.attribute("height").toFloat();
-        qreal x = rect.attribute("x").toFloat();
-        qreal y = rect.attribute("y").toFloat();
+        qreal width = rect.attribute("width").toDouble();
+        qreal height = rect.attribute("height").toDouble();
+        qreal x = rect.attribute("x").toDouble();
+        qreal y = rect.attribute("y").toDouble();
         qreal centerx = x + (width/2);
         qreal centery = y + (height/2);
         QString cx = QString::number(qRound(centerx));
         QString cy = QString::number(qRound(centery));
         QString fill = rect.attribute("fill");
-        qreal stroke_width = rect.attribute("stroke-width").toFloat();
+        qreal stroke_width = rect.attribute("stroke-width").toDouble();
 
         qreal totalx = (width + stroke_width)/1000;
         qreal totaly = (height + stroke_width)/1000;
@@ -389,7 +394,7 @@ void SVG2gerber::allPaths2gerber() {
         }
     }
 
-    // polys - NOTE: assumes comma separated formatting
+    // polys - NOTE: assumes comma- or space- separated formatting
     QDomNodeList polyList = m_SVGDom.elementsByTagName("polygon");
 
     DebugDialog::debug("polygons to gerber: " + QString::number(polyList.length()));
@@ -402,15 +407,15 @@ void SVG2gerber::allPaths2gerber() {
         //start poly area fill
         m_gerber_paths += "G36*\n";
 
-        int startx = qRound(pointList.at(0).toFloat());
-        int starty = qRound(pointList.at(1).toFloat());
+        int startx = qRound(pointList.at(0).toDouble());
+        int starty = qRound(pointList.at(1).toDouble());
         // move to start - light off
         m_gerber_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D02*\n";
 
         // iterate through all other points - light on
         for(int pt = 2; pt < pointList.length(); pt +=2){
-            int ptx = qRound(pointList.at(pt).toFloat());
-            int pty = qRound(pointList.at(pt+1).toFloat());
+            int ptx = qRound(pointList.at(pt).toDouble());
+            int pty = qRound(pointList.at(pt+1).toDouble());
             m_gerber_paths += "X" + QString::number(ptx) + "Y" + QString::number(pty) + "D01*\n";
         }
 
@@ -433,11 +438,12 @@ void SVG2gerber::allPaths2gerber() {
         QDomElement line = lineList.item(k).toElement();
         QString aperture;
 
-        int x1 = qRound(line.attribute("x1").toFloat());
-        int y1 = qRound(line.attribute("y1").toFloat());
-        int x2 = qRound(line.attribute("x2").toFloat());
-        int y2 = qRound(line.attribute("y2").toFloat());
-        qreal stroke_width = line.attribute("stroke-width").toFloat();
+        int x1 = qRound(line.attribute("x1").toDouble());
+        int y1 = qRound(line.attribute("y1").toDouble());
+        int x2 = qRound(line.attribute("x2").toDouble());
+        int y2 = qRound(line.attribute("y2").toDouble());
+        qreal stroke_width = line.attribute("stroke-width").toDouble();
+		if (stroke_width == 0) continue;
 
         aperture = QString("C,%1").arg(stroke_width/1000);
 
@@ -480,12 +486,6 @@ void SVG2gerber::allPaths2gerber() {
         QString data = path.attribute("d");
         QString aperture;
 
-        // set poly fill if this is actually a filled in shape
-        if(path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
-            // start poly fill
-            m_gerber_paths += "G36*\n";
-        }
-
         const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
 
         PathUserData pathUserData;
@@ -496,12 +496,20 @@ void SVG2gerber::allPaths2gerber() {
         SvgFlattener flattener;
         flattener.parsePath(data, slot, pathUserData, this, true);
 
+		handleOblongPath(path, dcode_index);
+
         // only add paths if they contained gerber-izable path commands (NO CURVES!)
         // TODO: display some informative error for the user
         if(pathUserData.string.contains("INVALID"))
             continue;
 
-        qreal stroke_width = path.attribute("stroke-width").toFloat();
+        // set poly fill if this is actually a filled in shape
+        if(path.hasAttribute("fill") && !(path.hasAttribute("stroke"))){
+            // start poly fill
+            m_gerber_paths += "G36*\n";
+        }
+
+		qreal stroke_width = path.attribute("stroke-width").toDouble();
 
         aperture = QString("C,%1").arg(stroke_width/1000);
 
@@ -536,82 +544,36 @@ void SVG2gerber::allPaths2gerber() {
     }
 }
 
-QDomElement SVG2gerber::rect2path(QDomElement rectElement){
-    float x = rectElement.attribute("x").toFloat();
-    float y = rectElement.attribute("y").toFloat();
-    float width = rectElement.attribute("width").toFloat();
-    float height = rectElement.attribute("height").toFloat();
+void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {
+		// look for oblong paths
+	QDomElement parent = path.parentNode().toElement();
 
-    QString pathStr = "M " + QString::number(x) + "," + QString::number(y) + " ";
-    pathStr += "L " + QString::number(x + width) + "," + QString::number(y);
-    pathStr += "L " + QString::number(x + width) + "," + QString::number(y + height);
-    pathStr += "L " + QString::number(x) + "," + QString::number(y + height);
-    pathStr += "z";
+	if (!parent.attribute("id").compare("oblong") == 0) return;
 
-    QDomElement path = m_SVGDom.createElement("path");
-    path.setAttribute("d",pathStr);
+	QDomElement nextPath = path.nextSiblingElement("path");
+	if (nextPath.isNull()) return;
 
-    return path;
-}
+	QDomElement nextLine = nextPath.nextSiblingElement("line");
+	if (nextLine.isNull()) return;
+				
+	qreal diameter = parent.attribute("stroke-width").toDouble();
+	qreal cx1 = nextLine.attribute("x1").toDouble();
+	qreal cy1 = nextLine.attribute("y1").toDouble();
+	qreal cx2 = nextLine.attribute("x2").toDouble();
+	qreal cy2 = nextLine.attribute("y2").toDouble();
 
-QDomElement SVG2gerber::circle2path(QDomElement circleElement){
-    // 4 cubic bezier arcs
-    float cx = circleElement.attribute("cx").toFloat();
-    float cy = circleElement.attribute("cy").toFloat();
-    float r = circleElement.attribute("r").toFloat();
-
-    // approximate midpoint
-    float k = r * (qSqrt(2.0f) -1) * 4/3;
-
-//    d="m 0,1                      // translate(radius) from center
-//    C 0.552,1   1,0.552   1,0    // 1st quarter
-//      1,-0.552  0.552,-1  0,-1   // 2nd
-//      -0.552,-1 -1,-0.552 -1,0   // 3rd
-//      -1,0.552  -0.552,1  0,1z"  // 4th
-
-    //translate radius from center
-    QString pathStr = "M " + QString::number(cx) + "," + QString::number(cy + r) + " ";
-
-    //1st quarter
-    pathStr += "C " + QString::number(cx + k) + "," + QString::number(cy + r) + " ";
-    pathStr += QString::number(cx + r) + "," + QString::number(cy + k) + " ";
-    pathStr += QString::number(cx + r) + "," + QString::number(cy) + " ";
-
-    //2nd quarter
-    pathStr += QString::number(cx + r) + "," + QString::number(cy - k) + " ";
-    pathStr += QString::number(cx + k) + "," + QString::number(cy - r) + " ";
-    pathStr += QString::number(cx) + "," + QString::number(cy - r) + " ";
-
-    //3rd quarter
-    pathStr += QString::number(cx - k) + "," + QString::number(cy - r) + " ";
-    pathStr += QString::number(cx - r) + "," + QString::number(cy - k) + " ";
-    pathStr += QString::number(cx - r) + "," + QString::number(cy) + " ";
-
-    //4th quarter
-    pathStr += QString::number(cx - r) + "," + QString::number(cy + k) + " ";
-    pathStr += QString::number(cx - k) + "," + QString::number(cy + r) + " ";
-    pathStr += QString::number(cx) + "," + QString::number(cy + r) + "z";
-
-
-    QDomElement path = m_SVGDom.createElement("path");
-    path.setAttribute("d",pathStr);
-
-    return path;
-}
-
-QDomElement SVG2gerber::line2path(QDomElement lineElement){
-    float x1 = lineElement.attribute("x1").toFloat();
-    float y1 = lineElement.attribute("y1").toFloat();
-    float x2 = lineElement.attribute("x2").toFloat();
-    float y2 = lineElement.attribute("y2").toFloat();
-
-    QString pathStr = "M " + QString::number(x1) + "," + QString::number(y1) + " ";
-    pathStr += "L " + QString::number(x2) + "," + QString::number(y2) + " z";
-
-    QDomElement path = m_SVGDom.createElement("path");
-    path.setAttribute("d",pathStr);
-
-    return path;
+	QString drill_aperture = QString("C%1").arg(diameter / 1000) + "\n";
+	if (!m_drill_header.contains(drill_aperture)) {
+		m_drill_header += "T" + QString::number(dcode_index++) + drill_aperture;
+	}
+	int ix = m_drill_header.indexOf(drill_aperture);
+	int it = m_drill_header.lastIndexOf("T", ix);
+	m_drill_slots += QString("%1\nX%2Y%3G85X%4Y%5\nG05\n")
+		.arg(m_drill_header.mid(it, ix - it))
+		.arg(cx1 / 1000)
+		.arg(cy1 / 1000)
+		.arg(cx2 / 1000)
+		.arg(cy2 / 1000);
 }
 
 QDomElement SVG2gerber::poly2path(QDomElement polyElement){

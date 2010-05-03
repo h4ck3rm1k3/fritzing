@@ -52,19 +52,20 @@ protected:
     QString m_contour_header;
     QString m_contour_paths;
     QString m_drill_header;
+    QString m_drill_footer;
     QString m_drill_paths;
+    QString m_drill_slots;
 
     qreal m_pathstart_x;
     qreal m_pathstart_y;
+
+protected:
 
     void normalizeSVG();
     void convertShapes2paths(QDomNode);
     void flattenSVG(QDomNode);
     QMatrix parseTransform(QDomElement);
 
-    QDomElement rect2path(QDomElement);
-    QDomElement circle2path(QDomElement);
-    QDomElement line2path(QDomElement);
     QDomElement poly2path(QDomElement);
     QDomElement ellipse2path(QDomElement);
 
@@ -73,6 +74,8 @@ protected:
     void renderGerber();
     void allPaths2gerber();
     QString path2gerber(QDomElement);
+	void handleOblongPath(QDomElement & path, int & dcode_index);
+
 
 protected slots:
     void path2gerbCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
