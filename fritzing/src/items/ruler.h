@@ -60,6 +60,7 @@ public slots:
 
 protected:
 	QString makeSvg(qreal inches);
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	
 protected:
 	class FSvgRenderer * m_renderer;

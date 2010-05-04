@@ -263,20 +263,22 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, Svg
 		return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
-	QStringList holeSize = m_modelPart->prop("hole diameter").toString().split(",");
-	QString svg = makeSvg(holeSize.at(0), holeSize.at(1));
-	if (!svg.isEmpty()) {
-		QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-		SvgFileSplitter splitter;
-		bool result = splitter.splitString(svg, xmlName);
-		if (!result) {
-			return "";
+	QStringList holeSize = m_modelPart->prop("hole size").toString().split(",");
+	if (holeSize.length() == 2) {
+		QString svg = makeSvg(holeSize.at(0), holeSize.at(1));
+		if (!svg.isEmpty()) {
+			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+			SvgFileSplitter splitter;
+			bool result = splitter.splitString(svg, xmlName);
+			if (!result) {
+				return "";
+			}
+			result = splitter.normalize(dpi, xmlName, blackOnly);
+			if (!result) {
+				return "";
+			}
+			return splitter.elementString(xmlName);
 		}
-		result = splitter.normalize(dpi, xmlName, blackOnly);
-		if (!result) {
-			return "";
-		}
-		return splitter.elementString(xmlName);
 	}
 
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);

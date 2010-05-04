@@ -44,6 +44,8 @@ $Date$
 static const int IndexCm = 0;
 static const int IndexIn = 1;
 
+static QString DefaultWidth = "";
+
 Ruler::Ruler( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
@@ -53,7 +55,10 @@ Ruler::Ruler( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIde
 	m_renderer = NULL;
 	QString w = modelPart->prop("width").toString();
 	if (w.isEmpty()) {
-		m_modelPart->setProp("width", modelPart->properties().value("width", "10cm"));
+		if (DefaultWidth.isEmpty()) {
+			DefaultWidth = modelPart->properties().value("width", "10cm");
+		}
+		m_modelPart->setProp("width", DefaultWidth);
 	}
 }
 
@@ -61,6 +66,9 @@ Ruler::~Ruler() {
 }
 
 void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLayers) {
+
+	// note this really isn't resizeMM but resizeUnits
+
 	Q_UNUSED(viewLayers);
 
 	qreal w = TextUtils::convertToInches(modelPart()->prop("width").toString());
@@ -170,8 +178,28 @@ QString Ruler::makeSvg(qreal inches) {
 			.arg(1000 - (h * 1000));
 	}
 
-	svg += "</g></svg>";
+	for (int i = 0; i <= inches * 10; i++) {
+		qreal x = (offset + (i / 10.0)) * 1000;
+		qreal h = .125 + (3.0 / 16);
+		qreal h2 = h - (cm / 4);
+		if (i % 10 != 0) {
+			if (i % 5 == 0) {
+				h2 = .125 +  (2.0 / 16);
+			}
+			svg += QString("<line x1='%1' y1='%2' x2='%1' y2='%3' />\n")
+				.arg(x)
+				.arg(1000 - (h * 1000))
+				.arg(1000 - (h2 * 1000));
+		}
+	}
 
+	svg += "<g font-size='40'>\n";
+	svg += QString("<text x='%1' y='%2'>1/10</text>").arg((1000 * offset / 2.0) + 7).arg(780);
+	svg += QString("<text x='%1' y='%2'>1/16</text>").arg((1000 * offset / 2.0) + 7).arg(990);
+	svg += "</g>";
+
+
+	svg += "</g></svg>";
 	return svg;
 }
 
@@ -263,6 +291,7 @@ void Ruler::widthEntry() {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		int units = (m_unitsEditor->currentText() == "cm") ? IndexCm : IndexIn;
+		DefaultWidth = edit->text() + m_unitsEditor->currentText();
 		infoGraphicsView->resizeBoard(edit->text().toDouble(), units, false);
 	}
 }
@@ -279,6 +308,7 @@ void Ruler::unitsEntry(const QString & units) {
 		m_widthEditor->setText(QString::number(inches * 2.54));
 		m_widthValidator->setTop(20 * 2.54);
 	}
+	DefaultWidth = modelPart()->prop("width").toString();
 }
 
 bool Ruler::stickyEnabled() {
@@ -293,3 +323,27 @@ ItemBase::PluralType Ruler::isPlural() {
 	return Singular;
 }
 
+
+QVariant Ruler::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	switch (change) {
+		case ItemSceneHasChanged:
+			if (this->scene()) {
+				LayerHash viewLayers;
+				QString w = modelPart()->prop("width").toString();
+				modelPart()->setProp("width", "");							// makes sure resizeMM will do the work
+				qreal inches = TextUtils::convertToInches(w);
+				if (w.endsWith("cm")) {
+					resizeMM(inches * 2.54, IndexCm, viewLayers);
+				}
+				else {
+					resizeMM(inches, IndexIn, viewLayers);
+				}
+			}
+			break;
+		default:
+			break;
+   	}
+
+    return PaletteItem::itemChange(change, value);
+}
