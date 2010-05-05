@@ -1733,6 +1733,10 @@ void PCBSketchWidget::designRulesCheck()
 	this->setLayerVisible(ViewLayer::Copper0, true);
 
 	foreach (QGraphicsItem * item, scene()->items()) {
+		if (!item->isVisible()) {
+			continue;
+		}
+
 		TraceWire * tw = dynamic_cast<TraceWire *>(item);
 		if (tw != NULL) {
 			checkItems.append(item);
@@ -1769,6 +1773,10 @@ void PCBSketchWidget::designRulesCheck()
 
 		QList<QGraphicsItem *> intersectingItems;
 		foreach (QGraphicsItem * candidate, scene()->items(poly)) {
+			if (!candidate->isVisible()) {
+				continue;
+			}
+
 			if (candidate == checkItem) continue;
 			if (candidate == checkItemParent) continue;
 			if (checkItemParent && candidate->parentItem() == checkItemParent) continue;
@@ -1804,6 +1812,9 @@ void PCBSketchWidget::designRulesCheck()
 		QHash<QGraphicsItem *, bool> visibility;
 		foreach (QGraphicsItem * item, scene()->items(polyBounds)) {
 			if (intersectingItems.contains(item)) continue;
+			if (!item->isVisible()) {
+				continue;
+			}
 
 			bool gotChild = false;
 			foreach (QGraphicsItem * childItem, item->childItems()) {
