@@ -24,6 +24,7 @@ $Date$
 
 ********************************************************************/
 
+#include <qmath.h>
 
 #include "pcbsketchwidget.h"
 #include "../debugdialog.h"
@@ -37,6 +38,7 @@ $Date$
 #include "../items/moduleidnames.h"
 #include "../help/sketchmainhelp.h"
 #include "../utils/ratsnestcolors.h"
+#include "../fsvgrenderer.h"
 
 #include <limits>
 
@@ -107,8 +109,6 @@ void PCBSketchWidget::addViewLayers() {
 	addPcbViewLayers();
 
 	// disable these for now
-	ViewLayer * viewLayer = m_viewLayers.value(ViewLayer::Vias);
-	viewLayer->action()->setEnabled(false);
 	//viewLayer = m_viewLayers.value(ViewLayer::Keepout);
 	//viewLayer->action()->setEnabled(false);
 }
@@ -1713,3 +1713,237 @@ ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(const LayerList & no
 	return ViewLayer::SilkscreenLabel;
 }
 
+
+void PCBSketchWidget::designRulesCheck() 
+{
+
+	// TODO: 
+	//	what about ground plane?
+	//	undo selection change
+
+	QList<QGraphicsItem *> checkItems;
+	QSet<ItemBase *> collidingItems;
+
+	scene()->clearSelection();
+	QColor color;
+	color = this->background();
+	this->setBackground(QColor::fromRgb(255,255,255,255));
+	this->saveLayerVisibility();
+	this->setAllLayersVisible(false);
+	this->setLayerVisible(ViewLayer::Copper0, true);
+
+	foreach (QGraphicsItem * item, scene()->items()) {
+		TraceWire * tw = dynamic_cast<TraceWire *>(item);
+		if (tw != NULL) {
+			checkItems.append(item);
+			continue;
+		}
+
+		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+		if (nonConnectorItem != NULL) {
+			checkItems.append(item);
+		}
+	}
+
+	qreal expandBy = .01 * FSvgRenderer::printerScale();
+	foreach (QGraphicsItem * checkItem, checkItems) {
+		QRectF r = checkItem->boundingRect();
+		r.adjust(-expandBy, -expandBy, expandBy, expandBy);
+		QPolygonF poly = checkItem->mapToScene(r);						// mapToScene does take transforms into account
+
+		QList<ConnectorItem *> equipotentialConnectorItems;
+		TraceWire * checkTraceWire = NULL;
+		QGraphicsItem * checkItemParent = checkItem->parentItem();
+		ConnectorItem * checkConnectorItem = dynamic_cast<ConnectorItem *>(checkItem);
+		if (checkConnectorItem) {
+			equipotentialConnectorItems.append(checkConnectorItem);
+		}
+		else {
+			checkTraceWire = dynamic_cast<TraceWire *>(checkItem);
+			if (checkTraceWire != NULL) {
+				equipotentialConnectorItems.append(checkTraceWire->connector0());
+			}
+		}
+	
+		ConnectorItem::collectEqualPotential(equipotentialConnectorItems, ViewGeometry::NoFlag);
+
+		QList<QGraphicsItem *> intersectingItems;
+		foreach (QGraphicsItem * candidate, scene()->items(poly)) {
+			if (candidate == checkItem) continue;
+			if (candidate == checkItemParent) continue;
+			if (checkItemParent && candidate->parentItem() == checkItemParent) continue;
+
+			TraceWire * tw = dynamic_cast<TraceWire *>(candidate);
+			if (tw != NULL) {
+				if (equipotentialConnectorItems.contains(tw->connector0())) continue;			// part of the same net; skip it
+
+				intersectingItems.append(candidate);
+				continue;
+			}
+
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(candidate);
+			if (connectorItem != NULL) {
+				DebugDialog::debug(QString("checking connector %1 %2").arg(connectorItem->connectorSharedName()).arg(connectorItem->attachedToTitle()));
+				if (equipotentialConnectorItems.contains(connectorItem)) continue;				// part of the same net; skip it
+
+				intersectingItems.append(candidate);
+				continue;
+			}
+
+
+			NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(candidate);
+			if (nonConnectorItem != NULL) {
+				intersectingItems.append(candidate);
+				continue;
+			}
+		}
+
+		if (intersectingItems.count() == 0) continue;
+
+		QRectF polyBounds = poly.boundingRect();
+		QHash<QGraphicsItem *, bool> visibility;
+		foreach (QGraphicsItem * item, scene()->items(polyBounds)) {
+			if (intersectingItems.contains(item)) continue;
+
+			bool gotChild = false;
+			foreach (QGraphicsItem * childItem, item->childItems()) {
+				if (intersectingItems.contains(childItem)) {
+					gotChild = true;
+					break;
+				}
+			}
+			if (gotChild) continue;
+
+			visibility.insert(item, item->isVisible());
+			item->setVisible(false);
+		}
+
+		foreach (QGraphicsItem * item, intersectingItems) {
+			foreach (QGraphicsItem * childItem, item->childItems()) {
+				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+				if (connectorItem == NULL) continue;
+
+				visibility.insert(connectorItem, true);
+				connectorItem->setVisible(false);
+			}
+
+			if (item->parentItem()) {
+				foreach (QGraphicsItem * childItem, item->parentItem()->childItems()) {
+					ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+					if (connectorItem == NULL) continue;
+
+					visibility.insert(connectorItem, true);
+					connectorItem->setVisible(false);
+				}
+			}		 
+		}
+
+		QSize sz(qCeil(polyBounds.width()), qCeil(polyBounds.height()));
+		QImage image(sz, QImage::Format_ARGB32);
+		QPainter painter;
+		painter.begin(&image);
+		scene()->render(&painter, image.rect(), polyBounds);
+		painter.end();
+
+		for (int x = 0; x < sz.width(); x++) {
+			for (int y = 0; y < sz.height(); y++) {
+				QRgb p = image.pixel(x, y);
+				if (p == 0xffffffff) {
+					image.setPixel(x, y, 0x00000000);
+				}
+				else {
+					image.setPixel(x, y, 0xffffffff);
+				}
+			}
+		}
+
+		image.save("testDesignRulePolyOther.png", "png");
+
+		foreach (QGraphicsItem * item, intersectingItems) {
+			item->setVisible(false);
+			visibility.insert(item, true);
+			if (item->parentItem()) {
+				visibility.insert(item->parentItem(), true);
+				item->parentItem()->setVisible(false);
+			}
+		}
+
+		checkItem->setVisible(true);
+		if (checkItemParent) {
+			checkItemParent->setVisible(true);
+		}
+		if (checkConnectorItem) {
+			checkConnectorItem->setVisible(false);
+			visibility.insert(checkConnectorItem, true);
+		}
+		else if (checkTraceWire) {
+			checkTraceWire->connector0()->setVisible(false);
+			checkTraceWire->connector1()->setVisible(false);
+			visibility.insert(checkTraceWire->connector0(), true);
+			visibility.insert(checkTraceWire->connector1(), true);
+		}
+		
+		QImage image2(sz, QImage::Format_ARGB32);
+		painter.begin(&image2);
+		scene()->render(&painter, image2.rect(), polyBounds);
+		painter.end();
+		for (int x = 0; x < sz.width(); x++) {
+			for (int y = 0; y < sz.height(); y++) {
+				QRgb p = image2.pixel(x, y);
+				if (p == 0xffffffff) {
+					image2.setPixel(x, y, 0x00000000);
+				}
+				else {
+					image2.setPixel(x, y, 0xffffffff);
+				}
+			}
+		}
+
+		poly = checkItem->mapToScene(checkItem->boundingRect());						
+		QRectF polyBounds2 = poly.boundingRect();
+
+		image2.save("testDesignRulePolySelf.png", "png");
+		qreal growAmountX = (expandBy + expandBy + polyBounds2.width()) * sz.width() / polyBounds2.width();
+		qreal growAmountY = (expandBy + expandBy + polyBounds2.height()) * sz.height() / polyBounds2.height();
+
+		QImage scaledImage = image2.scaled(growAmountX, growAmountY, Qt::KeepAspectRatio);
+		scaledImage.save("testDesignRuleScaled.png", "png");
+		
+		foreach (QGraphicsItem * item, visibility.keys()) {
+			item->setVisible(visibility.value(item, true));
+		}
+
+		int dx = (scaledImage.width() - sz.width()) / 2;
+		int dy = (scaledImage.height() - sz.height()) / 2;
+		for (int x = 0; x < sz.width(); x++) {
+			for (int y = 0; y < sz.height(); y++) {
+				QRgb c = image.pixel(x, y);
+				if (c != 0xffffffff) continue;
+
+				c = scaledImage.pixel(x + dx, y + dy);
+				if (c != 0xffffffff) continue;
+
+				QPointF p(x + polyBounds.left(), y + polyBounds.y());
+				foreach (QGraphicsItem * item, scene()->items(p)) {
+					if (intersectingItems.contains(item)) {
+						collidingItems.insert(dynamic_cast<ItemBase *>(item->parentItem() ? item->parentItem() : item));
+						collidingItems.insert(dynamic_cast<ItemBase *>(checkItemParent ? checkItemParent : checkItem));
+					}
+				}
+			}
+		}
+	}
+
+	this->setBackground(color);
+	this->restoreLayerVisibility();
+
+	foreach (ItemBase * itemBase, collidingItems) {
+		if (itemBase == NULL) {
+			DebugDialog::debug("design rules check weirdness--this is a bug");
+			continue;
+		}
+
+		itemBase->layerKinChief()->setSelected(true);
+	}
+
+}

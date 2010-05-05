@@ -4651,7 +4651,7 @@ void SketchWidget::addPcbViewLayers() {
 	layers << ViewLayer::Board << ViewLayer::GroundPlane 
 		<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
 		<< ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
-		/* << ViewLayer::Keepout */ << ViewLayer::Vias /* << ViewLayer::Soldermask */  
+		/* << ViewLayer::Keepout */ /* << ViewLayer::Soldermask */  
 		<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
 		<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
 		<< ViewLayer::Jumperwires 
@@ -5514,7 +5514,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 					SvgFileSplitter::fixStyleAttributeRecurse(root);
 					itemSvg = domDocument.toString();
 				}
-				if (fillHoles) {
+				if (false && fillHoles) {
 					QDomDocument domDocument;
 					QString errorStr;
 					int errorLine;
@@ -6408,4 +6408,8 @@ const LayerList & SketchWidget::defaultNotLayers() {
 	}
 
 	return ll;
+}
+
+void SketchWidget::designRulesCheck() 
+{
 }

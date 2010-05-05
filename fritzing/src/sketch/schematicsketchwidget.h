@@ -65,6 +65,7 @@ public:
 						  bool connect, bool doEmit, bool seekLayerKin,
 						  bool updateConnections);
 	double defaultGridSizeInches();
+	void designRulesCheck();
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);

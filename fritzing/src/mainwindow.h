@@ -250,6 +250,7 @@ protected slots:
 
 	void openProgramWindow();
 	void linkToProgramFile(const QString & filename, bool addLink);
+	void designRulesCheck();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -531,6 +532,7 @@ protected:
 	QAction *m_selectAllJumperItemsAct;
 	QAction *m_groundFillAct;
 	QAction *m_removeGroundFillAct;
+	QAction *m_designRulesCheckAct;
 	QAction *m_tidyWiresAct;
 	QAction *m_updateRatsnestAct;
 

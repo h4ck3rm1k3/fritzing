@@ -1603,6 +1603,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 	m_pcbTraceMenu->addAction(m_groundFillAct);
 	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
+	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
 #ifndef QT_NO_DEBUG
 	m_pcbTraceMenu->addAction(m_updateRatsnestAct);
 #endif
@@ -2031,6 +2032,7 @@ void MainWindow::updateTraceMenu() {
 	m_tidyWiresAct->setEnabled(twEnabled);
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
+	m_designRulesCheckAct->setEnabled(true);
 	m_updateRatsnestAct->setEnabled(true);
 
 }
@@ -2716,6 +2718,10 @@ void MainWindow::createTraceMenuActions() {
 	m_removeGroundFillAct = new QAction(tr("Remove Copper Fill"), this);
 	m_removeGroundFillAct->setStatusTip(tr("Remove the copper fill"));
 	connect(m_removeGroundFillAct, SIGNAL(triggered()), this, SLOT(removeGroundFill()));
+
+	m_designRulesCheckAct = new QAction(tr("Design Rules Check"), this);
+	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
+	connect(m_designRulesCheckAct, SIGNAL(triggered()), this, SLOT(designRulesCheck()));
 
 	m_updateRatsnestAct = new QAction(tr("Update ratsnest"), this);
 	m_updateRatsnestAct->setStatusTip(tr("Update ratsnest colors"));
@@ -3523,4 +3529,11 @@ void MainWindow::linkToProgramFile(const QString & filename, bool addLink) {
 			}
 		}
 	}
+}
+
+void MainWindow::designRulesCheck() 
+{
+	if (m_currentGraphicsView == NULL) return;
+
+	m_currentGraphicsView->designRulesCheck();
 }

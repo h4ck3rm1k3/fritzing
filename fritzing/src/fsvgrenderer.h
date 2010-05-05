@@ -80,6 +80,7 @@ protected:
 	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
 	void initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs);
 	ConnectorInfo * initConnectorInfo(QDomElement & connectorElement);
+	bool initConnectorInfoAux(QList<QDomElement> & connectorElements, ConnectorInfo * connectorInfo);
 	void initNonConnectorInfo(QDomDocument & domDocument);
 	void initNonConnectorInfoAux(QDomElement & element);
 	void initTerminalInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & terminalIDs);

@@ -422,19 +422,36 @@ ConnectorInfo * FSvgRenderer::initConnectorInfo(QDomElement & connectorElement) 
 	if (connectorElement.isNull()) return connectorInfo;
 
 	connectorInfo->matrix = SvgFileSplitter::elementToMatrix(connectorElement);
+	QList<QDomElement> stack;
+	stack.append(connectorElement);
+	initConnectorInfoAux(stack, connectorInfo);
+	return connectorInfo;
+}
 
+bool FSvgRenderer::initConnectorInfoAux(QList<QDomElement> & connectorElements, ConnectorInfo * connectorInfo) 
+{
+	if (connectorElements.isEmpty()) return false;
+
+	QDomElement connectorElement = connectorElements.takeFirst();
 	// right now we only handle circles
-	if (connectorElement.nodeName().compare("circle") != 0) return connectorInfo;
+	if (connectorElement.nodeName().compare("circle") != 0) {
+		QDomElement element = connectorElement.firstChildElement();
+		while (!element.isNull()) {
+			connectorElements.append(element);
+			element = element.nextSiblingElement();
+		}
+		return initConnectorInfoAux(connectorElements, connectorInfo);
+	}
 
 	bool ok;
 	qreal cx = connectorElement.attribute("cx").toDouble(&ok);
-	if (!ok) return connectorInfo;
+	if (!ok) return false;
 
 	qreal cy = connectorElement.attribute("cy").toDouble(&ok);
-	if (!ok) return connectorInfo;
+	if (!ok) return false;
 
 	qreal r = connectorElement.attribute("r").toDouble(&ok);
-	if (!ok) return connectorInfo;
+	if (!ok) return false;
 
 	qreal sw = connectorElement.attribute("stroke-width").toDouble(&ok);	
 	if (!ok) {
@@ -443,7 +460,7 @@ ConnectorInfo * FSvgRenderer::initConnectorInfo(QDomElement & connectorElement) 
 		//SvgFileSplitter::fixStyleAttribute(connectorElement, s, strokewidth);
 		sw = connectorElement.attribute("stroke-width").toDouble(&ok);
 		if (!ok) {
-			return connectorInfo;
+			return false;
 		}
 	}
 
@@ -451,7 +468,7 @@ ConnectorInfo * FSvgRenderer::initConnectorInfo(QDomElement & connectorElement) 
 	connectorInfo->bounds.setRect(cx - r - (sw / 2.0), cy - r - (sw / 2.0), (r * 2) + sw, (r * 2) + sw);
 	connectorInfo->radius = r;
 	connectorInfo->strokeWidth = sw;
-	return connectorInfo;
+	return true;
 }
 
 void FSvgRenderer::removeFromHash(const QString &moduleId, const QString filename) {

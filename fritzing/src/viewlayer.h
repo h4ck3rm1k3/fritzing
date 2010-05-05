@@ -60,7 +60,6 @@ public:
 		Copper0,
 		Copper0Trace,
 		Keepout,
-		Vias,
 		Soldermask,
 		Copper1,
 		Copper1Trace,

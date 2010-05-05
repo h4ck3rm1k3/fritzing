@@ -239,6 +239,8 @@ public:
 	virtual double defaultGridSizeInches();
 	void clearPasteOffset();
 	const LayerList & defaultNotLayers();
+	virtual void designRulesCheck();
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

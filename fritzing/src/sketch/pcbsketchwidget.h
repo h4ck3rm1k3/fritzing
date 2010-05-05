@@ -139,6 +139,7 @@ protected:
 	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
 	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
+	void designRulesCheck();
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
