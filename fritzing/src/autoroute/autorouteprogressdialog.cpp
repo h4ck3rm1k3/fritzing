@@ -58,61 +58,64 @@ void ArrowButton::mousePressEvent(QMouseEvent *event) {
 	}
 }
 
-
 /////////////////////////////////////
 
-AutorouteProgressDialog::AutorouteProgressDialog(ZoomableGraphicsView * view, QWidget *parent) : QDialog(parent) 
+AutorouteProgressDialog::AutorouteProgressDialog(const QString & title, bool zoomAndPan, bool stopButton, ZoomableGraphicsView * view, QWidget *parent) : QDialog(parent) 
 {
 	Qt::WindowFlags flags = windowFlags();
 	flags ^= Qt::WindowCloseButtonHint;
 	flags ^= Qt::WindowContextHelpButtonHint;
 	setWindowFlags(flags);
 
-	this->setWindowTitle(QObject::tr("Autorouting Progress..."));
+	this->setWindowTitle(title);
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 
 	m_progressBar = new QProgressBar(this);
 	vLayout->addWidget(m_progressBar);
+	
+	if (zoomAndPan) {
+		QGroupBox * groupBox = new QGroupBox(tr("zoom and pan"));
+		QHBoxLayout *lo2 = new QHBoxLayout(groupBox);
+		lo2->setSpacing(1);
+		lo2->setMargin(0);
+		lo2->addWidget(new ZoomControls(view, groupBox));
 
-	QGroupBox * groupBox = new QGroupBox(tr("zoom and pan"));
-	QHBoxLayout *lo2 = new QHBoxLayout(groupBox);
-	lo2->setSpacing(1);
-	lo2->setMargin(0);
-	lo2->addWidget(new ZoomControls(view, groupBox));
+		lo2->addSpacerItem(new QSpacerItem ( 10, 0, QSizePolicy::Expanding));
 
-	lo2->addSpacerItem(new QSpacerItem ( 10, 0, QSizePolicy::Expanding));
+		QFrame * frame = new QFrame();
+		QGridLayout *gridLayout = new QGridLayout(frame);
 
-	QFrame * frame = new QFrame();
-	QGridLayout *gridLayout = new QGridLayout(frame);
+		QString imgPath = ":/resources/images/icons/arrowButton%1.png";
+		ArrowButton * label = new ArrowButton(0, ScrollAmount, view, imgPath.arg("Up"));
+		gridLayout->addWidget(label, 0, 1);
 
-	QString imgPath = ":/resources/images/icons/arrowButton%1.png";
-	ArrowButton * label = new ArrowButton(0, ScrollAmount, view, imgPath.arg("Up"));
-	gridLayout->addWidget(label, 0, 1);
+		label = new ArrowButton(ScrollAmount, 0, view, imgPath.arg("Left"));
+		gridLayout->addWidget(label, 1, 0);
 
-	label = new ArrowButton(ScrollAmount, 0, view, imgPath.arg("Left"));
-	gridLayout->addWidget(label, 1, 0);
+		label = new ArrowButton(-ScrollAmount, 0, view, imgPath.arg("Right"));
+		gridLayout->addWidget(label, 1, 2);
 
-	label = new ArrowButton(-ScrollAmount, 0, view, imgPath.arg("Right"));
-	gridLayout->addWidget(label, 1, 2);
+		label = new ArrowButton(0, -ScrollAmount, view, imgPath.arg("Down"));
+		gridLayout->addWidget(label, 2, 1);
 
-	label = new ArrowButton(0, -ScrollAmount, view, imgPath.arg("Down"));
-	gridLayout->addWidget(label, 2, 1);
+		lo2->addWidget(frame);
 
-	lo2->addWidget(frame);
+		vLayout->addWidget(groupBox);
 
-	vLayout->addWidget(groupBox);
+		QPushButton * button = new QPushButton(tr("Skip current trace"), this);
+		connect(button, SIGNAL(clicked()), this, SLOT(sendSkip()));
+		vLayout->addWidget(button);
+	}
 
-	QPushButton * button = new QPushButton(tr("Skip current trace"), this);
-	connect(button, SIGNAL(clicked()), this, SLOT(sendSkip()));
-	vLayout->addWidget(button);
+	QDialogButtonBox * buttonBox = new QDialogButtonBox(stopButton ? QDialogButtonBox::Ok | QDialogButtonBox::Cancel : QDialogButtonBox::Cancel);
+	if (stopButton) {
+		buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Stop Now"));
+		connect(buttonBox, SIGNAL(accepted()), this, SLOT(sendStop()));
+	}
 
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
-	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Stop Now"));
-
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(sendCancel()));
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(sendStop()));
+	connect(buttonBox, SIGNAL(rejected()), this, SLOT(sendCancel()));
 
 	vLayout->addWidget(buttonBox);
 

@@ -37,7 +37,7 @@ class AutorouteProgressDialog : public QDialog
 Q_OBJECT
 
 public:
-	AutorouteProgressDialog(class ZoomableGraphicsView * view, QWidget *parent = 0);
+	AutorouteProgressDialog(const QString & title, bool zoomAndPan, bool stopButton, class ZoomableGraphicsView * view, QWidget *parent = 0);
 	~AutorouteProgressDialog();
 
 protected:

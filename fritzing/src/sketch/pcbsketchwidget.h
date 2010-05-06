@@ -141,6 +141,10 @@ protected:
 	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
 	void designRulesCheck();
 
+signals:
+	void setMaximumDRCProgress(int);
+	void setDRCProgressValue(int);
+
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
 	static void clearDistances();
@@ -148,6 +152,10 @@ protected:
 	static int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 	static void transitiveClosure(QVector< QVector<bool> > & adjacency, int count);
 	static int countMissing(QVector< QVector<bool> > & adjacency, int count);
+
+protected slots:
+	void cancelDRC();
+	void stopDRC();
 
 protected:
 	RoutingStatus m_routingStatus;
@@ -157,6 +165,7 @@ protected:
 	qreal m_jumperWidth;
 	QString m_traceColor;
 	CleanType m_cleanType;
+	bool m_cancelDRC;
 
 };
 

@@ -457,17 +457,16 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	else if (moduleID.compare(ModuleIDNames::rulerModuleIDName) == 0) {
 		type = ModelPart::Ruler;
 	}
-	else if (propertiesText.contains("arduino", Qt::CaseInsensitive)) {
-		LayerAttributes la;
-		if (la.getSvgElementID(domDocument, ViewIdentifierClass::PCBView, ViewLayer::Board)) {
-			type = ModelPart::Board;
-		}
-	}
 	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {
 		type = ModelPart::Breadboard;
 	}
 	else if (propertiesText.contains("plain vanilla pcb", Qt::CaseInsensitive)) {
-		type = ModelPart::ResizableBoard;
+		if (propertiesText.contains("shield", Qt::CaseInsensitive)) {
+			type = ModelPart::Board;
+		}
+		else {
+			type = ModelPart::ResizableBoard;
+		}
 	}
 
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);

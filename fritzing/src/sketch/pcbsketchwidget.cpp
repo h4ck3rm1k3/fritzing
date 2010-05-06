@@ -39,8 +39,10 @@ $Date$
 #include "../help/sketchmainhelp.h"
 #include "../utils/ratsnestcolors.h"
 #include "../fsvgrenderer.h"
+#include "../autoroute/autorouteprogressdialog.h"
 
 #include <limits>
+#include <QApplication>
 
 static const int MAX_INT = std::numeric_limits<int>::max();
 
@@ -1713,14 +1715,33 @@ ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(const LayerList & no
 	return ViewLayer::SilkscreenLabel;
 }
 
+void PCBSketchWidget::cancelDRC() {
+	m_cancelDRC = true;
+}
+
+void PCBSketchWidget::stopDRC() {
+}
 
 void PCBSketchWidget::designRulesCheck() 
 {
-
 	// TODO: 
 	//	what about ground plane?
-	//	undo selection change
 
+	m_cancelDRC = false;
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Design Rule Check (select items that are too close together)"));
+	SelectItemCommand * selectItemCommand = stackSelectionState(false, parentCommand);
+	setIgnoreSelectionChangeEvents(true);
+
+	AutorouteProgressDialog progress(tr("Design Rules Check Progress..."), false, false, this, this->window());
+	progress.setModal(true);
+	progress.show();
+
+	connect(&progress, SIGNAL(cancel()), this, SLOT(cancelDRC()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(stop()), this, SLOT(stopDRC()), Qt::DirectConnection);
+	connect(this, SIGNAL(setMaximumDRCProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
+	connect(this, SIGNAL(setDRCProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
+	QApplication::processEvents();
+	
 	QList<QGraphicsItem *> checkItems;
 	QSet<ItemBase *> collidingItems;
 
@@ -1749,8 +1770,15 @@ void PCBSketchWidget::designRulesCheck()
 		}
 	}
 
+	int progressSoFar = checkItems.count() / 10;
+	int maxProgress = checkItems.count() + progressSoFar;
+	emit setMaximumDRCProgress(maxProgress);
+	emit setDRCProgressValue(progressSoFar);
+
 	qreal expandBy = .01 * FSvgRenderer::printerScale();
 	foreach (QGraphicsItem * checkItem, checkItems) {
+		if (m_cancelDRC) break;
+
 		QRectF r = checkItem->boundingRect();
 		r.adjust(-expandBy, -expandBy, expandBy, expandBy);
 		QPolygonF poly = checkItem->mapToScene(r);						// mapToScene does take transforms into account
@@ -1773,6 +1801,10 @@ void PCBSketchWidget::designRulesCheck()
 
 		QList<QGraphicsItem *> intersectingItems;
 		foreach (QGraphicsItem * candidate, scene()->items(poly)) {
+			if (m_cancelDRC) break;
+			QApplication::processEvents();
+
+
 			if (!candidate->isVisible()) {
 				continue;
 			}
@@ -1806,8 +1838,14 @@ void PCBSketchWidget::designRulesCheck()
 			}
 		}
 
-		if (intersectingItems.count() == 0) continue;
+		if (m_cancelDRC) break;
 
+		if (intersectingItems.count() == 0) {
+			emit setDRCProgressValue(++progressSoFar);
+			continue;
+		}
+
+		QApplication::processEvents();
 		QRectF polyBounds = poly.boundingRect();
 		QHash<QGraphicsItem *, bool> visibility;
 		foreach (QGraphicsItem * item, scene()->items(polyBounds)) {
@@ -1868,7 +1906,7 @@ void PCBSketchWidget::designRulesCheck()
 			}
 		}
 
-		image.save("testDesignRulePolyOther.png", "png");
+		//image.save("testDesignRulePolyOther.png", "png");
 
 		foreach (QGraphicsItem * item, intersectingItems) {
 			item->setVisible(false);
@@ -1913,12 +1951,12 @@ void PCBSketchWidget::designRulesCheck()
 		poly = checkItem->mapToScene(checkItem->boundingRect());						
 		QRectF polyBounds2 = poly.boundingRect();
 
-		image2.save("testDesignRulePolySelf.png", "png");
+		//image2.save("testDesignRulePolySelf.png", "png");
 		qreal growAmountX = (expandBy + expandBy + polyBounds2.width()) * sz.width() / polyBounds2.width();
 		qreal growAmountY = (expandBy + expandBy + polyBounds2.height()) * sz.height() / polyBounds2.height();
 
 		QImage scaledImage = image2.scaled(growAmountX, growAmountY, Qt::KeepAspectRatio);
-		scaledImage.save("testDesignRuleScaled.png", "png");
+		//scaledImage.save("testDesignRuleScaled.png", "png");
 		
 		foreach (QGraphicsItem * item, visibility.keys()) {
 			item->setVisible(visibility.value(item, true));
@@ -1937,24 +1975,36 @@ void PCBSketchWidget::designRulesCheck()
 				QPointF p(x + polyBounds.left(), y + polyBounds.y());
 				foreach (QGraphicsItem * item, scene()->items(p)) {
 					if (intersectingItems.contains(item)) {
-						collidingItems.insert(dynamic_cast<ItemBase *>(item->parentItem() ? item->parentItem() : item));
-						collidingItems.insert(dynamic_cast<ItemBase *>(checkItemParent ? checkItemParent : checkItem));
+						ItemBase * itemBase = dynamic_cast<ItemBase *>(item->parentItem() ? item->parentItem() : item);
+						itemBase->setSelected(true);
+						collidingItems.insert(itemBase);
+						itemBase = dynamic_cast<ItemBase *>(checkItemParent ? checkItemParent : checkItem);
+						collidingItems.insert(itemBase);
+						itemBase->setSelected(true);
 					}
 				}
 			}
 		}
+		emit setDRCProgressValue(++progressSoFar);
+		QApplication::processEvents();
 	}
 
 	this->setBackground(color);
 	this->restoreLayerVisibility();
 
-	foreach (ItemBase * itemBase, collidingItems) {
-		if (itemBase == NULL) {
-			DebugDialog::debug("design rules check weirdness--this is a bug");
-			continue;
+	if (m_cancelDRC) {
+		selectItemCommand->undo();
+		delete parentCommand;
+		setIgnoreSelectionChangeEvents(false);
+
+	}
+	else {
+		setIgnoreSelectionChangeEvents(false);
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		foreach (ItemBase * itemBase, collidingItems) {
+			selectItemCommand->addRedo(itemBase->layerKinChief()->id());
 		}
 
-		itemBase->layerKinChief()->setSelected(true);
+		m_undoStack->push(parentCommand);
 	}
-
 }
