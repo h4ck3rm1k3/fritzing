@@ -22,7 +22,7 @@
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/basic-diode.svg" >
+   <layers image="breadboard/basic_diode.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
