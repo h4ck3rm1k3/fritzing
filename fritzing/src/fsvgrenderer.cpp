@@ -164,7 +164,9 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 		if (!setColor.isEmpty()) {
 			QDomElement element = TextUtils::findElementWithAttribute(root, "id", colorElementID);
 			if (!element.isNull()) {
-				SvgFileSplitter::fixColorRecurse(element, setColor);
+				QStringList exceptions;
+				exceptions << "black" << "#000000";
+				SvgFileSplitter::fixColorRecurse(element, setColor, exceptions);
 				cleanContents = TextUtils::removeXMLEntities(doc.toString()).toUtf8();
 			}
 		}

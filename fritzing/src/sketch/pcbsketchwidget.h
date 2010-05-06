@@ -76,6 +76,7 @@ public:
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
 	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus &);
+	void designRulesCheck();
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -139,7 +140,7 @@ protected:
 	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
 	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
-	void designRulesCheck();
+	void setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility);
 
 signals:
 	void setMaximumDRCProgress(int);

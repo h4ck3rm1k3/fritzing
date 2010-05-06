@@ -757,13 +757,21 @@ QString KicadModule2Svg::drawCPad(int posX, int posY, int xSize, int ySize, int 
 
 	if (drillX == drillY) {
 		qreal w = (xSize - drillX) / 2.0;
-		return QString("<circle cx='%1' cy='%2' r='%3' %4 stroke-width='%5' stroke='%6' fill='none' />")
+		QString pad = QString("<g %1>").arg(id);
+		pad += QString("<circle cx='%1' cy='%2' r='%3' stroke-width='%4' stroke='%5' fill='none' />")
 							.arg(posX)
 							.arg(posY)
 							.arg((drillX / 2.0) + (w / 2))
-							.arg(id)
 							.arg(w)
 							.arg(color);
+		if (drillX > 500) {
+			pad += QString("<circle cx='%1' cy='%2' r='%3' stroke-width='0' fill='black' drill='0' />")
+										.arg(posX)
+										.arg(posY)
+										.arg(drillX / 2.0);
+		}
+		pad += "</g>";
+		return pad;
 	}
 
 

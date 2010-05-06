@@ -966,13 +966,36 @@ void SvgFileSplitter::fixStyleAttributeRecurse(QDomElement & element) {
 	}
 }
 
-void SvgFileSplitter::fixColorRecurse(QDomElement & element, const QString & newColor) {
+void SvgFileSplitter::fixColorRecurse(QDomElement & element, const QString & newColor, const QStringList & exceptions) {
 	fixStyleAttribute(element);
-	setStrokeOrFill(element, true, newColor);
+	bool gotException = false;
+	foreach (QString e, exceptions) {
+		QString s = element.attribute("stroke");
+		QString f = element.attribute("fill");
+		if (s.isEmpty()) {
+			if (f.isEmpty()) {
+				gotException = true;			// not really, but saves a little extra processing time
+			}
+			else {
+				gotException = exceptions.contains(f);
+			}
+		}
+		else {		
+			if (f.isEmpty()) {
+				gotException = exceptions.contains(s);
+			}
+			else {
+				gotException = exceptions.contains(s) && exceptions.contains(f);
+			}
+		}
+	}
+	if (!gotException) {
+		setStrokeOrFill(element, true, newColor);
+	}
 
 	QDomElement childElement = element.firstChildElement();
 	while (!childElement.isNull()) {
-		fixColorRecurse(childElement, newColor);
+		fixColorRecurse(childElement, newColor, exceptions);
 		childElement = childElement.nextSiblingElement();
 	}
 }

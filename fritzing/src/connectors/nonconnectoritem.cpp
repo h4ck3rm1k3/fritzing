@@ -43,6 +43,7 @@ NonConnectorItem::NonConnectorItem(ItemBase * attachedTo) : QGraphicsRectItem(at
 	m_radius = m_strokeWidth = 0;
 	m_circular = false;
 	m_hidden = false;
+	m_white = false;
 	m_attachedTo = attachedTo;
     setAcceptHoverEvents(false);
 	setAcceptedMouseButtons(Qt::NoButton);
@@ -59,7 +60,13 @@ ItemBase * NonConnectorItem::attachedTo() {
 }
 
 void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
-	if (m_hidden  || !m_paint) return;
+	if (m_white) {
+		qreal pw = (m_negativePenWidth < 0) ? m_negativePenWidth + 1 : pen().width() + 1;
+		painter->fillRect(rect().adjusted(-pw, -pw, pw, pw), QColor(255, 255, 255, 255));
+		return;
+	}
+
+	if (m_hidden || !m_paint) return;
 
 	painter->setOpacity(m_opacity);
 	if (m_circular) {
@@ -137,3 +144,7 @@ void NonConnectorItem::setShape(QPainterPath & pp) {
 	m_shape = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(pp, pen(), 1);
 }
 
+void NonConnectorItem::setWhite(bool white) {
+	m_white = white;
+	update();
+}

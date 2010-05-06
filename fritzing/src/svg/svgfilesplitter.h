@@ -71,7 +71,7 @@ public:
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
 	static void fixStyleAttributeRecurse(QDomElement & element);
-	static void fixColorRecurse(QDomElement & element, const QString & newColor);
+	static void fixColorRecurse(QDomElement & element, const QString & newColor, const QStringList & exceptions);
 	static void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
     static QList<qreal> getTransformFloats(QDomElement & element);
 	static QList<qreal> getTransformFloats(const QString & transform);

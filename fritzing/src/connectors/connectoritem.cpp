@@ -877,4 +877,3 @@ bool ConnectorItem::isGrounded() {
 	return ((name.compare("gnd", Qt::CaseInsensitive) == 0) || 
 			(name.compare("ground", Qt::CaseInsensitive) == 0));
 }
-

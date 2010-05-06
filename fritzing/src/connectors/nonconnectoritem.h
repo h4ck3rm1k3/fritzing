@@ -53,6 +53,7 @@ public:
 	qreal radius();
 	qreal strokeWidth();
 	void setShape(QPainterPath &);
+	void setWhite(bool);
 
 protected:
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
@@ -68,6 +69,7 @@ protected:
 	qreal m_strokeWidth;
 	qreal m_negativePenWidth;
 	QPainterPath m_shape;
+	bool m_white;
 	
 };
 

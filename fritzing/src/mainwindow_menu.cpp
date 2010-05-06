@@ -1513,7 +1513,7 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportBomAct);
 	m_exportMenu->addAction(m_exportEtchableAct);
 	m_exportMenu->addAction(m_exportEtchableSvgAct);
-	m_exportMenu->addAction(m_exportEagleAct);
+	//m_exportMenu->addAction(m_exportEagleAct);
 	m_exportMenu->addAction(m_exportGerberAct);
 	m_exportMenu->addAction(m_exportNetlistAct);
 
