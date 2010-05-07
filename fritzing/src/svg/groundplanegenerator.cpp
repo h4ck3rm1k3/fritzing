@@ -41,6 +41,8 @@ $Date$
 #define MINYSECTION 4
 #define MILS 10			// operate on a 10 mil scale
 
+QString GroundPlaneGenerator::ConnectorName = "connector0pad";
+
 GroundPlaneGenerator::GroundPlaneGenerator()
 {
 }
@@ -107,11 +109,11 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	scanImage(image, bWidth, bHeight, MILS, res, ViewLayer::Copper0Color, "groundplane");
+	scanImage(image, bWidth, bHeight, MILS, res, ViewLayer::Copper0Color, "groundplane", true);
 	return true;
 }
 
-void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName)  
+void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector)  
 {
 	QList<QRect> rects;
 	scanLines(image, bWidth, bHeight, rects);
@@ -127,7 +129,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 
 		// note: there is always one
 		joinScanLines(newRects, polygons);
-		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName);
+		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight, pixelFactor, colorString, layerName, makeConnector);
 		m_newSVGs.append(pSvg);
 
 		/*
@@ -437,7 +439,7 @@ void GroundPlaneGenerator::joinScanLines(QList<QRect> & rects, QList<QPolygon> &
 	}
 }
 
-QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName) 
+QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnector) 
 {
 	QString pSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
 		.arg(bWidth / res)
@@ -445,20 +447,78 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res,
 		.arg(bWidth * pixelFactor)
 		.arg(bHeight * pixelFactor);
 	pSvg += QString("<g id='%1'>\n").arg(layerName);
-	pSvg += "<g id='connector0pad'>\n";
-	foreach (QPolygon poly, polygons) {
-		pSvg += QString("<polygon fill='%1' points='\n").arg(colorString);
-		int space = 0;
-		foreach (QPoint p, poly) {
-			pSvg += QString("%1,%2 %3").arg(p.x()).arg(p.y()).arg((++space % 8 == 0) ?  "\n" : "");
+	if (makeConnector) {
+		QList<qreal> areas;
+		qreal divisor = res * pixelFactor * res * pixelFactor;
+		foreach (QPolygon poly, polygons) {
+			areas.append(calcArea(poly) / divisor);
 		}
-		pSvg += "'/>\n";
+		
+		int useIndex = -1;
+		for (int i = 0; i < areas.count(); i++) {
+			if (areas.at(i) > 0.1 && areas.at(i) < 0.25) {
+				useIndex = i;
+				break;
+			}
+		}
+		if (useIndex < 0) {
+			for (int i = 0; i < areas.count(); i++) {
+				if (areas.at(i) > 0.1) {
+					useIndex = i;
+					break;
+				}
+			}
+		}
+		if (useIndex < 0) {
+			pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
+			foreach (QPolygon poly, polygons) {
+				pSvg += makeOnePoly(poly, colorString);
+			}
+			pSvg += "</g>";
+		}
+		else {
+			for (int i = 0; i < polygons.count(); i++) {
+				if (i == useIndex) {
+					pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
+					pSvg += makeOnePoly(polygons.at(i), colorString);
+					pSvg += "</g>";
+				}
+				else {
+					pSvg += makeOnePoly(polygons.at(i), colorString);
+				}
+			}
+		}
 	}
-	pSvg += "</g></g>\n</svg>\n";
+	else {
+		foreach (QPolygon poly, polygons) {
+			pSvg += makeOnePoly(poly, colorString);
+		}
+	}
+
+	pSvg += "</g>\n</svg>\n";
 
 	return pSvg;
 }
 
+qreal GroundPlaneGenerator::calcArea(QPolygon & poly) {
+	qreal total = 0;
+	for (int ix = 0; ix < poly.count(); ix++) {
+		QPoint p0 = poly.at(ix);
+		QPoint p1 = poly.at((ix + 1) % poly.count());
+		total += (p0.x() * p1.y() - p1.x() * p0.y());
+	}
+	return qAbs(total / 2.0);
+}
+
+QString GroundPlaneGenerator::makeOnePoly(const QPolygon & poly, const QString & colorString) {
+	QString polyString = QString("<polygon fill='%1' points='\n").arg(colorString);
+	int space = 0;
+	foreach (QPoint p, poly) {
+		polyString += QString("%1,%2 %3").arg(p.x()).arg(p.y()).arg((++space % 8 == 0) ?  "\n" : "");
+	}
+	polyString += "'/>\n";
+	return polyString;
+}
 
 const QStringList & GroundPlaneGenerator::newSVGs() {
 	return m_newSVGs;

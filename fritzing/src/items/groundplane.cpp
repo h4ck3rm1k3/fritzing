@@ -30,6 +30,9 @@ $Date$
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
 #include "../svg/svgfilesplitter.h"
+#include "../svg/groundplanegenerator.h"
+
+#include <QPainterPathStroker>
 
 /////////////////////////////////////////////////////////
 
@@ -149,10 +152,20 @@ void GroundPlane::setSvgAux(const QString & svg) {
 			setSharedRenderer(m_renderer);
 		}
 
-		QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), xmlName);
+		QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), GroundPlaneGenerator::ConnectorName);
 		if (m_connector0) {
 			m_connector0->setRect(this->boundingRect());
-			m_connector0->setShape(painterPath);  // can this be made hollow?
+			//QMatrix m;
+			//m.scale(0.75, 0.75);
+			//QPainterPath pp = m.map(painterPath);
+			//m_connector0->setShape(pp);  // can this be made hollow?
+
+			//QPainterPathStroker stroker;
+			//stroker.setWidth(10);
+			//QPainterPath pp = stroker.createStroke(painterPath);
+			//m_connector0->setShape(pp);
+
+			m_connector0->setShape(painterPath);
 		}
 		this->setShape(painterPath);  
 

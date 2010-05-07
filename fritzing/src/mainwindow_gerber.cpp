@@ -265,7 +265,7 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QS
 		//image.save("output.png");
 
 		GroundPlaneGenerator gpg;
-		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen");
+		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen", false);
 		foreach (QString gsvg, gpg.newSVGs()) {
 			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg);
 		}

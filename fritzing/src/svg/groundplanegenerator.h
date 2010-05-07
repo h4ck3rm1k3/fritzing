@@ -44,14 +44,18 @@ public:
 
 	bool start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, QGraphicsItem * board, qreal res); 
 	const QStringList & newSVGs();
-	void scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName);  
+	void scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector);  
 
+public:
+	static QString ConnectorName;
 
 protected:
 	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects);
 	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
 	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
-	QString makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName);
+	QString makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnector);
+	QString makeOnePoly(const QPolygon & poly, const QString & colorString);
+	qreal calcArea(QPolygon & poly);
 
 protected:
 	QStringList m_newSVGs;
