@@ -678,7 +678,8 @@ void HtmlInfoView::clearPropThingPlugin(PropThing * propThing)
 {
 	if (propThing->m_plugin) {
 		propThing->m_layout->removeWidget(propThing->m_plugin);
-		delete propThing->m_plugin;
+                // TODO: probably a memory leak here
+                propThing->m_plugin->setVisible(false);
 		propThing->m_plugin = NULL;		
 	}
 }
