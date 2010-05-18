@@ -26,14 +26,12 @@ $Date$
 
 #include <QWebFrame>
 #include <QBuffer>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QSettings>
-#include <QLabel>
 #include <QPalette>
+#include <QFormLayout>
 
 #include "htmlinfoview.h"
-#include "infoviewwebpage.h"
 #include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
 #include "../connectors/connectorshared.h"
@@ -41,19 +39,20 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../dockmanager.h"
 #include "../utils/flineedit.h"
+#include "../utils/expandableview.h"
 
 
 #define HTML_EOF "</body>\n</html>"
-
-QString HtmlInfoView::PropsBlockId = "props_id";
-QString HtmlInfoView::TagsBlockId = "tags_id";
-QString HtmlInfoView::ConnsBlockId = "conns_id";
 
 QPixmap * NoIcon = NULL;
 
 const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
 const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
 const int IconSpace = 3;
+
+QString HtmlInfoView::PropsBlockId = "props_id";
+QString HtmlInfoView::TagsBlockId = "tags_id";
+QString HtmlInfoView::ConnsBlockId = "conns_id";
 
 /////////////////////////////////////
 
@@ -75,20 +74,24 @@ QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
 
 HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent) 
 {
-        this->setWidgetResizable(true);
-        QFrame * mainFrame = new QFrame(this);
+    this->setWidgetResizable(true);
+    QFrame * mainFrame = new QFrame(this);
 	mainFrame->setObjectName("infoViewMainFrame");
 
+	m_partTitle = NULL;
+	m_partVersion = NULL;
+	m_connDescr = NULL;
+	m_tagsLabel = NULL;
 	m_lastSwappingEnabled = false;
 	m_lastItemBase = NULL;
 	m_infoGraphicsView = NULL;
 	m_setContentTimer.setSingleShot(true);
 	m_setContentTimer.setInterval(10);
 	connect(&m_setContentTimer, SIGNAL(timeout()), this, SLOT(setContent()));
-	QVBoxLayout *lo = new QVBoxLayout(mainFrame);
-	lo->setMargin(0);
-	lo->setSpacing(0);
-	lo->setSizeConstraint( QLayout::SetMinAndMaxSize );
+	QVBoxLayout *vlo = new QVBoxLayout(mainFrame);
+	vlo->setMargin(0);
+	vlo->setSpacing(0);
+	vlo->setSizeConstraint( QLayout::SetMinAndMaxSize );
 
         /* Part Title */
 
@@ -102,7 +105,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 
 	setInstanceTitleColors(m_titleEdit, QColor(0xb3, 0xb3, 0xb3), QColor(0x57, 0x57, 0x57));
 	m_titleEdit->setAutoFillBackground(true);
-	lo->addWidget(m_titleEdit);
+	vlo->addWidget(m_titleEdit);
 
         /* Part Icons */
 
@@ -110,8 +113,8 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 		NoIcon = new QPixmap(":/resources/images/icons/noicon.png");
 	}
 
-	QFrame * frame = new QFrame(mainFrame);
-	frame->setObjectName("IconFrame");
+	QFrame * iconFrame = new QFrame(mainFrame);
+	iconFrame->setObjectName("IconFrame");
 
 	QHBoxLayout * hboxLayout = new QHBoxLayout();
 	hboxLayout->setContentsMargins (0, 0, 0, 0);
@@ -119,54 +122,88 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_icon1 = addLabel(hboxLayout, NoIcon);
 	m_icon2 = addLabel(hboxLayout, NoIcon);
 	m_icon3 = addLabel(hboxLayout, NoIcon);
+	m_location = new QLabel();
+	hboxLayout->addWidget(m_location);
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
 	hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
-	frame->setLayout(hboxLayout);
-	lo->addWidget(frame);
+	iconFrame->setLayout(hboxLayout);
+	vlo->addWidget(iconFrame);
 
-        /* Part Properties (WebKit) */
+	QFrame * tFrame = new QFrame(mainFrame);
+	hboxLayout = new QHBoxLayout();
+	hboxLayout->setContentsMargins (0, 0, 0, 0);
+	m_partTitle = new QLabel(tFrame);
+	m_partTitle->setObjectName("partTitle");
+	hboxLayout->addWidget(m_partTitle);
+	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
+	hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
+	m_partVersion = new QLabel(tFrame);
+	m_partVersion->setObjectName("partTitle");
+	hboxLayout->addWidget(m_partVersion);
+	tFrame->setLayout(hboxLayout);
+	vlo->addWidget(tFrame);
 
-	m_webView = new QWebView(mainFrame);
-	m_webView->setObjectName("infoViewWebView");
-	
-	m_infoViewWebPage = new InfoViewWebPage(this, m_webView);
-	m_webView->setPage(m_infoViewWebPage);
-	lo->addWidget(m_webView);
+	ExpandableView * pev = new ExpandableView(tr("Properties"), this);
+	pev->setProperty("blockid", PropsBlockId);
+	connect(pev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
+	QFrame * propFrame = new QFrame(this);
+	m_propLayout = new QGridLayout(propFrame);
+	m_propLayout->setMargin(0);
+	propFrame->setLayout(m_propLayout);
+	pev->setChildFrame(propFrame);
+	vlo->addWidget(pev);
 
-	mainFrame->setLayout(lo);
+	ExpandableView * tev = new ExpandableView(tr("Tags"), this);
+	tev->setProperty("blockid", TagsBlockId);
+	connect(tev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
+	m_tagsLabel = new QLabel(this);
+	tev->setChildFrame(m_tagsLabel);
+	vlo->addWidget(tev);
+
+	ExpandableView * cev = new ExpandableView(tr("Connections"), this);
+	cev->setProperty("blockid", ConnsBlockId);
+	connect(cev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
+	QFrame * connFrame = new QFrame(this);
+	QFormLayout * connLayout = new QFormLayout(propFrame);
+	connLayout->setMargin(0);
+	connLayout->setLabelAlignment(Qt::AlignLeft);
+	connFrame->setLayout(connLayout);
+
+	QLabel * descrLabel = new QLabel(tr("conn."), this);
+	descrLabel->setObjectName("connectionsLabel");
+	m_connDescr = new QLabel(this);
+	connLayout->addRow(descrLabel, m_connDescr);
+
+	QLabel * nameLabel = new QLabel(tr("name"), this);
+	nameLabel->setObjectName("connectionsLabel");
+	m_connName = new QLabel(this);
+	connLayout->addRow(nameLabel, m_connName);
+
+	QLabel * typeLabel = new QLabel(tr("type"), this);
+	typeLabel->setObjectName("connectionsLabel");
+	m_connType = new QLabel(this);
+	connLayout->addRow(typeLabel, m_connType);
+
+	cev->setChildFrame(connFrame);
+	vlo->addWidget(cev);
+
+	mainFrame->setLayout(vlo);
 
 	this->setWidget(mainFrame);
-
-	m_webView->setContextMenuPolicy(Qt::PreventContextMenu);
-	m_includes = "";
-
-	QFile styleSheet(":/resources/styles/infoview.css");
-	if (!styleSheet.open(QIODevice::ReadOnly)) {
-		qWarning("Unable to open :/resources/styles/infoview.css");
-	} else {
-		m_includes += QString("<style>\n%1\n</style>\n").arg(QString(styleSheet.readAll()));
-	}
-
-	QFile javascript(":/resources/js/infoview.js");
-	if (!javascript.open(QIODevice::ReadOnly)) {
-		qWarning("Unable to open :/resources/js/infoview.js");
-	} else {
-		m_includes += QString("<script language='JavaScript'>\n%1\n</script>\n").arg(QString(javascript.readAll()));
-	}
-
-	// TODO Mariano: not working this way
-	//m_includes = "\t<link rel'stylesheet' type='text/css' href='/resources/styles/infoview.css' />\n";
-	//m_includes+= "\t<script src=':/resources/js/infoview.js' type='text/javascript'></script>\n";
 
 	m_currentItem = NULL;
 	m_currentSwappingEnabled = false;
 
-	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
-
 	QSettings settings;
-	m_blocksVisibility[PropsBlockId] = settings.value(settingsBlockVisibilityName(PropsBlockId),true).toBool();
-	m_blocksVisibility[TagsBlockId] = settings.value(settingsBlockVisibilityName(TagsBlockId),true).toBool();
-	m_blocksVisibility[ConnsBlockId] = settings.value(settingsBlockVisibilityName(ConnsBlockId),true).toBool();
+	if (!settings.value(settingsBlockVisibilityName(PropsBlockId),true).toBool()) {
+		pev->expanderClicked();
+	}
+	if (!settings.value(settingsBlockVisibilityName(TagsBlockId),true).toBool()) {
+		tev->expanderClicked();
+	}
+	if (!settings.value(settingsBlockVisibilityName(ConnsBlockId),true).toBool()) {
+		cev->expanderClicked();
+	}
 }
 
 HtmlInfoView::~HtmlInfoView() {
@@ -197,39 +234,43 @@ void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphics
 
 }
 
-void HtmlInfoView::viewConnectorItemInfo(InfoGraphicsView * infoGraphicsView, ConnectorItem * item, bool swappingEnabled) {
-	if (item->attachedTo() != m_lastItemBase) return;
+void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * connectorItem) {
+	Connector * connector = NULL;
+	ConnectorShared * connectorShared = NULL;
+	if (connectorItem) {
+		if (connectorItem->attachedTo() != m_lastItemBase) {
+			return;
+		}
 
-	Connector * connector = item->connector();
-	if (connector == NULL) return;
+		connector = connectorItem->connector();
+		connectorShared = connector->connectorShared();
+	
+		QPointF p = connectorItem->sceneAdjustedTerminalPoint(NULL);
+		m_location->setText(QString("%1 (%2,%3)").arg(m_location->text()).arg(p.x()).arg(p.y()));
+	}
 
-	ConnectorShared * connectorShared = connector->connectorShared();
-	if (connectorShared == NULL) return;
+	if (m_connDescr) {
+		m_connDescr->setText(connectorItem ? tr("connected to %n item(s)", "", connectorItem->connectionsCount()) : "");
+		m_connName->setText(connectorShared ? connectorShared->name() : "");
+		m_connType->setText(connector ? Connector::connectorNameFromType(connector->connectorType()) : "");
+	}
 
-	QString s = appendStuff(item->attachedTo(), swappingEnabled);
-	s += "<div class='block'>";
-	s += blockHeader(tr("Connections"),ConnsBlockId);
-	s += blockContainer(ConnsBlockId);
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("conn.")).arg(tr("connected to %n item(s)", "", item->connectionsCount()));
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("name")).arg(connectorShared->name());
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("type")).arg(Connector::connectorNameFromType(connector->connectorType()));
-	s += 		 "</table></div>\n";
-	s += "</div>";
-
-	setCurrentItem(item->attachedTo());
-	m_infoGraphicsView = infoGraphicsView;
-	setContent(s);
 }
 
 void HtmlInfoView::hoverEnterConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem * item, bool swappingEnabled) {
 	Q_UNUSED(event)
-	viewConnectorItemInfo(igv, item, swappingEnabled);
+	//QString s = appendStuff(connectorItem->attachedTo(), swappingEnabled);
+	//setCurrentItem(item->attachedTo());
+	//m_infoGraphicsView = infoGraphicsView;
+	//setContent(s);
+
+	viewConnectorItemInfo(item);
 }
 
 void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem *connItem) {
-	Q_UNUSED(igv);
 	Q_UNUSED(event);
 	Q_UNUSED(connItem);
+	viewConnectorItemInfo(NULL);
 }
 
 void HtmlInfoView::viewItemInfoAux(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
@@ -241,27 +282,26 @@ void HtmlInfoView::viewItemInfoAux(InfoGraphicsView * infoGraphicsView, ItemBase
 
 	m_currentSwappingEnabled = swappingEnabled;
 
-	QString s = appendStuff(item,swappingEnabled);
+	appendStuff(item, swappingEnabled);
 	setCurrentItem(item);
 	m_infoGraphicsView = infoGraphicsView;
-	setContent(s);
 }
 
-QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
+void HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
 	Wire *wire = dynamic_cast<Wire*>(item);
-	if(wire) {
-		return appendWireStuff(wire, wire->id(), swappingEnabled);
+	if (wire) {
+		appendWireStuff(wire, swappingEnabled);
 	} else {
-		return appendItemStuff(item, item->id(), swappingEnabled);
+		appendItemStuff(item, swappingEnabled);
 	}
 }
 
-QString HtmlInfoView::appendWireStuff(Wire* wire, long id, bool swappingEnabled) {
-	if (wire == NULL) return "missing base";
+void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
+	if (wire == NULL) return;
 
 	ModelPart *modelPart = wire->modelPart();
-	if (modelPart == NULL) return "missing modelpart";
-	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
+	if (modelPart == NULL) return;
+	if (modelPart->modelPartShared() == NULL) return;
 
 	QString autoroutable = wire->getAutoroutable() ? tr("(autoroutable)") : "";
 	QString nameString = tr("Wire");
@@ -275,80 +315,35 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id, bool swappingEnabled)
 
 	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
+	m_location->setText(QString("(%1,%2)").arg(wire->pos().x()).arg(wire->pos().y()));
 
-	QString s = "";
-	s += partTitle(nameString, modelPart->version());
+	partTitle(nameString, modelPart->version());
 
-	s += "<div class='block'>";
-	s += blockHeader(tr("Properties"),PropsBlockId);
-	s += blockContainer(PropsBlockId);
-#ifndef QT_NO_DEBUG
-	s += idString(id, modelPart->moduleID());
-#else
-	Q_UNUSED(id);
-#endif
-	displayProps(modelPart, wire, swappingEnabled, s);
-	addTags(modelPart, s);
+	displayProps(modelPart, wire, swappingEnabled);
+	addTags(modelPart);
 
-	return s;
 }
 
-QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnabled) {
-	if (base == NULL) return "missing base";
+void HtmlInfoView::appendItemStuff(ItemBase* base, bool swappingEnabled) {
+	if (base == NULL) return;
 
-	return appendItemStuff(base, base->modelPart(), id, swappingEnabled, base->isPartLabelVisible());
+	appendItemStuff(base, base->modelPart(), swappingEnabled, base->isPartLabelVisible());
 }
 
-QString HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, long id, bool swappingEnabled,bool labelIsVisible) {
+void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, bool swappingEnabled, bool labelIsVisible) {
 	Q_UNUSED(labelIsVisible);
 
-	if (modelPart == NULL) return "missing modelpart";
-	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
+	if (modelPart == NULL) return;
+	if (modelPart->modelPartShared() == NULL) return;
 
 	setUpTitle(itemBase);
 	setUpIcons(modelPart);
+	m_location->setText(QString("(%1,%2)").arg(itemBase->pos().x()).arg(itemBase->pos().y()));
 
-	QString s = "";
-	s += partTitle((itemBase) ? itemBase->title() : modelPart->title(), modelPart->version());
+	partTitle((itemBase) ? itemBase->title() : modelPart->title(), modelPart->version());
 
-	s += "<div class='block'>";
-	s += blockHeader(tr("Properties"),PropsBlockId);
-	s += blockContainer(PropsBlockId);
-#ifndef QT_NO_DEBUG
-	s += idString(id, modelPart->moduleID());
-	if (itemBase) {
-		PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
-		if (paletteItemBase != NULL) {
-			QString svgpath = paletteItemBase->filename();
-			if (!svgpath.isEmpty()) {
-				s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("svg").arg(svgpath);
-			}
-		}
-	}
-	else {
-		FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);
-		if (renderer != NULL) {
-			QString iconpath = renderer->filename();
-			if (!iconpath.isEmpty()) {
-				s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("svg").arg(iconpath);
-			}
-		}
-	}
-	if (modelPart->modelPartShared()) {
-		QString fzppath = modelPart->path();
-		if (!fzppath.isEmpty()) {
-			s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("fzp").arg(fzppath);
-		}
-	}
-
-#else
-	Q_UNUSED(id)
-#endif
-
-	displayProps(modelPart, itemBase, swappingEnabled, s);
-	addTags(modelPart, s);
-
-	return s;
+	displayProps(modelPart, itemBase, swappingEnabled);
+	addTags(modelPart);
 }
 
 void HtmlInfoView::setContent(const QString &html) {
@@ -367,9 +362,6 @@ void HtmlInfoView::setContent() {
 
 	//DebugDialog::debug("html info view set content");
 
-	QString fileContent = QString(QString("<html>\n%1<body>\n%2")+HTML_EOF).arg(m_includes).arg(m_content);
-	m_webView->setHtml(fileContent);
-	m_savedContent = m_content;
 
 	/*QFile file("/tmp/infoview.html");
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -386,7 +378,6 @@ QSize HtmlInfoView::sizeHint() const {
 
 void HtmlInfoView::setCurrentItem(ItemBase * item) {
 	m_currentItem = item;
-	m_infoViewWebPage->setCurrentItem(item);
 }
 
 void HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
@@ -419,30 +410,15 @@ void HtmlInfoView::reloadContent(InfoGraphicsView * infoGraphicsView) {
 	}
 }
 
-QString HtmlInfoView::blockHeader(const QString &title, const QString &blockId) {
-	return QString(
-			"<table><tr><td class='subhead'>%1</td><td class='subhead' align='right'>"
-			"<a class='hideShowControl' href='#' onclick='toggleVisibility(this,\"%2\")'>%3</a></td></tr></table>\n"
-		).arg(title).arg(blockId).arg(m_blocksVisibility[blockId] ? "[-]":"[+]");
-}
-
-QString HtmlInfoView::blockVisibility(const QString &blockId) {
-	if(!m_blocksVisibility[blockId]) {
-		return " style='display: none' ";
-	}
-	return "";
-}
-
-QString HtmlInfoView::blockContainer(const QString &blockId) {
-	return QString("<div id='%1' %2><table>\n").arg(blockId).arg(blockVisibility(blockId));
-}
-
-
 void HtmlInfoView::setNullContent()
 {
 	setUpTitle(NULL);
+	partTitle("", "");
 	setUpIcons(NULL);
-	setContent("");
+	displayProps(NULL, NULL, false);
+	addTags(NULL);
+	viewConnectorItemInfo(NULL);
+	m_location->setText("");
 }
 
 void HtmlInfoView::setInstanceTitle() {
@@ -484,16 +460,6 @@ void HtmlInfoView::setInstanceTitleColors(FLineEdit * edit, const QColor & base,
 	edit->setStyleSheet(QString("background: rgb(%1,%2,%3); color: rgb(%4,%5,%6);")
 		.arg(base.red()).arg(base.green()).arg(base.blue())
 		.arg(text.red()).arg(text.green()).arg(text.blue()) );
-}
-
-void HtmlInfoView::jsRegister() {
-	m_webView->page()->mainFrame()->addToJavaScriptWindowObject( "infoView", this);
-}
-
-void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
-	m_blocksVisibility[blockId] = value;
-	QSettings settings;
-	settings.setValue(settingsBlockVisibilityName(blockId),QVariant::fromValue(value));
 }
 
 QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
@@ -559,51 +525,160 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	if (pixmap3 != NoIcon) delete pixmap3;
 }
 
-void HtmlInfoView::addTags(ModelPart * modelPart, QString & s) {
-	if(!modelPart->tags().isEmpty()) {
-		s += "<div class='block'>";
-		s += blockHeader(tr("Tags"),TagsBlockId);
-		s += blockContainer(TagsBlockId);
-		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->tags().join(", "));
-		s += 		"</table></div>\n";
-		s += "</div>";
+void HtmlInfoView::addTags(ModelPart * modelPart) {
+	if (m_tagsLabel == NULL) return;
+
+	if (modelPart == NULL || modelPart->tags().isEmpty()) {
+		m_tagsLabel->setText("");
+		return;
 	}
 
+	m_tagsLabel->setText(modelPart->tags().join(", "));
 }
 
-QString HtmlInfoView::partTitle(const QString & title, const QString & version) {
-	QString s = "<div class='parttitle'>\n";
-	s += QString("<h2>%1</h2>\n<p>%2</p>\n").arg(title) .arg(version);
-	s += "</div>\n";
-	return s;
+void HtmlInfoView::partTitle(const QString & title, const QString & version) {
+	if (m_partTitle == NULL) return;
+
+	m_partTitle->setText(title);
+	m_partVersion->setText(version);
+
 }
 
-void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled, QString & s) 
+void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled) 
 {
-	QHash<QString,QString> properties = modelPart->properties();
-	QString family = properties.value("family", "").toLower();
-	QString basis("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n");
-	if (itemBase) {
-		itemBase->prepareProps();
+	QStringList keys;
+	QHash<QString, QString> properties;
+	QString family;
+	if (modelPart) {
+		properties = modelPart->properties();
+		family = properties.value("family", "").toLower();
+		if (itemBase) {
+			itemBase->prepareProps();
+		}
+
+		// ensure family is first;
+		keys = properties.keys();
+		keys.removeOne("family");
+		keys.push_front("family");
+
+#ifndef QT_NO_DEBUG
+		properties.insert("id", QString("%1 %2").arg(itemBase ? QString::number(itemBase->id()) : "").arg(modelPart->moduleID()));
+		keys.insert(1, "id");
+
+		int insertAt = 2;
+
+		if (itemBase) {
+			PaletteItemBase * paletteItemBase = qobject_cast<PaletteItemBase *>(itemBase);
+			if (paletteItemBase != NULL) {
+				properties.insert("svg", paletteItemBase->filename());
+				keys.insert(insertAt++, "svg");
+			}
+		}
+		else {
+			FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPart->moduleID(), ViewLayer::Icon);
+			if (renderer != NULL) {
+				properties.insert("svg", renderer->filename());
+				keys.insert(insertAt++, "svg");
+			}
+		}
+		if (modelPart->modelPartShared()) {
+			properties.insert("fzp",  modelPart->path());
+			keys.insert(insertAt++, "fzp");
+		}	
+#endif
+
 	}
-	foreach(QString key, properties.keys()) {
+
+	int ix = 0;
+	foreach(QString key, keys) {
+		if (ix >= m_propThings.count()) {
+			PropThing * propThing = new PropThing;
+			propThing->m_plugin = NULL;
+			m_propThings.append(propThing);
+
+			QLabel * propNameLabel = new QLabel(this);
+			propNameLabel->setObjectName("connectionsLabel");
+			propNameLabel->setWordWrap(true);
+			propThing->m_name = propNameLabel;
+			m_propLayout->addWidget(propNameLabel, ix, 0);
+
+			QFrame * valueFrame = new QFrame(this);
+			QVBoxLayout * vlayout = new QVBoxLayout(valueFrame);
+			propThing->m_layout = vlayout;
+			vlayout->setMargin(0);
+
+			QLabel * propValueLabel = new QLabel(valueFrame);
+			vlayout->addWidget(propValueLabel);
+			propThing->m_value = propValueLabel;
+			m_propLayout->addWidget(valueFrame, ix, 1);
+		}
+
+		PropThing * propThing = m_propThings.at(ix);
+		clearPropThingPlugin(propThing);
+
 		QString value = properties.value(key,"");
 		QString translatedName = ItemBase::translatePropertyName(key);
 		QString resultKey, resultValue;
+		QWidget * resultWidget = NULL;
 		bool result = false;
 		if (itemBase != NULL) {
-			result = itemBase->collectExtraInfoHtml(family, key, value, swappingEnabled, resultKey, resultValue);
+			result = itemBase->collectExtraInfo(propThing->m_name->parentWidget(), family, key, value, swappingEnabled, resultKey, resultValue, resultWidget);
 		}
+
 		if (result) {
-			s += basis.arg(resultKey).arg(resultValue);
+			propThing->m_name->setText(resultKey);
+			if (resultWidget) {
+				propThing->m_layout->addWidget(resultWidget);
+				propThing->m_plugin = resultWidget;
+				propThing->m_value->setVisible(false);
+			}
+			else {
+				propThing->m_value->setText(resultValue);
+				propThing->m_value->setVisible(true);
+			}
 		}
 		else {
-			s += basis.arg(translatedName).arg(value);
+			propThing->m_name->setText(translatedName);
+			propThing->m_value->setText(value);
+			propThing->m_value->setVisible(true);
 		}
+
+		propThing->m_name->setVisible(true);
+		ix++;
+	}
+
+	for (int jx = ix; jx < m_propThings.count(); jx++) {
+		PropThing * propThing = m_propThings.at(jx);
+		propThing->m_name->setVisible(false);
+		propThing->m_value->setVisible(false);
+		clearPropThingPlugin(propThing);
+	}
+
+	/*
+	foreach (PropThing * propThing, m_propThings) {
+		if (propThing->m_layout->count() > 1) {
+			DebugDialog::debug(QString("too many %1").arg(propThing->m_layout->count()));
+		}
+	}
+	*/
+}
+
+void HtmlInfoView::viewExpanded(bool value) {
+	QObject * view = sender();
+	if (view == NULL) return;
+
+	QString blockId = view->property("blockid").toString();
+	if (!blockId.isEmpty()) {
+		QSettings settings;
+		settings.setValue(settingsBlockVisibilityName(blockId),QVariant::fromValue(value));
 	}
 }
 
-
-QString HtmlInfoView::idString(long id, const QString & moduleID) {
-	return QString("<tr><td class='label'>%1</td><td>%2 %3</td></tr>\n").arg("id").arg(id).arg(moduleID);
+void HtmlInfoView::clearPropThingPlugin(PropThing * propThing) 
+{
+	if (propThing->m_plugin) {
+		propThing->m_layout->removeWidget(propThing->m_plugin);
+		delete propThing->m_plugin;
+		propThing->m_plugin = NULL;		
+	}
 }

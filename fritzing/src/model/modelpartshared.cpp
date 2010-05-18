@@ -397,7 +397,7 @@ void ModelPartShared::setPartlyLoaded(bool partlyLoaded) {
 void ModelPartShared::loadDocument() {
 	m_partlyLoaded = false;
 
-	DebugDialog::debug("loading document " + m_moduleID);
+	//DebugDialog::debug("loading document " + m_moduleID);
 
 	QFile file(m_path);
 	QString errorStr;

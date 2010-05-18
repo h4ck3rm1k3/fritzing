@@ -25,6 +25,7 @@ src/utils/bendpointaction.h \
 src/utils/boundedregexpvalidator.h \
 src/utils/bundler.h \
 src/utils/clickablelabel.h \
+src/utils/expandableview.h \
 src/utils/expandinglabel.h \
 src/utils/familypropertycombobox.h \
 src/utils/fileprogressdialog.h \
@@ -44,6 +45,7 @@ SOURCES += \
 src/utils/autoclosemessagebox.cpp \
 src/utils/bendpointaction.cpp \
 src/utils/clickablelabel.cpp \
+src/utils/expandableview.cpp \
 src/utils/fileprogressdialog.cpp \
 src/utils/flineedit.cpp \
 src/utils/focusoutcombobox.cpp \

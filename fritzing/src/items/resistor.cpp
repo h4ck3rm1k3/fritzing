@@ -217,16 +217,32 @@ QString Resistor::makeBreadboardSvg(const QString & resistance) {
 		.arg(ColorBands.value(thirdband, Qt::black).name());
 }
 
-bool Resistor::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool Resistor::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	if (prop.compare("resistance", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("resistance");
-		returnValue = QString("<object type='application/x-qt-plugin' classid='ResistanceInput' swappingenabled='%1' width='100%' height='22px'></object>")
-			.arg(swappingEnabled);  
+
+		FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
+		focusOutComboBox->setEnabled(swappingEnabled);
+		focusOutComboBox->setEditable(true);
+		QString current = m_ohms + OhmSymbol;
+		focusOutComboBox->addItems(Resistances);
+		focusOutComboBox->setCurrentIndex(focusOutComboBox->findText(current));
+		BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
+		validator->setConverter(toOhms);
+		validator->setBounds(0, 9900000000.0);
+		validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
+		focusOutComboBox->setValidator(validator);
+		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
+
+		focusOutComboBox->setMaximumWidth(100);
+					
+		returnWidget = focusOutComboBox;	
+
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 QString Resistor::getProperty(const QString & key) {
@@ -334,31 +350,6 @@ QStringList Resistor::collectValues(const QString & family, const QString & prop
 	}
 
 	return PaletteItem::collectValues(family, prop, value);
-}
-
-QObject * Resistor::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) 
-{
-	if (classid.compare("ResistanceInput", Qt::CaseInsensitive) != 0) {
-		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
-	}
-	
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-	FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
-	focusOutComboBox->setEnabled(swappingEnabled);
-	focusOutComboBox->setEditable(true);
-	QString current = m_ohms + OhmSymbol;
-	focusOutComboBox->addItems(Resistances);
-	focusOutComboBox->setCurrentIndex(focusOutComboBox->findText(current));
-	BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
-	validator->setConverter(toOhms);
-	validator->setBounds(0, 9900000000.0);
-	validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
-	focusOutComboBox->setValidator(validator);
-	connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resistanceEntry(const QString &)));
-
-	focusOutComboBox->setMaximumWidth(100);
-				
-	return focusOutComboBox;	
 }
 
 void Resistor::resistanceEntry(const QString & text) {

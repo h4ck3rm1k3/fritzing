@@ -170,14 +170,13 @@ public:
 	bool isEverVisible();
 	void setEverVisible(bool);
 	virtual bool connectionIsAllowed(ConnectorItem *);
-	virtual bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
+	virtual bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	virtual QString getProperty(const QString & key);
 	ConnectorItem * rightClickedConnector();
 	virtual bool canEditPart();
 	virtual bool hasCustomSVG();
 	virtual void setProp(const QString & prop, const QString & value);
 	bool isObsolete();
-	virtual QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	void prepareProps();
 	void resetValues(const QString & family, const QString & prop);
 	const QString & filename();
@@ -274,7 +273,6 @@ protected:
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
 
 protected:
-	static bool getSwappingEnabled(const QStringList &paramNames, const QStringList &paramValues);
 	static void getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, QDomDocument & flipDoc);
 
 protected:

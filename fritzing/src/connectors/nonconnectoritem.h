@@ -46,6 +46,7 @@ public:
 
 	ItemBase * attachedTo();
 	virtual void setHidden(bool hidden);
+	bool hidden();
 	long attachedToID();
 	const QString & attachedToTitle();
 	void setCircular(bool);

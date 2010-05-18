@@ -262,47 +262,38 @@ QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash
 	return svg; 
 }
 
-bool SymbolPaletteItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool SymbolPaletteItem::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	if ((prop.compare("voltage", Qt::CaseInsensitive) == 0) && 
 		(modelPart()->moduleID().compare(ModuleIDNames::groundModuleIDName) != 0)) 
 	{
-		returnValue = QString("<object type='application/x-qt-plugin' classid='VoltageInput' swappingenabled='%1' width='100%' height='22px'></object>")
-			.arg(swappingEnabled); 
+
+		FocusOutComboBox * edit = new FocusOutComboBox(parent);
+		edit->setEnabled(swappingEnabled);
+		int ix = 0;
+		foreach (qreal v, Voltages) {
+			edit->addItem(QString::number(v));
+			if (v == m_voltage) {
+				edit->setCurrentIndex(ix);
+			}
+			ix++;
+		}
+
+		QDoubleValidator * validator = new QDoubleValidator(edit);
+		validator->setRange(-9999.99, 9999.99, 2);
+		validator->setNotation(QDoubleValidator::StandardNotation);
+		edit->setValidator(validator);
+
+		edit->setMaximumWidth(200);
+
+		connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
+		returnWidget = edit;	
+
 		returnProp = tr("voltage");
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
-}
-
-
-QObject * SymbolPaletteItem::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	if (classid.compare("VoltageInput", Qt::CaseInsensitive) != 0) {
-		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
-	}
-	
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-	FocusOutComboBox * edit = new FocusOutComboBox(parent);
-	edit->setEnabled(swappingEnabled);
-	int ix = 0;
-	foreach (qreal v, Voltages) {
-		edit->addItem(QString::number(v));
-		if (v == m_voltage) {
-			edit->setCurrentIndex(ix);
-		}
-		ix++;
-	}
-
-	QDoubleValidator * validator = new QDoubleValidator(edit);
-	validator->setRange(-9999.99, 9999.99, 2);
-	validator->setNotation(QDoubleValidator::StandardNotation);
-	edit->setValidator(validator);
-
-	edit->setMaximumWidth(200);
-
-	connect(edit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(voltageEntry(const QString &)));
-	return edit;	
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 void SymbolPaletteItem::voltageEntry(const QString & text) {

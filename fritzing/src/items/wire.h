@@ -110,10 +110,10 @@ public:
 	bool canChangeColor();
 	void collectDirectWires(QList<Wire *> & wires);
 	bool isGrounded();
-	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	bool hasPartLabel();
 	PluralType isPlural();
+	QLineF getWeirdOffsetPaintLine();
 
 protected slots:
 	void colorEntry(const QString & text);

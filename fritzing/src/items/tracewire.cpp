@@ -37,50 +37,36 @@ TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 	m_canChainMultiple = true;
 }
 
-bool TraceWire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
-		returnValue = QString("<object type='application/x-qt-plugin' classid='WireWidthInput' swappingenabled='%1' width='100%' height='22px'></object>")
-			.arg(swappingEnabled);
+		QComboBox * comboBox = new QComboBox(parent);
+		comboBox->setEditable(false);
+		comboBox->setEnabled(swappingEnabled);
+		
+		int ix = 0;
+		qreal m = mils();
+		foreach(long widthValue, Wire::widths) {
+			QString widthName = Wire::widthTrans.value(widthValue);
+			QVariant val((int)widthValue);
+			comboBox->addItem(widthName, val);
+			if (qAbs(m - widthValue) < .01) {
+				comboBox->setCurrentIndex(ix);
+			}
+			ix++;
+		}
+
+		comboBox->setMaximumWidth(200);
+
+		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
+		returnWidget = comboBox;
+
 		return true;
 	}
 
-	return ClipableWire::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
+	return ClipableWire::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
-
-QObject * TraceWire::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-	Q_UNUSED(paramNames);
-	Q_UNUSED(paramValues);
-
-	if (classid.compare("WireWidthInput", Qt::CaseInsensitive) != 0) {
-		return ClipableWire::createPlugin(parent, classid, url, paramNames, paramValues);
-	}
-
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-	QComboBox * comboBox = new QComboBox(parent);
-	comboBox->setEditable(false);
-	comboBox->setEnabled(swappingEnabled);
-	
-	int ix = 0;
-	qreal m = mils();
-	foreach(long widthValue, Wire::widths) {
-		QString widthName = Wire::widthTrans.value(widthValue);
-        QVariant val((int)widthValue);
-        comboBox->addItem(widthName, val);
-		if (qAbs(m - widthValue) < .01) {
-			comboBox->setCurrentIndex(ix);
-		}
-		ix++;
-	}
-
-	comboBox->setMaximumWidth(200);
-
-	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(widthEntry(const QString &)));
-	return comboBox;
-}
-
 
 void TraceWire::widthEntry(const QString & text) {
 	Q_UNUSED(text);

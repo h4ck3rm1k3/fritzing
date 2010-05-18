@@ -509,13 +509,110 @@ bool ResizableBoard::hasCustomSVG() {
 	}
 }
 
-bool ResizableBoard::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
-	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
+	bool result = PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnValue.replace(HeightExpr, "height='60px");
+
 		returnProp = tr("shape");
+
+		if (!m_modelPart->prop("height").isValid()) { 
+			// display uneditable width and height
+			QFrame * frame = new QFrame();
+			QVBoxLayout * vboxLayout = new QVBoxLayout();
+			vboxLayout->setAlignment(Qt::AlignLeft);
+			vboxLayout->setSpacing(0);
+			vboxLayout->setContentsMargins(0, 3, 0, 0);
+
+			QRectF r = this->boundingRect();
+			qreal w = qRound(GraphicsUtils::pixels2mm(r.width()) * 100) / 100.0;
+			QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
+			l1->setMargin(0);
+
+			qreal h = qRound(GraphicsUtils::pixels2mm(r.height()) * 100) / 100.0;
+			QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
+			l2->setMargin(0);
+
+			vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
+			vboxLayout->addWidget(l1);
+			vboxLayout->addWidget(l2);
+
+			frame->setLayout(vboxLayout);
+
+			frame->setMaximumWidth(200);
+
+			returnWidget = frame;
+			return true;
+		}
+
+		qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
+		qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+
+		QFrame * frame = new QFrame();
+		QVBoxLayout * vboxLayout = new QVBoxLayout();
+		vboxLayout->setAlignment(Qt::AlignLeft);
+		vboxLayout->setSpacing(1);
+		vboxLayout->setContentsMargins(0, 3, 0, 0);
+
+		QFrame * subframe1 = new QFrame();
+		QHBoxLayout * hboxLayout1 = new QHBoxLayout();
+		hboxLayout1->setAlignment(Qt::AlignLeft);
+		hboxLayout1->setContentsMargins(0, 0, 0, 0);
+		hboxLayout1->setSpacing(2);
+
+		QLabel * l1 = new QLabel(tr("width(mm)"));	
+		l1->setMargin(0);
+		QLineEdit * e1 = new QLineEdit();
+		e1->setEnabled(swappingEnabled);
+		QDoubleValidator * validator = new QDoubleValidator(e1);
+		validator->setRange(0.1, 999.9, 1);
+		validator->setNotation(QDoubleValidator::StandardNotation);
+		e1->setValidator(validator);
+		e1->setMaxLength(5);
+		e1->setText(QString::number(w));
+		m_widthEditor = e1;
+
+		QFrame * subframe2 = new QFrame();
+		QHBoxLayout * hboxLayout2 = new QHBoxLayout();
+		hboxLayout2->setAlignment(Qt::AlignLeft);
+		hboxLayout2->setContentsMargins(0, 0, 0, 0);
+		hboxLayout2->setSpacing(2);
+
+		QLabel * l2 = new QLabel(tr("height(mm)"));
+		l2->setMargin(0);
+		QLineEdit * e2 = new QLineEdit();
+		e2->setEnabled(swappingEnabled);
+		validator = new QDoubleValidator(e1);
+		validator->setRange(0.1, 999.9, 1);
+		validator->setNotation(QDoubleValidator::StandardNotation);
+		e2->setValidator(validator);
+		e2->setMaxLength(5);
+		e2->setText(QString::number(h));
+		m_heightEditor = e2;
+
+		hboxLayout1->addWidget(l1);
+		hboxLayout1->addWidget(e1);
+
+		hboxLayout2->addWidget(l2);
+		hboxLayout2->addWidget(e2);
+
+		subframe1->setLayout(hboxLayout1);
+		subframe2->setLayout(hboxLayout2);
+
+		vboxLayout->addWidget(qobject_cast<QWidget *>(returnWidget));
+		vboxLayout->addWidget(subframe1);
+		vboxLayout->addWidget(subframe2);
+
+		frame->setLayout(vboxLayout);
+
+		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
+		connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
+
+		frame->setMaximumWidth(200);
+
+		returnWidget = frame;
+		return true;
 	}
 
 	return result;
@@ -532,111 +629,6 @@ QStringList ResizableBoard::collectValues(const QString & family, const QString 
 	}
 
 	return result;
-}
-
-QObject * ResizableBoard::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-
-	QObject * result = PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
-
-	if (classid.compare("shape", Qt::CaseInsensitive) != 0) {
-		return result;
-	}
-
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-	if (!m_modelPart->prop("height").isValid()) { 
-		// display uneditable width and height
-		QFrame * frame = new QFrame();
-		QVBoxLayout * vboxLayout = new QVBoxLayout();
-		vboxLayout->setAlignment(Qt::AlignLeft);
-		vboxLayout->setSpacing(0);
-		vboxLayout->setContentsMargins(0, 3, 0, 0);
-
-		QRectF r = this->boundingRect();
-		qreal w = qRound(GraphicsUtils::pixels2mm(r.width()) * 100) / 100.0;
-		QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
-		l1->setMargin(0);
-
-		qreal h = qRound(GraphicsUtils::pixels2mm(r.height()) * 100) / 100.0;
-		QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
-		l2->setMargin(0);
-
-		vboxLayout->addWidget(qobject_cast<QWidget *>(result));
-		vboxLayout->addWidget(l1);
-		vboxLayout->addWidget(l2);
-
-		frame->setLayout(vboxLayout);
-
-		frame->setMaximumWidth(200);
-
-		return frame;
-	}
-
-	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
-
-	QFrame * frame = new QFrame();
-	QVBoxLayout * vboxLayout = new QVBoxLayout();
-	vboxLayout->setAlignment(Qt::AlignLeft);
-	vboxLayout->setSpacing(1);
-	vboxLayout->setContentsMargins(0, 3, 0, 0);
-
-	QFrame * subframe1 = new QFrame();
-	QHBoxLayout * hboxLayout1 = new QHBoxLayout();
-	hboxLayout1->setAlignment(Qt::AlignLeft);
-	hboxLayout1->setContentsMargins(0, 0, 0, 0);
-	hboxLayout1->setSpacing(2);
-
-	QLabel * l1 = new QLabel(tr("width(mm)"));	
-	l1->setMargin(0);
-	QLineEdit * e1 = new QLineEdit();
-	e1->setEnabled(swappingEnabled);
-	QDoubleValidator * validator = new QDoubleValidator(e1);
-	validator->setRange(0.1, 999.9, 1);
-	validator->setNotation(QDoubleValidator::StandardNotation);
-	e1->setValidator(validator);
-	e1->setMaxLength(5);
-	e1->setText(QString::number(w));
-	m_widthEditor = e1;
-
-	QFrame * subframe2 = new QFrame();
-	QHBoxLayout * hboxLayout2 = new QHBoxLayout();
-	hboxLayout2->setAlignment(Qt::AlignLeft);
-	hboxLayout2->setContentsMargins(0, 0, 0, 0);
-	hboxLayout2->setSpacing(2);
-
-	QLabel * l2 = new QLabel(tr("height(mm)"));
-	l2->setMargin(0);
-	QLineEdit * e2 = new QLineEdit();
-	e2->setEnabled(swappingEnabled);
-	validator = new QDoubleValidator(e1);
-	validator->setRange(0.1, 999.9, 1);
-	validator->setNotation(QDoubleValidator::StandardNotation);
-	e2->setValidator(validator);
-	e2->setMaxLength(5);
-	e2->setText(QString::number(h));
-	m_heightEditor = e2;
-
-	hboxLayout1->addWidget(l1);
-	hboxLayout1->addWidget(e1);
-
-	hboxLayout2->addWidget(l2);
-	hboxLayout2->addWidget(e2);
-
-	subframe1->setLayout(hboxLayout1);
-	subframe2->setLayout(hboxLayout2);
-
-	vboxLayout->addWidget(qobject_cast<QWidget *>(result));
-	vboxLayout->addWidget(subframe1);
-	vboxLayout->addWidget(subframe2);
-
-	frame->setLayout(vboxLayout);
-
-	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
-	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
-
-	frame->setMaximumWidth(200);
-
-	return frame;
 }
 
 void ResizableBoard::widthEntry() {

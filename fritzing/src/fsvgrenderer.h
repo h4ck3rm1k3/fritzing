@@ -60,7 +60,7 @@ public:
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
-	bool setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint);
+	bool setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint, bool calcWeirdOffset);
 	QList<SvgIdLayer *> setUpNonConnectors();
 
 public:
@@ -85,7 +85,7 @@ protected:
 	void initNonConnectorInfoAux(QDomElement & element);
 	void initTerminalInfoAux(QDomElement & element, const QStringList & connectorIDs, const QStringList & terminalIDs);
 	void initConnectorInfoAux(QDomElement & element, const QStringList & connectorIDs);
-	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix);
+	QPointF calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix, bool useF);
 	ConnectorInfo * getConnectorInfo(const QString & connectorID);
 	void clearConnectorInfoHash(QHash<QString, ConnectorInfo *> & hash);
 

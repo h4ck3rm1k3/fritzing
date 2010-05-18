@@ -214,24 +214,12 @@ bool Ruler::hasCustomSVG() {
 	}
 }
 
-bool Ruler::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool Ruler::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
-	bool result = PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
+	bool result = PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='width' swappingenabled='%1' width='100%' height='22px'></object>")
-			.arg(swappingEnabled);  
 		returnProp = tr("width");
-		return true;
-	}
-
-	return result;
-}
-
-QObject * Ruler::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-
-	if (classid.compare("width", Qt::CaseInsensitive) == 0) {
-		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
 
 		int units = m_modelPart->prop("width").toString().contains("cm") ? IndexCm : IndexIn;
 		QLineEdit * e1 = new QLineEdit();
@@ -270,11 +258,12 @@ QObject * Ruler::createPlugin(QWidget * parent, const QString &classid, const QU
 
 		frame->setMaximumWidth(200);
 
-		return frame;
+		returnWidget = frame;
+
+		return true;
 	}
 
-	return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
-
+	return result;
 }
 
 void Ruler::widthEntry() {

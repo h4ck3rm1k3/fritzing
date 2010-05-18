@@ -24,28 +24,34 @@ $Date$
 
 ********************************************************************/
 
-#ifndef INFOVIEWWEBPAGE_H
-#define INFOVIEWWEBPAGE_H
+#ifndef EXPANDABLEVIEW_H
+#define EXPANDABLEVIEW_H
 
-#include <QWebPage>
-#include <QPointer>
+#include <QGroupBox>
+#include <QVBoxLayout>
 
-class InfoViewWebPage : public QWebPage
-{
-	Q_OBJECT
+#include "clickablelabel.h"
+
+
+class ExpandableView : public QGroupBox {
+Q_OBJECT
 
 public:
-    InfoViewWebPage(class HtmlInfoView *, QWidget *parent=0);
+	ExpandableView(const QString & text = "", QWidget * parent = NULL);
 
-	void setCurrentItem(class ItemBase *);
+	void setChildFrame(QFrame *);
+
+signals:
+	void expanded(bool);
+
+public slots:
+	void expanderClicked();
 
 protected:
-    QObject * createPlugin ( const QString & classid, const QUrl & url, const QStringList & paramNames, const QStringList & paramValues );
-
-protected:	
-	QWidget *m_parent;
-	QPointer<class ItemBase> m_currentItem;
-	QPointer<class HtmlInfoView> m_infoView;
+	QVBoxLayout * m_vLayout;
+	ClickableLabel * m_expander;
+	QFrame * m_childFrame;
 };
 
-#endif // INFOVIEWWEBPAGE_H
+
+#endif

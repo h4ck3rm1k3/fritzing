@@ -668,13 +668,14 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) continue;
 
-		bool result = renderer->setUpConnector(svgIdLayer, false);
+		bool result = renderer->setUpConnector(svgIdLayer, false, true);
 		if (!result) continue;
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);
 
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
+		connectorItem->setWeirdOffset(svgIdLayer->m_weirdOffset);
 
 		connectorItem->setCircular(true);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
@@ -1203,7 +1204,8 @@ void Wire::setIgnoreSelectionChange(bool ignore) {
 
 
 
-bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) {
+bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
+{
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		// don't display width property
 		return false;
@@ -1212,45 +1214,35 @@ bool Wire::collectExtraInfoHtml(const QString & family, const QString & prop, co
 	if (prop.compare("color", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("color");
 		if (canChangeColor()) {
-			returnValue = QString("<object type='application/x-qt-plugin' classid='WireColorInput' swappingenabled='%1' width='100%' height='22px'></object>")
-				.arg(swappingEnabled);
+			QComboBox * comboBox = new QComboBox(parent);
+			comboBox->setEditable(false);
+			comboBox->setEnabled(swappingEnabled);
+			
+			int ix = 0;
+			QString englishCurrColor = colorString();
+			foreach(QString transColorName, Wire::colorNames) {
+				QString englishColorName = Wire::colorTrans.value(transColorName);
+				comboBox->addItem(transColorName, QVariant(englishColorName));
+				if (englishColorName.compare(englishCurrColor, Qt::CaseInsensitive) == 0) {
+					comboBox->setCurrentIndex(ix);
+				}
+				ix++;
+			}
+
+			comboBox->setMaximumWidth(200);
+
+			connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(colorEntry(const QString &)));
+			returnWidget = comboBox;
+			return true;
 		}
 		else {
+			returnWidget = NULL;
 			returnValue = colorString();
+			return true;
 		}
-		return true;
 	}
 
-	return ItemBase::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
-}
-
-QObject * Wire::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-
-	if (classid.compare("WireColorInput", Qt::CaseInsensitive) != 0) {
-		return ItemBase::createPlugin(parent, classid, url, paramNames, paramValues);
-	}
-
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-	QComboBox * comboBox = new QComboBox(parent);
-	comboBox->setEditable(false);
-	comboBox->setEnabled(swappingEnabled);
-	
-	int ix = 0;
-	QString englishCurrColor = colorString();
-	foreach(QString transColorName, Wire::colorNames) {
-		QString englishColorName = Wire::colorTrans.value(transColorName);
-		comboBox->addItem(transColorName, QVariant(englishColorName));
-		if (englishColorName.compare(englishCurrColor, Qt::CaseInsensitive) == 0) {
-			comboBox->setCurrentIndex(ix);
-		}
-		ix++;
-	}
-
-	comboBox->setMaximumWidth(200);
-
-	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(colorEntry(const QString &)));
-	return comboBox;
+	return ItemBase::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 void Wire::colorEntry(const QString & text) {
@@ -1276,3 +1268,9 @@ ItemBase::PluralType Wire::isPlural() {
 	return Plural;
 }
 
+QLineF Wire::getWeirdOffsetPaintLine() {
+	QLineF line = getPaintLine();
+	line.setP1(line.p1() + connector0()->weirdOffset());
+	line.setP2(line.p2() + connector1()->weirdOffset());
+	return line;
+}

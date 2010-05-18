@@ -51,7 +51,6 @@ public:
 	void start();
 	
 public:
-	static void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy);
 	static void collectAllNets(class SketchWidget *, QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons);
 
 protected:
@@ -92,12 +91,13 @@ protected:
 	ItemBase * getPartForBounds(struct Edge *);
 	void fixupJumperItems(QList<struct JumperItemStruct *> &, int edgesDone);
 
-public:
+protected:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
 	static double calcDistance(QPointF fromPos, QGraphicsItem *);
 	static double distanceToLine(QPointF fromPos, QPointF p1, QPointF p2);
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
 	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
+	static void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy);
 
 public slots:
 	void cancel();

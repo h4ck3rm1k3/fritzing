@@ -223,6 +223,67 @@ HtmlInfoView {
 	background-color: rgb(179,179,179);
 }
 
+
+
+/* the whole thing */
+#expandableViewFrame {
+	border-radius: 3px;
+    border: 1px solid rgb(217,217,217);
+	margin: 3px;
+	padding: 4px;
+}
+
+/* redundant part title */
+#partTitle {
+	margin: 2px;
+	font-size: 10px;
+	font-weight: normal;
+	color: rgb(87,87,87);
+}
+
+#connectionsLabel {
+	color: rgb(87,87,87);
+	min-width: 65px;
+	max-width: 65px;
+}
+
+/* hide the title */
+#expandableViewFrame::title {
+     padding: 0px;
+     margin: 0px;
+     border: 0px;
+     font-size: 0px;
+ }
+ 
+ /* holds the label and hide/show button */
+ #expandableViewLabelFrame {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+ }
+
+/* the title  */
+#expandableViewLabel {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	font-weight: bold;
+	text-align: left;
+	font-size: 11px;
+	color: rgb(84,24,44);
+}
+
+/* the expander button *.
+#expander {
+	padding: 0px;
+	margin: 2px;
+	border: 0px;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: right;
+	color: black;
+}
+
 /*
 light grey:		rgb(217,217,217);
 medium grey_l:	rgb(190,190,190); (lighter grey for hovers)

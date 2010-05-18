@@ -46,10 +46,9 @@ public:
 	~LogoItem();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
-	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
 	QString getProperty(const QString & key);

@@ -44,7 +44,7 @@ public:
 	~Resistor();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
-	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	QString getProperty(const QString & key);
 	void setResistance(QString resistance, QString pinSpacing, bool force);
 	QString resistance();
@@ -52,7 +52,6 @@ public:
 	const QString & title();
 	bool hasCustomSVG();
 	bool canEditPart();
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	PluralType isPlural();
 
 protected:

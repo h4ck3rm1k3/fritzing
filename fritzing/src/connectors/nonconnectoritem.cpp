@@ -99,6 +99,10 @@ void NonConnectorItem::setHidden(bool hide) {
 	this->update();
 }
 
+bool NonConnectorItem::hidden() {
+	return m_hidden;
+}
+
 long NonConnectorItem::attachedToID() {
 	if (attachedTo() == NULL) return -1;
 	return attachedTo()->id();

@@ -413,10 +413,10 @@ QRect ViewSwitcher::buttonHolderGeometry() {
 
 void ViewSwitcher::resizeEvent(QResizeEvent * event)
 {
-	DebugDialog::debug(QString("viewswitcher resize %1 %2 %3 %4")
-		.arg(event->size().width()).arg(event->size().height())
-		.arg(parentWidget()->size().width()).arg(parentWidget()->size().height())
-		);
+	//DebugDialog::debug(QString("viewswitcher resize %1 %2 %3 %4")
+	//	.arg(event->size().width()).arg(event->size().height())
+	//	.arg(parentWidget()->size().width()).arg(parentWidget()->size().height())
+	//	);
 	QFrame::resizeEvent(event);
 }
 

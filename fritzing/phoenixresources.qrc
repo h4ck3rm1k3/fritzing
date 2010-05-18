@@ -123,14 +123,12 @@
         <file>resources/styles/partseditor.qss</file>
         <file>resources/styles/programwindow.qss</file>
         <file>resources/styles/inviewhelp.qss</file>
-        <file>resources/styles/infoview.css</file>
         <file>resources/styles/linux.qss</file>
         <file>resources/styles/linux-kde-oxygen.qss</file>
         <file>resources/styles/linux-gnome.qss</file>
         <file>resources/styles/win.qss</file>
         <file>resources/styles/mac.qss</file>
         <file>resources/styles/updatedialog.css</file>
-        <file>resources/js/infoview.js</file>
         <file>resources/bins/bin.fzb</file>
         <file>resources/bins/my_parts.fzb</file>
         <file>resources/images/helpImageBreadboard.png</file>

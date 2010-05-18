@@ -49,6 +49,8 @@ public:
 	void removeConnection(ConnectorItem *, bool emitChange);
 	ConnectorItem * firstConnectedToIsh();
 	void setTerminalPoint(QPointF);
+	void setWeirdOffset(QPointF);
+	QPointF weirdOffset();
 	QPointF terminalPoint();
 	QPointF adjustedTerminalPoint();
 	QPointF sceneAdjustedTerminalPoint(ConnectorItem * anchor);
@@ -112,6 +114,7 @@ protected:
 	bool m_connectorHovering;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
+	QPointF m_weirdOffset;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

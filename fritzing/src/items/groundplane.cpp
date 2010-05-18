@@ -52,10 +52,9 @@ bool GroundPlane::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 			ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
 			if (item == NULL) continue;
 
-			if (item->connectorSharedName().contains('0')) {
-				m_connector0 = item;
-				break;
-			}
+			// there is only one
+			m_connector0 = item;
+			break;
 		}
 	}
 
@@ -152,22 +151,13 @@ void GroundPlane::setSvgAux(const QString & svg) {
 			setSharedRenderer(m_renderer);
 		}
 
-		QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), GroundPlaneGenerator::ConnectorName);
 		if (m_connector0) {
-			m_connector0->setRect(this->boundingRect());
-			//QMatrix m;
-			//m.scale(0.75, 0.75);
-			//QPainterPath pp = m.map(painterPath);
-			//m_connector0->setShape(pp);  // can this be made hollow?
-
-			//QPainterPathStroker stroker;
-			//stroker.setWidth(10);
-			//QPainterPath pp = stroker.createStroke(painterPath);
-			//m_connector0->setShape(pp);
-
+			QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), GroundPlaneGenerator::ConnectorName);
+			m_connector0->setRect(painterPath.boundingRect());
 			m_connector0->setShape(painterPath);
 		}
-		this->setShape(painterPath);  
+		//QPainterPath painterPath = splitter.painterPath(FSvgRenderer::printerScale(), xmlName);
+		//this->setShape(painterPath);  
 
 	}
 }

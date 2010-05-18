@@ -221,16 +221,23 @@ QStringList MysteryPart::collectValues(const QString & family, const QString & p
 	return PaletteItem::collectValues(family, prop, value);
 }
 
-bool MysteryPart::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool MysteryPart::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("label");
-		returnValue = QString("<object type='application/x-qt-plugin' classid='ChipLabelInput' swappingenabled='%1' width='100%' height='22px'></object>")
-			.arg(swappingEnabled);  
+
+		QLineEdit * e1 = new QLineEdit(parent);
+		e1->setEnabled(swappingEnabled);
+		e1->setText(m_chipLabel);
+		connect(e1, SIGNAL(editingFinished()), this, SLOT(chipLabelEntry()));
+		e1->setMaximumWidth(200);
+
+		returnWidget = e1;
+
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 QString MysteryPart::getProperty(const QString & key) {
@@ -279,21 +286,6 @@ bool MysteryPart::hasCustomSVG() {
 		default:
 			return ItemBase::hasCustomSVG();
 	}
-}
-
-QObject * MysteryPart::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	if (classid.compare("ChipLabelInput", Qt::CaseInsensitive) != 0) {
-		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
-	}
-
-	QLineEdit * e1 = new QLineEdit(parent);
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-	e1->setEnabled(swappingEnabled);
-	e1->setText(m_chipLabel);
-	connect(e1, SIGNAL(editingFinished()), this, SLOT(chipLabelEntry()));
-	e1->setMaximumWidth(200);
-
-	return e1;
 }
 
 void MysteryPart::chipLabelEntry() {

@@ -279,7 +279,7 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) continue;
 
-		bool result = renderer->setUpConnector(svgIdLayer, ignoreTerminalPoints);
+		bool result = renderer->setUpConnector(svgIdLayer, ignoreTerminalPoints, true);
 		if (!result) continue;
 
 		//DebugDialog::debug(QString("<rect view=\"%6\" id=\"%1pin\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
@@ -300,6 +300,7 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
+		connectorItem->setWeirdOffset(svgIdLayer->m_weirdOffset);
 		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
 

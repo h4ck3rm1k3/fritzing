@@ -490,7 +490,7 @@ ConnectorInfo * FSvgRenderer::getConnectorInfo(const QString & connectorID) {
 	return m_connectorInfoHash.value(connectorID, &VanillaConnectorInfo);
 }
 
-bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint) {
+bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint, bool calcWeirdOffset) {
 
 	if (svgIdLayer == NULL) return false;
 
@@ -535,16 +535,34 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	);
 	*/
 
+	// some strangeness in the way that svg items and non-svg items map to screen space
+	// might be a qt problem.
 	QRectF r1 = matrix0.mapRect(bounds);
-	svgIdLayer->m_rect.setRect(r1.x() * defaultSize.width() / viewBox.width(), r1.y() * defaultSize.height() / viewBox.height(), r1.width() * defaultSize.width() / viewBox.width(), r1.height() * defaultSize.height() / viewBox.height());
+	svgIdLayer->m_rect.setRect(r1.x() * defaultSize.width() / viewBox.width(), 
+							   r1.y() * defaultSize.height() / viewBox.height(), 
+							   r1.width() * defaultSize.width() / viewBox.width(), 
+							   r1.height() * defaultSize.height() / viewBox.height());
 
 	svgIdLayer->m_visible = true;
-	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix);
+	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix, false);
+	
+	if (calcWeirdOffset) {	
+		QRectF trueRect(r1.x() * defaultSizeF.width() / viewBox.width(), 
+						r1.y() * defaultSizeF.height() / viewBox.height(), 
+						r1.width() * defaultSizeF.width() / viewBox.width(), 
+						r1.height() * defaultSizeF.height() / viewBox.height());
+		QMatrix m;
+		QPointF truePoint = calcTerminalPoint(svgIdLayer->m_terminalId, trueRect, ignoreTerminalPoint, viewBox, m, true);
+		svgIdLayer->m_weirdOffset = truePoint - svgIdLayer->m_point;
+		if (truePoint != svgIdLayer->m_point) {
+			DebugDialog::debug("difference ");
+		}
+	}
 
 	return true;
 }
 
-QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix)
+QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF & connectorRect, bool ignoreTerminalPoint, const QRectF & viewBox, QMatrix & terminalMatrix, bool useF)
 {
 	QPointF terminalPoint = connectorRect.center() - connectorRect.topLeft();    // default spot is centered
 	if (ignoreTerminalPoint) {
@@ -565,7 +583,6 @@ QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF
 		return terminalPoint;
 	}
 
-
 	//DebugDialog::debug(	QString("terminal %5 rect %1,%2,%3,%4").arg(tBounds.x()).
 										//arg(tBounds.y()).
 										//arg(tBounds.width()).
@@ -577,7 +594,9 @@ QPointF FSvgRenderer::calcTerminalPoint(const QString & terminalId, const QRectF
 	QMatrix tMatrix = this->matrixForElement(terminalId) * terminalMatrix;
 	QRectF terminalRect = tMatrix.mapRect(tBounds);
 	QPointF c = terminalRect.center();
-	QPointF q(c.x() * defaultSize.width() / viewBox.width(), c.y() * defaultSize.height() / viewBox.height());
+	QPointF q = useF 
+				? QPointF(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height())
+				: QPointF(c.x() * defaultSize.width() / viewBox.width(), c.y() * defaultSize.height() / viewBox.height());
 	terminalPoint = q - connectorRect.topLeft();
 	//DebugDialog::debug(	QString("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
 										//arg(terminalPoint.y()).

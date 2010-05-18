@@ -137,167 +137,149 @@ QStringList LogoItem::collectValues(const QString & family, const QString & prop
 	return PaletteItem::collectValues(family, prop, value);
 }
 
-bool LogoItem::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
 	if (m_hasLogo) {
 		if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
 			returnProp = tr("logo");
-			returnValue = QString("<object type='application/x-qt-plugin' classid='logo' swappingenabled='%1' width='100%' height='22px'></object>")
-				.arg(swappingEnabled);  
+			QLineEdit * e1 = new QLineEdit(parent);
+			e1->setText(m_logo);
+			e1->setEnabled(swappingEnabled);
+			connect(e1, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
+
+			e1->setMaximumWidth(200);
+
+			returnWidget = e1;
 			return true;
 		}
 	}
 	else {
 		if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
-			returnValue = QString("<object type='application/x-qt-plugin' classid='filename' swappingenabled='%1' width='100%' height='44px'></object>")
-				.arg(swappingEnabled);
+
+			QFrame * frame = new QFrame();
+			QVBoxLayout * vboxLayout = new QVBoxLayout();
+			vboxLayout->setAlignment(Qt::AlignLeft);
+			vboxLayout->setContentsMargins(0, 0, 0, 0);
+			vboxLayout->setSpacing(0);
+
+			QComboBox * comboBox = new QComboBox();
+			comboBox->setEditable(false);
+			comboBox->setEnabled(swappingEnabled);
+			m_fileNameComboBox = comboBox;
+
+			setFileNameItems();
+
+			connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
+
+			QPushButton * button = new QPushButton (tr("load image file"));
+			connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
+			button->setMinimumWidth(100);
+			button->setEnabled(swappingEnabled);
+
+			vboxLayout->addWidget(comboBox);
+			vboxLayout->addWidget(button);
+
+			frame->setLayout(vboxLayout);
+			frame->setMaximumWidth(200);
+			returnWidget = frame;
+
 			returnProp = "";
 			return true;
 		}
 	}
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='shape' swappingenabled='%1' width='100%' height='60px'></object>")
-			.arg(swappingEnabled);
+		qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
+		qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
+
+		QVBoxLayout * vboxLayout = NULL;
+		QFrame * frame = NULL;
+
+		frame = new QFrame();
+		vboxLayout = new QVBoxLayout();
+		vboxLayout->setAlignment(Qt::AlignLeft);
+		vboxLayout->setSpacing(1);
+		vboxLayout->setContentsMargins(0, 3, 0, 0);
+
+		QFrame * subframe1 = new QFrame();
+		QHBoxLayout * hboxLayout1 = new QHBoxLayout();
+		hboxLayout1->setAlignment(Qt::AlignLeft);
+		hboxLayout1->setContentsMargins(0, 0, 0, 0);
+		hboxLayout1->setSpacing(2);
+
+		QFrame * subframe2 = new QFrame();
+		QHBoxLayout * hboxLayout2 = new QHBoxLayout();
+		hboxLayout2->setAlignment(Qt::AlignLeft);
+		hboxLayout2->setContentsMargins(0, 0, 0, 0);
+		hboxLayout2->setSpacing(2);
+
+		QFrame * subframe3 = new QFrame();
+		QHBoxLayout * hboxLayout3 = new QHBoxLayout();
+		hboxLayout3->setAlignment(Qt::AlignLeft);
+		hboxLayout3->setContentsMargins(0, 0, 0, 0);
+		hboxLayout3->setSpacing(0);
+
+		QLabel * l1 = new QLabel(tr("width(mm)"));	
+		l1->setMargin(0);
+		QLineEdit * e1 = new QLineEdit();
+		QDoubleValidator * validator = new QDoubleValidator(e1);
+		validator->setRange(0.1, 999.9, 1);
+		validator->setNotation(QDoubleValidator::StandardNotation);
+		e1->setValidator(validator);
+		e1->setMaxLength(5);
+		e1->setText(QString::number(w));
+
+		QLabel * l2 = new QLabel(tr("height(mm)"));
+		l2->setMargin(0);
+		QLineEdit * e2 = new QLineEdit();
+		validator = new QDoubleValidator(e1);
+		validator->setRange(0.1, 999.9, 1);
+		validator->setNotation(QDoubleValidator::StandardNotation);
+		e2->setValidator(validator);
+		e2->setMaxLength(5);
+		e2->setText(QString::number(h));
+
+		QLabel * l3 = new QLabel(tr("keep in proportion"));	
+		l1->setMargin(0);
+		QCheckBox * checkBox = new QCheckBox();
+		checkBox->setChecked(m_keepAspectRatio);
+
+		hboxLayout1->addWidget(l1);
+		hboxLayout1->addWidget(e1);
+		hboxLayout2->addWidget(l2);
+		hboxLayout2->addWidget(e2);
+		hboxLayout3->addWidget(l3);
+		hboxLayout3->addWidget(checkBox);
+
+		subframe1->setLayout(hboxLayout1);
+		subframe2->setLayout(hboxLayout2);
+		subframe3->setLayout(hboxLayout3);
+
+		connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
+		connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
+		connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(keepAspectRatio(bool)));
+
+		m_widthEditor = e1;
+		m_heightEditor = e2;
+		m_aspectRatioCheck = checkBox;
+
+		vboxLayout->addWidget(subframe1);
+		vboxLayout->addWidget(subframe2);
+		vboxLayout->addWidget(subframe3);
+		frame->setLayout(vboxLayout);
+
+		frame->setMaximumWidth(200);
+
+	returnWidget = frame;
+
+
+
 		returnProp = tr("size");
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 
-}
-
-QObject * LogoItem::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-
-	if (classid.compare("shape", Qt::CaseInsensitive) == 0) {
-		// implemented below
-	}
-	else if (classid.compare("filename", Qt::CaseInsensitive) == 0) { 
-		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-		QFrame * frame = new QFrame();
-		QVBoxLayout * vboxLayout = new QVBoxLayout();
-		vboxLayout->setAlignment(Qt::AlignLeft);
-		vboxLayout->setContentsMargins(0, 0, 0, 0);
-		vboxLayout->setSpacing(0);
-
-		QComboBox * comboBox = new QComboBox();
-		comboBox->setEditable(false);
-		comboBox->setEnabled(swappingEnabled);
-		m_fileNameComboBox = comboBox;
-
-		setFileNameItems();
-
-		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(fileNameEntry(const QString &)));
-
-		QPushButton * button = new QPushButton (tr("load image file"));
-		connect(button, SIGNAL(pressed()), this, SLOT(prepLoadImage()));
-		button->setMinimumWidth(100);
-		button->setEnabled(swappingEnabled);
-
-		vboxLayout->addWidget(comboBox);
-		vboxLayout->addWidget(button);
-
-		frame->setLayout(vboxLayout);
-		frame->setMaximumWidth(200);
-		return frame;
-	}
-	else if (classid.compare("logo", Qt::CaseInsensitive) == 0) {
-		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-		QLineEdit * e1 = new QLineEdit(parent);
-		e1->setText(m_logo);
-		e1->setEnabled(swappingEnabled);
-		connect(e1, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
-
-		e1->setMaximumWidth(200);
-
-		return e1;
-	}
-	else {
-		return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);;
-	}
-
-	qreal w = qRound(m_modelPart->prop("width").toDouble() * 10) / 10.0;	// truncate to 1 decimal point
-	qreal h = qRound(m_modelPart->prop("height").toDouble() * 10) / 10.0;  // truncate to 1 decimal point
-
-	QVBoxLayout * vboxLayout = NULL;
-	QFrame * frame = NULL;
-
-	frame = new QFrame();
-	vboxLayout = new QVBoxLayout();
-	vboxLayout->setAlignment(Qt::AlignLeft);
-	vboxLayout->setSpacing(1);
-	vboxLayout->setContentsMargins(0, 3, 0, 0);
-
-	QFrame * subframe1 = new QFrame();
-	QHBoxLayout * hboxLayout1 = new QHBoxLayout();
-	hboxLayout1->setAlignment(Qt::AlignLeft);
-	hboxLayout1->setContentsMargins(0, 0, 0, 0);
-	hboxLayout1->setSpacing(2);
-
-	QFrame * subframe2 = new QFrame();
-	QHBoxLayout * hboxLayout2 = new QHBoxLayout();
-	hboxLayout2->setAlignment(Qt::AlignLeft);
-	hboxLayout2->setContentsMargins(0, 0, 0, 0);
-	hboxLayout2->setSpacing(2);
-
-	QFrame * subframe3 = new QFrame();
-	QHBoxLayout * hboxLayout3 = new QHBoxLayout();
-	hboxLayout3->setAlignment(Qt::AlignLeft);
-	hboxLayout3->setContentsMargins(0, 0, 0, 0);
-	hboxLayout3->setSpacing(0);
-
-	QLabel * l1 = new QLabel(tr("width(mm)"));	
-	l1->setMargin(0);
-	QLineEdit * e1 = new QLineEdit();
-	QDoubleValidator * validator = new QDoubleValidator(e1);
-	validator->setRange(0.1, 999.9, 1);
-	validator->setNotation(QDoubleValidator::StandardNotation);
-	e1->setValidator(validator);
-	e1->setMaxLength(5);
-	e1->setText(QString::number(w));
-
-	QLabel * l2 = new QLabel(tr("height(mm)"));
-	l2->setMargin(0);
-	QLineEdit * e2 = new QLineEdit();
-	validator = new QDoubleValidator(e1);
-	validator->setRange(0.1, 999.9, 1);
-	validator->setNotation(QDoubleValidator::StandardNotation);
-	e2->setValidator(validator);
-	e2->setMaxLength(5);
-	e2->setText(QString::number(h));
-
-	QLabel * l3 = new QLabel(tr("keep in proportion"));	
-	l1->setMargin(0);
-	QCheckBox * checkBox = new QCheckBox();
-	checkBox->setChecked(m_keepAspectRatio);
-
-	hboxLayout1->addWidget(l1);
-	hboxLayout1->addWidget(e1);
-	hboxLayout2->addWidget(l2);
-	hboxLayout2->addWidget(e2);
-	hboxLayout3->addWidget(l3);
-	hboxLayout3->addWidget(checkBox);
-
-	subframe1->setLayout(hboxLayout1);
-	subframe2->setLayout(hboxLayout2);
-	subframe3->setLayout(hboxLayout3);
-
-	connect(e1, SIGNAL(editingFinished()), this, SLOT(widthEntry()));
-	connect(e2, SIGNAL(editingFinished()), this, SLOT(heightEntry()));
-	connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(keepAspectRatio(bool)));
-
-	m_widthEditor = e1;
-	m_heightEditor = e2;
-	m_aspectRatioCheck = checkBox;
-
-	vboxLayout->addWidget(subframe1);
-	vboxLayout->addWidget(subframe2);
-	vboxLayout->addWidget(subframe3);
-	frame->setLayout(vboxLayout);
-
-	frame->setMaximumWidth(200);
-
-	return frame;
 }
 
 bool LogoItem::hasGrips() {

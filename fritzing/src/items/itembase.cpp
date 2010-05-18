@@ -535,10 +535,10 @@ void ItemBase::setHidden(bool hide) {
 	setAcceptHoverEvents(!hide);
 	update();
 	for (int i = 0; i < childItems().count(); i++) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
-		if (connectorItem == NULL) continue;
+		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(childItems()[i]);
+		if (nonconnectorItem == NULL) continue;
 
-		connectorItem->setHidden(hide);
+		nonconnectorItem->setHidden(hide);
 	}
 }
 
@@ -1536,7 +1536,8 @@ bool ItemBase::isObsolete() {
 	return modelPart()->isObsolete();
 }
 
-bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) {
+bool ItemBase::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
+{
 	returnProp = ItemBase::translatePropertyName(prop);
 	returnValue = value;	
 
@@ -1546,44 +1547,19 @@ bool ItemBase::collectExtraInfoHtml(const QString & family, const QString & prop
 	QString tempValue;
 	QStringList values = collectValues(family, prop, tempValue);
 	if (values.count() > 1) {
-		returnValue = QString("<object type='application/x-qt-plugin' classid='%1' family='%2' value='%3' swappingenabled='%4' width='100%' height='18px'></object>")
-								.arg(prop).arg(family).arg(value).arg(swappingEnabled);
+		FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, prop, parent);
+		comboBox->addItems(values);
+		comboBox->setCurrentIndex(comboBox->findText(value));
+		comboBox->setMaximumWidth(200);
+		comboBox->setEnabled(swappingEnabled);
+
+		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(swapEntry(const QString &)));
+
+		returnWidget = comboBox;
 		m_propsMap.insert(prop, value);
 	}
 		
 	return true;
-}
-
-QObject * ItemBase::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) {
-	Q_UNUSED(url);
-
-
-	QString family, value;
-	for (int i = 0; i < paramNames.count(); i++) {
-		if (paramNames[i].compare("family", Qt::CaseInsensitive) == 0) {
-			family = paramValues.at(i);
-		}
-		else if (paramNames[i].compare("value", Qt::CaseInsensitive) == 0) {
-			value = paramValues.at(i);
-		}
-	}
-
-	bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-
-	QStringList values = collectValues(family, classid, value);
-	if (values.count() <= 1) return NULL;
-
-	FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, classid, parent);
-	comboBox->addItems(values);
-	comboBox->setCurrentIndex(comboBox->findText(value));
-	comboBox->setMaximumWidth(200);
-	comboBox->setEnabled(swappingEnabled);
-
-	// need to save classid and family
-
-	connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(swapEntry(const QString &)));
-
-	return comboBox;
 }
 
 void ItemBase::swapEntry(const QString & text) {
@@ -1669,19 +1645,6 @@ const QString & ItemBase::filename() {
 
 void ItemBase::setFilename(const QString & fn) {
 	m_filename = fn;
-}
-
-bool ItemBase::getSwappingEnabled(const QStringList &paramNames, const QStringList &paramValues)
-{
-	QString family, value;
-	for (int i = 0; i < paramNames.count(); i++) {
-		//DebugDialog::debug(QString("param %1 %2").arg(paramNames[i]).arg(paramValues[i]));
-		if (paramNames[i].compare("swappingenabled", Qt::CaseInsensitive) == 0) {
-			return paramValues.at(i).compare("1", Qt::CaseInsensitive) == 0;
-		}
-	}
-
-	return false;
 }
 
 ItemBase::PluralType ItemBase::isPlural() {

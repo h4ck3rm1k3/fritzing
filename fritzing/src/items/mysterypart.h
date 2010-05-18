@@ -44,14 +44,13 @@ public:
 	~MysteryPart();
 
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
-	bool collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	QString getProperty(const QString & key);
 	void setProp(const QString & prop, const QString & value);
 	void setChipLabel(QString label, bool force);
 	QString chipLabel();
 	const QString & title();
 	bool hasCustomSVG();
-	QObject * createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues);
 	void setSpacing(QString spacing, bool force);
 	const QString & spacing();
 	bool onlySpacingChanges(QMap<QString, QString> & propsMap);

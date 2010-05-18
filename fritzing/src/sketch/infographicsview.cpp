@@ -60,7 +60,7 @@ void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase
 void InfoGraphicsView::viewConnectorItemInfo(ConnectorItem * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->viewConnectorItemInfo(this, item, swappingEnabled(item->attachedTo()));
+	m_infoView->viewConnectorItemInfo(item);
 }
 
 void InfoGraphicsView::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {

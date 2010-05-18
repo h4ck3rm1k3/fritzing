@@ -66,7 +66,7 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) continue;
 
-		bool result = m_renderer->setUpConnector(svgIdLayer, false);
+		bool result = m_renderer->setUpConnector(svgIdLayer, false, true);
 		if (!result) continue;
 
 		foreach (QGraphicsItem * child, childItems()) {
@@ -75,6 +75,7 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 
 			connectorItem->setRect(svgIdLayer->m_rect);
 			connectorItem->setTerminalPoint(svgIdLayer->m_point);
+			connectorItem->setWeirdOffset(svgIdLayer->m_weirdOffset);
 			connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
 			connectorItem->attachedMoved();
 			break;

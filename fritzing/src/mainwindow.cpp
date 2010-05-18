@@ -40,6 +40,7 @@ $Date$
 #include <QPaintDevice>
 #include <QPixmap>
 #include <QTimer>
+#include <QWebView>
 
 #include "items/paletteitem.h"
 #include "mainwindow.h"

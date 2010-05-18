@@ -472,26 +472,28 @@ QString GroundPlaneGenerator::makePolySvg(QList<QPolygon> & polygons, qreal res,
 		if (useIndex < 0) {
 			pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
 			foreach (QPolygon poly, polygons) {
-				pSvg += makeOnePoly(poly, colorString);
+				pSvg += makeOnePoly(poly, colorString, "");
 			}
 			pSvg += "</g>";
 		}
 		else {
+			int ix = 0;
 			for (int i = 0; i < polygons.count(); i++) {
 				if (i == useIndex) {
+					// has to appear inside a g element
 					pSvg += QString("<g id='%1'>\n").arg(ConnectorName);
-					pSvg += makeOnePoly(polygons.at(i), colorString);
+					pSvg += makeOnePoly(polygons.at(i), colorString, "");
 					pSvg += "</g>";
 				}
 				else {
-					pSvg += makeOnePoly(polygons.at(i), colorString);
+					pSvg += makeOnePoly(polygons.at(i), colorString, FSvgRenderer::NonConnectorName + QString::number(ix++));
 				}
 			}
 		}
 	}
 	else {
 		foreach (QPolygon poly, polygons) {
-			pSvg += makeOnePoly(poly, colorString);
+			pSvg += makeOnePoly(poly, colorString, "");
 		}
 	}
 
@@ -510,8 +512,12 @@ qreal GroundPlaneGenerator::calcArea(QPolygon & poly) {
 	return qAbs(total / 2.0);
 }
 
-QString GroundPlaneGenerator::makeOnePoly(const QPolygon & poly, const QString & colorString) {
-	QString polyString = QString("<polygon fill='%1' points='\n").arg(colorString);
+QString GroundPlaneGenerator::makeOnePoly(const QPolygon & poly, const QString & colorString, const QString & id) {
+	QString idString;
+	if (!id.isEmpty()) {
+		idString = QString("id='%1'").arg(id);
+	}
+	QString polyString = QString("<polygon fill='%1' %2 points='\n").arg(colorString).arg(idString);
 	int space = 0;
 	foreach (QPoint p, poly) {
 		polyString += QString("%1,%2 %3").arg(p.x()).arg(p.y()).arg((++space % 8 == 0) ?  "\n" : "");

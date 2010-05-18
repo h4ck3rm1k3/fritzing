@@ -30,17 +30,25 @@ $Date$
 #define HTMLINFOVIEW_H
 
 #include <QFrame>
-#include <QWebView>
 #include <QGraphicsSceneHoverEvent>
 #include <QMutex>
 #include <QTimer>
 #include <QLabel>
 #include <QScrollArea>
+#include <QGridLayout>
+#include <QVBoxLayout>
 
 #include "../items/itembase.h"
 #include "../items/wire.h"
 #include "../connectors/connectoritem.h"
 #include "../referencemodel/referencemodel.h"
+
+struct PropThing {
+	QLabel * m_name;
+	QLabel * m_value;
+	QWidget * m_plugin;
+	QVBoxLayout * m_layout;
+};
 
 class HtmlInfoView : public QScrollArea
 {
@@ -60,7 +68,7 @@ public:
 	void hoverEnterItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item, bool swappingEnabled);
 	void hoverLeaveItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item);
 
-	void viewConnectorItemInfo(class InfoGraphicsView *, ConnectorItem* item, bool swappingEnabled);
+	void viewConnectorItemInfo(ConnectorItem* item);
 	void hoverEnterConnectorItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ConnectorItem * item, bool swappingEnabled);
 	void hoverLeaveConnectorItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
@@ -74,25 +82,21 @@ public:
 	static void cleanup();
 
 protected slots:
-	void jsRegister();
-	void setBlockVisibility(const QString &blockId, bool value);
 	void setContent();
 	void setInstanceTitle();
 	void instanceTitleEnter();
 	void instanceTitleLeave();
 	void instanceTitleEditable(bool editable);
+	void viewExpanded(bool);
 
 protected:
-	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
-	QString appendWireStuff(Wire* wire, long itemID, bool swappingEnabled);
-	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
-	QString appendItemStuff(ItemBase * base, ModelPart * modelPart, long itemID, bool swappingEnabled, bool labelIsVisible = false);
+	void appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
+	void appendWireStuff(Wire* wire, bool swappingEnabled);
+	void appendItemStuff(ItemBase* base, bool swappingEnabled);
+	void appendItemStuff(ItemBase * base, ModelPart * modelPart, bool swappingEnabled, bool labelIsVisible = false);
 
 	void setInstanceTitleColors(class FLineEdit * edit, const QColor & base, const QColor & text);
 
-	QString blockHeader(const QString &title, const QString &blockId);
-	QString blockVisibility(const QString &blockId);
-	QString blockContainer(const QString &blockId);
 	QString settingsBlockVisibilityName(const QString &blockId);
 
 	void setCurrentItem(ItemBase *);
@@ -101,21 +105,17 @@ protected:
 	void viewItemInfoAux(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
 	void setUpTitle(ItemBase *);
 	void setUpIcons(ModelPart *);
-	void addTags(ModelPart * modelPart, QString & s);
-	QString partTitle(const QString & title, const QString & version);
-	QString idString(long id, const QString & moduleID);
-	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled, QString & s);
+	void addTags(ModelPart * modelPart);
+	void partTitle(const QString & title, const QString & version);
+	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
+	void clearPropThingPlugin(PropThing * propThing);
 
 protected:
-	QString m_includes;
 	bool m_alreadyset;
 
 	QPointer<ItemBase> m_currentItem;
 	bool m_currentSwappingEnabled;					// previous item (possibly hovered over)
 
-	QWebView *m_webView;
-	QHash<QString, bool> m_blocksVisibility;
-	QPointer<class InfoViewWebPage> m_infoViewWebPage;
 	QString m_content;
 	QString m_savedContent;
 	QTimer m_setContentTimer;
@@ -126,6 +126,15 @@ protected:
 	QLabel * m_icon1;
 	QLabel * m_icon2;
 	QLabel * m_icon3;
+	QLabel * m_partTitle;
+	QLabel * m_partVersion;
+	QLabel * m_location;
+	QLabel * m_tagsLabel;
+	QLabel * m_connDescr;
+	QLabel * m_connName;
+	QLabel * m_connType;
+	QGridLayout * m_propLayout;
+	QList <PropThing *> m_propThings;
 
 protected:
 	static QString PropsBlockId;

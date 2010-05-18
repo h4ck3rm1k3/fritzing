@@ -17,9 +17,8 @@
 # $Date: 2009-03-28 07:54:52 +0100 (Sat, 28 Mar 2009) $
 # ********************************************************************/
 
-HEADERS += src/infoview/htmlinfoview.h \
- 	src/infoview/infoviewwebpage.h
+HEADERS += src/infoview/htmlinfoview.h 
 
-SOURCES += src/infoview/htmlinfoview.cpp \
-	src/infoview/infoviewwebpage.cpp
+SOURCES += src/infoview/htmlinfoview.cpp 
+
 

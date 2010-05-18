@@ -290,25 +290,12 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, Svg
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
-bool Hole::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) 
+bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
 	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
+		static const int rowHeight = 21;
+
 		returnProp = tr("hole size");
-		returnValue = QString("<object type='application/x-qt-plugin' classid='holesize' swappingenabled='%1' width='100%' height='120px'></object>")
-			.arg(swappingEnabled);  
-		return true;
-	}
-
-	return PaletteItem::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
-}
-
-QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUrl &url, const QStringList &paramNames, const QStringList &paramValues) 
-{
-	static const int rowHeight = 21;
-
-	if (classid.compare("holesize", Qt::CaseInsensitive) == 0) {
-		bool swappingEnabled = getSwappingEnabled(paramNames, paramValues);
-
 		QFrame * frame = new QFrame(parent);
 		QVBoxLayout * vBoxLayout = new QVBoxLayout(frame);
 
@@ -375,11 +362,11 @@ QObject * Hole::createPlugin(QWidget * parent, const QString &classid, const QUr
 
 		vBoxLayout->addWidget(subFrame);
 
-		return frame;
-
+		returnWidget = frame;
+		return true;
 	}
 
-	return PaletteItem::createPlugin(parent, classid, url, paramNames, paramValues);
+	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 void Hole::changeThickness() 

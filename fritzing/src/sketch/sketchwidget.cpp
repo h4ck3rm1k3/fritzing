@@ -144,7 +144,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     // as the scene resizes to fit the new item
    	m_sizeItem = new GraphicsSvgLineItem();
     m_sizeItem->setLine(0, 0, rect().width(), rect().height());
-	DebugDialog::debug(QString("initial rect %1 %2").arg(rect().width()).arg(rect().height()));
+	//DebugDialog::debug(QString("initial rect %1 %2").arg(rect().width()).arg(rect().height()));
     this->scene()->addItem(m_sizeItem);
     m_sizeItem->setVisible(false);
 	
@@ -4609,14 +4609,14 @@ void SketchWidget::resizeEvent(QResizeEvent * event) {
 
 	QPointF z = this->mapToScene(QPoint(0,0));
 
-	DebugDialog::debug(QString("resize event %1 %2, %3 %4, %5 %6")		/* , %3 %4 %5 %6, %7 %8 %9 %10 */
-		.arg(event->size().width()).arg(event->size().height())
-		.arg(p.x()).arg(p.y())
-		.arg(z.x()).arg(z.y())
+//	DebugDialog::debug(QString("resize event %1 %2, %3 %4, %5 %6")		/* , %3 %4 %5 %6, %7 %8 %9 %10 */
+//		.arg(event->size().width()).arg(event->size().height())
+//		.arg(p.x()).arg(p.y())
+//		.arg(z.x()).arg(z.y())
 //		.arg(sr.left()).arg(sr.top()).arg(sr.width()).arg(sr.height())
 //		.arg(sr.left()).arg(sr.top()).arg(ir.width()).arg(ir.height())
-			
-	);
+//			
+//	);
 
 	if (m_sizeItem != NULL) {
 		m_sizeItem->setLine(z.x(), z.y(), p.x(), p.y()); 
@@ -5587,7 +5587,7 @@ QString SketchWidget::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal pri
 }
 
 QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerScale, bool blackOnly) {
-	QLineF line = wire->getPaintLine();
+	QLineF line = wire->getWeirdOffsetPaintLine();
 	QPointF p1 = wire->scenePos() + line.p1() - offset;
 	QPointF p2 = wire->scenePos() + line.p2() - offset;
 	p1.setX(p1.x() * dpi / printerScale);
@@ -5946,8 +5946,12 @@ const QString & SketchWidget::getShortName() {
 }
 
 void SketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal & bendpointWidth, qreal & bendpoint2Width) {
-	int dwidth = (wire->getTrace() && (width > 1)) ? 4 : 3;
-	bendpoint2Width = bendpointWidth = (width - dwidth);
+	if (wire->getTrace()) {
+		bendpoint2Width = bendpointWidth = -width - 1;
+		return;
+	}
+
+	bendpoint2Width = bendpointWidth = (width - 3);
 }
 
 const QColor & SketchWidget::standardBackground() {

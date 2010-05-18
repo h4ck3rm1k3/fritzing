@@ -36,8 +36,9 @@ Dip::Dip( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentif
 Dip::~Dip() {
 }
 
-bool Dip::collectExtraInfoHtml(const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue) {
-	bool result = MysteryPart::collectExtraInfoHtml(family, prop, value, swappingEnabled, returnProp, returnValue);
+bool Dip::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
+{
+	bool result = MysteryPart::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 	if (prop.compare("chip label", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("chip label");
 	}

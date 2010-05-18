@@ -54,7 +54,7 @@ protected:
 	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
 	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
 	QString makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnector);
-	QString makeOnePoly(const QPolygon & poly, const QString & colorString);
+	QString makeOnePoly(const QPolygon & poly, const QString & colorString, const QString & id);
 	qreal calcArea(QPolygon & poly);
 
 protected:
