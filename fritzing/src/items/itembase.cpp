@@ -1549,19 +1549,19 @@ bool ItemBase::collectExtraInfo(QWidget * parent, const QString & family, const 
 		return true;
 	}
 
-	QString tempValue;
+	QString tempValue = value;
 	QStringList values = collectValues(family, prop, tempValue);
 	if (values.count() > 1) {
 		FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, prop, parent);
 		comboBox->setMaximumWidth(200);
 
 		comboBox->addItems(values);
-		comboBox->setCurrentIndex(comboBox->findText(value));
+		comboBox->setCurrentIndex(comboBox->findText(tempValue));
 		comboBox->setEnabled(swappingEnabled);
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(swapEntry(const QString &)));
 
 		returnWidget = comboBox;
-		m_propsMap.insert(prop, value);
+		m_propsMap.insert(prop, tempValue);
 		return true;
 	}
 		

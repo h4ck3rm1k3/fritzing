@@ -49,7 +49,6 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void saveParams();
 	void getParams(QPointF &, QSizeF &);
-	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
 	QString getProperty(const QString & key);
 	void setLogo(QString logo, bool force);

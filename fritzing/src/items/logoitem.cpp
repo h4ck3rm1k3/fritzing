@@ -133,10 +133,6 @@ QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
-QStringList LogoItem::collectValues(const QString & family, const QString & prop, QString & value) {
-	return PaletteItem::collectValues(family, prop, value);
-}
-
 bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
 	if (m_hasLogo) {

@@ -233,11 +233,9 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 {
 	m_setContentTimer.stop();
 	m_pendingInfoGraphicsView = infoGraphicsView;
-	m_pendingItemBase = item;
-	m_pendingSwappingEnabled = swappingEnabled;
-	m_pendingCopy = true;
+	m_lastItemBase = m_pendingItemBase = item;
+	m_lastSwappingEnabled = m_pendingSwappingEnabled = swappingEnabled;
 	m_setContentTimer.start();
-
 }
 
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * item, bool swappingEnabled) {
@@ -245,7 +243,6 @@ void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphics
 	m_pendingInfoGraphicsView = infoGraphicsView;
 	m_pendingItemBase = item;
 	m_pendingSwappingEnabled = swappingEnabled;
-	m_pendingCopy = false;
 	m_setContentTimer.start();
 }
 
@@ -256,7 +253,6 @@ void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphics
 	m_pendingInfoGraphicsView = infoGraphicsView;
 	m_pendingItemBase = m_lastItemBase;
 	m_pendingSwappingEnabled = m_lastSwappingEnabled;
-	m_pendingCopy = false;
 	m_setContentTimer.start();
 }
 
@@ -369,16 +365,13 @@ void HtmlInfoView::setContent()
 		return;
 	}
 
+	DebugDialog::debug(QString("pending %1").arg(m_pendingItemBase->title()));
 	m_currentSwappingEnabled = m_pendingSwappingEnabled;
 
 	appendStuff(m_pendingItemBase, m_pendingSwappingEnabled);
 	setCurrentItem(m_pendingItemBase);
 	m_infoGraphicsView = m_pendingInfoGraphicsView;
 
-	if (m_pendingCopy) {
-		m_lastItemBase = m_pendingItemBase;
-		m_lastSwappingEnabled = m_pendingSwappingEnabled;
-	}
 	m_setContentTimer.stop();
 	//DebugDialog::debug(QString("end   updating %1").arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
 
@@ -570,10 +563,15 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 {
 	bool repeatPossible = (modelPart == m_lastPropsModelPart && itemBase == m_lastPropsItemBase && swappingEnabled == m_lastPropsSwappingEnabled);
 	if (repeatPossible && modelPart == NULL && itemBase == NULL) {
+		DebugDialog::debug("display props bail");
 		return;
 	}
 
-	DebugDialog::debug(QString("repeat possible %1").arg(repeatPossible));
+	m_propLayout->setEnabled(false);
+
+	if (repeatPossible) {
+		DebugDialog::debug(QString("repeat possible %1").arg(repeatPossible));
+	}
 
 	QStringList keys;
 	QHash<QString, QString> properties;
@@ -704,6 +702,9 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			propThing->m_plugin->setVisible(false);
 		}
 	}
+
+	m_propLayout->setEnabled(true);
+
 
 	/*
 	foreach (PropThing * propThing, m_propThings) {

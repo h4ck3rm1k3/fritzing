@@ -135,7 +135,6 @@ protected:
 	QPointer<InfoGraphicsView> m_pendingInfoGraphicsView;
 	QPointer<ItemBase> m_pendingItemBase;
 	bool m_pendingSwappingEnabled;
-	bool m_pendingCopy;
 
 	// note: these m_last items should only be checked for equality and not otherwise accessed
 	ItemBase * m_lastTitleItemBase;
