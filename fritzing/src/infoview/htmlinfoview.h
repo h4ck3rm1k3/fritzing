@@ -100,15 +100,14 @@ protected:
 	QString settingsBlockVisibilityName(const QString &blockId);
 
 	void setCurrentItem(ItemBase *);
-	void registerAsCurrentItem(ItemBase *item);
 	void setNullContent();
-	void viewItemInfoAux(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
 	void setUpTitle(ItemBase *);
 	void setUpIcons(ModelPart *);
 	void addTags(ModelPart * modelPart);
 	void partTitle(const QString & title, const QString & version);
 	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
 	void clearPropThingPlugin(PropThing * propThing);
+	void clearPropThingPlugin(PropThing * propThing, QWidget * plugin);
 
 protected:
 	bool m_alreadyset;
@@ -116,8 +115,6 @@ protected:
 	QPointer<ItemBase> m_currentItem;
 	bool m_currentSwappingEnabled;					// previous item (possibly hovered over)
 
-	QString m_content;
-	QString m_savedContent;
 	QTimer m_setContentTimer;
 	QPointer<class InfoGraphicsView> m_infoGraphicsView;
 	QPointer<ItemBase> m_lastItemBase;
@@ -135,6 +132,23 @@ protected:
 	QLabel * m_connType;
 	QGridLayout * m_propLayout;
 	QList <PropThing *> m_propThings;
+	QPointer<InfoGraphicsView> m_pendingInfoGraphicsView;
+	QPointer<ItemBase> m_pendingItemBase;
+	bool m_pendingSwappingEnabled;
+	bool m_pendingCopy;
+
+	// note: these m_last items should only be checked for equality and not otherwise accessed
+	ItemBase * m_lastTitleItemBase;
+	QString m_lastPartTitle;
+	QString m_lastPartVersion;
+	ModelPart * m_lastTagsModelPart;
+	int m_lastConnectorItemCount;
+	ConnectorItem * m_lastConnectorItem;
+	ModelPart * m_lastIconModelPart;
+	ModelPart * m_lastPropsModelPart;
+	ItemBase * m_lastPropsItemBase;
+	bool m_lastPropsSwappingEnabled;
+	// end note
 
 protected:
 	static QString PropsBlockId;

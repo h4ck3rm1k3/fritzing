@@ -142,12 +142,13 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 	if (m_hasLogo) {
 		if (prop.compare("logo", Qt::CaseInsensitive) == 0) {
 			returnProp = tr("logo");
+
 			QLineEdit * e1 = new QLineEdit(parent);
+			e1->setMaximumWidth(200);
+
 			e1->setText(m_logo);
 			e1->setEnabled(swappingEnabled);
 			connect(e1, SIGNAL(editingFinished()), this, SLOT(logoEntry()));
-
-			e1->setMaximumWidth(200);
 
 			returnWidget = e1;
 			return true;
@@ -155,7 +156,6 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 	}
 	else {
 		if (prop.compare("filename", Qt::CaseInsensitive) == 0) {
-
 			QFrame * frame = new QFrame();
 			QVBoxLayout * vboxLayout = new QVBoxLayout();
 			vboxLayout->setAlignment(Qt::AlignLeft);
@@ -270,9 +270,7 @@ bool LogoItem::collectExtraInfo(QWidget * parent, const QString & family, const 
 
 		frame->setMaximumWidth(200);
 
-	returnWidget = frame;
-
-
+		returnWidget = frame;
 
 		returnProp = tr("size");
 		return true;

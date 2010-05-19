@@ -78,6 +78,13 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
     QFrame * mainFrame = new QFrame(this);
 	mainFrame->setObjectName("infoViewMainFrame");
 
+	m_lastTitleItemBase = NULL;
+	m_lastTagsModelPart = NULL;
+	m_lastConnectorItem = NULL;
+	m_lastIconModelPart = NULL;
+	m_lastPropsModelPart = NULL;
+	m_lastPropsItemBase = NULL;
+
 	m_partTitle = NULL;
 	m_partVersion = NULL;
 	m_connDescr = NULL;
@@ -125,18 +132,17 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_location = new QLabel();
 	hboxLayout->addWidget(m_location);
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
-	hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 	iconFrame->setLayout(hboxLayout);
 	vlo->addWidget(iconFrame);
 
 	QFrame * tFrame = new QFrame(mainFrame);
+	tFrame->setObjectName("partTitleFrame");
 	hboxLayout = new QHBoxLayout();
 	hboxLayout->setContentsMargins (0, 0, 0, 0);
 	m_partTitle = new QLabel(tFrame);
 	m_partTitle->setObjectName("partTitle");
 	hboxLayout->addWidget(m_partTitle);
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
-	hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 	m_partVersion = new QLabel(tFrame);
 	m_partVersion->setObjectName("partTitle");
 	hboxLayout->addWidget(m_partVersion);
@@ -151,6 +157,7 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_propLayout->setMargin(0);
 	propFrame->setLayout(m_propLayout);
 	pev->setChildFrame(propFrame);
+	pev->layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
 	vlo->addWidget(pev);
 
 	ExpandableView * tev = new ExpandableView(tr("Tags"), this);
@@ -158,13 +165,15 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	connect(tev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
 	m_tagsLabel = new QLabel(this);
 	tev->setChildFrame(m_tagsLabel);
+	tev->layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
 	vlo->addWidget(tev);
+
 
 	ExpandableView * cev = new ExpandableView(tr("Connections"), this);
 	cev->setProperty("blockid", ConnsBlockId);
 	connect(cev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
 	QFrame * connFrame = new QFrame(this);
-	QFormLayout * connLayout = new QFormLayout(propFrame);
+	QFormLayout * connLayout = new QFormLayout(connFrame);
 	connLayout->setMargin(0);
 	connLayout->setLabelAlignment(Qt::AlignLeft);
 	connFrame->setLayout(connLayout);
@@ -185,7 +194,11 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	connLayout->addRow(typeLabel, m_connType);
 
 	cev->setChildFrame(connFrame);
+	cev->layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
+
 	vlo->addWidget(cev);
+
+	vlo->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
 	mainFrame->setLayout(vlo);
 
@@ -218,23 +231,43 @@ void HtmlInfoView::cleanup() {
 
 void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) 
 {
-	viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
-	m_lastItemBase = item;
-	m_lastSwappingEnabled = swappingEnabled;
+	m_setContentTimer.stop();
+	m_pendingInfoGraphicsView = infoGraphicsView;
+	m_pendingItemBase = item;
+	m_pendingSwappingEnabled = swappingEnabled;
+	m_pendingCopy = true;
+	m_setContentTimer.start();
+
 }
 
 void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * item, bool swappingEnabled) {
-	viewItemInfoAux(infoGraphicsView, item, swappingEnabled);
+	m_setContentTimer.stop();
+	m_pendingInfoGraphicsView = infoGraphicsView;
+	m_pendingItemBase = item;
+	m_pendingSwappingEnabled = swappingEnabled;
+	m_pendingCopy = false;
+	m_setContentTimer.start();
 }
 
 void HtmlInfoView::hoverLeaveItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * itemBase){
 	Q_UNUSED(itemBase);
 	//DebugDialog::debug(QString("hoverLeaveItem itembase %1").arg(itemBase ? itemBase->instanceTitle() : "NULL"));
-	viewItemInfoAux(infoGraphicsView, m_lastItemBase, m_lastSwappingEnabled);
-
+	m_setContentTimer.stop();
+	m_pendingInfoGraphicsView = infoGraphicsView;
+	m_pendingItemBase = m_lastItemBase;
+	m_pendingSwappingEnabled = m_lastSwappingEnabled;
+	m_pendingCopy = false;
+	m_setContentTimer.start();
 }
 
 void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * connectorItem) {
+
+	int count = connectorItem ? connectorItem->connectionsCount() : 0;
+	if (m_lastConnectorItem == connectorItem && m_lastConnectorItemCount == count) return;
+
+	m_lastConnectorItem = connectorItem;
+	m_lastConnectorItemCount = count;
+
 	Connector * connector = NULL;
 	ConnectorShared * connectorShared = NULL;
 	if (connectorItem) {
@@ -259,11 +292,6 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * connectorItem) {
 
 void HtmlInfoView::hoverEnterConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem * item, bool swappingEnabled) {
 	Q_UNUSED(event)
-	//QString s = appendStuff(connectorItem->attachedTo(), swappingEnabled);
-	//setCurrentItem(item->attachedTo());
-	//m_infoGraphicsView = infoGraphicsView;
-	//setContent(s);
-
 	viewConnectorItemInfo(item);
 }
 
@@ -271,20 +299,6 @@ void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsScene
 	Q_UNUSED(event);
 	Q_UNUSED(connItem);
 	viewConnectorItemInfo(NULL);
-}
-
-void HtmlInfoView::viewItemInfoAux(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
-
-	if (item == NULL) {
-		setNullContent();
-		return;
-	}
-
-	m_currentSwappingEnabled = swappingEnabled;
-
-	appendStuff(item, swappingEnabled);
-	setCurrentItem(item);
-	m_infoGraphicsView = infoGraphicsView;
 }
 
 void HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
@@ -321,7 +335,6 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 
 	displayProps(modelPart, wire, swappingEnabled);
 	addTags(modelPart);
-
 }
 
 void HtmlInfoView::appendItemStuff(ItemBase* base, bool swappingEnabled) {
@@ -346,49 +359,42 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 	addTags(modelPart);
 }
 
-void HtmlInfoView::setContent(const QString &html) {
-	//DebugDialog::debug("html set content");
+void HtmlInfoView::setContent()
+{
 	m_setContentTimer.stop();
-	if (html.compare(m_savedContent) == 0) {
-		//DebugDialog::debug("same content bail");
+	//DebugDialog::debug(QString("start updating %1").arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
+	if (m_pendingItemBase == NULL) {
+		setNullContent();
+		m_setContentTimer.stop();
 		return;
 	}
 
-	m_content = html;
-	m_setContentTimer.start();
-}
+	m_currentSwappingEnabled = m_pendingSwappingEnabled;
 
-void HtmlInfoView::setContent() {
+	appendStuff(m_pendingItemBase, m_pendingSwappingEnabled);
+	setCurrentItem(m_pendingItemBase);
+	m_infoGraphicsView = m_pendingInfoGraphicsView;
 
-	//DebugDialog::debug("html info view set content");
+	if (m_pendingCopy) {
+		m_lastItemBase = m_pendingItemBase;
+		m_lastSwappingEnabled = m_pendingSwappingEnabled;
+	}
+	m_setContentTimer.stop();
+	//DebugDialog::debug(QString("end   updating %1").arg(QTime::currentTime().toString("HH:mm:ss.zzz")));
 
-
-	/*QFile file("/tmp/infoview.html");
-	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-	         return;
-	QTextStream out(&file);
-	out << fileContent;
-	file.close();*/
 }
 
 QSize HtmlInfoView::sizeHint() const {
 	return QSize(DockManager::DockDefaultWidth, DockManager::InfoViewDefaultHeight);
 }
 
-
 void HtmlInfoView::setCurrentItem(ItemBase * item) {
 	m_currentItem = item;
 }
 
-void HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
-	if(item == NULL) {
-		setNullContent();
-	}
-}
-
 void HtmlInfoView::unregisterCurrentItem() {
 	setCurrentItem(NULL);
-	registerAsCurrentItem(NULL);
+	setNullContent();
 }
 
 void HtmlInfoView::unregisterCurrentItemIf(long id) {
@@ -468,7 +474,10 @@ QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
 
 void HtmlInfoView::setUpTitle(ItemBase * itemBase) 
 {
-	if(itemBase) {
+	if (itemBase == m_lastTitleItemBase) return;
+
+	m_lastTitleItemBase = itemBase;
+	if (itemBase) {
 		QString title = itemBase->instanceTitle();
 		if (title.isEmpty()) {
 			// assumes a part with an empty title only comes from the parts bin palette
@@ -488,6 +497,10 @@ void HtmlInfoView::setUpTitle(ItemBase * itemBase)
 }
 
 void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
+	if (m_lastIconModelPart == modelPart) return;
+	
+	m_lastIconModelPart = modelPart;
+
 	QPixmap *pixmap1 = NULL;
 	QPixmap *pixmap2 = NULL;
 	QPixmap *pixmap3 = NULL;
@@ -528,6 +541,10 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 void HtmlInfoView::addTags(ModelPart * modelPart) {
 	if (m_tagsLabel == NULL) return;
 
+	if (m_lastTagsModelPart == modelPart) return;
+
+	m_lastTagsModelPart = modelPart;
+
 	if (modelPart == NULL || modelPart->tags().isEmpty()) {
 		m_tagsLabel->setText("");
 		return;
@@ -539,6 +556,11 @@ void HtmlInfoView::addTags(ModelPart * modelPart) {
 void HtmlInfoView::partTitle(const QString & title, const QString & version) {
 	if (m_partTitle == NULL) return;
 
+	if (m_lastPartTitle == title && m_lastPartVersion == version) return;
+
+	m_lastPartTitle = title;
+	m_lastPartVersion = version;
+
 	m_partTitle->setText(title);
 	m_partVersion->setText(version);
 
@@ -546,6 +568,13 @@ void HtmlInfoView::partTitle(const QString & title, const QString & version) {
 
 void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled) 
 {
+	bool repeatPossible = (modelPart == m_lastPropsModelPart && itemBase == m_lastPropsItemBase && swappingEnabled == m_lastPropsSwappingEnabled);
+	if (repeatPossible && modelPart == NULL && itemBase == NULL) {
+		return;
+	}
+
+	DebugDialog::debug(QString("repeat possible %1").arg(repeatPossible));
+
 	QStringList keys;
 	QHash<QString, QString> properties;
 	QString family;
@@ -614,36 +643,56 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 		}
 
 		PropThing * propThing = m_propThings.at(ix);
-		clearPropThingPlugin(propThing);
+
+		QWidget * oldPlugin = propThing->m_plugin;
+		propThing->m_plugin = NULL;
 
 		QString value = properties.value(key,"");
 		QString translatedName = ItemBase::translatePropertyName(key);
 		QString resultKey, resultValue;
-		QWidget * resultWidget = NULL;
+		QWidget * resultWidget = oldPlugin;
 		bool result = false;
 		if (itemBase != NULL) {
 			result = itemBase->collectExtraInfo(propThing->m_name->parentWidget(), family, key, value, swappingEnabled, resultKey, resultValue, resultWidget);
 		}
 
+		QString newName;
+		QString newValue;
+		QWidget * newWidget = NULL;
 		if (result) {
-			propThing->m_name->setText(resultKey);
+			newName = resultKey;
 			if (resultWidget) {
-				propThing->m_layout->addWidget(resultWidget);
+				newWidget = resultWidget;
+				if (resultWidget != oldPlugin) {
+					propThing->m_layout->addWidget(resultWidget);
+				}
+				else {
+					oldPlugin = NULL;
+				}
 				propThing->m_plugin = resultWidget;
-				propThing->m_value->setVisible(false);
 			}
 			else {
-				propThing->m_value->setText(resultValue);
-				propThing->m_value->setVisible(true);
+				newValue = resultValue;
 			}
 		}
 		else {
-			propThing->m_name->setText(translatedName);
-			propThing->m_value->setText(value);
-			propThing->m_value->setVisible(true);
+			newName = translatedName;
+			newValue = value;
+		}
+		
+		if (oldPlugin) {
+			clearPropThingPlugin(propThing, oldPlugin);
 		}
 
+		if (propThing->m_name->text().compare(newName) != 0) {
+			propThing->m_name->setText(newName);
+		}
 		propThing->m_name->setVisible(true);
+
+		if (newWidget == NULL && propThing->m_value->text().compare(newValue) != 0) {
+			propThing->m_value->setText(newValue);
+		}
+		propThing->m_value->setVisible(newWidget == NULL);
 		ix++;
 	}
 
@@ -651,7 +700,9 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 		PropThing * propThing = m_propThings.at(jx);
 		propThing->m_name->setVisible(false);
 		propThing->m_value->setVisible(false);
-		clearPropThingPlugin(propThing);
+		if (propThing->m_plugin) {
+			propThing->m_plugin->setVisible(false);
+		}
 	}
 
 	/*
@@ -677,9 +728,14 @@ void HtmlInfoView::viewExpanded(bool value) {
 void HtmlInfoView::clearPropThingPlugin(PropThing * propThing) 
 {
 	if (propThing->m_plugin) {
-		propThing->m_layout->removeWidget(propThing->m_plugin);
-                // TODO: probably a memory leak here
-                propThing->m_plugin->setVisible(false);
+		clearPropThingPlugin(propThing, propThing->m_plugin);
 		propThing->m_plugin = NULL;		
 	}
+}
+
+void HtmlInfoView::clearPropThingPlugin(PropThing * propThing, QWidget * plugin) 
+{
+	propThing->m_layout->removeWidget(plugin);
+	plugin->setVisible(false);
+	plugin->deleteLater();
 }

@@ -215,15 +215,11 @@ HtmlInfoView {
 	margin-top: 3px;
 }
 
-#infoViewWebView {
-	background-color: rgb(179,179,179);
-}
-
 #IconFrame {
 	background-color: rgb(179,179,179);
+	max-height: 32px;
+	min-height: 32px;
 }
-
-
 
 /* the whole thing */
 #expandableViewFrame {
@@ -233,12 +229,19 @@ HtmlInfoView {
 	padding: 4px;
 }
 
+#partTitleFrame {
+	max-height: 18px;
+	min-height: 18px;
+}
+
 /* redundant part title */
 #partTitle {
 	margin: 2px;
 	font-size: 10px;
 	font-weight: normal;
 	color: rgb(87,87,87);
+	max-height: 18px;
+	min-height: 18px;
 }
 
 #connectionsLabel {

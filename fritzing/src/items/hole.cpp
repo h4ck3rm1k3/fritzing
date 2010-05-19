@@ -213,10 +213,7 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 			.arg(id);
 		svg += QString("<circle drill='0' fill='black' cx='%1' cy='%1' r='%2' stroke-width='0'  />")   // set the drill attribute for gerber translation
 			.arg((hd / 2) + rt)
-			.arg(hd / 2)
-			.arg(hd)
-			.arg(setColor)
-			.arg(id);
+			.arg(hd / 2);
 	}
   		
 	svg += "</g></svg>";
@@ -292,18 +289,17 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, Svg
 
 bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget) 
 {
-	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
-		static const int rowHeight = 21;
+	static const int rowHeight = 21;
 
+	if (prop.compare("hole size", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("hole size");
+
 		QFrame * frame = new QFrame(parent);
 		QVBoxLayout * vBoxLayout = new QVBoxLayout(frame);
 
 		m_sizesComboBox = new QComboBox(frame);
 		m_sizesComboBox->setMaximumWidth(200);
 		m_sizesComboBox->setEditable(false);
-		m_sizesComboBox->setEnabled(swappingEnabled);
-		m_sizesComboBox->addItems(m_holeSizes.keys());
 
 		vBoxLayout->addWidget(m_sizesComboBox);
 
@@ -315,10 +311,8 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		m_unitsComboBox->setMinimumHeight(rowHeight);
 		m_unitsComboBox->setMaximumHeight(rowHeight);
 		m_unitsComboBox->setEditable(false);
-		m_unitsComboBox->setEnabled(swappingEnabled);
 		m_unitsComboBox->addItem("mm");
 		m_unitsComboBox->addItem("in");
-		m_unitsComboBox->setCurrentIndex(m_modelPart->prop("hole size").toString().contains("in") ? 1 : 0);
 		gridLayout->addWidget(m_unitsComboBox, 0, 2, 2, 1);
 
 		m_diameterEdit = new QLineEdit(subFrame);
@@ -327,7 +321,6 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		m_diameterValidator = new QDoubleValidator(m_diameterEdit);
 		m_diameterValidator->setNotation(QDoubleValidator::StandardNotation);
 		m_diameterEdit->setValidator(m_diameterValidator);
-		m_diameterEdit->setEnabled(swappingEnabled);
 		gridLayout->addWidget(m_diameterEdit, 0, 1);
 
 		QLabel * label = new QLabel(tr("Hole Diameter"));
@@ -340,7 +333,6 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		m_thicknessValidator = new QDoubleValidator(m_thicknessEdit);
 		m_thicknessValidator->setNotation(QDoubleValidator::StandardNotation);
 		m_thicknessEdit->setValidator(m_thicknessValidator);
-		m_thicknessEdit->setEnabled(swappingEnabled);
 		gridLayout->addWidget(m_thicknessEdit, 1, 1);
 
 		label = new QLabel(tr("Ring Thickness"));
@@ -351,6 +343,15 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
 
+		vBoxLayout->addWidget(subFrame);
+
+		m_sizesComboBox->addItems(m_holeSizes.keys());
+		m_sizesComboBox->setEnabled(swappingEnabled);
+		m_unitsComboBox->setEnabled(swappingEnabled);
+		m_unitsComboBox->setCurrentIndex(m_modelPart->prop("hole size").toString().contains("in") ? 1 : 0);
+		m_diameterEdit->setEnabled(swappingEnabled);
+		m_thicknessEdit->setEnabled(swappingEnabled);
+
 		updateEditTexts();
 		updateValidators();
 		updateSizes();
@@ -359,8 +360,6 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		connect(m_unitsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeUnits(const QString &)));
 		connect(m_diameterEdit, SIGNAL(editingFinished()), this, SLOT(changeDiameter()));
 		connect(m_thicknessEdit, SIGNAL(editingFinished()), this, SLOT(changeThickness()));
-
-		vBoxLayout->addWidget(subFrame);
 
 		returnWidget = frame;
 		return true;

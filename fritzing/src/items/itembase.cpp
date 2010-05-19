@@ -1538,25 +1538,31 @@ bool ItemBase::isObsolete() {
 
 bool ItemBase::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
+	returnWidget = NULL;
 	returnProp = ItemBase::translatePropertyName(prop);
 	returnValue = value;	
 
-	if (prop.compare("family", Qt::CaseInsensitive) == 0) return true;
-	if (prop.compare("id", Qt::CaseInsensitive) == 0) return true;
+	if (prop.compare("family", Qt::CaseInsensitive) == 0) {
+		return true;
+	}
+	if (prop.compare("id", Qt::CaseInsensitive) == 0) {
+		return true;
+	}
 
 	QString tempValue;
 	QStringList values = collectValues(family, prop, tempValue);
 	if (values.count() > 1) {
 		FamilyPropertyComboBox * comboBox = new FamilyPropertyComboBox(family, prop, parent);
+		comboBox->setMaximumWidth(200);
+
 		comboBox->addItems(values);
 		comboBox->setCurrentIndex(comboBox->findText(value));
-		comboBox->setMaximumWidth(200);
 		comboBox->setEnabled(swappingEnabled);
-
 		connect(comboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(swapEntry(const QString &)));
 
 		returnWidget = comboBox;
 		m_propsMap.insert(prop, value);
+		return true;
 	}
 		
 	return true;
