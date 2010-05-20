@@ -173,25 +173,27 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	cev->setProperty("blockid", ConnsBlockId);
 	connect(cev, SIGNAL(expanded(bool)), this, SLOT(viewExpanded(bool)));
 	QFrame * connFrame = new QFrame(this);
-	QFormLayout * connLayout = new QFormLayout(connFrame);
+        QGridLayout * connLayout = new QGridLayout(connFrame);
 	connLayout->setMargin(0);
-	connLayout->setLabelAlignment(Qt::AlignLeft);
 	connFrame->setLayout(connLayout);
 
 	QLabel * descrLabel = new QLabel(tr("conn."), this);
 	descrLabel->setObjectName("connectionsLabel");
 	m_connDescr = new QLabel(this);
-	connLayout->addRow(descrLabel, m_connDescr);
+        connLayout->addWidget(descrLabel, 0, 0);
+        connLayout->addWidget(m_connDescr, 0, 1);
 
 	QLabel * nameLabel = new QLabel(tr("name"), this);
 	nameLabel->setObjectName("connectionsLabel");
 	m_connName = new QLabel(this);
-	connLayout->addRow(nameLabel, m_connName);
+        connLayout->addWidget(nameLabel, 1, 0);
+        connLayout->addWidget(m_connName, 1, 1);
 
 	QLabel * typeLabel = new QLabel(tr("type"), this);
 	typeLabel->setObjectName("connectionsLabel");
 	m_connType = new QLabel(this);
-	connLayout->addRow(typeLabel, m_connType);
+        connLayout->addWidget(typeLabel, 2, 0);
+        connLayout->addWidget(m_connType, 2, 1);
 
 	cev->setChildFrame(connFrame);
 	cev->layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
@@ -386,8 +388,10 @@ void HtmlInfoView::setCurrentItem(ItemBase * item) {
 }
 
 void HtmlInfoView::unregisterCurrentItem() {
+        m_setContentTimer.stop();
 	setCurrentItem(NULL);
-	setNullContent();
+        m_pendingItemBase = NULL;
+        m_setContentTimer.start();
 }
 
 void HtmlInfoView::unregisterCurrentItemIf(long id) {
@@ -667,6 +671,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 				else {
 					oldPlugin = NULL;
 				}
+                                DebugDialog::debug(QString("adding %1 %2").arg(newName).arg((long) resultWidget, 0, 16));
 				propThing->m_plugin = resultWidget;
 			}
 			else {
@@ -728,6 +733,7 @@ void HtmlInfoView::viewExpanded(bool value) {
 
 void HtmlInfoView::clearPropThingPlugin(PropThing * propThing) 
 {
+
 	if (propThing->m_plugin) {
 		clearPropThingPlugin(propThing, propThing->m_plugin);
 		propThing->m_plugin = NULL;		
@@ -736,6 +742,7 @@ void HtmlInfoView::clearPropThingPlugin(PropThing * propThing)
 
 void HtmlInfoView::clearPropThingPlugin(PropThing * propThing, QWidget * plugin) 
 {
+        DebugDialog::debug(QString("clearing %1").arg((long) plugin, 0, 16));
 	propThing->m_layout->removeWidget(plugin);
 	plugin->setVisible(false);
 	plugin->deleteLater();

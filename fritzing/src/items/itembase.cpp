@@ -1569,15 +1569,15 @@ bool ItemBase::collectExtraInfo(QWidget * parent, const QString & family, const 
 }
 
 void ItemBase::swapEntry(const QString & text) {
-	FamilyPropertyComboBox * comboBox = dynamic_cast<FamilyPropertyComboBox *>(sender());
-	if (comboBox == NULL) return;
+    FamilyPropertyComboBox * comboBox = qobject_cast<FamilyPropertyComboBox *>(sender());
+    if (comboBox == NULL) return;
 
-	m_propsMap.insert(comboBox->prop(), text);
+    m_propsMap.insert(comboBox->prop(), text);
 
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->swap(comboBox->family(), comboBox->prop(), m_propsMap);
-	}
+    InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+    if (infoGraphicsView != NULL) {
+        infoGraphicsView->swap(comboBox->family(), comboBox->prop(), m_propsMap);
+    }
 }
 
 void ItemBase::setReferenceModel(ReferenceModel * rm) {

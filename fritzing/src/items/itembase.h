@@ -36,6 +36,7 @@ $Date$
 #include <QPointer>
 #include <QUrl>
 #include <QMap>
+#include <QTimer>
 
 #include "../viewgeometry.h"
 #include "../viewlayer.h"

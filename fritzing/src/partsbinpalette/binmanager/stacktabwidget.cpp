@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 #include <QMouseEvent>
-#include <QTimer>
 
 #include "stacktabwidget.h"
 #include "stackwidget.h"

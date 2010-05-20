@@ -303,11 +303,14 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 
 		vBoxLayout->addWidget(m_sizesComboBox);
 
+                QFrame * hFrame = new QFrame(frame);
+                QHBoxLayout * hLayout = new QHBoxLayout(hFrame);
+
 		QGroupBox * subFrame = new QGroupBox(tr("custom settings"), frame);
 		QGridLayout * gridLayout = new QGridLayout(subFrame);
 
 		m_unitsComboBox = new QComboBox(subFrame);
-		m_unitsComboBox->setMaximumWidth(40);
+                m_unitsComboBox->setMaximumWidth(60);
 		m_unitsComboBox->setMinimumHeight(rowHeight);
 		m_unitsComboBox->setMaximumHeight(rowHeight);
 		m_unitsComboBox->setEditable(false);
@@ -343,7 +346,9 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
 
-		vBoxLayout->addWidget(subFrame);
+                hLayout->addWidget(subFrame);
+                hLayout->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Minimum));
+                vBoxLayout->addWidget(hFrame);
 
 		m_sizesComboBox->addItems(m_holeSizes.keys());
 		m_sizesComboBox->setEnabled(swappingEnabled);

@@ -44,10 +44,10 @@ $Date$
 #include "../referencemodel/referencemodel.h"
 
 struct PropThing {
-	QLabel * m_name;
-	QLabel * m_value;
-	QWidget * m_plugin;
-	QVBoxLayout * m_layout;
+        QPointer<QLabel> m_name;
+        QPointer<QLabel> m_value;
+        QPointer<QWidget> m_plugin;
+        QPointer<QVBoxLayout> m_layout;
 };
 
 class HtmlInfoView : public QScrollArea
@@ -110,8 +110,6 @@ protected:
 	void clearPropThingPlugin(PropThing * propThing, QWidget * plugin);
 
 protected:
-	bool m_alreadyset;
-
 	QPointer<ItemBase> m_currentItem;
 	bool m_currentSwappingEnabled;					// previous item (possibly hovered over)
 
@@ -132,7 +130,7 @@ protected:
 	QLabel * m_connType;
 	QGridLayout * m_propLayout;
 	QList <PropThing *> m_propThings;
-	QPointer<InfoGraphicsView> m_pendingInfoGraphicsView;
+        QPointer<class InfoGraphicsView> m_pendingInfoGraphicsView;
 	QPointer<ItemBase> m_pendingItemBase;
 	bool m_pendingSwappingEnabled;
 

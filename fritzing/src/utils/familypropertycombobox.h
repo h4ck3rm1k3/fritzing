@@ -28,6 +28,7 @@ $Date$
 #define FAMILYPROPERTYCOMBOBOX_H
 
 #include <QComboBox>
+#include "../debugdialog.h"
 
 class FamilyPropertyComboBox : public QComboBox 
 {
@@ -40,6 +41,11 @@ public:
 	}
 	~FamilyPropertyComboBox() {
 	}
+
+        void hidePopup() {
+            DebugDialog::debug(QString("hide popup %1").arg((long) this, 0, 16));
+            QComboBox::hidePopup();
+        }
 
 	const QString & prop() { return m_prop; }
 	const QString & family() { return m_family; }

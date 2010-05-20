@@ -28,10 +28,9 @@ $Date$
 #define ABOUTBOX_H
 
 #include <QWidget>
+#include <QTimer>
 #include <QTime>
-
-class QScrollArea;
-class QTimer;
+#include <QScrollArea>
 
 class AboutBox : public QWidget {
 	Q_OBJECT
