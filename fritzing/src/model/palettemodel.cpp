@@ -324,10 +324,13 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	QString title, label, date, author, description, taxonomy, replacedBy, version;
 	QStringList tags;
 	QHash<QString, QString> properties;
+	QSet<ViewIdentifierClass::ViewIdentifier> hasViewFor;
+	QHash<ViewIdentifierClass::ViewIdentifier, QString> hasBaseNameFor;
 
 	if (fastLoad) {
 		QXmlStreamReader xml(&file);
 		xml.setNamespaceProcessing(false);
+		ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::IconView;
 		while (!xml.atEnd()) {
 			bool done = false;
 			switch (xml.readNext()) {
@@ -372,8 +375,23 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 					else if (name.compare("date") == 0) {
 						date = xml.readElementText();
 					}
-					else if (name.compare("views") == 0) {
-						done = true;
+					else if (name.compare("breadboardView") == 0) {
+						viewIdentifier = ViewIdentifierClass::BreadboardView;
+					}
+					else if (name.compare("schematicView") == 0) {
+						viewIdentifier = ViewIdentifierClass::SchematicView;
+					}
+					else if (name.compare("pcbView") == 0) {
+						viewIdentifier = ViewIdentifierClass::PCBView;
+					}
+					else if (name.compare("layers") == 0) {
+						hasBaseNameFor.insert(viewIdentifier, xml.attributes().value("image").toString());
+					}
+					else if (name.compare("layer") == 0) {
+						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(xml.attributes().value("layerId").toString());
+						if (viewLayerID != ViewLayer::UnknownLayer) {
+							hasViewFor.insert(viewIdentifier);
+						}
 					}
 					else if (name.compare("connectors") == 0) {
 						done = true;
@@ -527,6 +545,12 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		modelPartShared->setReplacedBy(replacedBy);
 		modelPartShared->setTags(tags);
 		modelPartShared->setProperties(properties);
+		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasViewFor) {
+			modelPartShared->setHasViewFor(viewIdentifier, true);
+		}
+		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasBaseNameFor.keys()) {
+			modelPartShared->setHasBaseNameFor(viewIdentifier, hasBaseNameFor.value(viewIdentifier));
+		}
 	}
 	else {
 		modelPart->modelPartShared()->flipSMD();

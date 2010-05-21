@@ -633,3 +633,15 @@ QDomDocument* ModelPart::domDocument() {
 
 	return m_modelPartShared->domDocument();
 }
+
+bool ModelPart::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	if (m_modelPartShared == NULL) return false;
+
+	return m_modelPartShared->hasViewFor(viewIdentifier);
+}
+
+QString ModelPart::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	if (m_modelPartShared == NULL) return ___emptyString___;
+
+	return m_modelPartShared->hasBaseNameFor(viewIdentifier);
+}

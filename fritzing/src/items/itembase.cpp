@@ -1248,45 +1248,13 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
 	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartShared->moduleID(), viewLayerID);
 	if (renderer == NULL) {
-		QString tempPath1;
-		QString tempPath2;
-		QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
-		if(modelPartShared->path() != ___emptyString___) {
-			QDir dir(modelPartShared->path());			// is a path to a filename
-			dir.cdUp();									// lop off the filename
-			dir.cdUp();									// parts root
-			tempPath1 = dir.absolutePath() + "/" + ItemBase::SvgFilesDir +"/%1/" + layerAttributes.filename();
-			tempPath2 = FolderUtils::getApplicationSubFolderPath("parts")+postfix;    // some svgs may still be in the fritzing parts folder, though the other svgs are in the user folder
-		} else { // for fake models
-			tempPath1 = FolderUtils::getApplicationSubFolderPath("parts")+postfix;
-			tempPath2 = FolderUtils::getUserDataStorePath("parts")+postfix;
-		}
-
-		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));
-
-		QStringList possibleFolders = ModelPart::possibleFolders();
-		bool gotOne = false;
-		QString filename;
-		foreach (QString possibleFolder, possibleFolders) {
-			filename = tempPath1.arg(possibleFolder);
-			if (QFileInfo(filename).exists()) {
-				gotOne = true;
-				break;
-			} 
-			else {
-				filename = tempPath2.arg(possibleFolder);
-				if (QFileInfo(filename).exists()) {
-					gotOne = true;
-					break;
-				}
-			}
-		}
+		QString filename = getSvgFilename(modelPartShared, layerAttributes.filename());
 
 //#ifndef QT_NO_DEBUG
 		//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
 //#endif
 
-		if (gotOne) {
+		if (!filename.isEmpty()) {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
 			if (renderer == NULL) {
 				QStringList connectorIDs, terminalIDs;
@@ -1314,7 +1282,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 					}
 				}
 
-				gotOne = false;
+				bool gotOne = false;
 				renderer = new FSvgRenderer();
 				QDomDocument flipDoc;
 				getFlipDoc(modelPart, filename, viewLayerID, flipDoc);
@@ -1372,6 +1340,42 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 	}
 
 	return renderer;
+}
+
+QString ItemBase::getSvgFilename(ModelPartShared * modelPartShared, const QString & baseName) 
+{
+	QString tempPath1;
+	QString tempPath2;
+	QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ baseName;
+	if(modelPartShared->path() != ___emptyString___) {
+		QDir dir(modelPartShared->path());			// is a path to a filename
+		dir.cdUp();									// lop off the filename
+		dir.cdUp();									// parts root
+		tempPath1 = dir.absolutePath() + "/" + ItemBase::SvgFilesDir +"/%1/" + baseName;
+		tempPath2 = FolderUtils::getApplicationSubFolderPath("parts")+postfix;    // some svgs may still be in the fritzing parts folder, though the other svgs are in the user folder
+	} else { // for fake models
+		tempPath1 = FolderUtils::getApplicationSubFolderPath("parts")+postfix;
+		tempPath2 = FolderUtils::getUserDataStorePath("parts")+postfix;
+	}
+
+		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));
+
+	QStringList possibleFolders = ModelPart::possibleFolders();
+	QString filename;
+	foreach (QString possibleFolder, possibleFolders) {
+		filename = tempPath1.arg(possibleFolder);
+		if (QFileInfo(filename).exists()) {
+			return filename;
+		} 
+		else {
+			filename = tempPath2.arg(possibleFolder);
+			if (QFileInfo(filename).exists()) {
+				return filename;
+			}
+		}
+	}
+
+	return "";
 }
 
 void ItemBase::updateConnectionsAux() {

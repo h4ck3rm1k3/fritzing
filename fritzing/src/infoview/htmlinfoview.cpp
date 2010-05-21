@@ -54,6 +54,8 @@ QString HtmlInfoView::PropsBlockId = "props_id";
 QString HtmlInfoView::TagsBlockId = "tags_id";
 QString HtmlInfoView::ConnsBlockId = "conns_id";
 
+QHash<QString, QPixmap *> HtmlInfoView::m_pixmaps;
+
 /////////////////////////////////////
 
 QLabel * addLabel(QHBoxLayout * hboxLayout, QPixmap * pixmap) {
@@ -290,12 +292,15 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * connectorItem) {
 
 void HtmlInfoView::hoverEnterConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem * item, bool swappingEnabled) {
 	Q_UNUSED(event)
+	Q_UNUSED(swappingEnabled)
+	Q_UNUSED(igv)
 	viewConnectorItemInfo(item);
 }
 
 void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsSceneHoverEvent *event, ConnectorItem *connItem) {
 	Q_UNUSED(event);
 	Q_UNUSED(connItem);
+	Q_UNUSED(igv);
 	viewConnectorItemInfo(NULL);
 }
 
@@ -317,19 +322,25 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 
 	QString autoroutable = wire->getAutoroutable() ? tr("(autoroutable)") : "";
 	QString nameString = tr("Wire");
-	if(wire->getRatsnest()) {
-		nameString = tr("Rat's nest wire");
-	} else if(wire->getTrace()) {
-		nameString = tr("Trace wire %1").arg(autoroutable);
-	} else if(wire->getJumper()) {
-		nameString = tr("Jumper wire %1").arg(autoroutable);
+	if (swappingEnabled) {
+		if (wire->getRatsnest()) {
+			nameString = tr("Rat's nest wire");
+		} 
+		else if(wire->getTrace()) {
+			nameString = tr("Trace wire %1").arg(autoroutable);
+		} 
+		else if(wire->getJumper()) {
+			nameString = tr("Jumper wire %1").arg(autoroutable);
+		}
 	}
+	else {
+		 nameString = modelPart->description();
+	}
+	partTitle(nameString, modelPart->version());
 
 	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
 	m_location->setText(QString("(%1,%2)").arg(wire->pos().x()).arg(wire->pos().y()));
-
-	partTitle(nameString, modelPart->version());
 
 	displayProps(modelPart, wire, swappingEnabled);
 	addTags(modelPart);
@@ -351,7 +362,14 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 	setUpIcons(modelPart);
 	m_location->setText(QString("(%1,%2)").arg(itemBase->pos().x()).arg(itemBase->pos().y()));
 
-	partTitle((itemBase) ? itemBase->title() : modelPart->title(), modelPart->version());
+	QString nameString;
+	if (swappingEnabled) {
+		nameString = (itemBase) ? itemBase->title() : modelPart->title();
+	}
+	else {
+		nameString = modelPart->description();
+	}
+	partTitle(nameString, modelPart->version());
 
 	displayProps(modelPart, itemBase, swappingEnabled);
 	addTags(modelPart);
@@ -498,6 +516,7 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	
 	m_lastIconModelPart = modelPart;
 
+	QPixmap *pixmap0 = NULL;
 	QPixmap *pixmap1 = NULL;
 	QPixmap *pixmap2 = NULL;
 	QPixmap *pixmap3 = NULL;
@@ -505,34 +524,43 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	QSize size = NoIcon->size();
 
 	if (modelPart != NULL) {
-		pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
-		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
-		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
-		if (pixmap1 == NULL) {
+		pixmap0 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+		pixmap1 = getPixmap(modelPart, ViewIdentifierClass::BreadboardView);
+		pixmap2 = getPixmap(modelPart, ViewIdentifierClass::SchematicView);
+		pixmap3 = getPixmap(modelPart, ViewIdentifierClass::PCBView);
+		if (pixmap0 == NULL) {
 			ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon);
-			pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
-		}
-		if (pixmap2 == NULL) {
-			ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic);
-			pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
-		}
-		if (pixmap3 == NULL) {
-			ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0);
-			pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
+			pixmap0 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
 		}
 	}
 
-	if (pixmap1 == NULL) pixmap1 = NoIcon;
-	if (pixmap2 == NULL) pixmap2 = NoIcon;
-	if (pixmap3 == NULL) pixmap3 = NoIcon;
+	QPixmap* use1 = pixmap1;
+	QPixmap* use2 = pixmap2;
+	QPixmap* use3 = pixmap3;
 
-	m_icon1->setPixmap(*pixmap1);
-	m_icon2->setPixmap(*pixmap2);
-	m_icon3->setPixmap(*pixmap3);
+	// use the icon image instead of the breadboard image, unless the item doesn't have a breadboard view
+	if (pixmap1 && pixmap2 && pixmap3) {
+		use1 = pixmap0;
+	}
+	else if (pixmap3) {
+		use3 = pixmap0;
+	}
+	else if (pixmap1) {
+		use1 = pixmap0;
+	}
+	else if (pixmap2) {
+		use2 = pixmap0;
+	}
 
-	if (pixmap1 != NoIcon) delete pixmap1;
-	if (pixmap2 != NoIcon) delete pixmap2;
-	if (pixmap3 != NoIcon) delete pixmap3;
+	if (use1 == NULL) use1 = NoIcon;
+	if (use2 == NULL) use2 = NoIcon;
+	if (use3 == NULL) use3 = NoIcon;
+
+	m_icon1->setPixmap(*use1);
+	m_icon2->setPixmap(*use2);
+	m_icon3->setPixmap(*use3);
+
+	if (pixmap0) delete pixmap0;
 }
 
 void HtmlInfoView::addTags(ModelPart * modelPart) {
@@ -742,8 +770,48 @@ void HtmlInfoView::clearPropThingPlugin(PropThing * propThing)
 
 void HtmlInfoView::clearPropThingPlugin(PropThing * propThing, QWidget * plugin) 
 {
-        DebugDialog::debug(QString("clearing %1").arg((long) plugin, 0, 16));
+    //DebugDialog::debug(QString("clearing %1").arg((long) plugin, 0, 16));
+
 	propThing->m_layout->removeWidget(plugin);
 	plugin->setVisible(false);
 	plugin->deleteLater();
+}
+
+
+QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	QString key = QString("%1_%2").arg(modelPart->moduleID()).arg(viewIdentifier);
+	QPixmap * cached = m_pixmaps.value(key, NULL);
+	if (cached) {
+		return cached;
+	}
+
+	if (!modelPart->hasViewFor(viewIdentifier)) return NULL;
+
+	QString baseName = modelPart->hasBaseNameFor(viewIdentifier);
+	if (baseName.isEmpty()) return NULL;
+
+	QString filename = ItemBase::getSvgFilename(modelPart->modelPartShared(), baseName);
+	if (filename.isEmpty()) return NULL;
+
+	QSvgRenderer renderer(filename);
+
+	QSize size = NoIcon->size();
+	QPixmap * pixmap = new QPixmap(size);
+	pixmap->fill(Qt::transparent);
+	QPainter painter(pixmap);
+	// preserve aspect ratio
+	QSize def = renderer.defaultSize();
+	qreal newW = size.width();
+	qreal newH = newW * def.height() / def.width();
+	if (newH > size.height()) {
+		newH = size.height();
+		newW = newH * def.width() / def.height();
+	}
+	QRectF bounds((size.width() - newW) / 2.0, (size.height() - newH) / 2.0, newW, newH);
+	renderer.render(&painter, bounds);
+	painter.end();
+
+	m_pixmaps.insert(key, pixmap);
+
+	return pixmap;
 }

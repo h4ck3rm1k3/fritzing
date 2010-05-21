@@ -105,6 +105,10 @@ public:
 	void flipSMD();
 	void setFlippedSMD(bool);
 	bool flippedSMD();
+	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
+	void setHasViewFor(ViewIdentifierClass::ViewIdentifier, bool);
+	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
+	void setHasBaseNameFor(ViewIdentifierClass::ViewIdentifier, const QString &);
 
 protected:
 	void loadTagText(QDomElement parent, QString tagName, QString &field);
@@ -136,6 +140,8 @@ protected:
 
 	QHash<QString, class ConnectorShared *> m_connectorSharedHash;
 	QHash<QString, class BusShared *> m_buses;
+	QHash<ViewIdentifierClass::ViewIdentifier, bool> m_hasViewFor;
+	QHash<ViewIdentifierClass::ViewIdentifier, QString> m_hasBaseNameFor;
 	QList<class ConnectorShared *> m_deletedList;
 
 	bool m_connectorsInitialized;

@@ -108,6 +108,7 @@ protected:
 	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
 	void clearPropThingPlugin(PropThing * propThing);
 	void clearPropThingPlugin(PropThing * propThing, QWidget * plugin);
+	QPixmap * getPixmap(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
 
 protected:
 	QPointer<ItemBase> m_currentItem;
@@ -151,6 +152,7 @@ protected:
 	static QString PropsBlockId;
 	static QString TagsBlockId;
 	static QString ConnsBlockId;
+	static QHash<QString, QPixmap *> m_pixmaps;
 };
 
 #endif

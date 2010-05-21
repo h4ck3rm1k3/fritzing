@@ -140,6 +140,8 @@ public:
 
 	void setFlippedSMD(bool);
 	bool flippedSMD();
+	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
+	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
 
 public:
 	static long nextIndex();

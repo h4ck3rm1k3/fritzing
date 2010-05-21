@@ -70,6 +70,30 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 		populateTagCollection(root, m_properties, "properties", "name");
 
 		m_moduleID = root.attribute("moduleId", "");
+
+		QDomElement views = root.firstChildElement("views");
+		if (!views.isNull()) {
+			QDomElement view = views.firstChildElement();
+			while (!view.isNull()) {
+				ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::idFromXmlName(view.nodeName());
+				QDomElement layers = view.firstChildElement("layers");
+				if (!layers.isNull()) {
+					setHasBaseNameFor(viewIdentifier, layers.attribute("image"));
+					QDomElement layer = layers.firstChildElement("layer");
+					while (!layer.isNull()) {
+						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer.attribute("layerId"));
+						if (viewLayerID != ViewLayer::UnknownLayer) {
+							setHasViewFor(viewIdentifier, true);
+							break;
+						}
+						layer = layer.nextSiblingElement("layer");
+					}
+				}
+
+				view = view.nextSiblingElement();
+			}
+		}
+
 	}
 }
 
@@ -361,6 +385,12 @@ void ModelPartShared::copy(ModelPartShared* other) {
 	setTitle(other->title());
 	setUri(other->uri());
 	setVersion(other->version());
+	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, other->m_hasViewFor.keys()) {
+		setHasViewFor(viewIdentifier, other->hasViewFor(viewIdentifier));
+	}
+	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, other->m_hasBaseNameFor.keys()) {
+		setHasBaseNameFor(viewIdentifier, other->hasBaseNameFor(viewIdentifier));
+	}
 }
 
 void ModelPartShared::setProperty(const QString & key, const QString & value) {
@@ -509,3 +539,18 @@ void ModelPartShared::flipSMD() {
 	DebugDialog::debug(m_domDocument->toString());
 }
 
+bool ModelPartShared::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	return m_hasViewFor.value(viewIdentifier, false);
+}
+
+void ModelPartShared::setHasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, bool value) {
+	m_hasViewFor.insert(viewIdentifier, value);
+}
+
+QString ModelPartShared::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	return m_hasBaseNameFor.value(viewIdentifier, "");
+}
+
+void ModelPartShared::setHasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & value) {
+	m_hasBaseNameFor.insert(viewIdentifier, value);
+}
