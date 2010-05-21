@@ -59,14 +59,19 @@ protected:
 
 /////////////////////////////////
 
-QHash <ViewIdentifierClass::ViewIdentifier, NameTriple * > ViewIdentifierClass::names;
+QHash <ViewIdentifierClass::ViewIdentifier, NameTriple * > ViewIdentifierClass::Names;
+static LayerList ii;
+static LayerList bb;
+static LayerList ss;
+static LayerList pp;
+static LayerList ee;
 
 QString & ViewIdentifierClass::viewIdentifierName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 	if (viewIdentifier < 0 || viewIdentifier >= ViewIdentifierClass::ViewCount) {
 		throw "ViewIdentifierClass::viewIdentifierName bad identifier";
 	}
 
-	return names[viewIdentifier]->viewName();
+	return Names[viewIdentifier]->viewName();
 }
 
 QString & ViewIdentifierClass::viewIdentifierXmlName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
@@ -74,7 +79,7 @@ QString & ViewIdentifierClass::viewIdentifierXmlName(ViewIdentifierClass::ViewId
 		throw "ViewIdentifierClass::viewIdentifierXmlName bad identifier";
 	}
 
-	return names[viewIdentifier]->xmlName();
+	return Names[viewIdentifier]->xmlName();
 }
 
 QString & ViewIdentifierClass::viewIdentifierNaturalName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
@@ -82,21 +87,39 @@ QString & ViewIdentifierClass::viewIdentifierNaturalName(ViewIdentifierClass::Vi
 		throw "ViewIdentifierClass::viewIdentifierNaturalName bad identifier";
 	}
 
-	return names[viewIdentifier]->naturalName();
+	return Names[viewIdentifier]->naturalName();
 }
 
 void ViewIdentifierClass::initNames() {
-	if (names.count() == 0) {
-		names.insert(ViewIdentifierClass::IconView, new NameTriple("iconView", QObject::tr("icon view"), "icon"));
-		names.insert(ViewIdentifierClass::BreadboardView, new NameTriple("breadboardView", QObject::tr("breadboard view"), "breadboard"));
-		names.insert(ViewIdentifierClass::SchematicView, new NameTriple("schematicView", QObject::tr("schematic view"), "schematic"));
-		names.insert(ViewIdentifierClass::PCBView, new NameTriple("pcbView", QObject::tr("pcb view"), "pcb"));
+	if (Names.count() == 0) {
+		Names.insert(ViewIdentifierClass::IconView, new NameTriple("iconView", QObject::tr("icon view"), "icon"));
+		Names.insert(ViewIdentifierClass::BreadboardView, new NameTriple("breadboardView", QObject::tr("breadboard view"), "breadboard"));
+		Names.insert(ViewIdentifierClass::SchematicView, new NameTriple("schematicView", QObject::tr("schematic view"), "schematic"));
+		Names.insert(ViewIdentifierClass::PCBView, new NameTriple("pcbView", QObject::tr("pcb view"), "pcb"));
+	}
+
+	if (bb.count() == 0) {
+		ii << ViewLayer::Icon;
+		bb << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard 
+			<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel 
+			<< ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
+		ss << ViewLayer::Schematic << ViewLayer::SchematicWire 
+			<< ViewLayer::SchematicTrace << ViewLayer::SchematicLabel 
+			<< ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
+		pp << ViewLayer::Board << ViewLayer::GroundPlane 
+			<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
+			<< ViewLayer::Copper0 << ViewLayer::Ratsnest 
+			<< ViewLayer::Copper0Trace 
+			<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
+			<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel 
+			<< ViewLayer::Jumperwires 
+			<< ViewLayer::PcbNote << ViewLayer::PcbRuler;
 	}
 }
 
 ViewIdentifierClass::ViewIdentifier ViewIdentifierClass::idFromXmlName(const QString & name) {
-	foreach (ViewIdentifier id, names.keys()) {
-		NameTriple * nameTriple = names.value(id);
+	foreach (ViewIdentifier id, Names.keys()) {
+		NameTriple * nameTriple = Names.value(id);
 		if (name.compare(nameTriple->xmlName()) == 0) return id;
 	}
 
@@ -104,8 +127,27 @@ ViewIdentifierClass::ViewIdentifier ViewIdentifierClass::idFromXmlName(const QSt
 }
 
 void ViewIdentifierClass::cleanup() {
-	foreach (NameTriple * nameTriple, names) {
+	foreach (NameTriple * nameTriple, Names) {
 		delete nameTriple;
 	}
-	names.clear();
+	Names.clear();
+}
+
+const LayerList & ViewIdentifierClass::layersForView(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	switch(viewIdentifier) {
+		case IconView:
+			return ii;
+		case BreadboardView:
+			return bb;
+		case SchematicView:
+			return ss;
+		case PCBView:
+			return pp;
+		default:
+			return ee;
+	}
+}
+
+bool ViewIdentifierClass::viewHasLayer(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	return layersForView(viewIdentifier).contains(viewLayerID);
 }

@@ -385,7 +385,7 @@ void HtmlInfoView::setContent()
 		return;
 	}
 
-	DebugDialog::debug(QString("pending %1").arg(m_pendingItemBase->title()));
+	//DebugDialog::debug(QString("pending %1").arg(m_pendingItemBase->title()));
 	m_currentSwappingEnabled = m_pendingSwappingEnabled;
 
 	appendStuff(m_pendingItemBase, m_pendingSwappingEnabled);
@@ -541,6 +541,12 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 	// use the icon image instead of the breadboard image, unless the item doesn't have a breadboard view
 	if (pixmap1 && pixmap2 && pixmap3) {
 		use1 = pixmap0;
+		if (pixmap2 == pixmap1) {
+			use2 = pixmap0;
+		}
+		if (pixmap3 == pixmap1) {
+			use3 = pixmap0;
+		}
 	}
 	else if (pixmap3) {
 		use3 = pixmap0;
@@ -699,7 +705,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 				else {
 					oldPlugin = NULL;
 				}
-                                DebugDialog::debug(QString("adding %1 %2").arg(newName).arg((long) resultWidget, 0, 16));
+                //DebugDialog::debug(QString("adding %1 %2").arg(newName).arg((long) resultWidget, 0, 16));
 				propThing->m_plugin = resultWidget;
 			}
 			else {
@@ -779,12 +785,6 @@ void HtmlInfoView::clearPropThingPlugin(PropThing * propThing, QWidget * plugin)
 
 
 QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	QString key = QString("%1_%2").arg(modelPart->moduleID()).arg(viewIdentifier);
-	QPixmap * cached = m_pixmaps.value(key, NULL);
-	if (cached) {
-		return cached;
-	}
-
 	if (!modelPart->hasViewFor(viewIdentifier)) return NULL;
 
 	QString baseName = modelPart->hasBaseNameFor(viewIdentifier);
@@ -792,6 +792,11 @@ QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::Vi
 
 	QString filename = ItemBase::getSvgFilename(modelPart->modelPartShared(), baseName);
 	if (filename.isEmpty()) return NULL;
+
+	QPixmap * cached = m_pixmaps.value(filename, NULL);
+	if (cached) {
+		return cached;
+	}
 
 	QSvgRenderer renderer(filename);
 
@@ -811,7 +816,7 @@ QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::Vi
 	renderer.render(&painter, bounds);
 	painter.end();
 
-	m_pixmaps.insert(key, pixmap);
+	m_pixmaps.insert(filename, pixmap);
 
 	return pixmap;
 }

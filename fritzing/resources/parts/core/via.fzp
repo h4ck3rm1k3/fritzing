@@ -24,12 +24,12 @@
   </iconView>
   <breadboardView>
    <layers image="pcb/via.svg" >
-    <layer layerId="unknown" />
+    <layer layerId="copper0" />
    </layers>
   </breadboardView>
   <schematicView>
    <layers image="pcb/via.svg" >
-    <layer layerId="unknown" />
+    <layer layerId="copper0" />
    </layers>
   </schematicView>
   <pcbView>

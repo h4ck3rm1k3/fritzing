@@ -4627,37 +4627,17 @@ void SketchWidget::resizeEvent(QResizeEvent * event) {
 
 void SketchWidget::addBreadboardViewLayers() {
 	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardNote);
-
-	LayerList layers;
-	layers << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard
-		<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel << ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
-
-	addViewLayersAux(layers);
+	addViewLayersAux(ViewIdentifierClass::layersForView(ViewIdentifierClass::BreadboardView));
 }
 
 void SketchWidget::addSchematicViewLayers() {
 	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicTrace, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicNote);
-
-	LayerList layers;
-	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
-
-	addViewLayersAux(layers);
+	addViewLayersAux(ViewIdentifierClass::layersForView(ViewIdentifierClass::SchematicView));
 }
 
 void SketchWidget::addPcbViewLayers() {
 	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::PcbNote);
-
-	LayerList layers;
-	layers << ViewLayer::Board << ViewLayer::GroundPlane 
-		<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
-		<< ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
-		/* << ViewLayer::Keepout */ /* << ViewLayer::Soldermask */  
-		<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
-		<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
-		<< ViewLayer::Jumperwires 
-		<< ViewLayer::PcbNote << ViewLayer::PcbRuler;
-
-	addViewLayersAux(layers);
+	addViewLayersAux(ViewIdentifierClass::layersForView(ViewIdentifierClass::PCBView));
 
 	ViewLayer * silkscreen = m_viewLayers.value(ViewLayer::Silkscreen);
 	ViewLayer * silkscreenLabel = m_viewLayers.value(ViewLayer::SilkscreenLabel);

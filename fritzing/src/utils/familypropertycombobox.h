@@ -43,7 +43,7 @@ public:
 	}
 
         void hidePopup() {
-            DebugDialog::debug(QString("hide popup %1").arg((long) this, 0, 16));
+            //DebugDialog::debug(QString("hide popup %1").arg((long) this, 0, 16));
             QComboBox::hidePopup();
         }
 

@@ -389,7 +389,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 					}
 					else if (name.compare("layer") == 0) {
 						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(xml.attributes().value("layerId").toString());
-						if (viewLayerID != ViewLayer::UnknownLayer) {
+						if (ViewIdentifierClass::viewHasLayer(viewIdentifier, viewLayerID)) {
 							hasViewFor.insert(viewIdentifier);
 						}
 					}

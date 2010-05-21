@@ -29,8 +29,8 @@ $Date$
 #ifndef VIEWIDENTIFIERCLASS_H
 #define VIEWIDENTIFIERCLASS_H
 
-
 #include <QHash>
+#include "viewlayer.h"
 
 class ViewIdentifierClass
 {
@@ -52,9 +52,10 @@ public:
 	static ViewIdentifier idFromXmlName(const QString & name);
 	static void initNames();
 	static void cleanup();
+	static const LayerList & layersForView(ViewIdentifier);
+	static bool viewHasLayer(ViewIdentifier, ViewLayer::ViewLayerID);
 
 protected:
-	static QHash <ViewIdentifier, class NameTriple * > names;
-
+	static QHash <ViewIdentifier, class NameTriple * > Names;
 };
 #endif

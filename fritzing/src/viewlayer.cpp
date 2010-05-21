@@ -81,9 +81,9 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Copper1Trace,  new StringPair("copper1trace", QObject::tr("Copper Top Trace")));
 		names.insert(ViewLayer::Silkscreen0,  new StringPair("silkscreen0", QObject::tr("Silkscreen Bottom")));
 		names.insert(ViewLayer::Silkscreen0Label,  new StringPair("silkscreen0Label", QObject::tr("Silkscreen Bottom (Part Labels)")));
-		names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));
-		names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));
-		names.insert(ViewLayer::Keepout, new StringPair("keepout", QObject::tr("Keep out")));
+		//names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));
+		//names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));
+		//names.insert(ViewLayer::Keepout, new StringPair("keepout", QObject::tr("Keep out")));
 		names.insert(ViewLayer::Jumperwires, new StringPair("jumperwires", QObject::tr("Jumper wires")));
 		names.insert(ViewLayer::PcbNote,  new StringPair("pcbNote", QObject::tr("Notes")));
 		names.insert(ViewLayer::PcbRuler,  new StringPair("pcbRuler", QObject::tr("Rulers")));
