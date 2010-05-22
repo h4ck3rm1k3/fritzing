@@ -878,10 +878,3 @@ bool ConnectorItem::isGrounded() {
 			(name.compare("ground", Qt::CaseInsensitive) == 0));
 }
 
-void ConnectorItem::setWeirdOffset(QPointF p) {
-	m_weirdOffset = p;
-}
-
-QPointF ConnectorItem::weirdOffset() {
-	return m_weirdOffset;
-}

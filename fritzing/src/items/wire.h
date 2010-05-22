@@ -113,7 +113,6 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	bool hasPartLabel();
 	PluralType isPlural();
-	QLineF getWeirdOffsetPaintLine();
 
 protected slots:
 	void colorEntry(const QString & text);

@@ -668,14 +668,13 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(viewIdentifier, m_viewLayerID);
 		if (svgIdLayer == NULL) continue;
 
-		bool result = renderer->setUpConnector(svgIdLayer, false, true);
+		bool result = renderer->setUpConnector(svgIdLayer, false);
 		if (!result) continue;
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);
 
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
-		connectorItem->setWeirdOffset(svgIdLayer->m_weirdOffset);
 
 		connectorItem->setCircular(true);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
@@ -1268,9 +1267,3 @@ ItemBase::PluralType Wire::isPlural() {
 	return Plural;
 }
 
-QLineF Wire::getWeirdOffsetPaintLine() {
-	QLineF line = getPaintLine();
-	line.setP1(line.p1() + connector0()->weirdOffset());
-	line.setP2(line.p2() + connector1()->weirdOffset());
-	return line;
-}

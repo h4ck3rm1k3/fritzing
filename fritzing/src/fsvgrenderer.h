@@ -60,7 +60,7 @@ public:
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
-	bool setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint, bool calcWeirdOffset);
+	bool setUpConnector(struct SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint);
 	QList<SvgIdLayer *> setUpNonConnectors();
 
 public:

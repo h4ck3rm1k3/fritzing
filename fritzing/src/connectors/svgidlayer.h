@@ -39,7 +39,6 @@ struct SvgIdLayer {
 	bool m_processed;
 	QRectF m_rect;		
 	QPointF m_point;	
-	QPointF m_weirdOffset;
 	qreal m_radius;
 	qreal m_strokeWidth;
 };

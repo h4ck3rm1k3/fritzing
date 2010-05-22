@@ -5567,7 +5567,7 @@ QString SketchWidget::makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal pri
 }
 
 QString SketchWidget::makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerScale, bool blackOnly) {
-	QLineF line = wire->getWeirdOffsetPaintLine();
+	QLineF line = wire->getPaintLine();
 	QPointF p1 = wire->scenePos() + line.p1() - offset;
 	QPointF p2 = wire->scenePos() + line.p2() - offset;
 	p1.setX(p1.x() * dpi / printerScale);

@@ -26,6 +26,7 @@ $Date$
 
 #include "graphicssvglineitem.h"
 #include "../utils/misc.h"
+#include "../fsvgrenderer.h"
 
 
 // note: copied most of this code directly from Qt's QGraphicsLineItem code
@@ -122,7 +123,14 @@ QRectF GraphicsSvgLineItem::boundingRect() const
 	    return hoverShape().controlPointRect();
     }
     
-    return QGraphicsSvgItem::boundingRect();
+	FSvgRenderer * frenderer = dynamic_cast<FSvgRenderer *>(this->renderer());
+	if (frenderer == NULL) {
+		return QGraphicsSvgItem::boundingRect();
+	}
+
+	QSizeF s = frenderer->defaultSizeF();
+	QRectF r(0,0, s.width(), s.height());
+	return r;
 }
 
 
@@ -182,7 +190,15 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	
     }
     else {
-    	QGraphicsSvgItem::paint(painter, option, widget);
+    	//QGraphicsSvgItem::paint(painter, option, widget);
+
+		// Qt's SVG renderer's defaultSize is not correct when the svg has a fractional pixel size
+		Q_UNUSED(widget);
+		renderer()->render(painter, boundingRect());
+
+		if (option->state & QStyle::State_Selected) {
+			qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), NULL);
+		}
    	}
 }
 

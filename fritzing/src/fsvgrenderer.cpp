@@ -490,7 +490,7 @@ ConnectorInfo * FSvgRenderer::getConnectorInfo(const QString & connectorID) {
 	return m_connectorInfoHash.value(connectorID, &VanillaConnectorInfo);
 }
 
-bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint, bool calcWeirdOffset) {
+bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint) {
 
 	if (svgIdLayer == NULL) return false;
 
@@ -538,14 +538,23 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 	// some strangeness in the way that svg items and non-svg items map to screen space
 	// might be a qt problem.
 	QRectF r1 = matrix0.mapRect(bounds);
+	/*
 	svgIdLayer->m_rect.setRect(r1.x() * defaultSize.width() / viewBox.width(), 
 							   r1.y() * defaultSize.height() / viewBox.height(), 
 							   r1.width() * defaultSize.width() / viewBox.width(), 
 							   r1.height() * defaultSize.height() / viewBox.height());
+	*/
+	svgIdLayer->m_rect.setRect(r1.x() * defaultSizeF.width() / viewBox.width(), 
+							   r1.y() * defaultSizeF.height() / viewBox.height(), 
+							   r1.width() * defaultSizeF.width() / viewBox.width(), 
+							   r1.height() * defaultSizeF.height() / viewBox.height());
 
 	svgIdLayer->m_visible = true;
-	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix, false);
+	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix, true);
 	
+
+	/*
+	svgIdLayer->m_point = calcTerminalPoint(svgIdLayer->m_terminalId, svgIdLayer->m_rect, ignoreTerminalPoint, viewBox, connectorInfo->terminalMatrix, false);
 	if (calcWeirdOffset) {	
 		QRectF trueRect(r1.x() * defaultSizeF.width() / viewBox.width(), 
 						r1.y() * defaultSizeF.height() / viewBox.height(), 
@@ -558,6 +567,7 @@ bool FSvgRenderer::setUpConnector(SvgIdLayer * svgIdLayer, bool ignoreTerminalPo
 			DebugDialog::debug("difference ");
 		}
 	}
+	*/
 
 	return true;
 }

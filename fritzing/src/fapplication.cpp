@@ -863,7 +863,7 @@ void FApplication::preloadSlowParts() {
 		if (connector == NULL) continue;
 
 		SvgIdLayer * svgIdLayer = connector->fullPinInfo(ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard);
-		renderer->setUpConnector(svgIdLayer, false, true);
+		renderer->setUpConnector(svgIdLayer, false);
 		//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorSharedID()));
 	}
 	DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
