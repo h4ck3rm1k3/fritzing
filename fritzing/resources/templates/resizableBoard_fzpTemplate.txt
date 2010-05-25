@@ -13,6 +13,7 @@
   <tag>fritzing user</tag>
  </tags>
  <properties>
+  <property name="layers">%8</property>
   <property name="Shape">%4 %2 x %3mm (%1 %5 %7)</property>
   <property name="family">Plain Vanilla PCB</property>
  </properties>

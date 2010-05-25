@@ -1723,7 +1723,7 @@ void PCBSketchWidget::cancelDRC() {
 void PCBSketchWidget::stopDRC() {
 }
 
-void PCBSketchWidget::designRulesCheck() 
+int PCBSketchWidget::designRulesCheck() 
 {
 	// TODO: 
 	//	what about ground plane?
@@ -1916,6 +1916,14 @@ void PCBSketchWidget::designRulesCheck()
 		}
 
 		checkItem->setVisible(true);
+		if (checkConnectorItem) {
+			if (checkConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				checkConnectorItem->setVisible(true);
+			}
+			else {
+				checkConnectorItem->setWhite(false);
+			}
+		}
 		if (checkItemParent) {
 			checkItemParent->setVisible(true);
 		}
@@ -1948,9 +1956,12 @@ void PCBSketchWidget::designRulesCheck()
 		qreal growAmountY = (expandBy + expandBy + polyBounds.height()) * sz.height() / polyBounds.height();
 		QImage scaledImage = selfImage.scaled(growAmountX, growAmountY, Qt::KeepAspectRatio);
 		
+
+#ifndef QT_NO_DEBUG
 		//selfImage.save("testDesignRulePolySelf.png", "png");
 		scaledImage.save("testDesignRuleSelfScaled" + QString::number(imageCount) + ".png", "png");
 		otherImage.save("testDesignRulePolyOther" + QString::number(imageCount) + ".png", "png");
+#endif
 		imageCount++;
 		
 		foreach (ConnectorItem * connectorItem, equipotentialConnectorItems) {
@@ -1981,6 +1992,7 @@ void PCBSketchWidget::designRulesCheck()
 					if (itemBase == NULL) continue;
 					if (!intersectingItems.contains(itemBase)) continue;
 
+
 					itemBase->setSelected(true);
 					collidingItems.insert(itemBase);
 					itemBase = dynamic_cast<ItemBase *>(checkItemParent ? checkItemParent : checkItem);
@@ -2000,7 +2012,7 @@ void PCBSketchWidget::designRulesCheck()
 		selectItemCommand->undo();
 		delete parentCommand;
 		setIgnoreSelectionChangeEvents(false);
-
+		return -1;
 	}
 	else {
 		setIgnoreSelectionChangeEvents(false);
@@ -2010,7 +2022,9 @@ void PCBSketchWidget::designRulesCheck()
 		}
 
 		m_undoStack->push(parentCommand);
+		return collidingItems.count();
 	}
+
 }
 
 void PCBSketchWidget::setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility)

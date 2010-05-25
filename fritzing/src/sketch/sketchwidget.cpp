@@ -3297,7 +3297,7 @@ void SketchWidget::rotateX(qreal degrees)
 		ViewGeometry vg1 = item->getViewGeometry();
 		ViewGeometry vg2(vg1);
 		if (item->itemType() != ModelPart::Wire) {
-			if (item->modelPart()->moduleID().compare(ModuleIDNames::rectangleModuleIDName) == 0) {
+			if (item->modelPart()->moduleID().contains(ModuleIDNames::rectangleModuleIDName)) {
 				// because these boards don't actually rotate yet
 				QRectF r = item->boundingRect();
 				//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
@@ -6394,6 +6394,7 @@ const LayerList & SketchWidget::defaultNotLayers() {
 	return ll;
 }
 
-void SketchWidget::designRulesCheck() 
+int SketchWidget::designRulesCheck() 
 {
+	return 0;
 }

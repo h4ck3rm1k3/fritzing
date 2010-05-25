@@ -32,6 +32,7 @@
         <file>resources/parts/core/cmRuler.fzp</file>
         <file>resources/parts/core/note.fzp</file>
         <file>resources/parts/core/rectangle_pcb.fzp</file>
+        <file>resources/parts/core/rectangle_pcb_two_layers.fzp</file>
         <file>resources/parts/core/logotext.fzp</file>
         <file>resources/parts/core/logoimage.fzp</file>
         <file>resources/parts/svg/core/icon/wireicon.svg</file>

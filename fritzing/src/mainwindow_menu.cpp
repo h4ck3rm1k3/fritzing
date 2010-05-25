@@ -3535,5 +3535,11 @@ void MainWindow::designRulesCheck()
 {
 	if (m_currentGraphicsView == NULL) return;
 
-	m_currentGraphicsView->designRulesCheck();
+	int result = m_currentGraphicsView->designRulesCheck();
+	if (result == 0) {
+		showAutoCloseMessage(tr("No overlapping parts found"));
+	}
+	else if (result > 0) {
+		showAutoCloseMessage(tr("%1 overlapping parts found").arg(result));
+	}
 }

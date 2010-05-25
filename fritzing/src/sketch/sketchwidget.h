@@ -239,7 +239,7 @@ public:
 	virtual double defaultGridSizeInches();
 	void clearPasteOffset();
 	const LayerList & defaultNotLayers();
-	virtual void designRulesCheck();
+	virtual int designRulesCheck();
 
 
 protected:

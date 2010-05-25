@@ -333,6 +333,7 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getLabelViewLayerID(const LayerLis
 	return ViewLayer::SchematicLabel;
 }
 
-void SchematicSketchWidget::designRulesCheck() 
+int SchematicSketchWidget::designRulesCheck() 
 {
+	return 0;
 }

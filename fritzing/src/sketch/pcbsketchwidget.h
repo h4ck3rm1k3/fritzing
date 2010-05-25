@@ -76,7 +76,7 @@ public:
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
 	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus &);
-	void designRulesCheck();
+	int designRulesCheck();
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);

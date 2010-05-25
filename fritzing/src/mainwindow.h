@@ -92,7 +92,6 @@ public:
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
 	void exportToGerber(const QString & exportDir, ItemBase * board);
 
-
 public:
 	static void initExportConstants();
 	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress);
@@ -361,6 +360,7 @@ protected:
 	bool wannaRestart();
 	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QSizeF imageSize, ItemBase * board, const QString & exportDir);
 	void addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers);
+	void showAutoCloseMessage(const QString & msg);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

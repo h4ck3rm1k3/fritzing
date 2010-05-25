@@ -12,6 +12,7 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
+  <property name="layers">1</property>
   <property name="Shape">Arduino Shield</property>
   <property name="family">Plain Vanilla PCB</property>
  </properties>
