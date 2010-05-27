@@ -183,8 +183,8 @@ public:
 	const QString & filename();
 	void setFilename(const QString &);
 	virtual PluralType isPlural();
-	const LayerList & notLayers();
-	void setNotLayers(const LayerList & notLayers);
+	ViewLayer::ViewLayerSpec viewLayerSpec();
+	void setViewLayerSpec(ViewLayer::ViewLayerSpec);
 
 
 public:
@@ -302,7 +302,7 @@ protected:
 	ConnectorItem * m_rightClickedConnector;
 	QMap<QString, QString> m_propsMap;
 	QString m_filename;
-	LayerList m_notLayers;
+	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 
 protected:
 	static long nextID;

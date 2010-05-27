@@ -56,7 +56,7 @@ public:
 	virtual bool autorouteCheckWires();
 	virtual bool autorouteCheckConnectors();
 	virtual bool autorouteCheckParts();
-	const QString & traceColor();
+	virtual const QString & traceColor(ConnectorItem * forColor);
 	const QString & jumperColor();
 	qreal jumperWidth();
 	virtual void ensureTraceLayersVisible();
@@ -71,7 +71,7 @@ public:
 	virtual qreal getLabelFontSizeSmall();
 	virtual qreal getLabelFontSizeMedium();
 	virtual qreal getLabelFontSizeLarge();
-	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers);
+	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findBoard();
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
@@ -95,11 +95,11 @@ protected:
 	void setWireVisible(Wire * wire);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
 	// void checkAutorouted();
-	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, const LayerList & notLayers, QDomElement & layers, QString & layerName);
+	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	bool canChainWire(Wire *);
-	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
+	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag);
 	void createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
-								QUndoCommand * & parentCommand, const QString & commandString, const QString & colorString);
+								QUndoCommand * & parentCommand, const QString & commandString);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
@@ -129,7 +129,7 @@ protected:
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
 	ConnectorItem * findEmptyBus(ItemBase * breadboard);
 	bool bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems, QList<Wire *> & visited);
-	void getLabelFont(QFont &, QColor &, const LayerList & notLayers);
+	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
@@ -139,8 +139,9 @@ protected:
 	void scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus &);
 	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
-	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
+	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	void setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility);
+	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 
 signals:
 	void setMaximumDRCProgress(int);
@@ -164,7 +165,6 @@ protected:
 	QPointer<ItemBase> m_addedBoard;
 	QString m_jumperColor;
 	qreal m_jumperWidth;
-	QString m_traceColor;
 	CleanType m_cleanType;
 	bool m_cancelDRC;
 

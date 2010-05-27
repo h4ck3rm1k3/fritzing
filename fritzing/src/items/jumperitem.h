@@ -33,7 +33,7 @@ class JumperItem : public PaletteItem
 {
 
 public:
-	JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel = true); 
+	JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel); 
 
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
@@ -50,7 +50,7 @@ public:
 	class ConnectorItem * connector1();
 	bool hasCustomSVG();
 	bool inDrag();
-	void loadLayerKin( const LayerHash & viewLayers, const LayerList & notLayers);
+	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	PluralType isPlural();
 
 protected:

@@ -47,16 +47,16 @@ $Date$
 #include "via.h"
 
 
-ItemBase * PartFactory::createPart( ModelPart * modelPart, const LayerList & notLayers, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu)
+ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
 {
-	ItemBase * itemBase = createPartAux(modelPart, viewIdentifier, viewGeometry, id, itemMenu, wireMenu);
+	ItemBase * itemBase = createPartAux(modelPart, viewIdentifier, viewGeometry, id, itemMenu, wireMenu, doLabel);
 	if (itemBase) {
-		itemBase->setNotLayers(notLayers);
+		itemBase->setViewLayerSpec(viewLayerSpec);
 	}
 	return itemBase;
 }
 
-ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu)
+ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
 {
 	switch (modelPart->itemType()) {
 		case ModelPart::Wire:
@@ -80,39 +80,39 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			return new Note(modelPart, viewIdentifier, viewGeometry, id, NULL);
 		}
 		case ModelPart::CopperFill:
-			return new GroundPlane(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
+			return new GroundPlane(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Jumper:
-			return new JumperItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
+			return new JumperItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::ResizableBoard:
-			return new ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
+			return new ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Logo:
-			return new LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
+			return new LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Ruler:
-			return new Ruler(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
+			return new Ruler(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Symbol:
-			return new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
+			return new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		default:
 			{
 				QString family = modelPart->properties().value("family", "");
 				if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) == 0) {
-					return new Resistor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
+					return new Resistor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
 				if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {
-					return new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
+					return new MysteryPart(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
 				if (family.compare("pin header", Qt::CaseInsensitive) == 0) {
-					return new PinHeader(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
+					return new PinHeader(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
 				if (family.compare("generic IC", Qt::CaseInsensitive) == 0) {
-					return new Dip(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
+					return new Dip(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
 				if (family.compare("hole", Qt::CaseInsensitive) == 0) {
-					return new Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
+					return new Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
 				if (family.compare("via", Qt::CaseInsensitive) == 0) {
-					return new Via(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true);
+					return new Via(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
-				return new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu);
+				return new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 
 			}
 	}

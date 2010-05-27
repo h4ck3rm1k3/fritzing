@@ -56,10 +56,10 @@ protected:
 	bool canDropModelPart(ModelPart * modelPart); 
 	void translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases);
 	bool allowFemaleRotation(ItemBase *);
-	void getLabelFont(QFont &, QColor &, const LayerList & notLayers);
+	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void setNewPartVisible(ItemBase *);
 	double defaultGridSizeInches();
-	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
+	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 
 };
 

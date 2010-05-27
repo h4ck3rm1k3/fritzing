@@ -73,8 +73,8 @@ public:
 
 	void pushCommand(QUndoCommand *);
     class WaitPushUndoStack * undoStack();
-    ItemBase * addItem(ModelPart *, const LayerList & notLayers, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
-	ItemBase * addItem(const QString & moduleID, const LayerList & notLayers, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
+    ItemBase * addItem(ModelPart *, ViewLayer::ViewLayerSpec, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
+	ItemBase * addItem(const QString & moduleID, ViewLayer::ViewLayerSpec, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
@@ -142,7 +142,7 @@ public:
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
-	virtual ItemBase * addItemAux(ModelPart *, const LayerList & notLayers, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
+	virtual ItemBase * addItemAux(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier);
 
     bool swappingEnabled(ItemBase *);
 
@@ -219,7 +219,7 @@ public:
 	void disconnectAll();
 	virtual bool canDisconnectAll();
 	virtual bool ignoreFemale();
-	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers);
+	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findItem(long id);
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
@@ -238,7 +238,7 @@ public:
 	void initGrid();
 	virtual double defaultGridSizeInches();
 	void clearPasteOffset();
-	const LayerList & defaultNotLayers();
+	ViewLayer::ViewLayerSpec defaultViewLayerSpec();
 	virtual int designRulesCheck();
 
 
@@ -254,7 +254,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *);
-    PaletteItem* addPartItem(ModelPart * modelPart, const LayerList & notLayers, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier);
+    PaletteItem* addPartItem(ModelPart * modelPart, ViewLayer::ViewLayerSpec, PaletteItem * paletteItem, bool doConnectors, bool & ok, ViewIdentifierClass::ViewIdentifier);
 	void clearHoldingSelectItem();
 	bool startZChange(QList<ItemBase *> & bases);
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
@@ -264,7 +264,7 @@ protected:
 	ViewLayer::ViewLayerID getPartViewLayerID();
 	ViewLayer::ViewLayerID getRulerViewLayerID();
 	ViewLayer::ViewLayerID getConnectorViewLayerID();
-	virtual ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
+	virtual ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	ViewLayer::ViewLayerID getNoteViewLayerID();
 	void dragMoveHighlightConnector(QPoint eventPos);
 
@@ -292,7 +292,7 @@ protected:
 	void clearTemporaries();
 	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	void killDroppingItem();
-	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerList & notLayers);
+	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec);
 	ItemBase * overSticky(ItemBase *);
 	virtual void setNewPartVisible(ItemBase *);
 	virtual void collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
@@ -308,7 +308,7 @@ protected:
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos, bool checkAutoScroll);
-	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, const LayerList & notLayers, QDomElement & layers, QString & layerName);
+	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
@@ -359,7 +359,7 @@ protected:
 	void resizeBoard();
 	void resizeJumperItem();
 	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
-											   QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, 
+											   QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, QUndoCommand *parent);
 	int selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg);
 	bool moveByArrow(int dx, int dy, QKeyEvent * );
@@ -381,7 +381,7 @@ protected:
 	static bool greaterThan(int a, int b);
 
 signals:
-	void itemAddedSignal(ModelPart *, const LayerList & notLayers, const ViewGeometry &, long id, SketchWidget * dropOrigin);
+	void itemAddedSignal(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
 	void itemDeletedSignal(long id);
 	void clearSelectionSignal();
 	void itemSelectedSignal(long id, bool state);
@@ -416,7 +416,7 @@ signals:
 
 
 protected slots:
-	void sketchWidget_itemAdded(ModelPart *, const LayerList & notLayers, const ViewGeometry &, long id, SketchWidget * dropOrigin);
+	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
 	void sketchWidget_itemDeleted(long id);
 	void sketchWidget_clearSelection();
 	void sketchWidget_itemSelected(long id, bool state);
@@ -566,7 +566,7 @@ protected:
 	QPointer<QSvgRenderer> m_movingSVGRenderer;
 	QPointF m_movingSVGOffset;
 	QPointer<QGraphicsSvgItem> m_movingItem;
-
+	virtual ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

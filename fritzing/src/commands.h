@@ -79,7 +79,7 @@ protected:
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
-    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, const LayerList & notLayers, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
+	AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
 
 	long itemID() const;
 	void setDropOrigin(class SketchWidget *);
@@ -94,13 +94,13 @@ protected:
     ViewGeometry m_viewGeometry;
 	long m_modelIndex;
 	class SketchWidget * m_dropOrigin;
-	LayerList m_notLayers;
+	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 };
 
 class AddItemCommand : public AddDeleteItemCommand
 {
 public:
-    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, const LayerList & notLayers, ViewGeometry &, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent);
+    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry &, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent);
     void undo();
     void redo();
 	void turnOffFirstRedo();
@@ -120,7 +120,7 @@ protected:
 class DeleteItemCommand : public AddDeleteItemCommand
 {
 public:
-	DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, const LayerList & notLayers, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
+	DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
     void undo();
     void redo();
 

@@ -39,7 +39,7 @@ public:
     SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
-	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers);
+	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	void initWire(Wire *, int penWidth);
 	bool autorouteNeedsBounds();
@@ -54,7 +54,7 @@ public:
 	bool usesJumperItem();
 	void setClipEnds(ClipableWire * vw, bool);
 	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
-	void getLabelFont(QFont &, QColor &, const LayerList & notLayers);
+	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void setNewPartVisible(ItemBase *);
 	bool canDropModelPart(ModelPart * modelPart); 
 	bool includeSymbols();
@@ -66,6 +66,7 @@ public:
 						  bool updateConnections);
 	double defaultGridSizeInches();
 	int designRulesCheck();
+	const QString & traceColor(ConnectorItem * forColor);
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);
@@ -76,9 +77,9 @@ protected slots:
 protected:
 	qreal getRatsnestOpacity(bool);
 	AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
-										QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, 
+										QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry & viewGeometry, qint64 id, 
 										bool updateInfoView, long modelIndex, QUndoCommand *parent);
-	ViewLayer::ViewLayerID getLabelViewLayerID(const LayerList & notLayers);
+	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 
 
 protected:

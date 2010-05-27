@@ -292,8 +292,7 @@ void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setColorString("blue", 1.0);
 }
 
-void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color, const LayerList & notLayers) {
-	Q_UNUSED(notLayers);
+void BreadboardSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::ViewLayerSpec) {
 	font.setFamily("Droid Sans");
 	font.setPointSize(9);
 	color.setAlpha(255);
@@ -323,7 +322,6 @@ double BreadboardSketchWidget::defaultGridSizeInches() {
 	return 0.1;
 }
 
-ViewLayer::ViewLayerID BreadboardSketchWidget::getLabelViewLayerID(const LayerList & notLayers) {
-	Q_UNUSED(notLayers);
+ViewLayer::ViewLayerID BreadboardSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec) {
 	return ViewLayer::BreadboardLabel;
 }

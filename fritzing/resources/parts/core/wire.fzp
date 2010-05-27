@@ -39,6 +39,8 @@
     <layer layerId="ratsnest" />
     <layer layerId="copper0" />
      <layer layerId="copper0trace" />
+    <layer layerId="copper1" />
+     <layer layerId="copper1trace" />
      <layer layerId="jumperwires" />
    </layers>
   </pcbView>
@@ -58,6 +60,8 @@
      <p svgId="connector0pin" layer="ratsnest" />
       <p svgId="connector0pin" layer="copper0" />
       <p svgId="connector0pin" layer="copper0trace" />
+      <p svgId="connector0pin" layer="copper1" />
+      <p svgId="connector0pin" layer="copper1trace" />
       <p svgId="connector0pin" layer="jumperwires" />
     </pcbView>
    </views>
@@ -76,6 +80,8 @@
      <p svgId="connector1pin" layer="ratsnest" />
       <p svgId="connector1pin" layer="copper0" />
       <p svgId="connector1pin" layer="copper0trace" />
+      <p svgId="connector1pin" layer="copper1" />
+      <p svgId="connector1pin" layer="copper1trace" />
       <p svgId="connector1pin" layer="jumperwires" />
     </pcbView>
    </views>

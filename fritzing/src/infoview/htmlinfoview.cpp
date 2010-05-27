@@ -224,6 +224,15 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 }
 
 HtmlInfoView::~HtmlInfoView() {
+	foreach (PropThing * propThing, m_propThings) {
+		delete propThing;
+	}
+	m_propThings.clear();
+
+	foreach (QPixmap * pixmap, m_pixmaps.values()) {
+		delete pixmap;
+	}
+	m_pixmaps.clear();
 }
 
 void HtmlInfoView::cleanup() {

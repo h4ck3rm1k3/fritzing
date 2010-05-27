@@ -364,8 +364,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 			ends.removeOne(toConnectorItem);
 		}
 
-		whichConnectorItem->setOverConnectorItem(
-					findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true, ends));
+		whichConnectorItem->setOverConnectorItem(findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true, ends));
 	}
 }
 
@@ -960,10 +959,11 @@ void Wire::initNames() {
 	colors.insert("orange", "#ff7033");
     colors.insert("jumper", "#6699cc");
 	colors.insert("trace",  ViewLayer::Copper0Color);    
+	colors.insert("trace1",  ViewLayer::Copper1Color);    
 	colors.insert("unrouted", "#000000");
 	colors.insert("blackblack", "#000000");
 	colors.insert("schematicGrey", "#9d9d9d");
-        colors.insert("purple", "#ab58a2");
+    colors.insert("purple", "#ab58a2");
 	colors.insert("brown", "#8c3b00");
 
     shadowColors.insert("blue",		"#1b5bb3");
@@ -976,9 +976,10 @@ void Wire::initNames() {
 	shadowColors.insert("orange",	"#d95821");
     shadowColors.insert("jumper",	"#2d6563");
 	shadowColors.insert("trace",	"#d69b00");
+	shadowColors.insert("trace1",   "#d69b00");    
 	shadowColors.insert("unrouted", "#000000");
-        shadowColors.insert("purple",	"#7a3a73");
-        shadowColors.insert("brown",	"#6c2710");
+    shadowColors.insert("purple",	"#7a3a73");
+    shadowColors.insert("brown",	"#6c2710");
 	shadowColors.insert("schematicGrey", "#1d1d1d");
 	shadowColors.insert("blackblack", "#000000");
 }

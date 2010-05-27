@@ -1669,12 +1669,12 @@ ItemBase::PluralType ItemBase::isPlural() {
 	return ItemBase::NotSure;
 }
 
-const LayerList & ItemBase::notLayers() {
-	return m_notLayers;
+ViewLayer::ViewLayerSpec ItemBase::viewLayerSpec() {
+	return m_viewLayerSpec;
 }
 
-void ItemBase::setNotLayers(const LayerList & notLayers) {
-	m_notLayers = notLayers;
+void ItemBase::setViewLayerSpec(ViewLayer::ViewLayerSpec viewLayerSpec) {
+	m_viewLayerSpec = viewLayerSpec;
 }
 
 ViewLayer::ViewLayerID ItemBase::partLabelViewLayerID() {

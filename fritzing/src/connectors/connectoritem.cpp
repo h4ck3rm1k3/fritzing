@@ -821,6 +821,11 @@ void ConnectorItem::clearConnector() {
 bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 	if (!connector()->connectionIsAllowed(other->connector())) return false;
 	if (!m_attachedTo->connectionIsAllowed(other)) return false;
+	foreach (ConnectorItem * toConnectorItem, connectedToItems()) {
+		if (!toConnectorItem->attachedTo()->connectionIsAllowed(other)) {
+			return false;
+		}
+	}
 
 	return true;
 }

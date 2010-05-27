@@ -36,7 +36,7 @@ $Date$
 
 #include <limits>
 
-static QColor schematicColor;
+static QString SchematicTraceColor = "blackblack";
 
 SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSketchWidget(viewIdentifier, parent)
@@ -46,7 +46,6 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 	m_standardBackgroundColor = QColor(255,255,255);
 	initBackgroundColor();
 
-	m_traceColor = "blackblack";
 	m_jumperColor = "blackblack";	
 	m_jumperWidth = 2;
 	m_cleanType = ninetyClean;
@@ -64,7 +63,7 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getDragWireViewLayerID(ConnectorIt
 	return ViewLayer::SchematicTrace;
 }
 
-ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers) {
+ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	if (viewGeometry.getTrace()) {
 		return ViewLayer::SchematicTrace;
 	}
@@ -73,7 +72,7 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 		return ViewLayer::SchematicWire;
 	}
 
-	return SketchWidget::getWireViewLayerID(viewGeometry, notLayers);
+	return SketchWidget::getWireViewLayerID(viewGeometry, viewLayerSpec);
 }
 
 void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
@@ -149,8 +148,7 @@ void SchematicSketchWidget::getBendpointWidths(Wire * wire, qreal width, qreal &
 }
 
 
-void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color, const LayerList & notLayers) {
-	Q_UNUSED(notLayers);
+void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::ViewLayerSpec) {
 	font.setFamily("Droid Sans");
 	font.setPointSize(9);
 	color.setAlpha(255);
@@ -220,11 +218,11 @@ void SchematicSketchWidget::changeConnection(long fromID, const QString & fromCo
 	m_updateDotsTimer.start();
 }
 
-AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, const LayerList & notLayers, 
+AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossViewType crossViewType, QString moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, 
 														  ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, 
 														  long modelIndex, QUndoCommand *parent)
 {
-	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, notLayers, viewGeometry, id, updateInfoView, modelIndex, parent);
+	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, viewLayerSpec, viewGeometry, id, updateInfoView, modelIndex, parent);
 	qreal v = 0;
 	bool gotV = false;
 	if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
@@ -244,7 +242,7 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	}
 
 	// create the item temporarily, then delete it
-	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, notLayers, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
+	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, viewLayerSpec, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
 	
 	foreach (QGraphicsItem * item, scene()->items()) {
 		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);
@@ -328,12 +326,15 @@ double SchematicSketchWidget::defaultGridSizeInches() {
 	return 0.3;
 }
 
-ViewLayer::ViewLayerID SchematicSketchWidget::getLabelViewLayerID(const LayerList & notLayers) {
-	Q_UNUSED(notLayers);
+ViewLayer::ViewLayerID SchematicSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec) {
 	return ViewLayer::SchematicLabel;
 }
 
 int SchematicSketchWidget::designRulesCheck() 
 {
 	return 0;
+}
+
+const QString & SchematicSketchWidget::traceColor(ConnectorItem *) {
+	return SchematicTraceColor;
 }

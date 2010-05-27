@@ -71,6 +71,15 @@ public:
 		ViewLayerCount
 	};
 
+	enum ViewLayerSpec {
+		ThroughHoleThroughTop,
+		ThroughHoleThroughBottom,
+		SMDOnTop,
+		SMDOnBottom,
+		WireOnTop,
+		WireOnBottom
+	};
+
 public:
 	static const QString HolesColor;
 	static const QString Copper0Color;

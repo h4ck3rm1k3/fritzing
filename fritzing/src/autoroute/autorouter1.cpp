@@ -230,7 +230,7 @@ void Autorouter1::start()
 
 	ViewGeometry vg;
 	vg.setRatsnest(true);
-	ViewLayer::ViewLayerID viewLayerID = m_sketchWidget->getWireViewLayerID(vg, m_sketchWidget->defaultNotLayers());
+	ViewLayer::ViewLayerID viewLayerID = m_sketchWidget->getWireViewLayerID(vg, m_sketchWidget->defaultViewLayerSpec());
 	lineItem->setZValue(m_sketchWidget->viewLayers().value(viewLayerID)->nextZ());
 	lineItem->setOpacity(0.8);
 
@@ -399,14 +399,14 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 
 			m_sketchWidget->scene()->addItem(jumperItem);
 
-			TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->notLayers());
+			TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec(), from);
 			traceWire->connector0()->tempConnectTo(jumperItem->connector0(), true);
 			jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
 			traceWire->connector1()->tempConnectTo(from, true);
 			from->tempConnectTo(traceWire->connector1(), true);
 
 
-			traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->notLayers());
+			traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec(), from);
 			traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
 			jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
 			traceWire->connector1()->tempConnectTo(to, true);
@@ -454,7 +454,7 @@ bool Autorouter1::traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase
 		originalLine = subedge->wire->line();
 		QLineF newLine(QPointF(0,0), subedge->point - subedge->wire->pos());
 		subedge->wire->setLine(newLine);
-		splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1, subedge->wire->notLayers());
+		splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1, subedge->wire->viewLayerSpec(), subedge->from);
 		from = splitWire->connector0();
 		QApplication::processEvents();
 	}
@@ -934,7 +934,7 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												m_sketchWidget->defaultNotLayers(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+												m_sketchWidget->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase == NULL) {
 		// we're in trouble
 		return NULL;
@@ -963,7 +963,7 @@ JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * t
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
-												from->attachedTo()->notLayers(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+												from->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (temp == NULL) {
 		// we're in trouble
 		return NULL;
@@ -1209,7 +1209,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		}
 	}
 
-	TraceWire * traceWire = drawOneTrace(fromPos, toPos, Wire::STANDARD_TRACE_WIDTH + 1, m_sketchWidget->defaultNotLayers());
+	TraceWire * traceWire = drawOneTrace(fromPos, toPos, Wire::STANDARD_TRACE_WIDTH + 1, m_sketchWidget->defaultViewLayerSpec(), from);
 	if (traceWire == NULL) {
 		return false;
 	}
@@ -1757,7 +1757,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 		return;
 	}
 
-	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->notLayers(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
+	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
 	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, parentCommand);
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
@@ -1800,7 +1800,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct
 		QPointF pos, c0, c1;
 		jumperItem->getParams(pos, c0, c1);
 
-		new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::jumperModuleIDName, jumperItem->notLayers(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
+		new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::jumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
 		new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
 		new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, parentCommand);
 
@@ -1849,7 +1849,7 @@ void Autorouter1::reduceColinearWires(QList<Wire *> & wires)
 		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint(NULL);
 
 		if (qAbs(fromPos.y() - toPos.y()) < .001 || qAbs(fromPos.x() - toPos.x()) < .001) {
-			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, w0->notLayers());
+			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, w0->viewLayerSpec(), w0->connector0());
 			if (traceWire == NULL)continue;
 
 			m_sketchWidget->deleteItem(wires[i], true, false, false);
@@ -1903,7 +1903,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 	}
 	if (!insidePoly) return NULL;
 
-	TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, m_sketchWidget->defaultNotLayers());
+	TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, m_sketchWidget->defaultViewLayerSpec(), from);
 	if (traceWire == NULL) return NULL;
 
 	bool intersects = false;
@@ -2010,7 +2010,7 @@ void Autorouter1::findNearestIntersection(QLineF & l1, QPointF & fromPos, const 
 	}
 }
 
-TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width, const LayerList & notLayers)
+TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec, ConnectorItem * forColor)
 {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
@@ -2021,7 +2021,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width,
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												notLayers, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+												viewLayerSpec, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
 		return NULL;
@@ -2032,7 +2032,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width,
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	m_sketchWidget->setClipEnds(traceWire, false);
-	traceWire->setColorString(m_sketchWidget->traceColor(), 1.0);
+	traceWire->setColorString(m_sketchWidget->traceColor(forColor), 1.0);
 	traceWire->setWireWidth(width, m_sketchWidget);
 
 	return traceWire;
@@ -2064,7 +2064,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 	QList<Wire *> newWires;
 	// 1. draw wire from FROM to just outside its nearest part border
 	QPointF fromPrime = calcPrimePoint(from);
-	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(NULL), fromPrime, Wire::STANDARD_TRACE_WIDTH + 1, from->attachedTo()->notLayers());
+	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(NULL), fromPrime, Wire::STANDARD_TRACE_WIDTH + 1, from->attachedTo()->viewLayerSpec(), from);
 	if (fromWire == NULL) return false;
 
 	if (hitsObstacle(fromWire, from->attachedTo())) {
@@ -2074,7 +2074,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 
 	// 2. draw wire from TO to just outside its nearest part border
 	QPointF toPrime = calcPrimePoint(to);
-	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH + 1, to->attachedTo()->notLayers());
+	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH + 1, to->attachedTo()->viewLayerSpec(), to);
 	if (toWire == NULL) {
 		m_sketchWidget->deleteItem(fromWire, true, false, false);
 		return false;

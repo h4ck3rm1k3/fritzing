@@ -482,7 +482,7 @@ void PartLabel::setUpText() {
 	if (infographics != NULL) {
 		QFont font;
 		QColor color;
-		infographics->getLabelFont(font, color, m_owner->notLayers());
+		infographics->getLabelFont(font, color, m_owner->viewLayerSpec());
 		setBrush(QBrush(color));
 		setFont(font);		
 	}

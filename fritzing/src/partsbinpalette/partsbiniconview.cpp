@@ -199,8 +199,7 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
-		LayerList layerList;
-		ItemBase * itemBase = PartFactory::createPart(modelPart, layerList, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL);
+		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop /* viewLayerSpec */, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		ItemBase::PluralType plural = itemBase->isPlural();
 		if (plural == ItemBase::NotSure) {
 			QHash<QString,QString> properties = modelPart->properties();

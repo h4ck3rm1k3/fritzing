@@ -61,6 +61,10 @@ PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidg
 }
 
 PartsBinListView::~PartsBinListView() {
+	for (int i = 0; i < this->count(); i++) {
+		QListWidgetItem * item = this->item(i);
+		delete item->data(Qt::UserRole).value<ItemBase *>();
+	}
 }
 
 void PartsBinListView::doClear() {
@@ -78,8 +82,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
 		QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());
-		LayerList layerList;
-		ItemBase * itemBase = PartFactory::createPart(modelPart, layerList, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL);
+		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop /* viewLayerSpec */, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		lwi->setData(Qt::UserRole, qVariantFromValue( itemBase ) );
 		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon);
 		if (renderer != NULL) {

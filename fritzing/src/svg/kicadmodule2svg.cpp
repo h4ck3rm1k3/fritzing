@@ -359,6 +359,36 @@ int KicadModule2Svg::drawDArc(const QString & ds, QString & arc) {
 	qreal y1 = (radius * sin(startAngle)) + cy;
 
 	// TODO: figure out bounding box for circular arc and set min and max accordingly
+
+/*
+You have radius R, start angle S, end angle T, and I'll
+assume that the arc is swept counterclockwise from S to T.
+
+start.x = R * cos(S)
+start.y = R * sin(S)
+end.x = R * cos(T)
+end.y = R * sin(T)
+
+Determine the axis crossings by analyzing the start and
+end angles. For discussion sake, I'll describe angles
+using degrees. Provide a function, wrap(angle), that
+returns an angle in the range [0 to 360).
+
+cross0 = wrap(S) > wrap(T)
+cross90 = wrap(S-90) > wrap(T-90)
+cross180 = wrap(S-180) > wrap(T-180)
+cross270 = wrap(S-270) > wrap(T-270)
+
+Now the axis aligned bounding box is defined by:
+
+right = cross0 ? +R : max(start.x, end.x)
+top = cross90 ? +R : max(start.y, end.y)
+left = cross180 ? -R : min(start.x, end.x)
+bottom = cross270 ? -R : min(start.y, end.y)
+
+*/
+
+
 	checkXLimit(cx + radius);
 	checkXLimit(cx - radius);
 	checkYLimit(cy + radius);

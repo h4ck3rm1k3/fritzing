@@ -2125,7 +2125,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 
 	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(this);
 	if (fromItem != NULL) {
-		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, fromItem->notLayers(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView);
+		ItemBase * ii = m_breadboardGraphicsView->addItemAux(modelPart, fromItem->viewLayerSpec(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView);
 		if (ii != NULL) {
 			m_breadboardGraphicsView->scene()->removeItem(ii);
 			if (!ii->hasCustomSVG()) {
@@ -2812,7 +2812,7 @@ void MainWindow::addNote() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
 	m_currentGraphicsView->stackSelectionState(false, parentCommand);
 	m_currentGraphicsView->scene()->clearSelection();
-	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, m_currentGraphicsView->defaultNotLayers(), vg, ItemBase::getNextID(), false, -1, parentCommand);
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, m_currentGraphicsView->defaultViewLayerSpec(), vg, ItemBase::getNextID(), false, -1, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -2988,7 +2988,7 @@ void MainWindow::groundFill()
 		ViewGeometry vg;
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
-		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, m_pcbGraphicsView->defaultNotLayers(), vg, newID, false, -1, parentCommand);
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, m_pcbGraphicsView->defaultViewLayerSpec(), vg, newID, false, -1, parentCommand);
 		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
 	}
 

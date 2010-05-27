@@ -68,7 +68,7 @@ bool PaletteItem::renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewId
 	return result;
 }
 
-void PaletteItem::loadLayerKin(const LayerHash & viewLayers, const LayerList & notLayers) {
+void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec) {
 
 	if (m_modelPart == NULL) return;
 
@@ -80,6 +80,24 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, const LayerList & n
 	ViewGeometry viewGeometry = m_viewGeometry;
 	viewGeometry.setZ(-1);
 
+	LayerList notLayers;
+	switch (viewLayerSpec) {
+		case ViewLayer::WireOnTop:
+		case ViewLayer::ThroughHoleThroughTop:
+			notLayers << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
+			break;
+		case ViewLayer::WireOnBottom:
+		case ViewLayer::ThroughHoleThroughBottom:
+			notLayers << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
+			break;
+		case ViewLayer::SMDOnTop:
+			notLayers << ViewLayer::Copper0 << ViewLayer::Copper0Trace << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
+			break;
+		case ViewLayer::SMDOnBottom:
+			notLayers << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
+			break;
+	}
+
 	// the palette item already used the zeroth child "layer" element
 	foreach (ViewLayer::ViewLayerID viewLayerID, viewLayers.keys()) {
 		if (viewLayerID == m_viewLayerID) continue;
@@ -88,6 +106,7 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, const LayerList & n
 		LayerKinPaletteItem * lkpi = newLayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, m_itemMenu, viewLayers);
 		if (lkpi->ok()) {
 			DebugDialog::debug(QString("adding layer kin %1 %2 %3").arg(id).arg(m_viewIdentifier).arg((long) lkpi, 0, 16) );
+			lkpi->setViewLayerSpec(viewLayerSpec);
 			addLayerKin(lkpi);
 			id++;
 		}

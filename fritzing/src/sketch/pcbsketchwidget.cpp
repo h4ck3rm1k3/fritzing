@@ -47,6 +47,10 @@ $Date$
 
 static const int MAX_INT = std::numeric_limits<int>::max();
 
+static QString PCBTraceColor1 = "trace1";
+static QString PCBTraceColor = "trace";
+
+
 struct DistanceThing {
 	int distance;
 	bool fromConnector0;
@@ -94,7 +98,6 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	initBackgroundColor();
 
 	m_routingStatus.zero();
-	m_traceColor = "trace";
 	m_jumperColor = "jumper";
 	m_jumperWidth = 3;
 	m_cleanType = noClean;
@@ -144,7 +147,7 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 }
 
 
-ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerList & notLayers, QDomElement & layers, QString & layerName) {
+ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
 	Q_UNUSED(viewIdentifier);
 
@@ -191,17 +194,17 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 
 void PCBSketchWidget::createJumper() {
 	QString commandString = tr("Create Jumper from this Wire");
-	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, m_jumperColor);
+	createJumperOrTrace(commandString, ViewGeometry::JumperFlag);
 	ensureJumperLayerVisible();
 }
 
 void PCBSketchWidget::createTrace() {
 	QString commandString = tr("Create Trace from this Wire");
-	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, m_traceColor);
+	createJumperOrTrace(commandString, ViewGeometry::TraceFlag);
 	ensureTraceLayerVisible();
 }
 
-void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag, const QString & colorString)
+void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag)
 {
 	QList<Wire *> done;
 	QUndoCommand * parentCommand = NULL;
@@ -210,7 +213,7 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 		if (wire == NULL) continue;
 		if (done.contains(wire)) continue;
 
-		createOneJumperOrTrace(wire, flag, false, done, parentCommand, commandString, colorString);
+		createOneJumperOrTrace(wire, flag, false, done, parentCommand, commandString);
 	}
 
 	if (parentCommand == NULL) return;
@@ -220,7 +223,7 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 }
 
 void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
-											 QUndoCommand * & parentCommand, const QString & commandString, const QString & colorString) 
+											 QUndoCommand * & parentCommand, const QString & commandString) 
 {
 	QList<ConnectorItem *> ends;
 	Wire * jumperOrTrace = NULL;
@@ -260,6 +263,14 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 		}
 	}
 
+	QString colorString;
+	if (flag == ViewGeometry::JumperFlag) {
+		colorString = m_jumperColor;
+	}
+	else {
+		ConnectorItem * toConnectorItem = ends[0]->connectedToItems()[0];
+		colorString = traceColor(toConnectorItem);
+	}
 	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
@@ -480,7 +491,8 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 
 	if (jumperOrTrace == NULL) {
 		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, ViewGeometry::TraceFlag, parentCommand);
-		new WireColorChangeCommand(this, newID, m_traceColor, m_traceColor, 1.0, 1.0, parentCommand);
+		QString tc = traceColor(fromConnectorItem);
+		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
 		new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			foreach (ConnectorItem * connectorItem, fromConnectorItem->connectedToItems()) {
@@ -569,7 +581,7 @@ void PCBSketchWidget::addBoard() {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
-	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultNotLayers(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
 	// so position it in setCurrent()
@@ -614,12 +626,15 @@ ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID(ConnectorItem * c
 	}
 }
 
-ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, const LayerList & notLayers) {
+ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	if (viewGeometry.getJumper()) {
 		return ViewLayer::Jumperwires;
 	}
 
 	if (viewGeometry.getTrace()) {
+		if (viewLayerSpec == ViewLayer::WireOnTop) {
+			return ViewLayer::Copper1Trace;
+		}
 		return ViewLayer::Copper0Trace;
 	}
 
@@ -627,7 +642,11 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 		return ViewLayer::Ratsnest;
 	}
 
-	return SketchWidget::getWireViewLayerID(viewGeometry, notLayers);
+	if (viewLayerSpec == ViewLayer::WireOnTop) {
+		return ViewLayer::Copper1Trace;
+	}
+
+	return m_wireViewLayerID;
 }
 
 void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
@@ -652,8 +671,15 @@ bool PCBSketchWidget::autorouteCheckParts() {
 	return false;
 }
 
-const QString & PCBSketchWidget::traceColor() {
-	return m_traceColor;
+const QString & PCBSketchWidget::traceColor(ConnectorItem * forColor) {
+	switch(forColor->attachedTo()->viewLayerID()) {
+		case ViewLayer::Copper1:
+		case ViewLayer::Copper1Trace:
+			return PCBTraceColor1;
+		default:
+			return PCBTraceColor;
+	}
+	
 }
 
 const QString & PCBSketchWidget::jumperColor() {
@@ -757,13 +783,14 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 		return;
 	}
 
-	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
+	DebugDialog::debug(QString("deal with ratsnest %7: %1 %2 %3, %4 %5 %6")
 		.arg(fromConnectorItem->attachedToTitle())
 		.arg(fromConnectorItem->attachedToID())
 		.arg(fromConnectorItem->connectorSharedID())
 		.arg(toConnectorItem->attachedToTitle())
 		.arg(toConnectorItem->attachedToID())
 		.arg(toConnectorItem->connectorSharedID())
+		.arg(m_viewIdentifier)
 	);
 
 	QList<ConnectorItem *> connectorItems;
@@ -976,7 +1003,7 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), source->attachedTo()->notLayers(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 	if (!select) {
@@ -1095,7 +1122,8 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 	ViewGeometry viewGeometry;
 	makeRatsnestViewGeometry(viewGeometry, fromConnectorItem, toConnectorItem);
 	viewGeometry.setWireFlags(wireFlags);
-	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, fromConnectorItem->attachedTo()->notLayers(), viewGeometry, newID, true, -1, parentCommand);
+	ViewLayer::ViewLayerSpec viewLayerSpec = wireViewLayerSpec(fromConnectorItem);
+	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, viewLayerSpec, viewGeometry, newID, true, -1, parentCommand);
 	new CheckStickyCommand(this, cvt, newID, false, parentCommand);
 
 	new ChangeConnectionCommand(this, cvt,
@@ -1148,7 +1176,7 @@ void PCBSketchWidget::makeTwoWires(ConnectorItem * originalFromConnectorItem, Co
 		}
 
 		if (newBreadboard) {
-			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), originalFromConnectorItem->attachedTo()->notLayers(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
+			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), originalFromConnectorItem->attachedTo()->viewLayerSpec(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
 			m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
 		}
 	}
@@ -1201,7 +1229,7 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 	vg.setLoc(QPointF(0, maxY + 50));
 
 	long id = ItemBase::getNextID();
-	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, defaultNotLayers(), BaseCommand::SingleView, vg, id, -1, NULL);
+	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, defaultViewLayerSpec(), BaseCommand::SingleView, vg, id, -1, NULL);
 	busConnectorItem = findEmptyBus(newBreadboard);
 	return busConnectorItem;
 }
@@ -1335,15 +1363,26 @@ void PCBSketchWidget::showGroundTraces(bool show) {
 	}
 }
 
-void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, const LayerList & notLayers) {
+void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	font.setFamily("OCRA");			// ocra10
 	font.setPointSize(getLabelFontSizeMedium());
 	color.setAlpha(255);
-	if (notLayers.contains(ViewLayer::Silkscreen)) {
-		color.setNamedColor(ViewLayer::Silkscreen0Color);
-	}
-	else {
-		color.setNamedColor(ViewLayer::SilkscreenColor);
+
+	switch (viewLayerSpec) {
+		case ViewLayer::WireOnTop:
+		case ViewLayer::ThroughHoleThroughTop:
+			color.setNamedColor(ViewLayer::SilkscreenColor);
+			break;
+		case ViewLayer::WireOnBottom:
+		case ViewLayer::ThroughHoleThroughBottom:
+			color.setNamedColor(ViewLayer::Silkscreen0Color);
+			break;
+		case ViewLayer::SMDOnTop:
+			color.setNamedColor(ViewLayer::SilkscreenColor);
+			break;
+		case ViewLayer::SMDOnBottom:
+			color.setNamedColor(ViewLayer::Silkscreen0Color);
+			break;
 	}
 }
 
@@ -1427,7 +1466,7 @@ void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
 
 	switch (itemBase->itemType()) {
 		case ModelPart::Part:
-			itemBase->showPartLabel(true, m_viewLayers.value(getLabelViewLayerID(itemBase->notLayers())));
+			itemBase->showPartLabel(true, m_viewLayers.value(getLabelViewLayerID(itemBase->viewLayerSpec())));
 			break;
 		default:
 			break;
@@ -1710,10 +1749,22 @@ bool PCBSketchWidget::canAlignToTopLeft(ItemBase * itemBase)
 	}
 }
 
-ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(const LayerList & notLayers) {
-	if (notLayers.contains(ViewLayer::SilkscreenLabel)) return ViewLayer::Silkscreen0Label;
+ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec viewLayerSpec) {
+	switch (viewLayerSpec) {
+		case ViewLayer::WireOnTop:
+		case ViewLayer::ThroughHoleThroughTop:
+			return ViewLayer::SilkscreenLabel;
+		case ViewLayer::WireOnBottom:
+		case ViewLayer::ThroughHoleThroughBottom:
+			return ViewLayer::Silkscreen0Label;
+		case ViewLayer::SMDOnTop:
+			return ViewLayer::SilkscreenLabel;
+		case ViewLayer::SMDOnBottom:
+			return ViewLayer::Silkscreen0Label;
+		default:
+			return ViewLayer::SilkscreenLabel;
+	}
 
-	return ViewLayer::SilkscreenLabel;
 }
 
 void PCBSketchWidget::cancelDRC() {
@@ -2034,4 +2085,14 @@ void PCBSketchWidget::setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem
 
 	visibility.insert(item, true);
 	item->setVisible(false);
+}
+
+ViewLayer::ViewLayerSpec PCBSketchWidget::wireViewLayerSpec(ConnectorItem * connectorItem) {
+	switch (connectorItem->attachedTo()->viewLayerID()) {
+		case ViewLayer::Copper1:
+		case ViewLayer::Copper1Trace:
+			return ViewLayer::WireOnTop;
+		default:
+			return ViewLayer::WireOnBottom;
+	}
 }

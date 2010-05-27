@@ -132,7 +132,7 @@ int BaseCommand::index() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
+AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
     : BaseCommand(crossViewType, sketchWidget, parent)
 {
  	m_dropOrigin = NULL;
@@ -140,7 +140,7 @@ AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseComma
     m_viewGeometry = viewGeometry;
     m_itemID = id;
 	m_modelIndex = modelIndex;
-	m_notLayers = notLayers;
+	m_viewLayerSpec = viewLayerSpec;
 }
 
 QString AddDeleteItemCommand::getParamString() const {
@@ -165,8 +165,8 @@ SketchWidget * AddDeleteItemCommand::dropOrigin() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
-    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, notLayers, viewGeometry, id, modelIndex, parent)
+AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
+    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewLayerSpec, viewGeometry, id, modelIndex, parent)
 {
 	m_doFirstRedo = m_firstRedo = true;
 	m_module = false;
@@ -181,7 +181,7 @@ void AddItemCommand::undo()
 void AddItemCommand::redo()
 {
 	if (!m_firstRedo || m_doFirstRedo) {
-		m_sketchWidget->addItem(m_moduleID, m_notLayers, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
+		m_sketchWidget->addItem(m_moduleID, m_viewLayerSpec, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
 	}
 	m_firstRedo = false;
 }
@@ -196,14 +196,14 @@ QString AddItemCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, const LayerList & notLayers, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
-    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, notLayers, viewGeometry, id, modelIndex, parent)
+DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
+    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewLayerSpec, viewGeometry, id, modelIndex, parent)
 {
 }
 
 void DeleteItemCommand::undo()
 {
-    m_sketchWidget->addItem(m_moduleID, m_notLayers, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
+    m_sketchWidget->addItem(m_moduleID, m_viewLayerSpec, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
 }
 
 void DeleteItemCommand::redo()
@@ -633,7 +633,7 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 				wire->id(), "connector1", false, true, NULL));
 	}
 
-	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->notLayers(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
+	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
 }
 
 
@@ -758,7 +758,7 @@ void RatsnestCommand::redo() {
 
 void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest, bool select) 
 {
-	addSubCommand(new AddItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->notLayers(), wire->getViewGeometry(), wire->id(), true, -1, NULL));
+	addSubCommand(new AddItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), true, -1, NULL));
 	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorSharedID(),

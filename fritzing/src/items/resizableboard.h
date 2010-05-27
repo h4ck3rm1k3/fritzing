@@ -40,13 +40,13 @@ class ResizableBoard : public PaletteItem
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	ResizableBoard(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
+	ResizableBoard(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~ResizableBoard();
 
 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 	virtual void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
 	void resizePixels(qreal w, qreal h, const LayerHash & viewLayers);
- 	void loadLayerKin(const LayerHash & viewLayers, const LayerList & notLayers);
+ 	void loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	void setInitialSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	void rotateItem(qreal degrees);
