@@ -298,12 +298,18 @@ QRectF PartsEditorConnectorsConnectorItem::mappedRect() {
 	return mapToParent(rect()).boundingRect();
 }
 
+void PartsEditorConnectorsConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+	unsetCursor();
+	PartsEditorConnectorItem::mouseReleaseEvent(event);
+}
+
 void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	highlight(connectorSharedID());
 	PartsEditorView *gv = dynamic_cast<PartsEditorView*>(scene()->parent());
 	if(gv) {
 		gv->informConnectorSelectionFromView(connectorSharedID());
 	}
+	setCursor(Qt::BlankCursor);
 	Q_UNUSED(event);
 }
 

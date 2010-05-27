@@ -65,6 +65,7 @@ protected slots:
 protected:
 	void init(bool resizable);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 	void resizeRect(qreal x, qreal y, qreal width, qreal height);
 	void setResizable(bool resizable);

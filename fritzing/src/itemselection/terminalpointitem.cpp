@@ -242,7 +242,7 @@ void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			setCursor(QCursor(Qt::ForbiddenCursor));
 		} else {
 			m_parent->setHasBeenMoved(m_pressed);
-			unsetCursor();
+			setCursor(Qt::BlankCursor);
 		}
 		QGraphicsPixmapItem::mouseMoveEvent(event);
 	}
@@ -252,6 +252,7 @@ void TerminalPointItemPrivate::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 	if(m_editable && isVisible()) {
 		setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Selected]);
 		m_pressed = true;
+		setCursor(Qt::BlankCursor);
 	}
 	QGraphicsPixmapItem::mousePressEvent(event);
 }
@@ -263,6 +264,7 @@ void TerminalPointItemPrivate::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
 			m_parent->reset();
 			return;
 		} else {
+			unsetCursor();
 			setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Hover]);
 			m_pressed = false;
 		}
