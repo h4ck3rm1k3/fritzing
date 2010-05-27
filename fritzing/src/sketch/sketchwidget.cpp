@@ -2178,6 +2178,9 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 	if (draggingWireEnd()) {
 		checkAutoscroll(event->globalPos());
+		if (m_infoView) {
+			m_infoView->updateLocation();
+		}
 	}
 
 		
@@ -2287,6 +2290,10 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 
 	foreach (Wire * wire, m_savedWires.keys()) {
 		wire->simpleConnectedMoved(m_savedWires.value(wire));
+	}
+
+	if (m_infoView != NULL) {
+		m_infoView->updateLocation();
 	}
 
 	//DebugDialog::debug(QString("done move items %1").arg(QTime::currentTime().msec()) );

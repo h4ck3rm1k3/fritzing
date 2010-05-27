@@ -37,6 +37,7 @@ $Date$
 #include <QScrollArea>
 #include <QGridLayout>
 #include <QVBoxLayout>
+#include <QComboBox>
 
 #include "../items/itembase.h"
 #include "../items/wire.h"
@@ -89,6 +90,10 @@ protected slots:
 	void instanceTitleEditable(bool editable);
 	void viewExpanded(bool);
 
+public slots:
+	void updateLocation();
+
+
 protected:
 	void appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
 	void appendWireStuff(Wire* wire, bool swappingEnabled);
@@ -103,6 +108,7 @@ protected:
 	void setNullContent();
 	void setUpTitle(ItemBase *);
 	void setUpIcons(ModelPart *);
+	void setUpLocation(ItemBase *);
 	void addTags(ModelPart * modelPart);
 	void partTitle(const QString & title, const QString & version);
 	void displayProps(ModelPart * modelPart, ItemBase * itemBase, bool swappingEnabled);
@@ -125,6 +131,7 @@ protected:
 	QLabel * m_partTitle;
 	QLabel * m_partVersion;
 	QLabel * m_location;
+	QComboBox * m_locationUnits;
 	QLabel * m_tagsLabel;
 	QLabel * m_connDescr;
 	QLabel * m_connName;

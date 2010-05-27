@@ -131,8 +131,18 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	m_icon1 = addLabel(hboxLayout, NoIcon);
 	m_icon2 = addLabel(hboxLayout, NoIcon);
 	m_icon3 = addLabel(hboxLayout, NoIcon);
+
+	hboxLayout->addSpacing(20);
+	m_locationUnits = new QComboBox();
+	m_locationUnits->addItem("in");
+	m_locationUnits->addItem("mm");
+	m_locationUnits->setCurrentIndex(0);
+	m_locationUnits->setVisible(false);
+	hboxLayout->addWidget(m_locationUnits);
 	m_location = new QLabel();
 	hboxLayout->addWidget(m_location);
+	connect(m_locationUnits, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLocation()));
+
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
 	iconFrame->setLayout(hboxLayout);
 	vlo->addWidget(iconFrame);
@@ -287,8 +297,6 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * connectorItem) {
 		connector = connectorItem->connector();
 		connectorShared = connector->connectorShared();
 	
-		QPointF p = connectorItem->sceneAdjustedTerminalPoint(NULL);
-		m_location->setText(QString("%1 (%2,%3)").arg(m_location->text()).arg(p.x()).arg(p.y()));
 	}
 
 	if (m_connDescr) {
@@ -349,7 +357,7 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 
 	setUpTitle(wire);
 	setUpIcons(wire->modelPart());
-	m_location->setText(QString("(%1,%2)").arg(wire->pos().x()).arg(wire->pos().y()));
+	setUpLocation(swappingEnabled ? wire : NULL);
 
 	displayProps(modelPart, wire, swappingEnabled);
 	addTags(modelPart);
@@ -369,7 +377,8 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 
 	setUpTitle(itemBase);
 	setUpIcons(modelPart);
-	m_location->setText(QString("(%1,%2)").arg(itemBase->pos().x()).arg(itemBase->pos().y()));
+
+	setUpLocation(swappingEnabled ? itemBase : NULL);
 
 	QString nameString;
 	if (swappingEnabled) {
@@ -448,7 +457,7 @@ void HtmlInfoView::setNullContent()
 	displayProps(NULL, NULL, false);
 	addTags(NULL);
 	viewConnectorItemInfo(NULL);
-	m_location->setText("");
+	setUpLocation(NULL);
 }
 
 void HtmlInfoView::setInstanceTitle() {
@@ -828,4 +837,40 @@ QPixmap * HtmlInfoView::getPixmap(ModelPart * modelPart, ViewIdentifierClass::Vi
 	m_pixmaps.insert(filename, pixmap);
 
 	return pixmap;
+}
+
+void HtmlInfoView::setUpLocation(ItemBase * itemBase) {
+	if (itemBase == NULL) {
+		m_location->setText("");
+		m_locationUnits->setVisible(false);
+		return;
+	}
+
+	m_locationUnits->setVisible(true);
+	QPointF p = itemBase->pos();
+	qreal x = p.x() / FSvgRenderer::printerScale();
+	qreal y = p.y() / FSvgRenderer::printerScale();
+
+	qreal units = (m_locationUnits->currentText().compare("in") == 0) ? 1.0 : 25.4;
+
+	if (itemBase->itemType() == ModelPart::Wire) {
+		Wire * wire = qobject_cast<Wire *>(itemBase);
+		QPointF q = p + wire->line().p2();
+		m_location->setText(tr("x:%1 %2\ny:%3 %4")
+			.arg(x * units, 0, 'f', 3)
+			.arg(q.x() * units / FSvgRenderer::printerScale(), 0, 'f', 3)
+			.arg(y * units, 0, 'f', 3)
+			.arg(q.y() * units / FSvgRenderer::printerScale(), 0, 'f', 3)
+		);
+		return;
+	}
+
+	m_location->setText(tr("x:%1\ny:%2")
+		.arg(x * units, 0, 'f', 3)
+		.arg(y * units, 0, 'f', 3)
+	);
+}
+
+void HtmlInfoView::updateLocation() {
+	setUpLocation(m_currentItem);
 }
