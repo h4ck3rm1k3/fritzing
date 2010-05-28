@@ -36,6 +36,7 @@ $Date$
 #include <QGraphicsItem>
 #include <QSet>
 #include <QComboBox>
+#include <QCoreApplication>
 
 #include "../debugdialog.h"
 #include "../sketch/infographicsview.h"
@@ -364,7 +365,21 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 			ends.removeOne(toConnectorItem);
 		}
 
-		whichConnectorItem->setOverConnectorItem(findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true, ends));
+		ConnectorItem* ci = findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true, ends);
+		// tooltip patch submitted by bryant.mairs
+        if (ci && ci->connectorHovering()) {
+            // Activate tooltip for destination connector.
+			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+			if (infoGraphicsView) {
+				QGraphicsSceneHelpEvent tip(QEvent::GraphicsSceneHelp);
+				QPointF tp = ci->sceneAdjustedTerminalPoint(NULL);
+				QPointF sp = infoGraphicsView->mapToGlobal(infoGraphicsView->mapFromScene(tp));
+				tip.setScreenPos(sp.toPoint());
+				tip.setScenePos(tp);
+				QCoreApplication::sendEvent(scene(), &tip);
+			}
+        }
+        whichConnectorItem->setOverConnectorItem(ci);	
 	}
 }
 
