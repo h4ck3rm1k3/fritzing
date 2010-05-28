@@ -1053,15 +1053,18 @@ void MainWindow::loadBundledPartFromWeb() {
 }
 
 void MainWindow::loadBundledPart() {
-	QString fileName = FolderUtils::getOpenFileName(
+	QStringList fileNames = FolderUtils::getOpenFileNames(
 		this,
-		tr("Select a part to import"),
+		tr("Select one or more parts to import"),
 		defaultSaveFolder(),
 		tr("External Part (*%1)").arg(FritzingBundledPartExtension)
 	);
-	if (fileName.isNull()) return;
 
-	loadBundledPart(fileName);
+	if (fileNames.count() == 0) return;
+
+	foreach (QString fileName, fileNames) {
+		loadBundledPart(fileName);
+	}
 }
 
 ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
@@ -1076,6 +1079,7 @@ ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 			tr("Fritzing"),
 			tr("Unable to open shareable part %1").arg(fileName)
 		);
+		return NULL;
 	}
 
 	QDir unzipDir(unzipDirPath);
@@ -1083,7 +1087,12 @@ ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
 	if (mps.count()!=1) {
 		// if this fails, that means that the bundled was wrong
-		throw "bundled count was wrong";
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Unable to read shareable part %1").arg(fileName)
+		);
+		return NULL;
 	}
 
 	FolderUtils::rmdir(unzipDirPath);

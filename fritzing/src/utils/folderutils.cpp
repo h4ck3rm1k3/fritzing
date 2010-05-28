@@ -230,6 +230,15 @@ QString FolderUtils::getOpenFileName( QWidget * parent, const QString & caption,
 	return result;
 }
 
+QStringList FolderUtils::getOpenFileNames( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
+{
+	QStringList result = QFileDialog::getOpenFileNames(parent, caption, dir, filter, selectedFilter, options);
+	if (result.count() > 0) {
+		setOpenSaveFolder(result.at(0));
+	}
+	return result;
+}
+
 QString FolderUtils::getSaveFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
 {
 	//DebugDialog::debug(QString("getopenfilename %1 %2 %3 %4").arg(caption).arg(dir).arg(filter).arg(*selectedFilter));
