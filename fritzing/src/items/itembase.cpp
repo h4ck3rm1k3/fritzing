@@ -857,7 +857,7 @@ ConnectorItem * ItemBase::anyConnectorItem() {
 }
 
 
-QString ItemBase::instanceTitle() {
+const QString & ItemBase::instanceTitle() {
 	if (m_modelPart) {
 		return m_modelPart->instanceTitle();
 	}

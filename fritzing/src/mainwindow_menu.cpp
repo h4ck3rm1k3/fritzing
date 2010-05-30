@@ -1661,8 +1661,9 @@ void MainWindow::updateLayerMenu(bool resetLayout) {
 	// make sure they're in ascending order when inserting into the menu
 	qSort(keys.begin(), keys.end());
 
-	for (int i = 0; i < keys.count(); i++) {
-		ViewLayer * viewLayer = viewLayers.value(keys[i]);
+	foreach (ViewLayer::ViewLayerID key, keys) {
+		ViewLayer * viewLayer = viewLayers.value(key);
+		//DebugDialog::debug(QString("Layer: %1 is %2").arg(viewLayer->action()->text()).arg(viewLayer->action()->isEnabled()));
     	if (viewLayer != NULL) {
 			if (viewLayer->parentLayer()) continue;
 			m_viewMenu->addAction(viewLayer->action());

@@ -123,6 +123,7 @@ void LayerPalette::updateLayerPalette(LayerHash & viewLayers, LayerList & keys)
 
 		ViewLayerCheckBox * cb = m_checkBoxes[ix++];
 		cb->setChecked(viewLayer->action()->isChecked());
+		cb->setEnabled(viewLayer->action()->isEnabled());
 	}
 }
 

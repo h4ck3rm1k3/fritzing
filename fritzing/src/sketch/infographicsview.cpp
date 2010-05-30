@@ -37,6 +37,7 @@ InfoGraphicsView::InfoGraphicsView( QWidget * parent )
 	: ZoomableGraphicsView(parent)
 {
 	m_infoView = NULL;
+	m_boardLayers = 1;
 }
 
 void InfoGraphicsView::viewItemInfo(ItemBase * item) {
@@ -237,3 +238,12 @@ void InfoGraphicsView::setNoteFocus(QGraphicsItem * item, bool inFocus) {
 	Q_UNUSED(item);
 	Q_UNUSED(inFocus);
 }
+
+void InfoGraphicsView::setBoardLayers(int layers) {
+	m_boardLayers = layers;
+}
+
+int InfoGraphicsView::boardLayers() {
+	return m_boardLayers;
+}
+

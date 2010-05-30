@@ -645,7 +645,11 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 		keys.push_front("family");
 
 #ifndef QT_NO_DEBUG
-		properties.insert("id", QString("%1 %2").arg(itemBase ? QString::number(itemBase->id()) : "").arg(modelPart->moduleID()));
+		properties.insert("id", QString("%1 %2 %3")
+			.arg(itemBase ? QString::number(itemBase->id()) : "")
+			.arg(modelPart->moduleID())
+			.arg(itemBase ? ViewLayer::viewLayerNameFromID(itemBase->viewLayerID()) : "")
+		);
 		keys.insert(1, "id");
 
 		int insertAt = 2;

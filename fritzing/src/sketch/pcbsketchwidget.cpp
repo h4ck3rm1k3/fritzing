@@ -117,6 +117,8 @@ void PCBSketchWidget::addViewLayers() {
 	// disable these for now
 	//viewLayer = m_viewLayers.value(ViewLayer::Keepout);
 	//viewLayer->action()->setEnabled(false);
+
+	setBoardLayers(1);
 }
 
 
@@ -631,22 +633,25 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 		return ViewLayer::Jumperwires;
 	}
 
-	if (viewGeometry.getTrace()) {
-		if (viewLayerSpec == ViewLayer::WireOnTop) {
-			return ViewLayer::Copper1Trace;
-		}
-		return ViewLayer::Copper0Trace;
-	}
-
 	if (viewGeometry.getRatsnest()) {
 		return ViewLayer::Ratsnest;
 	}
 
-	if (viewLayerSpec == ViewLayer::WireOnTop) {
-		return ViewLayer::Copper1Trace;
+	if (viewGeometry.getTrace()) {
+		switch (viewLayerSpec) {
+			case ViewLayer::WireOnTop_TwoLayers:
+				return ViewLayer::Copper1Trace;
+			default:
+				return ViewLayer::Copper0Trace;
+		}
 	}
 
-	return m_wireViewLayerID;
+	switch (viewLayerSpec) {
+		case ViewLayer::WireOnTop_TwoLayers:
+			return ViewLayer::Copper1Trace;
+		default:
+			return m_wireViewLayerID;
+	}
 }
 
 void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
@@ -1369,18 +1374,24 @@ void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::View
 	color.setAlpha(255);
 
 	switch (viewLayerSpec) {
-		case ViewLayer::WireOnTop:
-		case ViewLayer::ThroughHoleThroughTop:
+		case ViewLayer::WireOnTop_TwoLayers:
+		case ViewLayer::WireOnBottom_OneLayer:
+		case ViewLayer::WireOnBottom_TwoLayers:
+			DebugDialog::debug("bad viewLayerSpec in getLabelFont");
+			break;
+
+		case ViewLayer::ThroughHoleThroughTop_OneLayer:
+		case ViewLayer::ThroughHoleThroughTop_TwoLayers:
 			color.setNamedColor(ViewLayer::SilkscreenColor);
 			break;
-		case ViewLayer::WireOnBottom:
-		case ViewLayer::ThroughHoleThroughBottom:
+		case ViewLayer::ThroughHoleThroughBottom_TwoLayers:
 			color.setNamedColor(ViewLayer::Silkscreen0Color);
 			break;
-		case ViewLayer::SMDOnTop:
+		case ViewLayer::SMDOnTop_TwoLayers:
 			color.setNamedColor(ViewLayer::SilkscreenColor);
 			break;
-		case ViewLayer::SMDOnBottom:
+		case ViewLayer::SMDOnBottom_TwoLayers:
+		case ViewLayer::SMDOnBottom_OneLayer:
 			color.setNamedColor(ViewLayer::Silkscreen0Color);
 			break;
 	}
@@ -1751,15 +1762,21 @@ bool PCBSketchWidget::canAlignToTopLeft(ItemBase * itemBase)
 
 ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec viewLayerSpec) {
 	switch (viewLayerSpec) {
-		case ViewLayer::WireOnTop:
-		case ViewLayer::ThroughHoleThroughTop:
+		case ViewLayer::WireOnTop_TwoLayers:
+		case ViewLayer::WireOnBottom_OneLayer:
+		case ViewLayer::WireOnBottom_TwoLayers:
+			DebugDialog::debug("bad viewLayerSpec in getLabelViewLayerID");
 			return ViewLayer::SilkscreenLabel;
-		case ViewLayer::WireOnBottom:
-		case ViewLayer::ThroughHoleThroughBottom:
+
+		case ViewLayer::ThroughHoleThroughTop_OneLayer:
+		case ViewLayer::ThroughHoleThroughTop_TwoLayers:
+			return ViewLayer::SilkscreenLabel;
+		case ViewLayer::ThroughHoleThroughBottom_TwoLayers:
 			return ViewLayer::Silkscreen0Label;
-		case ViewLayer::SMDOnTop:
+		case ViewLayer::SMDOnTop_TwoLayers:
 			return ViewLayer::SilkscreenLabel;
-		case ViewLayer::SMDOnBottom:
+		case ViewLayer::SMDOnBottom_OneLayer:
+		case ViewLayer::SMDOnBottom_TwoLayers:
 			return ViewLayer::Silkscreen0Label;
 		default:
 			return ViewLayer::SilkscreenLabel;
@@ -2091,8 +2108,22 @@ ViewLayer::ViewLayerSpec PCBSketchWidget::wireViewLayerSpec(ConnectorItem * conn
 	switch (connectorItem->attachedTo()->viewLayerID()) {
 		case ViewLayer::Copper1:
 		case ViewLayer::Copper1Trace:
-			return ViewLayer::WireOnTop;
+			return ViewLayer::WireOnTop_TwoLayers;
 		default:
-			return ViewLayer::WireOnBottom;
+			return (m_boardLayers == 1) ?  ViewLayer::WireOnBottom_OneLayer : ViewLayer::WireOnBottom_TwoLayers;
+	}
+}
+
+void PCBSketchWidget::setBoardLayers(int layers) {
+	SketchWidget::setBoardLayers(layers);
+
+	QList <ViewLayer::ViewLayerID> viewLayerIDs;
+	viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+	foreach (ViewLayer::ViewLayerID viewLayerID, viewLayerIDs) {
+		ViewLayer * layer = m_viewLayers.value(viewLayerID, NULL);
+		if (layer) {
+			layer->action()->setEnabled(layers == 2);
+			layer->setVisible(layers == 2);
+		}
 	}
 }

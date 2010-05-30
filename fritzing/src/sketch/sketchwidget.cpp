@@ -2855,7 +2855,7 @@ void SketchWidget::setAllLayersVisible(bool visible) {
 
 	for (int i = 0; i < keys.count(); i++) {
 		ViewLayer * viewLayer = m_viewLayers.value(keys[i]);
-		if (viewLayer != NULL) {
+		if (viewLayer != NULL && viewLayer->action()->isEnabled()) {
 			setLayerVisible(viewLayer, visible);
 		}
 	}
@@ -3253,11 +3253,11 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
    	viewGeometry.setLoc(p);
 	viewGeometry.setLine(QLineF(0,0,0,0));
 
-	// Activate tooltip for origin connector.  (patch submitted by bryant.mairs)
-    QGraphicsSceneHelpEvent tip(QEvent::GraphicsSceneHelp);
-    tip.setScreenPos(event->screenPos());
-    tip.setScenePos(event->scenePos());
-    QApplication::sendEvent(scene(), &tip);
+	// Activate tooltip for origin connector.  (based on a patch submitted by bryant.mairs)
+	QString text = QString("%1:%2").arg(connectorItem->attachedToInstanceTitle()).arg(connectorItem->connectorSharedName());
+	QPointF q = mapFromScene(p);
+	QRect r(q.x() - 2, q.y() - 2, 4, 4);
+	QToolTip::showText(mapToGlobal(q.toPoint()), text, this, r);
 
 	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
@@ -6399,7 +6399,7 @@ void SketchWidget::clearPasteOffset() {
 }
 
 ViewLayer::ViewLayerSpec SketchWidget::defaultViewLayerSpec() {
-	return ViewLayer::ThroughHoleThroughTop;
+	return (m_boardLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers;
 }
 
 int SketchWidget::designRulesCheck() 
@@ -6408,5 +6408,5 @@ int SketchWidget::designRulesCheck()
 }
 
 ViewLayer::ViewLayerSpec SketchWidget::wireViewLayerSpec(ConnectorItem *) {
-	return ViewLayer::WireOnBottom;
+	return (m_boardLayers == 1) ? ViewLayer::WireOnBottom_OneLayer : ViewLayer::WireOnBottom_TwoLayers;
 }

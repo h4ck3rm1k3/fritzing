@@ -83,6 +83,9 @@ public:
 
 	virtual void setNoteFocus(QGraphicsItem *, bool inFocus);
 
+	int boardLayers();
+	virtual void setBoardLayers(int);
+
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);
 	virtual void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -98,6 +101,7 @@ public:
 protected:
 	QGraphicsItem *selectedAux();
 	class HtmlInfoView *m_infoView;
+	int m_boardLayers;
 
 };
 

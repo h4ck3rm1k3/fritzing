@@ -36,7 +36,7 @@ $Date$
 #include <QGraphicsItem>
 #include <QSet>
 #include <QComboBox>
-#include <QCoreApplication>
+#include <QToolTip>
 
 #include "../debugdialog.h"
 #include "../sketch/infographicsview.h"
@@ -366,19 +366,39 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 		}
 
 		ConnectorItem* ci = findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false, true, ends);
-		// tooltip patch submitted by bryant.mairs
-        if (ci && ci->connectorHovering()) {
-            // Activate tooltip for destination connector.
-			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
-			if (infoGraphicsView) {
-				QGraphicsSceneHelpEvent tip(QEvent::GraphicsSceneHelp);
-				QPointF tp = ci->sceneAdjustedTerminalPoint(NULL);
-				QPointF sp = infoGraphicsView->mapToGlobal(infoGraphicsView->mapFromScene(tp));
-				tip.setScreenPos(sp.toPoint());
-				tip.setScenePos(tp);
-				QCoreApplication::sendEvent(scene(), &tip);
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+		if (infoGraphicsView) {
+			// Activate tooltip for destination connector. based on a patch submitted by bryant.mairs
+			bool showIt = false;
+			QString text;
+			if (ci && ci->connectorHovering()) {
+				showIt = true;
+				if (otherConnectorItem->connectionsCount() > 0) {
+					ConnectorItem * originatingConnector = otherConnectorItem->connectedToItems()[0];
+					text = QString("%1:%2\n%3:%4")
+						.arg(originatingConnector->attachedToInstanceTitle())
+						.arg(originatingConnector->connectorSharedName())
+						.arg(ci->attachedToInstanceTitle())
+						.arg(ci->connectorSharedName());
+				}
+				else {
+					text = QString("%1:%2").arg(ci->attachedToInstanceTitle()).arg(ci->connectorSharedName());
+				}
+
 			}
-        }
+			else if (QToolTip::isVisible()) {
+				showIt = true;
+				text = QToolTip::text();
+			}
+			if (showIt) {
+				QPointF p = mapToScene(eventPos);
+				QPointF q = infoGraphicsView->mapFromScene(p);
+				QRect r(q.x() - 2, q.y() - 2, 4, 4);
+				QPointF sp = infoGraphicsView->mapToGlobal(q.toPoint());
+				QToolTip::showText(sp.toPoint(), "", infoGraphicsView);
+				QToolTip::showText(sp.toPoint(), text, infoGraphicsView, r);
+			}
+		}
         whichConnectorItem->setOverConnectorItem(ci);	
 	}
 }

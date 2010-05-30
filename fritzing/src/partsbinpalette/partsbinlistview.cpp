@@ -82,7 +82,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	QString moduleID = modelPart->moduleID();
 	if(!contains(moduleID)) {
 		QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());
-		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop /* viewLayerSpec */, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
+		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		lwi->setData(Qt::UserRole, qVariantFromValue( itemBase ) );
 		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon);
 		if (renderer != NULL) {

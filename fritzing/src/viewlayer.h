@@ -72,12 +72,15 @@ public:
 	};
 
 	enum ViewLayerSpec {
-		ThroughHoleThroughTop,
-		ThroughHoleThroughBottom,
-		SMDOnTop,
-		SMDOnBottom,
-		WireOnTop,
-		WireOnBottom
+		ThroughHoleThroughTop_OneLayer,
+		ThroughHoleThroughTop_TwoLayers,
+		ThroughHoleThroughBottom_TwoLayers,
+		SMDOnTop_TwoLayers,
+		SMDOnBottom_OneLayer,
+		SMDOnBottom_TwoLayers,
+		WireOnTop_TwoLayers,
+		WireOnBottom_OneLayer,
+		WireOnBottom_TwoLayers
 	};
 
 public:

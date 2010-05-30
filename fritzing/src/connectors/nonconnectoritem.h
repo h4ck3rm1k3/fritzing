@@ -49,6 +49,7 @@ public:
 	bool hidden();
 	long attachedToID();
 	const QString & attachedToTitle();
+	const QString & attachedToInstanceTitle();
 	void setCircular(bool);
 	void setRadius(qreal radius, qreal strokeWidth);
 	qreal radius();

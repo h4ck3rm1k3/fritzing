@@ -113,6 +113,11 @@ const QString & NonConnectorItem::attachedToTitle() {
 	return attachedTo()->title();
 }
 
+const QString & NonConnectorItem::attachedToInstanceTitle() {
+	if (attachedTo() == NULL) return ___emptyString___;
+	return attachedTo()->instanceTitle();
+}
+
 void NonConnectorItem::setCircular(bool circular) {
 	m_circular = circular;
 }

@@ -82,19 +82,28 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 
 	LayerList notLayers;
 	switch (viewLayerSpec) {
-		case ViewLayer::WireOnTop:
-		case ViewLayer::ThroughHoleThroughTop:
-			notLayers << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
+		case ViewLayer::ThroughHoleThroughTop_OneLayer:
+			//notLayers << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label << ViewLayer::Copper1 << ViewLayer:: Copper1Trace;
 			break;
-		case ViewLayer::WireOnBottom:
-		case ViewLayer::ThroughHoleThroughBottom:
-			notLayers << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
+		case ViewLayer::ThroughHoleThroughTop_TwoLayers:
+			//notLayers << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
 			break;
-		case ViewLayer::SMDOnTop:
+		case ViewLayer::ThroughHoleThroughBottom_TwoLayers:
+			//notLayers << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
+			break;
+
+		case ViewLayer::SMDOnTop_TwoLayers:
 			notLayers << ViewLayer::Copper0 << ViewLayer::Copper0Trace << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
 			break;
-		case ViewLayer::SMDOnBottom:
+		case ViewLayer::SMDOnBottom_TwoLayers:
+		case ViewLayer::SMDOnBottom_OneLayer:
 			notLayers << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
+			break;
+
+		case ViewLayer::WireOnTop_TwoLayers:
+		case ViewLayer::WireOnBottom_OneLayer:
+		case ViewLayer::WireOnBottom_TwoLayers:
+			DebugDialog::debug("bad view spec in LoadLayerKin");
 			break;
 	}
 

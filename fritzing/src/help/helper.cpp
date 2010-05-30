@@ -78,13 +78,10 @@ void Helper::initText() {
 Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {
 	m_owner = owner;
 	m_breadMainHelp = new SketchMainHelp("Breadboard", BreadboardHelpText, doShow);
-	//connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removePartsBinHelp()));
-	//connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeSwitchButtonsHelp()));
 
 	m_schemMainHelp = new SketchMainHelp("Schematic", SchematicHelpText, doShow);
 
 	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpText, doShow);
-	//connect(m_pcbMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeAutorouteHelp()));
 
 	m_stillWaitingFirstDrop = true;
 	m_stillWaitingFirstViewSwitch = true;
@@ -96,61 +93,30 @@ Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {
 	connectToView(m_owner->m_schematicGraphicsView);
 	connectToView(m_owner->m_pcbGraphicsView);
 
-	//m_owner->m_breadboardGraphicsView->addFixedToCenterItem(m_breadMainHelp);
-	//m_owner->m_schematicGraphicsView->addFixedToCenterItem(m_schemMainHelp);
-	//m_owner->m_pcbGraphicsView->addFixedToCenterItem(m_pcbMainHelp);
 	m_owner->m_breadboardGraphicsView->addFixedToCenterItem2(m_breadMainHelp);
 	m_owner->m_schematicGraphicsView->addFixedToCenterItem2(m_schemMainHelp);
 	m_owner->m_pcbGraphicsView->addFixedToCenterItem2(m_pcbMainHelp);
 
-	//m_owner->m_breadboardGraphicsView->addFixedToTopRightItem(m_partsBinHelp);
-	//m_owner->m_breadboardGraphicsView->addFixedToTopLeftItem(m_switchButtonsHelp);
-	//m_owner->m_pcbGraphicsView->addFixedToBottomLeftItem(m_autorouteHelp);
 }
 
 Helper::~Helper() {
-	// m_...MainHelp objects  are deleted by the scene when the scene is deleted
-	// when the sketch is closed, so calling doClose crashes at this point
-
-	// note: in the current implementation, these are not part of the scene so they don't get deleted
-	// remember to comment these out if we go back to including these in the scene
 	delete m_breadMainHelp;
 	delete m_schemMainHelp;
 	delete m_pcbMainHelp;
 
-	//m_breadMainHelp->doClose();
-	//m_schemMainHelp->doClose();
-	//m_pcbMainHelp->doClose();
 
 }
 
 void Helper::connectToView(SketchWidget* view) {
 	connect(view, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
-	//connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 }
 
 
 void Helper::somethingDroppedIntoView(const QPoint & pos) {
 	Q_UNUSED(pos);
-	/*SketchAreaWidget * widgetParent = dynamic_cast<SketchAreaWidget *>(
-		m_owner->m_tabWidget->currentWidget()
-	);
-	SketchWidget *currSketch = widgetParent->graphicsView();
-
-	int currIdx = m_owner->m_tabWidget->currentIndex();
-	SketchMainHelp *mainHelp = helpForIndex(currIdx);
-
-	bool doHide = false;
-	if(currSketch && mainHelp) {
-		QPointF posAux = currSketch->mapFrom(m_owner,pos);
-		doHide = mainHelp->boundingRect().contains(posAux);
-	}*/
 
 	if(m_stillWaitingFirstDrop) {
-		m_stillWaitingFirstDrop = false; //false;
-		/*m_breadMainHelp->setTransparent();
-		m_schemMainHelp->setTransparent();
-		m_pcbMainHelp->setTransparent();*/
+		m_stillWaitingFirstDrop = false; 
 		m_breadMainHelp->doSetVisible(false);
 		m_schemMainHelp->doSetVisible(false);
 		m_pcbMainHelp->doSetVisible(false);
@@ -160,16 +126,14 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 		m_pcbMainHelp->setTransparent();
 		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
 	}
+	m_owner->update();   // fixes update problem, thanks to bryant.mairs
 }
 
 
 void Helper::viewSwitched() {
 	if(m_stillWaitingFirstViewSwitch) {
 		m_stillWaitingFirstViewSwitch = false;
-
-		// QTimer::singleShot(400, this, SLOT(removeSwitchButtonsHelp()));
 	} else {
-		//disconnect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	}
 }
 
