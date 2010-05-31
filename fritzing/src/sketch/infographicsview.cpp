@@ -239,7 +239,8 @@ void InfoGraphicsView::setNoteFocus(QGraphicsItem * item, bool inFocus) {
 	Q_UNUSED(inFocus);
 }
 
-void InfoGraphicsView::setBoardLayers(int layers) {
+void InfoGraphicsView::setBoardLayers(int layers, bool redraw) {
+	Q_UNUSED(redraw);
 	m_boardLayers = layers;
 }
 

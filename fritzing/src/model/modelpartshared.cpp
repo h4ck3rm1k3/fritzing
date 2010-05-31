@@ -83,8 +83,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 					while (!layer.isNull()) {
 						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer.attribute("layerId"));
 						if (viewLayerID != ViewLayer::UnknownLayer) {
-							setHasViewFor(viewIdentifier, true);
-							break;
+							setHasViewFor(viewIdentifier, viewLayerID);
 						}
 						layer = layer.nextSiblingElement("layer");
 					}
@@ -386,7 +385,9 @@ void ModelPartShared::copy(ModelPartShared* other) {
 	setUri(other->uri());
 	setVersion(other->version());
 	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, other->m_hasViewFor.keys()) {
-		setHasViewFor(viewIdentifier, other->hasViewFor(viewIdentifier));
+		foreach (ViewLayer::ViewLayerID viewLayerID, other->m_hasViewFor.values(viewIdentifier)) {
+			setHasViewFor(viewIdentifier, viewLayerID);
+		}
 	}
 	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, other->m_hasBaseNameFor.keys()) {
 		setHasBaseNameFor(viewIdentifier, other->hasBaseNameFor(viewIdentifier));
@@ -536,15 +537,23 @@ void ModelPartShared::flipSMD() {
 		connector = connector.nextSiblingElement("connector");
 	}
 
-	DebugDialog::debug(m_domDocument->toString());
+#ifndef QT_NO_DEBUG
+	QString temp = m_domDocument->toString();
+	Q_UNUSED(temp);
+	//DebugDialog::debug(temp);
+#endif
 }
 
 bool ModelPartShared::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	return m_hasViewFor.value(viewIdentifier, false);
+	return m_hasViewFor.values(viewIdentifier).count() > 0;
 }
 
-void ModelPartShared::setHasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, bool value) {
-	m_hasViewFor.insert(viewIdentifier, value);
+bool ModelPartShared::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	return m_hasViewFor.values(viewIdentifier).contains(viewLayerID);
+}
+
+void ModelPartShared::setHasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	m_hasViewFor.insert(viewIdentifier, viewLayerID);
 }
 
 QString ModelPartShared::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {

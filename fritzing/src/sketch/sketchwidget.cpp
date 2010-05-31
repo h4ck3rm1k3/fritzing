@@ -161,19 +161,8 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 
     m_infoViewOnHover = true;
 
-    connect(this, SIGNAL(resizeSignal()), this, SLOT(ensureFixedItemsPositions()));
-    connect(this, SIGNAL(wheelSignal()),  this, SLOT(ensureFixedItemsPositions()));
-    connect(
-    	horizontalScrollBar(), SIGNAL(valueChanged(int)),
-    	this, SLOT(ensureFixedItemsPositions())
-    );
-    connect(
-    	verticalScrollBar(), SIGNAL(valueChanged(int)),
-    	this, SLOT(ensureFixedItemsPositions())
-    );
+	setMouseTracking(true);
 
-
-	QTimer::singleShot(400, this, SLOT(ensureFixedItemsPositions()));
 }
 
 SketchWidget::~SketchWidget() {
@@ -183,20 +172,6 @@ SketchWidget::~SketchWidget() {
 		delete viewLayer;
 	}
 	m_viewLayers.clear();
-}
-
-
-void SketchWidget::ensureFixedItemsPositions() {
-
-	//DebugDialog::debug("ensure fixed items positions");
-
-	ensureFixedToBottomLeftItems();
-	ensureFixedToCenterItems();
-	ensureFixedToTopLeftItems();
-	ensureFixedToTopRightItems();
-	ensureFixedToBottomRightItems();
-
-	scene()->update(sceneRect());
 }
 
 void SketchWidget::restartPasteCount() {
@@ -722,8 +697,6 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 		setLastPaletteItemSelected(NULL);
 	}
 	m_lastSelected.removeOne(itemBase);
-	removeIfFixedPos(itemBase);
-
 
 	if (deleteModelPart) {
 		ModelPart * modelPart = itemBase->modelPart();
@@ -4353,11 +4326,8 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-long SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
+long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
 {
-	ItemBase * itemBase = findItem(itemID);
-	if (itemBase == NULL) return 0;
-
 	long newID = ItemBase::getNextID(newModelIndex);
 
 	ViewGeometry vg = itemBase->getViewGeometry();
@@ -5002,211 +4972,6 @@ void SketchWidget::setWireVisible(Wire * wire) {
 void SketchWidget::forwardRoutingStatus(const RoutingStatus & routingStatus) {
 
 	emit routingStatusSignal(this, routingStatus);
-}
-
-void SketchWidget::addFixedToTopLeftItem(QGraphicsItem *item) {
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	if(!scene()->items().contains(item)) {
-		scene()->addItem(item);
-	}
-	m_fixedToTopLeftItems << item;
-	ensureFixedToTopLeft(item);
-}
-
-void SketchWidget::addFixedToTopRightItem(QGraphicsItem *item) {
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	if(!scene()->items().contains(item)) {
-		scene()->addItem(item);
-	}
-	m_fixedToTopRightItems << item;
-	ensureFixedToTopRight(item);
-}
-
-void SketchWidget::addFixedToBottomLeftItem(QGraphicsItem *item) {
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	if(!scene()->items().contains(item)) {
-		scene()->addItem(item);
-	}
-	m_fixedToBottomLeftItems << item;
-	ensureFixedToBottomLeft(item);
-}
-
-void SketchWidget::addFixedToBottomRightItem(QGraphicsItem *item) {
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	if(!scene()->items().contains(item)) {
-		scene()->addItem(item);
-	}
-	m_fixedToBottomRightItems << item;
-	ensureFixedToBottomRight(item);
-}
-
-void SketchWidget::addFixedToCenterItem(QGraphicsItem *item) {
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	if(!scene()->items().contains(item)) {
-		scene()->addItem(item);
-	}
-	m_fixedToCenterItems << item;
-	ensureFixedToCenter(item);
-}
-
-void SketchWidget::ensureFixedToTopLeftItems() {
-	if(isVisible()) {
-		QList<QGraphicsItem*> toRemove;
-
-		foreach(QGraphicsItem* item, m_fixedToTopLeftItems) {
-			if(scene()->items().contains(item)) {
-				ensureFixedToTopLeft(item);
-			} else {
-				toRemove << item;
-			}
-		}
-
-		foreach(QGraphicsItem* item, toRemove) {
-			m_fixedToTopLeftItems.removeAll(item);
-		}
-	}
-}
-
-void SketchWidget::ensureFixedToTopLeft(QGraphicsItem* item) {
-	item->setPos(mapToScene(0,0));
-}
-
-void SketchWidget::ensureFixedToTopRightItems() {
-	if(isVisible()) {
-		QList<QGraphicsItem*> toRemove;
-
-		foreach(QGraphicsItem* item, m_fixedToTopRightItems) {
-			if(scene()->items().contains(item)) {
-				ensureFixedToTopRight(item);
-			} else {
-				toRemove << item;
-			}
-		}
-
-		foreach(QGraphicsItem* item, toRemove) {
-			m_fixedToTopRightItems.removeAll(item);
-		}
-	}
-}
-
-void SketchWidget::ensureFixedToTopRight(QGraphicsItem* item) {
-	int x = (int) (width()-fixedItemWidth(item));
-	int y = 0;
-
-	item->setPos(mapToScene(x,y));
-}
-
-void SketchWidget::ensureFixedToBottomLeftItems() {
-	if(isVisible()) {
-		QList<QGraphicsItem*> toRemove;
-
-		foreach(QGraphicsItem* item, m_fixedToBottomLeftItems) {
-			if(scene()->items().contains(item)) {
-				ensureFixedToBottomLeft(item);
-			} else {
-				toRemove << item;
-			}
-		}
-
-		foreach(QGraphicsItem* item, toRemove) {
-			m_fixedToBottomLeftItems.removeAll(item);
-		}
-	}
-}
-
-void SketchWidget::ensureFixedToBottomLeft(QGraphicsItem* item) {
-	int x = 0;
-	int y = (int) (height()-fixedItemHeight(item));
-
-	item->setPos(mapToScene(x,y));
-}
-
-void SketchWidget::ensureFixedToBottomRightItems() {
-	if(isVisible()) {
-		QList<QGraphicsItem*> toRemove;
-
-		foreach(QGraphicsItem* item, m_fixedToBottomRightItems) {
-			if(scene()->items().contains(item)) {
-				ensureFixedToBottomRight(item);
-			} else {
-				toRemove << item;
-			}
-		}
-
-		foreach(QGraphicsItem* item, toRemove) {
-			m_fixedToBottomRightItems.removeAll(item);
-		}
-	}
-}
-
-void SketchWidget::ensureFixedToBottomRight(QGraphicsItem* item) {
-	int x = (int) (width()-fixedItemWidth(item));
-	int y = (int) (height()-fixedItemHeight(item));
-
-	item->setPos(mapToScene(x,y));
-}
-
-void SketchWidget::ensureFixedToCenterItems() {
-	if(isVisible()) {
-		QList<QGraphicsItem*> toRemove;
-
-		foreach(QGraphicsItem* item, m_fixedToCenterItems) {
-			if(scene()->items().contains(item)) {
-				ensureFixedToCenter(item);
-			} else {
-				toRemove << item;
-			}
-		}
-
-		foreach(QGraphicsItem* item, toRemove) {
-			m_fixedToCenterItems.removeAll(item);
-		}
-	}
-}
-
-void SketchWidget::ensureFixedToCenter(QGraphicsItem* item) {
-	qreal x = (width()-fixedItemWidth(item))/2;
-	qreal y = (height()-fixedItemHeight(item))/2;
-
-	QPointF pos = mapToScene(x,y);
-
-	if(pos.x() < scene()->width() && pos.y() < scene()->height()) {
-		item->setPos(pos);
-	}
-}
-
-qreal SketchWidget::fixedItemWidth(QGraphicsItem* item) {
-	QGraphicsProxyWidget* gWidget = dynamic_cast<QGraphicsProxyWidget*>(item);
-	if(gWidget) {
-		return gWidget->widget()->width();
-	} else {
-		return item->boundingRect().width();
-	}
-}
-
-qreal SketchWidget::fixedItemHeight(QGraphicsItem* item) {
-	QGraphicsProxyWidget* gWidget = dynamic_cast<QGraphicsProxyWidget*>(item);
-	if(gWidget) {
-		return gWidget->widget()->height();
-	} else {
-		return item->boundingRect().height();
-	}
-}
-
-void SketchWidget::removeIfFixedPos(QGraphicsItem *item) {
-	m_fixedToBottomLeftItems.removeAll(item);
-	m_fixedToBottomRightItems.removeAll(item);
-	m_fixedToCenterItems.removeAll(item);
-	m_fixedToTopLeftItems.removeAll(item);
-	m_fixedToTopRightItems.removeAll(item);
-}
-
-void SketchWidget::clearFixedItems() {
-	m_fixedToBottomLeftItems.clear();
-	m_fixedToBottomRightItems.clear();
-	m_fixedToCenterItems.clear();
-	m_fixedToTopLeftItems.clear();
-	m_fixedToTopRightItems.clear();
 }
 
 void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect)
@@ -6404,3 +6169,8 @@ int SketchWidget::designRulesCheck()
 ViewLayer::ViewLayerSpec SketchWidget::wireViewLayerSpec(ConnectorItem *) {
 	return (m_boardLayers == 1) ? ViewLayer::WireOnBottom_OneLayer : ViewLayer::WireOnBottom_TwoLayers;
 }
+
+void SketchWidget::changeBoardLayers(int layers) {
+	Q_UNUSED(layers);
+}
+

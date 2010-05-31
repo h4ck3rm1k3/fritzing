@@ -715,4 +715,22 @@ protected:
 	bool m_addName;
 };
 
+
+class ChangeBoardLayersCommand : public BaseCommand
+{
+public:
+    ChangeBoardLayersCommand(class SketchWidget *sketchWidget, int oldLayers, int newLayers, bool redoOnly, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    int m_oldLayers;
+    int m_newLayers;
+    bool m_redoOnly;
+};
+
+
 #endif // COMMANDS_H

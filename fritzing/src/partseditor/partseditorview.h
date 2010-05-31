@@ -193,6 +193,31 @@ class PartsEditorView : public SketchWidget {
 		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);
 		QString saveSvg(const QString & svg, const QString & newFilePath);
 
+		void addFixedToTopLeftItem(QGraphicsItem *item);
+		void addFixedToTopRightItem(QGraphicsItem *item);
+		void addFixedToBottomLeftItem(QGraphicsItem *item);
+		void addFixedToCenterItem(QGraphicsItem *item);
+		void addFixedToBottomRightItem(QGraphicsItem *item);
+
+		void ensureFixedToTopLeftItems();
+		void ensureFixedToTopRightItems();
+		void ensureFixedToBottomLeftItems();
+		void ensureFixedToBottomRightItems();
+		void ensureFixedToCenterItems();
+
+		void ensureFixedToTopLeft(QGraphicsItem* item);
+		void ensureFixedToTopRight(QGraphicsItem* item);
+		void ensureFixedToBottomLeft(QGraphicsItem* item);
+		void ensureFixedToBottomRight(QGraphicsItem* item);
+		void ensureFixedToCenter(QGraphicsItem* item);
+
+		void ensureFixedItemsPositions();
+		void clearFixedItems();
+		void removeIfFixedPos(QGraphicsItem *item);
+		qreal fixedItemWidth(QGraphicsItem* item);
+		qreal fixedItemHeight(QGraphicsItem* item);
+		void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
+
 
 protected:
 		QPointer<PartsEditorPaletteItem> m_item; // just one item per view
@@ -218,6 +243,11 @@ protected:
 		QList<QWidget* > m_fixedWidgets;
 		ItemBase * m_viewItem;
 		QTimer *m_fitItemInViewTimer;
+		QList<QGraphicsItem*> m_fixedToTopLeftItems;
+		QList<QGraphicsItem*> m_fixedToTopRightItems;
+		QList<QGraphicsItem*> m_fixedToBottomLeftItems;
+		QList<QGraphicsItem*> m_fixedToBottomRightItems;
+		QList<QGraphicsItem*> m_fixedToCenterItems;
 
 	protected:
 		static int ConnDefaultWidth;

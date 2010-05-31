@@ -77,7 +77,9 @@ public:
 	virtual qreal getRatsnestOpacity(bool);
 	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus &);
 	int designRulesCheck();
-	void setBoardLayers(int);
+	void setBoardLayers(int, bool redraw);
+	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
+	void changeBoardLayers(int layers);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -143,6 +145,7 @@ protected:
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
 	void setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility);
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
+	int isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master);
 
 signals:
 	void setMaximumDRCProgress(int);

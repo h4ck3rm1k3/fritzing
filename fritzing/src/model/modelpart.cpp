@@ -640,6 +640,12 @@ bool ModelPart::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 	return m_modelPartShared->hasViewFor(viewIdentifier);
 }
 
+bool ModelPart::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	if (m_modelPartShared == NULL) return false;
+
+	return m_modelPartShared->hasViewFor(viewIdentifier, viewLayerID);
+}
+
 QString ModelPart::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 	if (m_modelPartShared == NULL) return ___emptyString___;
 

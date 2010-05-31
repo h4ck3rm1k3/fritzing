@@ -141,6 +141,7 @@ public:
 	void setFlippedSMD(bool);
 	bool flippedSMD();
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
+	bool hasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
 
 public:

@@ -76,7 +76,7 @@ public:
     ItemBase * addItem(ModelPart *, ViewLayer::ViewLayerSpec, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
 	ItemBase * addItem(const QString & moduleID, ViewLayer::ViewLayerSpec, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
-    void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
+    virtual void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
     void rotateItem(long id, qreal degrees);
     void transformItem(long id, const QMatrix &);
@@ -171,19 +171,6 @@ public:
 								  bool connect, class RatsnestCommand *, bool doEmit);
 	virtual void forwardRoutingStatus(const RoutingStatus &);
 
-	void addFixedToTopLeftItem(QGraphicsItem *item);
-	void addFixedToTopRightItem(QGraphicsItem *item);
-	void addFixedToBottomLeftItem(QGraphicsItem *item);
-	void addFixedToCenterItem(QGraphicsItem *item);
-	void addFixedToBottomRightItem(QGraphicsItem *item);
-	void addFixedToCenterItem2(class SketchMainHelp *item);
-
-	void ensureFixedToTopLeftItems();
-	void ensureFixedToTopRightItems();
-	void ensureFixedToBottomLeftItems();
-	void ensureFixedToBottomRightItems();
-	void ensureFixedToCenterItems();
-
 	void collectParts(QList<ItemBase *> & partList);
 
 	void movePartLabel(long itemID, QPointF newPos, QPointF newOffset);
@@ -204,7 +191,7 @@ public:
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect);
 
 	bool spaceBarIsPressed();
-	long setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
+	virtual long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();
@@ -240,6 +227,8 @@ public:
 	void clearPasteOffset();
 	ViewLayer::ViewLayerSpec defaultViewLayerSpec();
 	virtual int designRulesCheck();
+	virtual void changeBoardLayers(int layers);
+	void addFixedToCenterItem2(class SketchMainHelp *item);
 
 
 protected:
@@ -321,18 +310,6 @@ protected:
 	virtual void setWireVisible(Wire *);
 	virtual void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 	bool matchesLayer(ModelPart * modelPart);
-
-	void ensureFixedToTopLeft(QGraphicsItem* item);
-	void ensureFixedToTopRight(QGraphicsItem* item);
-	void ensureFixedToBottomLeft(QGraphicsItem* item);
-	void ensureFixedToBottomRight(QGraphicsItem* item);
-	void ensureFixedToCenter(QGraphicsItem* item);
-
-	qreal fixedItemWidth(QGraphicsItem* item);
-	qreal fixedItemHeight(QGraphicsItem* item);
-
-	void removeIfFixedPos(QGraphicsItem *item);
-	void clearFixedItems();
 
 	QByteArray removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes);
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
@@ -443,7 +420,6 @@ protected slots:
 							  long toID, const QString & toConnectorID,
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
-	void ensureFixedItemsPositions();
 	void rememberSticky(long id, QUndoCommand * parentCommand);
 
 public slots:
@@ -524,11 +500,6 @@ protected:
 	int m_ignoreSelectionChangeEvents;
 	bool m_current;
 
-	QList<QGraphicsItem*> m_fixedToTopLeftItems;
-	QList<QGraphicsItem*> m_fixedToTopRightItems;
-	QList<QGraphicsItem*> m_fixedToBottomLeftItems;
-	QList<QGraphicsItem*> m_fixedToBottomRightItems;
-	QList<QGraphicsItem*> m_fixedToCenterItems;
 	class SketchMainHelp * m_fixedToCenterItem;
 	QPoint m_fixedToCenterItemOffset;
 

@@ -35,6 +35,7 @@ $Date$
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QScrollBar>
 
 #include "partseditorview.h"
 #include "partseditorconnectoritem.h"
@@ -73,6 +74,7 @@ PartsEditorView::PartsEditorView(
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setDefaultBackground();
 
+	
 
 	//spec
 	m_svgFilePath = new SvgAndPartFilePath;
@@ -80,6 +82,16 @@ PartsEditorView::PartsEditorView(
 	if(m_startItem) {
 		addFixedToCenterItem(startItem);
 		ensureFixedToCenterItems();
+
+		connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(ensureFixedItemsPositions()));
+		connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(ensureFixedItemsPositions()));
+
+		connect(this, SIGNAL(resizeSignal()), this, SLOT(ensureFixedItemsPositions()));
+		connect(this, SIGNAL(wheelSignal()),  this, SLOT(ensureFixedItemsPositions()));
+
+
+		// TODO: do we still need this?
+		QTimer::singleShot(400, this, SLOT(ensureFixedItemsPositions()));
 	}
 	addDefaultLayers();
 
@@ -1597,6 +1609,233 @@ QString PartsEditorView::saveSvg(const QString & svg, const QString & newFilePat
 	return newFilePath;
 }
 
+void PartsEditorView::clearFixedItems() {
+	m_fixedToBottomLeftItems.clear();
+	m_fixedToBottomRightItems.clear();
+	m_fixedToCenterItems.clear();
+	m_fixedToTopLeftItems.clear();
+	m_fixedToTopRightItems.clear();
+}
+
+
+void PartsEditorView::ensureFixedItemsPositions() {
+
+	//DebugDialog::debug("ensure fixed items positions");
+
+	ensureFixedToBottomLeftItems();
+	ensureFixedToCenterItems();
+	ensureFixedToTopLeftItems();
+	ensureFixedToTopRightItems();
+	ensureFixedToBottomRightItems();
+
+	scene()->update(sceneRect());
+}
+
+void PartsEditorView::addFixedToTopLeftItem(QGraphicsItem *item) {
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
+	m_fixedToTopLeftItems << item;
+	ensureFixedToTopLeft(item);
+}
+
+void PartsEditorView::addFixedToTopRightItem(QGraphicsItem *item) {
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
+	m_fixedToTopRightItems << item;
+	ensureFixedToTopRight(item);
+}
+
+void PartsEditorView::addFixedToBottomLeftItem(QGraphicsItem *item) {
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
+	m_fixedToBottomLeftItems << item;
+	ensureFixedToBottomLeft(item);
+}
+
+void PartsEditorView::addFixedToBottomRightItem(QGraphicsItem *item) {
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
+	m_fixedToBottomRightItems << item;
+	ensureFixedToBottomRight(item);
+}
+
+void PartsEditorView::addFixedToCenterItem(QGraphicsItem *item) {
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
+	m_fixedToCenterItems << item;
+	ensureFixedToCenter(item);
+}
+
+void PartsEditorView::ensureFixedToTopLeftItems() {
+	if(isVisible()) {
+		QList<QGraphicsItem*> toRemove;
+
+		foreach(QGraphicsItem* item, m_fixedToTopLeftItems) {
+			if(scene()->items().contains(item)) {
+				ensureFixedToTopLeft(item);
+			} else {
+				toRemove << item;
+			}
+		}
+
+		foreach(QGraphicsItem* item, toRemove) {
+			m_fixedToTopLeftItems.removeAll(item);
+		}
+	}
+}
+
+void PartsEditorView::ensureFixedToTopLeft(QGraphicsItem* item) {
+	item->setPos(mapToScene(0,0));
+}
+
+void PartsEditorView::ensureFixedToTopRightItems() {
+	if(isVisible()) {
+		QList<QGraphicsItem*> toRemove;
+
+		foreach(QGraphicsItem* item, m_fixedToTopRightItems) {
+			if(scene()->items().contains(item)) {
+				ensureFixedToTopRight(item);
+			} else {
+				toRemove << item;
+			}
+		}
+
+		foreach(QGraphicsItem* item, toRemove) {
+			m_fixedToTopRightItems.removeAll(item);
+		}
+	}
+}
+
+void PartsEditorView::ensureFixedToTopRight(QGraphicsItem* item) {
+	int x = (int) (width()-fixedItemWidth(item));
+	int y = 0;
+
+	item->setPos(mapToScene(x,y));
+}
+
+void PartsEditorView::ensureFixedToBottomLeftItems() {
+	if(isVisible()) {
+		QList<QGraphicsItem*> toRemove;
+
+		foreach(QGraphicsItem* item, m_fixedToBottomLeftItems) {
+			if(scene()->items().contains(item)) {
+				ensureFixedToBottomLeft(item);
+			} else {
+				toRemove << item;
+			}
+		}
+
+		foreach(QGraphicsItem* item, toRemove) {
+			m_fixedToBottomLeftItems.removeAll(item);
+		}
+	}
+}
+
+void PartsEditorView::ensureFixedToBottomLeft(QGraphicsItem* item) {
+	int x = 0;
+	int y = (int) (height()-fixedItemHeight(item));
+
+	item->setPos(mapToScene(x,y));
+}
+
+void PartsEditorView::ensureFixedToBottomRightItems() {
+	if(isVisible()) {
+		QList<QGraphicsItem*> toRemove;
+
+		foreach(QGraphicsItem* item, m_fixedToBottomRightItems) {
+			if(scene()->items().contains(item)) {
+				ensureFixedToBottomRight(item);
+			} else {
+				toRemove << item;
+			}
+		}
+
+		foreach(QGraphicsItem* item, toRemove) {
+			m_fixedToBottomRightItems.removeAll(item);
+		}
+	}
+}
+
+void PartsEditorView::ensureFixedToBottomRight(QGraphicsItem* item) {
+	int x = (int) (width()-fixedItemWidth(item));
+	int y = (int) (height()-fixedItemHeight(item));
+
+	item->setPos(mapToScene(x,y));
+}
+
+void PartsEditorView::ensureFixedToCenterItems() {
+	if(isVisible()) {
+		QList<QGraphicsItem*> toRemove;
+
+		foreach(QGraphicsItem* item, m_fixedToCenterItems) {
+			if(scene()->items().contains(item)) {
+				ensureFixedToCenter(item);
+			} else {
+				toRemove << item;
+			}
+		}
+
+		foreach(QGraphicsItem* item, toRemove) {
+			m_fixedToCenterItems.removeAll(item);
+		}
+	}
+}
+
+void PartsEditorView::ensureFixedToCenter(QGraphicsItem* item) {
+	qreal x = (width()-fixedItemWidth(item))/2;
+	qreal y = (height()-fixedItemHeight(item))/2;
+
+	QPointF pos = mapToScene(x,y);
+
+	if(pos.x() < scene()->width() && pos.y() < scene()->height()) {
+		item->setPos(pos);
+	}
+}
+
+void PartsEditorView::removeIfFixedPos(QGraphicsItem *item) {
+	m_fixedToBottomLeftItems.removeAll(item);
+	m_fixedToBottomRightItems.removeAll(item);
+	m_fixedToCenterItems.removeAll(item);
+	m_fixedToTopLeftItems.removeAll(item);
+	m_fixedToTopRightItems.removeAll(item);
+}
+
+
+qreal PartsEditorView::fixedItemWidth(QGraphicsItem* item) {
+	QGraphicsProxyWidget* gWidget = dynamic_cast<QGraphicsProxyWidget*>(item);
+	if(gWidget) {
+		return gWidget->widget()->width();
+	} else {
+		return item->boundingRect().width();
+	}
+}
+
+qreal PartsEditorView::fixedItemHeight(QGraphicsItem* item) {
+	QGraphicsProxyWidget* gWidget = dynamic_cast<QGraphicsProxyWidget*>(item);
+	if(gWidget) {
+		return gWidget->widget()->height();
+	} else {
+		return item->boundingRect().height();
+	}
+}
+
+void PartsEditorView::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
+{
+	removeIfFixedPos(itemBase);
+	SketchWidget::deleteItem(itemBase, deleteModelPart, doEmit, later);
+}
+
+
 //////////////////////////////////////////////////////////
 
 KicadModuleDialog::KicadModuleDialog(const QString & filename, const QStringList & modules, QWidget *parent) : QDialog(parent) 
@@ -1638,5 +1877,4 @@ KicadModuleDialog::~KicadModuleDialog() {
 const QString KicadModuleDialog::selectedModule() {
 	return m_comboBox->currentText();
 }
-
 

@@ -1299,3 +1299,35 @@ QString LoadLogoImageCommand::getParamString() const {
 			.arg(m_itemID).arg(m_oldFilename).arg(m_newFilename);
 
 }
+
+///////////////////////////////////////////////
+
+ChangeBoardLayersCommand::ChangeBoardLayersCommand(SketchWidget *sketchWidget, int oldLayers, int newLayers, bool redoOnly, QUndoCommand *parent)
+	: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_oldLayers = oldLayers;
+    m_newLayers = newLayers;
+    m_redoOnly = redoOnly;
+}
+
+void ChangeBoardLayersCommand::undo() {
+	if (!m_redoOnly) {
+		m_sketchWidget->changeBoardLayers(m_oldLayers);
+	}
+}
+
+void ChangeBoardLayersCommand::redo() {
+	if (m_redoOnly) {
+		m_sketchWidget->changeBoardLayers(m_newLayers);
+	}
+}
+
+QString ChangeBoardLayersCommand::getParamString() const {
+	return QString("ChangeBoardLayersCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" redoOnly:%1 old:%2 new:%3") 
+			.arg(m_redoOnly).arg(m_oldLayers).arg(m_newLayers);
+
+}
+
+

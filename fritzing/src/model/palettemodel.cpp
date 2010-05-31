@@ -324,7 +324,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	QString title, label, date, author, description, taxonomy, replacedBy, version;
 	QStringList tags;
 	QHash<QString, QString> properties;
-	QSet<ViewIdentifierClass::ViewIdentifier> hasViewFor;
+	QMultiHash<ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID> hasViewFor;
 	QHash<ViewIdentifierClass::ViewIdentifier, QString> hasBaseNameFor;
 
 	if (fastLoad) {
@@ -390,7 +390,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 					else if (name.compare("layer") == 0) {
 						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(xml.attributes().value("layerId").toString());
 						if (ViewIdentifierClass::viewHasLayer(viewIdentifier, viewLayerID)) {
-							hasViewFor.insert(viewIdentifier);
+							hasViewFor.insert(viewIdentifier, viewLayerID);
 						}
 					}
 					else if (name.compare("connectors") == 0) {
@@ -545,8 +545,10 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		modelPartShared->setReplacedBy(replacedBy);
 		modelPartShared->setTags(tags);
 		modelPartShared->setProperties(properties);
-		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasViewFor) {
-			modelPartShared->setHasViewFor(viewIdentifier, true);
+		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasViewFor.keys()) {
+			foreach (ViewLayer::ViewLayerID viewLayerID, hasViewFor.values(viewIdentifier)) {
+				modelPartShared->setHasViewFor(viewIdentifier, viewLayerID);
+			}
 		}
 		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasBaseNameFor.keys()) {
 			modelPartShared->setHasBaseNameFor(viewIdentifier, hasBaseNameFor.value(viewIdentifier));

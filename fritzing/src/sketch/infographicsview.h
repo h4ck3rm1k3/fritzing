@@ -84,7 +84,7 @@ public:
 	virtual void setNoteFocus(QGraphicsItem *, bool inFocus);
 
 	int boardLayers();
-	virtual void setBoardLayers(int);
+	virtual void setBoardLayers(int, bool redraw);
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);

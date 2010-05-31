@@ -107,10 +107,10 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 			break;
 	}
 
-	// the palette item already used the zeroth child "layer" element
 	foreach (ViewLayer::ViewLayerID viewLayerID, viewLayers.keys()) {
 		if (viewLayerID == m_viewLayerID) continue;
 		if (notLayers.contains(viewLayerID)) continue;
+		if (!m_modelPart->hasViewFor(m_viewIdentifier, viewLayerID)) continue;
 
 		LayerKinPaletteItem * lkpi = newLayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, m_itemMenu, viewLayers);
 		if (lkpi->ok()) {

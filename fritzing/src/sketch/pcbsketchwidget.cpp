@@ -119,7 +119,7 @@ void PCBSketchWidget::addViewLayers() {
 	//viewLayer = m_viewLayers.value(ViewLayer::Keepout);
 	//viewLayer->action()->setEnabled(false);
 
-	setBoardLayers(1);
+	setBoardLayers(1, false);
 }
 
 
@@ -604,13 +604,13 @@ void PCBSketchWidget::setCurrent(bool current) {
 			p.setX((int) ((vp.width() - helpsize.width()) / 2.0));
 			p.setY((int) ((vp.height() - helpsize.height()) / 2.0));
 
-			// TODO: make these constants less arbitrary
+			// TODO: make these constants less arbitrary (get the size and location of the icon which the board is replacing)
 			p += QPointF(10, 30);
 
 			// add a board to the empty sketch, and place it in the help area.
 
-			m_addedBoard->setPos(p);
-			qobject_cast<ResizableBoard *>(m_addedBoard)->resizePixels(110, helpsize.height() - 30 - 30, m_viewLayers);
+			m_addedBoard->setPos(mapToScene(p.toPoint()));
+			qobject_cast<ResizableBoard *>(m_addedBoard)->resizePixels(95, helpsize.height() - 30 - 30, m_viewLayers);
 		}
 	}
 }
@@ -2123,8 +2123,8 @@ ViewLayer::ViewLayerSpec PCBSketchWidget::wireViewLayerSpec(ConnectorItem * conn
 	}
 }
 
-void PCBSketchWidget::setBoardLayers(int layers) {
-	SketchWidget::setBoardLayers(layers);
+void PCBSketchWidget::setBoardLayers(int layers, bool redraw) {
+	SketchWidget::setBoardLayers(layers, redraw);
 
 	QList <ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
@@ -2133,6 +2133,95 @@ void PCBSketchWidget::setBoardLayers(int layers) {
 		if (layer) {
 			layer->action()->setEnabled(layers == 2);
 			layer->setVisible(layers == 2);
+			if (redraw) {
+				setLayerVisible(layer, layers == 2);
+				if (layers == 2) {
+					layer->action()->setChecked(true);
+				}
+			}
 		}
 	}
+}
+
+long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
+{
+	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
+
+	// command has to fire last whether undoing or redoing
+	// so set up two commands that each only trigger one way
+
+	if (m_boardLayers != newLayers) {
+		new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, false, parentCommand);
+		QList<Wire *> already;
+		if (newLayers == 1) {
+			foreach (QGraphicsItem * item, scene()->items()) {
+				Wire * wire = dynamic_cast<Wire *>(item);
+				if (wire == NULL) continue;
+				if (!wire->getTrace()) continue;
+				if (wire->viewLayerID() != ViewLayer::Copper1Trace) continue;
+				if (already.contains(wire)) continue;
+					
+				QList<Wire *> chained;
+				QList<ConnectorItem *> ends;
+				QList<ConnectorItem *> uniqueEnds;
+				wire->collectChained(chained, ends, uniqueEnds);
+				makeWiresChangeConnectionCommands(chained, parentCommand);
+				foreach (Wire * w, chained) {
+					makeDeleteItemCommand(w, BaseCommand::SingleView, parentCommand);
+					already.append(w);
+				}
+			}
+		}
+	}
+
+	
+	// TODO: disconnect and flip smds
+
+
+	long result = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, master, parentCommand);
+
+	if (m_boardLayers != newLayers) {
+		new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, true, parentCommand);
+	}
+
+	return result;
+}
+
+int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master)
+{							
+	if (!master) return m_boardLayers;
+
+	switch (itemBase->itemType()) {
+		case ModelPart::Board:
+		case ModelPart::ResizableBoard:
+			break;
+		default: 
+			return m_boardLayers;
+	}
+
+	ModelPart * modelPart = paletteModel()->retrieveModelPart(newModuleID);
+	if (modelPart == NULL) {
+		// shouldn't happen
+		return m_boardLayers;
+	}
+
+	QString slayers = modelPart->properties().value("layers", "");
+	if (slayers.isEmpty()) {
+		// shouldn't happen
+		return m_boardLayers;
+	}
+
+	bool ok;
+	int layers = slayers.toInt(&ok);
+	if (!ok) {
+		// shouldn't happen
+		return m_boardLayers;
+	}
+
+	return layers;
+}
+
+
+void PCBSketchWidget::changeBoardLayers(int layers) {
+	setBoardLayers(layers, true);
 }
