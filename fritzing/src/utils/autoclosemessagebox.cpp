@@ -26,11 +26,11 @@ $Date$
 
 #include "autoclosemessagebox.h"
 #include "../debugdialog.h"
+#include "../mainwindow.h"
 
 static const int Interval = 30;
 static const int Steps = 7;
 static const int Wait = 100;
-
 
 AutoCloseMessageBox::AutoCloseMessageBox( QWidget * parent ) 
 	: QLabel(parent)
@@ -132,3 +132,25 @@ void AutoCloseMessageBox::prepMoveBack() {
 	connect(&m_animationTimer, SIGNAL(timeout()), this, SLOT(moveBack()));
 	m_animationTimer.start();
 }
+
+void AutoCloseMessageBox::showMessage(QWidget *window, const QString &message) 
+{
+	MainWindow * mainWindow = qobject_cast<MainWindow *>(window);
+	if (mainWindow == NULL) return;
+
+	QStatusBar * statusBar = mainWindow->realStatusBar();
+	if (statusBar == NULL) return;
+
+	AutoCloseMessageBox * acmb = new AutoCloseMessageBox(mainWindow);
+	acmb->setText(message);
+	QRect dest = statusBar->geometry(); // toolbar->geometry();
+	QRect r = mainWindow->geometry();
+	acmb->setFixedSize(QSize(dest.width(), dest.height()));
+	QPoint p(dest.x(), dest.y());
+	p = statusBar->parentWidget()->mapTo(mainWindow, p);
+	acmb->setStartPos(p.x(), r.height());
+	acmb->setEndPos(p.x(), p.y());
+	acmb->start();
+}
+
+

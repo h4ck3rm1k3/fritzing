@@ -369,35 +369,43 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView) {
 			// Activate tooltip for destination connector. based on a patch submitted by bryant.mairs
-			bool showIt = false;
 			QString text;
 			if (ci && ci->connectorHovering()) {
-				showIt = true;
 				if (otherConnectorItem->connectionsCount() > 0) {
 					ConnectorItem * originatingConnector = otherConnectorItem->connectedToItems()[0];
-					text = QString("%1:%2\n%3:%4")
+					text = QString("%1: %2\n%3: %4")
 						.arg(originatingConnector->attachedToInstanceTitle())
 						.arg(originatingConnector->connectorSharedName())
 						.arg(ci->attachedToInstanceTitle())
 						.arg(ci->connectorSharedName());
 				}
 				else {
-					text = QString("%1:%2").arg(ci->attachedToInstanceTitle()).arg(ci->connectorSharedName());
+					text = QString("%1: %2").arg(ci->attachedToInstanceTitle()).arg(ci->connectorSharedName());
 				}
 
 			}
-			else if (QToolTip::isVisible()) {
-				showIt = true;
-				text = QToolTip::text();
+			else {
+				if (otherConnectorItem->connectionsCount() > 0) {
+					ConnectorItem * originatingConnector = otherConnectorItem->connectedToItems()[0];
+					text = QString("%1: %2")
+						.arg(originatingConnector->attachedToInstanceTitle())
+						.arg(originatingConnector->connectorSharedName());
+				}
+
 			}
-			if (showIt) {
-				QPointF p = mapToScene(eventPos);
-				QPointF q = infoGraphicsView->mapFromScene(p);
-				QRect r(q.x() - 2, q.y() - 2, 4, 4);
-				QPointF sp = infoGraphicsView->mapToGlobal(q.toPoint());
-				QToolTip::showText(sp.toPoint(), "", infoGraphicsView);
-				QToolTip::showText(sp.toPoint(), text, infoGraphicsView, r);
-			}
+            // Now use Qt's tooltip functionality to display our tooltip.
+            // The tooltip text is first cleared as only a change in tooltip
+            // text will update its position.
+            // A rect is generated to smooth out position updates.
+            // NOTE: Increasing this rect will cause the tooltip to disappear
+            // and not reappear until another pixel move after the move that
+            // disabled it.
+            QPointF p = mapToScene(eventPos);
+            QPointF q = infoGraphicsView->mapFromScene(p);
+            QRect r(q.x(), q.y(), 1, 1);
+            QPointF sp = infoGraphicsView->mapToGlobal(q.toPoint());
+            QToolTip::showText(sp.toPoint(), "", infoGraphicsView);
+            QToolTip::showText(sp.toPoint(), text, infoGraphicsView, r);
 		}
         whichConnectorItem->setOverConnectorItem(ci);	
 	}

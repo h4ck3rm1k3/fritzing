@@ -3253,12 +3253,6 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
    	viewGeometry.setLoc(p);
 	viewGeometry.setLine(QLineF(0,0,0,0));
 
-	// Activate tooltip for origin connector.  (based on a patch submitted by bryant.mairs)
-	QString text = QString("%1:%2").arg(connectorItem->attachedToInstanceTitle()).arg(connectorItem->connectorSharedName());
-	QPointF q = mapFromScene(p);
-	QRect r(q.x() - 2, q.y() - 2, 4, 4);
-	QToolTip::showText(mapToGlobal(q.toPoint()), text, this, r);
-
 	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
 	ViewLayer::ViewLayerSpec viewLayerSpec = wireViewLayerSpec(connectorItem);

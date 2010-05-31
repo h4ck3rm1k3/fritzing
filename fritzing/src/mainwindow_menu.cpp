@@ -64,6 +64,7 @@ $Date$
 #include "dialogs/alignsettingsdialog.h"
 #include "layerpalette.h"
 #include "program/programwindow.h"
+#include "utils/autoclosemessagebox.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -3538,9 +3539,9 @@ void MainWindow::designRulesCheck()
 
 	int result = m_currentGraphicsView->designRulesCheck();
 	if (result == 0) {
-		showAutoCloseMessage(tr("No overlapping parts found"));
+		AutoCloseMessageBox::showMessage(this, tr("No overlapping parts found"));
 	}
 	else if (result > 0) {
-		showAutoCloseMessage(tr("%1 overlapping parts found").arg(result));
+		AutoCloseMessageBox::showMessage(this, tr("%1 overlapping parts found").arg(result));
 	}
 }

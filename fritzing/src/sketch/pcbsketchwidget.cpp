@@ -41,6 +41,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../autoroute/autorouteprogressdialog.h"
 #include "../items/groundplane.h"
+#include "../utils/autoclosemessagebox.h"
 
 #include <limits>
 #include <QApplication>
@@ -742,7 +743,15 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 			return false;
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
-			return matchesLayer(modelPart);
+			if (!matchesLayer(modelPart)) return false;
+			
+			if (findBoard() != NULL) {
+				// don't allow multiple boards
+				AutoCloseMessageBox::showMessage(this->window(), tr("Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one."));
+				return false;
+			}
+
+			return true;
 		default:
 			return true;
 	}

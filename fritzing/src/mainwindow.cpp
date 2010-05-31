@@ -1479,7 +1479,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	itemBase = itemBase->layerKinChief();
 
 	if(!exactMatch) {
-		showAutoCloseMessage(tr("No exactly matching part found; Fritzing chose the closest match."));
+		AutoCloseMessageBox::showMessage(this, tr("No exactly matching part found; Fritzing chose the closest match."));
 	}
 
 	swapSelectedAux(itemBase, moduleID);
@@ -1789,21 +1789,5 @@ void MainWindow::statusMessage(QString message, int timeout) {
 void MainWindow::dropPaste(SketchWidget * sketchWidget) {
 	paste();
 	sketchWidget->clearPasteOffset();
-}
-
-void MainWindow::showAutoCloseMessage(const QString & msg) 
-{
-	if (m_statusBar == NULL) return;
-
-	AutoCloseMessageBox * acmb = new AutoCloseMessageBox(this);
-	acmb->setText(msg);
-	QRect dest = m_statusBar->geometry(); // toolbar->geometry();
-	QRect r = this->geometry();
-	acmb->setFixedSize(QSize(dest.width(), dest.height()));
-	QPoint p(dest.x(), dest.y());
-	p = m_statusBar->parentWidget()->mapTo(this, p);
-	acmb->setStartPos(p.x(), r.height());
-	acmb->setEndPos(p.x(), p.y());
-	acmb->start();
 }
 

@@ -40,6 +40,8 @@ public:
 	void setEndPos(int x, int y);
 	void start();
 
+	static void showMessage(QWidget * window, const QString & message);
+
 protected:
 	void mousePressEvent(QMouseEvent *);
 	void prepMoveBack();

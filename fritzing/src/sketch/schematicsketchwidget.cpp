@@ -169,19 +169,24 @@ void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 }
 
 bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
-	if (modelPart->itemType() == ModelPart::Jumper) return false;
-	if (modelPart->itemType() == ModelPart::CopperFill) return false;
-	if (modelPart->itemType() == ModelPart::Logo) return false;
+	switch (modelPart->itemType()) {
+		case ModelPart::Jumper:
+		case ModelPart::CopperFill:
+		case ModelPart::Logo:
+		case ModelPart::Board:
+		case ModelPart::ResizableBoard:
+		case ModelPart::Breadboard:
+			return false;
+		case ModelPart::Symbol:
+			return true;
+		default:
+			break;
+	}
 
 	if (modelPart->moduleID().compare(ModuleIDNames::holeModuleIDName) == 0) return false;
 	if (modelPart->moduleID().compare(ModuleIDNames::viaModuleIDName) == 0) return false;
 
-	bool result = PCBSketchWidget::canDropModelPart(modelPart);
-	if (result) return result;
-
-	if (modelPart->itemType() == ModelPart::Symbol) return true;
-
-	return result;
+	return PCBSketchWidget::canDropModelPart(modelPart);
 }
 
 bool SchematicSketchWidget::includeSymbols() {
