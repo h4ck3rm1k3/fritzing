@@ -36,6 +36,7 @@
    <label/>
    <layers image="pcb/hole.svg" >
     <layer layerId="copper0" />
+    <layer layerId="copper1" />
    </layers>
   </pcbView>
  </views>

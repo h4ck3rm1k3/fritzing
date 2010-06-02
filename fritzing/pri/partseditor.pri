@@ -40,7 +40,6 @@ HEADERS += \
     src/partseditor/editablelabel.h \
     src/partseditor/partspecificationswidget.h \
     src/partseditor/addremovelistwidget.h \
-    src/partseditor/connectorswidget.h \
     src/partseditor/partseditorpaletteitem.h \
     src/partseditor/zoomcontrols.h \
     src/partseditor/addremoveconnectorbutton.h \
@@ -70,7 +69,6 @@ SOURCES += \
     src/partseditor/editablelabel.cpp \
     src/partseditor/partspecificationswidget.cpp \
     src/partseditor/addremovelistwidget.cpp \
-    src/partseditor/connectorswidget.cpp \
     src/partseditor/partseditorpaletteitem.cpp \
     src/partseditor/zoomcontrols.cpp \
     src/partseditor/partseditorconnectorspaletteitem.cpp \

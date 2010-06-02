@@ -320,9 +320,9 @@ void ResizableBoard::positionGrips() {
 	m_resizeGripTL->setPos(-dx, -dy);
 }
 
-bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
+bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors)
 {
-	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
+	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors);
 	if (result) {
 		positionGrips();
 	}
@@ -336,7 +336,7 @@ void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers
 
 void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	if (mmW == 0 || mmH == 0) {
-		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, true);
+		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, m_viewLayerSpec, true);
 		modelPart()->setProp("height", QVariant());
 		modelPart()->setProp("width", QVariant());
 		// do the layerkin
@@ -380,7 +380,7 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	positionGrips();
 
 	foreach (ItemBase * itemBase, m_layerKin) {
-		if (itemBase->viewLayerID() == ViewLayer::Silkscreen) {
+		if (itemBase->viewLayerID() == ViewLayer::Silkscreen1) {
 			if (m_silkscreenRenderer == NULL) {
 				m_silkscreenRenderer = new FSvgRenderer(itemBase);
 			}
@@ -425,7 +425,7 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 			case ViewLayer::Board:
 				xml = makeBoardSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
 				break;
-			case ViewLayer::Silkscreen:
+			case ViewLayer::Silkscreen1:
 				xml = makeSilkscreenSvg(w, h, GraphicsUtils::mm2mils(w), GraphicsUtils::mm2mils(h));
 				break;
 			default:

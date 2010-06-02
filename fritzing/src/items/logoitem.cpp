@@ -113,7 +113,7 @@ QVariant LogoItem::itemChange(GraphicsItemChange change, const QVariant &value)
 
 QString LogoItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
-	if (viewLayerID == ViewLayer::Silkscreen) {
+	if (viewLayerID == ViewLayer::Silkscreen1) {
 		QString svg = modelPart()->prop("shape").toString();
 		if (!svg.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);

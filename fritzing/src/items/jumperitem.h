@@ -37,7 +37,7 @@ public:
 
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
- 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+ 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors);
 	void saveParams();
 	void getParams(QPointF & pos, QPointF & c0, QPointF & c1);
 	void resize(QPointF pos, QPointF c0, QPointF c1);

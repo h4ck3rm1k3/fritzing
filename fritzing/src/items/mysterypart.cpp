@@ -112,11 +112,11 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 				}
 
 				m_changingSpacing = true;
-				this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), true);
+				this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true);
 				m_changingSpacing = false;
 				
 				foreach (ItemBase * itemBase, m_layerKin) {
-					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), infoGraphicsView->viewLayers(), itemBase->viewLayerID(), true);
+					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), infoGraphicsView->viewLayers(), itemBase->viewLayerID(), itemBase->viewLayerSpec(), true);
 				}
 
 				if (m_viewIdentifier == ViewIdentifierClass::BreadboardView) {

@@ -198,8 +198,10 @@ void PartsEditorPaletteItem::setConnector(const QString &id, Connector *connecto
 	Q_UNUSED(connector);
 }
 
-bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
+bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors)
 {
+	Q_UNUSED(viewLayerSpec);
+
     ModelPartShared * modelPartShared = modelPart->modelPartShared();
     if (modelPartShared == NULL) return false;
     if (modelPartShared->domDocument() == NULL) return false;
@@ -297,13 +299,16 @@ ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {
 	return new PartsEditorConnectorItem(connector,this);
 }
 
-LayerKinPaletteItem * PartsEditorPaletteItem::newLayerKinPaletteItem(
-		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
-		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
+LayerKinPaletteItem * PartsEditorPaletteItem::newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
+																	 ViewIdentifierClass::ViewIdentifier viewIdentifier,
+																	 const ViewGeometry & viewGeometry, long id,
+																	 ViewLayer::ViewLayerID viewLayerID, 
+																	 ViewLayer::ViewLayerSpec viewLayerSpec,
+																	 QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new
                 PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu);
-	lk->init(viewLayerID, viewLayers);
+	lk->init(viewLayerID, viewLayerSpec, viewLayers);
 	return lk;
 }
 

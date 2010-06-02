@@ -62,7 +62,7 @@ PaletteItem::~PaletteItem() {
 }
 
 bool PaletteItem::renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {
-	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
+	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, this->viewLayerSpec(), doConnectors);
 
 	m_syncMoved = this->pos();
 	return result;
@@ -83,21 +83,29 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 	LayerList notLayers;
 	switch (viewLayerSpec) {
 		case ViewLayer::ThroughHoleThroughTop_OneLayer:
+			if (m_modelPart->flippedSMD()) {
+				notLayers << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
+			}
 			//notLayers << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label << ViewLayer::Copper1 << ViewLayer:: Copper1Trace;
 			break;
 		case ViewLayer::ThroughHoleThroughTop_TwoLayers:
+			if (m_modelPart->flippedSMD()) {
+				notLayers << ViewLayer::Copper0 << ViewLayer::Copper0Trace << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
+			}
 			//notLayers << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
 			break;
 		case ViewLayer::ThroughHoleThroughBottom_TwoLayers:
 			//notLayers << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
 			break;
 
+
+		// not sure these ever get used...
 		case ViewLayer::SMDOnTop_TwoLayers:
 			notLayers << ViewLayer::Copper0 << ViewLayer::Copper0Trace << ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label;
 			break;
 		case ViewLayer::SMDOnBottom_TwoLayers:
 		case ViewLayer::SMDOnBottom_OneLayer:
-			notLayers << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
+			notLayers << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
 			break;
 
 		case ViewLayer::WireOnTop_TwoLayers:
@@ -112,9 +120,9 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 		if (notLayers.contains(viewLayerID)) continue;
 		if (!m_modelPart->hasViewFor(m_viewIdentifier, viewLayerID)) continue;
 
-		LayerKinPaletteItem * lkpi = newLayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, m_itemMenu, viewLayers);
+		LayerKinPaletteItem * lkpi = newLayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, viewLayerSpec, m_itemMenu, viewLayers);
 		if (lkpi->ok()) {
-			DebugDialog::debug(QString("adding layer kin %1 %2 %3").arg(id).arg(m_viewIdentifier).arg((long) lkpi, 0, 16) );
+			DebugDialog::debug(QString("adding layer kin %1 %2 %3").arg(id).arg(m_viewIdentifier).arg(viewLayerID) );
 			lkpi->setViewLayerSpec(viewLayerSpec);
 			addLayerKin(lkpi);
 			id++;

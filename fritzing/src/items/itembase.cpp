@@ -154,7 +154,16 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 		// choose the male first
 		return false;
 	}
+	if (c1->connectorType() == Connector::Pad) {
+		// choose the pad first
+		return true;
+	}
+	if (c2->connectorType() == Connector::Pad) {
+		// choose the pad first
+		return false;
+	}
 
+	// Connector::Wire last
 	return c1->zValue() > c2->zValue();
 
 }
@@ -1219,13 +1228,13 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 	GraphicsUtils::saveTransform(streamWriter, m_viewGeometry.transform());
 }
 
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID)
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec)
 {
 	LayerAttributes layerAttributes;
-	return setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
+	return setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes);
 }
 
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes)
 {
 #ifndef QT_NO_DEBUG
 	QTime t;
@@ -1271,7 +1280,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 							modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs);
 							setColor = ViewLayer::Copper1Color;
 							break;
-						case ViewLayer::Silkscreen:
+						case ViewLayer::Silkscreen1:
 							setColor = ViewLayer::SilkscreenColor;
 							break;
 						case ViewLayer::Silkscreen0:
@@ -1285,7 +1294,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 				bool gotOne = false;
 				renderer = new FSvgRenderer();
 				QDomDocument flipDoc;
-				getFlipDoc(modelPart, filename, viewLayerID, flipDoc);
+				getFlipDoc(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc);
 				if (layerAttributes.multiLayer()) {
 					// need to treat create "virtual" svg file for each layer
 					SvgFileSplitter svgFileSplitter;
@@ -1701,13 +1710,15 @@ QRectF ItemBase::partLabelSceneBoundingRect() {
 	return m_partLabel->sceneBoundingRect();
 }
 
-void ItemBase::getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, QDomDocument & flipDoc)
+void ItemBase::getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QDomDocument & flipDoc)
 {
-	if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD()) {
-		TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), FSvgRenderer::printerScale());
-	}
-	else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD()) {
-		TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), FSvgRenderer::printerScale());
+	if (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer) {
+		if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD() && (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer)) {
+			TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), FSvgRenderer::printerScale());
+		}
+		else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD() && (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer)) {
+			TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), FSvgRenderer::printerScale());
+		}
 	}
 }
 

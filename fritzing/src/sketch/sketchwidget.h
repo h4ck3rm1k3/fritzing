@@ -227,7 +227,6 @@ public:
 	void clearPasteOffset();
 	ViewLayer::ViewLayerSpec defaultViewLayerSpec();
 	virtual int designRulesCheck();
-	virtual void changeBoardLayers(int layers);
 	void addFixedToCenterItem2(class SketchMainHelp *item);
 
 
@@ -390,6 +389,7 @@ signals:
 	void statusMessageSignal(QString, int timeout);
 	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
 	void dropPasteSignal(SketchWidget *);
+	void changeBoardLayersSignal(int, bool doEmit);
 
 
 protected slots:
@@ -441,6 +441,7 @@ public slots:
 	void setForm(const QString & form);
 	virtual void showLabelFirstTime(long itemID, bool show, bool doEmit);
 	void resizeBoard(qreal w, qreal h, bool doEmit);
+	virtual void changeBoardLayers(int layers, bool doEmit);
 
 protected:
 	enum StatusConnectStatus {

@@ -1312,13 +1312,13 @@ ChangeBoardLayersCommand::ChangeBoardLayersCommand(SketchWidget *sketchWidget, i
 
 void ChangeBoardLayersCommand::undo() {
 	if (!m_redoOnly) {
-		m_sketchWidget->changeBoardLayers(m_oldLayers);
+		m_sketchWidget->changeBoardLayers(m_oldLayers, true);
 	}
 }
 
 void ChangeBoardLayersCommand::redo() {
 	if (m_redoOnly) {
-		m_sketchWidget->changeBoardLayers(m_newLayers);
+		m_sketchWidget->changeBoardLayers(m_newLayers, true);
 	}
 }
 

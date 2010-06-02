@@ -46,7 +46,7 @@ class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 		ConnectorItem* newConnectorItem(Connector *connector);
 		LayerKinPaletteItem * newLayerKinPaletteItem(
 			PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
-			const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers
+			const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, QMenu* itemMenu, const LayerHash & viewLayers
 		);
 		bool isShowingTerminalPoints();
 

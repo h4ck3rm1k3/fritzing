@@ -857,7 +857,7 @@ void FApplication::preloadSlowParts() {
 		return;
 	}
 
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard, ViewLayer::ThroughHoleThroughTop_OneLayer);
 	//DebugDialog::debug(QString("preload set up image"));
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;

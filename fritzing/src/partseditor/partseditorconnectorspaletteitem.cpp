@@ -69,13 +69,16 @@ ConnectorItem* PartsEditorConnectorsPaletteItem::newConnectorItem(Connector *con
 	return new PartsEditorConnectorsConnectorItem(connector,this,m_showingTerminalPoints);
 }
 
-LayerKinPaletteItem * PartsEditorConnectorsPaletteItem::newLayerKinPaletteItem(
-		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
-		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
+LayerKinPaletteItem * PartsEditorConnectorsPaletteItem::newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
+																			   ViewIdentifierClass::ViewIdentifier viewIdentifier,
+																			   const ViewGeometry & viewGeometry, long id,
+																			   ViewLayer::ViewLayerID viewLayerID, 
+																			   ViewLayer::ViewLayerSpec viewLayerSpec, 
+																			   QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new
                 PartsEditorConnectorsLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu, m_showingTerminalPoints);
-	lk->init(viewLayerID, viewLayers);
+	lk->init(viewLayerID, viewLayerSpec, viewLayers);
 	return lk;
 }
 

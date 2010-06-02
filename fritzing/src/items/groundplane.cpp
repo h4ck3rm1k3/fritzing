@@ -43,9 +43,9 @@ GroundPlane::GroundPlane( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 	m_connector0 = NULL;
 }
 
-bool GroundPlane::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
+bool GroundPlane::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors)
 {
-	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
+	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors);
 
 	if (doConnectors) {
 		foreach (QGraphicsItem * childItem, childItems()) {

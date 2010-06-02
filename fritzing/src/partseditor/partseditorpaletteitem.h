@@ -59,11 +59,11 @@ class PartsEditorPaletteItem : public PaletteItem {
 		void setItemSVG(const QString &);
 
 	protected:
-		bool setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+		bool setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors);
 		ConnectorItem* newConnectorItem(Connector *connector);
 		LayerKinPaletteItem * newLayerKinPaletteItem(
 			PaletteItemBase * chief, ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id,
-			ViewLayer::ViewLayerID viewLayer, QMenu * itemMenu, const LayerHash & viewLayers
+			ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, QMenu * itemMenu, const LayerHash & viewLayers
 		);
 		QString xmlViewLayerID();
 

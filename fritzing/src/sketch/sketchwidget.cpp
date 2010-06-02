@@ -1435,7 +1435,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 		default:
 			break;				
 	}
-	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), m_droppingItem->viewLayerSpec(), viewGeometry, fromID, true, -1, parentCommand);
+	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), defaultViewLayerSpec(), viewGeometry, fromID, true, -1, parentCommand);
 	addItemCommand->setDropOrigin(this);
 	
 	new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
@@ -4616,13 +4616,13 @@ void SketchWidget::addSchematicViewLayers() {
 }
 
 void SketchWidget::addPcbViewLayers() {
-	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::PcbNote);
+	setViewLayerIDs(ViewLayer::Silkscreen1, ViewLayer::Copper0Trace, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::PcbNote);
 	addViewLayersAux(ViewIdentifierClass::layersForView(ViewIdentifierClass::PCBView));
 
-	ViewLayer * silkscreen = m_viewLayers.value(ViewLayer::Silkscreen);
-	ViewLayer * silkscreenLabel = m_viewLayers.value(ViewLayer::SilkscreenLabel);
-	if (silkscreen && silkscreenLabel) {
-		//silkscreenLabel->setParentLayer(silkscreen);
+	ViewLayer * silkscreen1 = m_viewLayers.value(ViewLayer::Silkscreen1);
+	ViewLayer * silkscreen1Label = m_viewLayers.value(ViewLayer::Silkscreen1Label);
+	if (silkscreen1 && silkscreen1Label) {
+		//silkscreen1Label->setParentLayer(silkscreen1);
 	}
 	ViewLayer * silkscreen0 = m_viewLayers.value(ViewLayer::Silkscreen0);
 	ViewLayer * silkscreen0Label = m_viewLayers.value(ViewLayer::Silkscreen0Label);
@@ -5423,8 +5423,8 @@ ViewLayer::ViewLayerID SketchWidget::defaultConnectorLayer(ViewIdentifierClass::
 
 bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newConnector) 
 {
-	return (((connectorItem->connectorType() == Connector::Male) && (newConnector->connectorType() == Connector::Female))  ||
-			((connectorItem->connectorType() == Connector::Female) && (newConnector->connectorType() == Connector::Male)));
+	return (Connector::males().contains(connectorItem->connectorType()) && (newConnector->connectorType() == Connector::Female))  ||
+		((connectorItem->connectorType() == Connector::Female) && Connector::males().contains(newConnector->connectorType()));
 }
 
 void SketchWidget::setLastPaletteItemSelected(PaletteItem * paletteItem)
@@ -6170,7 +6170,10 @@ ViewLayer::ViewLayerSpec SketchWidget::wireViewLayerSpec(ConnectorItem *) {
 	return (m_boardLayers == 1) ? ViewLayer::WireOnBottom_OneLayer : ViewLayer::WireOnBottom_TwoLayers;
 }
 
-void SketchWidget::changeBoardLayers(int layers) {
-	Q_UNUSED(layers);
+void SketchWidget::changeBoardLayers(int layers, bool doEmit) {
+	m_boardLayers = layers;
+	if (doEmit) {
+		emit changeBoardLayersSignal(layers, false);
+	}
 }
 

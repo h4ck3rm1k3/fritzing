@@ -232,10 +232,10 @@ void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 	}
 }
 
-bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
+bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors)
 {
 	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes);
 	if (renderer == NULL) {
 		return false;
 	}
@@ -362,13 +362,16 @@ void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
 }
 
 
-LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(
-	PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
-	const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
+LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
+															 ViewIdentifierClass::ViewIdentifier viewIdentifier,
+															 const ViewGeometry & viewGeometry, long id,
+															 ViewLayer::ViewLayerID viewLayerID, 
+															 ViewLayer::ViewLayerSpec viewLayerSpec, 
+															 QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new
                 LayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu);
-	lk->init(viewLayerID, viewLayers);
+	lk->init(viewLayerID, viewLayerSpec, viewLayers);
 	return lk;
 }
 
@@ -378,7 +381,7 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 	QString path = filename();
 
 	QDomDocument flipDoc;
-	getFlipDoc(modelPart(), path, viewLayerID, flipDoc);
+	getFlipDoc(modelPart(), path, viewLayerID, m_viewLayerSpec, flipDoc);
 	
 	//DebugDialog::debug(QString("path: %1").arg(path));
 

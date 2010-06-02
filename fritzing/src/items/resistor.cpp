@@ -155,11 +155,11 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				}
 
 				m_changingPinSpacing = true;
-				this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), true);
+				this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true);
 				m_changingPinSpacing = false;
 				
 				foreach (ItemBase * itemBase, m_layerKin) {
-					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), infoGraphicsView->viewLayers(), itemBase->viewLayerID(), true);
+					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), infoGraphicsView->viewLayers(), itemBase->viewLayerID(), itemBase->viewLayerSpec(), true);
 				}
 
 				updateConnections();

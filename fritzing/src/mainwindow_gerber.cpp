@@ -138,7 +138,7 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board)
     drillStream << copper0Gerber.getNCDrill();
 
     LayerList silkLayerIDs;
-    silkLayerIDs << ViewLayer::Silkscreen  << ViewLayer::SilkscreenLabel;
+    silkLayerIDs << ViewLayer::Silkscreen1  << ViewLayer::Silkscreen1Label;
 	doSilk(silkLayerIDs, "_silkBottom.gbo", imageSize, board, exportDir);
     silkLayerIDs.clear();
     silkLayerIDs << ViewLayer::Silkscreen0  << ViewLayer::Silkscreen0Label;

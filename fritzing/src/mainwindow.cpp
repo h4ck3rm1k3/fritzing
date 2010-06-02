@@ -414,6 +414,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(showLabelFirstTimeSignal(long, bool, bool )),
 									 slotter, SLOT(showLabelFirstTime(long, bool, bool )));
 
+	succeeded = succeeded && connect(signaller, SIGNAL(changeBoardLayersSignal(int, bool )),
+									 slotter, SLOT(changeBoardLayers(int, bool )));
+
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

@@ -459,7 +459,7 @@ void ModelPartShared::flipSMD() {
 	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
 	QString c0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0);
 	QString s0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0);
-	QString s1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen);
+	QString s1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen1);
 	
 	QDomElement c0;
 	QDomElement c1;
@@ -494,6 +494,7 @@ void ModelPartShared::flipSMD() {
 		c0 = m_domDocument->createElement("layer");
 		c0.setAttribute("layerId", c0String);
 		layers.appendChild(c0);
+		setHasViewFor(ViewIdentifierClass::PCBView, ViewLayer::Copper0);
 	}
 
 	c0.setAttribute("flipSMD", "true");
@@ -502,6 +503,7 @@ void ModelPartShared::flipSMD() {
 		s0 = m_domDocument->createElement("layer");
 		s0.setAttribute("layerId", s0String);
 		layers.appendChild(s0);
+		setHasViewFor(ViewIdentifierClass::PCBView, ViewLayer::Silkscreen0);
 	}
 
 	if (!s0.isNull()) {

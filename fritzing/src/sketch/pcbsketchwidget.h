@@ -79,11 +79,11 @@ public:
 	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
-	void changeBoardLayers(int layers);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
 	void showLabelFirstTime(long itemID, bool show, bool doEmit);
+	void changeBoardLayers(int layers, bool doEmit);
 
 
 public:

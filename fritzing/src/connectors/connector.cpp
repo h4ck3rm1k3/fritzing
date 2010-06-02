@@ -33,7 +33,8 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "ercdata.h"
 
-QHash <Connector::ConnectorType, QString > Connector::names;
+QHash <Connector::ConnectorType, QString > Connector::Names;
+QList<Connector::ConnectorType> Connector::Males;
 
 Connector::Connector( ConnectorShared * connectorShared, ModelPart * modelPart)
 {
@@ -50,15 +51,20 @@ Connector::~Connector() {
 }
 
 void Connector::initNames() {
-	if (names.count() == 0) {
-		names.insert(Connector::Male, "male");
-		names.insert(Connector::Female, "female");
-		names.insert(Connector::Wire, "wire");
+	if (Names.count() == 0) {
+		Names.insert(Connector::Male, "male");
+		Names.insert(Connector::Female, "female");
+		Names.insert(Connector::Wire, "wire");
+		Names.insert(Connector::Pad, "pad");
 	}
+	if (Males.count() == 0) {
+		Males << Connector::Male << Connector::Pad;
+	}
+
 }
 
 Connector::ConnectorType Connector::connectorTypeFromName(const QString & name) {
-	QHashIterator<ConnectorType, QString> i(names);
+	QHashIterator<ConnectorType, QString> i(Names);
     while (i.hasNext()) {
         i.next();
 		if (name.compare(i.value(), Qt::CaseInsensitive ) == 0) {
@@ -70,7 +76,7 @@ Connector::ConnectorType Connector::connectorTypeFromName(const QString & name) 
 }
 
 const QString & Connector::connectorNameFromType(ConnectorType type) {
-	return names[type];
+	return Names[type];
 }
 
 Connector::ConnectorType Connector::connectorType() {
@@ -246,4 +252,7 @@ int Connector::connectorItemCount() {
 	return m_connectorItems.count();
 }
 
+const QList<Connector::ConnectorType> & Connector::males() {
+	return Males;
+}
 

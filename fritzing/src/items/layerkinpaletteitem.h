@@ -42,7 +42,7 @@ public:
 	void setHidden(bool hidden);
 	void clearModelPart();
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
-	void init(ViewLayer::ViewLayerID viewLayerID, const LayerHash &viewLayers);
+	void init(ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, const LayerHash &viewLayers);
 	QString toolTip2();
 	bool sticky();
 	void setSticky(bool);

@@ -36,6 +36,7 @@
    <label/>
    <layers image="pcb/via.svg" >
     <layer layerId="copper0" />
+    <layer layerId="copper1" />
    </layers>
   </pcbView>
  </views>
@@ -51,6 +52,7 @@
         </schematicView>
         <pcbView>
           <p svgId="connector1pin" layer="copper0" />
+          <p svgId="connector1pin" layer="copper1" />
         </pcbView>
       </views>
     </connector>  

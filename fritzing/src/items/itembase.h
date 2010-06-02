@@ -253,8 +253,8 @@ public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
-	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
-	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &);
+	static class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec);
 	static QString getSvgFilename(ModelPartShared * modelPartShared, const QString & baseName); 
 
 protected:
@@ -275,7 +275,7 @@ protected:
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
 
 protected:
-	static void getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, QDomDocument & flipDoc);
+	static void getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QDomDocument & flipDoc);
 
 protected:
  	QSizeF m_size;

@@ -1775,20 +1775,20 @@ ViewLayer::ViewLayerID PCBSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayer
 		case ViewLayer::WireOnBottom_OneLayer:
 		case ViewLayer::WireOnBottom_TwoLayers:
 			DebugDialog::debug("bad viewLayerSpec in getLabelViewLayerID");
-			return ViewLayer::SilkscreenLabel;
+			return ViewLayer::Silkscreen1Label;
 
 		case ViewLayer::ThroughHoleThroughTop_OneLayer:
 		case ViewLayer::ThroughHoleThroughTop_TwoLayers:
-			return ViewLayer::SilkscreenLabel;
+			return ViewLayer::Silkscreen1Label;
 		case ViewLayer::ThroughHoleThroughBottom_TwoLayers:
 			return ViewLayer::Silkscreen0Label;
 		case ViewLayer::SMDOnTop_TwoLayers:
-			return ViewLayer::SilkscreenLabel;
+			return ViewLayer::Silkscreen1Label;
 		case ViewLayer::SMDOnBottom_OneLayer:
 		case ViewLayer::SMDOnBottom_TwoLayers:
 			return ViewLayer::Silkscreen0Label;
 		default:
-			return ViewLayer::SilkscreenLabel;
+			return ViewLayer::Silkscreen1Label;
 	}
 
 }
@@ -2222,6 +2222,7 @@ int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & new
 }
 
 
-void PCBSketchWidget::changeBoardLayers(int layers) {
+void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	setBoardLayers(layers, true);
+	SketchWidget::changeBoardLayers(layers, doEmit);
 }

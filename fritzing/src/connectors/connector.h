@@ -46,6 +46,7 @@ public:
 		Male,
 		Female,
 		Wire,
+		Pad,
 		Unknown
 	};
 
@@ -79,6 +80,7 @@ public:
 	static void initNames();
 	static const QString & connectorNameFromType(ConnectorType);
 	static ConnectorType connectorTypeFromName(const QString & name);
+	static const QList<Connector::ConnectorType> & males();
 
 protected:
 	void writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID);
@@ -93,7 +95,8 @@ protected:
 	QPointer<class Bus> m_bus;
 
 protected:
-	static QHash<ConnectorType, QString> names;
+	static QHash<ConnectorType, QString> Names;
+	static QList<Connector::ConnectorType> Males;
 };
 
 #endif
