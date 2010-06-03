@@ -247,8 +247,7 @@ void MainWindow::init() {
     m_schematicGraphicsView->setInfoView(m_infoView);
 
 	// make sure to set the connections after the views have been created
-	connect(m_tabWidget, SIGNAL(currentChanged ( int )),
-			this, SLOT(tabWidget_currentChanged( int )));
+	connect(m_tabWidget, SIGNAL(currentChanged ( int )), this, SLOT(tabWidget_currentChanged( int )));
 
 	connectPairs();
 
@@ -341,6 +340,11 @@ void MainWindow::connectPairs() {
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand *)),
+						this, SLOT(subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand *)),
+						Qt::DirectConnection);
+
 	
 
 	/*
@@ -1555,13 +1559,18 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) {
 
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
-	swapSelectedAuxAux(itemBase, moduleID, parentCommand);
+	swapSelectedAuxAux(itemBase, moduleID, itemBase->viewLayerSpec(), parentCommand);
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, 10);
 }
 
 
-long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, QUndoCommand * parentCommand) 
+void MainWindow::subSwapSlot(SketchWidget * sketchWidget, ItemBase * itemBase, ViewLayer::ViewLayerSpec viewLayerSpec, QUndoCommand * parentCommand) {
+	Q_UNUSED(sketchWidget);
+	swapSelectedAuxAux(itemBase, itemBase->modelPart()->moduleID(), viewLayerSpec, parentCommand);
+}
+
+long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID,  ViewLayer::ViewLayerSpec viewLayerSpec, QUndoCommand * parentCommand) 
 {
 	long modelIndex = ModelPart::nextIndex();
 
@@ -1577,11 +1586,11 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 		masterflags[0] = true;
 	}
 
-	long newID1 = m_schematicGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, masterflags[0], parentCommand);
-	long newID2 = m_pcbGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, masterflags[1], parentCommand);
+	long newID1 = m_schematicGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[0], parentCommand);
+	long newID2 = m_pcbGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[1], parentCommand);
 
 	// master view must go last, since it creates the delete command
-	long newID3 = m_breadboardGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, masterflags[2], parentCommand);
+	long newID3 = m_breadboardGraphicsView->setUpSwap(itemBase, modelIndex, moduleID, viewLayerSpec, masterflags[2], parentCommand);
 
 	// TODO:  z-order?
 
@@ -1793,4 +1802,3 @@ void MainWindow::dropPaste(SketchWidget * sketchWidget) {
 	paste();
 	sketchWidget->clearPasteOffset();
 }
-

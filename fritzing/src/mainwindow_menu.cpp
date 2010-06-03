@@ -3431,7 +3431,7 @@ void MainWindow::swapObsolete() {
 		}
 
 		count++;
-		long newID = swapSelectedAuxAux(itemBase, newModuleID, parentCommand);
+		long newID = swapSelectedAuxAux(itemBase, newModuleID, itemBase->viewLayerSpec(), parentCommand);
 		if (itemBase->modelPart()) {
 			// special case for swapping old resistors.
 			QString resistance = itemBase->modelPart()->properties().value("resistance", "");

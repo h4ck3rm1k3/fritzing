@@ -4326,7 +4326,7 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
+long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID(newModelIndex);
 
@@ -4339,7 +4339,7 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		needsTransform = true;
 	}
 
-	newAddItemCommand(BaseCommand::SingleView, newModuleID, itemBase->viewLayerSpec(), vg, newID, true, newModelIndex, parentCommand);
+	newAddItemCommand(BaseCommand::SingleView, newModuleID, viewLayerSpec, vg, newID, true, newModelIndex, parentCommand);
 
 	if (needsTransform) {
 		QMatrix m;
@@ -6176,4 +6176,3 @@ void SketchWidget::changeBoardLayers(int layers, bool doEmit) {
 		emit changeBoardLayersSignal(layers, false);
 	}
 }
-

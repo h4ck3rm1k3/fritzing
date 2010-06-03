@@ -719,7 +719,7 @@ protected:
 class ChangeBoardLayersCommand : public BaseCommand
 {
 public:
-    ChangeBoardLayersCommand(class SketchWidget *sketchWidget, int oldLayers, int newLayers, bool redoOnly, QUndoCommand *parent);
+    ChangeBoardLayersCommand(class SketchWidget *sketchWidget, int oldLayers, int newLayers, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -729,7 +729,6 @@ protected:
 protected:
     int m_oldLayers;
     int m_newLayers;
-    bool m_redoOnly;
 };
 
 

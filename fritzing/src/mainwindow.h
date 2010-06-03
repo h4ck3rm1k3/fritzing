@@ -250,6 +250,7 @@ protected slots:
 	void openProgramWindow();
 	void linkToProgramFile(const QString & filename, bool addLink);
 	void designRulesCheck();
+	void subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -346,7 +347,7 @@ protected:
 	bool loadCustomBoardShape();
 	void svgMissingLayer(const QString & layername, const QString & path);
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
-	long swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, QUndoCommand * parentCommand);
+	long swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, QUndoCommand * parentCommand);
 	bool swapSpecial(QMap<QString, QString> & currPropsMap);
 
 	void enableAddBendpointAct(QGraphicsItem *);

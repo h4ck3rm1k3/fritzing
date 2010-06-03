@@ -251,7 +251,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 			}
 			if (!loaded) {
 				QMessageBox::information( NULL, QObject::tr("Fritzing"),
-						QObject::tr("The file %1 is not a Fritzing file (11).").arg(m_svgStrings->absolutePath()));
+						QObject::tr("The file %1 is not a Fritzing file (7).").arg(m_svgStrings->absolutePath()));
 				delete renderer;
 				return false;
 			}

@@ -67,6 +67,7 @@ public:
 	double defaultGridSizeInches();
 	int designRulesCheck();
 	const QString & traceColor(ConnectorItem * forColor);
+	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID,  ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);

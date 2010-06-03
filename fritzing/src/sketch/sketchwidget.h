@@ -191,7 +191,7 @@ public:
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect);
 
 	bool spaceBarIsPressed();
-	virtual long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
+	virtual long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();
@@ -350,7 +350,6 @@ protected:
 	QString makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerscale);
 	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
 	void prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand);
-
 
 protected:
 	static bool lessThan(int a, int b);

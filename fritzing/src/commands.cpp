@@ -1302,31 +1302,32 @@ QString LoadLogoImageCommand::getParamString() const {
 
 ///////////////////////////////////////////////
 
-ChangeBoardLayersCommand::ChangeBoardLayersCommand(SketchWidget *sketchWidget, int oldLayers, int newLayers, bool redoOnly, QUndoCommand *parent)
+ChangeBoardLayersCommand::ChangeBoardLayersCommand(SketchWidget *sketchWidget, int oldLayers, int newLayers, QUndoCommand *parent)
 	: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_oldLayers = oldLayers;
     m_newLayers = newLayers;
-    m_redoOnly = redoOnly;
 }
 
 void ChangeBoardLayersCommand::undo() {
-	if (!m_redoOnly) {
-		m_sketchWidget->changeBoardLayers(m_oldLayers, true);
+	m_sketchWidget->changeBoardLayers(m_oldLayers, true);
+	for (int i = childCount() - 1; i >= 0; i--) {
+		((QUndoCommand *) child(i))->undo();
 	}
 }
 
 void ChangeBoardLayersCommand::redo() {
-	if (m_redoOnly) {
-		m_sketchWidget->changeBoardLayers(m_newLayers, true);
+	m_sketchWidget->changeBoardLayers(m_newLayers, true);
+	for (int i = 0; i < childCount(); i++) {
+		((QUndoCommand *) child(i))->redo();
 	}
 }
 
 QString ChangeBoardLayersCommand::getParamString() const {
 	return QString("ChangeBoardLayersCommand ") 
 		+ BaseCommand::getParamString()
-		+ QString(" redoOnly:%1 old:%2 new:%3") 
-			.arg(m_redoOnly).arg(m_oldLayers).arg(m_newLayers);
+		+ QString(" old:%1 new:%2") 
+			.arg(m_oldLayers).arg(m_newLayers);
 
 }
 

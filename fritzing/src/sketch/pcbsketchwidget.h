@@ -78,7 +78,7 @@ public:
 	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus &);
 	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
-	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
+	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -146,10 +146,12 @@ protected:
 	void setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility);
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 	int isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master);
+	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
 
 signals:
 	void setMaximumDRCProgress(int);
 	void setDRCProgressValue(int);
+	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);

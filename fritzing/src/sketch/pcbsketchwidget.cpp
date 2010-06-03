@@ -150,16 +150,17 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 }
 
 
-ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName) {
+ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec viewLayerSpec, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
 	Q_UNUSED(viewIdentifier);
 
-	// priviledge Copper0 if it's available
+	// priviledge Copper if it's available
+	ViewLayer::ViewLayerID wantLayer = modelPart->flippedSMD() && viewLayerSpec == ViewLayer::ThroughHoleThroughTop_TwoLayers ? ViewLayer::Copper1 : ViewLayer::Copper0;
 	QDomElement layer = layers.firstChildElement("layer");
 	while (!layer.isNull()) {
 		QString lName = layer.attribute("layerId");
-		if (ViewLayer::viewLayerIDFromXmlString(lName) == ViewLayer::Copper0) {
-			return ViewLayer::Copper0;
+		if (ViewLayer::viewLayerIDFromXmlString(lName) == wantLayer) {
+			return wantLayer;
 		}
 
 		layer = layer.nextSiblingElement("layer");
@@ -256,14 +257,7 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 	}
 
 	if (jumperOrTrace != NULL) {
-		QList<Wire *> chained;
-		QList<ConnectorItem *> uniqueEnds;
-		jumperOrTrace->collectChained(chained, ends, uniqueEnds);
-		makeWiresChangeConnectionCommands(chained, parentCommand);
-		foreach (Wire * c, chained) {
-			makeDeleteItemCommand(c, BaseCommand::SingleView, parentCommand);
-			done.append(c);
-		}
+		removeWire(jumperOrTrace, ends, done, parentCommand);
 	}
 
 	QString colorString;
@@ -2143,45 +2137,68 @@ void PCBSketchWidget::setBoardLayers(int layers, bool redraw) {
 	}
 }
 
-long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
+long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, QUndoCommand * parentCommand)
 {
+	long result = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, parentCommand);
+
 	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
+	if (newLayers == m_boardLayers) return result;
 
-	// command has to fire last whether undoing or redoing
-	// so set up two commands that each only trigger one way
+	QList<ItemBase *> smds;
+	QList<Wire *> already;
+	ChangeBoardLayersCommand * changeBoardCommand = new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, parentCommand);
 
-	if (m_boardLayers != newLayers) {
-		new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, false, parentCommand);
-		QList<Wire *> already;
-		if (newLayers == 1) {
-			foreach (QGraphicsItem * item, scene()->items()) {
-				Wire * wire = dynamic_cast<Wire *>(item);
-				if (wire == NULL) continue;
-				if (!wire->getTrace()) continue;
-				if (wire->viewLayerID() != ViewLayer::Copper1Trace) continue;
-				if (already.contains(wire)) continue;
-					
-				QList<Wire *> chained;
+	// disconnect and flip smds
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * smd = dynamic_cast<ItemBase *>(item);
+		if (smd == NULL) continue;
+		if (!smd->modelPart()->flippedSMD()) continue;
+
+		smd = smd->layerKinChief();
+		if (smds.contains(smd)) continue;
+
+		foreach (QGraphicsItem * child, smd->childItems()) {
+			ConnectorItem * ci = dynamic_cast<ConnectorItem *>(child);
+			if (ci == NULL) continue;
+
+			foreach (ConnectorItem * toci, ci->connectedToItems()) {
+				TraceWire * tw = qobject_cast<TraceWire *>(toci->attachedTo());
+				if (tw == NULL) continue;
+				if (already.contains(tw)) continue;
+
 				QList<ConnectorItem *> ends;
-				QList<ConnectorItem *> uniqueEnds;
-				wire->collectChained(chained, ends, uniqueEnds);
-				makeWiresChangeConnectionCommands(chained, parentCommand);
-				foreach (Wire * w, chained) {
-					makeDeleteItemCommand(w, BaseCommand::SingleView, parentCommand);
-					already.append(w);
+				removeWire(tw, ends, already, changeBoardCommand);
+
+				// remove these connections so they're not added back in when the part is swapped
+				foreach (ConnectorItem * end, ends) {
+					foreach (ConnectorItem * endTo, end->connectedToItems()) {
+						end->tempRemove(endTo, false);
+						endTo->tempRemove(end, false);
+					}
 				}
 			}
 		}
+
+		smds.append(smd);
 	}
 
-	
-	// TODO: disconnect and flip smds
+	if (newLayers == 1) {
+		// remove traces on the top layer
+		foreach (QGraphicsItem * item, scene()->items()) {
+			TraceWire * tw = dynamic_cast<TraceWire *>(item);
+			if (tw == NULL) continue;
+			if (tw->viewLayerID() != ViewLayer::Copper1Trace) continue;
+			if (already.contains(tw)) continue;
+				
+			QList<ConnectorItem *> ends;
+			removeWire(tw, ends, already, changeBoardCommand);
+		}
+	}
 
+	// TODO need to disconnect first?
 
-	long result = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, master, parentCommand);
-
-	if (m_boardLayers != newLayers) {
-		new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, true, parentCommand);
+	foreach (ItemBase * smd, smds) {
+		emit subSwapSignal(this, smd, (newLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers, changeBoardCommand);
 	}
 
 	return result;
@@ -2194,8 +2211,10 @@ int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & new
 	switch (itemBase->itemType()) {
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
+			// maybe a change
 			break;
 		default: 
+			// no change
 			return m_boardLayers;
 	}
 
@@ -2226,3 +2245,16 @@ void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	setBoardLayers(layers, true);
 	SketchWidget::changeBoardLayers(layers, doEmit);
 }
+
+void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand) 
+{
+	QList<Wire *> chained;
+	QList<ConnectorItem *> uniqueEnds;
+	w->collectChained(chained, ends, uniqueEnds);
+	makeWiresChangeConnectionCommands(chained, parentCommand);
+	foreach (Wire * c, chained) {
+		makeDeleteItemCommand(c, BaseCommand::SingleView, parentCommand);
+		done.append(c);
+	}
+}
+

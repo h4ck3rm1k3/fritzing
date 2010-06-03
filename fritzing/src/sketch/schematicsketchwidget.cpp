@@ -296,18 +296,14 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 	QUndoCommand * parentCommand =  new QUndoCommand();
 	parentCommand->setText(tr("Change voltage from %1 to %2").arg(sitem->voltage()).arg(v));
 
+	QList<Wire *> done;
 	foreach (ConnectorItem * toConnectorItem, sitem->connector0()->connectedToItems()) {
 		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 		if (w == NULL) continue;
+		if (done.contains(w)) continue;
 
-		QList<Wire *> chained;
 		QList<ConnectorItem *> ends;
-		QList<ConnectorItem *> uniqueEnds;
-		w->collectChained(chained, ends, uniqueEnds);
-		makeWiresChangeConnectionCommands(chained, parentCommand);
-		foreach (Wire * c, chained) {
-			makeDeleteItemCommand(c, BaseCommand::CrossView, parentCommand);
-		}
+		removeWire(w, ends, done, parentCommand);
 	}
 
 	new SetPropCommand(this, item->id(), "voltage", QString::number(sitem->voltage()), QString::number(v), parentCommand);
@@ -342,4 +338,9 @@ int SchematicSketchWidget::designRulesCheck()
 
 const QString & SchematicSketchWidget::traceColor(ConnectorItem *) {
 	return SchematicTraceColor;
+}
+
+long SchematicSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, QUndoCommand * parentCommand)
+{
+	return SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, parentCommand);
 }
