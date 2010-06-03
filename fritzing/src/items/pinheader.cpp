@@ -189,7 +189,7 @@ QVariant PinHeader::itemChange(GraphicsItemChange change, const QVariant &value)
 
 ConnectorItem* PinHeader::newConnectorItem(Connector *connector) {
 	if (m_changingForm) {
-		return connector->connectorItem(this->scene());
+		return connector->connectorItemByViewLayerID(viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(connector);

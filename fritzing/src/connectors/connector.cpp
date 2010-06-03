@@ -45,7 +45,7 @@ Connector::Connector( ConnectorShared * connectorShared, ModelPart * modelPart)
 
 Connector::~Connector() {
 	//DebugDialog::debug(QString("deleting connector %1 %2").arg((long) this, 0, 16).arg(connectorSharedID()));
-	foreach (ConnectorItem * connectorItem, m_connectorItems) {
+	foreach (ConnectorItem * connectorItem, m_connectorItems.values()) {
 		connectorItem->clearConnector();
 	}
 }
@@ -92,12 +92,16 @@ ConnectorShared * Connector::connectorShared() {
 }
 
 void Connector::addViewItem(ConnectorItem * item) {
-	m_connectorItems.append(item);
-	//DebugDialog::debug(QString("adding view %1 %2").arg(this->connectorShared()->name()).arg(m_connectorItems.count()) );
+	m_connectorItems.insert(item->attachedTo()->viewLayerID(), item);
+	DebugDialog::debug(QString("adding connector %1 %2 %3")
+		.arg(this->connectorShared()->name())
+		.arg(item->attachedTo()->viewLayerID())
+		.arg(m_connectorItems.count()) );
 }
 
 void Connector::removeViewItem(ConnectorItem * item) {
-	m_connectorItems.removeOne(item);
+
+	m_connectorItems.remove(item->attachedTo()->viewLayerID());
 
 	//DebugDialog::debug(QString("removing view %1 %2").arg(this->connectorShared()->name()).arg(m_connectorItems.count()) );
 }
@@ -170,12 +174,8 @@ const QList<Connector *> & Connector::toConnectors() {
 	return m_toConnectors;
 }
 
-ConnectorItem * Connector::connectorItem(QGraphicsScene * scene) {
-	foreach (ConnectorItem * connectorItem, m_connectorItems) {
-		if (connectorItem->scene() == scene) return connectorItem;
-	}
-
-	return NULL;
+ConnectorItem * Connector::connectorItemByViewLayerID(ViewLayer::ViewLayerID viewLayerID) {
+	return m_connectorItems.value(viewLayerID, NULL);
 }
 
 bool Connector::connectionIsAllowed(Connector* that)

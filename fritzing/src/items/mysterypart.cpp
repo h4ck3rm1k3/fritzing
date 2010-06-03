@@ -302,7 +302,7 @@ void MysteryPart::chipLabelEntry() {
 
 ConnectorItem* MysteryPart::newConnectorItem(Connector *connector) {
 	if (m_changingSpacing) {
-		return connector->connectorItem(this->scene());
+		return connector->connectorItemByViewLayerID(viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(connector);

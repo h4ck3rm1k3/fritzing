@@ -2670,7 +2670,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(from);
-			ConnectorItem::collectEqualPotential(connectorItems);
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
 				extendChangeConnectionCommand(from, formerConnectorItem, false, false, parentCommand);
@@ -6176,3 +6176,49 @@ void SketchWidget::changeBoardLayers(int layers, bool doEmit) {
 		emit changeBoardLayersSignal(layers, false);
 	}
 }
+
+void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons) 
+{
+	// get the set of all connectors in the sketch
+	QList<ConnectorItem *> allConnectors;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+
+		allConnectors.append(connectorItem);
+	}
+
+	// find all the nets and make a list of nodes (i.e. part ConnectorItems) for each net
+	while (allConnectors.count() > 0) {
+		
+		ConnectorItem * connectorItem = allConnectors.takeFirst();
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(connectorItem);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
+		if (connectorItems.count() <= 0) {
+			continue;
+		}
+
+		foreach (ConnectorItem * ci, connectorItems) {
+			allConnectors.removeOne(ci);
+		}
+
+		if (!includeSingletons && (connectorItems.count() <= 1)) {
+			continue;
+		}
+
+		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
+		ConnectorItem::collectParts(connectorItems, *partConnectorItems, includeSymbols());
+
+		if ((partConnectorItems->count() <= 0) || (!includeSingletons && (partConnectorItems->count() <= 1))) {
+			delete partConnectorItems;
+			continue;
+		}
+
+		foreach (ConnectorItem * ci, *partConnectorItems) {
+			indexer.insert(ci, indexer.count());
+		}
+		allPartConnectorItems.append(partConnectorItems);
+	}
+}
+

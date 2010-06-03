@@ -194,7 +194,7 @@ void Autorouter1::start()
 	updateRatsnest(false, parentCommand);
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
-	collectAllNets(m_sketchWidget, indexer, m_allPartConnectorItems, false);
+	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false);
 
 	if (m_allPartConnectorItems.count() == 0) {
 		return;
@@ -1695,52 +1695,6 @@ double Autorouter1::distanceToLine(QPointF p0, QPointF p1, QPointF p2) {
 	double x2 = p2.x();
 	double y2 = p2.y();
 	return qAbs((x2 - x1) * (y1 - y0) - (x1 - x0) * (y2 - y1)) / qSqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-}
-
-
-void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons) 
-{
-	// get the set of all connectors in the sketch
-	QList<ConnectorItem *> allConnectors;
-	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
-
-		allConnectors.append(connectorItem);
-	}
-
-	// find all the nets and make a list of nodes (i.e. part ConnectorItems) for each net
-	while (allConnectors.count() > 0) {
-		
-		ConnectorItem * connectorItem = allConnectors.takeFirst();
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems);
-		if (connectorItems.count() <= 0) {
-			continue;
-		}
-
-		foreach (ConnectorItem * ci, connectorItems) {
-			allConnectors.removeOne(ci);
-		}
-
-		if (!includeSingletons && (connectorItems.count() <= 1)) {
-			continue;
-		}
-
-		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
-		ConnectorItem::collectParts(connectorItems, *partConnectorItems, sketchWidget->includeSymbols());
-
-		if ((partConnectorItems->count() <= 0) || (!includeSingletons && (partConnectorItems->count() <= 1))) {
-			delete partConnectorItems;
-			continue;
-		}
-
-		foreach (ConnectorItem * ci, *partConnectorItems) {
-			indexer.insert(ci, indexer.count());
-		}
-		allPartConnectorItems.append(partConnectorItems);
-	}
 }
 
 void Autorouter1::restoreOriginalState(QUndoCommand * parentCommand) {

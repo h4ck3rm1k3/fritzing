@@ -102,6 +102,7 @@ protected:
     class Wire * wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
     bool wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
+	ConnectorItem * getCrossLayerConnectorItem();
 
 protected:
 	QPointer<Connector> m_connector;
@@ -117,8 +118,7 @@ protected:
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;
 
 public:
-	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);
-	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags, bool includeSymbols);
+	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, bool crossLayers, ViewGeometry::WireFlags skipFlags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols);
 	static void clearEqualPotentialDisplay();
 	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);

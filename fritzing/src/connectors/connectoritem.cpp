@@ -371,7 +371,7 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	}
 
 	m_equalPotentialDisplayItems.append(this);
-	collectEqualPotential(m_equalPotentialDisplayItems, ViewGeometry::NoFlag);
+	collectEqualPotential(m_equalPotentialDisplayItems, true, ViewGeometry::NoFlag);
 	//m_equalPotentialDisplayItems.removeAt(0);									// not sure whether to leave the clicked one in or out of the list
 	foreach (ConnectorItem * connectorItem, m_equalPotentialDisplayItems) {
 		connectorItem->showEqualPotential(true);
@@ -691,7 +691,7 @@ bool ConnectorItem::wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & 
 	return false;
 }
 
-void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags) {
+void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, bool crossLayers, ViewGeometry::WireFlags skipFlags) {
 	// collects all the connectors at the same potential
 	// allows direct connections or wired connections
 
@@ -703,9 +703,21 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 		//DebugDialog::debug(QString("testing %1 %2 %3").arg(connectorItem->attachedToID()).arg(connectorItem->attachedToTitle()).arg(connectorItem->connectorSharedID()) );
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
-		if (fromWire != NULL && fromWire->hasAnyFlag(skipFlags)) {
-			// don't add this kind of wire
-			continue;
+		if (fromWire != NULL) {
+			if (fromWire->hasAnyFlag(skipFlags)) {
+				// don't add this kind of wire
+				continue;
+			}
+		}
+		else {
+			if (crossLayers) {
+				ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
+				if (crossConnectorItem != NULL) {
+					if (!tempItems.contains(crossConnectorItem)) {
+						tempItems.append(crossConnectorItem);
+					}
+				}
+			}
 		}
 
 		// this one's a keeper
@@ -724,30 +736,6 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 			foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
 				if (!tempItems.contains(busConnectedItem)) {
 					tempItems.append(busConnectedItem);
-				}
-			}
-		}
-	}
-}
-
-void ConnectorItem::collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags, bool includeSymbols) {
-	// collects all the connectors at the same potential
-	// which are directly reached by the given wire type
-
-	collectEqualPotential(connectorItems);
-	QList<ConnectorItem *> partConnectorItems;
-	collectParts(connectorItems, partConnectorItems, includeSymbols);
-	connectorItems.clear();
-	for (int i = 0; i < partConnectorItems.count() - 1; i++) {
-		ConnectorItem * ci = partConnectorItems[i];
-		for (int j = i + 1; j < partConnectorItems.count(); j++) {
-			ConnectorItem * cj = partConnectorItems[j];
-			if (ci->wiredTo(cj, flags)) {
-				if (!connectorItems.contains(ci)) {
-					connectorItems.append(ci);
-				}
-				if (!connectorItems.contains(cj)) {
-					connectorItems.append(cj);
 				}
 			}
 		}
@@ -868,7 +856,7 @@ bool ConnectorItem::isGrounded(ConnectorItem * c1, ConnectorItem * c2) {
 	if (c2 != NULL) {
 		connectorItems.append(c2);
 	}
-	collectEqualPotential(connectorItems, ViewGeometry::NoFlag);
+	collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
 
 	foreach (ConnectorItem * end, connectorItems) {
 		if (end->isGrounded()) return true;
@@ -884,3 +872,6 @@ bool ConnectorItem::isGrounded() {
 			(name.compare("ground", Qt::CaseInsensitive) == 0));
 }
 
+ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
+	return connector()->connectorItemByViewLayerID(attachedTo()->viewLayerID() == ViewLayer::Copper0 ? ViewLayer::Copper1 : ViewLayer::Copper0);
+}

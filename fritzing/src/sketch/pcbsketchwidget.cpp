@@ -346,7 +346,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
-	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems, false);
+	collectAllNets(indexer, allPartConnectorItems, false);
 	routingStatus.zero();
 
 	// TODO:  handle delete in updateRatsnestColors...
@@ -433,7 +433,7 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 
 	QList<ConnectorItem *> connectorItems;
 	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems);
+	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
 	if (connectorItems.contains(toConnectorItem)) {
 		// don't generate a wire in bb view if the connectors are already connected
 		result = true;
@@ -524,7 +524,7 @@ void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, Connecto
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol && toConnectorItem->attachedToItemType() == ModelPart::Symbol) {
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(fromConnectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems);
+		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceJumperRatsnestFlags);
 		foreach (ConnectorItem * c, connectorItems) {
 			if (c->attachedToItemType() == ModelPart::Part) {
 				target1 = c; 
@@ -533,7 +533,7 @@ void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, Connecto
 		}
 		connectorItems.clear();
 		connectorItems.append(toConnectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems);
+		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceJumperRatsnestFlags);
 		foreach (ConnectorItem * c, connectorItems) {
 			if (c->attachedToItemType() == ModelPart::Part) {
 				target2 = c; 
@@ -557,7 +557,7 @@ void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, Connecto
 void PCBSketchWidget::connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2) {
 	QList<ConnectorItem *> connectorItems;
 	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems);
+	ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceJumperRatsnestFlags);
 	foreach (ConnectorItem * c, connectorItems) {
 		if (c->attachedToItemType() == ModelPart::Part) {
 			target1 = c;
@@ -804,7 +804,7 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 	QList<ConnectorItem *> connectorItems;
 	QList<ConnectorItem *> partsConnectorItems;
 	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems);
+	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
 	ConnectorItem::collectParts(connectorItems, partsConnectorItems, includeSymbols());
 
 	QList <Wire *> ratsnestWires;
@@ -1094,7 +1094,7 @@ ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * con
 
 	ends.clear();
 	ends.append(connectorItem);
-	ConnectorItem::collectEqualPotential(ends);
+	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceJumperRatsnestFlags);
 	foreach (ConnectorItem * end, ends) {
 		if (end->attachedToItemType() == ModelPart::Breadboard) {
 			return findEmptyBusConnectorItem(end);
@@ -1529,7 +1529,7 @@ void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand *
 	while (virtualWireConnectors.count() > 0) {
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(virtualWireConnectors.takeFirst());
-		ConnectorItem::collectEqualPotential(connectorItems, ViewGeometry::NormalFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NormalFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
 		for (int i = 1; i < connectorItems.count(); i++) {
 			virtualWireConnectors.removeOne(connectorItems[i]);
 		}
@@ -1710,7 +1710,7 @@ void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, BaseComma
 			if (to) {
 				QList<ConnectorItem *> traceConnectorItems;
 				traceConnectorItems.append(from);
-				ConnectorItem::collectEqualPotential(traceConnectorItems, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
+				ConnectorItem::collectEqualPotential(traceConnectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
 				routed = traceConnectorItems.contains(to);
 			}
 		}
@@ -1890,7 +1890,7 @@ int PCBSketchWidget::designRulesCheck()
 			}
 		}
 	
-		ConnectorItem::collectEqualPotential(equipotentialConnectorItems, ViewGeometry::NoFlag);
+		ConnectorItem::collectEqualPotential(equipotentialConnectorItems, true, ViewGeometry::NoFlag);
 
 		QSet<ItemBase *> intersectingItems;
 		foreach (QGraphicsItem * candidate, scene()->items(expandedCheckItemPoly)) {
