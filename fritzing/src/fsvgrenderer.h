@@ -76,7 +76,6 @@ public:
 
 protected:
 	void determineDefaultSize(QXmlStreamReader &);
-	QByteArray cleanXml(const QByteArray & contents, const QString & filename);
 	bool loadAux (const QByteArray & contents, const QString & filename, const QStringList & connectorNames, const QStringList & terminalNames, const QString & setColor, const QString & colorElementID, bool findNonConnectors);
 	void initConnectorInfo(QDomDocument &, const QStringList & connectorIDs, const QStringList & terminalIDs);
 	ConnectorInfo * initConnectorInfo(QDomElement & connectorElement);

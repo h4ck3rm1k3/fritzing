@@ -54,6 +54,7 @@ SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
     }
     else {
         QTextStream out(&dump);
+		out.setCodec("UTF-8");
         out << m_SVGDom.toString();
     }
     temp = m_SVGDom.toString();
@@ -69,6 +70,7 @@ SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
     }
     else {
         QTextStream out2(&dump2);
+		out2.setCodec("UTF-8");
         out2 << m_SVGDom.toString();
     }
     temp = m_SVGDom.toString();

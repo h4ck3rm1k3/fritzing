@@ -260,6 +260,7 @@ void PaletteModel::writeToCommonBinAux(const QString &textToWrite, QIODevice::Op
 	QFile file(filename);
 	if (file.open(openMode | QFile::Text)) {
 		QTextStream out(&file);
+		out.setCodec("UTF-8");
 		out << textToWrite;
 		file.close();
 	}

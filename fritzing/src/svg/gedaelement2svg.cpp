@@ -41,6 +41,7 @@ $Date$
 #include <QDomElement>
 #include <QDateTime>
 #include <qmath.h>
+#include <QTextDocument>
 
 GedaElement2Svg::GedaElement2Svg() : X2Svg() {
 }
@@ -131,8 +132,8 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 			else if (thing.compare("mark", Qt::CaseInsensitive) == 0) {
 			}
 			else if (thing.compare("attribute", Qt::CaseInsensitive) == 0) {
-				QString aname = unquote(stack[ix + 1].toString());
-				metadata += attribute.arg(aname, unquote(stack[ix + 2].toString()));
+				QString aname = TextUtils::stripNonValidXMLCharacters(Qt::escape(unquote(stack[ix + 1].toString())));
+				metadata += attribute.arg(aname, TextUtils::stripNonValidXMLCharacters(Qt::escape(unquote(stack[ix + 2].toString()))));
 				if (aname.compare("author", Qt::CaseInsensitive) == 0) {
 					hasAuthor = true;
 				}
@@ -154,7 +155,7 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	}
 
 	foreach (QString c, lexer.comments()) {
-		metadata += comment.arg(c);
+		metadata += comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(c)));
 	}
 
 	if (!hasAuthor) {
@@ -266,7 +267,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 					.arg(cy)
 					.arg(r - (w / 2))
 					.arg(pinID)
-					.arg(name)
+					.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(name)))
 					.arg(w)
 					.arg(ViewLayer::Copper0Color);
 	return circle;
@@ -354,7 +355,7 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 					.arg(square ? "square" : "round")
 					.arg(square ? "miter" : "round")
 					.arg(pinID)
-					.arg(name)
+					.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(name)))
 					.arg(ViewLayer::Copper1Color);
 	}
 

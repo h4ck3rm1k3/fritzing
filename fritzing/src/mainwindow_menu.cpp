@@ -203,6 +203,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		QFile file(svgFileName);
 		file.open(QIODevice::WriteOnly);
 		QTextStream out(&file);
+		out.setCodec("UTF-8");
 		out << svg;
 		file.close();
 	}
@@ -2466,6 +2467,7 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 	QFile file(fileName);
 	file.open(QIODevice::WriteOnly);
 	QTextStream out(&file);
+	out.setCodec("UTF-8");
 	out << svg;
 	file.close();
 	delete fileProgressDialog;

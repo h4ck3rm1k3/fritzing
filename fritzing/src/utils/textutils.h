@@ -60,6 +60,8 @@ public:
 	static QString svgTransform(const QString & svg, QTransform & transform, bool translate, const QString extra);
 	static bool getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight);
 	static bool findText(QDomNode & node, QString & text);
+	static QString stripNonValidXMLCharacters(const QString & str); 
+
 
 public:
 	static const QRegExp FindWhitespace;

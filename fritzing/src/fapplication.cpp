@@ -492,6 +492,7 @@ void FApplication::runGedaService() {
 			QFile file(newfilepath);
 			if (file.open(QFile::WriteOnly)) {
 				QTextStream stream(&file);
+				stream.setCodec("UTF-8");
 				stream << svg;
 				file.close();
 			}
@@ -530,6 +531,7 @@ void FApplication::runKicadService() {
 				QFile file(newFilePath);
 				if (file.open(QFile::WriteOnly)) {
 					QTextStream stream(&file);
+					stream.setCodec("UTF-8");
 					stream << svg;
 					file.close();
 				}

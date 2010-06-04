@@ -654,6 +654,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
 			);
 		} else {
 			QTextStream out(&file);
+			out.setCodec("UTF-8");
 			out << fileContent;
 			file.close();
 		}
@@ -1136,6 +1137,7 @@ void PartsEditorView::aboutToSave(bool fakeDefaultIfNone) {
 				}
 				else {
 					QTextStream out(&file);
+					out.setCodec("UTF-8");
 					out << TextUtils::removeXMLEntities(svgDom->toString());
 
 					file.close();
@@ -1604,6 +1606,7 @@ QString PartsEditorView::saveSvg(const QString & svg, const QString & newFilePat
 	}
 
 	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
 	stream << svg;
 	file.close();
 	return newFilePath;

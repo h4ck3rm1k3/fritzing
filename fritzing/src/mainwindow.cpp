@@ -1720,6 +1720,7 @@ bool MainWindow::loadCustomBoardShape()
 	QFile file2(userPartsFolderPath + moduleID + FritzingPartExtension);
 	file2.open(QIODevice::WriteOnly);
 	QTextStream out2(&file2);
+	out2.setCodec("UTF-8");
 	out2 << fzp;
 	file2.close();
 

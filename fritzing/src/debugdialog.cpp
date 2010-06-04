@@ -151,6 +151,7 @@ void DebugDialog::debug(QString message, DebugLevel debugLevel, QObject * ancest
 
    	if (m_file.open(QIODevice::Append | QIODevice::Text)) {
    		QTextStream out(&m_file);
+		out.setCodec("UTF-8");
    		out << message << "\n";
 		m_file.close();
 	}
