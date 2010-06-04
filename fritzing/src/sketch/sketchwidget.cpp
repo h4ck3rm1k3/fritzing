@@ -5423,8 +5423,7 @@ ViewLayer::ViewLayerID SketchWidget::defaultConnectorLayer(ViewIdentifierClass::
 
 bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newConnector) 
 {
-	return (Connector::males().contains(connectorItem->connectorType()) && (newConnector->connectorType() == Connector::Female))  ||
-		((connectorItem->connectorType() == Connector::Female) && Connector::males().contains(newConnector->connectorType()));
+	return (connectorItem->connectorType() != newConnector->connectorType());
 }
 
 void SketchWidget::setLastPaletteItemSelected(PaletteItem * paletteItem)

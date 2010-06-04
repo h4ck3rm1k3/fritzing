@@ -613,8 +613,8 @@ void ConnectorItem::writeOtherElements(QXmlStreamWriter & writer) {
 
 bool ConnectorItem::maleToFemale(ConnectorItem * other) {
 	
-	if (Connector::males().contains(this->connectorType()) && other->connectorType() == Connector::Female) return true;
-	if (this->connectorType() == Connector::Female && Connector::males().contains(other->connectorType())) return true;
+	if (this->connectorType() == Connector::Male && other->connectorType() == Connector::Female) return true;
+	if (this->connectorType() == Connector::Female && other->connectorType() == Connector::Male) return true;
 
 	return false;
 }

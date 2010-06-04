@@ -37,6 +37,7 @@
         <pcbView>
             <layers image="pcb/axial_lay_2_400mil_pcb.svg">
                 <layer layerId="copper0" />
+                <layer layerId="copper1" />
                 <layer layerId="keepout" />
                 <layer layerId="soldermask" />
                 <layer layerId="silkscreen" />
@@ -56,6 +57,7 @@
                 </schematicView>
                 <pcbView>
                     <p svgId="connector0pin" layer="copper0" />
+                    <p svgId="connector0pin" layer="copper1" />
                 </pcbView>
             </views>
         </connector>
@@ -70,6 +72,7 @@
                 </schematicView>
                 <pcbView>
                     <p svgId="connector1pin" layer="copper0" />
+                    <p svgId="connector1pin" layer="copper1" />
                 </pcbView>
             </views>
         </connector>

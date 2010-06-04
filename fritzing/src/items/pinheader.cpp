@@ -40,13 +40,9 @@ $Date$
 #include <QLineEdit>
 
 static QStringList Forms;
-static const ushort FemaleSymbol = 9792;
-static const ushort MaleSymbol = 9794;
-static const QString FemaleSymbolString = QString::fromUtf16(&FemaleSymbol, 1);
-static const QString MaleSymbolString = QString::fromUtf16(&MaleSymbol, 1);
-const QString PinHeader::FemaleFormString = FemaleSymbolString + " (female)";
-const QString PinHeader::FemaleRoundedFormString = FemaleSymbolString + " (female rounded)";
-const QString PinHeader::MaleFormString = MaleSymbolString + " (male)";
+QString PinHeader::FemaleFormString;
+QString PinHeader::FemaleRoundedFormString;
+QString PinHeader::MaleFormString;
 
 
 // TODO
@@ -66,6 +62,15 @@ PinHeader::PinHeader( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 }
 
 PinHeader::~PinHeader() {
+}
+
+
+void PinHeader::initNames() {
+	if (FemaleFormString.isEmpty()) {
+		FemaleFormString = FemaleSymbolString + " (female)";
+		FemaleRoundedFormString = FemaleSymbolString + " (female rounded)";
+		MaleFormString = MaleSymbolString + " (male)";
+	}
 }
 
 void PinHeader::setProp(const QString & prop, const QString & value) {

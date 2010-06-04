@@ -60,9 +60,6 @@ class ConnectorTypeWidget : public QFrame {
 		bool m_isSelected;
 		volatile bool m_isInEditionMode;
 		Connector::ConnectorType m_typeBackUp;
-
-		static const QString FemaleSymbol;
-		static const QString MaleSymbol;
 };
 
 class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {

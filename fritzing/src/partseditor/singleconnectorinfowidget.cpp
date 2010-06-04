@@ -31,8 +31,7 @@ $Date$
 #include "../connectors/connectorshared.h"
 #include "../debugdialog.h"
 
-const QString ConnectorTypeWidget::FemaleSymbol = QString("%1").arg(QChar(0x2640));
-const QString ConnectorTypeWidget::MaleSymbol = QString("%1").arg(QChar(0x2642));
+static const QString PadString = "Pad";
 
 ConnectorTypeWidget::ConnectorTypeWidget(Connector::ConnectorType type, QWidget *parent)
 	: QFrame(parent)
@@ -57,10 +56,13 @@ ConnectorTypeWidget::ConnectorTypeWidget(Connector::ConnectorType type, QWidget 
 }
 
 Connector::ConnectorType ConnectorTypeWidget::type() {
-	if(text()==FemaleSymbol) {
+	if(text()==FemaleSymbolString) {
 		return Connector::connectorTypeFromName("female");
-	} else if(text()==MaleSymbol) {
+	} else if(text()==MaleSymbolString) {
 		return Connector::connectorTypeFromName("male");
+	}
+	else if (text()==PadString) {
+		return Connector::connectorTypeFromName("pad");
 	}
 	return Connector::Unknown;
 }
@@ -74,9 +76,12 @@ void ConnectorTypeWidget::setType(Connector::ConnectorType type) {
 		m_typeBackUp = this->type();
 	}
 	if(type == Connector::Female) {
-		setText(FemaleSymbol);
+		setText(FemaleSymbolString);
 	} else if(type == Connector::Male) {
-		setText(MaleSymbol);
+		setText(MaleSymbolString);
+	}
+	else if(type == Connector::Pad) {
+		setText(PadString);
 	}
 	setToolTip(Connector::connectorNameFromType(type));
 }
@@ -108,9 +113,11 @@ void ConnectorTypeWidget::cancel() {
 void ConnectorTypeWidget::toggleValue() {
 	if(m_isSelected && m_isInEditionMode) {
 		if(type() == Connector::Female) {
-			setType(Connector::Male);
+			setType(Connector::Pad);
 		} else if(type() == Connector::Male) {
 			setType(Connector::Female);
+		} else if (type() == Connector::Pad) {
+			setType(Connector::Male);
 		}
 	}
 }

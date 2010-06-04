@@ -2244,6 +2244,7 @@ int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & new
 void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	setBoardLayers(layers, true);
 	SketchWidget::changeBoardLayers(layers, doEmit);
+	emit updateLayerMenuSignal();
 }
 
 void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand) 

@@ -58,9 +58,10 @@ protected:
 	const QStringList & forms();
 
 public:
-	static const QString FemaleFormString;
-	static const QString FemaleRoundedFormString;
-	static const QString MaleFormString;
+	static QString FemaleFormString;
+	static QString FemaleRoundedFormString;
+	static QString MaleFormString;
+	static void initNames();
 
 protected:
 	class FSvgRenderer * m_renderer;

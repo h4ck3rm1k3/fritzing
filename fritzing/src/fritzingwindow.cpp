@@ -94,20 +94,11 @@ bool FritzingWindow::save() {
 		result = saveAsAux(m_fileName);
 	}
 
-	if (result) {
-		QSettings settings;
-		settings.setValue("lastOpenSketch", m_fileName);
-	}
 	return result;
 }
 
 bool FritzingWindow::saveAs() {
-	bool result = saveAs(m_fileName, fileExtension(), m_readOnly);
-	if (result) {
-		QSettings settings;
-		settings.setValue("lastOpenSketch", m_fileName);
-	}
-	return result;
+	return saveAs(m_fileName, fileExtension(), m_readOnly);
 }
 
 bool FritzingWindow::save(const QString & filename, const QString & extension, bool readOnly) {

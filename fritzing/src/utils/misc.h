@@ -83,4 +83,8 @@ static const QString FritzingBundleExtension(".fzz");
 
 const QStringList & fritzingExtensions();
 
+static const QString FemaleSymbolString = QString("%1").arg(QChar(0x2640));
+static const QString MaleSymbolString = QString("%1").arg(QChar(0x2642));
+
+
 #endif

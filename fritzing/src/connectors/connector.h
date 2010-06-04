@@ -80,7 +80,6 @@ public:
 	static void initNames();
 	static const QString & connectorNameFromType(ConnectorType);
 	static ConnectorType connectorTypeFromName(const QString & name);
-	static const QList<Connector::ConnectorType> & males();
 
 protected:
 	void writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID);
@@ -96,7 +95,6 @@ protected:
 
 protected:
 	static QHash<ConnectorType, QString> Names;
-	static QList<Connector::ConnectorType> Males;
 };
 
 #endif

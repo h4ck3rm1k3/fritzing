@@ -34,7 +34,6 @@ $Date$
 #include "ercdata.h"
 
 QHash <Connector::ConnectorType, QString > Connector::Names;
-QList<Connector::ConnectorType> Connector::Males;
 
 Connector::Connector( ConnectorShared * connectorShared, ModelPart * modelPart)
 {
@@ -56,9 +55,6 @@ void Connector::initNames() {
 		Names.insert(Connector::Female, "female");
 		Names.insert(Connector::Wire, "wire");
 		Names.insert(Connector::Pad, "pad");
-	}
-	if (Males.count() == 0) {
-		Males << Connector::Male << Connector::Pad;
 	}
 
 }
@@ -250,9 +246,5 @@ ModelPart * Connector::modelPart() {
 
 int Connector::connectorItemCount() {
 	return m_connectorItems.count();
-}
-
-const QList<Connector::ConnectorType> & Connector::males() {
-	return Males;
 }
 

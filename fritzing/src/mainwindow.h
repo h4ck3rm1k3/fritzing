@@ -251,6 +251,9 @@ protected slots:
 	void linkToProgramFile(const QString & filename, bool addLink);
 	void designRulesCheck();
 	void subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
+	void updateLayerMenuSlot();
+	bool save();
+	bool saveAs();
 
 protected:
 	void initSketchWidget(SketchWidget *);

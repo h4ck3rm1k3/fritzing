@@ -346,6 +346,8 @@ void MainWindow::connectPairs() {
 						Qt::DirectConnection);
 
 	
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(updateLayerMenuSignal()), this, SLOT(updateLayerMenuSlot()));
+
 
 	/*
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
@@ -1801,4 +1803,26 @@ void MainWindow::statusMessage(QString message, int timeout) {
 void MainWindow::dropPaste(SketchWidget * sketchWidget) {
 	paste();
 	sketchWidget->clearPasteOffset();
+}
+
+void MainWindow::updateLayerMenuSlot() {
+	updateLayerMenu(true);
+}
+
+bool MainWindow::save() {
+	bool result = FritzingWindow::save();
+	if (result) {
+		QSettings settings;
+		settings.setValue("lastOpenSketch", m_fileName);
+	}
+	return result;
+}
+
+bool MainWindow::saveAs() {
+	bool result = FritzingWindow::saveAs();
+	if (result) {
+		QSettings settings;
+		settings.setValue("lastOpenSketch", m_fileName);
+	}
+	return result;
 }

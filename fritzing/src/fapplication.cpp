@@ -51,6 +51,7 @@ $Date$
 #include "svg/gedaelement2svg.h"
 #include "svg/kicadmodule2svg.h"
 #include "installedfonts.h"
+#include "items/pinheader.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -252,6 +253,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	PaletteModel::initNames();
 	RatsnestColors::initNames();
 	SvgIconWidget::initNames();
+	PinHeader::initNames();
 
 }
 
