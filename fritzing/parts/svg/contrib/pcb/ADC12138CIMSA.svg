@@ -8,7 +8,7 @@
  <line fill="none" connectorname="CH6" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector6pin" y1="38600" x1="19600" y2="32600" stroke-width="1200" x2="19600"/>
  <line fill="none" connectorname="CH7" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector7pin" y1="38600" x1="22100" y2="32600" stroke-width="1200" x2="22100"/>
  <line fill="none" connectorname="COM" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector8pin" y1="38600" x1="24700" y2="32600" stroke-width="1200" x2="24700"/>
- <line fill="none" connectorname="MuOut1" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector9pin" y1="38600" x1="27200" y2="32600" stroke-width="1200" x2="27200"/>
+ <line fill="none" connectorname="MuOut1" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector9pin" y1="38600" x1="27200" y2="32600" stroke-width="1200" x2="27200"/>
  <line fill="none" connectorname="A/Din1" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector10pin" y1="38600" x1="29800" y2="32600" stroke-width="1200" x2="29800"/>
  <line fill="none" connectorname="MuxOut2" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector11pin" y1="38600" x1="32300" y2="32600" stroke-width="1200" x2="32300"/>
  <line fill="none" connectorname="A/Din2" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector12pin" y1="38600" x1="34900" y2="32600" stroke-width="1200" x2="34900"/>
