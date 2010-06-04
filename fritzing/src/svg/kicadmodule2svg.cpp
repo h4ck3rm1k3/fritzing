@@ -118,7 +118,7 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	metadata += "<rdf:RDF>";
 	metadata += "<rdf:Description rdf:about=''>";
 	metadata += attribute.arg("kicad filename").arg(fileInfo.fileName());
-	metadata += attribute.arg("kicad module").arg(moduleName);
+	metadata += attribute.arg("kicad module").arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(moduleName)));
 	metadata += attribute.arg("fritzing version").arg(Version::versionString());
 	metadata += attribute.arg("conversion date").arg(dt);
 
@@ -152,12 +152,12 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 			break;
 		}
 		else if (line.startsWith("Cd")) {
-			metadata += comment.arg(line.remove(0,3));
+			metadata += comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(line.remove(0,3))));
 		}
 		else if (line.startsWith("Kw")) {
 			QStringList keywords = line.split(" ");
 			for (int i = 1; i < keywords.count(); i++) {
-				metadata += attribute.arg("keyword").arg(keywords[i]);
+				metadata += attribute.arg("keyword").arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(keywords[i])));
 			}
 		}
 	}

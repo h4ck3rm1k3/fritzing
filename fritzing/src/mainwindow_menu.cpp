@@ -3014,7 +3014,7 @@ void MainWindow::removeGroundFill() {
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Remove copper fill"));
 	foreach (ItemBase * itemBase, toDelete) {
-		m_pcbGraphicsView->makeDeleteItemCommand(itemBase, BaseCommand::SingleView, parentCommand);
+		m_pcbGraphicsView->makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 	}
 
 	new CleanUpWiresCommand(m_pcbGraphicsView, false, parentCommand);

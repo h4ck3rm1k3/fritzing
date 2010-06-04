@@ -873,5 +873,7 @@ bool ConnectorItem::isGrounded() {
 }
 
 ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
-	return connector()->connectorItemByViewLayerID(attachedTo()->viewLayerID() == ViewLayer::Copper0 ? ViewLayer::Copper1 : ViewLayer::Copper0);
+	if (m_connector == NULL) return NULL;
+
+	return m_connector->connectorItemByViewLayerID(attachedTo()->viewLayerID() == ViewLayer::Copper0 ? ViewLayer::Copper1 : ViewLayer::Copper0);
 }
