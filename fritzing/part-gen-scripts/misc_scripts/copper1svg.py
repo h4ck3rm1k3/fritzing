@@ -2,7 +2,6 @@
 #	    copper1svg.py -d [svg folder]
 #       adds a <g id="copper1"> if there isn't one found already.
 
-#	 loads the breadboard input file, simplifies the connectors, and saves it to the breadboard output file
 
 import getopt, sys, os, os.path, re, xml.dom.minidom, xml.dom
     
@@ -12,8 +11,6 @@ usage:
     copper1svg.py -d [svg folder]
     adds a <g id="copper1"> if there isn't one found already.
 """
-    
-        
            
 def main():
     try:
