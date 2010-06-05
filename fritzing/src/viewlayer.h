@@ -88,8 +88,9 @@ public:
 	static const QString HolesColor;
 	static const QString Copper0Color;
 	static const QString Copper1Color;
-	static const QString SilkscreenColor;
+	static const QString Silkscreen1Color;
 	static const QString Silkscreen0Color;
+	static const QString JumperColor;
 
 protected:
 	static qreal zIncrement;

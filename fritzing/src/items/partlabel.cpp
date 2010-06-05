@@ -402,7 +402,7 @@ void PartLabel::initMenu()
 	QAction *rotate90ccwAct = rlmenu->addAction(tr("Rotate 90\x00B0 Counter Clockwise"));
 	rotate90ccwAct->setData(QVariant(PartLabelRotate90CCW));
 	rotate90ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
-	
+		
 	QAction *flipHorizontalAct = rlmenu->addAction(tr("Flip Horizontal"));
 	flipHorizontalAct->setData(QVariant(PartLabelFlipHorizontal));
 	flipHorizontalAct->setStatusTip(tr("Flip label horizontally"));

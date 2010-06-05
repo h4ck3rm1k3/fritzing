@@ -1000,7 +1000,7 @@ void Wire::initNames() {
 	colors.insert("grey",	"#999999");
 	colors.insert("white",	"#ffffff");
 	colors.insert("orange", "#ff7033");
-    colors.insert("jumper", "#6699cc");
+	colors.insert("jumper", ViewLayer::JumperColor);
 	colors.insert("trace",  ViewLayer::Copper0Color);    
 	colors.insert("trace1",  ViewLayer::Copper1Color);    
 	colors.insert("unrouted", "#000000");

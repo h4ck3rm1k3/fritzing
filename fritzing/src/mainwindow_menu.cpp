@@ -1264,6 +1264,10 @@ void MainWindow::createPartMenuActions() {
 	m_rotate90ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
 	connect(m_rotate90ccwAct, SIGNAL(triggered()), this, SLOT(rotate90ccw()));
 
+	m_rotate45ccwAct = new QAction(tr("&Rotate 45\x00B0 Counter Clockwise"), this);
+	m_rotate45ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
+	connect(m_rotate45ccwAct, SIGNAL(triggered()), this, SLOT(rotate45ccw()));
+
 	m_flipHorizontalAct = new QAction(tr("&Flip Horizontal"), this);
 	m_flipHorizontalAct->setStatusTip(tr("Flip current selection horizontally"));
 	connect(m_flipHorizontalAct, SIGNAL(triggered()), this, SLOT(flipHorizontal()));
@@ -1551,6 +1555,9 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_rotate90cwAct);
 	m_partMenu->addAction(m_rotate180Act);
+#ifndef QT_NO_DEBUG
+	m_partMenu->addAction(m_rotate45ccwAct);
+#endif
 	m_partMenu->addAction(m_rotate90ccwAct);
 	m_partMenu->addAction(m_flipHorizontalAct);
 	m_partMenu->addAction(m_flipVerticalAct);
@@ -1820,6 +1827,7 @@ void MainWindow::updatePartMenu() {
 	m_rotate90cwAct->setEnabled(renable && enable);
 	m_rotate180Act->setEnabled(renable && enable);
 	m_rotate90ccwAct->setEnabled(renable && enable);
+	m_rotate45ccwAct->setEnabled(renable && enable);
 
 	m_flipHorizontalAct->setEnabled(enable && (itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 	m_flipVerticalAct->setEnabled(enable && (itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
@@ -1847,6 +1855,7 @@ void MainWindow::updateTransformationActions() {
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
+	m_rotate45ccwAct->setEnabled(enable);
 	foreach(SketchToolButton* rotateButton, m_rotateButtons) {
 		rotateButton->setEnabled(enable);
 	}
@@ -2294,6 +2303,12 @@ void MainWindow::rotate90ccw() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->rotateX(-90);
+}
+
+void MainWindow::rotate45ccw() {
+	if (m_currentGraphicsView == NULL) return;
+
+	m_currentGraphicsView->rotateX(-45);
 }
 
 void MainWindow::rotate180() {
@@ -3031,6 +3046,9 @@ bool MainWindow::isGroundFill(ItemBase * itemBase) {
 
 QMenu *MainWindow::breadboardItemMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Part"), this);
+#ifndef QT_NO_DEBUG
+	menu->addAction(m_rotate45ccwAct);
+#endif
 	menu->addAction(m_rotate90cwAct);
 	menu->addAction(m_rotate180Act);
 	menu->addAction(m_rotate90ccwAct);

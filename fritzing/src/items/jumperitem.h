@@ -34,6 +34,7 @@ class JumperItem : public PaletteItem
 
 public:
 	JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel); 
+	~JumperItem();
 
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
@@ -77,7 +78,7 @@ protected:
 	QPointF m_itemC0;
 	QPointF m_itemC1;
 	class FSvgRenderer * m_renderer;
-	class FSvgRenderer * m_jumperwiresRenderer;
+	QHash <ViewLayer::ViewLayerID, class FSvgRenderer *> m_renderers;
 	bool m_autoroutable;
 
 };

@@ -1281,7 +1281,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 							setColor = ViewLayer::Copper1Color;
 							break;
 						case ViewLayer::Silkscreen1:
-							setColor = ViewLayer::SilkscreenColor;
+							setColor = ViewLayer::Silkscreen1Color;
 							break;
 						case ViewLayer::Silkscreen0:
 							setColor = ViewLayer::Silkscreen0Color;

@@ -37,8 +37,9 @@ QHash<QString, ViewLayer::ViewLayerID> ViewLayer::xmlHash;
 
 const QString ViewLayer::Copper0Color = "#ff9400";   
 const QString ViewLayer::Copper1Color = "#ffbf00";
-const QString ViewLayer::SilkscreenColor = "#ffffff";
+const QString ViewLayer::Silkscreen1Color = "#ffffff";
 const QString ViewLayer::Silkscreen0Color = "#bbbbcc";
+const QString ViewLayer::JumperColor = "#6699cc";
 
 ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 {

@@ -170,6 +170,7 @@ protected slots:
 	void bringToFront();
 	void rotate90cw();
 	void rotate90ccw();
+	void rotate45ccw();
 	void rotate180();
 	void flipHorizontal();
 	void flipVertical();
@@ -482,6 +483,7 @@ protected:
 	QAction *m_rotate90cwAct;
 	QAction *m_rotate180Act;
 	QAction *m_rotate90ccwAct;
+	QAction *m_rotate45ccwAct;
 	QAction *m_flipHorizontalAct;
 	QAction *m_flipVerticalAct;
 	QAction *m_showPartLabelAct;

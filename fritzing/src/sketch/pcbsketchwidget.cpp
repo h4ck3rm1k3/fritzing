@@ -1390,13 +1390,13 @@ void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::View
 
 		case ViewLayer::ThroughHoleThroughTop_OneLayer:
 		case ViewLayer::ThroughHoleThroughTop_TwoLayers:
-			color.setNamedColor(ViewLayer::SilkscreenColor);
+			color.setNamedColor(ViewLayer::Silkscreen1Color);
 			break;
 		case ViewLayer::ThroughHoleThroughBottom_TwoLayers:
 			color.setNamedColor(ViewLayer::Silkscreen0Color);
 			break;
 		case ViewLayer::SMDOnTop_TwoLayers:
-			color.setNamedColor(ViewLayer::SilkscreenColor);
+			color.setNamedColor(ViewLayer::Silkscreen1Color);
 			break;
 		case ViewLayer::SMDOnBottom_TwoLayers:
 		case ViewLayer::SMDOnBottom_OneLayer:

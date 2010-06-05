@@ -34,6 +34,9 @@ $Date$
 static QString Copper0LayerTemplate = "";
 static QString JumperWireLayerTemplate = "";
 
+static QHash<ViewLayer::ViewLayerID, QString> Colors;
+
+
 // TODO: 
 //	ignore during autoroute?
 //	ignore during other connections?
@@ -44,9 +47,16 @@ static QString JumperWireLayerTemplate = "";
 JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
 	: PaletteItem(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, doLabel)
 {
+	if (Colors.isEmpty()) {
+		Colors.insert(ViewLayer::Copper0, ViewLayer::Copper0Color);
+		Colors.insert(ViewLayer::Copper1, ViewLayer::Copper1Color);
+		Colors.insert(ViewLayer::Jumperwires, ViewLayer::JumperColor);
+		Colors.insert(ViewLayer::Silkscreen0, ViewLayer::Silkscreen0Color);
+		Colors.insert(ViewLayer::Silkscreen1, ViewLayer::Silkscreen1Color);
+	}
+
 	m_autoroutable = true;
 	m_renderer = NULL;
-	m_jumperwiresRenderer = NULL;
 	m_connector0 = m_connector1 = m_dragItem = NULL;
 	if (Copper0LayerTemplate.isEmpty()) {
 		QFile file(":/resources/templates/jumper_copper0LayerTemplate.txt");
@@ -62,6 +72,10 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 			file.close();
 		}
 	}
+}
+
+JumperItem::~JumperItem() {
+	m_renderers.clear();
 }
 
 QPainterPath JumperItem::hoverShape() const
@@ -130,7 +144,7 @@ bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIden
 					qreal r1y = m_modelPart->prop("r1y").toDouble(&ok);
 					if (ok) {
 						resizeAux(GraphicsUtils::mils2pixels(r0x), GraphicsUtils::mils2pixels(r0y),
-									GraphicsUtils::mils2pixels(r1x), GraphicsUtils::mils2pixels(r1y));
+								  GraphicsUtils::mils2pixels(r1x), GraphicsUtils::mils2pixels(r1y));
 					}
 				}
 			}
@@ -217,17 +231,26 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	modelPart()->setProp("r1x", r1x);
 	modelPart()->setProp("r1y", r1y);
 
-	if (viewLayerID == ViewLayer::Copper0) {
-		return Copper0LayerTemplate
-			.arg(w).arg(h)
-			.arg(w * 1000).arg(h * 1000)			
-			.arg(r0x).arg(r0y).arg(r1x).arg(r1y);
-	}
-	else if (viewLayerID == ViewLayer::Jumperwires) {
-		return JumperWireLayerTemplate
-			.arg(w).arg(h)
-			.arg(w * 1000).arg(h * 1000)			
-			.arg(r0x).arg(r0y).arg(r1x).arg(r1y);
+
+	switch (viewLayerID) {
+		case ViewLayer::Copper0:
+		case ViewLayer::Copper1:
+			return Copper0LayerTemplate
+				.arg(w).arg(h)
+				.arg(w * 1000).arg(h * 1000)			
+				.arg(r0x).arg(r0y).arg(r1x).arg(r1y)
+				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
+				.arg(Colors.value(viewLayerID));
+
+		case ViewLayer::Jumperwires:
+		case ViewLayer::Silkscreen0:
+		case ViewLayer::Silkscreen1:
+			return JumperWireLayerTemplate
+				.arg(w).arg(h)
+				.arg(w * 1000).arg(h * 1000)			
+				.arg(r0x).arg(r0y).arg(r1x).arg(r1y)
+				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
+				.arg(Colors.value(viewLayerID));
 	}
 
 	return ___emptyString___;
@@ -256,17 +279,23 @@ void JumperItem::resize() {
 	}
 
 	foreach (ItemBase * itemBase, m_layerKin) {
-		if (itemBase->viewLayerID() == ViewLayer::Jumperwires) {
-			if (m_jumperwiresRenderer == NULL) {
-				m_jumperwiresRenderer = new FSvgRenderer(itemBase);
-			}
+		switch(itemBase->viewLayerID()) {
+			case ViewLayer::Jumperwires:
+			case ViewLayer::Copper1:
+			case ViewLayer::Silkscreen1:
+			case ViewLayer::Silkscreen0:
+				FSvgRenderer * renderer = m_renderers.value(itemBase->viewLayerID(), NULL);
+				if (renderer == NULL) {
+					renderer = new FSvgRenderer(itemBase);
+					m_renderers.insert(itemBase->viewLayerID(), renderer);
+				}
 
-			s = makeSvg(ViewLayer::Jumperwires);
-			bool result = m_jumperwiresRenderer->fastLoad(s.toUtf8());
-			if (result) {
-				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_jumperwiresRenderer);
-			}
-			break;
+				s = makeSvg(itemBase->viewLayerID());
+				bool result = renderer->fastLoad(s.toUtf8());
+				if (result) {
+					dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(renderer);
+				}
+				break;
 		}
 	}
 
@@ -310,11 +339,13 @@ QSizeF JumperItem::footprintSize() {
 QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
 	QString xml = "";
-	if (viewLayerID == ViewLayer::Copper0) {
-		xml = makeSvg(ViewLayer::Copper0);
-	}
-	else if (viewLayerID == ViewLayer::Jumperwires) {
-		xml = makeSvg(ViewLayer::Jumperwires);
+	switch (viewLayerID) {
+		case ViewLayer::Copper0:
+		case ViewLayer::Copper1:
+		case ViewLayer::Jumperwires:
+		case ViewLayer::Silkscreen0:
+		case ViewLayer::Silkscreen1:
+			xml = makeSvg(viewLayerID);
 	}
 
 	if (!xml.isEmpty()) {
