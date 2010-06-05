@@ -70,7 +70,7 @@ void GroundPlane::getParams() {
 QString GroundPlane::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
 	QString xml = "";
-	if (viewLayerID == ViewLayer::GroundPlane) {
+	if (viewLayerID == ViewLayer::GroundPlane0 || viewLayerID == ViewLayer::GroundPlane1) {
 		xml = modelPart()->prop("svg").toString();
 	}
 
@@ -136,7 +136,7 @@ void GroundPlane::setSvg(const QString & svg) {
 }
 
 void GroundPlane::setSvgAux(const QString & svg) {
-	QString xmlName = ViewLayer::viewLayerXmlNameFromID(ViewLayer::GroundPlane);
+	QString xmlName = ViewLayer::viewLayerXmlNameFromID(m_viewLayerID);
 	SvgFileSplitter	splitter;
 	QString cpy = svg;
 	bool result = splitter.splitString(cpy, xmlName);

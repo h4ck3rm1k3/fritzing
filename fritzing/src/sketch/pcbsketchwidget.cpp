@@ -697,8 +697,13 @@ PCBSketchWidget::CleanType PCBSketchWidget::cleanType() {
 void PCBSketchWidget::ensureTraceLayersVisible() {
 	ensureLayerVisible(ViewLayer::Copper0);
 	ensureLayerVisible(ViewLayer::Copper0Trace);
-	ensureLayerVisible(ViewLayer::GroundPlane);
+	ensureLayerVisible(ViewLayer::GroundPlane0);
 	ensureLayerVisible(ViewLayer::Jumperwires);
+	if (m_boardLayers == 2) {
+		ensureLayerVisible(ViewLayer::Copper1);
+		ensureLayerVisible(ViewLayer::Copper1Trace);
+		ensureLayerVisible(ViewLayer::GroundPlane1);
+	}
 }
 
 void PCBSketchWidget::ensureTraceLayerVisible() {

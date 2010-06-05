@@ -106,10 +106,10 @@ void ViewIdentifierClass::initNames() {
 		ss << ViewLayer::Schematic << ViewLayer::SchematicWire 
 			<< ViewLayer::SchematicTrace << ViewLayer::SchematicLabel 
 			<< ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
-		pp << ViewLayer::Board << ViewLayer::GroundPlane 
+		pp << ViewLayer::Board << ViewLayer::GroundPlane0 
 			<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
 			<< ViewLayer::Copper0 << ViewLayer::Ratsnest 
-			<< ViewLayer::Copper0Trace 
+			<< ViewLayer::Copper0Trace << ViewLayer::GroundPlane1 
 			<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
 			<< ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label 
 			<< ViewLayer::Jumperwires 

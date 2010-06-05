@@ -362,7 +362,8 @@ protected:
 	QString mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize);
 
 	bool wannaRestart();
-	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, QSizeF imageSize, ItemBase * board, const QString & exportDir);
+	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, ItemBase * board, const QString & exportDir);
+	void doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir);
 	void addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers);
 
 protected:

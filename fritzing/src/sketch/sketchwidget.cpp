@@ -4637,12 +4637,16 @@ void SketchWidget::addPcbViewLayers() {
 	if (copper0 && copper0Trace) {
 		copper0Trace->setParentLayer(copper0);
 	}
-	ViewLayer * groundPlane = m_viewLayers.value(ViewLayer::GroundPlane);
-	if (copper0 && groundPlane) {
-		groundPlane->setParentLayer(copper0);
+	ViewLayer * groundPlane0 = m_viewLayers.value(ViewLayer::GroundPlane0);
+	if (copper0 && groundPlane0) {
+		groundPlane0->setParentLayer(copper0);
 	}
 	if (copper1 && copper1Trace) {
 		copper1Trace->setParentLayer(copper1);
+	}
+	ViewLayer * groundPlane1 = m_viewLayers.value(ViewLayer::GroundPlane1);
+	if (copper1 && groundPlane1) {
+		groundPlane1->setParentLayer(copper1);
 	}
 }
 

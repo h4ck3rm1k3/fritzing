@@ -32,10 +32,12 @@ $Date$
 
 //TODO: currently only supports one board per sketch (i.e. multiple board outlines will mess you up)
 
-SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
+SVG2gerber::SVG2gerber()
 {
-    Q_UNUSED(debugStr);
+}
 
+void SVG2gerber::convert(QString svgStr, QString debugStr)
+{
     m_SVGDom = QDomDocument("svg");
     QString errorStr;
     int errorLine;

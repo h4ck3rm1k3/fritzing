@@ -191,8 +191,10 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
     ItemBase * board = m_pcbGraphicsView->findBoard();
 
+	// TODO: what about copper1, etc
+
 	LayerList viewLayerIDs;
-	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	if (wantSVG) {
 		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false);
