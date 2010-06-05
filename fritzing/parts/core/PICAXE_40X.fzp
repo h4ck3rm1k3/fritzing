@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.16b.02.24.4002" moduleId="RevEd_PICAXE_40X">
-    <version>1.0</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.16b.02.24.4002" moduleId="RevEd_PICAXE_40X">
+    <version>4</version>
     <author>Revolution Education Ltd</author>
     <title>PICAXE-40X</title>
     <label>IC</label>
@@ -33,7 +32,7 @@
                 <layer layerId="keepout"/>
                 <layer layerId="soldermask"/>
                 <layer layerId="outline"/>
-            </layers>
+            <layer layerId="copper1"/></layers>
         </pcbView>
         <schematicView>
             <layers image="schematic/PICAXE_40X_schematic.svg">
@@ -42,7 +41,7 @@
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="pin1">
+        <connector id="connector0" name="pin1" type="male">
             <description>Reset</description>
             <views>
                 <breadboardView>
@@ -53,10 +52,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin2">
+        <connector id="connector1" name="pin2" type="male">
             <description>In A0 / ADC 0</description>
             <views>
                 <breadboardView>
@@ -67,10 +66,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="pin3">
+        <connector id="connector2" name="pin3" type="male">
             <description>In A1 / ADC 1</description>
             <views>
                 <breadboardView>
@@ -81,10 +80,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="pin4">
+        <connector id="connector3" name="pin4" type="male">
             <description>In A2 / ADC 2</description>
             <views>
                 <breadboardView>
@@ -95,10 +94,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector3pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="pin5">
+        <connector id="connector4" name="pin5" type="male">
             <description>In A3 / ADC 3</description>
             <views>
                 <breadboardView>
@@ -109,10 +108,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector4pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector4pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="pin6">
+        <connector id="connector5" name="pin6" type="male">
             <description>Serial In</description>
             <views>
                 <breadboardView>
@@ -123,10 +122,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector5pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector5pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="pin7">
+        <connector id="connector6" name="pin7" type="male">
             <description>Serial Out</description>
             <views>
                 <breadboardView>
@@ -137,10 +136,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector6pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector6pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="pin8">
+        <connector id="connector7" name="pin8" type="male">
             <description>ADC 5</description>
             <views>
                 <breadboardView>
@@ -151,10 +150,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector7pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector7pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="pin9">
+        <connector id="connector8" name="pin9" type="male">
             <description>ADC 6</description>
             <views>
                 <breadboardView>
@@ -165,10 +164,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector8pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector8pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="pin10">
+        <connector id="connector9" name="pin10" type="male">
             <description>ADC 7</description>
             <views>
                 <breadboardView>
@@ -179,10 +178,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector9pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector9pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="pin11">
+        <connector id="connector10" name="pin11" type="male">
             <description>+V</description>
             <views>
                 <breadboardView>
@@ -193,10 +192,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector10pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector10pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="pin12">
+        <connector id="connector11" name="pin12" type="male">
             <description>0V</description>
             <views>
                 <breadboardView>
@@ -207,10 +206,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector11pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector11pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="pin13">
+        <connector id="connector12" name="pin13" type="male">
             <description>Resonator</description>
             <views>
                 <breadboardView>
@@ -221,10 +220,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector12pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector12pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="pin14">
+        <connector id="connector13" name="pin14" type="male">
             <description>Resonator</description>
             <views>
                 <breadboardView>
@@ -235,10 +234,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector13pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector13pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="pin15">
+        <connector id="connector14" name="pin15" type="male">
             <description>In/Out C0</description>
             <views>
                 <breadboardView>
@@ -249,10 +248,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector14pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector14pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector15" type="male" name="pin16">
+        <connector id="connector15" name="pin16" type="male">
             <description>In/Out C1</description>
             <views>
                 <breadboardView>
@@ -263,10 +262,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector15pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector15pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="male" name="pin17">
+        <connector id="connector16" name="pin17" type="male">
             <description>In/Out C2</description>
             <views>
                 <breadboardView>
@@ -277,10 +276,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector16pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector16pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector17" type="male" name="pin18">
+        <connector id="connector17" name="pin18" type="male">
             <description>In/Out C3</description>
             <views>
                 <breadboardView>
@@ -291,10 +290,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector17pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector17pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector18" type="male" name="pin19">
+        <connector id="connector18" name="pin19" type="male">
             <description>In 0</description>
             <views>
                 <breadboardView>
@@ -305,10 +304,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector18pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector18pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector19" type="male" name="pin20">
+        <connector id="connector19" name="pin20" type="male">
             <description>In 1</description>
             <views>
                 <breadboardView>
@@ -319,10 +318,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector19pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector19pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector20" type="male" name="pin21">
+        <connector id="connector20" name="pin21" type="male">
             <description>In 2</description>
             <views>
                 <breadboardView>
@@ -333,10 +332,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector20pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector20pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector21" type="male" name="pin22">
+        <connector id="connector21" name="pin22" type="male">
             <description>In 3</description>
             <views>
                 <breadboardView>
@@ -347,10 +346,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector21pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector21pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector22" type="male" name="pin23">
+        <connector id="connector22" name="pin23" type="male">
             <description>In/Out C4</description>
             <views>
                 <breadboardView>
@@ -361,10 +360,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector22pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector22pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector23" type="male" name="pin24">
+        <connector id="connector23" name="pin24" type="male">
             <description>In/Out C5</description>
             <views>
                 <breadboardView>
@@ -375,10 +374,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector23pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector23pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector24" type="male" name="pin25">
+        <connector id="connector24" name="pin25" type="male">
             <description>In/Out C6</description>
             <views>
                 <breadboardView>
@@ -389,10 +388,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector24pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector24pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector25" type="male" name="pin26">
+        <connector id="connector25" name="pin26" type="male">
             <description>In/Out C7</description>
             <views>
                 <breadboardView>
@@ -403,10 +402,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector25pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector25pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector26" type="male" name="pin27">
+        <connector id="connector26" name="pin27" type="male">
             <description>In 4</description>
             <views>
                 <breadboardView>
@@ -417,10 +416,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector26pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector26pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector27" type="male" name="pin28">
+        <connector id="connector27" name="pin28" type="male">
             <description>In 5</description>
             <views>
                 <breadboardView>
@@ -431,10 +430,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector27pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector27pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector28" type="male" name="pin29">
+        <connector id="connector28" name="pin29" type="male">
             <description>In 6</description>
             <views>
                 <breadboardView>
@@ -445,10 +444,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector28pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector28pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector29" type="male" name="pin30">
+        <connector id="connector29" name="pin30" type="male">
             <description>In 7</description>
             <views>
                 <breadboardView>
@@ -459,10 +458,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector29pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector29pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector30" type="male" name="pin31">
+        <connector id="connector30" name="pin31" type="male">
             <description>0V</description>
             <views>
                 <breadboardView>
@@ -473,10 +472,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector30pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector30pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector31" type="male" name="pin32">
+        <connector id="connector31" name="pin32" type="male">
             <description>+V</description>
             <views>
                 <breadboardView>
@@ -487,10 +486,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector31pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector31pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector32" type="male" name="pin33">
+        <connector id="connector32" name="pin33" type="male">
             <description>Out 0</description>
             <views>
                 <breadboardView>
@@ -501,10 +500,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector32pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector32pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector33" type="male" name="pin34">
+        <connector id="connector33" name="pin34" type="male">
             <description>Out 1</description>
             <views>
                 <breadboardView>
@@ -515,10 +514,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector33pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector33pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector34" type="male" name="pin35">
+        <connector id="connector34" name="pin35" type="male">
             <description>Out 2</description>
             <views>
                 <breadboardView>
@@ -529,10 +528,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector34pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector34pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector35" type="male" name="pin36">
+        <connector id="connector35" name="pin36" type="male">
             <description>Out 3</description>
             <views>
                 <breadboardView>
@@ -543,10 +542,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector35pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector35pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector36" type="male" name="pin37">
+        <connector id="connector36" name="pin37" type="male">
             <description>Out 4</description>
             <views>
                 <breadboardView>
@@ -557,10 +556,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector36pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector36pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector37" type="male" name="pin38">
+        <connector id="connector37" name="pin38" type="male">
             <description>Out 5</description>
             <views>
                 <breadboardView>
@@ -571,10 +570,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector37pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector37pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector38" type="male" name="pin39">
+        <connector id="connector38" name="pin39" type="male">
             <description>Out 6</description>
             <views>
                 <breadboardView>
@@ -585,10 +584,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector38pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector38pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector39" type="male" name="pin40">
+        <connector id="connector39" name="pin40" type="male">
             <description>Out 7</description>
             <views>
                 <breadboardView>
@@ -599,18 +598,18 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector39pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector39pin"/></pcbView>
             </views>
         </connector>
     </connectors>
     <buses>
         <bus id="ground">
-            <nodeMember connectorId="connector11" />
-            <nodeMember connectorId="connector30" />
+            <nodeMember connectorId="connector11"/>
+            <nodeMember connectorId="connector30"/>
         </bus>
         <bus id="plusV">
-            <nodeMember connectorId="connector10" />
-            <nodeMember connectorId="connector31" />
+            <nodeMember connectorId="connector10"/>
+            <nodeMember connectorId="connector31"/>
         </bus>
     </buses>
 </module>

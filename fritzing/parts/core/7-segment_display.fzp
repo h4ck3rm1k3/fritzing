@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.11" moduleId="f2341c24e2a6d9182a55c653b6bbefed">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.11" moduleId="f2341c24e2a6d9182a55c653b6bbefed"><version>4</version>
     <author>lionelmichel</author>
     <title>7-Segment LED Display</title>
     <label>DI</label>
@@ -21,9 +20,9 @@
         </schematicView>
         <pcbView>
             <layers image="pcb/dip_10_700mil_pcb.svg">
-                <layer layerId="copper0" />
-		<layer layerId="silkscreen" />
-            </layers>
+                <layer layerId="copper0"/>
+		<layer layerId="silkscreen"/>
+            <layer layerId="copper1"/></layers>
         </pcbView>
         <breadboardView>
             <layers image="breadboard/7-segment display.svg">
@@ -32,7 +31,7 @@
         </breadboardView>
     </views>
     <connectors>
-        <connector id="connector7" type="male" name="commAnode">
+        <connector id="connector7" name="commAnode" type="male">
             <description>Common Anode Pin</description>
             <views>
                 <breadboardView>
@@ -43,10 +42,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector7pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector7pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="cathodeF">
+        <connector id="connector8" name="cathodeF" type="male">
             <description>Cathode F Pin</description>
             <views>
                 <breadboardView>
@@ -57,10 +56,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector8pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector8pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="cathodeG">
+        <connector id="connector9" name="cathodeG" type="male">
             <description>Cathode G Pin</description>
             <views>
                 <breadboardView>
@@ -71,10 +70,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector9pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector9pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="cathodeE">
+        <connector id="connector0" name="cathodeE" type="male">
             <description>Cathode E Pin</description>
             <views>
                 <breadboardView>
@@ -85,10 +84,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="cathodeD">
+        <connector id="connector1" name="cathodeD" type="male">
             <description>Cathode D Pin</description>
             <views>
                 <breadboardView>
@@ -99,10 +98,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="commAnode">
+        <connector id="connector2" name="commAnode" type="male">
             <description>Common Anode Pin</description>
             <views>
                 <breadboardView>
@@ -113,10 +112,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="cathodeC">
+        <connector id="connector3" name="cathodeC" type="male">
             <description>Cathode C Pin</description>
             <views>
                 <breadboardView>
@@ -127,10 +126,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector3pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="cathodeDP">
+        <connector id="connector4" name="cathodeDP" type="male">
             <description>Cathode Decimal Point Pin</description>
             <views>
                 <breadboardView>
@@ -141,10 +140,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector4pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector4pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="cathodeB">
+        <connector id="connector5" name="cathodeB" type="male">
             <description>Cathode B Pin</description>
             <views>
                 <breadboardView>
@@ -155,10 +154,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector5pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector5pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="cathodeA">
+        <connector id="connector6" name="cathodeA" type="male">
             <description>Cathode A Pin</description>
             <views>
                 <breadboardView>
@@ -169,7 +168,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector6pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector6pin"/></pcbView>
             </views>
         </connector>
     </connectors>

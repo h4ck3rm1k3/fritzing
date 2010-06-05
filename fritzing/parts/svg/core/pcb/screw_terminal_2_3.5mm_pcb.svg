@@ -1,72 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="0.256in"
-   version="1.2"
-   height="0.315590552in"
-   viewBox="0 0 256.0 315.590552"
-   baseProfile="tiny"
-   id="svg2">
-  <desc
-     id="desc4">Fritzing footprint SVG</desc>
-  <g
-     id="silkscreen">
-    <line id="vertical-left" 
-       y1="20"
-       x1="20"
-       y2="305.590552"
-       x2="20"
-       stroke="white" stroke-width="20" />
-    <line id="bottom" 
-       y1="305.590552"
-       x1="20"
-       y2="305.590552"
-       x2="236.0"
-       stroke="white" stroke-width="20" />
-    <line id="vertical-right" 
-       y1="305.590552"
-       x1="236.0"
-       y2="20"
-       x2="236.0"
-       stroke="white" stroke-width="20" />
-    <line id="top" 
-       y1="20"
-       x1="236.0"
-       y2="20"
-       x2="20"
-       stroke="white" stroke-width="20" />
-    <line id="mid-vertical" 
-       y1="305.590552"
-       x1="196.0"
-       y2="20"
-       x2="196.0"
-       stroke="white" stroke-width="10" />
+<?xml version="1.0" encoding="UTF-8"?><svg baseProfile="tiny" height="0.315590552in" id="svg2" version="1.2" viewBox="0 0 256.0 315.590552" width="0.256in">
+  <desc id="desc4">Fritzing footprint SVG</desc>
+  <g id="silkscreen">
+    <line id="vertical-left" stroke="white" stroke-width="20" x1="20" x2="20" y1="20" y2="305.590552"/>
+    <line id="bottom" stroke="white" stroke-width="20" x1="20" x2="236.0" y1="305.590552" y2="305.590552"/>
+    <line id="vertical-right" stroke="white" stroke-width="20" x1="236.0" x2="236.0" y1="305.590552" y2="20"/>
+    <line id="top" stroke="white" stroke-width="20" x1="236.0" x2="20" y1="20" y2="20"/>
+    <line id="mid-vertical" stroke="white" stroke-width="10" x1="196.0" x2="196.0" y1="305.590552" y2="20"/>
   </g>
-  <g
-     id="copper0">
-    <rect
-       width="55"
-       x="80.5"
-       y="66.397638"
-       height="55"
-       id="rect20"
-       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
-    <circle
-       cx="108.0"
-       cy="93.897638"
-       r="27.5"
-       id="connector0pin"
-       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
-    <circle
-       cx="108.0"
-       cy="231.692914"
-       r="27.5"
-       id="connector1pin"
-       stroke="rgb(255, 191, 0)" fill="none" stroke-width="20" />
-  </g>
-  <g
-     id="keepout" />
-  <g
-     id="soldermask" />
-  <g
-     id="outline" />
+  <g id="copper1"><g id="copper0">
+    <rect fill="none" height="55" id="rect20" stroke="rgb(255, 191, 0)" stroke-width="20" width="55" x="80.5" y="66.397638"/>
+    <circle cx="108.0" cy="93.897638" fill="none" id="connector0pin" r="27.5" stroke="rgb(255, 191, 0)" stroke-width="20"/>
+    <circle cx="108.0" cy="231.692914" fill="none" id="connector1pin" r="27.5" stroke="rgb(255, 191, 0)" stroke-width="20"/>
+  </g></g>
+  <g id="keepout"/>
+  <g id="soldermask"/>
+  <g id="outline"/>
 </svg>

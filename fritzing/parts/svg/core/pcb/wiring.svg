@@ -1,599 +1,78 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.2"
-   x="0in"
-   y="0in"
-   width="3.600000in"
-   height="2.300000in"
-   viewBox="0 0 3600.000000 2300.000000"
-   id="svg">
-  <g
-     id="silkscreen">
-    <line
-       x1="4"
-       y1="4"
-       x2="3592.000000"
-       y2="4"
-       stroke="#ffffff"
-       stroke-width="8"
-       stroke-linecap="round"
-       id="line5" />
-    <line
-       x1="4"
-       y1="2292.000000"
-       x2="3592.000000"
-       y2="2292.000000"
-       stroke="#ffffff"
-       stroke-width="8"
-       stroke-linecap="round"
-       id="line7" />
-    <line
-       x1="4"
-       y1="4"
-       x2="4"
-       y2="1100.000000"
-       stroke="#ffffff"
-       stroke-width="8"
-       stroke-linecap="round"
-       id="line9" />
-    <line
-       x1="4"
-       y1="1200.000000"
-       x2="4"
-       y2="2292.000000"
-       stroke="#ffffff"
-       stroke-width="8"
-       stroke-linecap="round"
-       id="line11" />
-    <line
-       x1="3592.000000"
-       y1="4"
-       x2="3592.000000"
-       y2="2292.000000"
-       stroke="#ffffff"
-       stroke-width="8"
-       stroke-linecap="round"
-       id="line13" />
+<?xml version="1.0" encoding="UTF-8"?><svg height="2.300000in" id="svg" version="1.2" viewBox="0 0 3600.000000 2300.000000" width="3.600000in" x="0in" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" y="0in">
+  <g id="silkscreen">
+    <line id="line5" stroke="#ffffff" stroke-linecap="round" stroke-width="8" x1="4" x2="3592.000000" y1="4" y2="4"/>
+    <line id="line7" stroke="#ffffff" stroke-linecap="round" stroke-width="8" x1="4" x2="3592.000000" y1="2292.000000" y2="2292.000000"/>
+    <line id="line9" stroke="#ffffff" stroke-linecap="round" stroke-width="8" x1="4" x2="4" y1="4" y2="1100.000000"/>
+    <line id="line11" stroke="#ffffff" stroke-linecap="round" stroke-width="8" x1="4" x2="4" y1="1200.000000" y2="2292.000000"/>
+    <line id="line13" stroke="#ffffff" stroke-linecap="round" stroke-width="8" x1="3592.000000" x2="3592.000000" y1="4" y2="2292.000000"/>
   </g>
-  <g
-     id="copper0">
-    <circle
-       id="connector57pin"
-       fill="none"
-       cx="100.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector56pin"
-       fill="none"
-       cx="200.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector55pin"
-       fill="none"
-       cx="300.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector54pin"
-       fill="none"
-       cx="400.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector53pin"
-       fill="none"
-       cx="500.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector52pin"
-       fill="none"
-       cx="600.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector51pin"
-       fill="none"
-       cx="700.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector50pin"
-       fill="none"
-       cx="800.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector49pin"
-       fill="none"
-       cx="1000.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector48pin"
-       fill="none"
-       cx="1100.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector47pin"
-       fill="none"
-       cx="1200.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector46pin"
-       fill="none"
-       cx="1300.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector45pin"
-       fill="none"
-       cx="1400.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector44pin"
-       fill="none"
-       cx="1500.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector43pin"
-       fill="none"
-       cx="1600.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector42pin"
-       fill="none"
-       cx="1700.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector41pin"
-       fill="none"
-       cx="1900.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector40pin"
-       fill="none"
-       cx="2000.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector39pin"
-       fill="none"
-       cx="2100.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector38pin"
-       fill="none"
-       cx="2200.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector37pin"
-       fill="none"
-       cx="2300.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector36pin"
-       fill="none"
-       cx="2400.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector35pin"
-       fill="none"
-       cx="2500.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector34pin"
-       fill="none"
-       cx="2600.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector33pin"
-       fill="none"
-       cx="2800.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector32pin"
-       fill="none"
-       cx="2900.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector31pin"
-       fill="none"
-       cx="3000.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector30pin"
-       fill="none"
-       cx="3100.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector29pin"
-       fill="none"
-       cx="3200.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector28pin"
-       fill="none"
-       cx="3300.000000"
-       cy="100.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector58pin"
-       fill="none"
-       cx="100.000000"
-       cy="900.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector59pin"
-       fill="none"
-       cx="100.000000"
-       cy="1000.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector60pin"
-       cx="200"
-       cy="1200"
-       r="27.5"
-       transform="translate(-22.222222,0)"
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector61pin"
-       cx="200"
-       cy="1300"
-       r="27.5"
-       transform="translate(-22.222222,0)"
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector62pin"
-       cx="200"
-       cy="1400"
-       r="27.5"
-       transform="translate(-22.222222,0)"
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector63pin"
-       cx="200"
-       cy="1500"
-       r="27.5"
-       transform="translate(-22.222222,0)"
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector64pin"
-       cx="200"
-       cy="1600"
-       r="27.5"
-       transform="translate(-22.222222,0)"
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector65pin"
-       cx="200"
-       cy="1700"
-       r="27.5"
-       transform="translate(-22.222222,0)"
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector0pin"
-       fill="none"
-       cx="100.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <rect
-       x="72.500000"
-       y="2172.500000"
-       width="55.000000"
-       height="55.000000"
-       fill="none"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000"
-       id="rect710" />
-    <circle
-       id="connector1pin"
-       fill="none"
-       cx="200.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector2pin"
-       fill="none"
-       cx="300.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector3pin"
-       fill="none"
-       cx="400.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector4pin"
-       fill="none"
-       cx="500.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector5pin"
-       fill="none"
-       cx="600.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector6pin"
-       fill="none"
-       cx="700.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector7pin"
-       fill="none"
-       cx="800.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector8pin"
-       cx="1000"
-       cy="2200"
-       r="27.5"
-       
-       
-       
-       
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector9pin"
-       cx="1100"
-       cy="2200"
-       r="27.5"
-       
-       
-       
-       
-       style="fill:none;stroke:#ffbf00;stroke-width:20" />
-    <circle
-       id="connector10pin"
-       fill="none"
-       cx="1200.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector11pin"
-       fill="none"
-       cx="1300.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector12pin"
-       fill="none"
-       cx="1400.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector13pin"
-       fill="none"
-       cx="1500.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector14pin"
-       fill="none"
-       cx="1600.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector15pin"
-       fill="none"
-       cx="1700.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector16pin"
-       fill="none"
-       cx="1900.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector17pin"
-       fill="none"
-       cx="2000.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector18pin"
-       fill="none"
-       cx="2100.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector19pin"
-       fill="none"
-       cx="2200.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector20pin"
-       fill="none"
-       cx="2300.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector21pin"
-       fill="none"
-       cx="2400.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector22pin"
-       fill="none"
-       cx="2500.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector23pin"
-       fill="none"
-       cx="2600.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector24pin"
-       fill="none"
-       cx="3000.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector25pin"
-       fill="none"
-       cx="3100.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector26pin"
-       fill="none"
-       cx="3200.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-    <circle
-       id="connector27pin"
-       fill="none"
-       cx="3300.000000"
-       cy="2200.000000"
-       r="27.500000"
-       stroke="rgb(255, 191, 0)"
-       stroke-width="20.000000" />
-  </g>
+  <g id="copper1"><g id="copper0">
+    <circle cx="100.000000" cy="100.000000" fill="none" id="connector57pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="200.000000" cy="100.000000" fill="none" id="connector56pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="300.000000" cy="100.000000" fill="none" id="connector55pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="400.000000" cy="100.000000" fill="none" id="connector54pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="500.000000" cy="100.000000" fill="none" id="connector53pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="600.000000" cy="100.000000" fill="none" id="connector52pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="700.000000" cy="100.000000" fill="none" id="connector51pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="800.000000" cy="100.000000" fill="none" id="connector50pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1000.000000" cy="100.000000" fill="none" id="connector49pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1100.000000" cy="100.000000" fill="none" id="connector48pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1200.000000" cy="100.000000" fill="none" id="connector47pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1300.000000" cy="100.000000" fill="none" id="connector46pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1400.000000" cy="100.000000" fill="none" id="connector45pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1500.000000" cy="100.000000" fill="none" id="connector44pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1600.000000" cy="100.000000" fill="none" id="connector43pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1700.000000" cy="100.000000" fill="none" id="connector42pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1900.000000" cy="100.000000" fill="none" id="connector41pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2000.000000" cy="100.000000" fill="none" id="connector40pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2100.000000" cy="100.000000" fill="none" id="connector39pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2200.000000" cy="100.000000" fill="none" id="connector38pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2300.000000" cy="100.000000" fill="none" id="connector37pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2400.000000" cy="100.000000" fill="none" id="connector36pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2500.000000" cy="100.000000" fill="none" id="connector35pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2600.000000" cy="100.000000" fill="none" id="connector34pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2800.000000" cy="100.000000" fill="none" id="connector33pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2900.000000" cy="100.000000" fill="none" id="connector32pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3000.000000" cy="100.000000" fill="none" id="connector31pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3100.000000" cy="100.000000" fill="none" id="connector30pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3200.000000" cy="100.000000" fill="none" id="connector29pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3300.000000" cy="100.000000" fill="none" id="connector28pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="100.000000" cy="900.000000" fill="none" id="connector58pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="100.000000" cy="1000.000000" fill="none" id="connector59pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="200" cy="1200" id="connector60pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20" transform="translate(-22.222222,0)"/>
+    <circle cx="200" cy="1300" id="connector61pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20" transform="translate(-22.222222,0)"/>
+    <circle cx="200" cy="1400" id="connector62pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20" transform="translate(-22.222222,0)"/>
+    <circle cx="200" cy="1500" id="connector63pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20" transform="translate(-22.222222,0)"/>
+    <circle cx="200" cy="1600" id="connector64pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20" transform="translate(-22.222222,0)"/>
+    <circle cx="200" cy="1700" id="connector65pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20" transform="translate(-22.222222,0)"/>
+    <circle cx="100.000000" cy="2200.000000" fill="none" id="connector0pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <rect fill="none" height="55.000000" id="rect710" stroke="rgb(255, 191, 0)" stroke-width="20.000000" width="55.000000" x="72.500000" y="2172.500000"/>
+    <circle cx="200.000000" cy="2200.000000" fill="none" id="connector1pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="300.000000" cy="2200.000000" fill="none" id="connector2pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="400.000000" cy="2200.000000" fill="none" id="connector3pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="500.000000" cy="2200.000000" fill="none" id="connector4pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="600.000000" cy="2200.000000" fill="none" id="connector5pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="700.000000" cy="2200.000000" fill="none" id="connector6pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="800.000000" cy="2200.000000" fill="none" id="connector7pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1000" cy="2200" id="connector8pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20"/>
+    <circle cx="1100" cy="2200" id="connector9pin" r="27.5" style="fill:none;stroke:#ffbf00;stroke-width:20"/>
+    <circle cx="1200.000000" cy="2200.000000" fill="none" id="connector10pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1300.000000" cy="2200.000000" fill="none" id="connector11pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1400.000000" cy="2200.000000" fill="none" id="connector12pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1500.000000" cy="2200.000000" fill="none" id="connector13pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1600.000000" cy="2200.000000" fill="none" id="connector14pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1700.000000" cy="2200.000000" fill="none" id="connector15pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="1900.000000" cy="2200.000000" fill="none" id="connector16pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2000.000000" cy="2200.000000" fill="none" id="connector17pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2100.000000" cy="2200.000000" fill="none" id="connector18pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2200.000000" cy="2200.000000" fill="none" id="connector19pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2300.000000" cy="2200.000000" fill="none" id="connector20pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2400.000000" cy="2200.000000" fill="none" id="connector21pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2500.000000" cy="2200.000000" fill="none" id="connector22pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="2600.000000" cy="2200.000000" fill="none" id="connector23pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3000.000000" cy="2200.000000" fill="none" id="connector24pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3100.000000" cy="2200.000000" fill="none" id="connector25pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3200.000000" cy="2200.000000" fill="none" id="connector26pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+    <circle cx="3300.000000" cy="2200.000000" fill="none" id="connector27pin" r="27.500000" stroke="rgb(255, 191, 0)" stroke-width="20.000000"/>
+  </g></g>
 </svg>

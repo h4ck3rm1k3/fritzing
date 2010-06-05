@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.6b.08.14.3340" moduleId="a4f38a10-dd92-11dd-a3e2-001f5b3a17a4">
-    <version>1</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.6b.08.14.3340" moduleId="a4f38a10-dd92-11dd-a3e2-001f5b3a17a4">
+    <version>4</version>
     <author>Dirk van Oosterbosch</author>
     <title>H-Bridge</title>
     <label>IC</label>
@@ -33,7 +32,7 @@
             <layers image="pcb/DIP16N.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
-            </layers>
+            <layer layerId="copper1"/></layers>
         </pcbView>
         <schematicView>
             <layers image="schematic/h-bridge_schematic.svg">
@@ -42,7 +41,7 @@
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="GND1">
+        <connector id="connector3" name="GND1" type="male">
             <description>Heat Sink and Ground</description>
             <views>
                 <breadboardView>
@@ -53,10 +52,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector3pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector3pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector15" type="male" name="VCC1">
+        <connector id="connector15" name="VCC1" type="male">
             <description>Separate Supply Voltage (for logic circuit)</description>
             <views>
                 <breadboardView>
@@ -67,10 +66,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector15pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector15pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="GND2">
+        <connector id="connector4" name="GND2" type="male">
             <description>Heat Sink and Ground</description>
             <views>
                 <breadboardView>
@@ -81,10 +80,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector4pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector4pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="2Y">
+        <connector id="connector5" name="2Y" type="male">
             <description>Output 2</description>
             <views>
                 <breadboardView>
@@ -95,10 +94,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector5pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector5pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="2A">
+        <connector id="connector6" name="2A" type="male">
             <description>Control 2</description>
             <views>
                 <breadboardView>
@@ -109,10 +108,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector6pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector6pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="VCC2">
+        <connector id="connector7" name="VCC2" type="male">
             <description>Supply Voltage (High Load)</description>
             <views>
                 <breadboardView>
@@ -123,10 +122,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector7pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector7pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="3,4EN">
+        <connector id="connector8" name="3,4EN" type="male">
             <description>Enable 3,4</description>
             <views>
                 <breadboardView>
@@ -137,10 +136,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector8pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector8pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="3A">
+        <connector id="connector9" name="3A" type="male">
             <description>Control 3</description>
             <views>
                 <breadboardView>
@@ -151,10 +150,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector9pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector9pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="3Y">
+        <connector id="connector10" name="3Y" type="male">
             <description>Output 3</description>
             <views>
                 <breadboardView>
@@ -165,10 +164,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector10pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector10pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="GND3">
+        <connector id="connector11" name="GND3" type="male">
             <description>Heat Sink and Ground</description>
             <views>
                 <breadboardView>
@@ -179,10 +178,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector11pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector11pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="1,2EN">
+        <connector id="connector0" name="1,2EN" type="male">
             <description>Enable 1,2</description>
             <views>
                 <breadboardView>
@@ -193,10 +192,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector0pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="GND4">
+        <connector id="connector12" name="GND4" type="male">
             <description>Heat Sink and Ground</description>
             <views>
                 <breadboardView>
@@ -207,10 +206,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector12pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector12pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="1A">
+        <connector id="connector1" name="1A" type="male">
             <description>Control 1</description>
             <views>
                 <breadboardView>
@@ -221,10 +220,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector1pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="4Y">
+        <connector id="connector13" name="4Y" type="male">
             <description>Output 4</description>
             <views>
                 <breadboardView>
@@ -235,10 +234,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector13pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector13pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="1Y">
+        <connector id="connector2" name="1Y" type="male">
             <description>Output 1</description>
             <views>
                 <breadboardView>
@@ -249,10 +248,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="4A">
+        <connector id="connector14" name="4A" type="male">
             <description>Control 4</description>
             <views>
                 <breadboardView>
@@ -263,7 +262,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector14pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector14pad"/></pcbView>
             </views>
         </connector>
     </connectors>

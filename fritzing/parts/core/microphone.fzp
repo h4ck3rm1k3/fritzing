@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.11" moduleId="415c9d899a1e7de6c023ea0731bab117">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.11" moduleId="415c9d899a1e7de6c023ea0731bab117"><version>4</version>
     <author>Lionel Michel</author>
     <title>Microphone</title>
     <label>MIC</label>
@@ -26,13 +25,13 @@
         </schematicView>
         <pcbView>
             <layers image="pcb/jumper_2_100mil_pcb.svg">
-                <layer layerId="copper0" />
-		<layer layerId="silkscreen" />
-            </layers>
+                <layer layerId="copper0"/>
+		<layer layerId="silkscreen"/>
+            <layer layerId="copper1"/></layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="pin1">
+        <connector id="connector0" name="pin1" type="male">
             <description>Pin 1</description>
             <views>
                 <breadboardView>
@@ -43,10 +42,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin2">
+        <connector id="connector1" name="pin2" type="male">
             <description>Pin 2</description>
             <views>
                 <breadboardView>
@@ -57,7 +56,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
     </connectors>

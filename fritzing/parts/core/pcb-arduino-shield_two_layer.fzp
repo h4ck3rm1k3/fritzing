@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<module moduleId="423120090505_2" >
- <version>1</version>
+<?xml version="1.0" encoding="UTF-8"?><module moduleId="423120090505_2">
+ <version>4</version>
  <author>Brendan Howell</author>
  <title>Arduino Shield PCB</title>
  <date>2009-05-05</date>
@@ -17,31 +16,31 @@
   <property name="family">Plain Vanilla PCB</property>
  </properties>
  <taxonomy>discreteParts.pcb.plain.arduino_shield</taxonomy>
- <description>Plain PCB Shaped to fit an Arduino "Shield"</description>
+ <description>Plain PCB Shaped to fit an Arduino &quot;Shield&quot;</description>
  <views>
   <defaultUnits>mm</defaultUnits>
   <iconView>
    <layers image="icon/plain_pcb.svg">
-    <layer layerId="icon" />
+    <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView>
    <layers image="icon/plain_pcb.svg">
-    <layer layerId="unknown" />
+    <layer layerId="unknown"/>
    </layers>
   </breadboardView>
   <schematicView>
    <layers image="icon/plain_pcb.svg">
-    <layer layerId="unknown" />
+    <layer layerId="unknown"/>
    </layers>
   </schematicView>
   <pcbView>
    <layers image="pcb/pcb-arduino-shield.svg">
-    <layer layerId="silkscreen" />
-    <layer layerId="board" sticky="true" />
+    <layer layerId="silkscreen"/>
+    <layer layerId="board" sticky="true"/>
    </layers>
   </pcbView>
  </views>
- <connectors />
- <buses />
+ <connectors/>
+ <buses/>
 </module>

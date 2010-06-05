@@ -1,25 +1,24 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<svg width="0.44in" version="1.2" xmlns="http://www.w3.org/2000/svg" height="0.28in" viewBox="0 0 440 280" baseProfile="tiny" >
+<?xml version="1.0" encoding="UTF-8"?><svg baseProfile="tiny" height="0.28in" version="1.2" viewBox="0 0 440 280" width="0.44in" xmlns="http://www.w3.org/2000/svg">
  <desc>Fritzing footprint SVG</desc>
- <g id="silkscreen" >
-  <line stroke="white" y1="80" x1="20" y2="80" stroke-width="20" x2="420" />
-  <line stroke="white" y1="80" x1="420" y2="260" stroke-width="20" x2="420" />
-  <line stroke="white" y1="260" x1="420" y2="260" stroke-width="20" x2="20" />
-  <line stroke="white" y1="260" x1="20" y2="80" stroke-width="20" x2="20" />
-  <line stroke="white" y1="80" x1="20" y2="80" stroke-width="20" x2="420" />
-  <line stroke="white" y1="80" x1="420" y2="140" stroke-width="20" x2="420" />
-  <line stroke="white" y1="140" x1="420" y2="140" stroke-width="20" x2="20" />
-  <line stroke="white" y1="140" x1="20" y2="80" stroke-width="20" x2="20" />
-  <line stroke="white" y1="80" x1="150" y2="140" stroke-width="10" x2="150" />
-  <line stroke="white" y1="80" x1="290" y2="140" stroke-width="10" x2="290" />
+ <g id="silkscreen">
+  <line stroke="white" stroke-width="20" x1="20" x2="420" y1="80" y2="80"/>
+  <line stroke="white" stroke-width="20" x1="420" x2="420" y1="80" y2="260"/>
+  <line stroke="white" stroke-width="20" x1="420" x2="20" y1="260" y2="260"/>
+  <line stroke="white" stroke-width="20" x1="20" x2="20" y1="260" y2="80"/>
+  <line stroke="white" stroke-width="20" x1="20" x2="420" y1="80" y2="80"/>
+  <line stroke="white" stroke-width="20" x1="420" x2="420" y1="80" y2="140"/>
+  <line stroke="white" stroke-width="20" x1="420" x2="20" y1="140" y2="140"/>
+  <line stroke="white" stroke-width="20" x1="20" x2="20" y1="140" y2="80"/>
+  <line stroke="white" stroke-width="10" x1="150" x2="150" y1="80" y2="140"/>
+  <line stroke="white" stroke-width="10" x1="290" x2="290" y1="80" y2="140"/>
  </g>
- <g id="copper0" >
-  <rect width="62" x="89" y="169" fill="none" height="62" stroke="rgb(255, 191, 0)" stroke-width="20" />
-  <circle fill="none" cx="120" cy="200" stroke="rgb(255, 191, 0)" r="31" id="connector0pad" stroke-width="20" />
-  <circle fill="none" cx="220" cy="200" stroke="rgb(255, 191, 0)" r="31" id="connector1pad" stroke-width="20" />
-  <circle fill="none" cx="320" cy="200" stroke="rgb(255, 191, 0)" r="31" id="connector2pad" stroke-width="20" />
- </g>
- <g id="keepout" />
- <g id="soldermask" />
- <g id="outline" />
+ <g id="copper1"><g id="copper0">
+  <rect fill="none" height="62" stroke="rgb(255, 191, 0)" stroke-width="20" width="62" x="89" y="169"/>
+  <circle cx="120" cy="200" fill="none" id="connector0pad" r="31" stroke="rgb(255, 191, 0)" stroke-width="20"/>
+  <circle cx="220" cy="200" fill="none" id="connector1pad" r="31" stroke="rgb(255, 191, 0)" stroke-width="20"/>
+  <circle cx="320" cy="200" fill="none" id="connector2pad" r="31" stroke="rgb(255, 191, 0)" stroke-width="20"/>
+ </g></g>
+ <g id="keepout"/>
+ <g id="soldermask"/>
+ <g id="outline"/>
 </svg>

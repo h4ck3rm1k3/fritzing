@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.54712in" height="0.12991in" viewBox="0 0 54712 12991" ><title>RES-1250P-900L-330D__Yageo-M-TYPE-50.fp</title><desc>Geda footprint file 'RES-1250P-900L-330D__Yageo-M-TYPE-50.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>RES-1250P-900L-330D__Yageo-M-TYPE-50.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.04.07.4081</fz:attr><fz:attr name='conversion date'>12/04/2010 13:03:03</fz:attr><fz:attr name='dist-license'>GPL</fz:attr><fz:attr name='use-license'>unlimited</fz:attr><fz:attr name='author'>gEDA project</fz:attr><fz:attr name='license-url'>http://www.gnu.org/licenses/gpl.html</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper0">
- <circle fill="none" cx="2750" cy="6495.5" connectorname="" stroke="#ff9400" r="2250" id="connector0pin" stroke-width="1000"/>
- <circle fill="none" cx="51962" cy="6495.5" connectorname="" stroke="#ff9400" r="2250" id="connector1pin" stroke-width="1000"/>
-</g>
+<?xml version="1.0" encoding="UTF-8"?><svg baseProfile="tiny" height="0.12991in" version="1.2" viewBox="0 0 54712 12991" width="0.54712in" x="0in" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" y="0in"><title>RES-1250P-900L-330D__Yageo-M-TYPE-50.fp</title><desc>Geda footprint file 'RES-1250P-900L-330D__Yageo-M-TYPE-50.fp' converted by Fritzing</desc><metadata xmlns:fz="http://fritzing.org/gedametadata/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><rdf:RDF><rdf:Description rdf:about=""><fz:attr name="geda filename">RES-1250P-900L-330D__Yageo-M-TYPE-50.fp</fz:attr><fz:attr name="fritzing version">0.3.17b.04.07.4081</fz:attr><fz:attr name="conversion date">12/04/2010 13:03:03</fz:attr><fz:attr name="dist-license">GPL</fz:attr><fz:attr name="use-license">unlimited</fz:attr><fz:attr name="author">gEDA project</fz:attr><fz:attr name="license-url">http://www.gnu.org/licenses/gpl.html</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper1"><g id="copper0">
+ <circle connectorname="" cx="2750" cy="6495.5" fill="none" id="connector0pin" r="2250" stroke="#ff9400" stroke-width="1000"/>
+ <circle connectorname="" cx="51962" cy="6495.5" fill="none" id="connector1pin" r="2250" stroke="#ff9400" stroke-width="1000"/>
+</g></g>
 <g id="silkscreen">
- <line fill="none" stroke="white" y1="11491.5" x1="11140" y2="1499.5" stroke-width="2999" x2="11140"/>
- <line fill="none" stroke="white" y1="6495.5" x1="11140" y2="6495.5" stroke-width="1000" x2="7000"/>
- <line fill="none" stroke="white" y1="11491.5" x1="43572" y2="1499.5" stroke-width="2999" x2="43572"/>
- <line fill="none" stroke="white" y1="6495.5" x1="43572" y2="6495.5" stroke-width="1000" x2="47712"/>
- <line fill="none" stroke="white" y1="1499.5" x1="10140" y2="1499.5" stroke-width="1000" x2="44572"/>
- <line fill="none" stroke="white" y1="11491.5" x1="10140" y2="11491.5" stroke-width="1000" x2="44572"/>
+ <line fill="none" stroke="white" stroke-width="2999" x1="11140" x2="11140" y1="11491.5" y2="1499.5"/>
+ <line fill="none" stroke="white" stroke-width="1000" x1="11140" x2="7000" y1="6495.5" y2="6495.5"/>
+ <line fill="none" stroke="white" stroke-width="2999" x1="43572" x2="43572" y1="11491.5" y2="1499.5"/>
+ <line fill="none" stroke="white" stroke-width="1000" x1="43572" x2="47712" y1="6495.5" y2="6495.5"/>
+ <line fill="none" stroke="white" stroke-width="1000" x1="10140" x2="44572" y1="1499.5" y2="1499.5"/>
+ <line fill="none" stroke="white" stroke-width="1000" x1="10140" x2="44572" y1="11491.5" y2="11491.5"/>
 </g>
 </svg>

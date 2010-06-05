@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.16.b.02.02.2310" moduleId="a59353bd0db0225dc22770e292c622f3">
-<version>1</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.16.b.02.02.2310" moduleId="a59353bd0db0225dc22770e292c622f3">
+<version>4</version>
     <author>Brendan Howell</author>
     <title>LM 358 Dual Op-Amp</title>
     <label>U</label>
@@ -18,140 +17,140 @@
     <views>
         <iconView>
             <layers image="icon/lm358icon.svg">
-                <layer layerId="icon"></layer>
+                <layer layerId="icon"/>
             </layers>
         </iconView>
         <breadboardView>
             <layers image="breadboard/lm358_bread.svg">
-                <layer layerId="breadboard"></layer>
+                <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
         <schematicView>
             <layers image="schematic/lm358_schematic.svg">
-                <layer layerId="schematic"></layer>
+                <layer layerId="schematic"/>
             </layers>
         </schematicView>
         <pcbView>
             <layers image="pcb/DIP8N.svg">
-                <layer layerId="copper0"></layer>
-                <layer layerId="soldermask"></layer>
-                <layer layerId="silkscreen"></layer>
-                <layer layerId="outline"></layer>
-                <layer layerId="keepout"></layer>
-            </layers>
+                <layer layerId="copper0"/>
+                <layer layerId="soldermask"/>
+                <layer layerId="silkscreen"/>
+                <layer layerId="outline"/>
+                <layer layerId="keepout"/>
+            <layer layerId="copper1"/></layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="Pin 4">
+        <connector id="connector3" name="Pin 4" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"></p>
+                    <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"></p>
+                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector3pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector3pad"/>
+                <p layer="copper1" svgId="connector3pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="Pin 5">
+        <connector id="connector4" name="Pin 5" type="male">
             <description>Non-Inverting Input B</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"></p>
+                    <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"></p>
+                    <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector4pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector4pad"/>
+                <p layer="copper1" svgId="connector4pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="Pin 6">
+        <connector id="connector5" name="Pin 6" type="male">
             <description>Inverting Input B</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"></p>
+                    <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"></p>
+                    <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector5pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector5pad"/>
+                <p layer="copper1" svgId="connector5pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="Pin 7">
+        <connector id="connector6" name="Pin 7" type="male">
             <description>Output B</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"></p>
+                    <p layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector6pin" terminalId="connector6terminal"></p>
+                    <p layer="schematic" svgId="connector6pin" terminalId="connector6terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector6pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector6pad"/>
+                <p layer="copper1" svgId="connector6pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="Pin 8">
+        <connector id="connector7" name="Pin 8" type="male">
             <description>V+</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"></p>
+                    <p layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector7pin" terminalId="connector7terminal"></p>
+                    <p layer="schematic" svgId="connector7pin" terminalId="connector7terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector7pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector7pad"/>
+                <p layer="copper1" svgId="connector7pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="Pin 1">
+        <connector id="connector0" name="Pin 1" type="male">
             <description>Output A</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></p>
+                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector0pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector0pad"/>
+                <p layer="copper1" svgId="connector0pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="Pin 2">
+        <connector id="connector1" name="Pin 2" type="male">
             <description>Inverting Input A</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></p>
+                    <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></p>
+                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector1pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector1pad"/>
+                <p layer="copper1" svgId="connector1pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="Pin 3">
+        <connector id="connector2" name="Pin 3" type="male">
             <description>Non-Inverting Input A</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"></p>
+                    <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"></p>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector2pad"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector2pad"/>
+                <p layer="copper1" svgId="connector2pad"/></pcbView>
             </views>
         </connector>
     </connectors>

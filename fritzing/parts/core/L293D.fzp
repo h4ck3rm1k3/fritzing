@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.16b.02.24.4002" moduleId="RevEd_L293D">
-    <version>1.0</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.16b.02.24.4002" moduleId="RevEd_L293D">
+    <version>4</version>
     <author>Revolution Education Ltd</author>
     <title>L293D</title>
     <label>IC</label>
@@ -31,7 +30,7 @@
                 <layer layerId="keepout"/>
                 <layer layerId="soldermask"/>
                 <layer layerId="outline"/>
-            </layers>
+            <layer layerId="copper1"/></layers>
         </pcbView>
         <schematicView>
             <layers image="schematic/L293D_schematic.svg">
@@ -40,7 +39,7 @@
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="pin1">
+        <connector id="connector0" name="pin1" type="male">
             <description>Enable 1</description>
             <views>
                 <breadboardView>
@@ -51,10 +50,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin2">
+        <connector id="connector1" name="pin2" type="male">
             <description>In 1</description>
             <views>
                 <breadboardView>
@@ -65,10 +64,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="pin3">
+        <connector id="connector2" name="pin3" type="male">
             <description>Out 1 ( Controlled by Enable 1 )</description>
             <views>
                 <breadboardView>
@@ -79,10 +78,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="pin4">
+        <connector id="connector3" name="pin4" type="male">
             <description>0V</description>
             <views>
                 <breadboardView>
@@ -93,10 +92,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector3pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="pin5">
+        <connector id="connector4" name="pin5" type="male">
             <description>0V</description>
             <views>
                 <breadboardView>
@@ -107,10 +106,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector4pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector4pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="pin6">
+        <connector id="connector5" name="pin6" type="male">
             <description>Out 2 ( Controlled by Enable 1 )</description>
             <views>
                 <breadboardView>
@@ -121,10 +120,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector5pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector5pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="pin7">
+        <connector id="connector6" name="pin7" type="male">
             <description>In 2</description>
             <views>
                 <breadboardView>
@@ -135,10 +134,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector6pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector6pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="pin8">
+        <connector id="connector7" name="pin8" type="male">
             <description>+Vmotor</description>
             <views>
                 <breadboardView>
@@ -149,10 +148,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector7pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector7pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="pin9">
+        <connector id="connector8" name="pin9" type="male">
             <description>Enable 2</description>
             <views>
                 <breadboardView>
@@ -163,10 +162,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector8pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector8pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="pin10">
+        <connector id="connector9" name="pin10" type="male">
             <description>In 3</description>
             <views>
                 <breadboardView>
@@ -177,10 +176,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector9pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector9pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="pin11">
+        <connector id="connector10" name="pin11" type="male">
             <description>Out 3 ( Controlled by Enable 2 )</description>
             <views>
                 <breadboardView>
@@ -191,10 +190,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector10pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector10pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="pin12">
+        <connector id="connector11" name="pin12" type="male">
             <description>0V</description>
             <views>
                 <breadboardView>
@@ -205,10 +204,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector11pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector11pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="pin13">
+        <connector id="connector12" name="pin13" type="male">
             <description>0V</description>
             <views>
                 <breadboardView>
@@ -219,10 +218,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector12pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector12pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="pin14">
+        <connector id="connector13" name="pin14" type="male">
             <description>Out 4 ( Controlled by Enable 2 )</description>
             <views>
                 <breadboardView>
@@ -233,10 +232,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector13pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector13pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="pin15">
+        <connector id="connector14" name="pin15" type="male">
             <description>In 4</description>
             <views>
                 <breadboardView>
@@ -247,10 +246,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector14pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector14pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector15" type="male" name="pin16">
+        <connector id="connector15" name="pin16" type="male">
             <description>+V</description>
             <views>
                 <breadboardView>
@@ -261,20 +260,20 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector15pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector15pin"/></pcbView>
             </views>
         </connector>
     </connectors>
     <buses>
         <bus id="ground">
-            <nodeMember connectorId="connector3" />
-            <nodeMember connectorId="connector4" />
-            <nodeMember connectorId="connector11" />
-            <nodeMember connectorId="connector12" />
+            <nodeMember connectorId="connector3"/>
+            <nodeMember connectorId="connector4"/>
+            <nodeMember connectorId="connector11"/>
+            <nodeMember connectorId="connector12"/>
         </bus>
         <bus id="plusV">
-            <nodeMember connectorId="connector7" />
-            <nodeMember connectorId="connector15" />
+            <nodeMember connectorId="connector7"/>
+            <nodeMember connectorId="connector15"/>
         </bus>
     </buses>
 </module>

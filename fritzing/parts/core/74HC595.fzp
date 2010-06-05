@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.6b.08.14.3340" moduleId="1a7828b6466fac9fd042221e931124c4">
-<version>1</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.6b.08.14.3340" moduleId="1a7828b6466fac9fd042221e931124c4">
+<version>4</version>
     <author>Jonas Jaeger</author>
     <title>74HC595</title>
     <label>U</label>
@@ -29,7 +28,7 @@
             <layers image="pcb/DIP16N.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
-            </layers>
+            <layer layerId="copper1"/></layers>
         </pcbView>
         <schematicView>
             <layers image="schematic/74HC595.svg">
@@ -38,7 +37,7 @@
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector15" type="male" name="VCC">
+        <connector id="connector15" name="VCC" type="male">
             <description>Positive supply voltage</description>
             <views>
                 <breadboardView>
@@ -49,10 +48,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector15pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector15pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="Q4">
+        <connector id="connector3" name="Q4" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -63,10 +62,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector3pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector3pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="Q5">
+        <connector id="connector4" name="Q5" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -77,10 +76,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector4pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector4pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="Q6">
+        <connector id="connector5" name="Q6" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -91,10 +90,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector5pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector5pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="Q7">
+        <connector id="connector6" name="Q7" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -105,10 +104,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector6pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector6pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="GND">
+        <connector id="connector7" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -119,10 +118,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector7pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector7pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="Q7'">
+        <connector id="connector8" name="Q7'" type="male">
             <description>Serial Out</description>
             <views>
                 <breadboardView>
@@ -133,10 +132,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector8pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector8pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="MR">
+        <connector id="connector9" name="MR" type="male">
             <description>Master Reclear, active low</description>
             <views>
                 <breadboardView>
@@ -147,10 +146,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector9pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector9pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="SH_CP">
+        <connector id="connector10" name="SH_CP" type="male">
             <description>Shift register clock pin</description>
             <views>
                 <breadboardView>
@@ -161,10 +160,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector10pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector10pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="ST_CP">
+        <connector id="connector11" name="ST_CP" type="male">
             <description>Storage register clock pin (latch pin)</description>
             <views>
                 <breadboardView>
@@ -175,10 +174,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector11pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector11pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="OE">
+        <connector id="connector12" name="OE" type="male">
             <description>Output enable, active low</description>
             <views>
                 <breadboardView>
@@ -189,10 +188,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector12pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector12pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="Q1">
+        <connector id="connector0" name="Q1" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -203,10 +202,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector0pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="Q2">
+        <connector id="connector1" name="Q2" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -217,10 +216,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector1pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="DS">
+        <connector id="connector13" name="DS" type="male">
             <description>Serial data input</description>
             <views>
                 <breadboardView>
@@ -231,10 +230,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector13pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector13pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="Q0">
+        <connector id="connector14" name="Q0" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -245,10 +244,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector14pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector14pad"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="Q3">
+        <connector id="connector2" name="Q3" type="male">
             <description>Output Pin</description>
             <views>
                 <breadboardView>
@@ -259,7 +258,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pad"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pad"/></pcbView>
             </views>
         </connector>
     </connectors>

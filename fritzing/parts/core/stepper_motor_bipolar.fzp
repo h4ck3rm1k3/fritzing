@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="7d0bc366bcac9395c747f3a92e2ff843">
-<version>2</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.2.b.03.04.2550" moduleId="7d0bc366bcac9395c747f3a92e2ff843">
+<version>4</version>
     <author>Peter Boman</author>
     <title>Stepper Motor - Bipolar</title>
     <label>M</label>
@@ -25,81 +24,81 @@
     <views>
         <breadboardView>
             <layers image="breadboard/Stepper_Motor_-_Bipolar__breadboard.svg">
-                <layer layerId="breadboard"></layer>
+                <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
         <schematicView>
             <layers image="schematic/Stepper_Motor_-_Bipolar__schematic.svg">
-                <layer layerId="schematic"></layer>
+                <layer layerId="schematic"/>
             </layers>
         </schematicView>
         <pcbView>
             <layers image="pcb/jumper_4_100mil_pcb.svg">
-                <layer layerId="copper0"></layer>
-                <layer layerId="silkscreen"></layer>
-            </layers>
+                <layer layerId="copper0"/>
+                <layer layerId="silkscreen"/>
+            <layer layerId="copper1"/></layers>
         </pcbView>
         <iconView>
             <layers image="icon/Stepper_Motor_-_Bipolar__icon.svg">
-                <layer layerId="icon"></layer>
+                <layer layerId="icon"/>
             </layers>
         </iconView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="D">
-            <description>Terminal "D" - Coil Pair 2</description>
+        <connector id="connector3" name="D" type="male">
+            <description>Terminal &quot;D&quot; - Coil Pair 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin"></p>
+                    <p layer="breadboard" svgId="connector3pin"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"></p>
+                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector3pin"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector3pin"/>
+                <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="A">
-            <description>Terminal "A" - Coil Pair 1</description>
+        <connector id="connector0" name="A" type="male">
+            <description>Terminal &quot;A&quot; - Coil Pair 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin"></p>
+                    <p layer="breadboard" svgId="connector0pin"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector0pin"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector0pin"/>
+                <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="C">
-            <description>Terminal "C" - Coil Pair 1</description>
+        <connector id="connector1" name="C" type="male">
+            <description>Terminal &quot;C&quot; - Coil Pair 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin"></p>
+                    <p layer="breadboard" svgId="connector1pin"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></p>
+                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector1pin"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector1pin"/>
+                <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="B">
-            <description>Terminal "B" - Coil Pair 2</description>
+        <connector id="connector2" name="B" type="male">
+            <description>Terminal &quot;B&quot; - Coil Pair 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector2pin"></p>
+                    <p layer="breadboard" svgId="connector2pin"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"></p>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector2pin"></p>
-                </pcbView>
+                    <p layer="copper0" svgId="connector2pin"/>
+                <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
     </connectors>

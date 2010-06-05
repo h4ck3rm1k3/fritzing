@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.9b.10.15.3559" moduleId="a975d1270bd55d6fc3916947793f1a57">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.9b.10.15.3559" moduleId="a975d1270bd55d6fc3916947793f1a57"><version>4</version>
     <author>Tuomo Tammenpää</author>
     <title>RFID Reader</title>
     <label>RFID</label>
@@ -32,11 +31,11 @@
             <layers image="pcb/rfid_reader_id12.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
-            </layers>
+            <layer layerId="copper1"/></layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector2pin_10" type="male" name="+5V">
+        <connector id="connector2pin_10" name="+5V" type="male">
             <description>Power</description>
             <views>
                 <breadboardView>
@@ -47,10 +46,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_10_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_10_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_1" type="male" name="RES">
+        <connector id="connector2pin_1" name="RES" type="male">
             <description>Reset Bar</description>
             <views>
                 <breadboardView>
@@ -61,10 +60,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_1_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_1_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_2" type="male" name="ANT0">
+        <connector id="connector2pin_2" name="ANT0" type="male">
             <description>Antenna</description>
             <views>
                 <breadboardView>
@@ -75,10 +74,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_2_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_2_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_3" type="male" name="ANT1">
+        <connector id="connector2pin_3" name="ANT1" type="male">
             <description>Antenna</description>
             <views>
                 <breadboardView>
@@ -89,10 +88,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_3_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_3_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_4" type="male" name="CP">
+        <connector id="connector2pin_4" name="CP" type="male">
             <description>Card Present</description>
             <views>
                 <breadboardView>
@@ -103,10 +102,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_4_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_4_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_5" type="male" name="Future">
+        <connector id="connector2pin_5" name="Future" type="male">
             <description>For future use</description>
             <views>
                 <breadboardView>
@@ -117,10 +116,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_5_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_5_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_6" type="male" name="+/-">
+        <connector id="connector2pin_6" name="+/-" type="male">
             <description>Format Selector</description>
             <views>
                 <breadboardView>
@@ -131,10 +130,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_6_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_6_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_7" type="male" name="D1">
+        <connector id="connector2pin_7" name="D1" type="male">
             <description>Data Pin 1</description>
             <views>
                 <breadboardView>
@@ -145,10 +144,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_7_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_7_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_8" type="male" name="D0">
+        <connector id="connector2pin_8" name="D0" type="male">
             <description>Data Pin 0</description>
             <views>
                 <breadboardView>
@@ -159,10 +158,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_8_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_8_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2pin_9" type="male" name="LED">
+        <connector id="connector2pin_9" name="LED" type="male">
             <description>LED / Beeper</description>
             <views>
                 <breadboardView>
@@ -173,10 +172,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin_9_"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin_9_"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="GND">
+        <connector id="connector2" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -187,7 +186,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
     </connectors>

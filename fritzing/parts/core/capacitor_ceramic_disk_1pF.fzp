@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.1201" moduleId="204579BBEC12B" >
- <version>2</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.1201" moduleId="204579BBEC12B">
+ <version>4</version>
  <author>Brendan Howell</author>
  <title>Ceramic Disk Capacitor</title>
  <label>C</label>
@@ -11,63 +10,63 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >Capacitor</property>
-  <property name="Capacitance" >1 pF</property>
-  <property name="Capacitor Type" >Ceramic Disk</property>
-  <property name="Rated Voltage" >500 V</property>
+  <property name="family">Capacitor</property>
+  <property name="Capacitance">1 pF</property>
+  <property name="Capacitor Type">Ceramic Disk</property>
+  <property name="Rated Voltage">500 V</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>A 1 pF Ceramic Disk Capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg" >
-    <layer layerId="icon" />
+   <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg">
+    <layer layerId="icon"/>
    </layers>
   </iconView>
-  <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/ceramic_disk_capacitor_ochre.svg" >
-    <layer layerId="breadboard" />
+  <breadboardView fliphorizontal="true" flipvertical="true">
+   <layers image="breadboard/ceramic_disk_capacitor_ochre.svg">
+    <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/capacitor.svg" >
-    <layer layerId="schematic" />
+   <layers image="schematic/capacitor.svg">
+    <layer layerId="schematic"/>
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/axial_lay_2_300mil_pcb.svg" >
-    <layer layerId="copper0" />
-    <layer layerId="silkscreen" />
-   </layers>
+   <layers image="pcb/axial_lay_2_300mil_pcb.svg">
+    <layer layerId="copper0"/>
+    <layer layerId="silkscreen"/>
+   <layer layerId="copper1"/></layers>
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="pin 0" >
+  <connector id="connector0" name="pin 0" type="male">
    <description>pin0</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector0pin" layer="copper0" />
-    </pcbView>
+     <p layer="copper0" svgId="connector0pin"/>
+    <p layer="copper1" svgId="connector0pin"/></pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="pin 1" >
+  <connector id="connector1" name="pin 1" type="male">
    <description>pin1</description>
    <views>
     <breadboardView>
-     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector1pin" layer="copper0" />
-    </pcbView>
+     <p layer="copper0" svgId="connector1pin"/>
+    <p layer="copper1" svgId="connector1pin"/></pcbView>
    </views>
   </connector>
  </connectors>

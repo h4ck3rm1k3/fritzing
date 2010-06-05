@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.17b.04.07.4081" moduleId="81591c6c31ccf12f0f3ccec5f150df2d">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.17b.04.07.4081" moduleId="81591c6c31ccf12f0f3ccec5f150df2d"><version>4</version>
     <author>andre</author>
     <title>Wiring USB Adapter</title>
     <label>USB</label>
@@ -38,11 +37,11 @@
                 <layer layerId="keepout"/>
                 <layer layerId="soldermask"/>
                 <layer layerId="outline"/>
-            </layers>
+            <layer layerId="copper1"/></layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector15" type="male" name="RESET">
+        <connector id="connector15" name="RESET" type="male">
             <description>Reset</description>
             <views>
                 <breadboardView>
@@ -53,10 +52,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector15pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector15pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="RX">
+        <connector id="connector7" name="RX" type="male">
             <description>Receive Asynchronous Data</description>
             <views>
                 <breadboardView>
@@ -67,10 +66,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector7pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector7pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="male" name="OSCI">
+        <connector id="connector16" name="OSCI" type="male">
             <description>Oscillator Input</description>
             <views>
                 <breadboardView>
@@ -81,10 +80,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector16pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector16pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="5V">
+        <connector id="connector8" name="5V" type="male">
             <description>Power Out</description>
             <views>
                 <breadboardView>
@@ -95,10 +94,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector8pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector8pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector17" type="male" name="OSCO">
+        <connector id="connector17" name="OSCO" type="male">
             <description>Oscillator Output</description>
             <views>
                 <breadboardView>
@@ -109,10 +108,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector17pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector17pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="GND">
+        <connector id="connector9" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -123,10 +122,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector9pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector9pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="DTR">
+        <connector id="connector0" name="DTR" type="male">
             <description>Data Terminal Ready</description>
             <views>
                 <breadboardView>
@@ -137,10 +136,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="RTS">
+        <connector id="connector1" name="RTS" type="male">
             <description>Request To Send</description>
             <views>
                 <breadboardView>
@@ -151,10 +150,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="GND">
+        <connector id="connector10" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -165,10 +164,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector10pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector10pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="RI">
+        <connector id="connector2" name="RI" type="male">
             <description>Ring Indicator</description>
             <views>
                 <breadboardView>
@@ -179,10 +178,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="DSR">
+        <connector id="connector3" name="DSR" type="male">
             <description>Data Set Ready</description>
             <views>
                 <breadboardView>
@@ -193,10 +192,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector3pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="3.3V">
+        <connector id="connector11" name="3.3V" type="male">
             <description>Power Out</description>
             <views>
                 <breadboardView>
@@ -207,10 +206,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector11pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector11pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="DCD">
+        <connector id="connector4" name="DCD" type="male">
             <description>Data Carrier Detect</description>
             <views>
                 <breadboardView>
@@ -221,10 +220,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector4pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector4pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="CBUS3">
+        <connector id="connector12" name="CBUS3" type="male">
             <description>Configurable CBUS</description>
             <views>
                 <breadboardView>
@@ -235,10 +234,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector12pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector12pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="CTS">
+        <connector id="connector5" name="CTS" type="male">
             <description>Clear To Send</description>
             <views>
                 <breadboardView>
@@ -249,10 +248,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector5pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector5pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="CBUS2">
+        <connector id="connector13" name="CBUS2" type="male">
             <description>Configurable CBUS</description>
             <views>
                 <breadboardView>
@@ -263,10 +262,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector13pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector13pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="CBUS4">
+        <connector id="connector14" name="CBUS4" type="male">
             <description>Configurable CBUS</description>
             <views>
                 <breadboardView>
@@ -277,10 +276,10 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector14pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector14pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="TX">
+        <connector id="connector6" name="TX" type="male">
             <description>Transmit Asynchronous Data</description>
             <views>
                 <breadboardView>
@@ -291,7 +290,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector6pin"/>
-                </pcbView>
+                <p layer="copper1" svgId="connector6pin"/></pcbView>
             </views>
         </connector>
     </connectors>
