@@ -1369,9 +1369,8 @@ QString ItemBase::getSvgFilename(ModelPartShared * modelPartShared, const QStrin
 
 		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));
 
-	QStringList possibleFolders = ModelPart::possibleFolders();
 	QString filename;
-	foreach (QString possibleFolder, possibleFolders) {
+	foreach (QString possibleFolder, ModelPart::possibleFolders()) {
 		filename = tempPath1.arg(possibleFolder);
 		if (QFileInfo(filename).exists()) {
 			return filename;

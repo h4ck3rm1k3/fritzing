@@ -76,8 +76,8 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	QString description = QString("<desc>Geda footprint file '%1' converted by Fritzing</desc>")
 			.arg(fileInfo.fileName());
 
-	QString attribute("<fz:attr name='%1'>%2</fz:attr>");
-	QString comment("<fz:comment>%2</fz:comment>");
+	QString attribute("<fz:attr name='%1'>%2</fz:attr>\n");
+	QString comment("<fz:comment>%2</fz:comment>\n");
 
 	QString metadata("<metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>");
 	metadata += "<rdf:RDF>";
@@ -170,13 +170,13 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	metadata += "</metadata>";
 
 	if (!copper0.isEmpty()) {
-		copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
+		copper0 = offsetMin("\n<g id='copper0'><g id='copper1'>" + copper0 + "</g></g>\n");
 	}
 	if (!copper1.isEmpty()) {
-		copper1 = offsetMin("<g id='copper1'>" + copper1 + "</g>");
+		copper1 = offsetMin("\n<g id='copper1'>" + copper1 + "</g>\n");
 	}
 	if (!silkscreen.isEmpty()) {
-		silkscreen = offsetMin("<g id='silkscreen'>" + silkscreen + "</g>");
+		silkscreen = offsetMin("\n<g id='silkscreen'>" + silkscreen + "</g>\n");
 	}
 
 	QString svg = TextUtils::makeSVGHeader(100000, 100000, m_maxX - m_minX, m_maxY - m_minY) 

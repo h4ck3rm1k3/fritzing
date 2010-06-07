@@ -51,18 +51,18 @@ public:
 	};
 
 protected:
-	KicadModule2Svg::PadLayer convertPad(QTextStream & stream, QString & pad);
+	KicadModule2Svg::PadLayer convertPad(QTextStream & stream, QString & pad, QList<int> & numbers);
 	int drawDSegment(const QString & ds, QString & line);
 	int drawDArc(const QString & ds, QString & arc);
 	int drawDCircle(const QString & ds, QString & arc);
-	QString drawOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer);
-	QString drawVerticalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer);
-	QString drawHorizontalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer);
+	QString drawOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padType, KicadModule2Svg::PadLayer);
+	QString drawVerticalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padType, KicadModule2Svg::PadLayer);
+	QString drawHorizontalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padType, KicadModule2Svg::PadLayer);
 	void checkLimits(int posX, int xSize, int posY, int ySize);
-	QString drawRPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer);
-	QString drawCPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer);
+	QString drawRPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, int padNumber, const QString & padType, KicadModule2Svg::PadLayer);
+	QString drawCPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, int padNumber, const QString & padType, KicadModule2Svg::PadLayer);
 	QString getColor(KicadModule2Svg::PadLayer padLayer);
-	QString getID(const QString & padName, KicadModule2Svg::PadLayer padLayer);
+	QString getID(int padNumber, KicadModule2Svg::PadLayer padLayer);
 
 protected:
 	int m_nonConnectorNumber;

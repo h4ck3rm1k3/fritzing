@@ -95,109 +95,109 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 
           switch (r) {
  case 0: {
-    qDebug() << "got geda_element ";
+    //qDebug() << "got geda_element ";
 } break;  case 2: {
 } break;  case 3: {
 	m_symStack.append(QChar(')'));
 } break;  case 4: {
 	m_symStack.append(QChar(']'));
 } break;  case 6: {
-    qDebug() << "    got element_command sequence ";
+    //qDebug() << "    got element_command sequence ";
 } break;  case 7: {
 	m_symStack.append(QChar(')'));
-    qDebug() << "    got element_command sequence ";
+    //qDebug() << "    got element_command sequence ";
 } break;  case 8: {
 	m_symStack.append(QChar(']'));
-    qDebug() << "    got element_command sequence ";
+    //qDebug() << "    got element_command sequence ";
 } break;  case 9: {
-    qDebug() << "    got element_arguments ";
+    //qDebug() << "    got element_arguments ";
 } break;  case 11: {
-    qDebug() << "    got sub_element_groups ";
+    //qDebug() << "    got sub_element_groups ";
 } break;  case 17: {
-    qDebug() << "    got sub_element_group ";
+    //qDebug() << "    got sub_element_group ";
 } break;  case 18: {
-    qDebug() << "got mark_element ";
+    //qDebug() << "got mark_element ";
 } break;  case 20: {
-    qDebug() << "    got mark_sequence ";
+    //qDebug() << "    got mark_sequence ";
 } break;  case 21: {
 	m_symStack.append(QChar(')'));
-    qDebug() << "    got mark_paren_sequence ";
+    //qDebug() << "    got mark_paren_sequence ";
 } break;  case 22: {
 	m_symStack.append(QChar(']'));
-    qDebug() << "    got mark_bracket_sequence ";
+    //qDebug() << "    got mark_bracket_sequence ";
 } break;  case 23: {
-    qDebug() << "    got mark_arguments";
+    //qDebug() << "    got mark_arguments";
 } break;  case 24: {
-    qDebug() << "got pin_element ";
+    //qDebug() << "got pin_element ";
 } break;  case 26: {
-    qDebug() << "    got pin_sequence ";
+    //qDebug() << "    got pin_sequence ";
 } break;  case 27: {
 	m_symStack.append(QChar(')'));
-    qDebug() << "    got pin_paren_sequence ";
+    //qDebug() << "    got pin_paren_sequence ";
 } break;  case 28: {
 	m_symStack.append(QChar(']'));
-    qDebug() << "    got pin_bracket_sequence ";
+    //qDebug() << "    got pin_bracket_sequence ";
 } break;  case 32: {
-    qDebug() << "    got pin_arguments ";
+    //qDebug() << "    got pin_arguments ";
 } break;  case 33: {
-    qDebug() << "    got pin_arguments 1";
+    //qDebug() << "    got pin_arguments 1";
 } break;  case 34: {
-    qDebug() << "    got pin_arguments 2";
+    //qDebug() << "    got pin_arguments 2";
 } break;  case 35: {
-    qDebug() << "    got pin_arguments 3";
+    //qDebug() << "    got pin_arguments 3";
 } break;  case 36: {
-    qDebug() << "    got pin_arguments 4 ";
+    //qDebug() << "    got pin_arguments 4 ";
 } break;  case 37: {
-    qDebug() << "got pad_element ";
+    //qDebug() << "got pad_element ";
 } break;  case 39: {
-    qDebug() << "    got pad_sequence ";
+    //qDebug() << "    got pad_sequence ";
 } break;  case 40: {
 	m_symStack.append(QChar(')'));
-    qDebug() << "    got pad_paren_sequence ";
+    //qDebug() << "    got pad_paren_sequence ";
 } break;  case 41: {
 	m_symStack.append(QChar(']'));
-    qDebug() << "    got pad_bracket_sequence ";
+    //qDebug() << "    got pad_bracket_sequence ";
 } break;  case 44: {
-    qDebug() << "    got pad_arguments ";
+    //qDebug() << "    got pad_arguments ";
 } break;  case 45: {
-    qDebug() << "    got pad_arguments 1";
+    //qDebug() << "    got pad_arguments 1";
 } break;  case 46: {
-    qDebug() << "    got pad_arguments 2";
+    //qDebug() << "    got pad_arguments 2";
 } break;  case 47: {
-    qDebug() << "    got pad_arguments 3";
+    //qDebug() << "    got pad_arguments 3";
 } break;  case 48: {
-    qDebug() << "got element_line_element ";
+    //qDebug() << "got element_line_element ";
 } break;  case 50: {
-    qDebug() << "    got element_line_sequence ";
+    //qDebug() << "    got element_line_sequence ";
 } break;  case 51: {
 	m_symStack.append(QChar(')'));
-    qDebug() << "    got element_line_paren_sequence ";
+    //qDebug() << "    got element_line_paren_sequence ";
 } break;  case 52: {
 	m_symStack.append(QChar(']'));
-    qDebug() << "    got element_line_bracket_sequence ";
+    //qDebug() << "    got element_line_bracket_sequence ";
 } break;  case 53: {
-    qDebug() << "    got element_line_arguments ";
+    //qDebug() << "    got element_line_arguments ";
 } break;  case 54: {
-    qDebug() << "got element_arc_element ";
+    //qDebug() << "got element_arc_element ";
 } break;  case 56: {
-    qDebug() << "    got element_arc_sequence ";
+    //qDebug() << "    got element_arc_sequence ";
 } break;  case 57: {
 	m_symStack.append(QChar(')'));
-    qDebug() << "    got element_arc_paren_sequence ";
+    //qDebug() << "    got element_arc_paren_sequence ";
 } break;  case 58: {
 	m_symStack.append(QChar(']'));
-    qDebug() << "    got element_arc_bracket_sequence ";
+    //qDebug() << "    got element_arc_bracket_sequence ";
 } break;  case 59: {
-    qDebug() << "    got element_arc_arguments ";
+    //qDebug() << "    got element_arc_arguments ";
 } break;  case 60: {
-    qDebug() << "got attribute_element ";
+    //qDebug() << "got attribute_element ";
 } break;  case 61: {
-    qDebug() << "    got attribute_sequence ";
+    //qDebug() << "    got attribute_sequence ";
 } break;  case 62: {
 	m_symStack.append(QChar(')'));
-    qDebug() << "    got attribute_paren_sequence ";
+    //qDebug() << "    got attribute_paren_sequence ";
 } break;  case 63: {
-    qDebug() << "    got attribute_arguments ";
+    //qDebug() << "    got attribute_arguments ";
 } break;  case 64: {
 } break;  case 65: {
 } break;  case 66: {
@@ -228,52 +228,52 @@ bool GedaElementParser::parse(GedaElementLexer *lexer)
 } break;  case 92: {
 } break;  
 case 93: {
-    qDebug() << "        got NUMBER " << lexer->currentNumber();
+    //qDebug() << "        got NUMBER " << lexer->currentNumber();
     m_symStack.append(lexer->currentNumber());
 } break; 
  
 case 94: {
-    qDebug() << "        got HEXNUMBER " << lexer->currentNumber();
+    //qDebug() << "        got HEXNUMBER " << lexer->currentNumber();
     m_symStack.append(lexer->currentNumber());
 } break; 
  
 case 95: {
-    qDebug() << "        got STRING " << lexer->currentString();
+    //qDebug() << "        got STRING " << lexer->currentString();
     m_symStack.append(lexer->currentString());
 } break; 
  
 case 96: {
-    qDebug() << "got ELEMENT command ";
+    //qDebug() << "got ELEMENT command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 97: {
-    qDebug() << "got PIN command ";
+    //qDebug() << "got PIN command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 98: {
-    qDebug() << "got PAD command ";
+    //qDebug() << "got PAD command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 99: {
-    qDebug() << "got MARK command ";
+    //qDebug() << "got MARK command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 100: {
-    qDebug() << "got ELEMENTLINE command ";
+    //qDebug() << "got ELEMENTLINE command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 101: {
-    qDebug() << "got ELEMENTARC command ";
+    //qDebug() << "got ELEMENTARC command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
  
 case 102: {
-    qDebug() << "got ATTRIBUTE command ";
+    //qDebug() << "got ATTRIBUTE command ";
     m_symStack.append(lexer->currentCommand());
 } break; 
 

@@ -90,7 +90,8 @@ public:
 	// on the complex entities: sketches, bins, modules (?)
 	void saveBundledNonAtomicEntity(QString &filename, const QString &extension, Bundler *bundler, const QList<ModelPart*> &partsToSave);
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
-	void exportToGerber(const QString & exportDir, ItemBase * board);
+	
+	void exportToGerber(const QString & exportDir, ItemBase * board, bool displayMessageBoxes);
 
 public:
 	static void initExportConstants();
@@ -363,9 +364,11 @@ protected:
 	QString mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize);
 
 	bool wannaRestart();
-	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, ItemBase * board, const QString & exportDir);
-	void doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir);
+
+	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
+	void doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes);
 	void addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers);
+	void displayMessage(const QString & message, bool displayMessageBoxes);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

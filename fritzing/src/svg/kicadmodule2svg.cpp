@@ -111,8 +111,8 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	QString description = QString("<desc>Kicad module '%2' from file '%1' converted by Fritzing</desc>")
 			.arg(fileInfo.fileName()).arg(moduleName);
 
-	QString attribute("<fz:attr name='%1'>%2</fz:attr>");
-	QString comment("<fz:comment>%2</fz:comment>");
+	QString attribute("<fz:attr name='%1'>%2</fz:attr>\n");
+	QString comment("<fz:comment>%2</fz:comment>\n");
 
 	QString metadata("<metadata xmlns:fz='http://fritzing.org/kicadmetadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>");
 	metadata += "<rdf:RDF>";
@@ -121,6 +121,10 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	metadata += attribute.arg("kicad module").arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(moduleName)));
 	metadata += attribute.arg("fritzing version").arg(Version::versionString());
 	metadata += attribute.arg("conversion date").arg(dt);
+	metadata += attribute.arg("dist-license").arg("GPL");
+	metadata += attribute.arg("use-license").arg("unlimited");
+	metadata += attribute.arg("author").arg("KICAD project");
+	metadata += attribute.arg("license-url").arg("http://www.gnu.org/licenses/gpl.html");
 
 	bool gotModule = false;
 	while (true) {
@@ -177,6 +181,7 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 		}
 	}
 
+	bool done = false;
 	QString copper0;
 	QString copper1;
 	QString silkscreen0;
@@ -184,6 +189,10 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 
 	while (true) {
 		if (line.startsWith("$PAD")) break;
+		if (line.startsWith("$EndMODULE")) {
+			done = true;
+			break;
+		}
 
 		int layer = 0;
 		QString svgElement;
@@ -213,65 +222,71 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 		}
 	}
 
-	int pads = 0;
-	int pins = 0;
-	bool done = false;
-	while (!done) {
-		try {
-			QString pad;
-			PadLayer padLayer = convertPad(textStream, pad);
-			switch (padLayer) {
-				case ToCopper0:
-					copper0 += pad;
-					pins++;
-					break;
-				case ToCopper1:
-					copper1 += pad;
-					pads++;
-					break;
-				default:
-					break;
+	if (!done) {
+		QList<int> numbers;
+		for (int i = 0; i < 512; i++) {
+			numbers << i;
+		}
+		int pads = 0;
+		int pins = 0;
+		while (!done) {
+			try {
+				QString pad;
+				PadLayer padLayer = convertPad(textStream, pad, numbers);
+				switch (padLayer) {
+					case ToCopper0:
+						copper0 += pad;
+						pins++;
+						break;
+					case ToCopper1:
+						copper1 += pad;
+						pads++;
+						break;
+					default:
+						break;
+				}
 			}
-		}
-		catch (const QString & msg) {
-			DebugDialog::debug(QString("kicad pad %1 conversion failed in %2: %3").arg(moduleName).arg(filename).arg(msg));
-		}
-
-		while (true) {
-			line = textStream.readLine();
-			if (line.isNull()) {
-				throw QObject::tr("unexpected end of file in footprint %1 in file %2").arg(moduleName).arg(filename);
+			catch (const QString & msg) {
+				DebugDialog::debug(QString("kicad pad %1 conversion failed in %2: %3").arg(moduleName).arg(filename).arg(msg));
 			}
 
-			if (line.contains("$SHAPE3D")) {
-				done = true;
-				break;
-			}
-			if (line.contains("$EndMODULE")) {
-				done = true;
-				break;
-			}
-			if (line.contains("$PAD")) {
-				break;
+			while (true) {
+				line = textStream.readLine();
+				if (line.isNull()) {
+					throw QObject::tr("unexpected end of file in footprint %1 in file %2").arg(moduleName).arg(filename);
+				}
+
+				if (line.contains("$SHAPE3D")) {
+					done = true;
+					break;
+				}
+				if (line.contains("$EndMODULE")) {
+					done = true;
+					break;
+				}
+				if (line.contains("$PAD")) {
+					break;
+				}
 			}
 		}
-	}
 
-	if (!allowPadsAndPins && pins > 0 && pads > 0) {
-		throw QObject::tr("Sorry, Fritzing can't yet handle both pins and pads together (in %1 in %2)").arg(moduleName).arg(filename);
+		if (!allowPadsAndPins && pins > 0 && pads > 0) {
+			throw QObject::tr("Sorry, Fritzing can't yet handle both pins and pads together (in %1 in %2)").arg(moduleName).arg(filename);
+		}
+
 	}
 
 	if (!copper0.isEmpty()) {
-		copper0 = offsetMin("<g id='copper0'>" + copper0 + "</g>");
+		copper0 = offsetMin("\n<g id='copper0'><g id='copper1'>" + copper0 + "</g></g>\n");
 	}
 	if (!copper1.isEmpty()) {
-		copper1 = offsetMin("<g id='copper1'>" + copper1 + "</g>");
+		copper1 = offsetMin("\n<g id='copper1'>" + copper1 + "</g>\n");
 	}
 	if (!silkscreen1.isEmpty()) {
-		silkscreen1 = offsetMin("<g id='silkscreen'>" + silkscreen1 + "</g>");
+		silkscreen1 = offsetMin("\n<g id='silkscreen'>" + silkscreen1 + "</g>\n");
 	}
 	if (!silkscreen0.isEmpty()) {
-		silkscreen0 = offsetMin("<g id='silkscreen0'>" + silkscreen0 + "</g>");
+		silkscreen0 = offsetMin("\n<g id='silkscreen0'>" + silkscreen0 + "</g>\n");
 	}
 
 	QString svg = TextUtils::makeSVGHeader(10000, 10000, m_maxX - m_minX, m_maxY - m_minY) 
@@ -410,7 +425,7 @@ bottom = cross270 ? -R : min(start.y, end.y)
 	return layer;
 }
 
-KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QString & pad) {
+KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QString & pad, QList<int> & numbers) {
 	PadLayer padLayer = UnableToTranslate;
 
 	QStringList padStrings;
@@ -534,10 +549,15 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	}
 
 	QString padName = unquote(shapeStrings.at(1));
-	int padNumber = padName.toInt(&ok);
-	if (ok) {
-		padName = QString("%1").arg(padNumber - 1);
+	int padNumber = padName.toInt(&ok) - 1;
+	if (!ok) {
+		padNumber = padName.isEmpty() ? -1 : numbers.takeFirst();
+		DebugDialog::debug(QString("name:%1 padnumber %2").arg(padName).arg(padNumber));
 	}
+	else {
+		numbers.removeOne(padNumber);
+	}
+
 
 	QString shapeIdentifier = shapeStrings.at(2);
 	int xSize = shapeStrings.at(3).toInt();
@@ -568,16 +588,19 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 
 	if (shapeIdentifier == "C") {
 		checkLimits(posX, xSize, posY, ySize);
-		pad += drawCPad(posX, posY, xSize, ySize, drillX, drillY, padName, padType, padLayer);
+		pad += drawCPad(posX, posY, xSize, ySize, drillX, drillY, padName, padNumber, padType, padLayer);
 	}
 	else if (shapeIdentifier == "R") {
 		checkLimits(posX, xSize, posY, ySize);
-		pad += drawRPad(posX, posY, xSize, ySize, drillX, drillY, padName, padType, padLayer);
+		pad += drawRPad(posX, posY, xSize, ySize, drillX, drillY, padName, padNumber, padType, padLayer);
 	}
 	else if (shapeIdentifier == "O") {
 		checkLimits(posX, xSize, posY, ySize);
-		QString id = getID(padName, padLayer);
-		pad += QString("<g %1>").arg(id) + drawOblong(posX, posY, xSize, ySize, drillX, drillY, padName, padType, padLayer) + "</g>";
+		QString id = getID(padNumber, padLayer);
+		pad += QString("<g %1 connectorname='%2'>")
+			.arg(id).arg(padName) 
+			+ drawOblong(posX, posY, xSize, ySize, drillX, drillY, padType, padLayer) 
+			+ "</g>";
 	}
 	else {
 		throw QObject::tr("unable to handle pad shape %1").arg(shapeIdentifier);
@@ -597,8 +620,7 @@ KicadModule2Svg::PadLayer KicadModule2Svg::convertPad(QTextStream & stream, QStr
 	return padLayer;
 }
 
-QString KicadModule2Svg::drawVerticalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer padLayer) {
-	Q_UNUSED(padName);
+QString KicadModule2Svg::drawVerticalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padType, KicadModule2Svg::PadLayer padLayer) {
 
 	QString color = getColor(padLayer);
 	qreal rad = xSize / 4.0;
@@ -654,7 +676,7 @@ QString KicadModule2Svg::drawVerticalOblong(int posX, int posY, qreal xSize, qre
 	}
 	else {
 		if (drillX == drillY) {
-			middle = QString("<circle fill='none' cx='%1' cy='%2' r='%3' %4 stroke-width='%4' stroke='%5' />")
+			middle = QString("<circle fill='none' cx='%1' cy='%2' r='%3' stroke-width='%4' stroke='%5' />")
 								.arg(posX)
 								.arg(posY)
 								.arg((qMin(xSize, ySize) / 2.0) - (drillX / 4.0))
@@ -679,8 +701,7 @@ QString KicadModule2Svg::drawVerticalOblong(int posX, int posY, qreal xSize, qre
 	return middle + bot;
 }
 
-QString KicadModule2Svg::drawHorizontalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer padLayer) {
-	Q_UNUSED(padName);
+QString KicadModule2Svg::drawHorizontalOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padType, KicadModule2Svg::PadLayer padLayer) {
 
 	QString color = getColor(padLayer);
 	qreal rad = ySize / 4.0;
@@ -770,24 +791,25 @@ void KicadModule2Svg::checkLimits(int posX, int xSize, int posY, int ySize) {
 	checkYLimit(posY + (ySize / 2.0));
 }
 
-QString KicadModule2Svg::drawCPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer padLayer) 
+QString KicadModule2Svg::drawCPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, int padNumber, const QString & padType, KicadModule2Svg::PadLayer padLayer) 
 {
 	QString color = getColor(padLayer);
-	QString id = getID(padName, padLayer);
+	QString id = getID(padNumber, padLayer);
 
 	Q_UNUSED(ySize);
 	if (padType == "SMD") {
-		return QString("<circle cx='%1' cy='%2' r='%3' %4 fill='%5' stroke-width='0' />")
+		return QString("<circle cx='%1' cy='%2' r='%3' %4 fill='%5' stroke-width='0' connectorname='%6'/>")
 						.arg(posX)
 						.arg(posY)
 						.arg(xSize / 2.0)
 						.arg(id)
-						.arg(color);
+						.arg(color)
+						.arg(padName);
 	}
 
 	if (drillX == drillY) {
 		qreal w = (xSize - drillX) / 2.0;
-		QString pad = QString("<g %1>").arg(id);
+		QString pad = QString("<g %1 connectorname='%2'>").arg(id).arg(padName);
 		pad += QString("<circle cx='%1' cy='%2' r='%3' stroke-width='%4' stroke='%5' fill='none' />")
 							.arg(posX)
 							.arg(posY)
@@ -813,7 +835,7 @@ QString KicadModule2Svg::drawCPad(int posX, int posY, int xSize, int ySize, int 
 						.arg((xSize / 2.0) - (w / 2))
 						.arg(w)
 						.arg(color);
-	pad += drawOblong(posX, posY, drillX + w, drillY + w, drillX, drillY, "", "", padLayer);
+	pad += drawOblong(posX, posY, drillX + w, drillY + w, drillX, drillY, "", padLayer);
 
 	// now fill the gaps between the oblong and the circle
 	if (drillX >= drillY) {
@@ -862,22 +884,23 @@ QString KicadModule2Svg::drawCPad(int posX, int posY, int xSize, int ySize, int 
 	return pad;
 }
 
-QString KicadModule2Svg::drawRPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer padLayer) 
+QString KicadModule2Svg::drawRPad(int posX, int posY, int xSize, int ySize, int drillX, int drillY, const QString & padName, int padNumber, const QString & padType, KicadModule2Svg::PadLayer padLayer) 
 {
 	QString color = getColor(padLayer);
-	QString id = getID(padName, padLayer);
+	QString id = getID(padNumber, padLayer);
 
 	if (padType == "SMD") {
-		return QString("<rect x='%1' y='%2' width='%3' height='%4' %5 stroke-width='0' fill='%6' />")
+		return QString("<rect x='%1' y='%2' width='%3' height='%4' %5 stroke-width='0' fill='%6' connectorname='%7'/>")
 						.arg(posX - (xSize / 2.0))
 						.arg(posY - (ySize / 2.0))
 						.arg(xSize)
 						.arg(ySize)
 						.arg(id)
-						.arg(color);
+						.arg(color)
+						.arg(padName);
 	}
 
-	QString pad = QString("<g %1>").arg(id);
+	QString pad = QString("<g %1 connectorname='%2'>").arg(id).arg(padName);
 	if (drillX == drillY) {
 		qreal w = (qMin(xSize, ySize) - drillX) / 2.0;
 		pad += QString("<circle fill='none' cx='%1' cy='%2' r='%3' stroke-width='%4' stroke='%5' />")
@@ -895,7 +918,7 @@ QString KicadModule2Svg::drawRPad(int posX, int posY, int xSize, int ySize, int 
 							.arg((w / 2) + (qMax(drillX, drillY) / 2.0))
 							.arg(w)
 							.arg(color);
-		pad += drawOblong(posX, posY, drillX + w, drillY + w, drillX, drillY, padName, "", padLayer);
+		pad += drawOblong(posX, posY, drillX + w, drillY + w, drillX, drillY, "", padLayer);
 	}
 			
 	// draw 4 lines otherwise there may be gaps if one pair of sides is much longer than the other pair of sides
@@ -933,21 +956,21 @@ QString KicadModule2Svg::drawRPad(int posX, int posY, int xSize, int ySize, int 
 	return pad;
 }
 
-QString KicadModule2Svg::drawOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padName, const QString & padType, KicadModule2Svg::PadLayer padLayer) {
+QString KicadModule2Svg::drawOblong(int posX, int posY, qreal xSize, qreal ySize, int drillX, int drillY, const QString & padType, KicadModule2Svg::PadLayer padLayer) {
 	if (xSize <= ySize) {
-		return drawVerticalOblong(posX, posY, xSize, ySize, drillX, drillY, padName, padType, padLayer);
+		return drawVerticalOblong(posX, posY, xSize, ySize, drillX, drillY, padType, padLayer);
 	}
 	else {
-		return drawHorizontalOblong(posX, posY, xSize, ySize, drillX, drillY, padName, padType, padLayer);
+		return drawHorizontalOblong(posX, posY, xSize, ySize, drillX, drillY, padType, padLayer);
 	}
 }
 
-QString KicadModule2Svg::getID(const QString & padName, KicadModule2Svg::PadLayer padLayer) {
-	if (padName.isEmpty()) {
+QString KicadModule2Svg::getID(int padNumber, KicadModule2Svg::PadLayer padLayer) {	
+	if (padNumber < 0) {
 		return QString("id='%1%2'").arg(FSvgRenderer::NonConnectorName).arg(m_nonConnectorNumber++);
 	}
 
-	return QString("id='connector%1%2'").arg(padName).arg((padLayer == ToCopper1) ? "pad" : "pin");
+	return QString("id='connector%1%2'").arg(padNumber).arg((padLayer == ToCopper1) ? "pad" : "pin");
 }
 
 QString KicadModule2Svg::getColor(KicadModule2Svg::PadLayer padLayer) {

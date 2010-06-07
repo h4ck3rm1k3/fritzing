@@ -472,7 +472,7 @@ int FApplication::serviceStartup() {
 		return -1;
 	}
 
-	mainWindow->exportToGerber(m_outputFolder, NULL);
+	mainWindow->exportToGerber(m_outputFolder, NULL, false);
 
 	return 0;
 }

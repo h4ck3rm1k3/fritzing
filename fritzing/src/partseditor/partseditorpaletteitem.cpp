@@ -124,9 +124,10 @@ bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, c
 		QStringList possibleFolders = ModelPart::possibleFolders();
 		foreach(QString rootFolder, possibleRootFolders) {
 			foreach(QString folder, possibleFolders) {
-				if (QFileInfo( tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder) ).exists()) {
+				QString path = tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder);
+				if (QFileInfo(path).exists()) {
 					m_svgStrings = new SvgAndPartFilePath();
-					m_svgStrings->setAbsolutePath(tempPath.first.arg(rootFolder)+"/"+tempPath.second.arg(folder));
+					m_svgStrings->setAbsolutePath(path);
 					m_svgStrings->setRelativePath(tempPath.second.arg(folder));
 					m_svgStrings->setCoreContribOrUser(folder);
 					return true;
