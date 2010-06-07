@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="4.7255in" height="4.2015in" viewBox="0 0 472550 420150" ><title>PCI5V_MAX_HEIGHT.fp</title><desc>Geda footprint file 'PCI5V_MAX_HEIGHT.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>PCI5V_MAX_HEIGHT.fp</fz:attr><fz:attr name='fritzing version'>0.3.17b.04.07.4081</fz:attr><fz:attr name='conversion date'>12/04/2010 13:02:56</fz:attr><fz:attr name='dist-license'>GPL</fz:attr><fz:attr name='use-license'>unlimited</fz:attr><fz:attr name='author'>gEDA project</fz:attr><fz:attr name='license-url'>http://www.gnu.org/licenses/gpl.html</fz:attr></rdf:Description></rdf:RDF></metadata><g id="copper1">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="4.7255in" height="4.2015in" viewBox="0 0 472550 420150" ><title>PCI5V_MAX_HEIGHT.fp</title><desc>Geda footprint file 'PCI5V_MAX_HEIGHT.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>PCI5V_MAX_HEIGHT.fp</fz:attr>
+<fz:attr name='fritzing version'>0.3.21b.05.25.4197</fz:attr>
+<fz:attr name='conversion date'>07/06/2010 13:01:56</fz:attr>
+<fz:attr name='dist-license'>GPL</fz:attr>
+<fz:attr name='use-license'>unlimited</fz:attr>
+<fz:attr name='author'>gEDA project</fz:attr>
+<fz:attr name='license-url'>http://www.gnu.org/licenses/gpl.html</fz:attr>
+</rdf:Description></rdf:RDF></metadata><g id="copper1">
  <line fill="none" connectorname="-12V" stroke="#ffbf00" stroke-linejoin="round" stroke-linecap="round" id="connector0pin" y1="393850" x1="163850" y2="393850" stroke-width="1600" x2="166250"/>
  <line fill="none" connectorname="-12V" stroke="#ffbf00" stroke-linejoin="round" stroke-linecap="round" id="connector0pin" y1="393850" x1="163850" y2="413850" stroke-width="1600" x2="163850"/>
  <line fill="none" connectorname="-12V" stroke="#ffbf00" stroke-linejoin="round" stroke-linecap="round" id="connector0pin" y1="413850" x1="163850" y2="418850" stroke-width="1600" x2="165050"/>
