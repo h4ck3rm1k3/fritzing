@@ -60,6 +60,8 @@ void SVG2gerber::convert(QString svgStr, QString debugStr)
         out << m_SVGDom.toString();
     }
     temp = m_SVGDom.toString();
+#else
+    Q_UNUSED(debugStr);
 #endif
 
     normalizeSVG();

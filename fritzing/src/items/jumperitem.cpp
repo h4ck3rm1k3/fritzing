@@ -251,6 +251,8 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 				.arg(r0x).arg(r0y).arg(r1x).arg(r1y)
 				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
 				.arg(Colors.value(viewLayerID));
+                default:
+                    break;
 	}
 
 	return ___emptyString___;
@@ -284,6 +286,7 @@ void JumperItem::resize() {
 			case ViewLayer::Copper1:
 			case ViewLayer::Silkscreen1:
 			case ViewLayer::Silkscreen0:
+                                {
 				FSvgRenderer * renderer = m_renderers.value(itemBase->viewLayerID(), NULL);
 				if (renderer == NULL) {
 					renderer = new FSvgRenderer(itemBase);
@@ -294,8 +297,11 @@ void JumperItem::resize() {
 				bool result = renderer->fastLoad(s.toUtf8());
 				if (result) {
 					dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(renderer);
-				}
+                                }
+                                }
 				break;
+                        default:
+                                break;
 		}
 	}
 
@@ -346,6 +352,8 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 		case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
 			xml = makeSvg(viewLayerID);
+                default:
+                        break;
 	}
 
 	if (!xml.isEmpty()) {
