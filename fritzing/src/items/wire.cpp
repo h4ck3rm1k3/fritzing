@@ -571,7 +571,7 @@ void Wire::mouseDoubleClickConnectorEvent(ConnectorItem * connectorItem, QGraphi
 void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
 	//DebugDialog::debug("checking press connector event");
 
-	if (m_canChainMultiple && event->modifiers() == altOrMetaModifier()) {
+        if (m_canChainMultiple && event->modifiers() & altOrMetaModifier()) {
 		// dragging a wire out of a bendpoint
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView != NULL) {

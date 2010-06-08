@@ -282,7 +282,7 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,ConnectorTer
 			QString("</layers></%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 			QString("</views><connectors>\n");
 
-	QString defaultLayer = SketchWidget::defaultConnectorLayer(m_viewIdentifier);
+        QString defaultLayer = ViewLayer::viewLayerXmlNameFromID(SketchWidget::defaultConnectorLayer(m_viewIdentifier));
 	QStringList defaultLayers = defaultLayerAsStringlist();
 	foreach (QString layer, defaultLayers) {
 		if (layers.contains(layer)) {
