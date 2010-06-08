@@ -62,6 +62,8 @@ void MainWindow::exportToGerber() {
                                              QFileDialog::ShowDirsOnly
                                              | QFileDialog::DontResolveSymlinks);
 
+	if (exportDir.isEmpty()) return;
+
 	exportToGerber(exportDir, board, true);
 }
 

@@ -154,6 +154,9 @@ ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * mod
 	Q_UNUSED(modelPart);
 	Q_UNUSED(viewIdentifier);
 
+	if (viewLayerSpec == ViewLayer::GroundPlane_Bottom) return ViewLayer::GroundPlane0;
+	else if (viewLayerSpec == ViewLayer::GroundPlane_Top) return ViewLayer::GroundPlane1;
+
 	// priviledge Copper if it's available
 	ViewLayer::ViewLayerID wantLayer = modelPart->flippedSMD() && viewLayerSpec == ViewLayer::ThroughHoleThroughTop_TwoLayers ? ViewLayer::Copper1 : ViewLayer::Copper0;
 	QDomElement layer = layers.firstChildElement("layer");
@@ -617,6 +620,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID(ConnectorItem * c
 	switch (connectorItem->attachedTo()->viewLayerID()) {
 		case ViewLayer::Copper1:
 		case ViewLayer::Copper1Trace:
+		case ViewLayer::GroundPlane1:
 			return ViewLayer::Copper1Trace;
 		default:
 			return ViewLayer::Copper0Trace;
@@ -635,6 +639,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 	if (viewGeometry.getTrace()) {
 		switch (viewLayerSpec) {
 			case ViewLayer::WireOnTop_TwoLayers:
+			case ViewLayer::GroundPlane_Top:
 				return ViewLayer::Copper1Trace;
 			default:
 				return ViewLayer::Copper0Trace;
@@ -675,6 +680,7 @@ const QString & PCBSketchWidget::traceColor(ConnectorItem * forColor) {
 	switch(forColor->attachedTo()->viewLayerID()) {
 		case ViewLayer::Copper1:
 		case ViewLayer::Copper1Trace:
+		case ViewLayer::GroundPlane1:
 			return PCBTraceColor1;
 		default:
 			return PCBTraceColor;
@@ -1390,9 +1396,11 @@ void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::View
 
 		case ViewLayer::ThroughHoleThroughTop_OneLayer:
 		case ViewLayer::ThroughHoleThroughTop_TwoLayers:
+		case ViewLayer::GroundPlane_Top:
 			color.setNamedColor(ViewLayer::Silkscreen1Color);
 			break;
 		case ViewLayer::ThroughHoleThroughBottom_TwoLayers:
+		case ViewLayer::GroundPlane_Bottom:
 			color.setNamedColor(ViewLayer::Silkscreen0Color);
 			break;
 		case ViewLayer::SMDOnTop_TwoLayers:
@@ -2116,6 +2124,7 @@ ViewLayer::ViewLayerSpec PCBSketchWidget::wireViewLayerSpec(ConnectorItem * conn
 	switch (connectorItem->attachedTo()->viewLayerID()) {
 		case ViewLayer::Copper1:
 		case ViewLayer::Copper1Trace:
+		case ViewLayer::GroundPlane1:
 			return ViewLayer::WireOnTop_TwoLayers;
 		default:
 			return (m_boardLayers == 1) ?  ViewLayer::WireOnBottom_OneLayer : ViewLayer::WireOnBottom_TwoLayers;

@@ -42,7 +42,8 @@ public:
 	GroundPlaneGenerator();
 	~GroundPlaneGenerator();
 
-	bool start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, QGraphicsItem * board, qreal res); 
+	bool start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, QStringList & exceptions, 
+					QGraphicsItem * board, qreal res, const QString & color, const QString & layerName); 
 	const QStringList & newSVGs();
 	void scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector);  
 

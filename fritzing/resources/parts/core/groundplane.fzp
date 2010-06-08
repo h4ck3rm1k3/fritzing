@@ -23,6 +23,7 @@
 <pcbView>
 <layers image='pcb/groundplane.svg' >
 <layer layerId='groundplane' />
+<layer layerId='groundplane1' />
 </layers>
 </pcbView>
 <breadboardView>
@@ -42,6 +43,7 @@
 <views>
   <pcbView>
     <p svgId='connector0pad' layer='groundplane' />
+    <p svgId='connector0pad' layer='groundplane1' />
   </pcbView>
   <breadboardView>
     <p svgId='connector0pad' layer='groundplane' />

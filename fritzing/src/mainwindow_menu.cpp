@@ -166,75 +166,96 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		if (ret != QMessageBox::Yes) return;
 	}
 
+	QStringList fileNames;
 	QString path = defaultSaveFolder();
-
-	QString fileExt;
-	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
 	QString suffix = (wantPDF) ? pdfActionType : svgActionType;
-	QString fileName = FolderUtils::getSaveFileName(this,
-		tr("Export Etchable for DIY..."),
-		path+"/"+constructFileName("etch", suffix),
-		extFmt,
-		&fileExt
-	);
+	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
+	QString fileExt;
 
-	if (fileName.isEmpty()) {
-		return; //Cancel pressed
+	if (m_pcbGraphicsView->boardLayers() == 1) {
+		QString fileName = FolderUtils::getSaveFileName(this,
+			tr("Export Etchable for DIY..."),
+			path+"/"+constructFileName("etch", suffix),
+			extFmt,
+			&fileExt
+		);
+
+		if (fileName.isEmpty()) {
+			return; //Cancel pressed
+		}
+
+		if(!alreadyHasExtension(fileName, suffix)) {
+			fileName += suffix;
+		}
+
+		fileNames.append(fileName);
+	}
+	else {
+		QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
+												 defaultSaveFolder(),
+												 QFileDialog::ShowDirsOnly
+												 | QFileDialog::DontResolveSymlinks);
+		if (exportDir.isEmpty()) return;
+
+		fileNames.append(exportDir + "/" + constructFileName("etch_bottom", suffix));
+		fileNames.append(exportDir + "/" + constructFileName("etch_top", suffix));
+		fileExt = extFmt;
 	}
 
+	
 	FileProgressDialog * fileProgressDialog = exportProgress();
-
-	DebugDialog::debug(fileExt+" selected to export");
-	if(!alreadyHasExtension(fileName, suffix)) {
-		fileName += suffix;
-	}
 
     ItemBase * board = m_pcbGraphicsView->findBoard();
 
-	// TODO: what about copper1, etc
-
-	LayerList viewLayerIDs;
-	viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
-	QSizeF imageSize;
-	if (wantSVG) {
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false);
-		svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize);
-		
-		QString svgFileName = fileName;
-		svgFileName.replace(fileExt, ".svg");
-		QFile file(svgFileName);
-		file.open(QIODevice::WriteOnly);
-		QTextStream out(&file);
-		out.setCodec("UTF-8");
-		out << svg;
-		file.close();
-	}
-	else {
-		QPrinter printer(QPrinter::HighResolution);
-		printer.setOutputFormat(filePrintFormats[fileExt]);
-		printer.setOutputFileName(fileName);
-		int res = printer.resolution();
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false);
-		svg = mergeBoardSvg(svg, board, res, imageSize);
-		
-		// now convert to pdf
-		QSvgRenderer svgRenderer;
-		svgRenderer.load(svg.toLatin1());
-		qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
-		qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
-		QRectF target(0, 0, trueWidth * res, trueHeight * res);
-
-		QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
-					 (target.height() + printer.paperRect().height() - printer.height()) / res);
-		printer.setPaperSize(psize, QPrinter::Inch);
-
-		QPainter painter;
-		if (painter.begin(&printer))
-		{
-			svgRenderer.render(&painter, target);
+	for (int ix = 0; ix < fileNames.count(); ix++) {
+		QString fileName = fileNames[ix];
+		LayerList viewLayerIDs;
+		if (ix == 0) {
+			viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+		}
+		else {
+			viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
 		}
 
-		painter.end();
+		QSizeF imageSize;
+		if (wantSVG) {
+			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false);
+			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize);
+			
+			QFile file(fileName);
+			file.open(QIODevice::WriteOnly);
+			QTextStream out(&file);
+			out.setCodec("UTF-8");
+			out << svg;
+			file.close();
+		}
+		else {
+			QPrinter printer(QPrinter::HighResolution);
+			printer.setOutputFormat(filePrintFormats[fileExt]);
+			printer.setOutputFileName(fileName);
+			int res = printer.resolution();
+			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false);
+			svg = mergeBoardSvg(svg, board, res, imageSize);
+			
+			// now convert to pdf
+			QSvgRenderer svgRenderer;
+			svgRenderer.load(svg.toLatin1());
+			qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
+			qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
+			QRectF target(0, 0, trueWidth * res, trueHeight * res);
+
+			QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
+						 (target.height() + printer.paperRect().height() - printer.height()) / res);
+			printer.setPaperSize(psize, QPrinter::Inch);
+
+			QPainter painter;
+			if (painter.begin(&printer))
+			{
+				svgRenderer.render(&painter, target);
+			}
+
+			painter.end();
+		}
 	}
 
 	m_statusBar->showMessage(tr("Sketch exported"), 2000);
@@ -2956,7 +2977,6 @@ void MainWindow::groundFill()
 	//		what about leftover temp files from crashes?
 	//		clear ground plane when anything changes
 	//		some polygons can be combined
-	//		ground plane item should return to being a rectangle so it can be dragged?
 	//		remove old ground plane modules from paletteModel and database
 
 	FileProgressDialog fileProgress("Generating copper fill...", 0, this);
@@ -2984,23 +3004,46 @@ void MainWindow::groundFill()
 	QSizeF copperImageSize;
 
 	m_pcbGraphicsView->showGroundTraces(false);
-
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true);
+	m_pcbGraphicsView->showGroundTraces(true);
 	if (svg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 		return;
 	}
 
-	m_pcbGraphicsView->showGroundTraces(true);
+	QString svg2;
+	if (m_pcbGraphicsView->boardLayers() > 1) {
+		viewLayerIDs.clear();
+		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+		m_pcbGraphicsView->showGroundTraces(false);
+		svg2 = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true);
+		m_pcbGraphicsView->showGroundTraces(true);
+		if (svg2.isEmpty()) {
+			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
+			return;
+		}
+	}
+
 
 	QStringList exceptions;
 	exceptions << m_pcbGraphicsView->background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
-	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */);
+	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
+		ViewLayer::Copper0Color, "groundplane");
 	if (result == false) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
 		return;
+	}
+
+	GroundPlaneGenerator gpg2;
+	if (m_pcbGraphicsView->boardLayers() > 1) {
+		bool result = gpg2.start(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
+			ViewLayer::Copper1Color, "groundplane1");
+		if (result == false) {
+			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
+			return;
+		}
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Copper Fill"));
@@ -3009,7 +3052,15 @@ void MainWindow::groundFill()
 		ViewGeometry vg;
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
-		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, m_pcbGraphicsView->defaultViewLayerSpec(), vg, newID, false, -1, parentCommand);
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
+		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
+	}
+
+	foreach (QString svg, gpg2.newSVGs()) {
+		ViewGeometry vg;
+		vg.setLoc(board->pos());
+		long newID = ItemBase::getNextID();
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
 	}
 

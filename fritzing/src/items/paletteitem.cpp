@@ -98,6 +98,12 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 			//notLayers << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel;
 			break;
 
+		case ViewLayer::GroundPlane_Top:
+			notLayers << ViewLayer::GroundPlane0;
+			break;
+		case ViewLayer::GroundPlane_Bottom:
+			notLayers << ViewLayer::GroundPlane1;
+			break;
 
 		// not sure these ever get used...
 		case ViewLayer::SMDOnTop_TwoLayers:

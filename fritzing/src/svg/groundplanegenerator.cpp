@@ -51,7 +51,7 @@ GroundPlaneGenerator::~GroundPlaneGenerator() {
 }
 
 bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-								 QStringList & exceptions, QGraphicsItem * board, qreal res) 
+								 QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName) 
 {
 	QByteArray boardByteArray;
     QString tempColor("#ffffff");
@@ -109,7 +109,7 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	scanImage(image, bWidth, bHeight, MILS, res, ViewLayer::Copper0Color, "groundplane", true);
+	scanImage(image, bWidth, bHeight, MILS, res, color, layerName, true);
 	return true;
 }
 

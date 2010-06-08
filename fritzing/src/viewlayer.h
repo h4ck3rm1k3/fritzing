@@ -81,7 +81,9 @@ public:
 		SMDOnBottom_TwoLayers,
 		WireOnTop_TwoLayers,
 		WireOnBottom_OneLayer,
-		WireOnBottom_TwoLayers
+		WireOnBottom_TwoLayers,
+		GroundPlane_Top,
+		GroundPlane_Bottom
 	};
 
 public:
