@@ -132,7 +132,7 @@ void Connector::saveAsPart(QXmlStreamWriter & writer) {
 	writer.writeTextElement("description", connectorShared()->description());
 	writer.writeStartElement("views");
 	QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> pins = m_connectorShared->pins();
-	foreach (ViewIdentifierClass::ViewIdentifier currView, pins.keys()) {
+	foreach (ViewIdentifierClass::ViewIdentifier currView, pins.uniqueKeys()) {
 		writer.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(currView));
 		foreach (SvgIdLayer * svgIdLayer, pins.values(currView)) {
 			writer.writeStartElement("p");

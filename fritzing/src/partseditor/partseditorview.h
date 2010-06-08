@@ -77,7 +77,7 @@ class PartsEditorView : public SketchWidget {
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
 		void aboutToSave(bool fakeDefaultIfNotIn);
-		void updatePinsInfo(QList<class ConnectorShared*> conns);
+		void updatePinsInfo(QList< QPointer<class ConnectorShared> > conns);
 
 		void showTerminalPoints(bool show);
 		bool showingTerminalPoints();

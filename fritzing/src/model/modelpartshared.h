@@ -78,8 +78,8 @@ public:
 	const QString & taxonomy();
 	void setTaxonomy(QString taxonomy);
 
-	const QList<class ConnectorShared *> connectors();
-	void setConnectorsShared(QList<class ConnectorShared *> connectors);
+	const QList< QPointer<class ConnectorShared> > connectorsShared();
+	void setConnectorsShared(QList< QPointer<class ConnectorShared> > connectors);
 	void connectorIDs(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs);
 
 	const QStringList &tags();
@@ -139,7 +139,7 @@ protected:
 	QStringList m_tags;
 	QHash<QString,QString> m_properties;
 
-	QHash<QString, class ConnectorShared *> m_connectorSharedHash;
+	QHash<QString, QPointer<class ConnectorShared> > m_connectorSharedHash;
 	QHash<QString, class BusShared *> m_buses;
 	QMultiHash<ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID> m_hasViewFor;
 	QHash<ViewIdentifierClass::ViewIdentifier, QString> m_hasBaseNameFor;

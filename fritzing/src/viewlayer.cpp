@@ -48,6 +48,7 @@ ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 	m_action = NULL;
 	m_initialZ = m_nextZ = initialZ;	
 	m_parentLayer = NULL;
+	m_active = true;
 }
 
 ViewLayer::~ViewLayer() {
@@ -212,4 +213,12 @@ bool ViewLayer::canConnect(ViewLayer::ViewLayerID v1, ViewLayer::ViewLayerID v2)
 
  	LayerList uncs = unconnectables.values(v1);
 	return (!uncs.contains(v2));
+}
+
+bool ViewLayer::isActive() {
+	return m_active;
+}
+
+void ViewLayer::setActive(bool a) {
+	m_active = a;
 }

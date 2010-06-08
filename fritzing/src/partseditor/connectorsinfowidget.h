@@ -42,7 +42,7 @@ class ConnectorsInfoWidget : public QFrame {
 	Q_OBJECT
 	public:
 		ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent=0);
-		const QList<ConnectorShared *> connectorsShared();
+		const QList< QPointer<ConnectorShared> > connectorsShared();
 		QCheckBox *showTerminalPointsCheckBox();
 		int scrollBarWidth();
 		void setViews(PartsEditorViewsWidget* connsView);

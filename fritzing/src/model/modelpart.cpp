@@ -303,7 +303,7 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 		}
 
 		streamWriter.writeStartElement("connectors");
-		const QList<ConnectorShared *> connectors = m_modelPartShared->connectors();
+		const QList< QPointer<ConnectorShared> > connectors = m_modelPartShared->connectorsShared();
 		for (int i = 0; i < connectors.count(); i++) {
 			Connector * connector = new Connector(connectors[i], this);
 			connector->saveAsPart(streamWriter);
@@ -332,7 +332,9 @@ void ModelPart::initConnectors(bool force) {
 
 	if(force) {
 		foreach (Connector * connector, m_connectorHash.values()) {
+			// due to craziness in the parts editor
 			m_deletedConnectors.append(connector);
+			//delete connector;
 		}
 		m_connectorHash.clear();						
 		foreach (Bus * bus, m_busHash.values()) {
@@ -343,7 +345,7 @@ void ModelPart::initConnectors(bool force) {
 	if(m_connectorHash.count() > 0) return;		// already done
 
 	m_modelPartShared->initConnectors();
-	foreach (ConnectorShared * connectorShared, m_modelPartShared->connectors()) {
+	foreach (ConnectorShared * connectorShared, m_modelPartShared->connectorsShared()) {
 		Connector * connector = new Connector(connectorShared, this);
 		m_connectorHash.insert(connectorShared->id(), connector);
 		BusShared * busShared = connectorShared->bus();

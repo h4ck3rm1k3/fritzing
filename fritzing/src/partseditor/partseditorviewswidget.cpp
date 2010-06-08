@@ -339,7 +339,7 @@ void PartsEditorViewsWidget::setViewItems(ItemBase* bbItem, ItemBase* schemItem,
 	m_pcbView->setViewItem(pcbItem);
 }
 
-void PartsEditorViewsWidget::updatePinsInfo(QList<ConnectorShared*> connsShared) {
+void PartsEditorViewsWidget::updatePinsInfo(QList< QPointer<ConnectorShared> > connsShared) {
 	m_breadView->updatePinsInfo(connsShared);
 	m_schemView->updatePinsInfo(connsShared);
 	m_pcbView->updatePinsInfo(connsShared);

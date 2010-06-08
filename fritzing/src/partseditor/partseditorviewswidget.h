@@ -44,7 +44,7 @@ Q_OBJECT
 		void loadViewsImagesFromModel(PaletteModel *paletteModel, ModelPart *modelPart);
 		const QDir& tempDir();
 		void aboutToSave();
-		void updatePinsInfo(QList<ConnectorShared*> connsShared);
+		void updatePinsInfo(QList< QPointer<ConnectorShared> > connsShared);
 		QCheckBox *showTerminalPointsCheckBox();
 
 		bool imagesLoadedInAllViews();

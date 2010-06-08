@@ -282,12 +282,21 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,ConnectorTer
 			QString("</layers></%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 			QString("</views><connectors>\n");
 
+	QString defaultLayer = SketchWidget::defaultConnectorLayer(m_viewIdentifier);
+	QStringList defaultLayers = defaultLayerAsStringlist();
+	foreach (QString layer, defaultLayers) {
+		if (layers.contains(layer)) {
+			defaultLayer = layer;
+			break;
+		}
+	}
+
 	foreach(QString id, conns.keys()) {
 		QString terminalAttr = conns[id].terminalId != ___emptyString___ ? QString("terminalId='%1'").arg(conns[id].terminalId) : "";
 		fakeFzFile += QString("<connector id='%1'><views>\n").arg(id)+
 				QString("<%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 				QString("<p layer='%1' svgId='%2' %3/>\n")
-					.arg(ViewLayer::viewLayerXmlNameFromID(SketchWidget::defaultConnectorLayer(m_viewIdentifier)))
+					.arg(defaultLayer)
 					.arg(conns[id].connectorId)
 					.arg(terminalAttr)+
 				QString("</%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
@@ -351,15 +360,15 @@ const QStringList PartsEditorView::getLayers(const QString &path) {
 
 const QStringList PartsEditorView::getLayers(const QDomDocument *dom, bool fakeDefaultIfNone) {
 	QStringList retval;
-	QDomElement docElem = dom->documentElement();
+	
+	QDomNodeList nodeList = dom->elementsByTagName("g");
+	for (uint i = 0; i < nodeList.length(); i++) {
+		QDomElement e = nodeList.item(i).toElement();
+		QString id = e.attribute("id");
+		if (id.isEmpty()) continue;
+		if (ViewLayer::viewLayerIDFromXmlString(id) == ViewLayer::UnknownLayer) continue;
 
-	QDomElement e = docElem.firstChildElement();
-	while(!e.isNull()) {
-		if(e.tagName() == "g") {
-			QString id = e.attribute("id");
-			retval << id;
-		}
-		e = e.nextSiblingElement();
+		retval << id;
 	}
 
 	if(fakeDefaultIfNone && retval.isEmpty()) {
@@ -1217,8 +1226,7 @@ LayerList PartsEditorView::defaultLayers() {
 			layers << ViewLayer::Schematic; 
 			break;
 		case ViewIdentifierClass::PCBView: 
-			layers << ViewLayer::Copper0; 
-			layers << ViewLayer::Copper1;
+			layers << ViewLayer::Copper0 << ViewLayer::Copper1;
 			break;
 		default: 
 			layers << ViewLayer::UnknownLayer;
@@ -1555,7 +1563,7 @@ void PartsEditorView::setViewItem(ItemBase * item) {
 	m_viewItem = item;
 }
 
-void PartsEditorView::updatePinsInfo(QList<ConnectorShared*> connsShared) {
+void PartsEditorView::updatePinsInfo(QList< QPointer<ConnectorShared> > connsShared) {
 	if(!m_svgLodaded) return;  // if the user has not changed the svg file, there's nothing to update
 
 	ViewLayer::ViewLayerID layerID = connectorsLayerId();

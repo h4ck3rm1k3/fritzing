@@ -32,11 +32,12 @@ $Date$
 #include <QHash>
 #include <QList>
 #include <QXmlStreamWriter>
+#include <QPointer>
 
 class BusShared {
 	
 public:
-	BusShared(const QDomElement & busElement, const QHash<QString, class ConnectorShared *> & connectorHash);
+	BusShared(const QDomElement & busElement, const QHash<QString, QPointer<class ConnectorShared> > & connectorHash);
 	
 	const QString & id();
 	const QList<class ConnectorShared *> & connectors();

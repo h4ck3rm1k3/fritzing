@@ -655,7 +655,7 @@ ModelPartShared* PartsEditorMainWindow::modelPartShared() {
 	m_iconViewImage->aboutToSave(true);
 	m_views->aboutToSave();
 
-	QList<ConnectorShared*> connsShared = m_connsInfo->connectorsShared();
+	QList< QPointer<ConnectorShared> > connsShared = m_connsInfo->connectorsShared();
 	m_views->updatePinsInfo(connsShared);
 	shared->setConnectorsShared(m_connsInfo->connectorsShared());
 

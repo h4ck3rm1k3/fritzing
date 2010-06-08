@@ -77,19 +77,6 @@ static int kBottomOfAlpha = 204;
 #endif
 #endif
 
-#ifdef LINUX_32
-#define PLATFORM_NAME "linux-32bit"
-#endif
-#ifdef LINUX_64
-#define PLATFORM_NAME "linux-64bit"
-#endif
-#ifdef Q_WS_WIN
-#define PLATFORM_NAME "windows"
-#endif
-#ifdef Q_WS_MAC
-#define PLATFORM_NAME "mac"
-#endif
-
 int FApplication::RestartNeeded = 9999;
 
 QSet<QString> InstalledFonts::InstalledFontsList;

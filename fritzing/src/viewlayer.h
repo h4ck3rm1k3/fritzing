@@ -116,6 +116,8 @@ public:
 	const QList<ViewLayer *> & childLayers();
 	bool alreadyInLayer(qreal z);
 	void resetNextZ(qreal z);
+	void setActive(bool);
+	bool isActive();
 
 public:
 	static ViewLayerID viewLayerIDFromXmlString(const QString &);
@@ -135,6 +137,7 @@ protected:
 	qreal m_initialZ;
 	QList<ViewLayer *> m_childLayers;
 	ViewLayer * m_parentLayer;
+	bool m_active;
 
 };
 

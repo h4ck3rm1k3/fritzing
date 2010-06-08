@@ -27,6 +27,19 @@ $Date$
 #ifndef MISC_H
 #define MISC_H
 
+#ifdef LINUX_32
+#define PLATFORM_NAME "linux-32bit"
+#endif
+#ifdef LINUX_64
+#define PLATFORM_NAME "linux-64bit"
+#endif
+#ifdef Q_WS_WIN
+#define PLATFORM_NAME "windows"
+#endif
+#ifdef Q_WS_MAC
+#define PLATFORM_NAME "mac"
+#endif
+
 #include <QHash>
 #include <QVector>
 
@@ -86,5 +99,6 @@ const QStringList & fritzingExtensions();
 static const QString FemaleSymbolString = QString("%1").arg(QChar(0x2640));
 static const QString MaleSymbolString = QString("%1").arg(QChar(0x2642));
 
+Qt::KeyboardModifier altOrMetaModifier();
 
 #endif

@@ -332,8 +332,8 @@ void ConnectorsInfoWidget::informEditionCompleted() {
 	emit editionCompleted();
 }
 
-const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsShared() {
-	QList<ConnectorShared *> connectorsShared;
+const QList< QPointer<ConnectorShared> > ConnectorsInfoWidget::connectorsShared() {
+	QList< QPointer<ConnectorShared> > connectorsShared;
 	for(int i=0; i<m_connsInfo.size(); i++) {
 		SingleConnectorInfoWidget *sci = m_connsInfo[i];
 		QString id = sci->id();

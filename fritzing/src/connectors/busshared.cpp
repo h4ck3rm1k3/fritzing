@@ -29,7 +29,7 @@ $Date$
 #include "../debugdialog.h"
 #include "connectoritem.h"
 
-BusShared::BusShared(const QDomElement & busElement, const QHash<QString, ConnectorShared *> & connectorHash)
+BusShared::BusShared(const QDomElement & busElement, const QHash<QString, QPointer<ConnectorShared> > & connectorHash)
 {
 	m_id = busElement.attribute("id");
 	
