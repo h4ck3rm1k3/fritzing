@@ -50,7 +50,7 @@ public:
 	static qreal mils2pixels(qreal m);
 	static void saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform);
 	static bool loadTransform(const QDomElement & transformElement, QTransform & transform);
-
+	static bool is90(const QMatrix & matrix);
 
 public:
 	static const int IllustratorDPI = 72;

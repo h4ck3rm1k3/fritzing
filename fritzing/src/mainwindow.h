@@ -171,8 +171,9 @@ protected slots:
 	void bringToFront();
 	void rotate90cw();
 	void rotate90ccw();
-	void rotate45ccw();
 	void rotate180();
+	void rotate45ccw();
+	void rotate45cw();
 	void flipHorizontal();
 	void flipVertical();
 	void showAllLayers();
@@ -483,10 +484,14 @@ protected:
 	QAction *m_exportNormalizedFlattenedSvgAction;
     QAction *m_openInPartsEditorAct;
     QMenu *m_addToBinMenu;
+
+	QMenu *m_rotateMenu;
 	QAction *m_rotate90cwAct;
 	QAction *m_rotate180Act;
 	QAction *m_rotate90ccwAct;
 	QAction *m_rotate45ccwAct;
+	QAction *m_rotate45cwAct;
+
 	QAction *m_flipHorizontalAct;
 	QAction *m_flipVerticalAct;
 	QAction *m_showPartLabelAct;

@@ -191,7 +191,7 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
         DebugDialog::debug("converting child to path: " + tag);
 
         if(tag=="polygon"){
-            path = poly2path(element);
+            path = element;
         }
         else if(tag=="rect"){
             path = element;
@@ -410,27 +410,57 @@ void SVG2gerber::allPaths2gerber() {
         QString points = polygon.attribute("points");
 		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
 
-        //start poly area fill
-        m_gerber_paths += "G36*\n";
+        // set poly fill if this is actually a filled in shape
+        if(polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
+            // start poly fill
+            m_gerber_paths += "G36*\n";
+        }
+		else {
+			qreal stroke_width = polygon.attribute("stroke-width").toDouble();
+
+			QString aperture = QString("C,%1").arg(stroke_width/1000);
+			QString mask_aperture = QString("C,%1").arg((stroke_width/1000) + 0.006);
+
+			// add aperture to defs if we don't have it yet
+			if(!apertureMap.contains(aperture)){
+				apertureMap[aperture] = "D" + QString::number(dcode_index);
+				m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+				m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
+				dcode_index++;
+			}
+
+			QString dcode = apertureMap[aperture];
+			if(current_dcode != dcode){
+				//switch to correct aperture
+				m_gerber_paths += "G54" + dcode + "*\n";
+				m_soldermask_paths += "G54" + dcode + "*\n";
+				current_dcode = dcode;
+			}
+		}
 
         int startx = qRound(pointList.at(0).toDouble());
         int starty = qRound(pointList.at(1).toDouble());
         // move to start - light off
         m_gerber_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D02*\n";
+        m_soldermask_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D02*\n";
 
         // iterate through all other points - light on
         for(int pt = 2; pt < pointList.length(); pt +=2){
             int ptx = qRound(pointList.at(pt).toDouble());
             int pty = qRound(pointList.at(pt+1).toDouble());
             m_gerber_paths += "X" + QString::number(ptx) + "Y" + QString::number(pty) + "D01*\n";
+            m_soldermask_paths += "X" + QString::number(ptx) + "Y" + QString::number(pty) + "D01*\n";
         }
 
         // move back to start point
         m_gerber_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D01*\n";
+        m_soldermask_paths += "X" + QString::number(startx) + "Y" + QString::number(starty) + "D01*\n";
 
-
-        // stop poly fill
-        m_gerber_paths += "G37*\n";
+        // stop poly fill if this is actually a filled in shape
+        if(polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
+            // stop poly fill
+            m_gerber_paths += "G37*\n";
+        }
 
         // light off
         m_gerber_paths += "D02*\n";
@@ -580,11 +610,6 @@ void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {
 		.arg(cy1 / 1000)
 		.arg(cx2 / 1000)
 		.arg(cy2 / 1000);
-}
-
-QDomElement SVG2gerber::poly2path(QDomElement polyElement){
-    // TODO
-    return polyElement;
 }
 
 QDomElement SVG2gerber::ellipse2path(QDomElement ellipseElement){

@@ -2843,7 +2843,7 @@ ItemCount SketchWidget::calcItemCount() {
 
 	itemCount.visLabelCount = itemCount.hasLabelCount = 0;
 	itemCount.selCount = 0;
-	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable = 0;
+	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable  = itemCount.sel45Rotatable = 0;
 	itemCount.itemsCount = 0;
 	itemCount.obsoleteCount = 0;
 
@@ -2875,12 +2875,21 @@ ItemCount SketchWidget::calcItemCount() {
 			if (rotatable) {
 				itemCount.selRotatable++;
 			}
+
+			rotatable = rotation45Allowed(itemBase);
+			if (rotatable) {
+				itemCount.sel45Rotatable++;
+			}
 		}
 	}
 
 	if (itemCount.selCount != itemCount.selRotatable) {
 		// if you can't rotate them all, then you can't rotate any
 		itemCount.selRotatable = 0;
+	}
+	if (itemCount.selCount != itemCount.sel45Rotatable) {
+		// if you can't rotate them all, then you can't rotate any
+		itemCount.sel45Rotatable = 0;
 	}
 	if (itemCount.selCount != itemCount.selVFlipable) {
 		itemCount.selVFlipable = 0;
@@ -3277,6 +3286,9 @@ void SketchWidget::rotateX(qreal degrees)
 		if (!rotationAllowed(item)) {
 			continue;
 		}
+		if (qAbs(degrees) == 45 && !rotation45Allowed(item)) {
+			continue;
+		}
 
 		ViewGeometry vg1 = item->getViewGeometry();
 		ViewGeometry vg2(vg1);
@@ -3395,6 +3407,9 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 			default:
 				if (!rotationAllowed(itemBase)) {
+					continue;
+				}
+				if (qAbs(degrees) == 45 && !rotation45Allowed(itemBase)) {
 					continue;
 				}
 				break;
@@ -5575,13 +5590,29 @@ void SketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 	m_undoStack->push(parentCommand);
 }
 
+bool SketchWidget::rotation45Allowed(ItemBase * itemBase) 
+{
+	switch(itemBase->itemType()) {
+		case ModelPart::Wire:
+		case ModelPart::Note:
+		case ModelPart::Unknown:
+		case ModelPart::Jumper:
+		case ModelPart::CopperFill:
+		case ModelPart::Board:
+		case ModelPart::ResizableBoard:
+		case ModelPart::Breadboard:
+			return false;
+		default:
+			return true;
+	}
+}
 
 bool SketchWidget::rotationAllowed(ItemBase * itemBase) 
 {
 	// TODO: allow breadboard and ardiuno to rotate even when connected to something
 
 	switch(itemBase->itemType()) {
-		//case ModelPart::Wire:
+		case ModelPart::Wire:
 		case ModelPart::Note:
 		case ModelPart::Unknown:
 		case ModelPart::Jumper:

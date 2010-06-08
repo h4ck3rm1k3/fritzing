@@ -58,6 +58,7 @@ struct ItemCount {
 	int visLabelCount;
 	int itemsCount;
 	int selRotatable;
+	int sel45Rotatable;
 	int selHFlipable;
 	int selVFlipable;
 	int obsoleteCount;
@@ -323,6 +324,7 @@ protected:
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
 	bool rotationAllowed(ItemBase *);
+	bool rotation45Allowed(ItemBase *);
 	virtual bool allowFemaleRotation(ItemBase *);
 	void prepDragBendpoint(Wire *, QPoint eventPos);
 	void prepDragWire(Wire *);

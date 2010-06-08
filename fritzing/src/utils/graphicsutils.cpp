@@ -216,3 +216,12 @@ qreal GraphicsUtils::getNearestOrdinate(qreal ordinate, qreal units) {
 	return (qAbs(lo - ordinate) <= qAbs(hi - ordinate)) ? lo : hi;
 }
 
+bool GraphicsUtils::is90(const QMatrix & matrix) {
+	if (matrix.m11() == 0) return true;
+
+	if (matrix.m11() == M_PI / 2) return true;
+	if (matrix.m11() == -M_PI / 2) return true;
+	if (matrix.m11() == 3 * M_PI / 2) return true;
+
+	return false;
+}

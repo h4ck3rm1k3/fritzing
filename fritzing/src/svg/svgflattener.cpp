@@ -26,9 +26,11 @@ $Date$
 
 #include "svgflattener.h"
 #include "svgpathlexer.h"
+#include "../utils/graphicsutils.h"
 #include "../debugdialog.h"
 #include <QMatrix>
-#include <QRegExp>    
+#include <QRegExp>   
+#include <qmath.h>
 
 SvgFlattener::SvgFlattener() : SvgFileSplitter()
 {
@@ -100,16 +102,37 @@ void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
 			}
 		}
         else if(tag == "rect"){
-            // NOTE: this only works for 90/180/270 deg rotations
-            float x = element.attribute("x").toFloat();
-            float y = element.attribute("y").toFloat();
-            float width = element.attribute("width").toFloat();
-            float height = element.attribute("height").toFloat();
-            float cx = x + (width/2);
-            float cy = y + (height/2);
-            QPointF point = transform.map(QPointF(cx,cy));
-            element.setAttribute("x", point.x()-(width/2));
-            element.setAttribute("y", point.y()-(height/2));
+			float x = element.attribute("x").toFloat();
+			float y = element.attribute("y").toFloat();
+			float width = element.attribute("width").toFloat();
+			float height = element.attribute("height").toFloat();
+			if (GraphicsUtils::is90(transform)) {
+				float cx = x + (width/2);
+				float cy = y + (height/2);
+				QPointF point = transform.map(QPointF(cx,cy));
+				if (transform.m11() == 0 || transform.m11() == M_PI / 2) {
+					element.setAttribute("x", point.x()-(width/2));
+					element.setAttribute("y", point.y()-(height/2));
+				}
+				else {
+					element.setAttribute("x", point.x()-(height/2));
+					element.setAttribute("y", point.y()-(width/2));
+					element.setAttribute("width", height);
+					element.setAttribute("height", width);
+				}
+			}
+			else {
+				QRectF r(x, y, width, height);
+				QPolygonF poly = transform.map(r);
+				element.setTagName("polygon");
+				QString pts;
+				for (int i = 1; i < poly.count(); i++) {
+					QPointF p = poly.at(i);
+					pts += QString("%1,%2 ").arg(p.x()).arg(p.y());
+				}
+				pts.chop(1);
+				element.setAttribute("points", pts);
+			}
         }
         else if(tag == "circle"){
             float cx = element.attribute("cx").toFloat();

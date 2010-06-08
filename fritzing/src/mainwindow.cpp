@@ -513,8 +513,9 @@ ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent)
 
 SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
 	QList<QAction*> rotateMenuActions;
-	rotateMenuActions << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct;
+	rotateMenuActions << m_rotate45ccwAct << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct << m_rotate45cwAct;
 	SketchToolButton * rotateButton = new SketchToolButton("Rotate",parent, rotateMenuActions);
+	rotateButton->setDefaultAction(m_rotate90ccwAct);
 	rotateButton->setText(tr("Rotate"));
 	connect(rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
@@ -657,6 +658,20 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		this,
 		SLOT(updateTransformationActions())
 	);
+
+	static QKeySequence zeroSequence(0);
+	if (m_currentGraphicsView == m_schematicGraphicsView) {
+		m_rotate90ccwAct->setShortcut(tr("Alt+Ctrl+R"));
+		m_rotate90cwAct->setShortcut(tr("Ctrl+R"));
+		m_rotate45ccwAct->setShortcut(zeroSequence);
+		m_rotate45cwAct->setShortcut(zeroSequence);
+	}
+	else {
+		m_rotate45ccwAct->setShortcut(tr("Alt+Ctrl+R"));
+		m_rotate45cwAct->setShortcut(tr("Ctrl+R"));
+		m_rotate90ccwAct->setShortcut(zeroSequence);
+		m_rotate90cwAct->setShortcut(zeroSequence);
+	}
 
 	m_currentGraphicsView->setCurrent(true);
 

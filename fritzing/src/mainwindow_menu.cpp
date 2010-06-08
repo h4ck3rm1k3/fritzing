@@ -1286,8 +1286,12 @@ void MainWindow::createPartMenuActions() {
 	connect(m_rotate90ccwAct, SIGNAL(triggered()), this, SLOT(rotate90ccw()));
 
 	m_rotate45ccwAct = new QAction(tr("&Rotate 45\x00B0 Counter Clockwise"), this);
-	m_rotate45ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
+	m_rotate45ccwAct->setStatusTip(tr("Rotate current selection 45 degrees counter clockwise"));
 	connect(m_rotate45ccwAct, SIGNAL(triggered()), this, SLOT(rotate45ccw()));
+
+	m_rotate45cwAct = new QAction(tr("&Rotate 45\x00B0 Clockwise"), this);
+	m_rotate45cwAct->setStatusTip(tr("Rotate current selection 45 degrees clockwise"));
+	connect(m_rotate45cwAct, SIGNAL(triggered()), this, SLOT(rotate45cw()));
 
 	m_flipHorizontalAct = new QAction(tr("&Flip Horizontal"), this);
 	m_flipHorizontalAct->setStatusTip(tr("Flip current selection horizontally"));
@@ -1574,15 +1578,9 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_openInPartsEditorAct);
 	m_partMenu->addAction(m_saveBundledPart);
 	m_partMenu->addSeparator();
-	m_partMenu->addAction(m_rotate90cwAct);
-	m_partMenu->addAction(m_rotate180Act);
-#ifndef QT_NO_DEBUG
-	m_partMenu->addAction(m_rotate45ccwAct);
-#endif
-	m_partMenu->addAction(m_rotate90ccwAct);
 	m_partMenu->addAction(m_flipHorizontalAct);
 	m_partMenu->addAction(m_flipVerticalAct);
-	m_partMenu->addSeparator();
+	m_rotateMenu = m_partMenu->addMenu(tr("Rotate"));
 	m_zOrderMenu = m_partMenu->addMenu(tr("Raise and Lower"));
 	m_partMenu->addSeparator();
 	m_partMenu->addMenu(m_addToBinMenu);
@@ -1590,6 +1588,12 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_selectAllObsoleteAct);
 	m_partMenu->addAction(m_swapObsoleteAct);
+
+	m_rotateMenu->addAction(m_rotate45cwAct);
+	m_rotateMenu->addAction(m_rotate90cwAct);
+	m_rotateMenu->addAction(m_rotate180Act);
+	m_rotateMenu->addAction(m_rotate90ccwAct);
+	m_rotateMenu->addAction(m_rotate45ccwAct);
 
 	m_zOrderMenu->addAction(m_bringToFrontAct);
 	m_zOrderMenu->addAction(m_bringForwardAct);
@@ -1843,12 +1847,14 @@ void MainWindow::updatePartMenu() {
 	m_showPartLabelAct->setChecked(itemCount.visLabelCount == itemCount.hasLabelCount);
 
 	bool renable = (itemCount.selRotatable > 0);
+	bool renable45 = (itemCount.sel45Rotatable > 0);
 
 	//DebugDialog::debug(QString("enable rotate (2) %1").arg(enable));
 	m_rotate90cwAct->setEnabled(renable && enable);
 	m_rotate180Act->setEnabled(renable && enable);
 	m_rotate90ccwAct->setEnabled(renable && enable);
-	m_rotate45ccwAct->setEnabled(renable && enable);
+	m_rotate45ccwAct->setEnabled(renable && renable45 && enable && m_currentGraphicsView != m_schematicGraphicsView);
+	m_rotate45cwAct->setEnabled(renable && renable45 && enable && m_currentGraphicsView != m_schematicGraphicsView);
 
 	m_flipHorizontalAct->setEnabled(enable && (itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 	m_flipVerticalAct->setEnabled(enable && (itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
@@ -2330,6 +2336,12 @@ void MainWindow::rotate45ccw() {
 	if (m_currentGraphicsView == NULL) return;
 
 	m_currentGraphicsView->rotateX(-45);
+}
+
+void MainWindow::rotate45cw() {
+	if (m_currentGraphicsView == NULL) return;
+
+	m_currentGraphicsView->rotateX(45);
 }
 
 void MainWindow::rotate180() {
@@ -3097,22 +3109,13 @@ bool MainWindow::isGroundFill(ItemBase * itemBase) {
 
 QMenu *MainWindow::breadboardItemMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Part"), this);
-#ifndef QT_NO_DEBUG
-	menu->addAction(m_rotate45ccwAct);
-#endif
-	menu->addAction(m_rotate90cwAct);
-	menu->addAction(m_rotate180Act);
-	menu->addAction(m_rotate90ccwAct);
-	menu->addAction(m_flipHorizontalAct);
-	menu->addAction(m_flipVerticalAct);
+	menu->addMenu(m_rotateMenu);
 	return viewItemMenuAux(menu);
 }
 
 QMenu *MainWindow::schematicItemMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Part"), this);
-	menu->addAction(m_rotate90cwAct);
-	menu->addAction(m_rotate180Act);
-	menu->addAction(m_rotate90ccwAct);
+	menu->addMenu(m_rotateMenu);
 	menu->addAction(m_flipHorizontalAct);
 	menu->addAction(m_flipVerticalAct);
 	return viewItemMenuAux(menu);
@@ -3120,9 +3123,7 @@ QMenu *MainWindow::schematicItemMenu() {
 
 QMenu *MainWindow::pcbItemMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Part"), this);
-	menu->addAction(m_rotate90cwAct);
-	menu->addAction(m_rotate180Act);
-	menu->addAction(m_rotate90ccwAct);
+	menu->addMenu(m_rotateMenu);
 	menu = viewItemMenuAux(menu);
 	return menu;
 }
@@ -3198,7 +3199,6 @@ QMenu *MainWindow::schematicWireMenu() {
 }
 
 QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
-	menu->addSeparator();
 	menu->addMenu(m_zOrderMenu);
 	menu->addSeparator();
 	menu->addAction(m_copyAct);
