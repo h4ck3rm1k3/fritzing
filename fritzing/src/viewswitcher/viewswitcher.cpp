@@ -291,6 +291,7 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	//m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	m_layout->addWidget(m_buttonHolder);
 	//m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	m_layout->setSizeConstraint(QLayout::SetFixedSize);
 
 #ifndef QT_NO_DEBUG
 	//foreach (ViewSwitcherButton * b, m_buttons) {
