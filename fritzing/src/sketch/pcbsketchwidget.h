@@ -148,6 +148,7 @@ protected:
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 	int isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master);
 	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
+	void drcLayer(QSet<ItemBase *> & collidingItems, int progressOffest, qreal progressRange, int progressGoal);
 
 signals:
 	void setMaximumDRCProgress(int);

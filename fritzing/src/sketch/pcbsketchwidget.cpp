@@ -1826,10 +1826,9 @@ int PCBSketchWidget::designRulesCheck()
 	connect(this, SIGNAL(setMaximumDRCProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
 	connect(this, SIGNAL(setDRCProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
 	QApplication::processEvents();
-	
-	QSet<QGraphicsItem *> checkItems;
-	QSet<ItemBase *> collidingItems;
 
+	emit setMaximumDRCProgress(1000);
+	
 	scene()->clearSelection();
 	QColor color;
 	color = this->background();
@@ -1837,6 +1836,40 @@ int PCBSketchWidget::designRulesCheck()
 	this->saveLayerVisibility();
 	this->setAllLayersVisible(false);
 	this->setLayerVisible(ViewLayer::Copper0, true);
+	QSet<ItemBase *> collidingItems;
+	if (m_boardLayers == 1) {
+		drcLayer(collidingItems, 0, 1.0, 1000);
+	}
+	else {
+		drcLayer(collidingItems, 0, 0.5, 1000);
+		this->setLayerVisible(ViewLayer::Copper0, false);
+		this->setLayerVisible(ViewLayer::Copper1, true);
+		drcLayer(collidingItems, 500, 0.5, 1000);
+	}
+
+	this->setBackground(color);
+	this->restoreLayerVisibility();
+
+	if (m_cancelDRC) {
+		selectItemCommand->undo();
+		delete parentCommand;
+		setIgnoreSelectionChangeEvents(false);
+		return -1;
+	}
+	else {
+		setIgnoreSelectionChangeEvents(false);
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		foreach (ItemBase * itemBase, collidingItems) {
+			selectItemCommand->addRedo(itemBase->layerKinChief()->id());
+		}
+
+		m_undoStack->push(parentCommand);
+		return collidingItems.count();
+	}
+}
+
+void PCBSketchWidget::drcLayer(QSet<ItemBase *> & collidingItems, int progressOffset, qreal progressRange, int progressGoal) {
+	QSet<QGraphicsItem *> checkItems;
 
 	foreach (QGraphicsItem * item, scene()->items()) {
 		if (!item->isVisible()) {
@@ -1870,10 +1903,10 @@ int PCBSketchWidget::designRulesCheck()
 		}
 	}
 
-	int progressSoFar = checkItems.count() / 10;
+	qreal progressSoFar = checkItems.count() / 10;
 	int maxProgress = checkItems.count() + progressSoFar;
-	emit setMaximumDRCProgress(maxProgress);
-	emit setDRCProgressValue(progressSoFar);
+
+	emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * progressSoFar / maxProgress));
 
 	int imageCount = 0;
 	qreal expandBy = .01 * FSvgRenderer::printerScale();
@@ -1903,7 +1936,13 @@ int PCBSketchWidget::designRulesCheck()
 			}
 		}
 	
-		ConnectorItem::collectEqualPotential(equipotentialConnectorItems, true, ViewGeometry::NoFlag);
+		ConnectorItem::collectEqualPotential(equipotentialConnectorItems, false, ViewGeometry::NoFlag);
+		for (int i = equipotentialConnectorItems.count() - 1; i >= 0; i--) {
+			if (!equipotentialConnectorItems.at(i)->isVisible()) {
+				//DebugDialog::debug(QString("not visible %1").arg(ViewLayer::viewLayerNameFromID(equipotentialConnectorItems.at(i)->attachedTo()->viewLayerID())));
+				equipotentialConnectorItems.removeAt(i);
+			}
+		}
 
 		QSet<ItemBase *> intersectingItems;
 		foreach (QGraphicsItem * candidate, scene()->items(expandedCheckItemPoly)) {
@@ -1941,13 +1980,14 @@ int PCBSketchWidget::designRulesCheck()
 		if (m_cancelDRC) break;
 
 		if (intersectingItems.count() == 0) {
-			emit setDRCProgressValue(++progressSoFar);
+			emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * ++progressSoFar / maxProgress));
 			continue;
 		}
 
 		// take equipotential connectors out of the picture; unfortunately the visible part of these connectors
 		// is actually part of the svg of the parent, so this is a hack to remove them completely from the "other" image
 		// if the connector isn't well-behaved (a nice circle or rect) then this step may remove too much
+		// would a graphical xor within a clipping region do the job?
 		foreach (ConnectorItem * connectorItem, equipotentialConnectorItems) {
 			if (connectorItem->attachedToItemType() == ModelPart::Wire) {
 				connectorItem->setVisible(false);
@@ -2085,31 +2125,11 @@ int PCBSketchWidget::designRulesCheck()
 				}
 			}
 		}
-		emit setDRCProgressValue(++progressSoFar);
+		emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * ++progressSoFar / maxProgress));
 		QApplication::processEvents();
 	}
-
-	this->setBackground(color);
-	this->restoreLayerVisibility();
-
-	if (m_cancelDRC) {
-		selectItemCommand->undo();
-		delete parentCommand;
-		setIgnoreSelectionChangeEvents(false);
-		return -1;
-	}
-	else {
-		setIgnoreSelectionChangeEvents(false);
-		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
-		foreach (ItemBase * itemBase, collidingItems) {
-			selectItemCommand->addRedo(itemBase->layerKinChief()->id());
-		}
-
-		m_undoStack->push(parentCommand);
-		return collidingItems.count();
-	}
-
 }
+
 
 void PCBSketchWidget::setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility)
 {
