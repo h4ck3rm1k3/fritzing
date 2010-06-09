@@ -590,30 +590,28 @@ bool PartsBinPaletteWidget::beforeClosing() {
 	if (this->isWindowModified()) {
 		QMessageBox::StandardButton reply;
 		if (m_saveQuietly) {
-			reply = QMessageBox::Yes;
+			reply = QMessageBox::Save;
 		}
 		else {
-			QMessageBox messageBox(
-					tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
-					tr("Do you want to save the changes you made in the bin \"%1\"?")
-						.arg(title()),
-					QMessageBox::Warning,
-					QMessageBox::Yes,
-					QMessageBox::No,
-					QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default,
-					this, Qt::Sheet);
-
-			messageBox.setButtonText(QMessageBox::Yes, tr("Save"));
-			messageBox.setButtonText(QMessageBox::No, tr("Don't Save"));
-			messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-			messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
+            QMessageBox messageBox(this);
+            messageBox.setWindowTitle(tr("Save bin \"%1\"").arg(title()));
+            messageBox.setText(tr("Do you want to save the changes you made in the bin \"%1\"?").arg(title()));
+            messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
+            messageBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+            messageBox.setDefaultButton(QMessageBox::Save);
+            messageBox.setIcon(QMessageBox::Warning);
+            messageBox.setWindowModality(Qt::WindowModal);
+            messageBox.setButtonText(QMessageBox::Save, tr("Save"));
+            messageBox.setButtonText(QMessageBox::Discard, tr("Don't Save"));
+            messageBox.button(QMessageBox::Discard)->setShortcut(tr("Ctrl+D"));
+            messageBox.setButtonText(QMessageBox::Cancel, tr("Cancel"));
 
 			reply = (QMessageBox::StandardButton)messageBox.exec();
 		}
 
-     	if (reply == QMessageBox::Yes) {
+     	if (reply == QMessageBox::Save) {
      		retval = save();
-    	} else if (reply == QMessageBox::No) {
+    	} else if (reply == QMessageBox::Discard) {
     		retval = true;
         } else {
          	retval = false;

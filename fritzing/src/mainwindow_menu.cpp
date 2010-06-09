@@ -156,6 +156,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 {
 	if (!m_pcbGraphicsView->ratsAllRouted()) {
 		QMessageBox msgBox(this);
+		msgBox.setWindowModality(Qt::WindowModal);
 		msgBox.setText(tr("All traces have not yet been routed."));
 		msgBox.setInformativeText(tr("Do you want to proceed anyway?"));
 		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);

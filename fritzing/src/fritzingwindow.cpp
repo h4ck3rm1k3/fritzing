@@ -180,10 +180,10 @@ bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString 
 bool FritzingWindow::beforeClosing(bool showCancel) {
 	if (this->isWindowModified()) {
 		QMessageBox::StandardButton reply = beforeClosingMessage(m_fileName, showCancel);
-     	if (reply == QMessageBox::Yes) {
+     	if (reply == QMessageBox::Save) {
      		return save();
     	} 
-		else if (reply == QMessageBox::No) {
+		else if (reply == QMessageBox::Discard) {
      		return true;
         }
      	else {
@@ -198,23 +198,31 @@ bool FritzingWindow::beforeClosing(bool showCancel) {
 QMessageBox::StandardButton FritzingWindow::beforeClosingMessage(const QString & filename, bool showCancel) 
 {
 	QString basename = QFileInfo(filename).baseName();
- 	QMessageBox messageBox(
- 			tr("Save \"%1\"").arg(basename),
- 			tr("Do you want to save the changes you made in the document \"%1\"?").arg(basename),
- 			QMessageBox::Warning,
-			showCancel ? QMessageBox::Yes : QMessageBox::Yes | QMessageBox::Default,
- 			QMessageBox::No,
- 			showCancel ? QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default : QMessageBox::NoButton,
- 			this, Qt::Sheet);
 
-	messageBox.setButtonText(QMessageBox::Yes,
-		m_fileName.startsWith(untitledFileName()) ? tr("Save...") : tr("Save"));
-	messageBox.setButtonText(QMessageBox::No, tr("Don't Save"));
-	messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-	messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
+    QMessageBox messageBox(this);
+    messageBox.setWindowTitle(tr("Save \"%1\"").arg(basename));
+    messageBox.setText(tr("Do you want to save the changes you made in the document \"%1\"?").arg(basename));
+    messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
+    QMessageBox::StandardButtons buttons = QMessageBox::Save | QMessageBox::Discard;
+    if (showCancel) {
+        buttons |= QMessageBox::Cancel;
+    }
+    messageBox.setStandardButtons(buttons);
+    messageBox.setDefaultButton(QMessageBox::Save);
+    if (m_fileName.startsWith(untitledFileName())) {
+        messageBox.setButtonText(QMessageBox::Save, tr("Save..."));
+    }
+	else {
+        messageBox.setButtonText(QMessageBox::Save, tr("Save"));
+	}
+    messageBox.setButtonText(QMessageBox::Discard, tr("Don't Save"));
 	if (showCancel) {
 		messageBox.setButtonText(QMessageBox::Cancel, tr("Cancel"));
 	}
+    messageBox.setIcon(QMessageBox::Warning);
+    messageBox.setWindowModality(Qt::WindowModal);
+    messageBox.button(QMessageBox::Discard)->setShortcut(tr("Ctrl+D"));
+
 	return (QMessageBox::StandardButton) messageBox.exec();
 }
 

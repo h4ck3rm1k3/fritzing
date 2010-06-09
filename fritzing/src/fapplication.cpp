@@ -686,34 +686,19 @@ int FApplication::startup(bool firstRun)
 	if(prevVersion != ___emptyString___
 	   && Version::greaterThan(prevVersion,Version::FirstVersionWithDetachedUserData))
 	{
-		QMessageBox messageBox( 
-			QMessageBox::Question, 
-			tr("Import files from previous version?"), 
-			tr("Do you want to import parts and bins that you have created with earlier versions of Fritzing?\n"
-			   "\nNote: You can import them later using the \"Help\" > \"Import parts and bins "
-			   "from old version...\" menu action."),
-			   QMessageBox::Ok | QMessageBox::Cancel, 
-			   mainWindow, 
-			   Qt::Sheet );
-		messageBox.setButtonText(QMessageBox::Ok, tr("Import"));
-		messageBox.setButtonText(QMessageBox::Cancel, tr("Do not import now"));
-		messageBox.setDefaultButton(QMessageBox::Cancel);
-		QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
-
-		/*
-
-		QMessageBox::StandardButton answer = QMessageBox::question(
-			mainWindow,
-			tr("Import files from previous version?"),
-			tr("Do you want to import parts and bins that you have created with earlier versions of Fritzing?\n"
-			   "\nNote: You can also import them later through the \"Help\" > \"Import parts and bins "
-			   "from old version...\" menu action."),
-			QMessageBox::Ok | QMessageBox::Cancel,
-			QMessageBox::Ok
-		);
-
-		*/
-
+        QMessageBox messageBox(mainWindow);
+        messageBox.setWindowTitle(tr("Import files from previous version?"));
+        messageBox.setText(tr("Do you want to import parts and bins that you have created with earlier versions of Fritzing?\n"
+                              "\nNote: You can import them later using the \"Help\" > \"Import parts and bins "
+                              "from old version...\" menu action."));
+        messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
+        messageBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        messageBox.setDefaultButton(QMessageBox::Cancel);
+        messageBox.setIcon(QMessageBox::Question);
+        messageBox.setWindowModality(Qt::WindowModal);
+        messageBox.setButtonText(QMessageBox::Ok, tr("Import"));
+        messageBox.setButtonText(QMessageBox::Cancel, tr("Do not import now"));
+        QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
 
 		if(answer == QMessageBox::Ok) {
 			mainWindow->importFilesFromPrevInstall();

@@ -278,11 +278,11 @@ bool ProgramWindow::beforeClosingTab(int index, bool showCancel)
 	if (!programTab->isModified()) return true;
 
 	QMessageBox::StandardButton reply = beforeClosingMessage(programTab->filename(), showCancel);
-	if (reply == QMessageBox::Yes) {
+	if (reply == QMessageBox::Save) {
 		return prepSave(index, programTab, false);
 	} 
 	
-	if (reply == QMessageBox::No) {
+	if (reply == QMessageBox::Discard) {
 		return true;
 	}
  		
