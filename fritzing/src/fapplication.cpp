@@ -957,14 +957,16 @@ void FApplication::copyBin(const QString & dest, const QString & source) {
 void FApplication::changeActivation(bool activate, QWidget * originator) {
 	if (!activate) return;
 
-	MainWindow * mainWindow = qobject_cast<MainWindow *>(originator);
-	if (mainWindow == NULL) {
-		mainWindow = qobject_cast<MainWindow *>(originator->parent());
-	}
-	if (mainWindow == NULL) return;
+	DebugDialog::debug(QString("change activation %1 %2").arg(activate).arg(originator->metaObject()->className()));
 
-	m_orderedTopLevelWidgets.removeOne(mainWindow);
-	m_orderedTopLevelWidgets.push_front(mainWindow);
+	FritzingWindow * fritzingWindow = qobject_cast<FritzingWindow *>(originator);
+	if (fritzingWindow == NULL) {
+		fritzingWindow = qobject_cast<FritzingWindow *>(originator->parent());
+	}
+	if (fritzingWindow == NULL) return;
+
+	m_orderedTopLevelWidgets.removeOne(fritzingWindow);
+	m_orderedTopLevelWidgets.push_front(fritzingWindow);
 
 	m_activationTimer.stop();
 	m_activationTimer.start();
@@ -973,21 +975,24 @@ void FApplication::changeActivation(bool activate, QWidget * originator) {
 void FApplication::updateActivation() {
 	// DebugDialog::debug("updating activation");
 
-	MainWindow * prior = m_lastTopmostWindow; 
+	FritzingWindow * prior = m_lastTopmostWindow; 
 	m_lastTopmostWindow = NULL;
 	if (m_orderedTopLevelWidgets.count() > 0) {
-		m_lastTopmostWindow = qobject_cast<MainWindow *>(m_orderedTopLevelWidgets.at(0));
+		m_lastTopmostWindow = qobject_cast<FritzingWindow *>(m_orderedTopLevelWidgets.at(0));
 	}
 
 	if (prior == m_lastTopmostWindow) return;
 
 	//DebugDialog::debug(QString("last:%1, new:%2").arg((long) prior, 0, 16).arg((long) m_lastTopmostWindow.data(), 0, 16));
 
-	if (prior != NULL) {			
-		prior->saveDocks();
+	MainWindow * priorMainWindow = qobject_cast<MainWindow *>(prior);
+	if (priorMainWindow != NULL) {			
+		priorMainWindow->saveDocks();
 	}
-	if (m_lastTopmostWindow != NULL) {
-		m_lastTopmostWindow->restoreDocks();
+
+	MainWindow * lastTopmostMainWindow = qobject_cast<MainWindow *>(m_lastTopmostWindow);
+	if (lastTopmostMainWindow != NULL) {
+		lastTopmostMainWindow->restoreDocks();
 		//DebugDialog::debug("restoring active window");
 	}
 }

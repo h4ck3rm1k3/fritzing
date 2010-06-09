@@ -2273,3 +2273,40 @@ void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<
 	}
 }
 
+void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
+	if (parentCommand == NULL) {
+		bool done = false;
+		foreach (ModelPart * modelPart, modelParts) {
+			switch (modelPart->itemType()) {
+				case ModelPart::Board:
+				case ModelPart::ResizableBoard:
+					{
+						done = true;		// not allowed to have multiple boards, so we're almost done
+
+						QString slayers = modelPart->properties().value("layers", "");
+						if (slayers.isEmpty()) {
+							// shouldn't happen
+							break;
+						}
+						bool ok;
+						int layers = slayers.toInt(&ok);
+						if (!ok) {
+							// shouldn't happen
+							break;
+						}
+						if (layers != m_boardLayers) {
+							changeBoardLayers(layers, true);
+							break;
+						}		
+					}
+					break;
+				default: 
+					break;
+			}
+
+			if (done) break;
+		}
+	}
+
+	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, doRatsnest, offsetPaste);
+}

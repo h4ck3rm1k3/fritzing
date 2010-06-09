@@ -79,6 +79,7 @@ public:
 	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
+	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);

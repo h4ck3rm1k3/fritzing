@@ -3577,6 +3577,10 @@ void MainWindow::openProgramWindow() {
 
 	m_programWindow = new ProgramWindow(this);
 	connect(m_programWindow, SIGNAL(linkToProgramFile(const QString &, bool)), this, SLOT(linkToProgramFile(const QString &, bool)));
+	connect(this, SIGNAL(aboutToClose()), m_programWindow, SLOT(parentAboutToClose()));
+	connect(m_programWindow, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)), Qt::DirectConnection);
+	connect(m_programWindow, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
+
 	QFileInfo fileInfo(m_fileName);
 	m_programWindow->setup(m_linkedProgramFiles, fileInfo.absoluteDir().absolutePath());
 	m_programWindow->setVisible(true);

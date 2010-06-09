@@ -106,6 +106,7 @@ class PartsEditorView : public SketchWidget {
 	protected slots:
 		void recoverTerminalPointsState();
 		void fitCenterAndDeselect();
+		void ensureFixedItemsPositions();
 
 	signals:
 		// conns
@@ -211,7 +212,6 @@ class PartsEditorView : public SketchWidget {
 		void ensureFixedToBottomRight(QGraphicsItem* item);
 		void ensureFixedToCenter(QGraphicsItem* item);
 
-		void ensureFixedItemsPositions();
 		void clearFixedItems();
 		void removeIfFixedPos(QGraphicsItem *item);
 		qreal fixedItemWidth(QGraphicsItem* item);

@@ -102,7 +102,7 @@ protected:
 	QString m_translationPath;
 	class UpdateDialog * m_updateDialog;
 	QTimer m_activationTimer;
-	QPointer<class MainWindow> m_lastTopmostWindow;
+	QPointer<class FritzingWindow> m_lastTopmostWindow;
 	QList<QWidget *> m_orderedTopLevelWidgets;
 	QStringList m_arguments;
 	QStringList m_externalProcessArgs;

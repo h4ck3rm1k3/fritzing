@@ -92,7 +92,7 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
+	virtual void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
 	void sendBackward();
@@ -352,6 +352,7 @@ protected:
 	QString makeRectSVG(QRectF r, QPointF offset, qreal dpi, qreal printerscale);
 	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
 	void prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand);
+	ViewLayer::ViewLayerSpec getViewLayerSpec(ModelPart * modelPart, QDomElement & instance, QDomElement & view, ViewGeometry &);
 
 protected:
 	static bool lessThan(int a, int b);

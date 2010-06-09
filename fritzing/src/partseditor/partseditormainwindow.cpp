@@ -71,17 +71,6 @@ bool PartsEditorMainWindow::m_closeAfterSaving = true;
 	#define CORE_EDITION_ENABLED true
 #endif
 
-void PartsEditorMainWindow::initText() {
-	UntitledPartName = tr("Untitled Part");
-	TitleFreshStartText = tr("Please find a name for me!");
-	LabelFreshStartText = tr("Please provide a label");
-	DescriptionFreshStartText = tr("You could tell a little bit about this part");
-	TaxonomyFreshStartText = tr("Please classify this part");
-	TagsFreshStartText = tr("You can add your tags to make searching easier");
-	FooterText = tr("<i>created by</i> %1 <i>on</i> %2");
-	___partsEditorName___ = tr("Parts Editor");
-
-}
 
 PartsEditorMainWindow::PartsEditorMainWindow(QWidget *parent)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
@@ -107,6 +96,17 @@ PartsEditorMainWindow::~PartsEditorMainWindow()
 	}
 }
 
+void PartsEditorMainWindow::initText() {
+	UntitledPartName = tr("Untitled Part");
+	TitleFreshStartText = tr("Please find a name for me!");
+	LabelFreshStartText = tr("Please provide a label");
+	DescriptionFreshStartText = tr("You could tell a little bit about this part");
+	TaxonomyFreshStartText = tr("Please classify this part");
+	TagsFreshStartText = tr("You can add your tags to make searching easier");
+	FooterText = tr("<i>created by</i> %1 <i>on</i> %2");
+	___partsEditorName___ = tr("Parts Editor");
+
+}
 
 void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTemplate)
 {

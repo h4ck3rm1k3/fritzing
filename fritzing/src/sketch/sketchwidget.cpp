@@ -217,11 +217,13 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		ViewGeometry viewGeometry(geometry);
 
 		QDomElement labelGeometry = view.firstChildElement("titleGeometry");
+		
+		ViewLayer::ViewLayerSpec viewLayerSpec = getViewLayerSpec(mp, instance, view, viewGeometry);
 
 		// use a function of the model index to ensure the same parts have the same ID across views
 		long newID = ItemBase::getNextID(mp->modelIndex());
 		if (parentCommand == NULL) {
-			ItemBase * item = addItemAux(mp, defaultViewLayerSpec(), viewGeometry, newID, NULL, true, m_viewIdentifier);
+			ItemBase * item = addItemAux(mp, viewLayerSpec, viewGeometry, newID, NULL, true, m_viewIdentifier);
 			if (item != NULL) {
 				zmap.insert(viewGeometry.z() - qFloor(viewGeometry.z()), item);   
 				bool gotOne = false;
@@ -259,7 +261,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			if (offsetPaste) {
 				viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
 			}
-			newAddItemCommand(crossViewType, mp->moduleID(), defaultViewLayerSpec(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
+			newAddItemCommand(crossViewType, mp->moduleID(), viewLayerSpec, viewGeometry, newID, false, mp->modelIndex(), parentCommand);
 			if (mp->itemType() == ModelPart::ResizableBoard) {
 				bool ok;
 				qreal w = mp->prop("width").toDouble(&ok);
@@ -6256,3 +6258,23 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 	}
 }
 
+ViewLayer::ViewLayerSpec SketchWidget::getViewLayerSpec(ModelPart * modelPart, QDomElement & instance, QDomElement & view, ViewGeometry & viewGeometry) 
+{
+	Q_UNUSED(modelPart);
+	Q_UNUSED(instance);
+
+	ViewLayer::ViewLayerSpec viewLayerSpec = defaultViewLayerSpec();
+
+	if (!viewGeometry.getTrace()) return viewLayerSpec;
+
+	QString layer = view.attribute("layer");
+	if (layer.isEmpty()) return viewLayerSpec;
+
+	ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
+	if (viewLayerID == ViewLayer::Copper1Trace) {
+		return ViewLayer::WireOnTop_TwoLayers;
+	}
+
+	return viewLayerSpec;
+
+}
