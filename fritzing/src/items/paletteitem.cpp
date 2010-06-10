@@ -341,6 +341,11 @@ void PaletteItem::setHidden(bool hide) {
 	figureHover();
 }
 
+void PaletteItem::setInactive(bool inactive) {
+	ItemBase::setInactive(inactive);
+	figureHover();
+}
+
 void PaletteItem::figureHover() {
 	// if a layer contains connectors, make it the one that accepts hover events
 	// if you make all layers accept hover events, then the topmost layer will get the event
@@ -362,7 +367,7 @@ void PaletteItem::figureHover() {
 
 	int ix = 0;
 	foreach (ItemBase * base, allKin) {
-		if (!base->hidden() && base->hasConnectors()) {
+		if (!(base->hidden() || base->inactive()) && base->hasConnectors()) {
 			base->setAcceptHoverEvents(true);
 			base->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 			break;
@@ -372,7 +377,7 @@ void PaletteItem::figureHover() {
 
 	for (int i = 0; i < ix; i++) {
 		ItemBase * base = allKin[i];
-		if (!base->hidden()) {
+		if (!!(base->hidden() || base->inactive())) {
 			base->setAcceptHoverEvents(true);
 			base->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 			return;
@@ -392,7 +397,7 @@ ItemBase * PaletteItem::lowerConnectorLayerVisible(ItemBase * itemBase) {
 
 	if ((itemBase != this) 
 		&& this->isVisible() 
-		&& (!this->hidden()) && (this->zValue() < itemBase->zValue())
+		&& (!this->hidden()) && (!this->inactive()) && (this->zValue() < itemBase->zValue())
 		&& this->hasConnectors()) 
 	{
 		return this;
@@ -402,7 +407,7 @@ ItemBase * PaletteItem::lowerConnectorLayerVisible(ItemBase * itemBase) {
 		if (lkpi == itemBase) continue;
 
 		if (lkpi->isVisible() 
-			&& (!lkpi->hidden()) 
+			&& (!lkpi->hidden()) && (!lkpi->inactive()) 
 			&& (lkpi->zValue() < itemBase->zValue()) 
 			&& lkpi->hasConnectors() ) 
 		{

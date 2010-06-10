@@ -618,6 +618,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 			foreach (ItemBase * lkpi, paletteItem->layerKin()) {
 				this->scene()->addItem(lkpi);
 				lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+				lkpi->setInactive(!layerIsActive(lkpi->viewLayerID()));
 			}
 
 			ok = true;
@@ -648,6 +649,7 @@ void SketchWidget::addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerI
 	scene()->addItem(item);
  	item->setSelected(true);
  	item->setHidden(!layerIsVisible(viewLayerID));
+ 	item->setInactive(!layerIsActive(viewLayerID));
 }
 
 ItemBase * SketchWidget::findItem(long id) {
@@ -2917,6 +2919,13 @@ bool SketchWidget::layerIsVisible(ViewLayer::ViewLayerID viewLayerID) {
 	return viewLayer->visible();
 }
 
+bool SketchWidget::layerIsActive(ViewLayer::ViewLayerID viewLayerID) {
+	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
+	if (viewLayer == NULL) return false;
+
+	return viewLayer->isActive();
+}
+
 void SketchWidget::setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool vis) {
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
 	if (viewLayer) {
@@ -2957,6 +2966,41 @@ void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible) {
 		PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
 		if (partLabel && (viewLayerIDs.contains(partLabel->viewLayerID()))) {
 			partLabel->setHidden(!visible);
+		}
+	}
+}
+
+void SketchWidget::setLayerActive(ViewLayer::ViewLayerID viewLayerID, bool active) {
+	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
+	if (viewLayer) {
+		setLayerActive(viewLayer, active);
+	}
+}
+
+
+void SketchWidget::setLayerActive(ViewLayer * viewLayer, bool active) {
+
+	LayerList viewLayerIDs;
+	viewLayerIDs.append(viewLayer->viewLayerID());
+
+	viewLayer->setActive(active);
+	foreach (ViewLayer * childLayer, viewLayer->childLayers()) {
+		childLayer->setActive(active);
+		viewLayerIDs.append(childLayer->viewLayerID());
+	}
+
+	// TODO: replace scene()->items()
+	foreach (QGraphicsItem * item, scene()->items()) {
+		// want all items, not just topLevel
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase && (viewLayerIDs.contains(itemBase->viewLayerID()))) {
+			itemBase->setInactive(!active);
+			//DebugDialog::debug(QString("setting visible %1").arg(viewLayer->visible()));
+		}
+
+		PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
+		if (partLabel && (viewLayerIDs.contains(partLabel->viewLayerID()))) {
+			partLabel->setInactive(!active);
 		}
 	}
 }

@@ -108,6 +108,8 @@ public:
 	virtual void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
 	bool hidden();
+	virtual void setInactive(bool inactive);
+	bool inactive();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
 	void updateConnections(ConnectorItem *);
 	virtual void updateConnections();
@@ -288,6 +290,7 @@ protected:
 	int m_connectorHoverCount2;
 	int m_hoverCount;
 	bool m_hidden;
+	bool m_inactive;
 	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
 	bool m_sticky;
 	QList<ItemBase *> m_stickyList;

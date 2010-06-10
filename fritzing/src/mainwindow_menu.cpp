@@ -1631,16 +1631,25 @@ void MainWindow::createMenus()
 
 	m_pcbTraceMenu = menuBar()->addMenu(tr("&Trace"));
 	m_pcbTraceMenu->addAction(m_autorouteAct);
+	m_pcbTraceMenu->addAction(m_groundFillAct);
+	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
+	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
+	m_pcbTraceMenu->addSeparator();
+
+	m_pcbTraceMenu->addAction(m_activeLayerBothAct);
+	m_pcbTraceMenu->addAction(m_activeLayerBottomAct);
+	m_pcbTraceMenu->addAction(m_activeLayerTopAct);
+	m_pcbTraceMenu->addSeparator();
+
 	m_pcbTraceMenu->addAction(m_createTraceAct);
 	m_pcbTraceMenu->addAction(m_createJumperAct);
 	m_pcbTraceMenu->addAction(m_excludeFromAutorouteAct);
+	m_pcbTraceMenu->addSeparator();
+
 	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperWiresAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
-	m_pcbTraceMenu->addAction(m_groundFillAct);
-	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
-	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
 #ifndef QT_NO_DEBUG
 	m_pcbTraceMenu->addAction(m_updateRatsnestAct);
 #endif
@@ -2733,6 +2742,18 @@ void MainWindow::createTraceMenuActions() {
 	m_autorouteAct->setStatusTip(tr("Autoroute..."));
 	connect(m_autorouteAct, SIGNAL(triggered()), this, SLOT(autoroute()));
 
+	m_activeLayerBothAct = new QAction(tr("Both copper layers active"), this);
+	m_activeLayerBothAct->setStatusTip(tr("Set both copper top and copper bottom layers active"));
+	connect(m_activeLayerBothAct, SIGNAL(triggered()), this, SLOT(activeLayerBoth()));
+
+	m_activeLayerTopAct = new QAction(tr("Copper top layer active"), this);
+	m_activeLayerTopAct->setStatusTip(tr("Set copper top layer active"));
+	connect(m_activeLayerTopAct, SIGNAL(triggered()), this, SLOT(activeLayerTop()));
+
+	m_activeLayerBottomAct = new QAction(tr("Copper bottom layer active"), this);
+	m_activeLayerBottomAct->setStatusTip(tr("Set copper bottom layer active"));
+	connect(m_activeLayerBottomAct, SIGNAL(triggered()), this, SLOT(activeLayerBottom()));
+
 	m_createTraceAct = new QAction(tr("&Create Trace from Selected Wire(s)"), this);
 	m_createTraceAct->setStatusTip(tr("Create a trace from the selected wire"));
 	connect(m_createTraceAct, SIGNAL(triggered()), this, SLOT(createTrace()));
@@ -2781,6 +2802,36 @@ void MainWindow::createTraceMenuActions() {
 	m_updateRatsnestAct = new QAction(tr("Update ratsnest"), this);
 	m_updateRatsnestAct->setStatusTip(tr("Update ratsnest colors"));
 	connect(m_updateRatsnestAct, SIGNAL(triggered()), this, SLOT(updateRatsnest()));
+}
+
+void MainWindow::activeLayerBoth() {
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper1, true);
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper0, true);
+	AutoCloseMessageBox::showMessage(this, tr("Copper Top and Copper Bottom layers are both active"));
+	updateActiveLayerButtons();
+}
+
+void MainWindow::activeLayerTop() {
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper1, true);
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper0, false);
+	AutoCloseMessageBox::showMessage(this, tr("Copper Top layer is active"));
+	updateActiveLayerButtons();
+}
+
+void MainWindow::activeLayerBottom() {
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper1, false);
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper0, true);
+	AutoCloseMessageBox::showMessage(this, tr("Copper Bottom layer is active"));
+	updateActiveLayerButtons();
 }
 
 void MainWindow::autoroute() {

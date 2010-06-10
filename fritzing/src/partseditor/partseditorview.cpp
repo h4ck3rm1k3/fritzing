@@ -206,6 +206,7 @@ void PartsEditorView::fitCenterAndDeselect() {
 	if(m_item) {
 		m_item->setSelected(false);
 		m_item->setHidden(false);
+		m_item->setInactive(false);
 
 		fitInView(m_item, Qt::KeepAspectRatio);
 

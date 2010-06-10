@@ -110,7 +110,10 @@ public:
     void setAllLayersVisible(bool visible);
     void setLayerVisible(ViewLayer * viewLayer, bool visible);
 	void setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool visible);
+    void setLayerActive(ViewLayer * viewLayer, bool active);
+	void setLayerActive(ViewLayer::ViewLayerID viewLayerID, bool active);
     bool layerIsVisible(ViewLayer::ViewLayerID);
+    bool layerIsActive(ViewLayer::ViewLayerID);
 	void sortSelectedByZ(QList<ItemBase *> & bases);
 	void sortAnyByZ(const QList<QGraphicsItem *> & items, QList<ItemBase *> & bases);
  	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

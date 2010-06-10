@@ -189,7 +189,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 		m_modelPart->addViewItem(this);
 	}
 	m_id = id;
-	m_hidden = false;
+	m_inactive = m_hidden = false;
 	m_sticky = false;
 	m_canFlipHorizontal = m_canFlipVertical = false;
 
@@ -540,8 +540,8 @@ bool ItemBase::topLevel() {
 void ItemBase::setHidden(bool hide) {
 
 	m_hidden = hide;
-	setAcceptedMouseButtons(hide ? Qt::NoButton : ALLMOUSEBUTTONS);
-	setAcceptHoverEvents(!hide);
+	setAcceptedMouseButtons(m_hidden || m_inactive ? Qt::NoButton : ALLMOUSEBUTTONS);
+	setAcceptHoverEvents(!(m_hidden || m_inactive));
 	update();
 	for (int i = 0; i < childItems().count(); i++) {
 		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(childItems()[i]);
@@ -551,8 +551,26 @@ void ItemBase::setHidden(bool hide) {
 	}
 }
 
+void ItemBase::setInactive(bool inactive) {
+
+	m_inactive = inactive;
+	setAcceptedMouseButtons(m_hidden || m_inactive ? Qt::NoButton : ALLMOUSEBUTTONS);
+	setAcceptHoverEvents(!(m_hidden || m_inactive));
+	update();
+	for (int i = 0; i < childItems().count(); i++) {
+		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(childItems()[i]);
+		if (nonconnectorItem == NULL) continue;
+
+		nonconnectorItem->setInactive(inactive);
+	}
+}
+
 bool ItemBase::hidden() {
 	return m_hidden;
+}
+
+bool ItemBase::inactive() {
+	return m_inactive;
 }
 
 void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene) {
@@ -956,7 +974,7 @@ void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 		return;
 	}
 
-	if (m_hidden) {
+	if (m_hidden || m_inactive) {
 		event->ignore();
 		return;
 	}

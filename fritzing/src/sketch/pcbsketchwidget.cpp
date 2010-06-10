@@ -2278,6 +2278,9 @@ int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & new
 void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	setBoardLayers(layers, true);
 	SketchWidget::changeBoardLayers(layers, doEmit);
+	if (layers == 1) {
+		this->setLayerActive(ViewLayer::Copper0, true);
+	}
 	emit updateLayerMenuSignal();
 }
 

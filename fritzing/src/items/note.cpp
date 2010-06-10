@@ -514,6 +514,11 @@ void Note::setHidden(bool hide)
 	m_resizeGrip->setVisible(!hide);
 }
 
+void Note::setInactive(bool inactive)
+{
+	ItemBase::setInactive(inactive);
+}
+
 bool Note::eventFilter(QObject * object, QEvent * event)
 {
 	if (event->type() == QEvent::Shortcut || event->type() == QEvent::ShortcutOverride)

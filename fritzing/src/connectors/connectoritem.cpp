@@ -476,7 +476,16 @@ const QList< QPointer<ConnectorItem> > & ConnectorItem::connectedToItems() {
 
 void ConnectorItem::setHidden(bool hide) {
 	m_hidden = hide;
-	if (hide) {
+	setHiddenOrInactive();
+}
+
+void ConnectorItem::setInactive(bool inactive) {
+	m_inactive = inactive;
+	setHiddenOrInactive();
+}
+
+void ConnectorItem::setHiddenOrInactive() {
+	if (m_hidden || m_inactive) {
 		this->setAcceptedMouseButtons(Qt::NoButton);
 		this->unsetCursor();
 		setAcceptHoverEvents(false);
@@ -487,7 +496,6 @@ void ConnectorItem::setHidden(bool hide) {
 		setAcceptHoverEvents(true);
 	}
 	this->update();
-
 }
 
 ConnectorItem * ConnectorItem::overConnectorItem() {

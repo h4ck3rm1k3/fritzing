@@ -96,6 +96,15 @@
         <file>resources/images/icons/toolbarAutorouteEnabled_icon.png</file>
         <file>resources/images/icons/toolbarAutorouteDisabled_icon.png</file>
         <file>resources/images/icons/toolbarAutoroutePressed_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerPressed_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerBEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerBDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerBPressed_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerTEnabled_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerTDisabled_icon.png</file>
+        <file>resources/images/icons/toolbarActiveLayerTPressed_icon.png</file>
         <file>resources/images/icons/toolbarDiyEnabled_icon.png</file>
         <file>resources/images/icons/toolbarDiyDisabled_icon.png</file>
         <file>resources/images/icons/toolbarDiyPressed_icon.png</file>

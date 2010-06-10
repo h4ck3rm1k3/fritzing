@@ -38,6 +38,7 @@ $Date$
 SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QAction* defaultAction)
 	: QToolButton(parent)
 {
+	m_imageName = imageName;			// nice to have for debugging
 	setupIcons(imageName);
 
 	//DebugDialog::debug(QString("%1 %2 %3 %4 %5 %6 %7").arg(imageName)
@@ -54,6 +55,7 @@ SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QA
 SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QList<QAction*> menuActions)
 	: QToolButton(parent)
 {
+	m_imageName = imageName;			// nice to have for debugging
 	setupIcons(imageName);
 
 	QMenu *menu = new QMenu(this);
@@ -130,8 +132,3 @@ void SketchToolButton::changeEvent(QEvent *event) {
 	}
 	QToolButton::changeEvent(event);
 }
-
-/*void SketchToolButton::paintEvent(QPaintEvent *event) {
-	QPixmap pixmap = m_disabledIcon.pixmap(iconSize());
-	paintEngine()->painter()->drawPixmap(pos(), pixmap);
-}*/

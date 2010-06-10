@@ -55,6 +55,8 @@ public:
 	void ownerMoved(QPointF newPos);
 	void setHidden(bool hide);
 	bool hidden();
+	void setInactive(bool inactive);
+	bool inactive();
 	ViewLayer::ViewLayerID viewLayerID();
 	void saveInstance(QXmlStreamWriter & streamWriter);
 	void restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
@@ -80,6 +82,7 @@ protected:
 	void setFontSize(int action);
 	void rotateFlip(int action);
 	void setLabelDisplay(const QString & key);
+	void setHiddenOrInactive();
 
 protected:
 	QPointer<class ItemBase> m_owner;
@@ -91,6 +94,7 @@ protected:
 	QPointF m_offset;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	bool m_hidden;
+	bool m_inactive;
 	QMenu m_menu;
 	QString m_text;
 	QStringList m_displayKeys;

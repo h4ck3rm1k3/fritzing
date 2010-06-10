@@ -179,7 +179,7 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsVie
 void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
 	if (m_hidden) return;
 
-	painter->setOpacity(m_opacity);
+	painter->setOpacity(m_inactive ? m_opacity  / 2 : m_opacity);
 	if (!getRatsnest() && !getTrace()) {
 		painter->save();
 		painter->setPen(m_shadowPen);

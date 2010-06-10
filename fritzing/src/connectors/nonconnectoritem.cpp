@@ -42,7 +42,7 @@ NonConnectorItem::NonConnectorItem(ItemBase * attachedTo) : QGraphicsRectItem(at
 {
 	m_radius = m_strokeWidth = 0;
 	m_circular = false;
-	m_hidden = false;
+	m_inactive = m_hidden = false;
 	m_white = false;
 	m_attachedTo = attachedTo;
     setAcceptHoverEvents(false);
@@ -68,7 +68,7 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 
 	if (m_hidden || !m_paint) return;
 
-	painter->setOpacity(m_opacity);
+	painter->setOpacity(m_inactive ? m_opacity / 2 : m_opacity);
 	if (m_circular) {
 		//DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
 		painter->setBrush(brush());
@@ -101,6 +101,15 @@ void NonConnectorItem::setHidden(bool hide) {
 
 bool NonConnectorItem::hidden() {
 	return m_hidden;
+}
+
+void NonConnectorItem::setInactive(bool inactiv) {
+	m_inactive = inactiv;
+	this->update();
+}
+
+bool NonConnectorItem::inactive() {
+	return m_inactive;
 }
 
 long NonConnectorItem::attachedToID() {

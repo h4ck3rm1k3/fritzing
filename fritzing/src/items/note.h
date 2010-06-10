@@ -55,7 +55,8 @@ public:
 	void setText(const QString & text, bool checkSize);
 	QString text();
 	void setSize(const QSizeF & size);
-	void setHidden(bool hide) ;
+	void setHidden(bool hide);
+	void setInactive(bool inactive);
 	bool hasPartLabel();
 	bool stickyEnabled();
 

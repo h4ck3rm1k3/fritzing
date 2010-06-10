@@ -195,6 +195,9 @@ protected slots:
 	void updateItemMenu();
 
 	void autoroute();
+	void activeLayerTop();
+	void activeLayerBottom();
+	void activeLayerBoth();
 	void createTrace();
 	void createJumper();
 	void excludeFromAutoroute();
@@ -257,6 +260,7 @@ protected slots:
 	void updateLayerMenuSlot();
 	bool save();
 	bool saveAs();
+	void changeBoardLayers(int layers, bool doEmit);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -291,7 +295,7 @@ protected:
 	void notYetImplemented(QString action);
 	void setCurrentFile(const QString &fileName, bool addToRecent=true);
 	bool eventFilter(QObject *obj, QEvent *event);
-	void setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2);
+	void setActionsIcons(int index, QList<QAction *> &);
 	void exportToEagle();
 	void exportToGerber();
     void exportBOM();
@@ -335,6 +339,7 @@ protected:
 	SketchToolButton *createShareButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
+	SketchToolButton *createActiveLayerButton(SketchAreaWidget *parent, const QString & selector);
 	class ExpandingLabel * createRoutingStatusLabel(SketchAreaWidget *);
 	SketchToolButton *createExportEtchableButton(SketchAreaWidget *parent);
 	SketchToolButton *createNoteButton(SketchAreaWidget *parent);
@@ -370,6 +375,7 @@ protected:
 	void doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes);
 	void addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers);
 	void displayMessage(const QString & message, bool displayMessageBoxes);
+	void updateActiveLayerButtons();
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -537,6 +543,9 @@ protected:
 	QMenu *m_pcbTraceMenu;
 	QMenu *m_schematicTraceMenu;
 	QAction *m_autorouteAct;
+	QAction *m_activeLayerTopAct;
+	QAction *m_activeLayerBottomAct;
+	QAction *m_activeLayerBothAct;
 	QAction *m_createTraceAct;
 	QAction *m_createJumperAct;
 	QAction *m_excludeFromAutorouteAct;
@@ -572,6 +581,9 @@ protected:
 
 	QList<SketchToolButton*> m_rotateButtons;
 	QList<SketchToolButton*> m_flipButtons;
+	SketchToolButton * m_activeLayerBothButton;
+	SketchToolButton * m_activeLayerTopButton;
+	SketchToolButton * m_activeLayerBottomButton;
 
     bool m_comboboxChanged;
     bool m_restarting;

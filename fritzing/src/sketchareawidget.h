@@ -45,7 +45,7 @@ public:
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	SketchWidget* graphicsView();
 
-	void setContent(QList<QWidget*> buttons);
+	void setToolbarWidgets(QList<QWidget*> buttons);
 	void addStatusBar(QStatusBar *);
 	static QWidget *separator(QWidget* parent);
 	class ExpandingLabel * routingStatusLabel();

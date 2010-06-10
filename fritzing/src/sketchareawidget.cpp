@@ -93,7 +93,7 @@ void SketchAreaWidget::createLayout() {
 	statusbarlayout->setSpacing(0);
 }
 
-void SketchAreaWidget::setContent(QList<QWidget*> widgets) {
+void SketchAreaWidget::setToolbarWidgets(QList<QWidget*> widgets) {
 	foreach(QWidget* widget, widgets) {
 		if(widget->objectName() != RoutingStateLabelName) {
 			m_buttonsContainer->addWidget(widget);

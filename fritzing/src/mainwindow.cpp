@@ -93,6 +93,7 @@ static const int MainWindowDefaultHeight = 600;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_activeLayerBothButton = m_activeLayerTopButton = m_activeLayerBottomButton = NULL;
 	m_programWindow = NULL;
 	m_windowMenuSeparator = NULL;
 	m_wireColorMenu = NULL;
@@ -198,9 +199,9 @@ void MainWindow::init() {
 	createZoomOptions(m_schematicWidget);
 	createZoomOptions(m_pcbWidget);
 
-    m_breadboardWidget->setContent(getButtonsForView(m_breadboardWidget->viewIdentifier()));
-    m_schematicWidget->setContent(getButtonsForView(m_schematicWidget->viewIdentifier()));
-	m_pcbWidget->setContent(getButtonsForView(m_pcbWidget->viewIdentifier()));
+    m_breadboardWidget->setToolbarWidgets(getButtonsForView(m_breadboardWidget->viewIdentifier()));
+    m_schematicWidget->setToolbarWidgets(getButtonsForView(m_schematicWidget->viewIdentifier()));
+	m_pcbWidget->setToolbarWidgets(getButtonsForView(m_pcbWidget->viewIdentifier()));
 
 	QFile styleSheet(":/resources/styles/fritzing.qss");
     if (!styleSheet.open(QIODevice::ReadOnly)) {
@@ -347,6 +348,8 @@ void MainWindow::connectPairs() {
 
 	
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(updateLayerMenuSignal()), this, SLOT(updateLayerMenuSlot()));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(changeBoardLayersSignal(int, bool )), this, SLOT(changeBoardLayers(int, bool )));
+
 
 
 	/*
@@ -548,6 +551,27 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 	return autorouteButton;
 }
 
+SketchToolButton *MainWindow::createActiveLayerButton(SketchAreaWidget *parent, const QString & selector) {
+
+	if (selector.isEmpty()) {
+		m_activeLayerBothButton = new SketchToolButton("ActiveLayer", parent, m_activeLayerBottomAct);
+		m_activeLayerBothButton->setText(tr("Both Layers"));
+		return m_activeLayerBothButton;
+	}
+	if (selector == "B") {
+		m_activeLayerBottomButton = new SketchToolButton("ActiveLayerB", parent, m_activeLayerTopAct);
+		m_activeLayerBottomButton->setText(tr("Bottom Layer"));
+		return m_activeLayerBottomButton;
+	}
+	if (selector == "T") {
+		m_activeLayerTopButton = new SketchToolButton("ActiveLayerT", parent, m_activeLayerBothAct);
+		m_activeLayerTopButton->setText(tr("Top Layer"));
+		return m_activeLayerTopButton;
+	}
+
+	return NULL;
+}
+
 SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent) {
 	SketchToolButton *noteButton = new SketchToolButton("Notes",parent, m_addNoteAct);
 	noteButton->setText(tr("Add a note"));
@@ -588,8 +612,9 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 			retval << createFlipButton(parent) << createToolbarSpacer(parent) << createAutorouteButton(parent) << createRoutingStatusLabel(parent);
 			break;
 		case ViewIdentifierClass::PCBView:
-			retval << SketchAreaWidget::separator(parent) << createAutorouteButton(parent)
-				   << createExportEtchableButton(parent) << createRoutingStatusLabel(parent);
+			retval << SketchAreaWidget::separator(parent) 
+				<< createActiveLayerButton(parent, "") << createActiveLayerButton(parent, "T") << createActiveLayerButton(parent, "B") 
+				<< createAutorouteButton(parent) << createExportEtchableButton(parent) << createRoutingStatusLabel(parent);
 			break;
 		default:
 			break;
@@ -673,6 +698,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		m_rotate90cwAct->setShortcut(zeroSequence);
 	}
 
+	updateActiveLayerButtons();
+
 	m_currentGraphicsView->setCurrent(true);
 
 	// !!!!!! hack alert  !!!!!!!  
@@ -684,16 +711,9 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	}
 
 	updateLayerMenu(true);
-
-	//  TODO:  should be a cleaner way to do this
-	switch( index ) {
-		case 0 : setShowViewActionsIcons(m_showBreadboardAct, m_showSchematicAct,  m_showPCBAct); break;
-		case 1 : setShowViewActionsIcons(m_showSchematicAct,  m_showBreadboardAct, m_showPCBAct); break;
-		case 2 : setShowViewActionsIcons(m_showPCBAct,        m_showBreadboardAct, m_showSchematicAct); break;
-		default :
-			// Shouldn't get here
-			DebugDialog::debug("Warning: not considered tab selected");
-	}
+	QList<QAction *> actions;
+	actions << m_showBreadboardAct << m_showSchematicAct << m_showPCBAct;
+	setActionsIcons(index, actions);
 
 	hideShowTraceMenu();
 	updateTraceMenu();
@@ -719,10 +739,10 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 }
 
-void MainWindow::setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2) {
-	active->setIcon(m_dotIcon);
-	inactive1->setIcon(m_emptyIcon);
-	inactive2->setIcon(m_emptyIcon);
+void MainWindow::setActionsIcons(int index, QList<QAction *> & actions) {
+	for (int i = 0; i < actions.count(); i++) {
+		actions[i]->setIcon(index == i ? m_dotIcon : m_emptyIcon);
+	}
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -1841,4 +1861,47 @@ bool MainWindow::saveAs() {
 		settings.setValue("lastOpenSketch", m_fileName);
 	}
 	return result;
+}
+
+void MainWindow::changeBoardLayers(int layers, bool doEmit) {
+	Q_UNUSED(doEmit);
+	Q_UNUSED(layers);
+	updateActiveLayerButtons();
+}
+
+void MainWindow::updateActiveLayerButtons() {
+	bool alvis = false;
+	bool albvis = false;
+	bool altvis = false;
+	bool enabled = false;
+	int index;
+	if (m_currentGraphicsView->boardLayers() == 2) {
+		bool copper0Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper0);
+		bool copper1Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper1);
+		if (copper0Visible && copper1Visible) {
+			alvis = true;
+			index = 0;
+		}
+		else if (copper1Visible) {
+			altvis = true;
+			index = 2;
+		}
+		else if (copper0Visible) {
+			albvis = true;
+			index = 1;
+		}
+		enabled = true;
+	}
+
+	m_activeLayerBothButton->setVisible(alvis);
+	m_activeLayerTopButton->setVisible(altvis);
+	m_activeLayerBottomButton->setVisible(albvis);
+
+	m_activeLayerBothAct->setEnabled(enabled);
+	m_activeLayerBottomAct->setEnabled(enabled);
+	m_activeLayerTopAct->setEnabled(enabled);
+
+	QList<QAction *> actions;
+	actions << m_activeLayerBothAct << m_activeLayerBottomAct << m_activeLayerTopAct;
+	setActionsIcons(index, actions);
 }

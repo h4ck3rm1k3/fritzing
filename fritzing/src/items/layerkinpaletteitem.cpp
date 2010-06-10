@@ -102,6 +102,11 @@ void LayerKinPaletteItem::setHidden(bool hide) {
 	m_layerKinChief->figureHover();
 }
 
+void LayerKinPaletteItem::setInactive(bool inactive) {
+	ItemBase::setInactive(inactive);
+	m_layerKinChief->figureHover();
+}
+
 void LayerKinPaletteItem::clearModelPart() {
 	m_layerKinChief->clearModelPart();
 }

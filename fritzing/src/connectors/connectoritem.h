@@ -55,6 +55,7 @@ public:
 	bool connectedTo(ConnectorItem *);
 	const QList< QPointer<ConnectorItem> > & connectedToItems();
 	void setHidden(bool hidden);
+	void setInactive(bool inactive);
 	ConnectorItem * overConnectorItem();
 	void setOverConnectorItem(ConnectorItem *);
 	int attachedToItemType();
@@ -103,6 +104,7 @@ protected:
     bool wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
 	ConnectorItem * getCrossLayerConnectorItem();
+	void setHiddenOrInactive();
 
 protected:
 	QPointer<Connector> m_connector;

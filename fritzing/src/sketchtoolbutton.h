@@ -57,7 +57,9 @@ class SketchToolButton : public QToolButton, public AbstractStatesButton {
 		void mousePressEvent(QMouseEvent *event);
 		void mouseReleaseEvent(QMouseEvent *event);
 		void changeEvent(QEvent *event);
-		//void paintEvent(QPaintEvent *event);
+
+	protected:
+		QString m_imageName;
 };
 
 #endif /* SKETCHTOOLBUTTON_H_ */

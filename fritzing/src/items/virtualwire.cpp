@@ -70,6 +70,24 @@ void VirtualWire::hideConnectors() {
 	}
 }
 
+void VirtualWire::inactivateConnectors() {
+	// m_connector0 and m_connector1 may not yet be initialized
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
+		if (item == NULL) continue;	
+
+		item->setInactive(true);
+	}
+}
+
+void VirtualWire::setInactive(bool inactivate) {
+	ItemBase::setInactive(inactivate);
+	
+	if (!inactivate) {
+		inactivateConnectors();
+	}
+}
+
 void VirtualWire::setHidden(bool hide) {
 	ItemBase::setHidden(hide);
 	

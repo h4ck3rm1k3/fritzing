@@ -47,6 +47,8 @@ public:
 	ItemBase * attachedTo();
 	virtual void setHidden(bool hidden);
 	bool hidden();
+	virtual void setInactive(bool inactive);
+	bool inactive();
 	long attachedToID();
 	const QString & attachedToTitle();
 	const QString & attachedToInstanceTitle();
@@ -64,6 +66,7 @@ protected:
 protected:
 	QPointer<ItemBase> m_attachedTo;
 	bool m_hidden;
+	bool m_inactive;
 	bool m_paint;
 	qreal m_opacity;
 	bool m_circular;

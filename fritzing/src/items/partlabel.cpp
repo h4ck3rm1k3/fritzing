@@ -110,7 +110,7 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 	m_owner = owner;
 	m_spaceBarWasPressed = false;
 
-	m_hidden = m_initialized = false;
+	m_inactive = m_hidden = m_initialized = false;
 	m_displayKeys.append(LabelTextKey);
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
@@ -276,12 +276,22 @@ void PartLabel::setHidden(bool hide) {
 	if (!m_initialized) return;
 
 	m_hidden = hide;
-	if (!m_owner->isSelected()) {
-		hide = true;
-	}
+	setHiddenOrInactive();
+}
+
+void PartLabel::setHiddenOrInactive() {
+	bool hide = m_hidden || m_inactive || !m_owner->isSelected();
+
 	setAcceptedMouseButtons(hide ? Qt::NoButton : ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(!hide);
 	update();
+}
+
+void PartLabel::setInactive(bool inactive) {
+	if (!m_initialized) return;
+
+	m_inactive = inactive;
+	setHiddenOrInactive();
 }
 
 ViewLayer::ViewLayerID PartLabel::viewLayerID() {
@@ -290,6 +300,10 @@ ViewLayer::ViewLayerID PartLabel::viewLayerID() {
 
 bool PartLabel::hidden() {
 	return m_hidden;
+}
+
+bool PartLabel::inactive() {
+	return m_inactive;
 }
 
 void PartLabel::saveInstance(QXmlStreamWriter & streamWriter) {
@@ -508,7 +522,7 @@ QVariant PartLabel::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
 void PartLabel::ownerSelected(bool selected) 
 {
 	bool hide = !selected;
-	if (m_hidden) {
+	if (m_hidden || m_inactive) {
 		hide = true;
 	}
 	setAcceptedMouseButtons(hide ? Qt::NoButton : ALLMOUSEBUTTONS);
@@ -517,12 +531,7 @@ void PartLabel::ownerSelected(bool selected)
 
 void PartLabel::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
-	if (m_hidden) {
-		event->ignore();
-		return;
-	}
-
-	if (!m_owner->isSelected()) {
+	if (m_hidden || m_inactive || !m_owner->isSelected()) {
 		event->ignore();
 		return;
 	}
@@ -640,11 +649,20 @@ void PartLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 {
 	if (m_hidden) return;
 
+	if (m_inactive) {
+		painter->save();
+		painter->setOpacity(0.5);
+	}
+
 	if (m_owner->isSelected()) {
 		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), shape(), NULL);
     }
 
     QGraphicsSimpleTextItem::paint(painter, option, widget);
+
+	if (m_inactive) {
+		painter->restore();
+	}
 }
 
 void PartLabel::setFontSize(int action) {

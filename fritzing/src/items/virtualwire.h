@@ -36,6 +36,7 @@ public:
 	VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
 	
 	void setHidden(bool hidden);
+	void setInactive(bool inactive);
 	void tempRemoveAllConnections();
 	
 protected:
@@ -44,6 +45,7 @@ protected:
 	void connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
  	class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	void hideConnectors();	
+	void inactivateConnectors();
 	qreal calcClipRadius(ConnectorItem *);
 
 };
