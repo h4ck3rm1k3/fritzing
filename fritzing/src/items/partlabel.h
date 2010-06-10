@@ -55,7 +55,7 @@ public:
 	void ownerMoved(QPointF newPos);
 	void setHidden(bool hide);
 	bool hidden();
-	void setInactive(bool inactive);
+	void setInactive(bool inactivate);
 	bool inactive();
 	ViewLayer::ViewLayerID viewLayerID();
 	void saveInstance(QXmlStreamWriter & streamWriter);

@@ -47,7 +47,7 @@ public:
 	ItemBase * attachedTo();
 	virtual void setHidden(bool hidden);
 	bool hidden();
-	virtual void setInactive(bool inactive);
+	virtual void setInactive(bool inactivate);
 	bool inactive();
 	long attachedToID();
 	const QString & attachedToTitle();

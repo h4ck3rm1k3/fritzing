@@ -101,6 +101,7 @@ enum PartLabelAction {
 
 static QMultiHash<long, PartLabel *> AllPartLabels;
 static const QString LabelTextKey = "";
+static const qreal InactiveOpacity = 0.4;
 
 ///////////////////////////////////////////
 
@@ -279,6 +280,13 @@ void PartLabel::setHidden(bool hide) {
 	setHiddenOrInactive();
 }
 
+void PartLabel::setInactive(bool inactivate) {
+	if (!m_initialized) return;
+
+	m_inactive = inactivate;
+	setHiddenOrInactive();
+}
+
 void PartLabel::setHiddenOrInactive() {
 	bool hide = m_hidden || m_inactive || !m_owner->isSelected();
 
@@ -287,12 +295,6 @@ void PartLabel::setHiddenOrInactive() {
 	update();
 }
 
-void PartLabel::setInactive(bool inactive) {
-	if (!m_initialized) return;
-
-	m_inactive = inactive;
-	setHiddenOrInactive();
-}
 
 ViewLayer::ViewLayerID PartLabel::viewLayerID() {
 	return m_viewLayerID;
@@ -651,7 +653,7 @@ void PartLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 	if (m_inactive) {
 		painter->save();
-		painter->setOpacity(0.5);
+		painter->setOpacity(InactiveOpacity);
 	}
 
 	if (m_owner->isSelected()) {

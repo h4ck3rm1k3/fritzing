@@ -55,7 +55,7 @@ public:
 	bool connectedTo(ConnectorItem *);
 	const QList< QPointer<ConnectorItem> > & connectedToItems();
 	void setHidden(bool hidden);
-	void setInactive(bool inactive);
+	void setInactive(bool inactivate);
 	ConnectorItem * overConnectorItem();
 	void setOverConnectorItem(ConnectorItem *);
 	int attachedToItemType();

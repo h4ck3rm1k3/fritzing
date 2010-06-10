@@ -66,7 +66,7 @@ public:
 	bool swap(ModelPart* newModelPart, const LayerHash &layerHash, bool reinit, class SwapCommand *);
 	QString family();
 	void setHidden(bool hidden);
-	void setInactive(bool inactive);
+	void setInactive(bool inactivate);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void clearModelPart();

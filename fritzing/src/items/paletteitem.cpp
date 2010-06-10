@@ -341,8 +341,8 @@ void PaletteItem::setHidden(bool hide) {
 	figureHover();
 }
 
-void PaletteItem::setInactive(bool inactive) {
-	ItemBase::setInactive(inactive);
+void PaletteItem::setInactive(bool inactivate) {
+	ItemBase::setInactive(inactivate);
 	figureHover();
 }
 
@@ -377,7 +377,7 @@ void PaletteItem::figureHover() {
 
 	for (int i = 0; i < ix; i++) {
 		ItemBase * base = allKin[i];
-		if (!!(base->hidden() || base->inactive())) {
+		if (!(base->hidden() || base->inactive())) {
 			base->setAcceptHoverEvents(true);
 			base->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 			return;

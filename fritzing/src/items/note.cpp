@@ -74,6 +74,8 @@ const int Note::initialMinWidth = 140;
 const int Note::initialMinHeight = 45;
 const int borderWidth = 3;
 
+const qreal InactiveOpacity = 0.5;
+
 QString Note::initialTextString;
 
 QRegExp urlTag("<a.*href=[\"']([^\"]+[.\\s]*)[\"'].*>");    
@@ -274,6 +276,11 @@ void Note::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 	if (m_hidden) return;
 
+	if (m_inactive) {
+		painter->save();
+		painter->setOpacity(InactiveOpacity);
+	}
+
 	painter->setPen(m_pen);
 	painter->setBrush(m_brush);
     painter->drawRect(m_rect);
@@ -281,6 +288,10 @@ void Note::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 	if (option->state & QStyle::State_Selected) {
 		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
     }
+
+	if (m_inactive) {
+		painter->restore();
+	}
 }
 
 QRectF Note::boundingRect() const
@@ -514,9 +525,9 @@ void Note::setHidden(bool hide)
 	m_resizeGrip->setVisible(!hide);
 }
 
-void Note::setInactive(bool inactive)
+void Note::setInactive(bool inactivate)
 {
-	ItemBase::setInactive(inactive);
+	ItemBase::setInactive(inactivate);
 }
 
 bool Note::eventFilter(QObject * object, QEvent * event)

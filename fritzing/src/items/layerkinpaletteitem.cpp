@@ -102,8 +102,8 @@ void LayerKinPaletteItem::setHidden(bool hide) {
 	m_layerKinChief->figureHover();
 }
 
-void LayerKinPaletteItem::setInactive(bool inactive) {
-	ItemBase::setInactive(inactive);
+void LayerKinPaletteItem::setInactive(bool inactivate) {
+	ItemBase::setInactive(inactivate);
 	m_layerKinChief->figureHover();
 }
 

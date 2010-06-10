@@ -48,8 +48,10 @@ void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(tmp);
 		if (itemBase == NULL) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(tmp);
-			if (connectorItem && connectorItem->attachedTo()->hidden()) continue;
-			if (connectorItem && connectorItem->attachedTo()->inactive()) continue;
+			if (connectorItem) {
+				if (connectorItem->attachedTo()->hidden()) continue;
+				if (connectorItem->attachedTo()->inactive()) continue;
+			}
 
 			if (!tmp->toolTip().isEmpty()) {
 				text = tmp->toolTip();

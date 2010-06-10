@@ -59,6 +59,8 @@ static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
 static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
 static QHash<QString, qreal> NumberMatcherValues;
 
+static const qreal InactiveOpacity = 0.4;
+
 bool numberValueLessThan(QString v1, QString v2)
 {
 	return NumberMatcherValues.value(v1, 0) <= NumberMatcherValues.value(v2, 0);
@@ -551,9 +553,9 @@ void ItemBase::setHidden(bool hide) {
 	}
 }
 
-void ItemBase::setInactive(bool inactive) {
+void ItemBase::setInactive(bool inactivate) {
 
-	m_inactive = inactive;
+	m_inactive = inactivate;
 	setAcceptedMouseButtons(m_hidden || m_inactive ? Qt::NoButton : ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(!(m_hidden || m_inactive));
 	update();
@@ -561,7 +563,7 @@ void ItemBase::setInactive(bool inactive) {
 		NonConnectorItem * nonconnectorItem = dynamic_cast<NonConnectorItem *>(childItems()[i]);
 		if (nonconnectorItem == NULL) continue;
 
-		nonconnectorItem->setInactive(inactive);
+		nonconnectorItem->setInactive(inactivate);
 	}
 }
 
@@ -749,11 +751,20 @@ int ItemBase::itemType() const
 }
 
 void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	if (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0) {
+	if (!m_inactive && (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0)) {
 		paintHover(painter, option, widget);
 	}
 
+	if (m_inactive) {
+		painter->save();
+		painter->setOpacity(InactiveOpacity);
+	}
+
 	GraphicsSvgLineItem::paint(painter, option, widget);
+
+	if (m_inactive) {
+		painter->restore();
+	}
 }
 
 void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

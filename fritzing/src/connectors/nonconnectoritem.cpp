@@ -66,9 +66,9 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 		return;
 	}
 
-	if (m_hidden || !m_paint) return;
+	if (m_hidden || m_inactive || !m_paint) return;
 
-	painter->setOpacity(m_inactive ? m_opacity / 2 : m_opacity);
+	painter->setOpacity(m_opacity);
 	if (m_circular) {
 		//DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
 		painter->setBrush(brush());
@@ -103,8 +103,8 @@ bool NonConnectorItem::hidden() {
 	return m_hidden;
 }
 
-void NonConnectorItem::setInactive(bool inactiv) {
-	m_inactive = inactiv;
+void NonConnectorItem::setInactive(bool inactivate) {
+	m_inactive = inactivate;
 	this->update();
 }
 

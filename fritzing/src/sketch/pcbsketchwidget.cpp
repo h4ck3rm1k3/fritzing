@@ -1835,6 +1835,10 @@ int PCBSketchWidget::designRulesCheck()
 	this->setBackground(QColor::fromRgb(255,255,255,255));
 	this->saveLayerVisibility();
 	this->setAllLayersVisible(false);
+	bool copper0Active = layerIsActive(ViewLayer::Copper0);
+	bool copper1Active = layerIsActive(ViewLayer::Copper1);
+	setLayerActive(ViewLayer::Copper0, true);
+	setLayerActive(ViewLayer::Copper1, true);
 	this->setLayerVisible(ViewLayer::Copper0, true);
 	QSet<ItemBase *> collidingItems;
 	if (m_boardLayers == 1) {
@@ -1849,6 +1853,8 @@ int PCBSketchWidget::designRulesCheck()
 
 	this->setBackground(color);
 	this->restoreLayerVisibility();
+	setLayerActive(ViewLayer::Copper0, copper0Active);
+	setLayerActive(ViewLayer::Copper1, copper1Active);
 
 	if (m_cancelDRC) {
 		selectItemCommand->undo();

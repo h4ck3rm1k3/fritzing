@@ -479,8 +479,8 @@ void ConnectorItem::setHidden(bool hide) {
 	setHiddenOrInactive();
 }
 
-void ConnectorItem::setInactive(bool inactive) {
-	m_inactive = inactive;
+void ConnectorItem::setInactive(bool inactivate) {
+	m_inactive = inactivate;
 	setHiddenOrInactive();
 }
 

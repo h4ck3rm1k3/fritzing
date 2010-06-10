@@ -108,7 +108,7 @@ public:
 	virtual void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
 	bool hidden();
-	virtual void setInactive(bool inactive);
+	virtual void setInactive(bool inactivate);
 	bool inactive();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
 	void updateConnections(ConnectorItem *);

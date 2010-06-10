@@ -36,7 +36,7 @@ public:
 	VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
 	
 	void setHidden(bool hidden);
-	void setInactive(bool inactive);
+	void setInactive(bool inactivate);
 	void tempRemoveAllConnections();
 	
 protected:

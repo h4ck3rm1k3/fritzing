@@ -40,7 +40,7 @@ public:
 	ItemBase * layerKinChief();
 	bool ok();
 	void setHidden(bool hidden);
-	void setInactive(bool inactive);
+	void setInactive(bool inactivate);
 	void clearModelPart();
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void init(ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, const LayerHash &viewLayers);
