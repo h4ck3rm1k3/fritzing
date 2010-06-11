@@ -5772,7 +5772,7 @@ void SketchWidget::updateConnectors() {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
 
-		connectorItem->restoreColor(false, -1);
+		connectorItem->restoreColor(false, -1, true);
 	}
 }
 

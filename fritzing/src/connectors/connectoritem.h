@@ -79,7 +79,7 @@ public:
 	void clearConnector();
 	bool connectionIsAllowed(ConnectorItem * other);
 	void prepareGeometryChange();
-	void restoreColor(bool doBuses, int busConnectedCount);
+	void restoreColor(bool doBuses, int busConnectedCount, bool doCross);
 	void showEqualPotential(bool show);
 	void setHoverColor();
 	bool isGrounded();

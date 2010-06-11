@@ -892,8 +892,8 @@ void Wire::setShadowColor(QColor & color) {
 	m_shadowPen.setBrush(m_shadowBrush);
 	m_bendpointPen.setBrush(m_shadowBrush);
 	m_bendpoint2Pen.setBrush(m_shadowBrush);
-	if (m_connector0) m_connector0->restoreColor(false, 0);
-	if (m_connector0) m_connector1->restoreColor(false, 0);
+	if (m_connector0) m_connector0->restoreColor(false, 0, false);
+	if (m_connector0) m_connector1->restoreColor(false, 0, false);
 	this->update();
 }
 
@@ -906,8 +906,8 @@ void Wire::setWireWidth(qreal width, InfoGraphicsView * infoGraphicsView) {
 
 	prepareGeometryChange();
 	setPenWidth(width, infoGraphicsView);
-	if (m_connector0) m_connector0->restoreColor(false, 0);
-	if (m_connector1) m_connector1->restoreColor(false, 0);
+	if (m_connector0) m_connector0->restoreColor(false, 0, false);
+	if (m_connector1) m_connector1->restoreColor(false, 0, false);
 	update();
 }
 

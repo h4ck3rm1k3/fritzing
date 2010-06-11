@@ -1824,7 +1824,7 @@ void MainWindow::redrawSketch() {
 		item->update();
 		ConnectorItem * c = dynamic_cast<ConnectorItem *>(item);
 		if (c != NULL) {
-			c->restoreColor(false, -1);
+			c->restoreColor(false, -1, true);
 		}
 	}
 }
@@ -1867,6 +1867,8 @@ void MainWindow::changeBoardLayers(int layers, bool doEmit) {
 	Q_UNUSED(doEmit);
 	Q_UNUSED(layers);
 	updateActiveLayerButtons();
+	QTimer::singleShot(10, m_currentGraphicsView, SLOT(updateConnectors()));
+	m_currentGraphicsView->updateConnectors();
 }
 
 void MainWindow::updateActiveLayerButtons() {

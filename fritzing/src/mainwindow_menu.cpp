@@ -2742,16 +2742,16 @@ void MainWindow::createTraceMenuActions() {
 	m_autorouteAct->setStatusTip(tr("Autoroute..."));
 	connect(m_autorouteAct, SIGNAL(triggered()), this, SLOT(autoroute()));
 
-	m_activeLayerBothAct = new QAction(tr("Both copper layers active"), this);
-	m_activeLayerBothAct->setStatusTip(tr("Set both copper top and copper bottom layers active"));
+	m_activeLayerBothAct = new QAction(tr("Set both copper layers clickable"), this);
+	m_activeLayerBothAct->setStatusTip(tr("Set both copper layers clickable"));
 	connect(m_activeLayerBothAct, SIGNAL(triggered()), this, SLOT(activeLayerBoth()));
 
-	m_activeLayerTopAct = new QAction(tr("Copper top layer active"), this);
-	m_activeLayerTopAct->setStatusTip(tr("Set copper top layer active"));
+	m_activeLayerTopAct = new QAction(tr("Set copper top layer clickable"), this);
+	m_activeLayerTopAct->setStatusTip(tr("Set copper top layer clickable"));
 	connect(m_activeLayerTopAct, SIGNAL(triggered()), this, SLOT(activeLayerTop()));
 
-	m_activeLayerBottomAct = new QAction(tr("Copper bottom layer active"), this);
-	m_activeLayerBottomAct->setStatusTip(tr("Set copper bottom layer active"));
+	m_activeLayerBottomAct = new QAction(tr("Set copper bottom layer clickable"), this);
+	m_activeLayerBottomAct->setStatusTip(tr("Set copper bottom layer clickable"));
 	connect(m_activeLayerBottomAct, SIGNAL(triggered()), this, SLOT(activeLayerBottom()));
 
 	m_createTraceAct = new QAction(tr("&Create Trace from Selected Wire(s)"), this);

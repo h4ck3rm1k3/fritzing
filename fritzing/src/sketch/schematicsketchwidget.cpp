@@ -210,7 +210,7 @@ void SchematicSketchWidget::updateBigDots()
 
 		//DebugDialog::debug(QString("update big dot %1 %2").arg(traceWire->id()).arg(connectorItem->connectorSharedID()));
 
-		connectorItem->restoreColor(false, 0);
+		connectorItem->restoreColor(false, 0, false);
 	}
 }
 

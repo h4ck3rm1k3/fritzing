@@ -202,7 +202,6 @@ public:
 	virtual void createTrace();
 	void selectAllWires(ViewGeometry::WireFlag);
 	virtual void tidyWires();
-	void updateConnectors();
 	const QString & getShortName();
 	virtual void setClipEnds(class ClipableWire *, bool);
 	void getBendpointWidths(class Wire *, qreal w, qreal & w1, qreal & w2);
@@ -447,6 +446,7 @@ public slots:
 	virtual void showLabelFirstTime(long itemID, bool show, bool doEmit);
 	void resizeBoard(qreal w, qreal h, bool doEmit);
 	virtual void changeBoardLayers(int layers, bool doEmit);
+	void updateConnectors();
 
 protected:
 	enum StatusConnectStatus {

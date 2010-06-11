@@ -57,7 +57,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	if (connector != NULL) {
 		connector->addViewItem(this);
 	}
-	restoreColor(false, -1);
+	restoreColor(false, -1, true);
     setAcceptHoverEvents(true);
     this->setCursor(Qt::CrossCursor);
 
@@ -104,7 +104,7 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 		return;
 	}
 
-	restoreColor(false, -1);
+	restoreColor(false, -1, true);
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveConnectorItem(event, this);
@@ -131,7 +131,7 @@ Connector * ConnectorItem::connector() {
 
 void ConnectorItem::clearConnectorHover() {
 	m_connectorHovering = false;
-	restoreColor(false, -1);
+	restoreColor(false, -1, true);
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->clearConnectorHover();
 	}
@@ -143,7 +143,7 @@ void ConnectorItem::connectorHover(ItemBase * itemBase, bool hovering) {
 		setHoverColor();			// could make this light up buses as well
 	}
 	else {
-		restoreColor(false, -1);
+		restoreColor(false, -1, true);
 	}
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->connectorHover(this, itemBase, hovering);
@@ -159,7 +159,7 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 
 	m_connectedTo.append(connected);
 	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPartShared()->title()).arg(m_connectedTo.count()) );
-	restoreColor(true, -1);
+	restoreColor(true, -1, true);
 	if (m_attachedTo != NULL) {
 		m_attachedTo->connectionChange(this, connected, true);
 	}
@@ -175,7 +175,7 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 			if (m_attachedTo != NULL) {
 				m_attachedTo->connectionChange(this, removed, false);
 			}
-			restoreColor(true, -1);
+			restoreColor(true, -1, true);
 			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
 				.arg((long) this, 0, 16)
 				.arg(itemBase->modelPartShared()->title())
@@ -192,7 +192,7 @@ void ConnectorItem::removeConnection(ConnectorItem * connectedItem, bool emitCha
 	if (connectedItem == NULL) return;
 
 	m_connectedTo.removeOne(connectedItem);
-	restoreColor(true, -1);
+	restoreColor(true, -1, true);
 	if (emitChange) {
 		m_attachedTo->connectionChange(this, connectedItem, false);
 	}
@@ -203,17 +203,17 @@ void ConnectorItem::tempConnectTo(ConnectorItem * item, bool applyColor) {
 	if (!m_connectedTo.contains(item)) m_connectedTo.append(item);
 	updateTooltip();
 
-	if(applyColor) restoreColor(true, -1);
+	if(applyColor) restoreColor(true, -1, true);
 }
 
 void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 	m_connectedTo.removeOne(item);
 	updateTooltip();
 
-	if(applyColor) restoreColor(true, -1);
+	if(applyColor) restoreColor(true, -1, true);
 }
 
-void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount) {
+void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCross) {
 	
 	QList<ConnectorItem *> busConnectedItems;
 	if (attachedToItemType() == ModelPart::Wire) {
@@ -243,7 +243,7 @@ void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount) {
 		Bus * b = bus();
 		if (b != NULL) {
 			foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
-				busConnectedItem->restoreColor(false, busConnectionCount);
+				busConnectedItem->restoreColor(false, busConnectionCount, true);
 			}
 		}
 	}
@@ -253,6 +253,21 @@ void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount) {
 		if (toConnectorItem->attachedTo()->isEverVisible()) {
 			connectedToCount = 1;
 			break;
+		}
+	}
+
+	ConnectorItem * crossConnectorItem = getCrossLayerConnectorItem();
+	if (crossConnectorItem) {
+		if (connectedToCount == 0) {
+			foreach (ConnectorItem * toConnectorItem, crossConnectorItem->connectedToItems()) {
+				if (toConnectorItem->attachedTo()->isEverVisible()) {
+					connectedToCount = 1;
+					break;
+				}
+			}
+		}
+		if (doCross) {
+			crossConnectorItem->restoreColor(false, -1, false);
 		}
 	}
 
@@ -833,7 +848,7 @@ void ConnectorItem::prepareGeometryChange() {
 
 void ConnectorItem::showEqualPotential(bool show) {
 	if (!show) {
-		restoreColor(false, -1);
+		restoreColor(false, -1, true);
 		return;
 	}
 
