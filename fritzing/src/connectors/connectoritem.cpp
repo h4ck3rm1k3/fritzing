@@ -628,6 +628,7 @@ void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & el
 	writer.writeStartElement(elementName);
 	writer.writeAttribute("connectorId", connectorSharedID());
 	writer.writeAttribute("modelIndex", QString::number(connector()->modelIndex()));
+	writer.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(attachedTo()->viewLayerID()));
 	writer.writeEndElement();
 }
 
@@ -719,12 +720,18 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 	// collects all the connectors at the same potential
 	// allows direct connections or wired connections
 
+	DebugDialog::debug("__________________");
+
 	QList<ConnectorItem *> tempItems = connectorItems;
 	connectorItems.clear();
 
 	for (int i = 0; i < tempItems.count(); i++) {
 		ConnectorItem * connectorItem = tempItems[i];
-		//DebugDialog::debug(QString("testing %1 %2 %3").arg(connectorItem->attachedToID()).arg(connectorItem->attachedToTitle()).arg(connectorItem->connectorSharedID()) );
+		DebugDialog::debug(QString("testing id:%1 '%2' %3 vlid:%4")
+			.arg(connectorItem->attachedToID())
+			.arg(connectorItem->attachedToTitle())
+			.arg(connectorItem->connectorSharedID())
+			.arg(connectorItem->attachedTo()->viewLayerID()) );
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		if (fromWire != NULL) {
@@ -768,6 +775,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 
 void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols)
 {
+	DebugDialog::debug("__________________");
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		ItemBase * candidate = connectorItem->attachedTo();
 		switch (candidate->itemType()) {
@@ -778,10 +786,20 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 			case ModelPart::CopperFill:
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
-				if (!partsConnectors.contains(connectorItem)) {
-					//DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorSharedID()) );
-					partsConnectors.append(connectorItem);
+				if (partsConnectors.contains(connectorItem)) break;
+				
+				{
+					ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
+					if (crossConnectorItem != NULL) {
+						if (partsConnectors.contains(crossConnectorItem)) {
+							DebugDialog::debug("shouldn't collect?");
+							//break;
+						}
+					}
 				}
+					
+				DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorSharedID()) );
+				partsConnectors.append(connectorItem);
 				break;
 			default:
 				break;
@@ -899,7 +917,15 @@ bool ConnectorItem::isGrounded() {
 ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 	if (m_connector == NULL) return NULL;
 
-	return m_connector->connectorItemByViewLayerID(attachedTo()->viewLayerID() == ViewLayer::Copper0 ? ViewLayer::Copper1 : ViewLayer::Copper0);
+	ViewLayer::ViewLayerID viewLayerID = attachedTo()->viewLayerID();
+	if (viewLayerID == ViewLayer::Copper0) {
+		return m_connector->connectorItemByViewLayerID(ViewLayer::Copper1);
+	}
+	if (viewLayerID == ViewLayer::Copper1) {
+		return m_connector->connectorItemByViewLayerID(ViewLayer::Copper0);
+	}
+
+	return NULL;
 }
 
 void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 

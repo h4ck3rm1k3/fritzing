@@ -89,10 +89,11 @@ ConnectorShared * Connector::connectorShared() {
 
 void Connector::addViewItem(ConnectorItem * item) {
 	m_connectorItems.insert(item->attachedTo()->viewLayerID(), item);
-	DebugDialog::debug(QString("adding connector %1 %2 %3")
+	DebugDialog::debug(QString("adding connector '%1' vlid:%2 n:%3 id:%4")
 		.arg(this->connectorShared()->name())
 		.arg(item->attachedTo()->viewLayerID())
-		.arg(m_connectorItems.count()) );
+		.arg(m_connectorItems.count())
+		.arg(item->attachedTo()->id()) );
 }
 
 void Connector::removeViewItem(ConnectorItem * item) {
