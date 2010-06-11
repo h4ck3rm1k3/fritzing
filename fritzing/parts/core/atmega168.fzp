@@ -28,7 +28,7 @@
             </layers>
         </breadboardView>
         <pcbView>
-            <layers image="pcb/DIP28N.svg">
+            <layers image="pcb/dip_28_300mil_pcb.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
             <layer layerId="copper1"/></layers>
