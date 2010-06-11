@@ -1402,11 +1402,17 @@ QString ItemBase::getSvgFilename(ModelPartShared * modelPartShared, const QStrin
 	foreach (QString possibleFolder, ModelPart::possibleFolders()) {
 		filename = tempPath1.arg(possibleFolder);
 		if (QFileInfo(filename).exists()) {
+			if (possibleFolder == "obsolete") {
+				DebugDialog::debug(QString("module %1:%2 obsolete svg %3").arg(modelPartShared->title()).arg(modelPartShared->moduleID()).arg(filename));
+			}
 			return filename;
 		} 
 		else {
 			filename = tempPath2.arg(possibleFolder);
 			if (QFileInfo(filename).exists()) {
+				if (possibleFolder == "obsolete") {
+					DebugDialog::debug(QString("module %1:%2 obsolete svg %3").arg(modelPartShared->title()).arg(modelPartShared->moduleID()).arg(filename));
+				}
 				return filename;
 			}
 		}

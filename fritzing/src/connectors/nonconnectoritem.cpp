@@ -35,13 +35,14 @@ $Date$
 #include "../debugdialog.h"
 #include "../utils/graphicsutils.h"
 
+static const qreal EffectiveAdjustment = 1.25;
 
 /////////////////////////////////////////////////////////
 
 NonConnectorItem::NonConnectorItem(ItemBase * attachedTo) : QGraphicsRectItem(attachedTo)
 {
 	m_radius = m_strokeWidth = 0;
-	m_circular = false;
+	m_effectivelyCircular = m_effectivelyRectangular = m_circular = false;
 	m_inactive = m_hidden = false;
 	m_white = false;
 	m_attachedTo = attachedTo;
@@ -69,6 +70,7 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 	if (m_hidden || m_inactive || !m_paint) return;
 
 	painter->setOpacity(m_opacity);
+
 	if (m_circular) {
 		//DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
 		painter->setBrush(brush());
@@ -87,6 +89,16 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 		painter->setBrush(brush());  
 		painter->setPen(pen());
 		painter->drawPath(m_shape);
+	}
+	else if (m_effectivelyCircular) {
+		painter->setBrush(brush());  
+		painter->setPen(pen());
+		painter->drawEllipse(rect().adjusted(EffectiveAdjustment, EffectiveAdjustment, -EffectiveAdjustment, -EffectiveAdjustment));
+	}
+	else if (m_effectivelyRectangular) {
+		painter->setBrush(brush());  
+		painter->setPen(pen());
+		painter->drawRect(rect().adjusted(EffectiveAdjustment, EffectiveAdjustment, -EffectiveAdjustment, -EffectiveAdjustment));
 	}
 	else {
 		QGraphicsRectItem::paint(painter, option, widget);
@@ -159,6 +171,7 @@ QPainterPath NonConnectorItem::shape() const
 }
 
 void NonConnectorItem::setShape(QPainterPath & pp) {
+	// so far only used by GroundPlane
 	m_shape = GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(pp, pen(), 1);
 }
 

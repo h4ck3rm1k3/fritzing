@@ -105,6 +105,7 @@ protected:
 	bool isEverVisible();
 	ConnectorItem * getCrossLayerConnectorItem();
 	void setHiddenOrInactive();
+	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 
 protected:
 	QPointer<Connector> m_connector;
@@ -115,6 +116,7 @@ protected:
 	bool m_connectorHovering;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
+	bool m_checkedEffectively;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

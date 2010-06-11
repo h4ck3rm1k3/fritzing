@@ -551,20 +551,26 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 	return autorouteButton;
 }
 
-SketchToolButton *MainWindow::createActiveLayerButton(SketchAreaWidget *parent, const QString & selector) {
+SketchToolButton *MainWindow::createActiveLayerButton(SketchAreaWidget *parent, const QString & selector) 
+{
+	QList<QAction *> actions;
+	actions << m_activeLayerBothAct << m_activeLayerBottomAct << m_activeLayerTopAct;
 
 	if (selector.isEmpty()) {
-		m_activeLayerBothButton = new SketchToolButton("ActiveLayer", parent, m_activeLayerBottomAct);
+		m_activeLayerBothButton = new SketchToolButton("ActiveLayer", parent, actions);
+		m_activeLayerBothButton->setDefaultAction(m_activeLayerBottomAct);
 		m_activeLayerBothButton->setText(tr("Both Layers"));
 		return m_activeLayerBothButton;
 	}
 	if (selector == "B") {
-		m_activeLayerBottomButton = new SketchToolButton("ActiveLayerB", parent, m_activeLayerTopAct);
+		m_activeLayerBottomButton = new SketchToolButton("ActiveLayerB", parent, actions);
+		m_activeLayerBottomButton->setDefaultAction(m_activeLayerTopAct);
 		m_activeLayerBottomButton->setText(tr("Bottom Layer"));
 		return m_activeLayerBottomButton;
 	}
 	if (selector == "T") {
-		m_activeLayerTopButton = new SketchToolButton("ActiveLayerT", parent, m_activeLayerBothAct);
+		m_activeLayerTopButton = new SketchToolButton("ActiveLayerT", parent, actions);
+		m_activeLayerTopButton->setDefaultAction(m_activeLayerBothAct);
 		m_activeLayerTopButton->setText(tr("Top Layer"));
 		return m_activeLayerTopButton;
 	}

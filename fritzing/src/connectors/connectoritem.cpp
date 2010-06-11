@@ -50,6 +50,7 @@ static double MAX_DOUBLE = std::numeric_limits<double>::max();
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
+	m_checkedEffectively = false;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_overConnectorItem = NULL;
 	m_connectorHovering = false;
@@ -900,3 +901,20 @@ ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 
 	return m_connector->connectorItemByViewLayerID(attachedTo()->viewLayerID() == ViewLayer::Copper0 ? ViewLayer::Copper1 : ViewLayer::Copper0);
 }
+
+void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 
+{
+	if (!m_checkedEffectively) {
+		if (!m_circular && m_shape.isEmpty()) {
+			if (this->attachedTo()->viewIdentifier() == ViewIdentifierClass::PCBView) {
+				QRectF r = rect();
+				m_effectivelyCircular = qAbs(r.width() - r.height()) < 0.01;
+				m_effectivelyRectangular = !m_effectivelyCircular;
+			}
+		}
+		m_checkedEffectively = true;
+	}
+
+	NonConnectorItem::paint(painter, option, widget);
+}
+

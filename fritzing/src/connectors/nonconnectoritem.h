@@ -70,6 +70,8 @@ protected:
 	bool m_paint;
 	qreal m_opacity;
 	bool m_circular;
+	bool m_effectivelyCircular;
+	bool m_effectivelyRectangular;
 	qreal m_radius;
 	qreal m_strokeWidth;
 	qreal m_negativePenWidth;
