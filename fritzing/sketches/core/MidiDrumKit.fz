@@ -3528,7 +3528,7 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="2244BBEC34diode" modelIndex="133534" path="C:/Users/jonathan/fritzing2/parts/obsolete/diode_1N4001_300mil.fzp">
+        <instance moduleIdRef="3254CBFC44diode" modelIndex="133534" path="C:/Users/jonathan/fritzing2/parts/core/diode_1N4001_300mil.fzp">
             <title>Zener1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -3966,7 +3966,7 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="2244BBEC34diode" modelIndex="133563" path="C:/Users/jonathan/fritzing2/parts/obsolete/diode_1N4001_300mil.fzp">
+        <instance moduleIdRef="3254CBFC44diode" modelIndex="133563" path="C:/Users/jonathan/fritzing2/parts/core/diode_1N4001_300mil.fzp">
             <title>Zener2</title>
             <views>
                 <breadboardView layer="breadboard">
