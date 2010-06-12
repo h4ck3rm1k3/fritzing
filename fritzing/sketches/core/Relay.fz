@@ -3370,7 +3370,7 @@ p, li { white-space: pre-wrap; }
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="2244BBEC34diode" modelIndex="158165" path="C:/Users/jonathan/fritzing2/parts/obsolete/diode_1N4001_300mil.fzp">
+        <instance moduleIdRef="3254CBFC44diode" modelIndex="158165" path="C:/Users/jonathan/fritzing2/parts/core/diode_1N4001_300mil.fzp">
             <title>D2</title>
             <views>
                 <breadboardView layer="breadboard">
