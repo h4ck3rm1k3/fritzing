@@ -1274,7 +1274,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					continue;
 				}
 
-				if (!sameEffectiveLayer(candidateConnectorItem->attachedTo()->viewLayerID(), traceWire->viewLayerID())) {
+				if (!sameEffectiveLayer(candidateConnectorItem->attachedToViewLayerID(), traceWire->viewLayerID())) {
 					// needs to be on the same layer
 					continue;
 				}
@@ -1355,7 +1355,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					}
 				}
 
-				//if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+				//if (candidateConnectorItem->attachedToViewLayerID() != traceWire->viewLayerID()) {
 					// needs to be on the same layer
 					//continue;
 				//}
@@ -1778,14 +1778,16 @@ void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connec
 		foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
 			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 												wire->id(), connector1->connectorSharedID(),
-												connect, true, parentCommand);
+												ViewLayer::specFromID(wire->viewLayerID()),
+												connect, parentCommand);
 			ccc->setUpdateConnections(false);
 		}
 		ConnectorItem * connector0 = wire->connector0();
 		foreach (ConnectorItem * toConnectorItem, connector0->connectedToItems()) {
 			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 												wire->id(), connector0->connectorSharedID(),
-												connect, true, parentCommand);
+												ViewLayer::specFromID(wire->viewLayerID()),
+												connect, parentCommand);
 			ccc->setUpdateConnections(false);
 		}
 	}
@@ -1892,7 +1894,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 				continue;
 			}
 
-			if (!sameEffectiveLayer(candidateConnectorItem->attachedTo()->viewLayerID(), traceWire->viewLayerID())) {
+			if (!sameEffectiveLayer(candidateConnectorItem->attachedToViewLayerID(), traceWire->viewLayerID())) {
 				// needs to be on the same layer
 				continue;
 			}
@@ -2001,7 +2003,7 @@ bool Autorouter1::hitsObstacle(ItemBase * traceWire, ItemBase * ignore)
 			if (ignore == candidateItemBase) continue;
 			if (candidateItemBase->itemType() == ModelPart::Wire) continue;
 
-			//if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+			//if (candidateConnectorItem->attachedToViewLayerID() != traceWire->viewLayerID()) {
 				// needs to be on the same layer
 				//continue;
 			//}

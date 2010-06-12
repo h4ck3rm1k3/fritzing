@@ -86,7 +86,7 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 				fromConnectorItem->tempRemove(toConnectorItem, true);
 				toConnectorItem->tempRemove(fromConnectorItem, true);
 				if (doCommand) {
-					extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
+					extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, ViewLayer::Bottom, false, parentCommand);
 				}
 				connectorHash.insert(fromConnectorItem, toConnectorItem);
 
@@ -229,7 +229,7 @@ void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMo
 			continue;
 		}
 
-		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorSharedID(), true);
+		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorSharedID(), ViewLayer::Bottom);
 		if (fromConnectorItem == NULL) continue;
 
 		foreach (ConnectorItem * foreignToConnectorItem, foreignMoveItems.values(foreignFromConnectorItem)) {
@@ -237,7 +237,7 @@ void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMo
 			ItemBase * toItemBase = findItem(toItemID);
 			if (toItemBase == NULL) continue;
 
-			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorSharedID(), true);
+			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorSharedID(), ViewLayer::Bottom);
 			if (toConnectorItem == NULL) continue;
 
 			moveItems.insert(fromConnectorItem, toConnectorItem);

@@ -384,8 +384,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_wireDisconnected(long,  QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireConnectedSignal(long,  QString, long,  QString)),
 									 slotter, SLOT(sketchWidget_wireConnected(long, QString, long, QString)));
-	succeeded = succeeded && connect(signaller, SIGNAL(changeConnectionSignal(long,  QString, long,  QString, bool, bool)),
-									 slotter, SLOT(sketchWidget_changeConnection(long, QString, long, QString, bool, bool)));
+	succeeded = succeeded && connect(signaller, SIGNAL(changeConnectionSignal(long,  QString, long,  QString, ViewLayer::ViewLayerSpec, bool, bool)),
+									 slotter, SLOT(sketchWidget_changeConnection(long, QString, long, QString, ViewLayer::ViewLayerSpec, bool, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(copyItemSignal(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
 													   slotter, SLOT(sketchWidget_copyItem(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
 									 Qt::DirectConnection);
@@ -394,9 +394,11 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_cleanUpWires(CleanUpWiresCommand *)) );
 	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &,
 																			  long, const QString &,
+																			  ViewLayer::ViewLayerSpec,
 																			  bool, RatsnestCommand *)),
 									 slotter, SLOT(dealWithRatsnestSlot(long, const QString &,
 																			  long, const QString &,
+																			  ViewLayer::ViewLayerSpec,
 																			  bool, RatsnestCommand *)) );
 
 	succeeded = succeeded && connect(signaller, SIGNAL(checkStickySignal(long, bool, bool, CheckStickyCommand *)),

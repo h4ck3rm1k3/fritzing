@@ -59,6 +59,7 @@ public:
 	ConnectorItem * overConnectorItem();
 	void setOverConnectorItem(ConnectorItem *);
 	int attachedToItemType();
+	ViewLayer::ViewLayerID ConnectorItem::attachedToViewLayerID();
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();
 	class ErcData * connectorSharedErcData();
@@ -83,6 +84,8 @@ public:
 	void showEqualPotential(bool show);
 	void setHoverColor();
 	bool isGrounded();
+	ConnectorItem * chooseFromSpec(ViewLayer::ViewLayerSpec);
+	bool connectedToWires();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -123,7 +126,7 @@ protected:
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, bool crossLayers, ViewGeometry::WireFlags skipFlags);
-	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols);
+	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols, ViewLayer::ViewLayerSpec);
 	static void clearEqualPotentialDisplay();
 	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);
 

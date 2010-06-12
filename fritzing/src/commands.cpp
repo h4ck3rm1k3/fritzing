@@ -302,8 +302,8 @@ QString FlipItemCommand::getParamString() const {
 ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType crossView,
 												 long fromID, const QString & fromConnectorID,
 												 long toID, const QString & toConnectorID,
-												 bool connect, bool seekLayerKin,
-												 QUndoCommand * parent)
+												 ViewLayer::ViewLayerSpec viewLayerSpec,
+												 bool connect, QUndoCommand * parent)
 : BaseCommand(crossView, sketchWidget, parent)
 {
 	//DebugDialog::debug(QString("ccc: from %1 %2; to %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
@@ -312,18 +312,18 @@ ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, Ba
     m_toID = toID;
     m_toConnectorID = toConnectorID;
 	m_connect = connect;
-	m_seekLayerKin = seekLayerKin;
 	m_updateConnections = true;
+	m_viewLayerSpec = viewLayerSpec;
 }
 
 void ChangeConnectionCommand::undo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, !m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_updateConnections);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_viewLayerSpec, !m_connect,  m_crossViewType == CrossView,  m_updateConnections);
 }
 
 void ChangeConnectionCommand::redo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_updateConnections);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_viewLayerSpec, m_connect,  m_crossViewType == CrossView, m_updateConnections);
 }
 
 void ChangeConnectionCommand::setUpdateConnections(bool updatem) {
@@ -334,11 +334,12 @@ void ChangeConnectionCommand::setUpdateConnections(bool updatem) {
 QString ChangeConnectionCommand::getParamString() const {
 	return QString("ChangeConnectionCommand ") 
 		+ BaseCommand::getParamString() + 
-		QString(" fromid:%1 connid:%2 toid:%3 connid:%4 connect:%5")
+		QString(" fromid:%1 connid:%2 toid:%3 connid:%4 vlspec:%5 connect:%6")
 		.arg(m_fromID)
 		.arg(m_fromConnectorID)
 		.arg(m_toID)
 		.arg(m_toConnectorID)
+		.arg(m_viewLayerSpec)
 		.arg(m_connect);
 }
 
@@ -626,11 +627,15 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 	
 	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
 		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-				wire->id(), "connector0", false, true, NULL));
+								wire->id(), "connector0", 
+								ViewLayer::specFromID(wire->viewLayerID()),
+								false, NULL));
 	}
 	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
 		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-				wire->id(), "connector1", false, true, NULL));
+							wire->id(), "connector1", 
+							ViewLayer::specFromID(wire->viewLayerID()),
+							false, NULL));
 	}
 
 	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
@@ -734,10 +739,10 @@ QString WireFlagChangeCommand::getParamString() const {
 RatsnestCommand::RatsnestCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType crossViewType,
 									long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool seekLayerKin,
-									QUndoCommand * parent) 
+									ViewLayer::ViewLayerSpec viewLayerSpec,
+									bool connect, QUndoCommand * parent) 
 : ChangeConnectionCommand(sketchWidget, crossViewType, fromID, fromConnectorID, toID, toConnectorID,
-						connect, seekLayerKin, parent)
+						viewLayerSpec, connect, parent)
 {
 	m_firstTime = true;
 }
@@ -749,7 +754,7 @@ void RatsnestCommand::undo() {
 void RatsnestCommand::redo() {
 	if (m_firstTime) {
 		m_firstTime = false;
-		m_sketchWidget->dealWithRatsnest(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, this, m_crossViewType == BaseCommand::CrossView);
+		m_sketchWidget->dealWithRatsnest(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_viewLayerSpec, m_connect, this, m_crossViewType == BaseCommand::CrossView);
 	}
 	else {
 		subRedo();
@@ -762,9 +767,13 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorSharedID(),
-			wire->id(), "connector0", true, true, NULL));
+						wire->id(), "connector0", 
+						ViewLayer::specFromID(wire->viewLayerID()),
+						true, NULL));
 	addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorSharedID(),
-			wire->id(), "connector1", true, true, NULL));
+						wire->id(), "connector1", 
+						ViewLayer::specFromID(wire->viewLayerID()),
+						true, NULL));
 	if (!select) {
 		SelectItemCommand * sic = new SelectItemCommand(sketchWidget, SelectItemCommand::NormalDeselect, NULL);
 		sic->addRedo(wire->id());

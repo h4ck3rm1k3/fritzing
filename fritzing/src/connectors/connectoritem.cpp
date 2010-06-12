@@ -572,6 +572,13 @@ int ConnectorItem::attachedToItemType() {
 	return m_attachedTo->itemType();
 }
 
+ViewLayer::ViewLayerID ConnectorItem::attachedToViewLayerID() {
+	if (m_attachedTo == NULL) return ViewLayer::UnknownLayer;
+
+	return m_attachedTo->viewLayerID();
+}
+
+
 Connector::ConnectorType ConnectorItem::connectorType() {
 	if (m_connector == NULL) return Connector::Unknown;
 
@@ -590,7 +597,7 @@ bool ConnectorItem::chained() {
 
 void ConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
 	// do not write anything other than attributes in this routine.l
-	writer.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(attachedTo()->viewLayerID()));
+	writer.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(attachedToViewLayerID()));
 }
 
 void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
@@ -628,7 +635,7 @@ void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & el
 	writer.writeStartElement(elementName);
 	writer.writeAttribute("connectorId", connectorSharedID());
 	writer.writeAttribute("modelIndex", QString::number(connector()->modelIndex()));
-	writer.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(attachedTo()->viewLayerID()));
+	writer.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(attachedToViewLayerID()));
 	writer.writeEndElement();
 }
 
@@ -731,7 +738,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 			.arg(connectorItem->attachedToID())
 			.arg(connectorItem->attachedToTitle())
 			.arg(connectorItem->connectorSharedID())
-			.arg(connectorItem->attachedTo()->viewLayerID()) );
+			.arg(connectorItem->attachedToViewLayerID()) );
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		if (fromWire != NULL) {
@@ -773,9 +780,21 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 	}
 }
 
-void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols)
+void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols, ViewLayer::ViewLayerSpec viewLayerSpec)
 {
-	DebugDialog::debug("__________________");
+	if (connectorItems.count() == 0) return;
+
+	switch (viewLayerSpec) {
+		case ViewLayer::Top:
+		case ViewLayer::Bottom:
+		case ViewLayer::TopAndBottom:
+			break;
+		default:
+			DebugDialog::debug(QString("collect parts unknown spec %1").arg(viewLayerSpec));
+			viewLayerSpec = ViewLayer::TopAndBottom;
+			break;
+	}
+	
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		ItemBase * candidate = connectorItem->attachedTo();
 		switch (candidate->itemType()) {
@@ -792,13 +811,37 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 					ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
 					if (crossConnectorItem != NULL) {
 						if (partsConnectors.contains(crossConnectorItem)) {
-							DebugDialog::debug("shouldn't collect?");
-							//break;
+							break;
+						}
+
+						if (viewLayerSpec == ViewLayer::TopAndBottom) {
+							partsConnectors.append(crossConnectorItem);
+							DebugDialog::debug(QString("collecting part %1 %2 %3")
+								.arg(candidate->id())
+								.arg(crossConnectorItem->connectorSharedID())
+								.arg(connectorItem->attachedToViewLayerID()) );
+						}
+						else if (viewLayerSpec == ViewLayer::Top) {
+							if (connectorItem->attachedToViewLayerID() == ViewLayer::Copper1) {
+							}
+							else {
+								connectorItem = crossConnectorItem;
+							}
+						}
+						else if (viewLayerSpec == ViewLayer::Bottom) {
+							if (connectorItem->attachedToViewLayerID() == ViewLayer::Copper0) {
+							}
+							else {
+								connectorItem = crossConnectorItem;
+							}
 						}
 					}
 				}
 					
-				DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorSharedID()) );
+				DebugDialog::debug(QString("collecting part %1 %2 %3")
+					.arg(candidate->id())
+					.arg(connectorItem->connectorSharedID())
+					.arg(connectorItem->attachedToViewLayerID()) );
 				partsConnectors.append(connectorItem);
 				break;
 			default:
@@ -917,7 +960,7 @@ bool ConnectorItem::isGrounded() {
 ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 	if (m_connector == NULL) return NULL;
 
-	ViewLayer::ViewLayerID viewLayerID = attachedTo()->viewLayerID();
+	ViewLayer::ViewLayerID viewLayerID = attachedToViewLayerID();
 	if (viewLayerID == ViewLayer::Copper0) {
 		return m_connector->connectorItemByViewLayerID(ViewLayer::Copper1);
 	}
@@ -944,3 +987,48 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 	NonConnectorItem::paint(painter, option, widget);
 }
 
+ConnectorItem * ConnectorItem::chooseFromSpec(ViewLayer::ViewLayerSpec viewLayerSpec) {
+	ConnectorItem * crossConnectorItem = getCrossLayerConnectorItem();
+	if (crossConnectorItem == NULL) return this;
+
+	ViewLayer::ViewLayerID basis = ViewLayer::Copper0;
+	switch (viewLayerSpec) {
+		case ViewLayer::Top:
+			basis = ViewLayer::Copper1;
+			break;
+		case ViewLayer::Bottom:
+			basis = ViewLayer::Copper0;
+			break;
+		default:
+			DebugDialog::debug(QString("unusual viewLayerSpec %1").arg(viewLayerSpec));
+			basis = ViewLayer::Copper0;
+			break;
+	}
+
+	if (this->attachedToViewLayerID() == basis) {
+		return this;
+	}
+	if (crossConnectorItem->attachedToViewLayerID() == basis) {
+		return crossConnectorItem;	
+	}
+	return this;
+}
+
+bool ConnectorItem::connectedToWires() {
+	foreach (ConnectorItem * toConnectorItem, connectedToItems()) {
+		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			return true;
+		}
+	}
+
+	ConnectorItem * crossConnectorItem = getCrossLayerConnectorItem();
+	if (crossConnectorItem == NULL) return false;
+
+	foreach (ConnectorItem * toConnectorItem, crossConnectorItem->connectedToItems()) {
+		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			return true;
+		}
+	}
+
+	return false;
+}

@@ -501,7 +501,8 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 					new ChangeConnectionCommand(this, BaseCommand::SingleView,
 							newID, "connector0",
 							connectorItem->attachedToID(), connectorItem->connectorSharedID(),
-							true, true, parentCommand);
+							ViewLayer::specFromID(connectorItem->attachedToViewLayerID()),
+							true, parentCommand);
 				}
 			}
 		}
@@ -512,7 +513,8 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 					new ChangeConnectionCommand(this, BaseCommand::SingleView,
 							newID, "connector1",
 							connectorItem->attachedToID(), connectorItem->connectorSharedID(),
-							true, true, parentCommand);
+							ViewLayer::specFromID(connectorItem->attachedToViewLayerID()),
+							true, parentCommand);
 				}
 			}
 		}
@@ -617,7 +619,7 @@ void PCBSketchWidget::setClipEnds(ClipableWire * vw, bool clipEnds) {
 }
 
 ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID(ConnectorItem * connectorItem) {
-	switch (connectorItem->attachedTo()->viewLayerID()) {
+	switch (connectorItem->attachedToViewLayerID()) {
 		case ViewLayer::Copper1:
 		case ViewLayer::Copper1Trace:
 		case ViewLayer::GroundPlane1:
@@ -677,7 +679,7 @@ bool PCBSketchWidget::autorouteCheckParts() {
 }
 
 const QString & PCBSketchWidget::traceColor(ConnectorItem * forColor) {
-	switch(forColor->attachedTo()->viewLayerID()) {
+	switch(forColor->attachedToViewLayerID()) {
 		case ViewLayer::Copper1:
 		case ViewLayer::Copper1Trace:
 		case ViewLayer::GroundPlane1:
@@ -786,6 +788,7 @@ bool PCBSketchWidget::alreadyRatsnest(ConnectorItem * fromConnectorItem, Connect
 
 void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
+								  ViewLayer::ViewLayerSpec viewLayerSpec,
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
 {
@@ -797,12 +800,13 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 	ConnectorItem * toConnectorItem = NULL;
 	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
 							toID, toConnectorID,
+							viewLayerSpec,
 							connect, ratsnestCommand, doEmit)) 
 	{
 		return;
 	}
 
-	DebugDialog::debug(QString("deal with ratsnest %7: %1 %2 %3, %4 %5 %6")
+	DebugDialog::debug(QString("deal with ratsnest %7 %8: %1 %2 %3, %4 %5 %6 ")
 		.arg(fromConnectorItem->attachedToTitle())
 		.arg(fromConnectorItem->attachedToID())
 		.arg(fromConnectorItem->connectorSharedID())
@@ -810,13 +814,14 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 		.arg(toConnectorItem->attachedToID())
 		.arg(toConnectorItem->connectorSharedID())
 		.arg(m_viewIdentifier)
+		.arg(fromConnectorItem->attachedToViewLayerID())
 	);
 
 	QList<ConnectorItem *> connectorItems;
 	QList<ConnectorItem *> partsConnectorItems;
 	connectorItems.append(fromConnectorItem);
 	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
-	ConnectorItem::collectParts(connectorItems, partsConnectorItems, includeSymbols());
+	ConnectorItem::collectParts(connectorItems, partsConnectorItems, includeSymbols(), viewLayerSpec);
 
 	QList <Wire *> ratsnestWires;
 	Wire * modelWire = NULL;
@@ -1054,20 +1059,21 @@ void PCBSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, Conn
 bool PCBSketchWidget::dealWithRatsnestAux(ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem, 
 						long fromID, const QString & fromConnectorID, 
 						long toID, const QString & toConnectorID,
+						ViewLayer::ViewLayerSpec viewLayerSpec,
 						bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit) 
 {
-	SketchWidget::dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand, doEmit);
+	SketchWidget::dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, ratsnestCommand, doEmit);
 
 	ItemBase * from = findItem(fromID);
 	if (from == NULL) return true;
 
-	fromConnectorItem = findConnectorItem(from, fromConnectorID, true);
+	fromConnectorItem = findConnectorItem(from, fromConnectorID, viewLayerSpec);
 	if (fromConnectorItem == NULL) return true;
 
 	ItemBase * to = findItem(toID);
 	if (to == NULL) return true;
 
-	toConnectorItem = findConnectorItem(to, toConnectorID, true);
+	toConnectorItem = findConnectorItem(to, toConnectorID, viewLayerSpec);
 	if (toConnectorItem == NULL) return true;
 
 	return alreadyRatsnest(fromConnectorItem, toConnectorItem);
@@ -1148,21 +1154,25 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 	new ChangeConnectionCommand(this, cvt,
 								newID, "connector0",
 								fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-								true, true, parentCommand);
+								ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
+								true, parentCommand);
 	new ChangeConnectionCommand(this, cvt,
 								newID, "connector1",
 								toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-								true, true, parentCommand);
+								ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+								true, parentCommand);
 
 	if (wireFlags == 0) {
 		new RatsnestCommand(this, cvt,
 							newID, "connector0",
 							fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-							true, true, parentCommand);
+							ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
+							true, parentCommand);
 		new RatsnestCommand(this, cvt,
 							newID, "connector1",
 							toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-							true, true, parentCommand);
+							ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+							true, parentCommand);
 	}
 	return newID;
 }
@@ -1430,7 +1440,8 @@ void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wi
 				new ChangeConnectionCommand(this, BaseCommand::SingleView,
 											fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
 											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-											false, true, parentCommand);
+											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+											false, parentCommand);
 			}
 		}
 	}
@@ -1572,7 +1583,7 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 {
 	routingStatus.m_netCount++;
 	QList<ConnectorItem *> partConnectorItems;
-	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols());
+	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
 	int count = partConnectorItems.count();
 	// want adjacency[count][count] but some C++ compilers don't like it
 	QVector< QVector<bool> > adjacency(count);
@@ -1945,7 +1956,7 @@ void PCBSketchWidget::drcLayer(QSet<ItemBase *> & collidingItems, int progressOf
 		ConnectorItem::collectEqualPotential(equipotentialConnectorItems, false, ViewGeometry::NoFlag);
 		for (int i = equipotentialConnectorItems.count() - 1; i >= 0; i--) {
 			if (!equipotentialConnectorItems.at(i)->isVisible()) {
-				//DebugDialog::debug(QString("not visible %1").arg(ViewLayer::viewLayerNameFromID(equipotentialConnectorItems.at(i)->attachedTo()->viewLayerID())));
+				//DebugDialog::debug(QString("not visible %1").arg(ViewLayer::viewLayerNameFromID(equipotentialConnectorItems.at(i)->attachedToViewLayerID())));
 				equipotentialConnectorItems.removeAt(i);
 			}
 		}
@@ -2147,7 +2158,7 @@ void PCBSketchWidget::setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem
 }
 
 ViewLayer::ViewLayerSpec PCBSketchWidget::wireViewLayerSpec(ConnectorItem * connectorItem) {
-	switch (connectorItem->attachedTo()->viewLayerID()) {
+	switch (connectorItem->attachedToViewLayerID()) {
 		case ViewLayer::Copper1:
 		case ViewLayer::Copper1Trace:
 		case ViewLayer::GroundPlane1:

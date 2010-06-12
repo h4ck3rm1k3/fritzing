@@ -222,3 +222,15 @@ bool ViewLayer::isActive() {
 void ViewLayer::setActive(bool a) {
 	m_active = a;
 }
+
+ViewLayer::ViewLayerSpec ViewLayer::specFromID(ViewLayer::ViewLayerID viewLayerID) 
+{
+	switch (viewLayerID) {
+		case Copper1:
+		case Copper1Trace:
+		case GroundPlane1:
+			return ViewLayer::Top;
+		default:
+			return ViewLayer::Bottom;
+	}
+}

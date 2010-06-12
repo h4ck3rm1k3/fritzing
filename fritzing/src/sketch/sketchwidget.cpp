@@ -337,13 +337,13 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 		QDomElement connector = connectors.firstChildElement("connector");
 		while (!connector.isNull()) {
-			// TODO: make sure layerkin are searched for connectors
 			QString fromConnectorID = connector.attribute("connectorId");
+			ViewLayer::ViewLayerID connectorViewLayerID = ViewLayer::viewLayerIDFromXmlString(connector.attribute("layer"));
 			QDomElement connects = connector.firstChildElement("connects");
 			if (!connects.isNull()) {
 				QDomElement connect = connects.firstChildElement("connect");
 				while (!connect.isNull()) {
-					handleConnect(connect, mp, fromConnectorID, alreadyConnected, newItems, doRatsnest, parentCommand);
+					handleConnect(connect, mp, fromConnectorID, connectorViewLayerID, alreadyConnected, newItems, doRatsnest, parentCommand);
 					connect = connect.nextSiblingElement("connect");
 				}
 			}
@@ -379,14 +379,16 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 	setIgnoreSelectionChangeEvents(false);
 }
 
-void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand)
+void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, ViewLayer::ViewLayerID fromViewLayerID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand)
 {
 	bool ok;
 	QHash<long, ItemBase *> otherNewItems;
 	long modelIndex = connect.attribute("modelIndex").toLong(&ok);
 	QString toConnectorID = connect.attribute("connectorId");
-	QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
-						.arg(mp->modelIndex()).arg(fromConnectorID).arg(modelIndex).arg(toConnectorID);
+	ViewLayer::ViewLayerID toViewLayerID = ViewLayer::viewLayerIDFromXmlString(connect.attribute("layer"));
+	QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4.%5.%6") : QString("%4.%5.%6.%1.%2.%3"))
+						.arg(mp->modelIndex()).arg(fromConnectorID).arg(fromViewLayerID)
+						.arg(modelIndex).arg(toConnectorID).arg(toViewLayerID);
 	if (alreadyConnected.contains(already)) return;
 
 	alreadyConnected.append(already);
@@ -399,9 +401,8 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 		}
 		if (fromBase == NULL || toBase == NULL) return;
 
-		// TODO: make sure layerkin are searched for connectors
-		ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
-		ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID);
+		ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID, ViewLayer::specFromID(fromViewLayerID));
+		ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID, ViewLayer::specFromID(toViewLayerID));
 		if (fromConnectorItem == NULL || toConnectorItem == NULL) return;
 
 		fromConnectorItem->connectTo(toConnectorItem);
@@ -417,12 +418,14 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 	new ChangeConnectionCommand(this, BaseCommand::SingleView,
 								ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
 								ItemBase::getNextID(modelIndex), toConnectorID,
-								true, true, parentCommand);
+								ViewLayer::specFromID(fromViewLayerID),
+								true, parentCommand);
 	if (doRatsnest && doRatsnestOnCopy()) {
 		new RatsnestCommand(this, BaseCommand::SingleView,
 									ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
 									ItemBase::getNextID(modelIndex), toConnectorID,
-									true, true, parentCommand);
+									ViewLayer::specFromID(fromViewLayerID),
+									true, parentCommand);
 	}
 }
 
@@ -553,12 +556,13 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 
 	bool ok;
 	addPartItem(modelPart, viewLayerSpec, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
-	DebugDialog::debug(QString("adding part %1 %2 %4 %5 %3")
+	DebugDialog::debug(QString("adding part id:%1 '%2' hex:%3 vid:%4 vlid:%5")
 		.arg(id)
 		.arg(newItem->title())
-		.arg(viewIdentifier)
 		.arg((long) newItem, 0, 16)
-		.arg((long) static_cast<QGraphicsItem *>(newItem), 0, 16));
+		.arg(viewIdentifier)
+		.arg(newItem->viewLayerID())
+		);
 	setNewPartVisible(newItem);
 	return newItem;
 }
@@ -816,7 +820,8 @@ bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * 
 		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
 			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
-											  false, true, parentCommand);
+											  ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
+											  false, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem, false);
 				toConnectorItem->tempRemove(fromConnectorItem, false);
 			}
@@ -842,7 +847,8 @@ bool SketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHa
 
 void SketchWidget::extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
 												 long toID, const QString & toConnectorID,
-												 bool connect, bool seekLayerKin, QUndoCommand * parentCommand)
+												 ViewLayer::ViewLayerSpec viewLayerSpec,
+												 bool connect, QUndoCommand * parentCommand)
 {
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) {
@@ -854,17 +860,18 @@ void SketchWidget::extendChangeConnectionCommand(long fromID, const QString & fr
 		return;		// for now
 	}
 
-	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, seekLayerKin);
+	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, viewLayerSpec);
 	if (fromConnectorItem == NULL) return; // for now
 
-	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, seekLayerKin);
+	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, viewLayerSpec);
 	if (toConnectorItem == NULL) return; // for now
 
-	extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, connect, seekLayerKin, parentCommand);
+	extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, viewLayerSpec, connect, parentCommand);
 }
 
 void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
-												 bool connect, bool seekLayerKin, QUndoCommand * parentCommand)
+												 ViewLayer::ViewLayerSpec viewLayerSpec,
+												 bool connect, QUndoCommand * parentCommand)
 {
 	// cases:
 	//		delete
@@ -889,11 +896,11 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								fromItem->id(), fromConnectorItem->connectorSharedID(),
 								toItem->id(), toConnectorItem->connectorSharedID(),
-								connect, seekLayerKin, parentCommand);
+								viewLayerSpec, connect, parentCommand);
 	new RatsnestCommand(this, BaseCommand::CrossView,
 								fromItem->id(), fromConnectorItem->connectorSharedID(),
 								toItem->id(), toConnectorItem->connectorSharedID(),
-								connect, seekLayerKin, parentCommand);
+								viewLayerSpec, connect, parentCommand);
 }
 
 
@@ -923,14 +930,22 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, from->attachedTo()->viewLayerSpec(), viewGeometry, newID, false, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
-			newID, "connector0", true, true, parentCommand);
+						newID, "connector0", 
+						ViewLayer::specFromID(from->attachedToViewLayerID()),
+						true, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
-			newID, "connector1", true, true, parentCommand);
+						newID, "connector1", 
+						ViewLayer::specFromID(to->attachedToViewLayerID()),
+						true, parentCommand);
 	if (doRatsnest) {
 		new RatsnestCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
-				newID, "connector0", true, true, parentCommand);
+								newID, "connector0", 
+								ViewLayer::specFromID(from->attachedToViewLayerID()),
+								true, parentCommand);
 		new RatsnestCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
-				newID, "connector1", true, true, parentCommand);
+								newID, "connector1", 
+								ViewLayer::specFromID(to->attachedToViewLayerID()),
+								true, parentCommand);
 	}
 
 	if (addItNow) {
@@ -1462,7 +1477,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 		if (to != NULL) {
 			to->connectorHover(to->attachedTo(), false);
 			connectorItem->setOverConnectorItem(NULL);   // clean up
-			extendChangeConnectionCommand(connectorItem, to, true, false, parentCommand);
+			extendChangeConnectionCommand(connectorItem, to, ViewLayer::specFromID(connectorItem->attachedToViewLayerID()), true, parentCommand);
 			gotConnector = true;
 		}
 		connectorItem->clearConnectorHover();
@@ -2434,7 +2449,7 @@ bool SketchWidget::checkMoved()
 
 	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {
 		foreach (ConnectorItem * toConnectorItem, m_moveDisconnectedFromFemale.values(fromConnectorItem)) {
-			extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
+			extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()), false, parentCommand);
 			doEmit = true;
 		}
 	}
@@ -2449,7 +2464,9 @@ bool SketchWidget::checkMoved()
 			if (toConnectorItem != NULL) {
 				toConnectorItem->connectorHover(item, false);
 				fromConnectorItem->setOverConnectorItem(NULL);   // clean up
-				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, true, true, parentCommand);
+				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, 
+					ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+					true, parentCommand);
 			}
 			fromConnectorItem->clearConnectorHover();
 		}
@@ -2677,7 +2694,9 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
-				extendChangeConnectionCommand(from, formerConnectorItem, false, false, parentCommand);
+				extendChangeConnectionCommand(from, formerConnectorItem, 
+					ViewLayer::specFromID(wire->viewLayerID()),
+					false, parentCommand);
 				doEmit = true;
 				from->tempRemove(formerConnectorItem, false);
 				formerConnectorItem->tempRemove(from, false);
@@ -2686,7 +2705,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		}
 		if (to != NULL) {
 			doEmit = true;
-			extendChangeConnectionCommand(from, to, true, false, parentCommand);
+			extendChangeConnectionCommand(from, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
 		}
 	}
 
@@ -2751,11 +2770,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		if (m_bendpointWire == NULL) {
 			ConnectorItem * anchor = wire->otherConnector(fromOnWire);
 			if (anchor != NULL) {
-				extendChangeConnectionCommand(anchor, m_connectorDragConnector, true, false, parentCommand);
+				extendChangeConnectionCommand(anchor, m_connectorDragConnector, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
 				doEmit = true;
 			}
 			if (to != NULL) {
-				extendChangeConnectionCommand(fromOnWire, to, true, false, parentCommand);
+				extendChangeConnectionCommand(fromOnWire, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
 				doEmit = true;
 			}
 			if (!this->m_lastColorSelected.isEmpty()) {
@@ -2776,11 +2795,13 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 			new ChangeConnectionCommand(this, BaseCommand::SingleView,
 										m_bendpointWire->id(), m_connectorDragConnector->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										false, true, parentCommand);
+										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+										false, parentCommand);
 			new ChangeConnectionCommand(this, BaseCommand::SingleView,
 										wire->id(), wire->connector1()->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										true, true, parentCommand);
+										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+										true, parentCommand);
 		}
 
 		m_connectorDragConnector->tempRemove(wire->connector0(), false);
@@ -2788,7 +2809,8 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		new ChangeConnectionCommand(this, BaseCommand::SingleView,
 										m_connectorDragConnector->attachedToID(), m_connectorDragConnector->connectorSharedID(),
 										wire->id(), wire->connector0()->connectorSharedID(),
-										true, true, parentCommand);
+										ViewLayer::specFromID(wire->viewLayerID()),
+										true, parentCommand);
 
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(m_bendpointWire->id());
@@ -3507,12 +3529,13 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 }
 
-ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QString & connectorID, bool seekLayerKin) {
+ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QString & connectorID, ViewLayer::ViewLayerSpec viewLayerSpec) {
 
-	ConnectorItem * connectorItem = itemBase->findConnectorItemNamed(connectorID);
+	ConnectorItem * connectorItem = itemBase->findConnectorItemNamed(connectorID, viewLayerSpec);
 	if (connectorItem != NULL) return connectorItem;
 
-	seekLayerKin = true;
+	DebugDialog::debug("used to seek layer kin");
+	/*
 	if (seekLayerKin) {
 		PaletteItem * pitem = dynamic_cast<PaletteItem *>(itemBase);
 		if (pitem == NULL) return NULL;
@@ -3522,8 +3545,8 @@ ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QStri
 			if (connectorItem != NULL) return connectorItem;
 		}
 
-		return NULL;
 	}
+	*/
 
 	return NULL;
 }
@@ -3570,7 +3593,7 @@ void SketchWidget::sketchWidget_wireConnected(long fromID, QString fromConnector
 	Wire* wire = dynamic_cast<Wire *>(fromItem);
 	if (wire == NULL) return;
 
-	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, false);
+	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, ViewLayer::specFromID(wire->viewLayerID()));
 	if (fromConnectorItem == NULL) {
 		// shouldn't be here
 		return;
@@ -3582,7 +3605,7 @@ void SketchWidget::sketchWidget_wireConnected(long fromID, QString fromConnector
 		return;
 	}
 
-	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, false);
+	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, ViewLayer::specFromID(wire->viewLayerID()));
 	if (toConnectorItem == NULL) {
 		// shouldn't really be here
 		return;
@@ -3630,7 +3653,7 @@ void SketchWidget::sketchWidget_wireDisconnected(long fromID, QString fromConnec
 	Wire* wire = dynamic_cast<Wire *>(fromItem);
 	if (wire == NULL) return;
 
-	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, false);
+	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, ViewLayer::specFromID(wire->viewLayerID()));
 	if (fromConnectorItem == NULL) {
 		// shouldn't be here
 		return;
@@ -3645,9 +3668,10 @@ void SketchWidget::sketchWidget_wireDisconnected(long fromID, QString fromConnec
 
 void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool doEmit, bool seekLayerKin, bool updateConnections)
+									ViewLayer::ViewLayerSpec viewLayerSpec,
+									bool connect, bool doEmit, bool updateConnections)
 {
-	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin, updateConnections);
+	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, updateConnections);
 
 	// TODO: make a global NET data structure and use this to transfer connection/disconnection between views
 	// the data structure is parts (via part id) and connections (via ?)
@@ -3658,13 +3682,14 @@ void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID
 	if (doEmit) {
 		fromID = findWire(fromID);
 		toID = findWire(toID);
-		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect, updateConnections);
+		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, updateConnections);
 	}
 }
 
 void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool seekLayerKin, bool updateConnections)
+									ViewLayer::ViewLayerSpec viewLayerSpec,
+									bool connect, bool updateConnections)
 {
 	DebugDialog::debug(QString("changeConnection: from %1 %2; to %3 %4 con:%5 v:%6")
 				.arg(fromID).arg(fromConnectorID)
@@ -3677,7 +3702,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		return;
 	}
 
-	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, seekLayerKin);
+	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, viewLayerSpec);
 	if (fromConnectorItem == NULL) {
 		// shouldn't be here
 		DebugDialog::debug(QString("change connection exit 2 %1 %2").arg(fromID).arg(fromConnectorID));
@@ -3690,7 +3715,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		return;
 	}
 
-	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, seekLayerKin);
+	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, viewLayerSpec);
 	if (toConnectorItem == NULL) {
 		// shouldn't be here
 		DebugDialog::debug(QString("change connection exit 4 %1 %2").arg(toID).arg(toConnectorID));
@@ -3729,11 +3754,12 @@ void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorI
 
 void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
 												 long toID, QString toConnectorID,
+												 ViewLayer::ViewLayerSpec viewLayerSpec, 
 												 bool connect, bool updateConnections)
 {
 	changeConnection(fromID, fromConnectorID,
-					 toID, toConnectorID,
-					 connect, false, true, updateConnections);
+					 toID, toConnectorID, viewLayerSpec,
+					 connect, false, updateConnections);
 }
 
 void SketchWidget::navigatorScrollChange(double x, double y) {
@@ -4111,17 +4137,21 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
 		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 			wire->id(), connector1->connectorSharedID(),
-			false, true, parentCommand);
+			ViewLayer::specFromID(wire->viewLayerID()),
+			false, parentCommand);
 		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 			newID, connector1->connectorSharedID(),
-			true, true, parentCommand);
+			ViewLayer::specFromID(wire->viewLayerID()),
+			true, parentCommand);
 	}
 
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, oldPos, true, parentCommand);
 
 	// connect the two wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorSharedID(),
-			newID, "connector0", true, true, parentCommand);
+								newID, "connector0", 
+								ViewLayer::specFromID(wire->viewLayerID()),
+								true, parentCommand);
 
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	selectItemCommand->addRedo(newID);
@@ -4165,16 +4195,20 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 
 	// disconnect the wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), clickedConnectorItem->connectorSharedID(),
-			toWire->id(), toConnectorItem->connectorSharedID(), false, true, parentCommand);
+								toWire->id(), toConnectorItem->connectorSharedID(), 
+								ViewLayer::specFromID(wire->viewLayerID()),
+								false, parentCommand);
 
 	// disconnect everyone from the other end of the wire being deleted, and reconnect to the remaining wire
 	foreach (ConnectorItem * otherToConnectorItem, otherConnector->connectedToItems()) {
 		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorSharedID(),
 			toWire->id(), otherConnector->connectorSharedID(),
-			false, true, parentCommand);
+			ViewLayer::specFromID(toWire->viewLayerID()),
+			false, parentCommand);
 		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorSharedID(),
 			wire->id(), clickedConnectorItem->connectorSharedID(),
-			true, true, parentCommand);
+			ViewLayer::specFromID(wire->viewLayerID()),
+			true, parentCommand);
 	}
 
 	toWire->saveGeometry();
@@ -4477,7 +4511,8 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			new ChangeConnectionCommand(this, BaseCommand::SingleView,
 										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										false, true, parentCommand);
+										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+										false, parentCommand);
 
 			bool cleanup = false;
 			if (swappedGenderFlag) {
@@ -4488,14 +4523,16 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 					new RatsnestCommand(this, BaseCommand::SingleView,
 										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										false, true, parentCommand);
+										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+										false, parentCommand);
 			}
 			else {
 				// reconnect directly without cleaning up
 				new ChangeConnectionCommand(this, BaseCommand::SingleView,
 											newID, newConnector->connectorSharedID(),
 											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-											true, true, parentCommand);
+											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+											true, parentCommand);
 			}
 
 			if (cleanup && master) {
@@ -4504,13 +4541,21 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, itemBase->viewLayerSpec(), vg, wireID, false, -1, parentCommand);
 				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-						wireID, "connector0", true, true, parentCommand);
+											wireID, "connector0", 
+											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+											true, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-						wireID, "connector1", true, true, parentCommand);
+											wireID, "connector1", 
+											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+											true, parentCommand);
 				new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-						wireID, "connector0", true, true, parentCommand);
+											wireID, "connector0", 
+											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+											true, parentCommand);
 				new RatsnestCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-						wireID, "connector1", true, true, parentCommand);
+											wireID, "connector1", 
+											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+											true, parentCommand);
 			}
 		}
 	}
@@ -5013,21 +5058,23 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 
 void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID,
 											long toID, const QString & toConnectorID,
+											ViewLayer::ViewLayerSpec viewLayerSpec,
 											bool connect, RatsnestCommand * ratsnestCommand, bool doEmit)
 {
 	if (doEmit) {
 		fromID = findWire(fromID);
 		toID = findWire(toID);
-		emit dealWithRatsnestSignal(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand);
+		emit dealWithRatsnestSignal(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, ratsnestCommand);
 	}
 }
 
 
 void SketchWidget::dealWithRatsnestSlot(long fromID, const QString & fromConnectorID,
 													long toID, const QString & toConnectorID,
+													ViewLayer::ViewLayerSpec viewLayerSpec,
 													bool connect, class RatsnestCommand * ratsnestCommand)
 {
-	dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand, false);
+	dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, ratsnestCommand, false);
 }
 
 void SketchWidget::setWireVisible(Wire * wire) {
@@ -5812,14 +5859,9 @@ bool SketchWidget::includeSymbols() {
 
 void SketchWidget::disconnectAll() {
 
-	// TODO: collect all wires from separate views
-
 	QSet<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase == NULL) continue;
-
-		itemBase = itemBase->layerKinChief();
 		if (itemBase == NULL) continue;
 
 		itemBases.insert(itemBase);
@@ -5830,13 +5872,7 @@ void SketchWidget::disconnectAll() {
 		ConnectorItem * fromConnectorItem = itemBase->rightClickedConnector();
 		if (fromConnectorItem == NULL) continue;
 
-		bool gotOne = false;
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				gotOne = true;
-			}
-		}
-		if (gotOne) {
+		if (fromConnectorItem->connectedToWires()) {
 			connectorItems.append(fromConnectorItem);
 		}
 	}
@@ -5875,10 +5911,14 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 		ItemBase * itemBase = findItem(ci->attachedToID());
 		if (itemBase == NULL) continue;
 
-		ConnectorItem * fromConnectorItem = findConnectorItem(itemBase, ci->connectorSharedID(), true);
-		if (fromConnectorItem == NULL) continue;
-
-		myConnectorItems.append(fromConnectorItem);
+		ConnectorItem * fromConnectorItem = findConnectorItem(itemBase, ci->connectorSharedID(), ViewLayer::Top);
+		if (fromConnectorItem != NULL) {
+			myConnectorItems.append(fromConnectorItem);
+		}
+		fromConnectorItem = findConnectorItem(itemBase, ci->connectorSharedID(), ViewLayer::Bottom);
+		if (fromConnectorItem != NULL) {
+			myConnectorItems.append(fromConnectorItem);
+		}
 	}
 
 	QSet<ItemBase *> deleteItems;
@@ -6288,7 +6328,7 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 		}
 
 		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
-		ConnectorItem::collectParts(connectorItems, *partConnectorItems, includeSymbols());
+		ConnectorItem::collectParts(connectorItems, *partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
 
 		if ((partConnectorItems->count() <= 0) || (!includeSingletons && (partConnectorItems->count() <= 1))) {
 			delete partConnectorItems;

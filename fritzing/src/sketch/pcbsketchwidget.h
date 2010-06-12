@@ -109,10 +109,12 @@ protected:
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
+								  ViewLayer::ViewLayerSpec viewLayerSpec,
 								  bool connect, class RatsnestCommand *, bool doEmit);
 	bool dealWithRatsnestAux(ConnectorItem * & from, ConnectorItem * & to,
 							long fromID, const QString & fromConnectorID, 
 							long toID, const QString & toConnectorID,
+							ViewLayer::ViewLayerSpec viewLayerSpec,
 							bool connect, class RatsnestCommand *, bool doEmit);
 	bool canDropModelPart(ModelPart * modelPart);
 	virtual void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);

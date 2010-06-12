@@ -199,8 +199,8 @@ public:
 	ChangeConnectionCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType,
 							long fromID, const QString & fromConnectorID,
 							long toID, const QString & toConnectorID,
-							bool connect, bool seekLayerKin,
-							QUndoCommand * parent);
+							ViewLayer::ViewLayerSpec,
+							bool connect, QUndoCommand * parent);
 	void undo();
 	void redo();
 	void setUpdateConnections(bool updatem);
@@ -211,11 +211,11 @@ protected:
 protected:
     long m_fromID;
     long m_toID;
-    bool m_seekLayerKin;
     QString m_fromConnectorID;
     QString m_toConnectorID;
 	bool m_connect;
 	bool m_updateConnections;
+	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 
 };
 
@@ -400,7 +400,8 @@ public:
 	RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType,
 					long fromID, const QString & fromConnectorID,
 					long toID, const QString & toConnectorID,
-					bool connect, bool seekLayerKin,
+					ViewLayer::ViewLayerSpec,
+					bool connect,
 					QUndoCommand * parent);
     void undo();
     void redo();

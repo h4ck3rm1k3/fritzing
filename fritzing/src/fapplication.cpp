@@ -942,7 +942,7 @@ void FApplication::copyBin(const QString & dest, const QString & source) {
 void FApplication::changeActivation(bool activate, QWidget * originator) {
 	if (!activate) return;
 
-	DebugDialog::debug(QString("change activation %1 %2").arg(activate).arg(originator->metaObject()->className()));
+	//DebugDialog::debug(QString("change activation %1 %2").arg(activate).arg(originator->metaObject()->className()));
 
 	FritzingWindow * fritzingWindow = qobject_cast<FritzingWindow *>(originator);
 	if (fritzingWindow == NULL) {

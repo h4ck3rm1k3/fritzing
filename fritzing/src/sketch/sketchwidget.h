@@ -125,7 +125,8 @@ public:
 	virtual void changeConnection(long fromID,
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
-						  bool connect, bool doEmit, bool seekLayerKin,
+						  ViewLayer::ViewLayerSpec,
+						  bool connect, bool doEmit, 
 						  bool updateConnections);
 
  	ItemCount calcItemCount();
@@ -172,6 +173,7 @@ public:
 	void makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
+								  ViewLayer::ViewLayerSpec viewLayerSpec,
 								  bool connect, class RatsnestCommand *, bool doEmit);
 	virtual void forwardRoutingStatus(const RoutingStatus &);
 
@@ -260,12 +262,13 @@ protected:
 	void dragMoveHighlightConnector(QPoint eventPos);
 
 	void addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerID);
-	ConnectorItem * findConnectorItem(ItemBase * item, const QString & connectorID, bool seekLayerKin);
+	ConnectorItem * findConnectorItem(ItemBase * item, const QString & connectorID, ViewLayer::ViewLayerSpec);
 	bool checkMoved();
 
 	void changeConnectionAux(long fromID, const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
-						  bool connect, bool seekLayerKin, bool updateConnections);
+						  ViewLayer::ViewLayerSpec,
+						  bool connect, bool updateConnections);
 
 
 	void cutDeleteAux(QString undoStackMessage);
@@ -273,9 +276,11 @@ protected:
 	bool deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
 	void extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,
-									   bool connect, bool seekLayerKin, QUndoCommand * parent);
+									   ViewLayer::ViewLayerSpec,
+									   bool connect, QUndoCommand * parent);
 	void extendChangeConnectionCommand(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
-										bool connect, bool seekLayerKin, QUndoCommand * parentCommand);
+										ViewLayer::ViewLayerSpec,
+										bool connect, QUndoCommand * parentCommand);
 
 
 	void keyPressEvent(QKeyEvent *);
@@ -320,7 +325,7 @@ protected:
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText);
 	void drawBackground( QPainter * painter, const QRectF & rect );
-	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
+	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, ViewLayer::ViewLayerID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
 	void setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand);
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
@@ -369,6 +374,7 @@ signals:
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
 								long toID, QString toConnectorID,
+								ViewLayer::ViewLayerSpec,
 								bool connect, bool updateConnections);
 	void copyItemSignal(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
 	void cleanUpWiresSignal(CleanUpWiresCommand *);
@@ -383,6 +389,7 @@ signals:
 	void selectAllItemsSignal(bool state, bool doEmit);
 	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID,
 								long toID, const QString & toConnectorID,
+								ViewLayer::ViewLayerSpec viewLayerSpec,
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void checkStickySignal(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
@@ -408,7 +415,7 @@ protected slots:
 	void toggleLayerVisibility();
 	void sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID);
 	void sketchWidget_wireDisconnected(long fromID, QString fromConnectorID);
-	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect, bool updateConnections);
+	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, ViewLayer::ViewLayerSpec, bool connect, bool updateConnections);
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
 	void sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
@@ -422,6 +429,7 @@ protected slots:
 	void moveAutoScrollTimeout();
 	void dealWithRatsnestSlot(long fromID, const QString & fromConnectorID,
 							  long toID, const QString & toConnectorID,
+							  ViewLayer::ViewLayerSpec viewLayerSpec,
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void rememberSticky(long id, QUndoCommand * parentCommand);

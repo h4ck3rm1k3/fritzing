@@ -83,7 +83,10 @@ public:
 		WireOnBottom_OneLayer,
 		WireOnBottom_TwoLayers,
 		GroundPlane_Top,
-		GroundPlane_Bottom
+		GroundPlane_Bottom,
+		Top,
+		Bottom,
+		TopAndBottom
 	};
 
 public:
@@ -130,6 +133,7 @@ public:
 	static void cleanup();
 	static QList<ViewLayerID> findAlternativeLayers(ViewLayerID);
 	static bool canConnect(ViewLayerID, ViewLayerID);
+	static ViewLayer::ViewLayerSpec specFromID(ViewLayer::ViewLayerID);
 
 protected:
 	bool m_visible;

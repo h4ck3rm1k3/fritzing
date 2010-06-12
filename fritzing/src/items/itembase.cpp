@@ -600,13 +600,13 @@ void ItemBase::collectConnectors(QList<ConnectorItem *> & connectors) {
 	}
 }
 
-ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
+ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID, ViewLayer::ViewLayerSpec viewLayerSpec)  {
 	for (int i = 0; i < childItems().count(); i++) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
 		if (connectorItem == NULL) continue;
 
 		if (connectorID.compare(connectorItem->connectorSharedID()) == 0) {
-			return connectorItem;
+			return connectorItem->chooseFromSpec(viewLayerSpec);
 		}
 	}
 
@@ -1521,7 +1521,7 @@ void ItemBase::setEverVisible(bool v) {
 }
 
 bool ItemBase::connectionIsAllowed(ConnectorItem * other) {
-	return ViewLayer::canConnect(this->viewLayerID(), other->attachedTo()->viewLayerID());
+	return ViewLayer::canConnect(this->viewLayerID(), other->attachedToViewLayerID());
 }
 
 QString ItemBase::getProperty(const QString & key) {

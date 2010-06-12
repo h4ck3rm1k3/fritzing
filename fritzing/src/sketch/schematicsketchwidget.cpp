@@ -216,10 +216,11 @@ void SchematicSketchWidget::updateBigDots()
 
 void SchematicSketchWidget::changeConnection(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool doEmit, bool seekLayerKin, bool updateConnections)
+									ViewLayer::ViewLayerSpec viewLayerSpec,
+									bool connect, bool doEmit, bool updateConnections)
 {
 	m_updateDotsTimer.stop();
-	SketchWidget::changeConnection(fromID, fromConnectorID, toID, toConnectorID, connect,  doEmit,  seekLayerKin,  updateConnections);
+	SketchWidget::changeConnection(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect,  doEmit,  updateConnections);
 	m_updateDotsTimer.start();
 }
 

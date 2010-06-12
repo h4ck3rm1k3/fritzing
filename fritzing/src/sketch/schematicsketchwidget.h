@@ -62,7 +62,8 @@ public:
 	void changeConnection(long fromID,
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
-						  bool connect, bool doEmit, bool seekLayerKin,
+						  ViewLayer::ViewLayerSpec,
+						  bool connect, bool doEmit, 
 						  bool updateConnections);
 	double defaultGridSizeInches();
 	int designRulesCheck();

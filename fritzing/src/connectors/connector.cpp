@@ -91,14 +91,14 @@ void Connector::addViewItem(ConnectorItem * item) {
 	m_connectorItems.insert(item->attachedTo()->viewLayerID(), item);
 	DebugDialog::debug(QString("adding connector '%1' vlid:%2 n:%3 id:%4")
 		.arg(this->connectorShared()->name())
-		.arg(item->attachedTo()->viewLayerID())
+		.arg(item->attachedToViewLayerID())
 		.arg(m_connectorItems.count())
 		.arg(item->attachedTo()->id()) );
 }
 
 void Connector::removeViewItem(ConnectorItem * item) {
 
-	m_connectorItems.remove(item->attachedTo()->viewLayerID());
+	m_connectorItems.remove(item->attachedToViewLayerID());
 
 	//DebugDialog::debug(QString("removing view %1 %2").arg(this->connectorShared()->name()).arg(m_connectorItems.count()) );
 }
