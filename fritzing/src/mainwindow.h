@@ -95,8 +95,10 @@ public:
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered);
 
 public:
-	static void initExportConstants();
+	static void initNames();
 	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress);
+	static void setAutosavePeriod(int);
+	static void setAutosaveEnabled(bool);
 
 signals:
 	void alienPartsDismissed();
@@ -383,7 +385,7 @@ protected:
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
-
+	static void setAutosave(int, bool);
 
 protected:
 
@@ -618,12 +620,13 @@ protected:
 	QPointer<class ProgramWindow> m_programWindow;
 	QStringList m_linkedProgramFiles;
 	QString m_backupFileNameAndPath;
-	QTimer * m_autosaveTimer;
+	QTimer m_autosaveTimer;
 	bool m_autosaveNeeded;
-	int m_autoSaveTimeout;
 
 public:
 	static int RestartNeeded;
+	static int AutosaveTimeoutMinutes;
+	static bool AutosaveEnabled;
 
 protected:
 	static const QString UntitledSketchName;

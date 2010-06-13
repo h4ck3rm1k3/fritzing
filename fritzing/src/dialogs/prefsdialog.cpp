@@ -31,6 +31,7 @@ $Date$
 #include "../utils/clickablelabel.h"
 #include "setcolordialog.h"
 #include "../sketch/zoomablegraphicsview.h"
+#include "../mainwindow.h"
 
 #include <QFormLayout>
 #include <QLabel>
@@ -65,7 +66,6 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 #ifndef QT_NO_DEBUG
 	vLayout->addWidget(createOtherForm());
 #endif
-
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
@@ -120,15 +120,16 @@ QWidget * PrefsDialog::createAutosaveForm() {
 	QHBoxLayout * zhlayout = new QHBoxLayout(this);
 	zhlayout->setSpacing(5);
 
-
 	QCheckBox * box = new QCheckBox(tr("Autosave every:"));
+	box->setChecked(MainWindow::AutosaveEnabled);
 	zhlayout->addWidget(box);
 
 	zhlayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 
 	QSpinBox * spinBox = new QSpinBox;
 	spinBox->setMinimum(1);
-	spinBox->setMaximum(75);
+	spinBox->setMaximum(60);
+	spinBox->setValue(MainWindow::AutosaveTimeoutMinutes);
 	spinBox->setMaximumWidth(80);
 	zhlayout->addWidget(spinBox);
 
@@ -136,6 +137,11 @@ QWidget * PrefsDialog::createAutosaveForm() {
 	zhlayout->addWidget(label);
 
 	autosave->setLayout(zhlayout);
+
+	connect(box, SIGNAL(clicked(bool)), this, SLOT(toggleAutosave(bool)));
+	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(changeAutosavePeriod(int)));
+
+
 	return autosave;
 }
 
@@ -201,7 +207,6 @@ QWidget* PrefsDialog::createColorForm()
 	formGroupBox->setLayout(layout);
 	return formGroupBox;
 }
-
 
 QWidget* PrefsDialog::createOtherForm() 
 {
@@ -284,8 +289,6 @@ void PrefsDialog::changeWheelBehavior() {
 
 	m_settings.insert("wheelMapping", QString("%1").arg(m_wheelMapping));
 	updateWheelText();
-
-
 }
 
 void PrefsDialog::updateWheelText() {
@@ -317,3 +320,10 @@ void PrefsDialog::updateWheelText() {
 	m_wheelLabel->setText(text);
 }
 
+void PrefsDialog::toggleAutosave(bool checked) {
+	m_settings.insert("autosaveEnabled", QString("%1").arg(checked));
+}
+
+void PrefsDialog::changeAutosavePeriod(int value) {
+	m_settings.insert("autosavePeriod", QString("%1").arg(value));
+}

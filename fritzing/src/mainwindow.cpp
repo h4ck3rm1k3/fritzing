@@ -90,6 +90,10 @@ int MainWindow::RestartNeeded = 0;
 static const int MainWindowDefaultWidth = 840;
 static const int MainWindowDefaultHeight = 600;
 
+int MainWindow::AutosaveTimeoutMinutes = 10;   // in minutes
+bool MainWindow::AutosaveEnabled = true;
+
+
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
@@ -106,10 +110,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
     // Add a timer for autosaving
 	m_autosaveNeeded = false;
-	m_autoSaveTimeout = 10000;
-    m_autosaveTimer = new QTimer(this);
-    connect(m_autosaveTimer, SIGNAL(timeout()), this, SLOT(backupSketch()));
-    m_autosaveTimer->start(m_autoSaveTimeout);
+    connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(backupSketch()));
+    m_autosaveTimer.start(AutosaveTimeoutMinutes * 60 * 1000);
 
 	resize(MainWindowDefaultWidth, MainWindowDefaultHeight);
 
@@ -1984,4 +1986,28 @@ void MainWindow::undoStackCleanChanged(bool isClean) {
     if (isClean) {
         QFile::remove(m_backupFileNameAndPath);
     }
+}
+
+void MainWindow::setAutosavePeriod(int minutes) {
+	setAutosave(minutes, AutosaveEnabled);
+}
+
+void MainWindow::setAutosaveEnabled(bool enabled) {
+	setAutosave(AutosaveTimeoutMinutes, enabled);
+}
+
+void MainWindow::setAutosave(int minutes, bool enabled) {
+	AutosaveTimeoutMinutes = minutes;
+	AutosaveEnabled = enabled;
+	foreach (QWidget * widget, QApplication::topLevelWidgets()) {
+		MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
+		if (mainWindow == NULL) continue;
+
+		mainWindow->m_autosaveTimer.stop();
+		if (AutosaveEnabled) {
+			// is there a way to get the current timer offset so that all the timers aren't running in sync?
+			// or just add some random time...
+			mainWindow->m_autosaveTimer.start(AutosaveTimeoutMinutes * 60 * 1000);
+		}
+	}
 }

@@ -228,7 +228,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 
 	qRegisterMetaType<ViewGeometry>("ViewGeometry");
 
-	MainWindow::initExportConstants();
+	MainWindow::initNames();
 	FSvgRenderer::calcPrinterScale();
 	ViewIdentifierClass::initNames();
 	Wire::initNames();
@@ -787,6 +787,12 @@ void FApplication::preferences() {
 				}
 				else if (key.compare("wheelMapping") == 0) {
 					ZoomableGraphicsView::setWheelMapping((ZoomableGraphicsView::WheelMapping) hash.value(key).toInt());
+				}
+				else if (key.compare("autosavePeriod") == 0) {
+					MainWindow::setAutosavePeriod(hash.value(key).toInt());
+				}
+				else if (key.compare("autosaveEnabled") == 0) {
+					MainWindow::setAutosaveEnabled(hash.value(key).toInt());
 				}
 			}
 		}

@@ -111,7 +111,7 @@ bool sortPartList(ItemBase * b1, ItemBase * b2){
 
 /////////////////////////////////////////////////////////
 
-void MainWindow::initExportConstants()
+void MainWindow::initNames()
 {
 	OtherKnownExtensions << jpgActionType << psActionType << pdfActionType << pngActionType << svgActionType << bomActionType << netlistActionType;
 
@@ -127,6 +127,10 @@ void MainWindow::initExportConstants()
 	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)");
 	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)");
 	fileExtFormats[bomActionType] = tr("BoM Text File (*.txt)");
+
+	QSettings settings;
+	AutosaveEnabled = settings.value("autosaveEnabled", QString("%1").arg(AutosaveEnabled)).toBool();
+	AutosaveTimeoutMinutes = settings.value("autosavePeriod", QString("%1").arg(AutosaveTimeoutMinutes)).toInt();
 }
 
 void MainWindow::print() {

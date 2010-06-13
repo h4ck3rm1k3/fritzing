@@ -58,6 +58,8 @@ protected slots:
 	void setConnectedColor();
 	void setUnconnectedColor();
 	void changeWheelBehavior();
+	void toggleAutosave(bool);
+	void changeAutosavePeriod(int);
 
 protected:
 	QLabel * m_wheelLabel;
