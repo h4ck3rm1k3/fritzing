@@ -92,6 +92,7 @@ public:
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
 	
 	void exportToGerber(const QString & exportDir, ItemBase * board, bool displayMessageBoxes);
+	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered);
 
 public:
 	static void initExportConstants();
@@ -261,6 +262,9 @@ protected slots:
 	bool save();
 	bool saveAs();
 	void changeBoardLayers(int layers, bool doEmit);
+    void backupSketch();
+	void undoStackCleanChanged(bool isClean);
+	void autosaveNeeded(int index = 0);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -290,10 +294,10 @@ protected:
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
 	void closeEvent(QCloseEvent * event);
 	bool saveAsAux(const QString & fileName);
+	void saveAsAuxAux(const QString & fileName);
 	void printAux(QPrinter &printer, bool removeBackground, bool paginate);
 	void exportAux(QString fileName, QImage::Format format, bool removeBackground);
 	void notYetImplemented(QString action);
-	void setCurrentFile(const QString &fileName, bool addToRecent=true);
 	bool eventFilter(QObject *obj, QEvent *event);
 	void setActionsIcons(int index, QList<QAction *> &);
 	void exportToEagle();
@@ -613,6 +617,10 @@ protected:
 	QPointer<class LayerPalette> m_layerPalette;
 	QPointer<class ProgramWindow> m_programWindow;
 	QStringList m_linkedProgramFiles;
+	QString m_backupFileNameAndPath;
+	QTimer * m_autosaveTimer;
+	bool m_autosaveNeeded;
+	int m_autoSaveTimeout;
 
 public:
 	static int RestartNeeded;

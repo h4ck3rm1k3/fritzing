@@ -89,6 +89,8 @@ protected:
 	bool loadBin(QString binToOpen);
 	void runGedaService();
 	void runKicadService();
+	MainWindow * recoverBackups(int & loaded);
+	void clearBackups();
 
 protected:
 	bool m_spaceBarIsPressed;

@@ -48,6 +48,8 @@ protected:
 	QWidget * createLanguageForm(QFileInfoList & list);
 	QWidget* createOtherForm();
 	QWidget* createColorForm();
+	QWidget * createZoomerForm();
+	QWidget * createAutosaveForm();
 	void updateWheelText();
 
 protected slots:

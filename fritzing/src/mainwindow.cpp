@@ -104,7 +104,19 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_comboboxChanged = false;
 	m_helper = NULL;
 
+    // Add a timer for autosaving
+	m_autosaveNeeded = false;
+	m_autoSaveTimeout = 10000;
+    m_autosaveTimer = new QTimer(this);
+    connect(m_autosaveTimer, SIGNAL(timeout()), this, SLOT(backupSketch()));
+    m_autosaveTimer->start(m_autoSaveTimeout);
+
 	resize(MainWindowDefaultWidth, MainWindowDefaultHeight);
+
+    m_backupFileNameAndPath = FolderUtils::getUserDataStorePath("backup") + "/" + FolderUtils::getRandText() + fileExtension();
+    // Connect the undoStack to our autosave stuff
+    connect(m_undoStack, SIGNAL(indexChanged(int)), this, SLOT(autosaveNeeded(int)));
+    connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)));
 
 	// Create dot icons
 	m_dotIcon = QIcon(":/resources/images/dot.png");
@@ -287,6 +299,9 @@ void MainWindow::init() {
 
 MainWindow::~MainWindow()
 {
+    // Delete backup of this sketch if one exists.
+    QFile::remove(m_backupFileNameAndPath);	
+	
 	delete m_sketchModel;
 	m_dockManager->dontKeepMargins();
 	m_setUpDockManagerTimer.stop();
@@ -435,8 +450,21 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 }
 
-void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent) {
+void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool recovered) {
 	m_fileName = fileName;
+
+    // If this is an untitled sketch, increment the untitled sketch number
+    // to something reasonable.
+    if (recovered && fileName.startsWith(untitledFileName())) {
+		DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(fileName).arg(untitledFileName()));
+        int untitledSketchNumber = fileName.section(' ', -1).toInt() + 1;
+        if (untitledSketchNumber == 1) {
+            untitledSketchNumber++;
+        }
+        DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
+        UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
+    }
+
 
 	updateRaiseWindowAction();
 	setTitle();
@@ -1801,6 +1829,7 @@ MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceMod
 	}
 
 	mw->init();
+
 	return mw;
 }
 
@@ -1914,4 +1943,45 @@ void MainWindow::updateActiveLayerButtons() {
 	QList<QAction *> actions;
 	actions << m_activeLayerBothAct << m_activeLayerBottomAct << m_activeLayerTopAct;
 	setActionsIcons(index, actions);
+}
+
+/**
+ * A slot for saving a copy of the current sketch to a temp location.
+ * This should be called every X minutes as well as just before certain
+ * events, such as saves, part imports, file export/printing. This relies
+ * on the m_autosaveNeeded variable and the undoStack being dirty for
+ * an autosave to be attempted.
+ */
+void  MainWindow::backupSketch() {
+    if (m_autosaveNeeded && !m_undoStack->isClean()) {
+        m_autosaveNeeded = false;			// clear this now in case the save takes a really long time
+
+        DebugDialog::debug(QString("%1 autosaved as %2").arg(m_fileName).arg(m_backupFileNameAndPath));
+        statusBar()->showMessage(tr("Backing up '%1'").arg(m_fileName), 2000);
+		QApplication::processEvents();
+		saveAsAuxAux(m_backupFileNameAndPath);
+    }
+}
+
+/**
+ * This function is used to trigger an autosave at the next autosave
+ * timer event. It is connected to the QUndoStack::indexChanged(int)
+ * signal so that any change to the undo stack triggers autosaves.
+ * This function can be called independent of this signal and
+ * still work properly.
+ */
+void MainWindow::autosaveNeeded(int index) {
+    Q_UNUSED(index);
+    //DebugDialog::debug(QString("Triggering autosave"));
+    m_autosaveNeeded = true;
+}
+
+/**
+ * delete the backup file when the undostack is clean.
+ */
+void MainWindow::undoStackCleanChanged(bool isClean) {
+    DebugDialog::debug(QString("Clean status changed to %1").arg(isClean));
+    if (isClean) {
+        QFile::remove(m_backupFileNameAndPath);
+    }
 }

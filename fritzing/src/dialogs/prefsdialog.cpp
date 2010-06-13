@@ -40,6 +40,7 @@ $Date$
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QRadioButton>
+#include <QSpinBox>
 
 #define MARGIN 5
 
@@ -58,7 +59,32 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 	vLayout->addWidget(createLanguageForm(list));
 	vLayout->addWidget(createColorForm());
+	vLayout->addWidget(createZoomerForm());
+	vLayout->addWidget(createAutosaveForm());
 
+#ifndef QT_NO_DEBUG
+	vLayout->addWidget(createOtherForm());
+#endif
+
+
+    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
+
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+	vLayout->addWidget(buttonBox);
+
+	this->setLayout(vLayout);
+
+}
+
+PrefsDialog::~PrefsDialog()
+{
+}
+
+QWidget * PrefsDialog::createZoomerForm() {
 	QGroupBox * zoomer = new QGroupBox(tr("Mouse Wheel Behavior"), this );
 
 	QHBoxLayout * zhlayout = new QHBoxLayout(this);
@@ -85,26 +111,34 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 
 	zoomer->setLayout(zhlayout);
 
-	vLayout->addWidget(zoomer);
-
-	vLayout->addWidget(createOtherForm());
-
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
-	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
-
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-
-	vLayout->addWidget(buttonBox);
-
-	this->setLayout(vLayout);
-
+	return zoomer;
 }
 
-PrefsDialog::~PrefsDialog()
-{
+QWidget * PrefsDialog::createAutosaveForm() {
+	QGroupBox * autosave = new QGroupBox(tr("Autosave"), this );
+
+	QHBoxLayout * zhlayout = new QHBoxLayout(this);
+	zhlayout->setSpacing(5);
+
+
+	QCheckBox * box = new QCheckBox(tr("Autosave every:"));
+	zhlayout->addWidget(box);
+
+	zhlayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+
+	QSpinBox * spinBox = new QSpinBox;
+	spinBox->setMinimum(1);
+	spinBox->setMaximum(75);
+	spinBox->setMaximumWidth(80);
+	zhlayout->addWidget(spinBox);
+
+	QLabel * label = new QLabel(tr("minutes"));
+	zhlayout->addWidget(label);
+
+	autosave->setLayout(zhlayout);
+	return autosave;
 }
+
 
 QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list) 
 {
@@ -171,19 +205,8 @@ QWidget* PrefsDialog::createColorForm()
 
 QWidget* PrefsDialog::createOtherForm() 
 {
-	QGroupBox * formGroupBox = new QGroupBox(tr("Coming soon..."));
+	QGroupBox * formGroupBox = new QGroupBox(tr("Debug"));
     QFormLayout *layout = new QFormLayout();
-
-	QLabel * textLabel = new QLabel(this);
-	textLabel->setMaximumWidth(250);
-	textLabel->setWordWrap(true);
-	textLabel->setMinimumHeight(95);
-	textLabel->setText(QObject::tr("This dialog will soon provide the ability to set some other preferences, "
-							  "such as your default sketch folder and your fritzing.org login name\n"
-							  "Please stay tuned."));	
-	layout->addRow(textLabel);
-
-#ifndef QT_NO_DEBUG
 
 	QLabel * clearLabel = new QLabel(this);
 	clearLabel->setFixedWidth(195);
@@ -195,8 +218,6 @@ QWidget* PrefsDialog::createOtherForm()
 	connect(clear, SIGNAL(clicked()), this, SLOT(clear()));
 
 	layout->addRow(clearLabel, clear);	
-
-#endif
 
 	formGroupBox->setLayout(layout);
 	return formGroupBox;

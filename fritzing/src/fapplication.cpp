@@ -52,6 +52,7 @@ $Date$
 #include "svg/kicadmodule2svg.h"
 #include "installedfonts.h"
 #include "items/pinheader.h"
+#include "dialogs/recoverydialog.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -628,10 +629,15 @@ int FApplication::startup(bool firstRun)
 	splash.showProgress(m_progressIndex, 0.875);
 
 	int loaded = 0;
-	MainWindow * mainWindow = loadWindows(true, loaded);
-	foreach (QString filename, m_filesToLoad) {
-		loadOne(mainWindow, filename, loaded++);
-	}
+    MainWindow * mainWindow = recoverBackups(loaded);
+    if (mainWindow == NULL) {
+        mainWindow = loadWindows(true, loaded);
+        foreach (QString filename, m_filesToLoad) {
+            loadOne(mainWindow, filename, loaded++);
+        }
+    }
+
+	clearBackups();
 
 	//DebugDialog::debug("after m_files");
 
@@ -650,7 +656,6 @@ int FApplication::startup(bool firstRun)
 			}
 		}
 	}
-
 
 	//DebugDialog::debug("after last open sketch");
 
@@ -1083,3 +1088,44 @@ bool FApplication::notify(QObject *receiver, QEvent *e)
     return false;
 }
 
+MainWindow * FApplication::recoverBackups(int & loaded)
+{
+    // Check if there are any backups we need to recover
+	QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
+    backupDir.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );    
+    QFileInfoList list = backupDir.entryInfoList();
+    if (list.size() == 0) return NULL;
+
+    RecoveryDialog recoveryDialog(list);
+    int result = recoveryDialog.exec();
+    if (!result) return NULL;
+
+	MainWindow * mainWindow = NULL;
+
+    QList<QListWidgetItem*> fileItems = recoveryDialog.getSelectedFiles();
+    DebugDialog::debug(QString("Recovering %1 files from recoveryDialog").arg(fileItems.size()));
+    if (fileItems.size() > 0) {
+        mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
+		foreach (QListWidgetItem * item, fileItems) {
+			loadOne(mainWindow, item->data(Qt::UserRole).value<QString>(), loaded++);
+            mainWindow->setCurrentFile(item->text(), false, true);
+            mainWindow->setWindowModified(true);
+            mainWindow->showAllFirstTimeHelp(false);
+        }
+    }
+
+	return mainWindow;
+}
+
+void FApplication::clearBackups() {
+    // Now cleanup and delete all of the autosaves    
+    QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
+    backupDir.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );
+    QFileInfoList list = backupDir.entryInfoList();
+    foreach (QFileInfo fileInfo, list) {
+        DebugDialog::debug(QString("Deleting %1").arg(fileInfo.filePath()));
+        if (!backupDir.remove(fileInfo.filePath())) {
+            DebugDialog::debug(QString("Failed removing %1").arg(fileInfo.filePath()));
+        }
+    }
+}

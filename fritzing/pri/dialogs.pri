@@ -20,9 +20,11 @@
 HEADERS += src/dialogs/prefsdialog.h \
 	src/dialogs/setcolordialog.h \
 	src/dialogs/alignsettingsdialog.h \
+	src/dialogs/recoverydialog.h \
 	src/dialogs/translatorlistmodel.h
  
 SOURCES += src/dialogs/prefsdialog.cpp \
 	src/dialogs/setcolordialog.cpp \
 	src/dialogs/alignsettingsdialog.cpp \
+	src/dialogs/recoverydialog.cpp \
 	src/dialogs/translatorlistmodel.cpp

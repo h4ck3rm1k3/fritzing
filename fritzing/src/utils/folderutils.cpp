@@ -46,7 +46,8 @@ FolderUtils::FolderUtils() {
 		<< "/parts/svg/user/icon" << "/parts/svg/user/breadboard"
 		<< "/parts/svg/user/schematic" << "/parts/svg/user/pcb"
 		<< "/parts/svg/contrib/icon" << "/parts/svg/contrib/breadboard"
-		<< "/parts/svg/contrib/schematic" << "/parts/svg/contrib/pcb";
+		<< "/parts/svg/contrib/schematic" << "/parts/svg/contrib/pcb"
+		<< "/backup";
 }
 
 FolderUtils::~FolderUtils() {

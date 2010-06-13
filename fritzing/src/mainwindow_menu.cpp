@@ -601,18 +601,10 @@ bool MainWindow::saveAsAux(const QString & fileName) {
     setReadOnly(false);
     //FritzingWindow::saveAsAux(fileName);
 
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-	connect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
-		this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
-
-	m_sketchModel->save(fileName, false);
-
-	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
-			   this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
-	QApplication::restoreOverrideCursor();
+	saveAsAuxAux(fileName);
 
     m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
-    setCurrentFile(fileName);
+    setCurrentFile(fileName, true, false);
 
 	if(m_restarting && m_fileName != ___emptyString___) {
 		QSettings settings;
@@ -628,6 +620,18 @@ bool MainWindow::saveAsAux(const QString & fileName) {
     m_saveAct->setEnabled(true);
 
 	return true;
+}
+
+void MainWindow::saveAsAuxAux(const QString & fileName) {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+	connect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
+		this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)), Qt::DirectConnection);
+
+	m_sketchModel->save(fileName, false);
+
+	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
+			   this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
+	QApplication::restoreOverrideCursor();
 }
 
 
@@ -791,7 +795,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		settings.setValue("lastOpenSketch",fileName);
 	}
 
-	setCurrentFile(fileName, addToRecent);
+	setCurrentFile(fileName, addToRecent, false);
 
 	UntitledSketchIndex--;
 }
@@ -3329,6 +3333,9 @@ void MainWindow::setBackgroundColor() {
 }
 
 void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter & streamWriter) {
+	
+	streamWriter.writeTextElement("originalFileName", m_fileName);
+
 	if (m_linkedProgramFiles.count() > 0) {
 		QFileInfo fileInfo(fileName);
 		QDir dir = fileInfo.absoluteDir();
