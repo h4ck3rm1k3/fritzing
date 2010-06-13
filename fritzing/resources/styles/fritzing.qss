@@ -435,10 +435,6 @@ StackTabBar[current="true"]::tab:selected {
 
 /**************** sketch area widgets ****************/
 
-Console {
-	background-color: black;
-	color: white;
-}
 
 SketchArea QToolButton {
 	background-color: transparent;

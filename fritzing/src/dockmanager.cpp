@@ -139,12 +139,6 @@ void DockManager::createDockWindows()
     makeDock(tr("Layers"), m_mainWindow->m_layerPalette, DockMinWidth, DockMinHeight)->hide();
     m_mainWindow->m_undoView->setMinimumSize(DockMinWidth, DockMinHeight);
 
-
-	// comment out the console for nows
-	// m_mainWindow->m_consoleView = new Console();
-	// FDockWidget * dock = makeDock(tr("Console"), m_mainWindow->m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
-	// dock->hide();
-
     m_mainWindow->m_windowMenu->addSeparator();
     m_mainWindow->m_windowMenu->addAction(m_mainWindow->m_openProgramWindowAct);
 

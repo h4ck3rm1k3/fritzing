@@ -727,18 +727,20 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 	// collects all the connectors at the same potential
 	// allows direct connections or wired connections
 
-	DebugDialog::debug("__________________");
+	//DebugDialog::debug("__________________");
 
 	QList<ConnectorItem *> tempItems = connectorItems;
 	connectorItems.clear();
 
 	for (int i = 0; i < tempItems.count(); i++) {
 		ConnectorItem * connectorItem = tempItems[i];
+		/*
 		DebugDialog::debug(QString("testing id:%1 '%2' %3 vlid:%4")
 			.arg(connectorItem->attachedToID())
 			.arg(connectorItem->attachedToTitle())
 			.arg(connectorItem->connectorSharedID())
 			.arg(connectorItem->attachedToViewLayerID()) );
+		*/
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		if (fromWire != NULL) {
@@ -816,10 +818,12 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 
 						if (viewLayerSpec == ViewLayer::TopAndBottom) {
 							partsConnectors.append(crossConnectorItem);
+							/*
 							DebugDialog::debug(QString("collecting part %1 %2 %3")
 								.arg(candidate->id())
 								.arg(crossConnectorItem->connectorSharedID())
 								.arg(connectorItem->attachedToViewLayerID()) );
+								*/
 						}
 						else if (viewLayerSpec == ViewLayer::Top) {
 							if (connectorItem->attachedToViewLayerID() == ViewLayer::Copper1) {
@@ -838,10 +842,13 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 					}
 				}
 					
+				/*
 				DebugDialog::debug(QString("collecting part %1 %2 %3")
 					.arg(candidate->id())
 					.arg(connectorItem->connectorSharedID())
 					.arg(connectorItem->attachedToViewLayerID()) );
+					*/
+
 				partsConnectors.append(connectorItem);
 				break;
 			default:

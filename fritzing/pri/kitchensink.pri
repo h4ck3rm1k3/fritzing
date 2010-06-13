@@ -18,7 +18,6 @@
 # ********************************************************************/
 HEADERS += \
     src/commands.h \
-    src/console.h \
     src/debugdialog.h \
     src/dockmanager.h \
     src/fapplication.h \
@@ -41,7 +40,6 @@ HEADERS += \
     
 SOURCES += \
     src/commands.cpp \
-    src/console.cpp \
     src/debugdialog.cpp \
     src/dockmanager.cpp \
     src/fapplication.cpp \

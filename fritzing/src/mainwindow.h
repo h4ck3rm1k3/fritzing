@@ -410,7 +410,6 @@ protected:
     QHash <long,class PartsEditorMainWindow*> m_partsEditorWindows;
     QHash <long,class PartsBinPaletteWidget*> m_binsWithPartsEditorRequests;
 
-    QPointer<class Console> m_consoleView;
     bool m_closing;
 	bool m_dontClose;
     bool m_firstOpen;
