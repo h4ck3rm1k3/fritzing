@@ -23,7 +23,6 @@
         <breadboardView>
             <layers image="breadboard/BASIC_Stamp_2p24.svg">
                 <layer layerId="breadboard"/>
-                <layer layerId="unknown"/>
             </layers>
         </breadboardView>
         <schematicView>
