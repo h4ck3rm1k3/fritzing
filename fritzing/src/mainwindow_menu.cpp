@@ -3338,7 +3338,9 @@ void MainWindow::setBackgroundColor() {
 
 void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter & streamWriter) {
 	
-	streamWriter.writeTextElement("originalFileName", m_fileName);
+	if (m_backingUp) {
+		streamWriter.writeTextElement("originalFileName", m_fileName);
+	}
 
 	if (m_linkedProgramFiles.count() > 0) {
 		QFileInfo fileInfo(fileName);

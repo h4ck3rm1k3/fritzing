@@ -109,7 +109,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_helper = NULL;
 
     // Add a timer for autosaving
-	m_autosaveNeeded = false;
+	m_backingUp = m_autosaveNeeded = false;
     connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(backupSketch()));
     m_autosaveTimer.start(AutosaveTimeoutMinutes * 60 * 1000);
 
@@ -1961,7 +1961,9 @@ void  MainWindow::backupSketch() {
         DebugDialog::debug(QString("%1 autosaved as %2").arg(m_fileName).arg(m_backupFileNameAndPath));
         statusBar()->showMessage(tr("Backing up '%1'").arg(m_fileName), 2000);
 		QApplication::processEvents();
+		m_backingUp = true;
 		saveAsAuxAux(m_backupFileNameAndPath);
+		m_backingUp = false;
     }
 }
 

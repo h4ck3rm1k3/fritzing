@@ -622,6 +622,7 @@ protected:
 	QString m_backupFileNameAndPath;
 	QTimer m_autosaveTimer;
 	bool m_autosaveNeeded;
+	bool m_backingUp;
 
 public:
 	static int RestartNeeded;
