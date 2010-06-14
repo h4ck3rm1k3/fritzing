@@ -410,32 +410,38 @@ void SVG2gerber::allPaths2gerber() {
         QString points = polygon.attribute("points");
 		QStringList pointList = points.split(QRegExp("\\s+|,"), QString::SkipEmptyParts);
 
+		QString aperture;
+		QString mask_aperture;
+
         // set poly fill if this is actually a filled in shape
         if(polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
             // start poly fill
             m_gerber_paths += "G36*\n";
+			aperture = QString("C,%1").arg(1/1000);
+			mask_aperture = QString("C,%1").arg((1/1000) + 0.006);
         }
 		else {
 			qreal stroke_width = polygon.attribute("stroke-width").toDouble();
 
-			QString aperture = QString("C,%1").arg(stroke_width/1000);
-			QString mask_aperture = QString("C,%1").arg((stroke_width/1000) + 0.006);
+			aperture = QString("C,%1").arg(stroke_width/1000);
+			mask_aperture = QString("C,%1").arg((stroke_width/1000) + 0.006);
 
-			// add aperture to defs if we don't have it yet
-			if(!apertureMap.contains(aperture)){
-				apertureMap[aperture] = "D" + QString::number(dcode_index);
-				m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
-				m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
-				dcode_index++;
-			}
+		}
 
-			QString dcode = apertureMap[aperture];
-			if(current_dcode != dcode){
-				//switch to correct aperture
-				m_gerber_paths += "G54" + dcode + "*\n";
-				m_soldermask_paths += "G54" + dcode + "*\n";
-				current_dcode = dcode;
-			}
+		// add aperture to defs if we don't have it yet
+		if(!apertureMap.contains(aperture)){
+			apertureMap[aperture] = "D" + QString::number(dcode_index);
+			m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+			m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
+			dcode_index++;
+		}
+
+		QString dcode = apertureMap[aperture];
+		if(current_dcode != dcode){
+			//switch to correct aperture
+			m_gerber_paths += "G54" + dcode + "*\n";
+			m_soldermask_paths += "G54" + dcode + "*\n";
+			current_dcode = dcode;
 		}
 
         int startx = qRound(pointList.at(0).toDouble());

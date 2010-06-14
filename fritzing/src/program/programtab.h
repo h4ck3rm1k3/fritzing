@@ -41,8 +41,6 @@ $Date$
 #include <QDialogButtonBox>
 #include <QCheckBox>
 
-#include "programtab.h"
-
 class ProgramTab : public QFrame 
 {
 	Q_OBJECT
