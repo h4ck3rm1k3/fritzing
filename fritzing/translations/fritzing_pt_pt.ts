@@ -172,49 +172,6 @@ antes de adicionar algum conector</translation>
     </message>
 </context>
 <context>
-    <name>ConnectorsWidget</name>
-    <message>
-        <source>New</source>
-        <translation>Novo</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Fêmea</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Macho</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation>ID</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nome</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Descrição</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Breadboard</source>
-        <translation>Breadboard</translation>
-    </message>
-    <message>
-        <source>Schematic</source>
-        <translation>Esquema</translation>
-    </message>
-    <message>
-        <source>PCB</source>
-        <translation>PCB (PLaca de Circuito Impresso)</translation>
-    </message>
-</context>
-<context>
     <name>DebugDialog</name>
     <message>
         <source>for debugging</source>
@@ -229,6 +186,10 @@ antes de adicionar algum conector</translation>
     </message>
     <message>
         <source>Don&apos;t Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete the file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -310,6 +271,10 @@ Nota: Você pode importa-los mais tarde através do menu  &quot;ajuda&quot; &gt;
     </message>
     <message>
         <source>Fritzing caught an exception %1 from %2 in event %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -408,8 +373,51 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
         <translation>Bem vindo a &lt;b&gt; vista de Esquema&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Esta é uma forma mais abstracta de ver os componentes e ligações do que na vista da Breadboard. Tu tens os mesmos elmentos que tens numa breadboard, apenas a sua aparência é diferente. Esta representação é mais próxima das usadas pelos engenheiros&lt;br/&gt;&lt;br/&gt; Podes pressionar &amp;lt;Shift&amp;gt;-clique no rato para criar pontos de inflexão e ligações apertadas. O esquemático ajuda a visualizar se fizes-te as ligações correctamente entre componentes. Podes também imprimir o teu esquema para documentação.</translation>
     </message>
     <message>
-        <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;The first thing you will need is a board &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; to place your parts on. To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation>A &lt;b&gt; vista do tipo PCB (Placa de Circuito Impresso) &lt;/b&gt; é onde se desenham os componentes que vão aparecer na PCB física. &lt;br/&gt;&lt;br/&gt; As PCBs podem ser feitas em casa num pequeno laboratório improvisado utilizando processos denominados &quot;DIY etching processes&quot;. Também se pode igualmente enviar os esquemas para fabricantes professionais, quando se precisam de uma alta precisão de fabrico. &lt;br/&gt;A primeira coisa que vais precisar é a placa &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; para colocar lá os teus componentes. Para criar um bom esquema em PCB organiza os componentes por forma a minimizar o tamanho da placa final, fazendo com que estes fiquem bem organizados. Podendo assim ajustar o tamanho das placas rectangulares disponíveis. Depois dos componentes estarem bem organizados, podes clicar nas ligações individualmente e usar a opção autoencaminhar (Autoroute) para criar os traços de cobre entre os componentes. O botão de autoencaminhamento (Autoroute) &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; está no topo esquerdo.</translation>
+        <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;The first thing you will need is a board to place your parts on. There should already be one to the left of this text, but if not, drag in this icon &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; from the parts bin. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Hole</name>
+    <message>
+        <source>Pin Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Standard Through-hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Big Through-hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mounting Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fine Lead Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thick Lead Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hole size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>custom settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hole Diameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ring Thickness</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -464,6 +472,16 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>Tags</source>
         <translation>Tags</translation>
+    </message>
+    <message>
+        <source>x:%1 %2
+y:%3 %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>x:%1
+y:%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -530,6 +548,17 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     </message>
 </context>
 <context>
+    <name>KicadModuleDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LayerPalette</name>
     <message>
         <source>show all layers</source>
@@ -545,6 +574,14 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>url:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>text:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -643,10 +680,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>Unable to export %1 to shareable sketch</source>
         <translation>Impossível de exportar %1 como um sketch compartilhável</translation>
-    </message>
-    <message>
-        <source>Select a part to import</source>
-        <translation>Seleccione uma parte para importar</translation>
     </message>
     <message>
         <source>External Part (*%1)</source>
@@ -1238,10 +1271,6 @@ Por favor seleccione um dos tipos de letra do Fritzing para o substituir:</trans
     <message>
         <source>Shift+Ctrl+0</source>
         <translation>Shift+Ctrl+0</translation>
-    </message>
-    <message>
-        <source>Actual size</source>
-        <translation>Tamanho actual</translation>
     </message>
     <message>
         <source>&amp;Show Breadboard</source>
@@ -1912,6 +1941,138 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>Enable debugging log</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Both Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select one or more parts to import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to read shareable part %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backing up &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outline file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outline file export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 file export failure (3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 mask file export failure (4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 drill file export failure (5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silk file export failure (1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silk file export failure (2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Rotate 45° Counter Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate current selection 45 degrees counter clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Rotate 45° Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate current selection 45 degrees clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actual (real world physical) size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>100% Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>100% (pixel) size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set both copper layers clickable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set copper top layer clickable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set copper bottom layer clickable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Design Rules Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select any parts that are too close together for safe board production (w/in 10 mil)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top and Copper Bottom layers are both active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Top layer is active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copper Bottom layer is active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autorouting Progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No overlapping parts found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 overlapping parts found</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1951,6 +2112,10 @@ Razão: %2 (código do erro %3)</translation>
         <source>label</source>
         <translation>etiqueta</translation>
     </message>
+    <message>
+        <source>chip label</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Note</name>
@@ -1976,6 +2141,14 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>Resize board to %1 %2</source>
         <translation>Redimensionar placa para %1 %2</translation>
+    </message>
+    <message>
+        <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Design Rules Check Progress...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2118,10 +2291,6 @@ Razão: %2 (código do erro %3)</translation>
 %2.</translation>
     </message>
     <message>
-        <source>Save &quot;%1&quot;</source>
-        <translation>Guardar &quot;%1&quot;</translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
@@ -2231,6 +2400,14 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Contributed Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save bin &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2488,10 +2665,6 @@ numa PCB (Placa de Circuito Impresso)?</translation>
         <translation>Linguagem</translation>
     </message>
     <message>
-        <source>Coming soon...</source>
-        <translation>Brevemente...</translation>
-    </message>
-    <message>
         <source>Colors</source>
         <translation>Cores</translation>
     </message>
@@ -2565,6 +2738,22 @@ Zoom
 Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Autosave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autosave every:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProgramTab</name>
@@ -2606,6 +2795,18 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Select a program file to load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Programmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing is unable to find &apos;%1&apos;, please locate it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program (*.%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2727,10 +2928,6 @@ Vertical scroll</source>
         <translation>um valor</translation>
     </message>
     <message>
-        <source>The file %1 is not a Fritzing file (11).</source>
-        <translation>O ficheiro %1 não é um ficheiro Fritzing (11).</translation>
-    </message>
-    <message>
         <source>no name yet</source>
         <translation>Não possuí um nome ainda</translation>
     </message>
@@ -2781,12 +2978,6 @@ Vertical scroll</source>
     <message>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation>Uma definição de linguagem nova não vai ter efeito até reiniciar o Fritzing.</translation>
-    </message>
-    <message>
-        <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
-Please stay tuned.</source>
-        <translation>Esta caixa em breve vai dar a possibilidade de definir outras opções, como a pasta do sketch e o teu nome de login fritzing.org
-Por favor fica atento.</translation>
     </message>
     <message>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
@@ -2887,22 +3078,6 @@ O Fritzing ainda trabalha, mas não vais poder modificar as propriedas dos compo
         <translation>Ninho de ratos</translation>
     </message>
     <message>
-        <source>Solder mask</source>
-        <translation>Máscara de solda</translation>
-    </message>
-    <message>
-        <source>Outline</source>
-        <translation>Contornar</translation>
-    </message>
-    <message>
-        <source>Vias</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Keep out</source>
-        <translation>Afaste-se</translation>
-    </message>
-    <message>
         <source>Unknown Layer</source>
         <translation>Camada desconhecida</translation>
     </message>
@@ -2925,10 +3100,6 @@ is already there, we won&apos;t add it again, right?</source>
 já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
-        <source>Autorouting Progress...</source>
-        <translation>Executando o Autorouting...</translation>
-    </message>
-    <message>
         <source>bb</source>
         <translation></translation>
     </message>
@@ -2943,10 +3114,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>File Progress...</source>
         <translation>Ficheiro em progresso...</translation>
-    </message>
-    <message>
-        <source>Ground Plane</source>
-        <translation>Plano terra</translation>
     </message>
     <message>
         <source>&lt;b&gt;Connected highlight color&lt;/b&gt;</source>
@@ -3045,10 +3212,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ellipsoidal drill holes not implemented</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>attributes missing params</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3120,6 +3283,42 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Silkscreen Bottom (Part Labels)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The file %1 is not a Fritzing file (7).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select footprint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Design Rule Check (select items that are too close together)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing can&apos;t yet handle both pins and pads together (in %1 in %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad layer mask parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>non-circular holes not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>non-copper holes not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground Plane Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground Plane Top</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -3149,6 +3348,21 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>ZIP/UNZIP API error %1</source>
         <translation>Erro no API ZIP/UNZIP %1</translation>
+    </message>
+</context>
+<context>
+    <name>RecoveryDialog</name>
+    <message>
+        <source>Select any files you want to recover from the list below</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Recover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Ignore</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3426,14 +3640,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>Mudar o formato de %1 para %2</translation>
     </message>
     <message>
-        <source>Change chip label from %1 to %2</source>
-        <translation>Mudar a etiqueta do chip de %1 para %2</translation>
-    </message>
-    <message>
-        <source>Change logo from %1 to %2</source>
-        <translation>Mudar o logotipo de %1 para %2</translation>
-    </message>
-    <message>
         <source>Change %note to &apos;%2&apos;</source>
         <translation>Mudar a %nota para &apos;%2&apos;</translation>
     </message>
@@ -3444,6 +3650,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     <message>
         <source>Change image from %1 to %2</source>
         <translation>Mudar a imagem de %1 para %2</translation>
+    </message>
+    <message>
+        <source>Change %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3472,16 +3682,8 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>&lt;ul&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the alt key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Para arrastar um segmento de fio ( seccção de fio entre dois pontos de curva), arraste-o com a tecla alt pressionada. Se simultaneamente pressionar a tecla shift, o segmento vai ser forçado a um movimento horizontal ou vertical.&lt;/li&gt;</translation>
-    </message>
-    <message>
         <source>&lt;li&gt;Use shift-drag on a wire end or bendpoint to constrain its wire segment to an angle of 45 degrees (or some multiple of 45 degrees).  If the wire segment is connected to other wire segments, the segment you&apos;re dragging will snap to make 90 degree angles with the neighboring wire segment.&lt;/li&gt;</source>
         <translation>&lt;li&gt;Usa shift-arrastar no fim de um fio ou num ponto de flexão para limitar esse segmento a um ângulo de 45 graus (ou multiplo de 45 graus). Se o segmento de fio se encontra ligado a outros segmentos, o segmento que estás a agarrar vai rodar de forma a fazer 90 graus de ângulo com o segmento de fio vizinho.&lt;/li&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the alt key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Na vista de Esquema ou PCB (Placa de Circuito Impresso), se arrastares um ponto de flexão com a tecla alt pressionada, vais arrastar um novo fio apartir desse ponto&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To constrain the motion of a part to horizontal or vertical, hold down the shift key as you drag it.&lt;/li&gt;</source>
@@ -3504,14 +3706,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;li&gt;To drag a new wire out of a bendpoint, hold down the Alt key as you drag the mouse.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;li&gt;To edit a part label, double-click it, or use the text input widget in the inspector window.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3528,7 +3722,19 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.&lt;/li&gt;</source>
+        <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.  Or open up the &lt;b&gt;Layers&lt;/b&gt; palette from the &lt;b&gt;Window&lt;/b&gt; menu.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part. The parts bin icon will also be a little &apos;stack&apos; and not just a flat icon.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the Alt (Linux: Meta) key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the Alt (Linux: Meta) key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
