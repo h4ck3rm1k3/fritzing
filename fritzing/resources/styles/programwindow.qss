@@ -83,14 +83,19 @@
         color: #CCB6BD;
         border: 2px solid #802643;
         border-bottom: 0px;
-        min-width: 3.5em;
-        width: 3.5em;
+        min-width: 1.5em;
+        width: 1.5em;
         min-height: 1.5em;
 }
 
 #programmingWindow #addButton:hover {
         font-weight: bold;
 }
+
+#programmingWindow #addButton:pressed {
+	background-color: #CCB6BD;
+	color: #52182C;
+ }
 
 #programmingWindow #console {
 	background-color: #000000;
