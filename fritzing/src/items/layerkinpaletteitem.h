@@ -59,6 +59,7 @@ protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	ConnectorItem* newConnectorItem(class Connector *connector);
 
 protected:
 	QPointer<PaletteItemBase> m_layerKinChief;

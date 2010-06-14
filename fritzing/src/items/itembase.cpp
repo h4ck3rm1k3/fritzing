@@ -885,6 +885,11 @@ ConnectorItem* ItemBase::newConnectorItem(Connector *connector)
 	return new ConnectorItem(connector, this);
 }
 
+ConnectorItem* ItemBase::newConnectorItem(ItemBase * layerKin, Connector *connector) 
+{
+	return new ConnectorItem(connector, layerKin);
+}
+
 ConnectorItem * ItemBase::anyConnectorItem() {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);

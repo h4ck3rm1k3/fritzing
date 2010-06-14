@@ -243,6 +243,8 @@ public:
 	virtual const QList<ItemBase *> & layerKin();
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
+	virtual ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
+
 	virtual void setInstanceTitle(const QString &title);
 
 public slots:

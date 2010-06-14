@@ -150,17 +150,9 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				filename.replace(DigitsMil, newSpacing + "mil");
 				element.setAttribute("image", filename);
 
-				foreach (Connector * connector, modelPart()->connectors()) {
-					connector->unprocess(this->viewIdentifier(), this->viewLayerID());
-				}
-
 				m_changingPinSpacing = true;
-				this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true);
+				resetImage(infoGraphicsView);
 				m_changingPinSpacing = false;
-				
-				foreach (ItemBase * itemBase, m_layerKin) {
-					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), infoGraphicsView->viewLayers(), itemBase->viewLayerID(), itemBase->viewLayerSpec(), true);
-				}
 
 				updateConnections();
 			}
@@ -323,6 +315,14 @@ ConnectorItem* Resistor::newConnectorItem(Connector *connector) {
 	}
 
 	return PaletteItem::newConnectorItem(connector);
+}
+
+ConnectorItem* Resistor::newConnectorItem(ItemBase * layerKin, Connector *connector) {
+	if (m_changingPinSpacing) {
+		return connector->connectorItemByViewLayerID(layerKin->viewLayerID());
+	}
+
+	return PaletteItem::newConnectorItem(layerKin, connector);
 }
 
 bool Resistor::hasCustomSVG() {

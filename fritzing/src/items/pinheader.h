@@ -54,6 +54,7 @@ public:
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	ConnectorItem* newConnectorItem(class Connector *connector);
+	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	const QStringList & forms();
 

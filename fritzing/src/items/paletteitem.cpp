@@ -435,3 +435,18 @@ void PaletteItem::slamZ(qreal z) {
 		lkpi->slamZ(z);
 	}
 }
+
+void PaletteItem::resetImage(InfoGraphicsView * infoGraphicsView) {
+	foreach (Connector * connector, modelPart()->connectors()) {
+		connector->unprocess(this->viewIdentifier(), this->viewLayerID());
+	}
+
+	this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true);
+	
+	foreach (ItemBase * layerKin, m_layerKin) {
+		foreach (Connector * connector, modelPart()->connectors()) {
+			connector->unprocess(layerKin->viewIdentifier(), layerKin->viewLayerID());
+		}
+		qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true);
+	}
+}

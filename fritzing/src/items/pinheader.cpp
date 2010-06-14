@@ -133,13 +133,9 @@ void PinHeader::setForm(QString form, bool force) {
 				}
 
 				m_changingForm = true;
-				this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true);
+				resetImage(infoGraphicsView);
 				m_changingForm = false;
 				
-				foreach (ItemBase * itemBase, m_layerKin) {
-					qobject_cast<PaletteItemBase *>(itemBase)->setUpImage(modelPart(), itemBase->viewIdentifier(), infoGraphicsView->viewLayers(), itemBase->viewLayerID(), itemBase->viewLayerSpec(), true);
-				}
-
 				updateConnections();
 			}
 			break;
@@ -198,6 +194,14 @@ ConnectorItem* PinHeader::newConnectorItem(Connector *connector) {
 	}
 
 	return PaletteItem::newConnectorItem(connector);
+}
+
+ConnectorItem* PinHeader::newConnectorItem(ItemBase * layerKin, Connector *connector) {
+	if (m_changingForm) {
+		return connector->connectorItemByViewLayerID(layerKin->viewLayerID());
+	}
+
+	return PaletteItem::newConnectorItem(layerKin, connector);
 }
 
 const QString & PinHeader::form() {

@@ -63,6 +63,7 @@ protected:
 	QString makeSvg(const QString & chipLabel);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	ConnectorItem* newConnectorItem(class Connector *connector);
+	ConnectorItem* newConnectorItem(ItemBase * layerkin, Connector *connector);
 	QStringList collectValues(const QString & family, const QString & prop, QString & value);
 	virtual bool isDIP();
 	virtual bool otherPropsChange(const QMap<QString, QString> & propsMap);

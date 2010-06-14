@@ -158,3 +158,9 @@ QString LayerKinPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHa
 {
 	return m_layerKinChief->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
+
+ConnectorItem* LayerKinPaletteItem::newConnectorItem(Connector *connector) 
+{
+	return m_layerKinChief->newConnectorItem(this, connector);
+}
+

@@ -75,6 +75,7 @@ public:
 	void resetID();
 	void blockSyncKinMoved(bool block);
 	void slamZ(qreal z);
+	void resetImage(class InfoGraphicsView *);
 
 protected:
 	void syncKinSelection(bool selected, PaletteItemBase * originator);
