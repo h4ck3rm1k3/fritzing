@@ -84,12 +84,16 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	}
 
 	QString holeSize = modelPart->prop("hole size").toString();
-	if (holeSize.isEmpty()) {
-		holeSize = modelPart->properties().value("hole size", ".035in,0.2in");
-		modelPart->setProp("hole size", holeSize);
+	QStringList sizes = holeSize.split(",");
+	if (sizes.count() != 2) {
+		holeSize = m_holeSizes.value(holeSize, "");
+		if (holeSize.isEmpty()) {
+			holeSize = modelPart->properties().value("hole size", ".035in,0.2in");
+			modelPart->setProp("hole size", holeSize);
+		}
+		sizes = holeSize.split(",");
 	}
 
-	QStringList sizes = holeSize.split(",");
 	m_holeDiameter = sizes.at(0);
 	m_ringThickness = sizes.at(1);
 
@@ -121,6 +125,7 @@ void Hole::setHoleSize(QString holeSize, bool force) {
 	}
 	else {
 		sizes = hashedHoleSize.split(",");
+		holeSize = sizes[0] + "," + sizes[1];
 	}
 	if (sizes.count() < 2) return;
 
@@ -303,8 +308,8 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 
 		vBoxLayout->addWidget(m_sizesComboBox);
 
-                QFrame * hFrame = new QFrame(frame);
-                QHBoxLayout * hLayout = new QHBoxLayout(hFrame);
+        QFrame * hFrame = new QFrame(frame);
+        QHBoxLayout * hLayout = new QHBoxLayout(hFrame);
 
 		QGroupBox * subFrame = new QGroupBox(tr("custom settings"), frame);
 		QGridLayout * gridLayout = new QGridLayout(subFrame);
@@ -346,9 +351,9 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 3);
 		gridLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
 
-                hLayout->addWidget(subFrame);
-                hLayout->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Minimum));
-                vBoxLayout->addWidget(hFrame);
+        hLayout->addWidget(subFrame);
+        hLayout->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Minimum));
+        vBoxLayout->addWidget(hFrame);
 
 		m_sizesComboBox->addItems(m_holeSizes.keys());
 		m_sizesComboBox->setEnabled(swappingEnabled);
