@@ -2365,12 +2365,12 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		return;
 	}
 
-	if (m_savedItems.size() <= 0) {
+	if (m_moveEventCount == 0) {
 		if (this->m_holdingSelectItemCommand != NULL) {
 			if (m_holdingSelectItemCommand->updated()) {
 				SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
 				m_holdingSelectItemCommand = NULL;
-				//DebugDialog::debug(QString("scene changed push select %1").arg(scene()->selectedItems().count()));
+				DebugDialog::debug(QString("scene changed push select %1").arg(scene()->selectedItems().count()));
 				m_undoStack->push(tempCommand);
 			}
 			else {
