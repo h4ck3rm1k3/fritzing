@@ -1181,6 +1181,18 @@ void PCBSketchWidget::modifyNewWireConnectionsAux(ConnectorItem * fromConnectorI
 												  ConnectorItem * toConnectorItem, 
 												  QUndoCommand * parentCommand)
 {
+	// fromConnectorItem is connected to a wire
+	Wire * wire = qobject_cast<Wire *>(fromConnectorItem->attachedTo());
+	QList<Wire *> wires;
+	QList<ConnectorItem *> ends;
+	QList<ConnectorItem *> uniqueEnds;
+	wire->collectChained(wires, ends, uniqueEnds);
+	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceJumperRatsnestFlags);
+	if (ends.contains(toConnectorItem)) {
+		// don't need a new wire
+		return;
+	}
+
 	ConnectorItem * originalFromConnectorItem = fromConnectorItem;
 	fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
