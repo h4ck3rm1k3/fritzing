@@ -59,7 +59,7 @@ public:
 	ConnectorItem * overConnectorItem();
 	void setOverConnectorItem(ConnectorItem *);
 	int attachedToItemType();
-	ViewLayer::ViewLayerID ConnectorItem::attachedToViewLayerID();
+	ViewLayer::ViewLayerID attachedToViewLayerID();
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();
 	class ErcData * connectorSharedErcData();
