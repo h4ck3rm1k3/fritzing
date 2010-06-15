@@ -277,7 +277,7 @@ void JumperItem::resize() {
 
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 	}
 
 	foreach (ItemBase * itemBase, m_layerKin) {
@@ -296,7 +296,7 @@ void JumperItem::resize() {
 				s = makeSvg(itemBase->viewLayerID());
 				bool result = renderer->fastLoad(s.toUtf8());
 				if (result) {
-					dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(renderer);
+					dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);
                                 }
                                 }
 				break;

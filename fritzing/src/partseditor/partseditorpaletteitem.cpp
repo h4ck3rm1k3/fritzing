@@ -263,10 +263,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 
 	this->setZValue(this->z());
 
-	this->setSharedRenderer(renderer);
-
-
-	m_size = renderer->defaultSize();
+	this->setSharedRendererEx(renderer);
 
 	m_svg = true;
 

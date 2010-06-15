@@ -250,7 +250,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 
 	//DebugDialog::debug(QString("setting layer %1 view:%2 z:%3").arg(modelPart->title()).arg(viewIdentifier).arg(this->z()) );
 	this->setZValue(this->z());
-	this->setSharedRenderer(renderer);
+	this->setSharedRendererEx(renderer);
 
 	m_svg = true;
 
@@ -267,8 +267,8 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 	return true;
 }
 
-void PaletteItemBase::setSharedRenderer(FSvgRenderer * renderer) {
-	ItemBase::setSharedRenderer(renderer);
+void PaletteItemBase::setSharedRendererEx(FSvgRenderer * renderer) {
+	setSharedRenderer(renderer);
 	m_size = renderer->defaultSizeF();
 }
 

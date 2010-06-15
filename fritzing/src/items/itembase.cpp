@@ -1014,8 +1014,6 @@ void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	}
 }
 
-
-
 bool ItemBase::hasConnectors() {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		if (dynamic_cast<ConnectorItem *>(childItem) != NULL) return true;
@@ -1024,6 +1022,13 @@ bool ItemBase::hasConnectors() {
 	return false;
 }
 
+bool ItemBase::hasNonConnectors() {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		if (dynamic_cast<NonConnectorItem *>(childItem) != NULL) return true;
+	}
+
+	return false;
+}
 
 bool ItemBase::canFlipHorizontal() {
 	return m_canFlipHorizontal;

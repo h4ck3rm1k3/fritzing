@@ -184,7 +184,7 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 
 		bool result = m_renderer->fastLoad(svg.toUtf8());
 		if (result) {
-			setSharedRenderer(m_renderer);
+			setSharedRendererEx(m_renderer);
 		}
 	}
 

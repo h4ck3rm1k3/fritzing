@@ -148,7 +148,7 @@ void GroundPlane::setSvgAux(const QString & svg) {
 
 		bool result = m_renderer->fastLoad(svg.toUtf8());
 		if (result) {
-			setSharedRenderer(m_renderer);
+			setSharedRendererEx(m_renderer);
 		}
 
 		if (m_connector0) {

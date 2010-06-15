@@ -126,7 +126,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				//DebugDialog::debug(svg);
 				bool result = m_renderer->fastLoad(svg.toUtf8());
 				if (result) {
-					setSharedRenderer(m_renderer);
+					setSharedRendererEx(m_renderer);
 				}
 			}
 			break;

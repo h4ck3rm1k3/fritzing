@@ -46,17 +46,7 @@ Via::~Via() {
 void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
 
-	QString svg = makeSvg(holeDiameter, ringThickness);
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
-
-	QString setColor;
-	QStringList noIDs;
-	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, noIDs, noIDs, "", "", true);
-	if (result) {
-		setSharedRenderer(m_renderer);
-	}
+	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
 
 	// there's only one connector
 	foreach (Connector * connector, m_modelPart->connectors().values()) {
@@ -69,16 +59,24 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 		bool result = m_renderer->setUpConnector(svgIdLayer, false);
 		if (!result) continue;
 
-		foreach (QGraphicsItem * child, childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(child);
-			if (connectorItem == NULL) continue;
-
-			connectorItem->setRect(svgIdLayer->m_rect);
-			connectorItem->setTerminalPoint(svgIdLayer->m_point);
-			connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
-			connectorItem->attachedMoved();
-			break;
+		setBothConnectors(this, svgIdLayer);
+		if (otherLayer) {
+			setBothConnectors(otherLayer, svgIdLayer);
 		}
+	}
+}
+
+void Via::setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) 
+{
+	foreach (QGraphicsItem * child, itemBase->childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(child);
+		if (connectorItem == NULL) continue;
+
+		connectorItem->setRect(svgIdLayer->m_rect);
+		connectorItem->setTerminalPoint(svgIdLayer->m_point);
+		connectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
+		connectorItem->attachedMoved();
+		break;
 	}
 }
 

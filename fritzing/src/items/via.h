@@ -42,6 +42,8 @@ protected:
 	QString makeID();
 	QPointF ringThicknessRange();
 	QPointF holeDiameterRange();
+	static void setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
+
 
 };
 

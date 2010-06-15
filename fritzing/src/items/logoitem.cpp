@@ -89,7 +89,7 @@ QVariant LogoItem::itemChange(GraphicsItemChange change, const QVariant &value)
 
 					bool result = m_renderer->fastLoad(shape.toUtf8());
 					if (result) {
-						setSharedRenderer(m_renderer);
+						setSharedRendererEx(m_renderer);
 						positionGrips();
 					}
 				}
@@ -315,7 +315,7 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 {
 	bool result = m_renderer->fastLoad(svg.toUtf8());
 	if (result) {
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 		if (aspectRatio == QSizeF(0, 0)) {
 			QRectF r = m_renderer->viewBoxF();
 			m_aspectRatio.setWidth(r.width());
@@ -345,7 +345,7 @@ void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, cons
 	else {
 		// restore previous (not sure whether this is necessary)
 		m_renderer->fastLoad(modelPart()->prop("shape").toString().toUtf8());
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 		unableToLoad(fileName);
 	}
 }
@@ -512,7 +512,7 @@ void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 
 	bool result = m_renderer->fastLoad(svg.toUtf8());
 	if (result) {
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 		modelPart()->setProp("shape", svg);
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
@@ -570,7 +570,7 @@ void LogoItem::setLogo(QString logo, bool force) {
 
 	bool result = m_renderer->fastLoad(svg.toUtf8());
 	if (result) {
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 		QRectF r = m_renderer->viewBoxF();
 		m_aspectRatio.setWidth(r.width());
 		m_aspectRatio.setHeight(r.height());

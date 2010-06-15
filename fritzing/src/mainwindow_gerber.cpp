@@ -329,24 +329,6 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, It
 	silkOut.close();
 }
 
-
-void MainWindow::addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers) {
-	QStringList exceptions;
-	exceptions << "none" << "";
-	QString toColor("#FFFF00");
-	QByteArray byteArray;
-	SvgFileSplitter::changeColors(svg, toColor, exceptions, byteArray);
-	QGraphicsSvgItem * item = new QGraphicsSvgItem();
-	QSvgRenderer * renderer = new QSvgRenderer(byteArray);
-	item->setSharedRenderer(renderer);
-	item->setPos(p);								// the rendering is offset from the board, so move the textItem to the board location
-	item->setVisible(true);
-	item->setZValue(-999999);				// underneath
-	m_pcbGraphicsView->scene()->addItem(item);
-	items.append(item);
-	renderers.append(renderer);
-}
-
 void MainWindow::displayMessage(const QString & message, bool displayMessageBoxes) {
 	// don't use QMessageBox if running conversion as a service
 	if (displayMessageBoxes) {

@@ -154,7 +154,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
 		bool result = m_renderer->fastLoad(svg.toUtf8());
 		if (result) {
-			setSharedRenderer(m_renderer);
+			setSharedRendererEx(m_renderer);
 		}
 	}
 

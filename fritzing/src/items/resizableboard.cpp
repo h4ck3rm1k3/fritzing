@@ -364,7 +364,7 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 		modelPart()->setProp("width", mmW);
 		modelPart()->setProp("height", mmH);
 
@@ -388,7 +388,7 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 			s = makeSilkscreenSvg(mmW, mmH, milsW, milsH);
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
-				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
+				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(m_silkscreenRenderer);
 				itemBase->modelPart()->setProp("width", mmW);
 				itemBase->modelPart()->setProp("height", mmH);
 			}

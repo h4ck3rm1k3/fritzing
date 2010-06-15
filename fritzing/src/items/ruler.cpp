@@ -84,7 +84,7 @@ void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLay
 
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 		modelPart()->setProp("width", QString::number(magnitude) + units);
 	}
 	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));

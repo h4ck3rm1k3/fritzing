@@ -97,7 +97,7 @@ Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	m_holeDiameter = sizes.at(0);
 	m_ringThickness = sizes.at(1);
 
-	m_renderer = NULL;
+	m_otherLayerRenderer = m_renderer = NULL;
 }
 
 Hole::~Hole() {
@@ -150,7 +150,24 @@ void Hole::setHoleSize(QString holeSize, bool force) {
 void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
 
-	QString svg = makeSvg(holeDiameter, ringThickness);
+	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
+
+	// there's only one NonConnectorItem
+	foreach (SvgIdLayer * svgIdLayer, m_renderer->setUpNonConnectors()) {
+		if (svgIdLayer == NULL) continue;
+
+		setBothNonConnectors(this, svgIdLayer);
+		if (otherLayer != NULL) {
+			setBothNonConnectors(otherLayer, svgIdLayer);
+		}
+
+		delete svgIdLayer;
+	}
+}
+
+ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness) 
+{
+	QString svg = makeSvg(holeDiameter, ringThickness, m_viewLayerID);
 	if (m_renderer == NULL) {
 		m_renderer = new FSvgRenderer(this);
 	}
@@ -159,29 +176,46 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 	QStringList noIDs;
 	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, noIDs, noIDs, "", "", true);
 	if (result) {
-		setSharedRenderer(m_renderer);
+		setSharedRendererEx(m_renderer);
 	}
 
-	// there's only one NonConnectorItem
-	foreach (SvgIdLayer * svgIdLayer, m_renderer->setUpNonConnectors()) {
-		if (svgIdLayer == NULL) continue;
-
-		foreach (QGraphicsItem * child, childItems()) {
-			NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(child);
-			if (nonConnectorItem == NULL) continue;
-
-			nonConnectorItem->setRect(svgIdLayer->m_rect);
-			nonConnectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
+	QString osvg;
+	ItemBase * otherLayer = NULL;
+	foreach (ItemBase * layerKin, m_layerKin) {
+		if (layerKin->hasNonConnectors()) {
+			otherLayer = layerKin;
 			break;
 		}
-
-		delete svgIdLayer;
 	}
 
+	if (otherLayer) {
+		osvg = makeSvg(holeDiameter, ringThickness, otherLayer->viewLayerID());
+		if (m_otherLayerRenderer == NULL) {
+			m_otherLayerRenderer = new FSvgRenderer(this);
+		}
 
+		result = m_otherLayerRenderer->loadSvg(osvg.toLatin1(), m_filename, noIDs, noIDs, "", "", true);
+		if (result) {
+			qobject_cast<PaletteItemBase *>(otherLayer)->setSharedRendererEx(m_otherLayerRenderer);
+		}
+	}
+	
+	return otherLayer;
 }
 
-QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThickness) 
+void Hole::setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) {
+	foreach (QGraphicsItem * child, itemBase->childItems()) {
+		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(child);
+		if (nonConnectorItem == NULL) continue;
+
+		nonConnectorItem->setRect(svgIdLayer->m_rect);
+		nonConnectorItem->setRadius(svgIdLayer->m_radius, svgIdLayer->m_strokeWidth);
+		break;
+	}
+}
+
+
+QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThickness, ViewLayer::ViewLayerID viewLayerID) 
 {
 	qreal hd = TextUtils::convertToInches(holeDiameter) * GraphicsUtils::StandardFritzingDPI;
 	qreal rt = TextUtils::convertToInches(ringThickness) * GraphicsUtils::StandardFritzingDPI;
@@ -190,14 +224,14 @@ QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThicknes
 	QString svg = TextUtils::makeSVGHeader(1, GraphicsUtils::StandardFritzingDPI, wInches, wInches);
 
 	QString setColor;
-	if (m_viewLayerID == ViewLayer::Copper0) {
+	if (viewLayerID == ViewLayer::Copper0) {
 		setColor = ViewLayer::Copper0Color;
 	}
-	else if (m_viewLayerID == ViewLayer::Copper1) {
+	else if (viewLayerID == ViewLayer::Copper1) {
 		setColor = ViewLayer::Copper1Color;
 	}
 
-	svg += QString("<g id='%1'>").arg(ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
+	svg += QString("<g id='%1'>").arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID));
 	
 	QString id = makeID();
 	if (rt == 0) {
@@ -275,7 +309,7 @@ QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, Svg
 
 	QStringList holeSize = m_modelPart->prop("hole size").toString().split(",");
 	if (holeSize.length() == 2) {
-		QString svg = makeSvg(holeSize.at(0), holeSize.at(1));
+		QString svg = makeSvg(holeSize.at(0), holeSize.at(1), viewLayerID);
 		if (!svg.isEmpty()) {
 			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 			SvgFileSplitter splitter;
@@ -523,15 +557,4 @@ void Hole::updateSizes() {
 	disconnect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
 	m_sizesComboBox->setCurrentIndex(newIndex);
 	connect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
-}
-
-LayerKinPaletteItem *Hole::newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
-															 ViewIdentifierClass::ViewIdentifier viewIdentifier,
-															 const ViewGeometry & viewGeometry, long id,
-															 ViewLayer::ViewLayerID viewLayerID, 
-															 ViewLayer::ViewLayerSpec viewLayerSpec, 
-															 QMenu* itemMenu, const LayerHash & viewLayers)
-{
-	return PaletteItem::newLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, 
-												viewLayerSpec, itemMenu, viewLayers);
 }

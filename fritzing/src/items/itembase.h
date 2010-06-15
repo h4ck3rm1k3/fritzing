@@ -134,7 +134,8 @@ public:
 	void setTooltip();
 	void setConnectorTooltips();
 	void removeTooltip();
-	virtual bool hasConnectors();
+	bool hasConnectors();
+	bool hasNonConnectors();
 	bool hasConnections();
 	bool canFlipHorizontal();
 	void setCanFlipHorizontal(bool);

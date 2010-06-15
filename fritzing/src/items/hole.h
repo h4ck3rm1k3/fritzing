@@ -62,7 +62,7 @@ protected slots:
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	QString makeSvg(const QString & holeDiameter, const QString & ringThickness);
+	QString makeSvg(const QString & holeDiameter, const QString & ringThickness, ViewLayer::ViewLayerID);
 	void updateValidators();
 	void updateEditTexts();
 	void updateSizes();
@@ -70,14 +70,12 @@ protected:
 	virtual QPointF ringThicknessRange();
 	virtual QPointF holeDiameterRange();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
-	LayerKinPaletteItem * newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
-												 ViewIdentifierClass::ViewIdentifier viewIdentifier,
-												 const ViewGeometry & viewGeometry, long id,
-												 ViewLayer::ViewLayerID viewLayerID, 
-												 ViewLayer::ViewLayerSpec viewLayerSpec, 
-												 QMenu* itemMenu, const LayerHash & viewLayers);
+	ItemBase * setBothSvg(const QString & holeDiameter, const QString & ringThickness); 
+	void setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
+											 
 protected:
 	class FSvgRenderer * m_renderer;
+	class FSvgRenderer * m_otherLayerRenderer;
 	QString m_holeDiameter;
 	QString m_ringThickness;
 	QPointer<QDoubleValidator> m_diameterValidator;

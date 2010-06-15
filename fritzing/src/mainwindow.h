@@ -379,7 +379,6 @@ protected:
 
 	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
 	void doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes);
-	void addSvgItem(const QString & svg, QPointF p, QList<QGraphicsSvgItem *> & items, QList<QSvgRenderer *> & renderers);
 	void displayMessage(const QString & message, bool displayMessageBoxes);
 	void updateActiveLayerButtons();
 
