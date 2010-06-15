@@ -114,6 +114,9 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 			notLayers << ViewLayer::Copper1 << ViewLayer::Copper1Trace << ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label;
 			break;
 
+                case ViewLayer::Top:
+                case ViewLayer::Bottom:
+                case ViewLayer::TopAndBottom:
 		case ViewLayer::WireOnTop_TwoLayers:
 		case ViewLayer::WireOnBottom_OneLayer:
 		case ViewLayer::WireOnBottom_TwoLayers:
