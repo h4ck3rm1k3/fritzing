@@ -158,7 +158,7 @@ qreal NonConnectorItem::strokeWidth() {
 
 QPainterPath NonConnectorItem::shape() const
 {
-	if (m_circular) {
+	if (m_circular || m_effectivelyCircular) {
 		QPainterPath path;
 		path.addEllipse(rect());
 		return GraphicsSvgLineItem::qt_graphicsItem_shapeFromPath(path, pen(), 1);
