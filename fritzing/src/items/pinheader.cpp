@@ -128,10 +128,6 @@ void PinHeader::setForm(QString form, bool force) {
 
 				element.setAttribute("image", filename);
 
-				foreach (Connector * connector, modelPart()->connectors()) {
-					connector->unprocess(this->viewIdentifier(), this->viewLayerID());
-				}
-
 				m_changingForm = true;
 				resetImage(infoGraphicsView);
 				m_changingForm = false;

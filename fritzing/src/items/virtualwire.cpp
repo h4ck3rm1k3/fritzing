@@ -45,12 +45,7 @@ void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * op
 }
 
 void VirtualWire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
-	Q_UNUSED(onMe);
-	Q_UNUSED(onIt);
-	Q_UNUSED(connect);	//if (connect && !onIt->attachedTo()->isVisible()) {
-		//this->setVisible(false);
-	//}
-
+	checkVisibility(onMe, onIt, connect);
 	// note: at this point in fritzing development, the VirtualWire class is only ever used for ratsnest wires
 }
 

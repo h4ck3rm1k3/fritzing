@@ -1033,6 +1033,9 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 	if (!select) {
 		wire->setSelected(false);
 	}
+	if (!source->attachedTo()->isVisible() || !dest->attachedTo()->isVisible()) {
+		wire->setVisible(false);
+	}
 
 	Wire * tempWire = source->wiredTo(dest, ViewGeometry::TraceFlag);
 	if (tempWire) {

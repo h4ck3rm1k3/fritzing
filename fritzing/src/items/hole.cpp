@@ -177,6 +177,8 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 
 		delete svgIdLayer;
 	}
+
+
 }
 
 QString Hole::makeSvg(const QString & holeDiameter, const QString & ringThickness) 
@@ -523,3 +525,13 @@ void Hole::updateSizes() {
 	connect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
 }
 
+LayerKinPaletteItem *Hole::newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
+															 ViewIdentifierClass::ViewIdentifier viewIdentifier,
+															 const ViewGeometry & viewGeometry, long id,
+															 ViewLayer::ViewLayerID viewLayerID, 
+															 ViewLayer::ViewLayerSpec viewLayerSpec, 
+															 QMenu* itemMenu, const LayerHash & viewLayers)
+{
+	return PaletteItem::newLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, 
+												viewLayerSpec, itemMenu, viewLayers);
+}

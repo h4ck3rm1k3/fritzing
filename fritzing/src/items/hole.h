@@ -70,7 +70,12 @@ protected:
 	virtual QPointF ringThicknessRange();
 	virtual QPointF holeDiameterRange();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
-
+	LayerKinPaletteItem * newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
+												 ViewIdentifierClass::ViewIdentifier viewIdentifier,
+												 const ViewGeometry & viewGeometry, long id,
+												 ViewLayer::ViewLayerID viewLayerID, 
+												 ViewLayer::ViewLayerSpec viewLayerSpec, 
+												 QMenu* itemMenu, const LayerHash & viewLayers);
 protected:
 	class FSvgRenderer * m_renderer;
 	QString m_holeDiameter;

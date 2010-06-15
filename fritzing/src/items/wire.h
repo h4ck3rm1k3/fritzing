@@ -157,6 +157,7 @@ protected:
 	bool releaseDrag();
 	void setIgnoreSelectionChange(bool);
 	virtual void setColorFromElement(QDomElement & element);
+	void checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
 
 protected:
 	QPointF m_wireDragOrigin;

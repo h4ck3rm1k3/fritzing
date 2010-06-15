@@ -529,10 +529,7 @@ void Wire::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorIt
 }
 
 void Wire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
-	Q_UNUSED(onMe);
-	if (connect && !onIt->attachedTo()->isVisible()) {
-		this->setVisible(false);
-	}
+	checkVisibility(onMe, onIt, connect);
 
 	bool movable = true;
 	foreach (ConnectorItem * connectedTo, m_connector0->connectedToItems()) {
@@ -1311,3 +1308,21 @@ ItemBase::PluralType Wire::isPlural() {
 	return Plural;
 }
 
+void Wire::checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
+		if (connect) {
+		if (!onIt->attachedTo()->isVisible()) {
+			this->setVisible(false);
+		}
+		else {
+			ConnectorItem * other = otherConnector(onMe);
+			foreach (ConnectorItem * toConnectorItem, other->connectedToItems()) {
+				if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
+
+				if (!toConnectorItem->attachedTo()->isVisible()) {
+					this->setVisible(false);
+					break;
+				}
+			}
+		}
+	}
+}
