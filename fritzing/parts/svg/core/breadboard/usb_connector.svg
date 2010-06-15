@@ -2,15 +2,19 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
 <svg version="1.1" baseProfile="basic" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="0.94in" height="0.59in" viewBox="0 0 67.502 42.52" xml:space="preserve">
+<g id="breadboard">
 <rect id="connector0pin" x="60.644" y="32.178" fill="none" width="2.16" height="5.372"/>
 <rect id="connector1pin" x="53.496" y="5.002" fill="none" width="2.16" height="5.309"/>
 <rect id="connector2pin" x="60.644" y="5.002" fill="none" width="2.16" height="5.309"/>
 <rect id="connector3pin" x="53.506" y="32.178" fill="none" width="2.159" height="5.372"/>
+<rect id="connector5pin" x="53.506" y="32.178" fill="none" width="2.159" height="5.372"/>
+<rect id="connector4pin" x="53.506" y="32.178" fill="none" width="2.159" height="5.372"/>
 <rect id="connector0terminal" x="60.644" y="33.836" fill="none" width="2.16" height="3.714"/>
 <rect id="connector1terminal" x="53.496" y="5.002" fill="none" width="2.16" height="3.669"/>
 <rect id="connector2terminal" x="60.644" y="5.002" fill="none" width="2.16" height="3.669"/>
 <rect id="connector3terminal" x="53.506" y="33.836" fill="none" width="2.159" height="3.714"/>
-<g id="breadboard">
+<rect id="connector5terminal" x="53.506" y="33.836" fill="none" width="2.159" height="3.714"/>
+<rect id="connector4terminal" x="53.506" y="33.836" fill="none" width="2.159" height="3.714"/>
 	<g>
 		<polygon fill="#1F7A34" points="49.528,34.417 67.502,34.417 67.502,8.102 49.528,8.102 49.528,0 20.776,0 20.776,42.52 
 			49.528,42.52 		"/>
