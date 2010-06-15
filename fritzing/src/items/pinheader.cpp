@@ -186,7 +186,7 @@ QVariant PinHeader::itemChange(GraphicsItemChange change, const QVariant &value)
 
 ConnectorItem* PinHeader::newConnectorItem(Connector *connector) {
 	if (m_changingForm) {
-		return connector->connectorItemByViewLayerID(viewLayerID());
+		return connector->connectorItemByViewLayerID(viewIdentifier(), viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(connector);
@@ -194,7 +194,7 @@ ConnectorItem* PinHeader::newConnectorItem(Connector *connector) {
 
 ConnectorItem* PinHeader::newConnectorItem(ItemBase * layerKin, Connector *connector) {
 	if (m_changingForm) {
-		return connector->connectorItemByViewLayerID(layerKin->viewLayerID());
+		return connector->connectorItemByViewLayerID(viewIdentifier(), layerKin->viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(layerKin, connector);

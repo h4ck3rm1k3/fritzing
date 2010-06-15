@@ -294,7 +294,7 @@ void MysteryPart::chipLabelEntry() {
 
 ConnectorItem* MysteryPart::newConnectorItem(Connector *connector) {
 	if (m_changingSpacing) {
-		return connector->connectorItemByViewLayerID(viewLayerID());
+		return connector->connectorItemByViewLayerID(viewIdentifier(), viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(connector);
@@ -302,7 +302,7 @@ ConnectorItem* MysteryPart::newConnectorItem(Connector *connector) {
 
 ConnectorItem* MysteryPart::newConnectorItem(ItemBase * layerKin, Connector *connector) {
 	if (m_changingSpacing) {
-		return connector->connectorItemByViewLayerID(layerKin->viewLayerID());
+		return connector->connectorItemByViewLayerID(viewIdentifier(), layerKin->viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(layerKin, connector);

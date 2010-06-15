@@ -62,7 +62,7 @@ public:
 	void disconnectFrom(Connector *);
 	void saveAsPart(QXmlStreamWriter & writer);
 	const QList<Connector *> & toConnectors();
-	ConnectorItem * connectorItemByViewLayerID(ViewLayer::ViewLayerID);
+	ConnectorItem * connectorItemByViewLayerID(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID);
 	bool connectionIsAllowed(Connector* that);
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();
@@ -88,7 +88,7 @@ protected:
 
 protected:
 	QPointer<class ConnectorShared> m_connectorShared;
-	QHash< ViewLayer::ViewLayerID, QPointer<class ConnectorItem> > m_connectorItems;
+	QHash< int, QPointer<class ConnectorItem> > m_connectorItems;
 	QList<Connector *> m_toConnectors;
 	QPointer<class ModelPart> m_modelPart;
 	QPointer<class Bus> m_bus;

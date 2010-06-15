@@ -60,6 +60,7 @@ public:
 	void setOverConnectorItem(ConnectorItem *);
 	int attachedToItemType();
 	ViewLayer::ViewLayerID attachedToViewLayerID();
+	ViewIdentifierClass::ViewIdentifier attachedToViewIdentifier();
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();
 	class ErcData * connectorSharedErcData();
@@ -123,6 +124,7 @@ protected:
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;
+	static void collectPart(ConnectorItem * connectorItem, QList<ConnectorItem *> & partsConnectors, ViewLayer::ViewLayerSpec);
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, bool crossLayers, ViewGeometry::WireFlags skipFlags);

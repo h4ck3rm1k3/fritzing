@@ -578,6 +578,11 @@ ViewLayer::ViewLayerID ConnectorItem::attachedToViewLayerID() {
 	return m_attachedTo->viewLayerID();
 }
 
+ViewIdentifierClass::ViewIdentifier ConnectorItem::attachedToViewIdentifier() {
+	if (m_attachedTo == NULL) return ViewIdentifierClass::UnknownView;
+
+	return m_attachedTo->viewIdentifier();
+}
 
 Connector::ConnectorType ConnectorItem::connectorType() {
 	if (m_connector == NULL) return Connector::Unknown;
@@ -786,6 +791,7 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 {
 	if (connectorItems.count() == 0) return;
 
+	DebugDialog::debug("___________________________");
 	switch (viewLayerSpec) {
 		case ViewLayer::Top:
 		case ViewLayer::Bottom:
@@ -808,54 +814,57 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
 			case ModelPart::Via:
-				if (partsConnectors.contains(connectorItem)) break;
-				
-				{
-					ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
-					if (crossConnectorItem != NULL) {
-						if (partsConnectors.contains(crossConnectorItem)) {
-							break;
-						}
-
-						if (viewLayerSpec == ViewLayer::TopAndBottom) {
-							partsConnectors.append(crossConnectorItem);
-							/*
-							DebugDialog::debug(QString("collecting part %1 %2 %3")
-								.arg(candidate->id())
-								.arg(crossConnectorItem->connectorSharedID())
-								.arg(connectorItem->attachedToViewLayerID()) );
-								*/
-						}
-						else if (viewLayerSpec == ViewLayer::Top) {
-							if (connectorItem->attachedToViewLayerID() == ViewLayer::Copper1) {
-							}
-							else {
-								connectorItem = crossConnectorItem;
-							}
-						}
-						else if (viewLayerSpec == ViewLayer::Bottom) {
-							if (connectorItem->attachedToViewLayerID() == ViewLayer::Copper0) {
-							}
-							else {
-								connectorItem = crossConnectorItem;
-							}
-						}
-					}
-				}
-					
-				/*
-				DebugDialog::debug(QString("collecting part %1 %2 %3")
-					.arg(candidate->id())
-					.arg(connectorItem->connectorSharedID())
-					.arg(connectorItem->attachedToViewLayerID()) );
-					*/
-
-				partsConnectors.append(connectorItem);
+				collectPart(connectorItem, partsConnectors, viewLayerSpec);
 				break;
 			default:
 				break;
 		}
 	}
+}
+
+void ConnectorItem::collectPart(ConnectorItem * connectorItem, QList<ConnectorItem *> & partsConnectors, ViewLayer::ViewLayerSpec viewLayerSpec) {
+	if (partsConnectors.contains(connectorItem)) return;
+				
+	ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
+	if (crossConnectorItem != NULL) {
+		if (partsConnectors.contains(crossConnectorItem)) {
+			return;
+		}
+		
+		if (viewLayerSpec == ViewLayer::TopAndBottom) {
+			partsConnectors.append(crossConnectorItem);
+			
+			DebugDialog::debug(QString("collecting both: %1 %2 %3 %4")
+				.arg(crossConnectorItem->attachedToID())
+				.arg(crossConnectorItem->connectorSharedID())
+				.arg(crossConnectorItem->attachedToViewLayerID())
+				.arg((long)crossConnectorItem->attachedTo(), 0, 16) );
+				
+		}
+		else if (viewLayerSpec == ViewLayer::Top) {
+			if (connectorItem->attachedToViewLayerID() == ViewLayer::Copper1) {
+			}
+			else {
+				connectorItem = crossConnectorItem;
+			}
+		}
+		else if (viewLayerSpec == ViewLayer::Bottom) {
+			if (connectorItem->attachedToViewLayerID() == ViewLayer::Copper0) {
+			}
+			else {
+				connectorItem = crossConnectorItem;
+			}
+		}
+	}
+
+	DebugDialog::debug(QString("collecting part: %1 %2 %3 %4")
+		.arg(connectorItem->attachedToID())
+		.arg(connectorItem->connectorSharedID())
+		.arg(connectorItem->attachedToViewLayerID())
+		.arg((long) connectorItem->attachedTo(), 0, 16) );
+		
+
+	partsConnectors.append(connectorItem);
 }
 
 void ConnectorItem::updateTooltip() {
@@ -972,10 +981,10 @@ ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 
 	ViewLayer::ViewLayerID viewLayerID = attachedToViewLayerID();
 	if (viewLayerID == ViewLayer::Copper0) {
-		return m_connector->connectorItemByViewLayerID(ViewLayer::Copper1);
+		return m_connector->connectorItemByViewLayerID(this->attachedToViewIdentifier(), ViewLayer::Copper1);
 	}
 	if (viewLayerID == ViewLayer::Copper1) {
-		return m_connector->connectorItemByViewLayerID(ViewLayer::Copper0);
+		return m_connector->connectorItemByViewLayerID(this->attachedToViewIdentifier(), ViewLayer::Copper0);
 	}
 
 	return NULL;

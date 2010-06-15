@@ -35,6 +35,10 @@ $Date$
 
 QHash <Connector::ConnectorType, QString > Connector::Names;
 
+static inline int QuickHash(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	return (1000 * viewIdentifier) + viewLayerID;
+}
+
 Connector::Connector( ConnectorShared * connectorShared, ModelPart * modelPart)
 {
 	m_modelPart = modelPart;
@@ -88,7 +92,7 @@ ConnectorShared * Connector::connectorShared() {
 }
 
 void Connector::addViewItem(ConnectorItem * item) {
-	m_connectorItems.insert(item->attachedTo()->viewLayerID(), item);
+	m_connectorItems.insert(QuickHash(item->attachedToViewIdentifier(), item->attachedToViewLayerID()), item);
 	
 	/*
 	DebugDialog::debug(QString("adding connector '%1' vlid:%2 vl:%3 hex:%4 id:%5")
@@ -102,7 +106,7 @@ void Connector::addViewItem(ConnectorItem * item) {
 
 void Connector::removeViewItem(ConnectorItem * item) {
 
-	m_connectorItems.remove(item->attachedToViewLayerID());
+	m_connectorItems.remove(QuickHash(item->attachedToViewIdentifier(), item->attachedToViewLayerID()));
 
 	//DebugDialog::debug(QString("removing view %1 %2").arg(this->connectorShared()->name()).arg(m_connectorItems.count()) );
 }
@@ -175,8 +179,8 @@ const QList<Connector *> & Connector::toConnectors() {
 	return m_toConnectors;
 }
 
-ConnectorItem * Connector::connectorItemByViewLayerID(ViewLayer::ViewLayerID viewLayerID) {
-	return m_connectorItems.value(viewLayerID, NULL);
+ConnectorItem * Connector::connectorItemByViewLayerID(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	return m_connectorItems.value(QuickHash(viewIdentifier, viewLayerID), NULL);
 }
 
 bool Connector::connectionIsAllowed(Connector* that)

@@ -311,7 +311,7 @@ void Resistor::updateResistances(QString r) {
 
 ConnectorItem* Resistor::newConnectorItem(Connector *connector) {
 	if (m_changingPinSpacing) {
-		return connector->connectorItemByViewLayerID(viewLayerID());
+		return connector->connectorItemByViewLayerID(viewIdentifier(), viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(connector);
@@ -319,7 +319,7 @@ ConnectorItem* Resistor::newConnectorItem(Connector *connector) {
 
 ConnectorItem* Resistor::newConnectorItem(ItemBase * layerKin, Connector *connector) {
 	if (m_changingPinSpacing) {
-		return connector->connectorItemByViewLayerID(layerKin->viewLayerID());
+		return connector->connectorItemByViewLayerID(viewIdentifier(), layerKin->viewLayerID());
 	}
 
 	return PaletteItem::newConnectorItem(layerKin, connector);
