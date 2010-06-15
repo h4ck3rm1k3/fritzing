@@ -1309,7 +1309,7 @@ ItemBase::PluralType Wire::isPlural() {
 }
 
 void Wire::checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool connect) {
-		if (connect) {
+	if (connect) {
 		if (!onIt->attachedTo()->isVisible()) {
 			this->setVisible(false);
 		}

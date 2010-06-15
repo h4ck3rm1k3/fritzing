@@ -60,6 +60,8 @@ public:
 		 Jumper,
 		 CopperFill,
 		 Logo,
+		 Hole,
+		 Via,
 		 Ruler,
 		 Unknown
 	};

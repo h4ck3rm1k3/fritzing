@@ -807,6 +807,7 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 			case ModelPart::CopperFill:
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
+			case ModelPart::Via:
 				if (partsConnectors.contains(connectorItem)) break;
 				
 				{
@@ -966,6 +967,8 @@ bool ConnectorItem::isGrounded() {
 
 ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 	if (m_connector == NULL) return NULL;
+	if (m_attachedTo == NULL) return NULL;
+	if (m_attachedTo->viewIdentifier() != ViewIdentifierClass::PCBView) return NULL;
 
 	ViewLayer::ViewLayerID viewLayerID = attachedToViewLayerID();
 	if (viewLayerID == ViewLayer::Copper0) {

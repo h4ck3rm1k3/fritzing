@@ -91,6 +91,10 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			return new Ruler(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Symbol:
 			return new SymbolPaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+		case ModelPart::Via:
+			return new Via(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+		case ModelPart::Hole:
+			return new Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		default:
 			{
 				QString family = modelPart->properties().value("family", "");
@@ -105,12 +109,6 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 				}
 				if (family.compare("generic IC", Qt::CaseInsensitive) == 0) {
 					return new Dip(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
-				}
-				if (family.compare("hole", Qt::CaseInsensitive) == 0) {
-					return new Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
-				}
-				if (family.compare("via", Qt::CaseInsensitive) == 0) {
-					return new Via(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
 				return new PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 

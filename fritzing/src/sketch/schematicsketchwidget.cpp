@@ -160,11 +160,16 @@ void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 		case ModelPart::Breadboard:
 		case ModelPart::Jumper:
 		case ModelPart::CopperFill:
+		case ModelPart::Logo:
+		case ModelPart::Via:
+		case ModelPart::Hole:
 			// don't need to see the breadboard in the other views
 			// but it's there so connections can be more easily synched between views
 			itemBase->setVisible(false);
 			itemBase->setEverVisible(false);
 			return;
+		default:
+			break;
 	}
 }
 
@@ -176,15 +181,14 @@ bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 		case ModelPart::Breadboard:
+		case ModelPart::Via:
+		case ModelPart::Hole:
 			return false;
 		case ModelPart::Symbol:
 			return true;
 		default:
 			break;
 	}
-
-	if (modelPart->moduleID().compare(ModuleIDNames::holeModuleIDName) == 0) return false;
-	if (modelPart->moduleID().compare(ModuleIDNames::viaModuleIDName) == 0) return false;
 
 	return PCBSketchWidget::canDropModelPart(modelPart);
 }

@@ -476,6 +476,12 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	else if (moduleID.compare(ModuleIDNames::rulerModuleIDName) == 0) {
 		type = ModelPart::Ruler;
 	}
+	else if (moduleID.compare(ModuleIDNames::viaModuleIDName) == 0) {
+		type = ModelPart::Via;
+	}
+	else if (moduleID.compare(ModuleIDNames::holeModuleIDName) == 0) {
+		type = ModelPart::Hole;
+	}
 	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {
 		type = ModelPart::Breadboard;
 	}

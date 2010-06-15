@@ -269,16 +269,21 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Board || modelPart->itemType() == ModelPart::ResizableBoard) {
 		return matchesLayer(modelPart);
 	}
-
-	if (modelPart->itemType() == ModelPart::Logo) return false;
-	if (modelPart->itemType() == ModelPart::Symbol) return false;
-	if (modelPart->itemType() == ModelPart::Jumper) return false;
-	if (modelPart->itemType() == ModelPart::CopperFill) return false;
-
-	if (modelPart->moduleID().compare(ModuleIDNames::holeModuleIDName) == 0) return false;
-	if (modelPart->moduleID().compare(ModuleIDNames::viaModuleIDName) == 0) return false;
-
-	return true;
+	
+	switch (modelPart->itemType()) {
+		case  ModelPart::Board:
+		case ModelPart::ResizableBoard:
+			return matchesLayer(modelPart);
+		case ModelPart::Logo:
+		case ModelPart::Symbol:
+		case ModelPart::Jumper:
+		case ModelPart::CopperFill:
+		case ModelPart::Hole:
+		case ModelPart::Via:
+			return false;
+		default:
+			return true;
+	}
 }
 
 bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
@@ -304,9 +309,14 @@ void BreadboardSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 		case ModelPart::Symbol:
 		case ModelPart::Jumper:
 		case ModelPart::CopperFill:
+		case ModelPart::Logo:
+		case ModelPart::Hole:
+		case ModelPart::Via:
 			itemBase->setVisible(false);
 			itemBase->setEverVisible(false);
 			return;
+		default:
+			break;
 	}
 }
 

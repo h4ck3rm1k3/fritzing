@@ -303,7 +303,9 @@ ItemBase::PluralType Hole::isPlural() {
 
 QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
 {
-	if (viewLayerID != ViewLayer::Copper0) {
+	if (m_viewIdentifier != ViewIdentifierClass::PCBView || 
+		(viewLayerID != ViewLayer::Copper0 && viewLayerID != ViewLayer::Copper1)) 
+	{
 		return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
@@ -351,7 +353,7 @@ bool Hole::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 		QGridLayout * gridLayout = new QGridLayout(subFrame);
 
 		m_unitsComboBox = new QComboBox(subFrame);
-                m_unitsComboBox->setMaximumWidth(60);
+        m_unitsComboBox->setMaximumWidth(60);
 		m_unitsComboBox->setMinimumHeight(rowHeight);
 		m_unitsComboBox->setMaximumHeight(rowHeight);
 		m_unitsComboBox->setEditable(false);
@@ -557,4 +559,8 @@ void Hole::updateSizes() {
 	disconnect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
 	m_sizesComboBox->setCurrentIndex(newIndex);
 	connect(m_sizesComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeHoleSize(const QString &)));
+}
+
+bool Hole::canEditPart() {
+	return false;
 }

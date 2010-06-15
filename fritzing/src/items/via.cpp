@@ -60,10 +60,24 @@ void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 		if (!result) continue;
 
 		setBothConnectors(this, svgIdLayer);
-		if (otherLayer) {
+	}
+
+	if (otherLayer) {
+		foreach (Connector * connector, m_modelPart->connectors().values()) {
+			if (connector == NULL) continue;
+
+			connector->unprocess(m_viewIdentifier, otherLayer->viewLayerID());
+			SvgIdLayer * svgIdLayer = connector->fullPinInfo(m_viewIdentifier, otherLayer->viewLayerID());
+			if (svgIdLayer == NULL) continue;
+
+			bool result = m_otherLayerRenderer->setUpConnector(svgIdLayer, false);
+			if (!result) continue;
+
 			setBothConnectors(otherLayer, svgIdLayer);
 		}
 	}
+
+
 }
 
 void Via::setBothConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer) 

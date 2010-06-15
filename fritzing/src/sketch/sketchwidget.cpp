@@ -1246,6 +1246,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 			case ModelPart::Symbol:
 			case ModelPart::Jumper:
 			case ModelPart::CopperFill:
+			case ModelPart::Via:
 			case ModelPart::Unknown:
 				doConnectors = true;
 				break;
@@ -3464,6 +3465,8 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 			case ModelPart::Note:
 			case ModelPart::CopperFill:
 			case ModelPart::Unknown:
+			case ModelPart::Via:
+			case ModelPart::Hole:
 				continue;
 			case ModelPart::Board:
 			case ModelPart::ResizableBoard:
@@ -5687,6 +5690,8 @@ bool SketchWidget::rotation45Allowed(ItemBase * itemBase)
 {
 	switch(itemBase->itemType()) {
 		case ModelPart::Wire:
+		case ModelPart::Hole:
+		case ModelPart::Via:
 		case ModelPart::Note:
 		case ModelPart::Unknown:
 		case ModelPart::Jumper:
@@ -5710,6 +5715,8 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::Unknown:
 		case ModelPart::Jumper:
 		case ModelPart::CopperFill:
+		case ModelPart::Via:
+		case ModelPart::Hole:
 			return false;
 
 		case ModelPart::Board:

@@ -53,6 +53,7 @@ public:
 	bool hasCustomSVG();
 	PluralType isPlural();
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi); 
+	bool canEditPart();
 
 protected slots:
 	void changeDiameter();

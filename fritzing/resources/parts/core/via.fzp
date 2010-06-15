@@ -41,18 +41,18 @@
   </pcbView>
  </views>
   <connectors>
-    <connector type="male" id="connector1" name="via" >
+    <connector type="male" id="connector0" name="via" >
       <description>via</description>
       <views>
         <breadboardView>
-          <p svgId="connector1pin" layer="copper0" />
+          <p svgId="connector0pin" layer="copper0" />
         </breadboardView>
         <schematicView>
-          <p svgId="connector1pin" layer="copper0" />
+          <p svgId="connector0pin" layer="copper0" />
         </schematicView>
         <pcbView>
-          <p svgId="connector1pin" layer="copper0" />
-          <p svgId="connector1pin" layer="copper1" />
+          <p svgId="connector0pin" layer="copper0" />
+          <p svgId="connector0pin" layer="copper1" />
         </pcbView>
       </views>
     </connector>  
