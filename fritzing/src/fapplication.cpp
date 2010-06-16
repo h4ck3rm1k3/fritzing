@@ -629,13 +629,19 @@ int FApplication::startup(bool firstRun)
 	splash.showProgress(m_progressIndex, 0.875);
 
 	int loaded = 0;
-    MainWindow * mainWindow = recoverBackups(loaded);
-    if (mainWindow == NULL) {
+	QList<MainWindow*> sketchesToLoad;
+	MainWindow * mainWindow = NULL;
+    sketchesToLoad << recoverBackups(loaded);
+    if (sketchesToLoad.size() == 0) {
         mainWindow = loadWindows(true, loaded);
+		sketchesToLoad << mainWindow;
         foreach (QString filename, m_filesToLoad) {
             loadOne(mainWindow, filename, loaded++);
         }
-    }
+     }
+	else {
+		mainWindow = sketchesToLoad.at(0);
+	}
 
 	clearBackups();
 
@@ -668,25 +674,11 @@ int FApplication::startup(bool firstRun)
 		mainWindow->addBoard();
 	}
 
-	mainWindow->show();
-
-	/*
-	 QDate now = QDate::currentDate();
-	 QDate over = QDate(2009, 1, 7);
-	 if (now < over) {
-		 QString path = getApplicationSubFolderPath("examples") + "/Fritzmas/treeduino.fz";
-		 QFileInfo tree(path);
-		 if (tree.exists()) {
-			 MainWindow * treeduino = MainWindow::newMainWindow(paletteBinModel, referenceModel, false);
-			 treeduino->load(path, false);
-			 treeduino->show();
-		}
-	 }
-	 */
-
-	splash.finish(mainWindow);
-
-	mainWindow->clearFileProgressDialog();
+	foreach (MainWindow* sketch, sketchesToLoad) {
+		sketch->show();
+		splash.finish(sketch);
+		sketch->clearFileProgressDialog();
+	}
 
 	if(prevVersion != ___emptyString___
 	   && Version::greaterThan(prevVersion,Version::FirstVersionWithDetachedUserData))
@@ -1094,33 +1086,36 @@ bool FApplication::notify(QObject *receiver, QEvent *e)
     return false;
 }
 
-MainWindow * FApplication::recoverBackups(int & loaded)
+QList<MainWindow *> FApplication::recoverBackups(int & loaded)
 {
+	QList<MainWindow*> recoveredSketches;
+
     // Check if there are any backups we need to recover
 	QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
     backupDir.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );    
     QFileInfoList list = backupDir.entryInfoList();
-    if (list.size() == 0) return NULL;
+    if (list.size() == 0) return recoveredSketches;
 
     RecoveryDialog recoveryDialog(list);
     int result = recoveryDialog.exec();
-    if (!result) return NULL;
-
-	MainWindow * mainWindow = NULL;
+    if (!result) return recoveredSketches;
 
     QList<QListWidgetItem*> fileItems = recoveryDialog.getSelectedFiles();
     DebugDialog::debug(QString("Recovering %1 files from recoveryDialog").arg(fileItems.size()));
     if (fileItems.size() > 0) {
-        mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
-		foreach (QListWidgetItem * item, fileItems) {
-			loadOne(mainWindow, item->data(Qt::UserRole).value<QString>(), loaded++);
-            mainWindow->setCurrentFile(item->text(), false, true);
-            mainWindow->setWindowModified(true);
-            mainWindow->showAllFirstTimeHelp(false);
-        }
+        foreach (QListWidgetItem * item, fileItems) {
+			MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
+			currentRecoveredSketch->showFileProgressDialog(item->text());
+			currentRecoveredSketch->load(item->data(Qt::UserRole).value<QString>(), false, false);
+			currentRecoveredSketch->setCurrentFile(item->text(), false, true);
+			currentRecoveredSketch->setWindowModified(true);
+			currentRecoveredSketch->showAllFirstTimeHelp(false);
+			recoveredSketches << currentRecoveredSketch;
+			loaded++;
+		}
     }
 
-	return mainWindow;
+	return recoveredSketches;
 }
 
 void FApplication::clearBackups() {
