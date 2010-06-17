@@ -102,6 +102,7 @@ class PartsEditorView : public SketchWidget {
 		void informConnectorSelection(const QString& connId);
 		void informConnectorSelectionFromView(const QString& connId);
 		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
+		void checkConnectorLayers(ViewIdentifierClass::ViewIdentifier, const QString & connId, Connector* existingConnector, Connector * newConnector);
 
 	protected slots:
 		void recoverTerminalPointsState();
@@ -233,7 +234,7 @@ protected:
 
 		QHash<QString/*connectorId*/,ConnectorTerminalSvgIdPair> m_svgIds;
 		ViewLayer::ViewLayerID m_connsLayerID;
-		bool m_svgLodaded;
+		bool m_svgLoaded;
 
 		QString m_lastSelectedConnId;
 		bool m_showingTerminalPoints;

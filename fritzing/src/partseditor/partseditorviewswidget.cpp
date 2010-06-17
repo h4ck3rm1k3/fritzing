@@ -138,10 +138,10 @@ PartsEditorView * PartsEditorViewsWidget::createViewImageWidget(
 		viw, SIGNAL(connectorsFound(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &)),
 		info, SLOT(syncNewConnectors(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &))
 	);
-	/*connect(
-		info, SIGNAL(existingConnector(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*)),
-		viw, SLOT(setConnector(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*))
-	);*/
+	connect(
+		info, SIGNAL(existingConnector(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*, Connector*)),
+		viw, SLOT(checkConnectorLayers(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*, Connector*))
+	);
 
 	connect(
 		info, SIGNAL(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString &, bool)),

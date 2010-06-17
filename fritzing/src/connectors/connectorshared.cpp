@@ -110,6 +110,10 @@ const QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer*> & ConnectorSha
 	return m_pins;
 }
 
+void ConnectorShared::insertPin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer) {
+	m_pins.insert(layer, svgIdLayer);
+}
+
 void ConnectorShared::addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID viewLayerID, QString terminalId) {
 	SvgIdLayer * svgIdLayer = new SvgIdLayer;
 	svgIdLayer->m_viewLayerID = viewLayerID;
@@ -124,6 +128,10 @@ void ConnectorShared::removePins(ViewIdentifierClass::ViewIdentifier layer) {
 	if (m_pins.values(layer).size() != 0) {
 		throw "ConnectorShared::removePins";
 	}
+}
+
+void ConnectorShared::removePin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer) {
+	m_pins.remove(layer, svgIdLayer);
 }
 
 const QString ConnectorShared::pin(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {

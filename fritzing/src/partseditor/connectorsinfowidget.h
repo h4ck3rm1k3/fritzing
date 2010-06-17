@@ -66,7 +66,7 @@ class ConnectorsInfoWidget : public QFrame {
 	signals:
 		void connectorSelected(const QString &);
 		void editionCompleted();
-		void existingConnector(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, Connector*);
+		void existingConnector(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, Connector* existingConnector, Connector * newConnector);
 		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, bool mismatching);
 		void repaintNeeded();
 		void showTerminalPoints(bool show);

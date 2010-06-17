@@ -59,7 +59,9 @@ public:
 	const QString terminal(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	void addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID, QString terminalId);
+	void insertPin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer);
 	void removePins(ViewIdentifierClass::ViewIdentifier layer);
+	void removePin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer);
 
 	class BusShared * bus();
 	void setBus(class BusShared *);

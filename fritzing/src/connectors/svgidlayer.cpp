@@ -24,28 +24,14 @@ $Date$
 
 ********************************************************************/
 
-#ifndef SVGIDLAYER_H
-#define SVGIDLAYER_H
+#include "svgidlayer.h"
 
-#include <QString>
-
-#include "../viewlayer.h"
-
-struct SvgIdLayer 
-{
-
-	QString m_svgId;
-	QString m_terminalId;
-	ViewLayer::ViewLayerID m_viewLayerID;
-	bool m_visible;
-	bool m_processed;
-	QRectF m_rect;		
-	QPointF m_point;	
-	qreal m_radius;
-	qreal m_strokeWidth;
-
-	SvgIdLayer * copyLayer();
-};
+SvgIdLayer * SvgIdLayer::copyLayer() {
+	SvgIdLayer * toSvgIdLayer = new SvgIdLayer;
+	toSvgIdLayer = this;
+	return toSvgIdLayer;
+}
 
 
-#endif
+
+

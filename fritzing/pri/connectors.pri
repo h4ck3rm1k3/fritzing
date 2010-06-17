@@ -34,4 +34,5 @@ src/connectors/connector.cpp \
 src/connectors/connectoritem.cpp \ 
 src/connectors/nonconnectoritem.cpp \ 
 src/connectors/connectorshared.cpp \
-src/connectors/ercdata.cpp 
+src/connectors/ercdata.cpp \
+src/connectors/svgidlayer.cpp 

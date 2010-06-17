@@ -408,7 +408,7 @@ void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier
 		}*/
 
 		if(existingConnId(connId)) {
-			emit existingConnector(viewId, connId, findConnector(connId));
+			emit existingConnector(viewId, connId, findConnector(connId), conn);
 		} else {
 			MismatchingConnectorWidget *mcw = NULL;
 			if(( mcw = existingMismatchingConnector(connId) )) {
@@ -423,7 +423,7 @@ void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier
 						addConnectorInfo(connId);
 					}
 					
-					emit existingConnector(viewId, connId, findConnector(connId));
+					emit existingConnector(viewId, connId, findConnector(connId), conn);
 				} else {
 					mcw->addViewPresence(viewId);
 					emit setMismatching(viewId, mcw->connId(), true);

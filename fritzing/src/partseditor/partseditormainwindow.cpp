@@ -596,7 +596,7 @@ bool PartsEditorMainWindow::saveAsAux(const QString & fileName) {
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    m_sketchModel->root()->setModelPartShared(modelPartShared());
+    m_sketchModel->root()->setModelPartShared(createModelPartShared());
 
 	QString fileNameAux = QFileInfo(fileName).fileName();
 	m_views->copySvgFilesToDestiny(fileNameAux);
@@ -630,7 +630,7 @@ void PartsEditorMainWindow::updateDateAndAuthor() {
 	m_createdByText->setText(FooterText.arg(m_author->text()).arg(m_createdOn->text()));
 }
 
-ModelPartShared* PartsEditorMainWindow::modelPartShared() {
+ModelPartShared* PartsEditorMainWindow::createModelPartShared() {
 	ModelPartShared* shared = new ModelPartShared();
 
 	if(m_moduleId.isNull() || m_moduleId.isEmpty()) {
@@ -654,6 +654,13 @@ ModelPartShared* PartsEditorMainWindow::modelPartShared() {
 
 	m_iconViewImage->aboutToSave(true);
 	m_views->aboutToSave();
+
+	// the deal seems to be that an original modelpart is created and becomes the official sketch model (root).
+	// the ConnectorsShared from that model are used to seed the PartsEditorConnectorsConnectorItems. 
+	// When a new image is loaded into a view, the sketch model's ConnectorsShared are replaced with newly constructed ones.
+	// So now the sketch model points to one set of ConnectorsShared, but the original ones are still sitting
+	// back in the PartsEditorConnectorsConnectorItems.  So now we replace the new ones with the old ones.
+	// I think.
 
 	QList< QPointer<ConnectorShared> > connsShared = m_connsInfo->connectorsShared();
 	m_views->updatePinsInfo(connsShared);
