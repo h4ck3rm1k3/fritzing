@@ -342,7 +342,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	m_views->connectTerminalRemoval(m_connsInfo);
 
 	connect(
-		m_views, SIGNAL(connectorsFound(QList< QPointer<Connector> >)),
+		m_views, SIGNAL(connectorsFoundSignal(QList< QPointer<Connector> >)),
 		m_connsInfo, SLOT(connectorsFound(QList< QPointer<Connector> >))
 	);
 

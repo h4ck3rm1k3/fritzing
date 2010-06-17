@@ -399,3 +399,23 @@ MismatchingConnectorWidget *SingleConnectorInfoWidget::toMismatching(ViewIdentif
 	return mcw;
 }
 
+Connector::ConnectorType SingleConnectorInfoWidget::connectorType() {
+	if (m_type == NULL) return Connector::Unknown;
+
+	return m_type->type();
+}
+
+void SingleConnectorInfoWidget::setConnectorType(Connector::ConnectorType type) {
+	if (m_type) {
+		m_type->setType(type);
+	}
+}
+
+void SingleConnectorInfoWidget::setName(const QString & name)
+{
+	m_nameLabel->setText(name);
+	if (m_nameEdit) {
+		m_nameEdit->setText(name);
+	}
+}
+

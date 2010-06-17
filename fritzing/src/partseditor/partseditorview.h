@@ -42,9 +42,11 @@ struct ConnectorTerminalSvgIdPair {
 	ConnectorTerminalSvgIdPair() {
 		connectorId = ___emptyString___;
 		terminalId = ___emptyString___;
+		connectorName = ___emptyString___;
 	}
 	QString connectorId;
 	QString terminalId;
+	QString connectorName;
 };
 
 class PartsEditorView : public SketchWidget {
@@ -111,7 +113,7 @@ class PartsEditorView : public SketchWidget {
 
 	signals:
 		// conns
-		void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
+		void connectorsFoundSignal(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
 		void svgFileLoadNeeded(const QString &filepath);
 		void connectorSelected(const QString& connId);
 		void removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid);

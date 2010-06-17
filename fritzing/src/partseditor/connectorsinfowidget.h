@@ -66,7 +66,7 @@ class ConnectorsInfoWidget : public QFrame {
 	signals:
 		void connectorSelected(const QString &);
 		void editionCompleted();
-		void existingConnector(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, Connector* existingConnector, Connector * newConnector);
+		void existingConnectorSignal(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, Connector* existingConnector, Connector * newConnector);
 		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, bool mismatching);
 		void repaintNeeded();
 		void showTerminalPoints(bool show);
@@ -104,8 +104,13 @@ class ConnectorsInfoWidget : public QFrame {
 		void removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool singleShot = true, bool alsoDeleteFromView = false);
 		void removeConnectorInfo(SingleConnectorInfoWidget *sci, bool singleShot = true, bool alsoDeleteFromView = false);
 		Connector* findConnector(const QString &id);
+		SingleConnectorInfoWidget * findSCI(const QString &id);
 
 		int nextConnId();
+		void resetType(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn);
+		void resetName(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn);
+
+protected:
 
 		//QHash<QString /*connId*/, QMultiHash<ViewIdentifierClass::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
 

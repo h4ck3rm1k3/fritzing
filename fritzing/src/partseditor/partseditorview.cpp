@@ -152,7 +152,7 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 		addFixedToBottomRightItem(proxy);
 	}*/
 
-	emit connectorsFound(this->m_viewIdentifier,m_item->connectors());
+	emit connectorsFoundSignal(this->m_viewIdentifier,m_item->connectors());
 }
 
 ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry &, long /*id*/, PaletteItem * paletteItemAux, bool doConnectors, ViewIdentifierClass::ViewIdentifier) {
@@ -286,8 +286,9 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,ConnectorTer
 	QStringList defaultLayers = defaultLayerAsStringlist();
 
 	foreach(QString id, conns.keys()) {
-		QString terminalAttr = conns[id].terminalId != ___emptyString___ ? QString("terminalId='%1'").arg(conns[id].terminalId) : "";
-		fakeFzFile += QString("<connector id='%1'><views>\n").arg(id)+
+		QString terminalAttr = conns[id].terminalId.isEmpty() ? "" : QString("terminalId='%1'").arg(conns[id].terminalId);
+		QString name = conns[id].connectorName.isEmpty() ? "" : QString("name='%1'").arg(conns[id].connectorName);		
+		fakeFzFile += QString("<connector id='%1' %2><views>\n").arg(id).arg(name) +
 							QString("<%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
 		foreach (QString layer, defaultLayers) {
 			if (layers.contains(layer)) {
@@ -308,6 +309,7 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,ConnectorTer
   	retval->modelPartShared()->resetConnectorsInitialization();
 	retval->modelPartShared()->setPath(FolderUtils::getUserDataStorePath("parts")+"/svg/user");
   	retval->initConnectors(true /*redo connectors*/);
+	
 	return retval;
 }
 
@@ -336,6 +338,7 @@ void PartsEditorView::getConnectorsSvgIdsAux(QDomElement &docElem) {
 			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
 			ConnectorTerminalSvgIdPair pair = m_svgIds.contains(conn) ? m_svgIds[conn] : ConnectorTerminalSvgIdPair();
 			pair.connectorId = id;
+			pair.connectorName = e.attribute("connectorname");
 			m_svgIds[conn] = pair;
 		}
 		if(e.hasChildNodes()) {

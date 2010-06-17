@@ -56,6 +56,18 @@ ConnectorShared::ConnectorShared( const QDomElement & domElement )
 	}
 
 	loadPins(domElement);
+
+	if (m_type == Connector::Unknown) {
+		foreach (SvgIdLayer * svgIdLayer, m_pins.values()) {
+			if (svgIdLayer->m_svgId.endsWith("pad")) {
+				m_type = Connector::Pad;
+				m_typeString = Connector::connectorNameFromType(m_type);
+				break;
+			}
+		}
+
+	}
+
 	m_bus = NULL;
 }
 

@@ -403,27 +403,28 @@ void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier
 		QString connId = conn->connectorSharedID();
 		connIds << connId;
 
-		/*foreach(SvgIdLayer* pin, conn->connectorStuff()->pins().values(viewId)) {
-			m_connectorsPins[connId].insert(viewId,pin);
-		}*/
-
 		if(existingConnId(connId)) {
-			emit existingConnector(viewId, connId, findConnector(connId), conn);
+			SingleConnectorInfoWidget * sci = findSCI(connId);
+			resetType(viewId, sci, conn);
+			resetName(viewId, sci, conn);
+			emit existingConnectorSignal(viewId, connId, sci ? sci->connector() : NULL, conn);
 		} else {
 			MismatchingConnectorWidget *mcw = NULL;
 			if(( mcw = existingMismatchingConnector(connId) )) {
 				if(mcw->onlyMissingThisView(viewId)) {
 					Connector * prevConn = mcw->prevConn();
 					removeMismatchingConnectorInfo(mcw, false);
-					//addConnectorInfo(mcw) is unsafe; mcw was just deleted in removeMismatchingConnectorInfo
-					//addConnectorInfo(mcw);
+					// mcw was just deleted in removeMismatchingConnectorInfo so we can't use it directly
 					if(prevConn) {
 						addConnectorInfo(prevConn);
 					} else {
 						addConnectorInfo(connId);
 					}
 					
-					emit existingConnector(viewId, connId, findConnector(connId), conn);
+					SingleConnectorInfoWidget * sci = findSCI(connId);
+					resetType(viewId, sci, conn);
+					resetName(viewId, sci, conn);
+					emit existingConnectorSignal(viewId, connId, sci ? sci->connector() : NULL, conn);
 				} else {
 					mcw->addViewPresence(viewId);
 					emit setMismatching(viewId, mcw->connId(), true);
@@ -507,6 +508,15 @@ Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
 	foreach(SingleConnectorInfoWidget *sci, m_connsInfo) {
 		if(sci->id() == id) {
 			return sci->connector();
+		}
+	}
+	return NULL;
+}
+
+SingleConnectorInfoWidget* ConnectorsInfoWidget::findSCI(const QString &id) {
+	foreach(SingleConnectorInfoWidget *sci, m_connsInfo) {
+		if(sci->id() == id) {
+			return sci;
 		}
 	}
 	return NULL;
@@ -640,4 +650,44 @@ bool ConnectorsInfoWidget::connectorsCountChanged() {
 
 bool ConnectorsInfoWidget::hasMismatchingConnectors() {
 	return m_mismatchConnsInfo.size() > 0;
+}
+
+void ConnectorsInfoWidget::resetType(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn) {
+	if (viewId != ViewIdentifierClass::PCBView) return;
+
+	if (conn->connectorType() == sci->connectorType()) return;
+
+	if (conn->connectorType() == Connector::Pad) {
+		// was male or female
+		sci->setConnectorType(conn->connectorType());
+		return;
+	}
+
+	if (sci->connectorType() != Connector::Pad) return;
+
+	// was pad, should it be male or female?
+
+	// TODO: figure out which gender or ask the user to fix it.
+	sci->setConnectorType(Connector::Male);
+
+}
+
+
+void ConnectorsInfoWidget::resetName(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn) 
+{
+	Q_UNUSED(viewId);
+
+	if (!sci->name().startsWith("pin", Qt::CaseInsensitive)) return;  // probably already changed by the user
+
+	QString name = conn->connectorSharedName();
+	if (name.isEmpty()) return;
+
+	if (name.startsWith("pin", Qt::CaseInsensitive)) return;
+
+	bool ok;
+	int num = name.toInt(&ok);
+	if (ok) return;					// just a number, don't bother
+
+	Q_UNUSED(num);
+	sci->setName(name);
 }

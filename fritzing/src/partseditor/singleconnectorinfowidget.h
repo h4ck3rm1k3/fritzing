@@ -77,8 +77,11 @@ class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 
 		QString id();
 		QString name();
+		void setName(const QString &);
 		QString description();
 		QString type();
+		Connector::ConnectorType connectorType();
+		void setConnectorType(Connector::ConnectorType);
 
 		MismatchingConnectorWidget *toMismatching(ViewIdentifierClass::ViewIdentifier viewId);
 

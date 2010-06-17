@@ -67,7 +67,7 @@ Q_OBJECT
 		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
 
 	signals:
-		void connectorsFound(QList< QPointer<Connector> >);
+		void connectorsFoundSignal(QList< QPointer<Connector> >);
 		void connectorSelectedInView(const QString& connId);
 
 	protected:

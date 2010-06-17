@@ -135,11 +135,11 @@ PartsEditorView * PartsEditorViewsWidget::createViewImageWidget(
 		viw, SLOT(informConnectorSelection(const QString&))
 	);
 	connect(
-		viw, SIGNAL(connectorsFound(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &)),
+		viw, SIGNAL(connectorsFoundSignal(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &)),
 		info, SLOT(syncNewConnectors(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &))
 	);
 	connect(
-		info, SIGNAL(existingConnector(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*, Connector*)),
+		info, SIGNAL(existingConnectorSignal(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*, Connector*)),
 		viw, SLOT(checkConnectorLayers(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*, Connector*))
 	);
 
@@ -171,7 +171,7 @@ void PartsEditorViewsWidget::loadViewsImagesFromModel(PaletteModel *paletteModel
 	m_pcbView->loadFromModel(paletteModel, modelPart);
 
 	if(modelPart->connectors().size() > 0) {
-		emit connectorsFound(modelPart->connectors().values());
+		emit connectorsFoundSignal(modelPart->connectors().values());
 	}
 }
 

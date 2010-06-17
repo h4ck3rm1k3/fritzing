@@ -28,7 +28,7 @@ $Date$
 
 SvgIdLayer * SvgIdLayer::copyLayer() {
 	SvgIdLayer * toSvgIdLayer = new SvgIdLayer;
-	toSvgIdLayer = this;
+	*toSvgIdLayer = *this;
 	return toSvgIdLayer;
 }
 
