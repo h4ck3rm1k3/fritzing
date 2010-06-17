@@ -233,7 +233,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 	}
 
 	bool repeat;
-	QString pinID = getPinID(number, name, repeat);
+	QString pinID = getPinID(number, name, repeat, false);
 	if (repeat) {
 		// TODO:  increment the id...
 	}
@@ -313,7 +313,7 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 	QString pinID;
 	if (isPad) {
 		bool repeat;
-		pinID = getPinID(number, name, repeat);
+		pinID = getPinID(number, name, repeat, true);
 		if (repeat) {
 			// TODO: increment id number
 		}
@@ -477,7 +477,7 @@ int GedaElement2Svg::reflectQuad(int angle, int & quad) {
 	return angle;
 }
 
-QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repeat) {
+QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repeat, bool isPad) {
 
 	repeat = false;
 
@@ -487,6 +487,8 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repea
 	if (!name.isEmpty()) {
 		name = unquote(name);
 	}
+
+	QString suffix = isPad ? "pad" : "pin";
 
 	if (!number.isEmpty()) {
 		if (m_numberList.contains(number)) {
@@ -498,7 +500,8 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repea
 
 		bool ok;
 		int n = number.toInt(&ok);
-		return (ok ? QString("connector%1pin").arg(n - 1) : QString("connector%1pin").arg(number));
+		return ok ? QString("connector%1%2").arg(n - 1).arg(suffix) 
+				  : QString("connector%1%2").arg(number).arg(suffix);
 	}
 
 	if (!name.isEmpty()) {
@@ -513,7 +516,7 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repea
 			bool ok;
 			int n = name.toInt(&ok);
 			if (ok) {
-				return QString("connector%1pin").arg(n - 1);
+				return QString("connector%1%2").arg(n - 1).arg(suffix);
 			}
 		}
 	}

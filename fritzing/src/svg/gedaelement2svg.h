@@ -47,7 +47,7 @@ protected:
 	QString convertArc(QVector<QVariant> & stack, int ix, int argCount, bool mils);
 	void fixQuad(int quad, qreal & px, qreal & py);
 	int reflectQuad(int angle, int & quad);
-	QString getPinID(QString & number, QString & name, bool & repeat);
+	QString getPinID(QString & number, QString & name, bool & repeat, bool isPad);
 
 protected:
 	QStringList m_nameList;
