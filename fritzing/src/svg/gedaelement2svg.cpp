@@ -31,6 +31,7 @@ $Date$
 #include "svgfilesplitter.h"
 #include "../version/version.h"
 #include "../items/wire.h"
+#include "../debugdialog.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -87,18 +88,16 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	metadata += attribute.arg("conversion date").arg(dt);
 
 	// TODO: other layers
-	QString copper0;
-	QString copper1;
 	QString silkscreen;
 
-	m_nameList.clear();
-	m_numberList.clear();
 	QVector<QVariant> stack = parser.symStack();
 
 	bool hasAuthor = false;
-	QStringList already;
-	int pins = 0;
-	int pads = 0;
+	QMultiHash<QString, QString> pads;
+	QMultiHash<QString, QString> pins;
+	QStringList pinIDs;
+	QStringList padIDs;
+
 	for (int ix = 0; ix < stack.size(); ) { 
 		QVariant var = stack[ix];
 		if (var.type() == QVariant::String) {
@@ -108,23 +107,24 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 			if (thing.compare("element", Qt::CaseInsensitive) == 0) {
 			}
 			else if (thing.compare("pad", Qt::CaseInsensitive) == 0) {
-				QString s = convertPad(stack, ix, argCount, mils);
-				if (!already.contains(s)) {
-					copper1 += s;
-					already.append(s);
+				QString pid;
+				QString s = convertPad(stack, ix, argCount, mils, pid);
+				pads.insert(pid, s);
+				if (!padIDs.contains(pid)) {
+					padIDs.append(pid);
 				}
-				pads++;
 			}
 			else if (thing.compare("pin", Qt::CaseInsensitive) == 0) {
-				QString s = convertPin(stack, ix, argCount, mils);
-				if (!already.contains(s)) {
-					copper0 += s;
-					already.append(s);
+				QString pid;
+				QString s = convertPin(stack, ix, argCount, mils, pid);
+				pins.insert(pid, s);
+				if (!pinIDs.contains(pid)) {
+					pinIDs.append(pid);
 				}
-				pins++;
 			}
 			else if (thing.compare("elementline", Qt::CaseInsensitive) == 0) {
-				silkscreen += convertPad(stack, ix, argCount, mils);
+				QString unused;
+				silkscreen += convertPad(stack, ix, argCount, mils, unused);
 			}
 			else if (thing.compare("elementarc", Qt::CaseInsensitive) == 0) {
 				silkscreen += convertArc(stack, ix, argCount, mils);
@@ -150,7 +150,7 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 		}
 	}
 
-	if (!allowPadsAndPins && pins > 0 && pads > 0) {
+	if (!allowPadsAndPins && pins.count() > 0 && pads.count() > 0) {
 		throw QObject::tr("Sorry, Fritzing can't yet handle both pins and pads together (in %1)").arg(filename);
 	}
 
@@ -168,6 +168,9 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	metadata += "</rdf:Description>";
 	metadata += "</rdf:RDF>";
 	metadata += "</metadata>";
+
+	QString copper0 = makeCopper(pinIDs, pins, filename);
+	QString copper1 = makeCopper(padIDs, pads, filename);
 
 	if (!copper0.isEmpty()) {
 		copper0 = offsetMin("\n<g id='copper0'><g id='copper1'>" + copper0 + "</g></g>\n");
@@ -202,7 +205,7 @@ int GedaElement2Svg::countArgs(QVector<QVariant> & stack, int ix) {
 	return argCount;
 }
 
-QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCount, bool mils)
+QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCount, bool mils, QString & pinID)
 {
 	qreal drill = 0;
 	QString name;
@@ -232,11 +235,8 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 		throw QObject::tr("bad pin argument count");
 	}
 
-	bool repeat;
-	QString pinID = getPinID(number, name, repeat, false);
-	if (repeat) {
-		// TODO:  increment the id...
-	}
+
+	pinID = getPinID(number, name, false);
 
 	int cx = stack[ix + 1].toInt();
 	int cy = stack[ix + 2].toInt();
@@ -273,7 +273,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 	return circle;
 }
 
-QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils)
+QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCount, bool mils, QString & pinID)
 {
 	QString name; 
 	QString number;
@@ -310,13 +310,8 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 		throw QObject::tr("bad pad argument count");
 	}
 
-	QString pinID;
 	if (isPad) {
-		bool repeat;
-		pinID = getPinID(number, name, repeat, true);
-		if (repeat) {
-			// TODO: increment id number
-		}
+		pinID = getPinID(number, name, true);
 	}
 
 	if (mils) {
@@ -477,9 +472,7 @@ int GedaElement2Svg::reflectQuad(int angle, int & quad) {
 	return angle;
 }
 
-QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repeat, bool isPad) {
-
-	repeat = false;
+QString GedaElement2Svg::getPinID(QString & number, QString & name, bool isPad) {
 
 	if (!number.isEmpty()) {
 		number = unquote(number);
@@ -491,13 +484,6 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repea
 	QString suffix = isPad ? "pad" : "pin";
 
 	if (!number.isEmpty()) {
-		if (m_numberList.contains(number)) {
-			repeat = true;
-		}
-		else {
-			m_numberList.append(number);
-		}
-
 		bool ok;
 		int n = number.toInt(&ok);
 		return ok ? QString("connector%1%2").arg(n - 1).arg(suffix) 
@@ -505,13 +491,6 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repea
 	}
 
 	if (!name.isEmpty()) {
-		if (m_nameList.contains(name)) {
-			repeat = true;
-		}
-		else {
-			m_nameList.append(name);
-		}
-
 		if (number.isEmpty()) {
 			bool ok;
 			int n = name.toInt(&ok);
@@ -522,4 +501,62 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name, bool & repea
 	}
 
 	return "";
+}
+
+
+QString GedaElement2Svg::makeCopper(QStringList ids, QHash<QString, QString> & strings, const QString & filename) {
+	QString copper;
+	foreach (QString id, ids) {
+		QStringList values = strings.values(id);
+		if (id.isEmpty()) {
+			DebugDialog::debug(QString("geda empty id %1").arg(filename));
+			foreach(QString string, values) {
+				copper.append(string);
+			}
+			continue;
+		}
+
+		if (values.count() == 1) {
+			copper.append(values.at(0));
+			continue;
+		}
+
+		if (values.count() == 0) {
+			// shouldn't happen
+			continue;
+		}
+
+		DebugDialog::debug(QString("geda multiple id %1").arg(filename));
+
+
+		QString xml = "<g>";
+		foreach (QString string, values) {
+			xml.append(string);
+		}
+		xml.append("</g>");
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+		QDomDocument doc;
+		if (!doc.setContent(xml, &errorStr, &errorLine, &errorColumn)) {
+			throw QObject::tr("Unable to parse copper: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn);
+		}
+		QDomElement root = doc.documentElement();
+		QDomElement child = root.firstChildElement();
+		while (!child.isNull()) {
+			QString id = child.attribute("id");
+			root.setAttribute("id", id);
+			child.removeAttribute("id");
+			QString name = child.attribute("connectorname");
+			child.removeAttribute("connectorname");
+			if (!name.isEmpty()) {
+				root.setAttribute("connectorname", name);
+			}
+			child = child.nextSiblingElement();
+		}
+
+		copper += doc.toString();
+	}
+
+	return copper;
 }
