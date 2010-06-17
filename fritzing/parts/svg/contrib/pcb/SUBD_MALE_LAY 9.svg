@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.495in" height="1.222in" viewBox="0 0 49500 122200" ><title>SUBD_MALE_LAY 9.fp</title><desc>Geda footprint file 'SUBD_MALE_LAY 9.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>SUBD_MALE_LAY 9.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.05.25.4197</fz:attr>
-<fz:attr name='conversion date'>07/06/2010 13:02:40</fz:attr>
+<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
+<fz:attr name='conversion date'>17/06/2010 11:12:47</fz:attr>
 <fz:comment>Gehaeuse (schmaler Kasten incl. Bohrungen)</fz:comment>
 <fz:comment>Gehaeuse (aeusserer Kasten)</fz:comment>
 <fz:comment>This part of the connector normally hangs off the circuit board,</fz:comment>

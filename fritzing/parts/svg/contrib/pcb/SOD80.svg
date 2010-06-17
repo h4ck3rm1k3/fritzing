@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.217in" height="0.12in" viewBox="0 0 21700 12000" ><title>SOD80.fp</title><desc>Geda footprint file 'SOD80.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>SOD80.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.05.25.4197</fz:attr>
-<fz:attr name='conversion date'>07/06/2010 13:02:31</fz:attr>
+<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
+<fz:attr name='conversion date'>17/06/2010 11:12:39</fz:attr>
 <fz:comment>how much to grow the pads by for soldermask</fz:comment>
 <fz:comment>clearance from planes</fz:comment>
 <fz:attr name='dist-license'>GPL</fz:attr>
@@ -8,8 +8,8 @@
 <fz:attr name='author'>gEDA project</fz:attr>
 <fz:attr name='license-url'>http://www.gnu.org/licenses/gpl.html</fz:attr>
 </rdf:Description></rdf:RDF></metadata><g id="copper1">
- <line fill="none" connectorname="1" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector0pin" y1="4400" x1="5800" y2="7600" stroke-width="5300" x2="5800"/>
- <line fill="none" connectorname="2" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector1pin" y1="4400" x1="17400" y2="7600" stroke-width="5300" x2="17400"/>
+ <line fill="none" connectorname="1" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector0pad" y1="4400" x1="5800" y2="7600" stroke-width="5300" x2="5800"/>
+ <line fill="none" connectorname="2" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector1pad" y1="4400" x1="17400" y2="7600" stroke-width="5300" x2="17400"/>
 </g>
 <g id="silkscreen">
  <line fill="none" stroke="white" y1="1700" x1="1000" y2="10300" stroke-width="2000" x2="1000"/>

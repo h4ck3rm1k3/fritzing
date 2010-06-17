@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.3037in" height="0.31133in" viewBox="0 0 30370 31133" ><title>NICHICON_WT_CAP_6p3_5p8.fp</title><desc>Geda footprint file 'NICHICON_WT_CAP_6p3_5p8.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>NICHICON_WT_CAP_6p3_5p8.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.05.25.4197</fz:attr>
-<fz:attr name='conversion date'>07/06/2010 13:01:51</fz:attr>
+<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
+<fz:attr name='conversion date'>17/06/2010 11:12:02</fz:attr>
 <fz:comment>max pin width (perpendicular to axis of package) (1/100 mil)</fz:comment>
 <fz:comment>max pin length (parallel to axis of package) (1/100 mil)</fz:comment>
 <fz:comment>gap between the pads (1/100 mil)</fz:comment>
@@ -27,8 +27,8 @@
 <fz:attr name='author'>gEDA project</fz:attr>
 <fz:attr name='license-url'>http://www.gnu.org/licenses/gpl.html</fz:attr>
 </rdf:Description></rdf:RDF></metadata><g id="copper1">
- <line fill="none" connectorname="Plus" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector0pin" y1="2574.5" x1="15185" y2="9661.5" stroke-width="5149" x2="15185"/>
- <line fill="none" connectorname="Minus" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector1pin" y1="28558.5" x1="15185" y2="21471.5" stroke-width="5149" x2="15185"/>
+ <line fill="none" connectorname="Plus" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector0pad" y1="2574.5" x1="15185" y2="9661.5" stroke-width="5149" x2="15185"/>
+ <line fill="none" connectorname="Minus" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector1pad" y1="28558.5" x1="15185" y2="21471.5" stroke-width="5149" x2="15185"/>
 </g>
 <g id="silkscreen">
  <line fill="none" stroke="white" y1="30251.5" x1="29870" y2="30251.5" stroke-width="1000" x2="19059"/>
