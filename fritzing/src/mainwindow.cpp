@@ -92,7 +92,7 @@ static const int MainWindowDefaultHeight = 600;
 
 int MainWindow::AutosaveTimeoutMinutes = 10;   // in minutes
 bool MainWindow::AutosaveEnabled = true;
-
+QString MainWindow::BackupFolder;
 
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
@@ -116,7 +116,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	resize(MainWindowDefaultWidth, MainWindowDefaultHeight);
 
-    m_backupFileNameAndPath = FolderUtils::getUserDataStorePath("backup") + "/" + FolderUtils::getRandText() + fileExtension();
+	m_backupFileNameAndPath = MainWindow::BackupFolder + "/" + FolderUtils::getRandText() + fileExtension();
     // Connect the undoStack to our autosave stuff
     connect(m_undoStack, SIGNAL(indexChanged(int)), this, SLOT(autosaveNeeded(int)));
     connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)));

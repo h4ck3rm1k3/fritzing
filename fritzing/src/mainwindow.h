@@ -629,6 +629,7 @@ public:
 	static int RestartNeeded;
 	static int AutosaveTimeoutMinutes;
 	static bool AutosaveEnabled;
+	static QString BackupFolder;
 
 protected:
 	static const QString UntitledSketchName;

@@ -53,6 +53,7 @@ $Date$
 #include "installedfonts.h"
 #include "items/pinheader.h"
 #include "dialogs/recoverydialog.h"
+#include "lib/qtlockedfile/qtlockedfile.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -85,6 +86,8 @@ QMultiHash<QString, QString> InstalledFonts::InstalledFontsNameMapper;   // fami
 
 static const qreal LoadProgressStart = 0.085;
 static const qreal LoadProgressEnd = 0.6;
+
+static const QString LockFileName = "___lockfile___.txt";
 
 //////////////////////////
 
@@ -124,9 +127,9 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 
 	m_arguments = arguments();
 
-	foreach (QString argument, m_arguments) {
-		DebugDialog::debug(QString("argument %1").arg(argument));
-	}
+	//foreach (QString argument, m_arguments) {
+		//DebugDialog::debug(QString("argument %1").arg(argument));
+	//}
 
 	QList<int> toRemove;
 	for (int i = 0; i < m_arguments.length() - 1; i++) {
@@ -252,7 +255,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 
 FApplication::~FApplication(void)
 {
-
+	cleanupBackups();
+		
 	clearModels();
 
 	if (m_updateDialog) {
@@ -1035,6 +1039,8 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
 	initFilesToLoad();   // sets up m_filesToLoad from the command line on PC and Linux; mac uses a FileOpen event instead
 
+	initBackups();
+
 	DebugDialog::debug("checking for backups");
     QList<MainWindow*> sketchesToLoad = recoverBackups();
 
@@ -1139,16 +1145,57 @@ void FApplication::doLoadPrevious(MainWindow * sketchWindow) {
 }
 
 QList<MainWindow *> FApplication::recoverBackups()
-{
-	QList<MainWindow*> recoveredSketches;
-
-    // Check if there are any backups we need to recover
+{	
+	QFileInfoList backupList;
 	QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
-    backupDir.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );    
-    QFileInfoList list = backupDir.entryInfoList();
-    if (list.size() == 0) return recoveredSketches;
+	QFileInfoList dirList = backupDir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
+	foreach (QFileInfo dirInfo, dirList) {
+		QDir dir(backupDir.absoluteFilePath(dirInfo.fileName()));
+		QString temp = dir.absolutePath();
+		QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+		if (fileInfoList.isEmpty()) continue;
 
-    RecoveryDialog recoveryDialog(list);
+		for (int i = 0; i < fileInfoList.count(); i++) {
+			QFileInfo fileInfo = fileInfoList.at(i);
+			if (fileInfo.fileName() == LockFileName) {
+				fileInfoList.removeOne(fileInfo);
+				break;
+			}
+		}
+
+		if (fileInfoList.isEmpty()) {
+			// could mean this backup folder is just being created by another process
+			// could also mean it's leftover crap.
+			// check the date and delete if it's old?
+			continue;
+		}
+		
+		QtLockedFile * otherLockFile = new QtLockedFile(dir.absoluteFilePath(LockFileName));
+		bool isOpen = otherLockFile->open(QFile::WriteOnly);
+		if (!isOpen) {
+			// somebody else owns the file
+			delete otherLockFile;
+			continue;
+		}
+
+		if (!otherLockFile->lock(QtLockedFile::WriteLock, false)) {
+			// somebody else owns the file
+			otherLockFile->close();
+			delete otherLockFile;
+			continue;
+		}
+
+		// we own the file
+		m_lockedFiles.insert(dirInfo.fileName(), otherLockFile);		
+		foreach (QFileInfo fileInfo, fileInfoList) {
+			backupList << fileInfo;
+		}
+	}
+
+	QList<MainWindow*> recoveredSketches;
+    if (backupList.size() == 0) return recoveredSketches;
+
+    RecoveryDialog recoveryDialog(backupList);
 	QMessageBox::StandardButton result = (QMessageBox::StandardButton)recoveryDialog.exec();
     QList<QTreeWidgetItem*> fileItems = recoveryDialog.getFileList();
     DebugDialog::debug(QString("Recovering %1 files from recoveryDialog").arg(fileItems.size()));
@@ -1185,3 +1232,37 @@ void FApplication::initFilesToLoad()
 	}
 }
 
+void FApplication::initBackups() {
+		// first create our own unique backup folder and lock it
+	QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
+	QString lockedSubfolder = FolderUtils::getRandText();
+	backupDir.mkdir(lockedSubfolder);
+	MainWindow::BackupFolder = backupDir.absoluteFilePath(lockedSubfolder);
+	QtLockedFile * lockFile = new QtLockedFile(MainWindow::BackupFolder + "/" + LockFileName);
+	lockFile->open(QFile::WriteOnly);
+	lockFile->lock(QtLockedFile::WriteLock, true);
+	m_lockedFiles.insert(lockedSubfolder, lockFile);
+}
+
+void FApplication::cleanupBackups() {
+	// remove backup files; this is a clean exit
+	QDir backupDir(MainWindow::BackupFolder);
+	backupDir.cdUp();
+	foreach (QString sub, m_lockedFiles.keys()) {
+		QDir dir(backupDir.absoluteFilePath(sub));
+		QStringList files = dir.entryList(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+		foreach (QString f, files) {
+			if (f == LockFileName) continue;
+
+			QFile::remove(dir.absoluteFilePath(f));	
+		}
+		QtLockedFile * lockedFile = m_lockedFiles.value(sub);
+		lockedFile->unlock();
+		lockedFile->close();
+		delete lockedFile;
+		QFile::remove(dir.absoluteFilePath(LockFileName));
+		dir.cdUp();
+		dir.rmdir(sub);
+	}
+	m_lockedFiles.clear();
+}

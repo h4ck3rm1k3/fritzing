@@ -94,6 +94,8 @@ protected:
 	void doLoadPrevious(MainWindow *);
 	void loadSomething(bool firstRun, const QString & previousVersion);
 	void initFilesToLoad();
+	void initBackups();
+	void cleanupBackups();
 
 protected:
 	bool m_spaceBarIsPressed;
@@ -120,6 +122,7 @@ protected:
 	int m_progressIndex;
 	class FSplashScreen * m_splash;
 	QString m_outputFolder;
+	QHash<QString, class QtLockedFile *> m_lockedFiles;
 
 public:
 	static int RestartNeeded;

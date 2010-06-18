@@ -83,6 +83,7 @@ RESOURCES += phoenixresources.qrc
 	include(pri/sketch.pri)
 	include(pri/translations.pri)
 	include(pri/program.pri)
+	include(pri/qtlockedfile.pri)
 TARGET = Fritzing
 TEMPLATE = app
 
