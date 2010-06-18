@@ -92,7 +92,7 @@ public:
 	void loadBundledNonAtomicEntity(const QString &filename, Bundler *bundler, bool addToBin);
 	
 	void exportToGerber(const QString & exportDir, ItemBase * board, bool displayMessageBoxes);
-	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered);
+	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
 
 public:
 	static void initNames();

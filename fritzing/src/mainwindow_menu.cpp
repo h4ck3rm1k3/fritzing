@@ -608,7 +608,7 @@ bool MainWindow::saveAsAux(const QString & fileName) {
 	saveAsAuxAux(fileName);
 
     m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
-    setCurrentFile(fileName, true, false);
+    setCurrentFile(fileName, true, false, "");
 
 	if(m_restarting && m_fileName != ___emptyString___) {
 		QSettings settings;
@@ -799,7 +799,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		settings.setValue("lastOpenSketch",fileName);
 	}
 
-	setCurrentFile(fileName, addToRecent, false);
+	setCurrentFile(fileName, addToRecent, false, "");
 
 	UntitledSketchIndex--;
 }

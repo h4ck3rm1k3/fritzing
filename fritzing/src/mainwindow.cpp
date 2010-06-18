@@ -452,7 +452,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 }
 
-void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool recovered) {
+
+void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName) {
 	m_fileName = fileName;
 
     // If this is an untitled sketch, increment the untitled sketch number
@@ -460,13 +461,18 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool 
     if (recovered && fileName.startsWith(untitledFileName())) {
 		DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(fileName).arg(untitledFileName()));
         int untitledSketchNumber = fileName.section(' ', -1).toInt() + 1;
+        DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
         if (untitledSketchNumber == 1) {
             untitledSketchNumber++;
         }
-        DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
         UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
     }
 
+    // If this was a sketch restored from the backup directory, preserve the
+    // backup file name
+    if (recovered) {
+        m_backupFileNameAndPath = backupName;
+    }
 
 	updateRaiseWindowAction();
 	setTitle();

@@ -28,20 +28,26 @@ $Date$
 #define RECOVERYDIALOG_H
 
 #include <QDialog>
-#include <QListWidget>
+#include <QTreeWidget>
+#include <QString>
 #include <QFileInfoList>
 
 class RecoveryDialog : public QDialog {
         Q_OBJECT
 public:
         RecoveryDialog(QFileInfoList fileList, QWidget *parent = 0, Qt::WindowFlags flags = 0);
-        QList<QListWidgetItem*> getSelectedFiles();
+        QList<QTreeWidgetItem*> getFileList();
 
 protected:
-		QString getOriginalName(const QString & path);
+        QString getOriginalFileName(const QString & path);
 
-protected:
-        QListWidget *m_recoveryList;
+        QList<QTreeWidgetItem*> m_fileList;
+        QTreeWidget *m_recoveryList;
+        QPushButton *m_recover;
+        QPushButton *m_ignore;
+
+protected slots:
+        void updateRecoverButton();
 };
 
 #endif // RECOVERYDIALOG_H

@@ -89,8 +89,11 @@ protected:
 	bool loadBin(QString binToOpen);
 	void runGedaService();
 	void runKicadService();
-	QList<class MainWindow *> recoverBackups(int & loaded);
-	void clearBackups();
+	QList<class MainWindow *> recoverBackups();
+	QList<MainWindow *> loadLastOpenSketch();
+	void doLoadPrevious(MainWindow *);
+	void loadSomething(bool firstRun, const QString & previousVersion);
+	void initFilesToLoad();
 
 protected:
 	bool m_spaceBarIsPressed;

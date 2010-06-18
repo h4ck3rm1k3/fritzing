@@ -514,3 +514,9 @@ SearchLineEdit {
     border: 1px solid rgb(140,140,140);
 }
 
+RecoveryDialog QTreeWidget {
+	padding-left: 2px;
+	padding-right: 2px;
+	text-align: center;
+	background: red;
+}

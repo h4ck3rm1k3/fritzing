@@ -123,6 +123,11 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_kicadService = false;
 
 	m_arguments = arguments();
+
+	foreach (QString argument, m_arguments) {
+		DebugDialog::debug(QString("argument %1").arg(argument));
+	}
+
 	QList<int> toRemove;
 	for (int i = 0; i < m_arguments.length() - 1; i++) {
 		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||
@@ -337,6 +342,7 @@ bool FApplication::event(QEvent *event)
 		case QEvent::FileOpen:
 			{
 				QString path = static_cast<QFileOpenEvent *>(event)->file();
+				DebugDialog::debug(QString("file open %1").arg(path));
 				if (m_started) {
 					loadNew(path);
 				}
@@ -418,11 +424,9 @@ MainWindow * FApplication::loadWindows(bool showProgress, int & loaded) {
 	}
 
 	loaded = 0;
-	for (int i = 1; i < m_arguments.length(); i++) {
-		QFileInfo fileinfo(m_arguments[i]);
-		if (fileinfo.exists() && !fileinfo.isDir()) {
-			loadOne(mainWindow, m_arguments[i], loaded++);
-		}
+	initFilesToLoad();
+	foreach (QString file, m_filesToLoad) {
+		loadOne(mainWindow, file, loaded++);
 	}
 
 	//DebugDialog::debug("after argc");
@@ -620,7 +624,7 @@ int FApplication::startup(bool firstRun)
 	//DebugDialog::debug(QString("ending thread %1").arg(t.elapsed()));
 
 	splash.showProgress(m_progressIndex, 0.85);
-
+	processEvents();
 
 	m_updateDialog = new UpdateDialog();
 	connect(m_updateDialog, SIGNAL(enableAgainSignal(bool)), this, SLOT(enableCheckUpdates(bool)));
@@ -628,79 +632,11 @@ int FApplication::startup(bool firstRun)
 
 	splash.showProgress(m_progressIndex, 0.875);
 
-	int loaded = 0;
-	QList<MainWindow*> sketchesToLoad;
-	MainWindow * mainWindow = NULL;
-    sketchesToLoad << recoverBackups(loaded);
-    if (sketchesToLoad.size() == 0) {
-        mainWindow = loadWindows(true, loaded);
-		sketchesToLoad << mainWindow;
-        foreach (QString filename, m_filesToLoad) {
-            loadOne(mainWindow, filename, loaded++);
-        }
-     }
-	else {
-		mainWindow = sketchesToLoad.at(0);
-	}
-
-	clearBackups();
-
-	//DebugDialog::debug("after m_files");
-
-	if (loaded == 0 || !firstRun)
-	{
-		if(!settings.value("lastOpenSketch").isNull()) {
-			QString lastSketchPath = settings.value("lastOpenSketch").toString();
-			if(QFileInfo(lastSketchPath).exists()) {
-				settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
-				mainWindow->showFileProgressDialog(lastSketchPath);
-				mainWindow->load(lastSketchPath);
-				loaded++;
-				settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
-			} else {
-				settings.remove("lastOpenSketch");
-			}
-		}
-	}
-
-	//DebugDialog::debug("after last open sketch");
-
+	loadSomething(firstRun, prevVersion);
 	m_started = true;
 
 	splash.showProgress(m_progressIndex, 0.99);
 	processEvents();
-
-	if (!loaded) {
-		mainWindow->addBoard();
-	}
-
-	foreach (MainWindow* sketch, sketchesToLoad) {
-		sketch->show();
-		splash.finish(sketch);
-		sketch->clearFileProgressDialog();
-	}
-
-	if(prevVersion != ___emptyString___
-	   && Version::greaterThan(prevVersion,Version::FirstVersionWithDetachedUserData))
-	{
-        QMessageBox messageBox(mainWindow);
-        messageBox.setWindowTitle(tr("Import files from previous version?"));
-        messageBox.setText(tr("Do you want to import parts and bins that you have created with earlier versions of Fritzing?\n"
-                              "\nNote: You can import them later using the \"Help\" > \"Import parts and bins "
-                              "from old version...\" menu action."));
-        messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
-        messageBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-        messageBox.setDefaultButton(QMessageBox::Cancel);
-        messageBox.setIcon(QMessageBox::Question);
-        messageBox.setWindowModality(Qt::WindowModal);
-        messageBox.setButtonText(QMessageBox::Ok, tr("Import"));
-        messageBox.setButtonText(QMessageBox::Cancel, tr("Do not import now"));
-        QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
-
-		if(answer == QMessageBox::Ok) {
-			mainWindow->importFilesFromPrevInstall();
-		}
-	}
 
 	return 0;
 }
@@ -1086,7 +1022,123 @@ bool FApplication::notify(QObject *receiver, QEvent *e)
     return false;
 }
 
-QList<MainWindow *> FApplication::recoverBackups(int & loaded)
+void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
+    // At this point we're trying to determine what sketches to load which are from one of the following sources:
+    // Only one of these sources will actually provide sketches to load and they're listed in order of priority:
+
+    //		We found sketch backups to recover
+	//		it's a restart (!firstRun)
+	//		there's a previous version (open an empty sketch)
+	//		files were double-clicked
+    //		The last opened sketch
+    //		A new blank sketch
+
+	initFilesToLoad();   // sets up m_filesToLoad from the command line on PC and Linux; mac uses a FileOpen event instead
+
+	DebugDialog::debug("checking for backups");
+    QList<MainWindow*> sketchesToLoad = recoverBackups();
+
+	bool loadPrevious = false;
+	if (sketchesToLoad.isEmpty()) {
+		loadPrevious = !prevVersion.isEmpty() && Version::greaterThan(prevVersion, Version::FirstVersionWithDetachedUserData);
+	}
+
+	DebugDialog::debug(QString("load previous %1").arg(loadPrevious));
+
+	if (!loadPrevious && sketchesToLoad.isEmpty()) {
+		if (!firstRun) {
+			DebugDialog::debug(QString("not first run"));
+			sketchesToLoad = loadLastOpenSketch();
+		}
+	}
+
+	if (!loadPrevious && sketchesToLoad.isEmpty()) {
+		// Check for double-clicked files to load
+		DebugDialog::debug(QString("check files to load %1").arg(m_filesToLoad.count()));
+
+        foreach (QString filename, m_filesToLoad) {
+            DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
+            MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, false);
+            mainWindow->showFileProgressDialog(filename);
+            mainWindow->loadWhich(filename);
+            sketchesToLoad << mainWindow;
+        }
+	}
+
+    // Find any previously open sketches to reload
+    if (!loadPrevious && sketchesToLoad.isEmpty()) {
+		DebugDialog::debug(QString("load last open"));
+		sketchesToLoad = loadLastOpenSketch();
+	}
+
+	MainWindow * newBlankSketch = NULL;
+	if (sketchesToLoad.isEmpty()) {
+		DebugDialog::debug(QString("empty sketch"));
+		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
+		sketchesToLoad << newBlankSketch;
+	}
+
+    // Finish loading the sketches and show them to the user
+	foreach (MainWindow* sketch, sketchesToLoad) {
+		sketch->show();
+		sketch->clearFileProgressDialog();
+	}
+
+	// make sure to start an empty sketch with a board
+    if (newBlankSketch) {
+        newBlankSketch->addBoard();
+    }
+
+	if (loadPrevious) {
+		doLoadPrevious(newBlankSketch);
+	}
+}
+
+QList<MainWindow *> FApplication::loadLastOpenSketch() {
+	QList<MainWindow *> sketches;
+	QSettings settings;
+	if(settings.value("lastOpenSketch").isNull()) return sketches;
+
+	QString lastSketchPath = settings.value("lastOpenSketch").toString();
+	if(!QFileInfo(lastSketchPath).exists()) {
+		settings.remove("lastOpenSketch");
+		return sketches;
+	}
+
+    DebugDialog::debug(QString("Loading last open sketch %1").arg(lastSketchPath));
+    settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
+    MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, lastSketchPath, false);
+    mainWindow->showFileProgressDialog(lastSketchPath);
+    mainWindow->load(lastSketchPath);
+    sketches << mainWindow;
+    settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
+	return sketches;
+}
+
+void FApplication::doLoadPrevious(MainWindow * sketchWindow) {
+	// Here we check if files need to be imported from an earlier version.
+    // This should be done before any files are loaded as it requires a restart.
+    // As this can generate UI it should come after the splash screen has closed.
+
+    QMessageBox messageBox(sketchWindow);
+    messageBox.setWindowTitle(tr("Import files from previous version?"));
+    messageBox.setText(tr("Do you want to import parts and bins that you have created with earlier versions of Fritzing?\n"));
+    messageBox.setInformativeText(tr("\nNote: You can import them later using the \"Help\" > \"Import parts and bins "
+									"from old version...\" menu action."));
+    messageBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    messageBox.setDefaultButton(QMessageBox::Cancel);
+    messageBox.setIcon(QMessageBox::Question);
+    messageBox.setWindowModality(Qt::WindowModal);
+    messageBox.setButtonText(QMessageBox::Ok, tr("Import"));
+    messageBox.setButtonText(QMessageBox::Cancel, tr("Do not import now"));
+    QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
+
+    if(answer == QMessageBox::Ok) {
+		 sketchWindow->importFilesFromPrevInstall();
+    }
+}
+
+QList<MainWindow *> FApplication::recoverBackups()
 {
 	QList<MainWindow*> recoveredSketches;
 
@@ -1097,36 +1149,37 @@ QList<MainWindow *> FApplication::recoverBackups(int & loaded)
     if (list.size() == 0) return recoveredSketches;
 
     RecoveryDialog recoveryDialog(list);
-    int result = recoveryDialog.exec();
-    if (!result) return recoveredSketches;
-
-    QList<QListWidgetItem*> fileItems = recoveryDialog.getSelectedFiles();
+	QMessageBox::StandardButton result = (QMessageBox::StandardButton)recoveryDialog.exec();
+    QList<QTreeWidgetItem*> fileItems = recoveryDialog.getFileList();
     DebugDialog::debug(QString("Recovering %1 files from recoveryDialog").arg(fileItems.size()));
-    if (fileItems.size() > 0) {
-        foreach (QListWidgetItem * item, fileItems) {
-			MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
-			currentRecoveredSketch->showFileProgressDialog(item->text());
-			currentRecoveredSketch->load(item->data(Qt::UserRole).value<QString>(), false, false);
-			currentRecoveredSketch->setCurrentFile(item->text(), false, true);
-			currentRecoveredSketch->setWindowModified(true);
-			currentRecoveredSketch->showAllFirstTimeHelp(false);
-			recoveredSketches << currentRecoveredSketch;
-			loaded++;
-		}
+    foreach (QTreeWidgetItem * item, fileItems) {
+        if (result == QDialog::Accepted && item->isSelected()) {
+			QString originalBaseName = item->text(0);
+            DebugDialog::debug(QString("Loading recovered sketch %1").arg(originalBaseName));
+            MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
+            currentRecoveredSketch->showFileProgressDialog(originalBaseName);
+			QString backupName = item->data(0, Qt::UserRole).value<QString>();
+            currentRecoveredSketch->load(backupName, false, false);
+            currentRecoveredSketch->setCurrentFile(item->data(1, Qt::UserRole).value<QString>(), false, true, backupName);
+            currentRecoveredSketch->setWindowModified(true);
+            currentRecoveredSketch->showAllFirstTimeHelp(false);
+            recoveredSketches << currentRecoveredSketch;
+        }
+        else {
+			QFile::remove(item->data(0, Qt::UserRole).value<QString>());
+        }
     }
 
 	return recoveredSketches;
 }
 
-void FApplication::clearBackups() {
-    // Now cleanup and delete all of the autosaves    
-    QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
-    backupDir.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );
-    QFileInfoList list = backupDir.entryInfoList();
-    foreach (QFileInfo fileInfo, list) {
-        DebugDialog::debug(QString("Deleting %1").arg(fileInfo.filePath()));
-        if (!backupDir.remove(fileInfo.filePath())) {
-            DebugDialog::debug(QString("Failed removing %1").arg(fileInfo.filePath()));
-        }
-    }
+void FApplication::initFilesToLoad()
+{
+	for (int i = 1; i < m_arguments.length(); i++) {
+		QFileInfo fileinfo(m_arguments[i]);
+		if (fileinfo.exists() && !fileinfo.isDir()) {
+			m_filesToLoad << m_arguments[i];
+		}
+	}
 }
+

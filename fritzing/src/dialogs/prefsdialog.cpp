@@ -76,7 +76,7 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 
 	vLayout->addWidget(buttonBox);
 
-	this->setLayout(vLayout);
+	//this->setLayout(vLayout);
 
 }
 
@@ -87,7 +87,7 @@ PrefsDialog::~PrefsDialog()
 QWidget * PrefsDialog::createZoomerForm() {
 	QGroupBox * zoomer = new QGroupBox(tr("Mouse Wheel Behavior"), this );
 
-	QHBoxLayout * zhlayout = new QHBoxLayout(this);
+	QHBoxLayout * zhlayout = new QHBoxLayout();
 	zhlayout->setSpacing(5);
 
 #ifdef Q_WS_MAC
@@ -117,7 +117,7 @@ QWidget * PrefsDialog::createZoomerForm() {
 QWidget * PrefsDialog::createAutosaveForm() {
 	QGroupBox * autosave = new QGroupBox(tr("Autosave"), this );
 
-	QHBoxLayout * zhlayout = new QHBoxLayout(this);
+	QHBoxLayout * zhlayout = new QHBoxLayout();
 	zhlayout->setSpacing(5);
 
 	QCheckBox * box = new QCheckBox(tr("Autosave every:"));
