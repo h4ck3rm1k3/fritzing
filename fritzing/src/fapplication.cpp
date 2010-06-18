@@ -663,7 +663,7 @@ void FApplication::finish()
 
 void FApplication::loadNew(QString path) {
 	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, path, true);
-	if (!mw->loadWhich(path, false)) {
+	if (!mw->loadWhich(path, false, true)) {
 		mw->close();
 	}
 	mw->clearFileProgressDialog();
@@ -672,7 +672,7 @@ void FApplication::loadNew(QString path) {
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 	if (loaded == 0) {
 		mw->showFileProgressDialog(path);
-		mw->loadWhich(path);
+		mw->loadWhich(path, true, true);
 	}
 	else {
 		loadNew(path);
@@ -1060,7 +1060,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
             DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
             MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, filename, false);
             mainWindow->showFileProgressDialog(filename);
-            mainWindow->loadWhich(filename);
+            mainWindow->loadWhich(filename, true, true);
             sketchesToLoad << mainWindow;
         }
 	}
@@ -1109,7 +1109,7 @@ QList<MainWindow *> FApplication::loadLastOpenSketch() {
     settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
     MainWindow *mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, lastSketchPath, false);
     mainWindow->showFileProgressDialog(lastSketchPath);
-    mainWindow->load(lastSketchPath);
+    mainWindow->load(lastSketchPath, true, true, "");
     sketches << mainWindow;
     settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
 	return sketches;
@@ -1159,8 +1159,10 @@ QList<MainWindow *> FApplication::recoverBackups()
             MainWindow *currentRecoveredSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
             currentRecoveredSketch->showFileProgressDialog(originalBaseName);
 			QString backupName = item->data(0, Qt::UserRole).value<QString>();
-            currentRecoveredSketch->load(backupName, false, false);
-            currentRecoveredSketch->setCurrentFile(item->data(1, Qt::UserRole).value<QString>(), false, true, backupName);
+			QString originalPath = item->data(1, Qt::UserRole).value<QString>();
+ 			currentRecoveredSketch->setRecovered(true);
+			currentRecoveredSketch->load(backupName, false, false, originalPath);		
+            currentRecoveredSketch->setCurrentFile(originalPath, false, true, backupName);
             currentRecoveredSketch->setWindowModified(true);
             currentRecoveredSketch->showAllFirstTimeHelp(false);
             recoveredSketches << currentRecoveredSketch;

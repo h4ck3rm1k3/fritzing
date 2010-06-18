@@ -37,9 +37,21 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../debugdialog.h"
 
+CenteredTreeWidget::CenteredTreeWidget(QWidget * parent) : QTreeWidget(parent) {
+	// no luck getting this styling to work from fritzing.qss
+	setStyleSheet("::item { margin-left: 8px; margin-right: 8px; margin-top: 1px; margin-bottom: 1px; }");
+}
+
+QStyleOptionViewItem CenteredTreeWidget::viewOptions() const {
+	// alignment not possible from a stylesheet
+	QStyleOptionViewItem styleOptionViewItem = QTreeWidget::viewOptions();
+	styleOptionViewItem.displayAlignment = Qt::AlignCenter;
+	return styleOptionViewItem;
+}
+
 RecoveryDialog::RecoveryDialog(QFileInfoList fileInfoList, QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags)
 {
-    m_recoveryList = new QTreeWidget(this);
+    m_recoveryList = new CenteredTreeWidget(this);
     m_recoveryList->setColumnCount(3);
     m_recoveryList->setSelectionMode(QAbstractItemView::ExtendedSelection);
     m_recoveryList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

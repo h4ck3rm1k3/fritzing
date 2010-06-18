@@ -107,6 +107,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_currentGraphicsView = NULL;
 	m_comboboxChanged = false;
 	m_helper = NULL;
+	m_recovered = false;
 
     // Add a timer for autosaving
 	m_backingUp = m_autosaveNeeded = false;
@@ -458,14 +459,16 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool 
 
     // If this is an untitled sketch, increment the untitled sketch number
     // to something reasonable.
-    if (recovered && fileName.startsWith(untitledFileName())) {
-		DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(fileName).arg(untitledFileName()));
-        int untitledSketchNumber = fileName.section(' ', -1).toInt() + 1;
-        DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
-        if (untitledSketchNumber == 1) {
-            untitledSketchNumber++;
-        }
-        UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
+	if (recovered) {
+		if (fileName.startsWith(untitledFileName())) {
+			DebugDialog::debug(QString("Comparing untitled documents: %1 %2").arg(fileName).arg(untitledFileName()));
+			QRegExp regexp("\\d+");
+			int ix = regexp.indexIn(fileName);
+			int untitledSketchNumber = ix >= 0 ? regexp.cap(0).toInt() : 1;
+			untitledSketchNumber++;
+			DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
+			UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
+		}
     }
 
     // If this was a sketch restored from the backup directory, preserve the
@@ -984,7 +987,7 @@ const QString & MainWindow::fileName() {
 }
 
 bool MainWindow::undoStackIsEmpty() {
-	return m_undoStack->count() == 0;
+	return m_undoStack->count() == 0 && !m_recovered;
 }
 
 void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
@@ -1122,7 +1125,7 @@ void MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
 	QStringList namefilters;
 	namefilters << "*"+FritzingSketchExtension;
 
-	this->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false);
+	this->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false, true, "");
 	this->setWindowModified(true);
 
 	m_alienPartsMsg = tr("Do you want to keep the parts that were loaded with this shareable sketch %1?");
@@ -2018,4 +2021,8 @@ void MainWindow::setAutosave(int minutes, bool enabled) {
 			mainWindow->m_autosaveTimer.start(AutosaveTimeoutMinutes * 60 * 1000);
 		}
 	}
+}
+
+void MainWindow::setRecovered(bool recovered) {
+	m_recovered = recovered;
 }

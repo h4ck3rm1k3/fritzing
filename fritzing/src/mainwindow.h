@@ -62,8 +62,8 @@ public:
     MainWindow(QFile & fileToLoad);
 	~MainWindow();
 
-    void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
-	bool loadWhich(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
+    void load(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName);
+	bool loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent);
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
 	QSizeGrip *sizeGrip();
@@ -93,6 +93,7 @@ public:
 	
 	void exportToGerber(const QString & exportDir, ItemBase * board, bool displayMessageBoxes);
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
+	void setRecovered(bool);
 
 public:
 	static void initNames();
@@ -622,6 +623,7 @@ protected:
 	QTimer m_autosaveTimer;
 	bool m_autosaveNeeded;
 	bool m_backingUp;
+	bool m_recovered;
 
 public:
 	static int RestartNeeded;

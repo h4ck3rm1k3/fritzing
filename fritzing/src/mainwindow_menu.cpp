@@ -606,8 +606,10 @@ bool MainWindow::saveAsAux(const QString & fileName) {
     //FritzingWindow::saveAsAux(fileName);
 
 	saveAsAuxAux(fileName);
+	m_autosaveNeeded = false;
+	undoStackCleanChanged(true);
 
-    m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
+	m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
     setCurrentFile(fileName, true, false, "");
 
 	if(m_restarting && m_fileName != ___emptyString___) {
@@ -635,6 +637,7 @@ void MainWindow::saveAsAuxAux(const QString & fileName) {
 
 	disconnect(m_sketchModel->root(), SIGNAL(startSaveInstances(const QString &, ModelPart *, QXmlStreamWriter &)),
 			   this, SLOT(startSaveInstancesSlot(const QString &, ModelPart *, QXmlStreamWriter &)));
+
 	QApplication::restoreOverrideCursor();
 }
 
@@ -698,7 +701,7 @@ void MainWindow::load() {
     file.close();
 
     MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, fileName, true);
-	mw->loadWhich(fileName);
+	mw->loadWhich(fileName, true, true);
     mw->clearFileProgressDialog();
 	closeIfEmptySketch(mw);
 }
@@ -707,7 +710,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 {
 	bool result = false;
     if(fileName.endsWith(FritzingSketchExtension)) {
-    	load(fileName, setAsLastOpened, addToRecent);
+    	load(fileName, setAsLastOpened, addToRecent, "");
 		result = true;
     } else if(fileName.endsWith(FritzingBundleExtension)) {
     	m_saveAct->setEnabled(false);
@@ -733,7 +736,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 	return result;
 }
 
-void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
+void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent, const QString & displayName) {
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setMaximum(100);
@@ -743,10 +746,15 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	showAllFirstTimeHelp(false);
 	QApplication::processEvents();
 
-	QFileInfo fileInfo(fileName);
+
+	QString displayName2 = displayName;
+	if (displayName.isEmpty()) {
+		QFileInfo fileInfo(fileName);
+		displayName2 = fileInfo.fileName();
+	}
 
 	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setMessage(tr("loading %1 (model)").arg(fileInfo.fileName()));
+		m_fileProgressDialog->setMessage(tr("loading %1 (model)").arg(displayName2));
 		m_fileProgressDialog->setMaximum(100);
 		m_fileProgressDialog->setValue(10);
 	}
@@ -768,7 +776,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(55);
-		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(fileInfo.fileName()));
+		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(displayName2));
 	}
 
 	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
@@ -776,7 +784,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(70);
-		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(fileInfo.fileName()));
+		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(displayName2));
 	}
 
 	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
@@ -784,7 +792,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(85);
-		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(fileInfo.fileName()));
+		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(displayName2));
 	}
 
 	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
@@ -800,8 +808,6 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	}
 
 	setCurrentFile(fileName, addToRecent, false, "");
-
-	UntitledSketchIndex--;
 }
 
 void MainWindow::copy() {
@@ -2424,7 +2430,7 @@ void MainWindow::openRecentOrExampleFile() {
 		MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, action->data().toString(), true);
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
-		mw->load(action->data().toString(),!readOnly,!readOnly);
+		mw->load(action->data().toString(),!readOnly,!readOnly,"");
 		mw->clearFileProgressDialog();
 		closeIfEmptySketch(mw);
 	}

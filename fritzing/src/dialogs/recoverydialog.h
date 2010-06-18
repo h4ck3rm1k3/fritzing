@@ -31,6 +31,17 @@ $Date$
 #include <QTreeWidget>
 #include <QString>
 #include <QFileInfoList>
+#include <QStyleOptionViewItem>
+
+class CenteredTreeWidget : public QTreeWidget {
+	Q_OBJECT
+
+public:
+	CenteredTreeWidget(QWidget *parent = 0);
+
+protected:
+	QStyleOptionViewItem viewOptions () const;
+};
 
 class RecoveryDialog : public QDialog {
         Q_OBJECT
