@@ -953,13 +953,15 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 	Q_ASSERT(existsResult);
 */
 
-	QImage imgOrig(origFilePath);
-
+	QImage img(origFilePath);
 	QSvgGenerator svgGenerator;
+	svgGenerator.setResolution(90);
 	svgGenerator.setFileName(newFilePath);
-    svgGenerator.setSize(imgOrig.size());
+	QSize sz = img.size();
+    svgGenerator.setSize(sz);
+	svgGenerator.setViewBox(QRect(0, 0, sz.width(), sz.height()));
 	QPainter svgPainter(&svgGenerator);
-	svgPainter.drawImage(QPoint(0,0), imgOrig);
+	svgPainter.drawImage(QPoint(0,0), img);
 	svgPainter.end();
 
 	return newFilePath;
