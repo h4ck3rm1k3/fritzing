@@ -990,6 +990,13 @@ ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 	return NULL;
 }
 
+bool ConnectorItem::isCrossLayerConnectorItem(ConnectorItem * candidate) {
+	if (candidate == NULL) return false;
+
+	ConnectorItem * cross = getCrossLayerConnectorItem();
+	return cross == candidate;
+}
+
 void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 
 {
 	if (!m_checkedEffectively) {

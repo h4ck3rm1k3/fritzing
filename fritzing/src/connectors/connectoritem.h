@@ -87,6 +87,7 @@ public:
 	bool isGrounded();
 	ConnectorItem * chooseFromSpec(ViewLayer::ViewLayerSpec);
 	bool connectedToWires();
+	bool isCrossLayerConnectorItem(ConnectorItem * candidate);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

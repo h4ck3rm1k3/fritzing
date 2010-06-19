@@ -1575,6 +1575,7 @@ void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand *
 		connectorItems.append(virtualWireConnectors.takeFirst());
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NormalFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
 		for (int i = 1; i < connectorItems.count(); i++) {
+			// we're done with these now
 			virtualWireConnectors.removeOne(connectorItems[i]);
 		}
 
@@ -1620,6 +1621,12 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 			if (j == i) continue;
 
 			ConnectorItem * to = partConnectorItems[j];
+			if (from->isCrossLayerConnectorItem(to)) {
+				adjacency[i][j] = true;
+				adjacency[j][i] = true;
+				continue;
+			}
+
 			if (to->attachedTo() != from->attachedTo()) continue;
 			if (to->bus() == NULL) continue;
 			if (to->bus() != from->bus()) continue;
