@@ -71,7 +71,7 @@ protected:
 	virtual QPointF ringThicknessRange();
 	virtual QPointF holeDiameterRange();
 	virtual void setBoth(const QString & holeDiameter, const QString &  thickness);
-	ItemBase * setBothSvg(const QString & holeDiameter, const QString & ringThickness); 
+	ItemBase * setBothSvg(const QString & holeDiameter, const QString & ringThickness, const QStringList & connectorIDs); 
 	void setBothNonConnectors(ItemBase * itemBase, SvgIdLayer * svgIdLayer);
 											 
 protected:

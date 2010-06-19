@@ -150,7 +150,8 @@ void Hole::setHoleSize(QString holeSize, bool force) {
 void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) {
 	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
 
-	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
+	QStringList connectorIDs;
+	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness, connectorIDs);
 
 	// there's only one NonConnectorItem
 	foreach (SvgIdLayer * svgIdLayer, m_renderer->setUpNonConnectors()) {
@@ -165,7 +166,7 @@ void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) 
 	}
 }
 
-ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness) 
+ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringThickness, const QStringList & connectorIDs) 
 {
 	QString svg = makeSvg(holeDiameter, ringThickness, m_viewLayerID);
 	if (m_renderer == NULL) {
@@ -174,7 +175,7 @@ ItemBase * Hole::setBothSvg(const QString & holeDiameter, const QString & ringTh
 
 	QString setColor;
 	QStringList noIDs;
-	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, noIDs, noIDs, "", "", true);
+	bool result = m_renderer->loadSvg(svg.toLatin1(), m_filename, connectorIDs, noIDs, "", "", true);
 	if (result) {
 		setSharedRendererEx(m_renderer);
 	}
