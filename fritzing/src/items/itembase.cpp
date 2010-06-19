@@ -928,7 +928,7 @@ void ItemBase::setInstanceTitleAux(const QString &title)
 }
 
 QString ItemBase::label() {
-	if(m_modelPart && m_modelPart->modelPartShared()) {
+	if(m_modelPart) {
 		return m_modelPart->label();
 	}
 	return ___emptyString___;

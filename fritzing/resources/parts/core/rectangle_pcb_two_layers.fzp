@@ -36,7 +36,6 @@
    </layers>
   </schematicView>
   <pcbView>
-   <label/>
    <layers image="pcb/rectangle_pcb.svg" >
     <layer layerId="board" sticky="true" />
     <layer layerId="silkscreen" sticky="true" />

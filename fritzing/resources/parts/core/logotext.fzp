@@ -36,7 +36,6 @@
    </layers>
   </schematicView>
   <pcbView>
-   <label/>
    <layers image="pcb/logo.svg" >
     <layer layerId="silkscreen"/>
    </layers>
