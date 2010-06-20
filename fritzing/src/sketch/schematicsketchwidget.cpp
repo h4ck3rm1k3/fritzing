@@ -345,7 +345,24 @@ const QString & SchematicSketchWidget::traceColor(ConnectorItem *) {
 	return SchematicTraceColor;
 }
 
+const QString & SchematicSketchWidget::traceColor(ViewLayer::ViewLayerSpec) {
+	return SchematicTraceColor;
+}
+
 long SchematicSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, QUndoCommand * parentCommand)
 {
 	return SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, parentCommand);
 }
+
+
+bool SchematicSketchWidget::isInLayers(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec viewLayerSpec) {
+	Q_UNUSED(connectorItem);
+	Q_UNUSED(viewLayerSpec);
+	return true;
+}
+
+bool SchematicSketchWidget::routeBothSides() {
+	return false;
+}
+
+

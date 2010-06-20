@@ -234,3 +234,17 @@ ViewLayer::ViewLayerSpec ViewLayer::specFromID(ViewLayer::ViewLayerID viewLayerI
 			return ViewLayer::Bottom;
 	}
 }
+
+const LayerList & ViewLayer::copperLayers(ViewLayer::ViewLayerSpec viewLayerSpec) {
+	static LayerList bottom;
+	static LayerList top;
+	if (bottom.isEmpty()) {
+		bottom << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	}
+	if (top.isEmpty()) {
+		top << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+	}
+	if (viewLayerSpec == ViewLayer::Top) return top;
+	
+	return bottom;
+}

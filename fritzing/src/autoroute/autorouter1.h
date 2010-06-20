@@ -71,7 +71,7 @@ protected:
 	bool clean90(QPointF fromPos, QPointF toPos, QList<Wire *> & newWires, int level);
 	QPointF calcPrimePoint(ConnectorItem *);
 	void findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance); 
-	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec, ConnectorItem * forColor);
+	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
 	bool hitsObstacle(ItemBase * traceWire, ItemBase * ignore); 
 	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> & newWires, int level, bool recurse);
 	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> & newWires, int level, bool recurse);
@@ -79,14 +79,20 @@ protected:
 	void reduceColinearWires(QList<Wire *> &);
 	bool sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	bool sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
-	bool sameEffectiveLayer(ViewLayer::ViewLayerID viewLayerID1, ViewLayer::ViewLayerID viewLayerID2);
 	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited);
 	bool findSpaceFor(ConnectorItem * from, class JumperItem *, const QPolygonF & boundingPoly, QPointF & candidate); 
 	void dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<int> & netCounters, QList<struct Edge *> & edges);
+	void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy);
 	void addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<struct Subedge *> & subedges);
 	bool traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase * partForBounds, const QPolygonF & boundingPoly, QGraphicsLineItem *);
 	ItemBase * getPartForBounds(struct Edge *);
-	void fixupJumperItems(QList<struct JumperItemStruct *> &, int edgesDone);
+	void fixupJumperItems(QList<struct JumperItemStruct *> &, int edgesDone, bool bothSidesNow);
+	void runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem, 	
+				  QList<struct JumperItemStruct *> & jumperItemStructs, QList<Wire *> & jumpers,
+				  int & edgesDone, QVector<int> & netCounters, struct RoutingStatus &);
+	void clearEdges(QList<Edge *> & edges);
+	void doCancel(QUndoCommand * parentCommand);
+
 
 protected:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
@@ -94,7 +100,6 @@ protected:
 	static double distanceToLine(QPointF fromPos, QPointF p1, QPointF p2);
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
 	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
-	static void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy);
 
 public slots:
 	void cancel();
@@ -116,6 +121,7 @@ protected:
 	int m_autobail;
 	QGraphicsItem * m_nearestObstacle;
 	QList<Wire *> m_cleanWires;
+	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 };
 
 #endif

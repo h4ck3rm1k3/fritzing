@@ -56,7 +56,8 @@ public:
 	virtual bool autorouteCheckWires();
 	virtual bool autorouteCheckConnectors();
 	virtual bool autorouteCheckParts();
-	virtual const QString & traceColor(ConnectorItem * forColor);
+	virtual const QString & traceColor(ConnectorItem *);
+	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
 	const QString & jumperColor();
 	qreal jumperWidth();
 	virtual void ensureTraceLayersVisible();
@@ -80,6 +81,9 @@ public:
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
+	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
+	virtual bool routeBothSides();
+	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);

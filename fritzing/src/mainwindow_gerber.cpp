@@ -79,13 +79,11 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 
 	// TODO:  need copper1 (.gbl) mask (.gbs) 
 
-	LayerList viewLayerIDs;
-	viewLayerIDs << ViewLayer::GroundPlane0 << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	LayerList viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Bottom);
 	doCopper(board, viewLayerIDs, "copper0", "_copperTop.gtl", "_maskTop.gts", true, exportDir, displayMessageBoxes);
 
 	if (m_pcbGraphicsView->boardLayers() == 2) {
-		viewLayerIDs.clear();
-		viewLayerIDs << ViewLayer::GroundPlane1 << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
+		viewLayerIDs = ViewLayer::copperLayers(ViewLayer::Top);
 		doCopper(board, viewLayerIDs, "copper1", "_copperBottom.gbl", "_maskBottom.gbs", false, exportDir, displayMessageBoxes);
 	}
 

@@ -134,6 +134,7 @@ public:
 	static QList<ViewLayerID> findAlternativeLayers(ViewLayerID);
 	static bool canConnect(ViewLayerID, ViewLayerID);
 	static ViewLayer::ViewLayerSpec specFromID(ViewLayer::ViewLayerID);
+	static const QList<ViewLayer::ViewLayerID> & copperLayers(ViewLayer::ViewLayerSpec);
 
 protected:
 	bool m_visible;
@@ -146,7 +147,6 @@ protected:
 	bool m_active;
 
 };
-
 
 typedef QHash<ViewLayer::ViewLayerID, ViewLayer *> LayerHash;
 typedef QList<ViewLayer::ViewLayerID> LayerList;

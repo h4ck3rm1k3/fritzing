@@ -88,6 +88,9 @@ public:
 	ConnectorItem * chooseFromSpec(ViewLayer::ViewLayerSpec);
 	bool connectedToWires();
 	bool isCrossLayerConnectorItem(ConnectorItem * candidate);
+	bool isCrossLayerFrom(ConnectorItem * candidate);
+	bool isInLayers(ViewLayer::ViewLayerSpec);
+	ConnectorItem * getCrossLayerConnectorItem();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -108,7 +111,6 @@ protected:
     class Wire * wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
     bool wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
-	ConnectorItem * getCrossLayerConnectorItem();
 	void setHiddenOrInactive();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 

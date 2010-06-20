@@ -640,6 +640,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 
 	if (viewGeometry.getTrace()) {
 		switch (viewLayerSpec) {
+			case ViewLayer::Top:
 			case ViewLayer::WireOnTop_TwoLayers:
 			case ViewLayer::GroundPlane_Top:
 				return ViewLayer::Copper1Trace;
@@ -649,6 +650,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & 
 	}
 
 	switch (viewLayerSpec) {
+		case ViewLayer::Top:
 		case ViewLayer::WireOnTop_TwoLayers:
 			return ViewLayer::Copper1Trace;
 		default:
@@ -686,9 +688,17 @@ const QString & PCBSketchWidget::traceColor(ConnectorItem * forColor) {
 			return PCBTraceColor1;
 		default:
 			return PCBTraceColor;
-	}
-	
+	}	
 }
+
+const QString & PCBSketchWidget::traceColor(ViewLayer::ViewLayerSpec viewLayerSpec) {
+	if (viewLayerSpec == ViewLayer::Top) {
+		return PCBTraceColor1;
+	}
+
+	return PCBTraceColor;
+}
+
 
 const QString & PCBSketchWidget::jumperColor() {
 	return m_jumperColor;
@@ -2376,4 +2386,25 @@ void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCo
 	}
 
 	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, doRatsnest, offsetPaste);
+}
+
+bool PCBSketchWidget::isInLayers(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec viewLayerSpec) {
+	return connectorItem->isInLayers(viewLayerSpec);
+}
+
+bool PCBSketchWidget::routeBothSides() {
+	return m_boardLayers > 1;
+}
+
+bool PCBSketchWidget::sameElectricalLayer(ViewLayer::ViewLayerID id1, ViewLayer::ViewLayerID id2) {
+	// assumes both ids are in a copper layer
+
+	if (id1 == id2) return true;
+
+	LayerList copperBottom = ViewLayer::copperLayers(ViewLayer::Bottom);
+
+	bool c1 = copperBottom.contains(id1);
+	bool c2 = copperBottom.contains(id2);
+
+	return c1 == c2;
 }

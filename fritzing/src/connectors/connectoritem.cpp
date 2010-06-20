@@ -990,11 +990,19 @@ ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 	return NULL;
 }
 
+bool ConnectorItem::isInLayers(ViewLayer::ViewLayerSpec viewLayerSpec) {
+	return ViewLayer::copperLayers(viewLayerSpec).contains(attachedToViewLayerID());
+}
+
 bool ConnectorItem::isCrossLayerConnectorItem(ConnectorItem * candidate) {
 	if (candidate == NULL) return false;
 
 	ConnectorItem * cross = getCrossLayerConnectorItem();
 	return cross == candidate;
+}
+
+bool ConnectorItem::isCrossLayerFrom(ConnectorItem * candidate) {
+	return !ViewLayer::canConnect(this->attachedToViewLayerID(), candidate->attachedToViewLayerID());
 }
 
 void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) 

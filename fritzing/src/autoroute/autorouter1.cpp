@@ -200,10 +200,12 @@ void Autorouter1::start()
 		return;
 	}
 
+	// will list connectors on both sides separately
 	routingStatus.m_netCount = m_allPartConnectorItems.count();
 
 	QList<Edge *> edges;
 	QVector<int> netCounters(m_allPartConnectorItems.count());
+	m_viewLayerSpec = ViewLayer::Bottom;
 	dijkstraNets(indexer, netCounters, edges);
 
 	if (m_cancelled || m_stopTrace) {
@@ -215,12 +217,6 @@ void Autorouter1::start()
 	emit setMaximumProgress(edges.count());
 	QApplication::processEvents(); // to keep the app  from freezing
 
-	// sort the edges by distance
-	// TODO: for each edge, determine a measure of pin density, and use that, weighted with length, as the sort order
-	qSort(edges.begin(), edges.end(), edgeLessThan);
-
-	QPolygonF boundingPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-200, -200, 200, 200));
-
 	QGraphicsLineItem * lineItem = new QGraphicsLineItem(0, 0, 0, 0, NULL, m_sketchWidget->scene());
 	QPen pen = lineItem->pen();
 	pen.setColor(QColor(255, 200, 200));
@@ -228,15 +224,73 @@ void Autorouter1::start()
 	pen.setCapStyle(Qt::RoundCap);
 	lineItem->setPen(pen);
 
-	ViewGeometry vg;
-	vg.setRatsnest(true);
-	ViewLayer::ViewLayerID viewLayerID = m_sketchWidget->getWireViewLayerID(vg, m_sketchWidget->defaultViewLayerSpec());
-	lineItem->setZValue(m_sketchWidget->viewLayers().value(viewLayerID)->nextZ());
-	lineItem->setOpacity(0.8);
-
 	QList<Wire *> jumpers;
 	QList<JumperItemStruct *> jumperItemStructs;
 	int edgesDone = 0;
+	runEdges(edges, lineItem, jumperItemStructs, jumpers, edgesDone, netCounters, routingStatus);
+
+	clearEdges(edges);
+
+	if (m_cancelled) {
+		delete lineItem;
+		doCancel(parentCommand);
+		return;
+	}
+
+	bool bothSidesNow = m_sketchWidget->routeBothSides();
+	if (bothSidesNow) {
+		m_viewLayerSpec = ViewLayer::Top;
+		dijkstraNets(indexer, netCounters, edges);
+		runEdges(edges, lineItem, jumperItemStructs, jumpers, edgesDone, netCounters, routingStatus);
+	}
+
+	if (m_cancelled) {
+		delete lineItem;
+		doCancel(parentCommand);
+		return;
+	}
+
+	delete lineItem;
+
+	fixupJumperItems(jumperItemStructs, edgesDone, bothSidesNow);
+
+	cleanUp();
+
+	clearEdges(edges);
+
+	addToUndo(parentCommand, jumperItemStructs);
+
+	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
+		if (jumperItemStruct->jumperItem) {
+			m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false);
+		}
+		delete jumperItemStruct;
+	}
+	jumperItemStructs.clear();
+	
+	m_sketchWidget->pushCommand(parentCommand);
+	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand, routingStatus);
+	m_sketchWidget->repaint();
+	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
+}
+
+void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem, 
+						   QList<struct JumperItemStruct *> & jumperItemStructs, 
+						   QList<Wire *> & jumpers, int & edgesDone,
+						   QVector<int> & netCounters, RoutingStatus & routingStatus)
+{
+	// sort the edges by distance
+	// TODO: for each edge, determine a measure of pin density, and use that, weighted with length, as the sort order
+	qSort(edges.begin(), edges.end(), edgeLessThan);
+
+	QPolygonF boundingPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-200, -200, 200, 200));
+
+	ViewGeometry vg;
+	vg.setRatsnest(true);
+	ViewLayer::ViewLayerID viewLayerID = m_sketchWidget->getWireViewLayerID(vg, m_viewLayerSpec);
+	lineItem->setZValue(m_sketchWidget->viewLayers().value(viewLayerID)->nextZ());
+	lineItem->setOpacity(0.8);
+
 	foreach (Edge * edge, edges) {
 		QList<ConnectorItem *> fromConnectorItems;
 		QSet<Wire *> fromTraces;
@@ -344,10 +398,6 @@ void Autorouter1::start()
 		QApplication::processEvents();
 
 		if (m_cancelled) {
-			delete lineItem;
-			clearTraces(m_sketchWidget, false, NULL);
-			restoreOriginalState(parentCommand);
-			cleanUp();
 			return;
 		}
 
@@ -355,62 +405,51 @@ void Autorouter1::start()
 			break;
 		}
 	}
-
-	delete lineItem;
-
-	fixupJumperItems(jumperItemStructs, edgesDone);
-
-	cleanUp();
-	foreach (Edge * edge, edges) {
-		delete edge;
-	}
-	edges.clear();
-
-	addToUndo(parentCommand, jumperItemStructs);
-
-	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-		if (jumperItemStruct->jumperItem) {
-			m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false);
-		}
-		delete jumperItemStruct;
-	}
-	jumperItemStructs.clear();
-	
-	m_sketchWidget->pushCommand(parentCommand);
-	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand, routingStatus);
-	m_sketchWidget->repaint();
-	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
-void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs, int edgesDone) {
+void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs, int edgesDone, bool bothSidesNow) {
 	if (jumperItemStructs.count() <= 0) return;
 
 	int jumpersDone = 0;
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 		ConnectorItem * from = jumperItemStruct->from;
 		ConnectorItem * to = jumperItemStruct->to;
-		JumperItem * jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
-		jumperItemStruct->jumperItem = jumperItem;
-		if (jumperItem == NULL) {
-			// notify user?
+
+		bool deletedJumper = false;
+		if (bothSidesNow) {
+			QList<ConnectorItem *> connectorItems;
+			connectorItems << from;
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
+			if (connectorItems.contains(to)) {
+				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
+				deletedJumper = true;
+			}
 		}
-		else {
-			m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
 
-			m_sketchWidget->scene()->addItem(jumperItem);
+		if (!deletedJumper) {
+			JumperItem * jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
+			jumperItemStruct->jumperItem = jumperItem;
+			if (jumperItem == NULL) {
+				// notify user?
+			}
+			else {
+				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
 
-			TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec(), from);
-			traceWire->connector0()->tempConnectTo(jumperItem->connector0(), true);
-			jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
-			traceWire->connector1()->tempConnectTo(from, true);
-			from->tempConnectTo(traceWire->connector1(), true);
+				m_sketchWidget->scene()->addItem(jumperItem);
+
+				TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec());
+				traceWire->connector0()->tempConnectTo(jumperItem->connector0(), true);
+				jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
+				traceWire->connector1()->tempConnectTo(from, true);
+				from->tempConnectTo(traceWire->connector1(), true);
 
 
-			traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec(), from);
-			traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
-			jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
-			traceWire->connector1()->tempConnectTo(to, true);
-			to->tempConnectTo(traceWire->connector1(), true);
+				traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec());
+				traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
+				jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
+				traceWire->connector1()->tempConnectTo(to, true);
+				to->tempConnectTo(traceWire->connector1(), true);
+			}
 		}
 
 		emit setProgressValue(edgesDone + (++jumpersDone));
@@ -454,7 +493,7 @@ bool Autorouter1::traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase
 		originalLine = subedge->wire->line();
 		QLineF newLine(QPointF(0,0), subedge->point - subedge->wire->pos());
 		subedge->wire->setLine(newLine);
-		splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1, subedge->wire->viewLayerSpec(), subedge->from);
+		splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1, m_viewLayerSpec);
 		from = splitWire->connector0();
 		QApplication::processEvents();
 	}
@@ -587,27 +626,174 @@ void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<in
 			}
 		}
 		for (int i = 0; i < partConnectorItems->count() - 1; i++) {
+			ConnectorItem * from = partConnectorItems->at(i);
+			if (!m_sketchWidget->isInLayers(from, m_viewLayerSpec)) {
+				// dijkstra puts these all at the end of the list so we can stop here
+				break;
+			}
+
+			ConnectorItem * to = partConnectorItems->at(i + 1);
+			if (!m_sketchWidget->isInLayers(to, m_viewLayerSpec)) {
+				break;
+			}
+
+			double d = (*adjacency[indexer.value(from)])[indexer.value(to)];
+			if (d == 0) continue;
+
+			/*
+			DebugDialog::debug(QString("%1 %2 vlid:%3 to %4 %5 vlid:%6 %7")
+				.arg(from->attachedToTitle())
+				.arg(from->connectorSharedID())
+				.arg(from->attachedToViewLayerID())
+				.arg(to->attachedToTitle())
+				.arg(to->connectorSharedID())
+				.arg(to->attachedToViewLayerID())
+				.arg(d)
+				);
+			*/
+
 			Edge * edge = new Edge;
-			edge->from = partConnectorItems->at(i);
-			edge->to = partConnectorItems->at(i + 1);
-			edge->distance = (*adjacency[indexer.value(edge->from)])[indexer.value(edge->to)];
+			edge->from = from;
+			edge->to = to;
+			edge->distance = d;
 			edge->ground = ground;
-			if (edge->distance == 0) {
-				// do not autoroute this edge
-				delete edge;
-			}
-			else {
-				edges.append(edge);
-			}
+			edges.append(edge);
 		}
 	}
 	foreach (QVector<double> * row, adjacency) {
 		delete row;
 	}
 	adjacency.clear();
-
 }
 
+void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, 
+						   ViewGeometry::WireFlags alreadyWiredBy) 
+{
+	// TODO: this is the most straightforward dijkstra, but there are more efficient implementations
+
+	int count = vertices.count();
+	if (count < 2) return;
+
+	int leastDistanceStartIndex = 0;
+	double leastDistance = 0;
+
+	// set up adjacency matrix
+	for (int i = 0; i < count; i++) {
+		for (int j = i; j < count; j++) {
+			if (i == j) {
+				int index = indexer[vertices[i]];
+				(*adjacency[index])[index] = 0;
+			}
+			else {
+				double d = 0;
+				ConnectorItem * ci = vertices[i];
+				ConnectorItem * cj = vertices[j];
+				
+				DebugDialog::debug(QString("%1 %2 vlid:%3 to %4 %5 vlid:%6")
+					.arg(ci->attachedToTitle())
+					.arg(ci->connectorSharedID())
+					.arg(ci->attachedToViewLayerID())
+					.arg(cj->attachedToTitle())
+					.arg(cj->connectorSharedID())
+					.arg(cj->attachedToViewLayerID())
+					);
+				
+				if (ci->isCrossLayerFrom(cj)) {
+					// can't get there from here so distance is zero
+				}
+				else if (!m_sketchWidget->isInLayers(ci, m_viewLayerSpec)) {
+					// don't route the other side
+				}
+				else {
+					Wire * wire = ci->wiredTo(cj, alreadyWiredBy);
+					if (wire == NULL) {
+						ConnectorItem * ccci = ci->getCrossLayerConnectorItem();
+						if (ccci) {
+							ConnectorItem * cccj = cj->getCrossLayerConnectorItem();
+							if (cccj) {
+								wire = ccci->wiredTo(cccj, alreadyWiredBy);
+							}
+						}
+
+					}
+					if (wire) {
+						// leave the distance at zero
+						// do not autoroute--user says leave it alone
+					}
+					else if ((ci->attachedTo() == cj->attachedTo()) && ci->bus() && (ci->bus() == cj->bus())) {
+						// leave the distance at zero
+						// if connections are on the same bus on a given part
+					}
+					else {
+						QPointF pi = ci->sceneAdjustedTerminalPoint(NULL);
+						QPointF pj = cj->sceneAdjustedTerminalPoint(NULL);
+						double px = pi.x() - pj.x();
+						double py = pi.y() - pj.y();
+						d = (px * px) + (py * py);
+					}
+				}
+				int indexI = indexer.value(ci);
+				int indexJ = indexer.value(cj);
+				(*adjacency[indexJ])[indexI] = (*adjacency[indexI])[indexJ] = d;
+				if ((i == 0 && j == 1) || (d < leastDistance)) {
+					leastDistance = d;
+					leastDistanceStartIndex = i;
+				}
+				DebugDialog::debug(QString("adj %1").arg((*adjacency[indexJ])[indexI]) );
+			}
+		}
+	}
+
+	QList<ConnectorItem *> path;
+	path.append(vertices[leastDistanceStartIndex]);
+	int currentIndex = indexer.value(vertices[leastDistanceStartIndex]);
+	QList<ConnectorItem *> todo;
+	for (int i = 0; i < count; i++) {
+		if (i == leastDistanceStartIndex) continue;
+		todo.append(vertices[i]);
+	};
+	while (todo.count() > 0) {
+		ConnectorItem * leastConnectorItem = todo[0];
+		int leastIndex = indexer.value(todo[0]);
+		double leastDistance = (*adjacency[currentIndex])[leastIndex];
+		for (int i = 1; i < todo.count(); i++) {
+			ConnectorItem * candidateConnectorItem = todo[i];
+			int candidateIndex = indexer.value(candidateConnectorItem);
+			double candidateDistance = (*adjacency[currentIndex])[candidateIndex];
+			if (candidateDistance < leastDistance) {
+				leastDistance = candidateDistance;
+				leastIndex = candidateIndex;
+				leastConnectorItem = candidateConnectorItem;
+			}
+		}
+		path.append(leastConnectorItem);
+		todo.removeOne(leastConnectorItem);
+		currentIndex = leastIndex;
+	}
+
+
+
+	// should now have shortest path through vertices, so replace original list
+	vertices.clear();
+	//DebugDialog::debug("shortest path:");
+	QList<ConnectorItem *> otherSide;
+	foreach (ConnectorItem * connectorItem, path) {
+		if (m_sketchWidget->isInLayers(connectorItem, m_viewLayerSpec)) {
+			vertices.append(connectorItem);
+		}
+		else {
+			otherSide.append(connectorItem);
+		}
+		/*
+		DebugDialog::debug(QString("\t%1 %2 %3 %4")
+				.arg(connectorItem->attachedToTitle())
+				.arg(connectorItem->connectorSharedID())
+				.arg(connectorItem->sceneAdjustedTerminalPoint(NULL).x())
+				.arg(connectorItem->sceneAdjustedTerminalPoint(NULL).y()) );
+		*/
+	}
+	vertices.append(otherSide);
+}
 
 void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited) 
 {
@@ -748,105 +934,6 @@ void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 	}
 }
 
-
-void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy) {
-	// TODO: this is the most straightforward dijkstra, but there are more efficient implementations
-
-	int count = vertices.count();
-	if (count < 2) return;
-
-	int leastDistanceStartIndex = 0;
-	double leastDistance = 0;
-
-	// set up adjacency matrix
-	for (int i = 0; i < count; i++) {
-		for (int j = i; j < count; j++) {
-			if (i == j) {
-				int index = indexer[vertices[i]];
-				(*adjacency[index])[index] = 0;
-			}
-			else {
-				ConnectorItem * ci = vertices[i];
-				ConnectorItem * cj = vertices[j];
-				double d = 0;
-				Wire * wire = ci->wiredTo(cj, alreadyWiredBy);
-				if (wire && !wire->getAutoroutable()) {
-					// leave the distance at zero
-					// do not autoroute--user says leave it alone
-				}
-				else if ((ci->attachedTo() == cj->attachedTo()) && ci->bus() && (ci->bus() == cj->bus())) {
-					// leave the distance at zero
-					// if connections are on the same bus on a given part
-				}
-				else {
-					QPointF pi = ci->sceneAdjustedTerminalPoint(NULL);
-					QPointF pj = cj->sceneAdjustedTerminalPoint(NULL);
-					double px = pi.x() - pj.x();
-					double py = pi.y() - pj.y();
-					d = (px * px) + (py * py);
-				}
-				int indexI = indexer.value(ci);
-				int indexJ = indexer.value(cj);
-				(*adjacency[indexJ])[indexI] = (*adjacency[indexI])[indexJ] = d;
-				if ((i == 0 && j == 1) || (d < leastDistance)) {
-					leastDistance = d;
-					leastDistanceStartIndex = i;
-				}
-				//DebugDialog::debug(QString("adj from %1 %2 to %3 %4, %5")
-					//.arg(ci->attachedToTitle())
-					//.arg(ci->connectorSharedID())
-					//.arg(cj->attachedToTitle())
-					//.arg(cj->connectorSharedID())
-					//.arg((*adjacency[indexJ])[indexI]) );
-
-
-			}
-		}
-	}
-
-	QList<ConnectorItem *> path;
-	path.append(vertices[leastDistanceStartIndex]);
-	int currentIndex = indexer.value(vertices[leastDistanceStartIndex]);
-	QList<ConnectorItem *> todo;
-	for (int i = 0; i < count; i++) {
-		if (i == leastDistanceStartIndex) continue;
-		todo.append(vertices[i]);
-	};
-	while (todo.count() > 0) {
-		ConnectorItem * leastConnectorItem = todo[0];
-		int leastIndex = indexer.value(todo[0]);
-		double leastDistance = (*adjacency[currentIndex])[leastIndex];
-		for (int i = 1; i < todo.count(); i++) {
-			ConnectorItem * candidateConnectorItem = todo[i];
-			int candidateIndex = indexer.value(candidateConnectorItem);
-			double candidateDistance = (*adjacency[currentIndex])[candidateIndex];
-			if (candidateDistance < leastDistance) {
-				leastDistance = candidateDistance;
-				leastIndex = candidateIndex;
-				leastConnectorItem = candidateConnectorItem;
-			}
-		}
-		path.append(leastConnectorItem);
-		todo.removeOne(leastConnectorItem);
-		currentIndex = leastIndex;
-	}
-
-	// should now have shortest path through vertices, so replace original list
-	vertices.clear();
-	//DebugDialog::debug("shortest path:");
-	foreach (ConnectorItem * connectorItem, path) {
-		vertices.append(connectorItem);
-		/*
-		DebugDialog::debug(QString("\t%1 %2 %3 %4")
-				.arg(connectorItem->attachedToTitle())
-				.arg(connectorItem->connectorSharedID())
-				.arg(connectorItem->sceneAdjustedTerminalPoint(NULL).x())
-				.arg(connectorItem->sceneAdjustedTerminalPoint(NULL).y()) );
-		*/
-	}
-
-}
-
  bool Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {
 
 	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
@@ -934,7 +1021,7 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												m_sketchWidget->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+												  from->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase == NULL) {
 		// we're in trouble
 		return NULL;
@@ -945,10 +1032,10 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	jumperWire->setWireWidth(m_sketchWidget->jumperWidth(), m_sketchWidget);
 	jumperWire->setSelected(false);
 
-	from->tempConnectTo(jumperWire->connector0(), false);
-	jumperWire->connector0()->tempConnectTo(from, false);
-	to->tempConnectTo(jumperWire->connector1(), false);
-	jumperWire->connector1()->tempConnectTo(to, false);
+	//from->tempConnectTo(jumperWire->connector0(), false);
+	//jumperWire->connector0()->tempConnectTo(from, false);
+	//to->tempConnectTo(jumperWire->connector1(), false);
+	//jumperWire->connector1()->tempConnectTo(to, false);
 
 	if (partForBounds) {
 		jumperWire->addSticky(partForBounds, true);
@@ -963,7 +1050,7 @@ JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * t
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
-												from->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+											  from->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (temp == NULL) {
 		// we're in trouble
 		return NULL;
@@ -1058,8 +1145,8 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 					if (connectorItem->attachedTo() == jumperItem) continue;
 
 					ItemBase * itemBase = connectorItem->attachedTo();
-					ViewLayer::ViewLayerID vid = itemBase->viewLayerID();
-					if (vid == ViewLayer::Copper0 || vid == ViewLayer::Copper0Trace) {
+					if (m_sketchWidget->sameElectricalLayer(itemBase->viewLayerID(), jumperItem->viewLayerID()))
+					{
 						Wire * wire = dynamic_cast<Wire *>(itemBase);
 						if (wire != NULL) {
 							// handle this elsewhere
@@ -1112,8 +1199,8 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 					if (connectorItem->attachedTo() == jumperItem) continue;
 
 					ItemBase * itemBase = connectorItem->attachedTo();
-					ViewLayer::ViewLayerID vid = itemBase->viewLayerID();
-					if (vid == ViewLayer::Copper0 || vid == ViewLayer::Copper0Trace) {
+					if (m_sketchWidget->sameElectricalLayer(itemBase->viewLayerID(), jumperItem->viewLayerID())) 
+					{
 						Wire * wire = dynamic_cast<Wire *>(itemBase);
 						if (wire != NULL) {
 							// handle this elsewhere
@@ -1209,7 +1296,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		}
 	}
 
-	TraceWire * traceWire = drawOneTrace(fromPos, toPos, Wire::STANDARD_TRACE_WIDTH + 1, m_sketchWidget->defaultViewLayerSpec(), from);
+	TraceWire * traceWire = drawOneTrace(fromPos, toPos, Wire::STANDARD_TRACE_WIDTH + 1, m_viewLayerSpec);
 	if (traceWire == NULL) {
 		return false;
 	}
@@ -1274,7 +1361,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					continue;
 				}
 
-				if (!sameEffectiveLayer(candidateConnectorItem->attachedToViewLayerID(), traceWire->viewLayerID())) {
+				if (!m_sketchWidget->sameElectricalLayer(candidateConnectorItem->attachedToViewLayerID(), traceWire->viewLayerID())) {
 					// needs to be on the same layer
 					continue;
 				}
@@ -1805,7 +1892,7 @@ void Autorouter1::reduceColinearWires(QList<Wire *> & wires)
 		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint(NULL);
 
 		if (qAbs(fromPos.y() - toPos.y()) < .001 || qAbs(fromPos.x() - toPos.x()) < .001) {
-			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, w0->viewLayerSpec(), w0->connector0());
+			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, w0->viewLayerSpec());
 			if (traceWire == NULL)continue;
 
 			m_sketchWidget->deleteItem(wires[i], true, false, false);
@@ -1859,7 +1946,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 	}
 	if (!insidePoly) return NULL;
 
-	TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, m_sketchWidget->defaultViewLayerSpec(), from);
+	TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, m_viewLayerSpec);
 	if (traceWire == NULL) return NULL;
 
 	bool intersects = false;
@@ -1894,7 +1981,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 				continue;
 			}
 
-			if (!sameEffectiveLayer(candidateConnectorItem->attachedToViewLayerID(), traceWire->viewLayerID())) {
+			if (!m_sketchWidget->sameElectricalLayer(candidateConnectorItem->attachedToViewLayerID(), traceWire->viewLayerID())) {
 				// needs to be on the same layer
 				continue;
 			}
@@ -1966,7 +2053,7 @@ void Autorouter1::findNearestIntersection(QLineF & l1, QPointF & fromPos, const 
 	}
 }
 
-TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec, ConnectorItem * forColor)
+TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec)
 {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
@@ -1988,7 +2075,7 @@ TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width,
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	m_sketchWidget->setClipEnds(traceWire, false);
-	traceWire->setColorString(m_sketchWidget->traceColor(forColor), 1.0);
+	traceWire->setColorString(m_sketchWidget->traceColor(viewLayerSpec), 1.0);
 	traceWire->setWireWidth(width, m_sketchWidget);
 
 	return traceWire;
@@ -2020,7 +2107,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 	QList<Wire *> newWires;
 	// 1. draw wire from FROM to just outside its nearest part border
 	QPointF fromPrime = calcPrimePoint(from);
-	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(NULL), fromPrime, Wire::STANDARD_TRACE_WIDTH + 1, from->attachedTo()->viewLayerSpec(), from);
+	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(NULL), fromPrime, Wire::STANDARD_TRACE_WIDTH + 1, from->attachedTo()->viewLayerSpec());
 	if (fromWire == NULL) return false;
 
 	if (hitsObstacle(fromWire, from->attachedTo())) {
@@ -2030,7 +2117,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 
 	// 2. draw wire from TO to just outside its nearest part border
 	QPointF toPrime = calcPrimePoint(to);
-	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH + 1, to->attachedTo()->viewLayerSpec(), to);
+	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH + 1, to->attachedTo()->viewLayerSpec());
 	if (toWire == NULL) {
 		m_sketchWidget->deleteItem(fromWire, true, false, false);
 		return false;
@@ -2285,10 +2372,15 @@ bool Autorouter1::sameX(const QPointF & fromPos0, const QPointF & fromPos1, cons
 			qAbs(toPos0.x() - toPos1.x()) < 1.0;
 }
 
-bool Autorouter1::sameEffectiveLayer(ViewLayer::ViewLayerID viewLayerID1, ViewLayer::ViewLayerID viewLayerID2) {
-	Q_UNUSED(viewLayerID2);
+void Autorouter1::clearEdges(QList<Edge *> & edges) {
+	foreach (Edge * edge, edges) {
+		delete edge;
+	}
+	edges.clear();
+}
 
-	if (viewLayerID1 == ViewLayer::Copper0) return true;
-
-	return false;
+void Autorouter1::doCancel(QUndoCommand * parentCommand) {
+	clearTraces(m_sketchWidget, false, NULL);
+	restoreOriginalState(parentCommand);
+	cleanUp();
 }
