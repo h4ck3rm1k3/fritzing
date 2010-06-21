@@ -137,6 +137,17 @@
     </message>
 </context>
 <context>
+    <name>Board</name>
+    <message>
+        <source>one layer (single-sided)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>two layers (double-sided)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -246,14 +257,6 @@ in order to fix this connector</source>
         <translation>Импортировать файлы предыдущей версии?</translation>
     </message>
     <message>
-        <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
-
-Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
-        <translation>Вы хотите импортировать элементы и bins ,которые Вы создали в предыдущей версии Fritzing?
-
-Примечание: Вы можете импортировать их позде, используя меню &quot;Помощь&quot; &gt; &quot;Импортировать элементы и bins из предыдущей версии...&quot;.</translation>
-    </message>
-    <message>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
@@ -274,7 +277,13 @@ Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import par
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your changes will be lost if you don&apos;t save them.</source>
+        <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3328,6 +3337,10 @@ Fritzing по-прежнему работает, но вы не сможете �
         <source>Ground Plane Top</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to parse copper: %1 %2 %3</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -3362,15 +3375,31 @@ Fritzing по-прежнему работает, но вы не сможете �
 <context>
     <name>RecoveryDialog</name>
     <message>
-        <source>Select any files you want to recover from the list below</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Recover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Ignore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file not saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;&lt;b&gt;Fritzing may have crashed, but some of the changes to the following files may be recovered.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;The date and time each file was backed-up is displayed. If the file was saved, that date and time is also listed for comparison.&lt;/p&gt;&lt;p&gt;The original files are still on your disk, if they were ever saved. You can choose whether to overwrite the original file after you load its recovery file.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Select any files you want to recover from the list below.&lt;/b&gt;&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3824,6 +3853,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>Chinese (Traditional) - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polish - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
