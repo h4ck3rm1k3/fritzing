@@ -86,13 +86,14 @@ protected:
 	void addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<struct Subedge *> & subedges);
 	bool traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase * partForBounds, const QPolygonF & boundingPoly, QGraphicsLineItem *);
 	ItemBase * getPartForBounds(struct Edge *);
-	void fixupJumperItems(QList<struct JumperItemStruct *> &, int edgesDone, bool bothSidesNow);
+	void fixupJumperItems(QList<struct JumperItemStruct *> &, int edgesDone);
 	void runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem, 	
 				  QList<struct JumperItemStruct *> & jumperItemStructs, QList<Wire *> & jumpers,
 				  int & edgesDone, QVector<int> & netCounters, struct RoutingStatus &);
 	void clearEdges(QList<Edge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
-
+	bool alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to);
+	bool hasCollisions(JumperItem *, QGraphicsItem *, ConnectorItem * from); 
 
 protected:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
@@ -109,6 +110,8 @@ public slots:
 signals:
 	void setMaximumProgress(int);
 	void setProgressValue(int);
+	void wantTopVisible();
+	void wantBottomVisible();
 
 protected:
 	class PCBSketchWidget * m_sketchWidget;
@@ -119,6 +122,7 @@ protected:
 	bool m_cancelTrace;
 	bool m_stopTrace;
 	int m_autobail;
+	bool m_bothSidesNow;
 	QGraphicsItem * m_nearestObstacle;
 	QList<Wire *> m_cleanWires;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;

@@ -48,8 +48,48 @@ static const QRegExp HeightExpr("height=\\'\\d*px");
 
 QString ResizableBoard::customShapeTranslated;
 
-ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+
+QString Board::oneLayerTranslated;
+QString Board::twoLayersTranslated;
+
+Board::Board( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
+{
+}
+
+Board::~Board() {
+}
+
+QStringList Board::collectValues(const QString & family, const QString & prop, QString & value) {
+	if (prop.compare("layers", Qt::CaseInsensitive) == 0) {
+		QStringList result;
+		if (oneLayerTranslated.isEmpty()) {
+			oneLayerTranslated = tr("one layer (single-sided)");
+		}
+		if (twoLayersTranslated.isEmpty()) {
+			twoLayersTranslated = tr("two layers (double-sided)");
+		}
+
+		result.append(oneLayerTranslated);
+		result.append(twoLayersTranslated);
+
+		if (value == "1") {
+			value = oneLayerTranslated;
+		}
+		else if (value == "2") {
+			value = twoLayersTranslated;
+		}
+
+		return result;
+	}
+
+	return PaletteItem::collectValues(family, prop, value);
+}
+
+///////////////////////////////////////////////////////////
+
+ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+	: Board(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_keepAspectRatio = false;
 	m_widthEditor = m_heightEditor = NULL;
@@ -109,7 +149,7 @@ QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &v
 			break;
    	}
 
-    return PaletteItem::itemChange(change, value);
+    return Board::itemChange(change, value);
 }
 
 bool ResizableBoard::hasGrips() {
@@ -118,7 +158,7 @@ bool ResizableBoard::hasGrips() {
 
 void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	if (m_inResize == NULL) {
-		PaletteItem::mouseMoveEvent(event);
+		Board::mouseMoveEvent(event);
 		return;
 	}
 
@@ -251,7 +291,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 
 void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	if (m_inResize == NULL) {
-		PaletteItem::mouseReleaseEvent(event);
+		Board::mouseReleaseEvent(event);
 		return;
 	}
 
@@ -322,7 +362,7 @@ void ResizableBoard::positionGrips() {
 
 bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors)
 {
-	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors);
+	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors);
 	if (result) {
 		positionGrips();
 	}
@@ -398,7 +438,7 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 }
 
 void ResizableBoard::loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec) {
-	PaletteItem::loadLayerKin(viewLayers, viewLayerSpec);
+	Board::loadLayerKin(viewLayers, viewLayerSpec);
 	qreal w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {
 		resizeMM(w, m_modelPart->prop("height").toDouble(), viewLayers);
@@ -447,7 +487,7 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 		}
 	}
 
-	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+	return Board::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
 QString ResizableBoard::makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
@@ -484,7 +524,7 @@ void ResizableBoard::rotateItem(qreal degrees) {
 		}
 	}
 	else {
-		PaletteItem::rotateItem(degrees);
+		Board::rotateItem(degrees);
 	}
 }
 
@@ -511,7 +551,7 @@ bool ResizableBoard::hasCustomSVG() {
 
 bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
-	bool result = PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+	bool result = Board::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 
@@ -619,7 +659,7 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 }
 
 QStringList ResizableBoard::collectValues(const QString & family, const QString & prop, QString & value) {
-	QStringList result = PaletteItem::collectValues(family, prop, value);
+	QStringList result = Board::collectValues(family, prop, value);
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (customShapeTranslated.isEmpty()) {

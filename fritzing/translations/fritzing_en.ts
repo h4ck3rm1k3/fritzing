@@ -778,8 +778,8 @@ y:%2</source>
         <location filename="../src/mainwindow.cpp" line="1388"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation>
-            <numerusform>%1 of %2 nets routed - %n connector still to be routed</numerusform>
-            <numerusform>%1 of %2 nets routed - %n connectors still to be routed</numerusform>
+            <numerusform>%1 of %2 nets routed - %n connection still to be routed</numerusform>
+            <numerusform>%1 of %2 nets routed - %n connections still to be routed</numerusform>
         </translation>
     </message>
     <message>

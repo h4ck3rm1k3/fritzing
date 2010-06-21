@@ -349,7 +349,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
-	collectAllNets(indexer, allPartConnectorItems, false);
+	collectAllNets(indexer, allPartConnectorItems, false, routeBothSides());
 	routingStatus.zero();
 
 	// TODO:  handle delete in updateRatsnestColors...

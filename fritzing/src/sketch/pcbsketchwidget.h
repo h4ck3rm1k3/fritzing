@@ -82,7 +82,7 @@ public:
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
-	virtual bool routeBothSides();
+	bool routeBothSides();
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 
 public slots:

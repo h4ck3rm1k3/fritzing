@@ -62,6 +62,7 @@ struct JumperItemStruct {
 	QPolygonF boundingPoly;
 	Wire * jumperWire;
 	JumperItem * jumperItem;
+	bool deleted;
 };
 
 Subedge * makeSubedge(QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to) 
@@ -190,11 +191,17 @@ void Autorouter1::start()
 
 	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
 
+	m_bothSidesNow = m_sketchWidget->routeBothSides();
+	if (m_bothSidesNow) {
+		emit wantBottomVisible();
+		QApplication::processEvents();
+	}
+
 	clearTraces(m_sketchWidget, false, parentCommand);
 	updateRatsnest(false, parentCommand);
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
-	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false);
+	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false, m_bothSidesNow);
 
 	if (m_allPartConnectorItems.count() == 0) {
 		return;
@@ -237,8 +244,9 @@ void Autorouter1::start()
 		return;
 	}
 
-	bool bothSidesNow = m_sketchWidget->routeBothSides();
-	if (bothSidesNow) {
+	if (m_bothSidesNow) {
+		emit wantTopVisible();
+		QApplication::processEvents();
 		m_viewLayerSpec = ViewLayer::Top;
 		dijkstraNets(indexer, netCounters, edges);
 		runEdges(edges, lineItem, jumperItemStructs, jumpers, edgesDone, netCounters, routingStatus);
@@ -252,7 +260,7 @@ void Autorouter1::start()
 
 	delete lineItem;
 
-	fixupJumperItems(jumperItemStructs, edgesDone, bothSidesNow);
+	fixupJumperItems(jumperItemStructs, edgesDone);
 
 	cleanUp();
 
@@ -361,19 +369,23 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 		subedges.clear();
 
 		if (!routedFlag && !m_stopTrace) {
-			Wire * jumperWire = drawJumper(edge->from, edge->to, partForBounds, boundingPoly);
-			jumpers.append(jumperWire);
-			if (m_sketchWidget->usesJumperItem()) {
-				JumperItemStruct * jumperItemStruct = new JumperItemStruct();
-				jumperItemStruct->jumperItem = NULL;
-				jumperItemStruct->from = edge->from;
-				jumperItemStruct->to = edge->to;
-				jumperItemStruct->partForBounds = partForBounds;
-				jumperItemStruct->boundingPoly = boundingPoly;
-				jumperItemStruct->jumperWire = jumperWire;
-				jumperItemStructs.append(jumperItemStruct);
-				emit setMaximumProgress(edges.count() + jumperItemStructs.count());
+			if (!alreadyJumper(jumperItemStructs, edge->from, edge->to)) {
+				Wire * jumperWire = drawJumper(edge->from, edge->to, partForBounds, boundingPoly);
+				jumpers.append(jumperWire);
+				if (m_sketchWidget->usesJumperItem()) {
+					JumperItemStruct * jumperItemStruct = new JumperItemStruct();
+					jumperItemStruct->jumperItem = NULL;
+					jumperItemStruct->from = edge->from;
+					jumperItemStruct->to = edge->to;
+					jumperItemStruct->partForBounds = partForBounds;
+					jumperItemStruct->boundingPoly = boundingPoly;
+					jumperItemStruct->jumperWire = jumperWire;
+					jumperItemStruct->deleted = false;
+					jumperItemStructs.append(jumperItemStruct);
+					emit setMaximumProgress(edges.count() + jumperItemStructs.count());
+				}
 			}
+
 		}
 
 		emit setProgressValue(++edgesDone);
@@ -407,46 +419,53 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 	}
 }
 
-void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs, int edgesDone, bool bothSidesNow) {
+void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs, int edgesDone) {
 	if (jumperItemStructs.count() <= 0) return;
+
+	if (m_bothSidesNow) {
+		// clear any jumpers that have been routed on the other side
+		foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
+			ConnectorItem * from = jumperItemStruct->from;
+			ConnectorItem * to = jumperItemStruct->to;
+			QList<ConnectorItem *> connectorItems;
+			connectorItems << from;
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
+			if (connectorItems.contains(to)) {				
+				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
+				jumperItemStruct->deleted = true;
+			}
+		}
+	}
 
 	int jumpersDone = 0;
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 		ConnectorItem * from = jumperItemStruct->from;
 		ConnectorItem * to = jumperItemStruct->to;
 
-		bool deletedJumper = false;
-		if (bothSidesNow) {
-			QList<ConnectorItem *> connectorItems;
-			connectorItems << from;
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
-			if (connectorItems.contains(to)) {
-				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
-				deletedJumper = true;
+		if (!jumperItemStruct->deleted) {
+			jumperItemStruct->jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
+			if (jumperItemStruct->jumperItem == NULL && m_bothSidesNow) {
+				from = from->getCrossLayerConnectorItem();
+				to = to->getCrossLayerConnectorItem();
+				if (from && to) {
+					jumperItemStruct->jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
+				}
 			}
-		}
 
-		if (!deletedJumper) {
-			JumperItem * jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
-			jumperItemStruct->jumperItem = jumperItem;
-			if (jumperItem == NULL) {
-				// notify user?
-			}
-			else {
+			if (jumperItemStruct->jumperItem) {
 				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
+				m_sketchWidget->scene()->addItem(jumperItemStruct->jumperItem);
 
-				m_sketchWidget->scene()->addItem(jumperItem);
-
-				TraceWire * traceWire = drawOneTrace(jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec());
-				traceWire->connector0()->tempConnectTo(jumperItem->connector0(), true);
-				jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
+				TraceWire * traceWire = drawOneTrace(jumperItemStruct->jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItemStruct->jumperItem->viewLayerSpec());
+				traceWire->connector0()->tempConnectTo(jumperItemStruct->jumperItem->connector0(), true);
+				jumperItemStruct->jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
 				traceWire->connector1()->tempConnectTo(from, true);
 				from->tempConnectTo(traceWire->connector1(), true);
 
 
-				traceWire = drawOneTrace(jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItem->viewLayerSpec());
-				traceWire->connector0()->tempConnectTo(jumperItem->connector1(), true);
-				jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
+				traceWire = drawOneTrace(jumperItemStruct->jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItemStruct->jumperItem->viewLayerSpec());
+				traceWire->connector0()->tempConnectTo(jumperItemStruct->jumperItem->connector1(), true);
+				jumperItemStruct->jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
 				traceWire->connector1()->tempConnectTo(to, true);
 				to->tempConnectTo(traceWire->connector1(), true);
 			}
@@ -689,6 +708,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 				ConnectorItem * ci = vertices[i];
 				ConnectorItem * cj = vertices[j];
 				
+				/*
 				DebugDialog::debug(QString("%1 %2 vlid:%3 to %4 %5 vlid:%6")
 					.arg(ci->attachedToTitle())
 					.arg(ci->connectorSharedID())
@@ -697,6 +717,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 					.arg(cj->connectorSharedID())
 					.arg(cj->attachedToViewLayerID())
 					);
+				*/
 				
 				if (ci->isCrossLayerFrom(cj)) {
 					// can't get there from here so distance is zero
@@ -706,7 +727,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 				}
 				else {
 					Wire * wire = ci->wiredTo(cj, alreadyWiredBy);
-					if (wire == NULL) {
+					if (wire == NULL && m_bothSidesNow) {
 						ConnectorItem * ccci = ci->getCrossLayerConnectorItem();
 						if (ccci) {
 							ConnectorItem * cccj = cj->getCrossLayerConnectorItem();
@@ -739,7 +760,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 					leastDistance = d;
 					leastDistanceStartIndex = i;
 				}
-				DebugDialog::debug(QString("adj %1").arg((*adjacency[indexJ])[indexI]) );
+				//DebugDialog::debug(QString("adj %1").arg((*adjacency[indexJ])[indexI]) );
 			}
 		}
 	}
@@ -1105,7 +1126,6 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 				return false;
 			}
 
-			bool intersected = false;
 			qreal radians = angle * 2 * M_PI / 360.0;
 			candidate.setX(radius * cos(radians));
 			candidate.setY(radius * sin(radians));
@@ -1139,44 +1159,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 			}
 			QApplication::processEvents();
 
-			foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(ellipse)) {
-				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-				if (connectorItem != NULL) {
-					if (connectorItem->attachedTo() == jumperItem) continue;
-
-					ItemBase * itemBase = connectorItem->attachedTo();
-					if (m_sketchWidget->sameElectricalLayer(itemBase->viewLayerID(), jumperItem->viewLayerID()))
-					{
-						Wire * wire = dynamic_cast<Wire *>(itemBase);
-						if (wire != NULL) {
-							// handle this elsewhere
-							continue;
-						}
-
-						intersected = true;
-						break;
-					}
-					else {
-						continue;
-					}
-				}
-
-				NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-				if (nonConnectorItem != NULL) {
-					if (dynamic_cast<ConnectorItem *>(item) == NULL) {
-						intersected = true;
-						break;
-					}
-				}
-
-				TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
-				if (traceWire != NULL) {
-					intersected = true;
-					break;
-				}
-			}
-
-			if (intersected) {
+			if (hasCollisions(jumperItem, ellipse, NULL)) {
 				continue;
 			}
 
@@ -1191,67 +1174,8 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 				lineItem->setLine(c.x(), c.y(), candidate.x(), candidate.y());
 			}
 			QApplication::processEvents();
-
-			foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(lineItem)) {
-				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-				if (connectorItem != NULL) {
-					if (connectorItem == from) continue;
-					if (connectorItem->attachedTo() == jumperItem) continue;
-
-					ItemBase * itemBase = connectorItem->attachedTo();
-					if (m_sketchWidget->sameElectricalLayer(itemBase->viewLayerID(), jumperItem->viewLayerID())) 
-					{
-						Wire * wire = dynamic_cast<Wire *>(itemBase);
-						if (wire != NULL) {
-							// handle this elsewhere
-							continue;
-						}
-
-						intersected = true;
-						break;
-					}
-					else {
-						continue;
-					}
-				}
-
-				NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-				if (nonConnectorItem != NULL) {
-					if (dynamic_cast<ConnectorItem *>(item) == NULL) {
-						intersected = true;
-						break;
-					}
-				}
-
-				TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
-				if (traceWire == NULL) {
-					continue;
-				}
-
-				QList<Wire *> chainedWires;
-				QList<ConnectorItem *> ends;
-				QList<ConnectorItem *> uniqueEnds;
-				traceWire->collectChained(chainedWires, ends, uniqueEnds);
-				
-				if (!ends.contains(from)) {
-					intersected = true;
-					break;
-				}
-				else {
-					DebugDialog::debug("has trace");
-				}
-
-				// not sure why equipotential isn't working...
-				//if (!equipotential.contains(traceWire->connector0())) {
-					//intersected = true;
-					//break;
-				//}
-				//else {
-					//DebugDialog::debug("has trace");
-				//}
-			}
 			
-			if (!intersected) {
+			if (!hasCollisions(jumperItem, lineItem, from)) {
 				if (ellipse) delete ellipse;
 				if (lineItem) delete lineItem;
 				return true;
@@ -2384,3 +2308,87 @@ void Autorouter1::doCancel(QUndoCommand * parentCommand) {
 	restoreOriginalState(parentCommand);
 	cleanUp();
 }
+
+bool Autorouter1::alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to) {
+	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
+		if (jumperItemStruct->from == from && jumperItemStruct->to == to) {
+			return true;
+		}
+		if (jumperItemStruct->to == from && jumperItemStruct->from == to) {
+			return true;
+		}
+	}
+
+	if (m_bothSidesNow) {
+		from = from->getCrossLayerConnectorItem();
+		to = to->getCrossLayerConnectorItem();
+		if (from != NULL && to != NULL) {
+			foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
+				if (jumperItemStruct->from == from && jumperItemStruct->to == to) {
+					return true;
+				}
+				if (jumperItemStruct->to == from && jumperItemStruct->from == to) {
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool Autorouter1::hasCollisions(JumperItem * jumperItem, QGraphicsItem * lineOrEllipse, ConnectorItem * from) 
+{
+	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(lineOrEllipse)) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem != NULL) {
+			if (connectorItem == from) continue;
+			if (connectorItem->attachedTo() == jumperItem) continue;
+
+			ItemBase * itemBase = connectorItem->attachedTo();
+			if (m_sketchWidget->sameElectricalLayer(itemBase->viewLayerID(), jumperItem->viewLayerID()))
+			{
+				Wire * wire = dynamic_cast<Wire *>(itemBase);
+				if (wire != NULL) {
+					// handle this elsewhere
+					continue;
+				}
+
+				return true;
+			}
+			else {
+				continue;
+			}
+		}
+
+		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+		if (nonConnectorItem != NULL) {
+			if (dynamic_cast<ConnectorItem *>(item) == NULL) {
+				if (m_sketchWidget->sameElectricalLayer(nonConnectorItem->attachedTo()->viewLayerID(), jumperItem->viewLayerID()))
+				{
+					return true;
+				}
+			}
+
+			continue;
+		}
+
+		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
+		if (traceWire == NULL) continue;
+		if (!m_sketchWidget->sameElectricalLayer(traceWire->viewLayerID(), jumperItem->viewLayerID())) continue;
+
+		if (!from) return true;
+
+		QList<Wire *> chainedWires;
+		QList<ConnectorItem *> ends;
+		QList<ConnectorItem *> uniqueEnds;
+		traceWire->collectChained(chainedWires, ends, uniqueEnds);
+		
+		if (!ends.contains(from)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+

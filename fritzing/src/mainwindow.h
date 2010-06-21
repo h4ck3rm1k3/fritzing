@@ -346,7 +346,7 @@ protected:
 	SketchToolButton *createShareButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
-	SketchToolButton *createActiveLayerButton(SketchAreaWidget *parent, const QString & selector);
+	QWidget *createActiveLayerButton(SketchAreaWidget *parent);
 	class ExpandingLabel * createRoutingStatusLabel(SketchAreaWidget *);
 	SketchToolButton *createExportEtchableButton(SketchAreaWidget *parent);
 	SketchToolButton *createNoteButton(SketchAreaWidget *parent);
@@ -586,9 +586,7 @@ protected:
 
 	QList<SketchToolButton*> m_rotateButtons;
 	QList<SketchToolButton*> m_flipButtons;
-	SketchToolButton * m_activeLayerBothButton;
-	SketchToolButton * m_activeLayerTopButton;
-	SketchToolButton * m_activeLayerBottomButton;
+	QStackedWidget * m_activeLayerButtonWidget;
 
     bool m_comboboxChanged;
     bool m_restarting;

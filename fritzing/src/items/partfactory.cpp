@@ -85,6 +85,8 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			return new JumperItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::ResizableBoard:
 			return new ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+		case ModelPart::Board:
+			return new Board(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Logo:
 			return new LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		case ModelPart::Ruler:

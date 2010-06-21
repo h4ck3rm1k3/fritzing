@@ -41,6 +41,7 @@ $Date$
 #include <QPixmap>
 #include <QTimer>
 #include <QWebView>
+#include <QStackedWidget>
 
 #include "items/paletteitem.h"
 #include "mainwindow.h"
@@ -97,7 +98,7 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
-	m_activeLayerBothButton = m_activeLayerTopButton = m_activeLayerBottomButton = NULL;
+	m_activeLayerButtonWidget = NULL;
 	m_programWindow = NULL;
 	m_windowMenuSeparator = NULL;
 	m_wireColorMenu = NULL;
@@ -592,31 +593,29 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 	return autorouteButton;
 }
 
-SketchToolButton *MainWindow::createActiveLayerButton(SketchAreaWidget *parent, const QString & selector) 
+QWidget *MainWindow::createActiveLayerButton(SketchAreaWidget *parent) 
 {
 	QList<QAction *> actions;
 	actions << m_activeLayerBothAct << m_activeLayerBottomAct << m_activeLayerTopAct;
 
-	if (selector.isEmpty()) {
-		m_activeLayerBothButton = new SketchToolButton("ActiveLayer", parent, actions);
-		m_activeLayerBothButton->setDefaultAction(m_activeLayerBottomAct);
-		m_activeLayerBothButton->setText(tr("Both Layers"));
-		return m_activeLayerBothButton;
-	}
-	if (selector == "B") {
-		m_activeLayerBottomButton = new SketchToolButton("ActiveLayerB", parent, actions);
-		m_activeLayerBottomButton->setDefaultAction(m_activeLayerTopAct);
-		m_activeLayerBottomButton->setText(tr("Bottom Layer"));
-		return m_activeLayerBottomButton;
-	}
-	if (selector == "T") {
-		m_activeLayerTopButton = new SketchToolButton("ActiveLayerT", parent, actions);
-		m_activeLayerTopButton->setDefaultAction(m_activeLayerBothAct);
-		m_activeLayerTopButton->setText(tr("Top Layer"));
-		return m_activeLayerTopButton;
-	}
+	m_activeLayerButtonWidget = new QStackedWidget;
 
-	return NULL;
+	SketchToolButton * button = new SketchToolButton("ActiveLayer", parent, actions);
+	button->setDefaultAction(m_activeLayerBottomAct);
+	button->setText(tr("Both Layers"));
+	m_activeLayerButtonWidget->addWidget(button);
+
+	button = new SketchToolButton("ActiveLayerB", parent, actions);
+	button->setDefaultAction(m_activeLayerTopAct);
+	button->setText(tr("Bottom Layer"));
+	m_activeLayerButtonWidget->addWidget(button);
+
+	button = new SketchToolButton("ActiveLayerT", parent, actions);
+	button->setDefaultAction(m_activeLayerBothAct);
+	button->setText(tr("Top Layer"));
+	m_activeLayerButtonWidget->addWidget(button);
+
+	return m_activeLayerButtonWidget;
 }
 
 SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent) {
@@ -660,7 +659,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 			break;
 		case ViewIdentifierClass::PCBView:
 			retval << SketchAreaWidget::separator(parent) 
-				<< createActiveLayerButton(parent, "") << createActiveLayerButton(parent, "T") << createActiveLayerButton(parent, "B") 
+				<< createActiveLayerButton(parent) 
 				<< createAutorouteButton(parent) << createExportEtchableButton(parent) << createRoutingStatusLabel(parent);
 			break;
 		default:
@@ -1595,6 +1594,22 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 			}
 		}
 
+		if (key.compare("layers", Qt::CaseInsensitive) == 0) {
+			Board * board = dynamic_cast<Board *>(itemBase);
+			if (board == NULL) continue;
+
+			QString value = currPropsMap.value(key, "");
+			if (value.compare(Board::oneLayerTranslated) == 0) {
+				currPropsMap.insert(key, "1");
+				return false;
+			}
+			if (value.compare(Board::twoLayersTranslated) == 0) {
+				currPropsMap.insert(key, "2");
+				return false;
+			}
+		}
+
+
 		if (key.compare("form", Qt::CaseInsensitive) == 0) {
 			PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
 			if (pinHeader == NULL) continue;
@@ -1920,32 +1935,24 @@ void MainWindow::changeBoardLayers(int layers, bool doEmit) {
 }
 
 void MainWindow::updateActiveLayerButtons() {
-	bool alvis = false;
-	bool albvis = false;
-	bool altvis = false;
 	bool enabled = false;
 	int index;
 	if (m_currentGraphicsView->boardLayers() == 2) {
 		bool copper0Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper0);
 		bool copper1Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper1);
 		if (copper0Visible && copper1Visible) {
-			alvis = true;
 			index = 0;
 		}
 		else if (copper1Visible) {
-			altvis = true;
 			index = 2;
 		}
 		else if (copper0Visible) {
-			albvis = true;
 			index = 1;
 		}
 		enabled = true;
 	}
 
-	m_activeLayerBothButton->setVisible(alvis);
-	m_activeLayerTopButton->setVisible(altvis);
-	m_activeLayerBottomButton->setVisible(albvis);
+	m_activeLayerButtonWidget->setCurrentIndex(index);
 
 	m_activeLayerBothAct->setEnabled(enabled);
 	m_activeLayerBottomAct->setEnabled(enabled);

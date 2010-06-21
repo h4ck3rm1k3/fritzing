@@ -233,7 +233,8 @@ public:
 	ViewLayer::ViewLayerSpec defaultViewLayerSpec();
 	virtual int designRulesCheck();
 	void addFixedToCenterItem2(class SketchMainHelp *item);
-	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons);
+	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons, bool crossLayers);
+	virtual bool routeBothSides();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

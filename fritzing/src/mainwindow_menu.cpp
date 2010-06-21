@@ -2641,7 +2641,7 @@ void MainWindow::exportBOM() {
 void MainWindow::exportNetlist() {
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > netList;
-	this->m_currentGraphicsView->collectAllNets(indexer, netList, true);
+	this->m_currentGraphicsView->collectAllNets(indexer, netList, true, m_currentGraphicsView->routeBothSides());
 
 	QDomDocument doc;
 	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>"));
@@ -2862,6 +2862,8 @@ void MainWindow::autoroute() {
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
 	Autorouter1 * autorouter1 = new Autorouter1(pcbSketchWidget);
 
+	connect(autorouter1, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
+	connect(autorouter1, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(cancel()), autorouter1, SLOT(cancel()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(skip()), autorouter1, SLOT(cancelTrace()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(stop()), autorouter1, SLOT(stopTrace()), Qt::DirectConnection);

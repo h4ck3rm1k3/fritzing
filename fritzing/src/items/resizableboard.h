@@ -34,7 +34,23 @@ $Date$
 
 #include "paletteitem.h"
 
-class ResizableBoard : public PaletteItem 
+class Board : public PaletteItem 
+{
+	Q_OBJECT
+
+public:
+	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
+	Board(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~Board();
+
+	QStringList collectValues(const QString & family, const QString & prop, QString & value);
+
+public:
+	static QString oneLayerTranslated;
+	static QString twoLayersTranslated;
+};
+
+class ResizableBoard : public Board 
 {
 	Q_OBJECT
 

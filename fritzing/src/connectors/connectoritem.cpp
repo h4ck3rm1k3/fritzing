@@ -791,7 +791,7 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 {
 	if (connectorItems.count() == 0) return;
 
-	DebugDialog::debug("___________________________");
+	//DebugDialog::debug("___________________________");
 	switch (viewLayerSpec) {
 		case ViewLayer::Top:
 		case ViewLayer::Bottom:
@@ -834,11 +834,13 @@ void ConnectorItem::collectPart(ConnectorItem * connectorItem, QList<ConnectorIt
 		if (viewLayerSpec == ViewLayer::TopAndBottom) {
 			partsConnectors.append(crossConnectorItem);
 			
+			/*
 			DebugDialog::debug(QString("collecting both: %1 %2 %3 %4")
 				.arg(crossConnectorItem->attachedToID())
 				.arg(crossConnectorItem->connectorSharedID())
 				.arg(crossConnectorItem->attachedToViewLayerID())
 				.arg((long)crossConnectorItem->attachedTo(), 0, 16) );
+			*/
 				
 		}
 		else if (viewLayerSpec == ViewLayer::Top) {
@@ -857,12 +859,13 @@ void ConnectorItem::collectPart(ConnectorItem * connectorItem, QList<ConnectorIt
 		}
 	}
 
+	/*
 	DebugDialog::debug(QString("collecting part: %1 %2 %3 %4")
 		.arg(connectorItem->attachedToID())
 		.arg(connectorItem->connectorSharedID())
 		.arg(connectorItem->attachedToViewLayerID())
 		.arg((long) connectorItem->attachedTo(), 0, 16) );
-		
+	*/	
 
 	partsConnectors.append(connectorItem);
 }

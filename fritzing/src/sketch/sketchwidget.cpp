@@ -6304,7 +6304,7 @@ void SketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	}
 }
 
-void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons) 
+void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons, bool crossLayers) 
 {
 	// get the set of all connectors in the sketch
 	QList<ConnectorItem *> allConnectors;
@@ -6321,7 +6321,7 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 		ConnectorItem * connectorItem = allConnectors.takeFirst();
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
+		ConnectorItem::collectEqualPotential(connectorItems, crossLayers, ViewGeometry::TraceJumperRatsnestFlags);
 		if (connectorItems.count() <= 0) {
 			continue;
 		}
@@ -6368,4 +6368,8 @@ ViewLayer::ViewLayerSpec SketchWidget::getViewLayerSpec(ModelPart * modelPart, Q
 
 	return viewLayerSpec;
 
+}
+
+bool SketchWidget::routeBothSides() {
+	return false;
 }

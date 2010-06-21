@@ -1122,13 +1122,13 @@ QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
 			if (infoGraphicsView) {
 				infoGraphicsView->setIgnoreSelectionChangeEvents(true);
 			}
-			DebugDialog::debug(QString("original wire selected %1 %2").arg(value.toBool()).arg(this->id()));
+			// DebugDialog::debug(QString("original wire selected %1 %2").arg(value.toBool()).arg(this->id()));
 			foreach (Wire * wire, chained) {
 				if (wire != this ) {
 					wire->setIgnoreSelectionChange(true);
 					wire->setSelected(value.toBool());
 					wire->setIgnoreSelectionChange(false);
-					DebugDialog::debug(QString("wire selected %1 %2").arg(value.toBool()).arg(wire->id()));
+					// DebugDialog::debug(QString("wire selected %1 %2").arg(value.toBool()).arg(wire->id()));
 				}
 			}
 			if (infoGraphicsView) {
