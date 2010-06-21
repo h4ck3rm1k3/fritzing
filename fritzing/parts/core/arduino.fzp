@@ -12,7 +12,7 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller Board</property>
+        <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino</property>
     </properties>

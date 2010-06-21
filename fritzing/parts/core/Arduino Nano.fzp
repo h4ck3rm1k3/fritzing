@@ -3,13 +3,14 @@
     <author>Lionel Michel</author>
     <title>Arduino Nano</title>
     <date>2009-03-06</date>
+    <label>Nano</label>
     <tags>
         <tag>Arduino</tag>
         <tag>Nano</tag>
         <tag>microcontroller</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller Board</property>
+        <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino Nano</property>
     </properties>

@@ -9,7 +9,7 @@
         <tag>microcontroller</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller Board</property>
+        <property name="family">Microcontroller Board (Wiring)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Wiring Mini</property>
     </properties>

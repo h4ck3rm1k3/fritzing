@@ -10,7 +10,7 @@
         <tag>Parallax</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller</property>
+        <property name="family">Microcontroller (Propeller)</property>
         <property name="type">Parallax Propeller</property>
         <property name="package">DIP</property>
     </properties>

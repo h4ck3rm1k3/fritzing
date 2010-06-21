@@ -9,7 +9,7 @@
         <tag>Parallax</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller Board</property>
+        <property name="family">Microcontroller Board (Basic Stamp)</property>
         <property name="processor">PBASIC</property>
         <property name="variant">Basic Stamp 2pe</property>
     </properties>

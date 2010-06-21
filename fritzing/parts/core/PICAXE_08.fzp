@@ -9,7 +9,7 @@
         <tag>DIP</tag>
     </tags>
     <properties>
-        <property name="family">PICAXE</property>
+        <property name="family">Microcontroller Board (PICAXE)</property>
         <property name="variant">PICAXE-08</property>
     </properties>
     <description>PICAXE-08 from Revolution Education Ltd</description>

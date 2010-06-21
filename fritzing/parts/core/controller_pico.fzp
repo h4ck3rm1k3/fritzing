@@ -5,7 +5,7 @@
     <date>2010-01-12</date>
     <tags/>
     <properties>
-        <property name="family">Microcontroller Board</property>
+        <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Modified pico</property>
     </properties>

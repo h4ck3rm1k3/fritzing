@@ -12,7 +12,7 @@
         <tag>microcontroller</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller Board</property>
+        <property name="family">Microcontroller Board (MBED)</property>
         <property name="processor">NXP/ARM Cortex</property>
         <property name="variant">mbed</property>
     </properties>
