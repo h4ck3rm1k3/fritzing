@@ -83,9 +83,8 @@ void PaletteModel::initParts(bool fastLoad) {
 	if (dir == NULL) {
 	    QMessageBox::information(NULL, QObject::tr("Fritzing"),
 	                             QObject::tr("Parts folder not found.") );
+		return;
 	}
-	return;
-
 
 	FritzingContribPath = dir->absoluteFilePath("contrib");
 	delete dir;
