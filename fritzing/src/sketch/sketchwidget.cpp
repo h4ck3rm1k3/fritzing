@@ -1292,6 +1292,7 @@ bool SketchWidget::canDropModelPart(ModelPart * modelPart) {
 }
 
 void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
+	Q_UNUSED(event);
 	turnOffAutoscroll();
 
 	if (m_droppingItem != NULL) {
@@ -1310,7 +1311,7 @@ void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
 		}
 	}
 
-	QGraphicsView::dragLeaveEvent(event);
+	//QGraphicsView::dragLeaveEvent(event);		// we override QGraphicsView::dragEnterEvent so don't call the subclass dragLeaveEvent here
 }
 
 void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
@@ -1344,7 +1345,7 @@ void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 		return;
 	}
 
-	QGraphicsView::dragMoveEvent(event);
+	//QGraphicsView::dragMoveEvent(event);   // we override QGraphicsView::dragEnterEvent so don't call the subclass dragMoveEvent here
 }
 
 void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
@@ -5324,6 +5325,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 								  bool fillHoles, 
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
 {
+	Q_UNUSED(fillHoles);
 	qreal width = itemsBoundingRect.width();
 	qreal height = itemsBoundingRect.height();
 	QPointF offset = itemsBoundingRect.topLeft();
