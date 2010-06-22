@@ -93,7 +93,7 @@ protected:
 	void clearEdges(QList<Edge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
 	bool alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to);
-	bool hasCollisions(JumperItem *, QGraphicsItem *, ConnectorItem * from); 
+	bool hasCollisions(JumperItem *, ViewLayer::ViewLayerID, QGraphicsItem *, ConnectorItem * from); 
 
 protected:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);

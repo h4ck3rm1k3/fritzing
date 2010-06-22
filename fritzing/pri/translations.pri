@@ -31,4 +31,5 @@ TRANSLATIONS += translations/fritzing_de.ts \
 	translations/fritzing_et.ts \
 	translations/fritzing_hu.ts \
 	translations/fritzing_th.ts \
-	translations/fritzing_nl.ts
+	translations/fritzing_nl.ts \
+	translations/fritzing_pl.ts \

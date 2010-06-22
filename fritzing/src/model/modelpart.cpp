@@ -123,6 +123,8 @@ void ModelPart::setItemType(ItemType t) {
 }
 
 void ModelPart::copy(ModelPart * modelPart) {
+	if (modelPart == NULL) return;
+
 	m_type = modelPart->itemType();
 	m_modelPartShared = modelPart->modelPartShared();
 	m_core = modelPart->isCore();

@@ -63,6 +63,7 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
         m_languages.insert("chinese_china", tr("Chinese (Simplified) - %1").arg(QString::fromUtf16(t6)));
         ushort t7[] = { 0x6b63, 0x9ad4, 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7e41, 0x9ad4, 0x0029, 0 };
         m_languages.insert("chinese_taiwan", tr("Chinese (Traditional) - %1").arg(QString::fromUtf16(t7)));
+        m_languages.insert("polish", tr("Polish - %1").arg("Polski"));
 
         // More languages written in their own language can be found
         // at http://www.mozilla.com/en-US/firefox/all.html

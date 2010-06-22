@@ -1609,7 +1609,6 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 			}
 		}
 
-
 		if (key.compare("form", Qt::CaseInsensitive) == 0) {
 			PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
 			if (pinHeader == NULL) continue;

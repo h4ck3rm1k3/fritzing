@@ -1159,7 +1159,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 			}
 			QApplication::processEvents();
 
-			if (hasCollisions(jumperItem, ellipse, NULL)) {
+			if (hasCollisions(jumperItem, from->attachedToViewLayerID(), ellipse, NULL)) {
 				continue;
 			}
 
@@ -1175,7 +1175,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 			}
 			QApplication::processEvents();
 			
-			if (!hasCollisions(jumperItem, lineItem, from)) {
+			if (!hasCollisions(jumperItem, from->attachedToViewLayerID(), lineItem, from)) {
 				if (ellipse) delete ellipse;
 				if (lineItem) delete lineItem;
 				return true;
@@ -2337,7 +2337,7 @@ bool Autorouter1::alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStr
 	return false;
 }
 
-bool Autorouter1::hasCollisions(JumperItem * jumperItem, QGraphicsItem * lineOrEllipse, ConnectorItem * from) 
+bool Autorouter1::hasCollisions(JumperItem * jumperItem, ViewLayer::ViewLayerID viewLayerID, QGraphicsItem * lineOrEllipse, ConnectorItem * from) 
 {
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(lineOrEllipse)) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
@@ -2346,7 +2346,7 @@ bool Autorouter1::hasCollisions(JumperItem * jumperItem, QGraphicsItem * lineOrE
 			if (connectorItem->attachedTo() == jumperItem) continue;
 
 			ItemBase * itemBase = connectorItem->attachedTo();
-			if (m_sketchWidget->sameElectricalLayer(itemBase->viewLayerID(), jumperItem->viewLayerID()))
+			if (m_sketchWidget->sameElectricalLayer(itemBase->viewLayerID(), viewLayerID))
 			{
 				Wire * wire = dynamic_cast<Wire *>(itemBase);
 				if (wire != NULL) {
@@ -2364,7 +2364,7 @@ bool Autorouter1::hasCollisions(JumperItem * jumperItem, QGraphicsItem * lineOrE
 		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
 		if (nonConnectorItem != NULL) {
 			if (dynamic_cast<ConnectorItem *>(item) == NULL) {
-				if (m_sketchWidget->sameElectricalLayer(nonConnectorItem->attachedTo()->viewLayerID(), jumperItem->viewLayerID()))
+				if (m_sketchWidget->sameElectricalLayer(nonConnectorItem->attachedTo()->viewLayerID(), viewLayerID))
 				{
 					return true;
 				}
@@ -2375,7 +2375,7 @@ bool Autorouter1::hasCollisions(JumperItem * jumperItem, QGraphicsItem * lineOrE
 
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
 		if (traceWire == NULL) continue;
-		if (!m_sketchWidget->sameElectricalLayer(traceWire->viewLayerID(), jumperItem->viewLayerID())) continue;
+		if (!m_sketchWidget->sameElectricalLayer(traceWire->viewLayerID(), viewLayerID)) continue;
 
 		if (!from) return true;
 
