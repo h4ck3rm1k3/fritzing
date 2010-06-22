@@ -470,11 +470,13 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool 
 			DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
 			UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
 		}
-    }
+		else if (!QFile(fileName).isWritable()) {
+			// If the file is read-only be sure to set this
+			setReadOnly(true);
+		}
 
-    // If this was a sketch restored from the backup directory, preserve the
-    // backup file name
-    if (recovered) {
+		// If this was a sketch restored from the backup directory, preserve the
+		// backup file name
         m_backupFileNameAndPath = backupName;
     }
 
@@ -1935,7 +1937,7 @@ void MainWindow::changeBoardLayers(int layers, bool doEmit) {
 
 void MainWindow::updateActiveLayerButtons() {
 	bool enabled = false;
-	int index;
+	int index = 0;
 	if (m_currentGraphicsView->boardLayers() == 2) {
 		bool copper0Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper0);
 		bool copper1Visible = m_currentGraphicsView->layerIsActive(ViewLayer::Copper1);

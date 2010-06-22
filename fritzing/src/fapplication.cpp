@@ -1150,15 +1150,16 @@ QList<MainWindow *> FApplication::recoverBackups()
 	QDir backupDir(FolderUtils::getUserDataStorePath("backup"));
 	QFileInfoList dirList = backupDir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::NoSymLinks);
 	foreach (QFileInfo dirInfo, dirList) {
-		QDir dir(backupDir.absoluteFilePath(dirInfo.fileName()));
-		QString temp = dir.absolutePath();
+		QDir dir(dirInfo.filePath());
+		DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
 		QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-		if (fileInfoList.isEmpty()) continue;
 
+		QString lockFilePath;
 		for (int i = 0; i < fileInfoList.count(); i++) {
 			QFileInfo fileInfo = fileInfoList.at(i);
 			if (fileInfo.fileName() == LockFileName) {
 				fileInfoList.removeOne(fileInfo);
+				lockFilePath = fileInfo.absoluteFilePath();
 				break;
 			}
 		}
@@ -1166,7 +1167,22 @@ QList<MainWindow *> FApplication::recoverBackups()
 		if (fileInfoList.isEmpty()) {
 			// could mean this backup folder is just being created by another process
 			// could also mean it's leftover crap.
-			// check the date and delete if it's old?
+			// check the date and only delete if it's old
+
+			// don't lock the file, in case this is a race condition:
+			// if another instance starting up is about to lock the file, 
+			// the date will be recent and we won't delete 
+			
+			QDateTime lastModified = dirInfo.lastModified();
+			if (lastModified < QDateTime::currentDateTime().addSecs(-5 * 60)) {
+				// At startup, creating the backup folder, the lock file, and locking it are successive operations
+				// so even giving it 5 minutes here is probably way more than we need
+				if (!lockFilePath.isEmpty()) {
+					QFile::remove(lockFilePath);
+				}
+				FolderUtils::rmdir(dirInfo.filePath());
+			}
+			
 			continue;
 		}
 		
@@ -1196,7 +1212,7 @@ QList<MainWindow *> FApplication::recoverBackups()
     if (backupList.size() == 0) return recoveredSketches;
 
     RecoveryDialog recoveryDialog(backupList);
-	QMessageBox::StandardButton result = (QMessageBox::StandardButton)recoveryDialog.exec();
+	int result = (QMessageBox::StandardButton)recoveryDialog.exec();
     QList<QTreeWidgetItem*> fileItems = recoveryDialog.getFileList();
     DebugDialog::debug(QString("Recovering %1 files from recoveryDialog").arg(fileItems.size()));
     foreach (QTreeWidgetItem * item, fileItems) {

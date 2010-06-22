@@ -272,6 +272,7 @@ QString FolderUtils::getRandText() {
 	return randext;
 }*/
 
+// NOTE: This function cannot remove directories that have non-empty name filters set on it.
 void FolderUtils::rmdir(const QString &dirPath) {
 	QDir dir = QDir(dirPath);
 	rmdir(dir);
