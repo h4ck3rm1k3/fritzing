@@ -3341,6 +3341,10 @@ Fritzing по-прежнему работает, но вы не сможете �
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Parts folder not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -3857,6 +3861,10 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>Polish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

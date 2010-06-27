@@ -3287,6 +3287,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Parts folder not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -3799,6 +3803,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     </message>
     <message>
         <source>Polish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

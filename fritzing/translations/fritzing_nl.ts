@@ -3336,6 +3336,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Parts folder not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -3850,6 +3854,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Polish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

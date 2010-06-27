@@ -3328,6 +3328,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Parts folder not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -3840,6 +3844,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Polish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

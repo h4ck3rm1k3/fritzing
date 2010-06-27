@@ -3324,6 +3324,10 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Unable to parse copper: %1 %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Parts folder not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -3838,6 +3842,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Polish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
