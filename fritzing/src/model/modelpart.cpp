@@ -632,6 +632,14 @@ bool ModelPart::flippedSMD() {
 	return false;
 }
 
+bool ModelPart::needsCopper1() {
+	if (m_modelPartShared != NULL) {
+		return m_modelPartShared->needsCopper1();
+	}
+
+	return false;
+}
+
 QDomDocument* ModelPart::domDocument() {
 	if (m_modelPartShared == NULL) return NULL;
 

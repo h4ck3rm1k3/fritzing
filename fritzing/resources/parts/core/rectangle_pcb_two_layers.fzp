@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="TwoLayerRectanglePCBModuleID" >
- <version>1</version>
+ <version>4</version>
  <author>Brendan Howell</author>
  <title>Rectangular PCB - Resizable</title>
  <date>2008-11-25</date>

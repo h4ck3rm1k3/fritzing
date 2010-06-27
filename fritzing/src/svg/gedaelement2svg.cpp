@@ -32,6 +32,7 @@ $Date$
 #include "../version/version.h"
 #include "../items/wire.h"
 #include "../debugdialog.h"
+#include "../fsvgrenderer.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -49,6 +50,7 @@ GedaElement2Svg::GedaElement2Svg() : X2Svg() {
 
 QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins) 
 {
+	m_nonConnectorNumber = 0;
 	initLimits();
 
 	QFile file(filename);
@@ -500,7 +502,7 @@ QString GedaElement2Svg::getPinID(QString & number, QString & name, bool isPad) 
 		}
 	}
 
-	return "";
+	return QString("%1%2").arg(FSvgRenderer::NonConnectorName).arg(m_nonConnectorNumber++);
 }
 
 

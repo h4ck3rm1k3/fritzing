@@ -571,7 +571,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		}
 	}
 	else {
-		modelPart->modelPartShared()->flipSMD();
+		modelPart->modelPartShared()->flipSMDAnd();
 	}
 
     return modelPart;

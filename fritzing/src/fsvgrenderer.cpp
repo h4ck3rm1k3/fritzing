@@ -142,12 +142,25 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 	bool cleaned = false;
 	if (contents.contains("Illustrator")) {
 		QString string(contents);
+
+		if (contents.contains("sodipodi") || contents.contains("inkscape")) {
+			// if svg has both Illustrator and Inkscape crap then converting back and forth between strings and QDomDocument
+			// in FixPixelDimensionsIn() can result in invalid xml
+			TextUtils::cleanSodipodi(string);
+			DebugDialog::debug("Illustrator and inkscape:" + filename);
+		}
+
+		//DebugDialog::debug("Illustrator " + filename);
 		if (TextUtils::fixPixelDimensionsIn(string)) {
 			cleaned = true;
 			cleanContents = string.toUtf8();
-			//DebugDialog::debug("Illustrator " + filename);
 		}
 	}
+	
+	if (contents.contains("sodipodi") || contents.contains("inkscape")) {
+		//DebugDialog::debug("inkscape " + filename);
+	}
+
 	if (!cleaned) {
 		cleanContents = contents; 
 	}

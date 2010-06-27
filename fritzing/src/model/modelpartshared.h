@@ -102,9 +102,10 @@ public:
 	const QString & replacedby();
 	void setReplacedBy(const QString & replacedBy);
 
-	void flipSMD();
+	void flipSMDAnd();
 	void setFlippedSMD(bool);
-	bool flippedSMD();
+	bool flippedSMD();	
+	bool needsCopper1();
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	void setHasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
@@ -118,6 +119,7 @@ protected:
 	void populateTagCollection(QDomElement parent, QHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
 	void commonInit();
 	void loadDocument();
+	bool checkNeedsCopper1(QDomElement & copper0, QDomElement & copper1);
 
 protected:
 
@@ -150,6 +152,7 @@ protected:
 
 	bool m_flippedSMD;
 	bool m_partlyLoaded;
+	bool m_needsCopper1;				// for converting pre-two-layer parts
 };
 
 

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="JumperModuleID" >
- <version>2</version>
+ <version>4</version>
  <author>Brendan Howell</author>
  <title>Jumper</title>
  <date>2008-07-28</date>
@@ -24,7 +24,7 @@
   <breadboardView>
    <layers image="pcb/jumper.svg" >
     <layer layerId="copper0" />
-   </layers>
+    </layers>
   </breadboardView>
   <schematicView>
    <layers image="pcb/jumper.svg" >
@@ -34,6 +34,7 @@
   <pcbView>
    <layers image="pcb/jumper.svg" >
      <layer layerId="copper0" />
+     <layer layerId="copper1" />
      <layer layerId="jumperwires" />
      <layer layerId="silkscreen" />
      <layer layerId="silkscreen0" />
@@ -52,6 +53,7 @@
     </schematicView>
     <pcbView>
       <p svgId="connector0pad" layer="copper0" />
+     <p svgId="connector0pad" layer="copper1" />
     </pcbView>
    </views>
   </connector>
@@ -66,6 +68,7 @@
     </schematicView>
     <pcbView>
       <p svgId="connector1pad" layer="copper0" />
+      <p svgId="connector1pad" layer="copper1" />
     </pcbView>
    </views>
   </connector>

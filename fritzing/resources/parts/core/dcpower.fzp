@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module moduleId="PowerModuleID" >
- <version>2</version>
+ <version>4</version>
  <author>Brendan Howell</author>
  <title>DC Power</title>
  <date>2008-07-28</date>

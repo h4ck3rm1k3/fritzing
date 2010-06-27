@@ -102,6 +102,7 @@ void ModelPartShared::commonInit() {
 	m_connectorsInitialized = false;
 	m_ignoreTerminalPoints = false;
 	m_partlyLoaded = false;
+	m_needsCopper1 = false;
 }
 
 ModelPartShared::~ModelPartShared() {
@@ -415,6 +416,10 @@ bool ModelPartShared::flippedSMD() {
 	return m_flippedSMD;
 }
 
+bool ModelPartShared::needsCopper1() {
+	return m_needsCopper1;
+}
+
 void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs) {
 	foreach (ConnectorShared * connector, m_connectorSharedHash.values()) {
 		connectorIDs.append(connector->pin(viewIdentifier, viewLayerID));
@@ -442,11 +447,11 @@ void ModelPartShared::loadDocument() {
 	}
 	else {
 		m_domDocument = doc;
-		flipSMD();
+		flipSMDAnd();
 	}
 }
 
-void ModelPartShared::flipSMD() {
+void ModelPartShared::flipSMDAnd() {
 	QDomElement root = m_domDocument->documentElement();
 	QDomElement views = root.firstChildElement("views");
 	if (views.isNull()) return;
@@ -486,7 +491,12 @@ void ModelPartShared::flipSMD() {
 		layer = layer.nextSiblingElement("layer");
 	}
 
-	if (!c0.isNull()) return;
+	if (!c0.isNull()) {
+		if (checkNeedsCopper1(c0, c1)) {
+			setHasViewFor(ViewIdentifierClass::PCBView, ViewLayer::Copper1);
+		}
+		return;
+	}
 	if (c1.isNull()) return;
 
 	setFlippedSMD(true);
@@ -565,4 +575,61 @@ QString ModelPartShared::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier view
 
 void ModelPartShared::setHasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & value) {
 	m_hasBaseNameFor.insert(viewIdentifier, value);
+}
+
+bool ModelPartShared::checkNeedsCopper1(QDomElement & copper0, QDomElement & copper1) 
+{
+	if (!m_replacedby.isEmpty()) return false;
+
+	bool ok;
+	qreal versionNumber = m_version.toDouble(&ok);
+	if (ok) {
+		if (versionNumber >= 4.0) return false;
+	}
+
+	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
+
+	if (copper1.isNull()) {					
+		QDomElement c1 = m_domDocument->createElement("layer");
+		c1.setAttribute("layerId", c1String);
+		copper0.parentNode().appendChild(c1);
+		m_needsCopper1 = true;
+	}
+
+	QDomElement root = m_domDocument->documentElement();
+	QDomElement connectors = root.firstChildElement("connectors");
+	QDomElement connector = connectors.firstChildElement("connector");
+	while (!connector.isNull()) {
+		QDomElement views = connector.firstChildElement("views");
+		QDomElement pcb = views.firstChildElement("pcbView");
+		QDomElement p = pcb.firstChildElement("p");
+		bool hasCopper1 = false;
+		while (!p.isNull()) {
+			QString l = p.attribute("layer");
+			if (l == c1String) {
+				hasCopper1 = true;
+				break;
+			}
+			p = p.nextSiblingElement("p");
+		}
+		if (!hasCopper1) {
+			p = pcb.firstChildElement("p");
+			QDomElement newP = m_domDocument->createElement("p");
+			newP.setAttribute("layer", c1String);
+			newP.setAttribute("svgId", p.attribute("svgId"));
+			QString terminalId = p.attribute("terminalId");
+			if (!terminalId.isEmpty()) {
+				newP.setAttribute("svgId", terminalId);
+			}
+			pcb.appendChild(newP);
+			m_needsCopper1 = true;
+		}
+
+		connector = connector.nextSiblingElement("connector");
+	}
+
+	return m_needsCopper1;
+
+	//QString test = m_domDocument->toString();
+	//DebugDialog::debug("test " + test);
 }

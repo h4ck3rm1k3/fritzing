@@ -280,7 +280,8 @@ protected:
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
 
 protected:
-	static void getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QDomDocument & flipDoc);
+	static bool getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QDomDocument &);
+	static bool fixCopper1(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QDomDocument &);
 
 protected:
  	QSizeF m_size;

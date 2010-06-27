@@ -50,6 +50,10 @@ protected:
 	int reflectQuad(int angle, int & quad);
 	QString getPinID(QString & number, QString & name, bool isPad);
 	QString makeCopper(QStringList ids, QHash<QString, QString> &, const QString & filename);
+
+protected:
+	int m_nonConnectorNumber;
+
 };
 
 #endif // GEDAELEMENT2SVG_H

@@ -37,6 +37,19 @@ const QString TextUtils::SMDFlipSuffix("___");
 
 const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
 
+
+void TextUtils::findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements) {
+	if (!element.attribute(att).isEmpty()) {
+		elements.append(element);
+	}
+
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		findElementsWithAttribute(child, att, elements);
+		child = child.nextSiblingElement();
+	}
+}
+
 QDomElement TextUtils::findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue) {
 	if (element.hasAttribute(attributeName)) {
 		if (element.attribute(attributeName).compare(attributeValue) == 0) return element;
@@ -447,10 +460,10 @@ void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument,
 #endif
 }
 
-void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & elementID, QDomElement altElement, const QString & altElementID, qreal printerScale) 
+void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altElement, const QString & altAtt, qreal printerScale) 
 {
 	Q_UNUSED(printerScale);
-	Q_UNUSED(elementID);
+	Q_UNUSED(att);
 
 	QRectF bounds = renderer.viewBoxF();
 	QMatrix cm = QMatrix().translate(-bounds.center().x(), -bounds.center().y()) * 
@@ -461,7 +474,7 @@ void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & render
 	QDomElement pElement = domDocument.createElement("g");
 	pElement.appendChild(newElement);
 	setSVGTransform(pElement, cm);
-	pElement.setAttribute("id", altElementID);
+	pElement.setAttribute("id", altAtt);
 	pElement.setAttribute("flipped", true);
 	if (!altElement.isNull()) {
 		pElement.appendChild(altElement);
@@ -572,3 +585,56 @@ QString TextUtils::stripNonValidXMLCharacters(const QString & str)
     }
     return result;
 }    
+
+bool TextUtils::addCopper1(const QString & filename, QDomDocument & domDocument, const QString & srcAtt, const QString & destAtt) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QFile file(filename);
+	bool result = domDocument.setContent(&file, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		domDocument.clear();			// probably redundant
+		return false;
+	}
+
+    QDomElement root = domDocument.documentElement();
+	QList<QDomElement> elements;
+	findElementsWithAttribute(root, "id", elements);
+    for (int i = 0; i < elements.count(); i++) {
+        QDomElement node = elements.at(i);
+        if (node.isNull()) continue;
+
+        QString att = node.attribute("id");
+		if (att == destAtt) {
+			// already have copper1
+			domDocument.clear();
+			return false;
+		}
+    }
+
+	result = false;
+    for (int i = 0; i < elements.count(); i++) {
+        QDomElement node = elements.at(i);
+        if (node.isNull()) continue;
+
+        QString att = node.attribute("id");
+		if (att == srcAtt) {
+			QDomElement g = domDocument.createElement("g");
+			g.setAttribute("id", destAtt);
+			node.parentNode().insertAfter(g, node);
+			g.appendChild(node);
+			result = true;
+		}
+    }
+
+	if (!result) {
+		domDocument.clear();
+	}
+	//else {
+		//QString test = domDocument.toString();
+		//DebugDialog::debug("test " + test);
+	//}
+
+	return result;
+
+}

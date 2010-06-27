@@ -43,7 +43,6 @@ $Date$
 #include <QWebView>
 #include <QStackedWidget>
 
-#include "items/paletteitem.h"
 #include "mainwindow.h"
 #include "debugdialog.h"
 #include "connectors/connector.h"
@@ -63,6 +62,7 @@ $Date$
 #include "items/mysterypart.h"
 #include "items/pinheader.h"
 #include "layerpalette.h"
+#include "items/paletteitem.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -1954,6 +1954,7 @@ void MainWindow::updateActiveLayerButtons() {
 	}
 
 	m_activeLayerButtonWidget->setCurrentIndex(index);
+	m_activeLayerButtonWidget->setVisible(enabled);
 
 	m_activeLayerBothAct->setEnabled(enabled);
 	m_activeLayerBottomAct->setEnabled(enabled);

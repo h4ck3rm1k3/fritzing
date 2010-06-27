@@ -1333,7 +1333,9 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 				bool gotOne = false;
 				renderer = new FSvgRenderer();
 				QDomDocument flipDoc;
-				getFlipDoc(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc);
+				if (!getFlipDoc(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc)) {
+					fixCopper1(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc);
+				}
 				if (layerAttributes.multiLayer()) {
 					// need to treat create "virtual" svg file for each layer
 					SvgFileSplitter svgFileSplitter;
@@ -1754,15 +1756,29 @@ QRectF ItemBase::partLabelSceneBoundingRect() {
 	return m_partLabel->sceneBoundingRect();
 }
 
-void ItemBase::getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QDomDocument & flipDoc)
+bool ItemBase::getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QDomDocument & flipDoc)
 {
 	if (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer) {
 		if ((viewLayerID == ViewLayer::Copper0) && modelPart->flippedSMD() && (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer)) {
 			TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), FSvgRenderer::printerScale());
+			return true;
 		}
 		else if ((viewLayerID == ViewLayer::Silkscreen0) && modelPart->flippedSMD() && (viewLayerSpec == ViewLayer::ThroughHoleThroughTop_OneLayer)) {
 			TextUtils::flipSMDSvg(filename, flipDoc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen1), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0), FSvgRenderer::printerScale());
+			return true;
 		}
 	}
+
+	return false;
 }
+
+bool ItemBase::fixCopper1(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QDomDocument & doc)
+{
+	Q_UNUSED(viewLayerSpec);
+	if (viewLayerID != ViewLayer::Copper1) return false;
+	if (!modelPart->needsCopper1()) return false;
+
+	return TextUtils::addCopper1(filename, doc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1));
+}
+
 
