@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.34in" height="2.78in" viewBox="0 0 34000 278000" ><title>DIN41651_40S.fp</title><desc>Geda footprint file 'DIN41651_40S.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>DIN41651_40S.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
-<fz:attr name='conversion date'>17/06/2010 11:11:32</fz:attr>
+<fz:attr name='fritzing version'>0.4.0b.06.21.4282</fz:attr>
+<fz:attr name='conversion date'>27/06/2010 07:15:15</fz:attr>
 <fz:comment>aeusserer Rahmen</fz:comment>
 <fz:comment>innerer Rahmen mit Codieraussparung</fz:comment>
 <fz:comment>Markierung Pin 1</fz:comment>

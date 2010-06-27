@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.325in" height="0.31in" viewBox="0 0 32500 31000" ><title>SME4.fp</title><desc>Geda footprint file 'SME4.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>SME4.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
-<fz:attr name='conversion date'>17/06/2010 11:12:38</fz:attr>
+<fz:attr name='fritzing version'>0.4.0b.06.21.4282</fz:attr>
+<fz:attr name='conversion date'>27/06/2010 07:16:31</fz:attr>
 <fz:comment>how much to grow the pads by for soldermask</fz:comment>
 <fz:comment>clearance from planes</fz:comment>
 <fz:attr name='dist-license'>GPL</fz:attr>

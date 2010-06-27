@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.636in" height="0.305in" viewBox="0 0 63600 30500" ><title>MINICIRCUITS_KK81.fp</title><desc>Geda footprint file 'MINICIRCUITS_KK81.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>MINICIRCUITS_KK81.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
-<fz:attr name='conversion date'>17/06/2010 11:12:00</fz:attr>
+<fz:attr name='fritzing version'>0.4.0b.06.21.4282</fz:attr>
+<fz:attr name='conversion date'>27/06/2010 07:15:54</fz:attr>
 <fz:comment>number of pads</fz:comment>
 <fz:comment>pad width in 1/1000 mil</fz:comment>
 <fz:comment>pad length in 1/1000 mil</fz:comment>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.438in" height="0.148in" viewBox="0 0 43800 14800" ><title>SMD_POLAR 280 100.fp</title><desc>Geda footprint file 'SMD_POLAR 280 100.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>SMD_POLAR 280 100.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
-<fz:attr name='conversion date'>17/06/2010 11:12:37</fz:attr>
+<fz:attr name='fritzing version'>0.4.0b.06.21.4282</fz:attr>
+<fz:attr name='conversion date'>27/06/2010 07:16:31</fz:attr>
 <fz:comment>Silkscreen box coordinates</fz:comment>
 <fz:comment>PAD(X1, Y1, X1, Y2, T, 1)</fz:comment>
 <fz:comment>PAD(X2, Y1, X2, Y2, T, 2)</fz:comment>

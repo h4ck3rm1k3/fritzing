@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.65118in" height="0.65118in" viewBox="0 0 65118 65118" ><title>TQFP128_14_EP.fp</title><desc>Geda footprint file 'TQFP128_14_EP.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>TQFP128_14_EP.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
-<fz:attr name='conversion date'>17/06/2010 11:12:50</fz:attr>
+<fz:attr name='fritzing version'>0.4.0b.06.21.4282</fz:attr>
+<fz:attr name='conversion date'>27/06/2010 07:16:39</fz:attr>
 <fz:comment>left row</fz:comment>
 <fz:comment>bottom row</fz:comment>
 <fz:comment>right row</fz:comment>
@@ -16,7 +16,10 @@
 <fz:attr name='author'>gEDA project</fz:attr>
 <fz:attr name='license-url'>http://www.gnu.org/licenses/gpl.html</fz:attr>
 </rdf:Description></rdf:RDF></metadata><g id="copper1">
- <line fill="none" connectorname="1" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector0pad" y1="8150" x1="492" y2="8150" stroke-width="984" x2="4008"/>
+ <g connectorname="1" id="connector0pad">
+  <line fill="none" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" y1="32559" x1="32559" y2="32559" stroke-width="38188" x2="32559"/>
+  <line fill="none" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" y1="8150" x1="492" y2="8150" stroke-width="984" x2="4008"/>
+ </g>
  <line fill="none" connectorname="2" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector1pad" y1="9724" x1="492" y2="9724" stroke-width="984" x2="4008"/>
  <line fill="none" connectorname="3" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector2pad" y1="11299" x1="492" y2="11299" stroke-width="984" x2="4008"/>
  <line fill="none" connectorname="4" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector3pad" y1="12874" x1="492" y2="12874" stroke-width="984" x2="4008"/>
@@ -144,7 +147,6 @@
  <line fill="none" connectorname="126" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector125pad" y1="492" x1="11299" y2="4008" stroke-width="984" x2="11299"/>
  <line fill="none" connectorname="127" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector126pad" y1="492" x1="9724" y2="4008" stroke-width="984" x2="9724"/>
  <line fill="none" connectorname="128" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector127pad" y1="492" x1="8150" y2="4008" stroke-width="984" x2="8150"/>
- <line fill="none" connectorname="1" stroke="#ffbf00" stroke-linejoin="miter" stroke-linecap="square" id="connector0pad" y1="32559" x1="32559" y2="32559" stroke-width="38188" x2="32559"/>
 </g>
 <g id="silkscreen">
  <line fill="none" stroke="white" y1="5400" x1="8300" y2="5400" stroke-width="800" x2="59718"/>

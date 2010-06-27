@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.495in" height="2.734in" viewBox="0 0 49500 273400" ><title>DB37M.fp</title><desc>Geda footprint file 'DB37M.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>DB37M.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
-<fz:attr name='conversion date'>17/06/2010 11:11:28</fz:attr>
+<fz:attr name='fritzing version'>0.4.0b.06.21.4282</fz:attr>
+<fz:attr name='conversion date'>27/06/2010 07:15:09</fz:attr>
 <fz:comment>Gehaeuse (schmaler Kasten incl. Bohrungen)</fz:comment>
 <fz:comment>Gehaeuse (aeusserer Kasten)</fz:comment>
 <fz:comment>This part of the connector normally hangs off the circuit board,</fz:comment>
@@ -63,8 +63,8 @@
   <circle fill="none" cx="31400" cy="206900" connectorname="35" stroke="#ff9400" r="2375" id="connector34pin" stroke-width="1250"/>
   <circle fill="none" cx="31400" cy="217700" connectorname="36" stroke="#ff9400" r="2375" id="connector35pin" stroke-width="1250"/>
   <circle fill="none" cx="31400" cy="228500" connectorname="37" stroke="#ff9400" r="2375" id="connector36pin" stroke-width="1250"/>
-  <circle fill="none" cx="37000" cy="12500" connectorname="C1" stroke="#ff9400" r="9375" id="" stroke-width="6250"/>
-  <circle fill="none" cx="37000" cy="260900" connectorname="C2" stroke="#ff9400" r="9375" id="" stroke-width="6250"/>
+  <circle fill="none" cx="37000" cy="12500" connectorname="C1" stroke="#ff9400" r="9375" id="nonconn0" stroke-width="6250"/>
+  <circle fill="none" cx="37000" cy="260900" connectorname="C2" stroke="#ff9400" r="9375" id="nonconn1" stroke-width="6250"/>
  </g>
 </g>
 <g id="silkscreen">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.41in" height="1.06in" viewBox="0 0 41000 106000" ><title>N 20 300.fp</title><desc>Geda footprint file 'N 20 300.fp' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='geda filename'>N 20 300.fp</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.06.08.4227</fz:attr>
-<fz:attr name='conversion date'>17/06/2010 11:12:01</fz:attr>
+<fz:attr name='fritzing version'>0.4.0b.06.21.4282</fz:attr>
+<fz:attr name='conversion date'>27/06/2010 07:15:55</fz:attr>
 <fz:comment>retain backwards compatibility to older versions of PKG_DIL</fz:comment>
 <fz:comment>which did not have 100,60,28 args</fz:comment>
 <fz:attr name='dist-license'>GPL</fz:attr>
