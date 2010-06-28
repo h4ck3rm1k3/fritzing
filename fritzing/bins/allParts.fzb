@@ -2592,6 +2592,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="423120090505_2">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="93d4585be720f3982141f4d032f44c8e">
         <views>
           <iconView layer="icon">
@@ -3271,6 +3278,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="HoleModuleID">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="JumperModuleID">
         <views>
           <iconView layer="icon">
@@ -3306,7 +3320,21 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="TwoLayerRectanglePCBModuleID">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="ResistorModuleID">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="ViaModuleID">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>

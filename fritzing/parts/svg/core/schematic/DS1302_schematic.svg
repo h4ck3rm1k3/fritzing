@@ -13,7 +13,7 @@
    viewBox="0 0 1830 1796.6664"
    id="svg2870"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="SCH-DS1307.svg">
+   sodipodi:docname="DS1302_schematic.svg">
   <metadata
      id="metadata2920">
     <rdf:RDF>
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -67,7 +67,7 @@
      inkscape:cx="82.349997"
      inkscape:cy="80.849997"
      inkscape:window-width="800"
-     inkscape:window-height="553"
+     inkscape:window-height="551"
      inkscape:window-x="-4"
      inkscape:window-y="-4"
      inkscape:window-maximized="1"
@@ -215,11 +215,11 @@
        x="1438.87"
        y="637.1131"
        font-size="130"
-       style="font-size:130px;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans"
-       sodipodi:linespacing="125%">
+       style="font-size:130px;text-align:end;line-height:100%;writing-mode:lr;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans"
+       sodipodi:linespacing="100%">
       <tspan
          sodipodi:role="line"
-         id="tspan3083">SCL</tspan>
+         id="tspan2964">SCLK</tspan>
     </text>
     <line
        x1="15"
@@ -279,11 +279,11 @@
        x="1440"
        y="950"
        font-size="130"
-       style="font-size:130px;text-align:end;line-height:125%;writing-mode:lr;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans"
-       sodipodi:linespacing="125%">
+       style="font-size:130px;text-align:end;line-height:100%;writing-mode:lr;text-anchor:end;fill:#000000;stroke:none;font-family:DroidSans"
+       sodipodi:linespacing="100%">
       <tspan
          sodipodi:role="line"
-         id="tspan3085">SDA</tspan>
+         id="tspan2966">I/O</tspan>
     </text>
     <line
        x1="15"

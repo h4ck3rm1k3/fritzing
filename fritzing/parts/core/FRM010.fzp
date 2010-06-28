@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.16b.02.24.4002" moduleId="RevEd_FRM010">
-    <version>4</version>
+    <version>1.1</version>
     <author>Revolution Education Ltd</author>
     <title>FRM010</title>
     <label>IC</label>
-    <date>2010-04-15</date>
+    <date>2010-05-26</date>
     <tags>
         <tag>DIP</tag>
     </tags>
@@ -38,8 +38,8 @@
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector0" name="pin1" type="male">
-            <description>LCD RS</description>
+        <connector id="connector0" name="LCD RS" type="male">
+            <description>Connect to the LCD module 'RS' pin</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -52,8 +52,8 @@
                 <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" name="pin2" type="male">
-            <description>LCD E</description>
+        <connector id="connector1" name="LCD E" type="male">
+            <description>Connect to the LCD module 'E' pin</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -66,8 +66,8 @@
                 <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" name="pin3" type="male">
-            <description>Serial In</description>
+        <connector id="connector2" name="Serial In" type="male">
+            <description>This is the serial input used to control the FRM010. Connect to a digital output of your controller via a 1K resistor or via a 22K resistor when connected directly to a PC or to an input signal whose voltage is greater than the power supply</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
@@ -80,8 +80,8 @@
                 <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" name="pin4" type="male">
-            <description>Reset</description>
+        <connector id="connector3" name="Reset" type="male">
+            <description>Connect via a 4K7 resistor to the positive rail of the power supply in your circuit. This pin must be connected via the 4K7 resistor or the FRM010 will not operate correctly. This pin can also be connected to a switch to 0V (ground) to provide a manual 'reset button' for the FRM010</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -94,8 +94,8 @@
                 <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" name="pin5" type="male">
-            <description>0V</description>
+        <connector id="connector4" name="0V" type="male">
+            <description>Connect to the 0V (ground) of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -108,8 +108,8 @@
                 <p layer="copper1" svgId="connector4pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" name="pin6" type="male">
-            <description>LCD D4</description>
+        <connector id="connector5" name="LCD D4" type="male">
+            <description>Connect to the LCD module 'D4' pin</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
@@ -122,8 +122,8 @@
                 <p layer="copper1" svgId="connector5pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" name="pin7" type="male">
-            <description>LCD D5</description>
+        <connector id="connector6" name="LCD D5" type="male">
+            <description>Connect to the LCD module 'D5' pin</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"/>
@@ -136,8 +136,8 @@
                 <p layer="copper1" svgId="connector6pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" name="pin8" type="male">
-            <description>LCD D6</description>
+        <connector id="connector7" name="LCD D6" type="male">
+            <description>Connect to the LCD module 'D6' pin</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"/>
@@ -150,8 +150,8 @@
                 <p layer="copper1" svgId="connector7pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" name="pin9" type="male">
-            <description>LCD D7</description>
+        <connector id="connector8" name="LCD D7" type="male">
+            <description>Connect to the LCD module 'D7' pin</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector8pin" terminalId="connector8terminal"/>
@@ -164,8 +164,8 @@
                 <p layer="copper1" svgId="connector8pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" name="pin10" type="male">
-            <description>JP1</description>
+        <connector id="connector9" name="JP1 - Welcome Message selection" type="male">
+            <description>Connect this pin to 0V (ground) to display a welcome message. Leave this pin unconnected to not display the welcome message</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector9pin" terminalId="connector9terminal"/>
@@ -178,8 +178,8 @@
                 <p layer="copper1" svgId="connector9pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector10" name="pin11" type="male">
-            <description>JP2</description>
+        <connector id="connector10" name="JP2 - Baud Rate selection" type="male">
+            <description>Connect this pin to 0V (ground) to select 9600 baud operation. Leave the pin unconnected to select 2400 baud operation</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector10pin" terminalId="connector10terminal"/>
@@ -192,8 +192,8 @@
                 <p layer="copper1" svgId="connector10pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector11" name="pin12" type="male">
-            <description>JP3</description>
+        <connector id="connector11" name="JP3 - Polarity selection" type="male">
+            <description>Connect this pin to 0V (ground) when connected directly to a PC or controlled by a PICAXE using an 'N' baud rate. Leave this pin unconnected when controlled by a PICAXE using a 'T' baud rate</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector11pin" terminalId="connector11terminal"/>
@@ -206,8 +206,8 @@
                 <p layer="copper1" svgId="connector11pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector12" name="pin13" type="male">
-            <description>JP4</description>
+        <connector id="connector12" name="JP4 - Number of Lines selection" type="male">
+            <description>Connect this pin to 0V (ground) for a single line display. Leave the pin unconnected for a two line display</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector12pin" terminalId="connector12terminal"/>
@@ -220,8 +220,8 @@
                 <p layer="copper1" svgId="connector12pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector13" name="pin14" type="male">
-            <description>+V</description>
+        <connector id="connector13" name="+V" type="male">
+            <description>Connect to the positive rail of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector13pin" terminalId="connector13terminal"/>
@@ -234,8 +234,8 @@
                 <p layer="copper1" svgId="connector13pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector14" name="pin15" type="male">
-            <description>XTAL</description>
+        <connector id="connector14" name="XTAL" type="male">
+            <description>Connect this pin to a 4MHz resonator. Without a resonator fitted the FRM010 will not function.</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector14pin" terminalId="connector14terminal"/>
@@ -248,8 +248,8 @@
                 <p layer="copper1" svgId="connector14pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector15" name="pin16" type="male">
-            <description>XTAL</description>
+        <connector id="connector15" name="XTAL" type="male">
+            <description>Connect this pin to a 4MHz resonator. Without a resonator fitted the FRM010 will not function.</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector15pin" terminalId="connector15terminal"/>
@@ -262,8 +262,8 @@
                 <p layer="copper1" svgId="connector15pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector16" name="pin17" type="male">
-            <description>LED</description>
+        <connector id="connector16" name="LED" type="male">
+            <description>Connect this pin to a LED plus current limiting resistor to 0V (ground) of your power supply to indicate that communications are being received</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector16pin" terminalId="connector16terminal"/>
@@ -276,8 +276,8 @@
                 <p layer="copper1" svgId="connector16pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector17" name="pin18" type="male">
-            <description>LCD PWR</description>
+        <connector id="connector17" name="LCD PWR" type="male">
+            <description>Power for the LCD module. Connect to the LCD module 'VCC' pin</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector17pin" terminalId="connector17terminal"/>

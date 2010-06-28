@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.16b.02.24.4002" moduleId="RevEd_PICAXE_40X2_3V">
-    <version>4</version>
+    <version>1.1</version>
     <author>Revolution Education Ltd</author>
     <title>PICAXE-40X2-3V</title>
     <label>IC</label>
-    <date>2010-04-15</date>
+    <date>2010-05-26</date>
     <tags>
         <tag>PICAXE</tag>
         <tag>DIP</tag>
     </tags>
     <properties>
         <property name="family">Microcontroller Board (PICAXE)</property>
-        <property name="type">PICAXE</property>
         <property name="variant">PICAXE-40X2-3V</property>
     </properties>
     <description>PICAXE-40X2-3V from Revolution Education Ltd</description>
@@ -41,8 +40,8 @@
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector0" name="pin1" type="male">
-            <description>Reset</description>
+        <connector id="connector0" name="Reset" type="male">
+            <description>Connect via a 4K7 resistor to the positive rail of the power supply in your circuit. This pin must be connected via the 4K7 resistor or the PICAXE will not operate correctly. This pin can also be connected to a switch to 0V (ground) to provide a manual 'reset button' for the PICAXE</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -55,8 +54,8 @@
                 <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" name="pin2" type="male">
-            <description>A.0 / ADC 0 / C1-</description>
+        <connector id="connector1" name="A.0 / ADC 0 / C1-" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input. This pin can be used as an input for the internal 'C1' comparator</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -69,8 +68,8 @@
                 <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" name="pin3" type="male">
-            <description>A.1 / ADC 1 / C2-</description>
+        <connector id="connector2" name="A.1 / ADC 1 / C2-" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input. This pin can be used as an input for the internal 'C2' comparator</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
@@ -83,8 +82,8 @@
                 <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" name="pin4" type="male">
-            <description>A.2 / ADC 2 / C1+</description>
+        <connector id="connector3" name="A.2 / ADC 2 / C1+" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input. This pin can be used as an input for the internal 'C1' comparator</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -97,8 +96,8 @@
                 <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" name="pin5" type="male">
-            <description>A.3 / ADC 3 / C2+</description>
+        <connector id="connector4" name="A.3 / ADC 3 / C2+" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input. This pin can be used as an input for the internal 'C2' comparator</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -111,8 +110,8 @@
                 <p layer="copper1" svgId="connector4pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" name="pin6" type="male">
-            <description>Serial In</description>
+        <connector id="connector5" name="Serial In" type="male">
+            <description>Connect to the 22K resistor of the PICAXE download circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
@@ -125,8 +124,8 @@
                 <p layer="copper1" svgId="connector5pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" name="pin7" type="male">
-            <description>Serial Out / Out A.4</description>
+        <connector id="connector6" name="Serial Out / Out A.4" type="male">
+            <description>Connect to the output pin of the download connector for the PICAXE download circuit. This pin can also be used as an independent digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"/>
@@ -139,8 +138,8 @@
                 <p layer="copper1" svgId="connector6pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" name="pin8" type="male">
-            <description>A.5 / ADC 5</description>
+        <connector id="connector7" name="A.5 / ADC 5" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"/>
@@ -153,8 +152,8 @@
                 <p layer="copper1" svgId="connector7pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector8" name="pin9" type="male">
-            <description>A.6 / ADC 6</description>
+        <connector id="connector8" name="A.6 / ADC 6" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector8pin" terminalId="connector8terminal"/>
@@ -167,8 +166,8 @@
                 <p layer="copper1" svgId="connector8pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector9" name="pin10" type="male">
-            <description>A.7 / ADC 7</description>
+        <connector id="connector9" name="A.7 / ADC 7" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector9pin" terminalId="connector9terminal"/>
@@ -181,8 +180,8 @@
                 <p layer="copper1" svgId="connector9pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector10" name="pin11" type="male">
-            <description>+3V6</description>
+        <connector id="connector10" name="+3V6" type="male">
+            <description>Connect to the +3V6 rail of the power supply in your circuit.</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector10pin" terminalId="connector10terminal"/>
@@ -195,8 +194,8 @@
                 <p layer="copper1" svgId="connector10pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector11" name="pin12" type="male">
-            <description>0V</description>
+        <connector id="connector11" name="0V" type="male">
+            <description>Connect to the 0V (ground) of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector11pin" terminalId="connector11terminal"/>
@@ -209,8 +208,8 @@
                 <p layer="copper1" svgId="connector11pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector12" name="pin13" type="male">
-            <description>Resonator ( Optional )</description>
+        <connector id="connector12" name="Resonator ( Optional )" type="male">
+            <description>Connect to a resonator or crystal if you wish to use one. The PICAXE will operate without a resonator or crystal connected</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector12pin" terminalId="connector12terminal"/>
@@ -223,8 +222,8 @@
                 <p layer="copper1" svgId="connector12pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector13" name="pin14" type="male">
-            <description>Resonator ( Optional )</description>
+        <connector id="connector13" name="Resonator ( Optional )" type="male">
+            <description>Connect to a resonator or crystal if you wish to use one. The PICAXE will operate without a resonator or crystal connected</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector13pin" terminalId="connector13terminal"/>
@@ -237,8 +236,8 @@
                 <p layer="copper1" svgId="connector13pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector14" name="pin15" type="male">
-            <description>C.0 / Timer Clock</description>
+        <connector id="connector14" name="C.0 / Timer Clock" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to increment the internal 'timer' variable of the PICAXE</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector14pin" terminalId="connector14terminal"/>
@@ -251,8 +250,8 @@
                 <p layer="copper1" svgId="connector14pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector15" name="pin16" type="male">
-            <description>C.1 / PWM C.1</description>
+        <connector id="connector15" name="C.1 / PWM C.1" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to generate a background PWM output signal using the PWMOUT command</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector15pin" terminalId="connector15terminal"/>
@@ -265,8 +264,8 @@
                 <p layer="copper1" svgId="connector15pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector16" name="pin17" type="male">
-            <description>C.2 / PWM C.2 / HPWM A</description>
+        <connector id="connector16" name="C.2 / PWM C.2 / HPWM A" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to generate a background PWM output signal using the PWMOUT or HPWM commands</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector16pin" terminalId="connector16terminal"/>
@@ -279,8 +278,8 @@
                 <p layer="copper1" svgId="connector16pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector17" name="pin18" type="male">
-            <description>C.3 / I2C Clock / SPI Clock</description>
+        <connector id="connector17" name="C.3 / I2C Clock / SPI Clock" type="male">
+            <description>This pin can be used as a digital input and a digital output. If using the PICAXE with I2C devices this pin should connect to the 'I2C Clock' (SCL) pins of those devices and a 4K7 resistor should connect from this pin to the positive rail of the power supply in your circuit. If using the PICAXE with SPI devices this pin should connect to the 'SPI Clock' (SCK/SCLK) pins of those devices</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector17pin" terminalId="connector17terminal"/>
@@ -293,8 +292,8 @@
                 <p layer="copper1" svgId="connector17pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector18" name="pin19" type="male">
-            <description>D.0</description>
+        <connector id="connector18" name="D.0" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector18pin" terminalId="connector18terminal"/>
@@ -307,8 +306,8 @@
                 <p layer="copper1" svgId="connector18pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector19" name="pin20" type="male">
-            <description>D.1</description>
+        <connector id="connector19" name="D.1" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector19pin" terminalId="connector19terminal"/>
@@ -321,8 +320,8 @@
                 <p layer="copper1" svgId="connector19pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector20" name="pin21" type="male">
-            <description>D.2</description>
+        <connector id="connector20" name="D.2" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector20pin" terminalId="connector20terminal"/>
@@ -335,8 +334,8 @@
                 <p layer="copper1" svgId="connector20pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector21" name="pin22" type="male">
-            <description>D.3</description>
+        <connector id="connector21" name="D.3" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector21pin" terminalId="connector21terminal"/>
@@ -349,8 +348,8 @@
                 <p layer="copper1" svgId="connector21pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector22" name="pin23" type="male">
-            <description>C.4 / I2C Data / SPI Data In</description>
+        <connector id="connector22" name="C.4 / I2C Data / SPI Data In" type="male">
+            <description>This pin can be used as a digital input and a digital output. If using the PICAXE with I2C devices this pin should connect to the 'I2C Data' (SDA) pins of those devices and a 4K7 resistor should connect from this pin to the positive rail of the power supply in your circuit. If using the PICAXE with SPI devices this pin should connect to the 'SPI Data Out' (DO/DOUT/SO) pins of those devices</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector22pin" terminalId="connector22terminal"/>
@@ -363,8 +362,8 @@
                 <p layer="copper1" svgId="connector22pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector23" name="pin24" type="male">
-            <description>C.5 / SPI Data Out</description>
+        <connector id="connector23" name="C.5 / SPI Data Out" type="male">
+            <description>This pin can be used as a digital input and a digital output. If using the PICAXE with SPI devices this pin should connect to the 'SPI Data In' (DI/DIN/SI) pins of those devices</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector23pin" terminalId="connector23terminal"/>
@@ -377,8 +376,8 @@
                 <p layer="copper1" svgId="connector23pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector24" name="pin25" type="male">
-            <description>C.6 / Hserout</description>
+        <connector id="connector24" name="C.6 / Hserout" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to output high-speed serial data</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector24pin" terminalId="connector24terminal"/>
@@ -391,8 +390,8 @@
                 <p layer="copper1" svgId="connector24pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector25" name="pin26" type="male">
-            <description>C.7 / Hersin</description>
+        <connector id="connector25" name="C.7 / Hserin" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to receive high-speed serial data</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector25pin" terminalId="connector25terminal"/>
@@ -405,8 +404,8 @@
                 <p layer="copper1" svgId="connector25pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector26" name="pin27" type="male">
-            <description>D.4</description>
+        <connector id="connector26" name="D.4" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector26pin" terminalId="connector26terminal"/>
@@ -419,8 +418,8 @@
                 <p layer="copper1" svgId="connector26pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector27" name="pin28" type="male">
-            <description>D.5 / HPWM C</description>
+        <connector id="connector27" name="D.5 / HPWM C" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to generate a background PWM output signal using the HPWM command</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector27pin" terminalId="connector27terminal"/>
@@ -433,8 +432,8 @@
                 <p layer="copper1" svgId="connector27pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector28" name="pin29" type="male">
-            <description>D.6 / HPWM B / Keyboard Clock</description>
+        <connector id="connector28" name="D.6 / HPWM B / Keyboard Clock" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to generate a background PWM output signal using the HPWM command. If using the PICAXE with a PS/2 keyboard this pin should connect to the 'PS/2 Keyboard Clock' signal ( pin 5 on a PS/2 mini-DIN connector ) and a 4K7 resistor should connect from this pin to the positive rail of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector28pin" terminalId="connector28terminal"/>
@@ -447,8 +446,8 @@
                 <p layer="copper1" svgId="connector28pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector29" name="pin30" type="male">
-            <description>D.7 / HPWM D / Keyvoard Data</description>
+        <connector id="connector29" name="D.7 / HPWM D / Keyboard Data" type="male">
+            <description>This pin can be used as a digital input and a digital output. This pin can be used to generate a background PWM output signal using the HPWM command. If using the PICAXE with a PS/2 keyboard this pin should connect to the 'PS/2 Keyboard Data' signal ( pin 1 on a PS/2 mini-DIN connector ) and a 4K7 resistor should connect from this pin to the positive rail of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector29pin" terminalId="connector29terminal"/>
@@ -461,8 +460,8 @@
                 <p layer="copper1" svgId="connector29pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector30" name="pin31" type="male">
-            <description>0V</description>
+        <connector id="connector30" name="0V" type="male">
+            <description>Connect to the 0V (ground) of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector30pin" terminalId="connector30terminal"/>
@@ -475,8 +474,8 @@
                 <p layer="copper1" svgId="connector30pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector31" name="pin32" type="male">
-            <description>+3V6</description>
+        <connector id="connector31" name="+3V6" type="male">
+            <description>Connect to the +3V6 rail of the power supply in your circuit.</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector31pin" terminalId="connector31terminal"/>
@@ -489,8 +488,8 @@
                 <p layer="copper1" svgId="connector31pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector32" name="pin33" type="male">
-            <description>B.0</description>
+        <connector id="connector32" name="B.0" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector32pin" terminalId="connector32terminal"/>
@@ -503,8 +502,8 @@
                 <p layer="copper1" svgId="connector32pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector33" name="pin34" type="male">
-            <description>B.1 / ADC 10 / Hint 1 / HPWM C</description>
+        <connector id="connector33" name="B.1 / ADC 10 / Hint 1 / HPWM C" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input. This pin can be used to generate a background PWM output signal using the HPWM command. This pin can be used as an input trigger to initiate a 'hardware interrupt'</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector33pin" terminalId="connector33terminal"/>
@@ -517,8 +516,8 @@
                 <p layer="copper1" svgId="connector33pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector34" name="pin35" type="male">
-            <description>B.2 / ADC 8 / Hint 2 / HPWM B</description>
+        <connector id="connector34" name="B.2 / ADC 8 / Hint 2 / HPWM B" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input. This pin can be used to generate a background PWM output signal using the HPWM command. This pin can be used as an input trigger to initiate a 'hardware interrupt'</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector34pin" terminalId="connector34terminal"/>
@@ -531,8 +530,8 @@
                 <p layer="copper1" svgId="connector34pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector35" name="pin36" type="male">
-            <description>B.3 / ADC 9</description>
+        <connector id="connector35" name="B.3 / ADC 9" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector35pin" terminalId="connector35terminal"/>
@@ -545,8 +544,8 @@
                 <p layer="copper1" svgId="connector35pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector36" name="pin37" type="male">
-            <description>B.4 / ADC 11 / HPWM D</description>
+        <connector id="connector36" name="B.4 / ADC 11 / HPWM D" type="male">
+            <description>This pin can be used as a digital input and a digital output or can be used as an analogue input. This pin can be used to generate a background PWM output signal using the HPWM command</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector36pin" terminalId="connector36terminal"/>
@@ -559,8 +558,8 @@
                 <p layer="copper1" svgId="connector36pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector37" name="pin38" type="male">
-            <description>B.5</description>
+        <connector id="connector37" name="B.5" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector37pin" terminalId="connector37terminal"/>
@@ -573,8 +572,8 @@
                 <p layer="copper1" svgId="connector37pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector38" name="pin39" type="male">
-            <description>B.6</description>
+        <connector id="connector38" name="B.6" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector38pin" terminalId="connector38terminal"/>
@@ -587,8 +586,8 @@
                 <p layer="copper1" svgId="connector38pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector39" name="pin40" type="male">
-            <description>B.7</description>
+        <connector id="connector39" name="B.7" type="male">
+            <description>This pin can be used as a digital input and a digital output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector39pin" terminalId="connector39terminal"/>

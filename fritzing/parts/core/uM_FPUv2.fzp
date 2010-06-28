@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.16b.02.24.4002" moduleId="RevEd_uM_FPUv2">
-    <version>4</version>
+    <version>1.1</version>
     <author>Revolution Education Ltd</author>
     <title>uM-FPUv2</title>
     <label>IC</label>
-    <date>2010-04-15</date>
+    <date>2010-05-26</date>
     <tags>
         <tag>FPU</tag>
         <tag>I2C</tag>
@@ -42,7 +42,7 @@
         </schematicView>
     </views>
     <connectors>
-        <connector id="connector0" name="pin1" type="male">
+        <connector id="connector0" name="CS" type="male">
             <description>Chip Select</description>
             <views>
                 <breadboardView>
@@ -56,8 +56,8 @@
                 <p layer="copper1" svgId="connector0pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector1" name="pin2" type="male">
-            <description>SPI Data Out</description>
+        <connector id="connector1" name="SPI Data Out" type="male">
+            <description>When using SPI mode this pin is used to read data from this device. Connect this pin to the 'SPI Data In' (DI/DIN/SI) pin or to a digital input pin of your controller</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -70,8 +70,8 @@
                 <p layer="copper1" svgId="connector1pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector2" name="pin3" type="male">
-            <description>I2C Clock / SPI Clock</description>
+        <connector id="connector2" name="I2C Clock / SPI Clock" type="male">
+            <description>When using I2C mode connect this pin to the 'I2C Clock' (SCL) signal of the controller. When using SPI mode this pin is used to clock data in and data out of the device. Connect this pin to the 'SPI Clock' (SCK/SCLK) pin or to a digital output pin of your controller</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
@@ -84,8 +84,8 @@
                 <p layer="copper1" svgId="connector2pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector3" name="pin4" type="male">
-            <description>0V</description>
+        <connector id="connector3" name="0V" type="male">
+            <description>Connect to the 0V (ground) of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -98,8 +98,8 @@
                 <p layer="copper1" svgId="connector3pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector4" name="pin5" type="male">
-            <description>I2C Data / SPI Data In</description>
+        <connector id="connector4" name="I2C Data / SPI Data In" type="male">
+            <description>When using I2C mode connect this pin to the 'I2C Data' (SDA) signal of the controller. When using SPI mode this pin is used to write data into this device. Connect this pin to the 'SPI Data Out' (DO/DOUT/SO) pin or to a digital output pin of your controller</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -112,8 +112,8 @@
                 <p layer="copper1" svgId="connector4pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector5" name="pin6" type="male">
-            <description>TSTOUT</description>
+        <connector id="connector5" name="TSTOUT" type="male">
+            <description>Test Output</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
@@ -126,8 +126,8 @@
                 <p layer="copper1" svgId="connector5pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector6" name="pin7" type="male">
-            <description>TSTIN</description>
+        <connector id="connector6" name="TSTIN" type="male">
+            <description>Test Input</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"/>
@@ -140,8 +140,8 @@
                 <p layer="copper1" svgId="connector6pin"/></pcbView>
             </views>
         </connector>
-        <connector id="connector7" name="pin8" type="male">
-            <description>+V</description>
+        <connector id="connector7" name="+V" type="male">
+            <description>Connect to the positive rail of the power supply in your circuit</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"/>
