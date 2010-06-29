@@ -1152,17 +1152,7 @@ QList<MainWindow *> FApplication::recoverBackups()
 	foreach (QFileInfo dirInfo, dirList) {
 		QDir dir(dirInfo.filePath());
 		DebugDialog::debug(QString("looking in backup dir %1").arg(dir.absolutePath()));
-		QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-
-		QString lockFilePath;
-		for (int i = 0; i < fileInfoList.count(); i++) {
-			QFileInfo fileInfo = fileInfoList.at(i);
-			if (fileInfo.fileName() == LockFileName) {
-				fileInfoList.removeOne(fileInfo);
-				lockFilePath = fileInfo.absoluteFilePath();
-				break;
-			}
-		}
+		QFileInfoList fileInfoList = dir.entryInfoList(QStringList("*.fz"), QDir::Files | QDir::Hidden | QDir::NoSymLinks);
 
 		if (fileInfoList.isEmpty()) {
 			// could mean this backup folder is just being created by another process
@@ -1177,9 +1167,6 @@ QList<MainWindow *> FApplication::recoverBackups()
 			if (lastModified < QDateTime::currentDateTime().addSecs(-5 * 60)) {
 				// At startup, creating the backup folder, the lock file, and locking it are successive operations
 				// so even giving it 5 minutes here is probably way more than we need
-				if (!lockFilePath.isEmpty()) {
-					QFile::remove(lockFilePath);
-				}
 				FolderUtils::rmdir(dirInfo.filePath());
 			}
 			
@@ -1265,20 +1252,11 @@ void FApplication::cleanupBackups() {
 	QDir backupDir(MainWindow::BackupFolder);
 	backupDir.cdUp();
 	foreach (QString sub, m_lockedFiles.keys()) {
-		QDir dir(backupDir.absoluteFilePath(sub));
-		QStringList files = dir.entryList(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-		foreach (QString f, files) {
-			if (f == LockFileName) continue;
-
-			QFile::remove(dir.absoluteFilePath(f));	
-		}
-		QtLockedFile * lockedFile = m_lockedFiles.value(sub);
+        QtLockedFile * lockedFile = m_lockedFiles.value(sub);
 		lockedFile->unlock();
 		lockedFile->close();
 		delete lockedFile;
-		QFile::remove(dir.absoluteFilePath(LockFileName));
-		dir.cdUp();
-		dir.rmdir(sub);
+        FolderUtils::rmdir(backupDir.absoluteFilePath(sub));
 	}
 	m_lockedFiles.clear();
 }
