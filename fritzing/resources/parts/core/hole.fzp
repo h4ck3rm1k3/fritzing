@@ -18,7 +18,7 @@
  <description>Hole with or without copper</description>
  <views>
   <iconView>
-   <layers image="pcb/hole.svg" >
+   <layers image="icon/hole.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>

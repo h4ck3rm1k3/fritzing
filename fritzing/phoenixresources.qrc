@@ -60,9 +60,11 @@
         <file>resources/parts/core/groundplane.fzp</file>
         <file>resources/parts/core/hole.fzp</file>
         <file>resources/parts/svg/core/pcb/hole.svg</file>
+        <file>resources/parts/svg/core/icon/hole.svg</file>
         <file>resources/parts/svg/core/pcb/groundplane.svg</file>
         <file>resources/parts/core/via.fzp</file>
         <file>resources/parts/svg/core/pcb/via.svg</file>
+        <file>resources/parts/svg/core/icon/via.svg</file>
         <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
         <file>resources/images/icons/partsBinOpenPressed_icon.png</file>
         <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>

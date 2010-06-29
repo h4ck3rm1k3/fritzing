@@ -18,7 +18,7 @@
  <description>Via</description>
  <views>
   <iconView>
-   <layers image="pcb/via.svg" >
+   <layers image="icon/via.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
