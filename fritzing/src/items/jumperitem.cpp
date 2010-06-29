@@ -334,6 +334,14 @@ void JumperItem::resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y) {
 	r1.translate(r1x - c1.x(), r1y - c1.y());
 	m_connector0->setRect(r0);
 	m_connector1->setRect(r1);
+	ConnectorItem * cc0 = m_connector0->getCrossLayerConnectorItem();
+	if (cc0 != NULL) {
+		cc0->setRect(r0);
+	}
+	ConnectorItem * cc1 = m_connector1->getCrossLayerConnectorItem();
+	if (cc1 != NULL) {
+		cc1->setRect(r1);
+	}
 	resize();
 }
 

@@ -389,7 +389,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 					jumperItemStruct->jumperWire = jumperWire;
 					jumperItemStruct->deleted = false;
 					jumperItemStructs.append(jumperItemStruct);
-					incMaximumProgress(jumperItemStructs.count());
+					incMaximumProgress(1);
 				}
 			}
 		}
