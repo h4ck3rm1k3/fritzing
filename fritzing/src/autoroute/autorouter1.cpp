@@ -62,6 +62,8 @@ struct JumperItemStruct {
 	QPolygonF boundingPoly;
 	Wire * jumperWire;
 	JumperItem * jumperItem;
+	ViewLayer::ViewLayerID fromViewLayerID;
+	ViewLayer::ViewLayerID toViewLayerID;
 	bool deleted;
 };
 
@@ -184,6 +186,10 @@ void Autorouter1::start()
 	// TODO: tighten path between connectors once trace has succeeded
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
 	
+	m_maximumProgress = 0;
+
+	emit setMaximumProgress(m_maximumProgress);
+
 	RoutingStatus routingStatus;
 	routingStatus.zero();
 
@@ -221,7 +227,7 @@ void Autorouter1::start()
 		return;
 	}
 
-	emit setMaximumProgress(edges.count());
+	incMaximumProgress(edges.count());
 	QApplication::processEvents(); // to keep the app  from freezing
 
 	QGraphicsLineItem * lineItem = new QGraphicsLineItem(0, 0, 0, 0, NULL, m_sketchWidget->scene());
@@ -249,6 +255,7 @@ void Autorouter1::start()
 		QApplication::processEvents();
 		m_viewLayerSpec = ViewLayer::Top;
 		dijkstraNets(indexer, netCounters, edges);
+		incMaximumProgress(edges.count());
 		runEdges(edges, lineItem, jumperItemStructs, jumpers, edgesDone, netCounters, routingStatus);
 	}
 
@@ -382,10 +389,9 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 					jumperItemStruct->jumperWire = jumperWire;
 					jumperItemStruct->deleted = false;
 					jumperItemStructs.append(jumperItemStruct);
-					emit setMaximumProgress(edges.count() + jumperItemStructs.count());
+					incMaximumProgress(jumperItemStructs.count());
 				}
 			}
-
 		}
 
 		emit setProgressValue(++edgesDone);
@@ -439,43 +445,34 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 
 	int jumpersDone = 0;
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-		ConnectorItem * from = jumperItemStruct->from;
-		ConnectorItem * to = jumperItemStruct->to;
-
 		if (!jumperItemStruct->deleted) {
-			jumperItemStruct->jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
-			if (jumperItemStruct->jumperItem == NULL && m_bothSidesNow) {
-				from = from->getCrossLayerConnectorItem();
-				to = to->getCrossLayerConnectorItem();
-				if (from && to) {
-					jumperItemStruct->jumperItem = drawJumperItem(from, to, jumperItemStruct->partForBounds, jumperItemStruct->boundingPoly);
-				}
-			}
-
-			if (jumperItemStruct->jumperItem) {
+			if (drawJumperItem(jumperItemStruct)) {
 				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
 				m_sketchWidget->scene()->addItem(jumperItemStruct->jumperItem);
 
-				TraceWire * traceWire = drawOneTrace(jumperItemStruct->jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), from->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItemStruct->jumperItem->viewLayerSpec());
+				TraceWire * traceWire = drawOneTrace(jumperItemStruct->jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), 
+													 jumperItemStruct->from->sceneAdjustedTerminalPoint(NULL), 
+													 Wire::STANDARD_TRACE_WIDTH, 
+													 jumperItemStruct->from->attachedToViewLayerID() == ViewLayer::Copper0 ? ViewLayer::Bottom : ViewLayer::Top);
 				traceWire->connector0()->tempConnectTo(jumperItemStruct->jumperItem->connector0(), true);
 				jumperItemStruct->jumperItem->connector0()->tempConnectTo(traceWire->connector0(), true);
-				traceWire->connector1()->tempConnectTo(from, true);
-				from->tempConnectTo(traceWire->connector1(), true);
+				traceWire->connector1()->tempConnectTo(jumperItemStruct->from, true);
+				jumperItemStruct->from->tempConnectTo(traceWire->connector1(), true);
 
-
-				traceWire = drawOneTrace(jumperItemStruct->jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), to->sceneAdjustedTerminalPoint(NULL), Wire::STANDARD_TRACE_WIDTH, jumperItemStruct->jumperItem->viewLayerSpec());
+				traceWire = drawOneTrace(jumperItemStruct->jumperItem->connector1()->sceneAdjustedTerminalPoint(NULL), 
+										 jumperItemStruct->to->sceneAdjustedTerminalPoint(NULL), 
+										 Wire::STANDARD_TRACE_WIDTH, 
+										 jumperItemStruct->to->attachedToViewLayerID() == ViewLayer::Copper0 ? ViewLayer::Bottom : ViewLayer::Top);
 				traceWire->connector0()->tempConnectTo(jumperItemStruct->jumperItem->connector1(), true);
 				jumperItemStruct->jumperItem->connector1()->tempConnectTo(traceWire->connector0(), true);
-				traceWire->connector1()->tempConnectTo(to, true);
-				to->tempConnectTo(traceWire->connector1(), true);
+				traceWire->connector1()->tempConnectTo(jumperItemStruct->to, true);
+				jumperItemStruct->to->tempConnectTo(traceWire->connector1(), true);
 			}
 		}
 
 		emit setProgressValue(edgesDone + (++jumpersDone));
-
 	}
 }
-
 
 ItemBase * Autorouter1::getPartForBounds(Edge * edge) {
 	if (m_sketchWidget->autorouteNeedsBounds()) {
@@ -1066,12 +1063,12 @@ Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase
 	return jumperWire;
  }
 
-JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds, const QPolygonF & boundingPoly) 
+JumperItem * Autorouter1::drawJumperItem(JumperItemStruct * jumperItemStruct) 
 {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
-											  from->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+											  jumperItemStruct->from->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (temp == NULL) {
 		// we're in trouble
 		return NULL;
@@ -1080,14 +1077,14 @@ JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * t
 	JumperItem * jumperItem = dynamic_cast<JumperItem *>(temp);
 
 	QPointF candidate1;
-	bool ok = findSpaceFor(to, jumperItem, boundingPoly, candidate1);
+	bool ok = findSpaceFor(jumperItemStruct->to, jumperItem, jumperItemStruct, candidate1);
 	if (!ok) {
 		m_sketchWidget->deleteItem(jumperItem, true, false, false);
 		return NULL;
 	}
 
 	QPointF candidate0;
-	ok = findSpaceFor(from, jumperItem, boundingPoly, candidate0);
+	ok = findSpaceFor(jumperItemStruct->from, jumperItem, jumperItemStruct, candidate0);
 	if (!ok) {
 		m_sketchWidget->deleteItem(jumperItem, true, false, false);
 		return NULL;
@@ -1095,15 +1092,17 @@ JumperItem * Autorouter1::drawJumperItem(ConnectorItem * from, ConnectorItem * t
 
 	jumperItem->resize(candidate0, candidate1);
 
-	if (partForBounds) {
-		jumperItem->addSticky(partForBounds, true);
-		partForBounds->addSticky(jumperItem, true);
+	if (jumperItemStruct->partForBounds) {
+		jumperItem->addSticky(jumperItemStruct->partForBounds, true);
+		jumperItemStruct->partForBounds->addSticky(jumperItem, true);
 	}
+
+	jumperItemStruct->jumperItem = jumperItem;
 
 	return jumperItem;
 }
 
-bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, const QPolygonF & boundingPoly, QPointF & candidate) 
+bool Autorouter1::findSpaceFor(ConnectorItem * & from, JumperItem * jumperItem, JumperItemStruct * jumperItemStruct, QPointF & candidate) 
 {
 	//QList<ConnectorItem *> equipotential;
 	//equipotential.append(from);
@@ -1113,10 +1112,12 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 	QRectF fromR = from->rect();
 	QPointF c = from->mapToScene(from->rect().center());
 	qreal minRadius = (jsz.width() / 2) + (qSqrt((fromR.width() * fromR.width()) + (fromR.height() * fromR.height())) / 4) + 1;
-	qreal maxRadius = minRadius * 4;
+	qreal maxRadius = minRadius * 5;
 
 	QGraphicsEllipseItem * ellipse = NULL;
 	QGraphicsLineItem * lineItem = NULL;
+
+	// TODO: with double-sided routing
 
 	for (qreal radius = minRadius; radius <= maxRadius; radius += (minRadius / 2)) {
 		for (int angle = 0; angle < 360; angle += 10) {
@@ -1130,8 +1131,8 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 			candidate.setX(radius * cos(radians));
 			candidate.setY(radius * sin(radians));
 			candidate += c;
-			if (!boundingPoly.isEmpty()) {
-				if (!boundingPoly.containsPoint(candidate, Qt::OddEvenFill)) {
+			if (!jumperItemStruct->boundingPoly.isEmpty()) {
+				if (!jumperItemStruct->boundingPoly.containsPoint(candidate, Qt::OddEvenFill)) {
 					continue;
 				}
 
@@ -1139,7 +1140,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 				QPointF nearestBoundsIntersection;
 				double nearestBoundsIntersectionDistance;
 				QLineF l1(c, candidate);
-				findNearestIntersection(l1, c, boundingPoly, inBounds, nearestBoundsIntersection, nearestBoundsIntersectionDistance);
+				findNearestIntersection(l1, c,jumperItemStruct->boundingPoly, inBounds, nearestBoundsIntersection, nearestBoundsIntersectionDistance);
 				if (!inBounds) {
 					continue;
 				}
@@ -1159,7 +1160,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 			}
 			QApplication::processEvents();
 
-			if (hasCollisions(jumperItem, from->attachedToViewLayerID(), ellipse, NULL)) {
+			if (hasCollisions(jumperItem, ViewLayer::UnknownLayer, ellipse, NULL)) {
 				continue;
 			}
 
@@ -1179,6 +1180,18 @@ bool Autorouter1::findSpaceFor(ConnectorItem * from, JumperItem * jumperItem, co
 				if (ellipse) delete ellipse;
 				if (lineItem) delete lineItem;
 				return true;
+			}
+
+			if (m_bothSidesNow) {
+				ConnectorItem * from2 = from->getCrossLayerConnectorItem();
+				if (from2) {
+					if (!hasCollisions(jumperItem, from2->attachedToViewLayerID(), lineItem, from2)) {
+						if (ellipse) delete ellipse;
+						if (lineItem) delete lineItem;
+						from = from2;
+						return true;
+					}
+				}
 			}
 		}
 	}
@@ -2392,3 +2405,7 @@ bool Autorouter1::hasCollisions(JumperItem * jumperItem, ViewLayer::ViewLayerID 
 	return false;
 }
 
+void Autorouter1::incMaximumProgress(int inc) {
+	m_maximumProgress += inc;
+	emit setMaximumProgress(m_maximumProgress);
+}

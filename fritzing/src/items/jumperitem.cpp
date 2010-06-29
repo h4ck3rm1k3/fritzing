@@ -286,22 +286,22 @@ void JumperItem::resize() {
 			case ViewLayer::Copper1:
 			case ViewLayer::Silkscreen1:
 			case ViewLayer::Silkscreen0:
-                                {
-				FSvgRenderer * renderer = m_renderers.value(itemBase->viewLayerID(), NULL);
-				if (renderer == NULL) {
-					renderer = new FSvgRenderer(itemBase);
-					m_renderers.insert(itemBase->viewLayerID(), renderer);
-				}
+                {
+					FSvgRenderer * renderer = m_renderers.value(itemBase->viewLayerID(), NULL);
+					if (renderer == NULL) {
+						renderer = new FSvgRenderer(itemBase);
+						m_renderers.insert(itemBase->viewLayerID(), renderer);
+					}
 
-				s = makeSvg(itemBase->viewLayerID());
-				bool result = renderer->fastLoad(s.toUtf8());
-				if (result) {
-					dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);
-                                }
-                                }
+					s = makeSvg(itemBase->viewLayerID());
+					bool result = renderer->fastLoad(s.toUtf8());
+					if (result) {
+						dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRendererEx(renderer);
+					}
+                }
 				break;
-                        default:
-                                break;
+            default:
+				break;
 		}
 	}
 

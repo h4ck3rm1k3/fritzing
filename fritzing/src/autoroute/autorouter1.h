@@ -61,7 +61,7 @@ protected:
 	void cleanUp();
 	void updateRatsnest(bool routed, QUndoCommand * parentCommand);
 	Wire * drawJumper(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
-	class JumperItem * drawJumperItem(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
+	class JumperItem * drawJumperItem(struct JumperItemStruct *);
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand, QList<struct JumperItemStruct *> &);
@@ -80,7 +80,7 @@ protected:
 	bool sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	bool sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited);
-	bool findSpaceFor(ConnectorItem * from, class JumperItem *, const QPolygonF & boundingPoly, QPointF & candidate); 
+	bool findSpaceFor(ConnectorItem * & from, class JumperItem *, struct JumperItemStruct *, QPointF & candidate); 
 	void dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<int> & netCounters, QList<struct Edge *> & edges);
 	void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy);
 	void addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<struct Subedge *> & subedges);
@@ -94,6 +94,7 @@ protected:
 	void doCancel(QUndoCommand * parentCommand);
 	bool alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to);
 	bool hasCollisions(JumperItem *, ViewLayer::ViewLayerID, QGraphicsItem *, ConnectorItem * from); 
+	void incMaximumProgress(int);
 
 protected:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
@@ -126,6 +127,7 @@ protected:
 	QGraphicsItem * m_nearestObstacle;
 	QList<Wire *> m_cleanWires;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
+	int m_maximumProgress;
 };
 
 #endif

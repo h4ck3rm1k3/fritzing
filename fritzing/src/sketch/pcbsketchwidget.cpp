@@ -2397,9 +2397,11 @@ bool PCBSketchWidget::routeBothSides() {
 }
 
 bool PCBSketchWidget::sameElectricalLayer(ViewLayer::ViewLayerID id1, ViewLayer::ViewLayerID id2) {
-	// assumes both ids are in a copper layer
+	// assumes both ids are in a copper layer or one id is a wildcard (UnknownLayer)
 
 	if (id1 == id2) return true;
+	if (id1 == ViewLayer::UnknownLayer) return true;
+	if (id2 == ViewLayer::UnknownLayer) return true;
 
 	LayerList copperBottom = ViewLayer::copperLayers(ViewLayer::Bottom);
 
