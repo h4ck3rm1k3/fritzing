@@ -470,9 +470,13 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent, bool 
 			DebugDialog::debug(QString("%1 untitled documents open, currently thinking %2").arg(untitledSketchNumber).arg(UntitledSketchIndex));
 			UntitledSketchIndex = UntitledSketchIndex >= untitledSketchNumber ? UntitledSketchIndex : untitledSketchNumber;
 		}
-		else if (!QFile(fileName).isWritable()) {
-			// If the file is read-only be sure to set this
-			setReadOnly(true);
+		else {
+			// sketch files aren't actually set to read-only
+			QString examplesPath = FolderUtils::getApplicationSubFolderPath("sketches");
+			if (fileName.contains(examplesPath, Qt::CaseInsensitive)) {
+				// If the file is read-only be sure to set this
+				setReadOnly(true);
+			}
 		}
 
 		// If this was a sketch restored from the backup directory, preserve the
