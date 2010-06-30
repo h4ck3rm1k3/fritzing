@@ -153,7 +153,7 @@ void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStr
 
     // create copper gerber from svg
     SVG2gerber copperGerber;
-	copperGerber.convert(svg, copperName);
+	copperGerber.convert(svg, m_pcbGraphicsView->boardLayers() == 2, copperName);
 
     QString copperFile = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)

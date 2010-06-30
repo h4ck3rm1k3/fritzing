@@ -506,7 +506,7 @@ void PartsBinPaletteWidget::saveBundledBin() {
 	saveAsLastBin();
 }
 
-void PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
+bool PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
 	QStringList namefilters;
 	namefilters << "*"+FritzingBinExtension;
 
@@ -517,6 +517,8 @@ void PartsBinPaletteWidget::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps
 		}
 	}
 	setFilename(___emptyString___);
+
+	return true;
 }
 
 

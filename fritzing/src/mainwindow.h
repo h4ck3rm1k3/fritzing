@@ -322,7 +322,8 @@ protected:
 	void hideShowTraceMenu();
 
 	QList<ModelPart*> moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin=true);
-	void loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
+	bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
+	bool preloadBundledAux(QDir &unzipDir);
 	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 	ModelPart* copyToPartsFolder(const QFileInfo& file, bool addToBin=true, const QString &destFolder="contrib");
 
@@ -382,6 +383,7 @@ protected:
 	void doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes);
 	void displayMessage(const QString & message, bool displayMessageBoxes);
 	void updateActiveLayerButtons();
+	bool hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -622,6 +624,7 @@ protected:
 	bool m_autosaveNeeded;
 	bool m_backingUp;
 	bool m_recovered;
+	QString m_bundledSketchName;
 
 public:
 	static int RestartNeeded;

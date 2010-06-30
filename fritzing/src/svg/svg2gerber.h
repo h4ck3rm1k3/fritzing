@@ -38,7 +38,7 @@ class SVG2gerber : public QObject
 
 public:
     SVG2gerber();
-	void convert(QString svgStr, QString debugStr="dbg");
+	void convert(QString svgStr, bool doubleSided, QString debugStr="dbg");
     QString getGerber();
     QString getSolderMask();
     QString getContour();
@@ -71,7 +71,7 @@ protected:
 
     void copyStyles(QDomElement, QDomElement);
 
-    void renderGerber();
+    void renderGerber(bool doubleSided);
     void allPaths2gerber();
     QString path2gerber(QDomElement);
 	void handleOblongPath(QDomElement & path, int & dcode_index);

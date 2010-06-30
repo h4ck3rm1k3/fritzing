@@ -641,12 +641,11 @@ void MainWindow::saveAsAuxAux(const QString & fileName) {
 	QApplication::restoreOverrideCursor();
 }
 
-
 void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 	int cascFactorX; int cascFactorY;
 	// close empty sketch window if user opens from a file
-	if (FolderUtils::isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty()) {
-		QTimer::singleShot(0, this, SLOT(close()) );
+	if (FolderUtils::isEmptyFileName(mw->m_fileName, untitledFileName()) && mw->undoStackIsEmpty()) {
+		QTimer::singleShot(0, mw, SLOT(close()) );
 		cascFactorX = 0;
 		cascFactorY = 0;
 	} else {
@@ -713,7 +712,6 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
     	load(fileName, setAsLastOpened, addToRecent, "");
 		result = true;
     } else if(fileName.endsWith(FritzingBundleExtension)) {
-    	m_saveAct->setEnabled(false);
     	loadBundledSketch(fileName);
 		result = true;
     } else if (

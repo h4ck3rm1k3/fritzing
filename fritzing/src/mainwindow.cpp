@@ -42,6 +42,7 @@ $Date$
 #include <QTimer>
 #include <QWebView>
 #include <QStackedWidget>
+#include <QXmlStreamReader>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -1100,42 +1101,91 @@ void MainWindow::loadBundledNonAtomicEntity(const QString &fileName, Bundler* bu
 
 	QDir unzipDir(unzipDirPath);
 
-	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
-	// the bundled itself
-	bundler->loadBundledAux(unzipDir,mps);
-	m_fileName.clear();							// clear m_fileName, so "save" will become "save as"; otherwise it will attempt to save this in the unzipDirPath that you're about to rmdir
-
-	if (m_linkedProgramFiles.count() > 0) {
-		// since the temporary dir containing the program files is about to be deleted
-		// copy these to the fzz directory (for lack of a better idea)
-		// another possibility is to ask the user for a directory
-		QFileInfo fileInfo(fileName);
-		QDir newdir = fileInfo.absoluteDir();
-		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
-			QString program = m_linkedProgramFiles.at(i);
-			QFileInfo p(program);
-			QFile file(unzipDir.absoluteFilePath(p.fileName()));
-			QString newPath = newdir.absoluteFilePath(p.fileName());
-			file.copy(newPath);
-			m_linkedProgramFiles.replace(i, newPath);
-		}
+	if (bundler->preloadBundledAux(unzipDir)) {
+		QList<ModelPart*> mps = moveToPartsFolder(unzipDir,this,addToBin);
+		// the bundled itself
+		bundler->loadBundledAux(unzipDir,mps);
 	}
 
 	FolderUtils::rmdir(unzipDirPath);
 }
 
-void MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
-	Q_UNUSED(mps);
-
+bool MainWindow::preloadBundledAux(QDir &unzipDir) 
+{
 	QStringList namefilters;
 	namefilters << "*"+FritzingSketchExtension;
+	QFileInfoList entryInfoList = unzipDir.entryInfoList(namefilters);
+	if (entryInfoList.count() == 0) return false;
 
-	this->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false, true, "");
-	this->setWindowModified(true);
+	QFileInfo sketchInfo = entryInfoList[0];
+	QString sketchName = defaultSaveFolder() + "/" + sketchInfo.fileName();
+
+	QStringList linkedProgramFiles;
+	if (!hasLinkedProgramFiles(sketchInfo.filePath(), linkedProgramFiles)) {
+		QString fileExt;
+		sketchName = 
+			FolderUtils::getSaveFileName(
+				this,
+				tr("Please specify a location for the archived sketch"),
+				sketchName,
+				tr("Fritzing File (*%1)").arg(FritzingSketchExtension),
+				&fileExt
+			);
+		if (sketchName.isEmpty()) return false;
+	}
+	else {
+		// ask the user for a folder to store the sketch and program files
+		QString path = QFileDialog::getExistingDirectory(
+							this,
+							tr("Please choose a folder to save the archived sketch and program files"),
+							defaultSaveFolder(),
+							QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+		if (path.isEmpty()) return false;
+
+		sketchName = path + "/" + sketchInfo.fileName();
+	}
+
+	if (!QFile::copy(sketchInfo.filePath(), sketchName)) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Unable to save sketch to %1").arg(sketchName)
+		);
+		return false;
+	}
+
+	QDir sketchDir = QFileInfo(sketchName).absoluteDir();
+
+	foreach (QString fname, linkedProgramFiles) {
+		QFileInfo finfo(fname);
+		QFile::copy(unzipDir.absoluteFilePath(finfo.fileName()), sketchDir.absoluteFilePath(finfo.fileName()));
+	}
+
+	m_bundledSketchName = sketchName;
+	return true;
+}
+
+bool MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
+
+	Q_UNUSED(unzipDir);
+
+	this->load(m_bundledSketchName, true, true, "");
+
+	if (m_linkedProgramFiles.count() > 0) {
+		// since the temporary dir containing the program files is about to be deleted
+		// copy these to the fzz directory (for lack of a better idea)
+		// another possibility is to ask the user for a directory
+		QFileInfo sketchInfo(m_bundledSketchName);
+		QDir newdir = sketchInfo.absoluteDir();
+		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
+			QFileInfo p(m_linkedProgramFiles.at(i));
+			QString newPath = newdir.absoluteFilePath(p.fileName());
+			m_linkedProgramFiles.replace(i, newPath);
+		}
+	}
 
 	m_alienPartsMsg = tr("Do you want to keep the parts that were loaded with this shareable sketch %1?");
-
-	closeIfEmptySketch(this);
+	return true;
 }
 
 void MainWindow::loadBundledPartFromWeb() {
@@ -2039,3 +2089,37 @@ void MainWindow::setAutosave(int minutes, bool enabled) {
 void MainWindow::setRecovered(bool recovered) {
 	m_recovered = recovered;
 }
+
+bool MainWindow::hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles) 
+{
+	QFile file(filename);
+	file.open(QFile::ReadOnly);
+	QXmlStreamReader xml(&file);
+    xml.setNamespaceProcessing(false);
+
+	bool done = false;
+	while (!xml.atEnd()) {
+        switch (xml.readNext()) {
+        case QXmlStreamReader::StartElement:
+			if (xml.name().toString().compare("program") == 0) {
+				linkedProgramFiles.append(xml.readElementText());
+				break;
+			}
+			if (xml.name().toString().compare("views") == 0) {
+				done = true;
+				break;
+			}
+			if (xml.name().toString().compare("instances") == 0) {
+				done = true;
+				break;
+			}
+		default:
+			break;
+		}
+
+		if (done) break;
+	}
+
+	return linkedProgramFiles.count() > 0;
+}
+

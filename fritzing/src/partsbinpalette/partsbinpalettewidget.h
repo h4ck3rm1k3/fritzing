@@ -163,7 +163,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QToolButton* newToolButton(const QString& btnObjName, const QString& imgPath = ___emptyString___, const QString &text = ___emptyString___);
 		QAction* newTitleAction(const QString &text);
 
-		void loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
+		bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 		void setFilename(const QString &filename);
 		QHash<QString,QString> getUserBinsInfo();

@@ -36,7 +36,7 @@ SVG2gerber::SVG2gerber()
 {
 }
 
-void SVG2gerber::convert(QString svgStr, QString debugStr)
+void SVG2gerber::convert(QString svgStr, bool doubleSided, QString debugStr)
 {
     m_SVGDom = QDomDocument("svg");
     QString errorStr;
@@ -80,7 +80,7 @@ void SVG2gerber::convert(QString svgStr, QString debugStr)
     temp = m_SVGDom.toString();
 #endif
 
-    renderGerber();
+    renderGerber(doubleSided);
 }
 
 QString SVG2gerber::getGerber(){
@@ -99,10 +99,10 @@ QString SVG2gerber::getNCDrill(){
     return m_drill_header + m_drill_paths + m_drill_slots + m_drill_footer;
 }
 
-void SVG2gerber::renderGerber(){
+void SVG2gerber::renderGerber(bool doubleSided){
     // human readable description comments
     m_gerber_header = "G04 MADE WITH FRITZING*\n";
-    m_gerber_header += "G04 SINGLE SIDED*\n";
+	m_gerber_header += QString("G04 %1 SIDED*\n").arg(doubleSided ? "DOUBLE" : "SINGLE");
     m_gerber_header += "G04 HOLES NOT PLATED*\n";
     m_gerber_header += "G04 CONTOUR ON CENTER OF CONTOUR VECTOR*\n";
 
