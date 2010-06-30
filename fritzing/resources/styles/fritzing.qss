@@ -229,13 +229,13 @@ HtmlInfoView {
 	padding: 4px;
 }
 
-#partTitleFrame {
+#infoViewPartTitleFrame {
 	max-height: 18px;
 	min-height: 18px;
 }
 
 /* redundant part title */
-#partTitle {
+#infoViewPartTitle {
 	margin: 2px;
 	font-size: 10px;
 	font-weight: normal;

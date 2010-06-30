@@ -148,15 +148,15 @@ HtmlInfoView::HtmlInfoView(QWidget * parent) : QScrollArea(parent)
 	vlo->addWidget(iconFrame);
 
 	QFrame * tFrame = new QFrame(mainFrame);
-	tFrame->setObjectName("partTitleFrame");
+	tFrame->setObjectName("infoViewPartTitleFrame");
 	hboxLayout = new QHBoxLayout();
 	hboxLayout->setContentsMargins (0, 0, 0, 0);
 	m_partTitle = new QLabel(tFrame);
-	m_partTitle->setObjectName("partTitle");
+	m_partTitle->setObjectName("infoViewPartTitle");
 	hboxLayout->addWidget(m_partTitle);
 	hboxLayout->addSpacerItem(new QSpacerItem(IconSpace, 1, QSizePolicy::Expanding));
 	m_partVersion = new QLabel(tFrame);
-	m_partVersion->setObjectName("partTitle");
+	m_partVersion->setObjectName("infoViewPartTitle");
 	hboxLayout->addWidget(m_partVersion);
 	tFrame->setLayout(hboxLayout);
 	vlo->addWidget(tFrame);
