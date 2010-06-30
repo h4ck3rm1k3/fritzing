@@ -37,8 +37,9 @@ $Date$
 #include <qmath.h>
 #include <QApplication>
 
-static int kExtraLength = 1000000;
-static int kAutoBailMax = 250;
+static const int kExtraLength = 1000000;
+static const int kAutoBailMax = 250;
+static const int MaximumProgress = 1000;
 
 struct Edge {
 	class ConnectorItem * from;
@@ -186,9 +187,10 @@ void Autorouter1::start()
 	// TODO: tighten path between connectors once trace has succeeded
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
 	
-	m_maximumProgress = 0;
+	m_maximumProgressPart = 2;
+	m_currentProgressPart = 0;
 
-	emit setMaximumProgress(m_maximumProgress);
+	emit setMaximumProgress(MaximumProgress);
 
 	RoutingStatus routingStatus;
 	routingStatus.zero();
@@ -199,6 +201,7 @@ void Autorouter1::start()
 
 	m_bothSidesNow = m_sketchWidget->routeBothSides();
 	if (m_bothSidesNow) {
+		m_maximumProgressPart = 3;
 		emit wantBottomVisible();
 		QApplication::processEvents();
 	}
@@ -227,7 +230,6 @@ void Autorouter1::start()
 		return;
 	}
 
-	incMaximumProgress(edges.count());
 	QApplication::processEvents(); // to keep the app  from freezing
 
 	QGraphicsLineItem * lineItem = new QGraphicsLineItem(0, 0, 0, 0, NULL, m_sketchWidget->scene());
@@ -239,8 +241,7 @@ void Autorouter1::start()
 
 	QList<Wire *> jumpers;
 	QList<JumperItemStruct *> jumperItemStructs;
-	int edgesDone = 0;
-	runEdges(edges, lineItem, jumperItemStructs, jumpers, edgesDone, netCounters, routingStatus);
+	runEdges(edges, lineItem, jumperItemStructs, jumpers, netCounters, routingStatus);
 
 	clearEdges(edges);
 
@@ -255,8 +256,8 @@ void Autorouter1::start()
 		QApplication::processEvents();
 		m_viewLayerSpec = ViewLayer::Top;
 		dijkstraNets(indexer, netCounters, edges);
-		incMaximumProgress(edges.count());
-		runEdges(edges, lineItem, jumperItemStructs, jumpers, edgesDone, netCounters, routingStatus);
+		m_currentProgressPart++;
+		runEdges(edges, lineItem, jumperItemStructs, jumpers, netCounters, routingStatus);
 	}
 
 	if (m_cancelled) {
@@ -267,7 +268,8 @@ void Autorouter1::start()
 
 	delete lineItem;
 
-	fixupJumperItems(jumperItemStructs, edgesDone);
+	m_currentProgressPart++;
+	fixupJumperItems(jumperItemStructs);
 
 	cleanUp();
 
@@ -291,7 +293,7 @@ void Autorouter1::start()
 
 void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem, 
 						   QList<struct JumperItemStruct *> & jumperItemStructs, 
-						   QList<Wire *> & jumpers, int & edgesDone,
+						   QList<Wire *> & jumpers,
 						   QVector<int> & netCounters, RoutingStatus & routingStatus)
 {
 	// sort the edges by distance
@@ -306,6 +308,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 	lineItem->setZValue(m_sketchWidget->viewLayers().value(viewLayerID)->nextZ());
 	lineItem->setOpacity(0.8);
 
+	int edgesDone = 0;
 	foreach (Edge * edge, edges) {
 		QList<ConnectorItem *> fromConnectorItems;
 		QSet<Wire *> fromTraces;
@@ -389,12 +392,11 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 					jumperItemStruct->jumperWire = jumperWire;
 					jumperItemStruct->deleted = false;
 					jumperItemStructs.append(jumperItemStruct);
-					incMaximumProgress(1);
 				}
 			}
 		}
 
-		emit setProgressValue(++edgesDone);
+		updateProgress(++edgesDone, edges.count());
 
 		for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
 			if (m_allPartConnectorItems[i]->contains(edge->from)) {
@@ -425,7 +427,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 	}
 }
 
-void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs, int edgesDone) {
+void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
 	if (jumperItemStructs.count() <= 0) return;
 
 	if (m_bothSidesNow) {
@@ -470,7 +472,7 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 			}
 		}
 
-		emit setProgressValue(edgesDone + (++jumpersDone));
+		updateProgress(++jumpersDone, jumperItemStructs.count());
 	}
 }
 
@@ -1117,7 +1119,8 @@ bool Autorouter1::findSpaceFor(ConnectorItem * & from, JumperItem * jumperItem, 
 	QGraphicsEllipseItem * ellipse = NULL;
 	QGraphicsLineItem * lineItem = NULL;
 
-	// TODO: with double-sided routing
+	// TODO: with double-sided routing, it's possible to range further away to find an empty spot
+	// eventually could use a variant of maze-routing to find empty spots
 
 	for (qreal radius = minRadius; radius <= maxRadius; radius += (minRadius / 2)) {
 		for (int angle = 0; angle < 360; angle += 10) {
@@ -2405,7 +2408,7 @@ bool Autorouter1::hasCollisions(JumperItem * jumperItem, ViewLayer::ViewLayerID 
 	return false;
 }
 
-void Autorouter1::incMaximumProgress(int inc) {
-	m_maximumProgress += inc;
-	emit setMaximumProgress(m_maximumProgress);
+void Autorouter1::updateProgress(int num, int denom) 
+{
+	emit setProgressValue((int) MaximumProgress * (m_currentProgressPart + (num / (qreal) denom)) / (qreal) m_maximumProgressPart);
 }

@@ -2170,12 +2170,9 @@ void PCBSketchWidget::drcLayer(QSet<ItemBase *> & collidingItems, int progressOf
 					if (itemBase == NULL) continue;
 					if (!intersectingItems.contains(itemBase)) continue;
 
-
-					itemBase->setSelected(true);
 					collidingItems.insert(itemBase);
 					itemBase = dynamic_cast<ItemBase *>(checkItemParent ? checkItemParent : checkItem);
 					collidingItems.insert(itemBase);
-					itemBase->setSelected(true);
 				}
 			}
 		}

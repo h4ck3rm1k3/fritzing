@@ -86,15 +86,15 @@ protected:
 	void addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<struct Subedge *> & subedges);
 	bool traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase * partForBounds, const QPolygonF & boundingPoly, QGraphicsLineItem *);
 	ItemBase * getPartForBounds(struct Edge *);
-	void fixupJumperItems(QList<struct JumperItemStruct *> &, int edgesDone);
+	void fixupJumperItems(QList<struct JumperItemStruct *> &);
 	void runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem, 	
 				  QList<struct JumperItemStruct *> & jumperItemStructs, QList<Wire *> & jumpers,
-				  int & edgesDone, QVector<int> & netCounters, struct RoutingStatus &);
+				  QVector<int> & netCounters, struct RoutingStatus &);
 	void clearEdges(QList<Edge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
 	bool alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to);
 	bool hasCollisions(JumperItem *, ViewLayer::ViewLayerID, QGraphicsItem *, ConnectorItem * from); 
-	void incMaximumProgress(int);
+	void updateProgress(int num, int denom);
 
 protected:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
@@ -127,7 +127,8 @@ protected:
 	QGraphicsItem * m_nearestObstacle;
 	QList<Wire *> m_cleanWires;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
-	int m_maximumProgress;
+	int m_maximumProgressPart;
+	int m_currentProgressPart;
 };
 
 #endif
