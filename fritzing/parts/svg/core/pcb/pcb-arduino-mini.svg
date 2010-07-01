@@ -70,7 +70,9 @@
   </g>
   <g
      id="copper0">
-    <circle
+  <g
+     id="copper1">
+   <circle
        cx="100"
        cy="100"
        r="27.5"
@@ -287,5 +289,6 @@
        r="27.5"
        id="connector30pin"
        style="fill:none;stroke:#ffbf00;stroke-width:20" />
+  </g>
   </g>
 </svg>
