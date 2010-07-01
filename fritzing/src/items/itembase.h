@@ -102,7 +102,7 @@ public:
 	void setViewLayerID(ViewLayer::ViewLayerID, const LayerHash & viewLayers);
 	void setViewLayerID(const QString & layerName, const LayerHash & viewLayers);
 	bool topLevel();
-	void collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene);
+	void collectConnectors(ConnectorPairHash & connectorHash);
 	virtual void collectConnectors(QList<ConnectorItem *> & connectors);
 
 	virtual void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);

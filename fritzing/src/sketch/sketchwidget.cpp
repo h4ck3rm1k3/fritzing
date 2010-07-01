@@ -808,7 +808,7 @@ bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * 
 
 	foreach (ItemBase * itemBase, deletedItems) {
 		ConnectorPairHash * connectorHash = new ConnectorPairHash;
-		itemBase->collectConnectors(*connectorHash, this->scene());
+		itemBase->collectConnectors(*connectorHash);
 		deletedConnections.insert(itemBase, connectorHash);
 	}
 
@@ -4432,6 +4432,10 @@ void SketchWidget::updateInfoViewSlot() {
 long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID(newModelIndex);
+	if (itemBase->viewIdentifier() != m_viewIdentifier) {
+		itemBase = findItem(itemBase->id());
+		if (itemBase == NULL) return newID;
+	}
 
 	ViewGeometry vg = itemBase->getViewGeometry();
 	QTransform oldTransform = vg.transform();
@@ -4476,7 +4480,7 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
 {
 	ConnectorPairHash connectorHash;
-	itemBase->collectConnectors(connectorHash, this->scene());
+	itemBase->collectConnectors(connectorHash);
 
 	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
 	if (newModelPart == NULL) return;

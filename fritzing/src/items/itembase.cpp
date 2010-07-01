@@ -575,9 +575,7 @@ bool ItemBase::inactive() {
 	return m_inactive;
 }
 
-void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene) {
-	Q_UNUSED(scene);
-
+void ItemBase::collectConnectors(ConnectorPairHash & connectorHash) {
 	ModelPart * modelPart = this->modelPart();
 	if (modelPart == NULL) return;
 
@@ -589,6 +587,13 @@ void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, QGraphicsSce
 
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			connectorHash.insert(fromConnectorItem, toConnectorItem);
+		}
+
+		ConnectorItem * crossConnectorItem = fromConnectorItem->getCrossLayerConnectorItem();
+		if (crossConnectorItem == NULL) continue;
+
+		foreach (ConnectorItem * toConnectorItem, crossConnectorItem->connectedToItems()) {
+			connectorHash.insert(crossConnectorItem, toConnectorItem);
 		}
 	}
 }

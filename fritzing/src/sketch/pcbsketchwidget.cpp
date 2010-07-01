@@ -2223,6 +2223,11 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 {
 	long result = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, parentCommand);
 
+	if (itemBase->viewIdentifier() != m_viewIdentifier) {
+		itemBase = findItem(itemBase->id());
+		if (itemBase == NULL) return result;
+	}
+
 	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
 	if (newLayers == m_boardLayers) return result;
 
