@@ -55,6 +55,7 @@ public:
 	const QString & spacing();
 	bool onlySpacingChanges(QMap<QString, QString> & propsMap);
 	PluralType isPlural();
+	void syncKinSceneChanged(PaletteItemBase *originator);
 
 public slots:
 	void chipLabelEntry();

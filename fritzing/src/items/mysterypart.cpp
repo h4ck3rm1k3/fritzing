@@ -342,3 +342,12 @@ const QStringList & MysteryPart::spacings() {
 ItemBase::PluralType MysteryPart::isPlural() {
 	return Plural;
 }
+
+void MysteryPart::syncKinSceneChanged(PaletteItemBase * originator) {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return;
+
+	m_changingSpacing = true;
+	resetKinImage(originator, infoGraphicsView);
+	m_changingSpacing = false;
+}

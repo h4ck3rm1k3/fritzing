@@ -447,9 +447,15 @@ void PaletteItem::resetImage(InfoGraphicsView * infoGraphicsView) {
 	this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true);
 	
 	foreach (ItemBase * layerKin, m_layerKin) {
-		foreach (Connector * connector, modelPart()->connectors()) {
-			connector->unprocess(layerKin->viewIdentifier(), layerKin->viewLayerID());
-		}
-		qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true);
+		resetKinImage(layerKin, infoGraphicsView);
 	}
 }
+
+void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView) 
+{
+	foreach (Connector * connector, modelPart()->connectors()) {
+		connector->unprocess(layerKin->viewIdentifier(), layerKin->viewLayerID());
+	}
+	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true);
+}
+

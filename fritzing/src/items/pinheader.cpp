@@ -234,3 +234,11 @@ ItemBase::PluralType PinHeader::isPlural() {
 	return Plural;
 }
 
+void PinHeader::syncKinSceneChanged(PaletteItemBase * originator) {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return;
+
+	m_changingForm = true;
+	resetKinImage(originator, infoGraphicsView);
+	m_changingForm = false;
+}

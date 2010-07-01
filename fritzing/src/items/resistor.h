@@ -53,6 +53,7 @@ public:
 	bool hasCustomSVG();
 	bool canEditPart();
 	PluralType isPlural();
+	void syncKinSceneChanged(PaletteItemBase *originator);
 
 protected:
 	QString makeBreadboardSvg(const QString & ohms);

@@ -50,6 +50,7 @@ public:
 	bool onlyFormChanges(QMap<QString, QString> & propsMap);
     bool hasCustomSVG();
 	PluralType isPlural();
+	void syncKinSceneChanged(PaletteItemBase *originator);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

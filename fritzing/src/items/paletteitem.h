@@ -76,6 +76,7 @@ public:
 	void blockSyncKinMoved(bool block);
 	void slamZ(qreal z);
 	void resetImage(class InfoGraphicsView *);
+	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
 
 protected:
 	void syncKinSelection(bool selected, PaletteItemBase * originator);

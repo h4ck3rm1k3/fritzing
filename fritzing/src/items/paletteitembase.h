@@ -49,6 +49,7 @@ public:
 	void moveItem(ViewGeometry &);
 	virtual void syncKinSelection(bool selected, PaletteItemBase *originator);
 	virtual void syncKinMoved(QPointF offset, QPointF loc);
+	virtual void syncKinSceneChanged(PaletteItemBase *originator);
  	void blockItemSelectedChange(bool selected);
  	bool syncSelected();
  	QPointF syncMoved();

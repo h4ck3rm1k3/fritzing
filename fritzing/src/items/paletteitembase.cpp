@@ -110,13 +110,18 @@ void PaletteItemBase::saveInstanceLocation(QXmlStreamWriter & streamWriter)
 	saveLocAndTransform(streamWriter);
 }
 
-void PaletteItemBase::syncKinSelection(bool selected, PaletteItemBase * /* originator */) {
+void PaletteItemBase::syncKinSelection(bool selected, PaletteItemBase * originator) {
+	Q_UNUSED(originator);
 	m_syncSelected = selected;
 }
 
 void PaletteItemBase::syncKinMoved(QPointF offset, QPointF newPos) {
 	Q_UNUSED(offset);
 	Q_UNUSED(newPos);
+}
+
+void PaletteItemBase::syncKinSceneChanged(PaletteItemBase * originator) {
+	Q_UNUSED(originator);
 }
 
 QPointF PaletteItemBase::syncMoved() {

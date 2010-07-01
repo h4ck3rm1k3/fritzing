@@ -362,3 +362,12 @@ void Resistor::resistanceEntry(const QString & text) {
 ItemBase::PluralType Resistor::isPlural() {
 	return Plural;
 }
+
+void Resistor::syncKinSceneChanged(PaletteItemBase * originator) {
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView == NULL) return;
+
+	m_changingPinSpacing = true;
+	resetKinImage(originator, infoGraphicsView);
+	m_changingPinSpacing = false;
+}
