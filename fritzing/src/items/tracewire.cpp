@@ -37,6 +37,11 @@ TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 	m_canChainMultiple = true;
 }
 
+
+TraceWire::~TraceWire() 	
+{
+}
+
 bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {

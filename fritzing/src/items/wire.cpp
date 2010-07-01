@@ -69,6 +69,7 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	m_markedDeleted = false;
 	m_connector0 = m_connector1 = NULL;
 	m_partLabel = new PartLabel(this, NULL);
 	m_canChainMultiple = false;
@@ -1325,4 +1326,13 @@ void Wire::checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool conn
 			}
 		}
 	}
+}
+
+
+void Wire::markDeleted(bool mark) {
+	m_markedDeleted = mark;
+}
+
+bool Wire::isMarkedDeleted() {
+	return m_markedDeleted;
 }

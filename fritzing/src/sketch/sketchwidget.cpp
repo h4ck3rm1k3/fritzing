@@ -3858,6 +3858,10 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 	}
 
 	ModelPart * mp = itemBase->modelPart();
+	if (mp->itemType() == ModelPart::Wire) {
+		qobject_cast<Wire *>(itemBase)->markDeleted(true);
+	}
+
 	new DeleteItemCommand(this, crossView, mp->moduleID(), itemBase->viewLayerSpec(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
 }
 

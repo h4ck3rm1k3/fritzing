@@ -892,16 +892,12 @@ void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & all
 
 		QList<Wire *> wiresCopy(wires);
 
-		// this is ugly, but for the moment I can't think of anything better.
-		// it prevents disconnected deleted traces (traces which have been directly deleted,
+		// prevent disconnected deleted traces (traces which have been directly deleted,
 		// as opposed to traces that are indirectly deleted by deleting or disconnecting parts)
 		// from being deleted twice on the undo stack
 		// and therefore added twice, and causing other problems
 		if (flag == ViewGeometry::TraceFlag || flag == ViewGeometry::JumperFlag) {
-			if (ends.count() == 0)
-			{
-				continue;
-			}
+			if (wire->isMarkedDeleted()) continue;
 		}
 
 		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
@@ -933,6 +929,7 @@ void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & all
 	}
 
 	foreach (Wire * wire, deleteWires) {
+		wire->markDeleted(true);
 		command->addWire(this, wire);
 		deleteItem(wire, true, false, false);
 	}
