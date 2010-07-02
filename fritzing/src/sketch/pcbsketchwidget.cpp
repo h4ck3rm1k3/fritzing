@@ -1878,26 +1878,53 @@ int PCBSketchWidget::designRulesCheck()
 	QColor color;
 	color = this->background();
 	this->setBackground(QColor::fromRgb(255,255,255,255));
-	this->saveLayerVisibility();
-	this->setAllLayersVisible(false);
+	saveLayerVisibility();
+	setAllLayersVisible(true);
 	bool copper0Active = layerIsActive(ViewLayer::Copper0);
 	bool copper1Active = layerIsActive(ViewLayer::Copper1);
 	setLayerActive(ViewLayer::Copper0, true);
 	setLayerActive(ViewLayer::Copper1, true);
-	this->setLayerVisible(ViewLayer::Copper0, true);
 	QSet<ItemBase *> collidingItems;
+	QList<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		if (!ViewLayer::copperLayers(ViewLayer::Bottom).contains(itemBase->viewLayerID())) {
+			if (itemBase->isVisible()) {
+				itemBase->setVisible(false);
+				itemBases.append(itemBase);
+			}
+		}
+	}
 	if (m_boardLayers == 1) {
 		drcLayer(collidingItems, 0, 1.0, 1000);
 	}
 	else {
 		drcLayer(collidingItems, 0, 0.5, 1000);
-		this->setLayerVisible(ViewLayer::Copper0, false);
-		this->setLayerVisible(ViewLayer::Copper1, true);
+		foreach (ItemBase * itemBase, itemBases) {
+			itemBase->setVisible(true);
+		}
+		itemBases.clear();
+		foreach (QGraphicsItem * item, scene()->items()) {
+			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+			if (itemBase == NULL) continue;
+
+			if (!ViewLayer::copperLayers(ViewLayer::Top).contains(itemBase->viewLayerID())) {
+				if (itemBase->isVisible()) {
+					itemBase->setVisible(false);
+					itemBases.append(itemBase);
+				}
+			}
+		}
 		drcLayer(collidingItems, 500, 0.5, 1000);
+	}
+	foreach (ItemBase * itemBase, itemBases) {
+		itemBase->setVisible(true);
 	}
 
 	this->setBackground(color);
-	this->restoreLayerVisibility();
+	restoreLayerVisibility();
 	setLayerActive(ViewLayer::Copper0, copper0Active);
 	setLayerActive(ViewLayer::Copper1, copper1Active);
 
@@ -1919,7 +1946,7 @@ int PCBSketchWidget::designRulesCheck()
 	}
 }
 
-void PCBSketchWidget::drcLayer(QSet<ItemBase *> & collidingItems, int progressOffset, qreal progressRange, int progressGoal) {
+bool PCBSketchWidget::drcLayer(QSet<ItemBase *> & collidingItems, int progressOffset, qreal progressRange, int progressGoal) {
 	QSet<QGraphicsItem *> checkItems;
 
 	foreach (QGraphicsItem * item, scene()->items()) {
@@ -1959,230 +1986,289 @@ void PCBSketchWidget::drcLayer(QSet<ItemBase *> & collidingItems, int progressOf
 
 	emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * progressSoFar / maxProgress));
 
+
+	bool retval = false;
 	int imageCount = 0;
 	qreal expandBy = .01 * FSvgRenderer::printerScale();
 	foreach (QGraphicsItem * checkItem, checkItems) {
 		if (m_cancelDRC) break;
 
-		QRectF r = checkItem->boundingRect();
-		r.adjust(-expandBy, -expandBy, expandBy, expandBy);
-		QPolygonF expandedCheckItemPoly = checkItem->mapToScene(r);						// mapToScene does take transforms into account
-
-		QList<ConnectorItem *> equipotentialConnectorItems;
-		TraceWire * checkTraceWire = NULL;
-		QGraphicsItem * checkItemParent = checkItem->parentItem();
-		ConnectorItem * checkConnectorItem = dynamic_cast<ConnectorItem *>(checkItem);
-		if (checkConnectorItem) {
-			if (checkConnectorItem->attachedToItemType() == ModelPart::CopperFill) {
-				// skip these
-				continue;
-			}
-
-			equipotentialConnectorItems.append(checkConnectorItem);
+		if (drcLayerItem(checkItem, collidingItems, progressOffset, progressRange, progressGoal, 
+			imageCount, expandBy, progressSoFar, maxProgress)) 
+		{
+			retval = true;
 		}
-		else {
-			checkTraceWire = dynamic_cast<TraceWire *>(checkItem);
-			if (checkTraceWire != NULL) {
-				equipotentialConnectorItems.append(checkTraceWire->connector0());
-			}
-		}
-	
-		ConnectorItem::collectEqualPotential(equipotentialConnectorItems, false, ViewGeometry::NoFlag);
-		for (int i = equipotentialConnectorItems.count() - 1; i >= 0; i--) {
-			if (!equipotentialConnectorItems.at(i)->isVisible()) {
-				//DebugDialog::debug(QString("not visible %1").arg(ViewLayer::viewLayerNameFromID(equipotentialConnectorItems.at(i)->attachedToViewLayerID())));
-				equipotentialConnectorItems.removeAt(i);
-			}
+	}
+
+	return retval;
+}
+
+bool PCBSketchWidget::drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> & collidingItems, int progressOffset, qreal progressRange, int progressGoal,
+								   int & imageCount, qreal expandBy, qreal & progressSoFar, int maxProgress) 
+{
+	QRectF r = checkItem->boundingRect();
+	r.adjust(-expandBy, -expandBy, expandBy, expandBy);
+	QPolygonF expandedCheckItemPoly = checkItem->mapToScene(r);						// mapToScene does take transforms into account
+
+	QList<ConnectorItem *> equipotentialConnectorItems;
+	TraceWire * checkTraceWire = NULL;
+	QGraphicsItem * checkItemParent = checkItem->parentItem();
+	ConnectorItem * checkConnectorItem = dynamic_cast<ConnectorItem *>(checkItem);
+	if (checkConnectorItem) {
+		if (checkConnectorItem->attachedToItemType() == ModelPart::CopperFill) {
+			// skip these
+			return false;
 		}
 
-		QSet<ItemBase *> intersectingItems;
-		foreach (QGraphicsItem * candidate, scene()->items(expandedCheckItemPoly)) {
-			if (m_cancelDRC) break;
-			QApplication::processEvents();
-
-			if (!candidate->isVisible()) {
-				continue;
-			}
-
-			if (candidate == checkItem) continue;
-			if (candidate == checkItemParent) continue;
-
-			ItemBase * itemBase = dynamic_cast<ItemBase *>(candidate);
-			if (itemBase == NULL) continue;
-			if (itemBase->hidden()) continue;
-
-			TraceWire * tw = dynamic_cast<TraceWire *>(candidate);
-			if (tw != NULL) {
-				if (equipotentialConnectorItems.contains(tw->connector0())) continue;			// part of the same net; skip it
-
-				intersectingItems.insert(tw);
-				continue;
-			}
-
-			GroundPlane * gp = dynamic_cast<GroundPlane *>(candidate);
-			if (gp != NULL) {
-				// skip these
-				continue;
-			}
-
-			intersectingItems.insert(itemBase);
+		equipotentialConnectorItems.append(checkConnectorItem);
+	}
+	else {
+		checkTraceWire = dynamic_cast<TraceWire *>(checkItem);
+		if (checkTraceWire != NULL) {
+			equipotentialConnectorItems.append(checkTraceWire->connector0());
 		}
+	}
 
+	ConnectorItem::collectEqualPotential(equipotentialConnectorItems, false, ViewGeometry::NoFlag);
+	for (int i = equipotentialConnectorItems.count() - 1; i >= 0; i--) {
+		if (!equipotentialConnectorItems.at(i)->isVisible()) {
+			//DebugDialog::debug(QString("not visible %1").arg(ViewLayer::viewLayerNameFromID(equipotentialConnectorItems.at(i)->attachedToViewLayerID())));
+			equipotentialConnectorItems.removeAt(i);
+		}
+	}
+
+	QSet<ItemBase *> intersectingItems;
+	foreach (QGraphicsItem * candidate, scene()->items(expandedCheckItemPoly)) {
 		if (m_cancelDRC) break;
 
-		if (intersectingItems.count() == 0) {
-			emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * ++progressSoFar / maxProgress));
+		QApplication::processEvents();
+
+		if (!candidate->isVisible()) {
 			continue;
 		}
 
-		// take equipotential connectors out of the picture; unfortunately the visible part of these connectors
-		// is actually part of the svg of the parent, so this is a hack to remove them completely from the "other" image
-		// if the connector isn't well-behaved (a nice circle or rect) then this step may remove too much
-		// would a graphical xor within a clipping region do the job?
-		foreach (ConnectorItem * connectorItem, equipotentialConnectorItems) {
-			if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-				connectorItem->setVisible(false);
-			}
-			else {
-				connectorItem->setWhite(true);
-			}
+		if (candidate == checkItem) continue;
+		if (candidate == checkItemParent) continue;
+
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(candidate);
+		if (itemBase == NULL) continue;
+		if (itemBase->hidden()) continue;
+
+		TraceWire * tw = dynamic_cast<TraceWire *>(candidate);
+		if (tw != NULL) {
+			if (equipotentialConnectorItems.contains(tw->connector0())) continue;			// part of the same net; skip it
+
+			intersectingItems.insert(tw);
+			continue;
 		}
 
-		QApplication::processEvents();
-		QRectF expandedPolyBounds = expandedCheckItemPoly.boundingRect();
-		QHash<QGraphicsItem *, bool> visibility;
-		// hide checkItem and any non-intersecting items so they don't show up in the "other" image
-		// also hide the connectors of the intersecting items so they don't show up in the other image (just the svg of their parent)
-		foreach (QGraphicsItem * item, scene()->items(expandedPolyBounds)) {
-			if (!item->isVisible()) continue;
-			
-			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-			if (itemBase) {
-				if (itemBase->hidden()) continue;
-
-				if (intersectingItems.contains(itemBase)) continue;
-			}
-
-			setDRCVisibility(item, equipotentialConnectorItems, visibility);
+		GroundPlane * gp = dynamic_cast<GroundPlane *>(candidate);
+		if (gp != NULL) {
+			// skip these
+			continue;
 		}
 
-		QSize sz(qCeil(expandedPolyBounds.width()), qCeil(expandedPolyBounds.height()));
-		QImage otherImage(sz, QImage::Format_ARGB32);
-		QPainter painter;
-		painter.begin(&otherImage);
-		scene()->render(&painter, otherImage.rect(), expandedPolyBounds);
-		painter.end();
+		intersectingItems.insert(itemBase);
+	}
 
-		for (int x = 0; x < sz.width(); x++) {
-			for (int y = 0; y < sz.height(); y++) {
-				QRgb p = otherImage.pixel(x, y);
-				if (p == 0xffffffff) {
-					otherImage.setPixel(x, y, 0x00000000);
-				}
-				else {
-					otherImage.setPixel(x, y, 0xffffffff);
-				}
-			}
-		}
+	if (m_cancelDRC) return false;
 
-		foreach (ItemBase * itemBase, intersectingItems) {
-			itemBase->setVisible(false);
-			visibility.insert(itemBase, true);
-		}
+	if (intersectingItems.count() == 0) {
+		emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * ++progressSoFar / maxProgress));
+		return false;
+	}
 
-		checkItem->setVisible(true);
-		if (checkConnectorItem) {
-			if (checkConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				checkConnectorItem->setVisible(true);
-			}
-			else {
-				checkConnectorItem->setWhite(false);
-			}
+	// take equipotential connectors out of the picture; unfortunately the visible part of these connectors
+	// is actually part of the svg of the parent, so this is a hack to remove them completely from the "other" image
+	// if the connector isn't well-behaved (a nice circle or rect) then this step may remove too much
+	// would a graphical xor within a clipping region do the job?
+	foreach (ConnectorItem * connectorItem, equipotentialConnectorItems) {
+		if (connectorItem->attachedToItemType() == ModelPart::Wire) {
+			connectorItem->setVisible(false);
 		}
-		if (checkItemParent) {
-			checkItemParent->setVisible(true);
+		else {
+			connectorItem->setWhite(true);
 		}
+	}
 
-		QPolygonF poly = checkItem->mapToScene(checkItem->boundingRect());						
-		QImage selfImage(sz, QImage::Format_ARGB32);
-		painter.begin(&selfImage);
-		scene()->render(&painter, selfImage.rect(), expandedPolyBounds);
-		painter.end();
-		for (int x = 0; x < sz.width(); x++) {
-			for (int y = 0; y < sz.height(); y++) {
-				if (poly.containsPoint(QPointF(expandedPolyBounds.left() + x, expandedPolyBounds.top() + y), Qt::OddEvenFill)) {
-					QRgb p = selfImage.pixel(x, y);
-					if (p == 0xffffffff) {
-						// white is background in the original image
-						selfImage.setPixel(x, y, 0x00000000);
-					}
-					else {
-						selfImage.setPixel(x, y, 0xffffffff);
-					}
-				}
-				else {
-					selfImage.setPixel(x, y, 0x00000000);
-				}
-			}
-		}
+	QRectF expandedPolyBounds = expandedCheckItemPoly.boundingRect();
+	QHash<QGraphicsItem *, bool> visibility;
 
-		QRectF polyBounds = poly.boundingRect();
-		qreal growAmountX = (expandBy + expandBy + polyBounds.width()) * sz.width() / polyBounds.width();
-		qreal growAmountY = (expandBy + expandBy + polyBounds.height()) * sz.height() / polyBounds.height();
-		QImage scaledImage = selfImage.scaled(growAmountX, growAmountY, Qt::KeepAspectRatio);
+	// hide checkItem and any non-intersecting items so they don't show up in the "other" image
+	// also hide the connectors of the intersecting items so they don't show up in the other image (just the svg of their parent)
+	if (checkItemParent) {
+		checkItemParent->setVisible(false);
+	}
+	else {
+		checkItem->setVisible(false);
+	}
+
+	QApplication::processEvents();
+
+	foreach (QGraphicsItem * item, scene()->items(expandedPolyBounds)) {
+		if (!item->isVisible()) continue;
 		
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase) {
+			if (itemBase->hidden()) continue;
+			if (intersectingItems.contains(itemBase)) continue;
+		}
+
+		setDRCVisibility(item, equipotentialConnectorItems, visibility);
+	}
+
+	QApplication::processEvents();
+	if (m_cancelDRC) return false;
+
+	QSize sz(qCeil(expandedPolyBounds.width()), qCeil(expandedPolyBounds.height()));
+	QImage otherImage(sz, QImage::Format_ARGB32);
+	otherImage.fill(0);
+	QPainter painter;
+	painter.begin(&otherImage);
+	scene()->render(&painter, otherImage.rect(), expandedPolyBounds);
+	painter.end();
 
 #ifndef QT_NO_DEBUG
-		//selfImage.save("testDesignRulePolySelf.png", "png");
-		scaledImage.save("testDesignRuleSelfScaled" + QString::number(imageCount) + ".png", "png");
-		otherImage.save("testDesignRulePolyOther" + QString::number(imageCount) + ".png", "png");
+	QString suffix = QString::number(imageCount) + "_" + QString::number(progressOffset) + ".png";
+	imageCount++;
+	otherImage.save("pretestDesignRulePolyOther" + suffix, "png");
 #endif
-		imageCount++;
-		
-		foreach (ConnectorItem * connectorItem, equipotentialConnectorItems) {
-			if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-				connectorItem->setVisible(true);
+
+	for (int x = 0; x < sz.width(); x++) {
+		for (int y = 0; y < sz.height(); y++) {
+			QRgb p = otherImage.pixel(x, y);
+			if (p == 0xffffffff) {
+				otherImage.setPixel(x, y, 0x00000000);
 			}
 			else {
-				connectorItem->setWhite(false);
+				otherImage.setPixel(x, y, 0xffffffff);
 			}
 		}
-		foreach (QGraphicsItem * item, visibility.keys()) {
-			item->setVisible(visibility.value(item, true));
+	}
+
+	foreach (ItemBase * itemBase, intersectingItems) {
+		itemBase->setVisible(false);
+		visibility.insert(itemBase, true);
+	}
+
+	checkItem->setVisible(true);
+	if (checkConnectorItem) {
+		if (checkConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			checkConnectorItem->setVisible(true);
 		}
+		else {
+			checkConnectorItem->setWhite(false);
+		}
+	}
+	if (checkItemParent) {
+		checkItemParent->setVisible(true);
+	}
 
-		int dx = (scaledImage.width() - sz.width()) / 2;
-		int dy = (scaledImage.height() - sz.height()) / 2;
-		for (int x = 0; x < sz.width(); x++) {
-			for (int y = 0; y < sz.height(); y++) {
-				QRgb c = otherImage.pixel(x, y);
-				if (c != 0xffffffff) continue;
+	QApplication::processEvents();
+	if (m_cancelDRC) return false;
 
-				c = scaledImage.pixel(x + dx, y + dy);
-				if (c != 0xffffffff) continue;
+	QPolygonF poly = checkItem->mapToScene(checkItem->boundingRect());						
+	QImage selfImage(sz, QImage::Format_ARGB32);
+	selfImage.fill(0);
+	painter.begin(&selfImage);
+	scene()->render(&painter, selfImage.rect(), expandedPolyBounds);
+	painter.end();
 
-				QPointF p(x + expandedPolyBounds.left(), y + expandedPolyBounds.y());
-				foreach (QGraphicsItem * item, scene()->items(p)) {
-					ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-					if (itemBase == NULL) continue;
-					if (!intersectingItems.contains(itemBase)) continue;
+#ifndef QT_NO_DEBUG
+	selfImage.save("pretestDesignRuleSelfScaled" + suffix, "png");
+#endif
 
-					collidingItems.insert(itemBase);
-					itemBase = dynamic_cast<ItemBase *>(checkItemParent ? checkItemParent : checkItem);
-					collidingItems.insert(itemBase);
+	for (int x = 0; x < sz.width(); x++) {
+		for (int y = 0; y < sz.height(); y++) {
+			if (poly.containsPoint(QPointF(expandedPolyBounds.left() + x, expandedPolyBounds.top() + y), Qt::OddEvenFill)) {
+				QRgb p = selfImage.pixel(x, y);
+				if (p == 0xffffffff) {
+					// white is background in the original image
+					selfImage.setPixel(x, y, 0x00000000);
+				}
+				else {
+					selfImage.setPixel(x, y, 0xffffffff);
 				}
 			}
+			else {
+				selfImage.setPixel(x, y, 0x00000000);
+			}
 		}
-		emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * ++progressSoFar / maxProgress));
-		QApplication::processEvents();
 	}
-}
 
+	QRectF polyBounds = poly.boundingRect();
+	qreal growAmountX = (expandBy + expandBy + polyBounds.width()) * sz.width() / polyBounds.width();
+	qreal growAmountY = (expandBy + expandBy + polyBounds.height()) * sz.height() / polyBounds.height();
+	QImage scaledImage = selfImage.scaled(growAmountX, growAmountY, Qt::KeepAspectRatio);
+	
+
+#ifndef QT_NO_DEBUG
+	//scaledImage.save("posttestDesignRuleSelfScaled" + suffix, "png");
+	//otherImage.save("posttestDesignRulePolyOther" + suffix, "png");
+#endif
+	
+	foreach (ConnectorItem * connectorItem, equipotentialConnectorItems) {
+		if (connectorItem->attachedToItemType() == ModelPart::Wire) {
+			connectorItem->setVisible(true);
+		}
+		else {
+			connectorItem->setWhite(false);
+		}
+	}
+	foreach (QGraphicsItem * item, visibility.keys()) {
+		item->setVisible(visibility.value(item, true));
+	}
+
+	bool colliding = false;
+
+	int dx = (scaledImage.width() - sz.width()) / 2;
+	int dy = (scaledImage.height() - sz.height()) / 2;
+	for (int x = 0; x < sz.width(); x++) {
+		for (int y = 0; y < sz.height(); y++) {
+			QRgb c = otherImage.pixel(x, y);
+			if (c != 0xffffffff) continue;
+
+			c = scaledImage.pixel(x + dx, y + dy);
+			if (c != 0xffffffff) continue;
+
+			QPointF p(x + expandedPolyBounds.left(), y + expandedPolyBounds.y());
+			foreach (QGraphicsItem * item, scene()->items(p)) {
+				ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+				if (itemBase == NULL) continue;
+				if (!intersectingItems.contains(itemBase)) continue;
+
+				collidingItems.insert(itemBase);
+				itemBase = dynamic_cast<ItemBase *>(checkItemParent ? checkItemParent : checkItem);
+				collidingItems.insert(itemBase);
+				colliding = true;
+				break;
+			}
+		}
+	}
+
+#ifndef QT_NO_DEBUG
+	if (!colliding) {
+		//QFile::remove("posttestDesignRuleSelfScaled" + suffix);
+		//QFile::remove("posttestDesignRulePolyOther" + suffix);
+		QFile::remove("pretestDesignRuleSelfScaled" + suffix);
+		QFile::remove("pretestDesignRulePolyOther" + suffix);
+	}
+#endif
+
+	emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * ++progressSoFar / maxProgress));
+	QApplication::processEvents();
+
+	return colliding;
+}
+	
 
 void PCBSketchWidget::setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility)
 {
 	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-	if (connectorItem && equipotentialConnectorItems.contains(connectorItem)) return;
+	if (connectorItem && equipotentialConnectorItems.contains(connectorItem)) {
+		// equipotential connector items have already been set white so don't hide them
+		return;
+	}
 
 	visibility.insert(item, true);
 	item->setVisible(false);
