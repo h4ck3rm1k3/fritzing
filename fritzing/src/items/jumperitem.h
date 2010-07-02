@@ -53,6 +53,7 @@ public:
 	bool inDrag();
 	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);
 	PluralType isPlural();
+	void syncKinSceneChanged(PaletteItemBase * originator);
 
 protected:
 	void resize();

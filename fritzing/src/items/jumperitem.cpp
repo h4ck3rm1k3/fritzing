@@ -199,9 +199,16 @@ void JumperItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	QRectF r = m_otherItem->rect();
 	r.moveTo(mapFromScene(m_otherPos));
 	m_otherItem->setRect(r);
+	ConnectorItem * cross = m_otherItem->getCrossLayerConnectorItem();
+	if (cross) cross->setRect(r);
+
 	r = m_dragItem->rect();
 	r.moveTo(mapFromScene(p));
 	m_dragItem->setRect(r);
+
+	cross = m_dragItem->getCrossLayerConnectorItem();
+	if (cross) cross->setRect(r);
+
 	resize();
 	ItemBase::updateConnections(m_dragItem);	
 }
@@ -420,3 +427,19 @@ ItemBase::PluralType JumperItem::isPlural() {
 	return Singular;
 }
 
+void JumperItem::syncKinSceneChanged(PaletteItemBase * originator) {
+
+	if (m_connector0 == NULL) return;
+	if (m_connector1 == NULL) return;
+
+	ConnectorItem * cc0 = m_connector0->getCrossLayerConnectorItem();
+	if (cc0 != NULL) {
+		if (cc0->parentItem() != originator) return;
+
+		cc0->setRect(m_connector0->rect());
+	}
+	ConnectorItem * cc1 = m_connector1->getCrossLayerConnectorItem();
+	if (cc1 != NULL) {
+		cc1->setRect(m_connector1->rect());
+	}
+}
