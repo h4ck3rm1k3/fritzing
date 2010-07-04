@@ -3352,9 +3352,11 @@ void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, Q
 		QFileInfo fileInfo(fileName);
 		QDir dir = fileInfo.absoluteDir();
 		streamWriter.writeStartElement("programs");
-		foreach (QString filename, m_linkedProgramFiles) {
+		foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
 			streamWriter.writeStartElement("program");
-			streamWriter.writeCharacters(dir.relativeFilePath(filename));
+			streamWriter.writeAttribute("language", linkedFile->language);
+			streamWriter.writeAttribute("programmer", linkedFile->programmer);
+			streamWriter.writeCharacters(dir.relativeFilePath(linkedFile->filename));
 			streamWriter.writeEndElement();
 		}
 		streamWriter.writeEndElement();
@@ -3386,11 +3388,17 @@ void MainWindow::loadedRootSlot(const QString & fname, ModelBase *, QDomElement 
 		QString text;
 		TextUtils::findText(program, text);
 		if (!text.isEmpty()) {
+			QString language = program.attribute("language");
+			QString programmer = program.attribute("programmer");
 			QDir dir = fileInfo.absoluteDir();
 			QFileInfo newFileInfo(text);
 			dir.cd(newFileInfo.dir().path());
 			QString path = dir.absoluteFilePath(newFileInfo.fileName());
-			m_linkedProgramFiles.append(path);
+			LinkedFile * linkedFile = new LinkedFile;
+			linkedFile->filename = path;
+			linkedFile->language = language;
+			linkedFile->programmer = programmer;
+			m_linkedProgramFiles.append(linkedFile);
 		}
 		program = program.nextSiblingElement("program");
 	}
@@ -3647,7 +3655,8 @@ void MainWindow::openProgramWindow() {
 	}
 
 	m_programWindow = new ProgramWindow();
-	connect(m_programWindow, SIGNAL(linkToProgramFile(const QString &, bool)), this, SLOT(linkToProgramFile(const QString &, bool)));
+	connect(m_programWindow, SIGNAL(linkToProgramFile(const QString &, const QString &, const QString &, bool, bool)), 
+			this, SLOT(linkToProgramFile(const QString &, const QString &, const QString &, bool, bool)));
 	connect(m_programWindow, SIGNAL(changeActivationSignal(bool, QWidget *)), qApp, SLOT(changeActivation(bool, QWidget *)), Qt::DirectConnection);
 	connect(m_programWindow, SIGNAL(destroyed(QObject *)), qApp, SLOT(topLevelWidgetDestroyed(QObject *)));
 
@@ -3656,24 +3665,57 @@ void MainWindow::openProgramWindow() {
 	m_programWindow->setVisible(true);
 }
 
-void MainWindow::linkToProgramFile(const QString & filename, bool addLink) {
+void MainWindow::linkToProgramFile(const QString & filename, const QString & language, const QString & programmer, bool addLink, bool strong) {
 #ifdef Q_WS_WIN
 	Qt::CaseSensitivity sensitivity = Qt::CaseInsensitive;
 #else
 	Qt::CaseSensitivity sensitivity = Qt::CaseSensitive;
 #endif
 
-	if (addLink) {
-		if (!m_linkedProgramFiles.contains(filename, sensitivity)) {
-			m_linkedProgramFiles.append(filename);
+	if (addLink && strong) {
+		bool gotOne = false;
+		foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
+			if (linkedFile->filename.compare(filename, sensitivity) == 0) {
+				if (linkedFile->language != language) {
+					linkedFile->language = language;
+					this->setWindowModified(true);
+				}
+				if (linkedFile->programmer != programmer) {
+					linkedFile->programmer = programmer;
+					this->setWindowModified(true);
+				}
+				gotOne = true;
+				break;
+			}
+		}
+		if (!gotOne) {
+			LinkedFile * linkedFile = new LinkedFile;
+			linkedFile->filename = filename;
+			linkedFile->language = language;
+			linkedFile->programmer = programmer;
+			m_linkedProgramFiles.append(linkedFile);
 			this->setWindowModified(true);
 		}
+		return;
 	}
 	else {
 		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
-			if (m_linkedProgramFiles.at(i).compare(filename, sensitivity) == 0) {
-				m_linkedProgramFiles.removeAt(i);
-				this->setWindowModified(true);
+			LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
+			if (linkedFile->filename.compare(filename, sensitivity) == 0) {
+				if (strong) {
+					m_linkedProgramFiles.removeAt(i);
+					this->setWindowModified(true);
+				}
+				else {
+					if (linkedFile->language != language) {
+						linkedFile->language = language;
+						this->setWindowModified(true);
+					}
+					if (linkedFile->programmer != programmer) {
+						linkedFile->programmer = programmer;
+						this->setWindowModified(true);
+					}
+				}
 				return;
 			}
 		}

@@ -234,13 +234,12 @@ QFrame * ProgramTab::createFooter() {
 	m_languageComboBox->setEditable(false);
     m_languageComboBox->setEnabled(true);
     m_languageComboBox->addItems(m_programWindow->getAvailableLanguages());
-    connect(m_languageComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setLanguage(const QString &)));
 	QSettings settings;
 	QString currentLanguage = settings.value("programwindow/language", "").toString();
 	if (currentLanguage.isEmpty()) {
 		currentLanguage = m_languageComboBox->currentText();
 	}
-    setLanguage(currentLanguage);
+    setLanguage(currentLanguage, false);
 
 	QPushButton * addButton = new QPushButton(tr("New"));
 	//addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -260,8 +259,6 @@ QFrame * ProgramTab::createFooter() {
     m_portComboBox->setEditable(false);
     m_portComboBox->setEnabled(true);
     m_portComboBox->addItems(m_programWindow->getSerialPorts());
-    connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setPort(const QString &)));
-	connect(m_portComboBox, SIGNAL(aboutToShow()), this, SLOT(updateSerialPorts()), Qt::DirectConnection);
 
 	QString currentPort = settings.value("programwindow/port", "").toString();
 	if (currentPort.isEmpty()) {
@@ -280,7 +277,6 @@ QFrame * ProgramTab::createFooter() {
 	m_programmerComboBox->setEditable(false);
     m_programmerComboBox->setEnabled(true);
 	updateProgrammers();
-    connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));	
 	QString currentProgrammer = ProgramWindow::LocateName;
 	QString temp = settings.value("programwindow/programmer", "").toString();
 	if (!temp.isEmpty()) {
@@ -289,7 +285,7 @@ QFrame * ProgramTab::createFooter() {
 			currentProgrammer = temp;
 		}
 	}
-	chooseProgrammerAux(currentProgrammer);
+	chooseProgrammerAux(currentProgrammer, false);
 
 	QHBoxLayout *footerLayout = new QHBoxLayout;
 
@@ -311,11 +307,25 @@ QFrame * ProgramTab::createFooter() {
 
 	footerFrame->setLayout(footerLayout);
 
+	// connect last so these signals aren't triggered during initialization
+    connect(m_languageComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setLanguage(const QString &)));
+    connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setPort(const QString &)));
+	connect(m_portComboBox, SIGNAL(aboutToShow()), this, SLOT(updateSerialPorts()), Qt::DirectConnection);
+    connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));	
+
 	return footerFrame;
 }
 
 void ProgramTab::setLanguage(const QString & newLanguage) {
+	setLanguage(newLanguage, true);
+}
+
+void ProgramTab::setLanguage(const QString & newLanguage, bool updateLink) {
         DebugDialog::debug(QString("Setting language to %1").arg(newLanguage));
+		if (updateLink && newLanguage != m_language) {
+			m_programWindow->updateLink(m_filename, newLanguage, m_programmerPath, false, false);
+		}
+
         m_language = newLanguage;
         m_languageComboBox->setCurrentIndex(m_languageComboBox->findText(newLanguage));
         m_highlighter->setSyntaxer(m_programWindow->getSyntaxerForLanguage(newLanguage));
@@ -349,17 +359,17 @@ bool ProgramTab::loadProgramFile() {
 
 	if (fileName.isEmpty()) return false;
 
-	return loadProgramFile(fileName, "");
+	return loadProgramFile(fileName, "", true);
 }
 
-bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFileName) {
+bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFileName, bool updateLink) {
 	if (m_programWindow->alreadyHasProgram(fileName)) {
 		return false;
 	}
 
 	QFile file(fileName);
 	if (!file.open(QFile::ReadOnly)) {
-		emit wantToLink(fileName, false);
+		m_programWindow->updateLink(fileName, m_language, m_programmerPath, false, true);
 		if (!altFileName.isEmpty()) {
 			file.setFileName(altFileName);
 			if (!file.open(QFile::ReadOnly)) {
@@ -386,13 +396,15 @@ bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFi
 	setClean();
 	QFileInfo fileInfo(m_filename);
 	m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
-	emit wantToLink(m_filename, true);
+	if (updateLink) {
+		m_programWindow->updateLink(m_filename, m_language, m_programmerPath, true, true);
+	}
 	return true;
 }
 
 void ProgramTab::textChanged() {
 	QIcon tabIcon = m_tabWidget->tabIcon(m_tabWidget->currentIndex());
-	bool modified = m_textEdit->document()->isModified();
+	bool modified = isModified();
 
 	if (m_saveButton) {
 		m_saveButton->setEnabled(modified);
@@ -665,6 +677,17 @@ void ProgramTab::chooseProgrammer(int index) {
 	}
 }
 
+bool ProgramTab::setProgrammer(const QString & path) {
+	if (QFileInfo(path).exists()) {
+		chooseProgrammerAux(path, false);
+		return true;
+	}
+	else {
+		// TODO: what?
+		return false;
+	}
+}
+
 void ProgramTab::chooseProgrammer(const QString & programmer)
 {
 	QString filename = programmer;
@@ -678,15 +701,19 @@ void ProgramTab::chooseProgrammer(const QString & programmer)
 	}
     if (filename.isEmpty()) return;
 
-	chooseProgrammerAux(filename);
+	chooseProgrammerAux(filename, true);
 }
 
-void ProgramTab::chooseProgrammerAux(const QString & programmer) 
+void ProgramTab::chooseProgrammerAux(const QString & programmer, bool updateLink) 
 {
 	if (programmer == ProgramWindow::LocateName) {
 		if (m_programButton) {
 			m_programButton->setEnabled(false);
 		}
+		if (updateLink && !m_programmerPath.isEmpty()) {
+			m_programWindow->updateLink(m_filename, m_language, "", false, false);
+		}
+
 		m_programmerPath.clear();
 		updateProgrammerComboBox(programmer);
 		updateMenu();
@@ -698,6 +725,9 @@ void ProgramTab::chooseProgrammerAux(const QString & programmer)
 		m_programmerComboBox->addItem(fileInfo.fileName(), programmer);
 	}
 
+	if (updateLink && m_programmerPath != programmer) {
+		m_programWindow->updateLink(m_filename, m_language, programmer, false, false);
+	}
     m_programmerPath = programmer;
 	if (m_programButton) {
 		m_programButton->setEnabled(true);
@@ -799,3 +829,12 @@ void ProgramTab::updateSerialPorts() {
 		m_portComboBox->addItem(port);
 	}
 }
+
+const QString & ProgramTab::language() {
+	return m_language;
+}
+
+const QString & ProgramTab::programmer() {
+	return m_programmerPath;
+}
+

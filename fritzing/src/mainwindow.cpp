@@ -310,6 +310,11 @@ MainWindow::~MainWindow()
 	delete m_sketchModel;
 	m_dockManager->dontKeepMargins();
 	m_setUpDockManagerTimer.stop();
+
+	foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
+		delete linkedFile;
+	}
+	m_linkedProgramFiles.clear();
 }
 
 
@@ -1058,9 +1063,9 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	DebugDialog::debug("saving entity temporarily to "+destSketchPath);
 
 	for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
-		QString program = m_linkedProgramFiles.at(i);
-		QFileInfo fileInfo(program);
-		QFile file(program);
+		LinkedFile * linkedFile = m_linkedProgramFiles.at(i);
+		QFileInfo fileInfo(linkedFile->filename);
+		QFile file(linkedFile->filename);
 		file.copy(destFolder.absoluteFilePath(fileInfo.fileName()));
 	}
 
@@ -1181,14 +1186,12 @@ bool MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
 
 	if (m_linkedProgramFiles.count() > 0) {
 		// since the temporary dir containing the program files is about to be deleted
-		// copy these to the fzz directory (for lack of a better idea)
-		// another possibility is to ask the user for a directory
+		// update the names to where the new copy is
 		QFileInfo sketchInfo(m_bundledSketchName);
 		QDir newdir = sketchInfo.absoluteDir();
-		for (int i = 0; i < m_linkedProgramFiles.count(); i++) {
-			QFileInfo p(m_linkedProgramFiles.at(i));
-			QString newPath = newdir.absoluteFilePath(p.fileName());
-			m_linkedProgramFiles.replace(i, newPath);
+		foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
+			QFileInfo p(linkedFile->filename);
+			linkedFile->filename = newdir.absoluteFilePath(p.fileName());
 		}
 	}
 

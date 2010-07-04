@@ -138,7 +138,7 @@ void ProgramWindow::initLanguages() {
 	}
 }
 
-void ProgramWindow::setup(const QStringList & programs, const QString & alternativePath)
+void ProgramWindow::setup(const QList<LinkedFile *> & linkedFiles, const QString & alternativePath)
 {
     QFile styleSheet(":/resources/styles/programwindow.qss");
     QFrame * mainFrame = new QFrame(this);
@@ -336,9 +336,9 @@ void ProgramWindow::setup(const QStringList & programs, const QString & alternat
     connect(m_programAction, SIGNAL(triggered()), this, SLOT(sendProgram()));
     currentMenu->addAction(m_programAction);
 
-    if (!programs.isEmpty()) {
+    if (!linkedFiles.isEmpty()) {
         bool firstTime = true;
-        foreach (QString program, programs) {
+        foreach (LinkedFile * linkedFile, linkedFiles) {
             ProgramTab * programTab = NULL;
             if (firstTime) {
                 firstTime = false;
@@ -348,8 +348,17 @@ void ProgramWindow::setup(const QStringList & programs, const QString & alternat
                 programTab = addTab();
             }
             QDir dir(alternativePath);
-            QFileInfo fileInfo(program);
-            programTab->loadProgramFile(program, dir.absoluteFilePath(fileInfo.fileName()));
+            QFileInfo fileInfo(linkedFile->filename);
+            programTab->loadProgramFile(linkedFile->filename, dir.absoluteFilePath(fileInfo.fileName()), false);
+			if (!m_languages.value(linkedFile->language, "").isEmpty()) {
+				programTab->setLanguage(linkedFile->language, false);
+			}
+			else {
+				linkedFile->language.clear();
+			}
+			if (programTab->setProgrammer(linkedFile->programmer)) {
+				linkedFile->programmer.clear();
+			}
         }
     }
 }
@@ -495,7 +504,6 @@ ProgramTab * ProgramWindow::addTab() {
     connect(programTab, SIGNAL(wantToSave(int)), this, SLOT(tabSave(int)));
     connect(programTab, SIGNAL(wantToSaveAs(int)), this, SLOT(tabSaveAs(int)));
     connect(programTab, SIGNAL(wantToRename(int)), this, SLOT(tabRename(int)));
-    connect(programTab, SIGNAL(wantToLink(QString,bool)), this, SIGNAL(linkToProgramFile(QString,bool)));
     connect(programTab, SIGNAL(wantToDelete(int, bool)), this, SLOT(tabDelete(int, bool)), Qt::DirectConnection);
     connect(programTab, 
 		SIGNAL(programWindowUpdateRequest(bool, bool, bool, bool, bool, const QString &, const QString &, const QString &, const QString &)), 
@@ -520,7 +528,7 @@ void ProgramWindow::closeCurrentTab() {
 void ProgramWindow::closeTab(int index) {
         ProgramTab * pTab = indexWidget(index);
         if (pTab) {
-                emit linkToProgramFile(pTab->filename(), false);
+			emit linkToProgramFile(pTab->filename(), "", "", false, true);
                 pTab->deleteTab();
         }
 }
@@ -584,7 +592,7 @@ void ProgramWindow::updateMenu(bool programEnable, bool undoEnable, bool redoEna
 }
 
 void ProgramWindow::setLanguage(QAction* action) {
-    currentWidget()->setLanguage(action->text());
+    currentWidget()->setLanguage(action->text(), true);
 }
 
 void ProgramWindow::setPort(QAction* action) {
@@ -680,7 +688,7 @@ void ProgramWindow::tabRename(int index) {
 			QFile oldFile(oldFileName);
 			if (oldFile.exists()) {
 				oldFile.remove();
-				emit linkToProgramFile(oldFileName, false);
+				emit linkToProgramFile(oldFileName, "", "", false, true);
 			}
 		}
     }
@@ -709,7 +717,7 @@ bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag)
 
     if (result) {
 		programTab->setClean();
-		emit linkToProgramFile(programTab->filename(), true);
+		emit linkToProgramFile(programTab->filename(), programTab->language(), programTab->programmer(), true, true);
 	}
 	return result;
 }
@@ -954,5 +962,10 @@ void ProgramWindow::updateSerialPorts() {
 		m_serialPortActionGroup->removeAction(action);
 		m_serialPortMenu->removeAction(action);
 	}
+}
+
+void ProgramWindow::updateLink(const QString & filename, const QString & language, const QString & programmer, bool addlink, bool strong)
+{
+	emit linkToProgramFile(filename, language, programmer, addlink, strong);
 }
 

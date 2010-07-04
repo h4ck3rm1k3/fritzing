@@ -4,7 +4,7 @@ Part of the Fritzing project - http://fritzing.org
 Copyright (c) 2007-2010 Fachhochschule Potsdam - http://fh-potsdam.de
 
 Fritzing is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU General Public License as published by\
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -42,6 +42,12 @@ $Date$
 
 #include "../fritzingwindow.h"
 
+struct LinkedFile {
+	QString filename;
+	QString language;
+	QString programmer;
+};
+
 class PTabWidget : public QTabWidget 
 {
 	Q_OBJECT
@@ -65,7 +71,7 @@ public:
 	ProgramWindow(QWidget *parent=0);
 	~ProgramWindow();
 
-	void setup(const QStringList & programs, const QString & alternativePath);
+	void setup(const QList<LinkedFile *> &, const QString & alternativePath);
 	const QString defaultSaveFolder();
 
     QStringList getSerialPorts();
@@ -74,13 +80,15 @@ public:
 	const QHash<QString, QString> getProgrammerNames();
 	void loadProgramFileNew();
 	bool alreadyHasProgram(const QString &);
+	void updateLink(const QString & filename, const QString & language, const QString & programmer, bool addlink, bool strong);
 
 signals:
 	void closed();
     void changeActivationSignal(bool activate, QWidget * originator);
-    void linkToProgramFile(const QString &, bool);
+    void linkToProgramFile(const QString & filename, const QString & language, const QString & programmer, bool addlink, bool strong);
 
 protected slots:
+	void loadProgramFile();
     class ProgramTab * addTab();
     void closeCurrentTab();
     void closeTab(int index);
@@ -101,7 +109,6 @@ protected slots:
     void setLanguage(QAction*);
     void setPort(QAction*);
     void setProgrammer(QAction*);
-	void loadProgramFile();
 	void rename();
 	void undo();
 	void redo();

@@ -75,11 +75,15 @@ public:
 	bool readOnly();
 	void setClean();
 	bool save(const QString & filename);
-	bool loadProgramFile(const QString & filename, const QString & altFilename);
+	bool loadProgramFile(const QString & filename, const QString & altFilename, bool noUpdate);
     void print(QPrinter & printer);
     void setText(QString text);
     QString text();
 	void updateProgrammers();
+	bool setProgrammer(const QString & path);
+	const QString & programmer();
+	const QString & language();
+	void setLanguage(const QString &, bool updateLink);
 
 public slots:
     void setLanguage(const QString &);
@@ -117,14 +121,13 @@ signals:
 	void wantToSaveAs(int);
     void wantToRename(int);
 	void wantToDelete(int, bool deleteFile);
-    void wantToLink(const QString & filename, bool);
     void programWindowUpdateRequest(bool programEnable, bool undoEnable, bool redoEnable,
                             bool cutEnable, bool copyEnable, const QString & language,
                             const QString & port, const QString & programmer, const QString & filename);
 
 protected:
     QFrame * createFooter();
-	void chooseProgrammerAux(const QString & programmer);
+	void chooseProgrammerAux(const QString & programmer, bool updateLink);
 	void updateProgrammerComboBox(const QString & programmer);
 
 protected:

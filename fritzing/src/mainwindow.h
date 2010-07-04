@@ -258,7 +258,7 @@ protected slots:
 	void dropPaste(SketchWidget *);
 
 	void openProgramWindow();
-	void linkToProgramFile(const QString & filename, bool addLink);
+	void linkToProgramFile(const QString & filename, const QString & language, const QString & programmer, bool addLink, bool strong);
 	void designRulesCheck();
 	void subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
 	void updateLayerMenuSlot();
@@ -620,7 +620,7 @@ protected:
 
 	QPointer<class LayerPalette> m_layerPalette;
 	QPointer<class ProgramWindow> m_programWindow;
-	QStringList m_linkedProgramFiles;
+	QList<LinkedFile *>  m_linkedProgramFiles;
 	QString m_backupFileNameAndPath;
 	QTimer m_autosaveTimer;
 	bool m_autosaveNeeded;
