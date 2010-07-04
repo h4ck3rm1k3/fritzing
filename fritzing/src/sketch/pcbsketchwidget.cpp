@@ -2132,6 +2132,8 @@ bool PCBSketchWidget::drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> &
 	QString suffix = QString::number(imageCount) + "_" + QString::number(progressOffset) + ".png";
 	imageCount++;
 	otherImage.save("pretestDesignRulePolyOther" + suffix, "png");
+#else
+	Q_UNUSED(imageCount);
 #endif
 
 	for (int x = 0; x < sz.width(); x++) {

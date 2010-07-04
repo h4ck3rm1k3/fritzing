@@ -44,6 +44,7 @@ const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
 
 static double MAX_DOUBLE = std::numeric_limits<double>::max();
 
+static int rcindex = 0;
 
 /////////////////////////////////////////////////////////
 
@@ -214,8 +215,10 @@ void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 	if(applyColor) restoreColor(true, -1, true);
 }
 
-void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCross) {
-	
+void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCross) 
+{	
+	//rcindex++;
+	//DebugDialog::debug(QString("restore color %1 %2 %3 %4 %5").arg(doBuses).arg(busConnectionCount).arg(doCross).arg((long) this, 0, 16).arg(rcindex));
 	QList<ConnectorItem *> busConnectedItems;
 	if (attachedToItemType() == ModelPart::Wire) {
 		doBuses = false;
@@ -275,14 +278,17 @@ void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCr
 	if (connectedToCount + busConnectionCount <= 0) {
 		if (connectorType() == Connector::Female) {
 			setNormalColor();
+			//rcindex--;
 			return;
 		}
 
 		setUnconnectedColor();
+		//rcindex--;
 		return;	
 	}
 
 	setConnectedColor();
+	//rcindex--;
 }
 
 void ConnectorItem::setConnectedColor() {
