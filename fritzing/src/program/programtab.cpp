@@ -54,79 +54,48 @@ void SerialPortComboBox::showPopup() {
 
 DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags)
 {
+	// we use this dialog instead of the normal QMessageBox because it's currently hard if not impossible to add a checkbox to QMessageBox.
+	// supposedly this will be fixed in a future release of Qt.
+
+    this->setWindowTitle(title);
 	this->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |  Qt::WindowCloseButtonHint);
 
-// code borrowed from QMessageBox
+	QVBoxLayout * vlayout = new QVBoxLayout(this);
 
-    QLabel * label = new QLabel;
-    label->setObjectName(QLatin1String("qt_msgbox_label"));
-    label->setTextInteractionFlags(Qt::TextInteractionFlags(this->style()->styleHint(QStyle::SH_MessageBox_TextInteractionFlags, 0, this)));
-    label->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
-    label->setOpenExternalLinks(true);
-#if defined(Q_WS_MAC)
-    label->setContentsMargins(16, 0, 0, 0);
-#elif !defined(Q_WS_QWS)
-    label->setContentsMargins(2, 0, 0, 0);
-    label->setIndent(9);
-#endif
+	QFrame * frame  = new QFrame(this);
+	QHBoxLayout * hlayout = new QHBoxLayout(frame);
+
     QLabel * iconLabel = new QLabel;
-    iconLabel->setObjectName(QLatin1String("qt_msgboxex_icon_label"));
+	iconLabel->setPixmap(QMessageBox::standardIcon(QMessageBox::Warning));
     iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    m_buttonBox = new QDialogButtonBox;
-    m_buttonBox->setObjectName(QLatin1String("qt_msgbox_buttonbox"));
-    m_buttonBox->setCenterButtons(this->style()->styleHint(QStyle::SH_MessageBox_CenterButtons, 0, this));
-    QObject::connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+    QLabel * label = new QLabel;
+	label->setWordWrap(true);
+	label->setText(text);
 
+	hlayout->addWidget(iconLabel);
+	hlayout->addWidget(label);
 
-    QGridLayout *grid = new QGridLayout;
-#ifndef Q_WS_MAC
-    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop);
-    grid->addWidget(label, 0, 1, 1, 1);
-    grid->addWidget(m_buttonBox, 2, 0, 1, 2);
-#else
-    grid->setMargin(0);
-    grid->setVerticalSpacing(8);
-    grid->setHorizontalSpacing(0);
-    this->setContentsMargins(24, 15, 24, 20);
-    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignLeft);
-    grid->addWidget(label, 0, 1, 1, 1);
-    // -- leave space for information label --
-    grid->setRowStretch(1, 100);
-    grid->setRowMinimumHeight(2, 6);
-    grid->addWidget(m_buttonBox, 3, 1, 1, 1);
-#endif
+	vlayout->addWidget(frame);
 
 	m_checkBox = NULL;
 	if (deleteFileCheckBox) {
-		m_checkBox = new QCheckBox(tr("Delete the file"));
-		grid->addWidget(m_checkBox, 1, 0, 2, 1);
+		m_checkBox = new QCheckBox(tr("Also delete the file"));
+		vlayout->addSpacing(7);
+		vlayout->addWidget(m_checkBox);
+		vlayout->addSpacing(15);
 	}
 
-    grid->setSizeConstraint(QLayout::SetNoConstraint);
-    this->setLayout(grid);
-
-    if (!title.isEmpty() || !text.isEmpty()) {
-        this->setWindowTitle(title);
-        label->setText(text);
-    }
-    this->setModal(true);
-
-#ifdef Q_WS_MAC
-    QFont f = this->font();
-    f.setBold(true);
-    label->setFont(f);
-#endif
-
+    m_buttonBox = new QDialogButtonBox;
 	m_buttonBox->addButton(QDialogButtonBox::Yes);
 	m_buttonBox->addButton(QDialogButtonBox::No);
-	m_buttonBox->addButton(QDialogButtonBox::Cancel);
-	m_buttonBox->button(QDialogButtonBox::Yes)->setText(tr("Delete"));
-	m_buttonBox->button(QDialogButtonBox::No)->setText(tr("Don't Delete"));
+	m_buttonBox->button(QDialogButtonBox::Yes)->setText(tr("Remove"));
+	m_buttonBox->button(QDialogButtonBox::No)->setText(tr("Don't remove"));
 
-	iconLabel->setPixmap(QMessageBox::standardIcon(QMessageBox::Warning));
+    QObject::connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+	vlayout->addWidget(m_buttonBox);
 
-	this->resize(300, 150);
+    this->setModal(true);
 }
 
 void DeleteDialog::buttonClicked(QAbstractButton * button) {
@@ -508,31 +477,10 @@ void ProgramTab::deleteTab() {
 		}
 
 		DeleteDialog deleteDialog(tr("Delete \"%1\"?").arg(name),
-								  tr("Are you sure you want to delete \"%1\"?").arg(name),
+								  tr("Are you sure you want to remove \"%1\" from the sketch?").arg(name),
 								  !FolderUtils::isEmptyFileName(m_filename, "Untitled"),
 								  NULL, 0);
 		int reply = deleteDialog.exec();
-
-		/*
-
-		QMessageBox messageBox(
-				tr("Delete \"%1\"?").arg(name),
-				tr("Are you sure you want to delete \"%1\"?").arg(name),
-				QMessageBox::Warning,
-				QMessageBox::Yes,
-				QMessageBox::No,
-				QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default,
-				this->window(), Qt::Sheet);
-
-		messageBox.setButtonText(QMessageBox::Yes, tr("Delete"));
-		messageBox.setButtonText(QMessageBox::No, tr("Don't Delete"));
-		messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-		messageBox.setInformativeText(tr("This program will be unlinked from the sketch, but the file won't be deleted."));
-
-		QMessageBox::StandardButton reply = (QMessageBox::StandardButton) messageBox.exec();
-
-		*/
-
  		if (reply != QMessageBox::Yes) {
      		return;
 		}
