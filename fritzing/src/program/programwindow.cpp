@@ -363,13 +363,13 @@ QFrame * ProgramWindow::createHeader() {
 
 QFrame * ProgramWindow::createCenter() {
 
-        QFrame * centerFrame = new QFrame(this);
+    QFrame * centerFrame = new QFrame(this);
 	centerFrame->setObjectName("center");
 
 	m_tabWidget = new PTabWidget(centerFrame);
 	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	m_tabWidget->setMovable(true);
-        m_tabWidget->setTabsClosable(true);
+    m_tabWidget->setTabsClosable(true);
 	m_tabWidget->setUsesScrollButtons(false);
 	m_tabWidget->setElideMode(Qt::ElideLeft);
         connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
@@ -411,12 +411,6 @@ Syntaxer * ProgramWindow::getSyntaxerForLanguage(QString language) {
 }
 
 void ProgramWindow::cleanUp() {
-}
-
-void ProgramWindow::parentAboutToClose() {
-	if(beforeClosing(false)) {
-		cleanUp();
-	}
 }
 
 /**

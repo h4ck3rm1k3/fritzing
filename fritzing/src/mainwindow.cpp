@@ -804,6 +804,14 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		return;
 	}
 
+	if (m_programWindow) {
+		m_programWindow->close();
+		if (m_programWindow->isVisible()) {
+			event->ignore();
+			return;
+		}
+	}
+
 	bool whatWithAliens = whatToDoWithAlienFiles();
 	if(!beforeClosing() || !whatWithAliens ||!m_paletteWidget->beforeClosing()) {
 		event->ignore();

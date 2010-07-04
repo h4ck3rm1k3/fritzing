@@ -74,6 +74,7 @@ public:
 	const QHash<QString, QString> getProgrammerNames();
 	void loadProgramFileNew();
 	bool alreadyHasProgram(const QString &);
+	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 
 signals:
 	void closed();
@@ -81,7 +82,6 @@ signals:
     void linkToProgramFile(const QString &, bool);
 
 protected slots:
-	void parentAboutToClose();
     class ProgramTab * addTab();
     void closeCurrentTab();
     void closeTab(int index);
@@ -127,7 +127,6 @@ protected:
     int &untitledFileCount();
     void setTitle();
     void setTitle(const QString & filename);
-	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 	bool saveAsAux(const QString & fileName);
 	bool prepSave(class ProgramTab *, bool saveAsFlag);
 	bool beforeClosingTab(int index, bool showCancel);
