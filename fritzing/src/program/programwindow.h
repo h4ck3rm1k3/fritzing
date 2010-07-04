@@ -74,7 +74,6 @@ public:
 	const QHash<QString, QString> getProgrammerNames();
 	void loadProgramFileNew();
 	bool alreadyHasProgram(const QString &);
-	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 
 signals:
 	void closed();
@@ -136,6 +135,7 @@ protected:
 	void initProgrammerNames();
 	QString getExtensionString();
 	QStringList getExtensions();
+	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 
 protected:
 	static void initLanguages();

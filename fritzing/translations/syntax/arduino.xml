@@ -23,6 +23,121 @@
       <item> union </item>
       <item> while </item>
     </list>
+    
+    <list name="keyword1">
+     <item> boolean </item>
+     <item> byte </item>
+     <item> char </item>
+     <item> class </item>
+     <item> double </item>
+     <item> false </item>
+     <item> float </item>
+     <item> int </item>
+     <item> long </item>
+     <item> new </item>
+     <item> null </item>
+     <item> private </item>
+     <item> protected </item>
+     <item> public </item>
+     <item> short </item>
+     <item> signed </item>
+     <item> static </item>
+     <item> this </item>
+     <item> throw </item>
+     <item> try </item>
+     <item> true </item>
+     <item> unsigned </item>
+     <item> void </item>
+     <item> word </item>
+     </list>
+     
+     <list name="keyword2-3">
+     <item> abs </item>
+     <item> acos </item>
+     <item> asin </item>
+     <item> atan </item>
+     <item> atan2 </item>
+     <item> ceil </item>
+     <item> constrain </item>
+     <item> cos </item>
+     <item> degrees </item>
+     <item> exp </item>
+     <item> floor </item>
+     <item> log </item>
+     <item> map </item>
+     <item> max </item>
+     <item> min </item>
+     <item> radians </item>
+     <item> random	 </item>
+     <item> randomSeed </item>
+     <item> round </item>
+     <item> sin </item>
+     <item> sq </item>
+     <item> sqrt </item>
+     <item> tan </item>
+     <item> bitRead </item>
+     <item> bitWrite </item>
+     <item> bitSet </item>
+     <item> bitClear </item>
+     <item> bit </item>
+     <item> highByte </item>
+     <item> lowByte </item>
+     <item> analogReference </item>
+     <item> analogRead </item>
+     <item> analogWrite </item>
+     <item> attachInterrupt </item>
+     <item> detachInterrupt </item>
+     <item> delay </item>
+     <item> delayMicroseconds </item>
+     <item> digitalWrite </item>
+     <item> digitalRead </item>
+     <item> interrupts </item>
+     <item> millis </item>
+     <item> micros </item>
+     <item> noInterrupts </item>
+     <item> noTone </item>
+     <item> pinMode </item>
+     <item> pulseIn </item>
+     <item> shiftOut </item>
+     <item> tone </item>
+     <item> Serial </item>
+     <item> Serial1 </item>
+     <item> Serial2 </item>
+     <item> Serial3 </item>
+     <item> begin </item>
+     <item> end </item>
+     <item> read </item>
+     <item> print </item>
+     <item> println </item>
+     <item> available </item>
+     <item> flush </item>
+     <item> setup </item>
+     <item> loop </item>
+     </list>
+
+     <list name="constant">
+	<item> HIGH </item>
+	<item> LOW </item>
+	<item> INPUT </item>
+	<item> OUTPUT </item>
+	<item> DEC </item>
+	<item> BIN </item>
+	<item> HEX </item>
+	<item> OCT </item>
+	<item> BYTE </item>
+	<item> PI </item>
+	<item> HALF_PI </item>
+	<item> TWO_PI </item>
+	<item> LSBFIRST </item>
+	<item> MSBFIRST </item>
+	<item> CHANGE </item>
+	<item> FALLING </item>
+	<item> RISING </item>
+	<item> DEFAULT </item>
+	<item> EXTERNAL </item>
+	<item> INTERAL </item>
+    </list>
+
     <list name="types">
       <item> auto </item>
       <item> char </item>
@@ -60,7 +175,10 @@
         <StringDetect attribute="Region Marker" context="Region Marker" String="//BEGIN" beginRegion="Region1" firstNonSpace="true" />
         <StringDetect attribute="Region Marker" context="Region Marker" String="//END" endRegion="Region1" firstNonSpace="true" />
         <keyword attribute="Keyword" context="#stay" String="keywords"/>
-        <keyword attribute="Data Type" context="#stay" String="types"/>
+        <keyword attribute="Keyword" context="#stay" String="keyword1"/>
+        <keyword attribute="Data Types" context="#stay" String="types"/>
+        <keyword attribute="Constant" context="#stay" String="constant"/>      
+	<keyword attribute="Functions" context="#stay" String="keyword2-3"/>
         <DetectIdentifier />
         <DetectChar attribute="Symbol" context="#stay" char="{" beginRegion="Brace1" />
         <DetectChar attribute="Symbol" context="#stay" char="}" endRegion="Brace1" />
@@ -141,7 +259,7 @@
     <itemDatas>
       <itemData name="Normal Text"  defStyleNum="dsNormal"/>
       <itemData name="Keyword"      defStyleNum="dsKeyword"/>
-      <itemData name="Data Type"    defStyleNum="dsDataType"/>
+      <itemData name="Data Types"    defStyleNum="dsDataType"/>
       <itemData name="Decimal"      defStyleNum="dsDecVal"/>
       <itemData name="Octal"        defStyleNum="dsBaseN"/>
       <itemData name="Hex"          defStyleNum="dsBaseN"/>
@@ -155,6 +273,9 @@
       <itemData name="Prep. Lib"    defStyleNum="dsOthers"/> <!--,Qt::darkYellow,Qt::yellow,false,false)); -->
       <itemData name="Alert"        defStyleNum="dsAlert" />
       <itemData name="Region Marker" defStyleNum="dsRegionMarker" />
+      <itemData name="Constant" defStyleNum="dsConstant"/>
+      <itemData name="Functions" defStyleNum="dsFunction"/>
+
     </itemDatas>
   </highlighting>
   <general>
