@@ -90,6 +90,8 @@ protected:
 	const QString untitledFileName();
 	int &untitledFileCount();
 	const QString fileExtension();
+	QString getExtensionString();
+	QStringList getExtensions();
 	const QString defaultSaveFolder();
 
 	void updateSaveButton();

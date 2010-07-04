@@ -31,6 +31,7 @@ $Date$
 #include <QDomDocument>
 #include <QObject>
 #include <QHash>
+#include <QStringList>
 
 #include "trienode.h"
 
@@ -62,8 +63,8 @@ public:
 	bool matchCommentStart(const QString & text, int offset, int & result, const CommentInfo * & resultCommentInfo);
 	int matchStringStart(const QString & text, int offset);
 	int matchStringEnd(const QString & text, int offset);
-	const QString & extensions();
-	const QString & extension();
+	const QString & extensionString();
+	const QStringList & extensions();
 
 public:
 	static QString parseForName(const QString & filename);
@@ -80,8 +81,8 @@ protected:
 protected:
 	TrieNode * m_trieRoot;
 	QString m_name;
-	QString m_extensions;
-	QString m_extension;
+	QString m_extensionString;
+	QStringList m_extensions;
 	QList<CommentInfo *> m_commentInfo;
 	QChar m_stringDelimiter;
 };

@@ -57,14 +57,16 @@ protected slots:
 	virtual bool saveAs();
 
 protected:
-	bool save(const QString & filename, const QString & extension, bool readOnly);
-	bool saveAs(const QString & filename, const QString & extension, bool readOnly);
+	bool save(const QString & filename, bool readOnly);
+	bool saveAs(const QString & filename, bool readOnly);
 	virtual void setTitle();
 	virtual const QString fritzingTitle();
 	virtual const QString fileExtension() = 0;
 	virtual const QString untitledFileName() = 0;
 	virtual int &untitledFileCount() = 0;
 	virtual const QString defaultSaveFolder() = 0;
+	virtual QString getExtensionString() = 0;
+	virtual QStringList getExtensions() = 0;
 
 	virtual bool saveAsAux(const QString & fileName) = 0;
 	virtual bool beforeClosing(bool showCancel=true);			// returns true if close, false if cancel

@@ -43,6 +43,20 @@ $Date$
 
 #include "programwindow.h"
 
+class SerialPortComboBox : public QComboBox
+{
+	Q_OBJECT
+
+public:
+	SerialPortComboBox();
+
+protected:
+	void showPopup();
+
+signals:
+	void aboutToShow();
+};
+
 class ProgramTab : public QFrame 
 {
 	Q_OBJECT
@@ -56,7 +70,8 @@ public:
 	bool isModified();
 	const QString & filename();
 	void setFilename(const QString &);
-	QString extension();
+	const QStringList & extensions();
+	const QString & extensionString();
 	bool readOnly();
 	void setClean();
 	bool save(const QString & filename);
@@ -93,6 +108,7 @@ public slots:
 	void programProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void programProcessReadyRead();
     void updateMenu();
+	void updateSerialPorts();
 
 signals:
 	// TODO: since ProgramTab has m_programWindow most/all of these signals could be replaced by direct
@@ -116,7 +132,7 @@ protected:
 	QPointer<QPushButton> m_saveButton;
     QPointer<QPushButton> m_cancelCloseButton;
 	QPointer<QPushButton> m_programButton;
-    QPointer<QComboBox> m_portComboBox;
+    QPointer<SerialPortComboBox> m_portComboBox;
 	QPointer<QComboBox> m_languageComboBox;
 	QPointer<QComboBox>  m_programmerComboBox;
 	QPointer<QTextEdit> m_textEdit;

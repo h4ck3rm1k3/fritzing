@@ -98,20 +98,20 @@ bool FritzingWindow::save() {
 }
 
 bool FritzingWindow::saveAs() {
-	return saveAs(m_fileName, fileExtension(), m_readOnly);
+	return saveAs(m_fileName, m_readOnly);
 }
 
-bool FritzingWindow::save(const QString & filename, const QString & extension, bool readOnly) {
+bool FritzingWindow::save(const QString & filename, bool readOnly) {
 	if (FolderUtils::isEmptyFileName(filename, untitledFileName())) {
-		return saveAs(filename, extension, readOnly);
+		return saveAs(filename, readOnly);
 	} else if (m_readOnly) {
-		return saveAs(filename, extension, readOnly);
+		return saveAs(filename, readOnly);
 	} else {
 		return saveAsAux(filename);
 	}
 }
 
-bool FritzingWindow::saveAs(const QString & filename, const QString & extension, bool readOnly) {
+bool FritzingWindow::saveAs(const QString & filename, bool readOnly) {
 	DebugDialog::debug(QString("current path: %1").arg(QDir::currentPath()));
 	QString fileExt;
     QString path;
@@ -134,7 +134,7 @@ bool FritzingWindow::saveAs(const QString & filename, const QString & extension,
 						this,
                         tr("Specify a file name"),
                         path,
-                        tr("Fritzing (*%1)").arg(extension),
+                        getExtensionString(),
                         &fileExt
                       );
 
@@ -150,8 +150,17 @@ bool FritzingWindow::saveAs(const QString & filename, const QString & extension,
 
 	FileProgressDialog progress("Saving...", 0, this);
 
-    if(!alreadyHasExtension(newFilename, extension)) {
-		newFilename += extension;
+	QStringList extensions = getExtensions();
+	bool hasExtension;
+	foreach (QString extension, extensions) {
+		if(alreadyHasExtension(newFilename, extension)) {
+			hasExtension = true;
+			break;
+		}
+	}
+
+	if (!hasExtension) {
+		newFilename += extensions[0];
 	}
 
 	return saveAsAux(newFilename);

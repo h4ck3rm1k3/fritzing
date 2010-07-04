@@ -82,17 +82,17 @@ bool Syntaxer::loadSyntax(const QString &filename)
 	m_name = root.attribute("name");
 	QStringList extensions = root.attribute("extensions").split(";", QString::SkipEmptyParts);
 	if (extensions.count() > 0) {
-		m_extension = extensions.at(0);
-		int ix = m_extension.indexOf(".");
-		if (ix > 0) {
-			m_extension.remove(0, ix);
-		}
-		m_extensions = m_name + " " + QObject::tr("files") + " (";
+		m_extensionString = m_name + " " + QObject::tr("files") + " (";
 		foreach (QString ext, extensions) {
-			m_extensions += ext + " ";
+			m_extensionString += ext + " ";
+			int ix = ext.indexOf(".");
+			if (ix > 0) {
+				ext.remove(0, ix);
+			}
+			m_extensions.append(ext);
 		}
-		m_extensions.chop(1);
-		m_extensions += ")";
+		m_extensionString.chop(1);
+		m_extensionString += ")";
 	}
 	
 	m_trieRoot = new TrieNode('\0');
@@ -188,12 +188,12 @@ int Syntaxer::matchStringEnd(const QString & text, int offset) {
 	return matchStringStart(text, offset);
 }
 
-const QString & Syntaxer::extensions() {
+const QStringList & Syntaxer::extensions() {
 	return m_extensions;
 }
 
-const QString & Syntaxer::extension() {
-	return m_extension;
+const QString & Syntaxer::extensionString() {
+	return m_extensionString;
 }
 
 QChar Syntaxer::getStringDelimiter(QDomElement & context) {

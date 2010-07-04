@@ -2123,3 +2123,13 @@ bool MainWindow::hasLinkedProgramFiles(const QString & filename, QStringList & l
 	return linkedProgramFiles.count() > 0;
 }
 
+QString MainWindow::getExtensionString() {
+	return tr("Fritzing (*%1)").arg(fileExtension());
+}
+
+QStringList MainWindow::getExtensions() {
+	QStringList extensions;
+	extensions.append(fileExtension());
+	return extensions;
+}
+

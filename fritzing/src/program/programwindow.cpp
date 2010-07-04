@@ -90,8 +90,6 @@ void PTabWidget::tabChanged(int index) {
             tabButton->show();
         }
     }
-
-	
 }
 
 ///////////////////////////////////////////////
@@ -310,19 +308,14 @@ void ProgramWindow::setup(const QStringList & programs, const QString & alternat
 
     connect(languageMenu, SIGNAL(triggered(QAction*)), this, SLOT(setLanguage(QAction*)));
 
-    QMenu *portMenu = new QMenu(tr("Select port"), this);
-    currentMenu->addMenu(portMenu);
+    m_serialPortMenu = new QMenu(tr("Select port"), this);
+    currentMenu->addMenu(m_serialPortMenu);
 
-    QActionGroup *portActionGroup = new QActionGroup(this);
-    foreach (QString name, getSerialPorts()) {
-        currentAction = new QAction(name, this);
-        currentAction->setCheckable(true);
-        m_portActions.insert(name, currentAction);
-        portMenu->addAction(currentAction);
-        portActionGroup->addAction(currentAction);
-    }
+    m_serialPortActionGroup = new QActionGroup(this);
+	updateSerialPorts();
 
-    connect(portMenu, SIGNAL(triggered(QAction*)), this, SLOT(setPort(QAction*)));
+    connect(m_serialPortMenu, SIGNAL(triggered(QAction*)), this, SLOT(setPort(QAction*)));
+	connect(m_serialPortMenu, SIGNAL(aboutToShow()), this, SLOT(updateSerialPorts()), Qt::DirectConnection);
 
 	m_programmerMenu = new QMenu(tr("Select programmer"), this);
     currentMenu->addMenu(m_programmerMenu);
@@ -717,8 +710,8 @@ bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag)
 	m_savingProgramTab = programTab;				// need this for the saveAsAux call
 
 	bool result = (saveAsFlag) 
-		? saveAs(programTab->filename(), programTab->extension(), programTab->readOnly())
-		: save(programTab->filename(), programTab->extension(), programTab->readOnly());
+		? saveAs(programTab->filename(), programTab->readOnly())
+		: save(programTab->filename(), programTab->readOnly());
 
     if (result) {
 		programTab->setClean();
@@ -917,3 +910,55 @@ bool ProgramWindow::alreadyHasProgram(const QString & filename) {
 
 	return false;
 }
+
+QString ProgramWindow::getExtensionString() {
+	ProgramTab * pt = currentWidget();
+	if (pt == NULL) return "";
+
+	return pt->extensionString();
+}
+
+QStringList ProgramWindow::getExtensions() {
+	ProgramTab * pt = currentWidget();
+	if (pt == NULL) return QStringList();
+
+	return pt->extensions();
+}
+
+void ProgramWindow::updateSerialPorts() {
+	QStringList ports = getSerialPorts();
+	QStringList newPorts;
+	foreach (QString port, ports) {
+		if (m_portActions.value(port, NULL) == NULL) {
+			newPorts.append(port);
+		}
+	}
+	QStringList obsoletePorts;
+	foreach (QString port, m_portActions.keys()) {
+		if (!ports.contains(port)) {
+			obsoletePorts.append(port);
+		}
+	}
+
+	foreach (QString port, newPorts) {
+        QAction * action = new QAction(port, this);
+        action->setCheckable(true);
+        m_portActions.insert(port, action);
+        m_serialPortMenu->addAction(action);
+        m_serialPortActionGroup->addAction(action);
+    }
+
+	foreach (QString port, obsoletePorts) {
+		QAction * action = m_portActions.value(port, NULL);
+		if (action == NULL) continue;			// shouldn't happen
+
+		if (action->isChecked()) {
+			// TODO:  what?
+		}
+
+		m_portActions.remove(port);
+		m_serialPortActionGroup->removeAction(action);
+		m_serialPortMenu->removeAction(action);
+	}
+}
+

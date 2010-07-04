@@ -96,6 +96,7 @@ protected slots:
                     bool cutEnable, bool copyEnable, 
 					const QString & language, const QString & port, 
 					const QString & programmer, const QString & filename);
+	void updateSerialPorts();
 
     // The following methods just forward events on to the current tab
     void setLanguage(QAction*);
@@ -134,6 +135,8 @@ protected:
 	inline ProgramTab * currentWidget();
 	inline ProgramTab * indexWidget(int index);
 	void initProgrammerNames();
+	QString getExtensionString();
+	QStringList getExtensions();
 
 protected:
 	static void initLanguages();
@@ -160,7 +163,9 @@ protected:
     QHash<QString, QAction *> m_portActions;
     QHash<QString, QAction *> m_programmerActions;
 	QActionGroup * m_programmerActionGroup;
+	QActionGroup * m_serialPortActionGroup;
 	QMenu * m_programmerMenu;
+	QMenu * m_serialPortMenu;
 };
 
 #endif /* ProgramWindow_H_ */

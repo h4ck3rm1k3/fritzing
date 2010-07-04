@@ -824,3 +824,14 @@ void PartsEditorMainWindow::setViewItems(ItemBase * iiItem, ItemBase* bbItem, It
 	m_schematicItem = schemItem;
 	m_pcbItem = pcbItem;
 }
+
+QString PartsEditorMainWindow::getExtensionString() {
+	return tr("Fritzing Parts (*%1)").arg(fileExtension());
+}
+
+QStringList PartsEditorMainWindow::getExtensions() {
+	QStringList extensions;
+	extensions.append(fileExtension());
+	return extensions;
+}
+

@@ -42,6 +42,16 @@ $Date$
 
 /////////////////////////////////////////
 
+SerialPortComboBox::SerialPortComboBox() : QComboBox() {
+}
+
+void SerialPortComboBox::showPopup() {
+	emit aboutToShow();
+	QComboBox::showPopup();
+}
+
+/////////////////////////////////////////
+
 DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags)
 {
 	this->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |  Qt::WindowCloseButtonHint);
@@ -246,11 +256,13 @@ QFrame * ProgramTab::createFooter() {
 
     QLabel * portLabel = new QLabel(tr("Port:"), this);
 
-    m_portComboBox = new QComboBox();
+    m_portComboBox = new SerialPortComboBox();
     m_portComboBox->setEditable(false);
     m_portComboBox->setEnabled(true);
     m_portComboBox->addItems(m_programWindow->getSerialPorts());
     connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setPort(const QString &)));
+	connect(m_portComboBox, SIGNAL(aboutToShow()), this, SLOT(updateSerialPorts()), Qt::DirectConnection);
+
 	QString currentPort = settings.value("programwindow/port", "").toString();
 	if (currentPort.isEmpty()) {
 		currentPort = m_portComboBox->currentText();
@@ -307,6 +319,7 @@ void ProgramTab::setLanguage(const QString & newLanguage) {
         m_language = newLanguage;
         m_languageComboBox->setCurrentIndex(m_languageComboBox->findText(newLanguage));
         m_highlighter->setSyntaxer(m_programWindow->getSyntaxerForLanguage(newLanguage));
+		m_highlighter->rehighlight();
         updateMenu();
 		QSettings settings;
 		settings.setValue("programwindow/language", newLanguage);
@@ -331,7 +344,7 @@ bool ProgramTab::loadProgramFile() {
 						this,
 						tr("Select a program file to load"),
                         FolderUtils::openSaveFolder(),
-                        m_highlighter->syntaxer()->extensions()
+                        m_highlighter->syntaxer()->extensionString()
 		);
 
 	if (fileName.isEmpty()) return false;
@@ -381,8 +394,10 @@ void ProgramTab::textChanged() {
 	QIcon tabIcon = m_tabWidget->tabIcon(m_tabWidget->currentIndex());
 	bool modified = m_textEdit->document()->isModified();
 
-	m_saveButton->setEnabled(modified);
-	updateMenu();
+	if (m_saveButton) {
+		m_saveButton->setEnabled(modified);
+		updateMenu();
+	}
 
 	if (tabIcon.isNull()) {
 		if (modified) {
@@ -543,14 +558,24 @@ void ProgramTab::setFilename(const QString & name) {
         }
 }
 
-QString ProgramTab::extension() {
-    if (m_highlighter == NULL) return "";
+const QStringList & ProgramTab::extensions() {
+    if (m_highlighter == NULL) return ___emptyStringList___;
 
 	Syntaxer * syntaxer = m_highlighter->syntaxer();
-	if (syntaxer == NULL) return "";
+	if (syntaxer == NULL) return ___emptyStringList___;
 
-	return syntaxer->extension();
+	return syntaxer->extensions();
 }
+
+const QString & ProgramTab::extensionString() {
+    if (m_highlighter == NULL) return ___emptyString___;
+
+	Syntaxer * syntaxer = m_highlighter->syntaxer();
+	if (syntaxer == NULL) return ___emptyString___;
+
+	return syntaxer->extensionString();
+}
+
 
 void ProgramTab::setClean() {
 	m_textEdit->document()->setModified(false);
@@ -744,5 +769,33 @@ void ProgramTab::updateProgrammers() {
 
 	if (!currentProgrammer.isEmpty()) {
 		updateProgrammerComboBox(currentProgrammer);
+	}
+}
+
+void ProgramTab::updateSerialPorts() {
+	QStringList ports = m_programWindow->getSerialPorts();
+
+	QStringList newPorts;
+	foreach (QString port, ports) {
+		if (m_portComboBox->findText(port) < 0) {
+			newPorts.append(port);
+		}
+	}
+	QList<int> obsoletePorts;
+	for (int i = 0; i < m_portComboBox->count(); i++) {
+		QString port = m_portComboBox->itemText(i);
+		if (!ports.contains(port)) {
+			obsoletePorts.append(i);
+		}
+		if (i == m_portComboBox->currentIndex()) {
+			// TODO: what?
+		}
+	}
+
+	for (int i = obsoletePorts.count() - 1; i >= 0; i--) {
+		m_portComboBox->removeItem(obsoletePorts.at(i));
+	}
+	foreach (QString port, newPorts) {
+		m_portComboBox->addItem(port);
 	}
 }
