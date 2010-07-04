@@ -115,7 +115,7 @@ bool Syntaxer::loadSyntax(const QString &filename)
 		}
 	}
 
-	return false;
+	return true;
 }
 
 QString Syntaxer::parseForName(const QString & filename)

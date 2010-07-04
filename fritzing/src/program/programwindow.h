@@ -36,12 +36,22 @@ $Date$
 #include <QProcess>
 #include <QTabWidget>
 #include <QComboBox>
+#include <QActionGroup>
+
+#include "syntaxer.h"
 
 #include "../fritzingwindow.h"
 
 class PTabWidget : public QTabWidget 
 {
 	Q_OBJECT
+
+protected slots:
+    void tabChanged(int index);
+
+protected:
+    int m_lastTabIndex;
+
 public:
 	PTabWidget(QWidget * parent);
 	QTabBar * tabBar();
@@ -58,26 +68,53 @@ public:
 	void setup(const QStringList & programs, const QString & alternativePath);
 	const QString defaultSaveFolder();
 
-public:
-	static void initText();
+    QStringList getSerialPorts();
+    QStringList getAvailableLanguages();
+    Syntaxer * getSyntaxerForLanguage(QString language);
+	const QHash<QString, QString> getProgrammerNames();
+	void loadProgramFileNew();
+	bool alreadyHasProgram(const QString &);
 
 signals:
 	void closed();
-	void changeActivationSignal(bool activate, QWidget * originator);
-	void linkToProgramFile(const QString & filename, bool addLink);
+    void changeActivationSignal(bool activate, QWidget * originator);
+    void linkToProgramFile(const QString &, bool);
 
 protected slots:
 	void parentAboutToClose();
-	class ProgramTab * addTab();
-	void tabSaveAs(int);
-	void tabSave(int);
+    class ProgramTab * addTab();
+    void closeCurrentTab();
+    void closeTab(int index);
+    void tabSave(int);
+    void tabSaveAs(int);
+    void tabRename(int);
+    void duplicateTab();
 	void tabBeforeClosing(int, bool & ok);
-	void tabDelete(int index, bool deleteFile);
-	void tabLinkTo(const QString & filename, bool);
+    void tabDelete(int index, bool deleteFile);
+    void print();
+    void updateMenu(bool programEnable, bool undoEnable, bool redoEnable,
+                    bool cutEnable, bool copyEnable, 
+					const QString & language, const QString & port, 
+					const QString & programmer, const QString & filename);
+
+    // The following methods just forward events on to the current tab
+    void setLanguage(QAction*);
+    void setPort(QAction*);
+    void setProgrammer(QAction*);
+	void loadProgramFile();
+	void rename();
+	void undo();
+	void redo();
+	void cut();
+	void copy();
+	void paste();
+	void selectAll();
+	void sendProgram();
 
 protected:
-	void closeEvent(QCloseEvent *event);
-	bool eventFilter(QObject *object, QEvent *event);
+    bool event(QEvent * event);
+    void closeEvent(QCloseEvent *event);
+    bool eventFilter(QObject *object, QEvent *event);
 
 	QFrame * createHeader();
 	QFrame * createCenter();
@@ -85,20 +122,45 @@ protected:
 	const QString untitledFileName();
 	const QString fileExtension();
 
-	void cleanUp();
-	bool event(QEvent *);
-	int &untitledFileCount();
-	QStringList getSerialPorts();
-	void setTitle();
+    void cleanUp();
+    int &untitledFileCount();
+    void setTitle();
+    void setTitle(const QString & filename);
 	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 	bool saveAsAux(const QString & fileName);
-	bool prepSave(int index, class ProgramTab *, bool saveAsFlag);
+	bool prepSave(class ProgramTab *, bool saveAsFlag);
 	bool beforeClosingTab(int index, bool showCancel);
+	QAction * addProgrammer(const QString & name, const QString & path);
+	inline ProgramTab * currentWidget();
+	inline ProgramTab * indexWidget(int index);
+	void initProgrammerNames();
+
+protected:
+	static void initLanguages();
+
+public:
+	static const QString LocateName;
+
+protected:
+	static QHash<QString, class Syntaxer *> m_syntaxers;
+	static QHash<QString, QString> m_languages;
 
 protected:
 	QPointer<PTabWidget> m_tabWidget;
 	QPointer<QPushButton> m_addButton;
-	QPointer<class ProgramTab> m_savingProgramTab;
+    QPointer<class ProgramTab> m_savingProgramTab;
+    QAction *m_programAction;
+    QAction *m_undoAction;
+    QAction *m_redoAction;
+    QAction *m_cutAction;
+    QAction *m_copyAction;
+    QAction *m_saveAction;
+    QAction *m_printAction;
+    QHash<QString, QAction *> m_languageActions;
+    QHash<QString, QAction *> m_portActions;
+    QHash<QString, QAction *> m_programmerActions;
+	QActionGroup * m_programmerActionGroup;
+	QMenu * m_programmerMenu;
 };
 
 #endif /* ProgramWindow_H_ */

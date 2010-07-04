@@ -41,25 +41,79 @@ $Date$
 #include <QFontMetrics>
 #include <QTextStream>
 
+// Included for getSerialPort() and a few others
 #ifdef Q_WS_WIN
 #include "windows.h"
 #endif
+#ifdef Q_WS_MAC
+#include <IOKit/IOKitLib.h>
+#include <IOKit/IOBSD.h>
+#include <IOKit/serial/IOSerialKeys.h>
+#include <CoreFoundation/CoreFoundation.h>
+#endif
 
-// TODO: 
-//		text search
-//		numbers, string escape chars...
-//		where to store program files when opening fzz
-//		update serial port list (when?)
-//		when you hit program, warn the user to save
-//		^s and other standard shortcuts
 
-static int UntitledIndex = 1;				
+///////////////////////////////////////////////
+
+PTabWidget::PTabWidget(QWidget * parent) : QTabWidget(parent) {
+        m_lastTabIndex = -1;
+
+        connect(tabBar(), SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+}
+
+QTabBar * PTabWidget::tabBar() {
+	return QTabWidget::tabBar();
+}
+
+void PTabWidget::tabChanged(int index) {
+    // Hide the close button on the old tab
+    if (m_lastTabIndex >= 0) {
+        QAbstractButton *tabButton = qobject_cast<QAbstractButton *>(tabBar()->tabButton(m_lastTabIndex, QTabBar::LeftSide));
+        if (!tabButton) {
+			tabButton = qobject_cast<QAbstractButton *>(tabBar()->tabButton(m_lastTabIndex, QTabBar::RightSide));
+        }
+
+        if (tabButton) {
+            tabButton->hide();
+        }
+    }
+
+    m_lastTabIndex = index;
+
+    // Show the close button on the new tab
+    if (m_lastTabIndex >= 0) {
+        QAbstractButton *tabButton = qobject_cast<QAbstractButton *>(tabBar()->tabButton(m_lastTabIndex, QTabBar::LeftSide));
+        if (!tabButton) {
+            tabButton = qobject_cast<QAbstractButton *>(tabBar()->tabButton(m_lastTabIndex, QTabBar::RightSide));
+        }
+        if (tabButton) {
+            tabButton->show();
+        }
+    }
+
+	
+}
+
+///////////////////////////////////////////////
+
+static int UntitledIndex = 1;
+QHash<QString, QString> ProgramWindow::m_languages;
+QHash<QString, class Syntaxer *> ProgramWindow::m_syntaxers;
+const QString ProgramWindow::LocateName = "locate";
+static QHash<QString, QString> ProgrammerNames;
 
 ProgramWindow::ProgramWindow(QWidget *parent)
 	: FritzingWindow("", untitledFileCount(), "", parent)
 {
+	if (ProgrammerNames.count() == 0) {
+		initProgrammerNames();
+	}
+
+	if (m_languages.count() == 0) {
+		initLanguages();
+	}
+
 	m_savingProgramTab = NULL;
-	UntitledIndex--;						// incremented by FritzingWindow
 	ProgramWindow::setTitle();				// set to something weird by FritzingWindow
 }
 
@@ -67,7 +121,23 @@ ProgramWindow::~ProgramWindow()
 {
 }
 
-void ProgramWindow::initText() {
+void ProgramWindow::initLanguages() {
+	QDir dir(FolderUtils::getApplicationSubFolderPath("translations"));
+	dir.cd("syntax");
+	QStringList nameFilters;
+	nameFilters << "*.xml";
+	QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+	foreach (QFileInfo fileInfo, list) {
+		if (fileInfo.baseName().compare("styles") == 0) {
+			Highlighter::loadStyles(fileInfo.absoluteFilePath());
+		}
+		else {
+			QString name = Syntaxer::parseForName(fileInfo.absoluteFilePath());
+			if (!name.isEmpty()) {
+				m_languages.insert(name, fileInfo.absoluteFilePath());
+			}
+		}
+	}
 }
 
 void ProgramWindow::setup(const QStringList & programs, const QString & alternativePath)
@@ -103,31 +173,192 @@ void ProgramWindow::setup(const QStringList & programs, const QString & alternat
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	QSettings settings;
-	//if (!settings.value("peditor/state").isNull()) {
-		//restoreState(settings.value("peditor/state").toByteArray());
-	//}
-	//if (!settings.value("peditor/geometry").isNull()) {
-		//restoreGeometry(settings.value("peditor/geometry").toByteArray());
-	//}
+	if (!settings.value("programwindow/state").isNull()) {
+		restoreState(settings.value("programwindow/state").toByteArray());
+	}
+	if (!settings.value("programwindow/geometry").isNull()) {
+		restoreGeometry(settings.value("programwindow/geometry").toByteArray());
+	}
 
 	installEventFilter(this);
 
-	if (programs.count() == 0) return;
+    // Setup new menu bar for the programming window
+    QMenuBar *menubar = menuBar();
 
-	bool firstTime = true;
-	foreach (QString program, programs) {
-		ProgramTab * programTab = NULL;
-		if (firstTime) {
-			firstTime = false;
-			programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(0));
+    QMenu *currentMenu = menubar->addMenu(tr("&File"));
+
+    QAction *currentAction = new QAction(tr("New"), this);
+    currentAction->setShortcut(tr("Ctrl+N"));
+    currentAction->setStatusTip(tr("Create a new program"));
+    connect(currentAction, SIGNAL(triggered()), this, SLOT(addTab()));
+    currentMenu->addAction(currentAction);
+
+    currentAction = new QAction(tr("&Open..."), this);
+    currentAction->setShortcut(tr("Ctrl+O"));
+    currentAction->setStatusTip(tr("Open a program"));
+    connect(currentAction, SIGNAL(triggered()), this, SLOT(loadProgramFile()));
+    currentMenu->addAction(currentAction);
+
+    currentMenu->addSeparator();
+
+    m_saveAction = new QAction(tr("&Save"), this);
+    m_saveAction->setShortcut(tr("Ctrl+S"));
+    m_saveAction->setStatusTip(tr("Save the current program"));
+    connect(m_saveAction, SIGNAL(triggered()), this, SLOT(save()));
+    currentMenu->addAction(m_saveAction);
+
+    currentAction = new QAction(tr("Rename"), this);
+    currentAction->setStatusTip(tr("Rename the current program"));
+    connect(currentAction, SIGNAL(triggered()), this, SLOT(rename()));
+    currentMenu->addAction(currentAction);
+
+    currentAction = new QAction(tr("Duplicate tab"), this);
+    currentAction->setStatusTip(tr("Copies the current program into a new tab"));
+    connect(currentAction, SIGNAL(triggered()), this, SLOT(duplicateTab()));
+    currentMenu->addAction(currentAction);
+
+    currentMenu->addSeparator();
+
+    currentAction = new QAction(tr("Remove tab"), this);
+    currentAction->setShortcut(tr("Ctrl+W"));
+    currentAction->setStatusTip(tr("Remove the current program from the sketch"));
+    connect(currentAction, SIGNAL(triggered()), this, SLOT(closeCurrentTab()));
+    currentMenu->addAction(currentAction);
+
+    currentMenu->addSeparator();
+
+    m_printAction = new QAction(tr("&Print..."), this);
+    m_printAction->setShortcut(tr("Ctrl+P"));
+    m_printAction->setStatusTip(tr("Print the current program"));
+    connect(m_printAction, SIGNAL(triggered()), this, SLOT(print()));
+    currentMenu->addAction(m_printAction);
+
+    currentMenu->addSeparator();
+
+    currentAction = new QAction(tr("&Quit"), this);
+    currentAction->setShortcut(tr("Ctrl+Q"));
+    currentAction->setStatusTip(tr("Quit the application"));
+    currentAction->setMenuRole(QAction::QuitRole);
+    connect(currentAction, SIGNAL(triggered()), qApp, SLOT(closeAllWindows2()));
+    currentMenu->addAction(currentAction);
+
+    currentMenu = menubar->addMenu(tr("&Edit"));
+
+    m_undoAction = new QAction(tr("Undo"), this);
+    m_undoAction->setShortcuts(QKeySequence::Undo);
+    m_undoAction->setEnabled(false);
+    connect(m_undoAction, SIGNAL(triggered()), this, SLOT(undo()));
+    currentMenu->addAction(m_undoAction);
+
+    m_redoAction = new QAction(tr("Redo"), this);
+    m_redoAction->setShortcuts(QKeySequence::Redo);
+    m_redoAction->setEnabled(false);
+    connect(m_redoAction, SIGNAL(triggered()), this, SLOT(redo()));
+    currentMenu->addAction(m_redoAction);
+
+    currentMenu->addSeparator();
+
+    m_cutAction = new QAction(tr("&Cut"), this);
+    m_cutAction->setShortcut(tr("Ctrl+X"));
+    m_cutAction->setStatusTip(tr("Cut selection"));
+    m_cutAction->setEnabled(false);
+    connect(m_cutAction, SIGNAL(triggered()), this, SLOT(cut()));
+    currentMenu->addAction(m_cutAction);
+
+    m_copyAction = new QAction(tr("&Copy"), this);
+    m_copyAction->setShortcut(tr("Ctrl+C"));
+    m_copyAction->setStatusTip(tr("Copy selection"));
+    m_copyAction->setEnabled(false);
+    connect(m_copyAction, SIGNAL(triggered()), this, SLOT(copy()));
+    currentMenu->addAction(m_copyAction);
+
+    currentAction = new QAction(tr("&Paste"), this);
+    currentAction->setShortcut(tr("Ctrl+V"));
+    currentAction->setStatusTip(tr("Paste clipboard contents"));
+    // TODO: Check clipboard status and disable appropriately here
+    connect(currentAction, SIGNAL(triggered()), this, SLOT(paste()));
+    currentMenu->addAction(currentAction);
+
+    currentMenu->addSeparator();
+
+    currentAction = new QAction(tr("&Select All"), this);
+    currentAction->setShortcut(tr("Ctrl+A"));
+    currentAction->setStatusTip(tr("Select all text"));
+    connect(currentAction, SIGNAL(triggered()), this, SLOT(selectAll()));
+    currentMenu->addAction(currentAction);
+
+    currentMenu = menuBar()->addMenu(tr("&Program"));
+
+    QMenu *languageMenu = new QMenu(tr("Select language"), this);
+    currentMenu->addMenu(languageMenu);
+
+	QString currentLanguage = settings.value("programwindow/language", "").toString();
+	QStringList languages = getAvailableLanguages();
+    QActionGroup *languageActionGroup = new QActionGroup(this);
+    foreach (QString language, languages) {
+        currentAction = new QAction(language, this);
+        currentAction->setCheckable(true);
+        m_languageActions.insert(language, currentAction);
+        languageActionGroup->addAction(currentAction);
+        languageMenu->addAction(currentAction);
+		if (!currentLanguage.isEmpty()) {
+			if (language.compare(currentLanguage) == 0) {
+				currentAction->setChecked(true);
+			}
 		}
-		else {
-			programTab = addTab();
-		}
-		QDir dir(alternativePath);
-		QFileInfo fileInfo(program);
-		programTab->loadProgramFile(program, dir.absoluteFilePath(fileInfo.fileName()));
+    }
+
+    connect(languageMenu, SIGNAL(triggered(QAction*)), this, SLOT(setLanguage(QAction*)));
+
+    QMenu *portMenu = new QMenu(tr("Select port"), this);
+    currentMenu->addMenu(portMenu);
+
+    QActionGroup *portActionGroup = new QActionGroup(this);
+    foreach (QString name, getSerialPorts()) {
+        currentAction = new QAction(name, this);
+        currentAction->setCheckable(true);
+        m_portActions.insert(name, currentAction);
+        portMenu->addAction(currentAction);
+        portActionGroup->addAction(currentAction);
+    }
+
+    connect(portMenu, SIGNAL(triggered(QAction*)), this, SLOT(setPort(QAction*)));
+
+	m_programmerMenu = new QMenu(tr("Select programmer"), this);
+    currentMenu->addMenu(m_programmerMenu);
+
+	m_programmerActionGroup = new QActionGroup(this);
+	QHash<QString, QString> programmerNames = getProgrammerNames();
+	foreach (QString name, programmerNames.keys()) {
+		addProgrammer(name, programmerNames.value(name));
 	}
+	
+    connect(m_programmerMenu, SIGNAL(triggered(QAction*)), this, SLOT(setProgrammer(QAction*)));
+
+    currentMenu->addSeparator();
+
+    m_programAction = new QAction(tr("Program"), this);
+    m_programAction->setStatusTip(tr("Load the current program onto a microcontroller"));
+    m_programAction->setEnabled(false);
+    connect(m_programAction, SIGNAL(triggered()), this, SLOT(sendProgram()));
+    currentMenu->addAction(m_programAction);
+
+    if (!programs.isEmpty()) {
+        bool firstTime = true;
+        foreach (QString program, programs) {
+            ProgramTab * programTab = NULL;
+            if (firstTime) {
+                firstTime = false;
+                programTab = indexWidget(0);
+            }
+            else {
+                programTab = addTab();
+            }
+            QDir dir(alternativePath);
+            QFileInfo fileInfo(program);
+            programTab->loadProgramFile(program, dir.absoluteFilePath(fileInfo.fileName()));
+        }
+    }
 }
 
 QFrame * ProgramWindow::createHeader() {
@@ -139,19 +370,23 @@ QFrame * ProgramWindow::createHeader() {
 
 QFrame * ProgramWindow::createCenter() {
 
-	QFrame * centerFrame = new QFrame();
+        QFrame * centerFrame = new QFrame(this);
 	centerFrame->setObjectName("center");
 
 	m_tabWidget = new PTabWidget(centerFrame);
 	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	m_tabWidget->setMovable(true);
+        m_tabWidget->setTabsClosable(true);
 	m_tabWidget->setUsesScrollButtons(false);
 	m_tabWidget->setElideMode(Qt::ElideLeft);
+        connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 
+	/*
 	m_addButton = new QPushButton("+", m_tabWidget);
 	m_addButton->setObjectName("addButton");
 	connect(m_addButton, SIGNAL(clicked()), this, SLOT(addTab()));
 	m_tabWidget->setCornerWidget(m_addButton, Qt::TopRightCorner);
+	*/
 
 	addTab();
 
@@ -167,6 +402,20 @@ QFrame * ProgramWindow::createCenter() {
 	return centerFrame;
 }
 
+QStringList ProgramWindow::getAvailableLanguages() {
+   return m_languages.keys();
+}
+
+Syntaxer * ProgramWindow::getSyntaxerForLanguage(QString language) {
+	Syntaxer * syntaxer = m_syntaxers.value(language, NULL);
+	if (syntaxer == NULL) {
+		syntaxer = new Syntaxer();
+		if (syntaxer->loadSyntax(m_languages.value(language))) {
+			m_syntaxers.insert(language, syntaxer);
+		}
+	}
+    return m_syntaxers.value(language, NULL);
+}
 
 void ProgramWindow::cleanUp() {
 }
@@ -177,6 +426,25 @@ void ProgramWindow::parentAboutToClose() {
 	}
 }
 
+/**
+ * eventFilter here is used to catch the keyboard shortcuts that trigger the close event
+ * for ProgramWindow. If there are more than one tab widget the standard close shortcut
+ * should only close the current tab instead of closing the whole window. Every other
+ * case is ignored and handled by closeEvent() like normal.
+ */
+bool ProgramWindow::eventFilter(QObject * object, QEvent * event) {
+        if (object == this && event->type() == QEvent::ShortcutOverride) {
+                QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
+                if(keyEvent && keyEvent->matches(QKeySequence::Close) && m_tabWidget->count() > 1 ) {
+                        return true;
+                }
+        }
+        return QMainWindow::eventFilter(object, event);
+}
+
+/**
+ * Reimplement closeEvent to save any modified documents before closing.
+ */
 void ProgramWindow::closeEvent(QCloseEvent *event) {
 	if(beforeClosing()) {
 		cleanUp();
@@ -187,8 +455,8 @@ void ProgramWindow::closeEvent(QCloseEvent *event) {
 	}
 
 	QSettings settings;
-	//settings.setValue("peditor/state",saveState());
-	//settings.setValue("peditor/geometry",saveGeometry());
+	settings.setValue("programwindow/state",saveState());
+	settings.setValue("programwindow/geometry",saveGeometry());
 }
 
 const QString ProgramWindow::untitledFileName() {
@@ -201,25 +469,6 @@ const QString ProgramWindow::fileExtension() {
 
 const QString ProgramWindow::defaultSaveFolder() {
 	return FolderUtils::openSaveFolder();
-}
-
-bool ProgramWindow::eventFilter(QObject *object, QEvent *event) {
-	if (object == this && event->type() == QEvent::ShortcutOverride) {
-		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
-		if(keyEvent && keyEvent->matches(QKeySequence::Close)) {
-			this->close();
-			event->ignore();
-			QCoreApplication::processEvents();
-#ifdef Q_WS_MAC
-			FritzingWindow *parent = dynamic_cast<FritzingWindow*>(parentWidget());
-			if(parent) {
-				parent->notClosableForAWhile();
-			}
-#endif
-			return true;
-		}
-	}
-	return QMainWindow::eventFilter(object, event);
 }
 
 bool ProgramWindow::event(QEvent * e) {
@@ -241,23 +490,122 @@ int & ProgramWindow::untitledFileCount() {
 }
 
 void ProgramWindow::setTitle() {
-	setWindowTitle(tr("Programming Window"));
+    setWindowTitle(tr("Programming Window"));
 }
 
+void ProgramWindow::setTitle(const QString & filename) {
+        setWindowTitle(tr("Programming Window - %1").arg(filename));
+}
+
+/**
+ * Create and open a new tab within the PTabWidget child.
+ * This function handled connecting all the appropriate signals
+ * and setting an appropriate filename.
+ */
 ProgramTab * ProgramWindow::addTab() {
-	ProgramTab * programTab = new ProgramTab(m_tabWidget);
-	connect(programTab, SIGNAL(wantToSaveAs(int)), this, SLOT(tabSaveAs(int)));
-	connect(programTab, SIGNAL(wantToSave(int)), this, SLOT(tabSave(int)));
-	connect(programTab, SIGNAL(wantBeforeClosing(int, bool &)), this, SLOT(tabBeforeClosing(int, bool &)), Qt::DirectConnection);
-	connect(programTab, SIGNAL(wantToDelete(int, bool)), this, SLOT(tabDelete(int, bool)), Qt::DirectConnection);
-	connect(programTab, SIGNAL(wantToLink(const QString &, bool)), this, SLOT(tabLinkTo(const QString &, bool)));
-	QString name = (UntitledIndex == 1) ? untitledFileName() : tr("%1 %2").arg(untitledFileName()).arg(UntitledIndex);
-	programTab->setFilename(name);
+    QString name = (UntitledIndex == 1) ? untitledFileName() : tr("%1 %2").arg(untitledFileName()).arg(UntitledIndex);
+    ProgramTab * programTab = new ProgramTab(name, m_tabWidget);
+    connect(programTab, SIGNAL(wantToSave(int)), this, SLOT(tabSave(int)));
+    connect(programTab, SIGNAL(wantToSaveAs(int)), this, SLOT(tabSaveAs(int)));
+    connect(programTab, SIGNAL(wantToRename(int)), this, SLOT(tabRename(int)));
+    connect(programTab, SIGNAL(wantToLink(QString,bool)), this, SIGNAL(linkToProgramFile(QString,bool)));
+    connect(programTab, SIGNAL(wantToDelete(int, bool)), this, SLOT(tabDelete(int, bool)), Qt::DirectConnection);
+    connect(programTab, 
+		SIGNAL(programWindowUpdateRequest(bool, bool, bool, bool, bool, const QString &, const QString &, const QString &, const QString &)), 
+		this, 
+		SLOT(updateMenu(bool, bool, bool, bool, bool, const QString &, const QString &, const QString &, const QString &)));
 	int ix = m_tabWidget->addTab(programTab, name);
-	m_tabWidget->setCurrentIndex(ix);
+    m_tabWidget->setCurrentIndex(ix);
 	UntitledIndex++;
 
 	return programTab;
+}
+
+/**
+ * A function for closing the current displayed tab.
+ * I'm using a ProgramWindow method instead of calling deleteTab()
+ * directly as I believe it's more apropos.
+ */
+void ProgramWindow::closeCurrentTab() {
+        closeTab(m_tabWidget->currentIndex());
+}
+
+void ProgramWindow::closeTab(int index) {
+        ProgramTab * pTab = indexWidget(index);
+        if (pTab) {
+                emit linkToProgramFile(pTab->filename(), false);
+                pTab->deleteTab();
+        }
+}
+
+/**
+ * This slot is for updating the tab-dependent menu items.
+ *  - program
+ *  - undo/redo
+ *  - cut/copy
+ */
+void ProgramWindow::updateMenu(bool programEnable, bool undoEnable, bool redoEnable, bool cutEnable, bool copyEnable, 
+							   const QString & language, const QString & port, const QString & programmer, const QString & filename) 
+{
+	ProgramTab * programTab = currentWidget();
+	m_saveAction->setEnabled(programTab->isModified());
+    m_programAction->setEnabled(programEnable);
+    m_undoAction->setEnabled(undoEnable);
+    m_redoAction->setEnabled(redoEnable);
+    m_cutAction->setEnabled(cutEnable);
+    m_copyAction->setEnabled(copyEnable);
+    QAction *lang = m_languageActions.value(language);
+    if (lang) {
+        lang->setChecked(true);
+    }
+    QAction *portAction = m_portActions.value(port);
+    if (portAction) {
+        portAction->setChecked(true);
+    }
+
+	QAction *programmerAction = NULL;
+	if (programmer == LocateName) {
+		foreach (QAction * action, m_programmerActions) {
+			if (action->data().toString() == programmer) {
+				programmerAction = action;
+				break;
+			}
+		}
+	}
+	else {
+		QFileInfo fileInfo(programmer);
+		QString name = fileInfo.fileName();
+		programmerAction = m_programmerActions.value(name);
+		if (!programmerAction) {
+			programmerAction = addProgrammer(name, programmer);
+			ProgrammerNames.insert(name, programmer);
+			for (int i = 0; i < m_tabWidget->count(); i++) {
+				ProgramTab * pt = indexWidget(i);
+				if (pt != programTab) {
+					pt->updateProgrammers();
+				}
+			}
+		}
+	}
+
+    if (programmerAction) {
+        programmerAction->setChecked(true);
+    }
+
+
+    setTitle(filename);
+}
+
+void ProgramWindow::setLanguage(QAction* action) {
+    currentWidget()->setLanguage(action->text());
+}
+
+void ProgramWindow::setPort(QAction* action) {
+    currentWidget()->setPort(action->text());
+}
+
+void ProgramWindow::setProgrammer(QAction* action) {
+    currentWidget()->chooseProgrammer(action->data().toString());
 }
 
 bool ProgramWindow::beforeClosing(bool showCancel) {
@@ -272,14 +620,14 @@ bool ProgramWindow::beforeClosing(bool showCancel) {
 
 bool ProgramWindow::beforeClosingTab(int index, bool showCancel) 
 {
-	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	ProgramTab * programTab = indexWidget(index);
 	if (programTab == NULL) return true;
 
 	if (!programTab->isModified()) return true;
 
 	QMessageBox::StandardButton reply = beforeClosingMessage(programTab->filename(), showCancel);
 	if (reply == QMessageBox::Save) {
-		return prepSave(index, programTab, false);
+		return prepSave(programTab, false);
 	} 
 	
 	if (reply == QMessageBox::Discard) {
@@ -289,21 +637,27 @@ bool ProgramWindow::beforeClosingTab(int index, bool showCancel)
 	return false;
 }
 
+void ProgramWindow::print() {
+#ifndef QT_NO_PRINTER
+    QPrinter printer(QPrinter::HighResolution);
+    QPrintDialog printDialog(&printer, this);
+    if (printDialog.exec() == QDialog::Accepted) {
+        currentWidget()->print(printer);
+    } 
+#endif
+}
+
 bool ProgramWindow::saveAsAux(const QString & fileName) {
 	if (!m_savingProgramTab) return false;
 
-	bool result = m_savingProgramTab->save(fileName);
+    bool result = m_savingProgramTab->save(fileName);
 	m_savingProgramTab = NULL;
 	return result;
 }
 
-
 void ProgramWindow::tabDelete(int index, bool deleteFile) {
-	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
-	QString fname = programTab->filename();
-	if (programTab != NULL) {
-		emit linkToProgramFile(fname, false);
-	}
+	ProgramTab * programTab = indexWidget(index);
+    QString fname = programTab->filename();
 	m_tabWidget->removeTab(index);
 	if (m_tabWidget->count() == 0) {
 		addTab();
@@ -316,28 +670,49 @@ void ProgramWindow::tabDelete(int index, bool deleteFile) {
 }
 
 void ProgramWindow::tabSave(int index) {
-	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+	ProgramTab * programTab =indexWidget(index);
 	if (programTab == NULL) return;
 
-    prepSave(index, programTab, false);
+    prepSave(programTab, false);
 }
 
 void ProgramWindow::tabSaveAs(int index) {
-	ProgramTab * programTab = dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
-	if (programTab == NULL) return;
+	ProgramTab * programTab = indexWidget(index);
+    if (programTab == NULL) return;
 
-	QString formerFilename = programTab->filename();
-	if (prepSave(index, programTab, true)) {
-		emit linkToProgramFile(formerFilename, false);
-	}
+    prepSave(programTab, true);
+}
+
+void ProgramWindow::tabRename(int index) {
+    ProgramTab * programTab = indexWidget(index);
+    if (programTab == NULL) return;
+
+    QString oldFileName = programTab->filename();
+    if (prepSave(programTab, true)) {
+		if (programTab->filename() != oldFileName) {
+			QFile oldFile(oldFileName);
+			if (oldFile.exists()) {
+				oldFile.remove();
+				emit linkToProgramFile(oldFileName, false);
+			}
+		}
+    }
+}
+
+void ProgramWindow::duplicateTab() {
+        ProgramTab * oldTab = currentWidget();
+        if (oldTab == NULL) return;
+
+        ProgramTab * newTab = addTab();
+
+        newTab->setText(oldTab->text());
 }
 
 void ProgramWindow::tabBeforeClosing(int index, bool & ok) {
 	ok = beforeClosingTab(index, true);
 }
 
-
-bool ProgramWindow::prepSave(int index, ProgramTab * programTab, bool saveAsFlag) 
+bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag) 
 {
 	m_savingProgramTab = programTab;				// need this for the saveAsAux call
 
@@ -345,24 +720,200 @@ bool ProgramWindow::prepSave(int index, ProgramTab * programTab, bool saveAsFlag
 		? saveAs(programTab->filename(), programTab->extension(), programTab->readOnly())
 		: save(programTab->filename(), programTab->extension(), programTab->readOnly());
 
-	if (result) {
-		m_tabWidget->setTabText(index, programTab->filename());
+    if (result) {
 		programTab->setClean();
 		emit linkToProgramFile(programTab->filename(), true);
 	}
 	return result;
 }
 
-void ProgramWindow::tabLinkTo(const QString & filename, bool link) 
+QStringList ProgramWindow::getSerialPorts() {
+        // TODO: make this call a plugin?
+    QStringList ports;
+#ifdef Q_WS_WIN
+        for (int i = 1; i < 256; i++)
+        {
+                QString port = QString("COM%1").arg(i);
+                QString sport = QString("\\\\.\\%1").arg(port);
+                HANDLE hPort = ::CreateFileA(sport.toLatin1().constData(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
+                if (hPort == INVALID_HANDLE_VALUE) {
+                        DWORD dwError = GetLastError();
+                        if (dwError == ERROR_ACCESS_DENIED || dwError == ERROR_GEN_FAILURE || dwError == ERROR_SHARING_VIOLATION || dwError == ERROR_SEM_TIMEOUT) {
+                                ports.append(port);
+                        }
+                }
+                else {
+                        CloseHandle(hPort);
+                        ports.append(port);
+                }
+        }
+        return ports;
+#endif
+#ifdef Q_WS_MAC
+                // see http://developer.apple.com/Mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
+
+                mach_port_t         masterPort;
+        io_iterator_t       matchingServices;
+
+        kern_return_t kernResult = IOMasterPort(MACH_PORT_NULL, &masterPort);
+        if (KERN_SUCCESS != kernResult)
+        {
+            DebugDialog::debug(QString("IOMasterPort returned %1").arg(kernResult));
+            return ports;
+        }
+
+        // Serial devices are instances of class IOSerialBSDClient.
+        CFMutableDictionaryRef  classesToMatch = IOServiceMatching(kIOSerialBSDServiceValue);
+        if (classesToMatch == NULL)
+        {
+            DebugDialog::debug("IOServiceMatching returned a NULL dictionary.");
+            return ports;
+        }
+
+        CFDictionarySetValue(classesToMatch, CFSTR(kIOSerialBSDTypeKey), CFSTR(kIOSerialBSDRS232Type));
+
+        kernResult = IOServiceGetMatchingServices(masterPort, classesToMatch, &matchingServices);
+        if (KERN_SUCCESS != kernResult)
+        {
+            DebugDialog::debug(QString("IOServiceGetMatchingServices returned %1").arg(kernResult));
+            return ports;
+        }
+
+        io_object_t modemService;
+        while ((modemService = IOIteratorNext(matchingServices)))
+        {
+            CFTypeRef deviceFilePathAsCFString = IORegistryEntryCreateCFProperty(modemService,
+                                CFSTR(kIOCalloutDeviceKey),
+                                kCFAllocatorDefault,
+                                0);
+            if (deviceFilePathAsCFString)
+            {
+                char deviceFilePath[1024];
+                Boolean result = CFStringGetCString((CFStringRef) deviceFilePathAsCFString,
+                                            deviceFilePath,
+                                            1024,
+                                            kCFStringEncodingASCII);
+                CFRelease(deviceFilePathAsCFString);
+                if (result)
+                {
+                    ports.append(deviceFilePath);
+                }
+            }
+
+            // Release the io_service_t now that we are done with it.
+            (void) IOObjectRelease(modemService);
+        }
+
+        return ports;
+#endif
+#ifdef Q_WS_X11
+        QProcess * process = new QProcess(this);
+        process->setProcessChannelMode(QProcess::MergedChannels);
+        process->setReadChannel(QProcess::StandardOutput);
+
+        connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(portProcessFinished(int, QProcess::ExitStatus)));
+        connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(portProcessReadyRead()));
+
+        process->start("dmesg");
+
+        return ports;
+#endif
+
+}
+
+const QHash<QString, QString> ProgramWindow::getProgrammerNames()
 {
-	emit linkToProgramFile(filename, link);
+	return ProgrammerNames;
 }
 
-///////////////////////////////////////////////
+void ProgramWindow::initProgrammerNames()
+{
+	ProgrammerNames.insert(tr("Locate..."), LocateName);
 
-PTabWidget::PTabWidget(QWidget * parent) : QTabWidget(parent) {
+	// TODO: eventually save a list of programmer names (a la recent files)
+
+	QSettings settings;
+	QString programmer = settings.value("programwindow/programmer", "").toString();
+	if (!programmer.isEmpty()) {
+		QFileInfo fileInfo(programmer);
+		if (fileInfo.exists()) {
+			ProgrammerNames.insert(fileInfo.fileName(), programmer);
+		}
+	}
 }
 
-QTabBar * PTabWidget::tabBar() {
-	return QTabWidget::tabBar();
+QAction * ProgramWindow::addProgrammer(const QString & name, const QString & path)
+{
+    QAction * currentAction = new QAction(name, this);
+    currentAction->setCheckable(true);
+	currentAction->setData(path);
+    m_programmerActions.insert(name, currentAction);
+    m_programmerMenu->addAction(currentAction);
+    m_programmerActionGroup->addAction(currentAction);
+	return currentAction;
+}
+
+void ProgramWindow::loadProgramFile() {
+	currentWidget()->loadProgramFile();
+}
+
+void ProgramWindow::loadProgramFileNew() {
+	ProgramTab * programTab = addTab();
+	if (programTab) {
+		if (!programTab->loadProgramFile()) {
+			delete programTab;
+		}
+	}
+}
+
+void ProgramWindow::rename() {
+	 currentWidget()->rename();
+}
+
+void ProgramWindow::undo() {
+	 currentWidget()->undo();
+}
+
+void ProgramWindow::redo() {
+	 currentWidget()->redo();
+}
+
+void ProgramWindow::cut() {
+	 currentWidget()->cut();
+}
+
+void ProgramWindow::copy() {
+	 currentWidget()->copy();
+}
+
+void ProgramWindow::paste() {
+	 currentWidget()->paste();
+}
+
+void ProgramWindow::selectAll() {
+	 currentWidget()->selectAll();
+}
+
+void ProgramWindow::sendProgram() {
+	 currentWidget()->sendProgram();
+}
+
+ProgramTab * ProgramWindow::currentWidget() {
+	return dynamic_cast<ProgramTab *>(m_tabWidget->currentWidget());
+}
+
+ProgramTab * ProgramWindow::indexWidget(int index) {
+	return dynamic_cast<ProgramTab *>(m_tabWidget->widget(index));
+}
+
+bool ProgramWindow::alreadyHasProgram(const QString & filename) {
+	for (int i = 0; i < m_tabWidget->count(); i++) {
+		ProgramTab * tab = indexWidget(i);
+		if (tab->filename() == filename) {
+			m_tabWidget->setCurrentIndex(i);
+			return true;
+		}
+	}
+
+	return false;
 }

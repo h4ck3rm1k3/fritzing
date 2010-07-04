@@ -41,13 +41,17 @@ $Date$
 #include <QDialogButtonBox>
 #include <QCheckBox>
 
+#include "programwindow.h"
+
 class ProgramTab : public QFrame 
 {
 	Q_OBJECT
 
 public:
-	ProgramTab(QWidget * parent);
-	~ProgramTab();
+    ProgramTab(QString & filename, QWidget * parent);
+    ~ProgramTab();
+
+    void showEvent(QShowEvent *event);
 
 	bool isModified();
 	const QString & filename();
@@ -57,56 +61,81 @@ public:
 	void setClean();
 	bool save(const QString & filename);
 	bool loadProgramFile(const QString & filename, const QString & altFilename);
+    void print(QPrinter & printer);
+    void setText(QString text);
+    QString text();
+	void updateProgrammers();
 
-protected slots:
-	void changeLanguage(const QString &);
-	void loadProgramFile();
-	void textUndoAvailable(bool b);
-	void textRedoAvailable(bool b);
+public slots:
+    void setLanguage(const QString &);
+    void setPort(const QString &);
+    bool loadProgramFile();
 	void textChanged();
-	void redoText();
-	void undoText();
+    void undo();
+    void enableUndo(bool enable);
+    void redo();
+    void enableRedo(bool enable);
+    void cut();
+    void enableCut(bool enable);
+    void copy();
+    void enableCopy(bool enable);
+    void paste();
+    void selectAll();
 	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void portProcessReadyRead();
 	void deleteTab();
 	void save();
-	void saveAs();
+    void saveAs();
+    void rename();
 	void sendProgram();
-	void chooseProgrammer();
+	void chooseProgrammer(int);
+	void chooseProgrammer(const QString &);
 	void programProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void programProcessReadyRead();
+    void updateMenu();
 
 signals:
+	// TODO: since ProgramTab has m_programWindow most/all of these signals could be replaced by direct
+	// calls to ProgramWindow public functions
 	void wantToSave(int);
 	void wantToSaveAs(int);
-	void wantBeforeClosing(int, bool & ok);
+    void wantToRename(int);
 	void wantToDelete(int, bool deleteFile);
-	void wantToLink(const QString & filename, bool);
+    void wantToLink(const QString & filename, bool);
+    void programWindowUpdateRequest(bool programEnable, bool undoEnable, bool redoEnable,
+                            bool cutEnable, bool copyEnable, const QString & language,
+                            const QString & port, const QString & programmer, const QString & filename);
 
 protected:
-	QFrame * createFooter();
-	QStringList getSerialPorts();
-	void initLanguages();
-
-protected:
-	static QHash<QString, QString> m_languages;
-	static QHash<QString, class Syntaxer *> m_syntaxers;
+    QFrame * createFooter();
+	void chooseProgrammerAux(const QString & programmer);
+	void updateProgrammerComboBox(const QString & programmer);
 
 protected:
 	QPointer<QPushButton> m_saveAsButton;
 	QPointer<QPushButton> m_saveButton;
-	QPointer<QPushButton> m_cancelCloseButton;
-	QPointer<QPushButton> m_undoButton;
-	QPointer<QPushButton> m_redoButton;
+    QPointer<QPushButton> m_cancelCloseButton;
 	QPointer<QPushButton> m_programButton;
     QPointer<QComboBox> m_portComboBox;
 	QPointer<QComboBox> m_languageComboBox;
-
+	QPointer<QComboBox>  m_programmerComboBox;
 	QPointer<QTextEdit> m_textEdit;
 	QPointer<QTextEdit> m_console;
 	QPointer<QTabWidget> m_tabWidget;
 
 	bool m_updateEnabled;
+
+    QPointer<ProgramWindow> m_programWindow;
+
+    // Store the status of selected text, undo, and redo actions
+    // so this tab can emit the proper status of these actions
+    // on activation
+    bool m_canUndo;
+    bool m_canRedo;
+    bool m_canCopy;
+    bool m_canCut;
+    QString m_language;
+    QString m_port;
 
 	QPointer<class Highlighter> m_highlighter;
 	QString m_filename;

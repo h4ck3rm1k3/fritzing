@@ -40,21 +40,100 @@ $Date$
 #include <QMessageBox>
 #include <QSplitter>
 
-#ifdef Q_WS_WIN
-#include "windows.h"
+/////////////////////////////////////////
+
+DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags)
+{
+	this->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |  Qt::WindowCloseButtonHint);
+
+// code borrowed from QMessageBox
+
+    QLabel * label = new QLabel;
+    label->setObjectName(QLatin1String("qt_msgbox_label"));
+    label->setTextInteractionFlags(Qt::TextInteractionFlags(this->style()->styleHint(QStyle::SH_MessageBox_TextInteractionFlags, 0, this)));
+    label->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    label->setOpenExternalLinks(true);
+#if defined(Q_WS_MAC)
+    label->setContentsMargins(16, 0, 0, 0);
+#elif !defined(Q_WS_QWS)
+    label->setContentsMargins(2, 0, 0, 0);
+    label->setIndent(9);
 #endif
-#ifdef Q_WS_MAC
-#include <IOKit/IOKitLib.h>
-#include <IOKit/IOBSD.h>
-#include <IOKit/serial/IOSerialKeys.h>
-#include <CoreFoundation/CoreFoundation.h>
+    QLabel * iconLabel = new QLabel;
+    iconLabel->setObjectName(QLatin1String("qt_msgboxex_icon_label"));
+    iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    m_buttonBox = new QDialogButtonBox;
+    m_buttonBox->setObjectName(QLatin1String("qt_msgbox_buttonbox"));
+    m_buttonBox->setCenterButtons(this->style()->styleHint(QStyle::SH_MessageBox_CenterButtons, 0, this));
+    QObject::connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+
+
+    QGridLayout *grid = new QGridLayout;
+#ifndef Q_WS_MAC
+    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop);
+    grid->addWidget(label, 0, 1, 1, 1);
+    grid->addWidget(m_buttonBox, 2, 0, 1, 2);
+#else
+    grid->setMargin(0);
+    grid->setVerticalSpacing(8);
+    grid->setHorizontalSpacing(0);
+    this->setContentsMargins(24, 15, 24, 20);
+    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignLeft);
+    grid->addWidget(label, 0, 1, 1, 1);
+    // -- leave space for information label --
+    grid->setRowStretch(1, 100);
+    grid->setRowMinimumHeight(2, 6);
+    grid->addWidget(m_buttonBox, 3, 1, 1, 1);
 #endif
 
-QHash<QString, QString> ProgramTab::m_languages;
-QHash<QString, class Syntaxer *> ProgramTab::m_syntaxers;
+	m_checkBox = NULL;
+	if (deleteFileCheckBox) {
+		m_checkBox = new QCheckBox(tr("Delete the file"));
+		grid->addWidget(m_checkBox, 1, 0, 2, 1);
+	}
+
+    grid->setSizeConstraint(QLayout::SetNoConstraint);
+    this->setLayout(grid);
+
+    if (!title.isEmpty() || !text.isEmpty()) {
+        this->setWindowTitle(title);
+        label->setText(text);
+    }
+    this->setModal(true);
+
+#ifdef Q_WS_MAC
+    QFont f = this->font();
+    f.setBold(true);
+    label->setFont(f);
+#endif
+
+	m_buttonBox->addButton(QDialogButtonBox::Yes);
+	m_buttonBox->addButton(QDialogButtonBox::No);
+	m_buttonBox->addButton(QDialogButtonBox::Cancel);
+	m_buttonBox->button(QDialogButtonBox::Yes)->setText(tr("Delete"));
+	m_buttonBox->button(QDialogButtonBox::No)->setText(tr("Don't Delete"));
+
+	iconLabel->setPixmap(QMessageBox::standardIcon(QMessageBox::Warning));
+
+	this->resize(300, 150);
+}
+
+void DeleteDialog::buttonClicked(QAbstractButton * button) {
+	this->done(m_buttonBox->standardButton(button));
+}
+
+bool DeleteDialog::deleteFileChecked() {
+	if (m_checkBox == NULL) return false;
+
+	return m_checkBox->isChecked();
+}
+
+/////////////////////////////////////////////
+
 QIcon * AsteriskIcon = NULL;
 
-ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
+ProgramTab::ProgramTab(QString & filename, QWidget *parent) : QFrame(parent)
 {
 	m_tabWidget = NULL;
 	while (parent != NULL) {
@@ -64,20 +143,42 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 			break;
 		}
 		parent = parent->parentWidget();
-	}
-
-	if (m_languages.count() == 0) {
-		initLanguages();
-	}
+    }
 
 	if (AsteriskIcon == NULL) {
 		AsteriskIcon = new QIcon(":/resources/images/icons/asterisk.png");
 	}
 
+    m_canCopy = false;
+    m_canCut = false;
+    m_canUndo = false;
+    m_canRedo = false;
+    m_language = "";
+    m_port = "";
+    m_filename = filename;
+
 	m_updateEnabled = false;
 	QGridLayout *editLayout = new QGridLayout(this);
 	editLayout->setMargin(0);
 	editLayout->setSpacing(0);
+
+    m_programWindow = qobject_cast<ProgramWindow *>(window());
+
+    // m_textEdit needs to be initialized before createFooter so
+    // some signals get connected properly.
+    m_textEdit = new QTextEdit;
+    m_textEdit->setFontFamily("Droid Sans Mono");
+    m_textEdit->setLineWrapMode(QTextEdit::NoWrap);
+    QFontMetrics fm(m_textEdit->currentFont());
+    m_textEdit->setTabStopWidth(fm.averageCharWidth() * 4);
+    m_textEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    m_textEdit->setUndoRedoEnabled(true);
+    connect(m_textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
+    connect(m_textEdit, SIGNAL(undoAvailable(bool)), this, SLOT(enableUndo(bool)));
+    connect(m_textEdit, SIGNAL(redoAvailable(bool)), this, SLOT(enableRedo(bool)));
+    connect(m_textEdit, SIGNAL(copyAvailable(bool)), this, SLOT(enableCopy(bool)));
+    connect(m_textEdit, SIGNAL(copyAvailable(bool)), this, SLOT(enableCut(bool))); // Reuse copy signal for cut
+    m_highlighter = new Highlighter(m_textEdit);
 
 	QFrame * footerFrame = createFooter();
 	editLayout->addWidget(footerFrame,0,0);
@@ -85,19 +186,7 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 	QSplitter * splitter = new QSplitter;
 	splitter->setObjectName("splitter");
 	splitter->setOrientation(Qt::Vertical);
-	editLayout->addWidget(splitter, 1, 0);
-
-	m_textEdit = new QTextEdit;
-	m_textEdit->setFontFamily("Droid Sans Mono");
-	m_textEdit->setLineWrapMode(QTextEdit::NoWrap);
-	QFontMetrics fm(m_textEdit->currentFont());
-	m_textEdit->setTabStopWidth(fm.averageCharWidth() * 4);
-	m_textEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	m_textEdit->setUndoRedoEnabled(true);
-	connect(m_textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
-	connect(m_textEdit, SIGNAL(undoAvailable(bool)), this, SLOT(textUndoAvailable(bool)));
-	connect(m_textEdit, SIGNAL(redoAvailable(bool)), this, SLOT(textRedoAvailable(bool)));
-	m_highlighter = new Highlighter(m_textEdit);
+    editLayout->addWidget(splitter, 1, 0);
 
 	splitter->addWidget(m_textEdit);
 
@@ -109,147 +198,152 @@ ProgramTab::ProgramTab(QWidget *parent) : QFrame(parent)
 	splitter->addWidget(m_console);
 
 	splitter->setStretchFactor(0, 8);
-	splitter->setStretchFactor(1, 2);
-
-	changeLanguage(m_languageComboBox->currentText());
+    splitter->setStretchFactor(1, 2);
 }
 
 ProgramTab::~ProgramTab()
 {
 }
 
-void ProgramTab::initLanguages() {
-	QDir dir(FolderUtils::getApplicationSubFolderPath("translations"));
-	dir.cd("syntax");
-	QStringList nameFilters;
-	nameFilters << "*.xml";
-	QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
-	foreach (QFileInfo fileInfo, list) {
-		if (fileInfo.baseName().compare("styles") == 0) {
-			Highlighter::loadStyles(fileInfo.absoluteFilePath());
-		}
-		else {
-			QString name = Syntaxer::parseForName(fileInfo.absoluteFilePath());
-			if (!name.isEmpty()) {
-				m_languages.insert(name, fileInfo.absoluteFilePath());
-			}
-		}
-	}
+/**
+ * We override the showEvent for the tab to trigger a menu update
+ */
+void ProgramTab::showEvent(QShowEvent *event) {
+    QFrame::showEvent(event);
+    updateMenu();
 }
 
 QFrame * ProgramTab::createFooter() {
-	QFrame * footerFrame = new QFrame();
-	footerFrame->setObjectName("footer");
+    QFrame * footerFrame = new QFrame();
+    footerFrame->setObjectName("footer"); // Used for styling
 	footerFrame->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+
+    QLabel * languageLabel = new QLabel(tr("Language:"), this);
 
 	m_languageComboBox = new QComboBox();
 	m_languageComboBox->setEditable(false);
-	m_languageComboBox->setEnabled(true);
-	m_languageComboBox->addItems(m_languages.keys());
-	connect(m_languageComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
+    m_languageComboBox->setEnabled(true);
+    m_languageComboBox->addItems(m_programWindow->getAvailableLanguages());
+    connect(m_languageComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setLanguage(const QString &)));
+	QSettings settings;
+	QString currentLanguage = settings.value("programwindow/language", "").toString();
+	if (currentLanguage.isEmpty()) {
+		currentLanguage = m_languageComboBox->currentText();
+	}
+    setLanguage(currentLanguage);
 
-	QPushButton * loadButton = new QPushButton(tr("Open..."));
-	loadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect(loadButton, SIGNAL(clicked()), this, SLOT(loadProgramFile()));
+	QPushButton * addButton = new QPushButton(tr("New"));
+	//addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	connect(addButton, SIGNAL(clicked()), m_programWindow, SLOT(addTab()));
 
-	m_undoButton = new QPushButton(tr("undo"));
-	m_undoButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_undoButton, SIGNAL(clicked()), this, SLOT(undoText()));
-	m_undoButton->setEnabled(false);
+    QPushButton * loadButton = new QPushButton(tr("Open..."));
+	//loadButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect(loadButton, SIGNAL(clicked()), this, SLOT(loadProgramFile()));
 
-	m_redoButton = new QPushButton(tr("redo"));
-	m_undoButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_redoButton, SIGNAL(clicked()), this, SLOT(redoText()));
-	m_redoButton->setEnabled(false);
+    m_saveButton = new QPushButton(tr("Save"));
+	//m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 
-	m_saveAsButton = new QPushButton(tr("save as"));
-	m_saveAsButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_saveAsButton, SIGNAL(clicked()), this, SLOT(saveAs()));
-
-	m_saveButton = new QPushButton(tr("save"));
-	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
-
-	QPushButton * deleteButton = new QPushButton(tr("remove"));
-	deleteButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-	connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteTab()));
+    QLabel * portLabel = new QLabel(tr("Port:"), this);
 
     m_portComboBox = new QComboBox();
     m_portComboBox->setEditable(false);
     m_portComboBox->setEnabled(true);
-    //connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(changeLanguage(const QString &)));
-    m_portComboBox->addItems(getSerialPorts());
-
-	QPushButton * programmerButton = new QPushButton(tr("Programmer"));
-	programmerButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect(programmerButton, SIGNAL(clicked()), this, SLOT(chooseProgrammer()));
+    m_portComboBox->addItems(m_programWindow->getSerialPorts());
+    connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setPort(const QString &)));
+	QString currentPort = settings.value("programwindow/port", "").toString();
+	if (currentPort.isEmpty()) {
+		currentPort = m_portComboBox->currentText();
+	}
+    setPort(currentPort);
 
 	m_programButton = new QPushButton(tr("Program"));
 	m_programButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect(m_programButton, SIGNAL(clicked()), this, SLOT(sendProgram()));
+    connect(m_programButton, SIGNAL(clicked()), this, SLOT(sendProgram()));
 	m_programButton->setEnabled(false);
+
+	QLabel * programmerLabel = new QLabel(tr("Programmer:"), this);
+
+	m_programmerComboBox = new QComboBox();
+	m_programmerComboBox->setEditable(false);
+    m_programmerComboBox->setEnabled(true);
+	updateProgrammers();
+    connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));	
+	QString currentProgrammer = ProgramWindow::LocateName;
+	QString temp = settings.value("programwindow/programmer", "").toString();
+	if (!temp.isEmpty()) {
+		QFileInfo fileInfo(temp);
+		if (fileInfo.exists()) {
+			currentProgrammer = temp;
+		}
+	}
+	chooseProgrammerAux(currentProgrammer);
 
 	QHBoxLayout *footerLayout = new QHBoxLayout;
 
 	footerLayout->setMargin(0);
-	footerLayout->setSpacing(0);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_languageComboBox);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(loadButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_undoButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_redoButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_saveAsButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(m_saveButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(deleteButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+	footerLayout->setSpacing(5);
+    footerLayout->addWidget(addButton);
+    footerLayout->addWidget(loadButton);
+    footerLayout->addWidget(m_saveButton);
+
+    footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
+
+    footerLayout->addWidget(languageLabel);
+    footerLayout->addWidget(m_languageComboBox);
+    footerLayout->addWidget(portLabel);
     footerLayout->addWidget(m_portComboBox);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-	footerLayout->addWidget(programmerButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+	footerLayout->addWidget(programmerLabel);
+	footerLayout->addWidget(m_programmerComboBox);
 	footerLayout->addWidget(m_programButton);
-	footerLayout->addSpacerItem(new QSpacerItem(5,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
+
 	footerFrame->setLayout(footerLayout);
 
 	return footerFrame;
 }
 
-void ProgramTab::changeLanguage(const QString & newLanguage) {
-	Syntaxer * syntaxer = m_syntaxers.value(newLanguage, NULL);
-	if (syntaxer == NULL) {
-		syntaxer = new Syntaxer();
-		if (syntaxer->loadSyntax(m_languages.value(newLanguage))) {
-			m_syntaxers.insert(newLanguage, syntaxer);
-		}
-	}
-	m_highlighter->setSyntaxer(syntaxer);
+void ProgramTab::setLanguage(const QString & newLanguage) {
+        DebugDialog::debug(QString("Setting language to %1").arg(newLanguage));
+        m_language = newLanguage;
+        m_languageComboBox->setCurrentIndex(m_languageComboBox->findText(newLanguage));
+        m_highlighter->setSyntaxer(m_programWindow->getSyntaxerForLanguage(newLanguage));
+        updateMenu();
+		QSettings settings;
+		settings.setValue("programwindow/language", newLanguage);
 }
 
-void ProgramTab::loadProgramFile() {
-	if (isModified()) {
-		bool ok = false;
-		emit wantBeforeClosing(m_tabWidget->currentIndex(), ok);
-		if (!ok) return;
+void ProgramTab::setPort(const QString & newPort) {
+        DebugDialog::debug(QString("Setting port to %1").arg(newPort));
+        m_port = newPort;
+        m_portComboBox->setCurrentIndex(m_portComboBox->findText(newPort));
+        updateMenu();
+		QSettings settings;
+		settings.setValue("programwindow/port", newPort);
+}
+
+bool ProgramTab::loadProgramFile() {
+	if (isModified() || !m_textEdit->toPlainText().isEmpty()) {
+		m_programWindow->loadProgramFileNew();
+		return false;
 	}
 
 	QString fileName = FolderUtils::getOpenFileName(
-							this,
-							tr("Select a program file to load"),
-							FolderUtils::openSaveFolder(),
-							m_highlighter->syntaxer()->extensions()
+						this,
+						tr("Select a program file to load"),
+                        FolderUtils::openSaveFolder(),
+                        m_highlighter->syntaxer()->extensions()
 		);
 
-	if (fileName.isEmpty()) return;
+	if (fileName.isEmpty()) return false;
 
-	loadProgramFile(fileName, "");
+	return loadProgramFile(fileName, "");
 }
 
 bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFileName) {
+	if (m_programWindow->alreadyHasProgram(fileName)) {
+		return false;
+	}
+
 	QFile file(fileName);
 	if (!file.open(QFile::ReadOnly)) {
 		emit wantToLink(fileName, false);
@@ -269,7 +363,6 @@ bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFi
 				if (!file.open(QFile::ReadOnly)) {
 					return false;
 				}
-
 			}
 		}
 	}
@@ -289,6 +382,8 @@ void ProgramTab::textChanged() {
 	bool modified = m_textEdit->document()->isModified();
 
 	m_saveButton->setEnabled(modified);
+	updateMenu();
+
 	if (tabIcon.isNull()) {
 		if (modified) {
 			m_tabWidget->setTabIcon(m_tabWidget->currentIndex(), *AsteriskIcon);
@@ -301,114 +396,49 @@ void ProgramTab::textChanged() {
 	}
 }
 
-void ProgramTab::textUndoAvailable(bool b) {
-	m_undoButton->setEnabled(b);
-}
-
-void ProgramTab::textRedoAvailable(bool b) {
-	m_redoButton->setEnabled(b);
-}
-
-void ProgramTab::undoText() {
+void ProgramTab::undo() {
 	m_textEdit->undo();
 }
 
-void ProgramTab::redoText() {
-	m_textEdit->redo();
+void ProgramTab::enableUndo(bool enable) {
+        m_canUndo = enable;
+		m_saveButton->setEnabled(m_canUndo);
+        updateMenu();
 }
 
-QStringList ProgramTab::getSerialPorts() {
-	// TODO: make this call a plugin?
-    QStringList ports;
-#ifdef Q_WS_WIN
-	for (int i = 1; i < 256; i++)
-	{
-		QString port = QString("COM%1").arg(i);
-		QString sport = QString("\\\\.\\%1").arg(port);
-		HANDLE hPort = ::CreateFileA(sport.toLatin1().constData(), GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
-		if (hPort == INVALID_HANDLE_VALUE) {
-			DWORD dwError = GetLastError();
-			if (dwError == ERROR_ACCESS_DENIED || dwError == ERROR_GEN_FAILURE || dwError == ERROR_SHARING_VIOLATION || dwError == ERROR_SEM_TIMEOUT) {
-				ports.append(port);
-			}
-		}
-		else {
-			CloseHandle(hPort);
-			ports.append(port);
-		}
-	}
-	return ports;
-#endif
-#ifdef Q_WS_MAC
-		// see http://developer.apple.com/Mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
+void ProgramTab::redo() {
+    m_textEdit->redo();
+}
 
-		mach_port_t         masterPort;
-        io_iterator_t       matchingServices;
+void ProgramTab::enableRedo(bool enable) {
+        m_canRedo = enable;
+        updateMenu();
+}
 
-        kern_return_t kernResult = IOMasterPort(MACH_PORT_NULL, &masterPort);
-        if (KERN_SUCCESS != kernResult)
-        {
-            DebugDialog::debug(QString("IOMasterPort returned %1").arg(kernResult));
-            return ports;
-        }
+void ProgramTab::cut() {
+        m_textEdit->cut();
+}
 
-        // Serial devices are instances of class IOSerialBSDClient.
-        CFMutableDictionaryRef  classesToMatch = IOServiceMatching(kIOSerialBSDServiceValue);
-        if (classesToMatch == NULL)
-        {
-            DebugDialog::debug("IOServiceMatching returned a NULL dictionary.");
-            return ports;
-        }
+void ProgramTab::enableCut(bool enable) {
+        m_canCut = enable;
+        updateMenu();
+}
 
-        CFDictionarySetValue(classesToMatch, CFSTR(kIOSerialBSDTypeKey), CFSTR(kIOSerialBSDRS232Type));
+void ProgramTab::copy() {
+        m_textEdit->copy();
+}
 
-        kernResult = IOServiceGetMatchingServices(masterPort, classesToMatch, &matchingServices);
-        if (KERN_SUCCESS != kernResult)
-        {
-            DebugDialog::debug(QString("IOServiceGetMatchingServices returned %1").arg(kernResult));
-            return ports;
-        }
+void ProgramTab::enableCopy(bool enable) {
+        m_canCopy = enable;
+        updateMenu();
+}
 
-        io_object_t modemService;
-        while ((modemService = IOIteratorNext(matchingServices)))
-        {
-            CFTypeRef deviceFilePathAsCFString = IORegistryEntryCreateCFProperty(modemService,
-                                CFSTR(kIOCalloutDeviceKey),
-                                kCFAllocatorDefault,
-                                0);
-            if (deviceFilePathAsCFString)
-            {
-                char deviceFilePath[1024];
-                Boolean result = CFStringGetCString((CFStringRef) deviceFilePathAsCFString,
-                                            deviceFilePath,
-                                            1024,
-                                            kCFStringEncodingASCII);
-                CFRelease(deviceFilePathAsCFString);
-                if (result)
-                {
-                    ports.append(deviceFilePath);
-                }
-            }
+void ProgramTab::paste() {
+        m_textEdit->paste();
+}
 
-            // Release the io_service_t now that we are done with it.
-            (void) IOObjectRelease(modemService);
-        }
-
-        return ports;
-#endif
-#ifdef Q_WS_X11
-	QProcess * process = new QProcess(this);
-	process->setProcessChannelMode(QProcess::MergedChannels);
-	process->setReadChannel(QProcess::StandardOutput);
-
-	connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(portProcessFinished(int, QProcess::ExitStatus)));
-	connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(portProcessReadyRead()));
-
-        process->start("dmesg");
-
-        return ports;
-#endif
-
+void ProgramTab::selectAll() {
+        m_textEdit->selectAll();
 }
 
 void ProgramTab::portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus) {
@@ -498,11 +528,23 @@ const QString & ProgramTab::filename() {
 }
 
 void ProgramTab::setFilename(const QString & name) {
-	m_filename = name;
+        m_filename = name;
+        updateMenu();
+
+        // Here we update the widget's tab label. We need
+        // to check that it both has the PTabWidget as its
+        // parent and it's already been added to the PTabWidget
+        int currentIndex = m_tabWidget->indexOf(this);
+        if (currentIndex >= 0) {
+            m_tabWidget->setTabText(currentIndex, name.section("/",-1));
+        }
+        else {
+            DebugDialog::debug("Negative index");
+        }
 }
 
 QString ProgramTab::extension() {
-	if (m_highlighter == NULL) return "";
+    if (m_highlighter == NULL) return "";
 
 	Syntaxer * syntaxer = m_highlighter->syntaxer();
 	if (syntaxer == NULL) return "";
@@ -523,6 +565,22 @@ void ProgramTab::saveAs() {
 	emit wantToSaveAs(m_tabWidget->currentIndex());
 }
 
+void ProgramTab::rename() {
+        emit wantToRename(m_tabWidget->currentIndex());
+}
+
+void ProgramTab::print(QPrinter &printer) {
+        m_textEdit->print(&printer);
+}
+
+void ProgramTab::setText(QString text) {
+        m_textEdit->setPlainText(text);
+}
+
+QString ProgramTab::text() {
+        return m_textEdit->toPlainText();
+}
+
 bool ProgramTab::readOnly() {
 	// TODO: return true if it's a sample file
 	return false;
@@ -539,7 +597,7 @@ bool ProgramTab::save(const QString & filename) {
 	file.close();
 	bool result = (b.length() == written);
 	if (result) {
-		setFilename(filename);
+                setFilename(filename);
 	}
 	return result;
 }
@@ -568,18 +626,62 @@ void ProgramTab::sendProgram() {
 
 }
 
-void ProgramTab::chooseProgrammer() {
-	QString filename = FolderUtils::getOpenFileName(
-							this,
-							tr("Select a program file to load"),
-							FolderUtils::openSaveFolder(),
-							"(Programmer *.exe)"
-		);
-
-	m_programmerPath = filename;
-	m_programButton->setEnabled(true);
+void ProgramTab::chooseProgrammer(int index) {
+	QString realname = m_programmerComboBox->itemData(index).toString();
+	if (realname == ProgramWindow::LocateName) {
+		// if "Locate..." is chosen, always trigger
+		chooseProgrammer(realname);
+	}
+	else {
+		if (m_programmerPath != realname) {
+			// only trigger if path actually changed
+			chooseProgrammer(realname);
+		}
+	}
 }
 
+void ProgramTab::chooseProgrammer(const QString & programmer)
+{
+	QString filename = programmer;
+	if (!QFileInfo(filename).exists()) {
+		filename = FolderUtils::getOpenFileName(
+							this,
+							tr("Select a programmer (executable) for %1").arg(this->m_language),
+							FolderUtils::openSaveFolder(),
+                            "(Programmer *.exe)"
+							);
+	}
+    if (filename.isEmpty()) return;
+
+	chooseProgrammerAux(filename);
+}
+
+void ProgramTab::chooseProgrammerAux(const QString & programmer) 
+{
+	if (programmer == ProgramWindow::LocateName) {
+		if (m_programButton) {
+			m_programButton->setEnabled(false);
+		}
+		m_programmerPath.clear();
+		updateProgrammerComboBox(programmer);
+		updateMenu();
+		return;
+	}
+
+	if (m_programmerComboBox->findData(programmer) < 0) {
+		QFileInfo fileInfo(programmer);
+		m_programmerComboBox->addItem(fileInfo.fileName(), programmer);
+	}
+
+    m_programmerPath = programmer;
+	if (m_programButton) {
+		m_programButton->setEnabled(true);
+	}
+	updateProgrammerComboBox(programmer);
+    updateMenu();
+	QSettings settings;
+	settings.setValue("programwindow/programmer", programmer);
+}
 
 void ProgramTab::programProcessFinished(int exitCode, QProcess::ExitStatus exitStatus) {
 	DebugDialog::debug(QString("program process finished %1 %2").arg(exitCode).arg(exitStatus));
@@ -596,91 +698,51 @@ void ProgramTab::programProcessReadyRead() {
     m_console->append(byteArray);
 }
 
-/////////////////////////////////////////
 
-DeleteDialog::DeleteDialog(const QString & title, const QString & text, bool deleteFileCheckBox, QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags)
-{
-	this->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |  Qt::WindowCloseButtonHint);
+/**
+ * This function emits all the required signals to update the menu of its owning ProgramWindow.
+ * It is currently called on the QTabWidget's currentChanged() signal.
+ */
+void ProgramTab::updateMenu() {
+//        DebugDialog::debug(QString("Updating the menu for tab %1").arg(m_tabWidget->currentIndex()));
+//        DebugDialog::debug(QString("Program: %1").arg(!m_programmerPath.isEmpty()));
+//        DebugDialog::debug(QString("Undo: %1").arg(m_canUndo));
+//        DebugDialog::debug(QString("Redo: %1").arg(m_canRedo));
+//        DebugDialog::debug(QString("Cut: %1").arg(m_canCut));
+//        DebugDialog::debug(QString("Copy: %1").arg(m_canCopy));
+//        DebugDialog::debug(QString("Language: %1").arg(m_language));
+//        DebugDialog::debug(QString("Port: %1").arg(m_port));
 
-// code borrowed from QMessageBox
+        // Emit a signal so that the ProgramWindow can update its own UI.
+        emit programWindowUpdateRequest(!m_programmerPath.isEmpty(), m_canUndo, m_canRedo, m_canCut, m_canCopy, 
+			m_language, m_port, m_programmerPath.isEmpty() ? ProgramWindow::LocateName : m_programmerPath, m_filename);
+}
 
-    QLabel * label = new QLabel;
-    label->setObjectName(QLatin1String("qt_msgbox_label"));
-    label->setTextInteractionFlags(Qt::TextInteractionFlags(this->style()->styleHint(QStyle::SH_MessageBox_TextInteractionFlags, 0, this)));
-    label->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
-    label->setOpenExternalLinks(true);
-#if defined(Q_WS_MAC)
-    label->setContentsMargins(16, 0, 0, 0);
-#elif !defined(Q_WS_QWS)
-    label->setContentsMargins(2, 0, 0, 0);
-    label->setIndent(9);
-#endif
-    QLabel * iconLabel = new QLabel;
-    iconLabel->setObjectName(QLatin1String("qt_msgboxex_icon_label"));
-    iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+void ProgramTab::updateProgrammerComboBox(const QString & programmer) {
+	// don't want activate signal triggered recursively
+	disconnect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));
+	m_programmerComboBox->setCurrentIndex(m_programmerComboBox->findData(programmer));
+	connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));
+}
 
-    m_buttonBox = new QDialogButtonBox;
-    m_buttonBox->setObjectName(QLatin1String("qt_msgbox_buttonbox"));
-    m_buttonBox->setCenterButtons(this->style()->styleHint(QStyle::SH_MessageBox_CenterButtons, 0, this));
-    QObject::connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+void ProgramTab::updateProgrammers() {
 
-
-    QGridLayout *grid = new QGridLayout;
-#ifndef Q_WS_MAC
-    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop);
-    grid->addWidget(label, 0, 1, 1, 1);
-    grid->addWidget(m_buttonBox, 2, 0, 1, 2);
-#else
-    grid->setMargin(0);
-    grid->setVerticalSpacing(8);
-    grid->setHorizontalSpacing(0);
-    this->setContentsMargins(24, 15, 24, 20);
-    grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignLeft);
-    grid->addWidget(label, 0, 1, 1, 1);
-    // -- leave space for information label --
-    grid->setRowStretch(1, 100);
-    grid->setRowMinimumHeight(2, 6);
-    grid->addWidget(m_buttonBox, 3, 1, 1, 1);
-#endif
-
-	m_checkBox = NULL;
-	if (deleteFileCheckBox) {
-		m_checkBox = new QCheckBox(tr("Delete the file"));
-		grid->addWidget(m_checkBox, 1, 0, 2, 1);
+	QString currentProgrammer;
+	int index = m_programmerComboBox->currentIndex();
+	if (index >= 0) {
+		currentProgrammer = m_programmerComboBox->itemData(index).toString();
 	}
 
-    grid->setSizeConstraint(QLayout::SetNoConstraint);
-    this->setLayout(grid);
+	while (m_programmerComboBox->count() > 0) {
+		m_programmerComboBox->removeItem(0);
+	}
 
-    if (!title.isEmpty() || !text.isEmpty()) {
-        this->setWindowTitle(title);
-        label->setText(text);
-    }
-    this->setModal(true);
+	QHash<QString, QString> programmerNames = m_programWindow->getProgrammerNames();
+	foreach (QString name, programmerNames.keys()) {
+		m_programmerComboBox->addItem(name, programmerNames.value(name));
+	}
 
-#ifdef Q_WS_MAC
-    QFont f = this->font();
-    f.setBold(true);
-    label->setFont(f);
-#endif
-
-	m_buttonBox->addButton(QDialogButtonBox::Yes);
-	m_buttonBox->addButton(QDialogButtonBox::No);
-	m_buttonBox->addButton(QDialogButtonBox::Cancel);
-	m_buttonBox->button(QDialogButtonBox::Yes)->setText(tr("Delete"));
-	m_buttonBox->button(QDialogButtonBox::No)->setText(tr("Don't Delete"));
-
-	iconLabel->setPixmap(QMessageBox::standardIcon(QMessageBox::Warning));
-
-	this->resize(300, 150);
-}
-
-void DeleteDialog::buttonClicked(QAbstractButton * button) {
-	this->done(m_buttonBox->standardButton(button));
-}
-
-bool DeleteDialog::deleteFileChecked() {
-	if (m_checkBox == NULL) return false;
-
-	return m_checkBox->isChecked();
+	if (!currentProgrammer.isEmpty()) {
+		updateProgrammerComboBox(currentProgrammer);
+	}
 }
