@@ -312,6 +312,7 @@ void ProgramTab::setPort(const QString & newPort) {
         DebugDialog::debug(QString("Setting port to %1").arg(newPort));
         m_port = newPort;
         m_portComboBox->setCurrentIndex(m_portComboBox->findText(newPort));
+		m_portComboBox->setToolTip(newPort);
         updateMenu();
 		QSettings settings;
 		settings.setValue("programwindow/port", newPort);
@@ -717,6 +718,7 @@ void ProgramTab::updateProgrammerComboBox(const QString & programmer) {
 	// don't want activate signal triggered recursively
 	disconnect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));
 	m_programmerComboBox->setCurrentIndex(m_programmerComboBox->findData(programmer));
+	m_programmerComboBox->setToolTip(m_programmerPath);
 	connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));
 }
 
