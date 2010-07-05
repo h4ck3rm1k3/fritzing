@@ -1181,6 +1181,7 @@ bool MainWindow::preloadBundledAux(QDir &unzipDir)
 bool MainWindow::loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps) {
 
 	Q_UNUSED(unzipDir);
+        Q_UNUSED(mps);
 
 	this->load(m_bundledSketchName, true, true, "");
 
