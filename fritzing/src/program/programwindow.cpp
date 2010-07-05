@@ -881,6 +881,7 @@ QAction * ProgramWindow::addProgrammer(const QString & name, const QString & pat
 
 void ProgramWindow::loadProgramFile() {
 	currentWidget()->loadProgramFile();
+	
 }
 
 void ProgramWindow::loadProgramFileNew() {
@@ -1029,3 +1030,4 @@ void ProgramWindow::portProcessReadyRead() {
         }
     }
 }
+

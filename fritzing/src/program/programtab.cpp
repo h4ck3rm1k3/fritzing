@@ -369,6 +369,7 @@ bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFi
 	setClean();
 	QFileInfo fileInfo(m_filename);
 	m_tabWidget->setTabText(m_tabWidget->currentIndex(), fileInfo.fileName());
+	m_tabWidget->setTabToolTip(m_tabWidget->currentIndex(), m_filename);
 	if (updateLink) {
 		m_programWindow->updateLink(m_filename, m_language, m_programmerPath, true, true);
 	}
