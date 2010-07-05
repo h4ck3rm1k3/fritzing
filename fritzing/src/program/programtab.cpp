@@ -227,10 +227,14 @@ QFrame * ProgramTab::createFooter() {
     m_portComboBox = new SerialPortComboBox();
     m_portComboBox->setEditable(false);
     m_portComboBox->setEnabled(true);
-    m_portComboBox->addItems(m_programWindow->getSerialPorts());
+	QStringList ports = m_programWindow->getSerialPorts();
+    m_portComboBox->addItems(ports);
 
 	QString currentPort = settings.value("programwindow/port", "").toString();
 	if (currentPort.isEmpty()) {
+		currentPort = m_portComboBox->currentText();
+	}
+	else if (!ports.contains(currentPort)) {
 		currentPort = m_portComboBox->currentText();
 	}
     setPort(currentPort);
@@ -314,7 +318,7 @@ void ProgramTab::setPort(const QString & newPort) {
 }
 
 bool ProgramTab::loadProgramFile() {
-	if (isModified() || !m_textEdit->toPlainText().isEmpty()) {
+	if (isModified() || !m_textEdit->document()->isEmpty()) {
 		m_programWindow->loadProgramFileNew();
 		return false;
 	}
@@ -377,8 +381,9 @@ void ProgramTab::textChanged() {
 
 	if (m_saveButton) {
 		m_saveButton->setEnabled(modified);
-		updateMenu();
 	}
+
+	updateMenu();			// calls enableProgramButton
 
 	if (tabIcon.isNull()) {
 		if (modified) {
@@ -470,7 +475,7 @@ void ProgramTab::portProcessReadyRead() {
 
 void ProgramTab::deleteTab() {
 	bool deleteFile = false;
-	if (!m_textEdit->toPlainText().isEmpty()) {
+	if (!m_textEdit->document()->isEmpty()) {
 		QString name = QFileInfo(m_filename).baseName();
 		if (name.isEmpty()) {
 			name = m_tabWidget->tabText(m_tabWidget->currentIndex());
@@ -590,6 +595,11 @@ bool ProgramTab::save(const QString & filename) {
 void ProgramTab::sendProgram() {
 	if (m_programmerPath.isEmpty()) return;
 
+	if (isModified()) {
+		QMessageBox::information(this, QObject::tr("Fritzing"), tr("The file '%1' must be saved before it can be sent to the programmer.").arg(m_filename));
+		return;
+	}
+
 	m_programButton->setEnabled(false);
 
 	QString language = m_languageComboBox->currentText();
@@ -655,9 +665,7 @@ void ProgramTab::chooseProgrammer(const QString & programmer)
 void ProgramTab::chooseProgrammerAux(const QString & programmer, bool updateLink) 
 {
 	if (programmer == ProgramWindow::LocateName) {
-		if (m_programButton) {
-			m_programButton->setEnabled(false);
-		}
+		enableProgramButton();
 		if (updateLink && !m_programmerPath.isEmpty()) {
 			m_programWindow->updateLink(m_filename, m_language, "", false, false);
 		}
@@ -677,9 +685,7 @@ void ProgramTab::chooseProgrammerAux(const QString & programmer, bool updateLink
 		m_programWindow->updateLink(m_filename, m_language, programmer, false, false);
 	}
     m_programmerPath = programmer;
-	if (m_programButton) {
-		m_programButton->setEnabled(true);
-	}
+	enableProgramButton();
 	updateProgrammerComboBox(programmer);
     updateMenu();
 	QSettings settings;
@@ -716,8 +722,10 @@ void ProgramTab::updateMenu() {
 //        DebugDialog::debug(QString("Language: %1").arg(m_language));
 //        DebugDialog::debug(QString("Port: %1").arg(m_port));
 
+		enableProgramButton();
+
         // Emit a signal so that the ProgramWindow can update its own UI.
-        emit programWindowUpdateRequest(!m_programmerPath.isEmpty(), m_canUndo, m_canRedo, m_canCut, m_canCopy, 
+		emit programWindowUpdateRequest(m_programButton ? m_programButton->isEnabled() : false, m_canUndo, m_canRedo, m_canCut, m_canCopy, 
 			m_language, m_port, m_programmerPath.isEmpty() ? ProgramWindow::LocateName : m_programmerPath, m_filename);
 }
 
@@ -776,6 +784,8 @@ void ProgramTab::updateSerialPorts() {
 	foreach (QString port, newPorts) {
 		m_portComboBox->addItem(port);
 	}
+
+	enableProgramButton();
 }
 
 const QString & ProgramTab::language() {
@@ -786,3 +796,21 @@ const QString & ProgramTab::programmer() {
 	return m_programmerPath;
 }
 
+void ProgramTab::enableProgramButton() {
+	if (m_programButton == NULL) return;
+
+	bool enabled = true;
+	if (m_programmerPath.isEmpty()) {
+		enabled = false;
+	}
+	if (enabled && m_portComboBox->count() == 1) {
+		if (m_portComboBox->itemText(0).compare(ProgramWindow::NoSerialPortName) == 0) {
+			enabled = false;
+		}
+	}
+	if (enabled && m_textEdit->document()->isEmpty()) {
+		enabled = false;
+	}
+
+	m_programButton->setEnabled(enabled);
+}

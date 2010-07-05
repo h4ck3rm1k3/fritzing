@@ -129,6 +129,7 @@ protected:
     QFrame * createFooter();
 	void chooseProgrammerAux(const QString & programmer, bool updateLink);
 	void updateProgrammerComboBox(const QString & programmer);
+	void enableProgramButton();
 
 protected:
 	QPointer<QPushButton> m_saveAsButton;

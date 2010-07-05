@@ -98,6 +98,8 @@ static int UntitledIndex = 1;
 QHash<QString, QString> ProgramWindow::m_languages;
 QHash<QString, class Syntaxer *> ProgramWindow::m_syntaxers;
 const QString ProgramWindow::LocateName = "locate";
+QString ProgramWindow::NoSerialPortName;
+
 static QHash<QString, QString> ProgrammerNames;
 
 ProgramWindow::ProgramWindow(QWidget *parent)
@@ -111,7 +113,12 @@ ProgramWindow::ProgramWindow(QWidget *parent)
 		initLanguages();
 	}
 
+	if (NoSerialPortName.isEmpty()) {
+		NoSerialPortName = tr("No ports found");
+	}
+
 	m_savingProgramTab = NULL;
+	UntitledIndex--;						// incremented by FritzingWindow
 	ProgramWindow::setTitle();				// set to something weird by FritzingWindow
 }
 
@@ -723,6 +730,28 @@ bool ProgramWindow::prepSave(ProgramTab * programTab, bool saveAsFlag)
 }
 
 QStringList ProgramWindow::getSerialPorts() {
+	QStringList ports = getSerialPortsAux();
+
+	/*
+	// on the pc, handy for testing the UI when there are no serial ports
+	ports.removeOne("COM0");
+	ports.removeOne("COM1");
+	ports.removeOne("COM2");
+	ports.removeOne("COM3");
+	ports.removeOne("COM4");
+	ports.removeOne("COM5");
+	ports.removeOne("COM6");
+	ports.removeOne("COM7");
+	ports.removeOne("COM8");
+	*/
+
+	if (ports.isEmpty()) {
+		ports.append(NoSerialPortName);
+	}
+	return ports;
+}
+
+QStringList ProgramWindow::getSerialPortsAux() {
         // TODO: make this call a plugin?
     QStringList ports;
 #ifdef Q_WS_WIN

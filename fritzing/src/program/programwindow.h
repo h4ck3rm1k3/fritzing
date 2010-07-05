@@ -143,12 +143,14 @@ protected:
 	QString getExtensionString();
 	QStringList getExtensions();
 	bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
+	QStringList getSerialPortsAux();
 
 protected:
 	static void initLanguages();
 
 public:
 	static const QString LocateName;
+	static QString NoSerialPortName;
 
 protected:
 	static QHash<QString, class Syntaxer *> m_syntaxers;
