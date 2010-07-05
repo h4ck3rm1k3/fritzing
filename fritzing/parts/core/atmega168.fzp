@@ -433,4 +433,10 @@
             </views>
         </connector>
     </connectors>
+    <buses>
+        <bus id="ground" >
+            <nodeMember connectorId="connector7" />
+            <nodeMember connectorId="connector21" />
+        </bus>
+    </buses>
 </module>
