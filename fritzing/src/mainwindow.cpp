@@ -269,6 +269,8 @@ void MainWindow::init() {
 
 	connectPairs();
 
+	m_helper = new Helper(this, true);
+
 	// do this the first time, since the current_changed signal wasn't sent
 	int tab = 0;
 	currentNavigatorChanged(m_navigators[tab]);
@@ -294,8 +296,6 @@ void MainWindow::init() {
 	m_miniViewContainerPCB->setView(m_pcbGraphicsView);
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
-
-	m_helper = new Helper(this, true);
 
 	m_setUpDockManagerTimer.setSingleShot(true);
 	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
@@ -371,7 +371,11 @@ void MainWindow::connectPairs() {
 						this, SLOT(subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand *)),
 						Qt::DirectConnection);
 
-	
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
+
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(updateLayerMenuSignal()), this, SLOT(updateLayerMenuSlot()));
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(changeBoardLayersSignal(int, bool )), this, SLOT(changeBoardLayers(int, bool )));
 
@@ -2145,3 +2149,6 @@ QStringList MainWindow::getExtensions() {
 	return extensions;
 }
 
+void MainWindow::firstTimeHelpHidden() {
+	m_showInViewHelpAct->setChecked(false);
+}

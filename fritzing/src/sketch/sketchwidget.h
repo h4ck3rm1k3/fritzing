@@ -402,6 +402,7 @@ signals:
 	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
 	void dropPasteSignal(SketchWidget *);
 	void changeBoardLayersSignal(int, bool doEmit);
+	void firstTimeHelpHidden();
 
 
 protected slots:

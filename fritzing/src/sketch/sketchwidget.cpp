@@ -1991,6 +1991,8 @@ void SketchWidget::clickBackground(QMouseEvent * event)
 			if (m_fixedToCenterItem->forwardMousePressEvent(&newEvent)) {
 				// update background
 				setBackground(background());
+				this->update();
+				emit firstTimeHelpHidden();
 			}
 		}
 	}
