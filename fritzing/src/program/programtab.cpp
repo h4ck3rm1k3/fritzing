@@ -442,37 +442,6 @@ void ProgramTab::selectAll() {
         m_textEdit->selectAll();
 }
 
-void ProgramTab::portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus) {
-	DebugDialog::debug(QString("process finished %1 %2").arg(exitCode).arg(exitStatus));
-
-	// parse the text and update the combo box
-
-	sender()->deleteLater();
-}
-
-void ProgramTab::portProcessReadyRead() {
-    QStringList ports;
-
-	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
-    QTextStream textStream(byteArray, QIODevice::ReadOnly);
-    while (true) {
-        QString line = textStream.readLine();
-        if (line.isNull()) break;
-
-        if (!line.contains("tty")) continue;
-        if (!line.contains("serial", Qt::CaseInsensitive)) continue;
-
-        QStringList candidates = line.split(" ");
-        foreach (QString candidate, candidates) {
-            if (candidate.contains("tty")) {
-                ports.append(candidate);
-                break;
-            }
-        }
-    }
-    m_portComboBox->addItems(ports);
-}
-
 void ProgramTab::deleteTab() {
 	bool deleteFile = false;
 	if (!m_textEdit->document()->isEmpty()) {

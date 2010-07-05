@@ -776,7 +776,7 @@ QStringList ProgramWindow::getSerialPortsAux() {
 #ifdef Q_WS_MAC
                 // see http://developer.apple.com/Mac/library/documentation/DeviceDrivers/Conceptual/WorkingWSerial/WWSerial_SerialDevs/SerialDevices.html
 
-                mach_port_t         masterPort;
+        mach_port_t         masterPort;
         io_iterator_t       matchingServices;
 
         kern_return_t kernResult = IOMasterPort(MACH_PORT_NULL, &masterPort);
@@ -839,8 +839,10 @@ QStringList ProgramWindow::getSerialPortsAux() {
         connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(portProcessReadyRead()));
 
         process->start("dmesg");
+		bool result = waitForFinished(3000);			// hate to block here, but a better approach will take some time;
+		if (!result) return ports;
 
-        return ports;
+        return m_ports;
 #endif
 
 }
@@ -998,3 +1000,32 @@ void ProgramWindow::updateLink(const QString & filename, const QString & languag
 	emit linkToProgramFile(filename, language, programmer, addlink, strong);
 }
 
+void ProgramWindow::portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus) {
+	DebugDialog::debug(QString("process finished %1 %2").arg(exitCode).arg(exitStatus));
+
+	// parse the text and update the combo box
+
+	sender()->deleteLater();
+}
+
+void ProgramWindow::portProcessReadyRead() {
+	m_ports.clear();
+
+	QByteArray byteArray = qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+    QTextStream textStream(byteArray, QIODevice::ReadOnly);
+    while (true) {
+        QString line = textStream.readLine();
+        if (line.isNull()) break;
+
+        if (!line.contains("tty")) continue;
+        if (!line.contains("serial", Qt::CaseInsensitive)) continue;
+
+        QStringList candidates = line.split(" ");
+        foreach (QString candidate, candidates) {
+            if (candidate.contains("tty")) {
+                m_ports.append(candidate);
+                break;
+            }
+        }
+    }
+}

@@ -100,8 +100,6 @@ public slots:
     void enableCopy(bool enable);
     void paste();
     void selectAll();
-	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-	void portProcessReadyRead();
 	void deleteTab();
 	void save();
     void saveAs();

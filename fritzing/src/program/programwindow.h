@@ -104,6 +104,8 @@ protected slots:
 					const QString & language, const QString & port, 
 					const QString & programmer, const QString & filename);
 	void updateSerialPorts();
+	void portProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+	void portProcessReadyRead();
 
     // The following methods just forward events on to the current tab
     void setLanguage(QAction*);
@@ -174,6 +176,7 @@ protected:
 	QActionGroup * m_serialPortActionGroup;
 	QMenu * m_programmerMenu;
 	QMenu * m_serialPortMenu;
+	QStringList m_ports;				// temporary storage for linux
 };
 
 #endif /* ProgramWindow_H_ */
