@@ -233,6 +233,20 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="3661e4bbb7d863e04ccf7a9994dc65ff">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="371230f4269dfda53ae3cc123cd5fdb4">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="c46f1ec52c4917dd6e7aa12d7b7d66ea">
         <views>
           <iconView layer="icon">
