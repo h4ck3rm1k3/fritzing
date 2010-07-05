@@ -75,14 +75,17 @@
 
 #programmingWindow QTabBar::close-button {
         image: url(:/resources/images/icons/dockWidgetCloseNormal_icon.png);
+	subcontrol-position: right;
 }
 
 #programmingWindow QTabBar::close-button::hover {
         image: url(:/resources/images/icons/dockWidgetCloseHover_icon.png);
+	subcontrol-position: right;
 }
 
 #programmingWindow QTabBar::close-button::pressed {
         image: url(:/resources/images/icons/dockWidgetClosePressed_icon.png);
+	subcontrol-position: right;
 }
 
 #programmingWindow #addButton {
