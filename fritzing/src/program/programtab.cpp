@@ -284,7 +284,7 @@ QFrame * ProgramTab::createFooter() {
     connect(m_languageComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setLanguage(const QString &)));
     connect(m_portComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(setPort(const QString &)));
 	connect(m_portComboBox, SIGNAL(aboutToShow()), this, SLOT(updateSerialPorts()), Qt::DirectConnection);
-    connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammer(int)));	
+    connect(m_programmerComboBox, SIGNAL(activated(int)), this, SLOT(chooseProgrammerTimed(int)));	
 
 	return footerFrame;
 }
@@ -590,7 +590,20 @@ void ProgramTab::sendProgram() {
 
 }
 
-void ProgramTab::chooseProgrammer(int index) {
+void ProgramTab::chooseProgrammerTimed(int index) {
+	QTimer * timer = new QTimer(this);
+	timer->setInterval(1);
+	timer->setProperty("index", index);
+	timer->setSingleShot(true);
+	connect(timer, SIGNAL(timeout()), this, SLOT(chooseProgrammerTimeout()));
+	timer->start();
+}
+
+void ProgramTab::chooseProgrammerTimeout() {
+	QTimer * timer = qobject_cast<QTimer *>(sender());
+	if (timer == NULL) return;
+
+	int index = timer->property("index").toInt();
 	QString realname = m_programmerComboBox->itemData(index).toString();
 	if (realname == ProgramWindow::LocateName) {
 		// if "Locate..." is chosen, always trigger
@@ -602,6 +615,7 @@ void ProgramTab::chooseProgrammer(int index) {
 			chooseProgrammer(realname);
 		}
 	}
+	timer->deleteLater();
 }
 
 bool ProgramTab::setProgrammer(const QString & path) {

@@ -105,7 +105,8 @@ public slots:
     void saveAs();
     void rename();
 	void sendProgram();
-	void chooseProgrammer(int);
+	void chooseProgrammerTimed(int);
+	void chooseProgrammerTimeout();
 	void chooseProgrammer(const QString &);
 	void programProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void programProcessReadyRead();
