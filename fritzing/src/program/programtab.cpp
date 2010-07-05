@@ -623,7 +623,7 @@ void ProgramTab::chooseProgrammer(const QString & programmer)
 							this,
 							tr("Select a programmer (executable) for %1").arg(this->m_language),
 							FolderUtils::openSaveFolder(),
-                            "(Programmer *.exe)"
+                            "(Programmer *)"
 							);
 	}
     if (filename.isEmpty()) return;

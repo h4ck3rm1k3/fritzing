@@ -839,8 +839,8 @@ QStringList ProgramWindow::getSerialPortsAux() {
         connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(portProcessReadyRead()));
 
         process->start("dmesg");
-		bool result = waitForFinished(3000);			// hate to block here, but a better approach will take some time;
-		if (!result) return ports;
+        bool result = process->waitForFinished(3000);			// hate to block here, but a better approach will take some time;
+        if (!result) return ports;
 
         return m_ports;
 #endif
