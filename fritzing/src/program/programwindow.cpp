@@ -156,9 +156,13 @@ void ProgramWindow::setup(const QList<LinkedFile *> & linkedFiles, const QString
     } else {
         QString ss = styleSheet.readAll();
 #ifdef Q_WS_MAC
-        ss.replace(QRegExp("(QTabWidget::pane*top:)*px"), "\\1 4px");
-        ss.replace(QRegExp("(QTabWidget::tab-bar*top:)*px"), "\\1 0px");
+		int paneLoc = 4;
+		int tabBarLoc = 0;
+#else
+		int paneLoc = -1;
+		int tabBarLoc = 5;
 #endif
+		ss = ss.arg(paneLoc).arg(tabBarLoc);
         mainFrame->setStyleSheet(ss);
     }
 
@@ -393,16 +397,16 @@ QFrame * ProgramWindow::createCenter() {
     m_tabWidget->setTabsClosable(true);
 	m_tabWidget->setUsesScrollButtons(false);
 	m_tabWidget->setElideMode(Qt::ElideLeft);
-        connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
-
-	/*
-	m_addButton = new QPushButton("+", m_tabWidget);
-	m_addButton->setObjectName("addButton");
-	connect(m_addButton, SIGNAL(clicked()), this, SLOT(addTab()));
-	m_tabWidget->setCornerWidget(m_addButton, Qt::TopRightCorner);
-	*/
+     connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 
 	addTab();
+
+#ifdef Q_WS_MAC
+	// on the mac, the close button in the first tab is to the right so this is a hack to get around it
+	m_tabWidget->removeTab(0);
+	UntitledIndex--;
+	addTab();
+#endif
 
 	QGridLayout *tabLayout = new QGridLayout(m_tabWidget);
 	tabLayout->setMargin(0);
