@@ -105,7 +105,25 @@ static QHash<QString, QString> ProgrammerNames;
 ProgramWindow::ProgramWindow(QWidget *parent)
 	: FritzingWindow("", untitledFileCount(), "", parent)
 {
-	if (ProgrammerNames.count() == 0) {
+    QFile styleSheet(":/resources/styles/programwindow.qss");
+
+    this->setObjectName("programmingWindow");
+    if (!styleSheet.open(QIODevice::ReadOnly)) {
+        qWarning("Unable to open :/resources/styles/programwindow.qss");
+    } else {
+        QString ss = styleSheet.readAll();
+#ifdef Q_WS_MAC
+                int paneLoc = 4;
+                int tabBarLoc = 0;
+#else
+                int paneLoc = -1;
+                int tabBarLoc = 5;
+#endif
+                ss = ss.arg(paneLoc).arg(tabBarLoc);
+        this->setStyleSheet(ss);
+    }
+
+    if (ProgrammerNames.count() == 0) {
 		initProgrammerNames();
 	}
 
@@ -147,28 +165,11 @@ void ProgramWindow::initLanguages() {
 
 void ProgramWindow::setup(const QList<LinkedFile *> & linkedFiles, const QString & alternativePath)
 {
-    QFile styleSheet(":/resources/styles/programwindow.qss");
-    QFrame * mainFrame = new QFrame(this);
-    mainFrame->setObjectName("programmingWindow");
-
-    if (!styleSheet.open(QIODevice::ReadOnly)) {
-        qWarning("Unable to open :/resources/styles/programwindow.qss");
-    } else {
-        QString ss = styleSheet.readAll();
-#ifdef Q_WS_MAC
-		int paneLoc = 4;
-		int tabBarLoc = 0;
-#else
-		int paneLoc = -1;
-		int tabBarLoc = 5;
-#endif
-		ss = ss.arg(paneLoc).arg(tabBarLoc);
-        mainFrame->setStyleSheet(ss);
-    }
 
     resize(500,700);
 
     setAttribute(Qt::WA_DeleteOnClose, true);
+    QFrame * mainFrame = new QFrame(this);
 
 	QFrame * headerFrame = createHeader();
 	QFrame * centerFrame = createCenter();
@@ -400,13 +401,6 @@ QFrame * ProgramWindow::createCenter() {
      connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 
 	addTab();
-
-#ifdef Q_WS_MAC
-	// on the mac, the close button in the first tab is to the right so this is a hack to get around it
-	m_tabWidget->removeTab(0);
-	UntitledIndex--;
-	addTab();
-#endif
 
 	QGridLayout *tabLayout = new QGridLayout(m_tabWidget);
 	tabLayout->setMargin(0);
