@@ -707,6 +707,11 @@ void MainWindow::load() {
 
 bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent)
 {
+	if (!QFileInfo(fileName).exists()) {
+		QMessageBox::warning(NULL, tr("Fritzing"), tr("File '%1' not found").arg(fileName));
+		return false;
+	}
+
 	bool result = false;
     if(fileName.endsWith(FritzingSketchExtension)) {
     	load(fileName, setAsLastOpened, addToRecent, "");
@@ -2421,14 +2426,20 @@ void MainWindow::hideAllLayers() {
 void MainWindow::openRecentOrExampleFile() {
 	QAction *action = qobject_cast<QAction *>(sender());
 	if (action) {
-		if (alreadyOpen(action->data().toString())) {
+		QString filename = action->data().toString();
+		if (alreadyOpen(filename)) {
+			return;
+		}
+
+		if (!QFileInfo(filename).exists()) {
+			QMessageBox::warning(NULL, tr("Fritzing"), tr("File '%1' not found").arg(filename));
 			return;
 		}
 
 		MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, action->data().toString(), true);
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
-		mw->load(action->data().toString(),!readOnly,!readOnly,"");
+		mw->load(filename,!readOnly,!readOnly,"");
 		mw->clearFileProgressDialog();
 		closeIfEmptySketch(mw);
 	}
