@@ -154,12 +154,17 @@ void ProgramWindow::setup(const QList<LinkedFile *> & linkedFiles, const QString
     if (!styleSheet.open(QIODevice::ReadOnly)) {
         qWarning("Unable to open :/resources/styles/programwindow.qss");
     } else {
-    	mainFrame->setStyleSheet(styleSheet.readAll());
+        QString ss = styleSheet.readAll();
+#ifdef Q_WS_MAC
+        ss.replace(QRegExp("(QTabWidget::pane*top:)*px"), "\\1 4px");
+        ss.replace(QRegExp("(QTabWidget::tab-bar*top:)*px"), "\\1 0px");
+#endif
+        mainFrame->setStyleSheet(ss);
     }
 
     resize(500,700);
 
-	setAttribute(Qt::WA_DeleteOnClose, true);
+    setAttribute(Qt::WA_DeleteOnClose, true);
 
 	QFrame * headerFrame = createHeader();
 	QFrame * centerFrame = createCenter();
