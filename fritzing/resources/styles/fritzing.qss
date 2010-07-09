@@ -31,6 +31,7 @@ MainWindow {
 QStatusBar {
 	background-color: rgb(84,24,44);
 }
+
 #statusBarContainer {
 	background-color: rgb(84,24,44);
 }
@@ -52,7 +53,9 @@ QStatusBar {
 	font-size: 10px;
 }
 
-
+QStatusBar::item {
+        border: none;
+}
 
 /* ################### the toolbar #################### */
 QToolBar {
@@ -94,19 +97,15 @@ qtoolbutton
 }
 
 #ZoomSliderMinusButton {
-	border: none;
 	image: url(:/resources/images/icons/zoomSliderMinus.png);
 }
 #ZoomSliderMinusButton:pressed {
-	border: none;
 	image: url(:/resources/images/icons/zoomSliderMinusPressed.png);
 }
 #ZoomSliderPlusButton {
-	border: none;
 	image: url(:/resources/images/icons/zoomSliderPlus.png);
 }
 #ZoomSliderPlusButton:pressed {
-	border: none;
 	image: url(:/resources/images/icons/zoomSliderPlusPressed.png);
 }
 

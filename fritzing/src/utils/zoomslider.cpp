@@ -59,17 +59,18 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
         int soFar = 0;
 
 	m_lineEdit = new QLineEdit(this);
-        m_lineEdit->setObjectName("ZoomSliderValue");
+    m_lineEdit->setObjectName("ZoomSliderValue");
 	m_lineEdit->setGeometry(soFar, -1, 35, HEIGHT - 1);
 	m_lineEdit->setText(QString("%1").arg(STARTING_VALUE));
 	m_lineEdit->setValidator(new QIntValidator(MIN_VALUE, MAX_VALUE, this));
-        soFar += 25 + 5;
+	m_lineEdit->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    soFar += 25 + 5;
 
-        QLabel * label = new QLabel(tr("%"), this);
-        label->setObjectName("ZoomSliderLabel");
-        label->setGeometry(soFar, 0, 20, HEIGHT);
-        label->setAlignment(Qt::AlignLeft);
-        soFar += 20 + 2;
+    QLabel * label = new QLabel(tr("%"), this);
+    label->setObjectName("ZoomSliderLabel");
+    label->setGeometry(soFar, 0, 20, HEIGHT);
+    label->setAlignment(Qt::AlignLeft);
+    soFar += 20 + 2;
 
 	QPixmap temp(":/resources/images/icons/zoomSliderMinus.png");
 	m_minusButton = new QPushButton(this);
@@ -79,12 +80,12 @@ ZoomSlider::ZoomSlider(QWidget * parent) : QFrame(parent)
 	connect(m_minusButton, SIGNAL(clicked()), this, SLOT(minusClicked()));
 	soFar += temp.width() + 5;
 
-        m_slider = new QSlider(this);
+    m_slider = new QSlider(this);
 	m_slider->setOrientation(Qt::Horizontal);
 	m_slider->setRange(MIN_VALUE, MAX_VALUE);
 	m_slider->setValue(STARTING_VALUE);
-        m_slider->setTickPosition(QSlider::TicksBelow);
-        m_slider->setTickInterval(500);
+    m_slider->setTickPosition(QSlider::TicksBelow);
+    m_slider->setTickInterval(500);
 	m_slider->setGeometry(soFar, 0, 100, HEIGHT);
 	soFar += 100 + 5;
 
