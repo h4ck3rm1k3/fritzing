@@ -65,10 +65,10 @@ protected:
 	void resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y);
 
 protected:
-	ConnectorItem * m_dragItem;
-	ConnectorItem * m_connector0;
-	ConnectorItem * m_connector1;
-	ConnectorItem * m_otherItem;
+	QPointer<ConnectorItem> m_dragItem;
+	QPointer<ConnectorItem> m_connector0;
+	QPointer<ConnectorItem> m_connector1;
+	QPointer<ConnectorItem> m_otherItem;
 	QPointF m_dragStartScenePos;
 	QPointF m_dragStartThisPos;
 	QPointF m_dragStartConnectorPos;
@@ -78,8 +78,8 @@ protected:
 	QPointF m_itemPos;
 	QPointF m_itemC0;
 	QPointF m_itemC1;
-	class FSvgRenderer * m_renderer;
-	QHash <ViewLayer::ViewLayerID, class FSvgRenderer *> m_renderers;
+	QPointer<FSvgRenderer> m_renderer;
+	QHash <ViewLayer::ViewLayerID, QPointer<FSvgRenderer> > m_renderers;
 	bool m_autoroutable;
 
 };

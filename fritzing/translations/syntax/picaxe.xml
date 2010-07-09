@@ -830,7 +830,6 @@
         <DetectChar attribute="String" context="String" char="&quot;" />
         <RegExpr attribute="Region Marker" context="#stay" String="^\s*;+\s*BEGIN.*$" beginRegion="marker"/>
         <RegExpr attribute="Region Marker" context="#stay" String="^\s*;+\s*END.*$" endRegion="marker"/>
-        <DetectChar attribute="Comment" context="Comment1" char="'"/>
       </context>
       <context attribute="String" lineEndContext="#pop" name="String">
         <DetectChar attribute="String" context="#pop" char="&quot;"/>
@@ -856,9 +855,10 @@
     <keywords casesensitive="0" />
     <comments>
       <comment name="singleLine" start="'" />
+      <comment name="singleLine" start="&#x91;" />
       <comment name="singleLine" start=";" />
       <comment name="remark" start="REM " />
-      <comment name="multiLine" start="#REM" end="#ENDREM" />
+      <comment name="multiLine" start="#REM" end="#ENDREM"  />
     </comments>
   </general>
 </language>

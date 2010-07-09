@@ -57,7 +57,7 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 
 	m_autoroutable = true;
 	m_renderer = NULL;
-	m_connector0 = m_connector1 = m_dragItem = NULL;
+	m_otherItem = m_connector0 = m_connector1 = m_dragItem = NULL;
 	if (Copper0LayerTemplate.isEmpty()) {
 		QFile file(":/resources/templates/jumper_copper0LayerTemplate.txt");
 		if (file.open(QFile::ReadOnly)) {
