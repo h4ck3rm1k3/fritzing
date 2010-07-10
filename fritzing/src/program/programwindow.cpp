@@ -44,6 +44,11 @@ $Date$
 // Included for getSerialPort() and a few others
 #ifdef Q_WS_WIN
 #include "windows.h"
+#include <windows.h>
+#include <setupapi.h>
+#include <dbt.h>
+#include <INITGUID.H>
+
 #endif
 #ifdef Q_WS_MAC
 #include <IOKit/IOKitLib.h>
@@ -754,10 +759,60 @@ QStringList ProgramWindow::getSerialPorts() {
 	return ports;
 }
 
+#ifdef Q_WS_WIN
+
+// faster enumeration code from http://code.google.com/p/qextserialport
+
+/* Gordon Schumacher's macros for TCHAR -> QString conversions and vice versa */
+#ifdef UNICODE
+    #define QStringToTCHAR(x)     (wchar_t*) x.utf16()
+    #define PQStringToTCHAR(x)    (wchar_t*) x->utf16()
+    #define TCHARToQString(x)     QString::fromUtf16((ushort*)(x))
+    #define TCHARToQStringN(x,y)  QString::fromUtf16((ushort*)(x),(y))
+#else
+    #define QStringToTCHAR(x)     x.local8Bit().constData()
+    #define PQStringToTCHAR(x)    x->local8Bit().constData()
+    #define TCHARToQString(x)     QString::fromLocal8Bit((x))
+    #define TCHARToQStringN(x,y)  QString::fromLocal8Bit((x),(y))
+#endif /*UNICODE*/
+
+// see http://msdn.microsoft.com/en-us/library/ms791134.aspx for list of GUID classes
+#ifndef GUID_DEVCLASS_PORTS
+    DEFINE_GUID(GUID_DEVCLASS_PORTS, 0x4D36E978, 0xE325, 0x11CE, 0xBF, 0xC1, 0x08, 0x00, 0x2B, 0xE1, 0x03, 0x18 );
+#endif
+
+QString getRegKeyValue(HKEY key, LPCTSTR property)
+{
+    DWORD size = 0;
+    DWORD type;
+    RegQueryValueEx(key, property, NULL, NULL, NULL, & size);
+    BYTE* buff = new BYTE[size];
+    QString result;
+    if( RegQueryValueEx(key, property, NULL, &type, buff, & size) == ERROR_SUCCESS )
+        result = TCHARToQString(buff);
+    RegCloseKey(key);
+    delete [] buff;
+    return result;
+}
+
+//static
+QString getDeviceProperty(HDEVINFO devInfo, PSP_DEVINFO_DATA devData, DWORD property)
+{
+    DWORD buffSize = 0;
+    SetupDiGetDeviceRegistryProperty(devInfo, devData, property, NULL, NULL, 0, & buffSize);
+    BYTE* buff = new BYTE[buffSize];
+    SetupDiGetDeviceRegistryProperty(devInfo, devData, property, NULL, buff, buffSize, NULL);
+    QString result = TCHARToQString(buff);
+    delete [] buff;
+    return result;
+}
+#endif
+
 QStringList ProgramWindow::getSerialPortsAux() {
         // TODO: make this call a plugin?
     QStringList ports;
 #ifdef Q_WS_WIN
+		/*
         for (int i = 1; i < 256; i++)
         {
                 QString port = QString("COM%1").arg(i);
@@ -774,6 +829,24 @@ QStringList ProgramWindow::getSerialPortsAux() {
                         ports.append(port);
                 }
         }
+		*/
+
+		HDEVINFO devInfo;
+		GUID guid = GUID_DEVCLASS_PORTS;
+		if( (devInfo = SetupDiGetClassDevs(&guid, NULL, NULL, DIGCF_PRESENT)) != INVALID_HANDLE_VALUE)
+		{
+			SP_DEVINFO_DATA devInfoData;
+			devInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
+			for(int i = 0; SetupDiEnumDeviceInfo(devInfo, i, &devInfoData); i++)
+			{
+				HKEY devKey = SetupDiOpenDevRegKey(devInfo, &devInfoData, DICS_FLAG_GLOBAL, 0, DIREG_DEV, KEY_READ);
+				QString value = getRegKeyValue(devKey, TEXT("PortName"));
+				ports.append(value);
+
+			}
+			SetupDiDestroyDeviceInfoList(devInfo);
+		}
+
         return ports;
 #endif
 #ifdef Q_WS_MAC

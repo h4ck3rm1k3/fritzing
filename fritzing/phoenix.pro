@@ -29,6 +29,7 @@ win32 {
 	CONFIG -= embed_manifest_exe
 	INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
 	DEFINES += _CRT_SECURE_NO_DEPRECATE
+    LIBS += setupapi.lib
 }
 macx {
 	MOC_DIR = build/moc
