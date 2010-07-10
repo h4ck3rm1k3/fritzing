@@ -20,7 +20,9 @@ if [ "$arch_aux" == 'x86_64' ] ; then
 fi
 
 cd $compile_folder
-QT_HOME="/usr/local/Trolltech/Qt-4.6.1"
+#QT_HOME="/usr/local/Trolltech/Qt-4.6.1"
+QT_HOME="/usr"
+
 
 $QT_HOME/bin/qmake CONFIG+=release -unix
 make
@@ -58,8 +60,8 @@ cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetw
 #fi
 
 echo "copying plugins"
-cp $QT_HOME/plugins/imageformats/libqjpeg.so imageformats
-cp $QT_HOME/plugins/sqldrivers/libqsqlite.so sqldrivers
+cp $QT_HOME/qt4/plugins/imageformats/libqjpeg.so imageformats
+cp $QT_HOME/qt4/plugins/sqldrivers/libqsqlite.so sqldrivers
 
 echo "copying translations"
 cp ../../$compile_folder/translations/*.qm ../translations
@@ -72,4 +74,5 @@ echo "cleaning up"
 rm -rf $release_folder
 rm -rf $compile_folder
 
-echo "done!"
+#echo "done!"
+
