@@ -34,6 +34,7 @@ $Date$
 
 #define STRINGOFFSET 10
 #define COMMENTOFFSET 100
+static const QChar EscapeChar('\\');
 
 QHash <QString, QTextCharFormat *> Highlighter::m_styleFormats;
 
@@ -153,7 +154,20 @@ void Highlighter::highlightStrings(int startStringIndex, QString & text) {
 	}
 
 	while (startStringIndex >= 0) {
-		int endIndex = m_syntaxer->matchStringEnd(text, startStringIndex + 1);
+		int endIndex = -1;
+		int ssi = startStringIndex;
+		while (true) {
+			endIndex = m_syntaxer->matchStringEnd(text, ssi + 1);
+			if (endIndex == -1) {
+				break;
+			}
+
+			// TODO: escape char is backslash only; are there others in other compilers?
+			if (text.at(endIndex - 1) != EscapeChar) {
+				break;
+			}
+			ssi = endIndex;
+		}
 		int stringLength;
 		if (endIndex == -1) {
 			setCurrentBlockState(STRINGOFFSET);
