@@ -103,7 +103,7 @@ void SVG2gerber::renderGerber(bool doubleSided){
     // human readable description comments
     m_gerber_header = "G04 MADE WITH FRITZING*\n";
 	m_gerber_header += QString("G04 %1 SIDED*\n").arg(doubleSided ? "DOUBLE" : "SINGLE");
-    m_gerber_header += "G04 HOLES NOT PLATED*\n";
+	m_gerber_header += QString("G04 HOLES%1PLATED*\n").arg(doubleSided ? " " : " NOT ");
     m_gerber_header += "G04 CONTOUR ON CENTER OF CONTOUR VECTOR*\n";
 
     // initialize axes

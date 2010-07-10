@@ -116,7 +116,7 @@ void MainWindow::exportToGerber(const QString & exportDir, ItemBase * board, boo
 
     // create copper0 gerber from svg
     SVG2gerber outlineGerber;
-	outlineGerber.convert(svgOutline, "board");
+	outlineGerber.convert(svgOutline, m_pcbGraphicsView->boardLayers() == 2, "board");
 
     // contour / board outline
     QString contourFile = exportDir + "/" +
@@ -310,7 +310,7 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, It
 
     // create silk gerber from svg
     SVG2gerber silkGerber;
-	silkGerber.convert(svgSilk, "silk");
+	silkGerber.convert(svgSilk, m_pcbGraphicsView->boardLayers() == 2, "silk");
 
     QString silkFile = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)

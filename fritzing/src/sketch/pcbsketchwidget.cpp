@@ -2309,19 +2309,30 @@ void PCBSketchWidget::setBoardLayers(int layers, bool redraw) {
 
 long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec viewLayerSpec, bool master, QUndoCommand * parentCommand)
 {
-	long result = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, parentCommand);
+	long newID = SketchWidget::setUpSwap(itemBase, newModelIndex, newModuleID, viewLayerSpec, master, parentCommand);
 
 	if (itemBase->viewIdentifier() != m_viewIdentifier) {
 		itemBase = findItem(itemBase->id());
-		if (itemBase == NULL) return result;
+		if (itemBase == NULL) return newID;
 	}
 
 	int newLayers = isBoardLayerChange(itemBase, newModuleID, master);
-	if (newLayers == m_boardLayers) return result;
+	if (newLayers == m_boardLayers) return newID;
 
 	QList<ItemBase *> smds;
 	QList<Wire *> already;
 	ChangeBoardLayersCommand * changeBoardCommand = new ChangeBoardLayersCommand(this, m_boardLayers, newLayers, parentCommand);
+
+	if (itemBase->itemType() == ModelPart::ResizableBoard) {
+		// preserve the size if swapping rectangular board
+		ResizableBoard * rb = qobject_cast<ResizableBoard *>(itemBase);
+		QPointF p;
+		QSizeF sz;
+		rb->getParams(p, sz);
+		new ResizeBoardCommand(this, newID, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+		new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, parentCommand);
+	}
+ 
 
 	// disconnect and flip smds
 	foreach (QGraphicsItem * item, scene()->items()) {
@@ -2370,13 +2381,15 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 		}
 	}
 
+
+
 	// TODO need to disconnect first?
 
 	foreach (ItemBase * smd, smds) {
 		emit subSwapSignal(this, smd, (newLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers, changeBoardCommand);
 	}
 
-	return result;
+	return newID;
 }
 
 int PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master)

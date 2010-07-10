@@ -38,7 +38,7 @@ class SVG2gerber : public QObject
 
 public:
     SVG2gerber();
-	void convert(QString svgStr, bool doubleSided, QString debugStr="dbg");
+	void convert(QString svgStr, bool doubleSided, QString debugStr);
     QString getGerber();
     QString getSolderMask();
     QString getContour();
