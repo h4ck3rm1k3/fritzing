@@ -153,6 +153,8 @@ void Highlighter::highlightStrings(int startStringIndex, QString & text) {
 		startStringIndex = m_syntaxer->matchStringStart(text, 0);
 	}
 
+
+	// TODO: only check escape chars if syntax contains "HlCStringChar" in String context
 	while (startStringIndex >= 0) {
 		int endIndex = -1;
 		int ssi = startStringIndex;

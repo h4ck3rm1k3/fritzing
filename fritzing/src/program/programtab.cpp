@@ -40,6 +40,8 @@ $Date$
 #include <QMessageBox>
 #include <QSplitter>
 
+static const QChar Quote91Char(0x91);
+
 /////////////////////////////////////////
 
 SerialPortComboBox::SerialPortComboBox() : QComboBox() {
@@ -366,6 +368,12 @@ bool ProgramTab::loadProgramFile(const QString & fileName, const QString & altFi
 
 	m_filename = file.fileName();
 	QString text = file.readAll();
+	// clean out 0x91, mostly due to picaxe files
+	for (int i = 0; i < text.count(); i++) {
+		if (text[i] == Quote91Char) {
+			text[i] = '\'';
+		}
+	}
 	m_textEdit->setText(text);
 	setClean();
 	QFileInfo fileInfo(m_filename);

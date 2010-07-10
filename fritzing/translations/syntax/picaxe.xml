@@ -855,7 +855,6 @@
     <keywords casesensitive="0" />
     <comments>
       <comment name="singleLine" start="'" />
-      <comment name="singleLine" start="&#x91;" />
       <comment name="singleLine" start=";" />
       <comment name="remark" start="REM " />
       <comment name="multiLine" start="#REM" end="#ENDREM"  />
