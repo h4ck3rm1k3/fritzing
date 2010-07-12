@@ -60,8 +60,8 @@ cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetw
 #fi
 
 echo "copying plugins"
-cp $QT_HOME/qt4/plugins/imageformats/libqjpeg.so imageformats
-cp $QT_HOME/qt4/plugins/sqldrivers/libqsqlite.so sqldrivers
+cp $QT_HOME/lib/qt4/plugins/imageformats/libqjpeg.so imageformats
+cp $QT_HOME/lib/qt4/plugins/sqldrivers/libqsqlite.so sqldrivers
 
 echo "copying translations"
 cp ../../$compile_folder/translations/*.qm ../translations
