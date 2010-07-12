@@ -269,11 +269,11 @@ QString TextUtils::makeSVGHeader(qreal printerScale, qreal dpi, qreal width, qre
 	qreal trueHeight = height / printerScale;
 
 	return 
-		QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "
+		QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
 							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
 							 "version=\"1.2\" baseProfile=\"tiny\" "
 							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
-							 "viewBox=\"0 0 %3 %4\" >")
+							 "viewBox=\"0 0 %3 %4\" >\n")
 						.arg(trueWidth)
 						.arg(trueHeight)
 						.arg(trueWidth * dpi)

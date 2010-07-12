@@ -69,12 +69,18 @@ bool Syntaxer::loadSyntax(const QString &filename)
 	QDomElement contexts = highlighting.firstChildElement("contexts");
 	if (contexts.isNull()) return false;
 
+	m_hlCStringChar = false;
 	QDomElement context = contexts.firstChildElement("context");
 	while (!context.isNull()) {
 		if (context.attribute("attribute").compare("Normal Text") == 0) {
 			m_stringDelimiter = getStringDelimiter(context);
 			initListsToFormats(context);
-			break;
+		}
+		else if (context.attribute("attribute").compare("String") == 0) {
+			QDomElement HlCStringChar = context.firstChildElement("HlCStringChar");
+			if (!HlCStringChar.isNull()) {
+				m_hlCStringChar = true;
+			}
 		}
 		context = context.nextSiblingElement("context");
 	}
@@ -226,6 +232,10 @@ void Syntaxer::initListsToFormats(QDomElement & context) {
 
 QString Syntaxer::formatFromList(const QString & list) {
 	return m_listsToFormats.value(list, ___emptyString___);
+}
+
+bool Syntaxer::hlCStringChar() {
+	return m_hlCStringChar;
 }
 
 //////////////////////////////////////////////

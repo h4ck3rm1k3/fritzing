@@ -34,7 +34,7 @@ $Date$
 
 #define STRINGOFFSET 10
 #define COMMENTOFFSET 100
-static const QChar EscapeChar('\\');
+static const QChar CEscapeChar('\\');
 
 QHash <QString, QTextCharFormat *> Highlighter::m_styleFormats;
 
@@ -153,19 +153,23 @@ void Highlighter::highlightStrings(int startStringIndex, QString & text) {
 		startStringIndex = m_syntaxer->matchStringStart(text, 0);
 	}
 
-
-	// TODO: only check escape chars if syntax contains "HlCStringChar" in String context
+	// TODO: not handling "" as a way to escape-quote
 	while (startStringIndex >= 0) {
 		int endIndex = -1;
 		int ssi = startStringIndex;
 		while (true) {
 			endIndex = m_syntaxer->matchStringEnd(text, ssi + 1);
+			if (!m_syntaxer->hlCStringChar()) {
+				// only some languages use \ to escape 
+				break;
+			}
+
 			if (endIndex == -1) {
 				break;
 			}
 
 			// TODO: escape char is backslash only; are there others in other compilers?
-			if (text.at(endIndex - 1) != EscapeChar) {
+			if (text.at(endIndex - 1) != CEscapeChar) {
 				break;
 			}
 			ssi = endIndex;

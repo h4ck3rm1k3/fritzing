@@ -52,6 +52,7 @@ $Date$
 #include "../svg/svgfilesplitter.h"
 #include "../svg/gedaelement2svg.h"
 #include "../svg/kicadmodule2svg.h"
+#include "../svg/kicadschematic2svg.h"
 #include "../connectors/connectorshared.h"
 
 
@@ -548,18 +549,30 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 }
 
 void PartsEditorView::loadFile() {
+	QStringList extras;
+	extras.append("");
+	extras.append("");
 	QString imageFiles;
 	if (m_viewIdentifier == ViewIdentifierClass::PCBView) {
 		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)");   // 
+		extras[0] = "*.fp";
+		extras[1] = "*.mod";
 	}
 	else {
 		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)");
 	}
 
+#ifndef QT_NO_DEBUG
+	if (m_viewIdentifier == ViewIdentifierClass::SchematicView) {
+		extras[0] = "*.lib";
+		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)");   // 
+	}
+#endif
+
 	QString origPath = FolderUtils::getOpenFileName(this,
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? FolderUtils::openSaveFolder() /* FolderUtils::getUserDataStorePath("parts")+"/parts/svg/" */ : m_originalSvgFilePath,
-		imageFiles.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png").arg("*.fp").arg("*.mod")
+		imageFiles.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png").arg(extras[0]).arg(extras[1])
 	);
 
 	if(origPath.isEmpty()) {
@@ -882,7 +895,34 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 		return saveSvg(svg, newFilePath);
 	}
 
+	if (origFilePath.endsWith(".lib")) {
+		// Kicad schematic library file
+		QStringList defs = KicadSchematic2Svg::listDefs(origFilePath);
+		if (defs.count() == 0) {
+			throw tr("no schematics found in %1").arg(origFilePath);
+		}
+
+		QString def;
+		if (defs.count() > 1) {
+			KicadModuleDialog kmd(tr("schematic part"), origFilePath, defs, this);
+			int result = kmd.exec();
+			if (result != QDialog::Accepted) {
+				return "";
+			}
+
+			def = kmd.selectedModule();
+		}
+		else {
+			def = defs.at(0);
+		}
+
+		KicadSchematic2Svg k;
+		QString svg = k.convert(origFilePath, def);
+		return saveSvg(svg, newFilePath);
+	}
+
 	if (origFilePath.endsWith(".mod")) {
+		// Kicad footprint (Module) library file
 		QStringList modules = KicadModule2Svg::listModules(origFilePath);
 		if (modules.count() == 0) {
 			throw tr("no footprints found in %1").arg(origFilePath);
@@ -890,7 +930,7 @@ QString PartsEditorView::createSvgFromImage(const QString &origFilePath) {
 
 		QString module;
 		if (modules.count() > 1) {
-			KicadModuleDialog kmd(origFilePath, modules, this);
+			KicadModuleDialog kmd("footprint", origFilePath, modules, this);
 			int result = kmd.exec();
 			if (result != QDialog::Accepted) {
 				return "";
@@ -1904,9 +1944,9 @@ void PartsEditorView::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool
 
 //////////////////////////////////////////////////////////
 
-KicadModuleDialog::KicadModuleDialog(const QString & filename, const QStringList & modules, QWidget *parent) : QDialog(parent) 
+KicadModuleDialog::KicadModuleDialog(const QString & partType, const QString & filename, const QStringList & modules, QWidget *parent) : QDialog(parent) 
 {
-	this->setWindowTitle(QObject::tr("Select footprint"));
+	this->setWindowTitle(QObject::tr("Select %1").arg(partType));
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 
@@ -1916,11 +1956,11 @@ KicadModuleDialog::KicadModuleDialog(const QString & filename, const QStringList
 
 	m_comboBox = new QComboBox(this);
 	m_comboBox->addItems(modules);
-	formLayout->addRow( "footprint:", m_comboBox );
+	formLayout->addRow(QString("%1:").arg(partType), m_comboBox );
 
 	frame->setLayout(formLayout);
 
-	QLabel * label = new QLabel(QString("There are %1 footprints in '%2'.  Please select one.").arg(modules.count()).arg(filename));
+	QLabel * label = new QLabel(QString("There are %1 %3 descriptions in '%2'.  Please select one.").arg(modules.count()).arg(filename).arg(partType));
 	vLayout->addWidget(label);
 
 	vLayout->addWidget(frame);

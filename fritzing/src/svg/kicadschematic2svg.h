@@ -24,32 +24,32 @@ $Date$
 
 ********************************************************************/
 
-#ifndef X2SVG_H
-#define X2SVG_H
+#ifndef KICADSCHEMATIC2SVG_H
+#define KICADSCHEMATIC2SVG_H
 
 #include <QString>
+#include <QStringList>
+#include <QTextStream>
 
-class X2Svg
+#include "kicad2svg.h"
+
+class KicadSchematic2Svg : public Kicad2Svg
 {
 
 public:
-	X2Svg();
+	KicadSchematic2Svg();
+	QString convert(const QString & filename, const QString &defName);
 
-	void checkXLimit(qreal x);
-	void checkYLimit(qreal y);
+public:
+	static QStringList listDefs(const QString & filename);
+
+public:
+
 
 protected:
-	QString offsetMin(const QString & svg);
-	void initLimits();
-	QString unquote(const QString &);
 
-protected:
-	qreal m_maxX;
-	qreal m_maxY;
-	qreal m_minX;
-	qreal m_minY;
-	QString m_attribute;
-	QString m_comment;
+
 };
 
-#endif // X2SVG_H
+
+#endif // KICADSCHEMATIC2SVG_H

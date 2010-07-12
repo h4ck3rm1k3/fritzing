@@ -27,7 +27,6 @@ $Date$
 #include "kicadmodule2svg.h"
 #include "../utils/textutils.h"
 #include "svgfilesplitter.h"
-#include "../version/version.h"
 #include "../debugdialog.h"
 #include "../viewlayer.h"
 #include "../fsvgrenderer.h"
@@ -52,7 +51,7 @@ $Date$
 //		find true bounding box of arcs instead of using the whole circle
 
 
-KicadModule2Svg::KicadModule2Svg() : X2Svg() {
+KicadModule2Svg::KicadModule2Svg() : Kicad2Svg() {
 }
 
 QStringList KicadModule2Svg::listModules(const QString & filename) {
@@ -102,29 +101,8 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	QString text;
 	QTextStream textStream(&file);
 
-	QFileInfo fileInfo(filename);
+	QString metadata = makeMetadata(filename, "module", moduleName);
 
-	QDateTime now = QDateTime::currentDateTime();
-	QString dt = now.toString("dd/MM/yyyy hh:mm:ss");
-
-	QString title = QString("<title>%1</title>").arg(fileInfo.fileName());
-	QString description = QString("<desc>Kicad module '%2' from file '%1' converted by Fritzing</desc>")
-			.arg(fileInfo.fileName()).arg(moduleName);
-
-	QString attribute("<fz:attr name='%1'>%2</fz:attr>\n");
-	QString comment("<fz:comment>%2</fz:comment>\n");
-
-	QString metadata("<metadata xmlns:fz='http://fritzing.org/kicadmetadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>");
-	metadata += "<rdf:RDF>";
-	metadata += "<rdf:Description rdf:about=''>";
-	metadata += attribute.arg("kicad filename").arg(fileInfo.fileName());
-	metadata += attribute.arg("kicad module").arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(moduleName)));
-	metadata += attribute.arg("fritzing version").arg(Version::versionString());
-	metadata += attribute.arg("conversion date").arg(dt);
-	metadata += attribute.arg("dist-license").arg("GPL");
-	metadata += attribute.arg("use-license").arg("unlimited");
-	metadata += attribute.arg("author").arg("KICAD project");
-	metadata += attribute.arg("license-url").arg("http://www.gnu.org/licenses/gpl.html");
 
 	bool gotModule = false;
 	while (true) {
@@ -156,19 +134,17 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 			break;
 		}
 		else if (line.startsWith("Cd")) {
-			metadata += comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(line.remove(0,3))));
+			metadata += m_comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(line.remove(0,3))));
 		}
 		else if (line.startsWith("Kw")) {
 			QStringList keywords = line.split(" ");
 			for (int i = 1; i < keywords.count(); i++) {
-				metadata += attribute.arg("keyword").arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(keywords[i])));
+				metadata += m_attribute.arg("keyword").arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(keywords[i])));
 			}
 		}
 	}
 
-	metadata += "</rdf:Description>";
-	metadata += "</rdf:RDF>";
-	metadata += "</metadata>";
+	metadata += endMetadata();
 
 	if (!gotT0) {
 		throw QObject::tr("unexpected format (1) in %1 from %2").arg(moduleName).arg(filename);
@@ -290,7 +266,7 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 	}
 
 	QString svg = TextUtils::makeSVGHeader(10000, 10000, m_maxX - m_minX, m_maxY - m_minY) 
-					+ title + description + metadata + copper0 + copper1 + silkscreen0 + silkscreen1 + "</svg>";
+					+ m_title + m_description + metadata + copper0 + copper1 + silkscreen0 + silkscreen1 + "</svg>";
 
 	return svg;
 }

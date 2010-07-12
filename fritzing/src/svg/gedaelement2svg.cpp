@@ -79,15 +79,13 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	QString description = QString("<desc>Geda footprint file '%1' converted by Fritzing</desc>")
 			.arg(fileInfo.fileName());
 
-	QString attribute("<fz:attr name='%1'>%2</fz:attr>\n");
-	QString comment("<fz:comment>%2</fz:comment>\n");
 
 	QString metadata("<metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>");
 	metadata += "<rdf:RDF>";
 	metadata += "<rdf:Description rdf:about=''>";
-	metadata += attribute.arg("geda filename").arg(fileInfo.fileName());
-	metadata += attribute.arg("fritzing version").arg(Version::versionString());
-	metadata += attribute.arg("conversion date").arg(dt);
+	metadata += m_attribute.arg("geda filename").arg(fileInfo.fileName());
+	metadata += m_attribute.arg("fritzing version").arg(Version::versionString());
+	metadata += m_attribute.arg("conversion date").arg(dt);
 
 	// TODO: other layers
 	QString silkscreen;
@@ -135,7 +133,7 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 			}
 			else if (thing.compare("attribute", Qt::CaseInsensitive) == 0) {
 				QString aname = TextUtils::stripNonValidXMLCharacters(Qt::escape(unquote(stack[ix + 1].toString())));
-				metadata += attribute.arg(aname, TextUtils::stripNonValidXMLCharacters(Qt::escape(unquote(stack[ix + 2].toString()))));
+				metadata += m_attribute.arg(aname, TextUtils::stripNonValidXMLCharacters(Qt::escape(unquote(stack[ix + 2].toString()))));
 				if (aname.compare("author", Qt::CaseInsensitive) == 0) {
 					hasAuthor = true;
 				}
@@ -157,14 +155,14 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	}
 
 	foreach (QString c, lexer.comments()) {
-		metadata += comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(c)));
+		metadata += m_comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(c)));
 	}
 
 	if (!hasAuthor) {
-		metadata += attribute.arg("dist-license").arg("GPL");
-		metadata += attribute.arg("use-license").arg("unlimited");
-		metadata += attribute.arg("author").arg("gEDA project");
-		metadata += attribute.arg("license-url").arg("http://www.gnu.org/licenses/gpl.html");
+		metadata += m_attribute.arg("dist-license").arg("GPL");
+		metadata += m_attribute.arg("use-license").arg("unlimited");
+		metadata += m_attribute.arg("author").arg("gEDA project");
+		metadata += m_attribute.arg("license-url").arg("http://www.gnu.org/licenses/gpl.html");
 	}
 
 	metadata += "</rdf:Description>";

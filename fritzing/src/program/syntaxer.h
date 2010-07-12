@@ -65,6 +65,7 @@ public:
 	int matchStringEnd(const QString & text, int offset);
 	const QString & extensionString();
 	const QStringList & extensions();
+	bool hlCStringChar();
 
 public:
 	static QString parseForName(const QString & filename);
@@ -85,6 +86,7 @@ protected:
 	QStringList m_extensions;
 	QList<CommentInfo *> m_commentInfo;
 	QChar m_stringDelimiter;
+	bool m_hlCStringChar;
 };
 
 class SyntaxerTrieLeaf : public TrieLeaf

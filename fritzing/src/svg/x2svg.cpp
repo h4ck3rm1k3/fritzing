@@ -42,6 +42,9 @@ static const int MAX_INT = std::numeric_limits<int>::max();
 static const int MIN_INT = std::numeric_limits<int>::min();
 
 X2Svg::X2Svg() {
+	m_attribute = "<fz:attr name='%1'>%2</fz:attr>\n";
+	m_comment = "<fz:comment>%2</fz:comment>\n";
+
 }
 
 void X2Svg::initLimits() {

@@ -455,12 +455,12 @@ void ProgramTab::selectAll() {
 void ProgramTab::deleteTab() {
 	bool deleteFile = false;
 	if (!m_textEdit->document()->isEmpty()) {
-		QString name = QFileInfo(m_filename).baseName();
+		QString name = QFileInfo(m_filename).fileName();
 		if (name.isEmpty()) {
 			name = m_tabWidget->tabText(m_tabWidget->currentIndex());
 		}
 
-		DeleteDialog deleteDialog(tr("Delete \"%1\"?").arg(name),
+		DeleteDialog deleteDialog(tr("Remove \"%1\"?").arg(name),
 								  tr("Are you sure you want to remove \"%1\" from the sketch?").arg(name),
 								  !FolderUtils::isEmptyFileName(m_filename, "Untitled"),
 								  NULL, 0);

@@ -31,9 +31,9 @@ $Date$
 #include <QStringList>
 #include <QTextStream>
 
-#include "x2svg.h"
+#include "kicad2svg.h"
 
-class KicadModule2Svg : public X2Svg
+class KicadModule2Svg : public Kicad2Svg
 {
 
 public:
