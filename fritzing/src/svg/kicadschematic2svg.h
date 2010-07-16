@@ -43,11 +43,18 @@ public:
 public:
 	static QStringList listDefs(const QString & filename);
 
-public:
-
-
 protected:
-
+	QString convertField(const QString & line);
+	QString convertText(const QString & line);
+	QString convertField(const QString & xString, const QString & yString, const QString & fontSizeString, const QString & orientation, const QString & hjustify, const QString & vjustify, const QString & text);
+	QString convertRect(const QString & line); 
+	QString convertCircle(const QString & line); 
+	QString convertPin(const QString & line, bool allShortPinNames); 
+	QString convertArc(const QString & line); 
+	QString convertPoly(const QString & line); 
+	QString addFill(const QString & line, const QString & NF, const QString & strokeString);
+	bool shortPinName(const QString & line);
+	QStringList splitLine(const QString & line);
 
 };
 

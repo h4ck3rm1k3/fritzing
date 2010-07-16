@@ -134,12 +134,12 @@ QString KicadModule2Svg::convert(const QString & filename, const QString & modul
 			break;
 		}
 		else if (line.startsWith("Cd")) {
-			metadata += m_comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(line.remove(0,3))));
+			metadata += m_comment.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(line.remove(0,3))));
 		}
 		else if (line.startsWith("Kw")) {
 			QStringList keywords = line.split(" ");
 			for (int i = 1; i < keywords.count(); i++) {
-				metadata += m_attribute.arg("keyword").arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(keywords[i])));
+				metadata += m_attribute.arg("keyword").arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(keywords[i])));
 			}
 		}
 	}

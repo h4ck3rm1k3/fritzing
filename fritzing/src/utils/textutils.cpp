@@ -414,10 +414,13 @@ bool TextUtils::pxToInches(QDomElement &elem, const QString &attrName, bool isIl
 	return false;
 }
 
+QString TextUtils::svgMatrix(QMatrix & matrix) {
+	return QString("matrix(%1, %2, %3, %4, %5, %6)").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy());
+}
+
 void TextUtils::setSVGTransform(QDomElement & element, QMatrix & matrix)
 {
-	QString m = QString("matrix(%1, %2, %3, %4, %5, %6)").arg(matrix.m11()).arg(matrix.m12()).arg(matrix.m21()).arg(matrix.m22()).arg(matrix.dx()).arg(matrix.dy());
-	element.setAttribute("transform", m);
+	element.setAttribute("transform", svgMatrix(matrix));
 }
 
 QString TextUtils::svgTransform(const QString & svg, QTransform & transform, bool translate, const QString extras) {
@@ -553,6 +556,12 @@ qreal TextUtils::convertToInches(const QString & string) {
 	if (!ok) return 0;
 
 	return retval;
+}
+
+QString TextUtils::escapeAnd(const QString & string) {
+	QString s = Qt::escape(string);
+	s.replace('\'', "&apos;");
+	return s;
 }
 
 QString TextUtils::stripNonValidXMLCharacters(const QString & str) 

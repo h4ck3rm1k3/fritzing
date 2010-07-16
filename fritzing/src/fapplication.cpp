@@ -50,6 +50,7 @@ $Date$
 #include "infoview/htmlinfoview.h"
 #include "svg/gedaelement2svg.h"
 #include "svg/kicadmodule2svg.h"
+#include "svg/kicadschematic2svg.h"
 #include "installedfonts.h"
 #include "items/pinheader.h"
 #include "dialogs/recoverydialog.h"
@@ -123,7 +124,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_runAsService = false;
 	m_gerberService = false;
 	m_gedaService = false;
-	m_kicadService = false;
+	m_kicadFootprintService = false;
+	m_kicadSchematicService = false;
 
 	m_arguments = arguments();
 
@@ -155,7 +157,16 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 		if ((m_arguments[i].compare("-kicad", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("--kicad", Qt::CaseInsensitive) == 0)) {
 			m_runAsService = true;
-			m_kicadService = true;
+			m_kicadFootprintService = true;
+			m_outputFolder = m_arguments[i + 1];
+			toRemove << i;
+			toRemove << i + 1;
+		}
+
+		if ((m_arguments[i].compare("-kicadschematic", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("--kicadschematic", Qt::CaseInsensitive) == 0)) {
+			m_runAsService = true;
+			m_kicadSchematicService = true;
 			m_outputFolder = m_arguments[i + 1];
 			toRemove << i;
 			toRemove << i + 1;
@@ -448,8 +459,12 @@ int FApplication::serviceStartup() {
 		runGedaService();
 		return 0;
 	}
-	else if (m_kicadService) {
-		runKicadService();
+	else if (m_kicadFootprintService) {
+		runKicadFootprintService();
+		return 0;
+	}
+	else if (m_kicadSchematicService) {
+		runKicadSchematicService();
 		return 0;
 	}
 
@@ -502,7 +517,7 @@ void FApplication::runGedaService() {
 	}
 }
 
-void FApplication::runKicadService() {
+void FApplication::runKicadFootprintService() {
 	QDir dir(m_outputFolder);
 	QStringList filters;
 	filters << "*.mod";
@@ -524,6 +539,51 @@ void FApplication::runKicadService() {
 
 				QString newFilePath = dir.absoluteFilePath(moduleName + "_" + filename);
 				newFilePath.replace(".mod", ".svg");
+				QFile file(newFilePath);
+				if (file.open(QFile::WriteOnly)) {
+					QTextStream stream(&file);
+					stream.setCodec("UTF-8");
+					stream << svg;
+					file.close();
+				}
+				else {
+					DebugDialog::debug("unable to open file " + newFilePath);
+				}
+			}
+			catch (const QString & msg) {
+				DebugDialog::debug(msg);
+			}
+			catch (...) {
+				DebugDialog::debug("who knows");
+			}
+		}
+	}
+}
+
+void FApplication::runKicadSchematicService() {
+	QDir dir(m_outputFolder);
+	QStringList filters;
+	filters << "*.lib";
+	QStringList filenames = dir.entryList(filters, QDir::Files);
+	foreach (QString filename, filenames) {
+		QString filepath = dir.absoluteFilePath(filename);
+		QStringList defNames = KicadSchematic2Svg::listDefs(filepath);
+		foreach (QString defName, defNames) {
+			KicadSchematic2Svg k;
+			try {
+				QString svg = k.convert(filepath, defName);
+				if (svg.isEmpty()) {
+					DebugDialog::debug("svg is empty " + filepath + " " + defName);
+					continue;
+				}
+				foreach (QChar c, QString("<>:\"/\\|?*")) {
+					defName.remove(c);
+				}
+
+				//DebugDialog::debug(QString("converting %1 %2").arg(defName).arg(filename));
+
+				QString newFilePath = dir.absoluteFilePath(defName + "_" + filename);
+				newFilePath.replace(".lib", ".svg");
 				QFile file(newFilePath);
 				if (file.open(QFile::WriteOnly)) {
 					QTextStream stream(&file);

@@ -88,7 +88,8 @@ protected:
 	void registerFonts();
 	bool loadBin(QString binToOpen);
 	void runGedaService();
-	void runKicadService();
+	void runKicadFootprintService();
+	void runKicadSchematicService();
 	QList<class MainWindow *> recoverBackups();
 	QList<MainWindow *> loadLastOpenSketch();
 	void doLoadPrevious(MainWindow *);
@@ -118,7 +119,8 @@ protected:
 	bool m_runAsService;
 	bool m_gerberService;
 	bool m_gedaService;
-	bool m_kicadService;
+	bool m_kicadFootprintService;
+	bool m_kicadSchematicService;
 	int m_progressIndex;
 	class FSplashScreen * m_splash;
 	QString m_outputFolder;

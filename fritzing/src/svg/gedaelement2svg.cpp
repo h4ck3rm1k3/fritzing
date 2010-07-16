@@ -132,8 +132,8 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 			else if (thing.compare("mark", Qt::CaseInsensitive) == 0) {
 			}
 			else if (thing.compare("attribute", Qt::CaseInsensitive) == 0) {
-				QString aname = TextUtils::stripNonValidXMLCharacters(Qt::escape(unquote(stack[ix + 1].toString())));
-				metadata += m_attribute.arg(aname, TextUtils::stripNonValidXMLCharacters(Qt::escape(unquote(stack[ix + 2].toString()))));
+				QString aname = TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(unquote(stack[ix + 1].toString())));
+				metadata += m_attribute.arg(aname, TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(unquote(stack[ix + 2].toString()))));
 				if (aname.compare("author", Qt::CaseInsensitive) == 0) {
 					hasAuthor = true;
 				}
@@ -155,7 +155,7 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 	}
 
 	foreach (QString c, lexer.comments()) {
-		metadata += m_comment.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(c)));
+		metadata += m_comment.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(c)));
 	}
 
 	if (!hasAuthor) {
@@ -267,7 +267,7 @@ QString GedaElement2Svg::convertPin(QVector<QVariant> & stack, int ix, int argCo
 					.arg(cy)
 					.arg(r - (w / 2))
 					.arg(pinID)
-					.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(name)))
+					.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(name)))
 					.arg(w)
 					.arg(ViewLayer::Copper0Color);
 	return circle;
@@ -350,7 +350,7 @@ QString GedaElement2Svg::convertPad(QVector<QVariant> & stack, int ix, int argCo
 					.arg(square ? "square" : "round")
 					.arg(square ? "miter" : "round")
 					.arg(pinID)
-					.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(name)))
+					.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(name)))
 					.arg(ViewLayer::Copper1Color);
 	}
 

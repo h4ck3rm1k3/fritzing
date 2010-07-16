@@ -51,7 +51,7 @@ QString Kicad2Svg::makeMetadata(const QString & filename, const QString & type, 
 	metadata += "<rdf:Description rdf:about=''>\n";
 	metadata += m_attribute.arg("kicad filename").arg(fileInfo.fileName());
 	metadata += m_attribute.arg(QString("kicad %1").arg(type))
-							.arg(TextUtils::stripNonValidXMLCharacters(Qt::escape(name)));
+							.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(name)));
 	metadata += m_attribute.arg("fritzing version").arg(Version::versionString());
 	metadata += m_attribute.arg("conversion date").arg(dt);
 	metadata += m_attribute.arg("dist-license").arg("GPL");

@@ -58,10 +58,12 @@ public:
 	static void flipSMDSvg(const QString & filename, QDomDocument & flipDoc, const QString & elementID, const QString & altElementID, qreal printerScale);
 	static bool addCopper1(const QString & filename, QDomDocument & doc, const QString & srcAtt, const QString & destAtt);
 	static void setSVGTransform(QDomElement &, QMatrix &);
+	static QString svgMatrix(QMatrix &);
 	static QString svgTransform(const QString & svg, QTransform & transform, bool translate, const QString extra);
 	static bool getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight);
 	static bool findText(QDomNode & node, QString & text);
 	static QString stripNonValidXMLCharacters(const QString & str); 
+	static QString escapeAnd(const QString &);
 
 
 public:
