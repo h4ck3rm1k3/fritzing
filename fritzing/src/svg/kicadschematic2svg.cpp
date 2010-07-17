@@ -83,9 +83,9 @@ QString KicadSchematic2Svg::convert(const QString & filename, const QString & de
 	metadata += endMetadata();
 
 	QString reference;
-	int textOffset;
-	bool drawPinNumber;
-	bool drawPinName;
+        int textOffset = 0;
+        bool drawPinNumber = true;
+        bool drawPinName = true;
 	bool gotDef = false;
 	while (true) {
 		QString line = textStream.readLine();
