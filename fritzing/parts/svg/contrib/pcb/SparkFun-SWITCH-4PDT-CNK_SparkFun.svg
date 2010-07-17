@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="1.6993in" height="0.3in" viewBox="0 0 16993 3000" ><title>SparkFun.mod</title><desc>Kicad module 'SparkFun-SWITCH-4PDT-CNK' from file 'SparkFun.mod' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/kicadmetadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='kicad filename'>SparkFun.mod</fz:attr>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="1.6993in" height="0.3093in" viewBox="0 0 16993 3093" >
+<title>SparkFun.mod</title>
+<desc>Kicad module 'SparkFun-SWITCH-4PDT-CNK' from file 'SparkFun.mod' converted by Fritzing</desc>
+<metadata xmlns:fz='http://fritzing.org/kicadmetadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+<rdf:RDF><rdf:Description rdf:about=''>
+<fz:attr name='kicad filename'>SparkFun.mod</fz:attr>
 <fz:attr name='kicad module'>SparkFun-SWITCH-4PDT-CNK</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.05.25.4197</fz:attr>
-<fz:attr name='conversion date'>07/06/2010 13:15:51</fz:attr>
+<fz:attr name='fritzing version'>0.4.1b.07.04.4318</fz:attr>
+<fz:attr name='conversion date'>17/07/2010 17:18:04</fz:attr>
 <fz:attr name='dist-license'>GPL</fz:attr>
 <fz:attr name='use-license'>unlimited</fz:attr>
 <fz:attr name='author'>KICAD project</fz:attr>
@@ -11,95 +17,95 @@
 </rdf:Description></rdf:RDF></metadata><g id="copper0">
  <g id="copper1">
   <g connectorname="P$13" id="connector0pin">
-   <circle fill="none" cx="16580" cy="2680" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="2542.25" x1="16167" y2="2542.25" stroke-width="-275.5" x2="16993"/>
-   <line fill="none" stroke="#ff9400" y1="2817.75" x1="16167" y2="2817.75" stroke-width="-275.5" x2="16993"/>
-   <line fill="none" stroke="#ff9400" y1="2680" x1="16235.8" y2="2680" stroke-width="137.5" x2="16235.8"/>
-   <line fill="none" stroke="#ff9400" y1="2680" x1="16924.2" y2="2680" stroke-width="137.5" x2="16924.2"/>
+   <circle fill="none" cx="16580" cy="2680" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="2335.75" x1="16167" y2="2335.75" stroke-width="137.5" x2="16993"/>
+   <line fill="none" stroke="#ff9400" y1="3024.25" x1="16167" y2="3024.25" stroke-width="137.5" x2="16993"/>
+   <line fill="none" stroke="#ff9400" y1="2267" x1="16235.8" y2="3093" stroke-width="137.5" x2="16235.8"/>
+   <line fill="none" stroke="#ff9400" y1="2267" x1="16924.2" y2="3093" stroke-width="137.5" x2="16924.2"/>
   </g>
   <g connectorname="PP$1" id="connector1pin">
-   <circle fill="none" cx="9250" cy="1990" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="1852.25" x1="8837" y2="1852.25" stroke-width="-275.5" x2="9663"/>
-   <line fill="none" stroke="#ff9400" y1="2127.75" x1="8837" y2="2127.75" stroke-width="-275.5" x2="9663"/>
-   <line fill="none" stroke="#ff9400" y1="1990" x1="8905.75" y2="1990" stroke-width="137.5" x2="8905.75"/>
-   <line fill="none" stroke="#ff9400" y1="1990" x1="9594.25" y2="1990" stroke-width="137.5" x2="9594.25"/>
+   <circle fill="none" cx="9250" cy="1990" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="1645.75" x1="8837" y2="1645.75" stroke-width="137.5" x2="9663"/>
+   <line fill="none" stroke="#ff9400" y1="2334.25" x1="8837" y2="2334.25" stroke-width="137.5" x2="9663"/>
+   <line fill="none" stroke="#ff9400" y1="1577" x1="8905.75" y2="2403" stroke-width="137.5" x2="8905.75"/>
+   <line fill="none" stroke="#ff9400" y1="1577" x1="9594.25" y2="2403" stroke-width="137.5" x2="9594.25"/>
   </g>
   <g connectorname="PP$2" id="connector2pin">
-   <circle fill="none" cx="10500" cy="2209" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="2071.25" x1="10087" y2="2071.25" stroke-width="-275.5" x2="10913"/>
-   <line fill="none" stroke="#ff9400" y1="2346.75" x1="10087" y2="2346.75" stroke-width="-275.5" x2="10913"/>
-   <line fill="none" stroke="#ff9400" y1="2209" x1="10155.8" y2="2209" stroke-width="137.5" x2="10155.8"/>
-   <line fill="none" stroke="#ff9400" y1="2209" x1="10844.2" y2="2209" stroke-width="137.5" x2="10844.2"/>
+   <circle fill="none" cx="10500" cy="2209" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="1864.75" x1="10087" y2="1864.75" stroke-width="137.5" x2="10913"/>
+   <line fill="none" stroke="#ff9400" y1="2553.25" x1="10087" y2="2553.25" stroke-width="137.5" x2="10913"/>
+   <line fill="none" stroke="#ff9400" y1="1796" x1="10155.8" y2="2622" stroke-width="137.5" x2="10155.8"/>
+   <line fill="none" stroke="#ff9400" y1="1796" x1="10844.2" y2="2622" stroke-width="137.5" x2="10844.2"/>
   </g>
   <g connectorname="PP$3" id="connector3pin">
-   <circle fill="none" cx="11750" cy="1990" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="1852.25" x1="11337" y2="1852.25" stroke-width="-275.5" x2="12163"/>
-   <line fill="none" stroke="#ff9400" y1="2127.75" x1="11337" y2="2127.75" stroke-width="-275.5" x2="12163"/>
-   <line fill="none" stroke="#ff9400" y1="1990" x1="11405.8" y2="1990" stroke-width="137.5" x2="11405.8"/>
-   <line fill="none" stroke="#ff9400" y1="1990" x1="12094.2" y2="1990" stroke-width="137.5" x2="12094.2"/>
+   <circle fill="none" cx="11750" cy="1990" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="1645.75" x1="11337" y2="1645.75" stroke-width="137.5" x2="12163"/>
+   <line fill="none" stroke="#ff9400" y1="2334.25" x1="11337" y2="2334.25" stroke-width="137.5" x2="12163"/>
+   <line fill="none" stroke="#ff9400" y1="1577" x1="11405.8" y2="2403" stroke-width="137.5" x2="11405.8"/>
+   <line fill="none" stroke="#ff9400" y1="1577" x1="12094.2" y2="2403" stroke-width="137.5" x2="12094.2"/>
   </g>
   <g connectorname="PP$4" id="connector4pin">
-   <circle fill="none" cx="13000" cy="2209" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="2071.25" x1="12587" y2="2071.25" stroke-width="-275.5" x2="13413"/>
-   <line fill="none" stroke="#ff9400" y1="2346.75" x1="12587" y2="2346.75" stroke-width="-275.5" x2="13413"/>
-   <line fill="none" stroke="#ff9400" y1="2209" x1="12655.8" y2="2209" stroke-width="137.5" x2="12655.8"/>
-   <line fill="none" stroke="#ff9400" y1="2209" x1="13344.2" y2="2209" stroke-width="137.5" x2="13344.2"/>
+   <circle fill="none" cx="13000" cy="2209" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="1864.75" x1="12587" y2="1864.75" stroke-width="137.5" x2="13413"/>
+   <line fill="none" stroke="#ff9400" y1="2553.25" x1="12587" y2="2553.25" stroke-width="137.5" x2="13413"/>
+   <line fill="none" stroke="#ff9400" y1="1796" x1="12655.8" y2="2622" stroke-width="137.5" x2="12655.8"/>
+   <line fill="none" stroke="#ff9400" y1="1796" x1="13344.2" y2="2622" stroke-width="137.5" x2="13344.2"/>
   </g>
   <g connectorname="PP$5" id="connector5pin">
-   <circle fill="none" cx="14250" cy="1990" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="1852.25" x1="13837" y2="1852.25" stroke-width="-275.5" x2="14663"/>
-   <line fill="none" stroke="#ff9400" y1="2127.75" x1="13837" y2="2127.75" stroke-width="-275.5" x2="14663"/>
-   <line fill="none" stroke="#ff9400" y1="1990" x1="13905.8" y2="1990" stroke-width="137.5" x2="13905.8"/>
-   <line fill="none" stroke="#ff9400" y1="1990" x1="14594.2" y2="1990" stroke-width="137.5" x2="14594.2"/>
+   <circle fill="none" cx="14250" cy="1990" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="1645.75" x1="13837" y2="1645.75" stroke-width="137.5" x2="14663"/>
+   <line fill="none" stroke="#ff9400" y1="2334.25" x1="13837" y2="2334.25" stroke-width="137.5" x2="14663"/>
+   <line fill="none" stroke="#ff9400" y1="1577" x1="13905.8" y2="2403" stroke-width="137.5" x2="13905.8"/>
+   <line fill="none" stroke="#ff9400" y1="1577" x1="14594.2" y2="2403" stroke-width="137.5" x2="14594.2"/>
   </g>
   <g connectorname="PP$6" id="connector6pin">
-   <circle fill="none" cx="15500" cy="2209" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="2071.25" x1="15087" y2="2071.25" stroke-width="-275.5" x2="15913"/>
-   <line fill="none" stroke="#ff9400" y1="2346.75" x1="15087" y2="2346.75" stroke-width="-275.5" x2="15913"/>
-   <line fill="none" stroke="#ff9400" y1="2209" x1="15155.8" y2="2209" stroke-width="137.5" x2="15155.8"/>
-   <line fill="none" stroke="#ff9400" y1="2209" x1="15844.2" y2="2209" stroke-width="137.5" x2="15844.2"/>
+   <circle fill="none" cx="15500" cy="2209" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="1864.75" x1="15087" y2="1864.75" stroke-width="137.5" x2="15913"/>
+   <line fill="none" stroke="#ff9400" y1="2553.25" x1="15087" y2="2553.25" stroke-width="137.5" x2="15913"/>
+   <line fill="none" stroke="#ff9400" y1="1796" x1="15155.8" y2="2622" stroke-width="137.5" x2="15155.8"/>
+   <line fill="none" stroke="#ff9400" y1="1796" x1="15844.2" y2="2622" stroke-width="137.5" x2="15844.2"/>
   </g>
   <g connectorname="PP$7" id="connector7pin">
-   <circle fill="none" cx="9250" cy="791" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="653.25" x1="8837" y2="653.25" stroke-width="-275.5" x2="9663"/>
-   <line fill="none" stroke="#ff9400" y1="928.75" x1="8837" y2="928.75" stroke-width="-275.5" x2="9663"/>
-   <line fill="none" stroke="#ff9400" y1="791" x1="8905.75" y2="791" stroke-width="137.5" x2="8905.75"/>
-   <line fill="none" stroke="#ff9400" y1="791" x1="9594.25" y2="791" stroke-width="137.5" x2="9594.25"/>
+   <circle fill="none" cx="9250" cy="791" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="446.75" x1="8837" y2="446.75" stroke-width="137.5" x2="9663"/>
+   <line fill="none" stroke="#ff9400" y1="1135.25" x1="8837" y2="1135.25" stroke-width="137.5" x2="9663"/>
+   <line fill="none" stroke="#ff9400" y1="378" x1="8905.75" y2="1204" stroke-width="137.5" x2="8905.75"/>
+   <line fill="none" stroke="#ff9400" y1="378" x1="9594.25" y2="1204" stroke-width="137.5" x2="9594.25"/>
   </g>
   <g connectorname="PP$8" id="connector8pin">
-   <circle fill="none" cx="10500" cy="1010" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="872.25" x1="10087" y2="872.25" stroke-width="-275.5" x2="10913"/>
-   <line fill="none" stroke="#ff9400" y1="1147.75" x1="10087" y2="1147.75" stroke-width="-275.5" x2="10913"/>
-   <line fill="none" stroke="#ff9400" y1="1010" x1="10155.8" y2="1010" stroke-width="137.5" x2="10155.8"/>
-   <line fill="none" stroke="#ff9400" y1="1010" x1="10844.2" y2="1010" stroke-width="137.5" x2="10844.2"/>
+   <circle fill="none" cx="10500" cy="1010" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="665.75" x1="10087" y2="665.75" stroke-width="137.5" x2="10913"/>
+   <line fill="none" stroke="#ff9400" y1="1354.25" x1="10087" y2="1354.25" stroke-width="137.5" x2="10913"/>
+   <line fill="none" stroke="#ff9400" y1="597" x1="10155.8" y2="1423" stroke-width="137.5" x2="10155.8"/>
+   <line fill="none" stroke="#ff9400" y1="597" x1="10844.2" y2="1423" stroke-width="137.5" x2="10844.2"/>
   </g>
   <g connectorname="PP$9" id="connector9pin">
-   <circle fill="none" cx="11750" cy="791" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="653.25" x1="11337" y2="653.25" stroke-width="-275.5" x2="12163"/>
-   <line fill="none" stroke="#ff9400" y1="928.75" x1="11337" y2="928.75" stroke-width="-275.5" x2="12163"/>
-   <line fill="none" stroke="#ff9400" y1="791" x1="11405.8" y2="791" stroke-width="137.5" x2="11405.8"/>
-   <line fill="none" stroke="#ff9400" y1="791" x1="12094.2" y2="791" stroke-width="137.5" x2="12094.2"/>
+   <circle fill="none" cx="11750" cy="791" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="446.75" x1="11337" y2="446.75" stroke-width="137.5" x2="12163"/>
+   <line fill="none" stroke="#ff9400" y1="1135.25" x1="11337" y2="1135.25" stroke-width="137.5" x2="12163"/>
+   <line fill="none" stroke="#ff9400" y1="378" x1="11405.8" y2="1204" stroke-width="137.5" x2="11405.8"/>
+   <line fill="none" stroke="#ff9400" y1="378" x1="12094.2" y2="1204" stroke-width="137.5" x2="12094.2"/>
   </g>
   <g connectorname="PP$10" id="connector10pin">
-   <circle fill="none" cx="13000" cy="1030" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="892.25" x1="12587" y2="892.25" stroke-width="-275.5" x2="13413"/>
-   <line fill="none" stroke="#ff9400" y1="1167.75" x1="12587" y2="1167.75" stroke-width="-275.5" x2="13413"/>
-   <line fill="none" stroke="#ff9400" y1="1030" x1="12655.8" y2="1030" stroke-width="137.5" x2="12655.8"/>
-   <line fill="none" stroke="#ff9400" y1="1030" x1="13344.2" y2="1030" stroke-width="137.5" x2="13344.2"/>
+   <circle fill="none" cx="13000" cy="1030" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="685.75" x1="12587" y2="685.75" stroke-width="137.5" x2="13413"/>
+   <line fill="none" stroke="#ff9400" y1="1374.25" x1="12587" y2="1374.25" stroke-width="137.5" x2="13413"/>
+   <line fill="none" stroke="#ff9400" y1="617" x1="12655.8" y2="1443" stroke-width="137.5" x2="12655.8"/>
+   <line fill="none" stroke="#ff9400" y1="617" x1="13344.2" y2="1443" stroke-width="137.5" x2="13344.2"/>
   </g>
   <g connectorname="PP$11" id="connector11pin">
-   <circle fill="none" cx="14250" cy="791" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="653.25" x1="13837" y2="653.25" stroke-width="-275.5" x2="14663"/>
-   <line fill="none" stroke="#ff9400" y1="928.75" x1="13837" y2="928.75" stroke-width="-275.5" x2="14663"/>
-   <line fill="none" stroke="#ff9400" y1="791" x1="13905.8" y2="791" stroke-width="137.5" x2="13905.8"/>
-   <line fill="none" stroke="#ff9400" y1="791" x1="14594.2" y2="791" stroke-width="137.5" x2="14594.2"/>
+   <circle fill="none" cx="14250" cy="791" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="446.75" x1="13837" y2="446.75" stroke-width="137.5" x2="14663"/>
+   <line fill="none" stroke="#ff9400" y1="1135.25" x1="13837" y2="1135.25" stroke-width="137.5" x2="14663"/>
+   <line fill="none" stroke="#ff9400" y1="378" x1="13905.8" y2="1204" stroke-width="137.5" x2="13905.8"/>
+   <line fill="none" stroke="#ff9400" y1="378" x1="14594.2" y2="1204" stroke-width="137.5" x2="14594.2"/>
   </g>
   <g connectorname="PP$12" id="connector12pin">
-   <circle fill="none" cx="15500" cy="1010" stroke="#ff9400" r="137.75" stroke-width="-275.5"/>
-   <line fill="none" stroke="#ff9400" y1="872.25" x1="15087" y2="872.25" stroke-width="-275.5" x2="15913"/>
-   <line fill="none" stroke="#ff9400" y1="1147.75" x1="15087" y2="1147.75" stroke-width="-275.5" x2="15913"/>
-   <line fill="none" stroke="#ff9400" y1="1010" x1="15155.8" y2="1010" stroke-width="137.5" x2="15155.8"/>
-   <line fill="none" stroke="#ff9400" y1="1010" x1="15844.2" y2="1010" stroke-width="137.5" x2="15844.2"/>
+   <circle fill="none" cx="15500" cy="1010" stroke="#ff9400" r="344.25" stroke-width="137.5"/>
+   <line fill="none" stroke="#ff9400" y1="665.75" x1="15087" y2="665.75" stroke-width="137.5" x2="15913"/>
+   <line fill="none" stroke="#ff9400" y1="1354.25" x1="15087" y2="1354.25" stroke-width="137.5" x2="15913"/>
+   <line fill="none" stroke="#ff9400" y1="597" x1="15155.8" y2="1423" stroke-width="137.5" x2="15155.8"/>
+   <line fill="none" stroke="#ff9400" y1="597" x1="15844.2" y2="1423" stroke-width="137.5" x2="15844.2"/>
   </g>
  </g>
 </g>

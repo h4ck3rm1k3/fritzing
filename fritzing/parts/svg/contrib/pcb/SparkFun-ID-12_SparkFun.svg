@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?> <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="1.0392in" height="0.9961in" viewBox="0 0 10392 9961" ><title>SparkFun.mod</title><desc>Kicad module 'SparkFun-ID-12' from file 'SparkFun.mod' converted by Fritzing</desc><metadata xmlns:fz='http://fritzing.org/kicadmetadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:RDF><rdf:Description rdf:about=''><fz:attr name='kicad filename'>SparkFun.mod</fz:attr>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="1.0392in" height="0.9961in" viewBox="0 0 10392 9961" >
+<title>SparkFun.mod</title>
+<desc>Kicad module 'SparkFun-ID-12' from file 'SparkFun.mod' converted by Fritzing</desc>
+<metadata xmlns:fz='http://fritzing.org/kicadmetadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+<rdf:RDF><rdf:Description rdf:about=''>
+<fz:attr name='kicad filename'>SparkFun.mod</fz:attr>
 <fz:attr name='kicad module'>SparkFun-ID-12</fz:attr>
-<fz:attr name='fritzing version'>0.3.21b.05.25.4197</fz:attr>
-<fz:attr name='conversion date'>07/06/2010 13:13:32</fz:attr>
+<fz:attr name='fritzing version'>0.4.1b.07.04.4318</fz:attr>
+<fz:attr name='conversion date'>17/07/2010 17:16:00</fz:attr>
 <fz:attr name='dist-license'>GPL</fz:attr>
 <fz:attr name='use-license'>unlimited</fz:attr>
 <fz:attr name='author'>KICAD project</fz:attr>
@@ -18,11 +24,11 @@
 </rdf:Description></rdf:RDF></metadata><g id="copper0">
  <g id="copper1">
   <g connectorname="1" id="connector0pin">
-   <circle fill="none" cx="6416" cy="7874" stroke="#ff9400" r="78.5" stroke-width="-157"/>
-   <line fill="none" stroke="#ff9400" y1="7795.5" x1="6159" y2="7795.5" stroke-width="-157" x2="6673"/>
-   <line fill="none" stroke="#ff9400" y1="7952.5" x1="6159" y2="7952.5" stroke-width="-157" x2="6673"/>
-   <line fill="none" stroke="#ff9400" y1="7874" x1="6209" y2="7874" stroke-width="100" x2="6209"/>
-   <line fill="none" stroke="#ff9400" y1="7874" x1="6623" y2="7874" stroke-width="100" x2="6623"/>
+   <circle fill="none" cx="6416" cy="7874" stroke="#ff9400" r="207" stroke-width="100"/>
+   <line fill="none" stroke="#ff9400" y1="7667" x1="6159" y2="7667" stroke-width="100" x2="6673"/>
+   <line fill="none" stroke="#ff9400" y1="8081" x1="6159" y2="8081" stroke-width="100" x2="6673"/>
+   <line fill="none" stroke="#ff9400" y1="7617" x1="6209" y2="8131" stroke-width="100" x2="6209"/>
+   <line fill="none" stroke="#ff9400" y1="7617" x1="6623" y2="8131" stroke-width="100" x2="6623"/>
   </g>
   <g connectorname="2" id="connector1pin">
    <circle fill="none" cx="5629" cy="7874" stroke="#ff9400" r="207" stroke-width="100"/>
