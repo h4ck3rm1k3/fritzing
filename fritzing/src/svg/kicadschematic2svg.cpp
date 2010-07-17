@@ -41,11 +41,7 @@ $Date$
 #include <limits>
 
 // TODO:
-//		text outside borders
-//		if pin doesn't have a number (transistors)
-//		text positioning rules?
-//		pin: if name begins with '~' and is longer than one char, draw a 'not' above the truncated name
-//		pin: if length = 0 don't draw name/number, include the pin at all?
+//		pin shape: invert, etc.
 
 KicadSchematic2Svg::KicadSchematic2Svg() : Kicad2Svg() {
 }
@@ -87,6 +83,9 @@ QString KicadSchematic2Svg::convert(const QString & filename, const QString & de
 	metadata += endMetadata();
 
 	QString reference;
+	int textOffset;
+	bool drawPinNumber;
+	bool drawPinName;
 	bool gotDef = false;
 	while (true) {
 		QString line = textStream.readLine();
@@ -95,10 +94,14 @@ QString KicadSchematic2Svg::convert(const QString & filename, const QString & de
 		}
 
 		if (line.startsWith("DEF") && line.contains(defName, Qt::CaseInsensitive)) {
-			QStringList defs = line.split(" ", QString::SkipEmptyParts);
-			if (defs.count() > 2) {
-				reference = defs[2];
+			QStringList defs = splitLine(line);
+			if (defs.count() < 8) {
+				throw QObject::tr("bad schematic definition %1").arg(filename);
 			}
+			reference = defs[2];
+			textOffset = defs[4].toInt();
+			drawPinName = defs[6] == "Y";
+			drawPinNumber = defs[5] == "Y";
 			gotDef = true;
 			break;
 		}
@@ -153,7 +156,7 @@ QString KicadSchematic2Svg::convert(const QString & filename, const QString & de
 		}
 	}
 
-	QStringList pins;
+	int pinIndex = 0;
 	while (true) {
 		QString line = textStream.readLine();
 		if (line.isNull()) {
@@ -176,7 +179,7 @@ QString KicadSchematic2Svg::convert(const QString & filename, const QString & de
 		}
 		else if (line.startsWith("X")) {
 			// need to look at them all before formatting (I think)
-			pins.append(line);
+			contents += convertPin(line, textOffset, drawPinName, drawPinNumber, pinIndex++);
 		}
 		else if (line.startsWith("C")) {
 			contents += convertCircle(line);
@@ -193,17 +196,6 @@ QString KicadSchematic2Svg::convert(const QString & filename, const QString & de
 		else {
 			DebugDialog::debug("Unknown line " + line);
 		}
-	}
-
-	bool allShort = true;
-	foreach (QString line, pins) {
-		if (!shortPinName(line)) {
-			allShort = false;
-			break;
-		}
-	}
-	foreach (QString line, pins) {
-		contents += convertPin(line, allShort);
 	}
 
 	contents += "</g>\n";
@@ -231,6 +223,11 @@ QString KicadSchematic2Svg::convertField(const QString & line) {
 		return "";
 	}
 
+	if (fs[6] == "I") {
+		// invisible
+		return "";
+	}
+
 	while (fs.count() < 9) {
 		fs.append("");
 	}
@@ -239,8 +236,15 @@ QString KicadSchematic2Svg::convertField(const QString & line) {
 }
 
 QString KicadSchematic2Svg::convertField(const QString & xString, const QString & yString, const QString & fontSizeString, const QString &orientation, 
-					 const QString & hjustify, const QString & vjustify, const QString & text)
+					 const QString & hjustify, const QString & vjustify, const QString & t)
 {
+	QString text = t;
+	bool notName = false;
+	if (text.startsWith("~")) {
+		notName = true;
+		text.remove(0, 1);
+	}
+
 	int x = xString.toInt();
 	int y = -yString.toInt();						// KiCad flips y-axis w.r.t. svg
 	int fontSize = fontSizeString.toInt();
@@ -249,13 +253,13 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 	QString rotation;
 	QMatrix m;
 	if (rotate) {
-		QMatrix m = QMatrix().translate(-x, -y) * QMatrix().rotate(-90) * QMatrix().translate(x, y);
+		m = QMatrix().translate(-x, -y) * QMatrix().rotate(-90) * QMatrix().translate(x, y);
 		// store x, y, and r so they can be shifted correctly later
 		rotation = QString("transform='%1' _x='%2' _y='%3' _r='-90'").arg(TextUtils::svgMatrix(m)).arg(x).arg(y);
 	}
 
 	QFont font;
-	font.setFamily("Droid Sans");
+	font.setFamily("OCRA");
 	font.setWeight(QFont::Normal);
 	font.setPointSizeF(72 * fontSize / 1000.0);
 
@@ -284,9 +288,11 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 
 	QFontMetrics metrics(font);
 	QRect bri = metrics.boundingRect(text);
+
 	// convert back to 1000 dpi
-	QRectF brf(bri.left() * 1000 / FSvgRenderer::printerScale(), bri.top() * 1000 / FSvgRenderer::printerScale(),
-			   bri.width() * 1000 / FSvgRenderer::printerScale(), bri.height() * 1000 / FSvgRenderer::printerScale());
+	QRectF brf(0, 0,
+			   bri.width() * 1000 / FSvgRenderer::printerScale(), 
+			   bri.height() * 1000 / FSvgRenderer::printerScale());
 
 	if (anchor == "start") {
 		brf.translate(x, y - (brf.height() / 2));
@@ -299,7 +305,7 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 	}
 
 	if (rotate) {
-		brf = m.mapRect(brf);
+		brf = m.map(QPolygonF(brf)).boundingRect();
 	}
 
 	checkXLimit(brf.left());
@@ -307,14 +313,22 @@ QString KicadSchematic2Svg::convertField(const QString & xString, const QString 
 	checkYLimit(brf.top());
 	checkYLimit(brf.bottom());
 
-	return QString("<text x='%1' y='%2' font-size='%3' font-family='DroidSans' stroke='none' fill='#000000' text-anchor='%4' %5 %6>%7</text>\n")
+	QString s = QString("<text x='%1' y='%2' font-size='%3' font-family='OCRA' stroke='none' fill='#000000' text-anchor='%4' %5 %6>%7</text>\n")
 					.arg(x)		
 					.arg(y + (fontSize / 3))		
 					.arg(fontSize)		
 					.arg(anchor)
 					.arg(style)
 					.arg(rotation)
-					.arg(TextUtils::escapeAnd(unquote(text)));		// the text
+					.arg(TextUtils::escapeAnd(unquote(text)));		
+	if (notName) {
+		s += QString("<line fill='none' stroke='#000000' x1='%1' y1='%2' x2='%3' y2='%4' stroke-width='2' />\n")
+			.arg(brf.left())
+			.arg(brf.top())
+			.arg(rotate ? brf.left() : brf.right())
+			.arg(rotate ? brf.bottom() : brf.top());
+	}
+	return s;
 }
 
 QString KicadSchematic2Svg::convertRect(const QString & line) 
@@ -350,7 +364,7 @@ QString KicadSchematic2Svg::convertRect(const QString & line)
 	return rect;
 }
 
-QString KicadSchematic2Svg::convertPin(const QString & line, bool allShortPinNames) 
+QString KicadSchematic2Svg::convertPin(const QString & line, int textOffset, bool drawPinName, bool drawPinNumber, int pinIndex) 
 {
 	QStringList l = splitLine(line);
 	if (l.count() < 12) {
@@ -363,12 +377,27 @@ QString KicadSchematic2Svg::convertPin(const QString & line, bool allShortPinNam
 		return "";
 	}
 
+	if (l.count() > 12 && l[12] == "N") {
+		// don't draw this
+		return "";
+	}
+
+	int unit = l[9].toInt();
+	if (unit > 1) {
+		// don't draw this
+		return "";
+	}
+
 	QChar orientation = l[6].at(0);
 	QString name = l[1];
 	if (name == "~") {
 		name = "";
 	}
-	int n = l[2].toInt();
+	bool pinNumberOK;
+	int pinNumber = l[2].toInt(&pinNumberOK);
+	if (!pinNumberOK) {
+		pinNumber = pinIndex;
+	}
 	int nFontSize = l[7].toInt();
 	int x1 = l[3].toInt();
 	int y1 = -l[4].toInt();							// KiCad flips y-axis w.r.t. svg
@@ -385,7 +414,7 @@ QString KicadSchematic2Svg::convertPin(const QString & line, bool allShortPinNam
 		case 'D':
 			y2 = y1 + length;
 			y3 = y1 + (length / 2);
-			if (allShortPinNames) {
+			if (textOffset == 0) {
 				x3 += nFontSize / 2;
 				x4 -= nFontSize / 2;
 				y4 = y3;
@@ -394,14 +423,13 @@ QString KicadSchematic2Svg::convertPin(const QString & line, bool allShortPinNam
 			else {
 				x3 -= nFontSize / 2;
 				y4 = y2;
-				justify = "R";
-			}
+				justify = "R";			}
 			rotate = true;
 			break;
 		case 'U':
 			y2 = y1 - length;
 			y3 = y1 - (length / 2);
-			if (allShortPinNames) {
+			if (textOffset == 0) {
 				x3 += nFontSize / 2;
 				x4 -= nFontSize / 2;
 				y4 = y3;
@@ -417,7 +445,7 @@ QString KicadSchematic2Svg::convertPin(const QString & line, bool allShortPinNam
 		case 'L':
 			x2 = x1 - length;
 			x3 = x1 - (length / 2);
-			if (allShortPinNames) {
+			if (textOffset == 0) {
 				y3 += nFontSize / 2;
 				y4 -= nFontSize / 2;
 				x4 = x3;
@@ -432,7 +460,7 @@ QString KicadSchematic2Svg::convertPin(const QString & line, bool allShortPinNam
 		case 'R':
 			x2 = x1 + length;
 			x3 = x1 + (length / 2);
-			if (allShortPinNames) {
+			if (textOffset == 0) {
 				y3 += nFontSize / 2;
 				y4 -= nFontSize / 2;
 				x4 = x3;
@@ -462,20 +490,20 @@ QString KicadSchematic2Svg::convertPin(const QString & line, bool allShortPinNam
 			.arg(x2)
 			.arg(y2)
 			.arg(thickness)
-			.arg(n)
+			.arg(pinNumber)
 			.arg(TextUtils::escapeAnd(name));
 
 	pin += QString("<rect fill='none' x='%1' y='%2' width='0' height='0' stroke-width='0' id='connector%3terminal'  />\n")
 			.arg(x1)
 			.arg(y1)
-			.arg(n);
+			.arg(pinNumber);
 
-	if (length > 0) {
+
+	if (drawPinNumber) {
 		pin += convertField(QString::number(x3), QString::number(-y3), l[7], rotate ? "V" : "H", "C", "C", l[2]);
-		pin += convertField(QString::number(x4), QString::number(-y4), l[8], rotate ? "V" : "H", justify, "C", name);
 	}
-	if (length < 0) {
-		DebugDialog::debug("negative length");
+	if (drawPinName && !name.isEmpty()) {
+		pin += convertField(QString::number(x4), QString::number(-y4), l[8], rotate ? "V" : "H", justify, "C", name);
 	}
 
 	return pin;
@@ -644,16 +672,6 @@ QString KicadSchematic2Svg::addFill(const QString & line, const QString & NF, co
 
 	DebugDialog::debug(QString("bad NF param: %1").arg(line));
 	return "";
-}
-
-bool KicadSchematic2Svg::shortPinName(const QString & line) {
-	QStringList l = splitLine(line);
-	if (l.count() < 2) {
-		return true;
-	}
-
-	QString name = l[1];
-	return (name.length() < 4);
 }
 
 QStringList KicadSchematic2Svg::splitLine(const QString & line) {

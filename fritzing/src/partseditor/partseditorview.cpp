@@ -562,12 +562,10 @@ void PartsEditorView::loadFile() {
 		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)");
 	}
 
-#ifndef QT_NO_DEBUG
 	if (m_viewIdentifier == ViewIdentifierClass::SchematicView) {
 		extras[0] = "*.lib";
 		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)");   // 
 	}
-#endif
 
 	QString origPath = FolderUtils::getOpenFileName(this,
 		tr("Open Image"),
