@@ -111,11 +111,25 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 		return false;
 	}
 
+	QString elementText;
+	QTextStream textStream(&elementText);
+	element.save(textStream, 0);
+
 	while (!root.firstChild().isNull()) {
 		root.removeChild(root.firstChild());
 	}
 
-	root.appendChild(element);
+	QString svgOnly = m_domDocument.toString();
+	int ix = svgOnly.lastIndexOf("/>");
+	if (ix < 0) return false;
+	svgOnly[ix] = ' ';
+	svgOnly += elementText;
+	svgOnly += "</svg>";
+
+	if (!m_domDocument.setContent(svgOnly, true, &errorStr, &errorLine, &errorColumn)) {
+		return false;
+	}
+
 	m_byteArray = m_domDocument.toByteArray();
 
 	//QString s = m_domDocument.toString();
