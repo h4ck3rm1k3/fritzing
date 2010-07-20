@@ -111,17 +111,46 @@ bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
 		return false;
 	}
 
+	QStringList superTransforms;
+	QDomNode parent = element.parentNode();
+	while (!parent.isNull()) {
+		QDomElement e = parent.toElement();
+		if (!e.isNull()) {
+			QString transform = e.attribute("transform");
+			if (!transform.isEmpty()) {
+				superTransforms.append(transform);
+			}
+		}
+		parent = parent.parentNode();
+	}
+
+	if (!superTransforms.isEmpty()) {
+		element.removeAttribute("id");
+	}
+
 	QString elementText;
 	QTextStream textStream(&elementText);
 	element.save(textStream, 0);
+
+	if (!superTransforms.isEmpty()) {
+		for (int i = 0; i < superTransforms.count() - 1; i++) {
+			elementText = QString("<g transform='%1'>%2</g>").arg(superTransforms[i]).arg(elementText);
+		}
+		elementText = QString("<g id='%1' transform='%2'>%3</g>")
+			.arg(elementID)
+			.arg(superTransforms[superTransforms.count() - 1])
+			.arg(elementText);
+	}
 
 	while (!root.firstChild().isNull()) {
 		root.removeChild(root.firstChild());
 	}
 
+	// at this point the document should contain only the <svg> element and possibly svg info strings
 	QString svgOnly = m_domDocument.toString();
 	int ix = svgOnly.lastIndexOf("/>");
 	if (ix < 0) return false;
+
 	svgOnly[ix] = ' ';
 	svgOnly += elementText;
 	svgOnly += "</svg>";
