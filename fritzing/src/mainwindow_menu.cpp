@@ -782,7 +782,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(displayName2));
 	}
 
-	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false, NULL);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -790,7 +790,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(displayName2));
 	}
 
-	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false, NULL);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -798,7 +798,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(displayName2));
 	}
 
-	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false, NULL);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -823,7 +823,16 @@ void MainWindow::cut() {
 	m_currentGraphicsView->cut();
 }
 
+void MainWindow::pasteInPlace() {
+	pasteAux(true);
+}
+
 void MainWindow::paste() {
+	pasteAux(false);
+}
+
+void MainWindow::pasteAux(bool pasteInPlace)
+{
 	if (m_currentGraphicsView == NULL) return;
 
 	QClipboard *clipboard = QApplication::clipboard();
@@ -839,12 +848,19 @@ void MainWindow::paste() {
 
     QByteArray itemData = mimeData->data("application/x-dnditemsdata");
 	QList<ModelPart *> modelParts;
-	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts)) {
+	QHash<QString, QRectF> boundingRects;
+	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts, boundingRects)) {
 		QUndoCommand * parentCommand = new QUndoCommand("Paste");
 
-		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true);
-		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true);
-		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true);
+		QRectF r;
+		QRectF boundingRect = boundingRects.value(m_breadboardGraphicsView->viewName(), r);
+		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true, pasteInPlace ? &r : &boundingRect);
+
+		boundingRect = boundingRects.value(m_pcbGraphicsView->viewName(), r);
+		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true, pasteInPlace ? &r : &boundingRect);
+
+		boundingRect = boundingRects.value(m_schematicGraphicsView->viewName(), r);
+		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true, pasteInPlace ? &r : &boundingRect);
 
 		m_undoStack->push(parentCommand);
 	}
@@ -1219,6 +1235,10 @@ void MainWindow::createEditMenuActions() {
 	m_pasteAct->setStatusTip(tr("Paste clipboard contents"));
 	connect(m_pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
 
+	m_pasteInPlaceAct = new QAction(tr("Paste in Place"), this);
+	m_pasteInPlaceAct->setStatusTip(tr("Paste clipboard contents in place"));
+	connect(m_pasteInPlaceAct, SIGNAL(triggered()), this, SLOT(pasteInPlace()));
+
 	m_duplicateAct = new QAction(tr("&Duplicate"), this);
 	m_duplicateAct->setShortcut(tr("Ctrl+D"));
 	m_duplicateAct->setStatusTip(tr("Duplicate selection"));
@@ -1575,6 +1595,7 @@ void MainWindow::createMenus()
     m_editMenu->addAction(m_cutAct);
     m_editMenu->addAction(m_copyAct);
     m_editMenu->addAction(m_pasteAct);
+    m_editMenu->addAction(m_pasteInPlaceAct);
     m_editMenu->addAction(m_duplicateAct);
     m_editMenu->addAction(m_deleteAct);
     m_editMenu->addSeparator();
@@ -1983,11 +2004,13 @@ void MainWindow::updateItemMenu() {
 void MainWindow::updateEditMenu() {
 	QClipboard *clipboard = QApplication::clipboard();
 	m_pasteAct->setEnabled(false);
+	m_pasteInPlaceAct->setEnabled(false);
 	if (clipboard != NULL) {
 		const QMimeData *mimeData = clipboard->mimeData(QClipboard::Clipboard);
 		if (mimeData != NULL) {
 			if (mimeData->hasFormat("application/x-dnditemsdata")) {
 				m_pasteAct->setEnabled(true);
+				m_pasteInPlaceAct->setEnabled(true);
 				//DebugDialog::debug(QString("paste enabled: true"));
 			}
 		}

@@ -162,7 +162,6 @@ public:
 	void prepareGeometryChange();
 	virtual void resetID();
 	void updateConnectionsAux();
-	virtual void blockSyncKinMoved(bool block);
 	virtual ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
 	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
@@ -188,7 +187,7 @@ public:
 	virtual PluralType isPlural();
 	ViewLayer::ViewLayerSpec viewLayerSpec();
 	void setViewLayerSpec(ViewLayer::ViewLayerSpec);
-
+	virtual void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

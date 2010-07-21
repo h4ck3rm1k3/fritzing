@@ -72,6 +72,7 @@ public:
 	bool hasCustomSVG();
 	bool stickyEnabled();
 	PluralType isPlural();
+	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 
 public:
 	static QString customShapeTranslated;

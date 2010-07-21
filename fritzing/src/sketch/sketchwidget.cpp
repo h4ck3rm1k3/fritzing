@@ -91,7 +91,6 @@ const int SketchWidget::DragAutoScrollThreshold = 10;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
-	clearPasteOffset();
 	m_movingItem = NULL;
 	m_movingSVGRenderer = NULL;
 	m_clearSceneRect = false;
@@ -150,7 +149,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
 	
 	connect(this->scene(), SIGNAL(selectionChanged()), this, SLOT(scene_selectionChanged()));
 
-    connect(QApplication::clipboard(),SIGNAL(changed(QClipboard::Mode)),this,SLOT(restartPasteCount()));
+	connect(QApplication::clipboard(),SIGNAL(changed(QClipboard::Mode)),this,SLOT(restartPasteCount()));
     restartPasteCount(); // the first time
 
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -175,7 +174,7 @@ SketchWidget::~SketchWidget() {
 }
 
 void SketchWidget::restartPasteCount() {
-	m_pasteCount = 1;
+	m_pasteCount = 0;
 }
 
 WaitPushUndoStack* SketchWidget::undoStack() {
@@ -186,7 +185,7 @@ void SketchWidget::setUndoStack(WaitPushUndoStack * undoStack) {
 	m_undoStack = undoStack;
 }
 
-void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
+void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, const QRectF * boundingRect) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
@@ -200,6 +199,14 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 	QString viewName = ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier);
 	QMultiMap<qreal, ItemBase *> zmap;
+
+	QPointF sceneCenter = mapToScene(viewport()->rect().center());
+
+	QPointF sceneCorner;
+	if (boundingRect) {
+		sceneCorner.setX(sceneCenter.x() - (boundingRect->width() / 2));
+		sceneCorner.setY(sceneCenter.y() - (boundingRect->height() / 2));
+	}
 
 	// make parts
 	foreach (ModelPart * mp, modelParts) {
@@ -259,7 +266,14 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		else {
 			// offset pasted items so we can differentiate them from the originals
 			if (offsetPaste) {
-				viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
+				if (m_pasteOffset.x() != 0 || m_pasteOffset.y() != 0) {
+					viewGeometry.offset((20 * m_pasteCount) + m_pasteOffset.x(), (20 * m_pasteCount) + m_pasteOffset.y());
+				}
+				else if (boundingRect && !boundingRect->isNull()) {
+					qreal dx = viewGeometry.loc().x() - boundingRect->left() + sceneCorner.x() + (20 * m_pasteCount);
+					qreal dy = viewGeometry.loc().y() - boundingRect->top() + sceneCorner.y() + (20 * m_pasteCount);
+					viewGeometry.setLoc(QPointF(dx, dy));
+				}
 			}
 			newAddItemCommand(crossViewType, mp->moduleID(), viewLayerSpec, viewGeometry, newID, false, mp->modelIndex(), parentCommand);
 			if (mp->itemType() == ModelPart::ResizableBoard) {
@@ -290,12 +304,24 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				bool ok;
 				qreal x = clone.attribute("x").toDouble(&ok);
 				if (ok) {
-					x += (20 * m_pasteCount) + m_pasteOffset.x();
+					if (m_pasteOffset.x() == 0 && m_pasteOffset.y() == 0) {
+						int dx = (boundingRect) ? boundingRect->left() : 0;
+						x = x - dx + sceneCorner.x() + (20 * m_pasteCount);
+					}
+					else {
+						x += (20 * m_pasteCount) + m_pasteOffset.x();
+					}
 					clone.setAttribute("x", QString::number(x));
 				}
 				qreal y = clone.attribute("y").toDouble(&ok);
 				if (ok) {
-					y += (20 * m_pasteCount) + m_pasteOffset.y();
+					if (m_pasteOffset.x() == 0 && m_pasteOffset.y() == 0) {
+						int dy = boundingRect ? boundingRect->top() : 0;
+						y = y - dy + sceneCorner.y() + (20 * m_pasteCount);
+					}
+					else {
+						y += (20 * m_pasteCount) + m_pasteOffset.y();
+					}
 					clone.setAttribute("y", QString::number(y));
 				}
 				new RestoreLabelCommand(this, newID, clone, parentCommand);
@@ -377,6 +403,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 	}
 
 	setIgnoreSelectionChangeEvents(false);
+	m_pasteOffset = QPointF(0,0);
 }
 
 void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, ViewLayer::ViewLayerID fromViewLayerID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand)
@@ -1072,10 +1099,10 @@ void SketchWidget::copy() {
 
 	// sort them in z-order so the copies also appear in the same order
 	sortSelectedByZ(bases);
-	copyAux(bases);
+	copyAux(bases, true);
 }
 
-void SketchWidget::copyAux(QList<ItemBase *> & bases)
+void SketchWidget::copyAux(QList<ItemBase *> & bases, bool saveBoundingRects)
 {
     QByteArray itemData;
 	QXmlStreamWriter streamWriter(&itemData);
@@ -1083,6 +1110,32 @@ void SketchWidget::copyAux(QList<ItemBase *> & bases)
 	QList<long> modelIndexes;
 	streamWriter.writeStartElement("module");
 	streamWriter.writeAttribute("fritzingVersion", Version::versionString());
+
+	if (saveBoundingRects) {
+		QRectF itemsBoundingRect;
+		foreach (ItemBase * itemBase, bases) {
+			itemsBoundingRect |= itemBase->sceneBoundingRect();
+		}
+
+		QHash<QString, QRectF> boundingRects;
+		boundingRects.insert(m_viewName, itemsBoundingRect);
+		emit copyBoundingRectsSignal(boundingRects);
+
+		streamWriter.writeStartElement("boundingRects");
+		foreach (QString key, boundingRects.keys()) {
+			streamWriter.writeStartElement("boundingRect");
+			streamWriter.writeAttribute("name", key);
+			QRectF r = boundingRects.value(key);
+			streamWriter.writeAttribute("rect", QString("%1 %2 %3 %4")
+						.arg(r.left())
+						.arg(r.top())
+						.arg(r.width())
+						.arg(r.height()));
+			streamWriter.writeEndElement();
+		}
+		streamWriter.writeEndElement();
+	}
+
 	streamWriter.writeStartElement("instances");
 	foreach (ItemBase * base, bases) {
 		base->modelPart()->saveInstances("", streamWriter, false);
@@ -3206,6 +3259,7 @@ void SketchWidget::sortSelectedByZ(QList<ItemBase *> & bases) {
 		ItemBase * itemBase =  ItemBase::extractTopLevelItemBase(items[i]);
 		if (itemBase == NULL) continue;
 		if (itemBase->getVirtual()) continue;
+		if (tlBases.contains(itemBase)) continue;
 
 		if (itemBase != NULL) {
 			tlBases.append(itemBase);
@@ -3354,57 +3408,28 @@ void SketchWidget::rotateX(qreal degrees)
 			.arg((m_savedItems.count() == 1) ? m_savedItems.values()[0]->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
-	foreach (ItemBase * item, m_savedItems) {
-		if (!rotationAllowed(item)) {
+	foreach (ItemBase * itemBase, m_savedItems) {
+		if (!rotationAllowed(itemBase)) {
 			continue;
 		}
-		if (qAbs(degrees) == 45 && !rotation45Allowed(item)) {
+		if (qAbs(degrees) == 45 && !rotation45Allowed(itemBase)) {
 			continue;
 		}
 
-		ViewGeometry vg1 = item->getViewGeometry();
+		ViewGeometry vg1 = itemBase->getViewGeometry();
 		ViewGeometry vg2(vg1);
-		if (item->itemType() != ModelPart::Wire) {
-			if (item->modelPart()->moduleID().contains(ModuleIDNames::rectangleModuleIDName)) {
-				// because these boards don't actually rotate yet
-				QRectF r = item->boundingRect();
-				//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
-				QPointF p0 = item->pos();
-				if (degrees == 90) {
-					p0 += r.bottomLeft();
-				}
-				else if (degrees == -90) {
-					p0 += r.topRight();
-				}
-				else if (degrees == 180) {
-					p0 += r.bottomRight();
-				}
-				else {
-					// we're screwed: only multiples of 90 for now.
-				}
-				QPointF d0 = p0 - center;
-				QPointF d0t = rotation.map(d0);
-				vg2.setLoc(d0t + center);
-			}
-			else {
-				QPointF dp = center - item->pos();
-				QTransform tp = QTransform().translate(-dp.x(), -dp.y()) * rotation * QTransform().translate(dp.x(), dp.y());
-				QPointF dc = item->boundingRect().center();
-				QTransform tc = QTransform().translate(-dc.x(), -dc.y()) * rotation * QTransform().translate(dc.x(), dc.y());
-				QPointF mp = tp.map(QPointF(0,0));
-				QPointF mc = tc.map(QPointF(0,0));
-				vg2.setLoc(vg1.loc() + mp - mc);
-			}
+		if (itemBase->itemType() != ModelPart::Wire) {
+			itemBase->calcRotation(rotation, center, vg2);
 
 			QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 			ConnectorPairHash connectorHash;
-			disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand);
-			new MoveItemCommand(this, item->id(), vg1, vg1, parentCommand);
-			new RotateItemCommand(this, item->id(), degrees, parentCommand);
-			new MoveItemCommand(this, item->id(), vg2, vg2, parentCommand);
+			disconnectFromFemale(itemBase, emptyList, connectorHash, true, parentCommand);
+			new MoveItemCommand(this, itemBase->id(), vg1, vg1, parentCommand);
+			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
+			new MoveItemCommand(this, itemBase->id(), vg2, vg2, parentCommand);
 		}
 		else {
-			Wire * wire = qobject_cast<Wire *>(item);
+			Wire * wire = qobject_cast<Wire *>(itemBase);
 			QPointF p0 = wire->connector0()->sceneAdjustedTerminalPoint(NULL);
 			QPointF d0 = p0 - center;
 			QPointF d0t = rotation.map(d0);
@@ -3829,19 +3854,6 @@ void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
 	}
 
 	QGraphicsView::keyPressEvent(event);
-}
-
-
-
-void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> & geometryHash) {
-	ItemBase * itemBase = findItem(itemID);
-	if (itemBase == NULL) {
-		// this shouldn't happen
-		return;
-	}
-
-	ViewGeometry * vg = new ViewGeometry(itemBase->getViewGeometry());
-	geometryHash.insert(m_viewIdentifier, vg);
 }
 
 void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) {
@@ -5706,7 +5718,6 @@ bool SketchWidget::rotation45Allowed(ItemBase * itemBase)
 		case ModelPart::Via:
 		case ModelPart::Note:
 		case ModelPart::Unknown:
-		case ModelPart::Jumper:
 		case ModelPart::CopperFill:
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
@@ -5725,7 +5736,6 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::Wire:
 		case ModelPart::Note:
 		case ModelPart::Unknown:
-		case ModelPart::Jumper:
 		case ModelPart::CopperFill:
 		case ModelPart::Via:
 		case ModelPart::Hole:
@@ -5736,6 +5746,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::Breadboard:
 		case ModelPart::Logo:
 		case ModelPart::Ruler:
+		case ModelPart::Jumper:
 			//if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
 				//return false;
 			//}
@@ -5744,11 +5755,6 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 			break;
 	}
 
-	return allowFemaleRotation(itemBase);
-}
-
-bool SketchWidget::allowFemaleRotation(ItemBase * itemBase) {
-	Q_UNUSED(itemBase);
 	return true;
 }
 
@@ -6286,14 +6292,10 @@ void SketchWidget::copyDrop() {
                 QPointF loc = itemBase->getViewGeometry().loc();
                 itemBase->setItemPos(loc);
 	}
-	copyAux(itemBases);
+	copyAux(itemBases, false);
 
 	m_savedItems.clear();
 	m_savedWires.clear();
-}
-
-void SketchWidget::clearPasteOffset() {
-	m_pasteOffset = QPointF(0, 0);
 }
 
 ViewLayer::ViewLayerSpec SketchWidget::defaultViewLayerSpec() {
@@ -6385,3 +6387,20 @@ ViewLayer::ViewLayerSpec SketchWidget::getViewLayerSpec(ModelPart * modelPart, Q
 bool SketchWidget::routeBothSides() {
 	return false;
 }
+
+
+void SketchWidget::copyBoundingRectsSlot(QHash<QString, QRectF> & boundingRects)
+{
+	QRectF itemsBoundingRect;
+	QList<QGraphicsItem *> tlBases;
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		ItemBase * itemBase =  ItemBase::extractTopLevelItemBase(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->getVirtual()) continue;
+
+		itemsBoundingRect |= itemBase->sceneBoundingRect();	
+	}
+
+	boundingRects.insert(m_viewName, itemsBoundingRect);
+}
+

@@ -92,7 +92,7 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-	virtual void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
+	virtual void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, const QRectF * boundingRect);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
 	void sendBackward();
@@ -333,7 +333,6 @@ protected:
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
 	bool rotationAllowed(ItemBase *);
 	bool rotation45Allowed(ItemBase *);
-	virtual bool allowFemaleRotation(ItemBase *);
 	void prepDragBendpoint(Wire *, QPoint eventPos);
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
@@ -353,7 +352,7 @@ protected:
 	virtual bool canAlignToTopLeft(ItemBase *);
 	void findAlignmentAnchor(ItemBase * originatingItem, QSet<ItemBase *> & savedItems, QHash<Wire *, ConnectorItem *> & savedWires);
 	void alignLoc(QPointF & loc, const QPointF startPoint, const QPointF newLoc, const QPointF originalLoc);
-	void copyAux(QList<ItemBase *> & bases);
+	void copyAux(QList<ItemBase *> & bases, bool saveBoundingRects);
 	void copyDrop();
 	void dropItemEvent(QDropEvent *event);
 	QString makeWireSVG(Wire * wire, QPointF offset, qreal dpi, qreal printerscale, bool blackOnly);
@@ -377,7 +376,7 @@ signals:
 								long toID, QString toConnectorID,
 								ViewLayer::ViewLayerSpec,
 								bool connect, bool updateConnections);
-	void copyItemSignal(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
+	void copyBoundingRectsSignal(QHash<QString, QRectF> &);
 	void cleanUpWiresSignal(CleanUpWiresCommand *);
 	void selectionChangedSignal();
 
@@ -420,7 +419,6 @@ protected slots:
 	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, ViewLayer::ViewLayerSpec, bool connect, bool updateConnections);
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
-	void sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
 	void dragIsDoneSlot(class ItemDrag *);
 	void statusMessage(QString message, int timeout = 0);
 	void sketchWidget_cleanUpWires(CleanUpWiresCommand *);
@@ -435,6 +433,7 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void rememberSticky(long id, QUndoCommand * parentCommand);
+	void copyBoundingRectsSlot(QHash<QString, QRectF> &);
 
 public slots:
 	void changeWireColor(const QString newColor);

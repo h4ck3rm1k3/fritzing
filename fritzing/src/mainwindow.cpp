@@ -415,8 +415,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_wireConnected(long, QString, long, QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(changeConnectionSignal(long,  QString, long,  QString, ViewLayer::ViewLayerSpec, bool, bool)),
 									 slotter, SLOT(sketchWidget_changeConnection(long, QString, long, QString, ViewLayer::ViewLayerSpec, bool, bool)));
-	succeeded = succeeded && connect(signaller, SIGNAL(copyItemSignal(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
-													   slotter, SLOT(sketchWidget_copyItem(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
+	succeeded = succeeded && connect(signaller, SIGNAL(copyBoundingRectsSignal(QHash<QString, QRectF> &)),
+													   slotter, SLOT(copyBoundingRectsSlot(QHash<QString, QRectF> &)),
 									 Qt::DirectConnection);
 
 	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal(CleanUpWiresCommand *)),
@@ -1971,8 +1971,8 @@ void MainWindow::statusMessage(QString message, int timeout) {
 }
 
 void MainWindow::dropPaste(SketchWidget * sketchWidget) {
-	paste();
-	sketchWidget->clearPasteOffset();
+	Q_UNUSED(sketchWidget);
+	pasteInPlace();
 }
 
 void MainWindow::updateLayerMenuSlot() {

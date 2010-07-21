@@ -73,7 +73,6 @@ public:
 	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *);
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void resetID();
-	void blockSyncKinMoved(bool block);
 	void slamZ(qreal z);
 	void resetImage(class InfoGraphicsView *);
 	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
@@ -87,7 +86,6 @@ protected:
 
 protected:
  	QList<class ItemBase *> m_layerKin;
-	bool m_blockSyncKinMoved;
 
 };
 

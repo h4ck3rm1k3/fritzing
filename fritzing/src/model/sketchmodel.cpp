@@ -76,17 +76,5 @@ ModelPart * SketchModel::findModelPartAux(ModelPart * modelPart, const QString &
 	return NULL;
 }
 
-bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<ModelPart *> & modelParts) 
-{
-	QFile file(filename);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
-		return false;
-	}
-
-	QByteArray itemData = file.readAll();
-	file.close();
-
-	return ModelBase::paste(refModel, itemData, modelParts);
-}
 
 

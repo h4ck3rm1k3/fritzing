@@ -130,6 +130,7 @@ protected slots:
     void copy();
     void cut();
     void paste();
+	void pasteInPlace();
     void duplicate();
     void doDelete();
     void selectAll();
@@ -387,6 +388,7 @@ protected:
 	void displayMessage(const QString & message, bool displayMessageBoxes);
 	void updateActiveLayerButtons();
 	bool hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles);
+	void pasteAux(bool pasteInPlace);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -486,6 +488,7 @@ protected:
     QAction *m_cutAct;
     QAction *m_copyAct;
     QAction *m_pasteAct;
+    QAction *m_pasteInPlaceAct;
     QAction *m_duplicateAct;
     QAction *m_deleteAct;
     QAction *m_selectAllAct;

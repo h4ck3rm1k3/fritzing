@@ -80,7 +80,7 @@ public:
 	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
-	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
+	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, const QRectF * boundingRect);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);

@@ -286,12 +286,6 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	}
 }
 
-bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
-	Q_UNUSED(itemBase);
-	return true;
-}
-
-
 void BreadboardSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setPenWidth(penWidth - 2, this);
 	wire->setColorString("blue", 1.0);

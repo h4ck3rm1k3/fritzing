@@ -303,7 +303,7 @@ void ModelBase::save(const QString & fileName, QXmlStreamWriter & streamWriter, 
     }
 }
 
-bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts)
+bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QRectF> & boundingRects)
 {
 	m_referenceModel = refModel;
 
@@ -317,6 +317,25 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 	QDomElement module = domDocument.documentElement();
 	if (module.isNull()) {
 		return false;
+	}
+
+	QDomElement boundingRectsElement = module.firstChildElement("boundingRects");
+	if (!boundingRectsElement.isNull()) {
+		QDomElement boundingRect = boundingRectsElement.firstChildElement("boundingRect");
+		while (!boundingRect.isNull()) {
+			QString name = boundingRect.attribute("name");
+			QString rect = boundingRect.attribute("rect");
+			QRectF br;
+			if (!rect.isEmpty()) {
+				QStringList s = rect.split(" ");
+				if (s.count() == 4) {
+					QRectF r(s[0].toDouble(), s[1].toDouble(), s[2].toDouble(), s[3].toDouble());
+					br = r;
+				}
+			}
+			boundingRects.insert(name, br);
+			boundingRect = boundingRect.nextSiblingElement("boundingRect");
+		}
 	}
 
 	QDomElement instances = module.firstChildElement("instances");

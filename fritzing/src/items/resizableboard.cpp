@@ -708,3 +708,32 @@ bool ResizableBoard::stickyEnabled() {
 ItemBase::PluralType ResizableBoard::isPlural() {
 	return Plural;
 }
+
+void ResizableBoard::calcRotation(QTransform & rotation, QPointF center, ViewGeometry & vg2) 
+{
+	if (modelPart()->moduleID().contains(ModuleIDNames::rectangleModuleIDName)) {
+		// because these boards don't actually rotate yet
+		QRectF r = boundingRect();
+		//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
+		QPointF p0 = pos();
+		if (rotation.m12() == 1) {			// degrees == 90
+			p0 += r.bottomLeft();
+		}
+		else if (rotation.m12() == 1) {		// degrees == -90
+			p0 += r.topRight();
+		}
+		else if (rotation.m12() == 0) {		// degrees == 180
+			p0 += r.bottomRight();
+		}
+		else {
+			// we're screwed: only multiples of 90 for now.
+		}
+		QPointF d0 = p0 - center;
+		QPointF d0t = rotation.map(d0);
+		vg2.setLoc(d0t + center);
+	}
+	else {
+		Board::calcRotation(rotation, center, vg2);
+	}
+}
+

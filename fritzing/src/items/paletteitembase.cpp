@@ -427,7 +427,7 @@ bool PaletteItemBase::canEditPart() {
 	return ItemBase::canEditPart();
 }
 
-/*
+
 
 void PaletteItemBase::setPos(const QPointF & pos) {
 	ItemBase::setPos(pos);
@@ -437,5 +437,5 @@ void PaletteItemBase::setPos(const QPointF & pos) {
 void PaletteItemBase::setPos(qreal x, qreal y) {
 	ItemBase::setPos(x, y);
 }
-*/
+
 

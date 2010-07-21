@@ -238,7 +238,6 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	modelPart()->setProp("r1x", r1x);
 	modelPart()->setProp("r1y", r1y);
 
-
 	switch (viewLayerID) {
 		case ViewLayer::Copper0:
 		case ViewLayer::Copper1:
@@ -266,11 +265,10 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 }
 
 void JumperItem::resize(QPointF p0, QPointF p1) {
-	QRectF r0 = m_connector0->rect();
-	QPointF p(qMin(p0.x(), p1.x()) - (r0.width() / 2) - m_connectorTL.x(), 
-			  qMin(p0.y(), p1.y()) - (r0.height() / 2) - m_connectorTL.y());
+	QPointF p = calcPos(p0, p1);
 	resize(p, p0 - p, p1 - p);
 }
+
 
 void JumperItem::resize() {
 	if (m_connector0 == NULL) return;
@@ -328,7 +326,9 @@ void JumperItem::getParams(QPointF & p, QPointF & c0, QPointF & c1) {
 }
 
 void JumperItem::resize(QPointF p, QPointF nc0, QPointF nc1) {
-	resizeAux(nc0.x(), nc0.y(), nc1.x(), nc1.y());								
+	resizeAux(nc0.x(), nc0.y(), nc1.x(), nc1.y());	
+
+	DebugDialog::debug(QString("jumper item set pos %1 %2, %3").arg(this->id()).arg(p.x()).arg(p.y()) );
 	setPos(p);
 }
 
@@ -442,4 +442,44 @@ void JumperItem::syncKinSceneChanged(PaletteItemBase * originator) {
 	if (cc1 != NULL) {
 		cc1->setRect(m_connector1->rect());
 	}
+}
+
+void JumperItem::rotateItem(qreal degrees) {
+	QPointF tc0, tc1;
+	QTransform rotation;
+	rotation.rotate(degrees);
+	rotateEnds(rotation, tc0, tc1);
+	resize(tc0, tc1);	
+}
+
+void JumperItem::calcRotation(QTransform & rotation, QPointF center, ViewGeometry & vg2) 
+{
+	QPointF tc0, tc1;
+	rotateEnds(rotation, tc0, tc1);
+	QPointF p = calcPos(tc0, tc1);
+	QPointF myCenter = mapToScene(boundingRect().center());
+	QTransform transf = QTransform().translate(-center.x(), -center.y()) * rotation * QTransform().translate(center.x(), center.y());
+	QPointF q = transf.map(myCenter);
+	vg2.setLoc(p + q - myCenter);
+}
+
+void JumperItem::rotateEnds(QTransform & rotation, QPointF & tc0, QPointF & tc1) 
+{
+	ConnectorItem * cc0 = m_connector0;
+	QRectF r0 = cc0->rect();
+	QPointF c0 = cc0->mapToScene(r0.center());
+	ConnectorItem * cc1 = m_connector1;
+	QRectF r1 = cc1->rect();
+	QPointF c1 = cc1->mapToScene(r1.center());
+	QPointF c((c0.x() + c1.x()) / 2, (c0.y() + c1.y()) / 2);
+	QTransform transf = QTransform().translate(-c.x(), -c.y()) * rotation * QTransform().translate(c.x(), c.y());
+	tc0 = transf.map(c0);
+	tc1 = transf.map(c1);
+}
+
+QPointF JumperItem::calcPos(QPointF p0, QPointF p1) {
+	QRectF r0 = m_connector0->rect();
+	QPointF p(qMin(p0.x(), p1.x()) - (r0.width() / 2) - m_connectorTL.x(), 
+			  qMin(p0.y(), p1.y()) - (r0.height() / 2) - m_connectorTL.y());
+	return p;
 }

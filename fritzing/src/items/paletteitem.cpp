@@ -46,7 +46,6 @@ $Date$
 PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
-	m_blockSyncKinMoved = false;
 	if(doLabel) {
 		m_partLabel = new PartLabel(this, NULL);
 		m_partLabel->setVisible(false);
@@ -309,8 +308,6 @@ void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void PaletteItem::syncKinMoved(QPointF offset, QPointF newPos) {
 	Q_UNUSED(offset);    // ignore offset--should all be zeros now
 
-	if (m_blockSyncKinMoved) return;
-
 	//DebugDialog::debug(QString("sync kin moved %1 %2").arg(offset.x()).arg(offset.y()) );
 	//m_syncMoved = pos - offset;
 	//if (newPos != pos()) {
@@ -426,10 +423,6 @@ void PaletteItem::resetID() {
 	foreach (ItemBase * lkpi, m_layerKin) {
 		lkpi->resetID();
 	}
-}
-
-void PaletteItem::blockSyncKinMoved(bool block) {
-	m_blockSyncKinMoved = block;
 }
 
 void PaletteItem::slamZ(qreal z) {

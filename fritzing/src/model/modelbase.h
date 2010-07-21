@@ -46,7 +46,7 @@ public:
 	void save(const QString & fileName, class QXmlStreamWriter &, bool asPart);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
-	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
+	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QRectF> & boundingRects);
 
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);

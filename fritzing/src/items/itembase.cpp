@@ -1448,10 +1448,6 @@ void ItemBase::updateConnectionsAux() {
 	}
 }
 
-void ItemBase::blockSyncKinMoved(bool block) {
-	Q_UNUSED(block);
-}
-
 ItemBase * ItemBase::lowerConnectorLayerVisible(ItemBase * itemBase) {
 	Q_UNUSED(itemBase);
 	return NULL;
@@ -1784,6 +1780,17 @@ bool ItemBase::fixCopper1(ModelPart * modelPart, const QString & filename, ViewL
 	if (!modelPart->needsCopper1()) return false;
 
 	return TextUtils::addCopper1(filename, doc, ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0), ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1));
+}
+
+void ItemBase::calcRotation(QTransform & rotation, QPointF center, ViewGeometry & vg2) 
+{
+	QPointF dp = center - pos();
+	QTransform tp = QTransform().translate(-dp.x(), -dp.y()) * rotation * QTransform().translate(dp.x(), dp.y());
+	QPointF dc = boundingRect().center();
+	QTransform tc = QTransform().translate(-dc.x(), -dc.y()) * rotation * QTransform().translate(dc.x(), dc.y());
+	QPointF mp = tp.map(QPointF(0,0));
+	QPointF mc = tc.map(QPointF(0,0));
+	vg2.setLoc(vg2.loc() + mp - mc);
 }
 
 
