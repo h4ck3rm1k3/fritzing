@@ -615,6 +615,7 @@ QWidget *MainWindow::createActiveLayerButton(SketchAreaWidget *parent)
 	actions << m_activeLayerBothAct << m_activeLayerBottomAct << m_activeLayerTopAct;
 
 	m_activeLayerButtonWidget = new QStackedWidget;
+	m_activeLayerButtonWidget->setMaximumWidth(90);
 
 	SketchToolButton * button = new SketchToolButton("ActiveLayer", parent, actions);
 	button->setDefaultAction(m_activeLayerBottomAct);

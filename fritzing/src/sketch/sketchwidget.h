@@ -235,6 +235,7 @@ public:
 	void addFixedToCenterItem2(class SketchMainHelp *item);
 	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons, bool crossLayers);
 	virtual bool routeBothSides();
+	virtual void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

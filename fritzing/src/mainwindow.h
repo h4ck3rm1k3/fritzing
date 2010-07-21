@@ -270,6 +270,7 @@ protected slots:
 	void undoStackCleanChanged(bool isClean);
 	void autosaveNeeded(int index = 0);
 	void firstTimeHelpHidden();
+	void changeTraceLayer();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -561,6 +562,7 @@ protected:
 	QAction *m_activeLayerBothAct;
 	QAction *m_createTraceAct;
 	QAction *m_createJumperAct;
+	QAction *m_changeTraceLayerAct;
 	QAction *m_excludeFromAutorouteAct;
 	QAction *m_selectAllTracesAct;
 	QAction *m_selectAllExcludedTracesAct;

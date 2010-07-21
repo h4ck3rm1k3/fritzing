@@ -115,6 +115,7 @@ public:
 	PluralType isPlural();
 	bool isMarkedDeleted();
 	void markDeleted(bool);
+	virtual bool canSwitchLayers();
 
 protected slots:
 	void colorEntry(const QString & text);

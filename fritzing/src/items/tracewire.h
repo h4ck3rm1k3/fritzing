@@ -37,6 +37,7 @@ public:
 	~TraceWire();
 
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
+	bool canSwitchLayers();
 
 protected:
 	void setColorFromElement(QDomElement & element);

@@ -2510,3 +2510,107 @@ bool PCBSketchWidget::sameElectricalLayer(ViewLayer::ViewLayerID id1, ViewLayer:
 
 	return c1 == c2;
 }
+
+void PCBSketchWidget::changeTraceLayer() {
+	QList<Wire *> visitedWires;
+	QList<Wire *> changeWires;
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		TraceWire * tw = dynamic_cast<TraceWire *>(item);
+		if (tw == NULL) continue;
+		if (visitedWires.contains(tw)) continue;
+
+		QList<Wire *> wires;
+		QList<ConnectorItem *> uniqueEnds;
+		QList<ConnectorItem *> ends;
+		tw->collectChained(wires, ends, uniqueEnds);
+		visitedWires.append(wires);
+		if (ends.count() < 2) continue;   // should never happen, since traces have to be connected at both ends
+
+		bool canChange = true;
+		foreach(ConnectorItem * end, ends) {
+			if (end->getCrossLayerConnectorItem() == NULL) {
+				canChange = false;
+				break;
+			}
+		}
+		if (!canChange) continue;
+
+		changeWires.append(tw);
+	}
+
+	if (changeWires.count() == 0) return;
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Change trace layer"));
+
+	foreach (Wire * wire, changeWires) {
+		QList<Wire *> wires;
+		QList<ConnectorItem *> uniqueEnds;
+		QList<ConnectorItem *> ends;
+		wire->collectChained(wires, ends, uniqueEnds);
+
+		// probably safest to disconnect change the layers and reconnect, so that's why the redundant looping
+
+		foreach (ConnectorItem * end, ends) {
+			ConnectorItem * targetConnectorItem = NULL;
+			foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
+				Wire * w = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+				if (w == NULL) continue;
+
+				if (wires.contains(w)) {
+					targetConnectorItem = toConnectorItem;
+					break;
+				}
+			}
+
+			new ChangeConnectionCommand(this, BaseCommand::SingleView,
+								targetConnectorItem->attachedToID(), targetConnectorItem->connectorSharedID(),
+								end->attachedToID(), end->connectorSharedID(),
+								ViewLayer::specFromID(end->attachedToViewLayerID()), 
+								false, parentCommand);
+		}
+
+
+		foreach (Wire * w, wires) {
+			ViewLayer::ViewLayerID newViewLayerID = w->viewLayerID() == ViewLayer::Copper0Trace ? ViewLayer::Copper1Trace : ViewLayer::Copper0Trace;
+			new ChangeLayerCommand(this, w->id(), w->zValue(), m_viewLayers.value(newViewLayerID)->nextZ(), w->viewLayerID(), newViewLayerID, parentCommand);
+		}
+
+		foreach (ConnectorItem * end, ends) {
+			ConnectorItem * targetConnectorItem = NULL;
+			foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
+				Wire * w = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+				if (w == NULL) continue;
+
+				if (wires.contains(w)) {
+					targetConnectorItem = toConnectorItem;
+					break;
+				}
+			}
+
+			new ChangeConnectionCommand(this, BaseCommand::SingleView,
+								targetConnectorItem->attachedToID(), targetConnectorItem->connectorSharedID(),
+								end->attachedToID(), end->connectorSharedID(),
+								ViewLayer::specFromID(end->getCrossLayerConnectorItem()->attachedToViewLayerID()), 
+								true, parentCommand);
+		}
+	}
+
+	m_undoStack->push(parentCommand);
+}
+
+void PCBSketchWidget::changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID) {
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	itemBase->setViewLayerID(viewLayerID, m_viewLayers);
+	itemBase->setZValue(z);
+	itemBase->saveGeometry();
+
+	TraceWire * tw = qobject_cast<TraceWire *>(itemBase);
+	if (tw != NULL) {
+		tw->setColorString(traceColor(ViewLayer::specFromID(viewLayerID)), 1.0);
+		ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
+		tw->setActive(viewLayer->isActive());
+		tw->setHidden(!viewLayer->visible());
+	}
+}

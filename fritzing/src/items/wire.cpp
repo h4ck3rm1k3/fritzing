@@ -1336,3 +1336,7 @@ void Wire::markDeleted(bool mark) {
 bool Wire::isMarkedDeleted() {
 	return m_markedDeleted;
 }
+
+bool Wire::canSwitchLayers() {
+	return false;
+}

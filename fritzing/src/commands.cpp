@@ -381,6 +381,42 @@ QString ChangeWireCommand::getParamString() const {
 		;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ChangeLayerCommand::ChangeLayerCommand(SketchWidget *sketchWidget, long fromID,
+									qreal oldZ, qreal newZ, 
+									ViewLayer::ViewLayerID oldLayer, ViewLayer::ViewLayerID newLayer,
+    								QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_fromID = fromID;
+	m_oldZ = oldZ;
+    m_newZ = newZ;
+    m_oldLayer = oldLayer;
+    m_newLayer = newLayer;
+}
+
+void ChangeLayerCommand::undo()
+{
+    m_sketchWidget->changeLayer(m_fromID, m_oldZ, m_oldLayer);
+}
+
+void ChangeLayerCommand::redo()
+{
+    m_sketchWidget->changeLayer(m_fromID, m_newZ, m_newLayer);
+}
+
+QString ChangeLayerCommand::getParamString() const {
+	return QString("ChangeLayerCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 oldZ:%2 newZ:%3 oldL:%4 newL:%5")
+		.arg(m_fromID)
+		.arg(m_oldZ)
+		.arg(m_newZ)
+		.arg(m_oldLayer)		
+		.arg(m_newLayer)		
+		;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

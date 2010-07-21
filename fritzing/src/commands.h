@@ -241,6 +241,26 @@ protected:
     bool m_useLine;
 };
 
+class ChangeLayerCommand : public BaseCommand
+{
+public:
+    ChangeLayerCommand(class SketchWidget *sketchWidget, long fromID,
+					  qreal oldZ, qreal newZ, 
+					  ViewLayer::ViewLayerID oldLayer, ViewLayer::ViewLayerID newLayer,
+    				  QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_fromID;
+    qreal m_newZ;
+    qreal m_oldZ;
+	ViewLayer::ViewLayerID m_newLayer;
+    ViewLayer::ViewLayerID m_oldLayer;
+};
 
 class SelectItemCommand : public BaseCommand
 {

@@ -6404,3 +6404,8 @@ void SketchWidget::copyBoundingRectsSlot(QHash<QString, QRectF> & boundingRects)
 	boundingRects.insert(m_viewName, itemsBoundingRect);
 }
 
+void SketchWidget::changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID) {
+	Q_UNUSED(id);
+	Q_UNUSED(z);
+	Q_UNUSED(viewLayerID);
+}

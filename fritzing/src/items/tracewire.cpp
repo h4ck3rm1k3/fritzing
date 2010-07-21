@@ -26,6 +26,7 @@ $Date$
 
 #include "tracewire.h"
 #include "../sketch/infographicsview.h"
+#include "../connectors/connectoritem.h"
 
 #include <QComboBox>
 
@@ -102,4 +103,18 @@ void TraceWire::setColorFromElement(QDomElement & element) {
 	}
 
 	Wire::setColorFromElement(element);	
+}
+
+bool TraceWire::canSwitchLayers() {
+	QList<Wire *> wires;
+	QList<ConnectorItem *> uniqueEnds;
+	QList<ConnectorItem *> ends;
+	collectChained(wires, ends, uniqueEnds);
+	if (ends.count() < 2) return false;   // should never happen, since traces have to be connected at both ends
+
+	foreach (ConnectorItem * end, ends) {
+		if (end->getCrossLayerConnectorItem() == NULL) return false;
+	}
+
+	return true;
 }

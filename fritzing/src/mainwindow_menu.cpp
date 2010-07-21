@@ -1679,6 +1679,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_activeLayerTopAct);
 	m_pcbTraceMenu->addSeparator();
 
+	m_pcbTraceMenu->addAction(m_changeTraceLayerAct);
 	m_pcbTraceMenu->addAction(m_createTraceAct);
 	m_pcbTraceMenu->addAction(m_createJumperAct);
 	m_pcbTraceMenu->addAction(m_excludeFromAutorouteAct);
@@ -2049,60 +2050,64 @@ void MainWindow::updateTraceMenu() {
 	bool twEnabled = false;
 	bool gfEnabled = false;
 	bool gfrEnabled = false;
+	bool ctlEnabled = false;
 
-	if (m_currentGraphicsView != NULL) {
-		if (m_currentGraphicsView != this->m_breadboardGraphicsView) {
-			QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
-			foreach (QGraphicsItem * item, items) {
-				Wire * wire = dynamic_cast<Wire *>(item);
-				if (wire == NULL) {
-					if (m_currentGraphicsView != m_pcbGraphicsView) continue;
+	if (m_currentGraphicsView != NULL && m_currentGraphicsView != this->m_breadboardGraphicsView) {
+		QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
+		foreach (QGraphicsItem * item, items) {
+			Wire * wire = dynamic_cast<Wire *>(item);
+			if (wire == NULL) {
+				if (m_currentGraphicsView != m_pcbGraphicsView) continue;
 
-					ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-					if (itemBase == NULL) continue;
+				ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+				if (itemBase == NULL) continue;
 
-					if (itemBase->itemType() == ModelPart::Board ||  itemBase->itemType() == ModelPart::ResizableBoard) {
-						gfEnabled = true;
-					}
-					else if (itemBase->itemType() == ModelPart::Jumper) {
-						jiEnabled = true;
-					}
-					else if (isGroundFill(itemBase)) {
-						gfrEnabled = true;
-					}
-					else if (isGroundFill(itemBase)) {
-						gfrEnabled = true;
-					}
-
-					continue;
+				if (itemBase->itemType() == ModelPart::Board ||  itemBase->itemType() == ModelPart::ResizableBoard) {
+					gfEnabled = true;
+				}
+				else if (itemBase->itemType() == ModelPart::Jumper) {
+					jiEnabled = true;
+				}
+				else if (isGroundFill(itemBase)) {
+					gfrEnabled = true;
+				}
+				else if (isGroundFill(itemBase)) {
+					gfrEnabled = true;
 				}
 
-				if (wire->getRatsnest()) {
-					rEnabled = true;
-					if (wire->isSelected()) {
-						ctEnabled = true;
-						cjEnabled = true;
+				continue;
+			}
+
+			if (wire->getRatsnest()) {
+				rEnabled = true;
+				if (wire->isSelected()) {
+					ctEnabled = true;
+					cjEnabled = true;
+				}
+			}
+			else if (wire->getJumper()) {
+				jEnabled = true;
+				if (wire->isSelected()) {
+					ctEnabled = true;
+					exEnabled = true;
+					if (wire->getAutoroutable()) {
+						exChecked = false;
 					}
 				}
-				else if (wire->getJumper()) {
-					jEnabled = true;
-					if (wire->isSelected()) {
-						ctEnabled = true;
-						exEnabled = true;
-						if (wire->getAutoroutable()) {
-							exChecked = false;
-						}
+			}
+			else if (wire->getTrace()) {
+				tEnabled = true;
+				twEnabled = true;
+				if (wire->isSelected()) {
+					cjEnabled = true;
+					exEnabled = true;
+					if (wire->getAutoroutable()) {
+						exChecked = false;
 					}
 				}
-				else if (wire->getTrace()) {
-					tEnabled = true;
-					twEnabled = true;
-					if (wire->isSelected()) {
-						cjEnabled = true;
-						exEnabled = true;
-						if (wire->getAutoroutable()) {
-							exChecked = false;
-						}
+				if (m_currentGraphicsView == m_pcbGraphicsView && m_currentGraphicsView->boardLayers() > 1) {
+					if (wire->canSwitchLayers()) {
+						ctlEnabled = true;
 					}
 				}
 			}
@@ -2113,6 +2118,7 @@ void MainWindow::updateTraceMenu() {
 	m_createJumperAct->setEnabled(cjEnabled && (m_currentGraphicsView == m_pcbGraphicsView));
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
+	m_changeTraceLayerAct->setEnabled(ctlEnabled);
 	m_autorouteAct->setEnabled(rEnabled);
 	m_exportEtchableAct->setEnabled(true);
 	m_exportEtchableSvgAct->setEnabled(true);
@@ -2813,6 +2819,10 @@ void MainWindow::createTraceMenuActions() {
 	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 	m_excludeFromAutorouteAct->setCheckable(true);
 
+	m_changeTraceLayerAct = new QAction(tr("Change Trace Layer"), this);
+	m_changeTraceLayerAct->setStatusTip(tr("Move selected traces to the other side of the board"));
+	connect(m_changeTraceLayerAct, SIGNAL(triggered()), this, SLOT(changeTraceLayer()));
+
 	m_selectAllTracesAct = new QAction(tr("Select All Traces"), this);
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
 	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
@@ -3261,6 +3271,7 @@ QMenu *MainWindow::pcbWireMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
 	menu->addMenu(m_zOrderMenu);
 	menu->addSeparator();
+	menu->addAction(m_changeTraceLayerAct);	
 	menu->addAction(m_createTraceAct);
 	menu->addAction(m_createJumperAct);
 	menu->addAction(m_excludeFromAutorouteAct);
@@ -3767,4 +3778,11 @@ void MainWindow::designRulesCheck()
 	else if (result > 0) {
 		AutoCloseMessageBox::showMessage(this, tr("%1 overlapping parts found").arg(result));
 	}
+}
+
+void MainWindow::changeTraceLayer() {
+	if (m_currentGraphicsView == NULL) return;
+	if (m_currentGraphicsView != m_pcbGraphicsView) return;
+
+	m_pcbGraphicsView->changeTraceLayer();
 }
