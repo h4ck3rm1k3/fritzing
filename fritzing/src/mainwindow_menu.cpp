@@ -2896,6 +2896,9 @@ void MainWindow::autoroute() {
 
 	dynamic_cast<SketchAreaWidget *>(pcbSketchWidget->parent())->routingStatusLabel()->setText(tr("Autorouting..."));
 
+	bool copper0Active = pcbSketchWidget->layerIsActive(ViewLayer::Copper0);
+	bool copper1Active = pcbSketchWidget->layerIsActive(ViewLayer::Copper1);
+
 	AutorouteProgressDialog progress(tr("Autorouting Progress..."), true, true, pcbSketchWidget, this);
 	progress.setModal(true);
 	progress.show();
@@ -2915,7 +2918,12 @@ void MainWindow::autoroute() {
 
 	autorouter1->start();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(false);
+
 	delete autorouter1;
+
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper1, copper1Active);
+	pcbSketchWidget->setLayerActive(ViewLayer::Copper0, copper0Active);
+	updateActiveLayerButtons();
 }
 
 void MainWindow::createTrace() {
