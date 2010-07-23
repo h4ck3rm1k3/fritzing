@@ -31,6 +31,7 @@ $Date$
 
 class JumperItem : public PaletteItem
 {
+	Q_OBJECT
 
 public:
 	JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel); 
@@ -56,6 +57,7 @@ public:
 	void syncKinSceneChanged(PaletteItemBase * originator);
 	void rotateItem(qreal degrees);
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
+	QPointF dragOffset();
 
 protected:
 	void resize();
@@ -68,6 +70,9 @@ protected:
 	void rotateEnds(QTransform & rotation, QPointF & tc0, QPointF & tc1); 
 	QPointF calcPos(QPointF p0, QPointF p1);
 
+signals:
+	void alignMe(JumperItem *, QPointF & p); 
+
 protected:
 	QPointer<ConnectorItem> m_dragItem;
 	QPointer<ConnectorItem> m_connector0;
@@ -76,6 +81,7 @@ protected:
 	QPointF m_dragStartScenePos;
 	QPointF m_dragStartThisPos;
 	QPointF m_dragStartConnectorPos;
+	QPointF m_dragStartCenterPos;
 	QPointF m_otherPos;
 	QPointF m_connectorTL;
 	QPointF m_connectorBR;

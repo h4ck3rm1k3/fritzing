@@ -182,6 +182,7 @@ void JumperItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	m_dragStartScenePos = event->scenePos();
 	m_dragStartThisPos = this->pos();
 	m_dragStartConnectorPos = this->mapToScene(m_dragItem->rect().topLeft());
+	m_dragStartCenterPos = this->mapToScene(m_dragItem->rect().center());
 	m_otherPos = this->mapToScene(m_otherItem->rect().topLeft());
 }
 
@@ -193,6 +194,7 @@ void JumperItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 	QPointF d = event->scenePos() - m_dragStartScenePos;
 	QPointF p = m_dragStartConnectorPos + d;
+	emit alignMe(this, p);
 	QPointF myPos(qMin(p.x(), m_otherPos.x()) - m_connectorTL.x(), 
 				  qMin(p.y(), m_otherPos.y()) - m_connectorTL.y());
 	this->setPos(myPos);
@@ -482,4 +484,8 @@ QPointF JumperItem::calcPos(QPointF p0, QPointF p1) {
 	QPointF p(qMin(p0.x(), p1.x()) - (r0.width() / 2) - m_connectorTL.x(), 
 			  qMin(p0.y(), p1.y()) - (r0.height() / 2) - m_connectorTL.y());
 	return p;
+}
+
+QPointF JumperItem::dragOffset() {
+	return m_dragStartConnectorPos - m_dragStartCenterPos;
 }

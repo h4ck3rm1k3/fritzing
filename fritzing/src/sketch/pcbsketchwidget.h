@@ -159,6 +159,12 @@ protected:
 	bool drcLayer(QSet<ItemBase *> & collidingItems, int progressOffest, qreal progressRange, int progressGoal);
 	bool drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> & collidingItems, int progressOffest, qreal progressRange, int progressGoal,
 						int & imageCount, qreal expandBy, qreal & progressSoFar, int maxProgress);
+	bool resizingJumperItemPress(QGraphicsItem * item);
+	bool resizingJumperItemRelease();
+	bool resizingBoardPress(QGraphicsItem * item);
+	bool resizingBoardRelease();
+	void resizeBoard();
+	void resizeJumperItem();
 
 signals:
 	void setMaximumDRCProgress(int);
@@ -177,6 +183,7 @@ protected:
 protected slots:
 	void cancelDRC();
 	void stopDRC();
+	void alignJumperItem(class JumperItem *, QPointF &);
 
 protected:
 	RoutingStatus m_routingStatus;
@@ -186,7 +193,9 @@ protected:
 	qreal m_jumperWidth;
 	CleanType m_cleanType;
 	bool m_cancelDRC;
-
+	QPointF m_jumperDragOffset;
+	QPointer<class JumperItem> m_resizingJumperItem;
+	QPointer<class ResizableBoard> m_resizingBoard;
 };
 
 #endif

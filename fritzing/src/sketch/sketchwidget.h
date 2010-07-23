@@ -342,8 +342,6 @@ protected:
 	void initBackgroundColor();
 	QPointF calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom);
 	long findWire(long itemID);
-	void resizeBoard();
-	void resizeJumperItem();
 	virtual AddItemCommand * newAddItemCommand(BaseCommand::CrossViewType crossViewType, 
 											   QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry & viewGeometry, qint64 id, 
 											   bool updateInfoView, long modelIndex, QUndoCommand *parent);
@@ -361,6 +359,12 @@ protected:
 	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
 	void prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerSpec getViewLayerSpec(ModelPart * modelPart, QDomElement & instance, QDomElement & view, ViewGeometry &);
+
+	virtual bool resizingJumperItemPress(QGraphicsItem * item);
+	virtual bool resizingJumperItemRelease();
+	virtual bool resizingBoardPress(QGraphicsItem * item);
+	virtual bool resizingBoardRelease();
+
 
 protected:
 	static bool lessThan(int a, int b);
@@ -525,8 +529,6 @@ protected:
 	bool m_spaceBarIsPressed;
 	bool m_spaceBarWasPressed;
 
-	QPointer<class ResizableBoard> m_resizingBoard;
-	QPointer<class JumperItem> m_resizingJumperItem;
 	QPointer<ConnectorItem> m_lastHoverEnterConnectorItem;
 	QPointer<ItemBase> m_lastHoverEnterItem;
 	QString m_shortName;

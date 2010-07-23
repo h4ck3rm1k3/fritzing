@@ -41,7 +41,9 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../autoroute/autorouteprogressdialog.h"
 #include "../items/groundplane.h"
+#include "../items/jumperitem.h"
 #include "../utils/autoclosemessagebox.h"
+#include "../utils/graphicsutils.h"
 
 #include <limits>
 #include <QApplication>
@@ -93,6 +95,8 @@ bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
+	m_resizingBoard = NULL;
+	m_resizingJumperItem = NULL;
 	m_viewName = QObject::tr("PCB View");
 	m_shortName = QObject::tr("pcb");
 	m_standardBackgroundColor = QColor(160,168,179);
@@ -2613,4 +2617,109 @@ void PCBSketchWidget::changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewL
 		tw->setActive(viewLayer->isActive());
 		tw->setHidden(!viewLayer->visible());
 	}
+}
+
+bool PCBSketchWidget::resizingJumperItemPress(QGraphicsItem * item) {
+	JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+	if (jumperItem == NULL) return false;
+
+	if (jumperItem->inDrag()) {
+		m_resizingJumperItem = jumperItem;
+		m_resizingJumperItem->saveParams();
+		if (m_alignToGrid) {
+			m_alignmentStartPoint = QPointF(0,0);
+			ItemBase * board = findBoard();
+			QSet<ItemBase *> savedItems;
+			QHash<Wire *, ConnectorItem *> savedWires;
+			if (board == NULL) {
+				foreach (QGraphicsItem * item, scene()->items()) {
+					PaletteItemBase * itemBase = dynamic_cast<PaletteItemBase *>(item);
+					if (itemBase->itemType() == ModelPart::Jumper) continue;
+
+					savedItems.insert(itemBase);
+				}
+			}
+			findAlignmentAnchor(board, savedItems, savedWires);
+			m_jumperDragOffset = jumperItem->dragOffset();
+			connect(m_resizingJumperItem, SIGNAL(alignMe(JumperItem *, QPointF &)), this, SLOT(alignJumperItem(JumperItem *, QPointF &)), Qt::DirectConnection);
+		}
+		return true;
+	}
+
+	return false;
+}
+
+void PCBSketchWidget::alignJumperItem(JumperItem * jumperItem, QPointF & loc) {
+	Q_UNUSED(jumperItem);
+	if (!m_alignToGrid) return;
+
+	QPointF newPos = loc - m_jumperDragOffset - m_alignmentStartPoint;
+	qreal ny = GraphicsUtils::getNearestOrdinate(newPos.y(), gridSizeInches() * FSvgRenderer::printerScale());
+	qreal nx = GraphicsUtils::getNearestOrdinate(newPos.x(), gridSizeInches() * FSvgRenderer::printerScale());
+	loc.setX(loc.x() + nx - newPos.x());
+	loc.setY(loc.y() + ny - newPos.y());
+}
+
+bool PCBSketchWidget::resizingJumperItemRelease() {
+	if (m_resizingJumperItem == NULL) return false;
+
+	if (m_alignToGrid) {
+		disconnect(m_resizingJumperItem, SIGNAL(alignMe(JumperItem *, QPointF &)), this, SLOT(alignJumperItem(JumperItem *, QPointF &)));
+	}
+	resizeJumperItem();
+	return true;
+}
+
+void PCBSketchWidget::resizeJumperItem() {
+	QPointF oldC0, oldC1;
+	QPointF oldPos;
+	m_resizingJumperItem->getParams(oldPos, oldC0, oldC1);
+	QPointF newC0, newC1;
+	QPointF newPos;
+	m_resizingJumperItem->saveParams();
+	m_resizingJumperItem->getParams(newPos, newC0, newC1);
+	QUndoCommand * cmd = new ResizeJumperItemCommand(this, m_resizingJumperItem->id(), oldPos, oldC0, oldC1, newPos, newC0, newC1, NULL);
+	cmd->setText("Resize Jumper");
+	m_undoStack->waitPush(cmd, 10);
+	m_resizingJumperItem = NULL;
+}
+
+bool PCBSketchWidget::resizingBoardPress(QGraphicsItem * item) {
+	// board's child items (at the moment) are the resize grips
+	m_resizingBoard = dynamic_cast<ResizableBoard *>(item->parentItem());
+	if (m_resizingBoard == NULL) return false;
+
+	m_resizingBoard->saveParams();
+	return true;
+}
+
+bool PCBSketchWidget::resizingBoardRelease() {
+
+	if (m_resizingBoard == NULL) return false;
+
+	resizeBoard();
+	return true;
+}
+
+void PCBSketchWidget::resizeBoard() {
+	QSizeF oldSize;
+	QPointF oldPos;
+	m_resizingBoard->getParams(oldPos, oldSize);
+	QSizeF newSize;
+	QPointF newPos;
+	m_resizingBoard->saveParams();
+	m_resizingBoard->getParams(newPos, newSize);
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(newSize.width()).arg(newSize.height()));
+	new ResizeBoardCommand(this, m_resizingBoard->id(), oldSize.width(), oldSize.height(), newSize.width(), newSize.height(), parentCommand);
+	if (oldPos != newPos) {
+		m_resizingBoard->saveGeometry();
+		ViewGeometry vg1 = m_resizingBoard->getViewGeometry();
+		ViewGeometry vg2 = vg1;
+		vg1.setLoc(oldPos);
+		vg2.setLoc(newPos);
+		new MoveItemCommand(this, m_resizingBoard->id(), vg1, vg2, parentCommand);
+	}
+	new CheckStickyCommand(this, BaseCommand::SingleView, m_resizingBoard->id(), true, parentCommand);
+	m_undoStack->waitPush(parentCommand, 10);
+	m_resizingBoard = NULL;
 }
