@@ -103,7 +103,7 @@ public:
 	void flip(Qt::Orientations orientation);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
-	void deleteItem();
+	virtual void deleteSelected();
 	PaletteItem *getSelectedPart();
 
     void addViewLayer(ViewLayer *);
@@ -167,8 +167,8 @@ public:
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
 	const QString &selectedModuleID();
-	virtual bool canDeleteItem(QGraphicsItem * item);
-	virtual bool canCopyItem(QGraphicsItem * item);
+	virtual bool canDeleteItem(QGraphicsItem * item, int count);
+	virtual bool canCopyItem(QGraphicsItem * item, int count);
 	const QString & viewName();
 	void makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
@@ -233,7 +233,7 @@ public:
 	ViewLayer::ViewLayerSpec defaultViewLayerSpec();
 	virtual int designRulesCheck();
 	void addFixedToCenterItem2(class SketchMainHelp *item);
-	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons, bool crossLayers);
+	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons);
 	virtual bool routeBothSides();
 	virtual void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 

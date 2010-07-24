@@ -44,6 +44,7 @@ $Date$
 #include "../items/jumperitem.h"
 #include "../utils/autoclosemessagebox.h"
 #include "../utils/graphicsutils.h"
+#include "../lib/ff/flow.h"
 
 #include <limits>
 #include <QApplication>
@@ -176,22 +177,27 @@ ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * mod
 	return ViewLayer::viewLayerIDFromXmlString(layerName);
 }
 
-bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item)
+bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item, int count)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
-	if (wire != NULL) return false;
 
-	return SketchWidget::canDeleteItem(item);
+#ifndef QT_NO_DEBUG
+	if (wire != NULL && count > 1) return false;
+#else
+	if (wire != NULL) return false;
+#endif
+
+	return SketchWidget::canDeleteItem(item, count);
 }
 
-bool PCBSketchWidget::canCopyItem(QGraphicsItem * item)
+bool PCBSketchWidget::canCopyItem(QGraphicsItem * item, int count)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
 	if (wire != NULL) {
 		if (wire->getRatsnest()) return false;
 	}
 
-	return SketchWidget::canDeleteItem(item);
+	return SketchWidget::canDeleteItem(item, count);
 }
 
 bool PCBSketchWidget::canChainWire(Wire * wire) {
@@ -353,7 +359,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
-	collectAllNets(indexer, allPartConnectorItems, false, routeBothSides());
+	collectAllNets(indexer, allPartConnectorItems, false);
 	routingStatus.zero();
 
 	// TODO:  handle delete in updateRatsnestColors...
@@ -1595,8 +1601,8 @@ void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand *
 		recolor(connectorItems, command, parentCommand, forceUpdate);
 	}
 
-	routingStatus.m_jumperWireCount /= 2;			// since we counted each connector
-	routingStatus.m_jumperItemCount /= 2;			// since we counted each connector
+	routingStatus.m_jumperWireCount /= 2;			// since we counted each connector twice
+	routingStatus.m_jumperItemCount /= 2;			// since we counted each connector twice
 }
 
 void traceAdjacency(QVector< QVector<bool> > & adjacency, int count)
@@ -1618,20 +1624,21 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
 	int count = partConnectorItems.count();
 	// want adjacency[count][count] but some C++ compilers don't like it
-	QVector< QVector<bool> > adjacency(count);
-	for (int i = 0; i < count; i++) {
-		QVector<bool> row(count, false);
-		adjacency[i] = row;
-	}
+	QVector< QVector<bool> > adjacency(count, QVector<bool>(count, false));
 
 	// initialize adjaceny
 	for (int i = 0; i < count; i++) {
 		adjacency[i][i] = true;
 		ConnectorItem * from = partConnectorItems[i];
-		for (int j = i + 1; j < count; j++) {
-			if (j == i) continue;
+		DebugDialog::debug(QString("score one %1 '%2' '%3' %4")
+				.arg(i)
+				.arg(from->connectorSharedName())
+				.arg(from->attachedToInstanceTitle())
+				.arg(from->attachedToViewLayerID()));
 
+		for (int j = i + 1; j < count; j++) {
 			ConnectorItem * to = partConnectorItems[j];
+
 			if (from->isCrossLayerConnectorItem(to)) {
 				adjacency[i][j] = true;
 				adjacency[j][i] = true;
@@ -1639,15 +1646,16 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 			}
 
 			if (to->attachedTo() != from->attachedTo()) continue;
-			if (to->bus() == NULL) continue;
-			if (to->bus() != from->bus()) continue;
-				
-			adjacency[i][j] = true;
-			adjacency[j][i] = true;
+
+			if ((to->bus() != NULL) && (to->bus() == from->bus())) {	
+				adjacency[i][j] = true;
+				adjacency[j][i] = true;
+				continue;
+			}
 		}
 	}
 
-	//traceAdjacency(adjacency, count);
+	traceAdjacency(adjacency, count);
 
 	for (int i = 0; i < count; i++) {
 		ConnectorItem * fromConnectorItem = partConnectorItems[i];
@@ -1684,11 +1692,11 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 		}
 	}
 
-	//traceAdjacency(adjacency, count);
+	traceAdjacency(adjacency, count);
 
 	transitiveClosure(adjacency, count);
 
-	//traceAdjacency(adjacency, count);
+	traceAdjacency(adjacency, count);
 
 	int todo = countMissing(adjacency, count);
 	if (todo == 0) {
@@ -1732,11 +1740,19 @@ void PCBSketchWidget::transitiveClosure(QVector< QVector<bool> > & adjacency, in
 	// TODO: is there a faster implementation?
 	for (int i = 0; i < count; i++) {
 		for (int j = 0; j < count; j++) {
+			if (i == j) continue;
+
 			if (adjacency[i][j]) {
 				for (int k = 0; k < count; k++) {
+					if (k == j || k == i) continue;
+
 					if (adjacency[j][k]) {
 						adjacency[i][k] = true;
 						adjacency[k][i] = true;
+					}
+					if (adjacency[i][k]) {
+						adjacency[j][k] = true;
+						adjacency[k][j] = true;
 					}
 				}
 			}
@@ -2722,4 +2738,88 @@ void PCBSketchWidget::resizeBoard() {
 	new CheckStickyCommand(this, BaseCommand::SingleView, m_resizingBoard->id(), true, parentCommand);
 	m_undoStack->waitPush(parentCommand, 10);
 	m_resizingBoard = NULL;
+}
+
+void PCBSketchWidget::deleteSelected() {
+	QSet<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		itemBase = itemBase->layerKinChief();
+		itemBases.insert(itemBase);
+	}
+
+	bool rats = true;
+	foreach (ItemBase * itemBase, itemBases) {
+		Wire * wire = qobject_cast<Wire *>(itemBase);
+		if (wire == NULL) {
+			rats = false;
+			break;
+		}
+		if (!wire->getRatsnest()) {
+			rats = false;
+			break;
+		}
+	}
+
+	if (!rats) {
+		SketchWidget::deleteSelected();
+		return;
+	}
+
+	// deleting a ratsnest really means deleting underlying connections
+	// for now assume only one wire is being deleted
+
+	QSet<ItemBase *> deletedItems;
+
+	foreach (ItemBase * itemBase, itemBases) {
+		Wire * wire = qobject_cast<Wire *>(itemBase);
+
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(wire->connector0());
+		connectorItems.append(wire->connector1());
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
+		QList<ConnectorItem *> partConnectorItems;
+		ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
+		int n = partConnectorItems.count();
+
+		QVector< QVector<Wire *> > wires(n, QVector<Wire *>(n));
+		QVector< QVector<int> > cap(n, QVector<int>(n));
+		QVector<int> prev(n);
+		ConnectorItem * source = wire->connector0()->firstConnectedToIsh();
+		ConnectorItem * sink = wire->connector1()->firstConnectedToIsh();
+		int sourceIndex = -1;
+		int sinkIndex = -1;
+		for (int i = 0; i < n; i++) {
+			ConnectorItem * ci = partConnectorItems[i];
+			if (ci == source) sourceIndex = i;
+			else if (ci == sink) sinkIndex = i;
+			for (int j = i; j < n; j++) {
+				ConnectorItem * cj = partConnectorItems[j];
+				int weight = 0;
+				Wire * w = NULL;
+				if (i != j && ci->attachedTo() != cj->attachedTo()) {
+					w = ci->wiredTo(cj, ViewGeometry::NormalFlag);
+					if (w != NULL) weight = 1;
+				}
+				cap[j][i] = cap[i][j] = weight;
+				wires[j][i] = wires[i][j] = w;
+			}
+		}
+
+		fordFulkerson(cap, prev, n, sourceIndex, sinkIndex);
+
+		// If prev[v] == -1, then v is not reachable from s
+		for (int i = 0; i < n; i++) {
+			if (prev[i] == -1 && wires[i][sourceIndex]) {
+				DebugDialog::debug(QString("delete wire %1").arg(wires[i][sourceIndex]->id()));
+				deletedItems.insert(wires[i][sourceIndex]);			
+			}
+		}
+	}
+
+	if (deletedItems.count() > 0) {
+		deleteAux(deletedItems, tr("Delete ratsnest"));
+	}
 }

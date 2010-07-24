@@ -210,7 +210,7 @@ void Autorouter1::start()
 	updateRatsnest(false, parentCommand);
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
-	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false, m_bothSidesNow);
+	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false);
 
 	if (m_allPartConnectorItems.count() == 0) {
 		return;
@@ -344,6 +344,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 		}
 		qSort(subedges.begin(), subedges.end(), subedgeLessThan);
 
+		/*
 		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
 			.arg(edge->from->attachedToTitle())
 			.arg(edge->from->attachedToID())
@@ -352,6 +353,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 			.arg(edge->to->attachedToID())
 			.arg(edge->to->connectorSharedID())
 			.arg(edge->distance) );
+		*/
 
 		// if both connections are stuck to or attached to the same part
 		// then use that part's boundary to constrain the path
@@ -624,11 +626,7 @@ void Autorouter1::addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorIt
 void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<int> & netCounters, QList<Edge *> & edges) {
 	long count = indexer.count();
 	// want adjacency[count][count] but some C++ compilers don't like it
-	QVector< QVector<double> *> adjacency(count);
-	for (int i = 0; i < count; i++) {
-		QVector<double> * row = new QVector<double>(count);
-		adjacency[i] = row;
-	}
+	QVector< QVector<double> > adjacency(count, QVector<double>(count, 0));
 
 	for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
 		netCounters[i] = (m_allPartConnectorItems[i]->count() - 1) * 2;			// since we use two connectors at a time on a net
@@ -655,7 +653,7 @@ void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<in
 				break;
 			}
 
-			double d = (*adjacency[indexer.value(from)])[indexer.value(to)];
+			double d = adjacency[indexer.value(from)][indexer.value(to)];
 			if (d == 0) continue;
 
 			/*
@@ -678,13 +676,9 @@ void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<in
 			edges.append(edge);
 		}
 	}
-	foreach (QVector<double> * row, adjacency) {
-		delete row;
-	}
-	adjacency.clear();
 }
 
-void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, 
+void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> > & adjacency, 
 						   ViewGeometry::WireFlags alreadyWiredBy) 
 {
 	// TODO: this is the most straightforward dijkstra, but there are more efficient implementations
@@ -700,7 +694,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		for (int j = i; j < count; j++) {
 			if (i == j) {
 				int index = indexer[vertices[i]];
-				(*adjacency[index])[index] = 0;
+				adjacency[index][index] = 0;
 			}
 			else {
 				double d = 0;
@@ -754,7 +748,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 				}
 				int indexI = indexer.value(ci);
 				int indexJ = indexer.value(cj);
-				(*adjacency[indexJ])[indexI] = (*adjacency[indexI])[indexJ] = d;
+				adjacency[indexJ][indexI] = adjacency[indexI][indexJ] = d;
 				if ((i == 0 && j == 1) || (d < leastDistance)) {
 					leastDistance = d;
 					leastDistanceStartIndex = i;
@@ -775,11 +769,11 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	while (todo.count() > 0) {
 		ConnectorItem * leastConnectorItem = todo[0];
 		int leastIndex = indexer.value(todo[0]);
-		double leastDistance = (*adjacency[currentIndex])[leastIndex];
+		double leastDistance = adjacency[currentIndex][leastIndex];
 		for (int i = 1; i < todo.count(); i++) {
 			ConnectorItem * candidateConnectorItem = todo[i];
 			int candidateIndex = indexer.value(candidateConnectorItem);
-			double candidateDistance = (*adjacency[currentIndex])[candidateIndex];
+			double candidateDistance = adjacency[currentIndex][candidateIndex];
 			if (candidateDistance < leastDistance) {
 				leastDistance = candidateDistance;
 				leastIndex = candidateIndex;
@@ -1211,8 +1205,8 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	}
 
 	QApplication::processEvents();
-	DebugDialog::debug(QString("%5 drawtrace from:%1 %2, to:%3 %4")
-		.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );
+	//DebugDialog::debug(QString("%5 drawtrace from:%1 %2, to:%3 %4")
+		//.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );
 	if (m_cancelled || m_cancelTrace || m_stopTrace) {
 		return false;
 	}

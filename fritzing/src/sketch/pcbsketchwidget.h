@@ -38,8 +38,8 @@ public:
     PCBSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
-	bool canDeleteItem(QGraphicsItem * item);
-	bool canCopyItem(QGraphicsItem * item);
+	bool canDeleteItem(QGraphicsItem * item, int count);
+	bool canCopyItem(QGraphicsItem * item, int count);
 	void createJumper();
 	void createTrace();
 	void excludeFromAutoroute(bool exclude);
@@ -86,6 +86,7 @@ public:
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void changeTraceLayer();
 	void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
+	void deleteSelected();
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);

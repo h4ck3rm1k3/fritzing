@@ -38,11 +38,11 @@ $Date$
 Via::Via( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	DebugDialog::debug(QString("creating via %1 %2 %3").arg((long) this, 0, 16).arg(id).arg(m_viewIdentifier));
+	//DebugDialog::debug(QString("creating via %1 %2 %3").arg((long) this, 0, 16).arg(id).arg(m_viewIdentifier));
 }
 
 Via::~Via() {
-	DebugDialog::debug(QString("deleting via %1 %2 %3").arg((long) this, 0, 16).arg(m_id).arg(m_viewIdentifier));
+	//DebugDialog::debug(QString("deleting via %1 %2 %3").arg((long) this, 0, 16).arg(m_id).arg(m_viewIdentifier));
 }
 
 void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {

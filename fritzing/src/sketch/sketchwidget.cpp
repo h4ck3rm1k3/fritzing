@@ -755,7 +755,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 
 }
 
-void SketchWidget::deleteItem() {
+void SketchWidget::deleteSelected() {
 	cutDeleteAux("Delete");
 }
 
@@ -770,7 +770,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	QSet<ItemBase *> deletedItems;
 
 	foreach (QGraphicsItem * sitem, sitems) {
-		if (!canDeleteItem(sitem)) continue;
+		if (!canDeleteItem(sitem, sitems.count())) continue;
 
 		// canDeleteItem insures dynamic_cast<ItemBase *>(sitem)->layerKinChief() won't break
 		deletedItems.insert(dynamic_cast<ItemBase *>(sitem)->layerKinChief());
@@ -4927,8 +4927,9 @@ BaseCommand::CrossViewType SketchWidget::wireSplitCrossView()
 	return BaseCommand::SingleView;
 }
 
-bool SketchWidget::canDeleteItem(QGraphicsItem * item)
+bool SketchWidget::canDeleteItem(QGraphicsItem * item, int count)
 {
+	Q_UNUSED(count);
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase == NULL) return false;
 
@@ -4938,8 +4939,9 @@ bool SketchWidget::canDeleteItem(QGraphicsItem * item)
 	return true;
 }
 
-bool SketchWidget::canCopyItem(QGraphicsItem * item)
+bool SketchWidget::canCopyItem(QGraphicsItem * item, int count)
 {
+	Q_UNUSED(count);
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase == NULL) return false;
 
@@ -6271,7 +6273,7 @@ void SketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	}
 }
 
-void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons, bool crossLayers) 
+void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons) 
 {
 	// get the set of all connectors in the sketch
 	QList<ConnectorItem *> allConnectors;
@@ -6288,12 +6290,16 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 		ConnectorItem * connectorItem = allConnectors.takeFirst();
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, crossLayers, ViewGeometry::TraceJumperRatsnestFlags);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
 		if (connectorItems.count() <= 0) {
 			continue;
 		}
 
 		foreach (ConnectorItem * ci, connectorItems) {
+			//if (connectorItems.count(ci) > 1) {
+				//DebugDialog::debug("collect equal potential bug");
+			//}
+			//DebugDialog::debug(QString("from in equal potential %1 %2").arg(ci->connectorSharedName()).arg(ci->attachedToInstanceTitle()));
 			allConnectors.removeOne(ci);
 		}
 
@@ -6310,8 +6316,30 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 		}
 
 		foreach (ConnectorItem * ci, *partConnectorItems) {
+			//if (partConnectorItems->count(ci) > 1) {
+				//DebugDialog::debug("collect Parts bug");
+			//}
+			if (!connectorItems.contains(ci)) {
+				// crossed layer: toss it
+				DebugDialog::debug(QString("not in equal potential '%1' '%2' %3")
+					.arg(ci->connectorSharedName())
+					.arg(ci->attachedToInstanceTitle())
+					.arg(ci->attachedToViewLayerID()));
+				continue;
+			}
+			//if (indexer.keys().contains(ci)) {
+				//DebugDialog::debug(QString("connector item already indexed %1 %2").arg(ci->connectorSharedName()).arg(ci->attachedToInstanceTitle()));
+			//}
+			int c = indexer.count();
+			DebugDialog::debug(QString("insert indexer %1 '%2' '%3' %4")
+				.arg(c)
+				.arg(ci->connectorSharedName())
+				.arg(ci->attachedToInstanceTitle())
+				.arg(ci->attachedToViewLayerID()));
 			indexer.insert(ci, indexer.count());
 		}
+
+		DebugDialog::debug("________________");
 		allPartConnectorItems.append(partConnectorItems);
 	}
 }

@@ -879,7 +879,7 @@ void MainWindow::doDelete() {
 	//DebugDialog::debug(QString("invoking do delete") );
 
 	if (m_currentGraphicsView != NULL) {
-		m_currentGraphicsView->deleteItem();
+		m_currentGraphicsView->deleteSelected();
 	}
 }
 
@@ -1245,15 +1245,14 @@ void MainWindow::createEditMenuActions() {
 	connect(m_duplicateAct, SIGNAL(triggered()), this, SLOT(duplicate()));
 
 	m_deleteAct = new QAction(tr("&Delete"), this);
-
+	m_deleteAct->setStatusTip(tr("Delete selection"));
+	connect(m_deleteAct, SIGNAL(triggered()), this, SLOT(doDelete()));
 	#ifdef Q_WS_MAC
 		m_deleteAct->setShortcut(Qt::Key_Backspace);
 	#else
 		m_deleteAct->setShortcut(QKeySequence::Delete);
 	#endif
 
-	m_deleteAct->setStatusTip(tr("Delete selection"));
-	connect(m_deleteAct, SIGNAL(triggered()), this, SLOT(doDelete()));
 
 	m_selectAllAct = new QAction(tr("&Select All"), this);
 	m_selectAllAct->setShortcut(tr("Ctrl+A"));
@@ -1832,6 +1831,9 @@ void MainWindow::updateWireMenu() {
 			Wire * jt = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
 			createJumperOK = (jt == NULL) || (!jt->getJumper());
 			createTraceOK = (jt == NULL) || (!jt->getTrace());
+#ifndef QT_NO_DEBUG
+			deleteOK = true;
+#endif
 		}
 		else if (wire->getJumper()) {
 			deleteOK = true;
@@ -2022,10 +2024,10 @@ void MainWindow::updateEditMenu() {
 		bool copyActsEnabled = false;
 		bool deleteActsEnabled = false;
 		foreach (QGraphicsItem * item, items) {
-			if (m_currentGraphicsView->canDeleteItem(item)) {
+			if (m_currentGraphicsView->canDeleteItem(item, items.count())) {
 				deleteActsEnabled = true;
 			}
-			if (m_currentGraphicsView->canCopyItem(item)) {
+			if (m_currentGraphicsView->canCopyItem(item, items.count())) {
 				copyActsEnabled = true;
 			}
 		}
@@ -2679,7 +2681,7 @@ void MainWindow::exportBOM() {
 void MainWindow::exportNetlist() {
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > netList;
-	this->m_currentGraphicsView->collectAllNets(indexer, netList, true, m_currentGraphicsView->routeBothSides());
+	this->m_currentGraphicsView->collectAllNets(indexer, netList, true);
 
 	QDomDocument doc;
 	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>"));
