@@ -163,7 +163,7 @@ public:
 	void hideConnectors(bool hide);
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
-	virtual void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand*, RoutingStatus &);
+	virtual void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand*, RoutingStatus &, bool manual);
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
 	const QString &selectedModuleID();
@@ -236,6 +236,7 @@ public:
 	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons);
 	virtual bool routeBothSides();
 	virtual void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
+	void speedHack(bool toggle);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -311,6 +312,7 @@ protected:
 	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
+	virtual bool canDragWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	virtual bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void setupAutoscroll(bool moving);
@@ -359,6 +361,7 @@ protected:
 	QString makeMoveSVG(qreal printerScale, qreal dpi, QPointF & offset); 
 	void prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerSpec getViewLayerSpec(ModelPart * modelPart, QDomElement & instance, QDomElement & view, ViewGeometry &);
+	virtual ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 
 	virtual bool resizingJumperItemPress(QGraphicsItem * item);
 	virtual bool resizingJumperItemRelease();
@@ -407,7 +410,6 @@ signals:
 	void dropPasteSignal(SketchWidget *);
 	void changeBoardLayersSignal(int, bool doEmit);
 	void firstTimeHelpHidden();
-
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -555,7 +557,6 @@ protected:
 	QPointer<QSvgRenderer> m_movingSVGRenderer;
 	QPointF m_movingSVGOffset;
 	QPointer<QGraphicsSvgItem> m_movingItem;
-	virtual ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);
@@ -564,6 +565,7 @@ protected:
 	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;
 	static const int MoveAutoScrollThreshold;
 	static const int DragAutoScrollThreshold;
+	static bool m_manualRoutingStatusUpdate;
 };
 
 #endif

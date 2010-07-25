@@ -286,7 +286,7 @@ void Autorouter1::start()
 	jumperItemStructs.clear();
 	
 	m_sketchWidget->pushCommand(parentCommand);
-	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand, routingStatus);
+	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand, routingStatus, true);
 	m_sketchWidget->repaint();
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }

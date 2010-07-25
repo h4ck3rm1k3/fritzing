@@ -47,7 +47,7 @@ public:
 	void selectAllExcludedTraces();
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
-	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &);
+	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &, bool manual);
 	void forwardRoutingStatus(const RoutingStatus &);
 	void addBoard();
 	void setCurrent(bool current);
@@ -108,6 +108,7 @@ protected:
 	// void checkAutorouted();
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	bool canChainWire(Wire *);
+	bool canDragWire(Wire * wire);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag);
 	void createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
 								QUndoCommand * & parentCommand, const QString & commandString);

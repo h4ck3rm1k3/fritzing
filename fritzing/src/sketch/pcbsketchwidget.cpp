@@ -353,8 +353,10 @@ void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
 	//updateRatsnestStatus(NULL, parentCommand);
 }
 
-void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus)
+void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus, bool manual)
 {
+	if (!manual && m_manualRoutingStatusUpdate) return;
+
 	//DebugDialog::debug("update ratsnest status");
 
 	QHash<ConnectorItem *, int> indexer;
@@ -370,6 +372,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
 		delete list;
 	}
+
 
 	updateRatsnestColors(command, undoCommand, false, routingStatus);
 
@@ -2823,3 +2826,12 @@ void PCBSketchWidget::deleteSelected() {
 		deleteAux(deletedItems, tr("Delete ratsnest"));
 	}
 }
+
+bool PCBSketchWidget::canDragWire(Wire * wire) {
+	if (wire == NULL) return false;
+
+	if (wire->getRatsnest()) return false;
+
+	return true;
+}
+

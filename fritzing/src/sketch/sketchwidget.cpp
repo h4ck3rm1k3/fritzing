@@ -88,6 +88,8 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 const int SketchWidget::MoveAutoScrollThreshold = 5;
 const int SketchWidget::DragAutoScrollThreshold = 10;
 
+bool SketchWidget::m_manualRoutingStatusUpdate = false;
+
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
@@ -1707,9 +1709,9 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	}
 
 	Wire * wire = dynamic_cast<Wire *>(item);
-	if ((event->button() == Qt::LeftButton) && (wire != NULL) && !wire->getRatsnest()) {
-		if (canChainWire(wire) && wire->hasConnections() ) {
-			if (event->modifiers() & altOrMetaModifier()) {
+	if ((event->button() == Qt::LeftButton) && (wire != NULL)) {
+		if (canChainWire(wire) && wire->hasConnections()) {
+			if (canDragWire(wire) && ((event->modifiers() & altOrMetaModifier()) != 0)) {
 				prepDragWire(wire);
 				return;
 			}
@@ -4367,7 +4369,7 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool skipMe) {
 	if (!skipMe) {
 		RoutingStatus routingStatus;
-		updateRatsnestStatus(command, NULL, routingStatus);
+		updateRatsnestStatus(command, NULL, routingStatus, false);
 	}
 
 	if (doEmit) {
@@ -4377,7 +4379,7 @@ void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool
 
 void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
 	RoutingStatus routingStatus;
-	updateRatsnestStatus(command, NULL, routingStatus);
+	updateRatsnestStatus(command, NULL, routingStatus, false);
 }
 
 void SketchWidget::noteChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
@@ -4859,9 +4861,10 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	}
 }
 
-void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand, RoutingStatus &) {
+void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand, RoutingStatus &, bool manual) {
 	Q_UNUSED(command);
 	Q_UNUSED(undoCommand);
+	Q_UNUSED(manual);
 }
 
 
@@ -4957,6 +4960,12 @@ bool SketchWidget::canChainMultiple() {
 
 bool SketchWidget::canChainWire(Wire * wire) {
 	if (!this->m_chainDrag) return false;
+	if (wire == NULL) return false;
+
+	return true;
+}
+
+bool SketchWidget::canDragWire(Wire * wire) {
 	if (wire == NULL) return false;
 
 	return true;
@@ -6407,4 +6416,19 @@ bool SketchWidget::resizingBoardPress(QGraphicsItem *) {
 	return false;
 }
 
+void SketchWidget::speedHack(bool toggle) {
+	m_manualRoutingStatusUpdate = toggle;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+		if (!wire->getRatsnest()) continue;
+
+		wire->setVisible(!toggle);
+		if (!wire->hidden()) {
+			wire->setAcceptedMouseButtons(toggle ? 0 : ALLMOUSEBUTTONS);
+			wire->setAcceptHoverEvents(!toggle);
+			wire->setFlag(QGraphicsItem::ItemIsSelectable, !toggle );
+		}
+	}
+}
 

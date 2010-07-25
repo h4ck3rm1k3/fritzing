@@ -1690,6 +1690,9 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 #ifndef QT_NO_DEBUG
 	m_pcbTraceMenu->addAction(m_updateRatsnestAct);
+	m_pcbTraceMenu->addSeparator();
+	m_pcbTraceMenu->addAction(m_speedHackAct);
+	m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 #endif
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
@@ -1702,6 +1705,9 @@ void MainWindow::createMenus()
 #ifndef QT_NO_DEBUG
 	m_schematicTraceMenu->addAction(m_tidyWiresAct);
 	m_schematicTraceMenu->addAction(m_updateRatsnestAct);
+	m_schematicTraceMenu->addSeparator();
+	m_schematicTraceMenu->addAction(m_speedHackAct);
+	m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
 #endif
 
 	updateTraceMenu();
@@ -2133,6 +2139,8 @@ void MainWindow::updateTraceMenu() {
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
 	m_designRulesCheckAct->setEnabled(true);
 	m_updateRatsnestAct->setEnabled(true);
+	m_speedHackAct->setEnabled(true);
+	m_updateRoutingStatusAct->setEnabled(true);
 
 }
 
@@ -2860,6 +2868,16 @@ void MainWindow::createTraceMenuActions() {
 	m_updateRatsnestAct = new QAction(tr("Update ratsnest"), this);
 	m_updateRatsnestAct->setStatusTip(tr("Update ratsnest colors"));
 	connect(m_updateRatsnestAct, SIGNAL(triggered()), this, SLOT(updateRatsnest()));
+
+	m_speedHackAct = new QAction(tr("Speed hack"), this);
+	m_speedHackAct->setStatusTip(tr("Hack for speeding up Fritzing--use at your own risk"));
+	m_speedHackAct->setCheckable(true);
+	m_speedHackAct->setChecked(false);
+	connect(m_speedHackAct, SIGNAL(triggered()), this, SLOT(speedHack()));
+
+	m_updateRoutingStatusAct = new QAction(tr("Update routing status"), this);
+	m_updateRoutingStatusAct->setStatusTip(tr("Update routing status"));
+	connect(m_updateRoutingStatusAct, SIGNAL(triggered()), this, SLOT(updateRoutingStatus()));
 }
 
 void MainWindow::activeLayerBoth() {
@@ -3796,3 +3814,22 @@ void MainWindow::changeTraceLayer() {
 
 	m_pcbGraphicsView->changeTraceLayer();
 }
+
+void MainWindow::speedHack() {
+	m_pcbGraphicsView->speedHack(m_speedHackAct->isChecked());
+	m_schematicGraphicsView->speedHack(m_speedHackAct->isChecked());
+	m_breadboardGraphicsView->speedHack(m_speedHackAct->isChecked());
+}
+
+void MainWindow::updateRoutingStatus() {
+	QUndoCommand  parentCommand;
+	RoutingStatus routingStatus;
+	if (m_currentGraphicsView == m_schematicGraphicsView) {
+		m_schematicGraphicsView->updateRatsnestStatus(NULL, &parentCommand, routingStatus, true);
+
+	}
+	else if (m_currentGraphicsView == m_pcbGraphicsView) {
+		m_pcbGraphicsView->updateRatsnestStatus(NULL, &parentCommand, routingStatus, true);
+	}
+}
+
