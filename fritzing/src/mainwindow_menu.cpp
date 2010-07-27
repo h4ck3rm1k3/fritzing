@@ -1688,12 +1688,10 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperWiresAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
-#ifndef QT_NO_DEBUG
-	m_pcbTraceMenu->addAction(m_updateRatsnestAct);
+
 	m_pcbTraceMenu->addSeparator();
 	m_pcbTraceMenu->addAction(m_speedHackAct);
 	m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
-#endif
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
@@ -1704,11 +1702,10 @@ void MainWindow::createMenus()
 
 #ifndef QT_NO_DEBUG
 	m_schematicTraceMenu->addAction(m_tidyWiresAct);
-	m_schematicTraceMenu->addAction(m_updateRatsnestAct);
+#endif
 	m_schematicTraceMenu->addSeparator();
 	m_schematicTraceMenu->addAction(m_speedHackAct);
 	m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
-#endif
 
 	updateTraceMenu();
 	connect(m_pcbTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));

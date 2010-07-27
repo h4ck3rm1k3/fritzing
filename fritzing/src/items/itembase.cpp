@@ -974,20 +974,6 @@ void ItemBase::setDefaultTooltip() {
 	}
 }
 
-bool ItemBase::isConnectedTo(ItemBase * other) {
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (fromConnectorItem == NULL) continue;
-
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			if (toConnectorItem->attachedTo() == other) return true;
-		}
-	}
-
-	return false;
-}
-
-
 void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
 	if ((acceptedMouseButtons() & Qt::RightButton) == 0) {

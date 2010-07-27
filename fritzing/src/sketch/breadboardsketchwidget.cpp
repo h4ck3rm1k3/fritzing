@@ -30,6 +30,7 @@ $Date$
 #include "../items/virtualwire.h"
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
+#include "../lib/ff/flow.h"
 
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
@@ -103,8 +104,108 @@ BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 	return BaseCommand::SingleView;
 }
 
+void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems)
+{
+	// deleting a ratsnest really means deleting underlying connections
+	// for now assume only one ratsnest is being deleted although it's written as a loop
+
+
+	foreach (ItemBase * foreignItemBase, foreignDeletedItems) {
+		Wire * foreignWire = qobject_cast<Wire *>(foreignItemBase);
+		if (foreignWire == NULL) continue;	// shouldn't happen
+
+		// assume ratsnest has only one connection at each end
+		ConnectorItem * foreignSource = foreignWire->connector0()->firstConnectedToIsh();
+		ConnectorItem * foreignSink = foreignWire->connector1()->firstConnectedToIsh();
+		if (foreignSource == NULL) continue;
+		if (foreignSink == NULL) continue;
+
+		ItemBase * sourceBase = findItem(foreignSource->attachedToID());
+		if (sourceBase == NULL) continue;
+
+		ConnectorItem * source = findConnectorItem(sourceBase, foreignSource->connectorSharedID(), ViewLayer::Bottom);
+		if (source == NULL) continue;
+
+		ItemBase * sinkBase = findItem(foreignSink->attachedToID());
+		if (sinkBase == NULL) continue;
+
+		ConnectorItem * sink = findConnectorItem(sinkBase, foreignSink->connectorSharedID(), ViewLayer::Bottom);
+		if (sink == NULL) continue;
+
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(source);
+		connectorItems.append(sink);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
+		QList<ConnectorItem *> partConnectorItems;
+		ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
+		int n = partConnectorItems.count();
+
+		// there are multiple possibilities for each pair of connectors:
+
+		// they are directly connected because they're each inserted into female connectors on the same bus
+		// they are directly connected with a wire
+		// they are "directly" connected through some combination of female connectors and wires (i.e. one part is connected to a wire which is inserted into a female connector)
+		// they are indirectly connected via other parts
+
+		// what if there are multiple direct connections--treat it as a single connection and delete them all
+
+		QVector< QVector<Wire *> > wires(n, QVector<Wire *>(n));
+		QVector< QVector<int> > cap(n, QVector<int>(n));
+		QVector<int> prev(n);
+		int sourceIndex = -1;
+		int sinkIndex = -1;
+		for (int i = 0; i < n; i++) {
+			ConnectorItem * ci = partConnectorItems[i];
+			if (ci == source) sourceIndex = i;
+			else if (ci == sink) sinkIndex = i;
+			for (int j = i; j < n; j++) {
+				ConnectorItem * cj = partConnectorItems[j];
+				int weight = 0;
+				Wire * w = NULL;
+				if (i != j && ci->attachedTo() != cj->attachedTo()) {
+					w = ci->wiredTo(cj, ViewGeometry::NormalFlag);
+					if (w != NULL) weight = 1;
+				}
+				cap[j][i] = cap[i][j] = weight;
+				wires[j][i] = wires[i][j] = w;
+			}
+		}
+
+		fordFulkerson(cap, prev, n, sourceIndex, sinkIndex);
+
+		// If prev[v] == -1, then v is not reachable from s
+		for (int i = 0; i < n; i++) {
+			if (prev[i] == -1 && wires[i][sourceIndex]) {
+				DebugDialog::debug(QString("delete wire %1").arg(wires[i][sourceIndex]->id()));
+				//deletedItems.insert(wires[i][sourceIndex]);			
+			}
+		}
+	}
+		
+
+/*
+		// now figure out whether anything has to be detached from the breadboard
+
+		QMultiHash<ItemBase *, ConnectorItem *> detachItems;
+		foreach (ConnectorItem * end, ends) {
+			foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
+				if (toConnectorItem->connectorType() == Connector::Female) {
+					DebugDialog::debug("got female");
+					detachItems.insert(end->attachedTo(), end);
+				}	
+			}
+		}
+
+*/
+
+
+}
+
+
 void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
+	// this slot is obsolete, but some of the code might be useful
+
 	Q_UNUSED(deletedConnections);
 	Q_UNUSED(deletedItems);
 

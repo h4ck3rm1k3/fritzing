@@ -44,7 +44,6 @@ $Date$
 #include "../items/jumperitem.h"
 #include "../utils/autoclosemessagebox.h"
 #include "../utils/graphicsutils.h"
-#include "../lib/ff/flow.h"
 
 #include <limits>
 #include <QApplication>
@@ -986,8 +985,8 @@ bool PCBSketchWidget::bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags 
 
 bool PCBSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
-	Q_UNUSED(parentCommand);
 	Q_UNUSED(deletedItems);
+	Q_UNUSED(parentCommand);
 
 	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
@@ -2771,60 +2770,9 @@ void PCBSketchWidget::deleteSelected() {
 		return;
 	}
 
-	// deleting a ratsnest really means deleting underlying connections
-	// for now assume only one wire is being deleted
+	// probably deal with connections to ground symbol or ground plane here?
 
-	QSet<ItemBase *> deletedItems;
-
-	foreach (ItemBase * itemBase, itemBases) {
-		Wire * wire = qobject_cast<Wire *>(itemBase);
-
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(wire->connector0());
-		connectorItems.append(wire->connector1());
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
-		QList<ConnectorItem *> partConnectorItems;
-		ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
-		int n = partConnectorItems.count();
-
-		QVector< QVector<Wire *> > wires(n, QVector<Wire *>(n));
-		QVector< QVector<int> > cap(n, QVector<int>(n));
-		QVector<int> prev(n);
-		ConnectorItem * source = wire->connector0()->firstConnectedToIsh();
-		ConnectorItem * sink = wire->connector1()->firstConnectedToIsh();
-		int sourceIndex = -1;
-		int sinkIndex = -1;
-		for (int i = 0; i < n; i++) {
-			ConnectorItem * ci = partConnectorItems[i];
-			if (ci == source) sourceIndex = i;
-			else if (ci == sink) sinkIndex = i;
-			for (int j = i; j < n; j++) {
-				ConnectorItem * cj = partConnectorItems[j];
-				int weight = 0;
-				Wire * w = NULL;
-				if (i != j && ci->attachedTo() != cj->attachedTo()) {
-					w = ci->wiredTo(cj, ViewGeometry::NormalFlag);
-					if (w != NULL) weight = 1;
-				}
-				cap[j][i] = cap[i][j] = weight;
-				wires[j][i] = wires[i][j] = w;
-			}
-		}
-
-		fordFulkerson(cap, prev, n, sourceIndex, sinkIndex);
-
-		// If prev[v] == -1, then v is not reachable from s
-		for (int i = 0; i < n; i++) {
-			if (prev[i] == -1 && wires[i][sourceIndex]) {
-				DebugDialog::debug(QString("delete wire %1").arg(wires[i][sourceIndex]->id()));
-				deletedItems.insert(wires[i][sourceIndex]);			
-			}
-		}
-	}
-
-	if (deletedItems.count() > 0) {
-		deleteAux(deletedItems, tr("Delete ratsnest"));
-	}
+	emit disconnectWireSignal(itemBases);
 }
 
 bool PCBSketchWidget::canDragWire(Wire * wire) {

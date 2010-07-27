@@ -6425,7 +6425,7 @@ void SketchWidget::speedHack(bool toggle) {
 
 		wire->setVisible(!toggle);
 		if (!wire->hidden()) {
-			wire->setAcceptedMouseButtons(toggle ? 0 : ALLMOUSEBUTTONS);
+			wire->setAcceptedMouseButtons(toggle ? Qt::NoButton : ALLMOUSEBUTTONS);
 			wire->setAcceptHoverEvents(!toggle);
 			wire->setFlag(QGraphicsItem::ItemIsSelectable, !toggle );
 		}

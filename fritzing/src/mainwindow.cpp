@@ -387,6 +387,13 @@ void MainWindow::connectPairs() {
 						Qt::DirectConnection);
 	*/
 
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(disconnectWireSignal(QSet<ItemBase *> &)),
+					m_breadboardGraphicsView, SLOT(disconnectWireSlot(QSet<ItemBase *> &)),
+					Qt::DirectConnection);
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(disconnectWireSignal(QSet<ItemBase *> &)),
+					m_breadboardGraphicsView, SLOT(disconnectWireSlot(QSet<ItemBase *> &)),
+					Qt::DirectConnection);
+
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));

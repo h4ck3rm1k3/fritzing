@@ -45,6 +45,7 @@ public:
 
 protected slots:
 	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
+	void disconnectWireSlot(QSet<ItemBase *> & deletedItems);
 
 protected:
 	void setWireVisible(Wire * wire);

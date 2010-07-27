@@ -173,6 +173,7 @@ signals:
 	void setDRCProgressValue(int);
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
 	void updateLayerMenuSignal();
+	void disconnectWireSignal(QSet<ItemBase *> &);
 
 protected:
 	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
