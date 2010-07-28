@@ -158,7 +158,10 @@ void MainWindow::exportEtchableSvg() {
 
 void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 {
-	if (!m_pcbGraphicsView->ratsAllRouted()) {
+	QUndoCommand  parentCommand;
+	RoutingStatus routingStatus;
+	m_pcbGraphicsView->updateRatsnestStatus(NULL, &parentCommand, routingStatus, true);
+	if (routingStatus.m_connectorsLeftToRoute > 0) {
 		QMessageBox msgBox(this);
 		msgBox.setWindowModality(Qt::WindowModal);
 		msgBox.setText(tr("All traces have not yet been routed."));

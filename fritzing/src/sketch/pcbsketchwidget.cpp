@@ -322,18 +322,6 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 	}
 }
 
-bool PCBSketchWidget::ratsAllRouted() {
-	foreach (QGraphicsItem * item, scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (!wire->getRatsnest()) continue;
-
-		if (!wire->getRouted()) return false;
-	}
-
-	return true;
-}
-
 void PCBSketchWidget::makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand) {
 	new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), opacity, parentCommand);
 	ViewGeometry::WireFlags wireFlags = wire->wireFlags();

@@ -43,7 +43,6 @@ public:
 	void createJumper();
 	void createTrace();
 	void excludeFromAutoroute(bool exclude);
-	bool ratsAllRouted();
 	void selectAllExcludedTraces();
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
