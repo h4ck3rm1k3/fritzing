@@ -44,7 +44,10 @@ public:
 	bool ignoreFemale();
 
 protected slots:
+	/*
+	// obsolete but useful code
 	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
+	*/
 	void disconnectWireSlot(QSet<ItemBase *> & deletedItems);
 
 protected:
@@ -53,13 +56,17 @@ protected:
 	void findConnectorsUnder(ItemBase * item);
 	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
-	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & breadboardItemBase);
 	bool canDropModelPart(ModelPart * modelPart); 
+	/*
 	void translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases);
+	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & breadboardItemBase);
+	*/
 	void getLabelFont(QFont &, QColor &, ViewLayer::ViewLayerSpec);
 	void setNewPartVisible(ItemBase *);
 	double defaultGridSizeInches();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
+	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus);
+	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
 
 };
 

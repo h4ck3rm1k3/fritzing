@@ -31,6 +31,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
 #include "../lib/ff/flow.h"
+#include "../waitpushundostack.h"
 
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
@@ -110,6 +111,9 @@ void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDelete
 	// for now assume only one ratsnest is being deleted although it's written as a loop
 
 
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Delete ratsnest"));
+	QSet<ItemBase *> deletedItems;
+
 	foreach (ItemBase * foreignItemBase, foreignDeletedItems) {
 		Wire * foreignWire = qobject_cast<Wire *>(foreignItemBase);
 		if (foreignWire == NULL) continue;	// shouldn't happen
@@ -149,7 +153,7 @@ void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDelete
 
 		// what if there are multiple direct connections--treat it as a single connection and delete them all
 
-		QVector< QVector<Wire *> > wires(n, QVector<Wire *>(n));
+		QVector< QVector< QList<ConnectorItem *> > > buses(n, QVector< QList<ConnectorItem *> >(n, QList<ConnectorItem *>()));
 		QVector< QVector<int> > cap(n, QVector<int>(n));
 		QVector<int> prev(n);
 		int sourceIndex = -1;
@@ -161,210 +165,72 @@ void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDelete
 			for (int j = i; j < n; j++) {
 				ConnectorItem * cj = partConnectorItems[j];
 				int weight = 0;
-				Wire * w = NULL;
 				if (i != j && ci->attachedTo() != cj->attachedTo()) {
-					w = ci->wiredTo(cj, ViewGeometry::NormalFlag);
-					if (w != NULL) weight = 1;
+					if (connectedDirectlyTo(ci, cj, buses[j][i])) weight = 1;
 				}
 				cap[j][i] = cap[i][j] = weight;
-				wires[j][i] = wires[i][j] = w;
+				buses[i][j] = buses[j][i];
 			}
 		}
 
 		fordFulkerson(cap, prev, n, sourceIndex, sinkIndex);
 
+		QHash<ConnectorItem *, ConnectorItem *> detachItems;			// key is part to be detached, value is part to detach from
+
 		// If prev[v] == -1, then v is not reachable from s
 		for (int i = 0; i < n; i++) {
-			if (prev[i] == -1 && wires[i][sourceIndex]) {
-				DebugDialog::debug(QString("delete wire %1").arg(wires[i][sourceIndex]->id()));
-				//deletedItems.insert(wires[i][sourceIndex]);			
-			}
-		}
-	}
-		
+			QList<ConnectorItem *> & deleteConnectors = buses[i][sourceIndex];
+			if (prev[i] == -1 && deleteConnectors.count() > 0) {
+				foreach (ConnectorItem * deleteConnector, deleteConnectors) {
+					DebugDialog::debug(QString("delete something %1").arg(deleteConnector->attachedToID()));
+					if (deleteConnector->attachedToItemType() == ModelPart::Wire) {
+						deletedItems.insert(deleteConnector->attachedTo());
+					}
+					else {
 
-/*
-		// now figure out whether anything has to be detached from the breadboard
-
-		QMultiHash<ItemBase *, ConnectorItem *> detachItems;
-		foreach (ConnectorItem * end, ends) {
-			foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
-				if (toConnectorItem->connectorType() == Connector::Female) {
-					DebugDialog::debug("got female");
-					detachItems.insert(end->attachedTo(), end);
-				}	
-			}
-		}
-
-*/
-
-
-}
-
-
-void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
-{
-	// this slot is obsolete, but some of the code might be useful
-
-	Q_UNUSED(deletedConnections);
-	Q_UNUSED(deletedItems);
-
-	QMultiHash<PaletteItemBase *, ConnectorItem *> bases;
-	ConnectorPairHash moveItems;
-	translateToLocalItems(foreignMoveItems, moveItems, bases);
-
-	QHash<PaletteItemBase *, ItemBase *> detachItems;
-	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
-		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
-			if (fromConnectorItem->connectorType() == Connector::Female) {
-				// SchematicSketchWidget moveItems may have both A-hashed-to-B connectorItems, 
-				// and B-hashed-to-A connectorItems.  We ignore the hash pair starting with the
-				// female connector
-				continue;
-			}
-			foreach (ConnectorItem * toConnectorItem, moveItems.values(fromConnectorItem)) {
-				detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
-			}
-		}
-	}
-
-	/*
-	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
-		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
-			int femaleCount = 0;
-			int totalCount = 0;
-			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-				if (toConnectorItem->connectorType() == Connector::Female) femaleCount++;
-				totalCount++;
-			}
-			if (femaleCount == 1 && totalCount == 1) {
-				detachItems.insert(paletteItemBase, fromConnectorItem->connectedToItems()[0]->attachedTo());
-				continue;
-			}
-			foreach (ConnectorItem * toConnectorItem, moveItems.values(fromConnectorItem)) {
-				ItemBase * breadboardItemBase = NULL;
-				if (toConnectorItem->connectorType() == Connector::Female) {
-					// paletteItemBase directly connected to arduino, for example
-					detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
-				}
-				else if (shareBreadboard(fromConnectorItem, toConnectorItem, breadboardItemBase)) {
-					detachItems.insert(paletteItemBase, breadboardItemBase);
-				}
-				else {
-					// if they they indirectly connected via a female connector, then delete a wire
-					QList<ConnectorItem *> connectorItems;
-					connectorItems.append(fromConnectorItem);
-					connectorItems.append(toConnectorItem);
-					ConnectorItem::collectEqualPotential(connectorItems);
-					bool foundIt = false;
-					foreach (ConnectorItem * candidate, connectorItems) {
-						if (candidate->connectorType() != Connector::Female) continue;
-
-						foreach (ConnectorItem * cto, candidate->connectedToItems()) {
-							if (cto->attachedToItemType() != ModelPart::Wire) continue;
-
-							QList<Wire *> chained;
-							QList<ConnectorItem *> ends;
-							QList<ConnectorItem *> uniqueEnds;
-							Wire * tempWire = dynamic_cast<Wire *>(cto->attachedTo());
-							tempWire->collectChained(chained, ends, uniqueEnds);
-							if (ends.contains(fromConnectorItem) || ends.contains(toConnectorItem)) {
-								// is this good enough or do we need more confirmation that it's the right wire?
-								deletedItems.insert(tempWire);
-								ConnectorPairHash * connectorHash = new ConnectorPairHash;
-								tempWire->collectConnectors(*connectorHash, this->scene());
-								deletedConnections.insert(tempWire, connectorHash);	
-								foundIt = true;
-								break;
-							}
-						}
-						if (foundIt) break;
+						// we have to detach the source or sink from a female connector
+						detachItems.insert(partConnectorItems[i], deleteConnector);
 					}
 				}
 			}
 		}
-	}
-	*/
 
-	foreach (PaletteItemBase * detachee, detachItems.keys()) {
-		ItemBase * detachFrom = detachItems.value(detachee);
-		QPointF newPos = calcNewLoc(detachee, dynamic_cast<PaletteItemBase *>(detachFrom));
+		foreach (ConnectorItem * detacheeConnector, detachItems.keys()) {
+			ItemBase * detachee = detacheeConnector->attachedTo();
+			ConnectorItem * detachFromConnector = detachItems.value(detacheeConnector);
+			ItemBase * detachFrom = detachFromConnector->attachedTo();
+			QPointF newPos = calcNewLoc(detachee, detachFrom);
 
-		// delete connections
-		// add wires and connections for undisconnected connectors
+			// delete connections
+			// add wires and connections for undisconnected connectors
 
-		detachee->saveGeometry();
-		ViewGeometry vg = detachee->getViewGeometry();
-		vg.setLoc(newPos);
-		new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
-		QSet<ItemBase *> tempItems;
-		ConnectorPairHash connectorHash;
-		disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
-		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
-			if (moveItems.uniqueKeys().contains(fromConnectorItem)) {
-				// don't need to reconnect
-				continue;
-			}
-			if (moveItems.values().contains(fromConnectorItem)) {
-				// don't need to reconnect
-				continue;
-			}
+			detachee->saveGeometry();
+			ViewGeometry vg = detachee->getViewGeometry();
+			vg.setLoc(newPos);
+			new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
+			QSet<ItemBase *> tempItems;
+			ConnectorPairHash connectorHash;
+			disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
+			foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+				if (detachItems.keys().contains(fromConnectorItem)) {
+					// don't need to reconnect
+					continue;
+				}
+				if (detachItems.values().contains(fromConnectorItem)) {
+					// don't need to reconnect
+					continue;
+				}
 
-			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
-			}
-		}
-	}
-}
-
-void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases)
-{
-	foreach (ConnectorItem * foreignFromConnectorItem, foreignMoveItems.uniqueKeys()) {
-		qint64 fromItemID = foreignFromConnectorItem->attachedToID();
-		ItemBase * fromItemBase = findItem(fromItemID);
-		if (fromItemBase == NULL) continue;
-
-		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(fromItemBase);
-		if (paletteItemBase == NULL) {
-			// shouldn't be here: want parts not wires
-			continue;
-		}
-
-		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorSharedID(), ViewLayer::Bottom);
-		if (fromConnectorItem == NULL) continue;
-
-		foreach (ConnectorItem * foreignToConnectorItem, foreignMoveItems.values(foreignFromConnectorItem)) {
-			qint64 toItemID = foreignToConnectorItem->attachedToID();
-			ItemBase * toItemBase = findItem(toItemID);
-			if (toItemBase == NULL) continue;
-
-			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorSharedID(), ViewLayer::Bottom);
-			if (toConnectorItem == NULL) continue;
-
-			moveItems.insert(fromConnectorItem, toConnectorItem);
-		}
-		bases.insert(paletteItemBase, fromConnectorItem);
-	}
-}
-
-
-bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & itemBase)
-{
-	foreach (ConnectorItem * ftci, fromConnectorItem->connectedToItems()) {
-		if (ftci->connectorType() == Connector::Female) {
-			foreach (ConnectorItem * ttci, toConnectorItem->connectedToItems()) {
-				if (ttci->connectorType() == Connector::Female) {
-					if (ftci->bus() == ttci->bus()) {
-						itemBase = ftci->attachedTo();
-						return true;
-					}
+				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+					createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
 				}
 			}
 		}
 	}
 
-	return false;
+	deleteAux(deletedItems, parentCommand);
 }
+
 
 bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Board || modelPart->itemType() == ModelPart::ResizableBoard) {
@@ -430,3 +296,217 @@ double BreadboardSketchWidget::defaultGridSizeInches() {
 ViewLayer::ViewLayerID BreadboardSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec) {
 	return ViewLayer::BreadboardLabel;
 }
+
+bool BreadboardSketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus) 
+{
+	QList<ConnectorItem *> visited;
+	return connectedDirectlyTo(from, to, byBus, visited);
+}
+
+bool BreadboardSketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited) 
+{
+	bool result = false;
+	visited.append(from);
+	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
+		if (toConnectorItem == to) {
+			byBus.append(NULL);
+			return true;
+		}
+
+		if (visited.contains(toConnectorItem)) continue;
+
+		Bus * bus = toConnectorItem->bus();
+		if (bus == NULL) continue;
+
+		QList<ConnectorItem *> busConnectorItems;
+		toConnectorItem->attachedTo()->busConnectorItems(bus, busConnectorItems);
+		foreach (ConnectorItem * busConnectorItem, busConnectorItems) {
+			if (busConnectorItem != toConnectorItem) {
+				bool connected = connectedDirectlyTo(busConnectorItem, to, byBus, visited);
+				if (connected == true) {
+					result = true;
+					int ix = byBus.count() - 1;
+					if (byBus.at(ix) == NULL || byBus.at(ix)->attachedToItemType() != ModelPart::Wire) {
+						byBus[ix] = busConnectorItem;
+					}
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+/*
+
+void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+{
+	// this slot is obsolete, but some of the code might be useful
+
+	Q_UNUSED(deletedConnections);
+	Q_UNUSED(deletedItems);
+
+	QMultiHash<PaletteItemBase *, ConnectorItem *> bases;
+	ConnectorPairHash moveItems;
+	translateToLocalItems(foreignMoveItems, moveItems, bases);
+
+	QHash<PaletteItemBase *, ItemBase *> detachItems;
+	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
+		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
+			if (fromConnectorItem->connectorType() == Connector::Female) {
+				// SchematicSketchWidget moveItems may have both A-hashed-to-B connectorItems, 
+				// and B-hashed-to-A connectorItems.  We ignore the hash pair starting with the
+				// female connector
+				continue;
+			}
+			foreach (ConnectorItem * toConnectorItem, moveItems.values(fromConnectorItem)) {
+				detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
+			}
+		}
+	}
+	*/
+
+	/*
+	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
+		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
+			int femaleCount = 0;
+			int totalCount = 0;
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				if (toConnectorItem->connectorType() == Connector::Female) femaleCount++;
+				totalCount++;
+			}
+			if (femaleCount == 1 && totalCount == 1) {
+				detachItems.insert(paletteItemBase, fromConnectorItem->connectedToItems()[0]->attachedTo());
+				continue;
+			}
+			foreach (ConnectorItem * toConnectorItem, moveItems.values(fromConnectorItem)) {
+				ItemBase * breadboardItemBase = NULL;
+				if (toConnectorItem->connectorType() == Connector::Female) {
+					// paletteItemBase directly connected to arduino, for example
+					detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
+				}
+				else if (shareBreadboard(fromConnectorItem, toConnectorItem, breadboardItemBase)) {
+					detachItems.insert(paletteItemBase, breadboardItemBase);
+				}
+				else {
+					// if they they indirectly connected via a female connector, then delete a wire
+					QList<ConnectorItem *> connectorItems;
+					connectorItems.append(fromConnectorItem);
+					connectorItems.append(toConnectorItem);
+					ConnectorItem::collectEqualPotential(connectorItems);
+					bool foundIt = false;
+					foreach (ConnectorItem * candidate, connectorItems) {
+						if (candidate->connectorType() != Connector::Female) continue;
+
+						foreach (ConnectorItem * cto, candidate->connectedToItems()) {
+							if (cto->attachedToItemType() != ModelPart::Wire) continue;
+
+							QList<Wire *> chained;
+							QList<ConnectorItem *> ends;
+							QList<ConnectorItem *> uniqueEnds;
+							Wire * tempWire = dynamic_cast<Wire *>(cto->attachedTo());
+							tempWire->collectChained(chained, ends, uniqueEnds);
+							if (ends.contains(fromConnectorItem) || ends.contains(toConnectorItem)) {
+								// is this good enough or do we need more confirmation that it's the right wire?
+								deletedItems.insert(tempWire);
+								ConnectorPairHash * connectorHash = new ConnectorPairHash;
+								tempWire->collectConnectors(*connectorHash, this->scene());
+								deletedConnections.insert(tempWire, connectorHash);	
+								foundIt = true;
+								break;
+							}
+						}
+						if (foundIt) break;
+					}
+				}
+			}
+		}
+	}
+	*/
+
+	/*
+	foreach (PaletteItemBase * detachee, detachItems.keys()) {
+		ItemBase * detachFrom = detachItems.value(detachee);
+		QPointF newPos = calcNewLoc(detachee, dynamic_cast<PaletteItemBase *>(detachFrom));
+
+		// delete connections
+		// add wires and connections for undisconnected connectors
+
+		detachee->saveGeometry();
+		ViewGeometry vg = detachee->getViewGeometry();
+		vg.setLoc(newPos);
+		new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
+		QSet<ItemBase *> tempItems;
+		ConnectorPairHash connectorHash;
+		disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
+		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+			if (moveItems.uniqueKeys().contains(fromConnectorItem)) {
+				// don't need to reconnect
+				continue;
+			}
+			if (moveItems.values().contains(fromConnectorItem)) {
+				// don't need to reconnect
+				continue;
+			}
+
+			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+			}
+		}
+	}
+}
+
+*/
+
+/*
+void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases)
+{
+	foreach (ConnectorItem * foreignFromConnectorItem, foreignMoveItems.uniqueKeys()) {
+		qint64 fromItemID = foreignFromConnectorItem->attachedToID();
+		ItemBase * fromItemBase = findItem(fromItemID);
+		if (fromItemBase == NULL) continue;
+
+		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(fromItemBase);
+		if (paletteItemBase == NULL) {
+			// shouldn't be here: want parts not wires
+			continue;
+		}
+
+		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorSharedID(), ViewLayer::Bottom);
+		if (fromConnectorItem == NULL) continue;
+
+		foreach (ConnectorItem * foreignToConnectorItem, foreignMoveItems.values(foreignFromConnectorItem)) {
+			qint64 toItemID = foreignToConnectorItem->attachedToID();
+			ItemBase * toItemBase = findItem(toItemID);
+			if (toItemBase == NULL) continue;
+
+			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorSharedID(), ViewLayer::Bottom);
+			if (toConnectorItem == NULL) continue;
+
+			moveItems.insert(fromConnectorItem, toConnectorItem);
+		}
+		bases.insert(paletteItemBase, fromConnectorItem);
+	}
+}
+
+*/
+
+/*
+bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & itemBase)
+{
+	foreach (ConnectorItem * ftci, fromConnectorItem->connectedToItems()) {
+		if (ftci->connectorType() == Connector::Female) {
+			foreach (ConnectorItem * ttci, toConnectorItem->connectedToItems()) {
+				if (ttci->connectorType() == Connector::Female) {
+					if (ftci->bus() == ttci->bus()) {
+						itemBase = ftci->attachedTo();
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+*/

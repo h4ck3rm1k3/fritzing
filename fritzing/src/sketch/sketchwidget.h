@@ -275,7 +275,7 @@ protected:
 
 
 	void cutDeleteAux(QString undoStackMessage);
-	void deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackMessage);
+	void deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
 	bool deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
 	void extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,

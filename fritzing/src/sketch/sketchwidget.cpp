@@ -55,7 +55,6 @@ $Date$
 #include "../items/layerkinpaletteitem.h"
 #include "sketchwidget.h"
 #include "../connectors/connectoritem.h"
-#include "../connectors/bus.h"
 #include "../items/jumperitem.h"
 #include "../items/virtualwire.h"
 #include "../items/tracewire.h"
@@ -782,13 +781,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		return;
 	}
 
-	deleteAux(deletedItems, undoStackMessage);
-}
-
-void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackMessage) 
-{
 	QString string;
-
 	if (deletedItems.count() == 1) {
 		ItemBase * firstItem = *(deletedItems.begin());
 		string = tr("%1 %2").arg(undoStackMessage).arg(firstItem->title());
@@ -800,6 +793,11 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QString undoStackM
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 	parentCommand->setText(string);
 
+	deleteAux(deletedItems, parentCommand);
+}
+
+void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand) 
+{
     stackSelectionState(false, parentCommand);
 
 	bool skipMe = deleteMiddle(deletedItems, parentCommand);
