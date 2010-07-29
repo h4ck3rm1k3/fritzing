@@ -179,12 +179,7 @@ ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * mod
 bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item, int count)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
-
-#ifndef QT_NO_DEBUG
 	if (wire != NULL && count > 1) return false;
-#else
-	if (wire != NULL) return false;
-#endif
 
 	return SketchWidget::canDeleteItem(item, count);
 }
@@ -203,7 +198,11 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 	bool result = SketchWidget::canChainWire(wire);
 	if (!result) return result;
 
-	if (wire->getRatsnest()) return false;
+	if (wire->getRatsnest()) {
+		ConnectorItem * c0 = wire->connector0()->firstConnectedToIsh();
+		ConnectorItem * c1 = wire->connector1()->firstConnectedToIsh();
+		return !c0->wiredTo(c1, ViewGeometry::TraceFlag); 
+	}
 
 	return result;
 }
@@ -1620,11 +1619,11 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 	for (int i = 0; i < count; i++) {
 		adjacency[i][i] = true;
 		ConnectorItem * from = partConnectorItems[i];
-		DebugDialog::debug(QString("score one %1 '%2' '%3' %4")
-				.arg(i)
-				.arg(from->connectorSharedName())
-				.arg(from->attachedToInstanceTitle())
-				.arg(from->attachedToViewLayerID()));
+		//DebugDialog::debug(QString("score one %1 '%2' '%3' %4")
+				//.arg(i)
+				//.arg(from->connectorSharedName())
+				//.arg(from->attachedToInstanceTitle())
+				//.arg(from->attachedToViewLayerID()));
 
 		for (int j = i + 1; j < count; j++) {
 			ConnectorItem * to = partConnectorItems[j];
@@ -1645,7 +1644,7 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 		}
 	}
 
-	traceAdjacency(adjacency, count);
+	//traceAdjacency(adjacency, count);
 
 	for (int i = 0; i < count; i++) {
 		ConnectorItem * fromConnectorItem = partConnectorItems[i];
@@ -1682,11 +1681,11 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 		}
 	}
 
-	traceAdjacency(adjacency, count);
+	//traceAdjacency(adjacency, count);
 
 	transitiveClosure(adjacency, count);
 
-	traceAdjacency(adjacency, count);
+	//traceAdjacency(adjacency, count);
 
 	int todo = countMissing(adjacency, count);
 	if (todo == 0) {
@@ -2771,3 +2770,87 @@ bool PCBSketchWidget::canDragWire(Wire * wire) {
 	return true;
 }
 
+void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, ConnectorItem * to)
+{
+	if (m_bendpointWire == NULL || !wire->getRatsnest()) {
+		SketchWidget::dragWireChanged(wire, fromOnWire, to);
+		return;
+	}
+
+	// m_bendpointWire is the original wire
+	// m_connectorDragWire is temporary
+	// wire == m_connectorDragWire
+	// m_connectorDragConnector is from original wire
+
+	BaseCommand::CrossViewType crossViewType = BaseCommand::SingleView;
+
+	QUndoCommand * parentCommand = new QUndoCommand();
+	parentCommand->setText(tr("Create and connect trace"));
+
+	//SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+
+	m_connectorDragWire->saveGeometry();
+	m_bendpointWire->saveGeometry();
+
+	ViewLayer::ViewLayerSpec viewLayerSpec = ViewLayer::Bottom;
+
+	long newID1 = ItemBase::getNextID();
+	ViewGeometry vg1 = m_connectorDragWire->getViewGeometry();
+	vg1.setRatsnest(false);
+	vg1.setVirtual(false);
+	vg1.setTrace(true);
+	new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
+	new CheckStickyCommand(this, crossViewType, newID1, false, parentCommand);
+	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
+	new WireWidthChangeCommand(this, newID1, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
+
+	long newID2 = ItemBase::getNextID();
+	ViewGeometry vg2 = m_bendpointWire->getViewGeometry();
+	vg2.setRatsnest(false);
+	vg2.setVirtual(false);
+	vg2.setTrace(true);
+	new AddItemCommand(this, crossViewType, m_bendpointWire->modelPart()->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
+	new CheckStickyCommand(this, crossViewType, newID2, false, parentCommand);
+	new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
+	new WireWidthChangeCommand(this, newID2, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
+
+	new ChangeConnectionCommand(this, BaseCommand::SingleView,
+									newID2, m_connectorDragConnector->connectorSharedID(),
+									newID1, m_connectorDragWire->connector0()->connectorSharedID(),
+									ViewLayer::specFromID(wire->viewLayerID()),
+									true, parentCommand);
+
+	foreach (ConnectorItem * toConnectorItem, m_bendpointWire->connector0()->connectedToItems()) {
+		new ChangeConnectionCommand(this, BaseCommand::SingleView,
+									newID2, m_bendpointWire->connector0()->connectorSharedID(),
+									toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+									ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+									true, parentCommand);
+	}
+	foreach (ConnectorItem * toConnectorItem, m_connectorDragWire->connector1()->connectedToItems()) {
+		new ChangeConnectionCommand(this, BaseCommand::SingleView,
+									newID1, m_connectorDragWire->connector1()->connectorSharedID(),
+									toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+									ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
+									true, parentCommand);
+		m_connectorDragWire->connector1()->tempRemove(toConnectorItem, false);
+		toConnectorItem->tempRemove(m_connectorDragWire->connector1(), false);
+		m_bendpointWire->connector1()->tempConnectTo(toConnectorItem, false);
+		toConnectorItem->tempConnectTo(m_bendpointWire->connector1(), false);
+	}
+
+
+
+	m_bendpointWire->setPos(m_bendpointVG.loc());
+	m_bendpointWire->setLine(m_bendpointVG.line());
+	m_connectorDragConnector->tempRemove(m_connectorDragWire->connector0(), false);
+	m_connectorDragWire->connector0()->tempRemove(m_connectorDragConnector, false);
+	m_bendpointWire = NULL;			// signal that we're done
+
+
+	// remove the temporary wire
+	this->scene()->removeItem(m_connectorDragWire);
+
+	new CleanUpWiresCommand(this, false, parentCommand);
+	m_undoStack->push(parentCommand);
+}

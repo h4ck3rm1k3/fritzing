@@ -6337,16 +6337,16 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 			//if (indexer.keys().contains(ci)) {
 				//DebugDialog::debug(QString("connector item already indexed %1 %2").arg(ci->connectorSharedName()).arg(ci->attachedToInstanceTitle()));
 			//}
-			int c = indexer.count();
-			DebugDialog::debug(QString("insert indexer %1 '%2' '%3' %4")
-				.arg(c)
-				.arg(ci->connectorSharedName())
-				.arg(ci->attachedToInstanceTitle())
-				.arg(ci->attachedToViewLayerID()));
+			//int c = indexer.count();
+			//DebugDialog::debug(QString("insert indexer %1 '%2' '%3' %4")
+				//.arg(c)
+				//.arg(ci->connectorSharedName())
+				//.arg(ci->attachedToInstanceTitle())
+				//.arg(ci->attachedToViewLayerID()));
 			indexer.insert(ci, indexer.count());
 		}
 
-		DebugDialog::debug("________________");
+		//DebugDialog::debug("________________");
 		allPartConnectorItems.append(partConnectorItems);
 	}
 }

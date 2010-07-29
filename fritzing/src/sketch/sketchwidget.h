@@ -289,7 +289,7 @@ protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 	void clearTemporaries();
-	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
+	virtual void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	void killDroppingItem();
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec);
 	ItemBase * overSticky(ItemBase *);

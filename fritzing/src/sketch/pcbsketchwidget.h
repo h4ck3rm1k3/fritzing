@@ -166,6 +166,7 @@ protected:
 	bool resizingBoardRelease();
 	void resizeBoard();
 	void resizeJumperItem();
+	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 
 signals:
 	void setMaximumDRCProgress(int);

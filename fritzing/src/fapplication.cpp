@@ -177,14 +177,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 			(m_arguments[i].compare("--gerber", Qt::CaseInsensitive) == 0)) {
 			m_runAsService = true;
 			m_gerberService = true;
-			toRemove << i;
-		}
-
-		if ((m_arguments[i].compare("-go", Qt::CaseInsensitive) == 0)) {
-			m_runAsService = true;
-			toRemove << i;
-			toRemove << i + 1;
 			m_outputFolder = m_arguments[i + 1];
+			toRemove << i;
 		}
 
 		if (m_arguments[i].compare("-ep", Qt::CaseInsensitive) == 0) {
