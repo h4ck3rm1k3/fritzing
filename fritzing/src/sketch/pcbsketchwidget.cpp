@@ -345,8 +345,6 @@ void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
 
 void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus, bool manual)
 {
-	if (!manual && m_manualRoutingStatusUpdate) return;
-
 	//DebugDialog::debug("update ratsnest status");
 
 	QHash<ConnectorItem *, int> indexer;
@@ -363,6 +361,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 		delete list;
 	}
 
+	if (!manual && m_manualRoutingStatusUpdate) return;
 
 	updateRatsnestColors(command, undoCommand, false, routingStatus);
 
@@ -2796,7 +2795,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	m_connectorDragWire->saveGeometry();
 	m_bendpointWire->saveGeometry();
 
-	ViewLayer::ViewLayerSpec viewLayerSpec = ViewLayer::Bottom;
+	ViewLayer::ViewLayerSpec viewLayerSpec = layerIsActive(ViewLayer::Copper0) ? ViewLayer::Bottom : ViewLayer::Top;
 
 	long newID1 = ItemBase::getNextID();
 	ViewGeometry vg1 = m_connectorDragWire->getViewGeometry();
@@ -2879,7 +2878,7 @@ void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos,
 
 	wire->saveGeometry();
 
-	ViewLayer::ViewLayerSpec viewLayerSpec = ViewLayer::Bottom;
+	ViewLayer::ViewLayerSpec viewLayerSpec = layerIsActive(ViewLayer::Copper0) ? ViewLayer::Bottom : ViewLayer::Top;
 	BaseCommand::CrossViewType crossViewType = BaseCommand::SingleView;
 
 	long newID1 = ItemBase::getNextID();
