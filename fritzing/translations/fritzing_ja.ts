@@ -151,6 +151,13 @@
     </message>
 </context>
 <context>
+    <name>BreadboardSketchWidget</name>
+    <message>
+        <source>Delete ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -193,15 +200,15 @@ before adding any connectors</source>
 <context>
     <name>DeleteDialog</name>
     <message>
-        <source>Delete</source>
+        <source>Also delete the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t Delete</source>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete the file</source>
+        <source>Don&apos;t remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -334,10 +341,6 @@ Fritzingのフォントを指定してください:</translation>
     <message>
         <source>Specify a file name</source>
         <translation>ファイル名を選択してください</translation>
-    </message>
-    <message>
-        <source>Fritzing (*%1)</source>
-        <translation>Fritzing (*%1)</translation>
     </message>
     <message>
         <source>Save &quot;%1&quot;</source>
@@ -2089,6 +2092,54 @@ Please check all views for potential side-effects.</source>
         <source>%1 overlapping parts found</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please specify a location for the archived sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing File (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a folder to save the archived sketch and program files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save sketch to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste in Place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste clipboard contents in place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Trace Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected traces to the other side of the board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed hack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hack for speeding up Fritzing--use at your own risk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update routing status</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2165,6 +2216,18 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Design Rules Check Progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change trace layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create and connect trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create trace</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2560,6 +2623,10 @@ Please, specify a new filename</source>
         <source>Updating existing part</source>
         <translation>既存パーツの更新</translation>
     </message>
+    <message>
+        <source>Fritzing Parts (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PartsEditorView</name>
@@ -2624,6 +2691,18 @@ Fritzingの互換性のため svg 用として書き込むことが出ません�
     </message>
     <message>
         <source>unable to open temp file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no schematics found in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic part</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2778,43 +2857,11 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>undo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>save as</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select a program file to load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Programmer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2823,6 +2870,42 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Program (*.%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Programmer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove &quot;%1&quot; from the sketch?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file &apos;%1&apos; must be saved before it can be sent to the programmer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a programmer (executable) for %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2834,6 +2917,194 @@ Vertical scroll</source>
     </message>
     <message>
         <source>%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No ports found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the current program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename the current program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the current program into a new tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove the current program from the sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print the current program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Q</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste clipboard contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select programmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load the current program onto a microcontroller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Programming Window - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locate...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3303,10 +3574,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select footprint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Design Rule Check (select items that are too close together)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3340,6 +3607,34 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Parts folder not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad shape size is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad schematic definition %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic part %1 not found in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic %1 unexpectedly ends (1) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic %1 unexpectedly ends (2) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic %1 unexpectedly ends (3) in %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3539,10 +3834,6 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <source>Selection</source>
         <translation>セレクション</translation>
-    </message>
-    <message>
-        <source>Resize board to %1 %2</source>
-        <translation>ボードのサイズを %1 %2 に変更</translation>
     </message>
     <message>
         <source>Move %2 (%1)</source>
@@ -3772,6 +4063,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the Alt (Linux: Meta) key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To drag the canvas, hold down the space bar and drag it with the mouse.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To display different properties in a part label, rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

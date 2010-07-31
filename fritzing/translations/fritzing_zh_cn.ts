@@ -5,7 +5,7 @@
     <name>AboutBox</name>
     <message>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
-        <translation>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
+        <translation>版本号 %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
@@ -29,15 +29,15 @@
     </message>
     <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar and IxDS.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;p&gt;Special thanks goes out as well to all the students and alpha testers who were brave enough to give Fritzing a test spin. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;特别的感谢献给那些足够勇敢的给予Fritzing测试机会的学生和Alpha测试员。&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Thanks to Kurt Badelt for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, to Vladimir Savinov for the Russian translation,and to Steven Noppe for the Dutch translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;感谢 Kurt Badelt 对西班牙版的翻译, Gianluca Urgese 对意大利版的翻译, Nuno Pessanha Santos 对葡萄牙版的翻译, Yuelin and Ninjia 对简体中文版的翻译,  Hiroshi Suzuki 对日文版的翻译,  Robert Lee 对繁体中文版的翻译, Vladimir Savinov 对俄罗斯版的翻译,和 Steven Noppe 对荷兰版的翻译。&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -55,31 +55,31 @@
     <name>AlignSettingsDialog</name>
     <message>
         <source>Set the grid size for %1 only.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置网格大小为 %1 only.</translation>
     </message>
     <message>
         <source>Grid Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>网格大小:</translation>
     </message>
     <message>
         <source>in</source>
-        <translation type="unfinished"></translation>
+        <translation>in</translation>
     </message>
     <message>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复默认值</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -109,7 +109,7 @@
     </message>
     <message>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
-        <translation></translation>
+        <translation type="unfinished">BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</translation>
     </message>
     <message>
         <source>New bin (%1)</source>
@@ -140,10 +140,17 @@
     <name>Board</name>
     <message>
         <source>one layer (single-sided)</source>
-        <translation type="unfinished"></translation>
+        <translation>一层(单面)</translation>
     </message>
     <message>
         <source>two layers (double-sided)</source>
+        <translation>两层(双面)</translation>
+    </message>
+</context>
+<context>
+    <name>BreadboardSketchWidget</name>
+    <message>
+        <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -192,15 +199,15 @@ in order to fix this connector</source>
 <context>
     <name>DeleteDialog</name>
     <message>
-        <source>Delete</source>
+        <source>Also delete the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t Delete</source>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete the file</source>
+        <source>Don&apos;t remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -208,7 +215,7 @@ in order to fix this connector</source>
     <name>Dip</name>
     <message>
         <source>chip label</source>
-        <translation type="unfinished"></translation>
+        <translation>芯片标签</translation>
     </message>
 </context>
 <context>
@@ -219,7 +226,7 @@ in order to fix this connector</source>
     </message>
     <message>
         <source>Inspector</source>
-        <translation>分隔符</translation>
+        <translation>指示栏</translation>
     </message>
     <message>
         <source>Undo History</source>
@@ -243,11 +250,11 @@ in order to fix this connector</source>
     </message>
     <message>
         <source>Couldn&apos;t get the dock widget</source>
-        <translation>得不到此可停靠控件</translation>
+        <translation>不能获得可停靠控件</translation>
     </message>
     <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>层</translation>
     </message>
 </context>
 <context>
@@ -266,25 +273,27 @@ in order to fix this connector</source>
     </message>
     <message>
         <source>Fritzing failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing 出错了</translation>
     </message>
     <message>
         <source>Fritzing caught an exception from %1 in event %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing 在event %2 中获得了一个  %1的意外</translation>
     </message>
     <message>
         <source>Fritzing caught an exception %1 from %2 in event %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing 在event %3 中获得了一个 %2的%1意外</translation>
     </message>
     <message>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>你想要导入使用早期版本的Fritzing创建的元件和元件库么?
+</translation>
     </message>
     <message>
         <source>
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+提示：你可以在稍后使用&quot;帮助&quot;&gt;&quot;从早期版本中导入元件和元件库&quot;菜单导入他们.</translation>
     </message>
 </context>
 <context>
@@ -316,7 +325,7 @@ Please select one of the Fritzing fonts to replace them:</source>
     <name>FritzingWindow</name>
     <message>
         <source>&amp;Close Window</source>
-        <translation>&amp;C关闭窗口</translation>
+        <translation>关闭窗口(&amp;C)</translation>
     </message>
     <message>
         <source>Ctrl+W</source>
@@ -333,10 +342,6 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>Specify a file name</source>
         <translation>指定文件名</translation>
-    </message>
-    <message>
-        <source>Fritzing (*%1)</source>
-        <translation>Fritzing (*%1)</translation>
     </message>
     <message>
         <source>Save &quot;%1&quot;</source>
@@ -383,50 +388,50 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;The first thing you will need is a board to place your parts on. There should already be one to the left of this text, but if not, drag in this icon &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; from the parts bin. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;PCB视图&lt;/b&gt;时用来设计组件如何出现在真实的PCB(印刷电路板)上.&lt;br/&gt;&lt;br/&gt;PCB可以在家中或者小实验室中使用DIY的蚀刻工艺来制作。他们也可以被送到专业的PCB生产服务的地方更严谨精确的生产。&lt;br/&gt;首先需要的是一块板子&lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt;来放置元件. 布置PCB板,重新排布所有组件以使他们在板上能够很好的排布。然后试着移动他们以便最小化接插件的长度和次序。也可以重新确定矩形板的大小。一旦元件排布好，右击单独的接插件或者使用自动布线在元件之间生成铜的线迹。自动连线按钮&lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;在左下角。</translation>
     </message>
 </context>
 <context>
     <name>Hole</name>
     <message>
         <source>Pin Header</source>
-        <translation type="unfinished"></translation>
+        <translation>针脚头</translation>
     </message>
     <message>
         <source>Standard Through-hole</source>
-        <translation type="unfinished"></translation>
+        <translation>标准过孔</translation>
     </message>
     <message>
         <source>Big Through-hole</source>
-        <translation type="unfinished"></translation>
+        <translation>标准通孔</translation>
     </message>
     <message>
         <source>Mounting Hole</source>
-        <translation type="unfinished"></translation>
+        <translation>装配孔</translation>
     </message>
     <message>
         <source>Fine Lead Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>标准针脚元件</translation>
     </message>
     <message>
         <source>Thick Lead Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>粗针脚元件</translation>
     </message>
     <message>
         <source>hole size</source>
-        <translation type="unfinished"></translation>
+        <translation>孔径</translation>
     </message>
     <message>
         <source>custom settings</source>
-        <translation type="unfinished"></translation>
+        <translation>常规设置</translation>
     </message>
     <message>
         <source>Hole Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>内径</translation>
     </message>
     <message>
         <source>Ring Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>外径</translation>
     </message>
 </context>
 <context>
@@ -437,7 +442,7 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>conn.</source>
-        <translation type="unfinished">conn.</translation>
+        <translation>接口.</translation>
     </message>
     <message numerus="yes">
         <source>connected to %n item(s)</source>
@@ -463,11 +468,11 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>Rat&apos;s nest wire</source>
-        <translation>鼠巢线</translation>
+        <translation>飞线和覆铜预览</translation>
     </message>
     <message>
         <source>Trace wire %1</source>
-        <translation>迹线%1</translation>
+        <translation>引导线%1</translation>
     </message>
     <message>
         <source>Jumper wire %1</source>
@@ -484,12 +489,14 @@ Please select one of the Fritzing fonts to replace them:</source>
     <message>
         <source>x:%1 %2
 y:%3 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>x:%1 %2
+y:%3 %4</translation>
     </message>
     <message>
         <source>x:%1
 y:%2</source>
-        <translation type="unfinished"></translation>
+        <translation>x:%1
+y:%2</translation>
     </message>
 </context>
 <context>
@@ -500,77 +507,77 @@ y:%2</source>
     </message>
     <message>
         <source>family</source>
-        <translation type="unfinished">类族</translation>
+        <translation>类族</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished">颜色</translation>
+        <translation>颜色</translation>
     </message>
     <message>
         <source>resistance</source>
-        <translation type="unfinished">电阻</translation>
+        <translation>电阻</translation>
     </message>
     <message>
         <source>voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>电压</translation>
     </message>
     <message>
         <source>pin spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>针脚距离</translation>
     </message>
     <message>
         <source>rated power</source>
-        <translation type="unfinished"></translation>
+        <translation>额定功率</translation>
     </message>
     <message>
         <source>rated voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>额定电压</translation>
     </message>
     <message>
         <source>rated current</source>
-        <translation type="unfinished"></translation>
+        <translation>额定电流</translation>
     </message>
     <message>
         <source>version</source>
-        <translation type="unfinished"></translation>
+        <translation>版本</translation>
     </message>
     <message>
         <source>package</source>
-        <translation type="unfinished"></translation>
+        <translation>包</translation>
     </message>
     <message>
         <source>shape</source>
-        <translation type="unfinished"></translation>
+        <translation>形状</translation>
     </message>
     <message>
         <source>maximum resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>最大电阻</translation>
     </message>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>大小</translation>
     </message>
     <message>
         <source>form</source>
-        <translation type="unfinished"></translation>
+        <translation>组成</translation>
     </message>
 </context>
 <context>
     <name>KicadModuleDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
     <name>LayerPalette</name>
     <message>
         <source>show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>显示所有层</translation>
     </message>
 </context>
 <context>
@@ -585,62 +592,62 @@ y:%2</source>
     </message>
     <message>
         <source>url:</source>
-        <translation type="unfinished"></translation>
+        <translation>url:</translation>
     </message>
     <message>
         <source>text:</source>
-        <translation type="unfinished"></translation>
+        <translation>文本:</translation>
     </message>
 </context>
 <context>
     <name>LogoItem</name>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>大小</translation>
     </message>
     <message>
         <source>logo</source>
-        <translation type="unfinished"></translation>
+        <translation>标识</translation>
     </message>
     <message>
         <source>load image file</source>
-        <translation type="unfinished"></translation>
+        <translation>载入图像文件</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>图像</translation>
     </message>
     <message>
         <source>Select an image file to load</source>
-        <translation type="unfinished"></translation>
+        <translation>选择一个载入的图像文件</translation>
     </message>
     <message>
         <source>Unable to load</source>
-        <translation type="unfinished"></translation>
+        <translation>不能载入</translation>
     </message>
     <message>
         <source>Unable to load image from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能从%1中载入图像</translation>
     </message>
     <message>
         <source>Unable to display</source>
-        <translation type="unfinished"></translation>
+        <translation>不能显示</translation>
     </message>
     <message>
         <source>Unable to display image from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能从%1显示图像</translation>
     </message>
     <message>
         <source>width(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>宽度(mm)</translation>
     </message>
     <message>
         <source>height(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>高度(mm)</translation>
     </message>
     <message>
         <source>keep in proportion</source>
-        <translation type="unfinished"></translation>
+        <translation>保持比例</translation>
     </message>
 </context>
 <context>
@@ -827,7 +834,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
     <message>
         <source>All traces have not yet been routed.</source>
-        <translation>不是所有的迹线都被排布。</translation>
+        <translation>不是所有的引导线都被排布。</translation>
     </message>
     <message>
         <source>Do you want to proceed anyway?</source>
@@ -1299,7 +1306,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
     <message>
         <source>Bring Forward</source>
-        <translation>升到上策</translation>
+        <translation>升到上层</translation>
     </message>
     <message>
         <source>Ctrl+]</source>
@@ -1671,11 +1678,11 @@ Quantity	Part
     </message>
     <message>
         <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation>为选择的导线创建迹线(&amp;C)</translation>
+        <translation>为选择的导线创建引导线(&amp;C)</translation>
     </message>
     <message>
         <source>Create a trace from the selected wire</source>
-        <translation>为选择的导线创建一条迹线</translation>
+        <translation>为选择的导线创建一条引导线</translation>
     </message>
     <message>
         <source>&amp;Create Jumper from Selected Wire(s)</source>
@@ -1687,7 +1694,7 @@ Quantity	Part
     </message>
     <message>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
-        <translation>不要自动为此迹线布线(&amp;D)</translation>
+        <translation>不要自动为此引导线布线(&amp;D)</translation>
     </message>
     <message>
         <source>When autorouting, do not rip up this wire</source>
@@ -1695,11 +1702,11 @@ Quantity	Part
     </message>
     <message>
         <source>Select All Traces</source>
-        <translation>选择所有迹线</translation>
+        <translation>选择所有引导线</translation>
     </message>
     <message>
         <source>Select all trace wires</source>
-        <translation>选择所有迹线导线</translation>
+        <translation>选择所有引导线导线</translation>
     </message>
     <message>
         <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
@@ -1707,7 +1714,7 @@ Quantity	Part
     </message>
     <message>
         <source>Select all trace wires excluded from autorouting</source>
-        <translation>选择所有被排除在自动布线外的迹线导线</translation>
+        <translation>选择所有被排除在自动布线外的引导线</translation>
     </message>
     <message>
         <source>Select All Jumper Wires</source>
@@ -1795,65 +1802,68 @@ Quantity	Part
     </message>
     <message>
         <source>Export Normalized SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>导出为标准的SVG</translation>
     </message>
     <message>
         <source>Export 1000 dpi SVG of this part in this view</source>
-        <translation type="unfinished"></translation>
+        <translation>导出为1000 dpi在此视图中元件的SVG图像</translation>
     </message>
     <message>
         <source>Export Normalized Flattened SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>导出标准的SVG图像</translation>
     </message>
     <message>
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
-        <translation type="unfinished"></translation>
+        <translation>导出为1000 dpi在此视图中元件的SVG图像</translation>
     </message>
     <message>
         <source>No new part found for %1.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>未发现新元件 %1.
+</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>选择过期元件</translation>
     </message>
     <message>
         <source>Update selected parts</source>
-        <translation type="unfinished"></translation>
+        <translation>更新选择的元件</translation>
     </message>
     <message>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到过期元件。
+您所有的元件都是最新的。</translation>
     </message>
     <message>
         <source>Outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>已过期元件</translation>
     </message>
     <message numerus="yes">
         <source>Found %n outdated parts. Do you want to update them now?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>找到 %n 个过期元件。现在想更新他们么?</numerusform>
         </translation>
     </message>
     <message>
         <source>Unknown module id for %1.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>未知模块id 为 %1.</translation>
     </message>
     <message>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
-        <translation type="unfinished"></translation>
+        <translation>成功更新了 %1 个元件.
+请检查所有的视图以保证有正确的效果。</translation>
     </message>
     <message>
         <source>Update %1 part(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>更新了 %1 个元件</translation>
     </message>
     <message>
         <source>No exactly matching part found; Fritzing chose the closest match.</source>
-        <translation type="unfinished"></translation>
+        <translation>没有找到精确的零件；Fritzing选择了一个相近的.</translation>
     </message>
     <message>
         <source>Shell launch %1</source>
@@ -1865,218 +1875,266 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>所有</translation>
     </message>
     <message>
         <source>throw test exception</source>
-        <translation type="unfinished"></translation>
+        <translation>抛出测试意外</translation>
     </message>
     <message>
         <source>throw a fake exception to see what happens</source>
-        <translation type="unfinished"></translation>
+        <translation>抛出一个伪意外，查看发生了什么事</translation>
     </message>
     <message numerus="yes">
         <source>Routing completed using %n jumper wire(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>使用了%n条跳线完成了布线</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source> and %n jumper part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>和%n的跳线元件</numerusform>
         </translation>
     </message>
     <message>
         <source>Select All Jumpers</source>
-        <translation type="unfinished"></translation>
+        <translation>选择所有跳线</translation>
     </message>
     <message>
         <source>Select all jumper parts</source>
-        <translation type="unfinished"></translation>
+        <translation>选择所有跳线元件</translation>
     </message>
     <message>
         <source>Update ratsnest</source>
-        <translation type="unfinished"></translation>
+        <translation>更新飞线和覆铜预览</translation>
     </message>
     <message>
         <source>Update ratsnest colors</source>
-        <translation type="unfinished"></translation>
+        <translation>更新飞线和覆铜预览颜色</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>新建</translation>
     </message>
     <message>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Tips, Tricks and Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>技巧,诀窍和快捷键</translation>
     </message>
     <message>
         <source>Align to Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>对齐至网格</translation>
     </message>
     <message>
         <source>Align items to grid when dragging</source>
-        <translation type="unfinished"></translation>
+        <translation>拖动时对齐至网格</translation>
     </message>
     <message>
         <source>Set Grid Size...</source>
-        <translation type="unfinished"></translation>
+        <translation>设置网格大小...</translation>
     </message>
     <message>
         <source>Set the size of the grid to align to</source>
-        <translation type="unfinished"></translation>
+        <translation>设置网格大小并对齐</translation>
     </message>
     <message>
         <source>Open programming window</source>
-        <translation type="unfinished"></translation>
+        <translation>打开编程窗口</translation>
     </message>
     <message>
         <source>Open microcontroller programming window</source>
-        <translation type="unfinished"></translation>
+        <translation>打开单片机编程窗口</translation>
     </message>
     <message>
         <source>Report a bug...</source>
-        <translation type="unfinished"></translation>
+        <translation>报告bug...</translation>
     </message>
     <message>
         <source>Enable debugging log</source>
-        <translation type="unfinished"></translation>
+        <translation>启用调试记录</translation>
     </message>
     <message>
         <source>Both Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>双层</translation>
     </message>
     <message>
         <source>Bottom Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>底层</translation>
     </message>
     <message>
         <source>Top Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>顶层</translation>
     </message>
     <message>
         <source>Select one or more parts to import</source>
-        <translation type="unfinished"></translation>
+        <translation>选择导入一个或多个元件</translation>
     </message>
     <message>
         <source>Unable to read shareable part %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能读取分享的元件%1</translation>
     </message>
     <message>
         <source>Backing up &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>备份&apos;%1&apos;中</translation>
     </message>
     <message>
         <source>outline file export failure (1)</source>
-        <translation type="unfinished"></translation>
+        <translation>轮廓线文件导出失败(1)</translation>
     </message>
     <message>
         <source>outline file export failure (2)</source>
-        <translation type="unfinished"></translation>
+        <translation>轮廓线文件导出失败(2)</translation>
     </message>
     <message>
         <source>%1 file export failure (1)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1文件导出失败(1)</translation>
     </message>
     <message>
         <source>%1 file export failure (2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1文件导出失败(2)</translation>
     </message>
     <message>
         <source>%1 file export failure (3)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1文件导出失败(3)</translation>
     </message>
     <message>
         <source>%1 mask file export failure (4)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1机械层文件导出失败(4)</translation>
     </message>
     <message>
         <source>%1 drill file export failure (5)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1钻孔文件导出失败(5)</translation>
     </message>
     <message>
         <source>silk file export failure (1)</source>
-        <translation type="unfinished"></translation>
+        <translation>silk文件导出失败(1)</translation>
     </message>
     <message>
         <source>silk file export failure (2)</source>
-        <translation type="unfinished"></translation>
+        <translation>silk文件导出失败(2)</translation>
     </message>
     <message>
         <source>&amp;Rotate 45° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>逆时针旋转45°(&amp;R)</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>逆时针旋转当前选择45度</translation>
     </message>
     <message>
         <source>&amp;Rotate 45° Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>顺时针旋转45°(&amp;R)</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>顺时针旋转当前选择45度</translation>
     </message>
     <message>
         <source>Actual (real world physical) size</source>
-        <translation type="unfinished"></translation>
+        <translation>实际尺寸(真实物理尺寸)</translation>
     </message>
     <message>
         <source>100% Size</source>
-        <translation type="unfinished"></translation>
+        <translation>100%大小</translation>
     </message>
     <message>
         <source>100% (pixel) size</source>
-        <translation type="unfinished"></translation>
+        <translation>100%(像素)大小</translation>
     </message>
     <message>
         <source>Set both copper layers clickable</source>
-        <translation type="unfinished"></translation>
+        <translation>设置双面铜层可点击</translation>
     </message>
     <message>
         <source>Set copper top layer clickable</source>
-        <translation type="unfinished"></translation>
+        <translation>设置顶层铜层可点击</translation>
     </message>
     <message>
         <source>Set copper bottom layer clickable</source>
-        <translation type="unfinished"></translation>
+        <translation>设置底层铜层可点击</translation>
     </message>
     <message>
         <source>Design Rules Check</source>
-        <translation type="unfinished"></translation>
+        <translation>涉及规则检查</translation>
     </message>
     <message>
         <source>Select any parts that are too close together for safe board production (w/in 10 mil)</source>
-        <translation type="unfinished"></translation>
+        <translation>使任意元件间的距离大于电路板生产安全距离(w/in 10 mil)</translation>
     </message>
     <message>
         <source>Copper Top and Copper Bottom layers are both active</source>
-        <translation type="unfinished"></translation>
+        <translation>激活上下覆铜层</translation>
     </message>
     <message>
         <source>Copper Top layer is active</source>
-        <translation type="unfinished"></translation>
+        <translation>顶层覆铜层激活</translation>
     </message>
     <message>
         <source>Copper Bottom layer is active</source>
-        <translation type="unfinished"></translation>
+        <translation>底层覆铜层激活</translation>
     </message>
     <message>
         <source>Autorouting Progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>自动布线处理...</translation>
     </message>
     <message>
         <source>No overlapping parts found</source>
-        <translation type="unfinished"></translation>
+        <translation>未发现重叠元件</translation>
     </message>
     <message>
         <source>%1 overlapping parts found</source>
+        <translation>发现%1个重叠元件</translation>
+    </message>
+    <message>
+        <source>Please specify a location for the archived sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing File (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a folder to save the archived sketch and program files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save sketch to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste in Place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste clipboard contents in place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Trace Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected traces to the other side of the board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed hack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hack for speeding up Fritzing--use at your own risk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update routing status</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2084,15 +2142,15 @@ Please check all views for potential side-effects.</source>
     <name>MismatchingConnectorWidget</name>
     <message>
         <source>fix this!</source>
-        <translation type="unfinished"></translation>
+        <translation>修复！</translation>
     </message>
     <message>
         <source>In </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">In</translation>
     </message>
     <message>
         <source>and </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">and</translation>
     </message>
     <message>
         <source>view only</source>
@@ -2116,11 +2174,11 @@ Reason: %2 (errcode %3)</source>
     <name>MysteryPart</name>
     <message>
         <source>label</source>
-        <translation type="unfinished"></translation>
+        <translation>标签</translation>
     </message>
     <message>
         <source>chip label</source>
-        <translation type="unfinished"></translation>
+        <translation>芯片标签</translation>
     </message>
 </context>
 <context>
@@ -2138,22 +2196,34 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Create Trace from this Wire</source>
-        <translation>从这段导线创建迹线</translation>
+        <translation>从这段导线创建迹引导线</translation>
     </message>
     <message>
         <source>Click this connector to drag out a new trace.</source>
-        <translation>点击这个接插件拖出新的迹线.</translation>
+        <translation>点击这个接插件拖出新的引导线.</translation>
     </message>
     <message>
         <source>Resize board to %1 %2</source>
-        <translation type="unfinished">恢复板大小至%1 %2</translation>
+        <translation>重置板大小至%1 %2</translation>
     </message>
     <message>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing的每个sketch只允许一块板元件。或者删除当前板，或者选择一个不同的来代替它。</translation>
     </message>
     <message>
         <source>Design Rules Check Progress...</source>
+        <translation>设计规则检查处理中...</translation>
+    </message>
+    <message>
+        <source>Change trace layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create and connect trace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create trace</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2406,15 +2476,15 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Contributed Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>已分配元件</translation>
     </message>
     <message>
         <source>Save bin &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>保存元件库&quot;%1&quot;</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -2549,6 +2619,10 @@ Please, specify a new filename</source>
         <source>Please, provide an icon image for this part</source>
         <translation>请为此元件提供图标图像</translation>
     </message>
+    <message>
+        <source>Fritzing Parts (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PartsEditorView</name>
@@ -2565,8 +2639,7 @@ Please, specify a new filename</source>
 in non-real-world units (e.g. pixels), then they won&apos;t be translated 
 into real life ones.
 Malformed font-family definitions won&apos;t be fixed either.</source>
-        <translation>Malformed font-family definitions won&apos;t be fixed either.
-不能打开文件。如果这个文件中定义的规格为非真实世界单位的规格（例如像素），
+        <translation>不能打开文件。如果这个文件中定义的规格为非真实世界单位的规格（例如像素），
 那么他们将不能够转换为实物。
 更换的字体类型定义也不能修复这个问题。</translation>
     </message>
@@ -2592,27 +2665,40 @@ Fritzing和这种svg文件不兼容。请检查你的权限并重试。
     </message>
     <message>
         <source>Image &amp; Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)</source>
-        <translation type="unfinished"></translation>
+        <translation>图形和器件封装文件(%1 %2 %3 %4 %5);;SVG 文件 (%1);;JPEG 文件 (%2);;PNG 文件 (%3);;gEDA器件封装文件 (%4);;Kicad Module 文件 (%5)</translation>
     </message>
     <message>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>图形文件 (%1 %2 %3);;SVG 文件 (%1);;JPEG 文件 (%2);;PNG 文件 (%3)</translation>
     </message>
     <message>
         <source>Conversion problem</source>
-        <translation type="unfinished"></translation>
+        <translation>转换问题</translation>
     </message>
     <message>
         <source>Unable to load image file: 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能载入图形文件: 
+%1</translation>
     </message>
     <message>
         <source>no footprints found in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>在%1中未找到footprints</translation>
     </message>
     <message>
         <source>unable to open temp file %1</source>
+        <translation>不能打开临时文件%1</translation>
+    </message>
+    <message>
+        <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no schematics found in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic part</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2687,131 +2773,150 @@ the PCB view?</source>
     </message>
     <message>
         <source>Mouse Wheel Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>鼠标滚轮属性</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>命令
+</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>控制</translation>
     </message>
     <message>
         <source>No keys down:
 %1 key down:
 Alt key down:</source>
-        <translation type="unfinished"></translation>
+        <translation>无键按下:
+%1键按下:
+Alt键按下:</translation>
     </message>
     <message>
         <source>Change Wheel Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>改变滚轮属性</translation>
     </message>
     <message>
         <source>Zoom
 Vertical scroll
 Horizontal scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放
+垂直滚动
+水平滚动</translation>
     </message>
     <message>
         <source>Zoom
 Horizontal scroll
 Vertical scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放
+水平滚动
+垂直滚动</translation>
     </message>
     <message>
         <source>Vertical scroll
 Zoom
 Horizontal scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直滚动
+缩放
+水平滚动</translation>
     </message>
     <message>
         <source>Vertical scroll
 Horizontal scroll
 Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直滚动
+水平滚动
+缩放</translation>
     </message>
     <message>
         <source>Horizontal scroll
 Vertical scroll
 Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>水平滚动
+垂直滚动
+缩放</translation>
     </message>
     <message>
         <source>Horizontal scroll
 Zoom
 Vertical scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>水平滚动
+缩放
+垂直滚动</translation>
     </message>
     <message>
         <source>Autosave</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存</translation>
     </message>
     <message>
         <source>Autosave every:</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存任意:</translation>
     </message>
     <message>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>分钟</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>调试</translation>
     </message>
 </context>
 <context>
     <name>ProgramTab</name>
     <message>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>undo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>save as</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>save</source>
-        <translation type="unfinished"></translation>
+        <translation>打开...</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove</source>
-        <translation type="unfinished"></translation>
+        <translation>程序</translation>
     </message>
     <message>
         <source>Select a program file to load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Programmer</source>
-        <translation type="unfinished"></translation>
+        <translation>选择载入一个程序文件</translation>
     </message>
     <message>
         <source>Fritzing is unable to find &apos;%1&apos;, please locate it</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing找不到&apos;%1&apos;,请定位它</translation>
     </message>
     <message>
         <source>Program (*.%1)</source>
+        <translation>程序(*.%1)</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Programmer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove &quot;%1&quot; from the sketch?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file &apos;%1&apos; must be saved before it can be sent to the programmer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a programmer (executable) for %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2819,10 +2924,198 @@ Vertical scroll</source>
     <name>ProgramWindow</name>
     <message>
         <source>Programming Window</source>
-        <translation type="unfinished"></translation>
+        <translation>编程窗口</translation>
     </message>
     <message>
         <source>%1 %2</source>
+        <translation>%1 %2</translation>
+    </message>
+    <message>
+        <source>No ports found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the current program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename the current program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the current program into a new tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove the current program from the sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print the current program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Q</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste clipboard contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select programmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load the current program onto a microcontroller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Programming Window - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locate...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2894,7 +3187,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Wire</source>
-        <translation>连线</translation>
+        <translation>导线</translation>
     </message>
     <message>
         <source>Cannot read file %1:
@@ -2992,7 +3285,7 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
-        <translation>选择所有标记&quot;不自动布线&quot;的迹线</translation>
+        <translation>选择所有标记&quot;不自动布线&quot;的引导线</translation>
     </message>
     <message>
         <source>Oops!</source>
@@ -3050,11 +3343,11 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Trace wires</source>
-        <translation>迹线导线</translation>
+        <translation>引导线</translation>
     </message>
     <message>
         <source>Ratsnest wires</source>
-        <translation>鼠巢导线</translation>
+        <translation>飞线和覆铜预览</translation>
     </message>
     <message>
         <source>Select all %1</source>
@@ -3122,7 +3415,7 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Rat&apos;s nest</source>
-        <translation>鼠巢</translation>
+        <translation>飞线和覆铜预览</translation>
     </message>
     <message>
         <source>Unknown Layer</source>
@@ -3130,206 +3423,231 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Select outdated parts</source>
-        <translation type="unfinished"></translation>
+        <translation>选择过期元件</translation>
     </message>
     <message>
         <source>Select all jumpers</source>
-        <translation type="unfinished"></translation>
+        <translation>选择所有跳线</translation>
     </message>
     <message>
         <source>Grid Size</source>
-        <translation type="unfinished"></translation>
+        <translation>网格大小</translation>
     </message>
     <message>
         <source>files</source>
-        <translation type="unfinished"></translation>
+        <translation>文件</translation>
     </message>
     <message>
         <source>unable to open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能打开%1</translation>
     </message>
     <message>
         <source>unable to parse %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能解析%1</translation>
     </message>
     <message>
         <source>parse failure in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>解析%1失败</translation>
     </message>
     <message>
         <source>Sorry, Fritzing can&apos;t yet handle both pins and pads together (in %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>对不起,Fritzing还不能处理针脚和焊盘连在一起(in%1)</translation>
     </message>
     <message>
         <source>bad pin argument count</source>
-        <translation type="unfinished"></translation>
+        <translation>错误针脚参数</translation>
     </message>
     <message>
         <source>bad pad argument count</source>
-        <translation type="unfinished"></translation>
+        <translation>错误焊盘参数</translation>
     </message>
     <message>
         <source>footprint %1 not found in %2</source>
-        <translation type="unfinished"></translation>
+        <translation>在%2中未找到器件封装%1</translation>
     </message>
     <message>
         <source>unexpected end of file in footprint %1 in file %2</source>
-        <translation type="unfinished"></translation>
+        <translation>在文件%2中发现器件封装%1的未知文件结尾</translation>
     </message>
     <message>
         <source>unexpected format (1) in %1 from %2</source>
-        <translation type="unfinished"></translation>
+        <translation>未知格式(1)in %1 from %2</translation>
     </message>
     <message>
         <source>unexpected end of file</source>
-        <translation type="unfinished"></translation>
+        <translation>不可预料的文件末端</translation>
     </message>
     <message>
         <source>pad missing drill</source>
-        <translation type="unfinished"></translation>
+        <translation>丢失焊盘钻孔</translation>
     </message>
     <message>
         <source>pad missing attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>丢失焊盘属性</translation>
     </message>
     <message>
         <source>pad missing position</source>
-        <translation type="unfinished"></translation>
+        <translation>丢失焊盘位置</translation>
     </message>
     <message>
         <source>pad missing shape</source>
-        <translation type="unfinished"></translation>
+        <translation>丢失焊盘形状</translation>
     </message>
     <message>
         <source>position missing params</source>
-        <translation type="unfinished"></translation>
+        <translation>位置丢失参数</translation>
     </message>
     <message>
         <source>drill missing params</source>
-        <translation type="unfinished"></translation>
+        <translation>钻孔丢失参数</translation>
     </message>
     <message>
         <source>drill offset not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>钻孔偏移未实现</translation>
     </message>
     <message>
         <source>drill missing ellipse params</source>
-        <translation type="unfinished"></translation>
+        <translation>钻孔丢失椭圆参数</translation>
     </message>
     <message>
         <source>attributes missing params</source>
-        <translation type="unfinished"></translation>
+        <translation>属性丢失参数</translation>
     </message>
     <message>
         <source>Sorry, can&apos;t handle pad type %1</source>
-        <translation type="unfinished"></translation>
+        <translation>对不起，不能处理焊盘类型%1</translation>
     </message>
     <message>
         <source>pad shape missing params</source>
-        <translation type="unfinished"></translation>
+        <translation>焊盘形状丢失参数</translation>
     </message>
     <message>
         <source>shape delta not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>三角形未实现</translation>
     </message>
     <message>
         <source>trapezoidal pads not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>梯形焊盘未实现</translation>
     </message>
     <message>
         <source>unable to handle pad shape %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能处理焊盘形状%1</translation>
     </message>
     <message>
         <source>failure in svg conversion 1: %1 %2 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>svg转换失败1:%1 %2 %3</translation>
     </message>
     <message>
         <source>failure in svg conversion 2: %1 %2 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>svg转换失败2:%1 %2 %3</translation>
     </message>
     <message>
         <source>Copying file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>正在复制文件%1</translation>
     </message>
     <message>
         <source>File %1 already exists: it won&apos;t be overwritten</source>
-        <translation type="unfinished"></translation>
+        <translation>文件%1已经存在了:它不能够被覆盖</translation>
     </message>
     <message>
         <source>Silkscreen Top</source>
-        <translation type="unfinished"></translation>
+        <translation>丝印顶层</translation>
     </message>
     <message>
         <source>Silkscreen Top (Part Labels)</source>
-        <translation type="unfinished"></translation>
+        <translation>丝印顶层(元件标签)</translation>
     </message>
     <message>
         <source>Copper Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>底层铜箔</translation>
     </message>
     <message>
         <source>Copper Bottom Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>底层铜箔引导线</translation>
     </message>
     <message>
         <source>Copper Top</source>
-        <translation type="unfinished"></translation>
+        <translation>顶层铜箔</translation>
     </message>
     <message>
         <source>Copper Top Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>顶层铜箔引导线</translation>
     </message>
     <message>
         <source>Silkscreen Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>丝印底层
+</translation>
     </message>
     <message>
         <source>Silkscreen Bottom (Part Labels)</source>
-        <translation type="unfinished"></translation>
+        <translation>丝印底层(元件标签)</translation>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (7).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select footprint</source>
-        <translation type="unfinished"></translation>
+        <translation>文件%1不是Fritzing文件(7)。</translation>
     </message>
     <message>
         <source>Design Rule Check (select items that are too close together)</source>
-        <translation type="unfinished"></translation>
+        <translation>设计检查规则(选择距离过近的物品)</translation>
     </message>
     <message>
         <source>Sorry, Fritzing can&apos;t yet handle both pins and pads together (in %1 in %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>对不起,Fritzing还不能处理针脚和焊盘在一起的情况(in %1 in %2)</translation>
     </message>
     <message>
         <source>bad layer mask parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>错误的机械层参数</translation>
     </message>
     <message>
         <source>non-circular holes not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>非圆空还未实现</translation>
     </message>
     <message>
         <source>non-copper holes not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>非铜孔还未实现</translation>
     </message>
     <message>
         <source>Ground Plane Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>底层地</translation>
     </message>
     <message>
         <source>Ground Plane Top</source>
-        <translation type="unfinished"></translation>
+        <translation>顶层地</translation>
     </message>
     <message>
         <source>Unable to parse copper: %1 %2 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>不能解析铜层：%1 %2 %3</translation>
     </message>
     <message>
         <source>Parts folder not found.</source>
+        <translation>未找到元件文件夹.</translation>
+    </message>
+    <message>
+        <source>Select %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad shape size is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad schematic definition %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic part %1 not found in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic %1 unexpectedly ends (1) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic %1 unexpectedly ends (2) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic %1 unexpectedly ends (3) in %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3338,22 +3656,22 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>Ctrl</source>
         <comment>for naming shortcut keys on menu items</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Alt</source>
         <comment>for naming shortcut keys on menu items</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>Shift</source>
         <comment>for naming shortcut keys on menu items</comment>
-        <translation type="unfinished"></translation>
+        <translation>Shift</translation>
     </message>
     <message>
         <source>Meta</source>
         <comment>for naming shortcut keys on menu items</comment>
-        <translation type="unfinished"></translation>
+        <translation>Meta</translation>
     </message>
 </context>
 <context>
@@ -3367,38 +3685,38 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <name>RecoveryDialog</name>
     <message>
         <source>&amp;Recover</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复(&amp;R)</translation>
     </message>
     <message>
         <source>&amp;Ignore</source>
-        <translation type="unfinished"></translation>
+        <translation>忽略(&amp;I)</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>文件</translation>
     </message>
     <message>
         <source>Last backup</source>
-        <translation type="unfinished"></translation>
+        <translation>上一备份</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"></translation>
+        <translation>上次保存</translation>
     </message>
     <message>
         <source>file not saved</source>
-        <translation type="unfinished"></translation>
+        <translation>文件未保存</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Fritzing may have crashed, but some of the changes to the following files may be recovered.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;The date and time each file was backed-up is displayed. If the file was saved, that date and time is also listed for comparison.&lt;/p&gt;&lt;p&gt;The original files are still on your disk, if they were ever saved. You can choose whether to overwrite the original file after you load its recovery file.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Select any files you want to recover from the list below.&lt;/b&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Fritzing可能已经崩溃了，但下面文件的一些改变有可能被恢复。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;每个文件的备份日期和时间都显示了。如果文件被保存了，日期和时间也将被列出来用于对比。&lt;/p&gt;&lt;p&gt;如果他们曾经被保存过，原来的文件仍然在你的磁盘上。你可以在载入恢复文件后，选择是否覆盖原来的文件。&lt;/p&gt;&lt;p&gt;&lt;b&gt;从下面的列表中选择你想要恢复的文件。&lt;/b&gt;&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
     <name>Resistor</name>
     <message>
         <source>resistance</source>
-        <translation type="unfinished">电阻</translation>
+        <translation>电阻</translation>
     </message>
 </context>
 <context>
@@ -3409,37 +3727,37 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>shape</source>
-        <translation type="unfinished"></translation>
+        <translation>形状</translation>
     </message>
     <message>
         <source>width: %1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>宽度: %1mm</translation>
     </message>
     <message>
         <source>height: %1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>高度: %1mm</translation>
     </message>
     <message>
         <source>width(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>宽度(mm)</translation>
     </message>
     <message>
         <source>height(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>高度(mm)</translation>
     </message>
 </context>
 <context>
     <name>Ruler</name>
     <message>
         <source>width</source>
-        <translation type="unfinished">宽度</translation>
+        <translation>宽度</translation>
     </message>
 </context>
 <context>
     <name>SchematicSketchWidget</name>
     <message>
         <source>Change voltage from %1 to %2</source>
-        <translation type="unfinished">改变电压从%1至%2</translation>
+        <translation>改变电压从%1至%2</translation>
     </message>
 </context>
 <context>
@@ -3631,10 +3949,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>恢复注释大小</translation>
     </message>
     <message>
-        <source>Resize board to %1 %2</source>
-        <translation>恢复板大小至%1 %2</translation>
-    </message>
-    <message>
         <source>Disconnect all wires from %1</source>
         <translation>断开所有自%1的连线</translation>
     </message>
@@ -3644,50 +3958,50 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Change Resistance from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>改变电阻 %1 为 %2</translation>
     </message>
     <message numerus="yes">
         <source>show part label(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>显示元件标签</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>hide part label(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>隐藏元件标签</numerusform>
         </translation>
     </message>
     <message>
         <source>Change pin spacing from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>改变阵脚距离从 %1 至 %2</translation>
     </message>
     <message>
         <source>Change form from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>改变电阻从 %1 至 %2</translation>
     </message>
     <message>
         <source>Change %note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>改变 %note 为 &apos;%2&apos;</translation>
     </message>
     <message>
         <source>Resize ruler to %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>复位标尺为%1%2</translation>
     </message>
     <message>
         <source>Change image from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>改变图像从%1 至 %2</translation>
     </message>
     <message>
         <source>Change %1 from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation>改变%1从%2至%3</translation>
     </message>
 </context>
 <context>
     <name>SymbolPaletteItem</name>
     <message>
         <source>voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>电压</translation>
     </message>
 </context>
 <context>
@@ -3734,34 +4048,42 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>&lt;li&gt;To edit a part label, double-click it, or use the text input widget in the inspector window.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;编辑元件标签，双击它，或者使用指示窗口中的文本输入控件.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To add a bendpoint to a wire, double-click where you want the bendpoint.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;在导线上增加曲点，在想要增加的地方双击.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To delete a bendpoint from a wire, double-click it.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;删除一个导线上的曲点，只要双击它。&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To precisely move a selection of parts, use the arrow keys.  Shift-arrow moves by 10 units.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;精确的移动一个选择的元件，使用箭头按钮。Shift+箭头按钮可以移动10倍的单元.&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To toggle the visibility of layer in a view, go to the view menu and choose one of the view layer items.  Or open up the &lt;b&gt;Layers&lt;/b&gt; palette from the &lt;b&gt;Window&lt;/b&gt; menu.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;在视图中开启某一层的可视度，进入视图菜单，选择一个可视的层的项目。或者从&lt;b&gt;窗口&lt;/b&gt;菜单打开&lt;b&gt;层&lt;/b&gt;面板。&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;An icon in the parts bin may actually represent multiple related parts.  So when you drag an icon from the parts bin into a sketch, make sure you look at the inspector.  The inspector will display the range of choices available for you to modify a part, or swap it for a related part. The parts bin icon will also be a little &apos;stack&apos; and not just a flat icon.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;元件库中的图标可能和多个元件相关联。所以从元件库中拖动一个图标到sketch中时，查看指示栏。指示栏将显示可以选择修改的元件，或者将它转换为相关的元件。元件库的图标也是一个小的“堆栈”，而不只是一个图标。&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To drag a wire segment (a section of a wire between two bendpoints), drag it with the Alt (Linux: Meta) key down.  If you also hold down the shift key, the wire segment will be constrained to horizontal or vertical motion.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;拖动一段线段(在两个曲点之间的)，可以按住Alt键(Linux:Meta)拖动。如果同时按住Shift，线段将会垂直或者水平移动。&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;In Schematic or PCB view, if you drag from a bendpoint with the Alt (Linux: Meta) key down, you will drag out a new wire from that bendpoint.&lt;/li&gt;</source>
+        <translation>&lt;li&gt;在原理图和PCB视图中，如果按住Alt键(Linux:Meta)拖动一个曲点,将会从那个曲点处拖出一条新导线。&lt;/li&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To drag the canvas, hold down the space bar and drag it with the mouse.&lt;/li&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;li&gt;To display different properties in a part label, rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3769,78 +4091,78 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <name>TraceWire</name>
     <message>
         <source>width</source>
-        <translation type="unfinished">宽度</translation>
+        <translation>宽度</translation>
     </message>
 </context>
 <context>
     <name>TranslatorListModel</name>
     <message>
         <source>English - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>英语 - %1</translation>
     </message>
     <message>
         <source>French - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>法语 - %1</translation>
     </message>
     <message>
         <source>German - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>德语 - %1</translation>
     </message>
     <message>
         <source>Spanish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>西班牙语 - %1</translation>
     </message>
     <message>
         <source>Japanese - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>日语 - %1</translation>
     </message>
     <message>
         <source>Portuguese (European)- %1</source>
-        <translation type="unfinished"></translation>
+        <translation>葡萄牙语(欧洲) - %1</translation>
     </message>
     <message>
         <source>Portuguese (Brazilian) - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>葡萄牙语(巴西) - %1</translation>
     </message>
     <message>
         <source>Hungarian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>匈牙利语 - %1</translation>
     </message>
     <message>
         <source>Dutch - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>荷兰语 - %1</translation>
     </message>
     <message>
         <source>Russian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>俄罗斯语 - %1</translation>
     </message>
     <message>
         <source>Italian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>意大利语 - %1</translation>
     </message>
     <message>
         <source>Hebrew - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>以色列语 - %1</translation>
     </message>
     <message>
         <source>Arabic - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>阿拉伯语 - %1</translation>
     </message>
     <message>
         <source>Hindi - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>印地语 - %1</translation>
     </message>
     <message>
         <source>Chinese (Simplified) - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>中文(简体) - %1</translation>
     </message>
     <message>
         <source>Estonian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>爱沙尼亚语 - %1</translation>
     </message>
     <message>
         <source>Chinese (Traditional) - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>中文(繁体) - %1</translation>
     </message>
     <message>
         <source>Polish - %1</source>
@@ -3867,7 +4189,7 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>A new interim release is available for downloading:</source>
-        <translation>新的临时release已经可以下载了:</translation>
+        <translation>新的过度发布版已经可以下载了:</translation>
     </message>
     <message>
         <source>Checking...</source>
@@ -3945,22 +4267,22 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished">颜色</translation>
+        <translation>颜色</translation>
     </message>
     <message>
         <source>brown</source>
-        <translation type="unfinished"></translation>
+        <translation>棕色</translation>
     </message>
     <message>
         <source>purple</source>
-        <translation type="unfinished"></translation>
+        <translation>紫色</translation>
     </message>
 </context>
 <context>
     <name>ZoomSlider</name>
     <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
 </context>
 </TS>
