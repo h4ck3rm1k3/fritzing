@@ -37,6 +37,9 @@ VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 	}
 }
 
+VirtualWire::~VirtualWire() {
+}
+
 void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {	
 	if (m_hidden) return;
 	

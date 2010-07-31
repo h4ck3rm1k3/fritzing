@@ -34,6 +34,7 @@ class VirtualWire : public ClipableWire
 
 public:
 	VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	~VirtualWire();
 	
 	void setHidden(bool hidden);
 	void setInactive(bool inactivate);
