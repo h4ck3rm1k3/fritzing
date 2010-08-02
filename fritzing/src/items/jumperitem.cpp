@@ -134,24 +134,31 @@ bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIden
 			}
 		}
 
-		bool ok;
-		qreal r0x = m_modelPart->prop("r0x").toDouble(&ok);
-		if (ok) {
-			qreal r0y = m_modelPart->prop("r0y").toDouble(&ok);
-			if (ok) {
-				qreal r1x = m_modelPart->prop("r1x").toDouble(&ok);
-				if (ok) {
-					qreal r1y = m_modelPart->prop("r1y").toDouble(&ok);
-					if (ok) {
-						resizeAux(GraphicsUtils::mils2pixels(r0x), GraphicsUtils::mils2pixels(r0y),
-								  GraphicsUtils::mils2pixels(r1x), GraphicsUtils::mils2pixels(r1y));
-					}
-				}
-			}
-		}
+		initialResize(viewIdentifier);
 	}
 
 	return result;
+}
+
+void JumperItem::initialResize(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	if (viewIdentifier != ViewIdentifierClass::PCBView) return;
+
+	bool ok;
+	qreal r0x = m_modelPart->prop("r0x").toDouble(&ok);
+	if (!ok) return;
+
+	qreal r0y = m_modelPart->prop("r0y").toDouble(&ok);
+	if (!ok) return;
+					
+	qreal r1x = m_modelPart->prop("r1x").toDouble(&ok);
+	if (!ok) return;
+						
+	qreal r1y = m_modelPart->prop("r1y").toDouble(&ok);
+	if (!ok) return;
+							
+	resizeAux(GraphicsUtils::mils2pixels(r0x), GraphicsUtils::mils2pixels(r0y),
+				GraphicsUtils::mils2pixels(r1x), GraphicsUtils::mils2pixels(r1y));
+
 }
 
 void JumperItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -273,6 +280,8 @@ void JumperItem::resize(QPointF p0, QPointF p1) {
 
 
 void JumperItem::resize() {
+	if (m_viewIdentifier != ViewIdentifierClass::PCBView) return;
+
 	if (m_connector0 == NULL) return;
 	if (m_connector1 == NULL) return;
 
@@ -369,8 +378,8 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 		case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
 			xml = makeSvg(viewLayerID);
-                default:
-                        break;
+        default:
+			break;
 	}
 
 	if (!xml.isEmpty()) {

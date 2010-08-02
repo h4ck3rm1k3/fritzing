@@ -69,6 +69,7 @@ protected:
 	void resizeAux(qreal r0x, qreal r0y, qreal r1x, qreal r1y);
 	void rotateEnds(QTransform & rotation, QPointF & tc0, QPointF & tc1); 
 	QPointF calcPos(QPointF p0, QPointF p1);
+	void initialResize(ViewIdentifierClass::ViewIdentifier);
 
 signals:
 	void alignMe(JumperItem *, QPointF & p); 

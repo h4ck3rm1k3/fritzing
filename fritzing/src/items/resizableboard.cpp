@@ -363,7 +363,7 @@ void ResizableBoard::positionGrips() {
 bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors)
 {
 	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors);
-	if (result) {
+	if ((viewIdentifier == ViewIdentifierClass::PCBView) && result) {
 		positionGrips();
 	}
 
