@@ -80,9 +80,13 @@ JumperItem::~JumperItem() {
 
 QPainterPath JumperItem::hoverShape() const
 {
-	QPainterPath p;
-	QPointF c0 = m_connector0->rect().center();
-	QPointF c1 = m_connector1->rect().center();
+    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+        return PaletteItem::hoverShape();
+     }
+
+    QPainterPath p;
+    QPointF c0 = m_connector0->rect().center();
+    QPointF c1 = m_connector1->rect().center();
     p.moveTo(c0);
     p.lineTo(c1);
 	QPen pen = m_pen;
