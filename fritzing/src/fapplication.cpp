@@ -823,21 +823,40 @@ void FApplication::preloadSlowParts() {
 
 	QTime t;
 	t.start();
+
+	struct Thing {
+		QString moduleID;
+		ViewIdentifierClass::ViewIdentifier viewIdentifier;
+		ViewLayer::ViewLayerID viewLayerID;
+	};
+
+	QList<Thing> slowParts;
+	Thing thing1;
+	thing1.viewIdentifier = ViewIdentifierClass::BreadboardView;
+	thing1.viewLayerID = ViewLayer::BreadboardBreadboard;
+	thing1.moduleID = ModuleIDNames::breadboardModuleIDName;
+	Thing thing2;
+	thing2.viewIdentifier = ViewIdentifierClass::PCBView;
+	thing2.viewLayerID = ViewLayer::Copper0;
+	thing2.moduleID = ModuleIDNames::jumperModuleIDName;
+	slowParts << thing1 << thing2;
 	//DebugDialog::debug(QString("preload slow parts"));
-	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ModuleIDNames::breadboardModuleIDName);
-	if (modelPart == NULL) {
-		// something is badly wrong--parts folder is missing, for example
-		return;
-	}
+	foreach (Thing thing, slowParts) {
+		ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(thing.moduleID);
+		if (modelPart == NULL) {
+			// something is badly wrong--parts folder is missing, for example
+			continue;
+		}
 
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard, ViewLayer::ThroughHoleThroughTop_OneLayer);
-	//DebugDialog::debug(QString("preload set up image"));
-	foreach (Connector * connector, modelPart->connectors().values()) {
-		if (connector == NULL) continue;
+		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, thing.viewIdentifier, thing.viewLayerID, ViewLayer::ThroughHoleThroughTop_OneLayer);
+		//DebugDialog::debug(QString("preload set up image"));
+		foreach (Connector * connector, modelPart->connectors().values()) {
+			if (connector == NULL) continue;
 
-		SvgIdLayer * svgIdLayer = connector->fullPinInfo(ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard);
-		renderer->setUpConnector(svgIdLayer, false);
-		//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorSharedID()));
+			SvgIdLayer * svgIdLayer = connector->fullPinInfo(thing.viewIdentifier, thing.viewLayerID);
+			renderer->setUpConnector(svgIdLayer, false);
+			//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorSharedID()));
+		}
 	}
 	DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
 	//DebugDialog::debug(QString("preload slow parts done") );
