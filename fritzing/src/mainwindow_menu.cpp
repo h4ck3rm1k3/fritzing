@@ -1830,6 +1830,7 @@ void MainWindow::updateWireMenu() {
 	bool createJumperOK = false;
 	bool excludeOK = false;
 	bool enableZOK = true;
+	bool gotRat = false;
 	wire = dynamic_cast<Wire *>(items[0]);
 	if (wire != NULL) {
 		if (wire->getRatsnest()) {
@@ -1839,6 +1840,7 @@ void MainWindow::updateWireMenu() {
 			createTraceOK = (jt == NULL) || (!jt->getTrace());
 #ifndef QT_NO_DEBUG
 			deleteOK = true;
+			gotRat = true;
 #endif
 		}
 		else if (wire->getJumper()) {
@@ -1872,6 +1874,14 @@ void MainWindow::updateWireMenu() {
 	m_createJumperAct->setEnabled(enableAll && createJumperOK);
 	m_deleteAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteAct->setEnabled(enableAll && excludeOK);
+
+	if (gotRat) {
+		m_deleteAct->setText(tr("Delete (disconnect)"));
+	}
+	else {
+		m_deleteAct->setText(tr("Delete"));
+	}
+
 
 }
 
@@ -2040,6 +2050,7 @@ void MainWindow::updateEditMenu() {
 
 		//DebugDialog::debug(QString("enable cut/copy/duplicate/delete %1 %2 %3").arg(copyActsEnabled).arg(deleteActsEnabled).arg(m_currentWidget->viewIdentifier()) );
 		m_deleteAct->setEnabled(deleteActsEnabled);
+		m_deleteAct->setText(tr("Delete"));
 		m_cutAct->setEnabled(deleteActsEnabled && copyActsEnabled);
 		m_copyAct->setEnabled(copyActsEnabled);
 		m_duplicateAct->setEnabled(copyActsEnabled);
