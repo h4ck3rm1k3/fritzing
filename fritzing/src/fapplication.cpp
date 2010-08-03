@@ -816,6 +816,12 @@ void FApplication::initSplash(FSplashScreen & splash, QPixmap & pixmap) {
     splash.show();
 }
 
+struct Thing {
+        QString moduleID;
+        ViewIdentifierClass::ViewIdentifier viewIdentifier;
+        ViewLayer::ViewLayerID viewLayerID;
+};
+
 void FApplication::preloadSlowParts() {
 
 	// loads the part into a renderer and sets up its connectors
@@ -824,22 +830,12 @@ void FApplication::preloadSlowParts() {
 	QTime t;
 	t.start();
 
-	struct Thing {
-		QString moduleID;
-		ViewIdentifierClass::ViewIdentifier viewIdentifier;
-		ViewLayer::ViewLayerID viewLayerID;
-	};
-
 	QList<Thing> slowParts;
 	Thing thing1;
 	thing1.viewIdentifier = ViewIdentifierClass::BreadboardView;
 	thing1.viewLayerID = ViewLayer::BreadboardBreadboard;
 	thing1.moduleID = ModuleIDNames::breadboardModuleIDName;
-	Thing thing2;
-	thing2.viewIdentifier = ViewIdentifierClass::PCBView;
-	thing2.viewLayerID = ViewLayer::Copper0;
-	thing2.moduleID = ModuleIDNames::jumperModuleIDName;
-	slowParts << thing1 << thing2;
+        slowParts << thing1;
 	//DebugDialog::debug(QString("preload slow parts"));
 	foreach (Thing thing, slowParts) {
 		ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(thing.moduleID);
