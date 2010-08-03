@@ -327,9 +327,12 @@ bool BreadboardSketchWidget::connectedDirectlyTo(ConnectorItem * from, Connector
 		QList<ConnectorItem *> busConnectorItems;
 		toConnectorItem->attachedTo()->busConnectorItems(bus, busConnectorItems);
 		foreach (ConnectorItem * busConnectorItem, busConnectorItems) {
-			if (busConnectorItem != toConnectorItem) {
-				bool connected = connectedDirectlyTo(busConnectorItem, to, byBus, visited);
-				if (connected == true) {
+			if (busConnectorItem == to) {
+				byBus.append(NULL);
+				result = true;
+			}
+			else if (busConnectorItem != toConnectorItem) {
+				if (connectedDirectlyTo(busConnectorItem, to, byBus, visited)) {
 					result = true;
 					int ix = byBus.count() - 1;
 					if (byBus.at(ix) == NULL || byBus.at(ix)->attachedToItemType() != ModelPart::Wire) {
