@@ -165,8 +165,14 @@ void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDelete
 			for (int j = i; j < n; j++) {
 				ConnectorItem * cj = partConnectorItems[j];
 				int weight = 0;
-				if (i != j && ci->attachedTo() != cj->attachedTo()) {
-					if (connectedDirectlyTo(ci, cj, buses[j][i])) weight = 1;
+				if (i != j) {
+					bool onSameBus = false;
+					if (ci->attachedTo() == cj->attachedTo()) {
+						if (ci->bus() != NULL) {
+							onSameBus = (ci->bus() == cj->bus());
+						}
+					}
+					if (!onSameBus && connectedDirectlyTo(ci, cj, buses[j][i])) weight = 1;
 				}
 				cap[j][i] = cap[i][j] = weight;
 				buses[i][j] = buses[j][i];
