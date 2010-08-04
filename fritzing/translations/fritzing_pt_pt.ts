@@ -2133,6 +2133,14 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>Update routing status</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete (disconnect)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>

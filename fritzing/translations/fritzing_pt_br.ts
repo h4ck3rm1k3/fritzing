@@ -2114,6 +2114,14 @@ Please check all views for potential side-effects.</source>
         <source>Update routing status</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete (disconnect)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>

@@ -2137,6 +2137,14 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>Update routing status</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete (disconnect)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>

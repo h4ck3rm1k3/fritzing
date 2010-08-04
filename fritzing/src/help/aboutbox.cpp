@@ -134,7 +134,7 @@ tr("<p>Special thanks goes out to: "
    "Jan Sieber, Yaniv Steiner, Olaf Val, "
    "Michaela Vieser and Julia Werner.</p>") +
 
-tr("<p>Thanks to Kurt Badelt for the Spanish translation, "
+tr("<p>Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, "
 	"to Gianluca Urgese for the Italian translation, "
 	"to Nuno Pessanha Santos for the Portuguese translation, "
 	"to Yuelin and Ninjia  for the Chinese (Simplified) translation, "
