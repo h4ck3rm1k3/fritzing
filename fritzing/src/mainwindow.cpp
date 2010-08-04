@@ -300,6 +300,8 @@ void MainWindow::init() {
 	m_setUpDockManagerTimer.setSingleShot(true);
 	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
 	m_setUpDockManagerTimer.start(1000);
+
+	m_pcbGraphicsView->jumperItemHack();
 }
 
 MainWindow::~MainWindow()

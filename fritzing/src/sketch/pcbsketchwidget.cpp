@@ -53,6 +53,7 @@ static const int MAX_INT = std::numeric_limits<int>::max();
 static QString PCBTraceColor1 = "trace1";
 static QString PCBTraceColor = "trace";
 
+static bool AlreadyDidJumperHack = false;
 
 struct DistanceThing {
 	int distance;
@@ -2908,3 +2909,18 @@ void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos,
 }
 
 
+void PCBSketchWidget::jumperItemHack() {
+	if (AlreadyDidJumperHack) return;
+
+	// under linux32, Qt 4.6.1, 4.6.2, 4.6.3 certain files (StepperMotor.fz) cause a crash somehow related to JumperItems.
+	// this hack prevents the crash, though I still haven't been able to figure out the root cause.
+
+	AlreadyDidJumperHack = true;
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(QPointF(0, 0));
+	ItemBase * itemBase = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	if (itemBase) {
+		deleteItem(itemBase, true, false, false);
+	}
+}

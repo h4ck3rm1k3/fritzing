@@ -86,6 +86,7 @@ public:
 	void changeTraceLayer();
 	void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 	void deleteSelected();
+	void jumperItemHack();
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
