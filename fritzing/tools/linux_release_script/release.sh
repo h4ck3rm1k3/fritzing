@@ -46,9 +46,9 @@ mkdir translations
 cd lib
 echo "copying libraries"
 
-cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 $QT_HOME/lib/libQtXmlPatterns.so.4 $QT_HOME/lib/libQtDBus.so.4     .
+cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 $QT_HOME/lib/libQtXmlPatterns.so.4 $QT_HOME/lib/libQtDBus.so.4 $QT_HOME/lib/libphonon.so.4 .
 
-# $QT_HOME/lib/libphonon.so.4 
+#  
 
 # jrc 17 july 2010, both platforms seem to need libaudio now
 # seems not to be needed anymore
