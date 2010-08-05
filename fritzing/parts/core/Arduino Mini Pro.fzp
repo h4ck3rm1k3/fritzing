@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.4.2b.07.24.4368" moduleId="fd1b41f61d75a154da35b6f6bd5cca72">
-    <author>Lionel Michel</author>
+     <version>4</version>
+     <author>Lionel Michel</author>
     <title>Arduino Mini Pro</title>
     <label>Arduino Mini Pro</label>
     <date>2010-07-27</date>
@@ -10,8 +11,7 @@
         <tag>Sparkfun</tag>
     </tags>
     <properties>
-        <property name="family">Microcontroller Board (Arduino)
-</property>
+        <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino Pro Mini</property>
     </properties>
