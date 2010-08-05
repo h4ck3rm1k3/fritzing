@@ -144,6 +144,25 @@ void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDelete
 		ConnectorItem::collectParts(connectorItems, partConnectorItems, true, ViewLayer::TopAndBottom);
 		int n = partConnectorItems.count();
 
+		QSet<ConnectorItem *> sameBuses;
+		for (int i = 0; i < n; i++) {
+			ConnectorItem * ci = partConnectorItems[i];
+			for (int j = i + 1; j < n; j++) {
+				ConnectorItem * cj = partConnectorItems[j];
+				if (ci->attachedTo() == cj->attachedTo()) {
+					if (ci->bus() != NULL) {
+						if (ci->bus() == cj->bus()) {
+							sameBuses.insert(cj);
+						}
+					}
+				}
+			}
+		}
+		foreach (ConnectorItem * ci, sameBuses) {
+			partConnectorItems.removeOne(ci);
+		}
+		n = partConnectorItems.count();
+
 		// there are multiple possibilities for each pair of connectors:
 
 		// they are directly connected because they're each inserted into female connectors on the same bus
@@ -166,13 +185,7 @@ void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDelete
 				ConnectorItem * cj = partConnectorItems[j];
 				int weight = 0;
 				if (i != j) {
-					bool onSameBus = false;
-					if (ci->attachedTo() == cj->attachedTo()) {
-						if (ci->bus() != NULL) {
-							onSameBus = (ci->bus() == cj->bus());
-						}
-					}
-					if (!onSameBus && connectedDirectlyTo(ci, cj, buses[j][i])) weight = 1;
+					if (connectedDirectlyTo(ci, cj, buses[j][i])) weight = 1;
 				}
 				cap[j][i] = cap[i][j] = weight;
 				buses[i][j] = buses[j][i];
@@ -195,7 +208,12 @@ void BreadboardSketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDelete
 					else {
 
 						// we have to detach the source or sink from a female connector
-						detachItems.insert(partConnectorItems[i], deleteConnector);
+						if (deleteConnector->connectorType() == Connector::Female) {
+							detachItems.insert(partConnectorItems[i], deleteConnector);
+						}
+						else {
+							detachItems.insert(deleteConnector, partConnectorItems[i]);
+						}
 					}
 				}
 			}
@@ -306,7 +324,15 @@ ViewLayer::ViewLayerID BreadboardSketchWidget::getLabelViewLayerID(ViewLayer::Vi
 bool BreadboardSketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus) 
 {
 	QList<ConnectorItem *> visited;
-	return connectedDirectlyTo(from, to, byBus, visited);
+	bool result = connectedDirectlyTo(from, to, byBus, visited);
+	if (result) {
+		for (int i = 0; i < byBus.count(); i++) {
+			if (byBus[i] == NULL) {
+				byBus[i] = from;
+			}
+		}
+	}
+	return result;
 }
 
 bool BreadboardSketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited) 
