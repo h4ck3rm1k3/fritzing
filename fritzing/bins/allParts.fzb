@@ -240,6 +240,20 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="6afb899bc94444e19eac0acf1c625a12">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="fd1b41f61d75a154da35b6f6bd5cca72">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="371230f4269dfda53ae3cc123cd5fdb4">
         <views>
           <iconView layer="icon">
