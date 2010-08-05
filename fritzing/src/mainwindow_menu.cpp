@@ -1831,6 +1831,7 @@ void MainWindow::updateWireMenu() {
 	bool excludeOK = false;
 	bool enableZOK = true;
 	bool gotRat = false;
+	bool ctlOK = false;
 	wire = dynamic_cast<Wire *>(items[0]);
 	if (wire != NULL) {
 		if (wire->getRatsnest()) {
@@ -1838,10 +1839,8 @@ void MainWindow::updateWireMenu() {
 			Wire * jt = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
 			createJumperOK = (jt == NULL) || (!jt->getJumper());
 			createTraceOK = (jt == NULL) || (!jt->getTrace());
-#ifndef QT_NO_DEBUG
 			deleteOK = true;
 			gotRat = true;
-#endif
 		}
 		else if (wire->getJumper()) {
 			deleteOK = true;
@@ -1854,6 +1853,12 @@ void MainWindow::updateWireMenu() {
 			createJumperOK = true;
 			excludeOK = true;
 			m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
+			if (m_currentGraphicsView == m_pcbGraphicsView && m_currentGraphicsView->boardLayers() > 1) {
+				if (wire->canSwitchLayers()) {
+					ctlOK = true;
+				}
+			}
+
 		}
 		else {
 			deleteOK = true;
@@ -1874,6 +1879,7 @@ void MainWindow::updateWireMenu() {
 	m_createJumperAct->setEnabled(enableAll && createJumperOK);
 	m_deleteAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteAct->setEnabled(enableAll && excludeOK);
+	m_changeTraceLayerAct->setEnabled(ctlOK);
 
 	if (gotRat) {
 		m_deleteAct->setText(tr("Delete (disconnect)"));
