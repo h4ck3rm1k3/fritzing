@@ -146,8 +146,9 @@ tr("<p>Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, "
 
 tr("<p>Fritzing is made possible with funding from the "
    "MWFK Brandenburg, the sponsorship of the Design "
-   "Department of Bauhaus-University Weimar and "
-   "IxDS.</p>") +
+   "Department of Bauhaus-University Weimar, "
+   "IxDS, an anonymous donor, Parallax, Picaxe, "
+   "and from each purchase of a Fritzing Starter Kit.</p>") +
 
 tr("<p>Special thanks goes out as well to all the students "
    "and alpha testers who were brave enough to give "
