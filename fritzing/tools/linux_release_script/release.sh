@@ -67,7 +67,8 @@ cp $QT_HOME/plugins/sqldrivers/libqsqlite.so sqldrivers
 
 echo "copying translations"
 cp ../../$compile_folder/translations/ -r ../
-rm ../translations/*.ts
+rm ../translations/*.ts  			# remove translation xml files, since we only need the binaries in the release
+find ../translations -name "*.qm" -size -128c -delete   # delete empty translation binaries
 cd ../../
 
 echo "compressing...."
