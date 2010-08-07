@@ -104,23 +104,49 @@ int main(int argc, char *argv[])
 	int result = 0;
 	try {
 		FApplication * app = new FApplication(argc, argv);
-
-		//DebugDialog::setDebugLevel(DebugDialog::Error);
-		bool firstRun = true;
-		if (app->runAsService()) {
-			// for example: -g C:\Users\jonathan\fritzing2\fz\Test_multiple.fz -go C:\Users\jonathan\fritzing2\fz\gerber
-			result = app->serviceStartup();
+		if (app->init()) {
+			//DebugDialog::setDebugLevel(DebugDialog::Error);
+			bool firstRun = true;
+			if (app->runAsService()) {
+				// for example: -g C:\Users\jonathan\fritzing2\fz\Test_multiple.fz -go C:\Users\jonathan\fritzing2\fz\gerber
+				result = app->serviceStartup();
+			}
+			else {
+				do {
+					result = app->startup(firstRun);
+					if (result == 0) {
+						result = app->exec();
+						firstRun = false;
+					}
+				} while(result == FApplication::RestartNeeded);
+			}
+			app->finish();
 		}
 		else {
-			do {
-				result = app->startup(firstRun);
-				if (result == 0) {
-					result = app->exec();
-					firstRun = false;
-				}
-			} while(result == FApplication::RestartNeeded);
+			qDebug() << "\n"
+				"usage:\n"
+				"\n"
+				"[path to Fritzing file to be loaded]*\n"
+				"[-f {path to folder containing Fritzing parts/sketches/bins/translations folders}]\n"
+				"[-geda {path to folder containing gEDA footprint (.fp) files to be converted to Fritzing SVGs}]\n"
+				"[-kicad {path to folder containing Kicad footprint (.mod) files to be converted to Fritzing SVGs}]\n"
+				"[-kicadschematic {path to folder containing Kicad schematic (.lib) files to be converted to Fritzing SVGs}]\n"
+				"[-gerber {path to folder to export Gerber files into} {path to Fritzing file to be exported to Gerber}]\n"
+				"[-ep {external process path} [-eparg {argument passed to external process}]* -epname {name for the menu item}]\n"
+				"\n"
+				"The -geda/-kicad/-kicadschematic/-gerber options all exit Fritzing after the conversion process is complete;\n"
+				"these options are mutually exclusive.\n"
+				"\n"
+				"Usually, the Fritzing executable is stored in the same folder that contains the parts/bins/sketches/translations folders,\n"
+				"or the executable is in a child folder of the p/b/s/t folder.\n"
+				"If this is not the case, use the -f option to point to the p/b/s/t folder.\n"
+				"\n"
+				"The -ep option creates a menu item to launch an external process,\n"
+				"and puts the standard output of that process into a dialog window in Fritzing.\n"
+				"The process path follows the -ep argument; the name of the menu item follows the -epname argument;\n"
+				"and any arguments to pass to the external process are provided in the -eparg argments.\n"
+				"\n";
 		}
-		app->finish();
 		delete app;
 	}
 	catch (char const *str) {

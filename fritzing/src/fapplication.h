@@ -47,6 +47,7 @@ public:
 	~FApplication(void);
 
 public:
+	bool init();
 	int startup(bool firstRun);
 	int serviceStartup();
 	void finish();

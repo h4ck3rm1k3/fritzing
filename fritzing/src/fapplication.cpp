@@ -128,13 +128,25 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_kicadSchematicService = false;
 
 	m_arguments = arguments();
+}
+
+bool FApplication::init() {
 
 	//foreach (QString argument, m_arguments) {
 		//DebugDialog::debug(QString("argument %1").arg(argument));
 	//}
 
 	QList<int> toRemove;
-	for (int i = 0; i < m_arguments.length() - 1; i++) {
+	for (int i = 0; i < m_arguments.length(); i++) {
+		if ((m_arguments[i].compare("-h", Qt::CaseInsensitive) == 0) || 
+			(m_arguments[i].compare("-help", Qt::CaseInsensitive) == 0) || 
+			(m_arguments[i].compare("--help", Qt::CaseInsensitive) == 0)) 
+		{
+			return false;
+		}
+
+		if (i + 1 >= m_arguments.length()) continue;
+
 		if ((m_arguments[i].compare("-f", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("-folder", Qt::CaseInsensitive) == 0)||
 			(m_arguments[i].compare("--folder", Qt::CaseInsensitive) == 0))
@@ -255,7 +267,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	RatsnestColors::initNames();
 	SvgIconWidget::initNames();
 	PinHeader::initNames();
-
+	return true;
 }
 
 FApplication::~FApplication(void)
