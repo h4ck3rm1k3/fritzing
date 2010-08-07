@@ -251,6 +251,8 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	modelPart()->setProp("r1x", r1x);
 	modelPart()->setProp("r1y", r1y);
 
+	int thickness = 21;
+
 	switch (viewLayerID) {
 		case ViewLayer::Copper0:
 		case ViewLayer::Copper1:
@@ -261,15 +263,17 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
 				.arg(Colors.value(viewLayerID));
 
-		case ViewLayer::Jumperwires:
 		case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
+			thickness = 10;
+		case ViewLayer::Jumperwires:
 			return JumperWireLayerTemplate
 				.arg(w).arg(h)
 				.arg(w * 1000).arg(h * 1000)			
 				.arg(r0x).arg(r0y).arg(r1x).arg(r1y)
 				.arg(ViewLayer::viewLayerXmlNameFromID(viewLayerID))
-				.arg(Colors.value(viewLayerID));
+				.arg(Colors.value(viewLayerID))
+				.arg(thickness);
                 default:
                     break;
 	}
