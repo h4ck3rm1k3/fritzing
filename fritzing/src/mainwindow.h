@@ -273,6 +273,8 @@ protected slots:
 	void autosaveNeeded(int index = 0);
 	void firstTimeHelpHidden();
 	void changeTraceLayer();
+	void routingStatusLabelMousePress(QMouseEvent*);
+	void routingStatusLabelMouseRelease(QMouseEvent*);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -392,6 +394,8 @@ protected:
 	void updateActiveLayerButtons();
 	bool hasLinkedProgramFiles(const QString & filename, QStringList & linkedProgramFiles);
 	void pasteAux(bool pasteInPlace);
+
+	void routingStatusLabelMouse(QMouseEvent*, bool show);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -637,6 +641,7 @@ protected:
 	bool m_backingUp;
 	bool m_recovered;
 	QString m_bundledSketchName;
+	RoutingStatus m_routingStatus;
 
 public:
 	static int RestartNeeded;

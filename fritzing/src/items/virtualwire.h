@@ -31,6 +31,7 @@ $Date$
 
 class VirtualWire : public ClipableWire
 {
+	Q_OBJECT
 
 public:
 	VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 

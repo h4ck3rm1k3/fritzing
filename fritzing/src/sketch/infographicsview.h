@@ -85,6 +85,9 @@ public:
 
 	int boardLayers();
 	virtual void setBoardLayers(int, bool redraw);
+	virtual void makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor);
+	virtual void getRatsnestColor(QColor &);
+
 
 public slots:
 	virtual void setVoltage(qreal, bool doEmit);

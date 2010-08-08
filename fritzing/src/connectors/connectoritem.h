@@ -30,6 +30,8 @@ $Date$
 #include "nonconnectoritem.h"
 #include "connector.h"
 
+#include <QThread>
+
 class ConnectorItem : public NonConnectorItem
 {
 Q_OBJECT
@@ -124,19 +126,49 @@ protected:
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_checkedEffectively;
+
+protected slots:
+	void drawRatsnestSlot(class InfoGraphicsView *, ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;
+
+protected:
 	static void collectPart(ConnectorItem * connectorItem, QList<ConnectorItem *> & partsConnectors, ViewLayer::ViewLayerSpec);
+	static void waitThreads();
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, bool crossLayers, ViewGeometry::WireFlags skipFlags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols, ViewLayer::ViewLayerSpec);
 	static void clearEqualPotentialDisplay();
 	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);
+	static void displayRatsnest(ConnectorItem * center);
+	static void clearRatsnestDisplay();
+	static void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
 
 public:
 	static const QList<ConnectorItem *> emptyConnectorItemList;
+};
+
+class DisplayRatsnestThread : public QThread
+{
+	Q_OBJECT
+
+public:
+	DisplayRatsnestThread();
+
+	void stop();
+	void init(InfoGraphicsView * infoGraphicsView, ConnectorItem * center, QList<ConnectorItem *> & connectorItems);
+	void run();
+	void runAux();
+
+signals:
+	void drawRatsnestSignal(class InfoGraphicsView *, ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
+
+protected:
+	QList<ConnectorItem *> m_connectorItems;
+	InfoGraphicsView * m_infoGraphicsView;
+	bool m_keepGoing;
 };
 
 #endif

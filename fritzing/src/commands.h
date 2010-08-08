@@ -36,6 +36,7 @@ $Date$
 #include "viewgeometry.h"
 #include "viewlayer.h"
 #include "utils/misc.h"
+#include "items/itembase.h"
 
 class BaseCommand : public QUndoCommand
 {
@@ -394,56 +395,17 @@ protected:
 	qreal m_newWidth;
 };
 
-
-class WireFlagChangeCommand : public BaseCommand
-{
-public:
-	WireFlagChangeCommand(
-		SketchWidget* sketchWidget,
-		long wireId, ViewGeometry::WireFlags oldFlags, ViewGeometry::WireFlags newFlags,
-		QUndoCommand *parent);
-    void undo();
-    void redo();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	long m_wireId;
-	ViewGeometry::WireFlags m_oldFlags;
-	ViewGeometry::WireFlags m_newFlags;
-};
-
-class RatsnestCommand : public ChangeConnectionCommand
-{
-public:
-	RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType,
-					long fromID, const QString & fromConnectorID,
-					long toID, const QString & toConnectorID,
-					ViewLayer::ViewLayerSpec,
-					bool connect,
-					QUndoCommand * parent);
-    void undo();
-    void redo();
-	void addWire(class SketchWidget *, class Wire *, class ConnectorItem * source, class ConnectorItem * dest, bool select);
-
-protected:
-	QString getParamString() const;
-
-protected:
-	bool m_firstTime;
-
-};
-
 struct RoutingStatus {
 	int m_netCount;
 	int m_netRoutedCount;
 	int m_connectorsLeftToRoute;
 	int m_jumperWireCount;
 	int m_jumperItemCount;
+	ConnectorPairHash m_unroutedConnectors;
 
 public:
 	void zero() {
+		m_unroutedConnectors.clear();
 		m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperWireCount = m_jumperItemCount = 0;
 	}
 

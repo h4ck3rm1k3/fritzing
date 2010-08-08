@@ -44,7 +44,6 @@ public:
 	void createTrace();
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
-	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
 	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &, bool manual);
 	void forwardRoutingStatus(const RoutingStatus &);
@@ -87,6 +86,8 @@ public:
 	void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 	void deleteSelected();
 	void jumperItemHack();
+	void makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
+	void getRatsnestColor(QColor &);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -104,7 +105,6 @@ public:
 
 protected:
 	void setWireVisible(Wire * wire);
-	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
 	// void checkAutorouted();
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	bool canChainWire(Wire *);
@@ -119,15 +119,8 @@ protected:
 								  long toID, const QString & toConnectorID,
 								  ViewLayer::ViewLayerSpec viewLayerSpec,
 								  bool connect, class RatsnestCommand *, bool doEmit);
-	bool dealWithRatsnestAux(ConnectorItem * & from, ConnectorItem * & to,
-							long fromID, const QString & fromConnectorID, 
-							long toID, const QString & toConnectorID,
-							ViewLayer::ViewLayerSpec viewLayerSpec,
-							bool connect, class RatsnestCommand *, bool doEmit);
 	bool canDropModelPart(ModelPart * modelPart);
-	virtual void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
 	bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
-	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
 	bool doRatsnestOnCopy();
@@ -147,9 +140,6 @@ protected:
 	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
-	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *, bool select);
-	void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
-	void recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate); 
 	void scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus &);
 	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
@@ -182,7 +172,7 @@ protected:
 	static int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0);
 	static int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 	static void transitiveClosure(QVector< QVector<bool> > & adjacency, int count);
-	static int countMissing(QVector< QVector<bool> > & adjacency, int count);
+	static int countMissing(QVector< QVector<bool> > & adjacency, QList<ConnectorItem *> & partConnectorItems, ConnectorPairHash &);
 
 protected slots:
 	void cancelDRC();

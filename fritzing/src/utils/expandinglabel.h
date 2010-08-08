@@ -35,44 +35,22 @@ $Date$
 
 class ExpandingLabel : public QTextEdit {
 	Q_OBJECT
-public:
-	ExpandingLabel(QWidget *parent, int minSize=100) : QTextEdit(parent) {
-		setMinimumWidth(minSize);
-		setReadOnly(true);
-		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-		setStyleSheet("border: 0px; background-color: transparent; margin-top: 8px; margin-bottom: 5px;");
-		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	}
 
-	void setLabelText(const QString& theText) {
-		QTextDocument *doc = new QTextDocument(this);
-		doc->setHtml(theText);
-		setDocument(doc);
-		setToolTip(theText);
-		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-		setAlignment(Qt::AlignCenter);
-		setContextMenuPolicy(Qt::NoContextMenu);
-	}
+public:
+	ExpandingLabel(QWidget *parent, int minSize=100);
+	void setLabelText(const QString& theText);
 
 public slots:
-	void allTextVisible() {
-		QTextDocument *doc = document();
-		doc->setTextWidth(width());
-		int height = doc->documentLayout()->documentSize().toSize().height();
-		setStyleSheet("border: 0px; background-color: transparent; margin-top: 0px; margin-bottom: 0px;");
-		setFixedHeight(height);
-	}
+	void allTextVisible();
+
+signals:
+	void mousePressSignal(QMouseEvent *event);
+	void mouseReleaseSignal(QMouseEvent *event);
 
 protected:
-	void mouseMoveEvent(QMouseEvent * event) {
-		QAbstractScrollArea::mouseMoveEvent(event);
-	}
-	void mousePressEvent(QMouseEvent *event) {
-		QAbstractScrollArea::mousePressEvent(event);
-	}
-	void mouseReleaseEvent(QMouseEvent *event) {
-		QAbstractScrollArea::mouseReleaseEvent(event);
-	}
+	void mouseMoveEvent(QMouseEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 };
 
 #endif /* EXPANDINGLABEL_H_ */

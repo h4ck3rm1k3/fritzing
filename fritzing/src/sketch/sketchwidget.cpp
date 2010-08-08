@@ -447,11 +447,6 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 								ViewLayer::specFromID(fromViewLayerID),
 								true, parentCommand);
 	if (doRatsnest && doRatsnestOnCopy()) {
-		new RatsnestCommand(this, BaseCommand::SingleView,
-									ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
-									ItemBase::getNextID(modelIndex), toConnectorID,
-									ViewLayer::specFromID(fromViewLayerID),
-									true, parentCommand);
 	}
 }
 
@@ -922,10 +917,6 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 								fromItem->id(), fromConnectorItem->connectorSharedID(),
 								toItem->id(), toConnectorItem->connectorSharedID(),
 								viewLayerSpec, connect, parentCommand);
-	new RatsnestCommand(this, BaseCommand::CrossView,
-								fromItem->id(), fromConnectorItem->connectorSharedID(),
-								toItem->id(), toConnectorItem->connectorSharedID(),
-								viewLayerSpec, connect, parentCommand);
 }
 
 
@@ -963,14 +954,6 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 						ViewLayer::specFromID(to->attachedToViewLayerID()),
 						true, parentCommand);
 	if (doRatsnest) {
-		new RatsnestCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
-								newID, "connector0", 
-								ViewLayer::specFromID(from->attachedToViewLayerID()),
-								true, parentCommand);
-		new RatsnestCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
-								newID, "connector1", 
-								ViewLayer::specFromID(to->attachedToViewLayerID()),
-								true, parentCommand);
 	}
 
 	if (addItNow) {
@@ -4536,11 +4519,6 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			}
 			if ((newConnector == NULL) || cleanup) {
 					// clean up after disconnect
-					new RatsnestCommand(this, BaseCommand::SingleView,
-										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-										false, parentCommand);
 			}
 			else {
 				// reconnect directly without cleaning up
@@ -4561,14 +4539,6 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 											true, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-											wireID, "connector1", 
-											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-											true, parentCommand);
-				new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-											wireID, "connector0", 
-											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-											true, parentCommand);
-				new RatsnestCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 											wireID, "connector1", 
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 											true, parentCommand);
@@ -6297,7 +6267,7 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 		ConnectorItem * connectorItem = allConnectors.takeFirst();
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
 		if (connectorItems.count() <= 0) {
 			continue;
 		}

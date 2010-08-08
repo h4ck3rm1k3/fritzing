@@ -128,32 +128,6 @@ void PCBSketchWidget::addViewLayers() {
 }
 
 
-void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand * ratsnestCommand)
-{
-	int count = partsConnectorItems.count();
-	for (int i = 0; i < count - 1; i++) {
-		ConnectorItem * source = partsConnectorItems[i];
-		for (int j = i + 1; j < count; j++) {
-			ConnectorItem * dest = partsConnectorItems[j];
-			// if you can't get from i to j via wires, then add a virtual ratsnest wire
-			Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
-			if (tempWire == NULL) {
-				Wire * newWire = makeOneRatsnestWire(source, dest, ratsnestCommand, source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag) == NULL);
-				if (newWire != NULL) {
-					ratsnestWires.append(newWire);
-					if (source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
-						newWire->setRouted(true);
-					}
-				}
-
-			}
-			else {
-				modelWire = tempWire;
-			}
-		}
-	}
-}
-
 
 ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec viewLayerSpec, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
@@ -287,24 +261,6 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
-	Wire* rat = NULL;
-	if (wire->getRatsnest()) {
-		rat = wire;
-	}
-	else {
-		rat = ends[0]->wiredTo(ends[1], ViewGeometry::RatsnestFlag);
-	}
-
-	if (rat != NULL) {
-		QList<ConnectorItem *> ends;
-		QList<Wire *> rats;
-		QList<ConnectorItem *> uniqueEnds;
-		rat->collectChained(rats, ends, uniqueEnds);
-		foreach (Wire * r, rats) {
-			makeChangeRoutedCommand(r, true, getRatsnestOpacity(true), parentCommand);
-		}
-	}
-
 }
 
 
@@ -326,16 +282,6 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 	}
 }
 
-void PCBSketchWidget::makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand) {
-	new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), opacity, parentCommand);
-	ViewGeometry::WireFlags wireFlags = wire->wireFlags();
-	wireFlags |= ViewGeometry::RoutedFlag;
-	if (!routed) {
-		wireFlags &= ~ViewGeometry::RoutedFlag;
-	}
-	new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wireFlags, parentCommand);
-}
-
 void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
 	Q_UNUSED(parentCommand);
 
@@ -348,22 +294,9 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 {
 	//DebugDialog::debug("update ratsnest status");
 
-	QHash<ConnectorItem *, int> indexer;
-	QList< QList<ConnectorItem *>* > allPartConnectorItems;
-	collectAllNets(indexer, allPartConnectorItems, false);
-	routingStatus.zero();
-
-	// TODO:  handle delete in updateRatsnestColors...
-	if (command) {
-		removeRatsnestWires(allPartConnectorItems, command);
-	}
-
-	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-		delete list;
-	}
-
 	if (!manual && m_manualRoutingStatusUpdate) return;
 
+	routingStatus.zero();
 	updateRatsnestColors(command, undoCommand, false, routingStatus);
 
 	if (routingStatus != m_routingStatus) {
@@ -779,25 +712,7 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	return true;
 }
 
-bool PCBSketchWidget::alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem) {
-	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
-		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
-			// don't make further ratsnest's from ratsnest
-			return true;
-		}
-	}
 
-	if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
-			// don't make further ratsnest's from ratsnest
-			return true;
-		}
-	}
-
-	return false;
-}
 
 void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
@@ -805,137 +720,7 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
 {
-	if (!connect) {
-		return;
-	}
 
-	ConnectorItem * fromConnectorItem = NULL;
-	ConnectorItem * toConnectorItem = NULL;
-	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
-							toID, toConnectorID,
-							viewLayerSpec,
-							connect, ratsnestCommand, doEmit)) 
-	{
-		return;
-	}
-
-	DebugDialog::debug(QString("deal with ratsnest %7 %8: %1 %2 %3, %4 %5 %6 ")
-		.arg(fromConnectorItem->attachedToTitle())
-		.arg(fromConnectorItem->attachedToID())
-		.arg(fromConnectorItem->connectorSharedID())
-		.arg(toConnectorItem->attachedToTitle())
-		.arg(toConnectorItem->attachedToID())
-		.arg(toConnectorItem->connectorSharedID())
-		.arg(m_viewIdentifier)
-		.arg(fromConnectorItem->attachedToViewLayerID())
-	);
-
-	QList<ConnectorItem *> connectorItems;
-	QList<ConnectorItem *> partsConnectorItems;
-	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
-	ConnectorItem::collectParts(connectorItems, partsConnectorItems, includeSymbols(), viewLayerSpec);
-
-	QList <Wire *> ratsnestWires;
-	Wire * modelWire = NULL;
-
-	makeWires(partsConnectorItems, ratsnestWires, modelWire, ratsnestCommand);
-	if (ratsnestWires.count() > 0) {
-		QColor color;
-		if (modelWire) {
-			color = modelWire->color();
-		}
-		else {
-			color = RatsnestColors::netColor(m_viewIdentifier);
-		}
-		foreach (Wire * wire, ratsnestWires) {
-			wire->setColor(color, getRatsnestOpacity(wire));
-			checkSticky(wire->id(), false, false, NULL);
-		}
-	}
-
-	return;
-}
-
-void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand * command)
-{
-	/*
-	DebugDialog::debug("----------");
-	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-		foreach (ConnectorItem * ci, *list) {
-			DebugDialog::debug(QString("%1 %2 %3")
-				.arg(ci->attachedToTitle())
-				.arg(ci->attachedTo()->instanceTitle())
-				.arg(ci->connectorSharedName()));
-		}
-		DebugDialog::debug("-----");
-	}
-	*/
-
-	QSet<Wire *> deleteWires;
-	QSet<Wire *> visitedWires;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (visitedWires.contains(wire)) continue;
-
-		ViewGeometry::WireFlags flag = wire->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
-		if (flag == 0) continue;
-
-		// if a ratsnest is connecting two items that aren't connected any longer
-		// delete the ratsnest
-
-		QList<Wire *> wires;
-		QList<ConnectorItem *> ends;
-		QList<ConnectorItem *> uniqueEnds;
-		wire->collectChained(wires, ends, uniqueEnds);
-		foreach (Wire * w, wires) {
-			visitedWires.insert(w);
-		}
-
-		QList<Wire *> wiresCopy(wires);
-
-		// prevent disconnected deleted traces (traces which have been directly deleted,
-		// as opposed to traces that are indirectly deleted by deleting or disconnecting parts)
-		// from being deleted twice on the undo stack
-		// and therefore added twice, and causing other problems
-		if (flag == ViewGeometry::TraceFlag || flag == ViewGeometry::JumperFlag) {
-			if (wire->isMarkedDeleted()) continue;
-		}
-
-		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-			foreach (ConnectorItem * ci, ends) {
-				if (!list->contains(ci)) continue;
-
-				foreach (ConnectorItem * tci, ci->connectedToItems()) {
-					if (tci->attachedToItemType() != ModelPart::Wire) continue;
-
-					Wire * w = dynamic_cast<Wire *>(tci->attachedTo());
-					if (!wires.contains(w)) continue;  // already been tested and removed so keep going
-
-					ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
-					if (wflag != flag) continue;
-
-					// assumes one end is connected to a part, checks to see if the other end is also, possibly indirectly, connected
-					bothEndsConnected(w, flag, tci, wires, *list);
-
-				}
-			}
-			if (wires.count() == 0) break;
-		}
-
-
-		foreach (Wire * w, wires) {
-			deleteWires.insert(w);
-		}
-
-	}
-
-	foreach (Wire * wire, deleteWires) {
-		wire->markDeleted(true);
-		command->addWire(this, wire);
-		deleteItem(wire, true, false, false);
-	}
 }
 
 bool PCBSketchWidget::bothEndsConnected(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems)
@@ -1012,12 +797,32 @@ bool PCBSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Conne
 	return ((from != NULL) && (to != NULL));
 }
 
-Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand * ratsnestCommand, bool select) {
+bool PCBSketchWidget::doRatsnestOnCopy() 
+{
+	return true;
+}
+
+qreal PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
+	return getRatsnestOpacity(wire->getRouted());
+}
+
+qreal PCBSketchWidget::getRatsnestOpacity(bool routed) {
+	return (routed ? 0.2 : 1.0);
+}
+
+void PCBSketchWidget::getRatsnestColor(QColor & color) 
+{
+	RatsnestColors::reset(m_viewIdentifier);
+	color = RatsnestColors::netColor(m_viewIdentifier);
+}
+
+
+void PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color) {
 	if (source->attachedTo() == dest->attachedTo()) {
-		if (source == dest) return NULL;
+		if (source == dest) return;
 
 		if (source->bus() == dest->bus() && dest->bus() != NULL) {
-			return NULL;				// don't draw a wire within the same part on the same bus
+			return;				// don't draw a wire within the same part on the same bus
 		}
 	}
 	
@@ -1025,6 +830,7 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 
 	ViewGeometry viewGeometry;
 	makeRatsnestViewGeometry(viewGeometry, source, dest);
+	viewGeometry.setRouted(routed);
 
 	/*
 	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
@@ -1040,22 +846,13 @@ Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorIte
 	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
-	if (!select) {
-		wire->setSelected(false);
-	}
+
 	if (!source->attachedTo()->isVisible() || !dest->attachedTo()->isVisible()) {
 		wire->setVisible(false);
 	}
 
-	Wire * tempWire = source->wiredTo(dest, ViewGeometry::TraceFlag);
-	if (tempWire) {
-		wire->setOpacity(getRatsnestOpacity(true));
-	}
-
-	if (ratsnestCommand) {
-		ratsnestCommand->addWire(this, wire, source, dest, select);
-	}
-	return wire ;
+	qreal opacity = getRatsnestOpacity(routed);
+	wire->setColor(color, opacity);
 }
 
 void PCBSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest) 
@@ -1066,43 +863,6 @@ void PCBSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, Conn
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 	viewGeometry.setLine(line);
 	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);
-}
-
-
-bool PCBSketchWidget::dealWithRatsnestAux(ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem, 
-						long fromID, const QString & fromConnectorID, 
-						long toID, const QString & toConnectorID,
-						ViewLayer::ViewLayerSpec viewLayerSpec,
-						bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit) 
-{
-	SketchWidget::dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, ratsnestCommand, doEmit);
-
-	ItemBase * from = findItem(fromID);
-	if (from == NULL) return true;
-
-	fromConnectorItem = findConnectorItem(from, fromConnectorID, viewLayerSpec);
-	if (fromConnectorItem == NULL) return true;
-
-	ItemBase * to = findItem(toID);
-	if (to == NULL) return true;
-
-	toConnectorItem = findConnectorItem(to, toConnectorID, viewLayerSpec);
-	if (toConnectorItem == NULL) return true;
-
-	return alreadyRatsnest(fromConnectorItem, toConnectorItem);
-}
-
-bool PCBSketchWidget::doRatsnestOnCopy() 
-{
-	return true;
-}
-
-qreal PCBSketchWidget::getRatsnestOpacity(Wire * wire) {
-	return getRatsnestOpacity(wire->getRouted());
-}
-
-qreal PCBSketchWidget::getRatsnestOpacity(bool routed) {
-	return (routed ? 0.2 : 1.0);
 }
 
 ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * connectorItem) 
@@ -1176,16 +936,6 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 								true, parentCommand);
 
 	if (wireFlags == 0) {
-		new RatsnestCommand(this, cvt,
-							newID, "connector0",
-							fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-							ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
-							true, parentCommand);
-		new RatsnestCommand(this, cvt,
-							newID, "connector1",
-							toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-							ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
-							true, parentCommand);
 	}
 	return newID;
 }
@@ -1556,42 +1306,24 @@ ItemBase * PCBSketchWidget::findBoard() {
 	return NULL;
 }
 
-void PCBSketchWidget::collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames) 
-{
-	foreach(ConnectorItem * connectorItem, connectorItems) {
-		if (!connectorNames.contains(connectorItem->connectorSharedName())) {
-			connectorNames.append(connectorItem->connectorSharedName());
-			//DebugDialog::debug("name " + connectorItem->connectorSharedName());
-		}
-	}
-}
-
 void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus & routingStatus) 
 {
 	//DebugDialog::debug("update ratsnest colors");
 	// TODO: think about ways to optimize this...
 
-	QList<ConnectorItem *> virtualWireConnectors;
-	foreach (QGraphicsItem * item, items()) {
-		VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
-		if (vw == NULL) continue;
 
-		virtualWireConnectors.append(vw->connector0());
-		virtualWireConnectors.append(vw->connector1());
-	}
+	QList<ConnectorItem *> visited;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+		if (visited.contains(connectorItem)) continue;
 
-	while (virtualWireConnectors.count() > 0) {
 		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(virtualWireConnectors.takeFirst());
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NormalFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
-		for (int i = 1; i < connectorItems.count(); i++) {
-			// we're done with these now
-			virtualWireConnectors.removeOne(connectorItems[i]);
-		}
+		connectorItems.append(connectorItem);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
+		visited.append(connectorItems);
 
 		scoreOneNet(connectorItems, routingStatus);
-
-		recolor(connectorItems, command, parentCommand, forceUpdate);
 	}
 
 	routingStatus.m_jumperWireCount /= 2;			// since we counted each connector twice
@@ -1612,12 +1344,17 @@ void traceAdjacency(QVector< QVector<bool> > & adjacency, int count)
 
 void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus & routingStatus) 
 {
-	routingStatus.m_netCount++;
+	if (connectorItems.count() <= 1) return;
+
 	QList<ConnectorItem *> partConnectorItems;
 	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
 	int count = partConnectorItems.count();
+	if (count <= 1) return;
+
 	// want adjacency[count][count] but some C++ compilers don't like it
 	QVector< QVector<bool> > adjacency(count, QVector<bool>(count, false));
+
+	bool gotUserConnection = false;
 
 	// initialize adjaceny
 	for (int i = 0; i < count; i++) {
@@ -1633,20 +1370,29 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 			ConnectorItem * to = partConnectorItems[j];
 
 			if (from->isCrossLayerConnectorItem(to)) {
-				adjacency[i][j] = true;
-				adjacency[j][i] = true;
+				adjacency[j][i] = adjacency[i][j] = true;
 				continue;
 			}
 
-			if (to->attachedTo() != from->attachedTo()) continue;
+			if (to->attachedTo() != from->attachedTo()) {
+				gotUserConnection = true;
+				continue;
+			}
 
 			if ((to->bus() != NULL) && (to->bus() == from->bus())) {	
-				adjacency[i][j] = true;
-				adjacency[j][i] = true;
+				adjacency[j][i] = adjacency[i][j] = true;
 				continue;
 			}
+
+			gotUserConnection = true;
 		}
 	}
+
+	if (!gotUserConnection) {
+		return;
+	}
+
+	routingStatus.m_netCount++;
 
 	//traceAdjacency(adjacency, count);
 
@@ -1678,8 +1424,7 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 
 				int j = partConnectorItems.indexOf(end);
 				if (j >= 0) {
-					adjacency[i][j] = true;
-					adjacency[j][i] = true;
+					adjacency[j][i] = adjacency[i][j] = true;
 				}
 			}
 		}
@@ -1691,7 +1436,7 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 
 	//traceAdjacency(adjacency, count);
 
-	int todo = countMissing(adjacency, count);
+	int todo = countMissing(adjacency, partConnectorItems, routingStatus.m_unroutedConnectors);
 	if (todo == 0) {
 		routingStatus.m_netRoutedCount++;
 	}
@@ -1700,8 +1445,9 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 	}
 }
 
-int PCBSketchWidget::countMissing(QVector< QVector<bool> > & adjacency, int count)
+int PCBSketchWidget::countMissing(QVector< QVector<bool> > & adjacency, QList<ConnectorItem *> & partConnectorItems, ConnectorPairHash & connectorPairHash )
 {
+	int count = partConnectorItems.count();
 	QVector<bool> check(count, true);
 	int missing = 0;
 	for (int i = 0; i < count; i++) {
@@ -1718,6 +1464,7 @@ int PCBSketchWidget::countMissing(QVector< QVector<bool> > & adjacency, int coun
 				continue;
 			}
 
+			connectorPairHash.insert(partConnectorItems.at(i), partConnectorItems.at(j));
 			missingOne = true;							// we can minimally span the set with n-1 wires, so even if multiple connections are missing from a given connector, count it as one
 		}
 
@@ -1730,91 +1477,16 @@ int PCBSketchWidget::countMissing(QVector< QVector<bool> > & adjacency, int coun
 
 void PCBSketchWidget::transitiveClosure(QVector< QVector<bool> > & adjacency, int count)
 {
-	// TODO: is there a faster implementation?
-	for (int i = 0; i < count; i++) {
-		for (int j = 0; j < count; j++) {
-			if (i == j) continue;
-
-			if (adjacency[i][j]) {
-				for (int k = 0; k < count; k++) {
-					if (k == j || k == i) continue;
-
-					if (adjacency[j][k]) {
-						adjacency[i][k] = true;
-						adjacency[k][i] = true;
-					}
-					if (adjacency[i][k]) {
-						adjacency[j][k] = true;
-						adjacency[k][j] = true;
-					}
+	// Floyd-Warshall algorithm
+	for (int k = 0; k < count; k++) { 
+		for (int i = 0; i < count; i++) { 
+			for (int j = 0; j < count; j++) { 
+				bool adj = adjacency[i][j];
+				if (!adj) {
+					adjacency[i][j] = (adjacency[i][k] && adjacency[k][j]);
 				}
 			}
 		}
-	}
-}
-
-void PCBSketchWidget::recolor(QList<ConnectorItem *> & connectorItems, BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate) 
-{
-	QColor standardColor = RatsnestColors::netColor(m_viewIdentifier);
-
-	QStringList connectorNames;
-	collectConnectorNames(connectorItems, connectorNames);
-	QColor color;
-	bool gotColor = RatsnestColors::findConnectorColor(connectorNames, color);
-
-	QList<VirtualWire *> virtualWires;
-
-	foreach(ConnectorItem * connectorItem, connectorItems) {
-		if (connectorItem->attachedToItemType() != ModelPart::Wire) continue;
-
-		VirtualWire * vw = dynamic_cast<VirtualWire *>(connectorItem->attachedTo());
-		if (vw == NULL) continue;
-		if (virtualWires.contains(vw)) continue;
-
-		virtualWires.append(vw);
-
-		bool routed = false;
-		qreal opacity = vw->opacity();
-		ConnectorItem * from = vw->connector0()->firstConnectedToIsh();
-		if (from) {
-			ConnectorItem * to = vw->connector1()->firstConnectedToIsh();
-			if (to) {
-				QList<ConnectorItem *> traceConnectorItems;
-				traceConnectorItems.append(from);
-				ConnectorItem::collectEqualPotential(traceConnectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
-				routed = traceConnectorItems.contains(to);
-			}
-		}
-		qreal newOpacity = getRatsnestOpacity(routed);
-
-		QColor currentColor = vw->color();
-		bool isC = RatsnestColors::isConnectorColor(m_viewIdentifier, currentColor);
-		QColor useColor;
-		if (gotColor && isC) {
-			if (color == currentColor) {
-				// no change necessary
-				if (!forceUpdate && (newOpacity == opacity)) continue;
-			}
-			useColor = color;
-		}
-		else if (gotColor) {
-			useColor = color;
-		}
-		else if (isC) {
-			// this shouldn't happen, or at least not often
-			useColor = standardColor;
-		}
-		else {
-			// no change necessary
-			if (!forceUpdate && (newOpacity == opacity)) continue;
-			useColor = forceUpdate ? standardColor : currentColor;
-		}
-
-		WireColorChangeCommand * cmd = new WireColorChangeCommand(this, vw->id(), currentColor.name(), useColor.name(), vw->opacity(), newOpacity, parentCommand);
-		if (command) {
-			command->addSubCommand(cmd);
-		}
-		vw->setColor(useColor, newOpacity);
 	}
 }
 

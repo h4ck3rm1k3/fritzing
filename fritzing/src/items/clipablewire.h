@@ -35,7 +35,7 @@ class ClipableWire : public Wire
 {
 
 public:
-	ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool initLabel); 
 	
 	void setClipEnds(bool);
 	const QLineF & getPaintLine();	

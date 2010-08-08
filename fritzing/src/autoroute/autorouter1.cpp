@@ -896,6 +896,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 					oldTraces.append(wire);
 				}
 			}
+			/*
 			else if (wire->getRatsnest()) {
 				if (parentCommand) {
 					sketchWidget->makeChangeRoutedCommand(wire, false, sketchWidget->getRatsnestOpacity(false), parentCommand);
@@ -903,6 +904,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 				wire->setRouted(false);
 				wire->setOpacity(sketchWidget->getRatsnestOpacity(false));	
 			}
+			*/
 			continue;
 		}
 
@@ -930,22 +932,9 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 
 void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 
-	if (routed) {
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-			Wire * wire = dynamic_cast<Wire *>(item);
-			if (wire == NULL) continue;
-			if (!wire->getRatsnest()) continue;
-			
-			m_sketchWidget->makeChangeRoutedCommand(wire, routed, m_sketchWidget->getRatsnestOpacity(routed), parentCommand);
-			wire->setOpacity(m_sketchWidget->getRatsnestOpacity(routed));	
-			wire->setRouted(routed);
-		}
-	}
-	else {
-		RoutingStatus routingStatus;
-		routingStatus.zero();
-		m_sketchWidget->updateRatsnestColors(NULL, parentCommand, false, routingStatus);
-	}
+	RoutingStatus routingStatus;
+	routingStatus.zero();
+	m_sketchWidget->updateRatsnestColors(NULL, parentCommand, false, routingStatus);
 }
 
  bool Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {

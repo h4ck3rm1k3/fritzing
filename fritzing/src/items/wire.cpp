@@ -66,12 +66,28 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 
 /////////////////////////////////////////////////////////////
 
-Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
+
+WireMenu::WireMenu(const QString & title, QWidget * parent) : QMenu(title, parent) 
+{
+	m_wire = NULL;
+}
+
+void WireMenu::setWire(Wire * w) {
+	m_wire = w;
+}
+
+Wire * WireMenu::wire() {
+	return m_wire;
+}
+
+/////////////////////////////////////////////////////////////
+
+Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_markedDeleted = false;
 	m_connector0 = m_connector1 = NULL;
-	m_partLabel = new PartLabel(this, NULL);
+	m_partLabel = initLabel ? new PartLabel(this, NULL) : NULL;
 	m_canChainMultiple = false;
     setFlag(QGraphicsItem::ItemIsSelectable, true );
 	m_connectorHover = NULL;
@@ -214,6 +230,10 @@ void Wire::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
 
 void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+	WireMenu * wireMenu = qobject_cast<WireMenu *>(m_itemMenu);
+	if (wireMenu) {
+		wireMenu->setWire(this);
+	}
 	ItemBase::mousePressEvent(event);
 }
 

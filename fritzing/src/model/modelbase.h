@@ -56,6 +56,7 @@ protected:
 	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);
 	bool loadInstances(QDomDocument &, QDomElement & root, QList<ModelPart *> & modelParts);
 	ModelPart * fixObsoleteModuleID(QDomDocument & domDocument, QDomElement & instance, QString & moduleIDRef);
+	bool isRatsnest(QDomElement & instance);
 
 protected:
 	QPointer<ModelPart> m_root;

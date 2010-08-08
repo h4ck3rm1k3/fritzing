@@ -573,6 +573,14 @@ void MainWindow::createToolBars() {
 
 ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent) {
 	ExpandingLabel * routingStatusLabel = new ExpandingLabel(m_pcbWidget);
+
+	connect(routingStatusLabel, SIGNAL(mousePressSignal(QMouseEvent*)), this, SLOT(routingStatusLabelMousePress(QMouseEvent*)));
+	connect(routingStatusLabel, SIGNAL(mouseReleaseSignal(QMouseEvent*)), this, SLOT(routingStatusLabelMouseRelease(QMouseEvent*)));
+
+	routingStatusLabel->setTextInteractionFlags(Qt::NoTextInteraction);
+	routingStatusLabel->setCursor(Qt::ArrowCursor);
+	routingStatusLabel->viewport()->setCursor(Qt::ArrowCursor);
+
 	routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
 	parent->setRoutingStatusLabel(routingStatusLabel);
 	RoutingStatus routingStatus;
@@ -808,7 +816,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	// update issue with 4.5.1?
 	m_currentGraphicsView->updateConnectors();
-
+	RoutingStatus routingStatus;
+	m_currentGraphicsView->updateRatsnestStatus(NULL, NULL, routingStatus, false);
 }
 
 void MainWindow::setActionsIcons(int index, QList<QAction *> & actions) {
@@ -1463,6 +1472,7 @@ void MainWindow::resetTempFolder() {
 }
 
 void MainWindow::routingStatusSlot(SketchWidget * sketchWidget, const RoutingStatus & routingStatus) {
+	m_routingStatus = routingStatus;
 	QString theText;
 	if (routingStatus.m_netCount == 0) {
 		theText = tr("No connections to route");
@@ -2162,3 +2172,35 @@ QStringList MainWindow::getExtensions() {
 void MainWindow::firstTimeHelpHidden() {
 	m_showInViewHelpAct->setChecked(false);
 }
+
+void MainWindow::routingStatusLabelMousePress(QMouseEvent* event) {
+	routingStatusLabelMouse(event, true);
+}
+
+void MainWindow::routingStatusLabelMouseRelease(QMouseEvent* event) {
+	routingStatusLabelMouse(event, false);
+}
+
+void MainWindow::routingStatusLabelMouse(QMouseEvent*, bool show) {
+	if (show) DebugDialog::debug("-------");
+	foreach (ConnectorItem * iConnectorItem, m_routingStatus.m_unroutedConnectors.uniqueKeys()) {
+		iConnectorItem->showEqualPotential(show);
+		if (show)
+			DebugDialog::debug(QString("unrouted %1 %2 %3 %4")
+				.arg(iConnectorItem->attachedToInstanceTitle())
+				.arg(iConnectorItem->attachedToID())
+				.arg(iConnectorItem->attachedTo()->title())
+				.arg(iConnectorItem->connectorSharedName()));
+		foreach(ConnectorItem * jConnectorItem, m_routingStatus.m_unroutedConnectors.values(iConnectorItem)) {
+			jConnectorItem->showEqualPotential(show);
+			if (show) 
+				DebugDialog::debug(QString("     %1 %2 %3 %4")
+					.arg(jConnectorItem->attachedToInstanceTitle())
+					.arg(jConnectorItem->attachedToID())
+					.arg(jConnectorItem->attachedTo()->title())
+					.arg(jConnectorItem->connectorSharedName()));
+		}
+	}
+}
+
+

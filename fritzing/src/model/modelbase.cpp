@@ -27,6 +27,7 @@ $Date$
 #include "modelbase.h"
 #include "../debugdialog.h"
 #include "../items/pinheader.h"
+#include "../items/moduleidnames.h"
 
 #include <QMessageBox>
 
@@ -169,6 +170,12 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
    	while (!instance.isNull()) {
+		if (isRatsnest(instance)) {
+			// ratsnests in sketches are now obsolete
+			instance = instance.nextSiblingElement("instance");
+			continue;
+		}
+
    		// for now assume all parts are in the palette
    		QString moduleIDRef = instance.attribute("moduleIdRef");
    		modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
@@ -407,3 +414,25 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 	}
 }
 
+bool ModelBase::isRatsnest(QDomElement & instance) {
+	QString moduleIDRef = instance.attribute("moduleIdRef");
+	if (moduleIDRef.compare(ModuleIDNames::wireModuleIDName) != 0) return false;
+
+	QDomElement views = instance.firstChildElement("views");
+	if (views.isNull()) return false;
+
+	QDomElement view = views.firstChildElement();
+	while (!view.isNull()) {
+		QDomElement geometry = view.firstChildElement("geometry");
+		if (!geometry.isNull()) {
+			int flags = geometry.attribute("wireFlags").toInt();
+			if (flags & ViewGeometry::RatsnestFlag) {
+				return true;
+			}
+		}
+
+		view = view.nextSiblingElement();
+	}
+
+	return false;
+}

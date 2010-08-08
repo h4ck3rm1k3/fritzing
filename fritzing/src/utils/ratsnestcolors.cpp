@@ -178,3 +178,9 @@ bool RatsnestColors::isConnectorColor(ViewIdentifierClass::ViewIdentifier m_view
 	return false;
 }
 
+void RatsnestColors::reset(ViewIdentifierClass::ViewIdentifier m_viewIdentifier) {
+	RatsnestColors * ratsnestColors = m_viewList.value(m_viewIdentifier, NULL);
+	if (ratsnestColors == NULL) return;
+
+	ratsnestColors->m_index = 0;
+}

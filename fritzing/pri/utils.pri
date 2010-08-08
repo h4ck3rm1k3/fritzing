@@ -46,6 +46,7 @@ src/utils/autoclosemessagebox.cpp \
 src/utils/bendpointaction.cpp \
 src/utils/clickablelabel.cpp \
 src/utils/expandableview.cpp \
+src/utils/expandinglabel.cpp \
 src/utils/fileprogressdialog.cpp \
 src/utils/flineedit.cpp \
 src/utils/focusoutcombobox.cpp \

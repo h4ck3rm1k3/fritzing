@@ -70,7 +70,7 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 					return new TraceWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
 				}
 				else {
-					return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
+					return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu, true);
 				}
 			}
 

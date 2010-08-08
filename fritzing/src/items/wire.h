@@ -36,15 +36,28 @@ $Date$
 #include <QStyleOptionGraphicsItem>
 #include <QWidget>
 #include <QHash>
+#include <QMenu>
 
 #include "itembase.h"
+
+class WireMenu : public QMenu {
+	Q_OBJECT
+
+public:
+	WireMenu(const QString & title, QWidget * parent = 0);
+	void setWire(Wire *);
+	Wire * wire();
+
+protected:
+	Wire * m_wire;
+};
 
 class Wire : public ItemBase
 {
 Q_OBJECT
 
 public:
-	Wire(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
+	Wire(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu, bool initLabel);
 	virtual ~Wire();
 
 	void saveGeometry();

@@ -164,6 +164,7 @@ protected:
 	void grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId);
 	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 	void commonInit(ItemType type);
+	void saveInstance(QXmlStreamWriter & streamWriter);
 
 protected:
 	QList< QPointer<class ItemBase> > m_viewItems;

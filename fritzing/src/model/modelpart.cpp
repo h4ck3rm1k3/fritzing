@@ -32,6 +32,7 @@ $Date$
 #include "../version/version.h"
 #include "../utils/folderutils.h"
 #include "../items/itembase.h"
+#include "../items/virtualwire.h"
 
 #include <QDomElement>
 
@@ -184,43 +185,7 @@ void ModelPart::saveInstances(const QString & fileName, QXmlStreamWriter & strea
 	}
 
 	if (m_viewItems.size() > 0) {
-		streamWriter.writeStartElement("instance");
-		if (m_modelPartShared != NULL) {
-			const QString & moduleIdRef = m_modelPartShared->moduleID();
-			streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
-			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
-			streamWriter.writeAttribute("path", m_modelPartShared->path());
-			if (m_modelPartShared->flippedSMD()) {
-				streamWriter.writeAttribute("flippedSMD", "true");
-			}
-		}
-
-		foreach (QByteArray byteArray, dynamicPropertyNames()) {
-			streamWriter.writeStartElement("property");
-			streamWriter.writeAttribute("name",  byteArray.data());
-			streamWriter.writeAttribute("value", property(byteArray.data()).toString());
-			streamWriter.writeEndElement();
-		}
-
-		QString title = instanceTitle();
-		if(!title.isNull() && !title.isEmpty()) {
-			writeTag(streamWriter,"title",title);
-		}
-
-		QString text = instanceText();
-		if(!text.isNull() && !text.isEmpty()) {
-			streamWriter.writeStartElement("text");
-			streamWriter.writeCharacters(text);
-			streamWriter.writeEndElement();
-		}
-
-		// tell the views to write themselves out
-		streamWriter.writeStartElement("views");
-		foreach (ItemBase * itemBase, m_viewItems) {
-			itemBase->saveInstance(streamWriter);
-		}
-		streamWriter.writeEndElement();		// views
-		streamWriter.writeEndElement();		//instance
+		saveInstance(streamWriter);
 	}
 
 	QList<QObject *> children = this->children();
@@ -242,6 +207,49 @@ void ModelPart::saveInstances(const QString & fileName, QXmlStreamWriter & strea
 		streamWriter.writeEndElement();   //  module
 		streamWriter.writeEndDocument();
 	}
+}
+
+void ModelPart::saveInstance(QXmlStreamWriter & streamWriter) 
+{
+	if (qobject_cast<VirtualWire *>(m_viewItems.at(0)) != NULL) return;				// don't save virtual wires
+
+	streamWriter.writeStartElement("instance");
+	if (m_modelPartShared != NULL) {
+		const QString & moduleIdRef = m_modelPartShared->moduleID();
+		streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
+		streamWriter.writeAttribute("modelIndex", QString::number(m_index));
+		streamWriter.writeAttribute("path", m_modelPartShared->path());
+		if (m_modelPartShared->flippedSMD()) {
+			streamWriter.writeAttribute("flippedSMD", "true");
+		}
+	}
+
+	foreach (QByteArray byteArray, dynamicPropertyNames()) {
+		streamWriter.writeStartElement("property");
+		streamWriter.writeAttribute("name",  byteArray.data());
+		streamWriter.writeAttribute("value", property(byteArray.data()).toString());
+		streamWriter.writeEndElement();
+	}
+
+	QString title = instanceTitle();
+	if(!title.isNull() && !title.isEmpty()) {
+		writeTag(streamWriter,"title",title);
+	}
+
+	QString text = instanceText();
+	if(!text.isNull() && !text.isEmpty()) {
+		streamWriter.writeStartElement("text");
+		streamWriter.writeCharacters(text);
+		streamWriter.writeEndElement();
+	}
+
+	// tell the views to write themselves out
+	streamWriter.writeStartElement("views");
+	foreach (ItemBase * itemBase, m_viewItems) {
+		itemBase->saveInstance(streamWriter);
+	}
+	streamWriter.writeEndElement();		// views
+	streamWriter.writeEndElement();		//instance
 }
 
 void ModelPart::writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue) {

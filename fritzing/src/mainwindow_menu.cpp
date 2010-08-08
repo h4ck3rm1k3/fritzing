@@ -1820,10 +1820,18 @@ void MainWindow::updateLayerMenu(bool resetLayout) {
 
 void MainWindow::updateWireMenu() {
 	// assumes update wire menu is only called when right-clicking a wire
-	// so that all selected wires are chained
-	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
-	enableAddBendpointAct(items[0]);
+	// and that wire is cached by the menu in Wire::mousePressEvent
+
+	WireMenu * wireMenu = qobject_cast<WireMenu *>(sender());
 	Wire * wire = NULL;
+	if (wireMenu != NULL) {
+		wire = wireMenu->wire();
+	}
+
+	if (wire) {
+		enableAddBendpointAct(wire);
+	}
+
 	bool enableAll = true;
 	bool deleteOK = false;
 	bool createTraceOK = false;
@@ -1832,7 +1840,7 @@ void MainWindow::updateWireMenu() {
 	bool enableZOK = true;
 	bool gotRat = false;
 	bool ctlOK = false;
-	wire = dynamic_cast<Wire *>(items[0]);
+
 	if (wire != NULL) {
 		if (wire->getRatsnest()) {
 			QList<ConnectorItem *> ends;
@@ -1865,10 +1873,15 @@ void MainWindow::updateWireMenu() {
 		}
 	}
 
-	m_wireColorMenu->setEnabled(true);
-	foreach (QAction * action, m_wireColorMenu->actions()) {
-		QString colorName = action->data().toString();
-		action->setChecked(colorName.compare(wire->colorString()) == 0);
+	if (wire) {
+		m_wireColorMenu->setEnabled(true);
+		foreach (QAction * action, m_wireColorMenu->actions()) {
+			QString colorName = action->data().toString();
+			action->setChecked(colorName.compare(wire->colorString()) == 0);
+		}
+	}
+	else {
+		m_wireColorMenu->setEnabled(false);
 	}
 
 	m_bringToFrontAct->setEnabled(enableZOK);
@@ -3284,7 +3297,7 @@ QMenu *MainWindow::pcbItemMenu() {
 }
 
 QMenu *MainWindow::breadboardWireMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
 	menu->addMenu(m_zOrderMenu);
 	menu->addSeparator();
 	m_wireColorMenu = menu->addMenu(tr("&Wire Color"));
@@ -3313,7 +3326,7 @@ QMenu *MainWindow::breadboardWireMenu() {
 
 
 QMenu *MainWindow::pcbWireMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
 	menu->addMenu(m_zOrderMenu);
 	menu->addSeparator();
 	menu->addAction(m_changeTraceLayerAct);	
@@ -3335,7 +3348,7 @@ QMenu *MainWindow::pcbWireMenu() {
 }
 
 QMenu *MainWindow::schematicWireMenu() {
-	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
 	menu->addMenu(m_zOrderMenu);
 	menu->addSeparator();
 	menu->addAction(m_createTraceAct);

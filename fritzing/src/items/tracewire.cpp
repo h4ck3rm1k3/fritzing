@@ -33,7 +33,7 @@ $Date$
 /////////////////////////////////////////////////////////
 
 TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
-	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
+	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, true)
 {
 	m_canChainMultiple = true;
 }
