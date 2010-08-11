@@ -93,6 +93,8 @@ public:
 	bool isCrossLayerFrom(ConnectorItem * candidate);
 	bool isInLayers(ViewLayer::ViewLayerSpec);
 	ConnectorItem * getCrossLayerConnectorItem();
+	void displayRatsnest();
+	void prepDisplayRatsnest();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -115,6 +117,8 @@ protected:
 	bool isEverVisible();
 	void setHiddenOrInactive();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+	void displayRatsnest(QList<ConnectorItem *> &);
+	void clearRatsnestDisplay();
 
 protected:
 	QPointer<Connector> m_connector;
@@ -126,49 +130,26 @@ protected:
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_checkedEffectively;
-
-protected slots:
-	void drawRatsnestSlot(class InfoGraphicsView *, ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
+	QList<ConnectorItem *>  m_cacheEqualPotentialDisplayItems;
+	QList<ConnectorItem *> * m_ratsnestConnectorItems;
+	QPointer<ConnectorItem> m_ratsnestCenterItem;
+	bool m_ratsnestColorWasNamed;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;
 
 protected:
 	static void collectPart(ConnectorItem * connectorItem, QList<ConnectorItem *> & partsConnectors, ViewLayer::ViewLayerSpec);
-	static void waitThreads();
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, bool crossLayers, ViewGeometry::WireFlags skipFlags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors, bool includeSymbols, ViewLayer::ViewLayerSpec);
 	static void clearEqualPotentialDisplay();
 	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);
-	static void displayRatsnest(ConnectorItem * center);
-	static void clearRatsnestDisplay();
 	static void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
 
 public:
 	static const QList<ConnectorItem *> emptyConnectorItemList;
-};
-
-class DisplayRatsnestThread : public QThread
-{
-	Q_OBJECT
-
-public:
-	DisplayRatsnestThread();
-
-	void stop();
-	void init(InfoGraphicsView * infoGraphicsView, ConnectorItem * center, QList<ConnectorItem *> & connectorItems);
-	void run();
-	void runAux();
-
-signals:
-	void drawRatsnestSignal(class InfoGraphicsView *, ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
-
-protected:
-	QList<ConnectorItem *> m_connectorItems;
-	InfoGraphicsView * m_infoGraphicsView;
-	bool m_keepGoing;
 };
 
 #endif

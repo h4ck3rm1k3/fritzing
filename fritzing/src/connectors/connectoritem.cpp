@@ -45,72 +45,7 @@ $Date$
 
 /////////////////////////////////////////////////////////
 
-static QList<ConnectorItem *> RatsnestConnectorItems;
-static ConnectorItem * RatsnestConnectorItem = NULL;
-static QMutex RatsnestMutex;
-
-//////////////////////////////////////////////////////////
-
-DisplayRatsnestThread::DisplayRatsnestThread() : QThread() {
-	}
-
-void DisplayRatsnestThread::stop() {
-	m_keepGoing = false;
-}
-
-void DisplayRatsnestThread::init(InfoGraphicsView * infoGraphicsView, ConnectorItem * center, QList<ConnectorItem *> & connectorItems) {
-	QMutexLocker mutexLocker(&RatsnestMutex);
-	RatsnestConnectorItem = center;
-	RatsnestConnectorItems.clear();
-	m_keepGoing = true;
-	m_connectorItems = connectorItems;
-	m_infoGraphicsView = infoGraphicsView;
-}
-
-void DisplayRatsnestThread::run() {
-	connect(this, SIGNAL(drawRatsnestSignal(InfoGraphicsView *, ConnectorItem *, ConnectorItem *, bool, QColor)),
-			RatsnestConnectorItem, SLOT(drawRatsnestSlot(InfoGraphicsView *, ConnectorItem *, ConnectorItem *, bool, QColor)));
-	runAux();
-	disconnect(this, SIGNAL(drawRatsnestSignal(InfoGraphicsView *, ConnectorItem *, ConnectorItem *, bool, QColor)),
-			   RatsnestConnectorItem, SLOT(drawRatsnestSlot(InfoGraphicsView *, ConnectorItem *, ConnectorItem *, bool, QColor)));
-}
-
-void DisplayRatsnestThread::runAux() {
-	// TODO: third parameter should be true for schematic view
-	ConnectorItem::collectParts(m_connectorItems, RatsnestConnectorItems, false, ViewLayer::TopAndBottom);
-	if (RatsnestConnectorItems.count() < 2) return;
-	if (!m_keepGoing) return;
-
-	QStringList connectorNames;
-	ConnectorItem::collectConnectorNames(m_connectorItems, connectorNames);
-	if (!m_keepGoing) return;
-
-	QColor color;
-	bool gotColor = RatsnestColors::findConnectorColor(connectorNames, color);
-	if (!m_keepGoing) return;
-
-	if (!gotColor) {
-		m_infoGraphicsView->getRatsnestColor(color);
-	}
-	if (!m_keepGoing) return;
-
-	foreach (ConnectorItem * connectorItem, RatsnestConnectorItems) {
-		if (connectorItem == RatsnestConnectorItem) continue;
-
-		if (!m_keepGoing) return;
-		bool routed = RatsnestConnectorItem->wiredTo(connectorItem, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
-		if (!m_keepGoing) return;
-		emit drawRatsnestSignal(m_infoGraphicsView, RatsnestConnectorItem, connectorItem, routed, color);
-		if (!m_keepGoing) return;
-	}
-}
-
-
-/////////////////////////////////////////////////////////
-
 QList<ConnectorItem *> ConnectorItem::m_equalPotentialDisplayItems;
-
-static DisplayRatsnestThread TheDisplayRatsnestThread;
 
 const QList<ConnectorItem *> ConnectorItem::emptyConnectorItemList;
 
@@ -121,6 +56,8 @@ static double MAX_DOUBLE = std::numeric_limits<double>::max();
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
+	m_ratsnestConnectorItems = NULL;
+	m_ratsnestCenterItem = NULL;
 	m_checkedEffectively = false;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_overConnectorItem = NULL;
@@ -139,8 +76,10 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 }
 
 ConnectorItem::~ConnectorItem() {
-	if (RatsnestConnectorItems.contains(this)) {
-		clearRatsnestDisplay();
+	if (m_ratsnestConnectorItems != NULL) {
+		if (m_ratsnestConnectorItems->contains(this)) {
+			m_ratsnestCenterItem->clearRatsnestDisplay();
+		}
 	}
 
 	m_equalPotentialDisplayItems.removeOne(this);
@@ -419,14 +358,23 @@ void ConnectorItem::setColorAux(const QColor &color, bool paint) {
 }
 
 void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+
+	// not clear when this code actually gets invoked
+	DebugDialog::debug("in connectorItem mouseReleaseEvent");
+
+	QList<ConnectorItem *> temp(m_equalPotentialDisplayItems);
+
 	clearEqualPotentialDisplay();
 
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseReleaseConnectorEvent(this, event)) {
 		m_attachedTo->mouseReleaseConnectorEvent(this, event);
+		displayRatsnest(temp);
 		return;
 	}
 
 	QGraphicsRectItem::mouseReleaseEvent(event);
+	displayRatsnest(temp);
+
 }
 
 void ConnectorItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
@@ -458,7 +406,6 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 		return;
 	}
 
-	clearRatsnestDisplay();
 	clearEqualPotentialDisplay();
 
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
@@ -474,7 +421,6 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 		connectorItem->showEqualPotential(true);
 	}
 
-	displayRatsnest(this);
 
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMousePressConnectorEvent(this, event)) {
 		m_attachedTo->mousePressConnectorEvent(this, event);
@@ -1153,30 +1099,100 @@ bool ConnectorItem::connectedToWires() {
 	return false;
 }
 
-void ConnectorItem::displayRatsnest(ConnectorItem * center) {
-	if (center == NULL) return;			// shouldn't happen
+void ConnectorItem::prepDisplayRatsnest() {
+	m_cacheEqualPotentialDisplayItems = m_equalPotentialDisplayItems;
+}
 
-	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(center);
+void ConnectorItem::displayRatsnest() {
+	displayRatsnest(m_cacheEqualPotentialDisplayItems);
+	m_cacheEqualPotentialDisplayItems.clear();
+}
+
+void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & connectorItems) {
+	if (this == m_ratsnestCenterItem) {
+		// treat clicking on the same connector as a toggle
+		clearRatsnestDisplay();
+		return;
+	}
+
+	bool formerColorWasNamed = false;
+	bool gotFormerColor = false;
+	QColor formerColor;
+	if ((m_ratsnestConnectorItems != NULL) && m_ratsnestConnectorItems->contains(this)) {
+		gotFormerColor = true;
+		formerColorWasNamed = m_ratsnestColorWasNamed;
+		foreach (ConnectorItem * toConnectorItem, m_ratsnestCenterItem->connectedToItems()) {
+			VirtualWire * vw = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
+			if (vw == NULL) continue;
+
+			QString ignore;
+			vw->getColor(formerColor, ignore);
+			break;
+		}
+
+		// about to delete these items, so remove their connectors
+		QList<ConnectorItem *> remove;
+		foreach(ConnectorItem * connectorItem, connectorItems) {
+			VirtualWire * vw = dynamic_cast<VirtualWire *>(connectorItem->attachedTo());
+			if (vw == NULL) continue;
+
+			remove.append(connectorItem);
+		}
+		foreach(ConnectorItem * connectorItem, remove) {
+			connectorItems.removeOne(connectorItem);
+		}
+
+		clearRatsnestDisplay();
+	}
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView == NULL) return;
 
-	waitThreads();
+	QList<ConnectorItem *> ratsnestPartConnectorItems;
+	// TODO: third parameter should be true for schematic view
+	ConnectorItem::collectParts(connectorItems, ratsnestPartConnectorItems, false, ViewLayer::TopAndBottom);
+	if (ratsnestPartConnectorItems.count() < 2) return;
 
-	TheDisplayRatsnestThread.init(infoGraphicsView, center, m_equalPotentialDisplayItems);
-	TheDisplayRatsnestThread.start();
+	QStringList connectorNames;
+	ConnectorItem::collectConnectorNames(connectorItems, connectorNames);
+	QColor color;
+	m_ratsnestColorWasNamed = RatsnestColors::findConnectorColor(connectorNames, color);
+	if (!m_ratsnestColorWasNamed) {
+		if (!formerColorWasNamed && gotFormerColor) {
+			color = formerColor;
+		}
+		else {
+			infoGraphicsView->getRatsnestColor(color);
+		}
+	}
+
+	m_ratsnestCenterItem = this;
+	m_ratsnestConnectorItems = new QList<ConnectorItem *>(connectorItems);
+	foreach (ConnectorItem * connectorItem, connectorItems) {
+		connectorItem->m_ratsnestConnectorItems = m_ratsnestConnectorItems;
+		connectorItem->m_ratsnestCenterItem = this;
+		connectorItem->m_ratsnestColorWasNamed = m_ratsnestColorWasNamed;
+	}
+
+	foreach (ConnectorItem * connectorItem, ratsnestPartConnectorItems) {
+		if (this == connectorItem) continue;
+
+		bool routed = wiredTo(connectorItem, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		infoGraphicsView->makeOneRatsnestWire(this, connectorItem, routed, color);
+	}
 }
 
 void ConnectorItem::clearRatsnestDisplay() {
-	waitThreads();
-	QMutexLocker mutexLocker(&RatsnestMutex);
 
-	if (RatsnestConnectorItem == NULL) return;
+	if (m_ratsnestCenterItem == NULL) return;
+	if (m_ratsnestConnectorItems == NULL) return;
 
-	foreach (ConnectorItem * toConnectorItem, RatsnestConnectorItem->connectedToItems()) {
+	foreach (ConnectorItem * toConnectorItem, m_ratsnestCenterItem->connectedToItems()) {
 		VirtualWire * vw = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
 		if (vw == NULL) continue;
 
-		RatsnestConnectorItem->tempRemove(toConnectorItem, false);
-		toConnectorItem->tempRemove(RatsnestConnectorItem, false);
+		m_ratsnestCenterItem->tempRemove(toConnectorItem, false);
+		toConnectorItem->tempRemove(m_ratsnestCenterItem, false);
 
 		ConnectorItem * otherConnector = vw->otherConnector(toConnectorItem);
 		foreach (ConnectorItem * otherToConnector, otherConnector->connectedToItems()) {
@@ -1188,15 +1204,14 @@ void ConnectorItem::clearRatsnestDisplay() {
 		delete vw;
 	}
 
-	RatsnestConnectorItem = NULL;
-	RatsnestConnectorItems.clear();
+	QList<ConnectorItem *> * was = m_ratsnestConnectorItems;
+	foreach (ConnectorItem * connectorItem, *was) {
+		connectorItem->m_ratsnestCenterItem = NULL;
+		connectorItem->m_ratsnestConnectorItems = NULL;
+	}
+	delete was; 
 }
 
-
-void ConnectorItem::waitThreads() {
-	TheDisplayRatsnestThread.stop();
-	TheDisplayRatsnestThread.wait();
-}
 
 void ConnectorItem::collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames) 
 {
@@ -1208,6 +1223,3 @@ void ConnectorItem::collectConnectorNames(QList<ConnectorItem *> & connectorItem
 	}
 }
 
-void ConnectorItem::drawRatsnestSlot(class InfoGraphicsView * infoGraphicsView, ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color) {
-	infoGraphicsView->makeOneRatsnestWire(source, dest, routed, color);
-}

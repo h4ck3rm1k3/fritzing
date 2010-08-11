@@ -720,7 +720,7 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
 {
-
+	// note allowing the compiler warnings for now (August 10 2010) as a reminder
 }
 
 bool PCBSketchWidget::bothEndsConnected(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems)
@@ -812,7 +812,7 @@ qreal PCBSketchWidget::getRatsnestOpacity(bool routed) {
 
 void PCBSketchWidget::getRatsnestColor(QColor & color) 
 {
-	RatsnestColors::reset(m_viewIdentifier);
+	//RatsnestColors::reset(m_viewIdentifier);
 	color = RatsnestColors::netColor(m_viewIdentifier);
 }
 
@@ -1327,7 +1327,7 @@ void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand *
 	}
 
 	routingStatus.m_jumperWireCount /= 2;			// since we counted each connector twice
-	routingStatus.m_jumperItemCount /= 2;			// since we counted each connector twice
+	routingStatus.m_jumperItemCount /= 4;			// since we counted each connector twice on two layers (4 connectors per jumper item)
 }
 
 void traceAdjacency(QVector< QVector<bool> > & adjacency, int count)

@@ -2339,6 +2339,10 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	m_movingByMouse = false;
 
 	m_dragBendpointWire = NULL;
+
+	if (m_connectorDragWire != NULL && m_connectorDragConnector != NULL) {
+		m_connectorDragConnector->prepDisplayRatsnest();
+	}
 	ConnectorItem::clearEqualPotentialDisplay();
 
 	if (m_spaceBarWasPressed) {
@@ -2392,6 +2396,8 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		m_bendpointWire = m_connectorDragWire = NULL;
 		m_savedItems.clear();
 		m_savedWires.clear();
+		m_connectorDragConnector->displayRatsnest();
+		m_connectorDragConnector = NULL;
 		return;
 	}
 
