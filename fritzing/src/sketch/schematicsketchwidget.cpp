@@ -251,14 +251,14 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 		return addItemCommand;
 	}
 
-	// create the item temporarily, then delete it
+	// create the item temporarily, only in order to call makeModifiedWire, then delete it
 	SymbolPaletteItem * newSymbol = dynamic_cast<SymbolPaletteItem *>(addItem(moduleID, viewLayerSpec, BaseCommand::SingleView, viewGeometry, id, modelIndex, NULL));
 	
 	foreach (QGraphicsItem * item, scene()->items()) {
 		SymbolPaletteItem * symbol = dynamic_cast<SymbolPaletteItem *>(item);
 		if (symbol == NULL) continue;
 		if (symbol == newSymbol) continue;					// don't connect self to self
-		if (symbol->connector0() == NULL) continue;			// the drag item
+		if (symbol == m_droppingItem) continue;					// the drag item
 
 		if (symbol->voltage() == v) {
 			makeModifiedWire(newSymbol->connector0(), symbol->connector0(), crossViewType, 0, parent); 
@@ -278,7 +278,7 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 		}
 	}
 
-	deleteItem(newSymbol, true, false, false);
+	deleteItem(newSymbol, false, false, false);				// WARNING: don't delete the model part here...
 
 	return addItemCommand;
 }
