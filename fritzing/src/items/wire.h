@@ -52,6 +52,20 @@ protected:
 	Wire * m_wire;
 };
 
+class WireAction : public QAction {
+	Q_OBJECT
+
+public:
+	WireAction(QAction *);
+	WireAction(const QString & text, QObject * parent);
+
+	void setWire(Wire *);
+	Wire * wire();
+
+protected:
+	Wire * m_wire;
+};
+
 class Wire : public ItemBase
 {
 Q_OBJECT

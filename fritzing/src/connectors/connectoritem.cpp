@@ -78,7 +78,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 ConnectorItem::~ConnectorItem() {
 	if (m_ratsnestConnectorItems != NULL) {
 		if (m_ratsnestConnectorItems->contains(this)) {
-			m_ratsnestCenterItem->clearRatsnestDisplay();
+			clearRatsnestDisplay();
 		}
 	}
 
@@ -1109,12 +1109,6 @@ void ConnectorItem::displayRatsnest() {
 }
 
 void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & connectorItems) {
-	if (this == m_ratsnestCenterItem) {
-		// treat clicking on the same connector as a toggle
-		clearRatsnestDisplay();
-		return;
-	}
-
 	bool formerColorWasNamed = false;
 	bool gotFormerColor = false;
 	QColor formerColor;

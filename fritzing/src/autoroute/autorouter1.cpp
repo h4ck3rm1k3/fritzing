@@ -207,7 +207,7 @@ void Autorouter1::start()
 	}
 
 	clearTraces(m_sketchWidget, false, parentCommand);
-	updateRatsnest(false, parentCommand);
+	updateRatsnest();
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
 	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false);
@@ -930,11 +930,11 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 	}
 }
 
-void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
+void Autorouter1::updateRatsnest() {
 
 	RoutingStatus routingStatus;
 	routingStatus.zero();
-	m_sketchWidget->updateRatsnestColors(NULL, parentCommand, false, routingStatus);
+	m_sketchWidget->updateRoutingStatus(routingStatus);
 }
 
  bool Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {

@@ -275,6 +275,7 @@ protected slots:
 	void changeTraceLayer();
 	void routingStatusLabelMousePress(QMouseEvent*);
 	void routingStatusLabelMouseRelease(QMouseEvent*);
+	void hideNet();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -396,6 +397,7 @@ protected:
 	void pasteAux(bool pasteInPlace);
 
 	void routingStatusLabelMouse(QMouseEvent*, bool show);
+	class Wire * retrieveWire();
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -469,10 +471,15 @@ protected:
 	QAction * m_launchExternalProcessAct;
 
 	QMenu *m_zOrderMenu;
+	QMenu *m_zOrderWireMenu;
 	QAction *m_bringToFrontAct;
 	QAction *m_bringForwardAct;
 	QAction *m_sendBackwardAct;
 	QAction *m_sendToBackAct;
+	class WireAction *m_bringToFrontWireAct;
+	class WireAction *m_bringForwardWireAct;
+	class WireAction *m_sendBackwardWireAct;
+	class WireAction *m_sendToBackWireAct;
 
 	// Export Menu
 	QMenu *m_exportMenu;
@@ -498,6 +505,7 @@ protected:
     QAction *m_pasteInPlaceAct;
     QAction *m_duplicateAct;
     QAction *m_deleteAct;
+    class WireAction *m_deleteWireAct;
     QAction *m_selectAllAct;
     QAction *m_deselectAct;
 	QAction *m_addNoteAct;
@@ -567,9 +575,13 @@ protected:
 	QAction *m_activeLayerBottomAct;
 	QAction *m_activeLayerBothAct;
 	QAction *m_createTraceAct;
+	class WireAction *m_createTraceWireAct;
+	class WireAction *m_hideNetAct;
 	QAction *m_createJumperAct;
+	class WireAction *m_createJumperWireAct;
 	QAction *m_changeTraceLayerAct;
 	QAction *m_excludeFromAutorouteAct;
+	class WireAction *m_excludeFromAutorouteWireAct;
 	QAction *m_selectAllTracesAct;
 	QAction *m_selectAllExcludedTracesAct;
 	QAction *m_selectAllJumperWiresAct;

@@ -186,28 +186,33 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 	return result;
 }
 
-void PCBSketchWidget::createJumper() {
+void PCBSketchWidget::createJumper(Wire * wire) {
 	QString commandString = tr("Create Jumper from this Wire");
-	createJumperOrTrace(commandString, ViewGeometry::JumperFlag);
+	createJumperOrTrace(wire, commandString, ViewGeometry::JumperFlag);
 	ensureJumperLayerVisible();
 }
 
-void PCBSketchWidget::createTrace() {
+void PCBSketchWidget::createTrace(Wire * wire) {
 	QString commandString = tr("Create Trace from this Wire");
-	createJumperOrTrace(commandString, ViewGeometry::TraceFlag);
+	createJumperOrTrace(wire, commandString, ViewGeometry::TraceFlag);
 	ensureTraceLayerVisible();
 }
 
-void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag)
+void PCBSketchWidget::createJumperOrTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag flag)
 {
 	QList<Wire *> done;
 	QUndoCommand * parentCommand = NULL;
-	foreach (QGraphicsItem * item, scene()->selectedItems()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (done.contains(wire)) continue;
+	if (fromWire == NULL) {
+		foreach (QGraphicsItem * item, scene()->selectedItems()) {
+			Wire * wire = dynamic_cast<Wire *>(item);
+			if (wire == NULL) continue;
+			if (done.contains(wire)) continue;
 
-		createOneJumperOrTrace(wire, flag, false, done, parentCommand, commandString);
+			createOneJumperOrTrace(wire, flag, false, done, parentCommand, commandString);
+		}
+	}
+	else {
+		createOneJumperOrTrace(fromWire, flag, false, done, parentCommand, commandString);
 	}
 
 	if (parentCommand == NULL) return;
@@ -297,7 +302,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 	if (!manual && m_manualRoutingStatusUpdate) return;
 
 	routingStatus.zero();
-	updateRatsnestColors(command, undoCommand, false, routingStatus);
+	updateRoutingStatus(routingStatus);
 
 	if (routingStatus != m_routingStatus) {
 		if (command) {
@@ -1306,7 +1311,7 @@ ItemBase * PCBSketchWidget::findBoard() {
 	return NULL;
 }
 
-void PCBSketchWidget::updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus & routingStatus) 
+void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus) 
 {
 	//DebugDialog::debug("update ratsnest colors");
 	// TODO: think about ways to optimize this...
@@ -2405,16 +2410,22 @@ void PCBSketchWidget::resizeBoard() {
 	m_resizingBoard = NULL;
 }
 
-void PCBSketchWidget::deleteSelected() {
+void PCBSketchWidget::deleteSelected(Wire * wire) {
 	QSet<ItemBase *> itemBases;
-	foreach (QGraphicsItem * item, scene()->selectedItems()) {
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase == NULL) continue;
+	if (wire) {
+		itemBases << wire;
+	}
+	else {
+		foreach (QGraphicsItem * item, scene()->selectedItems()) {
+			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+			if (itemBase == NULL) continue;
 
-		itemBase = itemBase->layerKinChief();
-		itemBases.insert(itemBase);
+			itemBase = itemBase->layerKinChief();
+			itemBases.insert(itemBase);
+		}
 	}
 
+	// assumes ratsnest is not mixed with other itembases
 	bool rats = true;
 	foreach (ItemBase * itemBase, itemBases) {
 		Wire * wire = qobject_cast<Wire *>(itemBase);
@@ -2429,7 +2440,7 @@ void PCBSketchWidget::deleteSelected() {
 	}
 
 	if (!rats) {
-		SketchWidget::deleteSelected();
+		SketchWidget::deleteSelected(NULL);			// wire is selected in this case, so don't bother sending it along
 		return;
 	}
 
@@ -2595,4 +2606,14 @@ void PCBSketchWidget::jumperItemHack() {
 	if (itemBase) {
 		deleteItem(itemBase, true, false, false);
 	}
+}
+
+void PCBSketchWidget::hideNet(Wire * wire) {
+	if (wire == NULL) return;
+
+	ConnectorItem * connectorItem = wire->connector0()->firstConnectedToIsh();
+	if (connectorItem) {
+		connectorItem->clearRatsnestDisplay();
+	}
+
 }

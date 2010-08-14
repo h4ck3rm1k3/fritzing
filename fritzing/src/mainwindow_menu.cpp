@@ -882,7 +882,7 @@ void MainWindow::doDelete() {
 	//DebugDialog::debug(QString("invoking do delete") );
 
 	if (m_currentGraphicsView != NULL) {
-		m_currentGraphicsView->deleteSelected();
+		m_currentGraphicsView->deleteSelected(retrieveWire());
 	}
 }
 
@@ -1255,7 +1255,8 @@ void MainWindow::createEditMenuActions() {
 	#else
 		m_deleteAct->setShortcut(QKeySequence::Delete);
 	#endif
-
+	m_deleteWireAct = new WireAction(m_deleteAct);
+	connect(m_deleteWireAct, SIGNAL(triggered()), this, SLOT(doDelete()));
 
 	m_selectAllAct = new QAction(tr("&Select All"), this);
 	m_selectAllAct->setShortcut(tr("Ctrl+A"));
@@ -1345,26 +1346,29 @@ void MainWindow::createPartMenuActions() {
 	m_bringToFrontAct->setShortcut(tr("Shift+Ctrl+]"));
     m_bringToFrontAct->setStatusTip(tr("Bring selected object(s) to front of their layer"));
     connect(m_bringToFrontAct, SIGNAL(triggered()), this, SLOT(bringToFront()));
+	m_bringToFrontWireAct = new WireAction(m_bringToFrontAct);
+    connect(m_bringToFrontWireAct, SIGNAL(triggered()), this, SLOT(bringToFront()));
 
 	m_bringForwardAct = new QAction(tr("Bring Forward"), this);
 	m_bringForwardAct->setShortcut(tr("Ctrl+]"));
     m_bringForwardAct->setStatusTip(tr("Bring selected object(s) forward in their layer"));
     connect(m_bringForwardAct, SIGNAL(triggered()), this, SLOT(bringForward()));
+	m_bringForwardWireAct = new WireAction(m_bringForwardAct);
+    connect(m_bringForwardWireAct, SIGNAL(triggered()), this, SLOT(bringForward()));
 
 	m_sendBackwardAct = new QAction(tr("Send Backward"), this);
 	m_sendBackwardAct->setShortcut(tr("Ctrl+["));
     m_sendBackwardAct->setStatusTip(tr("Send selected object(s) back in their layer"));
     connect(m_sendBackwardAct, SIGNAL(triggered()), this, SLOT(sendBackward()));
+	m_sendBackwardWireAct = new WireAction(m_sendBackwardAct);
+    connect(m_sendBackwardWireAct, SIGNAL(triggered()), this, SLOT(sendBackward()));
 
 	m_sendToBackAct = new QAction(tr("Send to Back"), this);
 	m_sendToBackAct->setShortcut(tr("Shift+Ctrl+["));
     m_sendToBackAct->setStatusTip(tr("Send selected object(s) to the back of their layer"));
     connect(m_sendToBackAct, SIGNAL(triggered()), this, SLOT(sendToBack()));
-
-    /*m_deleteItemAct = new QAction(tr("&Delete"), this);
-    m_deleteItemAct->setShortcut(tr("Delete"));
-    m_deleteItemAct->setStatusTip(tr("Delete item from sketch"));
-    connect(m_deleteItemAct, SIGNAL(triggered()), this, SLOT(deleteItem()));*/
+	m_sendToBackWireAct = new WireAction(m_sendToBackAct);
+    connect(m_sendToBackWireAct, SIGNAL(triggered()), this, SLOT(sendToBack()));
 
 	m_showAllLayersAct = new QAction(tr("&Show All Layers"), this);
 	m_showAllLayersAct->setStatusTip(tr("Show all the available layers for the current view"));
@@ -1623,6 +1627,9 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_flipVerticalAct);
 	m_rotateMenu = m_partMenu->addMenu(tr("Rotate"));
 	m_zOrderMenu = m_partMenu->addMenu(tr("Raise and Lower"));
+	m_zOrderWireMenu = new QMenu(m_zOrderMenu);
+	m_zOrderWireMenu->setTitle(m_zOrderMenu->title());
+
 	m_partMenu->addSeparator();
 	m_partMenu->addMenu(m_addToBinMenu);
 	m_partMenu->addAction(m_showPartLabelAct);
@@ -1640,6 +1647,11 @@ void MainWindow::createMenus()
 	m_zOrderMenu->addAction(m_bringForwardAct);
 	m_zOrderMenu->addAction(m_sendBackwardAct);
 	m_zOrderMenu->addAction(m_sendToBackAct);
+
+	m_zOrderWireMenu->addAction(m_bringToFrontWireAct);
+	m_zOrderWireMenu->addAction(m_bringForwardWireAct);
+	m_zOrderWireMenu->addAction(m_sendBackwardWireAct);
+	m_zOrderWireMenu->addAction(m_sendToBackWireAct);
 
     m_viewMenu = menuBar()->addMenu(tr("&View"));
     m_viewMenu->addAction(m_zoomInAct);
@@ -1849,18 +1861,19 @@ void MainWindow::updateWireMenu() {
 			createTraceOK = (jt == NULL) || (!jt->getTrace());
 			deleteOK = true;
 			gotRat = true;
+			enableZOK = false;
 		}
 		else if (wire->getJumper()) {
 			deleteOK = true;
 			createTraceOK = true;
 			excludeOK = true;
-			m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
+			m_excludeFromAutorouteWireAct->setChecked(!wire->getAutoroutable());
 		}
 		else if (wire->getTrace()) {
 			deleteOK = true;
 			createJumperOK = true;
 			excludeOK = true;
-			m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
+			m_excludeFromAutorouteWireAct->setChecked(!wire->getAutoroutable());
 			if (m_currentGraphicsView == m_pcbGraphicsView && m_currentGraphicsView->boardLayers() > 1) {
 				if (wire->canSwitchLayers()) {
 					ctlOK = true;
@@ -1884,14 +1897,26 @@ void MainWindow::updateWireMenu() {
 		m_wireColorMenu->setEnabled(false);
 	}
 
-	m_bringToFrontAct->setEnabled(enableZOK);
-	m_bringForwardAct->setEnabled(enableZOK);
-	m_sendBackwardAct->setEnabled(enableZOK);
-	m_sendToBackAct->setEnabled(enableZOK);
-	m_createTraceAct->setEnabled(enableAll && createTraceOK);
-	m_createJumperAct->setEnabled(enableAll && createJumperOK);
-	m_deleteAct->setEnabled(enableAll && deleteOK);
-	m_excludeFromAutorouteAct->setEnabled(enableAll && excludeOK);
+	m_bringToFrontWireAct->setWire(wire);
+	m_bringForwardWireAct->setWire(wire);
+	m_sendBackwardWireAct->setWire(wire);
+	m_sendToBackWireAct->setWire(wire);
+	m_createTraceWireAct->setWire(wire);
+	m_createJumperWireAct->setWire(wire);
+	m_deleteWireAct->setWire(wire);
+	m_excludeFromAutorouteWireAct->setWire(wire);
+	m_hideNetAct->setWire(wire);
+
+	m_bringToFrontWireAct->setEnabled(enableZOK);
+	m_bringForwardWireAct->setEnabled(enableZOK);
+	m_sendBackwardWireAct->setEnabled(enableZOK);
+	m_sendToBackWireAct->setEnabled(enableZOK);
+	m_createTraceWireAct->setEnabled(enableAll && createTraceOK);
+	m_createJumperWireAct->setEnabled(enableAll && createJumperOK);
+	m_deleteWireAct->setEnabled(enableAll && deleteOK);
+	m_excludeFromAutorouteWireAct->setEnabled(enableAll && excludeOK);
+	m_hideNetAct->setEnabled(gotRat);
+
 	m_changeTraceLayerAct->setEnabled(ctlOK);
 
 	if (gotRat) {
@@ -2849,15 +2874,25 @@ void MainWindow::createTraceMenuActions() {
 	m_createTraceAct = new QAction(tr("&Create Trace from Selected Wire(s)"), this);
 	m_createTraceAct->setStatusTip(tr("Create a trace from the selected wire"));
 	connect(m_createTraceAct, SIGNAL(triggered()), this, SLOT(createTrace()));
+	m_createTraceWireAct = new WireAction(m_createTraceAct);
+	connect(m_createTraceWireAct, SIGNAL(triggered()), this, SLOT(createTrace()));
+
+	m_hideNetAct = new WireAction(tr("Hide Ratsnet"), this);
+	m_hideNetAct->setStatusTip(tr("Hide this net"));
+	connect(m_hideNetAct, SIGNAL(triggered()), this, SLOT(hideNet()));
 
 	m_createJumperAct = new QAction(tr("&Create Jumper from Selected Wire(s)"), this);
 	m_createJumperAct->setStatusTip(tr("Create a jumper wire from the selected wire"));
 	connect(m_createJumperAct, SIGNAL(triggered()), this, SLOT(createJumper()));
+	m_createJumperWireAct = new WireAction(m_createJumperAct);
+	connect(m_createJumperWireAct, SIGNAL(triggered()), this, SLOT(createJumper()));
 
 	m_excludeFromAutorouteAct = new QAction(tr("&Don't Autoroute This Trace"), this);
 	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this wire"));
 	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 	m_excludeFromAutorouteAct->setCheckable(true);
+	m_excludeFromAutorouteWireAct = new WireAction(m_excludeFromAutorouteAct);
+	connect(m_excludeFromAutorouteWireAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 
 	m_changeTraceLayerAct = new QAction(tr("Change Trace Layer"), this);
 	m_changeTraceLayerAct->setStatusTip(tr("Move selected traces to the other side of the board"));
@@ -2977,11 +3012,11 @@ void MainWindow::autoroute() {
 }
 
 void MainWindow::createTrace() {
-	m_currentGraphicsView->createTrace();
+	m_currentGraphicsView->createTrace(retrieveWire());
 }
 
 void MainWindow::createJumper() {
-	m_pcbGraphicsView->createJumper();
+	m_pcbGraphicsView->createJumper(retrieveWire());
 }
 
 void MainWindow::excludeFromAutoroute() {
@@ -3298,7 +3333,7 @@ QMenu *MainWindow::pcbItemMenu() {
 
 QMenu *MainWindow::breadboardWireMenu() {
 	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
-	menu->addMenu(m_zOrderMenu);
+	menu->addMenu(m_zOrderWireMenu);
 	menu->addSeparator();
 	m_wireColorMenu = menu->addMenu(tr("&Wire Color"));
 	foreach(QString colorName, Wire::colorNames) {
@@ -3310,7 +3345,7 @@ QMenu *MainWindow::breadboardWireMenu() {
 		connect(action, SIGNAL(triggered(bool)), this, SLOT(changeWireColor(bool)));
 	}
 	menu->addSeparator();
-	menu->addAction(m_deleteAct);
+	menu->addAction(m_deleteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
@@ -3327,14 +3362,15 @@ QMenu *MainWindow::breadboardWireMenu() {
 
 QMenu *MainWindow::pcbWireMenu() {
 	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
-	menu->addMenu(m_zOrderMenu);
+	menu->addMenu(m_zOrderWireMenu);
 	menu->addSeparator();
 	menu->addAction(m_changeTraceLayerAct);	
-	menu->addAction(m_createTraceAct);
-	menu->addAction(m_createJumperAct);
-	menu->addAction(m_excludeFromAutorouteAct);
+	menu->addAction(m_createTraceWireAct);
+	menu->addAction(m_createJumperWireAct);
+	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
-	menu->addAction(m_deleteAct);
+	menu->addAction(m_deleteWireAct);
+	menu->addAction(m_hideNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
@@ -3349,12 +3385,13 @@ QMenu *MainWindow::pcbWireMenu() {
 
 QMenu *MainWindow::schematicWireMenu() {
 	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
-	menu->addMenu(m_zOrderMenu);
+	menu->addMenu(m_zOrderWireMenu);
 	menu->addSeparator();
-	menu->addAction(m_createTraceAct);
-	menu->addAction(m_excludeFromAutorouteAct);
+	menu->addAction(m_createTraceWireAct);
+	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
-	menu->addAction(m_deleteAct);
+	menu->addAction(m_deleteWireAct);
+	menu->addAction(m_hideNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
@@ -3725,10 +3762,10 @@ void MainWindow::updateRatsnest() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Update ratsnest"));
 	RoutingStatus routingStatus;
 	if (m_currentGraphicsView == m_schematicGraphicsView) {
-		m_schematicGraphicsView->updateRatsnestColors(NULL, parentCommand, true, routingStatus);
+		m_schematicGraphicsView->updateRoutingStatus(routingStatus);
 	}
 	else if (m_currentGraphicsView == m_pcbGraphicsView) {
-		m_pcbGraphicsView->updateRatsnestColors(NULL, parentCommand, true, routingStatus);
+		m_pcbGraphicsView->updateRoutingStatus(routingStatus);
 	}
 	
 	m_undoStack->push(parentCommand);
@@ -3863,3 +3900,13 @@ void MainWindow::updateRoutingStatus() {
 	}
 }
 
+void MainWindow::hideNet() {
+	m_currentGraphicsView->hideNet(retrieveWire());
+}
+
+Wire * MainWindow::retrieveWire() {
+	WireAction * wireAction = qobject_cast<WireAction *>(sender());
+	if (wireAction == NULL) return NULL;
+
+	return wireAction->wire();
+}

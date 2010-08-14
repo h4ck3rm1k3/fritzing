@@ -103,7 +103,7 @@ public:
 	void flip(Qt::Orientations orientation);
 	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
 
-	virtual void deleteSelected();
+	virtual void deleteSelected(Wire *);
 	PaletteItem *getSelectedPart();
 
     void addViewLayer(ViewLayer *);
@@ -201,7 +201,8 @@ public:
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();
-	virtual void createTrace();
+	virtual void createTrace(Wire*);
+	virtual void hideNet(Wire*);
 	void selectAllWires(ViewGeometry::WireFlag);
 	virtual void tidyWires();
 	const QString & getShortName();

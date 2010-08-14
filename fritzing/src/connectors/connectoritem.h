@@ -95,6 +95,7 @@ public:
 	ConnectorItem * getCrossLayerConnectorItem();
 	void displayRatsnest();
 	void prepDisplayRatsnest();
+	void clearRatsnestDisplay();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -118,7 +119,6 @@ protected:
 	void setHiddenOrInactive();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void displayRatsnest(QList<ConnectorItem *> &);
-	void clearRatsnestDisplay();
 
 protected:
 	QPointer<Connector> m_connector;

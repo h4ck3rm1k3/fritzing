@@ -82,6 +82,27 @@ Wire * WireMenu::wire() {
 
 /////////////////////////////////////////////////////////////
 
+WireAction::WireAction(QAction * action) : QAction(action) {
+	m_wire = NULL;
+	this->setText(action->text());
+	this->setStatusTip(action->statusTip());
+	this->setCheckable(action->isCheckable());
+}
+
+WireAction::WireAction(const QString & title, QObject * parent) : QAction(title, parent) {
+	m_wire = NULL;
+}
+
+void WireAction::setWire(Wire * w) {
+	m_wire = w;
+}
+
+Wire * WireAction::wire() {
+	return m_wire;
+}
+
+/////////////////////////////////////////////////////////////
+
 Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {

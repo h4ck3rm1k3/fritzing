@@ -751,7 +751,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 
 }
 
-void SketchWidget::deleteSelected() {
+void SketchWidget::deleteSelected(Wire *) {
 	cutDeleteAux("Delete");
 }
 
@@ -3095,7 +3095,6 @@ void SketchWidget::bringToFront() {
 
 	QString text = QObject::tr("Bring to front");
 	continueZChangeMax(bases, 0, bases.size(), lessThan, 1, text);
-
 }
 
 qreal SketchWidget::fitInWindow() {
@@ -3133,8 +3132,11 @@ qreal SketchWidget::fitInWindow() {
 }
 
 bool SketchWidget::startZChange(QList<ItemBase *> & bases) {
-	int selCount = scene()->selectedItems().count();
-	if (selCount <= 0) return false;
+	int selCount = bases.count();
+	if (selCount == 0) {
+		selCount = scene()->selectedItems().count();
+		if (selCount <= 0) return false;
+	}
 
 	const QList<QGraphicsItem *> items = scene()->items();
 	if (items.count() <= selCount) return false;
@@ -5764,7 +5766,10 @@ void SketchWidget::setClipEnds(ClipableWire * vw, bool) {
 	vw->setClipEnds(false);
 }
 
-void SketchWidget::createTrace() {
+void SketchWidget::createTrace(Wire *) {
+}
+
+void SketchWidget::hideNet(Wire *) {
 }
 
 void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 

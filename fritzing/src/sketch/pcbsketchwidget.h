@@ -40,8 +40,8 @@ public:
 	void addViewLayers();
 	bool canDeleteItem(QGraphicsItem * item, int count);
 	bool canCopyItem(QGraphicsItem * item, int count);
-	void createJumper();
-	void createTrace();
+	void createJumper(Wire *);
+	void createTrace(Wire *);
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
 	void clearRouting(QUndoCommand * parentCommand);
@@ -74,7 +74,7 @@ public:
 	ItemBase * findBoard();
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
-	void updateRatsnestColors(BaseCommand * command, QUndoCommand * parentCommand, bool forceUpdate, RoutingStatus &);
+	void updateRoutingStatus(RoutingStatus &);
 	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
@@ -84,10 +84,11 @@ public:
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void changeTraceLayer();
 	void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
-	void deleteSelected();
+	void deleteSelected(Wire *);
 	void jumperItemHack();
 	void makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	void getRatsnestColor(QColor &);
+	void hideNet(Wire*);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -109,7 +110,7 @@ protected:
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	bool canChainWire(Wire *);
 	bool canDragWire(Wire * wire);
-	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag);
+	void createJumperOrTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
 	void createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
 								QUndoCommand * & parentCommand, const QString & commandString);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
