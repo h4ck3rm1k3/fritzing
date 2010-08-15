@@ -119,6 +119,7 @@ protected:
 	void setHiddenOrInactive();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void displayRatsnest(QList<ConnectorItem *> &);
+	bool isConnectedToPart();
 
 protected:
 	QPointer<Connector> m_connector;

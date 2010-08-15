@@ -5820,11 +5820,25 @@ void SketchWidget::tidyWires() {
 
 void SketchWidget::updateConnectors() {
 	// update issue with 4.5.0?
+	QList<ConnectorItem *> connectorItems;
 	foreach (QGraphicsItem* item, scene()->items()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
+		if (connectorItems.contains(connectorItem)) continue;
 
-		connectorItem->restoreColor(false, -1, true);
+		connectorItems.append(connectorItem);
+		ConnectorItem * cross = connectorItem->getCrossLayerConnectorItem();
+		if (cross) {
+			connectorItems.append(cross);
+		}
+		Bus * b = connectorItem->bus();
+		if (b) {
+			QList<ConnectorItem *> busConnectorItems;
+			connectorItem->attachedTo()->busConnectorItems(b, busConnectorItems);
+			connectorItems.append(busConnectorItems);
+		}
+
+		connectorItem->restoreColor(true, 0, true);
 	}
 }
 

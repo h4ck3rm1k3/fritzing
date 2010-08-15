@@ -725,7 +725,7 @@ void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnecto
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
 {
-	// note allowing the compiler warnings for now (August 10 2010) as a reminder
+#pragma message ("allowing the 'unreferenced parameter' warnings for now (August 10 2010) as a reminder")
 }
 
 bool PCBSketchWidget::bothEndsConnected(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems)
