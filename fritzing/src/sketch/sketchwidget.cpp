@@ -543,6 +543,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 
 		wire->setUp(getWireViewLayerID(viewGeometry, wire->viewLayerSpec()), m_viewLayers, this);
 		setWireVisible(wire);
+		wire->updateConnectors();
 
 		bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
 				this, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
@@ -585,6 +586,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 		.arg(newItem->viewLayerID())
 		);
 	setNewPartVisible(newItem);
+	newItem->updateConnectors();
 	return newItem;
 }
 
@@ -1505,10 +1507,15 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	}
 
 	bool gotConnector = false;
+
+	// jrc: 24 aug 2010: don't see why restoring color on dropped item is necessary
+	//QList<ConnectorItem *> connectorItems;
 	foreach (QGraphicsItem * childItem, m_droppingItem->childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
+		//connectorItem->setMarked(false);
+		//connectorItems.append(connectorItem);
 		ConnectorItem * to = connectorItem->overConnectorItem();
 		if (to != NULL) {
 			to->connectorHover(to->attachedTo(), false);
@@ -1516,8 +1523,14 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 			extendChangeConnectionCommand(connectorItem, to, ViewLayer::specFromID(connectorItem->attachedToViewLayerID()), true, parentCommand);
 			gotConnector = true;
 		}
-		connectorItem->clearConnectorHover();
+		//connectorItem->clearConnectorHover();
 	}
+	//foreach (ConnectorItem * connectorItem, connectorItems) {
+		//if (!connectorItem->marked()) {
+			//connectorItem->restoreColor(false, 0, true);
+		//}
+	//}
+	//m_droppingItem->clearConnectorHover();
 
 	clearTemporaries();
 
@@ -2490,6 +2503,7 @@ bool SketchWidget::checkMoved()
 		}
 	}
 
+	QList<ConnectorItem *> restoreConnectorItems;
 	foreach (ItemBase * item, m_savedItems) {
 		if (item->itemType() == ModelPart::Wire) continue;
 
@@ -2504,7 +2518,16 @@ bool SketchWidget::checkMoved()
 					ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 					true, parentCommand);
 			}
+			restoreConnectorItems.append(fromConnectorItem);
 			fromConnectorItem->clearConnectorHover();
+		}
+
+		item->clearConnectorHover();
+	}
+
+	foreach (ConnectorItem * connectorItem, restoreConnectorItems) {
+		if (!connectorItem->marked()) {
+			connectorItem->restoreColor(false, 0, true);
 		}
 	}
 
@@ -5820,22 +5843,18 @@ void SketchWidget::tidyWires() {
 
 void SketchWidget::updateConnectors() {
 	// update issue with 4.5.0?
-	QList<ConnectorItem *> connectorItems;
 	foreach (QGraphicsItem* item, scene()->items()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
-		if (connectorItems.contains(connectorItem)) continue;
 
-		connectorItems.append(connectorItem);
-		ConnectorItem * cross = connectorItem->getCrossLayerConnectorItem();
-		if (cross) {
-			connectorItems.append(cross);
-		}
-		Bus * b = connectorItem->bus();
-		if (b) {
-			QList<ConnectorItem *> busConnectorItems;
-			connectorItem->attachedTo()->busConnectorItems(b, busConnectorItems);
-			connectorItems.append(busConnectorItems);
+		connectorItem->setMarked(false);
+	}
+
+	foreach (QGraphicsItem* item, scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+		if (connectorItem->marked()) {
+			continue;
 		}
 
 		connectorItem->restoreColor(true, 0, true);

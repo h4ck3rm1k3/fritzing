@@ -187,6 +187,7 @@ public:
 	ViewLayer::ViewLayerSpec viewLayerSpec();
 	void setViewLayerSpec(ViewLayer::ViewLayerSpec);
 	virtual void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
+	void ItemBase::updateConnectors();
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);

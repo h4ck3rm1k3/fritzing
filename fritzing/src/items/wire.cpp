@@ -491,8 +491,9 @@ bool Wire::releaseDrag() {
 		// clean up
 		from->setOverConnectorItem(NULL);
 		from->clearConnectorHover();
+		from->restoreColor(false, 0, true);
 	}
-
+	clearConnectorHover();
 
 	QLineF newLine = this->line();
 	QLineF oldLine = m_viewGeometry.line();
@@ -753,7 +754,6 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 		if (!result) continue;
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);
-
 		connectorItem->setRect(svgIdLayer->m_rect);
 		connectorItem->setTerminalPoint(svgIdLayer->m_point);
 

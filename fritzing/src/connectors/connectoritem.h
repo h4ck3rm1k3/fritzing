@@ -96,6 +96,8 @@ public:
 	void displayRatsnest();
 	void prepDisplayRatsnest();
 	void clearRatsnestDisplay();
+	bool marked();
+	void setMarked(bool);
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -135,6 +137,7 @@ protected:
 	QList<ConnectorItem *> * m_ratsnestConnectorItems;
 	QPointer<ConnectorItem> m_ratsnestCenterItem;
 	bool m_ratsnestColorWasNamed;
+	bool m_marked;
 	
 protected:	
 	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;

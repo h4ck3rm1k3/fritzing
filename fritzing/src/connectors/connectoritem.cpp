@@ -56,6 +56,7 @@ static double MAX_DOUBLE = std::numeric_limits<double>::max();
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: NonConnectorItem(attachedTo)
 {
+	m_marked = false;
 	m_ratsnestConnectorItems = NULL;
 	m_ratsnestCenterItem = NULL;
 	m_checkedEffectively = false;
@@ -66,7 +67,6 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	if (connector != NULL) {
 		connector->addViewItem(this);
 	}
-	restoreColor(false, 0, true);
     setAcceptHoverEvents(true);
     this->setCursor(Qt::CrossCursor);
 
@@ -146,10 +146,6 @@ Connector * ConnectorItem::connector() {
 
 void ConnectorItem::clearConnectorHover() {
 	m_connectorHovering = false;
-	restoreColor(false, 0, true);
-	if (this->m_attachedTo != NULL) {
-		m_attachedTo->clearConnectorHover();
-	}
 }
 
 void ConnectorItem::connectorHover(ItemBase * itemBase, bool hovering) {
@@ -230,8 +226,10 @@ void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 
 void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCross) 
 {
+	setMarked(true);
 	if (!attachedTo()->isEverVisible()) return;
 
+	/*
 		DebugDialog::debug(QString("restore color dobus:%1 bccount:%2 docross:%3 cid:'%4' '%5' id:%6 '%7' vid:%8 vlid:%9")
 		.arg(doBuses)
 		.arg(busConnectionCount)
@@ -243,6 +241,7 @@ void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCr
 		.arg(this->attachedToViewIdentifier())
 		.arg(this->attachedToViewLayerID())
 		);
+		*/
 
 	int connectedToCount = busConnectionCount;
 	if (attachedToItemType() == ModelPart::Wire) {
@@ -293,6 +292,7 @@ void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCr
 		how = "connected";
 	}
 
+	/*
 	DebugDialog::debug(QString("restore color dobus:%1 bccount:%2 docross:%3 cid:'%4' '%5' id:%6 '%7' vid:%8 vlid:%9 %10")
 		.arg(doBuses)
 		.arg(busConnectionCount)
@@ -306,6 +306,7 @@ void ConnectorItem::restoreColor(bool doBuses, int busConnectionCount, bool doCr
 		.arg(how)
 	);
 
+	*/
 }
 
 void ConnectorItem::setConnectedColor() {
@@ -1286,3 +1287,10 @@ void ConnectorItem::collectConnectorNames(QList<ConnectorItem *> & connectorItem
 	}
 }
 
+bool ConnectorItem::marked() {
+	return m_marked;
+}
+
+void ConnectorItem::setMarked(bool m) {
+	m_marked = m;
+}
