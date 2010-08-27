@@ -1669,7 +1669,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 
 bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 	ItemBase * itemBase = m_infoView->currentItem();
-	QString pinSpacing, resistance;
+	QString pinSpacing, resistance, layers;
 	foreach (QString key, currPropsMap.keys()) {
 		if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 			ResizableBoard * board = dynamic_cast<ResizableBoard *>(itemBase);
@@ -1692,12 +1692,12 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 
 			QString value = currPropsMap.value(key, "");
 			if (value.compare(Board::oneLayerTranslated) == 0) {
-				currPropsMap.insert(key, "1");
-				return false;
+				layers = "1";
+				continue;
 			}
 			if (value.compare(Board::twoLayersTranslated) == 0) {
-				currPropsMap.insert(key, "2");
-				return false;
+				layers = "2";
+				continue;
 			}
 		}
 
@@ -1733,6 +1733,11 @@ bool MainWindow::swapSpecial(QMap<QString, QString> & currPropsMap) {
 			pinSpacing = currPropsMap.value(key);
 			continue;
 		}
+	}
+
+	if (!layers.isEmpty()) {
+		currPropsMap.insert("layers", layers);
+		return false;
 	}
 
 	if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
