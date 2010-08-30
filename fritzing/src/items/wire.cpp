@@ -160,8 +160,8 @@ bool Wire::itemMoved() {
 }
 
 void Wire::moveItem(ViewGeometry & viewGeometry) {
-	this->setLine(viewGeometry.line());
 	this->setPos(viewGeometry.loc());
+	this->setLine(viewGeometry.line());
 }
 
 void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsView * infoGraphicsView) {
@@ -370,7 +370,7 @@ void Wire::mouseMoveEventAux(QPointF eventPos, bool shiftModifier) {
 
 	if (m_drag0) {
 		QPointF r = this->mapToScene(eventPos);
-		this->setPos(r.x(), r.y());
+		QGraphicsSvgItem::setPos(r.x(), r.y());
 		this->setLine(0, 0, m_wireDragOrigin.x() - r.x() + m_viewGeometry.loc().x(),
 							m_wireDragOrigin.y() - r.y() + m_viewGeometry.loc().y() );
 	}
@@ -769,18 +769,31 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 	return renderer;
 }
 
+void Wire::setPos(const QPointF & pos) {
+	if (this->m_id == 2528610 || this->m_id == 2529190) {
+		DebugDialog::debug("shit");
+	}
+	GraphicsSvgLineItem::setPos(pos);
+}
 
 // helpful for debugging
 void Wire::setLine(QLineF line) {
+	if (this->m_id == 2528610 || this->m_id == 2529190) {
+		DebugDialog::debug("shit");
+	}
+
 	GraphicsSvgLineItem::setLine(line);
-	//DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(line.x1()).arg(line.y1()).arg(line.x2()).arg(line.y2())
-		//.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
+	DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(line.x1()).arg(line.y1()).arg(line.x2()).arg(line.y2())
+		.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
 }
 
 void Wire::setLine(qreal x1, qreal y1, qreal x2, qreal y2) {
+	if (this->m_id == 2528610 || this->m_id == 2529190) {
+		DebugDialog::debug("shit");
+	}
 	GraphicsSvgLineItem::setLine(x1, y1, x2, y2);
-	//DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(x1).arg(y1).arg(x2).arg(y2)
-		//.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
+	DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(x1).arg(y1).arg(x2).arg(y2)
+		.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
 }
 
 

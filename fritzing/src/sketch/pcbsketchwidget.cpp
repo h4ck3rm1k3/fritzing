@@ -927,7 +927,7 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 	viewGeometry.setWireFlags(wireFlags);
 	ViewLayer::ViewLayerSpec viewLayerSpec = wireViewLayerSpec(fromConnectorItem);
 	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, viewLayerSpec, viewGeometry, newID, true, -1, parentCommand);
-	new CheckStickyCommand(this, cvt, newID, false, parentCommand);
+	new CheckStickyCommand(this, cvt, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 
 	new ChangeConnectionCommand(this, cvt,
 								newID, "connector0",
@@ -1275,8 +1275,9 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(mmW).arg(mmH));
+	rememberSticky(item->id(), parentCommand);
 	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
-	new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), true, parentCommand);
+	new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), true, CheckStickyCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -2020,7 +2021,7 @@ long PCBSketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const Q
 		QSizeF sz;
 		rb->getParams(p, sz);
 		new ResizeBoardCommand(this, newID, sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
-		new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, parentCommand);
+		new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	}
  
 
@@ -2396,6 +2397,7 @@ void PCBSketchWidget::resizeBoard() {
 	m_resizingBoard->saveParams();
 	m_resizingBoard->getParams(newPos, newSize);
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(newSize.width()).arg(newSize.height()));
+	rememberSticky(m_resizingBoard->id(), parentCommand);
 	new ResizeBoardCommand(this, m_resizingBoard->id(), oldSize.width(), oldSize.height(), newSize.width(), newSize.height(), parentCommand);
 	if (oldPos != newPos) {
 		m_resizingBoard->saveGeometry();
@@ -2405,7 +2407,7 @@ void PCBSketchWidget::resizeBoard() {
 		vg2.setLoc(newPos);
 		new MoveItemCommand(this, m_resizingBoard->id(), vg1, vg2, parentCommand);
 	}
-	new CheckStickyCommand(this, BaseCommand::SingleView, m_resizingBoard->id(), true, parentCommand);
+	new CheckStickyCommand(this, BaseCommand::SingleView, m_resizingBoard->id(), true, CheckStickyCommand::RedoOnly, parentCommand);
 	m_undoStack->waitPush(parentCommand, 10);
 	m_resizingBoard = NULL;
 }
@@ -2487,7 +2489,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	vg1.setVirtual(false);
 	vg1.setTrace(true);
 	new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
-	new CheckStickyCommand(this, crossViewType, newID1, false, parentCommand);
+	new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
 	new WireWidthChangeCommand(this, newID1, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 
@@ -2497,7 +2499,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	vg2.setVirtual(false);
 	vg2.setTrace(true);
 	new AddItemCommand(this, crossViewType, m_bendpointWire->modelPart()->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
-	new CheckStickyCommand(this, crossViewType, newID2, false, parentCommand);
+	new CheckStickyCommand(this, crossViewType, newID2, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
 	new WireWidthChangeCommand(this, newID2, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 
@@ -2571,7 +2573,7 @@ void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos,
 	vg1.setVirtual(false);
 	vg1.setTrace(true);
 	new AddItemCommand(this, crossViewType, wire->modelPart()->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
-	new CheckStickyCommand(this, crossViewType, newID1, false, parentCommand);
+	new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
 	new WireWidthChangeCommand(this, newID1, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 

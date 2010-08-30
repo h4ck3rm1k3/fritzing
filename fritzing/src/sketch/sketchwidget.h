@@ -79,6 +79,9 @@ public:
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     virtual void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
+	void moveItem(long id, const QPointF & p);
+	void updateWire(long id, const QString & connectorID);
+
     void rotateItem(long id, qreal degrees);
     void transformItem(long id, const QMatrix &);
     void flipItem(long id, Qt::Orientations orientation);

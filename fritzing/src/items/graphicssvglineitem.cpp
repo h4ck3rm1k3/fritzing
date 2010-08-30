@@ -186,7 +186,7 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	        qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), NULL);
         }
 	    painter->setPen(m_pen);
-	    painter->drawLine(getPaintLine());
+	    painter->drawLine(getPaintLine());			
 	
     }
     else {

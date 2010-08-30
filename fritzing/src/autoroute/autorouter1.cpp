@@ -1722,7 +1722,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 	}
 
 	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
-	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, parentCommand);
+	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
 	new WireColorChangeCommand(m_sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
@@ -1766,7 +1766,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct
 
 		new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::jumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
 		new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
-		new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, parentCommand);
+		new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 
 		m_sketchWidget->createWire(jumperItem->connector0(), jumperItemStruct->from, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
 		m_sketchWidget->createWire(jumperItem->connector1(), jumperItemStruct->to, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);

@@ -207,6 +207,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		sceneCorner.setY(sceneCenter.y() - (boundingRect->height() / 2));
 	}
 
+	QList<long> newIDs;
 	// make parts
 	foreach (ModelPart * mp, modelParts) {
 		QDomElement instance = mp->instanceDomElement();
@@ -326,11 +327,15 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				new RestoreLabelCommand(this, newID, clone, parentCommand);
 			}
 
-			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
+			newIDs << newID;
 			if (mp->moduleID() == ModuleIDNames::wireModuleIDName) {
 				addWireExtras(newID, view, parentCommand);
 			}
 		}
+	}
+
+	foreach (long id, newIDs) {
+		new CheckStickyCommand(this, crossViewType, id, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	}
 
 	if (zmap.count() > 0) {
@@ -946,7 +951,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		);
 
 	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, from->attachedTo()->viewLayerSpec(), viewGeometry, newID, false, -1, parentCommand);
-	new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
+	new CheckStickyCommand(this, crossViewType, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 						newID, "connector0", 
 						ViewLayer::specFromID(from->attachedToViewLayerID()),
@@ -977,6 +982,27 @@ void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry) {
 			pitem->moveItem(viewGeometry);
 		}
 	}
+}
+
+
+void SketchWidget::moveItem(long id, const QPointF & p) {
+	ItemBase * pitem = findItem(id);
+	if (pitem != NULL) {
+		pitem->setPos(p);
+	}
+}
+
+void SketchWidget::updateWire(long id, const QString & connectorID) {
+	ItemBase * pitem = findItem(id);
+	if (pitem == NULL) return;
+
+	Wire * wire = qobject_cast<Wire *>(pitem);
+	if (wire == NULL) return;
+
+	ConnectorItem * connectorItem = findConnectorItem(wire, connectorID, ViewLayer::specFromID(wire->viewLayerID()));
+	if (connectorItem == NULL) return;
+
+	wire->simpleConnectedMoved(connectorItem);
 }
 
 void SketchWidget::rotateItem(long id, qreal degrees) {
@@ -1495,7 +1521,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), defaultViewLayerSpec(), viewGeometry, fromID, true, -1, parentCommand);
 	addItemCommand->setDropOrigin(this);
 	
-	new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
+	new CheckStickyCommand(this, crossViewType, fromID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	selectItemCommand->addRedo(fromID);
@@ -2466,13 +2492,18 @@ bool SketchWidget::checkMoved()
 	bool doEmit = false;
 
 	foreach (ItemBase * item, m_savedItems) {
+		rememberSticky(item->id(), parentCommand);
+	}
+
+	MoveItemsCommand * moveItemsCommand = new MoveItemsCommand(this, parentCommand);
+
+	foreach (ItemBase * item, m_savedItems) {
 		if (item == NULL) continue;
 
 		ViewGeometry viewGeometry(item->getViewGeometry());
 		item->saveGeometry();
 
-		new MoveItemCommand(this, item->id(), viewGeometry, item->getViewGeometry(), parentCommand);
-		new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), false, parentCommand);
+		moveItemsCommand->addItem(item->id(), viewGeometry.loc(), item->getViewGeometry().loc());
 
 		if (item->itemType() == ModelPart::Breadboard) {
 			hasBoard = true;
@@ -2485,15 +2516,22 @@ bool SketchWidget::checkMoved()
 		}
 	}
 
+	foreach (ItemBase * item, m_savedItems) {
+		new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), false, CheckStickyCommand::RedoOnly, parentCommand);
+	}
+
 	foreach (ItemBase * item, m_savedWires.keys()) {
-		if (item == NULL) continue;
+		rememberSticky(item->id(), parentCommand);
+	}
 
-		ViewGeometry viewGeometry(item->getViewGeometry());
-		item->saveGeometry();
-		ViewGeometry newViewGeometry(item->getViewGeometry());
+	foreach (Wire * wire, m_savedWires.keys()) {
+		if (wire == NULL) continue;
 
-		new ChangeWireCommand(this, item->id(), viewGeometry.line(), newViewGeometry.line(), viewGeometry.loc(), newViewGeometry.loc(), true, parentCommand);
-		new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), false, parentCommand);
+		moveItemsCommand->addWire(wire->id(), m_savedWires.value(wire)->connectorSharedID());
+	}
+
+	foreach (ItemBase * item, m_savedWires.keys()) {
+		new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), false, CheckStickyCommand::RedoOnly, parentCommand);
 	}
 
 	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {
@@ -2705,21 +2743,27 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		toConnectorID = to->connectorSharedID();
 	}
 
+	rememberSticky(fromID, parentCommand);
+
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
-	new CheckStickyCommand(this, BaseCommand::SingleView, fromID, false, parentCommand);
+	new CheckStickyCommand(this, BaseCommand::SingleView, fromID, false, CheckStickyCommand::RedoOnly, parentCommand);
 
 	bool chained = false;
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
 		Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 		if (toWire == NULL) continue;
 
+		rememberSticky(toWire->id(), parentCommand);
+
 		ViewGeometry vg = toWire->getViewGeometry();
 		QLineF nl = toWire->line();
 		QPointF np = toWire->pos();
 		new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, parentCommand);
-		new CheckStickyCommand(this, BaseCommand::SingleView, toWire->id(), false, parentCommand);
+		new CheckStickyCommand(this, BaseCommand::SingleView, toWire->id(), false, CheckStickyCommand::RedoOnly, parentCommand);
 		chained = true;
 	}
+
+
 
 	QList< QPointer<ConnectorItem> > former = from->connectedToItems();
 
@@ -2822,7 +2866,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 		// create a new wire with the same id as the temporary wire
 		new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->viewLayerSpec(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
-		new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
+		new CheckStickyCommand(this, crossViewType, fromID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(fromID);
 
@@ -3956,7 +4000,6 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 	}
 }
 
-
 void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
@@ -3964,14 +4007,14 @@ void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 	QList<ItemBase *> stickyList = itemBase->stickyList();
 	if (stickyList.count() <= 0) return;
 
-	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), false, parentCommand);
+	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), false, CheckStickyCommand::UndoOnly, parentCommand);
 	if (itemBase->sticky()) {
 		foreach (ItemBase * sticking, stickyList) {
-			checkStickyCommand->stick(this, itemBase->id(), sticking->id(), false);
+			checkStickyCommand->stick(this, itemBase->id(), sticking->id(), true);
 		}
 	}
 	else if (itemBase->stickingTo() != NULL) {
-		checkStickyCommand->stick(this, itemBase->stickingTo()->id(), itemBase->id(), false);
+		checkStickyCommand->stick(this, itemBase->stickingTo()->id(), itemBase->id(), true);
 	}
 }
 
@@ -4090,17 +4133,6 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckSti
 
 		itemBase = itemBase->layerKinChief();
 
-		// check whether it's a module
-		ItemBase * parent = itemBase;
-		while (true) {
-			ItemBase * temp = dynamic_cast<ItemBase *>(parent->parentItem());
-			if (temp == NULL) break;
-
-			parent = temp;
-		}
-
-		itemBase = parent;
-
 		if (!itemBase->stickyEnabled()) continue;
 		if (added.contains(itemBase)) continue;
 		if (itemBase->sticky()) continue;
@@ -4154,7 +4186,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
 	new AddItemCommand(this, crossView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), vg, newID, true, -1, parentCommand);
-	new CheckStickyCommand(this, crossView, newID, false, parentCommand);
+	new CheckStickyCommand(this, crossView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
 
@@ -4473,7 +4505,7 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 	}
 
 	setUpSwapReconnect(itemBase, newID, newModuleID, master, parentCommand);
-	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, parentCommand);
+	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	if (itemBase->isPartLabelVisible()) {
 		ShowLabelCommand * slc = new ShowLabelCommand(this, parentCommand);
 		slc->add(newID, true, true);
@@ -4564,7 +4596,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 				long wireID = ItemBase::getNextID();
 				ViewGeometry vg;
 				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, itemBase->viewLayerSpec(), vg, wireID, false, -1, parentCommand);
-				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
+				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 											wireID, "connector0", 
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),

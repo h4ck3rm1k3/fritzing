@@ -74,6 +74,13 @@ public:
 	Wire(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu, bool initLabel);
 	virtual ~Wire();
 
+	// for debugging
+	void setLine(QLineF line);				
+	void setLine(qreal x1, qreal y1, qreal x2, qreal y2);	
+	void setPos(const QPointF & pos);
+	// for debugging
+
+
 	void saveGeometry();
 	bool itemMoved();
 	void saveInstanceLocation(QXmlStreamWriter &);
@@ -85,8 +92,6 @@ public:
 	void initDragEnd(ConnectorItem * dragEnd, QPointF scenePos);
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setLineAnd(QLineF line, QPointF pos, bool useLine);
-	void setLine(QLineF line);				// helpful for debugging
-	void setLine(qreal x1, qreal y1, qreal x2, qreal y2);				// helpful for debugging
 	ConnectorItem * otherConnector(ConnectorItem *);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();

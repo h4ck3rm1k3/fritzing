@@ -238,8 +238,67 @@ void MoveItemCommand::redo()
 QString MoveItemCommand::getParamString() const {
 	return QString("MoveItemCommand ") 
 		+ BaseCommand::getParamString() + 
-		QString(" id:%1")
-		.arg(m_itemID);
+		QString(" id:%1 old.x:%2 old.y:%3 old.px:%4 old.py:%5 new.x:%6 new.y:%7 new.px:%8 new.py:%9")
+		.arg(m_itemID)
+		.arg(m_old.loc().x())
+		.arg(m_old.loc().y())
+		.arg(m_old.line().p2().x())
+		.arg(m_old.line().p2().y())
+		.arg(m_new.loc().x())
+		.arg(m_new.loc().y())		
+		.arg(m_new.line().p2().x())
+		.arg(m_new.line().p2().y())
+		;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MoveItemsCommand::MoveItemsCommand(SketchWidget* sketchWidget, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+}
+
+void MoveItemsCommand::undo()
+{
+	foreach(MoveItemThing moveItemThing, m_items) {
+		m_sketchWidget->moveItem(moveItemThing.id, moveItemThing.oldPos);
+	}
+	foreach (long id, m_wires.keys()) {
+		m_sketchWidget->updateWire(id, m_wires.value(id));
+	}
+}
+
+void MoveItemsCommand::redo()
+{
+	foreach(MoveItemThing moveItemThing, m_items) {
+		m_sketchWidget->moveItem(moveItemThing.id, moveItemThing.newPos);
+	}
+	foreach (long id, m_wires.keys()) {
+		m_sketchWidget->updateWire(id, m_wires.value(id));
+	}
+}
+
+void MoveItemsCommand::addWire(long id, const QString & connectorID)
+{
+	m_wires.insert(id, connectorID);
+}
+
+void MoveItemsCommand::addItem(long id, const QPointF & oldPos, const QPointF & newPos)
+{
+	MoveItemThing moveItemThing;
+	moveItemThing.id = id;
+	moveItemThing.oldPos = oldPos;
+	moveItemThing.newPos = newPos;
+	m_items.append(moveItemThing);
+}
+
+QString MoveItemsCommand::getParamString() const {
+	return QString("MoveItemsCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" items:%1 wires:%2")
+		.arg(m_items.count())
+		.arg(m_wires.count())
+		;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -570,11 +629,12 @@ QString ChangeZCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CheckStickyCommand::CheckStickyCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, long itemID, bool checkCurrent, QUndoCommand *parent)
+CheckStickyCommand::CheckStickyCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, long itemID, bool checkCurrent, CheckType checkType, QUndoCommand *parent)
 : BaseCommand(crossViewType, sketchWidget, parent)
 {
 	m_itemID = itemID;
 	m_firstTime = true;
+	m_checkType = checkType;
 	m_checkCurrent = checkCurrent;
 }
 
@@ -588,13 +648,22 @@ CheckStickyCommand::~CheckStickyCommand() {
 
 void CheckStickyCommand::undo()
 {
+	if (m_checkType == RedoOnly) return;
+
 	foreach (StickyThing * stickyThing, m_stickyList) {
-		stickyThing->sketchWidget->stickem(stickyThing->fromID, stickyThing->toID, !stickyThing->stickem);
+		if (m_checkType == RemoveOnly) {
+			stickyThing->sketchWidget->stickem(stickyThing->fromID, stickyThing->toID, !stickyThing->stickem);
+		}
+		else {
+			stickyThing->sketchWidget->stickem(stickyThing->fromID, stickyThing->toID, stickyThing->stickem);
+		}
 	}
 }
 
 void CheckStickyCommand::redo()
 {
+	if (m_checkType == UndoOnly) return;
+
 	if (m_firstTime) {
 		m_sketchWidget->checkSticky(m_itemID, m_crossViewType == BaseCommand::CrossView, m_checkCurrent, this);
 		m_firstTime = false;

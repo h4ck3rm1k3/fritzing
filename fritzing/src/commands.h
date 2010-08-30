@@ -146,6 +146,30 @@ protected:
     ViewGeometry m_new;
 };
 
+
+struct MoveItemThing {
+	long id;
+	QPointF oldPos;
+	QPointF newPos;
+};
+
+class MoveItemsCommand : public BaseCommand
+{
+public:
+    MoveItemsCommand(class SketchWidget *sketchWidget, QUndoCommand *parent);
+    void undo();
+    void redo();
+	void addItem(long id, const QPointF & oldPos, const QPointF & newPos);
+	void addWire(long id, const QString & connectorID);
+
+protected:
+	QString getParamString() const;
+
+protected:
+    QHash<long, QString> m_wires;
+	QList<MoveItemThing> m_items;
+};
+
 class RotateItemCommand : public BaseCommand
 {
 public:
@@ -334,12 +358,20 @@ struct StickyThing {
 class CheckStickyCommand : public BaseCommand
 {
 public:
-	CheckStickyCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, long itemID, bool checkCurrent, QUndoCommand *parent);
+	enum CheckType {
+		UndoOnly = 0,
+		RedoOnly,
+		RemoveOnly
+	};
+
+public:
+	CheckStickyCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, long itemID, bool checkCurrent, CheckType, QUndoCommand *parent);
 	~CheckStickyCommand();
 	
 	void undo();
     void redo();
 	void stick(SketchWidget *, long fromID, long toID, bool stickem);
+
 
 protected:
 	QString getParamString() const;
@@ -349,6 +381,8 @@ protected:
 	QList<StickyThing *> m_stickyList;
 	bool m_firstTime;
 	bool m_checkCurrent;
+	bool m_undoOnly;
+	CheckType m_checkType;
 };
 
 
