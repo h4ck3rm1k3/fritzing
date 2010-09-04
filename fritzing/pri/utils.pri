@@ -17,6 +17,8 @@
 # $Date$
 # ********************************************************************/
 
+INCLUDEPATH += src/lib/boost_1_43_0
+
 HEADERS += \
 src/utils/abstractimagebutton.h \
 src/utils/abstractstatesbutton.h \
@@ -36,6 +38,7 @@ src/utils/misc.h \
 src/utils/resizehandle.h \
 src/utils/folderutils.h \
 src/utils/graphicsutils.h \
+src/utils/graphutils.h \
 src/utils/ratsnestcolors.h \
 src/utils/svgandpartfilepath.h \
 src/utils/textutils.h \
@@ -55,6 +58,7 @@ src/utils/misc.cpp \
 src/utils/resizehandle.cpp \
 src/utils/folderutils.cpp \
 src/utils/graphicsutils.cpp \
+src/utils/graphutils.cpp \
 src/utils/ratsnestcolors.cpp \
 src/utils/textutils.cpp \
 src/utils/zoomslider.cpp 

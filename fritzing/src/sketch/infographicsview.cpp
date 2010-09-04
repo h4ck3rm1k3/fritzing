@@ -248,11 +248,12 @@ int InfoGraphicsView::boardLayers() {
 	return m_boardLayers;
 }
 
-void InfoGraphicsView::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color) {
+VirtualWire * InfoGraphicsView::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color) {
 	Q_UNUSED(source);
 	Q_UNUSED(dest);
 	Q_UNUSED(routed);
 	Q_UNUSED(color);
+	return NULL;
 }
 
 void InfoGraphicsView::getRatsnestColor(QColor & color) 

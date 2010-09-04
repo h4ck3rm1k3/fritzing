@@ -769,32 +769,25 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 	return renderer;
 }
 
+/*
 void Wire::setPos(const QPointF & pos) {
-	if (this->m_id == 2528610 || this->m_id == 2529190) {
-		DebugDialog::debug("shit");
-	}
 	GraphicsSvgLineItem::setPos(pos);
 }
 
 // helpful for debugging
 void Wire::setLine(QLineF line) {
-	if (this->m_id == 2528610 || this->m_id == 2529190) {
-		DebugDialog::debug("shit");
-	}
-
 	GraphicsSvgLineItem::setLine(line);
 	DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(line.x1()).arg(line.y1()).arg(line.x2()).arg(line.y2())
 		.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
 }
 
 void Wire::setLine(qreal x1, qreal y1, qreal x2, qreal y2) {
-	if (this->m_id == 2528610 || this->m_id == 2529190) {
-		DebugDialog::debug("shit");
-	}
 	GraphicsSvgLineItem::setLine(x1, y1, x2, y2);
 	DebugDialog::debug(QString("set line %5 %6, %7 %8, %1 %2 %3 %4").arg(x1).arg(y1).arg(x2).arg(y2)
 		.arg(id()).arg(m_viewIdentifier).arg(this->pos().x()).arg(this->pos().y()) );
 }
+
+*/
 
 
 void Wire::setLineAnd(QLineF line, QPointF pos, bool useLine) {

@@ -822,12 +822,12 @@ void PCBSketchWidget::getRatsnestColor(QColor & color)
 }
 
 
-void PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color) {
+VirtualWire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color) {
 	if (source->attachedTo() == dest->attachedTo()) {
-		if (source == dest) return;
+		if (source == dest) return NULL;
 
 		if (source->bus() == dest->bus() && dest->bus() != NULL) {
-			return;				// don't draw a wire within the same part on the same bus
+			return NULL;				// don't draw a wire within the same part on the same bus
 		}
 	}
 	
@@ -849,7 +849,7 @@ void PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem 
 	 */
 
 	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
-	Wire * wire = dynamic_cast<Wire *>(newItemBase);
+	VirtualWire * wire = dynamic_cast<VirtualWire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 
 	if (!source->attachedTo()->isVisible() || !dest->attachedTo()->isVisible()) {
@@ -858,6 +858,8 @@ void PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem 
 
 	qreal opacity = getRatsnestOpacity(routed);
 	wire->setColor(color, opacity);
+
+	return wire;
 }
 
 void PCBSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest) 

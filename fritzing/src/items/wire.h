@@ -74,10 +74,11 @@ public:
 	Wire(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu, bool initLabel);
 	virtual ~Wire();
 
+
 	// for debugging
-	void setLine(QLineF line);				
-	void setLine(qreal x1, qreal y1, qreal x2, qreal y2);	
-	void setPos(const QPointF & pos);
+	//void setLine(QLineF line);				
+	//void setLine(qreal x1, qreal y1, qreal x2, qreal y2);	
+	//void setPos(const QPointF & pos);
 	// for debugging
 
 

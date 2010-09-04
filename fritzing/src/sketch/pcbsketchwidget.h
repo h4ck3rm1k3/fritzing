@@ -86,7 +86,7 @@ public:
 	void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 	void deleteSelected(Wire *);
 	void jumperItemHack();
-	void makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
+	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	void getRatsnestColor(QColor &);
 	void hideNet(Wire*);
 

@@ -40,6 +40,7 @@ $Date$
 #include "../items/virtualwire.h"
 #include "../model/modelpart.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/graphutils.h"
 #include "../utils/ratsnestcolors.h"
 #include "ercdata.h"
 
@@ -58,7 +59,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 {
 	m_marked = false;
 	m_ratsnestConnectorItems = NULL;
-	m_ratsnestCenterItem = NULL;
+	m_ratsnestWires = NULL;
 	m_checkedEffectively = false;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_overConnectorItem = NULL;
@@ -1182,28 +1183,16 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & connectorItems) {
 	bool formerColorWasNamed = false;
 	bool gotFormerColor = false;
 	QColor formerColor;
-	if ((m_ratsnestConnectorItems != NULL) && m_ratsnestConnectorItems->contains(this)) {
+	if (m_ratsnestWires && m_ratsnestWires->count() > 0) {
 		gotFormerColor = true;
 		formerColorWasNamed = m_ratsnestColorWasNamed;
-		foreach (ConnectorItem * toConnectorItem, m_ratsnestCenterItem->connectedToItems()) {
-			VirtualWire * vw = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
-			if (vw == NULL) continue;
-
-			QString ignore;
-			vw->getColor(formerColor, ignore);
-			break;
-		}
+		QString ignore;
+		m_ratsnestWires->at(0)->getColor(formerColor, ignore);
 
 		// about to delete these items, so remove their connectors
-		QList<ConnectorItem *> remove;
-		foreach(ConnectorItem * connectorItem, connectorItems) {
-			VirtualWire * vw = dynamic_cast<VirtualWire *>(connectorItem->attachedTo());
-			if (vw == NULL) continue;
-
-			remove.append(connectorItem);
-		}
-		foreach(ConnectorItem * connectorItem, remove) {
-			connectorItems.removeOne(connectorItem);
+		foreach (VirtualWire * vw, *m_ratsnestWires) {
+			connectorItems.removeOne(vw->connector0());
+			connectorItems.removeOne(vw->connector1());
 		}
 
 		clearRatsnestDisplay();
@@ -1230,50 +1219,54 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & connectorItems) {
 		}
 	}
 
-	m_ratsnestCenterItem = this;
 	m_ratsnestConnectorItems = new QList<ConnectorItem *>(connectorItems);
+	m_ratsnestWires = new QList<VirtualWire *>();
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		connectorItem->m_ratsnestConnectorItems = m_ratsnestConnectorItems;
-		connectorItem->m_ratsnestCenterItem = this;
+		connectorItem->m_ratsnestWires = m_ratsnestWires;
 		connectorItem->m_ratsnestColorWasNamed = m_ratsnestColorWasNamed;
 	}
 
-	foreach (ConnectorItem * connectorItem, ratsnestPartConnectorItems) {
-		if (this == connectorItem) continue;
+	ConnectorPairHash result;
+	GraphUtils::chooseRatsnestGraph(ratsnestPartConnectorItems, result);
 
-		bool routed = wiredTo(connectorItem, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
-		infoGraphicsView->makeOneRatsnestWire(this, connectorItem, routed, color);
+	foreach (ConnectorItem * key, result.uniqueKeys()) {
+		foreach (ConnectorItem * value, result.values(key)) {
+			bool routed = key->wiredTo(value, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+			VirtualWire * vw = infoGraphicsView->makeOneRatsnestWire(key, value, routed, color);
+			if (vw != NULL) {
+				m_ratsnestWires->append(vw);
+			}
+		}
 	}
 }
 
 void ConnectorItem::clearRatsnestDisplay() {
 
-	if (m_ratsnestCenterItem == NULL) return;
 	if (m_ratsnestConnectorItems == NULL) return;
+	if (m_ratsnestWires == NULL) return;
 
-	foreach (ConnectorItem * toConnectorItem, m_ratsnestCenterItem->connectedToItems()) {
-		VirtualWire * vw = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
-		if (vw == NULL) continue;
+	foreach (VirtualWire * vw, *m_ratsnestWires) {
+		ConnectorItem * c1 = vw->connector0()->firstConnectedToIsh();
+		vw->connector0()->tempRemove(c1, false);
+		c1->tempRemove(vw->connector0(), false);
 
-		m_ratsnestCenterItem->tempRemove(toConnectorItem, false);
-		toConnectorItem->tempRemove(m_ratsnestCenterItem, false);
-
-		ConnectorItem * otherConnector = vw->otherConnector(toConnectorItem);
-		foreach (ConnectorItem * otherToConnector, otherConnector->connectedToItems()) {
-			otherConnector->tempRemove(otherToConnector, false);
-			otherToConnector->tempRemove(otherConnector, false);
-		}
+		ConnectorItem * c2 = vw->connector1()->firstConnectedToIsh();
+		vw->connector1()->tempRemove(c2, false);
+		c2->tempRemove(vw->connector1(), false);
 
 		vw->scene()->removeItem(vw);
 		delete vw;
 	}
 
-	QList<ConnectorItem *> * was = m_ratsnestConnectorItems;
-	foreach (ConnectorItem * connectorItem, *was) {
-		connectorItem->m_ratsnestCenterItem = NULL;
+	QList<ConnectorItem *> * wasC = m_ratsnestConnectorItems;
+	QList<VirtualWire *> * wasW = m_ratsnestWires;
+	foreach (ConnectorItem * connectorItem, *wasC) {
+		connectorItem->m_ratsnestWires = NULL;
 		connectorItem->m_ratsnestConnectorItems = NULL;
 	}
-	delete was; 
+	delete wasC; 
+	delete wasW;
 }
 
 

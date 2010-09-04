@@ -1779,22 +1779,20 @@ void ItemBase::calcRotation(QTransform & rotation, QPointF center, ViewGeometry 
 	vg2.setLoc(vg2.loc() + mp - mc);
 }
 
-
-
 void ItemBase::updateConnectors()
 {
 	if (!isEverVisible()) return;
 
 	// assumes all connectors have previously been initialized unmarked;
-	int count = 0;
+	//int count = 0;
 	foreach(QGraphicsItem * item, childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
 		if (connectorItem->marked()) continue;
 
 		connectorItem->restoreColor(false, 0, false);
-		count++;
+		//count++;
 	}
-	DebugDialog::debug(QString("set up connectors restore:%1").arg(count));
+	//DebugDialog::debug(QString("set up connectors restore:%1").arg(count));
 }
 

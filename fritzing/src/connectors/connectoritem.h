@@ -135,7 +135,7 @@ protected:
 	bool m_checkedEffectively;
 	QList<ConnectorItem *>  m_cacheEqualPotentialDisplayItems;
 	QList<ConnectorItem *> * m_ratsnestConnectorItems;
-	QPointer<ConnectorItem> m_ratsnestCenterItem;
+	QList<class VirtualWire *> * m_ratsnestWires;
 	bool m_ratsnestColorWasNamed;
 	bool m_marked;
 	
