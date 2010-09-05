@@ -6460,19 +6460,5 @@ bool SketchWidget::resizingBoardPress(QGraphicsItem *) {
 	return false;
 }
 
-void SketchWidget::speedHack(bool toggle) {
-	m_manualRoutingStatusUpdate = toggle;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (!wire->getRatsnest()) continue;
 
-		wire->setVisible(!toggle);
-		if (!wire->hidden()) {
-			wire->setAcceptedMouseButtons(toggle ? Qt::NoButton : ALLMOUSEBUTTONS);
-			wire->setAcceptHoverEvents(!toggle);
-			wire->setFlag(QGraphicsItem::ItemIsSelectable, !toggle );
-		}
-	}
-}
 

@@ -240,7 +240,6 @@ public:
 	void collectAllNets(QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons);
 	virtual bool routeBothSides();
 	virtual void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
-	void speedHack(bool toggle);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

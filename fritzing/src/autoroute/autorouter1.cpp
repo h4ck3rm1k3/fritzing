@@ -719,18 +719,18 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 					// don't route the other side
 				}
 				else {
-					Wire * wire = ci->wiredTo(cj, alreadyWiredBy);
-					if (wire == NULL && m_bothSidesNow) {
+					bool wired = ci->wiredTo(cj, alreadyWiredBy);
+					if (!wired && m_bothSidesNow) {
 						ConnectorItem * ccci = ci->getCrossLayerConnectorItem();
 						if (ccci) {
 							ConnectorItem * cccj = cj->getCrossLayerConnectorItem();
 							if (cccj) {
-								wire = ccci->wiredTo(cccj, alreadyWiredBy);
+								wired = ccci->wiredTo(cccj, alreadyWiredBy);
 							}
 						}
 
 					}
-					if (wire) {
+					if (wired) {
 						// leave the distance at zero
 						// do not autoroute--user says leave it alone
 					}

@@ -27,10 +27,19 @@ $Date: 2010-06-09 00:55:55 +0200 (Wed, 09 Jun 2010) $
 #include "graphutils.h"
 #include "../fsvgrenderer.h"
 
+#ifdef _MSC_VER 
+#pragma warning(push) 
+#pragma warning(disable:4100)			// disable scary-looking compiler warning in Boost library
+#endif
+
 #include <boost/config.hpp>
 #include <iostream>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
+
+#ifdef _MSC_VER 
+#pragma warning(pop)					// restore warning state
+#endif
 
 bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorItems, ConnectorPairHash & result) {
   using namespace boost;

@@ -1091,7 +1091,7 @@ Wire * Wire::findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorIt
 		return NULL;
 	}
 
-	return ends[0]->wiredTo(ends[1], flags);
+	return ConnectorItem::wiredTo(ends[0], ends[1], flags);
 }
 
 QRgb Wire::getRgb(const QString & name) {

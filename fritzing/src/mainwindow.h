@@ -255,7 +255,6 @@ protected slots:
 	void processStateChanged(QProcess::ProcessState newState);
     void throwFakeException();
 	void updateRatsnest();
-	void speedHack();
 	void updateRoutingStatus();
 
 	void dropPaste(SketchWidget *);
@@ -592,7 +591,6 @@ protected:
 	QAction *m_tidyWiresAct;
 	QAction *m_updateRatsnestAct;
 	QAction *m_updateRoutingStatusAct;
-	QAction *m_speedHackAct;
 
 	// Help Menu
     QMenu *m_helpMenu;

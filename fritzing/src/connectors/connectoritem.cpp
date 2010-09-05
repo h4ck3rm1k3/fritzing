@@ -691,71 +691,65 @@ bool ConnectorItem::maleToFemale(ConnectorItem * other) {
 	return false;
 }
 
-Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags flags) {
-	QList<ConnectorItem *> visited;
-	return wiredToAux(target, flags, visited);
+bool ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags flags) {
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(this);
+	collectEqualPotential(connectorItems, true, ~flags);
+	return connectorItems.contains(target);
 }
 
-Wire * ConnectorItem::wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited) {
-	if (visited.contains(this)) return NULL;
-	visited.append(this);
 
-	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
-		ItemBase * toItem = toConnectorItem->attachedTo();
-		if (toItem == NULL) {
-			continue;			// shouldn't happen
-		}
+Wire * ConnectorItem::wiredTo(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags) {
+	 QList<ConnectorItem *> visited;
+	 return wiredToAux(source, target, flags, visited);
+}
 
-		if (toItem->itemType() != ModelPart::Wire) continue;
+Wire * ConnectorItem::wiredToAux(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited) {
+	if (visited.contains(source)) return NULL;
 
-		Wire * wire = dynamic_cast<Wire *>(toItem);
-		if (!wire->hasAnyFlag(flags)) continue;
+	QList<ConnectorItem *> equals;
+	equals << source;
 
-		ConnectorItem * otherEnd = wire->otherConnector(toConnectorItem);
-		bool isChained = false;
-		foreach (ConnectorItem * otherConnectorItem, otherEnd->m_connectedTo) {
-			if (target == otherConnectorItem) {
-				return wire;
-			}
-			if (otherConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				//DebugDialog::debug(QString("wired from %1 to %2").arg(wire->id()).arg(otherConnectorItem->attachedToID()));
-				isChained = true;
-			}
-		}
-
-		if (isChained) {
-			if (otherEnd->wiredToAux(target, flags, visited)) {
-				return wire;
-			}
+	ConnectorItem * cross = source->getCrossLayerConnectorItem();
+	if (cross) {
+		if (!visited.contains(cross)) {
+			equals << cross;
 		}
 	}
 
-	return NULL;
-}
+	visited.append(equals);
 
-bool ConnectorItem::wiredTo(ConnectorItem * target)
-{
-	QList<ConnectorItem *> visited;
-	return wiredToAux(target, visited);
-}
+	foreach (ConnectorItem * fromItem, equals) {
+		foreach (ConnectorItem * toConnectorItem, fromItem->m_connectedTo) {
+			ItemBase * toItem = toConnectorItem->attachedTo();
+			if (toItem == NULL) {
+				continue;			// shouldn't happen
+			}
 
-bool ConnectorItem::wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited)
-{
-	if (visited.contains(this)) return false;
-	visited.append(this);
+			if (toItem->itemType() != ModelPart::Wire) continue;
 
-	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
-		if (target == toConnectorItem)
-		{
-			return true;
-		}
-	}
+			Wire * wire = dynamic_cast<Wire *>(toItem);
+			if (!wire->hasAnyFlag(flags)) continue;
 
-	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
-		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			ConnectorItem * otherConnector = dynamic_cast<Wire *>(toConnectorItem->attachedTo())->otherConnector(toConnectorItem);
-			if (otherConnector->wiredToAux(target, visited)) {
-				return true;
+			ConnectorItem * otherEnd = wire->otherConnector(toConnectorItem);
+			bool isChained = false;
+			foreach (ConnectorItem * otherConnectorItem, otherEnd->m_connectedTo) {
+				if (target == otherConnectorItem) {
+					return wire;
+				}
+				if (target->getCrossLayerConnectorItem() == otherConnectorItem) {
+					return wire;
+				}
+				if (otherConnectorItem->attachedToItemType() == ModelPart::Wire) {
+					//DebugDialog::debug(QString("wired from %1 to %2").arg(wire->id()).arg(otherConnectorItem->attachedToID()));
+					isChained = true;
+				}
+			}
+
+			if (isChained) {
+				if (ConnectorItem::wiredToAux(otherEnd, target, flags, visited)) {
+					return wire;
+				}
 			}
 		}
 	}

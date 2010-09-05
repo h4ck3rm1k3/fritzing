@@ -77,8 +77,7 @@ public:
 	void saveInstance(QXmlStreamWriter & );
 	void writeConnector(QXmlStreamWriter & writer, const QString & elementName);
 	bool maleToFemale(ConnectorItem * other);
-	bool wiredTo(ConnectorItem *);
-	class Wire * wiredTo(ConnectorItem *, ViewGeometry::WireFlags);
+	bool wiredTo(ConnectorItem *, ViewGeometry::WireFlags);
 	void setBaseTooltip(const QString &);
 	void clearConnector();
 	bool connectionIsAllowed(ConnectorItem * other);
@@ -115,8 +114,7 @@ protected:
 	void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	void writeOtherElements(QXmlStreamWriter & writer);
 	void updateTooltip();
-    class Wire * wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
-    bool wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
+    static class Wire * wiredToAux(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
 	void setHiddenOrInactive();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
@@ -151,6 +149,7 @@ public:
 	static void clearEqualPotentialDisplay();
 	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);
 	static void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
+	static class Wire * wiredTo(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags);
 
 public:
 	static const QList<ConnectorItem *> emptyConnectorItemList;

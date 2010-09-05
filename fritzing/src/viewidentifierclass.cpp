@@ -103,16 +103,18 @@ void ViewIdentifierClass::initNames() {
 		bb << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard 
 			<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel 
 			<< ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
-		ss << ViewLayer::Schematic << ViewLayer::SchematicWire 
+		ss << ViewLayer::Schematic 
 			<< ViewLayer::SchematicTrace << ViewLayer::SchematicLabel 
+			<< ViewLayer::SchematicWire 
 			<< ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
 		pp << ViewLayer::Board << ViewLayer::GroundPlane0 
 			<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
-			<< ViewLayer::Copper0 << ViewLayer::Ratsnest 
+			<< ViewLayer::Copper0 
 			<< ViewLayer::Copper0Trace << ViewLayer::GroundPlane1 
 			<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
 			<< ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label 
 			<< ViewLayer::Jumperwires 
+			<< ViewLayer::Ratsnest 
 			<< ViewLayer::PcbNote << ViewLayer::PcbRuler;
 	}
 }
