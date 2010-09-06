@@ -7,7 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    #(r'^externals/', include('fritzing.apps.externals.urls')),
+    (r'^externals/', include('fritzing.apps.externals.urls')),
     (r'^account/', include('account.urls')),
     (r'^openid/(.*)', PinaxConsumer()),
     (r'^profiles/', include('fritzing.apps.profiles.urls')),
