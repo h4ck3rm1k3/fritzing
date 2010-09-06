@@ -234,7 +234,6 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, It
     }
 
     if (anyConverted) {
-
 		QString svg;
 		bool firstTime = true;
 		for (int i = 0; i < 3; i++) {
@@ -244,7 +243,7 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, It
 					svg = text[i];
 				}
 				else {
-					svg = TextUtils::mergeSvg(svg, text[i]);
+					svg = TextUtils::mergeSvg(svg, text[i], "");
 				}
 			}
 		}
@@ -294,7 +293,7 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, It
 		GroundPlaneGenerator gpg;
 		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen", false);
 		foreach (QString gsvg, gpg.newSVGs()) {
-			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg);
+			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg, "");
 		}
 	}
 

@@ -229,7 +229,7 @@ QString TextUtils::replaceTextElement(const QString & svg, const QString & label
 	return svg;
 }
 
-QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2) {
+QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QString & id) {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
@@ -242,13 +242,26 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2) {
 	QDomElement root1 = doc1.documentElement();
 	if (root1.tagName() != "svg") return ___emptyString___;
 
+	QDomElement id1;
+	if (!id.isEmpty()) {
+		id1 = findElementWithAttribute(root1, "id", id);
+	}
+	if (id1.isNull()) id1 = root1;
+
 	QDomElement root2 = doc2.documentElement();
 	if (root2.tagName() != "svg") return ___emptyString___;
 
-	QDomNode node = root2.firstChild();
+	QDomElement id2;
+	if (!id.isEmpty()) {
+		id2 = findElementWithAttribute(root2, "id", id);
+	}
+	if (id2.isNull()) id2 = root2;
+
+
+	QDomNode node = id2.firstChild();
 	while (!node.isNull()) {
 		QDomNode nextNode = node.nextSibling();
-		root1.appendChild(node);
+		id1.appendChild(node);
 		node = nextNode;
 	}
 

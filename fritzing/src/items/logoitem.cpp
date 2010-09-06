@@ -449,7 +449,7 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 
 		svg = newSvgs[0];
 		for (int i = 1; i < newSvgs.length(); i++) {
-			svg = TextUtils::mergeSvg(svg, newSvgs[i]);
+			svg = TextUtils::mergeSvg(svg, newSvgs[i], "silkscreen");
 		}
 	}
 
