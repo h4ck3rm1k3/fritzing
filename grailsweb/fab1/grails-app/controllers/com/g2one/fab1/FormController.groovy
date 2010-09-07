@@ -266,7 +266,7 @@ class FormController {
 		def theOrder = Order1.get(session.orderID)
 		render(view:"orderCancel", model:[order: theOrder])
 		def fn = theOrder.gid + "_" + theOrder.filename
-		def path = "/uploads/" + fn
+		def path = "/srv/www/uploads/" + fn
 		sendMail {
 			multipart true
 			from "order@ixds.de"
@@ -317,9 +317,17 @@ class FormController {
 			return closeErr("File '${file.originalFilename}' must be < ${maxSize / 1024}k.")
 		}
 		
-		def prefix = "/uploads/${order1.gid}"
+		def prefix = "/srv/www/uploads/${order1.gid}"
 		def fn =  prefix + "_" + file.originalFilename
-		file.transferTo( new java.io.File(fn))
+		try {
+			file.transferTo( new java.io.File(fn))
+		} 
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+			return closeErr("Unable to copy file '${file.originalFilename}': " + e.getMessage())
+		}
+		
 		def fz = unzipFz(fn, prefix)
 		if (!fz) {
 			return closeErr("Sketch not found in '${file.originalFilename}'")
