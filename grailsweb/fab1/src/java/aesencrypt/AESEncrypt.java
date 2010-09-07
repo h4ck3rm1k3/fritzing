@@ -12,6 +12,7 @@ import javax.crypto.spec.IvParameterSpec;
 import java.security.spec.AlgorithmParameterSpec;
 import org.apache.commons.codec.binary14.Base64;  		// hack because grails uses commons.codec 1.3 and we need 1.4
 import java.util.Arrays;
+import java.lang.reflect.Array;
  
 public class AESEncrypt {
 	public static final int block_size = 16;
@@ -27,8 +28,8 @@ public class AESEncrypt {
 			
 			byte[] encrypted_text_plus = base64.decode(encoded_encrypted_text);
 			
-			byte[] encrypted_text = Arrays.copyOfRange(encrypted_text_plus,  block_size, encrypted_text_plus.length);
-			byte[] iv = Arrays.copyOfRange(encrypted_text_plus, 0, block_size);
+			byte[] encrypted_text = AESEncrypt.copyOfRange(encrypted_text_plus,  block_size, encrypted_text_plus.length);
+			byte[] iv = AESEncrypt.copyOfRange(encrypted_text_plus, 0, block_size);
 			
 			SecretKeySpec skeySpec = new SecretKeySpec(key_bytes, "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");   //      NoPadding  
@@ -45,6 +46,18 @@ public class AESEncrypt {
 	public static byte[] decode(String encoded_string) {
 		Base64 base64 = new Base64(true);			// url safe (hope it's the same as Python's)
 		return base64.decode(encoded_string);
+	}
+	
+
+	// Copied from Arrays.copyOfRange in openjdk 1.6 (not available in 1.5)
+	public static byte[] copyOfRange(byte[] original, int from, int to) {
+	   int newLength = to - from;
+	   if (newLength < 0)
+		   throw new IllegalArgumentException(from + " > " + to);
+	   byte[] copy = new byte[newLength];
+	   System.arraycopy(original, from, copy, 0,
+		                Math.min(original.length - from, newLength));
+	   return copy;
 	}
 }
 
