@@ -42,66 +42,65 @@ $Date: 2010-06-09 00:55:55 +0200 (Wed, 09 Jun 2010) $
 #endif
 
 bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorItems, ConnectorPairHash & result) {
-  using namespace boost;
-  typedef adjacency_list < vecS, vecS, undirectedS,
-    property<vertex_distance_t, double>, property < edge_weight_t, double > > Graph;
-  typedef std::pair < int, int >E;
+	using namespace boost;
+	typedef adjacency_list < vecS, vecS, undirectedS, property<vertex_distance_t, double>, property < edge_weight_t, double > > Graph;
+	typedef std::pair < int, int >E;
 
-  if (connectorItems.count() < 2) return false;
+	if (connectorItems.count() < 2) return false;
 
-  QList <ConnectorItem *> temp = connectorItems;
+	QList <ConnectorItem *> temp = connectorItems;
 
-  int i = 0;
-  while (i < temp.count()) {
-	  ConnectorItem * connectorItem = temp[i++];
-	  ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
-	  if (crossConnectorItem) {
-		  temp.removeOne(crossConnectorItem);
-	  }
-  }
+	int i = 0;
+	while (i < temp.count()) {
+		ConnectorItem * connectorItem = temp[i++];
+		ConnectorItem * crossConnectorItem = connectorItem->getCrossLayerConnectorItem();
+		if (crossConnectorItem) {
+			temp.removeOne(crossConnectorItem);
+		}
+	}
 
-  QList<QPointF> locs;
-  foreach (ConnectorItem * connectorItem, temp) {
-	  locs << connectorItem->sceneAdjustedTerminalPoint(NULL);
-  }
+	QList<QPointF> locs;
+	foreach (ConnectorItem * connectorItem, temp) {
+		locs << connectorItem->sceneAdjustedTerminalPoint(NULL);
+	}
 
-  int num_nodes = temp.count();
-  int num_edges = num_nodes * (num_nodes - 1) / 2;
-  E * edges = new E[num_edges];
-  double * weights = new double[num_edges];
-  int ix = 0;
-  for (int i = 0; i < num_nodes; i++) {
+	int num_nodes = temp.count();
+	int num_edges = num_nodes * (num_nodes - 1) / 2;
+	E * edges = new E[num_edges];
+	double * weights = new double[num_edges];
+	int ix = 0;
+	for (int i = 0; i < num_nodes; i++) {
 		ConnectorItem * c1 = temp.at(i);
 		for (int j = i + 1; j < num_nodes; j++) {
-			ConnectorItem * c2 = temp.at(j);
-			if ((c1->attachedTo() == c2->attachedTo()) && (c1->bus() != NULL) && (c1->bus() == c2->bus())) {
-				num_edges--;
-				continue;
-			}
-
 			edges[ix].first = i;
 			edges[ix].second = j;
-			double dx = locs[i].x() - locs[j].x();
-			double dy = locs[i].y() - locs[j].y();
-			weights[ix++] = (dx * dx) + (dy * dy);
+			ConnectorItem * c2 = temp.at(j);
+			if ((c1->attachedTo() == c2->attachedTo()) && (c1->bus() != NULL) && (c1->bus() == c2->bus())) {
+				weights[ix++] = 0;
+			}
+			else {
+				double dx = locs[i].x() - locs[j].x();
+				double dy = locs[i].y() - locs[j].y();
+				weights[ix++] = (dx * dx) + (dy * dy);
+			}
 		}
-  }
+	}
 
-  Graph g(edges, edges + num_edges, weights, num_nodes);
-  property_map<Graph, edge_weight_t>::type weightmap = get(edge_weight, g);
+	Graph g(edges, edges + num_edges, weights, num_nodes);
+	property_map<Graph, edge_weight_t>::type weightmap = get(edge_weight, g);
 
-  std::vector < graph_traits < Graph >::vertex_descriptor > p(num_vertices(g));
+	std::vector < graph_traits < Graph >::vertex_descriptor > p(num_vertices(g));
 
-  prim_minimum_spanning_tree(g, &p[0]);
+	prim_minimum_spanning_tree(g, &p[0]);
 
-  delete edges;
-  delete weights;
+	delete edges;
+	delete weights;
 
-  for (std::size_t i = 0; i != p.size(); ++i) {
-	  if (i == p[i]) continue;
+	for (std::size_t i = 0; i != p.size(); ++i) {
+		if (i == p[i]) continue;
 
-	  result.insert(temp[i], temp[p[i]]);
-  }
+		result.insert(temp[i], temp[p[i]]);
+	}
 
-  return true;
+	return true;
 }
