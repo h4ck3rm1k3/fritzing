@@ -1181,6 +1181,11 @@ bool MainWindow::preloadBundledAux(QDir &unzipDir)
 		sketchName = path + "/" + sketchInfo.fileName();
 	}
 
+	if (QFile(sketchName).exists()) {
+		// otherwise copy fails under windows
+		QFile::remove(sketchName);
+	}
+
 	if (!QFile::copy(sketchInfo.filePath(), sketchName)) {
 		QMessageBox::warning(
 			this,
