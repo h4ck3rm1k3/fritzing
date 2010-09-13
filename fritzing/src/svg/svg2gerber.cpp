@@ -280,8 +280,8 @@ void SVG2gerber::allPaths2gerber() {
         qreal centery = circle.attribute("cy").toDouble();
         QString cx = QString::number(qRound(centerx));
         QString cy = QString::number(qRound(centery));
-        QString drill_cx = QString::number(centerx / 1000);				// drill file seems to be in inches
-        QString drill_cy = QString::number(centery / 1000);				// drill file seems to be in inches
+        QString drill_cx = QString::number(centerx / 1000, 'f');				// drill file seems to be in inches
+        QString drill_cy = QString::number(centery / 1000, 'f');				// drill file seems to be in inches
         qreal r = circle.attribute("r").toDouble();
         QString fill = circle.attribute("fill");
         qreal stroke_width = circle.attribute("stroke-width").toDouble();
