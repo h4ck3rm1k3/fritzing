@@ -1079,44 +1079,26 @@ void SvgFileSplitter::fixStyleAttribute(QDomElement & element, QString & style, 
 	}
 }
 
-bool SvgFileSplitter::getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox)
+bool SvgFileSplitter::getSvgSizeAttributes(const QString & svg, QString & width, QString & height, QString & viewBox)
 {
+	QXmlStreamReader xml(svg);
+	xml.setNamespaceProcessing(false);
 
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument domDocument;
-
-	QFile file(path);
-	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		return false;
+	while (!xml.atEnd()) {
+        switch (xml.readNext()) {
+        case QXmlStreamReader::StartElement:
+			if (xml.name().toString().compare("svg") == 0) {
+				width = xml.attributes().value("width").toString();
+				height = xml.attributes().value("height").toString();
+				viewBox = xml.attributes().value("viewBox").toString();
+				return true;	
+			}
+		default:
+			break;
+		}
 	}
 
-	QDomElement root = domDocument.documentElement();
-	if (root.isNull()) {
-		return false;
-	}
-
-	if (root.tagName() != "svg") {
-		return false;
-	}
-
-	width = root.attribute("width");
-	if (width.isEmpty()) {
-		return false;
-	}
-
-	height = root.attribute("height");
-	if (height.isEmpty()) {
-		return false;
-	}
-
-	viewBox = root.attribute("viewBox");
-	if (viewBox.isEmpty()) {
-		return false;
-	}
-
-	return true;
+	return false;
 }
 
 bool SvgFileSplitter::changeStrokeWidth(const QString & svg, qreal delta, bool absolute, QByteArray & byteArray) {

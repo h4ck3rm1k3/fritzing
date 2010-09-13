@@ -363,8 +363,8 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			return;
 		}
 
-		TextUtils::fixPixelDimensionsIn(svg);
 		TextUtils::cleanSodipodi(svg);
+		TextUtils::fixPixelDimensionsIn(svg);
 		TextUtils::fixViewboxOrigin(svg);
 
 		QString errorStr;

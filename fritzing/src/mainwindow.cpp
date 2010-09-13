@@ -1816,19 +1816,37 @@ bool MainWindow::loadCustomBoardShape()
 		return false; // Cancel pressed
 	}
 
+	QString svg;
+	QFile f(path);
+	if (f.open(QFile::ReadOnly)) {
+		svg = f.readAll();
+	}
+	if (svg.isEmpty()) {
+		QMessageBox::information(
+			NULL,
+			tr("Unable to load"),
+			tr("Unable to load image from %1").arg(path)
+		);			
+		return false;
+	}
+
+	TextUtils::cleanSodipodi(svg);
+	TextUtils::fixPixelDimensionsIn(svg);
+	TextUtils::fixViewboxOrigin(svg);
+
 	SvgFileSplitter splitter;
-	if (!splitter.split(path, "board")) {
+	if (!splitter.splitString(svg, "board")) {
 		svgMissingLayer("board", path);
 		return false;
 	}
 
-	if (!splitter.split(path, "silkscreen")) {
+	if (!splitter.splitString(svg, "silkscreen")) {
 		svgMissingLayer("silkscreen", path);
 		return false;
 	}
 
 	QString wStr, hStr, vbStr;
-	if (!SvgFileSplitter::getSvgSizeAttributes(path, wStr, hStr, vbStr)) {
+	if (!SvgFileSplitter::getSvgSizeAttributes(svg, wStr, hStr, vbStr)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
@@ -1858,16 +1876,22 @@ bool MainWindow::loadCustomBoardShape()
 		return false;
 	}
 
-
 	QString moduleID = FolderUtils::getRandText();
 	QString userPartsSvgFolderPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
 	QString newName = userPartsSvgFolderPath + "pcb" + "/" + moduleID + ".svg";
-	bool result = QFile(path).copy(newName);
-	if (result == false) {
+
+	QFile svgFile(newName);
+	svgFile.open(QIODevice::WriteOnly);
+	QTextStream svgOut(&svgFile);
+	svgOut.setCodec("UTF-8");
+	svgOut << svg;
+	svgFile.close();
+
+	if (!svgFile.exists()) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
-			tr("Sorry, Fritzing is unable to copy the svg file.")
+			tr("Sorry, Fritzing is unable to save the svg file.")
 		);
 		return false;
 	}

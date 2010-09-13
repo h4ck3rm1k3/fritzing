@@ -66,7 +66,7 @@ public:
 	void shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms);
 
 public:
-	static bool getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox);
+	static bool getSvgSizeAttributes(const QString & svg, QString & width, QString & height, QString & viewBox);
 	static bool changeStrokeWidth(const QString & svg, qreal delta, bool absolute, QByteArray &);
 	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
