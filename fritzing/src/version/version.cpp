@@ -165,7 +165,7 @@ void Version::toVersionThing(const QString & candidate, VersionThing & versionTh
 		modString += s + "|";
 	}
 	modString.chop(1);
-	QRegExp sw(QString("([\\d]+)\\.([\\d]+)\\.([\\d]+)(%1)").arg(modString));
+	QRegExp sw(QString("([\\d]+)\\.([\\d]+)\\.([\\d]+)[\\.]{0,1}(%1)").arg(modString));
 	if (sw.indexIn(candidate) != 0) {
 		return;
 	}

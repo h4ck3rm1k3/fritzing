@@ -3759,8 +3759,8 @@ void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID
 	// TODO: not sure this works for bendpoints with multiple connections
 
 	if (doEmit) {
-		fromID = findWire(fromID);
-		toID = findWire(toID);
+		fromID = findPartOrWire(fromID);
+		toID = findPartOrWire(toID);
 		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, updateConnections);
 	}
 }
@@ -4413,7 +4413,7 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool skipMe) {
 	if (!skipMe) {
 		RoutingStatus routingStatus;
-		updateRatsnestStatus(command, NULL, routingStatus, false);
+		updateRoutingStatus(command, NULL, routingStatus, false);
 	}
 
 	if (doEmit) {
@@ -4423,7 +4423,7 @@ void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool
 
 void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
 	RoutingStatus routingStatus;
-	updateRatsnestStatus(command, NULL, routingStatus, false);
+	updateRoutingStatus(command, NULL, routingStatus, false);
 }
 
 void SketchWidget::noteChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
@@ -4892,7 +4892,7 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	}
 }
 
-void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand, RoutingStatus &, bool manual) {
+void SketchWidget::updateRoutingStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand, RoutingStatus &, bool manual) {
 	Q_UNUSED(command);
 	Q_UNUSED(undoCommand);
 	Q_UNUSED(manual);
@@ -5112,27 +5112,6 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 
 	//DebugDialog::debug(QString("autoscroll %1 %2").arg(m_autoScrollX).arg(m_autoScrollY) );
 	return true;
-}
-
-void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID,
-											long toID, const QString & toConnectorID,
-											ViewLayer::ViewLayerSpec viewLayerSpec,
-											bool connect, RatsnestCommand * ratsnestCommand, bool doEmit)
-{
-	if (doEmit) {
-		fromID = findWire(fromID);
-		toID = findWire(toID);
-		emit dealWithRatsnestSignal(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, ratsnestCommand);
-	}
-}
-
-
-void SketchWidget::dealWithRatsnestSlot(long fromID, const QString & fromConnectorID,
-													long toID, const QString & toConnectorID,
-													ViewLayer::ViewLayerSpec viewLayerSpec,
-													bool connect, class RatsnestCommand * ratsnestCommand)
-{
-	dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, viewLayerSpec, connect, ratsnestCommand, false);
 }
 
 void SketchWidget::setWireVisible(Wire * wire) {
@@ -6090,7 +6069,7 @@ QPointF SketchWidget::calcNewLoc(ItemBase * moveBase, ItemBase * detachFrom)
 	return newPos;
 }
 
-long SketchWidget::findWire(long itemID) 
+long SketchWidget::findPartOrWire(long itemID) 
 {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return itemID;
@@ -6459,6 +6438,11 @@ bool SketchWidget::resizingBoardRelease() {
 bool SketchWidget::resizingBoardPress(QGraphicsItem *) {
 	return false;
 }
+
+bool SketchWidget::hasAnyNets() {
+	return false;
+}
+
 
 
 

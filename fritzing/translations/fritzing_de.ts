@@ -961,17 +961,17 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1484"/>
         <source>Routing completed using %n jumper wire(s)</source>
-        <translation>
-            <numerusform>Routing fertiggestellt (mit %n unfertigen Drahtbrücke)</numerusform>
-            <numerusform>Routing fertiggestellt (mit %n unfertigen Drahtbrücken)</numerusform>
+        <translation type="unfinished">
+            <numerusform>Routing fertiggestellt mit %n unfertigen Drahtbrücke</numerusform>
+            <numerusform>Routing fertiggestellt mit %n unfertigen Drahtbrücken</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1485"/>
         <source> and %n jumper part(s)</source>
-        <translation>
-            <numerusform>und %n Dratbrücke</numerusform>
-            <numerusform>und %n Dratbrücken</numerusform>
+        <translation type="unfinished">
+            <numerusform>und %n Drahtbrücke</numerusform>
+            <numerusform>und %n Drahtbrücken</numerusform>
         </translation>
     </message>
     <message>

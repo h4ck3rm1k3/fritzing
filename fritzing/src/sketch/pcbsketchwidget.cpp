@@ -292,10 +292,10 @@ void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
 
 	//kill copperfill here
 	//Autorouter1::clearTraces(this, true, parentCommand);
-	//updateRatsnestStatus(NULL, parentCommand);
+	//updateRoutingStatus(NULL, parentCommand);
 }
 
-void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus, bool manual)
+void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus, bool manual)
 {
 	//DebugDialog::debug("update ratsnest status");
 
@@ -715,17 +715,6 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	}
 
 	return true;
-}
-
-
-
-void PCBSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID, 
-								  long toID, const QString & toConnectorID,
-								  ViewLayer::ViewLayerSpec viewLayerSpec,
-								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
-
-{
-#pragma message ("allowing the 'unreferenced parameter' warnings for now (August 10 2010) as a reminder")
 }
 
 bool PCBSketchWidget::bothEndsConnected(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems)
@@ -2599,8 +2588,10 @@ void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos,
 void PCBSketchWidget::jumperItemHack() {
 	if (AlreadyDidJumperHack) return;
 
-	// under linux32, Qt 4.6.1, 4.6.2, 4.6.3 certain files (StepperMotor.fz) cause a crash somehow related to JumperItems.
+	// under linux32, Qt 4.6.1, 4.6.2, 4.6.3, certain files (StepperMotor.fz) cause a crash somehow related to JumperItems.
 	// this hack prevents the crash, though I still haven't been able to figure out the root cause.
+
+	// later note: may be jumper wires at fault, not jumper items, though the root cause is still unknown
 
 	AlreadyDidJumperHack = true;
 	long newID = ItemBase::getNextID();
@@ -2621,3 +2612,8 @@ void PCBSketchWidget::hideNet(Wire * wire) {
 	}
 
 }
+
+bool PCBSketchWidget::hasAnyNets() {
+	return m_routingStatus.m_netCount > 0;
+}
+

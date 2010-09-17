@@ -28,6 +28,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../items/pinheader.h"
 #include "../items/moduleidnames.h"
+#include "../version/version.h"
 
 #include <QMessageBox>
 
@@ -93,6 +94,20 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
         return false;
     }
 
+	bool checkForRats = true;
+	QString fzVersion = root.attribute("fritzingVersion");
+	if (fzVersion.length() > 0) {
+		// with version 0.4.3 ratsnests in fz files are obsolete
+		VersionThing versionThingRats;
+		versionThingRats.majorVersion = 0;
+		versionThingRats.minorVersion = 4;
+		versionThingRats.minorSubVersion = 2;
+		versionThingRats.releaseModifier = "";
+		VersionThing versionThingFz;
+		Version::toVersionThing(fzVersion,versionThingFz);
+		checkForRats = !Version::greaterThan(versionThingRats, versionThingFz);
+	}
+
     QDomElement title = root.firstChildElement("title");
 	if (!title.isNull()) {
 		this->root()->modelPartShared()->setTitle(title.text());
@@ -114,7 +129,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
     	delete child;
    	}
 
-	return loadInstances(domDocument, instances, modelParts);
+	return loadInstances(domDocument, instances, modelParts, checkForRats);
 
 }
 
@@ -165,12 +180,12 @@ ModelPart * ModelBase::fixObsoleteModuleID(QDomDocument & domDocument, QDomEleme
 	return NULL;
 }
 
-bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instances, QList<ModelPart *> & modelParts)
+bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instances, QList<ModelPart *> & modelParts, bool checkForRats)
 {
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
    	while (!instance.isNull()) {
-		if (isRatsnest(instance)) {
+		if (checkForRats && isRatsnest(instance)) {
 			// ratsnests in sketches are now obsolete
 			instance = instance.nextSiblingElement("instance");
 			continue;
@@ -365,7 +380,7 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 	//file.write(domDocument.toByteArray());
 	//file.close();
 
-	return loadInstances(domDocument, instances, modelParts);
+	return loadInstances(domDocument, instances, modelParts, false);
 }
 
 void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew)

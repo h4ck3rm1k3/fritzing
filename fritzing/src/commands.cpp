@@ -714,39 +714,6 @@ void CleanUpWiresCommand::redo()
 	m_firstTime = false;
 }
 
-void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire) 
-{
-	if (m_parentCommand) {
-		for (int i = 0; i < m_parentCommand->childCount(); i++) {
-			const DeleteItemCommand * command = dynamic_cast<const DeleteItemCommand *>(m_parentCommand->child(i));
-
-			if (command == NULL) continue;
-			if (command->itemID() == wire->id()) {
-				return;
-			}		
-		}
-	}
-
-	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
-	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
-	
-	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
-		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-								wire->id(), "connector0", 
-								ViewLayer::specFromID(wire->viewLayerID()),
-								false, NULL));
-	}
-	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
-		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-							wire->id(), "connector1", 
-							ViewLayer::specFromID(wire->viewLayerID()),
-							false, NULL));
-	}
-
-	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
-}
-
-
 void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus)
 {
 	addSubCommand(new RoutingStatusCommand(sketchWidget, oldRoutingStatus, newRoutingStatus, NULL));

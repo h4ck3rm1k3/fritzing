@@ -474,7 +474,6 @@ public:
 	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool skipMe, QUndoCommand * parent);
     void undo();
     void redo();
-	void addWire(SketchWidget *, class Wire *);
 	void addRoutingStatus(SketchWidget *, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus);
 
 protected:

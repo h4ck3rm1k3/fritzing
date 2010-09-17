@@ -45,7 +45,8 @@ public:
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
 	void clearRouting(QUndoCommand * parentCommand);
-	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &, bool manual);
+	void updateRoutingStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &, bool manual);
+	bool hasAnyNets();
 	void forwardRoutingStatus(const RoutingStatus &);
 	void addBoard();
 	void setCurrent(bool current);
@@ -116,10 +117,6 @@ protected:
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
-	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
-								  long toID, const QString & toConnectorID,
-								  ViewLayer::ViewLayerSpec viewLayerSpec,
-								  bool connect, class RatsnestCommand *, bool doEmit);
 	bool canDropModelPart(ModelPart * modelPart);
 	bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);

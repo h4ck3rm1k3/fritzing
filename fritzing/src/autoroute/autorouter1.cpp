@@ -286,7 +286,7 @@ void Autorouter1::start()
 	jumperItemStructs.clear();
 	
 	m_sketchWidget->pushCommand(parentCommand);
-	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand, routingStatus, true);
+	m_sketchWidget->updateRoutingStatus(NULL, parentCommand, routingStatus, true);
 	m_sketchWidget->repaint();
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
@@ -861,27 +861,31 @@ void Autorouter1::clearLastDrawTraces() {
 void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand) {
 	QList<Wire *> oldTraces;
 	QList<JumperItem *> oldJumperItems;
-	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-		if (jumperItem == NULL) continue;
+	if (sketchWidget->usesJumperItem()) {
+		foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+			if (jumperItem == NULL) continue;
 
-		if (deleteAll || jumperItem->autoroutable()) {
-			oldJumperItems.append(jumperItem);
-			QList<ConnectorItem *> both;
-			foreach (ConnectorItem * ci, jumperItem->connector0()->connectedToItems()) both.append(ci);
-			foreach (ConnectorItem * ci, jumperItem->connector1()->connectedToItems()) both.append(ci);
-			foreach (ConnectorItem * connectorItem, both) {
-				Wire * w = dynamic_cast<Wire *>(connectorItem->attachedTo());
-				if (w == NULL) continue;
+			if (deleteAll || jumperItem->autoroutable()) {
+				oldJumperItems.append(jumperItem);
 
-				if (w->getTrace() || w->getJumper()) {
-					QList<Wire *> wires;
-					QList<ConnectorItem *> ends;
-					QList<ConnectorItem *> uniqueEnds;
+				// now deal with the traces connecting the jumperitem to the part
+				QList<ConnectorItem *> both;
+				foreach (ConnectorItem * ci, jumperItem->connector0()->connectedToItems()) both.append(ci);
+				foreach (ConnectorItem * ci, jumperItem->connector1()->connectedToItems()) both.append(ci);
+				foreach (ConnectorItem * connectorItem, both) {
+					Wire * w = dynamic_cast<Wire *>(connectorItem->attachedTo());
+					if (w == NULL) continue;
 
-					w->collectChained(wires, ends, uniqueEnds);
-					foreach (Wire * wire, wires) {
-						wire->setAutoroutable(true);
+					if (w->getTrace() || w->getJumper()) {
+						QList<Wire *> wires;
+						QList<ConnectorItem *> ends;
+						QList<ConnectorItem *> uniqueEnds;
+
+						w->collectChained(wires, ends, uniqueEnds);
+						foreach (Wire * wire, wires) {
+							wire->setAutoroutable(true);
+						}
 					}
 				}
 			}

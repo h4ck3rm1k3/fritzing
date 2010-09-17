@@ -160,7 +160,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 {
 	QUndoCommand  parentCommand;
 	RoutingStatus routingStatus;
-	m_pcbGraphicsView->updateRatsnestStatus(NULL, &parentCommand, routingStatus, true);
+	m_pcbGraphicsView->updateRoutingStatus(NULL, &parentCommand, routingStatus, true);
 	if (routingStatus.m_connectorsLeftToRoute > 0) {
 		QMessageBox msgBox(this);
 		msgBox.setWindowModality(Qt::WindowModal);
@@ -2095,7 +2095,6 @@ void MainWindow::updateEditMenu() {
 }
 
 void MainWindow::updateTraceMenu() {
-	bool rEnabled = false;
 	bool jEnabled = false;
 	bool jiEnabled = false;
 	bool tEnabled = false;
@@ -2107,6 +2106,7 @@ void MainWindow::updateTraceMenu() {
 	bool gfEnabled = false;
 	bool gfrEnabled = false;
 	bool ctlEnabled = false;
+	bool arEnabled = false;
 
 	if (m_currentGraphicsView != NULL && m_currentGraphicsView != this->m_breadboardGraphicsView) {
 		QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
@@ -2127,21 +2127,19 @@ void MainWindow::updateTraceMenu() {
 				else if (isGroundFill(itemBase)) {
 					gfrEnabled = true;
 				}
-				else if (isGroundFill(itemBase)) {
-					gfrEnabled = true;
-				}
 
 				continue;
 			}
 
 			if (wire->getRatsnest()) {
-				rEnabled = true;
-				if (wire->isSelected()) {
-					ctEnabled = true;
-					cjEnabled = true;
-				}
+				//rEnabled = true;
+				//if (wire->isSelected()) {
+					//ctEnabled = true;
+					//cjEnabled = true;
+				//}
 			}
 			else if (wire->getJumper()) {
+				arEnabled = true;
 				jEnabled = true;
 				if (wire->isSelected()) {
 					ctEnabled = true;
@@ -2152,6 +2150,7 @@ void MainWindow::updateTraceMenu() {
 				}
 			}
 			else if (wire->getTrace()) {
+				arEnabled = true;
 				tEnabled = true;
 				twEnabled = true;
 				if (wire->isSelected()) {
@@ -2170,12 +2169,18 @@ void MainWindow::updateTraceMenu() {
 		}
 	}
 
+	if (!arEnabled) {
+		if (m_currentGraphicsView != NULL) {
+			arEnabled = m_currentGraphicsView->hasAnyNets(); 
+		}
+	}
+
 	m_createTraceAct->setEnabled(ctEnabled);
 	m_createJumperAct->setEnabled(cjEnabled && (m_currentGraphicsView == m_pcbGraphicsView));
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
-	m_autorouteAct->setEnabled(rEnabled);
+	m_autorouteAct->setEnabled(arEnabled);
 	m_exportEtchableAct->setEnabled(true);
 	m_exportEtchableSvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
@@ -3871,13 +3876,7 @@ void MainWindow::changeTraceLayer() {
 void MainWindow::updateRoutingStatus() {
 	QUndoCommand  parentCommand;
 	RoutingStatus routingStatus;
-	if (m_currentGraphicsView == m_schematicGraphicsView) {
-		m_schematicGraphicsView->updateRatsnestStatus(NULL, &parentCommand, routingStatus, true);
-
-	}
-	else if (m_currentGraphicsView == m_pcbGraphicsView) {
-		m_pcbGraphicsView->updateRatsnestStatus(NULL, &parentCommand, routingStatus, true);
-	}
+	m_currentGraphicsView->updateRoutingStatus(NULL, &parentCommand, routingStatus, true);
 }
 
 void MainWindow::hideNet() {

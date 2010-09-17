@@ -430,14 +430,6 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal(CleanUpWiresCommand *)),
 									 slotter, SLOT(sketchWidget_cleanUpWires(CleanUpWiresCommand *)) );
-	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &,
-																			  long, const QString &,
-																			  ViewLayer::ViewLayerSpec,
-																			  bool, RatsnestCommand *)),
-									 slotter, SLOT(dealWithRatsnestSlot(long, const QString &,
-																			  long, const QString &,
-																			  ViewLayer::ViewLayerSpec,
-																			  bool, RatsnestCommand *)) );
 
 	succeeded = succeeded && connect(signaller, SIGNAL(checkStickySignal(long, bool, bool, CheckStickyCommand *)),
 									 slotter, SLOT(checkSticky(long, bool, bool, CheckStickyCommand *)) );
@@ -817,7 +809,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	// update issue with 4.5.1?
 	m_currentGraphicsView->updateConnectors();
 	RoutingStatus routingStatus;
-	m_currentGraphicsView->updateRatsnestStatus(NULL, NULL, routingStatus, false);
+	m_currentGraphicsView->updateRoutingStatus(NULL, NULL, routingStatus, false);
 }
 
 void MainWindow::setActionsIcons(int index, QList<QAction *> & actions) {

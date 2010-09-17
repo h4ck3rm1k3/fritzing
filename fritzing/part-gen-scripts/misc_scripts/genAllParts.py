@@ -55,7 +55,7 @@ def main():
      
     outfile = open(allPartsBinFilename, "w")
     outfile.write("""<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.14.b.12.13.3867">
+<module fritzingVersion="0.4.3b.0.0">
     <title>All Parts</title>
     <instances>
 """)
