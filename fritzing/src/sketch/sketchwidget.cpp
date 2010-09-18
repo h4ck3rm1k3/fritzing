@@ -6342,6 +6342,13 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
 		ConnectorItem::collectParts(connectorItems, *partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
 
+		for (int i = partConnectorItems->count() - 1; i >= 0; i--) {
+			if (!partConnectorItems->at(i)->attachedTo()->isEverVisible()) {
+				// may not be necessary when views are brought completely into sync
+				partConnectorItems->removeAt(i);
+			}
+		}
+
 		if ((partConnectorItems->count() <= 0) || (!includeSingletons && (partConnectorItems->count() <= 1))) {
 			delete partConnectorItems;
 			continue;

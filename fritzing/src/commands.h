@@ -35,6 +35,7 @@ $Date$
 
 #include "viewgeometry.h"
 #include "viewlayer.h"
+#include "routingstatus.h"
 #include "utils/misc.h"
 #include "items/itembase.h"
 
@@ -427,30 +428,6 @@ protected:
 	long m_wireId;
 	qreal m_oldWidth;
 	qreal m_newWidth;
-};
-
-struct RoutingStatus {
-	int m_netCount;
-	int m_netRoutedCount;
-	int m_connectorsLeftToRoute;
-	int m_jumperWireCount;
-	int m_jumperItemCount;
-	ConnectorPairHash m_unroutedConnectors;
-
-public:
-	void zero() {
-		m_unroutedConnectors.clear();
-		m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperWireCount = m_jumperItemCount = 0;
-	}
-
-	bool operator!=(const RoutingStatus &other) const {
-		return 
-			(m_netCount != other.m_netCount) ||
-			(m_netRoutedCount != other.m_netRoutedCount) ||
-			(m_connectorsLeftToRoute != other.m_connectorsLeftToRoute) ||
-			(m_jumperWireCount != other.m_jumperWireCount) ||
-			(m_jumperItemCount != other.m_jumperItemCount);
-	}
 };
 
 class RoutingStatusCommand : public BaseCommand 

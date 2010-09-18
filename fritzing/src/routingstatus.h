@@ -3,7 +3,7 @@
 Part of the Fritzing project - http://fritzing.org
 Copyright (c) 2007-2010 Fachhochschule Potsdam - http://fh-potsdam.de
 
-Fritzing is free software: you can redistribute it and/or modify
+Fritzing is free software: you can redistribute it and/or modify\
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -18,25 +18,40 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 4228 $:
+$Revision: 4434 $:
 $Author: cohen@irascible.com $:
-$Date: 2010-06-09 00:55:55 +0200 (Wed, 09 Jun 2010) $
+$Date: 2010-09-17 23:18:17 +0200 (Fri, 17 Sep 2010) $
 
 ********************************************************************/
 
-#ifndef GRAPHUTILS_H
-#define GRAPHUTILS_H
+#ifndef ROUTINGSTATUS_H
+#define ROUTINGSTATUS_H
 
-#include "../connectors/connectoritem.h"
-#include "../routingstatus.h"
+#include "items/itembase.h"
 
-class GraphUtils
-{
+struct RoutingStatus {
+	int m_netCount;
+	int m_netRoutedCount;
+	int m_connectorsLeftToRoute;
+	int m_jumperWireCount;
+	int m_jumperItemCount;
+	ConnectorPairHash m_unroutedConnectors;
 
 public:
-	static bool chooseRatsnestGraph(const QList<ConnectorItem *> & equipotentials, ConnectorPairHash & result);
-	static bool scoreOneNet(QList<ConnectorItem *> & partConnectorItems, RoutingStatus & routingStatus);
+	void zero() {
+		m_unroutedConnectors.clear();
+		m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperWireCount = m_jumperItemCount = 0;
+	}
 
+	bool operator!=(const RoutingStatus &other) const {
+		return 
+			(m_netCount != other.m_netCount) ||
+			(m_netRoutedCount != other.m_netRoutedCount) ||
+			(m_connectorsLeftToRoute != other.m_connectorsLeftToRoute) ||
+			(m_jumperWireCount != other.m_jumperWireCount) ||
+			(m_jumperItemCount != other.m_jumperItemCount);
+	}
 };
 
-#endif
+
+#endif // ROUTINGSTATUS_H

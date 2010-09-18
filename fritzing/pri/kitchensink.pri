@@ -31,6 +31,7 @@ HEADERS += \
     src/layerattributes.h \
     src/layerpalette.h \
     src/mainwindow.h \
+    src/routingstatus.h \
     src/sketchareawidget.h \
     src/sketchtoolbutton.h \
     src/viewgeometry.h \

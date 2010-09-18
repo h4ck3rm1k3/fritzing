@@ -169,8 +169,6 @@ protected:
 	static void clearDistances();
 	static int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0);
 	static int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
-	static void transitiveClosure(QVector< QVector<bool> > & adjacency, int count);
-	static int countMissing(QVector< QVector<bool> > & adjacency, QList<ConnectorItem *> & partConnectorItems, ConnectorPairHash &);
 
 protected slots:
 	void cancelDRC();

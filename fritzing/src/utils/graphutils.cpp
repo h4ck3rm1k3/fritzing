@@ -26,16 +26,20 @@ $Date: 2010-06-09 00:55:55 +0200 (Wed, 09 Jun 2010) $
 
 #include "graphutils.h"
 #include "../fsvgrenderer.h"
+#include "../items/wire.h"
+#include "../items/jumperitem.h"
 
 #ifdef _MSC_VER 
 #pragma warning(push) 
-#pragma warning(disable:4100)			// disable scary-looking compiler warning in Boost library
+#pragma warning(disable:4100)			// disable scary-looking compiler warnings in Boost library
+#pragma warning(disable:4181)			
 #endif
 
 #include <boost/config.hpp>
 #include <iostream>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/prim_minimum_spanning_tree.hpp>
+#include <boost/graph/transitive_closure.hpp>
 
 #ifdef _MSC_VER 
 #pragma warning(pop)					// restore warning state
@@ -100,6 +104,142 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorIte
 		if (i == p[i]) continue;
 
 		result.insert(temp[i], temp[p[i]]);
+	}
+
+	return true;
+}
+
+bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, RoutingStatus & routingStatus) {
+	using namespace boost;
+
+	int num_nodes = partConnectorItems.count();
+
+	typedef property < vertex_index_t, std::size_t > Index;
+	typedef adjacency_list < listS, listS, directedS, Index > graph_t;
+	typedef graph_traits < graph_t >::vertex_descriptor vertex_t;
+	typedef graph_traits < graph_t >::edge_descriptor edge_t;
+
+	graph_t G;
+	std::vector < vertex_t > verts(num_nodes);
+	for (int i = 0; i < num_nodes; ++i) {
+		verts[i] = add_vertex(Index(i), G);
+	}
+
+	//std::pair<int, int> pair;
+	bool gotUserConnection = false;
+	for (int i = 0; i < num_nodes; i++) {
+		add_edge(verts[i], verts[i], G);
+		ConnectorItem * from = partConnectorItems[i];
+		for (int j = i + 1; j < num_nodes; j++) {
+			ConnectorItem * to = partConnectorItems[j];
+
+			if (from->isCrossLayerConnectorItem(to)) {
+				add_edge(verts[i], verts[j], G);
+				add_edge(verts[j], verts[i], G);
+				continue;
+			}
+
+			if (to->attachedTo() != from->attachedTo()) {
+				gotUserConnection = true;
+				continue;
+			}
+
+			if ((to->bus() != NULL) && (to->bus() == from->bus())) {	
+				add_edge(verts[i], verts[j], G);
+				add_edge(verts[j], verts[i], G);
+				continue;
+			}
+
+			gotUserConnection = true;
+		}
+	}
+
+	if (!gotUserConnection) {
+		return false;
+	}
+
+	routingStatus.m_netCount++;
+
+	for (int i = 0; i < num_nodes; i++) {
+		ConnectorItem * fromConnectorItem = partConnectorItems[i];
+		if (fromConnectorItem->attachedToItemType() == ModelPart::Jumper) {
+			routingStatus.m_jumperItemCount++;				
+		}
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+				continue;
+			}
+
+			Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+			if (wire == NULL) continue;
+
+			if (!(wire->getJumper() || wire->getTrace())) continue;
+
+			if (wire->getJumper()) {
+				routingStatus.m_jumperWireCount++;
+			}
+
+			QList<Wire *> wires;
+			QList<ConnectorItem *> ends;
+			QList<ConnectorItem *> uniqueEnds;
+			wire->collectChained(wires, ends, uniqueEnds);
+			foreach (ConnectorItem * end, ends) {
+				if (end == fromConnectorItem) continue;
+
+				int j = partConnectorItems.indexOf(end);
+				if (j >= 0) {
+					add_edge(verts[i], verts[j], G);
+					add_edge(verts[j], verts[i], G);
+				}
+			}
+		}
+	}
+
+	adjacency_list <> TC;
+	transitive_closure(G, TC);
+
+	QVector<bool> check(num_nodes, true);
+	bool anyMissing = false;
+	for (int i = 0; i < num_nodes - 1; i++) {
+		if (!check[i]) continue;
+
+		check[i] = false;
+		bool missingOne = false;
+		for (int j = i + 1; j < num_nodes; j++) {
+			if (!check[j]) continue;
+
+			// TODO: there's a nicer way to describe p
+			std::pair< boost::detail::edge_desc_impl<boost::directed_tag, unsigned int>, bool> p = edge(i, j, TC);
+			if (p.second) {
+				check[j] = false;
+			}
+			else {
+				// we can minimally span the set with n-1 wires, so even if multiple connections are missing from a given connector, count it as one
+				anyMissing = missingOne = true;
+				routingStatus.m_unroutedConnectors.insert(partConnectorItems.at(i), partConnectorItems.at(j));
+				/*
+				ConnectorItem * ci = partConnectorItems.at(i);
+				ConnectorItem * cj = partConnectorItems.at(j);
+				DebugDialog::debug(QString("'%1' id:%2 cid:%3 vlid:%4 to '%5' id:%6 cid:%7 vlid:%8")
+					.arg(ci->attachedToTitle())
+					.arg(ci->attachedToID())
+					.arg(ci->connectorSharedID())
+					.arg(ci->attachedToViewLayerID())
+					.arg(cj->attachedToTitle())
+					.arg(cj->attachedToID())
+					.arg(cj->connectorSharedID())
+					.arg(cj->attachedToViewLayerID())
+					);
+				*/
+			}
+		}
+		if (missingOne) {
+			routingStatus.m_connectorsLeftToRoute++;
+		}
+	}
+
+	if (!anyMissing) {
+		routingStatus.m_netRoutedCount++;
 	}
 
 	return true;

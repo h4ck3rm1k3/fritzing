@@ -44,6 +44,7 @@ $Date$
 #include "../items/jumperitem.h"
 #include "../utils/autoclosemessagebox.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/graphutils.h"
 
 #include <limits>
 #include <QApplication>
@@ -1345,146 +1346,18 @@ void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, Routi
 
 	QList<ConnectorItem *> partConnectorItems;
 	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
-	int count = partConnectorItems.count();
-	if (count <= 1) return;
+	if (partConnectorItems.count() <= 1) return;
 
-	// want adjacency[count][count] but some C++ compilers don't like it
-	QVector< QVector<bool> > adjacency(count, QVector<bool>(count, false));
-
-	bool gotUserConnection = false;
-
-	// initialize adjaceny
-	for (int i = 0; i < count; i++) {
-		adjacency[i][i] = true;
-		ConnectorItem * from = partConnectorItems[i];
-		//DebugDialog::debug(QString("score one %1 '%2' '%3' %4")
-				//.arg(i)
-				//.arg(from->connectorSharedName())
-				//.arg(from->attachedToInstanceTitle())
-				//.arg(from->attachedToViewLayerID()));
-
-		for (int j = i + 1; j < count; j++) {
-			ConnectorItem * to = partConnectorItems[j];
-
-			if (from->isCrossLayerConnectorItem(to)) {
-				adjacency[j][i] = adjacency[i][j] = true;
-				continue;
-			}
-
-			if (to->attachedTo() != from->attachedTo()) {
-				gotUserConnection = true;
-				continue;
-			}
-
-			if ((to->bus() != NULL) && (to->bus() == from->bus())) {	
-				adjacency[j][i] = adjacency[i][j] = true;
-				continue;
-			}
-
-			gotUserConnection = true;
+	for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
+		if (!partConnectorItems[i]->attachedTo()->isEverVisible()) {
+			// may not be necessary when views are brought completely into sync
+			partConnectorItems.removeAt(i);
 		}
 	}
 
-	if (!gotUserConnection) {
-		return;
-	}
+	if (partConnectorItems.count() <= 1) return;
 
-	routingStatus.m_netCount++;
-
-	//traceAdjacency(adjacency, count);
-
-	for (int i = 0; i < count; i++) {
-		ConnectorItem * fromConnectorItem = partConnectorItems[i];
-		if (fromConnectorItem->attachedToItemType() == ModelPart::Jumper) {
-			routingStatus.m_jumperItemCount++;				
-		}
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
-				continue;
-			}
-
-			Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-			if (wire == NULL) continue;
-
-			if (!(wire->getJumper() || wire->getTrace())) continue;
-
-			if (wire->getJumper()) {
-				routingStatus.m_jumperWireCount++;
-			}
-
-			QList<Wire *> wires;
-			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			wire->collectChained(wires, ends, uniqueEnds);
-			foreach (ConnectorItem * end, ends) {
-				if (end == fromConnectorItem) continue;
-
-				int j = partConnectorItems.indexOf(end);
-				if (j >= 0) {
-					adjacency[j][i] = adjacency[i][j] = true;
-				}
-			}
-		}
-	}
-
-	//traceAdjacency(adjacency, count);
-
-	transitiveClosure(adjacency, count);
-
-	//traceAdjacency(adjacency, count);
-
-	int todo = countMissing(adjacency, partConnectorItems, routingStatus.m_unroutedConnectors);
-	if (todo == 0) {
-		routingStatus.m_netRoutedCount++;
-	}
-	else {
-		routingStatus.m_connectorsLeftToRoute += todo;
-	}
-}
-
-int PCBSketchWidget::countMissing(QVector< QVector<bool> > & adjacency, QList<ConnectorItem *> & partConnectorItems, ConnectorPairHash & connectorPairHash )
-{
-	int count = partConnectorItems.count();
-	QVector<bool> check(count, true);
-	int missing = 0;
-	for (int i = 0; i < count; i++) {
-		if (!check[i]) continue;
-
-		check[i] = false;
-		bool missingOne = false;
-		for (int j = 0; j < count; j++) {
-			if (!check[j]) continue;
-			if (i == j) continue;
-
-			if (adjacency[i][j]) {
-				check[j] = false;
-				continue;
-			}
-
-			connectorPairHash.insert(partConnectorItems.at(i), partConnectorItems.at(j));
-			missingOne = true;							// we can minimally span the set with n-1 wires, so even if multiple connections are missing from a given connector, count it as one
-		}
-
-		if (missingOne) missing++;
-	}
-
-	return missing;
-}
-
-
-void PCBSketchWidget::transitiveClosure(QVector< QVector<bool> > & adjacency, int count)
-{
-	// Floyd-Warshall algorithm
-	for (int k = 0; k < count; k++) { 
-		for (int i = 0; i < count; i++) { 
-			for (int j = 0; j < count; j++) { 
-				bool adj = adjacency[i][j];
-				if (!adj) {
-					adjacency[i][j] = (adjacency[i][k] && adjacency[k][j]);
-				}
-			}
-		}
-	}
+	GraphUtils::scoreOneNet(partConnectorItems, routingStatus);
 }
 
 double PCBSketchWidget::defaultGridSizeInches() {
