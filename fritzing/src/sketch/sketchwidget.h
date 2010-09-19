@@ -548,6 +548,8 @@ protected:
 	QPointer<QSvgRenderer> m_movingSVGRenderer;
 	QPointF m_movingSVGOffset;
 	QPointer<QGraphicsSvgItem> m_movingItem;
+	QList< QPointer<ConnectorItem> > m_ratsnestUpdateDisconnect;
+	QList< QPointer<ConnectorItem> > m_ratsnestUpdateConnect;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

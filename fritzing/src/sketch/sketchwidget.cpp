@@ -443,6 +443,7 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 			fromConnectorItem->setHidden(false);
 			toConnectorItem->setHidden(false);
 		}
+		m_ratsnestUpdateConnect << fromConnectorItem << toConnectorItem;
 		return;
 	}
 
@@ -2379,9 +2380,6 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 
 	m_dragBendpointWire = NULL;
 
-	if (m_connectorDragWire != NULL && m_connectorDragConnector != NULL) {
-		m_connectorDragConnector->prepDisplayRatsnest();
-	}
 	ConnectorItem::clearEqualPotentialDisplay();
 
 	if (m_spaceBarWasPressed) {
@@ -2435,7 +2433,6 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		m_bendpointWire = m_connectorDragWire = NULL;
 		m_savedItems.clear();
 		m_savedWires.clear();
-		m_connectorDragConnector->displayRatsnest();
 		m_connectorDragConnector = NULL;
 		return;
 	}
@@ -3805,12 +3802,13 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
 		fromConnectorItem->connectTo(toConnectorItem);
 		toConnectorItem->connectTo(fromConnectorItem);
+		m_ratsnestUpdateConnect << fromConnectorItem << toConnectorItem;
 	}
 	else {
-
 		fromConnectorItem->connector()->disconnectFrom(toConnectorItem->connector());
 		fromConnectorItem->removeConnection(toConnectorItem, true);
 		toConnectorItem->removeConnection(fromConnectorItem, true);
+		m_ratsnestUpdateDisconnect << fromConnectorItem << toConnectorItem;
 	}
 
 	chainVisible(fromConnectorItem, toConnectorItem, connect);
@@ -4896,8 +4894,9 @@ void SketchWidget::updateRoutingStatus(CleanUpWiresCommand * command, QUndoComma
 	Q_UNUSED(command);
 	Q_UNUSED(undoCommand);
 	Q_UNUSED(manual);
+	m_ratsnestUpdateConnect.clear();
+	m_ratsnestUpdateDisconnect.clear();
 }
-
 
 void SketchWidget::ensureLayerVisible(ViewLayer::ViewLayerID viewLayerID)
 {

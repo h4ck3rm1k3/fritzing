@@ -181,7 +181,7 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 		ConnectorItem * c1 = wire->connector1()->firstConnectedToIsh();
 		if (c1 == NULL) return false;
 
-		return !c0->wiredTo(c1, ViewGeometry::TraceFlag); 
+		return !c0->wiredTo(c1, ViewGeometry::NotTraceFlags); 
 	}
 
 	return result;
@@ -1306,10 +1306,11 @@ ItemBase * PCBSketchWidget::findBoard() {
 
 void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus) 
 {
-	//DebugDialog::debug("update ratsnest colors");
+	DebugDialog::debug(QString("update routing status %1").arg(m_viewIdentifier) );
 	// TODO: think about ways to optimize this...
 
 
+	QList< QList<ConnectorItem *> > ratnestsToUpdate;
 	QList<ConnectorItem *> visited;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
@@ -1321,43 +1322,49 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
 		visited.append(connectorItems);
 
-		scoreOneNet(connectorItems, routingStatus);
+		if (connectorItems.count() <= 1) continue;
+
+		QList<ConnectorItem *> partConnectorItems;
+		ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
+		if (partConnectorItems.count() <= 1) continue;
+
+		for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
+			if (!partConnectorItems[i]->attachedTo()->isEverVisible()) {
+				// may not be necessary when views are brought completely into sync
+				partConnectorItems.removeAt(i);
+			}
+		}
+
+		if (partConnectorItems.count() <= 1) continue;
+
+		GraphUtils::scoreOneNet(partConnectorItems, routingStatus);
+
+		bool doRatsnest = false;
+		for (int i = m_ratsnestUpdateConnect.count() - 1; i >= 0; i--) {
+			if (partConnectorItems.contains(m_ratsnestUpdateConnect[i])) {
+				m_ratsnestUpdateConnect.removeAt(i);
+				doRatsnest = true;
+			}
+		}
+		for (int i = m_ratsnestUpdateDisconnect.count() - 1; i >= 0; i--) {
+			if (partConnectorItems.contains(m_ratsnestUpdateDisconnect[i])) {
+				m_ratsnestUpdateDisconnect.removeAt(i);
+				doRatsnest = true;
+			}
+		}
+
+		if (doRatsnest) {
+			ratnestsToUpdate.append(partConnectorItems);
+		}
 	}
 
 	routingStatus.m_jumperWireCount /= 2;			// since we counted each connector twice
 	routingStatus.m_jumperItemCount /= 4;			// since we counted each connector twice on two layers (4 connectors per jumper item)
-}
 
-void traceAdjacency(QVector< QVector<bool> > & adjacency, int count)
-{
-	QString string = "\n";
-	for (int i = 0; i < count; i++) {
-		for (int j = 0; j < count; j++) {
-			string += adjacency[i][j] ? "1" : "0";
-		}
-		string += "\n";
+	// can't do this in the above loop since VirtualWires and ConnectorItems are added and deleted
+	foreach (QList<ConnectorItem *> partConnectorItems, ratnestsToUpdate) {
+		partConnectorItems.at(0)->displayRatsnest(partConnectorItems);
 	}
-	DebugDialog::debug(string);
-}
-
-void PCBSketchWidget::scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus & routingStatus) 
-{
-	if (connectorItems.count() <= 1) return;
-
-	QList<ConnectorItem *> partConnectorItems;
-	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
-	if (partConnectorItems.count() <= 1) return;
-
-	for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
-		if (!partConnectorItems[i]->attachedTo()->isEverVisible()) {
-			// may not be necessary when views are brought completely into sync
-			partConnectorItems.removeAt(i);
-		}
-	}
-
-	if (partConnectorItems.count() <= 1) return;
-
-	GraphUtils::scoreOneNet(partConnectorItems, routingStatus);
 }
 
 double PCBSketchWidget::defaultGridSizeInches() {
@@ -2419,7 +2426,7 @@ void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos,
 	ConnectorItem * c1 = wire->connector1()->firstConnectedToIsh();
 	if (c1 == NULL) return;
 
-	if (c1->wiredTo(c0, ViewGeometry::TraceFlag)) {
+	if (c1->wiredTo(c0, ViewGeometry::NotTraceFlags)) {
 		return;
 	}
 

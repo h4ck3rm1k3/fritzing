@@ -29,6 +29,8 @@ $Date$
 
 // get a compiler errow when using WireFlags instead of QFlags<>
 QFlags<ViewGeometry::WireFlag> ViewGeometry::TraceJumperRatsnestFlags = ViewGeometry::TraceFlag | ViewGeometry::JumperFlag | ViewGeometry::RatsnestFlag;
+QFlags<ViewGeometry::WireFlag> ViewGeometry::NotTraceJumperFlags = ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag;
+QFlags<ViewGeometry::WireFlag> ViewGeometry::NotTraceFlags = ViewGeometry::JumperFlag | ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag;
 
 ViewGeometry::ViewGeometry(  )
 {

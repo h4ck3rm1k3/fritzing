@@ -207,7 +207,7 @@ void Autorouter1::start()
 	}
 
 	clearTraces(m_sketchWidget, false, parentCommand);
-	updateRatsnest();
+	updateRoutingStatus();
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
 	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false);
@@ -437,10 +437,7 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 		foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 			ConnectorItem * from = jumperItemStruct->from;
 			ConnectorItem * to = jumperItemStruct->to;
-			QList<ConnectorItem *> connectorItems;
-			connectorItems << from;
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
-			if (connectorItems.contains(to)) {				
+			if (from->wiredTo(to, ViewGeometry::NotTraceJumperFlags)) {
 				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
 				jumperItemStruct->deleted = true;
 			}
@@ -633,7 +630,7 @@ void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<in
 	}
 	foreach (QList<ConnectorItem *>* partConnectorItems, m_allPartConnectorItems) {
 		// dijkstra will reorder *partConnectorItems
-		dijkstra(*partConnectorItems, indexer, adjacency, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
+		dijkstra(*partConnectorItems, indexer, adjacency, ViewGeometry::NotTraceJumperFlags);
 		bool ground = false;
 		foreach (ConnectorItem * pci, *partConnectorItems) {
 			if (pci->isGrounded()) {
@@ -679,7 +676,7 @@ void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<in
 }
 
 void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> > & adjacency, 
-						   ViewGeometry::WireFlags alreadyWiredBy) 
+						   ViewGeometry::WireFlags skipFlags) 
 {
 	// TODO: this is the most straightforward dijkstra, but there are more efficient implementations
 
@@ -719,13 +716,13 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 					// don't route the other side
 				}
 				else {
-					bool wired = ci->wiredTo(cj, alreadyWiredBy);
+					bool wired = ci->wiredTo(cj, skipFlags);
 					if (!wired && m_bothSidesNow) {
 						ConnectorItem * ccci = ci->getCrossLayerConnectorItem();
 						if (ccci) {
 							ConnectorItem * cccj = cj->getCrossLayerConnectorItem();
 							if (cccj) {
-								wired = ccci->wiredTo(cccj, alreadyWiredBy);
+								wired = ccci->wiredTo(cccj, skipFlags);
 							}
 						}
 
@@ -934,8 +931,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 	}
 }
 
-void Autorouter1::updateRatsnest() {
-
+void Autorouter1::updateRoutingStatus() {
 	RoutingStatus routingStatus;
 	routingStatus.zero();
 	m_sketchWidget->updateRoutingStatus(routingStatus);
@@ -1093,10 +1089,6 @@ JumperItem * Autorouter1::drawJumperItem(JumperItemStruct * jumperItemStruct)
 
 bool Autorouter1::findSpaceFor(ConnectorItem * & from, JumperItem * jumperItem, JumperItemStruct * jumperItemStruct, QPointF & candidate) 
 {
-	//QList<ConnectorItem *> equipotential;
-	//equipotential.append(from);
-	//ConnectorItem::collectEqualPotential(equipotential);
-
 	QSizeF jsz = jumperItem->footprintSize();
 	QRectF fromR = from->rect();
 	QPointF c = from->mapToScene(from->rect().center());

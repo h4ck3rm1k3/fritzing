@@ -77,7 +77,7 @@ public:
 	void saveInstance(QXmlStreamWriter & );
 	void writeConnector(QXmlStreamWriter & writer, const QString & elementName);
 	bool maleToFemale(ConnectorItem * other);
-	bool wiredTo(ConnectorItem *, ViewGeometry::WireFlags);
+	bool wiredTo(ConnectorItem *, ViewGeometry::WireFlags skipFlags);
 	void setBaseTooltip(const QString &);
 	void clearConnector();
 	bool connectionIsAllowed(ConnectorItem * other);
@@ -92,8 +92,7 @@ public:
 	bool isCrossLayerFrom(ConnectorItem * candidate);
 	bool isInLayers(ViewLayer::ViewLayerSpec);
 	ConnectorItem * getCrossLayerConnectorItem();
-	void displayRatsnest();
-	void prepDisplayRatsnest();
+	void displayRatsnest(QList<ConnectorItem *> & partsConnectorItems);
 	void clearRatsnestDisplay();
 	bool marked();
 	void setMarked(bool);
@@ -114,11 +113,10 @@ protected:
 	void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	void writeOtherElements(QXmlStreamWriter & writer);
 	void updateTooltip();
-    static class Wire * wiredToAux(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
+    static class Wire * directlyWiredToAux(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
 	void setHiddenOrInactive();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
-	void displayRatsnest(QList<ConnectorItem *> &);
 	bool isConnectedToPart();
 
 protected:
@@ -131,9 +129,8 @@ protected:
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_checkedEffectively;
-	QList<ConnectorItem *>  m_cacheEqualPotentialDisplayItems;
-	QList<ConnectorItem *> * m_ratsnestConnectorItems;
-	QList<class VirtualWire *> * m_ratsnestWires;
+	QList< QPointer<ConnectorItem> > * m_ratsnestConnectorItems;
+	QList< QPointer<class VirtualWire> > * m_ratsnestWires;
 	bool m_ratsnestColorWasNamed;
 	bool m_marked;
 	
@@ -149,7 +146,7 @@ public:
 	static void clearEqualPotentialDisplay();
 	static bool isGrounded(ConnectorItem * c1, ConnectorItem * c2);
 	static void collectConnectorNames(QList<ConnectorItem *> & connectorItems, QStringList & connectorNames);
-	static class Wire * wiredTo(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags);
+	static class Wire * directlyWiredTo(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags);
 
 public:
 	static const QList<ConnectorItem *> emptyConnectorItemList;

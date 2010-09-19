@@ -59,7 +59,7 @@ protected:
 	bool tryWithWire(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, QPointF midpoint, QList<class Wire *> & chainedWires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut);
 	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint, bool adjust);
 	void cleanUp();
-	void updateRatsnest();
+	void updateRoutingStatus();
 	Wire * drawJumper(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
 	class JumperItem * drawJumperItem(struct JumperItemStruct *);
 	void restoreOriginalState(QUndoCommand * parentCommand);
@@ -82,7 +82,7 @@ protected:
 	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited);
 	bool findSpaceFor(ConnectorItem * & from, class JumperItem *, struct JumperItemStruct *, QPointF & candidate); 
 	void dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<int> & netCounters, QList<struct Edge *> & edges);
-	void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> > & adjacency, ViewGeometry::WireFlags alreadyWiredBy);
+	void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> > & adjacency, ViewGeometry::WireFlags skipFlags);
 	void addSubedge(Wire * wire, QList<ConnectorItem *> & toConnectorItems, QList<struct Subedge *> & subedges);
 	bool traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase * partForBounds, const QPolygonF & boundingPoly, QGraphicsLineItem *);
 	ItemBase * getPartForBounds(struct Edge *);

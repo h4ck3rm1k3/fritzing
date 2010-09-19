@@ -2191,9 +2191,6 @@ void MainWindow::updateTraceMenu() {
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
 	m_designRulesCheckAct->setEnabled(true);
-	m_updateRatsnestAct->setEnabled(true);
-	m_updateRoutingStatusAct->setEnabled(true);
-
 }
 
 void MainWindow::zoomIn() {
@@ -2926,14 +2923,6 @@ void MainWindow::createTraceMenuActions() {
 	m_designRulesCheckAct = new QAction(tr("Design Rules Check"), this);
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
 	connect(m_designRulesCheckAct, SIGNAL(triggered()), this, SLOT(designRulesCheck()));
-
-	m_updateRatsnestAct = new QAction(tr("Update ratsnest"), this);
-	m_updateRatsnestAct->setStatusTip(tr("Update ratsnest colors"));
-	connect(m_updateRatsnestAct, SIGNAL(triggered()), this, SLOT(updateRatsnest()));
-
-	m_updateRoutingStatusAct = new QAction(tr("Update routing status"), this);
-	m_updateRoutingStatusAct->setStatusTip(tr("Update routing status"));
-	connect(m_updateRoutingStatusAct, SIGNAL(triggered()), this, SLOT(updateRoutingStatus()));
 }
 
 void MainWindow::activeLayerBoth() {
@@ -3749,19 +3738,6 @@ void MainWindow::throwFakeException() {
     throw "fake exception";
 }
 
-void MainWindow::updateRatsnest() {
-	QUndoCommand * parentCommand = new QUndoCommand(tr("Update ratsnest"));
-	RoutingStatus routingStatus;
-	if (m_currentGraphicsView == m_schematicGraphicsView) {
-		m_schematicGraphicsView->updateRoutingStatus(routingStatus);
-	}
-	else if (m_currentGraphicsView == m_pcbGraphicsView) {
-		m_pcbGraphicsView->updateRoutingStatus(routingStatus);
-	}
-	
-	m_undoStack->push(parentCommand);
-}
-
 void MainWindow::alignToGrid() {
 	if (m_currentGraphicsView == NULL) return;
 
@@ -3871,12 +3847,6 @@ void MainWindow::changeTraceLayer() {
 	if (m_currentGraphicsView != m_pcbGraphicsView) return;
 
 	m_pcbGraphicsView->changeTraceLayer();
-}
-
-void MainWindow::updateRoutingStatus() {
-	QUndoCommand  parentCommand;
-	RoutingStatus routingStatus;
-	m_currentGraphicsView->updateRoutingStatus(NULL, &parentCommand, routingStatus, true);
 }
 
 void MainWindow::hideNet() {

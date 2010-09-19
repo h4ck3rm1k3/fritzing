@@ -138,7 +138,6 @@ protected:
 	void connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2);
 	void connectSymbols(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
-	void scoreOneNet(QList<ConnectorItem *> & connectorItems, RoutingStatus &);
 	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
