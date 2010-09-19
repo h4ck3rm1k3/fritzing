@@ -160,7 +160,6 @@ public:
 	static void initNames();
 	static QRgb getRgb(const QString & name);
 	static void cleanup();
-	static void getColor(QColor & color, const QString & name);
 
 protected:
 	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);

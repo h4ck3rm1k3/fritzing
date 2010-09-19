@@ -1169,10 +1169,9 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems)
 	QColor formerColor;
 	if (m_ratsnestWires && m_ratsnestWires->count() > 0) {
 		formerColorWasNamed = m_ratsnestColorWasNamed;
-		QString ignore;
 		foreach (VirtualWire * vw, *m_ratsnestWires) {
 			if (vw != NULL) {
-				vw->getColor(formerColor, ignore);
+				formerColor = vw->color();
 				gotFormerColor = true;
 				break;
 			}

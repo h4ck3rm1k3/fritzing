@@ -1255,10 +1255,6 @@ void Wire::setPenWidth(qreal w, InfoGraphicsView * infoGraphicsView) {
 	m_shadowPen.setWidthF(w + 2);
 }
 
-void Wire::getColor(QColor & color, const QString & name) {
-	color.setNamedColor(colors.value(name));
-}
-
 bool Wire::connectionIsAllowed(ConnectorItem * to) {
 	if (!ItemBase::connectionIsAllowed(to)) return false;
 

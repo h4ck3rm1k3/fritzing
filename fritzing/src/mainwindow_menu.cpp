@@ -785,7 +785,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(displayName2));
 	}
 
-	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false, NULL);
+	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -793,7 +793,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(displayName2));
 	}
 
-	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false, NULL);
+	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -801,7 +801,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(displayName2));
 	}
 
-	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, false, NULL);
+	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
 
 	QApplication::processEvents();
 	if (m_fileProgressDialog) {
@@ -857,13 +857,13 @@ void MainWindow::pasteAux(bool pasteInPlace)
 
 		QRectF r;
 		QRectF boundingRect = boundingRects.value(m_breadboardGraphicsView->viewName(), r);
-		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true, pasteInPlace ? &r : &boundingRect);
+		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect);
 
 		boundingRect = boundingRects.value(m_pcbGraphicsView->viewName(), r);
-		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true, pasteInPlace ? &r : &boundingRect);
+		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect);
 
 		boundingRect = boundingRects.value(m_schematicGraphicsView->viewName(), r);
-		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, true, pasteInPlace ? &r : &boundingRect);
+		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect);
 
 		m_undoStack->push(parentCommand);
 	}
@@ -1899,6 +1899,7 @@ void MainWindow::updateWireMenu() {
 	m_deleteWireAct->setWire(wire);
 	m_excludeFromAutorouteWireAct->setWire(wire);
 	m_hideNetAct->setWire(wire);
+	m_updateNetAct->setWire(wire);
 
 	m_bringToFrontWireAct->setEnabled(enableZOK);
 	m_bringForwardWireAct->setEnabled(enableZOK);
@@ -1909,6 +1910,7 @@ void MainWindow::updateWireMenu() {
 	m_deleteWireAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteWireAct->setEnabled(enableAll && excludeOK);
 	m_hideNetAct->setEnabled(gotRat);
+	m_updateNetAct->setEnabled(gotRat);
 
 	m_changeTraceLayerAct->setEnabled(ctlOK);
 
@@ -2871,9 +2873,13 @@ void MainWindow::createTraceMenuActions() {
 	m_createTraceWireAct = new WireAction(m_createTraceAct);
 	connect(m_createTraceWireAct, SIGNAL(triggered()), this, SLOT(createTrace()));
 
-	m_hideNetAct = new WireAction(tr("Hide Ratsnet"), this);
+	m_hideNetAct = new WireAction(tr("Hide Ratsnest"), this);
 	m_hideNetAct->setStatusTip(tr("Hide this net"));
 	connect(m_hideNetAct, SIGNAL(triggered()), this, SLOT(hideNet()));
+
+	m_updateNetAct = new WireAction(tr("Update Ratsnest"), this);
+	m_updateNetAct->setStatusTip(tr("Redraw this net"));
+	connect(m_updateNetAct, SIGNAL(triggered()), this, SLOT(updateNet()));
 
 	m_createJumperAct = new QAction(tr("&Create Jumper from Selected Wire(s)"), this);
 	m_createJumperAct->setStatusTip(tr("Create a jumper wire from the selected wire"));
@@ -3351,6 +3357,7 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
 	menu->addAction(m_hideNetAct);
+	menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
@@ -3372,6 +3379,7 @@ QMenu *MainWindow::schematicWireMenu() {
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
 	menu->addAction(m_hideNetAct);
+	menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
@@ -3851,6 +3859,10 @@ void MainWindow::changeTraceLayer() {
 
 void MainWindow::hideNet() {
 	m_currentGraphicsView->hideNet(retrieveWire());
+}
+
+void MainWindow::updateNet() {
+	m_currentGraphicsView->updateNet(retrieveWire());
 }
 
 Wire * MainWindow::retrieveWire() {

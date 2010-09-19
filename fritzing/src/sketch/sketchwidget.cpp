@@ -184,7 +184,7 @@ void SketchWidget::setUndoStack(WaitPushUndoStack * undoStack) {
 	m_undoStack = undoStack;
 }
 
-void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, const QRectF * boundingRect) {
+void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
@@ -373,7 +373,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			if (!connects.isNull()) {
 				QDomElement connect = connects.firstChildElement("connect");
 				while (!connect.isNull()) {
-					handleConnect(connect, mp, fromConnectorID, connectorViewLayerID, alreadyConnected, newItems, doRatsnest, parentCommand);
+					handleConnect(connect, mp, fromConnectorID, connectorViewLayerID, alreadyConnected, newItems, parentCommand);
 					connect = connect.nextSiblingElement("connect");
 				}
 			}
@@ -391,26 +391,23 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 		m_pasteCount = 0;
 		this->scene()->clearSelection();
-		if (doRatsnest) {
-			cleanUpWires(false, NULL, false);
-		}
+		cleanUpWires(false, NULL, false);
+
 	}
 	else {
 		if (offsetPaste) {
 			// m_pasteCount used for offsetting paste items, not a count of how many items are pasted
 			m_pasteCount++;
 		}
-		//emit ratsnestChangeSignal(this, parentCommand);
-		if (doRatsnest) {
-			new CleanUpWiresCommand(this, false, parentCommand);
-		}
+
+		new CleanUpWiresCommand(this, false, parentCommand);
 	}
 
 	setIgnoreSelectionChangeEvents(false);
 	m_pasteOffset = QPointF(0,0);
 }
 
-void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, ViewLayer::ViewLayerID fromViewLayerID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand)
+void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, ViewLayer::ViewLayerID fromViewLayerID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand)
 {
 	bool ok;
 	QHash<long, ItemBase *> otherNewItems;
@@ -452,8 +449,6 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 								ItemBase::getNextID(modelIndex), toConnectorID,
 								ViewLayer::specFromID(fromViewLayerID),
 								true, parentCommand);
-	if (doRatsnest && doRatsnestOnCopy()) {
-	}
 }
 
 void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand)
@@ -815,8 +810,6 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 		}
 	}
 
-
-	emit ratsnestChangeSignal(this, parentCommand);
 
 	new CleanUpWiresCommand(this, skipMe, parentCommand);
 
@@ -1563,7 +1556,6 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 
 	killDroppingItem();
 
-	emit ratsnestChangeSignal(this, parentCommand);
 	new CleanUpWiresCommand(this, false, parentCommand);
     m_undoStack->waitPush(parentCommand, 10);
 
@@ -2486,7 +2478,6 @@ bool SketchWidget::checkMoved()
 	QUndoCommand * parentCommand = new QUndoCommand(moveString);
 
 	bool hasBoard = false;
-	bool doEmit = false;
 
 	foreach (ItemBase * item, m_savedItems) {
 		rememberSticky(item->id(), parentCommand);
@@ -2534,7 +2525,6 @@ bool SketchWidget::checkMoved()
 	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {
 		foreach (ConnectorItem * toConnectorItem, m_moveDisconnectedFromFemale.values(fromConnectorItem)) {
 			extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()), false, parentCommand);
-			doEmit = true;
 		}
 	}
 
@@ -2568,15 +2558,8 @@ bool SketchWidget::checkMoved()
 
 	clearTemporaries();
 
-	if (doEmit) {
-		emit ratsnestChangeSignal(this, parentCommand);
-	}
-	else if (!hasBoard) {
-		// TODO: hasboard: make a cleaner distinction if moving muliple parts (remember, this is for removing routing)
-		emit movingSignal(this, parentCommand);
-	}
-
-	new CleanUpWiresCommand(this, false, parentCommand);
+	// uncomment CleanUpWiresCommand if you decide to update ratsnests here
+	//new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 
 	return true;
@@ -2786,7 +2769,6 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	parentCommand->setText(QObject::tr("%1 %2 %3").arg(prefix).arg(wire->title()).arg(suffix) );
 
-	bool doEmit = false;
 	if (!chained) {
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
@@ -2797,20 +2779,14 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 				extendChangeConnectionCommand(from, formerConnectorItem, 
 					ViewLayer::specFromID(wire->viewLayerID()),
 					false, parentCommand);
-				doEmit = true;
 				from->tempRemove(formerConnectorItem, false);
 				formerConnectorItem->tempRemove(from, false);
 			}
 
 		}
 		if (to != NULL) {
-			doEmit = true;
 			extendChangeConnectionCommand(from, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
 		}
-	}
-
-	if (doEmit) {
-		emit ratsnestChangeSignal(this, parentCommand);
 	}
 
 	clearTemporaries();
@@ -2917,10 +2893,6 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 		m_bendpointWire = NULL;			// signal that we're done
 
-	}
-
-	if (doEmit) {
-		emit ratsnestChangeSignal(this, parentCommand);
 	}
 
 	clearTemporaries();
@@ -3573,11 +3545,10 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
-	bool doEmit = false;
 	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
 	foreach (ItemBase * item, targets) {
-		if (disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand)) doEmit = true;
+		disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand);
 
 		if (item->sticky()) {
 			//TODO: apply transformation to stuck items
@@ -3593,14 +3564,9 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 	}
 
 	clearTemporaries();
-	if (doEmit) {
-		emit ratsnestChangeSignal(this, parentCommand);
-	}
-	else {
-		emit rotatingFlippingSignal(this, parentCommand);		// eventually, don't send signal when rotating board
-	}
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	// uncomment CleanUpWiresCommand if you decide to reroute ratsnests here
+	//new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 
 }
@@ -4212,7 +4178,8 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	selectItemCommand->addRedo(newID);
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	// don't think ratsnest/routing status is changed, so comment out CleanUpWiresCommand
+	//new CleanUpWiresCommand(this, false, parentCommand);
 
 	m_undoStack->push(parentCommand);
 }
@@ -5805,6 +5772,9 @@ void SketchWidget::createTrace(Wire *) {
 void SketchWidget::hideNet(Wire *) {
 }
 
+void SketchWidget::updateNet(Wire *) {
+}
+
 void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
 {
 	QList<Wire *> wires;
@@ -5944,7 +5914,6 @@ void SketchWidget::disconnectAll() {
 	disconnectAllSlot(connectorItems, itemsToDelete, parentCommand);
 	emit disconnectAllSignal(connectorItems, itemsToDelete, parentCommand);
 
-	emit ratsnestChangeSignal(this, parentCommand);
 	new CleanUpWiresCommand(this, false, parentCommand);
 	foreach (ItemBase * item, itemsToDelete.keys()) {
 		itemsToDelete.value(item)->makeDeleteItemCommand(item, BaseCommand::SingleView, parentCommand);

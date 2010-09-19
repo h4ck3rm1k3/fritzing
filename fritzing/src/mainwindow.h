@@ -221,7 +221,6 @@ protected slots:
 
 	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(SketchWidget *, const RoutingStatus &);
-	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
 	void applyReadOnlyChange(bool isReadOnly);
 	void currentNavigatorChanged(class MiniViewContainer *);
@@ -273,6 +272,7 @@ protected slots:
 	void routingStatusLabelMousePress(QMouseEvent*);
 	void routingStatusLabelMouseRelease(QMouseEvent*);
 	void hideNet();
+	void updateNet();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -574,6 +574,7 @@ protected:
 	QAction *m_createTraceAct;
 	class WireAction *m_createTraceWireAct;
 	class WireAction *m_hideNetAct;
+	class WireAction *m_updateNetAct;
 	QAction *m_createJumperAct;
 	class WireAction *m_createJumperWireAct;
 	QAction *m_changeTraceLayerAct;

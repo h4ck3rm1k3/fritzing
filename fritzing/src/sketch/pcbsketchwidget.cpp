@@ -288,14 +288,6 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 	}
 }
 
-void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
-	Q_UNUSED(parentCommand);
-
-	//kill copperfill here
-	//Autorouter1::clearTraces(this, true, parentCommand);
-	//updateRoutingStatus(NULL, parentCommand);
-}
-
 void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus, bool manual)
 {
 	//DebugDialog::debug("update ratsnest status");
@@ -1341,13 +1333,21 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 
 		bool doRatsnest = false;
 		for (int i = m_ratsnestUpdateConnect.count() - 1; i >= 0; i--) {
-			if (partConnectorItems.contains(m_ratsnestUpdateConnect[i])) {
+			ConnectorItem * ci = m_ratsnestUpdateConnect[i];
+			if (ci == NULL) {
+				m_ratsnestUpdateConnect.removeAt(i);
+			}
+			else if (partConnectorItems.contains(ci)) {
 				m_ratsnestUpdateConnect.removeAt(i);
 				doRatsnest = true;
 			}
 		}
 		for (int i = m_ratsnestUpdateDisconnect.count() - 1; i >= 0; i--) {
-			if (partConnectorItems.contains(m_ratsnestUpdateDisconnect[i])) {
+			ConnectorItem * ci = m_ratsnestUpdateDisconnect[i];
+			if (ci == NULL) {
+				m_ratsnestUpdateConnect.removeAt(i);
+			}
+			else if (partConnectorItems.contains(ci)) {
 				m_ratsnestUpdateDisconnect.removeAt(i);
 				doRatsnest = true;
 			}
@@ -2012,7 +2012,7 @@ void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<
 	}
 }
 
-void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, const QRectF * boundingRect) {
+void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect) {
 	if (parentCommand == NULL) {
 		bool done = false;
 		foreach (ModelPart * modelPart, modelParts) {
@@ -2047,7 +2047,7 @@ void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCo
 		}
 	}
 
-	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, doRatsnest, offsetPaste, boundingRect);
+	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, offsetPaste, boundingRect);
 }
 
 bool PCBSketchWidget::isInLayers(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec viewLayerSpec) {
@@ -2490,7 +2490,20 @@ void PCBSketchWidget::hideNet(Wire * wire) {
 	if (connectorItem) {
 		connectorItem->clearRatsnestDisplay();
 	}
+}
 
+void PCBSketchWidget::updateNet(Wire * wire) {
+	if (wire == NULL) return;
+
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(wire->connector0());
+	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
+
+	QList<ConnectorItem *> partConnectorItems;
+	ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
+	if (partConnectorItems.count() < 1) return;
+
+	partConnectorItems.at(0)->displayRatsnest(partConnectorItems);
 }
 
 bool PCBSketchWidget::hasAnyNets() {

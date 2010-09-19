@@ -357,22 +357,9 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
 						this, SLOT(dropPaste(SketchWidget *)));
 	
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
-						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(movingSignal(SketchWidget *, QUndoCommand *)),
-						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(rotatingFlippingSignal(SketchWidget *, QUndoCommand *)),
-						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
-
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
-						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
-	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
-						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
-
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand *)),
 						this, SLOT(subSwapSlot(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand *)),
 						Qt::DirectConnection);
-
 
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
 	succeeded = connect(m_schematicGraphicsView, SIGNAL(firstTimeHelpHidden()), this, SLOT(firstTimeHelpHidden()));
@@ -806,10 +793,12 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	m_currentGraphicsView->updateInfoView();
 
-	// update issue with 4.5.1?
+	// update issue with 4.5.1?: is this still valid (4.6.x?)
 	m_currentGraphicsView->updateConnectors();
-	RoutingStatus routingStatus;
-	m_currentGraphicsView->updateRoutingStatus(NULL, NULL, routingStatus, false);
+
+	// don't think routing status update is necessary when changing views
+	//RoutingStatus routingStatus;
+	//m_currentGraphicsView->updateRoutingStatus(NULL, NULL, routingStatus, false);
 }
 
 void MainWindow::setActionsIcons(int index, QList<QAction *> & actions) {
@@ -1491,14 +1480,6 @@ void MainWindow::routingStatusSlot(SketchWidget * sketchWidget, const RoutingSta
 
 	updateTraceMenu();
 }
-
-
-void MainWindow::clearRoutingSlot(SketchWidget * sketchWidget, QUndoCommand * parentCommand) {
-	Q_UNUSED(sketchWidget);
-
-	m_pcbGraphicsView->clearRouting(parentCommand);
-}
-
 
 void MainWindow::applyReadOnlyChange(bool isReadOnly) {
 	Q_UNUSED(isReadOnly);

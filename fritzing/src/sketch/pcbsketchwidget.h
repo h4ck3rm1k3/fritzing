@@ -44,7 +44,6 @@ public:
 	void createTrace(Wire *);
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
-	void clearRouting(QUndoCommand * parentCommand);
 	void updateRoutingStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &, bool manual);
 	bool hasAnyNets();
 	void forwardRoutingStatus(const RoutingStatus &);
@@ -79,7 +78,7 @@ public:
 	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
-	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, const QRectF * boundingRect);
+	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
@@ -90,6 +89,7 @@ public:
 	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	void getRatsnestColor(QColor &);
 	void hideNet(Wire*);
+	void updateNet(Wire*);
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
