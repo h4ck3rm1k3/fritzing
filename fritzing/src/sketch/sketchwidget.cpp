@@ -440,7 +440,8 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 			fromConnectorItem->setHidden(false);
 			toConnectorItem->setHidden(false);
 		}
-		m_ratsnestUpdateConnect << fromConnectorItem << toConnectorItem;
+		ratsnestConnect(fromConnectorItem, true);
+		ratsnestConnect(toConnectorItem, true);
 		return;
 	}
 
@@ -3768,14 +3769,14 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
 		fromConnectorItem->connectTo(toConnectorItem);
 		toConnectorItem->connectTo(fromConnectorItem);
-		m_ratsnestUpdateConnect << fromConnectorItem << toConnectorItem;
 	}
 	else {
 		fromConnectorItem->connector()->disconnectFrom(toConnectorItem->connector());
 		fromConnectorItem->removeConnection(toConnectorItem, true);
 		toConnectorItem->removeConnection(fromConnectorItem, true);
-		m_ratsnestUpdateDisconnect << fromConnectorItem << toConnectorItem;
 	}
+	ratsnestConnect(fromConnectorItem, connect);
+	ratsnestConnect(toConnectorItem, connect);
 
 	chainVisible(fromConnectorItem, toConnectorItem, connect);
 
@@ -6418,6 +6419,22 @@ bool SketchWidget::hasAnyNets() {
 	return false;
 }
 
+void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) {
+	if (connect) {
+		m_ratsnestUpdateConnect << connectorItem;
+	}
+	else {
+		m_ratsnestUpdateDisconnect << connectorItem;
+	}
 
+	DebugDialog::debug(QString("add rat '%1' id:%2 cid:%3 vid%4 vlid:%5 con:%6")
+		.arg(connectorItem->attachedToTitle())
+		.arg(connectorItem->attachedToID())
+		.arg(connectorItem->connectorSharedID())
+		.arg(m_viewIdentifier)
+		.arg(connectorItem->attachedToViewLayerID())
+		.arg(connect)
+		);
+}
 
 

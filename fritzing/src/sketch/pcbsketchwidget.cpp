@@ -1301,7 +1301,6 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 	DebugDialog::debug(QString("update routing status %1").arg(m_viewIdentifier) );
 	// TODO: think about ways to optimize this...
 
-
 	QList< QList<ConnectorItem *> > ratnestsToUpdate;
 	QList<ConnectorItem *> visited;
 	foreach (QGraphicsItem * item, scene()->items()) {
@@ -1334,23 +1333,43 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 		bool doRatsnest = false;
 		for (int i = m_ratsnestUpdateConnect.count() - 1; i >= 0; i--) {
 			ConnectorItem * ci = m_ratsnestUpdateConnect[i];
+			bool remove = false;
 			if (ci == NULL) {
-				m_ratsnestUpdateConnect.removeAt(i);
+				remove = true;
+				DebugDialog::debug(QString("rem rat null %1 con:true").arg(m_viewIdentifier));
 			}
 			else if (partConnectorItems.contains(ci)) {
-				m_ratsnestUpdateConnect.removeAt(i);
+				remove = true;
+				DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:true")
+					.arg(ci->attachedToTitle())
+					.arg(ci->attachedToID())
+					.arg(ci->connectorSharedID())
+					.arg(m_viewIdentifier)
+					.arg(ci->attachedToViewLayerID())
+					);
 				doRatsnest = true;
 			}
+			if (remove) m_ratsnestUpdateConnect.removeAt(i);
 		}
 		for (int i = m_ratsnestUpdateDisconnect.count() - 1; i >= 0; i--) {
 			ConnectorItem * ci = m_ratsnestUpdateDisconnect[i];
+			bool remove = false;
 			if (ci == NULL) {
-				m_ratsnestUpdateConnect.removeAt(i);
+				remove = true;
+				DebugDialog::debug(QString("rem rat null %1 con:false").arg(m_viewIdentifier));
 			}
 			else if (partConnectorItems.contains(ci)) {
-				m_ratsnestUpdateDisconnect.removeAt(i);
+				remove = true;
+				DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid%4 vlid:%5 false")
+					.arg(ci->attachedToTitle())
+					.arg(ci->attachedToID())
+					.arg(ci->connectorSharedID())
+					.arg(m_viewIdentifier)
+					.arg(ci->attachedToViewLayerID())
+					);
 				doRatsnest = true;
 			}
+			if (remove) m_ratsnestUpdateDisconnect.removeAt(i);
 		}
 
 		if (doRatsnest) {
