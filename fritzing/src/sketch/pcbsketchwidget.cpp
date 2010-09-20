@@ -1312,71 +1312,42 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag);
 		visited.append(connectorItems);
 
-		if (connectorItems.count() <= 1) continue;
+		bool doRatsnest = checkUpdateRatsnest(connectorItems);
+		if (!doRatsnest && connectorItems.count() <= 1) continue;
 
 		QList<ConnectorItem *> partConnectorItems;
 		ConnectorItem::collectParts(connectorItems, partConnectorItems, includeSymbols(), ViewLayer::TopAndBottom);
-		if (partConnectorItems.count() <= 1) continue;
+		if (partConnectorItems.count() < 1) continue;
+		if (!doRatsnest && partConnectorItems.count() <= 1) continue;
 
 		for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
-			if (!partConnectorItems[i]->attachedTo()->isEverVisible()) {
+			ConnectorItem * ci = partConnectorItems[i];
+			DebugDialog::debug(QString("pc '%1' id:%2 cid:%3 vid:%4 vlid:%5 vis:%6")
+				.arg(ci->attachedToTitle())
+				.arg(ci->attachedToID())
+				.arg(ci->connectorSharedID())
+				.arg(m_viewIdentifier)
+				.arg(ci->attachedToViewLayerID())
+				.arg(ci->attachedTo()->isEverVisible())
+				);
+			if (!ci->attachedTo()->isEverVisible()) {
 				// may not be necessary when views are brought completely into sync
 				partConnectorItems.removeAt(i);
 			}
 		}
 
-		if (partConnectorItems.count() <= 1) continue;
-
-		GraphUtils::scoreOneNet(partConnectorItems, routingStatus);
-
-		bool doRatsnest = false;
-		for (int i = m_ratsnestUpdateConnect.count() - 1; i >= 0; i--) {
-			ConnectorItem * ci = m_ratsnestUpdateConnect[i];
-			bool remove = false;
-			if (ci == NULL) {
-				remove = true;
-				DebugDialog::debug(QString("rem rat null %1 con:true").arg(m_viewIdentifier));
-			}
-			else if (partConnectorItems.contains(ci)) {
-				remove = true;
-				DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:true")
-					.arg(ci->attachedToTitle())
-					.arg(ci->attachedToID())
-					.arg(ci->connectorSharedID())
-					.arg(m_viewIdentifier)
-					.arg(ci->attachedToViewLayerID())
-					);
-				doRatsnest = true;
-			}
-			if (remove) m_ratsnestUpdateConnect.removeAt(i);
-		}
-		for (int i = m_ratsnestUpdateDisconnect.count() - 1; i >= 0; i--) {
-			ConnectorItem * ci = m_ratsnestUpdateDisconnect[i];
-			bool remove = false;
-			if (ci == NULL) {
-				remove = true;
-				DebugDialog::debug(QString("rem rat null %1 con:false").arg(m_viewIdentifier));
-			}
-			else if (partConnectorItems.contains(ci)) {
-				remove = true;
-				DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid%4 vlid:%5 false")
-					.arg(ci->attachedToTitle())
-					.arg(ci->attachedToID())
-					.arg(ci->connectorSharedID())
-					.arg(m_viewIdentifier)
-					.arg(ci->attachedToViewLayerID())
-					);
-				doRatsnest = true;
-			}
-			if (remove) m_ratsnestUpdateDisconnect.removeAt(i);
-		}
+		if (partConnectorItems.count() < 1) continue;
 
 		if (doRatsnest) {
 			ratnestsToUpdate.append(partConnectorItems);
 		}
+
+		if (partConnectorItems.count() <= 1) continue;
+
+		GraphUtils::scoreOneNet(partConnectorItems, routingStatus);
 	}
 
 	routingStatus.m_jumperWireCount /= 2;			// since we counted each connector twice
@@ -1386,6 +1357,52 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 	foreach (QList<ConnectorItem *> partConnectorItems, ratnestsToUpdate) {
 		partConnectorItems.at(0)->displayRatsnest(partConnectorItems);
 	}
+}
+
+bool PCBSketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems) {
+	bool doRatsnest = false;
+	for (int i = m_ratsnestUpdateConnect.count() - 1; i >= 0; i--) {
+		ConnectorItem * ci = m_ratsnestUpdateConnect[i];
+		bool remove = false;
+		if (ci == NULL) {
+			remove = true;
+			DebugDialog::debug(QString("rem rat null %1 con:true").arg(m_viewIdentifier));
+		}
+		else if (connectorItems.contains(ci)) {
+			remove = true;
+			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:true")
+				.arg(ci->attachedToTitle())
+				.arg(ci->attachedToID())
+				.arg(ci->connectorSharedID())
+				.arg(m_viewIdentifier)
+				.arg(ci->attachedToViewLayerID())
+				);
+			doRatsnest = true;
+		}
+		if (remove) m_ratsnestUpdateConnect.removeAt(i);
+	}
+	for (int i = m_ratsnestUpdateDisconnect.count() - 1; i >= 0; i--) {
+		ConnectorItem * ci = m_ratsnestUpdateDisconnect[i];
+		bool remove = false;
+		if (ci == NULL) {
+			remove = true;
+			DebugDialog::debug(QString("rem rat null %1 con:false").arg(m_viewIdentifier));
+		}
+		else if (connectorItems.contains(ci)) {
+			remove = true;
+			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 false")
+				.arg(ci->attachedToTitle())
+				.arg(ci->attachedToID())
+				.arg(ci->connectorSharedID())
+				.arg(m_viewIdentifier)
+				.arg(ci->attachedToViewLayerID())
+				);
+			doRatsnest = true;
+		}
+		if (remove) m_ratsnestUpdateDisconnect.removeAt(i);
+	}
+
+	return doRatsnest;
 }
 
 double PCBSketchWidget::defaultGridSizeInches() {
@@ -2481,7 +2498,7 @@ void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos,
 								ViewLayer::specFromID(c1->attachedToViewLayerID()),
 								true, parentCommand);
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	//new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 

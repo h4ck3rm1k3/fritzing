@@ -828,31 +828,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand) {
 	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
 
-	foreach (ItemBase * itemBase, deletedItems) {
-		JumperItem * jumperItem = qobject_cast<JumperItem *>(itemBase);
-		if (jumperItem == NULL) continue;
-
-		QList<ConnectorItem *> connectedToItems;
-		foreach (ConnectorItem * connectorItem, jumperItem->connector0()->connectedToItems()) {
-			connectedToItems.append(connectorItem);
-		}
-		foreach (ConnectorItem * connectorItem, jumperItem->connector1()->connectedToItems()) {
-			connectedToItems.append(connectorItem);
-		}
-
-		foreach (ConnectorItem * connectorItem, connectedToItems) {
-			TraceWire * tw = qobject_cast<TraceWire *>(connectorItem->attachedTo());
-			if (tw == NULL) continue;
-
-			QList<Wire *> wires;
-			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			tw->collectChained(wires, ends, uniqueEnds);
-			foreach (Wire * wire, wires) {
-				deletedItems.insert(wire);
-			}
-		}
-	}
+	deleteJumperItems(deletedItems);
 
 	foreach (ItemBase * itemBase, deletedItems) {
 		ConnectorPairHash * connectorHash = new ConnectorPairHash;
@@ -882,6 +858,34 @@ bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * 
 	}
 
 	return skipMe;
+}
+
+void SketchWidget::deleteJumperItems(QSet<ItemBase *> & deletedItems) {
+	foreach (ItemBase * itemBase, deletedItems) {
+		JumperItem * jumperItem = qobject_cast<JumperItem *>(itemBase);
+		if (jumperItem == NULL) continue;
+
+		QList<ConnectorItem *> connectedToItems;
+		foreach (ConnectorItem * connectorItem, jumperItem->connector0()->connectedToItems()) {
+			connectedToItems.append(connectorItem);
+		}
+		foreach (ConnectorItem * connectorItem, jumperItem->connector1()->connectedToItems()) {
+			connectedToItems.append(connectorItem);
+		}
+
+		foreach (ConnectorItem * connectorItem, connectedToItems) {
+			Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
+			if (wire == NULL) continue;
+
+			QList<Wire *> wires;
+			QList<ConnectorItem *> ends;
+			QList<ConnectorItem *> uniqueEnds;
+			wire->collectChained(wires, ends, uniqueEnds);
+			foreach (Wire * w, wires) {
+				deletedItems.insert(w);
+			}
+		}
+	}
 }
 
 
@@ -1583,7 +1587,9 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 
 	killDroppingItem();
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	if (gotConnector) {
+		new CleanUpWiresCommand(this, false, parentCommand);
+	}
     m_undoStack->waitPush(parentCommand, 10);
 
 
@@ -6450,7 +6456,7 @@ void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) 
 		m_ratsnestUpdateDisconnect << connectorItem;
 	}
 
-	DebugDialog::debug(QString("add rat '%1' id:%2 cid:%3 vid%4 vlid:%5 con:%6")
+	DebugDialog::debug(QString("add rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:%6")
 		.arg(connectorItem->attachedToTitle())
 		.arg(connectorItem->attachedToID())
 		.arg(connectorItem->connectorSharedID())

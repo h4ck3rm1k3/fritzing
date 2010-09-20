@@ -93,7 +93,7 @@ public:
 	bool isInLayers(ViewLayer::ViewLayerSpec);
 	ConnectorItem * getCrossLayerConnectorItem();
 	void displayRatsnest(QList<ConnectorItem *> & partsConnectorItems);
-	void clearRatsnestDisplay();
+	void clearRatsnestDisplay(QList<ConnectorItem *> & connectorItems);
 	bool marked();
 	void setMarked(bool);
 
@@ -129,8 +129,6 @@ protected:
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_checkedEffectively;
-	QList< QPointer<ConnectorItem> > * m_ratsnestConnectorItems;
-	bool m_ratsnestColorWasNamed;
 	bool m_marked;
 	
 protected:	

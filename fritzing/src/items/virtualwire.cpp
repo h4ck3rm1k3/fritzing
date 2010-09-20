@@ -30,6 +30,7 @@ $Date$
 VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, false)
 {
+	m_colorWasNamed = false;
 	// note: at this point in fritzing development, the VirtualWire class is only ever used for ratsnest wires
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 }
@@ -121,3 +122,10 @@ void VirtualWire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	ClipableWire::mousePressEvent(event);
 }
 
+void VirtualWire::setColorWasNamed(bool colorWasNamed) {
+	m_colorWasNamed = colorWasNamed;
+}
+
+bool VirtualWire::colorWasNamed() {
+	return m_colorWasNamed;
+}

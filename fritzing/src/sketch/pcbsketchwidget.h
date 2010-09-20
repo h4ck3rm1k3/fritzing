@@ -154,6 +154,7 @@ protected:
 	void resizeBoard();
 	void resizeJumperItem();
 	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
+	bool checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems);
 
 signals:
 	void setMaximumDRCProgress(int);

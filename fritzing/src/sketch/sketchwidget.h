@@ -368,6 +368,7 @@ protected:
 	virtual bool resizingJumperItemRelease();
 	virtual bool resizingBoardPress(QGraphicsItem * item);
 	virtual bool resizingBoardRelease();
+	void deleteJumperItems(QSet<ItemBase *> & deletedItems);
 
 
 protected:

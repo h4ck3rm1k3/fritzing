@@ -40,6 +40,8 @@ public:
 	void setHidden(bool hidden);
 	void setInactive(bool inactivate);
 	void tempRemoveAllConnections();
+	void setColorWasNamed(bool);
+	bool colorWasNamed();
 	
 protected:
 	void paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );	
@@ -49,6 +51,9 @@ protected:
 	void hideConnectors();	
 	void inactivateConnectors();
 	qreal calcClipRadius(ConnectorItem *);
+
+protected:
+	bool m_colorWasNamed;
 
 };
 

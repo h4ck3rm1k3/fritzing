@@ -208,7 +208,7 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 		for (int j = i + 1; j < num_nodes; j++) {
 			if (!check[j]) continue;
 
-                        if (edge(i, j, TC).second) {
+			if (edge(i, j, TC).second) {
 				check[j] = false;
 			}
 			else {
