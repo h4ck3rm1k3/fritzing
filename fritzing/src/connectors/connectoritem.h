@@ -130,7 +130,6 @@ protected:
 	bool m_hoverEnterSpaceBarWasPressed;
 	bool m_checkedEffectively;
 	QList< QPointer<ConnectorItem> > * m_ratsnestConnectorItems;
-	QList< QPointer<class VirtualWire> > * m_ratsnestWires;
 	bool m_ratsnestColorWasNamed;
 	bool m_marked;
 	

@@ -202,7 +202,6 @@ public:
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();
 	virtual void createTrace(Wire*);
-	virtual void hideNet(Wire*);
 	virtual void updateNet(Wire*);
 	void selectAllWires(ViewGeometry::WireFlag);
 	virtual void tidyWires();

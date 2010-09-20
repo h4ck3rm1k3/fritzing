@@ -1898,7 +1898,6 @@ void MainWindow::updateWireMenu() {
 	m_createJumperWireAct->setWire(wire);
 	m_deleteWireAct->setWire(wire);
 	m_excludeFromAutorouteWireAct->setWire(wire);
-	m_hideNetAct->setWire(wire);
 	m_updateNetAct->setWire(wire);
 
 	m_bringToFrontWireAct->setEnabled(enableZOK);
@@ -1909,7 +1908,6 @@ void MainWindow::updateWireMenu() {
 	m_createJumperWireAct->setEnabled(enableAll && createJumperOK);
 	m_deleteWireAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteWireAct->setEnabled(enableAll && excludeOK);
-	m_hideNetAct->setEnabled(gotRat);
 	m_updateNetAct->setEnabled(gotRat);
 
 	m_changeTraceLayerAct->setEnabled(ctlOK);
@@ -2873,10 +2871,6 @@ void MainWindow::createTraceMenuActions() {
 	m_createTraceWireAct = new WireAction(m_createTraceAct);
 	connect(m_createTraceWireAct, SIGNAL(triggered()), this, SLOT(createTrace()));
 
-	m_hideNetAct = new WireAction(tr("Hide Ratsnest"), this);
-	m_hideNetAct->setStatusTip(tr("Hide this net"));
-	connect(m_hideNetAct, SIGNAL(triggered()), this, SLOT(hideNet()));
-
 	m_updateNetAct = new WireAction(tr("Update Ratsnest"), this);
 	m_updateNetAct->setStatusTip(tr("Redraw this net"));
 	connect(m_updateNetAct, SIGNAL(triggered()), this, SLOT(updateNet()));
@@ -3356,7 +3350,6 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
-	menu->addAction(m_hideNetAct);
 	menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
@@ -3378,7 +3371,6 @@ QMenu *MainWindow::schematicWireMenu() {
 	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
-	menu->addAction(m_hideNetAct);
 	menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
@@ -3855,10 +3847,6 @@ void MainWindow::changeTraceLayer() {
 	if (m_currentGraphicsView != m_pcbGraphicsView) return;
 
 	m_pcbGraphicsView->changeTraceLayer();
-}
-
-void MainWindow::hideNet() {
-	m_currentGraphicsView->hideNet(retrieveWire());
 }
 
 void MainWindow::updateNet() {

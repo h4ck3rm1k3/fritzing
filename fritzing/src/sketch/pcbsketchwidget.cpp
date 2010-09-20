@@ -751,6 +751,7 @@ bool PCBSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, 
 	Q_UNUSED(deletedItems);
 	Q_UNUSED(parentCommand);
 
+	// keeps virtual wire connections off the undo list
 	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
 		QList <ConnectorItem *> removeKeys;
@@ -774,6 +775,7 @@ bool PCBSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, 
 			connectorHash->remove(fromConnectorItem);
 		}
 	}
+
 
 	return false;
 }
@@ -2499,15 +2501,6 @@ void PCBSketchWidget::jumperItemHack() {
 	ItemBase * itemBase = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase) {
 		deleteItem(itemBase, true, false, false);
-	}
-}
-
-void PCBSketchWidget::hideNet(Wire * wire) {
-	if (wire == NULL) return;
-
-	ConnectorItem * connectorItem = wire->connector0()->firstConnectedToIsh();
-	if (connectorItem) {
-		connectorItem->clearRatsnestDisplay();
 	}
 }
 

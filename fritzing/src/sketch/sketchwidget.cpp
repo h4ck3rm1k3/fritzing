@@ -829,6 +829,32 @@ bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * 
 	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
 
 	foreach (ItemBase * itemBase, deletedItems) {
+		JumperItem * jumperItem = qobject_cast<JumperItem *>(itemBase);
+		if (jumperItem == NULL) continue;
+
+		QList<ConnectorItem *> connectedToItems;
+		foreach (ConnectorItem * connectorItem, jumperItem->connector0()->connectedToItems()) {
+			connectedToItems.append(connectorItem);
+		}
+		foreach (ConnectorItem * connectorItem, jumperItem->connector1()->connectedToItems()) {
+			connectedToItems.append(connectorItem);
+		}
+
+		foreach (ConnectorItem * connectorItem, connectedToItems) {
+			TraceWire * tw = qobject_cast<TraceWire *>(connectorItem->attachedTo());
+			if (tw == NULL) continue;
+
+			QList<Wire *> wires;
+			QList<ConnectorItem *> ends;
+			QList<ConnectorItem *> uniqueEnds;
+			tw->collectChained(wires, ends, uniqueEnds);
+			foreach (Wire * wire, wires) {
+				deletedItems.insert(wire);
+			}
+		}
+	}
+
+	foreach (ItemBase * itemBase, deletedItems) {
 		ConnectorPairHash * connectorHash = new ConnectorPairHash;
 		itemBase->collectConnectors(*connectorHash);
 		deletedConnections.insert(itemBase, connectorHash);
@@ -5768,9 +5794,6 @@ void SketchWidget::setClipEnds(ClipableWire * vw, bool) {
 }
 
 void SketchWidget::createTrace(Wire *) {
-}
-
-void SketchWidget::hideNet(Wire *) {
 }
 
 void SketchWidget::updateNet(Wire *) {

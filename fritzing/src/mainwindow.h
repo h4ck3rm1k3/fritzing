@@ -271,7 +271,6 @@ protected slots:
 	void changeTraceLayer();
 	void routingStatusLabelMousePress(QMouseEvent*);
 	void routingStatusLabelMouseRelease(QMouseEvent*);
-	void hideNet();
 	void updateNet();
 
 protected:
@@ -573,7 +572,6 @@ protected:
 	QAction *m_activeLayerBothAct;
 	QAction *m_createTraceAct;
 	class WireAction *m_createTraceWireAct;
-	class WireAction *m_hideNetAct;
 	class WireAction *m_updateNetAct;
 	QAction *m_createJumperAct;
 	class WireAction *m_createJumperWireAct;

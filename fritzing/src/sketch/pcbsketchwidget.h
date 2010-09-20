@@ -88,7 +88,6 @@ public:
 	void jumperItemHack();
 	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	void getRatsnestColor(QColor &);
-	void hideNet(Wire*);
 	void updateNet(Wire*);
 
 public slots:

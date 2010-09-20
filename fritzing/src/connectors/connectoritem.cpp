@@ -32,6 +32,7 @@ $Date$
 #include <limits>
 #include <QMutex>
 #include <QMutexLocker>
+#include <QSet>
 
 #include "../sketch/infographicsview.h"
 #include "../debugdialog.h"
@@ -59,7 +60,6 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 {
 	m_marked = false;
 	m_ratsnestConnectorItems = NULL;
-	m_ratsnestWires = NULL;
 	m_checkedEffectively = false;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_overConnectorItem = NULL;
@@ -1167,15 +1167,19 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems)
 	bool formerColorWasNamed = false;
 	bool gotFormerColor = false;
 	QColor formerColor;
-	if (m_ratsnestWires && m_ratsnestWires->count() > 0) {
-		formerColorWasNamed = m_ratsnestColorWasNamed;
-		foreach (VirtualWire * vw, *m_ratsnestWires) {
-			if (vw != NULL) {
-				formerColor = vw->color();
-				gotFormerColor = true;
-				break;
-			}
+
+	VirtualWire * vw = NULL;
+	foreach (ConnectorItem * fromConnectorItem, partConnectorItems) {
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			vw = qobject_cast<VirtualWire *>(toConnectorItem->attachedTo());
+			if (vw != NULL) break;
 		}
+		if (vw != NULL) break;
+	}
+
+	if (vw != NULL) {
+		formerColorWasNamed = m_ratsnestColorWasNamed;
+		formerColor = vw->color();
 		clearRatsnestDisplay();
 	}
 
@@ -1198,11 +1202,9 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems)
 	}
 
 	m_ratsnestConnectorItems = new QList< QPointer<ConnectorItem> >();
-	m_ratsnestWires = new QList< QPointer<VirtualWire> >();
 	foreach (ConnectorItem * connectorItem, partConnectorItems) {
 		m_ratsnestConnectorItems->append(connectorItem);
 		connectorItem->m_ratsnestConnectorItems = m_ratsnestConnectorItems;
-		connectorItem->m_ratsnestWires = m_ratsnestWires;
 		connectorItem->m_ratsnestColorWasNamed = m_ratsnestColorWasNamed;
 	}
 
@@ -1214,10 +1216,7 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems)
 			bool routed = key->wiredTo(value, ViewGeometry::NotTraceJumperFlags);
 			if (routed) continue;
 
-			VirtualWire * vw = infoGraphicsView->makeOneRatsnestWire(key, value, routed, color);
-			if (vw != NULL) {
-				m_ratsnestWires->append(vw);
-			}
+			infoGraphicsView->makeOneRatsnestWire(key, value, routed, color);
 		}
 	}
 }
@@ -1225,11 +1224,20 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems)
 void ConnectorItem::clearRatsnestDisplay() {
 
 	if (m_ratsnestConnectorItems == NULL) return;
-	if (m_ratsnestWires == NULL) return;
 
-	foreach (VirtualWire * vw, *m_ratsnestWires) {
-		if (vw == NULL) continue;
+	QSet<VirtualWire *> ratsnests;
+	foreach (ConnectorItem * fromConnectorItem, *m_ratsnestConnectorItems) {
+		if (fromConnectorItem == NULL) continue;
 
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			VirtualWire * vw = qobject_cast<VirtualWire *>(toConnectorItem->attachedTo());
+			if (vw != NULL) {
+				ratsnests.insert(vw);
+			}
+		}
+	}
+
+	foreach (VirtualWire * vw, ratsnests.values()) {
 		ConnectorItem * c1 = vw->connector0()->firstConnectedToIsh();
 		if (c1 != NULL) {
 			vw->connector0()->tempRemove(c1, false);
@@ -1247,15 +1255,12 @@ void ConnectorItem::clearRatsnestDisplay() {
 	}
 
 	QList< QPointer<ConnectorItem> > * wasC = m_ratsnestConnectorItems;
-	QList< QPointer<VirtualWire> > * wasW = m_ratsnestWires;
 	foreach (ConnectorItem * connectorItem, *wasC) {
 		if (connectorItem == NULL) continue;
 
-		connectorItem->m_ratsnestWires = NULL;
 		connectorItem->m_ratsnestConnectorItems = NULL;
 	}
 	delete wasC; 
-	delete wasW;
 }
 
 
