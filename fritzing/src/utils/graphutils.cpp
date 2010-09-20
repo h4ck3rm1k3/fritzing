@@ -208,9 +208,7 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 		for (int j = i + 1; j < num_nodes; j++) {
 			if (!check[j]) continue;
 
-			// TODO: there's a nicer way to describe p
-			std::pair< boost::detail::edge_desc_impl<boost::directed_tag, unsigned int>, bool> p = edge(i, j, TC);
-			if (p.second) {
+                        if (edge(i, j, TC).second) {
 				check[j] = false;
 			}
 			else {
