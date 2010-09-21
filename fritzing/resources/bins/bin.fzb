@@ -514,6 +514,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="c4256c251d53ee723058f86aa6d016a2" modelIndex="48" path="parts/core/gogoboard 4.0.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
 	
         <instance moduleIdRef="BreadboardModuleID" modelIndex="49" path="parts/core/breadboard.fzp">
             <views>
