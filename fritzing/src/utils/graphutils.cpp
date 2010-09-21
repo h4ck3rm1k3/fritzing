@@ -114,15 +114,16 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 
 	int num_nodes = partConnectorItems.count();
 
-	typedef property < vertex_index_t, std::size_t > Index;
+	typedef property < vertex_name_t, char >Name;
+	typedef property < vertex_index_t, std::size_t, Name > Index;
 	typedef adjacency_list < listS, listS, directedS, Index > graph_t;
 	typedef graph_traits < graph_t >::vertex_descriptor vertex_t;
-	typedef graph_traits < graph_t >::edge_descriptor edge_t;
+	//typedef graph_traits < graph_t >::edge_descriptor edge_t;
 
 	graph_t G;
 	std::vector < vertex_t > verts(num_nodes);
 	for (int i = 0; i < num_nodes; ++i) {
-		verts[i] = add_vertex(Index(i), G);
+		verts[i] = add_vertex(Index(i, Name('a')), G);
 	}
 
 	//std::pair<int, int> pair;
