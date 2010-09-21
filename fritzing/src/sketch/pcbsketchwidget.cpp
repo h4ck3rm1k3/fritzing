@@ -2142,6 +2142,9 @@ void PCBSketchWidget::changeTraceLayer() {
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Change trace layer"));
 
+
+	ViewLayer::ViewLayerID newViewLayerID;
+	bool firstTime = true;
 	foreach (Wire * wire, changeWires) {
 		QList<Wire *> wires;
 		QList<ConnectorItem *> uniqueEnds;
@@ -2169,9 +2172,12 @@ void PCBSketchWidget::changeTraceLayer() {
 								false, parentCommand);
 		}
 
+		if (firstTime) {
+			firstTime = false;
+			newViewLayerID = (wire->viewLayerID() == ViewLayer::Copper0Trace) ? ViewLayer::Copper1Trace : ViewLayer::Copper0Trace;
+		}
 
 		foreach (Wire * w, wires) {
-			ViewLayer::ViewLayerID newViewLayerID = w->viewLayerID() == ViewLayer::Copper0Trace ? ViewLayer::Copper1Trace : ViewLayer::Copper0Trace;
 			new ChangeLayerCommand(this, w->id(), w->zValue(), m_viewLayers.value(newViewLayerID)->nextZ(), w->viewLayerID(), newViewLayerID, parentCommand);
 		}
 

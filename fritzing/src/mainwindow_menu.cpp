@@ -2889,7 +2889,7 @@ void MainWindow::createTraceMenuActions() {
 	connect(m_excludeFromAutorouteWireAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 
 	m_changeTraceLayerAct = new QAction(tr("Change Trace Layer"), this);
-	m_changeTraceLayerAct->setStatusTip(tr("Move selected traces to the other side of the board"));
+	m_changeTraceLayerAct->setStatusTip(tr("Move selected traces to the other side of the board (note: the 'first' trace will be moved and the rest will follow to the same side)"));
 	connect(m_changeTraceLayerAct, SIGNAL(triggered()), this, SLOT(changeTraceLayer()));
 
 	m_selectAllTracesAct = new QAction(tr("Select All Traces"), this);
