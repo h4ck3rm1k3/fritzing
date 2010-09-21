@@ -36,10 +36,9 @@ $Date: 2010-06-09 00:55:55 +0200 (Wed, 09 Jun 2010) $
 #endif
 
 #include <boost/config.hpp>
-#include <iostream>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/prim_minimum_spanning_tree.hpp>
 #include <boost/graph/transitive_closure.hpp>
+#include <boost/graph/prim_minimum_spanning_tree.hpp>
+#include <boost/graph/adjacency_list.hpp>
 
 #ifdef _MSC_VER 
 #pragma warning(pop)					// restore warning state
@@ -114,16 +113,15 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 
 	int num_nodes = partConnectorItems.count();
 
-	typedef property < vertex_name_t, char >Name;
-	typedef property < vertex_index_t, std::size_t, Name > Index;
+	typedef property < vertex_index_t, std::size_t > Index;
 	typedef adjacency_list < listS, listS, directedS, Index > graph_t;
 	typedef graph_traits < graph_t >::vertex_descriptor vertex_t;
-	//typedef graph_traits < graph_t >::edge_descriptor edge_t;
+	typedef graph_traits < graph_t >::edge_descriptor edge_t;
 
 	graph_t G;
 	std::vector < vertex_t > verts(num_nodes);
 	for (int i = 0; i < num_nodes; ++i) {
-		verts[i] = add_vertex(Index(i, Name('a')), G);
+		verts[i] = add_vertex(Index(i), G);
 	}
 
 	//std::pair<int, int> pair;
