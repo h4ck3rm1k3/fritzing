@@ -2555,9 +2555,11 @@ bool SketchWidget::checkMoved()
 		new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), false, CheckStickyCommand::RedoOnly, parentCommand);
 	}
 
+	bool gotConnection = false;
 	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {
 		foreach (ConnectorItem * toConnectorItem, m_moveDisconnectedFromFemale.values(fromConnectorItem)) {
 			extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()), false, parentCommand);
+			gotConnection = true;
 		}
 	}
 
@@ -2572,6 +2574,7 @@ bool SketchWidget::checkMoved()
 			if (toConnectorItem != NULL) {
 				toConnectorItem->connectorHover(item, false);
 				fromConnectorItem->setOverConnectorItem(NULL);   // clean up
+				gotConnection = true;
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, 
 					ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 					true, parentCommand);
@@ -2591,8 +2594,9 @@ bool SketchWidget::checkMoved()
 
 	clearTemporaries();
 
-	// uncomment CleanUpWiresCommand if you decide to update ratsnests here
-	//new CleanUpWiresCommand(this, false, parentCommand);
+	if (gotConnection) {
+		new CleanUpWiresCommand(this, false, parentCommand);
+	}
 	m_undoStack->push(parentCommand);
 
 	return true;
