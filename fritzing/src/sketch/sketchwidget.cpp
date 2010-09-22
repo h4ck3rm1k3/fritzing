@@ -191,6 +191,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		SelectItemCommand * selectItemCommand = stackSelectionState(false, parentCommand);
 		selectItemCommand->setSelectItemType(SelectItemCommand::DeselectAll);
 		selectItemCommand->setCrossViewType(crossViewType);
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 	}
 
 	QHash<long, ItemBase *> newItems;
@@ -391,7 +392,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 
 		m_pasteCount = 0;
 		this->scene()->clearSelection();
-		cleanUpWires(false, NULL, false);
+		cleanUpWires(false, NULL);
 
 	}
 	else {
@@ -400,7 +401,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			m_pasteCount++;
 		}
 
-		new CleanUpWiresCommand(this, false, parentCommand);
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	}
 
 	setIgnoreSelectionChangeEvents(false);
@@ -799,7 +800,9 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 {
     stackSelectionState(false, parentCommand);
 
-	bool skipMe = deleteMiddle(deletedItems, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
+	deleteMiddle(deletedItems, parentCommand);
 
 	foreach (ItemBase * itemBase, deletedItems) {
 		Note * note = dynamic_cast<Note *>(itemBase);
@@ -812,7 +815,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 	}
 
 
-	new CleanUpWiresCommand(this, skipMe, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	// actual delete commands must come last for undo to work properly
 	foreach (ItemBase * itemBase, deletedItems) {
@@ -825,7 +828,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
    	m_undoStack->push(parentCommand);
 }
 
-bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand) {
+void SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand) {
 	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
 
 	deleteJumperItems(deletedItems);
@@ -836,7 +839,7 @@ bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * 
 		deletedConnections.insert(itemBase, connectorHash);
 	}
 
-	bool skipMe = reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
+	reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
 
 	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
@@ -856,8 +859,6 @@ bool SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * 
 	{
 		delete connectorHash;
 	}
-
-	return skipMe;
 }
 
 void SketchWidget::deleteJumperItems(QSet<ItemBase *> & deletedItems) {
@@ -1527,6 +1528,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(m_droppingItem->title()));
 	stackSelectionState(false, parentCommand);
+	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::Noop, parentCommand);
 
 	m_droppingItem->saveGeometry();
 	ViewGeometry viewGeometry = m_droppingItem->getViewGeometry();
@@ -1588,7 +1590,8 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 	killDroppingItem();
 
 	if (gotConnector) {
-		new CleanUpWiresCommand(this, false, parentCommand);
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+		cuw->setDirection(CleanUpWiresCommand::UndoOnly);
 	}
     m_undoStack->waitPush(parentCommand, 10);
 
@@ -2516,6 +2519,8 @@ bool SketchWidget::checkMoved()
 		rememberSticky(item->id(), parentCommand);
 	}
 
+	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::Noop, parentCommand);
+
 	MoveItemsCommand * moveItemsCommand = new MoveItemsCommand(this, parentCommand);
 
 	foreach (ItemBase * item, m_savedItems) {
@@ -2595,7 +2600,8 @@ bool SketchWidget::checkMoved()
 	clearTemporaries();
 
 	if (gotConnection) {
-		new CleanUpWiresCommand(this, false, parentCommand);
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
+		cuw->setDirection(CleanUpWiresCommand::UndoOnly);
 	}
 	m_undoStack->push(parentCommand);
 
@@ -2760,6 +2766,8 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		toConnectorID = to->connectorSharedID();
 	}
 
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
 	rememberSticky(fromID, parentCommand);
 
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
@@ -2828,7 +2836,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	clearTemporaries();
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -2859,6 +2867,8 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		selectItemCommand->copyUndo(m_tempDragWireCommand);
 		clearDragWireTempCommand();
 	}
+
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
 	m_connectorDragWire->saveGeometry();
 	bool doEmit = false;
@@ -2937,7 +2947,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 	// remove the temporary wire
 	this->scene()->removeItem(m_connectorDragWire);
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
 
 }
@@ -4412,11 +4422,9 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 	return false;
 }
 
-void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool skipMe) {
-	if (!skipMe) {
-		RoutingStatus routingStatus;
-		updateRoutingStatus(command, NULL, routingStatus, false);
-	}
+void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
+	RoutingStatus routingStatus;
+	updateRoutingStatus(command, NULL, routingStatus, false);
 
 	if (doEmit) {
 		emit cleanUpWiresSignal(command);
@@ -4517,13 +4525,14 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(newID);
 		selectItemCommand->addUndo(itemBase->id());
+
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
 		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
 				
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 		selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(newID);  // to make sure new item is selected so it appears in the info view
-		new CleanUpWiresCommand(this, false, parentCommand);
+		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	}
 
 	return newID;
@@ -5943,12 +5952,14 @@ void SketchWidget::disconnectAll() {
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
 	stackSelectionState(false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
 
 	QHash<ItemBase *, SketchWidget *> itemsToDelete;
 	disconnectAllSlot(connectorItems, itemsToDelete, parentCommand);
 	emit disconnectAllSignal(connectorItems, itemsToDelete, parentCommand);
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	foreach (ItemBase * item, itemsToDelete.keys()) {
 		itemsToDelete.value(item)->makeDeleteItemCommand(item, BaseCommand::SingleView, parentCommand);
 	}

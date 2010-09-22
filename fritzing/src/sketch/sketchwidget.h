@@ -143,7 +143,7 @@ public:
 	void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *, bool skipMe);
+	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
 
 	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext);
 	void noteChanged(ItemBase *, const QString & oldText, const QString &newtext, QSizeF oldSize, QSizeF newSize);
@@ -277,7 +277,7 @@ protected:
 
 	void cutDeleteAux(QString undoStackMessage);
 	void deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
-	bool deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
+	void deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
 	void extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,
 									   ViewLayer::ViewLayerSpec,

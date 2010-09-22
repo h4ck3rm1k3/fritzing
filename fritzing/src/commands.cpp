@@ -694,29 +694,39 @@ void CheckStickyCommand::stick(SketchWidget * sketchWidget, long fromID, long to
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, bool skipMe, QUndoCommand *parent)
+CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, CleanUpWiresCommand::Direction direction, QUndoCommand *parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
 	m_firstTime = true;
-	m_skipMe = skipMe;
+	m_direction = direction;
 }
 
 void CleanUpWiresCommand::undo()
 {
-	subUndo();
+	if (m_direction == UndoOnly) {
+		//subUndo();
+		m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, NULL);  
+	}
 }
 
 void CleanUpWiresCommand::redo()
 {
-	subRedo();
+	if (m_direction == RedoOnly) {
+		//subRedo();
 
-	m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, m_firstTime ? this : NULL, m_skipMe);
+		m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, NULL);  // m_firstTime ? this : NULL
+	}
 	m_firstTime = false;
 }
 
 void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus)
 {
 	addSubCommand(new RoutingStatusCommand(sketchWidget, oldRoutingStatus, newRoutingStatus, NULL));
+}
+
+void CleanUpWiresCommand::setDirection(CleanUpWiresCommand::Direction direction)
+{
+	m_direction = direction;
 }
 
 QString CleanUpWiresCommand::getParamString() const {

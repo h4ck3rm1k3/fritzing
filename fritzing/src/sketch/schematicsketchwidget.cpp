@@ -308,6 +308,8 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 	QUndoCommand * parentCommand =  new QUndoCommand();
 	parentCommand->setText(tr("Change voltage from %1 to %2").arg(sitem->voltage()).arg(v));
 
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
 	QList<Wire *> done;
 	foreach (ConnectorItem * toConnectorItem, sitem->connector0()->connectedToItems()) {
 		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
@@ -330,7 +332,7 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 		}
 	}
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	m_undoStack->push(parentCommand);
 }

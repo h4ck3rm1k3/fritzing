@@ -158,9 +158,8 @@ void MainWindow::exportEtchableSvg() {
 
 void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 {
-	QUndoCommand  parentCommand;
 	RoutingStatus routingStatus;
-	m_pcbGraphicsView->updateRoutingStatus(NULL, &parentCommand, routingStatus, true);
+	m_pcbGraphicsView->updateRoutingStatus(NULL, NULL, routingStatus, true);
 	if (routingStatus.m_connectorsLeftToRoute > 0) {
 		QMessageBox msgBox(this);
 		msgBox.setWindowModality(Qt::WindowModal);
@@ -3276,11 +3275,14 @@ void MainWindow::removeGroundFill() {
 	if (toDelete.length() <= 0) return;
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Remove copper fill"));
+
+	new CleanUpWiresCommand(m_pcbGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
+
 	foreach (ItemBase * itemBase, toDelete) {
 		m_pcbGraphicsView->makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 	}
 
-	new CleanUpWiresCommand(m_pcbGraphicsView, false, parentCommand);
+	new CleanUpWiresCommand(m_pcbGraphicsView, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	m_undoStack->push(parentCommand);
 }

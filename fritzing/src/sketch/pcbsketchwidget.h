@@ -111,8 +111,7 @@ protected:
 	bool canChainWire(Wire *);
 	bool canDragWire(Wire * wire);
 	void createJumperOrTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
-	void createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
-								QUndoCommand * & parentCommand, const QString & commandString);
+	bool createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);

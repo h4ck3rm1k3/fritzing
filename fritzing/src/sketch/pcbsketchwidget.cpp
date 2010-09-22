@@ -202,28 +202,34 @@ void PCBSketchWidget::createTrace(Wire * wire) {
 void PCBSketchWidget::createJumperOrTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag flag)
 {
 	QList<Wire *> done;
-	QUndoCommand * parentCommand = NULL;
+	QUndoCommand * parentCommand = new QUndoCommand(commandString);
+
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
+	bool gotOne = false;
 	if (fromWire == NULL) {
 		foreach (QGraphicsItem * item, scene()->selectedItems()) {
 			Wire * wire = dynamic_cast<Wire *>(item);
 			if (wire == NULL) continue;
 			if (done.contains(wire)) continue;
 
-			createOneJumperOrTrace(wire, flag, false, done, parentCommand, commandString);
+			gotOne = createOneJumperOrTrace(wire, flag, false, done, parentCommand);
 		}
 	}
 	else {
-		createOneJumperOrTrace(fromWire, flag, false, done, parentCommand, commandString);
+		gotOne = createOneJumperOrTrace(fromWire, flag, false, done, parentCommand);
 	}
 
-	if (parentCommand == NULL) return;
+	if (!gotOne) {
+		delete parentCommand;
+		return;
+	}
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
-void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
-											 QUndoCommand * & parentCommand, const QString & commandString) 
+bool PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand) 
 {
 	QList<ConnectorItem *> ends;
 	Wire * jumperOrTrace = NULL;
@@ -238,18 +244,14 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 	}
 	else if (!allowAny) {
 		// not eligible
-		return;
+		return false;
 	}
 	else {
 		jumperOrTrace = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
 	}
 
 	if (jumperOrTrace && jumperOrTrace->hasFlag(flag)) {
-		return;
-	}
-
-	if (parentCommand == NULL) {
-		parentCommand = new QUndoCommand(commandString);
+		return false;
 	}
 
 	if (jumperOrTrace != NULL) {
@@ -267,6 +269,7 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
+	return true;
 }
 
 
@@ -2399,6 +2402,8 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	QUndoCommand * parentCommand = new QUndoCommand();
 	parentCommand->setText(tr("Create and connect trace"));
 
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
 	//SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 
 	m_connectorDragWire->saveGeometry();
@@ -2463,7 +2468,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	// remove the temporary wire
 	this->scene()->removeItem(m_connectorDragWire);
 
-	new CleanUpWiresCommand(this, false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 

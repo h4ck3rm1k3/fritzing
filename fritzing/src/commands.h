@@ -382,7 +382,6 @@ protected:
 	QList<StickyThing *> m_stickyList;
 	bool m_firstTime;
 	bool m_checkCurrent;
-	bool m_undoOnly;
 	CheckType m_checkType;
 };
 
@@ -448,10 +447,18 @@ protected:
 class CleanUpWiresCommand : public BaseCommand
 {
 public:
-	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool skipMe, QUndoCommand * parent);
+	enum Direction {
+		UndoOnly = 0,
+		RedoOnly,
+		Noop
+	};
+
+public:
+	CleanUpWiresCommand(class SketchWidget * sketchWidget, CleanUpWiresCommand::Direction, QUndoCommand * parent);
     void undo();
     void redo();
 	void addRoutingStatus(SketchWidget *, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus);
+	void setDirection(CleanUpWiresCommand::Direction);
 
 protected:
 	QString getParamString() const;
@@ -459,7 +466,7 @@ protected:
 protected:
 
 	bool m_firstTime;
-	bool m_skipMe;
+	Direction m_direction;
 };
 
 class RestoreLabelCommand : public BaseCommand
