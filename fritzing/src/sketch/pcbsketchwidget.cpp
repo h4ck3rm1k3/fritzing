@@ -2370,7 +2370,10 @@ void PCBSketchWidget::deleteSelected(Wire * wire) {
 
 	// probably deal with connections to ground symbol or ground plane here?
 
-	emit disconnectWireSignal(itemBases);
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Delete ratsnest"));
+	QList<long> ids;
+	emit disconnectWireSignal(itemBases, ids, parentCommand);
+	m_undoStack->push(parentCommand);
 }
 
 bool PCBSketchWidget::canDragWire(Wire * wire) {

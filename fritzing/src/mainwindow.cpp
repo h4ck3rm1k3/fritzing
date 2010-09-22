@@ -369,20 +369,6 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(changeBoardLayersSignal(int, bool )), this, SLOT(changeBoardLayers(int, bool )));
 
 
-
-	/*
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
-						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
-						Qt::DirectConnection);
-	*/
-
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(disconnectWireSignal(QSet<ItemBase *> &)),
-					m_breadboardGraphicsView, SLOT(disconnectWireSlot(QSet<ItemBase *> &)),
-					Qt::DirectConnection);
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(disconnectWireSignal(QSet<ItemBase *> &)),
-					m_breadboardGraphicsView, SLOT(disconnectWireSlot(QSet<ItemBase *> &)),
-					Qt::DirectConnection);
-
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
 	succeeded = connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
@@ -445,6 +431,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(changeBoardLayersSignal(int, bool )),
 									 slotter, SLOT(changeBoardLayers(int, bool )));
 
+	succeeded = succeeded && connect(signaller, SIGNAL(disconnectWireSignal(QSet<ItemBase *> &, QList<long> &, QUndoCommand *)),
+									 slotter, SLOT(disconnectWireSlot(QSet<ItemBase *> &, QList<long> &, QUndoCommand *)),
+									 Qt::DirectConnection);
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

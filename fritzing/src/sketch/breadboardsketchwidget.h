@@ -43,13 +43,6 @@ public:
 	bool canDisconnectAll();
 	bool ignoreFemale();
 
-protected slots:
-	/*
-	// obsolete but useful code
-	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
-	*/
-	void disconnectWireSlot(QSet<ItemBase *> & deletedItems);
-
 protected:
 	void setWireVisible(Wire * wire);
 	void collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
@@ -65,8 +58,6 @@ protected:
 	void setNewPartVisible(ItemBase *);
 	double defaultGridSizeInches();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
-	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus);
-	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
 
 };
 
