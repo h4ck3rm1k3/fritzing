@@ -2209,4 +2209,9 @@ void MainWindow::routingStatusLabelMouse(QMouseEvent*, bool show) {
 	}
 }
 
+void MainWindow::setReportMissingModules(bool b) {
+	if (m_sketchModel) {
+		m_sketchModel->setReportMissingModules(b);
+	}
+}
 

@@ -1300,7 +1300,12 @@ ItemBase * PCBSketchWidget::findBoard() {
 
 void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus) 
 {
-	DebugDialog::debug(QString("update routing status %1").arg(m_viewIdentifier) );
+	DebugDialog::debug(QString("update routing status %1 %2 %3")
+		.arg(m_viewIdentifier) 
+		.arg(m_ratsnestUpdateConnect.count())
+		.arg(m_ratsnestUpdateDisconnect.count())
+		);
+
 	// TODO: think about ways to optimize this...
 
 	QList< QList<ConnectorItem *> > ratnestsToUpdate;

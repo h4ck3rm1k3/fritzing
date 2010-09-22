@@ -94,6 +94,7 @@ public:
 	void exportToGerber(const QString & exportDir, ItemBase * board, bool displayMessageBoxes);
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool recovered, const QString & backupName);
 	void setRecovered(bool);
+	void setReportMissingModules(bool);
 
 public:
 	static void initNames();

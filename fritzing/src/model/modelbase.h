@@ -47,6 +47,7 @@ public:
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
 	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QRectF> & boundingRects);
+	void setReportMissingModules(bool);
 
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);
@@ -61,6 +62,7 @@ protected:
 protected:
 	QPointer<ModelPart> m_root;
 	QPointer<ModelBase> m_referenceModel;
+	bool m_reportMissingModules;
 
 };
 

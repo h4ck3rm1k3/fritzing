@@ -6307,13 +6307,14 @@ void SketchWidget::changeBoardLayers(int layers, bool doEmit) {
 	}
 }
 
-void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons) 
+void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems, bool includeSingletons, bool bothSides) 
 {
 	// get the set of all connectors in the sketch
 	QList<ConnectorItem *> allConnectors;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
+		if (!bothSides && connectorItem->attachedToViewLayerID() == ViewLayer::Copper1) continue;
 
 		allConnectors.append(connectorItem);
 	}
@@ -6324,7 +6325,7 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 		ConnectorItem * connectorItem = allConnectors.takeFirst();
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NoFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, bothSides, ViewGeometry::NoFlag);
 		if (connectorItems.count() <= 0) {
 			continue;
 		}

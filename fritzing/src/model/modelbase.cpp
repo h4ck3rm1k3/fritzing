@@ -34,6 +34,7 @@ $Date$
 
 ModelBase::ModelBase( bool makeRoot )
 {
+	m_reportMissingModules = true;
 	m_referenceModel = NULL;
 	m_root = (makeRoot) ? new ModelPart() : NULL;
 }
@@ -198,6 +199,14 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 			DebugDialog::debug(QString("module id %1 not found in database").arg(moduleIDRef));
 			modelPart = fixObsoleteModuleID(domDocument, instance, moduleIDRef);
 			if (modelPart == NULL) {
+				if (m_reportMissingModules) {
+					QMessageBox::warning(NULL, QObject::tr("Fritzing"),
+                        QObject::tr("Unable to find module '%1' at\n'%2'")
+									.arg(moduleIDRef)
+									.arg(instance.attribute("path"))
+							  );
+
+				}
    				instance = instance.nextSiblingElement("instance");
    				continue;
 			}
@@ -450,4 +459,8 @@ bool ModelBase::isRatsnest(QDomElement & instance) {
 	}
 
 	return false;
+}
+
+void ModelBase::setReportMissingModules(bool b) {
+	m_reportMissingModules = b;
 }

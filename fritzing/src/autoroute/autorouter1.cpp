@@ -210,7 +210,7 @@ void Autorouter1::start()
 	updateRoutingStatus();
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
-	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false);
+	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false, m_bothSidesNow);
 
 	if (m_allPartConnectorItems.count() == 0) {
 		return;

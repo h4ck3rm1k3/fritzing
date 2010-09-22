@@ -438,6 +438,7 @@ bool FApplication::loadBin(QString binToOpen) {
 MainWindow * FApplication::loadWindows(bool showProgress, int & loaded) {
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);   // this is also slow
+	mainWindow->setReportMissingModules(false);
 
 	if (showProgress) {
 		m_splash->showProgress(m_progressIndex, 0.9);
@@ -471,6 +472,10 @@ int FApplication::serviceStartup() {
 	}
 	else if (m_kicadSchematicService) {
 		runKicadSchematicService();
+		return 0;
+	}
+
+	if (!m_gerberService) {
 		return 0;
 	}
 

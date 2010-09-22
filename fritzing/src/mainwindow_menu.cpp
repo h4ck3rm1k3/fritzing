@@ -2738,7 +2738,7 @@ void MainWindow::exportBOM() {
 void MainWindow::exportNetlist() {
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > netList;
-	this->m_currentGraphicsView->collectAllNets(indexer, netList, true);
+	this->m_currentGraphicsView->collectAllNets(indexer, netList, true, m_currentGraphicsView->boardLayers() > 1);
 
 	QDomDocument doc;
 	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>"));
