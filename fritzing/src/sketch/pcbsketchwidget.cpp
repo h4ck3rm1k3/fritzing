@@ -1315,6 +1315,9 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 		if (connectorItem == NULL) continue;
 		if (visited.contains(connectorItem)) continue;
 
+		VirtualWire * vw = qobject_cast<VirtualWire *>(connectorItem->attachedTo());
+		if (vw != NULL) continue;
+
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag);
