@@ -291,7 +291,7 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 	}
 }
 
-void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand, RoutingStatus & routingStatus, bool manual)
+void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingStatus & routingStatus, bool manual)
 {
 	//DebugDialog::debug("update ratsnest status");
 
@@ -304,10 +304,6 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, QUndoCom
 		if (command) {
 			// changing state after the command has already been executed
 			command->addRoutingStatus(this, m_routingStatus, routingStatus);
-		}
-		if (undoCommand) {
-			// the command is still to be executed
-			new RoutingStatusCommand(this, m_routingStatus, routingStatus, undoCommand);
 		}
 
 		emit routingStatusSignal(this, routingStatus);

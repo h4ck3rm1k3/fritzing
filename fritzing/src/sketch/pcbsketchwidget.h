@@ -44,7 +44,7 @@ public:
 	void createTrace(Wire *);
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
-	void updateRoutingStatus(CleanUpWiresCommand*, QUndoCommand *, RoutingStatus &, bool manual);
+	void updateRoutingStatus(CleanUpWiresCommand*, RoutingStatus &, bool manual);
 	bool hasAnyNets();
 	void forwardRoutingStatus(const RoutingStatus &);
 	void addBoard();

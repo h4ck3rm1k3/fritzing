@@ -166,7 +166,7 @@ public:
 	void hideConnectors(bool hide);
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
-	virtual void updateRoutingStatus(CleanUpWiresCommand*, QUndoCommand*, RoutingStatus &, bool manual);
+	virtual void updateRoutingStatus(CleanUpWiresCommand*, RoutingStatus &, bool manual);
 	virtual bool hasAnyNets();
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 

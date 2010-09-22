@@ -159,7 +159,7 @@ void MainWindow::exportEtchableSvg() {
 void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 {
 	RoutingStatus routingStatus;
-	m_pcbGraphicsView->updateRoutingStatus(NULL, NULL, routingStatus, true);
+	m_pcbGraphicsView->updateRoutingStatus(NULL, routingStatus, true);
 	if (routingStatus.m_connectorsLeftToRoute > 0) {
 		QMessageBox msgBox(this);
 		msgBox.setWindowModality(Qt::WindowModal);

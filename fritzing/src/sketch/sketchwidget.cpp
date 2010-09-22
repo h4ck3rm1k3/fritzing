@@ -4424,7 +4424,7 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 
 void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
 	RoutingStatus routingStatus;
-	updateRoutingStatus(command, NULL, routingStatus, false);
+	updateRoutingStatus(command, routingStatus, false);
 
 	if (doEmit) {
 		emit cleanUpWiresSignal(command);
@@ -4433,7 +4433,7 @@ void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
 
 void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
 	RoutingStatus routingStatus;
-	updateRoutingStatus(command, NULL, routingStatus, false);
+	updateRoutingStatus(command, routingStatus, false);
 }
 
 void SketchWidget::noteChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
@@ -4903,9 +4903,8 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	}
 }
 
-void SketchWidget::updateRoutingStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand, RoutingStatus &, bool manual) {
+void SketchWidget::updateRoutingStatus(CleanUpWiresCommand * command, RoutingStatus &, bool manual) {
 	Q_UNUSED(command);
-	Q_UNUSED(undoCommand);
 	Q_UNUSED(manual);
 	m_ratsnestUpdateConnect.clear();
 	m_ratsnestUpdateDisconnect.clear();

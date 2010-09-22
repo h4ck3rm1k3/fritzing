@@ -198,6 +198,7 @@ void Autorouter1::start()
 	m_sketchWidget->ensureTraceLayersVisible();
 
 	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
+	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::UndoOnly, parentCommand);
 
 	m_bothSidesNow = m_sketchWidget->routeBothSides();
 	if (m_bothSidesNow) {
@@ -285,8 +286,9 @@ void Autorouter1::start()
 	}
 	jumperItemStructs.clear();
 	
+	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::RedoOnly, parentCommand);
+
 	m_sketchWidget->pushCommand(parentCommand);
-	m_sketchWidget->updateRoutingStatus(NULL, parentCommand, routingStatus, true);
 	m_sketchWidget->repaint();
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
