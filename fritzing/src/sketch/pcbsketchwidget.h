@@ -116,7 +116,6 @@ protected:
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	bool canDropModelPart(ModelPart * modelPart);
-	bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
 	bool doRatsnestOnCopy();

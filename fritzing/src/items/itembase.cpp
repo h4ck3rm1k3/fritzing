@@ -575,7 +575,8 @@ bool ItemBase::inactive() {
 	return m_inactive;
 }
 
-void ItemBase::collectConnectors(ConnectorPairHash & connectorHash) {
+void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, SkipCheckFunction skipCheckFunction) {
+	// Is this modelpart check obsolete?
 	ModelPart * modelPart = this->modelPart();
 	if (modelPart == NULL) return;
 
@@ -586,6 +587,8 @@ void ItemBase::collectConnectors(ConnectorPairHash & connectorHash) {
 		if (fromConnectorItem == NULL) continue;
 
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			if (skipCheckFunction && skipCheckFunction(toConnectorItem)) continue;
+
 			connectorHash.insert(fromConnectorItem, toConnectorItem);
 		}
 
@@ -593,6 +596,8 @@ void ItemBase::collectConnectors(ConnectorPairHash & connectorHash) {
 		if (crossConnectorItem == NULL) continue;
 
 		foreach (ConnectorItem * toConnectorItem, crossConnectorItem->connectedToItems()) {
+			if (skipCheckFunction && skipCheckFunction(toConnectorItem)) continue;
+
 			connectorHash.insert(crossConnectorItem, toConnectorItem);
 		}
 	}

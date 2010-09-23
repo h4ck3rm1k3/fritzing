@@ -87,7 +87,7 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 				fromConnectorItem->tempRemove(toConnectorItem, true);
 				toConnectorItem->tempRemove(fromConnectorItem, true);
 				if (doCommand) {
-					extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, ViewLayer::Bottom, false, parentCommand);
+					extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem, ViewLayer::Bottom, false, parentCommand);
 				}
 				connectorHash.insert(fromConnectorItem, toConnectorItem);
 

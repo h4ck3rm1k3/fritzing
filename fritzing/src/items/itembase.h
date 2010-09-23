@@ -48,6 +48,8 @@ class ConnectorItem;
 
 typedef QMultiHash<ConnectorItem *, ConnectorItem *> ConnectorPairHash;
 
+typedef bool (*SkipCheckFunction)(ConnectorItem *);
+
 class ItemBase : public GraphicsSvgLineItem
 {
 Q_OBJECT
@@ -102,7 +104,8 @@ public:
 	void setViewLayerID(ViewLayer::ViewLayerID, const LayerHash & viewLayers);
 	void setViewLayerID(const QString & layerName, const LayerHash & viewLayers);
 	bool topLevel();
-	void collectConnectors(ConnectorPairHash & connectorHash);
+
+	void collectConnectors(ConnectorPairHash & connectorHash, SkipCheckFunction);
 	virtual void collectConnectors(QList<ConnectorItem *> & connectors);
 
 	virtual void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);

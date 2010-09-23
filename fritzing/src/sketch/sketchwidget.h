@@ -277,12 +277,13 @@ protected:
 
 	void cutDeleteAux(QString undoStackMessage);
 	void deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand, bool doPush);
-	void deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
-	void extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
+	void deleteMiddle(QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QUndoCommand * parentCommand);
+
+	void extendChangeConnectionCommand(BaseCommand::CrossViewType, long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,
 									   ViewLayer::ViewLayerSpec,
 									   bool connect, QUndoCommand * parent);
-	void extendChangeConnectionCommand(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
+	void extendChangeConnectionCommand(BaseCommand::CrossViewType, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
 										ViewLayer::ViewLayerSpec,
 										bool connect, QUndoCommand * parentCommand);
 
@@ -310,7 +311,6 @@ protected:
 	void moveItems(QPoint globalPos, bool checkAutoScroll);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
-	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
 	virtual bool canDragWire(Wire *);
@@ -368,7 +368,6 @@ protected:
 	virtual bool resizingJumperItemRelease();
 	virtual bool resizingBoardPress(QGraphicsItem * item);
 	virtual bool resizingBoardRelease();
-	void deleteJumperItems(QSet<ItemBase *> & deletedItems);
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus);
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
 
@@ -409,6 +408,7 @@ signals:
 	void changeBoardLayersSignal(int, bool doEmit);
 	void firstTimeHelpHidden();
 	void disconnectWireSignal(QSet<ItemBase *> &, QList<long> &, QUndoCommand * parentCommand);
+	void deleteTracesSignal(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, bool isForeign, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -436,6 +436,7 @@ protected slots:
 	void rememberSticky(long id, QUndoCommand * parentCommand);
 	void copyBoundingRectsSlot(QHash<QString, QRectF> &);
 	void disconnectWireSlot(QSet<ItemBase *> &, QList<long> & deletedIDs, QUndoCommand * parentCommand);
+	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, bool isForeign, QUndoCommand * parentCommand);
 
 public slots:
 	void changeWireColor(const QString newColor);

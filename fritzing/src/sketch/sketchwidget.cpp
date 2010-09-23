@@ -803,105 +803,93 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
-	deleteMiddle(deletedItems, parentCommand);
+	// some day we won't have to go through all this crap because all items will exist in all 3 views.
+	QHash<ItemBase *, SketchWidget *> otherDeletedItems;
+	emit deleteTracesSignal(deletedItems, otherDeletedItems, true, parentCommand);
 
+	deleteTracesSlot(deletedItems, otherDeletedItems, false, parentCommand);
 	foreach (ItemBase * itemBase, deletedItems) {
-		Note * note = dynamic_cast<Note *>(itemBase);
-		if (note != NULL) {
-			new ChangeNoteTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
-		}
-		else {
-			new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
-		}
+		otherDeletedItems.insert(itemBase, this);
 	}
-
+	deleteMiddle(otherDeletedItems, parentCommand);
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	// actual delete commands must come last for undo to work properly
-	foreach (ItemBase * itemBase, deletedItems) {
-		BaseCommand::CrossViewType crossView = BaseCommand::CrossView;
-		if (itemBase->getVirtual() || (dynamic_cast<TraceWire *>(itemBase) != NULL)) {
-			crossView = BaseCommand::SingleView;
-		}
-		makeDeleteItemCommand(itemBase, crossView, parentCommand);
+	foreach (ItemBase * itemBase, otherDeletedItems.keys()) {
+		SketchWidget * sketchWidget = otherDeletedItems.value(itemBase);
+		Wire * w = qobject_cast<Wire *>(itemBase);
+		BaseCommand::CrossViewType crossView = (w != NULL && (w->getTrace() || w->getJumper())) 
+			? BaseCommand::SingleView
+			: BaseCommand::CrossView;
+		sketchWidget->makeDeleteItemCommand(itemBase, crossView, parentCommand);
 	}
 	if (doPush) {
    		m_undoStack->push(parentCommand);
 	}
 }
 
-void SketchWidget::deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand) {
-	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
+bool isVirtualWireConnector(ConnectorItem * toConnectorItem) {
+	return (qobject_cast<VirtualWire *>(toConnectorItem->attachedTo()) != NULL);
+}
 
-	deleteJumperItems(deletedItems);
 
-	foreach (ItemBase * itemBase, deletedItems) {
-		ConnectorPairHash * connectorHash = new ConnectorPairHash;
-		itemBase->collectConnectors(*connectorHash);
-		deletedConnections.insert(itemBase, connectorHash);
-	}
+void SketchWidget::deleteMiddle(QHash<ItemBase *, SketchWidget *> & deletedItems, QUndoCommand * parentCommand) {
+	foreach (ItemBase * itemBase, deletedItems.keys()) {
+		foreach (QGraphicsItem * graphicsItem, itemBase->childItems()) {
+			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(graphicsItem);
+			if (fromConnectorItem == NULL) continue;
 
-	reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
-
-	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values())
-	{
-		// now prepare to disconnect all the deleted item's connectors
-		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
-			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
-				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				deletedItems.value(itemBase)->extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
 											  ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
 											  false, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem, false);
 				toConnectorItem->tempRemove(fromConnectorItem, false);
 			}
 		}
-   	}
-
-	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
-	{
-		delete connectorHash;
 	}
 }
 
-void SketchWidget::deleteJumperItems(QSet<ItemBase *> & deletedItems) {
+void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, bool isForeign, QUndoCommand * parentCommand) {
 	foreach (ItemBase * itemBase, deletedItems) {
-		JumperItem * jumperItem = qobject_cast<JumperItem *>(itemBase);
-		if (jumperItem == NULL) continue;
+		if (itemBase->itemType() == ModelPart::Wire) continue;
 
-		QList<ConnectorItem *> connectedToItems;
-		foreach (ConnectorItem * connectorItem, jumperItem->connector0()->connectedToItems()) {
-			connectedToItems.append(connectorItem);
+		if (isForeign) {
+			itemBase = findItem(itemBase->id());
+			if (itemBase == NULL) continue;
+
+			itemBase->saveGeometry();
+			ViewGeometry vg = itemBase->getViewGeometry();
+			new MoveItemCommand(this, itemBase->id(), vg, vg, parentCommand);
 		}
-		foreach (ConnectorItem * connectorItem, jumperItem->connector1()->connectedToItems()) {
-			connectedToItems.append(connectorItem);
-		}
 
-		foreach (ConnectorItem * connectorItem, connectedToItems) {
-			Wire * wire = qobject_cast<Wire *>(connectorItem->attachedTo());
-			if (wire == NULL) continue;
+		bool isJumper = (itemBase->itemType() == ModelPart::Jumper);
 
-			QList<Wire *> wires;
-			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			wire->collectChained(wires, ends, uniqueEnds);
-			foreach (Wire * w, wires) {
-				deletedItems.insert(w);
+		foreach (QGraphicsItem * graphicsItem, itemBase->childItems()) {
+			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(graphicsItem);
+			if (fromConnectorItem == NULL) continue;
+		
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
+				if (wire == NULL) continue;
+
+				if (isJumper || wire->getTrace() || wire->getJumper()) {
+					QList<Wire *> wires;
+					QList<ConnectorItem *> ends;
+					QList<ConnectorItem *> uniqueEnds;
+					wire->collectChained(wires, ends, uniqueEnds);
+					foreach (Wire * w, wires) {
+						otherDeletedItems.insert(w, this);
+					}
+				}
 			}
 		}
 	}
 }
 
-
-bool SketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
-	Q_UNUSED(parentCommand);
-	Q_UNUSED(deletedConnections);
-	Q_UNUSED(deletedItems);
-
-	return false;
-}
-
-void SketchWidget::extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
+void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType crossView,
+												 long fromID, const QString & fromConnectorID,
 												 long toID, const QString & toConnectorID,
 												 ViewLayer::ViewLayerSpec viewLayerSpec,
 												 bool connect, QUndoCommand * parentCommand)
@@ -922,10 +910,11 @@ void SketchWidget::extendChangeConnectionCommand(long fromID, const QString & fr
 	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, viewLayerSpec);
 	if (toConnectorItem == NULL) return; // for now
 
-	extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, viewLayerSpec, connect, parentCommand);
+	extendChangeConnectionCommand(crossView, fromConnectorItem, toConnectorItem, viewLayerSpec, connect, parentCommand);
 }
 
-void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
+void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType crossView,
+												 ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
 												 ViewLayer::ViewLayerSpec viewLayerSpec,
 												 bool connect, QUndoCommand * parentCommand)
 {
@@ -949,7 +938,7 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 		return;		// for now
 	}
 
-	new ChangeConnectionCommand(this, BaseCommand::CrossView,
+	new ChangeConnectionCommand(this, crossView,
 								fromItem->id(), fromConnectorItem->connectorSharedID(),
 								toItem->id(), toConnectorItem->connectorSharedID(),
 								viewLayerSpec, connect, parentCommand);
@@ -1576,7 +1565,7 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 		if (to != NULL) {
 			to->connectorHover(to->attachedTo(), false);
 			connectorItem->setOverConnectorItem(NULL);   // clean up
-			extendChangeConnectionCommand(connectorItem, to, ViewLayer::specFromID(connectorItem->attachedToViewLayerID()), true, parentCommand);
+			extendChangeConnectionCommand(BaseCommand::CrossView, connectorItem, to, ViewLayer::specFromID(connectorItem->attachedToViewLayerID()), true, parentCommand);
 			gotConnector = true;
 		}
 		//connectorItem->clearConnectorHover();
@@ -2566,7 +2555,7 @@ bool SketchWidget::checkMoved()
 	bool gotConnection = false;
 	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {
 		foreach (ConnectorItem * toConnectorItem, m_moveDisconnectedFromFemale.values(fromConnectorItem)) {
-			extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()), false, parentCommand);
+			extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem, ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()), false, parentCommand);
 			gotConnection = true;
 		}
 	}
@@ -2583,7 +2572,7 @@ bool SketchWidget::checkMoved()
 				toConnectorItem->connectorHover(item, false);
 				fromConnectorItem->setOverConnectorItem(NULL);   // clean up
 				gotConnection = true;
-				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, 
+				extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem, 
 					ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 					true, parentCommand);
 			}
@@ -2824,7 +2813,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
-				extendChangeConnectionCommand(from, formerConnectorItem, 
+				extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
 					ViewLayer::specFromID(wire->viewLayerID()),
 					false, parentCommand);
 				from->tempRemove(formerConnectorItem, false);
@@ -2833,7 +2822,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 		}
 		if (to != NULL) {
-			extendChangeConnectionCommand(from, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
+			extendChangeConnectionCommand(BaseCommand::CrossView, from, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
 		}
 	}
 
@@ -2896,11 +2885,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		if (m_bendpointWire == NULL) {
 			ConnectorItem * anchor = wire->otherConnector(fromOnWire);
 			if (anchor != NULL) {
-				extendChangeConnectionCommand(anchor, m_connectorDragConnector, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
+				extendChangeConnectionCommand(BaseCommand::CrossView, anchor, m_connectorDragConnector, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
 				doEmit = true;
 			}
 			if (to != NULL) {
-				extendChangeConnectionCommand(fromOnWire, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
+				extendChangeConnectionCommand(BaseCommand::CrossView, fromOnWire, to, ViewLayer::specFromID(wire->viewLayerID()), true, parentCommand);
 				doEmit = true;
 			}
 			if (!this->m_lastColorSelected.isEmpty()) {
@@ -3926,6 +3915,14 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 		slc->add(itemBase->id(), true, true);
 	}
 
+	Note * note = dynamic_cast<Note *>(itemBase);
+	if (note != NULL) {
+		new ChangeNoteTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
+	}
+	else {
+		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
+	}
+
 	prepDeleteProps(itemBase, parentCommand);
 
 	rememberSticky(itemBase->id(), parentCommand);
@@ -4544,7 +4541,7 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
 {
 	ConnectorPairHash connectorHash;
-	itemBase->collectConnectors(connectorHash);
+	itemBase->collectConnectors(connectorHash, NULL);
 
 	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
 	if (newModelPart == NULL) return;
@@ -5985,7 +5982,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 		}
 	}
 
-	QSet<ItemBase *> deleteItems;
+	QHash<ItemBase *, SketchWidget *> deletedItems;
 	foreach (ConnectorItem * fromConnectorItem, myConnectorItems) {
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -5997,7 +5994,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 					wire->collectChained(chained, ends, uniqueEnds);
 					foreach (Wire * w, chained) {
 						itemsToDelete.insert(w, this);
-						deleteItems.insert(w);
+						deletedItems.insert(w, this);
 					}
 				}
 			}
@@ -6035,7 +6032,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 		}
 	}
 
-	deleteMiddle(deleteItems, parentCommand);
+	deleteMiddle(deletedItems, parentCommand);
 }
 
 bool SketchWidget::canDisconnectAll() {

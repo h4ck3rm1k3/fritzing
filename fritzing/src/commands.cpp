@@ -731,7 +731,8 @@ void CleanUpWiresCommand::setDirection(CleanUpWiresCommand::Direction direction)
 
 QString CleanUpWiresCommand::getParamString() const {
 	return QString("CleanUpWiresCommand ") 
-		+ BaseCommand::getParamString();
+		+ BaseCommand::getParamString()
+		+ QString(" direction %1").arg(m_direction);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -745,40 +745,6 @@ bool PCBSketchWidget::bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags 
 	return result;
 }
 
-bool PCBSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
-{
-	Q_UNUSED(deletedItems);
-	Q_UNUSED(parentCommand);
-
-	// keeps virtual wire connections off the undo list
-	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
-	{
-		QList <ConnectorItem *> removeKeys;
-		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
-			if (fromConnectorItem->attachedTo()->getVirtual()) {
-				removeKeys.append(fromConnectorItem);
-				continue;
-			}
-
-			QList<ConnectorItem *> removeValues;
-			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
-				if (toConnectorItem->attachedTo()->getVirtual()) {
-					removeValues.append(toConnectorItem);
-				}
-			}
-			foreach (ConnectorItem * toConnectorItem, removeValues) {
-				connectorHash->remove(fromConnectorItem, toConnectorItem);
-			}
-		}
-		foreach (ConnectorItem * fromConnectorItem, removeKeys) {
-			connectorHash->remove(fromConnectorItem);
-		}
-	}
-
-
-	return false;
-}
-
 bool PCBSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to)
 {
 	Q_UNUSED(dragWire);

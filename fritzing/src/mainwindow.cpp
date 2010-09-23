@@ -435,6 +435,10 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(disconnectWireSlot(QSet<ItemBase *> &, QList<long> &, QUndoCommand *)),
 									 Qt::DirectConnection);
 
+	succeeded = succeeded && connect(signaller, SIGNAL(deleteTracesSignal(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, bool, QUndoCommand *)),
+									 slotter, SLOT(deleteTracesSlot(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, bool, QUndoCommand *)),
+									 Qt::DirectConnection);
+
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");
 	}
