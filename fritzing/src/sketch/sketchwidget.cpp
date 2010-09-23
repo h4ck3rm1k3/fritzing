@@ -4506,6 +4506,8 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		needsTransform = true;
 	}
 
+	new MoveItemCommand(this, itemBase->id(), vg, vg, parentCommand);
+
 	newAddItemCommand(BaseCommand::SingleView, newModuleID, viewLayerSpec, vg, newID, true, newModelIndex, parentCommand);
 
 	if (needsTransform) {
