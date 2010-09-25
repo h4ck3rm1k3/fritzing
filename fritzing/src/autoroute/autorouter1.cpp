@@ -827,9 +827,8 @@ void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorI
 			if (visited.contains(traceWire)) continue;
 
 			QList<Wire *> wires;
-			QList<ConnectorItem *> uniqueEnds;
 			QList<ConnectorItem *> ends;
-			traceWire->collectChained(wires, ends, uniqueEnds);
+			traceWire->collectChained(wires, ends);
 			foreach (Wire * wire, wires) {
 				visited.insert(wire);
 			}
@@ -879,9 +878,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 					if (w->getTrace() || w->getJumper()) {
 						QList<Wire *> wires;
 						QList<ConnectorItem *> ends;
-						QList<ConnectorItem *> uniqueEnds;
-
-						w->collectChained(wires, ends, uniqueEnds);
+						w->collectChained(wires, ends);
 						foreach (Wire * wire, wires) {
 							wire->setAutoroutable(true);
 						}
@@ -1253,8 +1250,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 			QList<Wire *> chainedWires;
 			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			candidateWire->collectChained(chainedWires, ends, uniqueEnds);
+			candidateWire->collectChained(chainedWires, ends);
 			if (ends.count() > 0 && m_drawingNet && m_drawingNet->contains(ends[0])) {
 				// it's the same potential, so it's safe to cross
 				continue;
@@ -1459,12 +1455,19 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 		QList<Wire *> chainedWires;
 		QList<ConnectorItem *> ends;
-		QList<ConnectorItem *> uniqueEnds;
-		wireObstacle->collectChained(chainedWires, ends, uniqueEnds);
+		wireObstacle->collectChained(chainedWires, ends);
 
 		foreach (ConnectorItem * end, ends) {
 			if (tryWithWires(fromPos, toPos, from, to, wires, end, chainedWires, boundingPoly, level, endPos, shortcut)) {
 				return true;
+			}
+		}
+
+		QList<ConnectorItem *> uniqueEnds;
+		foreach (Wire * cw, chainedWires) {
+			ConnectorItem * c0 = cw->connector0();
+			if ((c0 != NULL) && c0->chained()) {
+				uniqueEnds.append(c0);
 			}
 		}
 
@@ -2378,8 +2381,7 @@ bool Autorouter1::hasCollisions(JumperItem * jumperItem, ViewLayer::ViewLayerID 
 
 		QList<Wire *> chainedWires;
 		QList<ConnectorItem *> ends;
-		QList<ConnectorItem *> uniqueEnds;
-		traceWire->collectChained(chainedWires, ends, uniqueEnds);
+		traceWire->collectChained(chainedWires, ends);
 		
 		if (!ends.contains(from)) {
 			return true;

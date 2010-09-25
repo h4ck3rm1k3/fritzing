@@ -459,13 +459,15 @@ public:
     void redo();
 	void addRoutingStatus(SketchWidget *, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus);
 	void setDirection(CleanUpWiresCommand::Direction);
+	void addTrace(SketchWidget * sketchWidget, Wire * wire);
+	bool hasTraces(SketchWidget *);
+	CleanUpWiresCommand::Direction direction();
 
 protected:
 	QString getParamString() const;
 
 protected:
-
-	bool m_firstTime;
+	QSet<SketchWidget *> m_sketchWidgets;
 	Direction m_direction;
 };
 

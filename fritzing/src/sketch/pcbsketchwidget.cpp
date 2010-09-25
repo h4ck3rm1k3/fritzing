@@ -282,40 +282,12 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 		if (wire->getTrace() || wire->getJumper()) {
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			wire->collectChained(wires, ends, uniqueEnds);
+			wire->collectChained(wires, ends);
 			foreach (Wire * w, wires) {
 				w->setAutoroutable(!exclude);
 			}
 		}
 	}
-}
-
-void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingStatus & routingStatus, bool manual)
-{
-	//DebugDialog::debug("update ratsnest status");
-
-	if (!manual && m_manualRoutingStatusUpdate) return;
-
-	routingStatus.zero();
-	updateRoutingStatus(routingStatus);
-
-	if (routingStatus != m_routingStatus) {
-		if (command) {
-			// changing state after the command has already been executed
-			command->addRoutingStatus(this, m_routingStatus, routingStatus);
-		}
-
-		emit routingStatusSignal(this, routingStatus);
-
-		m_routingStatus = routingStatus;
-	}
-}
-
-void PCBSketchWidget::forwardRoutingStatus(const RoutingStatus & routingStatus) 
-{
-	m_routingStatus = routingStatus;
-	SketchWidget::forwardRoutingStatus(routingStatus);
 }
 
 void PCBSketchWidget::selectAllExcludedTraces() 
@@ -826,9 +798,8 @@ ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * con
 	Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
 	QList<ConnectorItem *> ends;
 	if (wire != NULL) {
-		QList<ConnectorItem *> uniqueEnds;
 		QList<Wire *> wires;
-		wire->collectChained(wires, ends, uniqueEnds);
+		wire->collectChained(wires, ends);
 		foreach (ConnectorItem * end, ends) {
 			foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
 				if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
@@ -904,8 +875,7 @@ void PCBSketchWidget::modifyNewWireConnectionsAux(ConnectorItem * fromConnectorI
 	Wire * wire = qobject_cast<Wire *>(fromConnectorItem->attachedTo());
 	QList<Wire *> wires;
 	QList<ConnectorItem *> ends;
-	QList<ConnectorItem *> uniqueEnds;
-	wire->collectChained(wires, ends, uniqueEnds);
+	wire->collectChained(wires, ends);
 	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceJumperRatsnestFlags);
 	if (ends.contains(toConnectorItem)) {
 		// don't need a new wire
@@ -1027,8 +997,7 @@ ConnectorItem * PCBSketchWidget::findNearestPartConnectorItem(ConnectorItem * fr
 
 void PCBSketchWidget::calcDistances(Wire * wire, QList<ConnectorItem *> & ends) {
 	QList<Wire *> chained;
-	QList<ConnectorItem *> uniqueEnds;
-	wire->collectChained(chained, ends, uniqueEnds);
+	wire->collectChained(chained, ends);
 	if (ends.count() < 2) return;
 
 	clearDistances();
@@ -1171,9 +1140,8 @@ void PCBSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wi
 				if (alreadyList.contains(already)) continue;
 
 				alreadyList.append(already);
-				new ChangeConnectionCommand(this, BaseCommand::SingleView,
-											fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+
+				extendChangeConnectionCommand(BaseCommand::SingleView, fromConnectorItem, toConnectorItem,
 											ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 											false, parentCommand);
 			}
@@ -1263,6 +1231,79 @@ ItemBase * PCBSketchWidget::findBoard() {
 	return NULL;
 }
 
+
+void PCBSketchWidget::forwardRoutingStatus(const RoutingStatus & routingStatus) 
+{
+	m_routingStatus = routingStatus;
+	SketchWidget::forwardRoutingStatus(routingStatus);
+}
+
+void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingStatus & routingStatus, bool manual)
+{
+	//DebugDialog::debug("update ratsnest status");
+
+	if (!manual && m_manualRoutingStatusUpdate) return;
+
+	if (command != NULL && m_ratsnestUpdateDisconnect.count() > 0 && !command->hasTraces(this)) {
+		QSet<Wire *> deletedWires;
+		QList<Wire *> visitedWires;
+		foreach (QGraphicsItem * item, scene()->items()) {
+			Wire * wire = dynamic_cast<Wire *>(item);
+			if (wire == NULL) continue;
+			if (!wire->getTrace()) continue;
+			if (visitedWires.contains(wire)) continue;
+
+			if (wire->connector0()->connectedToItems().count() == 0) {
+				// trace is already going to be deleted
+				continue;
+			}
+
+			QList<Wire *> wires;
+			QList<ConnectorItem *> ends;
+			wire->collectChained(wires, ends);
+			visitedWires.append(wires);
+			if (ends.count() <= 0) continue;
+
+			QList<ConnectorItem *> connectorItems;
+			connectorItems.append(ends[0]);
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+			bool doDelete = false;
+			foreach (ConnectorItem * end, ends) {
+				if (!connectorItems.contains(end)) {
+					doDelete = true;
+					break;
+				}
+			}
+
+			if (doDelete) {
+				foreach (Wire * w, wires) {
+					command->addTrace(this, w);
+					deletedWires.insert(w);
+				}
+			}
+		}
+
+		foreach (Wire * w, deletedWires.values()) {
+			//wire->markDeleted(true);
+			deleteItem(w, true, false, false);
+		}
+	}
+
+	routingStatus.zero();
+	updateRoutingStatus(routingStatus);
+
+	if (routingStatus != m_routingStatus) {
+		if (command) {
+			// changing state after the command has already been executed
+			command->addRoutingStatus(this, m_routingStatus, routingStatus);
+		}
+
+		emit routingStatusSignal(this, routingStatus);
+
+		m_routingStatus = routingStatus;
+	}
+}
+
 void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus) 
 {
 	DebugDialog::debug(QString("update routing status %1 %2 %3")
@@ -1285,7 +1326,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
 		visited.append(connectorItems);
 
 		bool doRatsnest = checkUpdateRatsnest(connectorItems);
@@ -1298,6 +1339,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 
 		for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
 			ConnectorItem * ci = partConnectorItems[i];
+			/*
 			DebugDialog::debug(QString("pc '%1' id:%2 cid:%3 vid:%4 vlid:%5 vis:%6")
 				.arg(ci->attachedToTitle())
 				.arg(ci->attachedToID())
@@ -1306,6 +1348,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 				.arg(ci->attachedToViewLayerID())
 				.arg(ci->attachedTo()->isEverVisible())
 				);
+				*/
 			if (!ci->attachedTo()->isEverVisible()) {
 				// may not be necessary when views are brought completely into sync
 				partConnectorItems.removeAt(i);
@@ -1339,10 +1382,11 @@ bool PCBSketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItem
 		bool remove = false;
 		if (ci == NULL) {
 			remove = true;
-			DebugDialog::debug(QString("rem rat null %1 con:true").arg(m_viewIdentifier));
+			//DebugDialog::debug(QString("rem rat null %1 con:true").arg(m_viewIdentifier));
 		}
 		else if (connectorItems.contains(ci)) {
 			remove = true;
+			/*
 			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:true")
 				.arg(ci->attachedToTitle())
 				.arg(ci->attachedToID())
@@ -1350,6 +1394,7 @@ bool PCBSketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItem
 				.arg(m_viewIdentifier)
 				.arg(ci->attachedToViewLayerID())
 				);
+				*/
 			doRatsnest = true;
 		}
 		if (remove) m_ratsnestUpdateConnect.removeAt(i);
@@ -1359,10 +1404,11 @@ bool PCBSketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItem
 		bool remove = false;
 		if (ci == NULL) {
 			remove = true;
-			DebugDialog::debug(QString("rem rat null %1 con:false").arg(m_viewIdentifier));
+			//DebugDialog::debug(QString("rem rat null %1 con:false").arg(m_viewIdentifier));
 		}
 		else if (connectorItems.contains(ci)) {
 			remove = true;
+			/*
 			DebugDialog::debug(QString("rem rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 false")
 				.arg(ci->attachedToTitle())
 				.arg(ci->attachedToID())
@@ -1370,6 +1416,7 @@ bool PCBSketchWidget::checkUpdateRatsnest(QList<ConnectorItem *> & connectorItem
 				.arg(m_viewIdentifier)
 				.arg(ci->attachedToViewLayerID())
 				);
+				*/
 			doRatsnest = true;
 		}
 		if (remove) m_ratsnestUpdateDisconnect.removeAt(i);
@@ -2014,8 +2061,7 @@ void PCBSketchWidget::changeBoardLayers(int layers, bool doEmit) {
 void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand) 
 {
 	QList<Wire *> chained;
-	QList<ConnectorItem *> uniqueEnds;
-	w->collectChained(chained, ends, uniqueEnds);
+	w->collectChained(chained, ends);
 	makeWiresChangeConnectionCommands(chained, parentCommand);
 	foreach (Wire * c, chained) {
 		makeDeleteItemCommand(c, BaseCommand::SingleView, parentCommand);
@@ -2093,9 +2139,8 @@ void PCBSketchWidget::changeTraceLayer() {
 		if (visitedWires.contains(tw)) continue;
 
 		QList<Wire *> wires;
-		QList<ConnectorItem *> uniqueEnds;
 		QList<ConnectorItem *> ends;
-		tw->collectChained(wires, ends, uniqueEnds);
+		tw->collectChained(wires, ends);
 		visitedWires.append(wires);
 		if (ends.count() < 2) continue;   // should never happen, since traces have to be connected at both ends
 
@@ -2120,9 +2165,8 @@ void PCBSketchWidget::changeTraceLayer() {
 	bool firstTime = true;
 	foreach (Wire * wire, changeWires) {
 		QList<Wire *> wires;
-		QList<ConnectorItem *> uniqueEnds;
 		QList<ConnectorItem *> ends;
-		wire->collectChained(wires, ends, uniqueEnds);
+		wire->collectChained(wires, ends);
 
 		// probably safest to disconnect change the layers and reconnect, so that's why the redundant looping
 
@@ -2138,9 +2182,8 @@ void PCBSketchWidget::changeTraceLayer() {
 				}
 			}
 
-			new ChangeConnectionCommand(this, BaseCommand::SingleView,
-								targetConnectorItem->attachedToID(), targetConnectorItem->connectorSharedID(),
-								end->attachedToID(), end->connectorSharedID(),
+			extendChangeConnectionCommand(BaseCommand::SingleView,
+								targetConnectorItem, end,
 								ViewLayer::specFromID(end->attachedToViewLayerID()), 
 								false, parentCommand);
 		}

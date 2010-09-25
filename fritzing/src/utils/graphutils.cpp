@@ -180,8 +180,7 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			wire->collectChained(wires, ends, uniqueEnds);
+			wire->collectChained(wires, ends);
 			foreach (ConnectorItem * end, ends) {
 				if (end == fromConnectorItem) continue;
 

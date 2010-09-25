@@ -98,7 +98,7 @@ public:
 	ConnectorItem * connector1();
 	virtual class FSvgRenderer * setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers, class InfoGraphicsView *);
 	void findConnectorsUnder();
-	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds);
+	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends);
 	void collectWires(QList<Wire *> & wires);
 	bool stickyEnabled();
 	void setPcbPenBrush(QBrush & brush);

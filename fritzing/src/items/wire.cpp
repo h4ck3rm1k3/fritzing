@@ -277,8 +277,7 @@ void Wire::initDragEnd(ConnectorItem * connectorItem, QPointF scenePos) {
 	if (connectorItem->chained()) {
 		QList<Wire *> chained;
 		QList<ConnectorItem *> ends;
-		QList<ConnectorItem *> uniqueEnds;
-		collectChained(chained, ends, uniqueEnds);
+		collectChained(chained, ends);
 		// already saved the first one
 		for (int i = 1; i < chained.count(); i++) {
 			chained[i]->saveGeometry();
@@ -821,15 +820,12 @@ void Wire::findConnectorsUnder() {
 	}
 }
 
-void Wire::collectChained(QList<Wire *> & chained, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds ) {
+void Wire::collectChained(QList<Wire *> & chained, QList<ConnectorItem *> & ends ) {
 	chained.append(this);
 	for (int i = 0; i < chained.count(); i++) {
 		Wire * wire = chained[i];
 		collectChained(wire->m_connector1, chained, ends);
 		collectChained(wire->m_connector0, chained, ends);
-		if ((wire->m_connector0 != NULL) && wire->m_connector0->chained()) {
-			uniqueEnds.append(wire->m_connector0);
-		}
 	}
 }
 
@@ -1084,8 +1080,7 @@ bool Wire::hasAnyFlag(ViewGeometry::WireFlags flags)
 
 Wire * Wire::findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends) {
 	QList<Wire *> chainedWires;
-	QList<ConnectorItem *> uniqueEnds;
-	this->collectChained(chainedWires, ends, uniqueEnds);
+	this->collectChained(chainedWires, ends);
 	if (ends.count() != 2) {
 		DebugDialog::debug(QString("wire in jumper or trace must have two ends") );
 		return NULL;
@@ -1164,8 +1159,7 @@ QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
 		if (!m_ignoreSelectionChange) {
 			QList<Wire *> chained;
 			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			collectChained(chained, ends, uniqueEnds);
+			collectChained(chained, ends);
 			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 			if (infoGraphicsView) {
 				infoGraphicsView->setIgnoreSelectionChangeEvents(true);

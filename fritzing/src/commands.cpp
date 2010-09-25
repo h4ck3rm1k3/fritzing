@@ -697,26 +697,29 @@ void CheckStickyCommand::stick(SketchWidget * sketchWidget, long fromID, long to
 CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, CleanUpWiresCommand::Direction direction, QUndoCommand *parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
-	m_firstTime = true;
 	m_direction = direction;
 }
 
 void CleanUpWiresCommand::undo()
 {
+	if (m_sketchWidgets.count() > 0)  {
+		subUndo();
+	}
+
 	if (m_direction == UndoOnly) {
-		//subUndo();
 		m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, NULL);  
 	}
 }
 
 void CleanUpWiresCommand::redo()
 {
-	if (m_direction == RedoOnly) {
-		//subRedo();
-
-		m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, NULL);  // m_firstTime ? this : NULL
+	if (m_sketchWidgets.count() > 0) {
+		subRedo();
 	}
-	m_firstTime = false;
+
+	if (m_direction == RedoOnly) {
+		m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, this);  
+	}
 }
 
 void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, const RoutingStatus & oldRoutingStatus, const RoutingStatus & newRoutingStatus)
@@ -727,6 +730,49 @@ void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, const Ro
 void CleanUpWiresCommand::setDirection(CleanUpWiresCommand::Direction direction)
 {
 	m_direction = direction;
+}
+
+CleanUpWiresCommand::Direction CleanUpWiresCommand::direction()
+{
+	return m_direction;
+}
+
+void CleanUpWiresCommand::addTrace(SketchWidget * sketchWidget, Wire * wire) 
+{
+	if (m_parentCommand) {
+		for (int i = 0; i < m_parentCommand->childCount(); i++) {
+			const DeleteItemCommand * command = dynamic_cast<const DeleteItemCommand *>(m_parentCommand->child(i));
+
+			if (command == NULL) continue;
+			if (command->itemID() == wire->id()) {
+				return;
+			}		
+		}
+	}
+
+	m_sketchWidgets.insert(sketchWidget);
+
+	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
+	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
+	
+	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
+		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+								wire->id(), "connector0", 
+								ViewLayer::specFromID(wire->viewLayerID()),
+								false, NULL));
+	}
+	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
+		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+							wire->id(), "connector1", 
+							ViewLayer::specFromID(wire->viewLayerID()),
+							false, NULL));
+	}
+
+	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
+}
+
+bool CleanUpWiresCommand::hasTraces(SketchWidget * sketchWidget) {
+	return m_sketchWidgets.contains(sketchWidget);
 }
 
 QString CleanUpWiresCommand::getParamString() const {

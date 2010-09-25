@@ -235,9 +235,8 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 
 							QList<Wire *> chained;
 							QList<ConnectorItem *> ends;
-							QList<ConnectorItem *> uniqueEnds;
 							Wire * tempWire = dynamic_cast<Wire *>(cto->attachedTo());
-							tempWire->collectChained(chained, ends, uniqueEnds);
+							tempWire->collectChained(chained, ends);
 							if (ends.contains(fromConnectorItem) || ends.contains(toConnectorItem)) {
 								// is this good enough or do we need more confirmation that it's the right wire?
 								deletedItems.insert(tempWire);

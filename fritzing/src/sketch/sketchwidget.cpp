@@ -812,6 +812,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 		otherDeletedItems.insert(itemBase, this);
 	}
 	deleteMiddle(otherDeletedItems, parentCommand);
+	//emit deleteMoreTracesSignal(deletedItems, otherDeletedItems, parentCommand);
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
@@ -833,19 +834,29 @@ bool isVirtualWireConnector(ConnectorItem * toConnectorItem) {
 	return (qobject_cast<VirtualWire *>(toConnectorItem->attachedTo()) != NULL);
 }
 
-
 void SketchWidget::deleteMiddle(QHash<ItemBase *, SketchWidget *> & deletedItems, QUndoCommand * parentCommand) {
 	foreach (ItemBase * itemBase, deletedItems.keys()) {
 		foreach (QGraphicsItem * graphicsItem, itemBase->childItems()) {
 			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(graphicsItem);
 			if (fromConnectorItem == NULL) continue;
-
+		
 			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 				deletedItems.value(itemBase)->extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
 											  ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
 											  false, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem, false);
 				toConnectorItem->tempRemove(fromConnectorItem, false);
+			}
+
+			fromConnectorItem = fromConnectorItem->getCrossLayerConnectorItem();
+			if (fromConnectorItem) {
+				foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+					deletedItems.value(itemBase)->extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem,
+												  ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()),
+												  false, parentCommand);
+					fromConnectorItem->tempRemove(toConnectorItem, false);
+					toConnectorItem->tempRemove(fromConnectorItem, false);
+				}
 			}
 		}
 	}
@@ -869,16 +880,22 @@ void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemB
 		foreach (QGraphicsItem * graphicsItem, itemBase->childItems()) {
 			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(graphicsItem);
 			if (fromConnectorItem == NULL) continue;
+
+			QList<ConnectorItem *> connectorItems;
+			foreach (ConnectorItem * ci, fromConnectorItem->connectedToItems()) connectorItems << ci;
+			ConnectorItem * crossConnectorItem = fromConnectorItem->getCrossLayerConnectorItem();
+			if (crossConnectorItem) {
+				foreach (ConnectorItem * ci, crossConnectorItem->connectedToItems()) connectorItems << ci;
+			}
 		
-			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			foreach (ConnectorItem * toConnectorItem, connectorItems) {
 				Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 				if (wire == NULL) continue;
 
 				if (isJumper || wire->getTrace() || wire->getJumper()) {
 					QList<Wire *> wires;
 					QList<ConnectorItem *> ends;
-					QList<ConnectorItem *> uniqueEnds;
-					wire->collectChained(wires, ends, uniqueEnds);
+					wire->collectChained(wires, ends);
 					foreach (Wire * w, wires) {
 						otherDeletedItems.insert(w, this);
 					}
@@ -1916,9 +1933,8 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 
 	foreach (Wire * w, wires) {
 		QList<Wire *> chainedWires;
-		QList<ConnectorItem *> uniqueEnds;
 		QList<ConnectorItem *> ends;
-		w->collectChained(chainedWires, ends, uniqueEnds);
+		w->collectChained(chainedWires, ends);
 		foreach (Wire * ww, chainedWires) {
 			wires.insert(ww);
 		}
@@ -4583,9 +4599,9 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 	
 		foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
 			// delete connection to part being swapped out
-			new ChangeConnectionCommand(this, BaseCommand::SingleView,
-										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+
+			extendChangeConnectionCommand(BaseCommand::SingleView,
+										fromConnectorItem, toConnectorItem,
 										ViewLayer::specFromID(toConnectorItem->attachedToViewLayerID()),
 										false, parentCommand);
 
@@ -5992,8 +6008,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 				if (!wire->getRatsnest()) {
 					QList<Wire *> chained;
 					QList<ConnectorItem *> ends;
-					QList<ConnectorItem *> uniqueEnds;
-					wire->collectChained(chained, ends, uniqueEnds);
+					wire->collectChained(chained, ends);
 					foreach (Wire * w, chained) {
 						itemsToDelete.insert(w, this);
 						deletedItems.insert(w, this);
@@ -6092,8 +6107,7 @@ long SketchWidget::findPartOrWire(long itemID)
 
 	QList<Wire *> chained;
 	QList<ConnectorItem *> ends;
-	QList<ConnectorItem *> uniqueEnds;
-	qobject_cast<Wire *>(item)->collectChained(chained, ends, uniqueEnds);
+	qobject_cast<Wire *>(item)->collectChained(chained, ends);
 	if (chained.length() <= 1) return itemID;
 
 	foreach (Wire * w, chained) {
@@ -6473,6 +6487,8 @@ void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) 
 		m_ratsnestUpdateDisconnect << connectorItem;
 	}
 
+	/*
+
 	DebugDialog::debug(QString("add rat '%1' id:%2 cid:%3 vid:%4 vlid:%5 con:%6")
 		.arg(connectorItem->attachedToTitle())
 		.arg(connectorItem->attachedToID())
@@ -6481,6 +6497,7 @@ void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) 
 		.arg(connectorItem->attachedToViewLayerID())
 		.arg(connect)
 		);
+	*/
 }
 
 
@@ -6583,9 +6600,8 @@ void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QL
 					if (deleteConnector->attachedToItemType() == ModelPart::Wire) {
 						Wire * deletedWire = qobject_cast<Wire *>(deleteConnector->attachedTo());
 						QList<ConnectorItem *> ends;
-						QList<ConnectorItem *> uniqueEnds;
 						QList<Wire *> wires;
-						deletedWire->collectChained(wires, ends, uniqueEnds);
+						deletedWire->collectChained(wires, ends);
 						foreach (Wire * w, wires) {
 							if (!deletedIDs.contains(w->id())) {
 								deletedItems.insert(w);
