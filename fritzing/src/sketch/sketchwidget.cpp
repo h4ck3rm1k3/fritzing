@@ -6687,8 +6687,10 @@ bool SketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to,
 
 bool SketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited) 
 {
-	bool result = false;
+	if (visited.contains(from)) return false;
 	visited.append(from);
+
+	bool result = false;
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
 		if (toConnectorItem == to) {
 			byBus.append(NULL);
