@@ -1287,6 +1287,7 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 				throw "drag enter event from unknown source";
 			}
 
+			m_checkUnder = other->m_checkUnder;
 			m_movingItem = new QGraphicsSvgItem();
 			m_movingItem->setSharedRenderer(other->m_movingSVGRenderer);
 			this->scene()->addItem(m_movingItem);
@@ -1811,6 +1812,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void SketchWidget::prepMove(ItemBase * originatingItem) {
+	m_checkUnder = true;
 	QSet<Wire *> wires;
 	QList<ItemBase *> items;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
@@ -1848,7 +1850,9 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		}
 
 		QSet<ItemBase *> set;
-		collectFemaleConnectees(chief, set);
+		if (collectFemaleConnectees(chief, set)) {
+			m_checkUnder = false;
+		}
 		foreach (ItemBase * sitemBase, set) {
 			if (!items.contains(sitemBase)) {
 				items.append(sitemBase);
@@ -2183,9 +2187,10 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 }
 
 
-void SketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<ItemBase *> & items) {
+bool SketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<ItemBase *> & items) {
 	Q_UNUSED(itemBase);
 	Q_UNUSED(items);
+	return false;
 }
 
 bool SketchWidget::draggingWireEnd() {
@@ -2376,14 +2381,16 @@ void SketchWidget::moveItems(QPoint globalPos, bool checkAutoScrollFlag)
 	}
 
 	foreach (ItemBase * item, m_savedItems) {
-       QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
-       QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
-       item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
+		QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
+		QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
+		item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
 
-	   findConnectorsUnder(item);
+		if (m_checkUnder) {
+			findConnectorsUnder(item);
+		}
 
 /*
-	   DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8")
+		DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8")
 		.arg(item->getViewGeometry().loc().x()).arg(item->getViewGeometry().loc().y())
 		.arg(currentParentPos.x()).arg(currentParentPos.y())
 		.arg(buttonDownParentPos.x()).arg(buttonDownParentPos.y())

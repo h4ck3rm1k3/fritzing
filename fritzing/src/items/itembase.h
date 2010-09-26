@@ -160,7 +160,7 @@ public:
 	virtual QString toolTip2();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	virtual void collectWireConnectees(QSet<class Wire *> & wires);
-	virtual void collectFemaleConnectees(QSet<ItemBase *> & items);
+	virtual bool collectFemaleConnectees(QSet<ItemBase *> & items);
 	void prepareGeometryChange();
 	virtual void resetID();
 	void updateConnectionsAux();

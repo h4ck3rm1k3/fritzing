@@ -296,7 +296,7 @@ protected:
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec);
 	ItemBase * overSticky(ItemBase *);
 	virtual void setNewPartVisible(ItemBase *);
-	virtual void collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
+	virtual bool collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
 	virtual void findConnectorsUnder(ItemBase * item);
 
 	bool currentlyInfoviewed(ItemBase *item);
@@ -555,6 +555,7 @@ protected:
 	QPointer<QGraphicsSvgItem> m_movingItem;
 	QList< QPointer<ConnectorItem> > m_ratsnestUpdateDisconnect;
 	QList< QPointer<ConnectorItem> > m_ratsnestUpdateConnect;
+	bool m_checkUnder;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

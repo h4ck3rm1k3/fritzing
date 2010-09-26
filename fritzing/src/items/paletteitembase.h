@@ -57,7 +57,7 @@ public:
 	bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	virtual bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors);
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
-	void collectFemaleConnectees(QSet<ItemBase *> & items);
+	bool collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	virtual void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);

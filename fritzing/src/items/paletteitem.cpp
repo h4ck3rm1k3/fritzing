@@ -260,11 +260,14 @@ void PaletteItem::updateConnections() {
 	}
 }
 
-void PaletteItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
-	PaletteItemBase::collectFemaleConnectees(items);
+bool PaletteItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
+	bool hasFemale = PaletteItemBase::collectFemaleConnectees(items);
 	foreach (ItemBase * lkpi, m_layerKin) {
-		lkpi->collectFemaleConnectees(items);
+		if (lkpi->collectFemaleConnectees(items)) {
+			hasFemale = true;
+		}
 	}
+	return hasFemale;
 }
 
 void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {

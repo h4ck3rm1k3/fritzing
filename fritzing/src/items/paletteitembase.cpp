@@ -208,12 +208,14 @@ void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	ItemBase::mouseReleaseEvent(event);
 }
 
-void PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
+bool PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
+	bool hasFemale = false;
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
 		if (item == NULL) continue;
 		if (item->connectorType() != Connector::Female) continue;
 
+		hasFemale = true;
 		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
 			if (!toConnectorItem->attachedTo()->isVisible()) continue;
@@ -221,6 +223,8 @@ void PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 			items.insert(toConnectorItem->attachedTo());
 		}
 	}
+
+	return hasFemale;
 }
 
 void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {

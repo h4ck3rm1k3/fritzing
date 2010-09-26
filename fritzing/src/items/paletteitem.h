@@ -67,7 +67,7 @@ public:
 	QString family();
 	void setHidden(bool hidden);
 	void setInactive(bool inactivate);
-	void collectFemaleConnectees(QSet<ItemBase *> & items);
+	bool collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void clearModelPart();
 	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *);
