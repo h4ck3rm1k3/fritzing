@@ -116,7 +116,7 @@ bool Version::candidateGreaterThanCurrent(const VersionThing & candidateVersionT
 	myVersionThing.minorSubVersion = minorSubVersion().toInt();
 	myVersionThing.releaseModifier = modifier();
 
-	return greaterThan(myVersionThing, candidateVersionThing);
+	return greaterThan(myVersionThing, candidateVersionThing); 
 }
 
 bool Version::greaterThan(const QString & myVersionStr, const QString & yourVersionStr) {

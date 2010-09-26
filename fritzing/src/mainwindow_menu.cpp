@@ -1681,6 +1681,7 @@ void MainWindow::createMenus()
 	connect(m_windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
 	m_pcbTraceMenu = menuBar()->addMenu(tr("&Trace"));
+	m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_groundFillAct);
 	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
@@ -1704,6 +1705,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
+	m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_schematicTraceMenu->addAction(m_autorouteAct);
 	m_schematicTraceMenu->addAction(m_createTraceAct);
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
@@ -2190,6 +2192,7 @@ void MainWindow::updateTraceMenu() {
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
 	m_designRulesCheckAct->setEnabled(true);
+	m_updateRoutingStatusAct->setEnabled(true);
 }
 
 void MainWindow::zoomIn() {
@@ -2895,6 +2898,10 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
 	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
 
+	m_updateRoutingStatusAct = new QAction(tr("Update Routing Status and Ratsnests"), this);
+	m_updateRoutingStatusAct->setStatusTip(tr("Recalculate routing status and ratsnest wires"));
+	connect(m_updateRoutingStatusAct, SIGNAL(triggered()), this, SLOT(updateRoutingStatus()));
+
 	m_selectAllExcludedTracesAct = new QAction(tr("Select All Traces Marked \"Don't Autoroute\""), this);
 	m_selectAllExcludedTracesAct->setStatusTip(tr("Select all trace wires excluded from autorouting"));
 	connect(m_selectAllExcludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllExcludedTraces()));
@@ -3004,6 +3011,12 @@ void MainWindow::excludeFromAutoroute() {
 
 void MainWindow::selectAllTraces() {
 	m_currentGraphicsView->selectAllWires(ViewGeometry::TraceFlag);
+}
+
+void MainWindow::updateRoutingStatus() {
+	RoutingStatus routingStatus;
+	routingStatus.zero();
+	m_currentGraphicsView->updateRoutingStatus(NULL, routingStatus, true);
 }
 
 void MainWindow::selectAllExcludedTraces() {

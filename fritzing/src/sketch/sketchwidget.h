@@ -408,7 +408,7 @@ signals:
 	void changeBoardLayersSignal(int, bool doEmit);
 	void firstTimeHelpHidden();
 	void disconnectWireSignal(QSet<ItemBase *> &, QList<long> &, QUndoCommand * parentCommand);
-	void deleteTracesSignal(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, bool isForeign, QUndoCommand * parentCommand);
+	void deleteTracesSignal(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -436,7 +436,7 @@ protected slots:
 	void rememberSticky(long id, QUndoCommand * parentCommand);
 	void copyBoundingRectsSlot(QHash<QString, QRectF> &);
 	void disconnectWireSlot(QSet<ItemBase *> &, QList<long> & deletedIDs, QUndoCommand * parentCommand);
-	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, bool isForeign, QUndoCommand * parentCommand);
+	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 
 public slots:
 	void changeWireColor(const QString newColor);
@@ -563,7 +563,6 @@ protected:
 	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;
 	static const int MoveAutoScrollThreshold;
 	static const int DragAutoScrollThreshold;
-	static bool m_manualRoutingStatusUpdate;
 };
 
 #endif

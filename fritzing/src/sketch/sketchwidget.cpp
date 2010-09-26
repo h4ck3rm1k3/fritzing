@@ -88,8 +88,6 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 const int SketchWidget::MoveAutoScrollThreshold = 5;
 const int SketchWidget::DragAutoScrollThreshold = 10;
 
-bool SketchWidget::m_manualRoutingStatusUpdate = false;
-
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
@@ -805,9 +803,13 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 
 	// some day we won't have to go through all this crap because all items will exist in all 3 views.
 	QHash<ItemBase *, SketchWidget *> otherDeletedItems;
-	emit deleteTracesSignal(deletedItems, otherDeletedItems, true, parentCommand);
+	QList<long> deletedIDs;
+	foreach(ItemBase * itemBase, deletedItems) {
+		deletedIDs.append(itemBase->id());
+	}
+	emit deleteTracesSignal(deletedItems, otherDeletedItems, deletedIDs, true, parentCommand);
 
-	deleteTracesSlot(deletedItems, otherDeletedItems, false, parentCommand);
+	deleteTracesSlot(deletedItems, otherDeletedItems, deletedIDs, false, parentCommand);
 	foreach (ItemBase * itemBase, deletedItems) {
 		otherDeletedItems.insert(itemBase, this);
 	}
@@ -862,7 +864,7 @@ void SketchWidget::deleteMiddle(QHash<ItemBase *, SketchWidget *> & deletedItems
 	}
 }
 
-void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, bool isForeign, QUndoCommand * parentCommand) {
+void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand) {
 	foreach (ItemBase * itemBase, deletedItems) {
 		if (itemBase->itemType() == ModelPart::Wire) continue;
 
@@ -897,7 +899,10 @@ void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemB
 					QList<ConnectorItem *> ends;
 					wire->collectChained(wires, ends);
 					foreach (Wire * w, wires) {
-						otherDeletedItems.insert(w, this);
+						if (!deletedIDs.contains(w->id())) {
+							otherDeletedItems.insert(w, this);
+							deletedIDs.append(w->id());
+						}
 					}
 				}
 			}

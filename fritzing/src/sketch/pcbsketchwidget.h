@@ -74,7 +74,7 @@ public:
 	ItemBase * findBoard();
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
-	void updateRoutingStatus(RoutingStatus &);
+	void updateRoutingStatus(RoutingStatus &, bool manual);
 	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);

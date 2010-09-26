@@ -1242,8 +1242,6 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingS
 {
 	//DebugDialog::debug("update ratsnest status");
 
-	if (!manual && m_manualRoutingStatusUpdate) return;
-
 	if (command != NULL && m_ratsnestUpdateDisconnect.count() > 0 && !command->hasTraces(this)) {
 		QSet<Wire *> deletedWires;
 		QList<Wire *> visitedWires;
@@ -1290,7 +1288,7 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingS
 	}
 
 	routingStatus.zero();
-	updateRoutingStatus(routingStatus);
+	updateRoutingStatus(routingStatus, manual);
 
 	if (routingStatus != m_routingStatus) {
 		if (command) {
@@ -1304,7 +1302,7 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingS
 	}
 }
 
-void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus) 
+void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool manual) 
 {
 	DebugDialog::debug(QString("update routing status %1 %2 %3")
 		.arg(m_viewIdentifier) 
@@ -1329,7 +1327,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus)
 		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
 		visited.append(connectorItems);
 
-		bool doRatsnest = checkUpdateRatsnest(connectorItems);
+		bool doRatsnest = manual || checkUpdateRatsnest(connectorItems);
 		if (!doRatsnest && connectorItems.count() <= 1) continue;
 
 		QList<ConnectorItem *> partConnectorItems;

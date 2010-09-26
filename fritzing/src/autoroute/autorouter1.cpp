@@ -933,7 +933,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 void Autorouter1::updateRoutingStatus() {
 	RoutingStatus routingStatus;
 	routingStatus.zero();
-	m_sketchWidget->updateRoutingStatus(routingStatus);
+	m_sketchWidget->updateRoutingStatus(routingStatus, false);
 }
 
  bool Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {

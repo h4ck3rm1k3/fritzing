@@ -435,8 +435,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(disconnectWireSlot(QSet<ItemBase *> &, QList<long> &, QUndoCommand *)),
 									 Qt::DirectConnection);
 
-	succeeded = succeeded && connect(signaller, SIGNAL(deleteTracesSignal(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, bool, QUndoCommand *)),
-									 slotter, SLOT(deleteTracesSlot(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, bool, QUndoCommand *)),
+	succeeded = succeeded && connect(signaller, SIGNAL(deleteTracesSignal(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, QList<long> &, bool, QUndoCommand *)),
+									 slotter, SLOT(deleteTracesSlot(QSet<ItemBase *> &, QHash<ItemBase *, SketchWidget *> &, QList<long> &, bool, QUndoCommand *)),
 									 Qt::DirectConnection);
 
 	if (!succeeded) {
@@ -789,9 +789,6 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	// update issue with 4.5.1?: is this still valid (4.6.x?)
 	m_currentGraphicsView->updateConnectors();
 
-	// don't think routing status update is necessary when changing views
-	//RoutingStatus routingStatus;
-	//m_currentGraphicsView->updateRoutingStatus(NULL, NULL, routingStatus, false);
 }
 
 void MainWindow::setActionsIcons(int index, QList<QAction *> & actions) {
