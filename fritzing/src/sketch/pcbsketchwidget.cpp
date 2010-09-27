@@ -2334,7 +2334,7 @@ void PCBSketchWidget::resizeBoard() {
 		ViewGeometry vg2 = vg1;
 		vg1.setLoc(oldPos);
 		vg2.setLoc(newPos);
-		new MoveItemCommand(this, m_resizingBoard->id(), vg1, vg2, parentCommand);
+		new MoveItemCommand(this, m_resizingBoard->id(), vg1, vg2, false, parentCommand);
 	}
 	new CheckStickyCommand(this, BaseCommand::SingleView, m_resizingBoard->id(), true, CheckStickyCommand::RedoOnly, parentCommand);
 	m_undoStack->waitPush(parentCommand, 10);

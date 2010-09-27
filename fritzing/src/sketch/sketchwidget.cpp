@@ -874,7 +874,7 @@ void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemB
 
 			itemBase->saveGeometry();
 			ViewGeometry vg = itemBase->getViewGeometry();
-			new MoveItemCommand(this, itemBase->id(), vg, vg, parentCommand);
+			new MoveItemCommand(this, itemBase->id(), vg, vg, false, parentCommand);
 		}
 
 		bool isJumper = (itemBase->itemType() == ModelPart::Jumper);
@@ -1015,24 +1015,28 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 }
 
 
-void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry) {
+void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry, bool updateRatsnest) {
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		if (pitem != NULL) {
-			pitem->moveItem(viewGeometry);
+		if (updateRatsnest) {
+			ratsnestConnect(pitem, true);
+		}
+		pitem->moveItem(viewGeometry);
+	}
+}
+
+
+void SketchWidget::moveItem(long id, const QPointF & p, bool updateRatsnest) {
+	ItemBase * pitem = findItem(id);
+	if (pitem != NULL) {
+		pitem->setPos(p);
+		if (updateRatsnest) {
+			ratsnestConnect(pitem, true);
 		}
 	}
 }
 
-
-void SketchWidget::moveItem(long id, const QPointF & p) {
-	ItemBase * pitem = findItem(id);
-	if (pitem != NULL) {
-		pitem->setPos(p);
-	}
-}
-
-void SketchWidget::updateWire(long id, const QString & connectorID) {
+void SketchWidget::updateWire(long id, const QString & connectorID, bool updateRatsnest) {
 	ItemBase * pitem = findItem(id);
 	if (pitem == NULL) return;
 
@@ -1041,6 +1045,10 @@ void SketchWidget::updateWire(long id, const QString & connectorID) {
 
 	ConnectorItem * connectorItem = findConnectorItem(wire, connectorID, ViewLayer::specFromID(wire->viewLayerID()));
 	if (connectorItem == NULL) return;
+
+	if (updateRatsnest) {
+		ratsnestConnect(connectorItem, true);
+	}
 
 	wire->simpleConnectedMoved(connectorItem);
 }
@@ -1068,14 +1076,15 @@ void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
 
 	if (!isVisible()) return;
 
-	 ItemBase * pitem = findItem(id);
+	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
 		pitem->flipItem(orientation);
+		ratsnestConnect(pitem, true);
 	}
 }
 
 
-void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLine)
+void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLine, bool updateRatsnest)
 {
 	DebugDialog::debug(QString("change wire %1; %2,%3,%4,%5; %6,%7; %8")
 			.arg(fromID)
@@ -1095,6 +1104,11 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLin
 	wire->setLineAnd(line, pos, useLine);
 	wire->updateConnections(wire->connector0());
 	wire->updateConnections(wire->connector1());
+
+	if (updateRatsnest) {
+		ratsnestConnect(wire->connector0(), true);
+		ratsnestConnect(wire->connector1(), true);
+	}
 }
 
 void SketchWidget::selectItem(long id, bool state, bool updateInfoView, bool doEmit) {
@@ -2539,9 +2553,11 @@ bool SketchWidget::checkMoved()
 		rememberSticky(item->id(), parentCommand);
 	}
 
-	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::Noop, parentCommand);
+	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
-	MoveItemsCommand * moveItemsCommand = new MoveItemsCommand(this, parentCommand);
+	bool gotConnection = true;
+
+	MoveItemsCommand * moveItemsCommand = new MoveItemsCommand(this, true, parentCommand);
 
 	foreach (ItemBase * item, m_savedItems) {
 		if (item == NULL) continue;
@@ -2580,7 +2596,6 @@ bool SketchWidget::checkMoved()
 		new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), false, CheckStickyCommand::RedoOnly, parentCommand);
 	}
 
-	bool gotConnection = false;
 	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {
 		foreach (ConnectorItem * toConnectorItem, m_moveDisconnectedFromFemale.values(fromConnectorItem)) {
 			extendChangeConnectionCommand(BaseCommand::CrossView, fromConnectorItem, toConnectorItem, ViewLayer::specFromID(fromConnectorItem->attachedToViewLayerID()), false, parentCommand);
@@ -2790,7 +2805,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	rememberSticky(fromID, parentCommand);
 
-	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
+	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, true, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, fromID, false, CheckStickyCommand::RedoOnly, parentCommand);
 
 	bool chained = false;
@@ -2803,7 +2818,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		ViewGeometry vg = toWire->getViewGeometry();
 		QLineF nl = toWire->line();
 		QPointF np = toWire->pos();
-		new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, parentCommand);
+		new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, true, parentCommand);
 		new CheckStickyCommand(this, BaseCommand::SingleView, toWire->id(), false, CheckStickyCommand::RedoOnly, parentCommand);
 		chained = true;
 	}
@@ -2931,7 +2946,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 	}
 
 	if (m_bendpointWire) {
-		new ChangeWireCommand(this, m_bendpointWire->id(), m_bendpointVG.line(), m_bendpointWire->line(), m_bendpointVG.loc(), m_bendpointWire->pos(), true, parentCommand);		
+		new ChangeWireCommand(this, m_bendpointWire->id(), m_bendpointVG.line(), m_bendpointWire->line(), m_bendpointVG.loc(), m_bendpointWire->pos(), true, false, parentCommand);		
 		foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
 			toConnectorItem->tempRemove(wire->connector1(), false);
 			wire->connector1()->tempRemove(toConnectorItem, false);
@@ -3492,6 +3507,8 @@ void SketchWidget::rotateX(qreal degrees)
 			.arg((m_savedItems.count() == 1) ? m_savedItems.values()[0]->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
 	foreach (ItemBase * itemBase, m_savedItems) {
 		if (!rotationAllowed(itemBase)) {
 			continue;
@@ -3508,9 +3525,9 @@ void SketchWidget::rotateX(qreal degrees)
 			QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 			ConnectorPairHash connectorHash;
 			disconnectFromFemale(itemBase, emptyList, connectorHash, true, parentCommand);
-			new MoveItemCommand(this, itemBase->id(), vg1, vg1, parentCommand);
+			new MoveItemCommand(this, itemBase->id(), vg1, vg1, true, parentCommand);
 			new RotateItemCommand(this, itemBase->id(), degrees, parentCommand);
-			new MoveItemCommand(this, itemBase->id(), vg2, vg2, parentCommand);
+			new MoveItemCommand(this, itemBase->id(), vg2, vg2, true, parentCommand);
 		}
 		else {
 			Wire * wire = qobject_cast<Wire *>(itemBase);
@@ -3522,7 +3539,7 @@ void SketchWidget::rotateX(qreal degrees)
 			QPointF d1 = p1 - center;
 			QPointF d1t = rotation.map(d1);
 
-			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, parentCommand);
+			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, true, parentCommand);
 		}
 	}
 	
@@ -3537,12 +3554,14 @@ void SketchWidget::rotateX(qreal degrees)
 
 		QPointF p1 = wire->otherConnector(rotater)->sceneAdjustedTerminalPoint(NULL);
 		if (rotater == wire->connector0()) {
-			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), p1 - (d0t + center)), vg1.loc(), d0t + center, true, parentCommand);
+			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), p1 - (d0t + center)), vg1.loc(), d0t + center, true, true, parentCommand);
 		}
 		else {
-			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d0t + center - p1), vg1.loc(), vg1.loc(), true, parentCommand);
+			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d0t + center - p1), vg1.loc(), vg1.loc(), true, true, parentCommand);
 		}
 	}
+
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	m_undoStack->push(parentCommand);
 
@@ -3612,6 +3631,8 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
+
 	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
 	foreach (ItemBase * item, targets) {
@@ -3632,8 +3653,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	clearTemporaries();
 
-	// uncomment CleanUpWiresCommand if you decide to reroute ratsnests here
-	//new CleanUpWiresCommand(this, false, parentCommand);
+	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
 
 }
@@ -4242,7 +4262,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 			true, parentCommand);
 	}
 
-	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, oldPos, true, parentCommand);
+	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, oldPos, true, false, parentCommand);
 
 	// connect the two wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorSharedID(),
@@ -4322,7 +4342,7 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 		newPos = toWire->pos();
 		newLine = QLineF(QPointF(0,0), wire->pos() - toWire->pos() + wire->line().p2());
 	}
-	new ChangeWireCommand(this, wire->id(), wire->line(), newLine, wire->pos(), newPos, true, parentCommand);
+	new ChangeWireCommand(this, wire->id(), wire->line(), newLine, wire->pos(), newPos, true, false, parentCommand);
 
 	m_undoStack->push(parentCommand);
 }
@@ -4534,7 +4554,7 @@ long SketchWidget::setUpSwap(ItemBase * itemBase, long newModelIndex, const QStr
 		needsTransform = true;
 	}
 
-	new MoveItemCommand(this, itemBase->id(), vg, vg, parentCommand);
+	new MoveItemCommand(this, itemBase->id(), vg, vg, false, parentCommand);
 
 	newAddItemCommand(BaseCommand::SingleView, newModuleID, viewLayerSpec, vg, newID, true, newModelIndex, parentCommand);
 
@@ -6042,7 +6062,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 					detachee->saveGeometry();
 					ViewGeometry vg = detachee->getViewGeometry();
 					vg.setLoc(newPos);
-					new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
+					new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
 					QSet<ItemBase *> tempItems;
 					ConnectorPairHash connectorHash;
 					disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
@@ -6491,6 +6511,16 @@ bool SketchWidget::hasAnyNets() {
 	return false;
 }
 
+void SketchWidget::ratsnestConnect(ItemBase * itemBase, bool connect) {
+	foreach (QGraphicsItem * item, itemBase->childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+		
+		ratsnestConnect(connectorItem, connect);
+	}
+}
+
+
 void SketchWidget::ratsnestConnect(ConnectorItem * connectorItem, bool connect) {
 	if (connect) {
 		m_ratsnestUpdateConnect << connectorItem;
@@ -6647,7 +6677,7 @@ void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QL
 			detachee->saveGeometry();
 			ViewGeometry vg = detachee->getViewGeometry();
 			vg.setLoc(newPos);
-			new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
+			new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, false, parentCommand);
 			QSet<ItemBase *> tempItems;
 			ConnectorPairHash connectorHash;
 			disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);

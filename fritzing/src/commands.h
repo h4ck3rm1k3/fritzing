@@ -134,7 +134,7 @@ protected:
 class MoveItemCommand : public BaseCommand
 {
 public:
-    MoveItemCommand(class SketchWidget *sketchWidget, long id, ViewGeometry & oldG, ViewGeometry & newG, QUndoCommand *parent);
+    MoveItemCommand(class SketchWidget *sketchWidget, long id, ViewGeometry & oldG, ViewGeometry & newG, bool updateRatsnest, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -142,6 +142,7 @@ protected:
 	QString getParamString() const;
 
 protected:
+	bool m_updateRatsnest;
     long m_itemID;
     ViewGeometry m_old;
     ViewGeometry m_new;
@@ -157,7 +158,7 @@ struct MoveItemThing {
 class MoveItemsCommand : public BaseCommand
 {
 public:
-    MoveItemsCommand(class SketchWidget *sketchWidget, QUndoCommand *parent);
+    MoveItemsCommand(class SketchWidget *sketchWidget, bool updateRatsnest, QUndoCommand *parent);
     void undo();
     void redo();
 	void addItem(long id, const QPointF & oldPos, const QPointF & newPos);
@@ -167,6 +168,7 @@ protected:
 	QString getParamString() const;
 
 protected:
+	bool m_updateRatsnest;
     QHash<long, QString> m_wires;
 	QList<MoveItemThing> m_items;
 };
@@ -250,7 +252,7 @@ class ChangeWireCommand : public BaseCommand
 public:
     ChangeWireCommand(class SketchWidget *sketchWidget, long fromID,
     					QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos,
-    					bool useLine,
+    					bool useLine, bool updateRatsnest,
     					QUndoCommand *parent);
     void undo();
     void redo();
@@ -259,6 +261,7 @@ protected:
 	QString getParamString() const;
 
 protected:
+	bool m_updateRatsnest;
     long m_fromID;
     QLineF m_newLine;
     QLineF m_oldLine;

@@ -78,16 +78,16 @@ public:
 	ItemBase * addItem(const QString & moduleID, ViewLayer::ViewLayerSpec, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     virtual void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
-    void moveItem(long id, ViewGeometry &);
-	void moveItem(long id, const QPointF & p);
-	void updateWire(long id, const QString & connectorID);
+    void moveItem(long id, ViewGeometry &, bool updateRatsnest);
+	void moveItem(long id, const QPointF & p, bool updateRatsnest);
+	void updateWire(long id, const QString & connectorID, bool updateRatsnest);
 
     void rotateItem(long id, qreal degrees);
     void transformItem(long id, const QMatrix &);
     void flipItem(long id, Qt::Orientations orientation);
     void selectItem(long id, bool state, bool updateInfoView, bool doEmit);
     void selectDeselectAllCommand(bool state);
-    void changeWire(long fromID, QLineF line, QPointF pos, bool useLine);   //  const QString & fromConnectorID, long toID, const QString & toConnectorID, bool dragend
+    void changeWire(long fromID, QLineF line, QPointF pos, bool useLine, bool updateRatsnest);   
     void cut();
     void copy();
     void setPaletteModel(PaletteModel *);
@@ -238,6 +238,7 @@ public:
 	virtual bool routeBothSides();
 	virtual void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 	void ratsnestConnect(ConnectorItem * connectorItem, bool connect);
+	void ratsnestConnect(ItemBase *, bool connect);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

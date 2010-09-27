@@ -217,9 +217,10 @@ QString DeleteItemCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-MoveItemCommand::MoveItemCommand(SketchWidget* sketchWidget, long itemID, ViewGeometry & oldG, ViewGeometry & newG, QUndoCommand *parent)
+MoveItemCommand::MoveItemCommand(SketchWidget* sketchWidget, long itemID, ViewGeometry & oldG, ViewGeometry & newG, bool updateRatsnest, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
+	m_updateRatsnest = updateRatsnest;
     m_itemID = itemID;
     m_old = oldG;
     m_new = newG;
@@ -227,12 +228,12 @@ MoveItemCommand::MoveItemCommand(SketchWidget* sketchWidget, long itemID, ViewGe
 
 void MoveItemCommand::undo()
 {
-    m_sketchWidget->moveItem(m_itemID, m_old);
+    m_sketchWidget->moveItem(m_itemID, m_old, m_updateRatsnest);
 }
 
 void MoveItemCommand::redo()
 {
-    m_sketchWidget->moveItem(m_itemID, m_new);
+    m_sketchWidget->moveItem(m_itemID, m_new, m_updateRatsnest);
 }
 
 QString MoveItemCommand::getParamString() const {
@@ -253,28 +254,29 @@ QString MoveItemCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-MoveItemsCommand::MoveItemsCommand(SketchWidget* sketchWidget, QUndoCommand *parent)
+MoveItemsCommand::MoveItemsCommand(SketchWidget* sketchWidget, bool updateRatsnest, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
+	m_updateRatsnest = updateRatsnest;
 }
 
 void MoveItemsCommand::undo()
 {
 	foreach(MoveItemThing moveItemThing, m_items) {
-		m_sketchWidget->moveItem(moveItemThing.id, moveItemThing.oldPos);
+		m_sketchWidget->moveItem(moveItemThing.id, moveItemThing.oldPos, m_updateRatsnest);
 	}
 	foreach (long id, m_wires.keys()) {
-		m_sketchWidget->updateWire(id, m_wires.value(id));
+		m_sketchWidget->updateWire(id, m_wires.value(id), m_updateRatsnest);
 	}
 }
 
 void MoveItemsCommand::redo()
 {
 	foreach(MoveItemThing moveItemThing, m_items) {
-		m_sketchWidget->moveItem(moveItemThing.id, moveItemThing.newPos);
+		m_sketchWidget->moveItem(moveItemThing.id, moveItemThing.newPos, m_updateRatsnest);
 	}
 	foreach (long id, m_wires.keys()) {
-		m_sketchWidget->updateWire(id, m_wires.value(id));
+		m_sketchWidget->updateWire(id, m_wires.value(id), m_updateRatsnest);
 	}
 }
 
@@ -406,10 +408,12 @@ QString ChangeConnectionCommand::getParamString() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeWireCommand::ChangeWireCommand(SketchWidget* sketchWidget, long fromID,
-									 QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, bool useLine,
+									 QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, 
+									 bool useLine, bool updateRatsnest,
 									 QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
+	m_updateRatsnest = updateRatsnest;
     m_fromID = fromID;
 	m_oldLine = oldLine;
     m_newLine = newLine;
@@ -420,12 +424,12 @@ ChangeWireCommand::ChangeWireCommand(SketchWidget* sketchWidget, long fromID,
 
 void ChangeWireCommand::undo()
 {
-    m_sketchWidget->changeWire(m_fromID, m_oldLine, m_oldPos, m_useLine);
+    m_sketchWidget->changeWire(m_fromID, m_oldLine, m_oldPos, m_useLine, m_updateRatsnest);
 }
 
 void ChangeWireCommand::redo()
 {
-    m_sketchWidget->changeWire(m_fromID, m_newLine, m_newPos, m_useLine);
+    m_sketchWidget->changeWire(m_fromID, m_newLine, m_newPos, m_useLine, m_updateRatsnest);
 }
 
 QString ChangeWireCommand::getParamString() const {
