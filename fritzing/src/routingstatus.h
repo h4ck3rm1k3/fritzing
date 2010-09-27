@@ -35,11 +35,9 @@ struct RoutingStatus {
 	int m_connectorsLeftToRoute;
 	int m_jumperWireCount;
 	int m_jumperItemCount;
-	ConnectorPairHash m_unroutedConnectors;
 
 public:
 	void zero() {
-		m_unroutedConnectors.clear();
 		m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperWireCount = m_jumperItemCount = 0;
 	}
 

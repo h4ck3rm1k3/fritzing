@@ -64,6 +64,7 @@ $Date$
 #include "items/pinheader.h"
 #include "layerpalette.h"
 #include "items/paletteitem.h"
+#include "items/virtualwire.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -2180,22 +2181,34 @@ void MainWindow::routingStatusLabelMouseRelease(QMouseEvent* event) {
 
 void MainWindow::routingStatusLabelMouse(QMouseEvent*, bool show) {
 	if (show) DebugDialog::debug("-------");
-	foreach (ConnectorItem * iConnectorItem, m_routingStatus.m_unroutedConnectors.uniqueKeys()) {
-		iConnectorItem->showEqualPotential(show);
-		if (show)
+
+	QSet<ConnectorItem *> toShow;
+	foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
+		VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
+		if (vw == NULL) continue;
+
+		foreach (ConnectorItem * connectorItem, vw->connector0()->connectedToItems()) {
+			toShow.insert(connectorItem);
+		}
+		foreach (ConnectorItem * connectorItem, vw->connector1()->connectedToItems()) {
+			toShow.insert(connectorItem);
+		}
+	}
+	foreach (ConnectorItem * connectorItem, toShow) {
+		if (show) {
 			DebugDialog::debug(QString("unrouted %1 %2 %3 %4")
-				.arg(iConnectorItem->attachedToInstanceTitle())
-				.arg(iConnectorItem->attachedToID())
-				.arg(iConnectorItem->attachedTo()->title())
-				.arg(iConnectorItem->connectorSharedName()));
-		foreach(ConnectorItem * jConnectorItem, m_routingStatus.m_unroutedConnectors.values(iConnectorItem)) {
-			jConnectorItem->showEqualPotential(show);
-			if (show) 
-				DebugDialog::debug(QString("     %1 %2 %3 %4")
-					.arg(jConnectorItem->attachedToInstanceTitle())
-					.arg(jConnectorItem->attachedToID())
-					.arg(jConnectorItem->attachedTo()->title())
-					.arg(jConnectorItem->connectorSharedName()));
+				.arg(connectorItem->attachedToInstanceTitle())
+				.arg(connectorItem->attachedToID())
+				.arg(connectorItem->attachedTo()->title())
+				.arg(connectorItem->connectorSharedName()));
+		}
+
+		if (connectorItem->isActive() && connectorItem->isVisible() && !connectorItem->hidden()) {
+			connectorItem->showEqualPotential(show);
+		}
+		else {
+			connectorItem = connectorItem->getCrossLayerConnectorItem();
+			if (connectorItem) connectorItem->showEqualPotential(show);
 		}
 	}
 }

@@ -212,7 +212,6 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 			else {
 				// we can minimally span the set with n-1 wires, so even if multiple connections are missing from a given connector, count it as one
 				anyMissing = missingOne = true;
-				routingStatus.m_unroutedConnectors.insert(partConnectorItems.at(i), partConnectorItems.at(j));
 				/*
 				ConnectorItem * ci = partConnectorItems.at(i);
 				ConnectorItem * cj = partConnectorItems.at(j);
