@@ -1255,6 +1255,7 @@ void MainWindow::createEditMenuActions() {
 		m_deleteAct->setShortcut(QKeySequence::Delete);
 	#endif
 	m_deleteWireAct = new WireAction(m_deleteAct);
+	m_deleteWireAct->setText("&Delete Wire");
 	connect(m_deleteWireAct, SIGNAL(triggered()), this, SLOT(doDelete()));
 
 	m_selectAllAct = new QAction(tr("&Select All"), this);
@@ -1681,11 +1682,11 @@ void MainWindow::createMenus()
 	connect(m_windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
 	m_pcbTraceMenu = menuBar()->addMenu(tr("&Trace"));
-	m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_groundFillAct);
 	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
+	m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addSeparator();
 
 	m_pcbTraceMenu->addAction(m_activeLayerBothAct);
@@ -1705,12 +1706,12 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
-	m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_schematicTraceMenu->addAction(m_autorouteAct);
 	m_schematicTraceMenu->addAction(m_createTraceAct);
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
+	m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
 
 #ifndef QT_NO_DEBUG
 	m_schematicTraceMenu->addAction(m_tidyWiresAct);
@@ -1914,10 +1915,10 @@ void MainWindow::updateWireMenu() {
 	m_changeTraceLayerAct->setEnabled(ctlOK);
 
 	if (gotRat) {
-		m_deleteAct->setText(tr("Delete (disconnect)"));
+		m_deleteWireAct->setText(tr("Delete Ratsnest Line"));
 	}
 	else {
-		m_deleteAct->setText(tr("Delete"));
+		m_deleteWireAct->setText(tr("Delete Wire"));
 	}
 
 
@@ -2898,8 +2899,8 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
 	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
 
-	m_updateRoutingStatusAct = new QAction(tr("Update Routing Status and Ratsnests"), this);
-	m_updateRoutingStatusAct->setStatusTip(tr("Recalculate routing status and ratsnest wires"));
+	m_updateRoutingStatusAct = new QAction(tr("Force Update Routing Status and Ratsnests"), this);
+	m_updateRoutingStatusAct->setStatusTip(tr("Recalculate routing status and ratsnest wires (in case the auto-update isn't working correctly)"));
 	connect(m_updateRoutingStatusAct, SIGNAL(triggered()), this, SLOT(updateRoutingStatus()));
 
 	m_selectAllExcludedTracesAct = new QAction(tr("Select All Traces Marked \"Don't Autoroute\""), this);
@@ -3365,7 +3366,7 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
-	menu->addAction(m_updateNetAct);
+	//menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
@@ -3386,7 +3387,7 @@ QMenu *MainWindow::schematicWireMenu() {
 	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);
-	menu->addAction(m_updateNetAct);
+	//menu->addAction(m_updateNetAct);
 	menu->addSeparator();
 	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG

@@ -214,7 +214,7 @@ public:
 	virtual bool ignoreFemale();
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findItem(long id);
-	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
+	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
 	int selectAllItemType(ModelPart::ItemType);
 	bool partLabelsVisible();

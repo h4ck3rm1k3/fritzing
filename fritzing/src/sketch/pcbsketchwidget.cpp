@@ -225,6 +225,8 @@ void PCBSketchWidget::createJumperOrTrace(Wire * fromWire, const QString & comma
 		return;
 	}
 
+	
+
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
 }
@@ -266,7 +268,7 @@ bool PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 		ConnectorItem * toConnectorItem = ends[0]->connectedToItems()[0];
 		colorString = traceColor(toConnectorItem);
 	}
-	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
+	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 	return true;
@@ -2483,48 +2485,7 @@ void PCBSketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos,
 		SketchWidget::wire_wireSplit(wire, newPos, oldPos, oldLine);
 	}
 
-	ConnectorItem * c0 = wire->connector0()->firstConnectedToIsh();
-	if (c0 == NULL) return;
-
-	ConnectorItem * c1 = wire->connector1()->firstConnectedToIsh();
-	if (c1 == NULL) return;
-
-	if (c1->wiredTo(c0, ViewGeometry::NotTraceFlags)) {
-		return;
-	}
-
-	QUndoCommand * parentCommand = new QUndoCommand();
-	parentCommand->setText(tr("Create trace"));
-
-	wire->saveGeometry();
-
-	ViewLayer::ViewLayerSpec viewLayerSpec = layerIsActive(ViewLayer::Copper0) ? ViewLayer::Bottom : ViewLayer::Top;
-	BaseCommand::CrossViewType crossViewType = BaseCommand::SingleView;
-
-	long newID1 = ItemBase::getNextID();
-	ViewGeometry vg1 = wire->getViewGeometry();
-	vg1.setRatsnest(false);
-	vg1.setVirtual(false);
-	vg1.setTrace(true);
-	new AddItemCommand(this, crossViewType, wire->modelPart()->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
-	new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
-	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
-	new WireWidthChangeCommand(this, newID1, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
-
-	new ChangeConnectionCommand(this, crossViewType,
-								newID1, wire->connector0()->connectorSharedID(),
-								c0->attachedToID(), c0->connectorSharedID(),
-								ViewLayer::specFromID(c0->attachedToViewLayerID()),
-								true, parentCommand);
-
-	new ChangeConnectionCommand(this, crossViewType,
-								newID1, wire->connector1()->connectorSharedID(),
-								c1->attachedToID(), c1->connectorSharedID(),
-								ViewLayer::specFromID(c1->attachedToViewLayerID()),
-								true, parentCommand);
-
-	//new CleanUpWiresCommand(this, false, parentCommand);
-	m_undoStack->push(parentCommand);
+	createTrace(wire);
 }
 
 

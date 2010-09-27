@@ -574,7 +574,7 @@ protected:
 	QAction *m_activeLayerBothAct;
 	QAction *m_createTraceAct;
 	class WireAction *m_createTraceWireAct;
-	class WireAction *m_updateNetAct;
+	class WireAction *m_updateNetAct;			// when we're confident, we can remove this
 	QAction *m_createJumperAct;
 	class WireAction *m_createJumperWireAct;
 	QAction *m_changeTraceLayerAct;

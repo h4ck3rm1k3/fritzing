@@ -967,8 +967,8 @@ void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType cros
 }
 
 
-long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags wireFlags,
-							  bool addItNow, bool doRatsnest,
+long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, 
+							  ViewGeometry::WireFlags wireFlags, bool addItNow,
 							  BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID();
@@ -1000,8 +1000,6 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 						newID, "connector1", 
 						ViewLayer::specFromID(to->attachedToViewLayerID()),
 						true, parentCommand);
-	if (doRatsnest) {
-	}
 
 	if (addItNow) {
 		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), from->attachedTo()->viewLayerSpec(), viewGeometry, newID, NULL, true, m_viewIdentifier);
@@ -1082,7 +1080,6 @@ void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
 		ratsnestConnect(pitem, true);
 	}
 }
-
 
 void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLine, bool updateRatsnest)
 {
@@ -6073,7 +6070,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 						}
 
 						foreach (ConnectorItem * tConnectorItem, connectorHash.values(fConnectorItem)) {
-							createWire(fConnectorItem, tConnectorItem, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+							createWire(fConnectorItem, tConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
 						}
 					}
 				}
@@ -6692,7 +6689,7 @@ void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QL
 				}
 
 				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-					createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+					createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
 				}
 			}
 		}
