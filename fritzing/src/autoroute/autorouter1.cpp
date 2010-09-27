@@ -257,6 +257,7 @@ void Autorouter1::start()
 		QApplication::processEvents();
 		m_viewLayerSpec = ViewLayer::Top;
 		dijkstraNets(indexer, netCounters, edges);
+		m_lastDrawTraces.clear();		// start this over; don't bail because we tried this point on the other side
 		m_currentProgressPart++;
 		runEdges(edges, lineItem, jumperItemStructs, jumpers, netCounters, routingStatus);
 	}
