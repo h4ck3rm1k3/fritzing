@@ -1200,7 +1200,7 @@ void ConnectorItem::displayRatsnest(QList<ConnectorItem *> & partConnectorItems)
 
 	foreach (ConnectorItem * key, result.uniqueKeys()) {
 		foreach (ConnectorItem * value, result.values(key)) {
-			bool routed = key->wiredTo(value, ViewGeometry::NotTraceJumperFlags);
+			bool routed = key->wiredTo(value, ViewGeometry::NotTraceFlags);
 			if (routed) continue;
 
 			VirtualWire * vw = infoGraphicsView->makeOneRatsnestWire(key, value, routed, color);

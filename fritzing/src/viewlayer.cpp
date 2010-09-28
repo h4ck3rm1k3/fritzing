@@ -87,7 +87,7 @@ void ViewLayer::initNames() {
 		//names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));
 		//names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));
 		//names.insert(ViewLayer::Keepout, new StringPair("keepout", QObject::tr("Keep out")));
-		names.insert(ViewLayer::Jumperwires, new StringPair("jumperwires", QObject::tr("Jumper wires")));
+		names.insert(ViewLayer::PartImage, new StringPair("partimage", QObject::tr("Part Image")));
 		names.insert(ViewLayer::PcbNote,  new StringPair("pcbNote", QObject::tr("Notes")));
 		names.insert(ViewLayer::PcbRuler,  new StringPair("pcbRuler", QObject::tr("Rulers")));
 

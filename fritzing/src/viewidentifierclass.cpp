@@ -114,7 +114,7 @@ void ViewIdentifierClass::initNames() {
 			<< ViewLayer::Copper0Trace << ViewLayer::GroundPlane1 
 			<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
 			<< ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label 
-			<< ViewLayer::Jumperwires 
+			<< ViewLayer::PartImage 
 			<< ViewLayer::PcbNote << ViewLayer::PcbRuler;
 	}
 }

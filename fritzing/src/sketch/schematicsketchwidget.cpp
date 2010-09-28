@@ -122,16 +122,8 @@ void SchematicSketchWidget::ensureTraceLayerVisible() {
 	ensureLayerVisible(ViewLayer::SchematicTrace);
 }
 
-void SchematicSketchWidget::ensureJumperLayerVisible() {
-	ensureLayerVisible(ViewLayer::SchematicTrace);
-}
-
 qreal SchematicSketchWidget::getRatsnestOpacity(bool routed) {
 	return (routed ? 0.1 : 0.7);
-}
-
-void SchematicSketchWidget::setJumperFlags(ViewGeometry & vg) {
-	vg.setTrace(true);
 }
 
 bool SchematicSketchWidget::usesJumperItem() {

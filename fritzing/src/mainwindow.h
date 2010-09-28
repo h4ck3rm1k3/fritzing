@@ -205,12 +205,10 @@ protected slots:
 	void activeLayerBottom();
 	void activeLayerBoth();
 	void createTrace();
-	void createJumper();
 	void excludeFromAutoroute();
 	void selectAllTraces();
 	void updateRoutingStatus();
 	void selectAllExcludedTraces();
-	void selectAllJumperWires();
 	void selectAllJumperItems();
 
 	void saveBundledSketch();
@@ -576,14 +574,12 @@ protected:
 	class WireAction *m_createTraceWireAct;
 	class WireAction *m_updateNetAct;			// when we're confident, we can remove this
 	QAction *m_createJumperAct;
-	class WireAction *m_createJumperWireAct;
 	QAction *m_changeTraceLayerAct;
 	QAction *m_excludeFromAutorouteAct;
 	class WireAction *m_excludeFromAutorouteWireAct;
 	QAction *m_selectAllTracesAct;
 	QAction *m_updateRoutingStatusAct;
 	QAction *m_selectAllExcludedTracesAct;
-	QAction *m_selectAllJumperWiresAct;
 	QAction *m_selectAllJumperItemsAct;
 	QAction *m_groundFillAct;
 	QAction *m_removeGroundFillAct;

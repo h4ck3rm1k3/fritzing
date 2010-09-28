@@ -49,15 +49,14 @@ public:
 		VirtualFlag = 1,
 		RoutedFlag = 2,
 		TraceFlag = 4,
-		JumperFlag = 8,
+		ObsoleteJumperFlag = 8,
 		RatsnestFlag = 16,
 		AutoroutableFlag = 32,
 		NormalFlag = 64
 	};
 	Q_DECLARE_FLAGS(WireFlags, WireFlag)
 
-	static WireFlags TraceJumperRatsnestFlags;
-	static WireFlags NotTraceJumperFlags;
+	static WireFlags TraceRatsnestFlags;
 	static WireFlags NotTraceFlags;
 
 protected:
@@ -85,8 +84,6 @@ public:
 	bool getRouted() const;
 	void setTrace(bool);
 	bool getTrace() const;
-	void setJumper(bool);
-	bool getJumper() const;
 	void setRatsnest(bool);
 	bool getRatsnest() const;
 	void setAutoroutable(bool);

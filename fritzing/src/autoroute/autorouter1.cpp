@@ -61,7 +61,6 @@ struct JumperItemStruct {
 	ConnectorItem * to;
 	ItemBase * partForBounds;
 	QPolygonF boundingPoly;
-	Wire * jumperWire;
 	JumperItem * jumperItem;
 	ViewLayer::ViewLayerID fromViewLayerID;
 	ViewLayer::ViewLayerID toViewLayerID;
@@ -240,9 +239,8 @@ void Autorouter1::start()
 	pen.setCapStyle(Qt::RoundCap);
 	lineItem->setPen(pen);
 
-	QList<Wire *> jumpers;
 	QList<JumperItemStruct *> jumperItemStructs;
-	runEdges(edges, lineItem, jumperItemStructs, jumpers, netCounters, routingStatus);
+	runEdges(edges, lineItem, jumperItemStructs, netCounters, routingStatus);
 
 	clearEdges(edges);
 
@@ -259,7 +257,7 @@ void Autorouter1::start()
 		dijkstraNets(indexer, netCounters, edges);
 		m_lastDrawTraces.clear();		// start this over; don't bail because we tried this point on the other side
 		m_currentProgressPart++;
-		runEdges(edges, lineItem, jumperItemStructs, jumpers, netCounters, routingStatus);
+		runEdges(edges, lineItem, jumperItemStructs, netCounters, routingStatus);
 	}
 
 	if (m_cancelled) {
@@ -296,7 +294,6 @@ void Autorouter1::start()
 
 void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem, 
 						   QList<struct JumperItemStruct *> & jumperItemStructs, 
-						   QList<Wire *> & jumpers,
 						   QVector<int> & netCounters, RoutingStatus & routingStatus)
 {
 	// sort the edges by distance
@@ -385,8 +382,6 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 
 		if (!routedFlag && !m_stopTrace) {
 			if (!alreadyJumper(jumperItemStructs, edge->from, edge->to)) {
-				Wire * jumperWire = drawJumper(edge->from, edge->to, partForBounds, boundingPoly);
-				jumpers.append(jumperWire);
 				if (m_sketchWidget->usesJumperItem()) {
 					JumperItemStruct * jumperItemStruct = new JumperItemStruct();
 					jumperItemStruct->jumperItem = NULL;
@@ -394,7 +389,6 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 					jumperItemStruct->to = edge->to;
 					jumperItemStruct->partForBounds = partForBounds;
 					jumperItemStruct->boundingPoly = boundingPoly;
-					jumperItemStruct->jumperWire = jumperWire;
 					jumperItemStruct->deleted = false;
 					jumperItemStructs.append(jumperItemStruct);
 				}
@@ -411,7 +405,6 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 		}
 
 		routingStatus.m_netRoutedCount = 0;
-		routingStatus.m_jumperWireCount = jumpers.count();
 		routingStatus.m_connectorsLeftToRoute = edges.count() + 1 - edgesDone;
 		foreach (int c, netCounters) {
 			if (c <= 0) {
@@ -440,8 +433,7 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 		foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 			ConnectorItem * from = jumperItemStruct->from;
 			ConnectorItem * to = jumperItemStruct->to;
-			if (from->wiredTo(to, ViewGeometry::NotTraceJumperFlags)) {
-				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
+			if (from->wiredTo(to, ViewGeometry::NotTraceFlags)) {
 				jumperItemStruct->deleted = true;
 			}
 		}
@@ -451,7 +443,6 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 		if (!jumperItemStruct->deleted) {
 			if (drawJumperItem(jumperItemStruct)) {
-				m_sketchWidget->deleteItem(jumperItemStruct->jumperWire, true, false, false);
 				m_sketchWidget->scene()->addItem(jumperItemStruct->jumperItem);
 
 				TraceWire * traceWire = drawOneTrace(jumperItemStruct->jumperItem->connector0()->sceneAdjustedTerminalPoint(NULL), 
@@ -633,7 +624,7 @@ void Autorouter1::dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<in
 	}
 	foreach (QList<ConnectorItem *>* partConnectorItems, m_allPartConnectorItems) {
 		// dijkstra will reorder *partConnectorItems
-		dijkstra(*partConnectorItems, indexer, adjacency, ViewGeometry::NotTraceJumperFlags);
+		dijkstra(*partConnectorItems, indexer, adjacency, ViewGeometry::NotTraceFlags);
 		bool ground = false;
 		foreach (ConnectorItem * pci, *partConnectorItems) {
 			if (pci->isGrounded()) {
@@ -876,7 +867,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 					Wire * w = dynamic_cast<Wire *>(connectorItem->attachedTo());
 					if (w == NULL) continue;
 
-					if (w->getTrace() || w->getJumper()) {
+					if (w->getTrace()) {
 						QList<Wire *> wires;
 						QList<ConnectorItem *> ends;
 						w->collectChained(wires, ends);
@@ -892,7 +883,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire != NULL) {		
-			if (wire->getTrace() || wire->getJumper()) {
+			if (wire->getTrace()) {
 				if (deleteAll || wire->getAutoroutable()) {
 					oldTraces.append(wire);
 				}
@@ -1008,45 +999,6 @@ void Autorouter1::updateRoutingStatus() {
 
 	return false;
 }
-
-Wire* Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, ItemBase * partForBounds, const QPolygonF & boundingPoly) 
-{
-	Q_UNUSED(boundingPoly);
-
-	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
-	QPointF toPos = to->sceneAdjustedTerminalPoint(NULL);
- 	long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(fromPos);
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-	viewGeometry.setLine(line);
-	m_sketchWidget->setJumperFlags(viewGeometry);
-	viewGeometry.setAutoroutable(true);
-
-	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												  from->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-	if (itemBase == NULL) {
-		// we're in trouble
-		return NULL;
-	}
-
-	Wire * jumperWire = dynamic_cast<Wire *>(itemBase);
-	jumperWire->setColorString(m_sketchWidget->jumperColor(), 1.0);
-	jumperWire->setWireWidth(m_sketchWidget->jumperWidth(), m_sketchWidget);
-	jumperWire->setSelected(false);
-
-	//from->tempConnectTo(jumperWire->connector0(), false);
-	//jumperWire->connector0()->tempConnectTo(from, false);
-	//to->tempConnectTo(jumperWire->connector1(), false);
-	//jumperWire->connector1()->tempConnectTo(to, false);
-
-	if (partForBounds) {
-		jumperWire->addSticky(partForBounds, true);
-		partForBounds->addSticky(jumperWire, true);
-	}
-
-	return jumperWire;
- }
 
 JumperItem * Autorouter1::drawJumperItem(JumperItemStruct * jumperItemStruct) 
 {
@@ -1746,16 +1698,6 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct
 			wires.append(wire);
 			continue;
 		}
-
-		Wire * w = dynamic_cast<Wire *>(item);
-		if (w != NULL) {
-			if (w->getJumper()) {
-				addToUndo(w, parentCommand);
-				wires.append(w);
-			}
-			continue;
-		}
-
 	}
 
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {	

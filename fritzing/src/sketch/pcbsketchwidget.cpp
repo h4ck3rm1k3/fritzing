@@ -113,7 +113,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
 {
-	bool visible = wire->getRatsnest() || wire->getTrace() || wire->getJumper();
+	bool visible = wire->getRatsnest() || wire->getTrace();
 	wire->setVisible(visible);
 	wire->setEverVisible(visible);
 }
@@ -187,19 +187,14 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 	return result;
 }
 
-void PCBSketchWidget::createJumper(Wire * wire) {
-	QString commandString = tr("Create Jumper from this Wire");
-	createJumperOrTrace(wire, commandString, ViewGeometry::JumperFlag);
-	ensureJumperLayerVisible();
-}
 
 void PCBSketchWidget::createTrace(Wire * wire) {
 	QString commandString = tr("Create Trace from this Wire");
-	createJumperOrTrace(wire, commandString, ViewGeometry::TraceFlag);
+	createTrace(wire, commandString, ViewGeometry::TraceFlag);
 	ensureTraceLayerVisible();
 }
 
-void PCBSketchWidget::createJumperOrTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag flag)
+void PCBSketchWidget::createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag flag)
 {
 	QList<Wire *> done;
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);
@@ -213,11 +208,11 @@ void PCBSketchWidget::createJumperOrTrace(Wire * fromWire, const QString & comma
 			if (wire == NULL) continue;
 			if (done.contains(wire)) continue;
 
-			gotOne = createOneJumperOrTrace(wire, flag, false, done, parentCommand);
+			gotOne = createOneTrace(wire, flag, false, done, parentCommand);
 		}
 	}
 	else {
-		gotOne = createOneJumperOrTrace(fromWire, flag, false, done, parentCommand);
+		gotOne = createOneTrace(fromWire, flag, false, done, parentCommand);
 	}
 
 	if (!gotOne) {
@@ -231,43 +226,35 @@ void PCBSketchWidget::createJumperOrTrace(Wire * fromWire, const QString & comma
 	m_undoStack->push(parentCommand);
 }
 
-bool PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand) 
+bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand) 
 {
 	QList<ConnectorItem *> ends;
-	Wire * jumperOrTrace = NULL;
+	Wire * Trace = NULL;
 	if (wire->getRatsnest()) {
-		jumperOrTrace = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
-	}
-	else if (wire->getJumper()) {
-		jumperOrTrace = wire;
+		Trace = wire->findTraced(ViewGeometry::TraceFlag, ends);
 	}
 	else if (wire->getTrace()) {
-		jumperOrTrace = wire;
+		Trace = wire;
 	}
 	else if (!allowAny) {
 		// not eligible
 		return false;
 	}
 	else {
-		jumperOrTrace = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
+		Trace = wire->findTraced(ViewGeometry::TraceFlag, ends);
 	}
 
-	if (jumperOrTrace && jumperOrTrace->hasFlag(flag)) {
+	if (Trace && Trace->hasFlag(flag)) {
 		return false;
 	}
 
-	if (jumperOrTrace != NULL) {
-		removeWire(jumperOrTrace, ends, done, parentCommand);
+	if (Trace != NULL) {
+		removeWire(Trace, ends, done, parentCommand);
 	}
 
 	QString colorString;
-	if (flag == ViewGeometry::JumperFlag) {
-		colorString = m_jumperColor;
-	}
-	else {
-		ConnectorItem * toConnectorItem = ends[0]->connectedToItems()[0];
-		colorString = traceColor(toConnectorItem);
-	}
+	ConnectorItem * toConnectorItem = ends[0]->connectedToItems()[0];
+	colorString = traceColor(toConnectorItem);
 	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
@@ -281,7 +268,7 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
 
-		if (wire->getTrace() || wire->getJumper()) {
+		if (wire->getTrace()) {
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;
 			wire->collectChained(wires, ends);
@@ -343,7 +330,7 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 
 	QList<ConnectorItem *> connectorItems;
 	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
+	ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
 	if (connectorItems.contains(toConnectorItem)) {
 		// don't generate a wire in bb view if the connectors are already connected
 		result = true;
@@ -392,11 +379,11 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 	dragWire->connector0()->tempConnectTo(fromConnectorItem, false);
 	dragWire->connector1()->tempConnectTo(toConnectorItem, false);
 	QList<ConnectorItem *> ends;
-	Wire * jumperOrTrace = dragWire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
+	Wire * Trace = dragWire->findTraced(ViewGeometry::TraceFlag, ends);
 	dragWire->connector0()->tempRemove(fromConnectorItem, false);
 	dragWire->connector1()->tempRemove(toConnectorItem, false);
 
-	if (jumperOrTrace == NULL) {
+	if (Trace == NULL) {
 		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, ViewGeometry::TraceFlag, parentCommand);
 		QString tc = traceColor(fromConnectorItem);
 		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
@@ -436,7 +423,7 @@ void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, Connecto
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Symbol && toConnectorItem->attachedToItemType() == ModelPart::Symbol) {
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(fromConnectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceJumperRatsnestFlags);
+		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceRatsnestFlags);
 		foreach (ConnectorItem * c, connectorItems) {
 			if (c->attachedToItemType() == ModelPart::Part) {
 				target1 = c; 
@@ -445,7 +432,7 @@ void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, Connecto
 		}
 		connectorItems.clear();
 		connectorItems.append(toConnectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceJumperRatsnestFlags);
+		ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceRatsnestFlags);
 		foreach (ConnectorItem * c, connectorItems) {
 			if (c->attachedToItemType() == ModelPart::Part) {
 				target2 = c; 
@@ -469,7 +456,7 @@ void PCBSketchWidget::connectSymbols(ConnectorItem * fromConnectorItem, Connecto
 void PCBSketchWidget::connectSymbolPrep(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ConnectorItem * & target1, ConnectorItem * & target2) {
 	QList<ConnectorItem *> connectorItems;
 	connectorItems.append(fromConnectorItem);
-	ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceJumperRatsnestFlags);
+	ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceRatsnestFlags);
 	foreach (ConnectorItem * c, connectorItems) {
 		if (c->attachedToItemType() == ModelPart::Part) {
 			target1 = c;
@@ -537,10 +524,6 @@ ViewLayer::ViewLayerID PCBSketchWidget::getDragWireViewLayerID(ConnectorItem * c
 }
 
 ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec viewLayerSpec) {
-	if (viewGeometry.getJumper()) {
-		return ViewLayer::Jumperwires;
-	}
-
 	if (viewGeometry.getRatsnest()) {
 		return ViewLayer::Ratsnest;
 	}
@@ -623,7 +606,6 @@ void PCBSketchWidget::ensureTraceLayersVisible() {
 	ensureLayerVisible(ViewLayer::Copper0);
 	ensureLayerVisible(ViewLayer::Copper0Trace);
 	ensureLayerVisible(ViewLayer::GroundPlane0);
-	ensureLayerVisible(ViewLayer::Jumperwires);
 	if (m_boardLayers == 2) {
 		ensureLayerVisible(ViewLayer::Copper1);
 		ensureLayerVisible(ViewLayer::Copper1Trace);
@@ -634,10 +616,6 @@ void PCBSketchWidget::ensureTraceLayersVisible() {
 void PCBSketchWidget::ensureTraceLayerVisible() {
 	ensureLayerVisible(ViewLayer::Copper0);
 	ensureLayerVisible(ViewLayer::Copper0Trace);
-}
-
-void PCBSketchWidget::ensureJumperLayerVisible() {
-	ensureLayerVisible(ViewLayer::Jumperwires);
 }
 
 bool PCBSketchWidget::canChainMultiple() {
@@ -706,7 +684,7 @@ bool PCBSketchWidget::bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags 
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
 
 		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-		ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
 		if (wflag != flag) continue;
 
 		result = bothEndsConnectedAux(w, flag, toConnectorItem, wires, partConnectorItems, visited) || result;   // let it recurse
@@ -813,7 +791,7 @@ ConnectorItem * PCBSketchWidget::lookForBreadboardConnection(ConnectorItem * con
 
 	ends.clear();
 	ends.append(connectorItem);
-	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceJumperRatsnestFlags);
+	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceRatsnestFlags);
 	foreach (ConnectorItem * end, ends) {
 		if (end->attachedToItemType() == ModelPart::Breadboard) {
 			return findEmptyBusConnectorItem(end);
@@ -878,7 +856,7 @@ void PCBSketchWidget::modifyNewWireConnectionsAux(ConnectorItem * fromConnectorI
 	QList<Wire *> wires;
 	QList<ConnectorItem *> ends;
 	wire->collectChained(wires, ends);
-	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceJumperRatsnestFlags);
+	ConnectorItem::collectEqualPotential(ends, true, ViewGeometry::TraceRatsnestFlags);
 	if (ends.contains(toConnectorItem)) {
 		// don't need a new wire
 		return;
@@ -1075,9 +1053,6 @@ int PCBSketchWidget::calcDistance(Wire * wire, ConnectorItem * end, int distance
 	return d1;
 }
 
-void PCBSketchWidget::setJumperFlags(ViewGeometry & vg) {
-	vg.setJumper(true);
-}
 
 bool PCBSketchWidget::usesJumperItem() {
 	return true;
@@ -1266,7 +1241,7 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingS
 
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(ends[0]);
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
 			bool doDelete = false;
 			foreach (ConnectorItem * end, ends) {
 				if (!connectorItems.contains(end)) {
@@ -1326,7 +1301,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
 		visited.append(connectorItems);
 
 		bool doRatsnest = manual || checkUpdateRatsnest(connectorItems);
@@ -1366,7 +1341,6 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 		GraphUtils::scoreOneNet(partConnectorItems, routingStatus);
 	}
 
-	routingStatus.m_jumperWireCount /= 2;			// since we counted each connector twice
 	routingStatus.m_jumperItemCount /= 4;			// since we counted each connector twice on two layers (4 connectors per jumper item)
 
 	// can't do this in the above loop since VirtualWires and ConnectorItems are added and deleted

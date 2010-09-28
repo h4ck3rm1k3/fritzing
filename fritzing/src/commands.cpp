@@ -861,8 +861,8 @@ QString RoutingStatusCommand::getParamString() const {
 	return QString("RoutingStatusCommand ") 
 		+ BaseCommand::getParamString()
 		+ QString(" oldnet:%1 oldnetrouted:%2 oldconnectors:%3 oldjumpers:%4 newnet:%51 newnetrouted:%6 newconnectors:%7 newjumpers:%8 ") 
-			.arg(m_oldRoutingStatus.m_netCount).arg(m_oldRoutingStatus.m_netRoutedCount).arg(m_oldRoutingStatus.m_connectorsLeftToRoute).arg(m_oldRoutingStatus.m_jumperWireCount)
-			.arg(m_newRoutingStatus.m_netCount).arg(m_newRoutingStatus.m_netRoutedCount).arg(m_newRoutingStatus.m_connectorsLeftToRoute).arg(m_newRoutingStatus.m_jumperWireCount);
+			.arg(m_oldRoutingStatus.m_netCount).arg(m_oldRoutingStatus.m_netRoutedCount).arg(m_oldRoutingStatus.m_connectorsLeftToRoute).arg(m_oldRoutingStatus.m_jumperItemCount)
+			.arg(m_newRoutingStatus.m_netCount).arg(m_newRoutingStatus.m_netRoutedCount).arg(m_newRoutingStatus.m_connectorsLeftToRoute).arg(m_newRoutingStatus.m_jumperItemCount);
 
 }
 

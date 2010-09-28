@@ -172,11 +172,7 @@ bool GraphUtils::scoreOneNet(QList<ConnectorItem *> & partConnectorItems, Routin
 			Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 			if (wire == NULL) continue;
 
-			if (!(wire->getJumper() || wire->getTrace())) continue;
-
-			if (wire->getJumper()) {
-				routingStatus.m_jumperWireCount++;
-			}
+			if (!wire->getTrace()) continue;
 
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;

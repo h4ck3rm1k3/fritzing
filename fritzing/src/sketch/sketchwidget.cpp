@@ -822,7 +822,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 	foreach (ItemBase * itemBase, otherDeletedItems.keys()) {
 		SketchWidget * sketchWidget = otherDeletedItems.value(itemBase);
 		Wire * w = qobject_cast<Wire *>(itemBase);
-		BaseCommand::CrossViewType crossView = (w != NULL && (w->getTrace() || w->getJumper())) 
+		BaseCommand::CrossViewType crossView = (w != NULL && w->getTrace()) 
 			? BaseCommand::SingleView
 			: BaseCommand::CrossView;
 		sketchWidget->makeDeleteItemCommand(itemBase, crossView, parentCommand);
@@ -894,7 +894,7 @@ void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemB
 				Wire * wire = qobject_cast<Wire *>(toConnectorItem->attachedTo());
 				if (wire == NULL) continue;
 
-				if (isJumper || wire->getTrace() || wire->getJumper()) {
+				if (isJumper || wire->getTrace()) {
 					QList<Wire *> wires;
 					QList<ConnectorItem *> ends;
 					wire->collectChained(wires, ends);
@@ -2850,7 +2850,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(from);
-			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceJumperRatsnestFlags);
+			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::TraceRatsnestFlags);
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
 				extendChangeConnectionCommand(BaseCommand::CrossView, from, formerConnectorItem, 
@@ -5886,10 +5886,7 @@ void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 	}
 
 	QString wireName;
-	if (flag == ViewGeometry::JumperFlag) {
-		wireName = QObject::tr("Jumper wires");
-	}
-	else if (flag == ViewGeometry::TraceFlag) {
+	if (flag == ViewGeometry::TraceFlag) {
 		wireName = QObject::tr("Trace wires");
 	}
 	else if (flag == ViewGeometry::RatsnestFlag) {

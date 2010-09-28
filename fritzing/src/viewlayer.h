@@ -64,7 +64,7 @@ public:
 		Copper1Trace,
 		Silkscreen1,
 		Silkscreen1Label,
-		Jumperwires,
+		PartImage,
 		Ratsnest,
 		PcbNote,
 		PcbRuler,

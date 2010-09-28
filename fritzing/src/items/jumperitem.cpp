@@ -50,7 +50,7 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 	if (Colors.isEmpty()) {
 		Colors.insert(ViewLayer::Copper0, ViewLayer::Copper0Color);
 		Colors.insert(ViewLayer::Copper1, ViewLayer::Copper1Color);
-		Colors.insert(ViewLayer::Jumperwires, ViewLayer::JumperColor);
+		Colors.insert(ViewLayer::PartImage, ViewLayer::JumperColor);
 		Colors.insert(ViewLayer::Silkscreen0, ViewLayer::Silkscreen0Color);
 		Colors.insert(ViewLayer::Silkscreen1, ViewLayer::Silkscreen1Color);
 	}
@@ -266,7 +266,7 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 		case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
 			thickness = 10;
-		case ViewLayer::Jumperwires:
+		case ViewLayer::PartImage:
 			return JumperWireLayerTemplate
 				.arg(w).arg(h)
 				.arg(w * 1000).arg(h * 1000)			
@@ -306,7 +306,7 @@ void JumperItem::resize() {
 
 	foreach (ItemBase * itemBase, m_layerKin) {
 		switch(itemBase->viewLayerID()) {
-			case ViewLayer::Jumperwires:
+			case ViewLayer::PartImage:
 			case ViewLayer::Copper1:
 			case ViewLayer::Silkscreen1:
 			case ViewLayer::Silkscreen0:
@@ -382,7 +382,7 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 	switch (viewLayerID) {
 		case ViewLayer::Copper0:
 		case ViewLayer::Copper1:
-		case ViewLayer::Jumperwires:
+		case ViewLayer::PartImage:
 		case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
 			xml = makeSvg(viewLayerID);

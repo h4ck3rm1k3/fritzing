@@ -40,7 +40,6 @@ public:
 	void addViewLayers();
 	bool canDeleteItem(QGraphicsItem * item, int count);
 	bool canCopyItem(QGraphicsItem * item, int count);
-	void createJumper(Wire *);
 	void createTrace(Wire *);
 	void excludeFromAutoroute(bool exclude);
 	void selectAllExcludedTraces();
@@ -60,10 +59,8 @@ public:
 	qreal jumperWidth();
 	virtual void ensureTraceLayersVisible();
 	virtual void ensureTraceLayerVisible();
-	virtual void ensureJumperLayerVisible();
 	bool canChainMultiple();
 	void setNewPartVisible(ItemBase *);
-	virtual void setJumperFlags(ViewGeometry & vg);
 	virtual bool usesJumperItem();
 	void setClipEnds(class ClipableWire *, bool);
 	void showGroundTraces(bool show);
@@ -110,8 +107,8 @@ protected:
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
 	bool canChainWire(Wire *);
 	bool canDragWire(Wire * wire);
-	void createJumperOrTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
-	bool createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
+	void createTrace(Wire * fromWire, const QString & commandString, ViewGeometry::WireFlag);
+	bool createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, QUndoCommand * parentCommand);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);

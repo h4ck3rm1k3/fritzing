@@ -28,9 +28,8 @@ $Date$
 #include "utils/graphicsutils.h"
 
 // get a compiler errow when using WireFlags instead of QFlags<>
-QFlags<ViewGeometry::WireFlag> ViewGeometry::TraceJumperRatsnestFlags = ViewGeometry::TraceFlag | ViewGeometry::JumperFlag | ViewGeometry::RatsnestFlag;
-QFlags<ViewGeometry::WireFlag> ViewGeometry::NotTraceJumperFlags = ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag;
-QFlags<ViewGeometry::WireFlag> ViewGeometry::NotTraceFlags = ViewGeometry::JumperFlag | ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag;
+QFlags<ViewGeometry::WireFlag> ViewGeometry::TraceRatsnestFlags = ViewGeometry::TraceFlag | ViewGeometry::RatsnestFlag;
+QFlags<ViewGeometry::WireFlag> ViewGeometry::NotTraceFlags = ViewGeometry::NormalFlag | ViewGeometry::RatsnestFlag;
 
 ViewGeometry::ViewGeometry(  )
 {
@@ -149,10 +148,6 @@ void ViewGeometry::setTrace(bool trace) {
 	setWireFlag(trace, TraceFlag);
 }
 
-void ViewGeometry::setJumper(bool jumper) {
-	setWireFlag(jumper, JumperFlag);
-}
-
 void ViewGeometry::setRatsnest(bool ratsnest) {
 	setWireFlag(ratsnest, RatsnestFlag);
 }
@@ -181,10 +176,6 @@ bool ViewGeometry::getNormal() const {
 
 bool ViewGeometry::getTrace() const {
 	return m_wireFlags.testFlag(TraceFlag);
-}
-
-bool ViewGeometry::getJumper() const {
-	return m_wireFlags.testFlag(JumperFlag);
 }
 
 bool ViewGeometry::getRatsnest() const {

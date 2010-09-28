@@ -41,7 +41,6 @@
      <layer layerId="copper0trace" />
     <layer layerId="copper1" />
      <layer layerId="copper1trace" />
-     <layer layerId="jumperwires" />
    </layers>
   </pcbView>
  </views>
@@ -62,7 +61,6 @@
       <p svgId="connector0pin" layer="copper0trace" />
       <p svgId="connector0pin" layer="copper1" />
       <p svgId="connector0pin" layer="copper1trace" />
-      <p svgId="connector0pin" layer="jumperwires" />
     </pcbView>
    </views>
   </connector>
@@ -82,7 +80,6 @@
       <p svgId="connector1pin" layer="copper0trace" />
       <p svgId="connector1pin" layer="copper1" />
       <p svgId="connector1pin" layer="copper1trace" />
-      <p svgId="connector1pin" layer="jumperwires" />
     </pcbView>
    </views>
   </connector>

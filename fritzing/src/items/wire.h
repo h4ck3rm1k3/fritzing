@@ -108,8 +108,6 @@ public:
 	void setRouted(bool);
 	bool getVirtual();
 	void setVirtual(bool);
-	bool getJumper();
-	void setJumper(bool);
 	bool getRatsnest();
 	void setRatsnest(bool);
 	void setAutoroutable(bool);
@@ -135,7 +133,7 @@ public:
 	qreal width();
 	qreal mils();
 	void setExtras(QDomElement &, InfoGraphicsView *);
-	Wire * findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
+	Wire * findTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
 	bool draggingEnd();
 	void simpleConnectedMoved(ConnectorItem * to);
 	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);

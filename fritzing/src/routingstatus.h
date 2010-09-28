@@ -33,12 +33,11 @@ struct RoutingStatus {
 	int m_netCount;
 	int m_netRoutedCount;
 	int m_connectorsLeftToRoute;
-	int m_jumperWireCount;
 	int m_jumperItemCount;
 
 public:
 	void zero() {
-		m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperWireCount = m_jumperItemCount = 0;
+		m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperItemCount = 0;
 	}
 
 	bool operator!=(const RoutingStatus &other) const {
@@ -46,7 +45,6 @@ public:
 			(m_netCount != other.m_netCount) ||
 			(m_netRoutedCount != other.m_netRoutedCount) ||
 			(m_connectorsLeftToRoute != other.m_connectorsLeftToRoute) ||
-			(m_jumperWireCount != other.m_jumperWireCount) ||
 			(m_jumperItemCount != other.m_jumperItemCount);
 	}
 };

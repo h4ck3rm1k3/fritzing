@@ -889,14 +889,6 @@ bool Wire::getVirtual() {
 	return m_viewGeometry.getVirtual();
 }
 
-void Wire::setJumper(bool jumper) {
-	m_viewGeometry.setJumper(jumper);
-}
-
-bool Wire::getJumper() {
-	return m_viewGeometry.getJumper();
-}
-
 void Wire::setRatsnest(bool ratsnest) {
 	m_viewGeometry.setRatsnest(ratsnest);
 }
@@ -1078,7 +1070,7 @@ bool Wire::hasAnyFlag(ViewGeometry::WireFlags flags)
 	return m_viewGeometry.hasAnyFlag(flags);
 }
 
-Wire * Wire::findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends) {
+Wire * Wire::findTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends) {
 	QList<Wire *> chainedWires;
 	this->collectChained(chainedWires, ends);
 	if (ends.count() != 2) {

@@ -60,7 +60,6 @@ protected:
 	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint, bool adjust);
 	void cleanUp();
 	void updateRoutingStatus();
-	Wire * drawJumper(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds, const QPolygonF & boundingPoly);
 	class JumperItem * drawJumperItem(struct JumperItemStruct *);
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
@@ -72,7 +71,7 @@ protected:
 	QPointF calcPrimePoint(ConnectorItem *);
 	void findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance); 
 	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
-	bool hitsObstacle(ItemBase * traceWire, ItemBase * ignore); 
+	bool hitsObstacle(class ItemBase * traceWire, ItemBase * ignore); 
 	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> & newWires, int level, bool recurse);
 	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> & newWires, int level, bool recurse);
 	void clearLastDrawTraces();
@@ -88,7 +87,7 @@ protected:
 	ItemBase * getPartForBounds(struct Edge *);
 	void fixupJumperItems(QList<struct JumperItemStruct *> &);
 	void runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem, 	
-				  QList<struct JumperItemStruct *> & jumperItemStructs, QList<Wire *> & jumpers,
+				  QList<struct JumperItemStruct *> & jumperItemStructs,
 				  QVector<int> & netCounters, struct RoutingStatus &);
 	void clearEdges(QList<Edge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);

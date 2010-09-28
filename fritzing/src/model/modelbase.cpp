@@ -453,6 +453,9 @@ bool ModelBase::isRatsnest(QDomElement & instance) {
 			if (flags & ViewGeometry::RatsnestFlag) {
 				return true;
 			}
+			if (flags & ViewGeometry::ObsoleteJumperFlag) {
+				return true;
+			}
 		}
 
 		view = view.nextSiblingElement();

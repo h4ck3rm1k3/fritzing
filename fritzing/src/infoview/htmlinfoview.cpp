@@ -346,9 +346,6 @@ void HtmlInfoView::appendWireStuff(Wire* wire, bool swappingEnabled) {
 		else if(wire->getTrace()) {
 			nameString = tr("Trace wire %1").arg(autoroutable);
 		} 
-		else if(wire->getJumper()) {
-			nameString = tr("Jumper wire %1").arg(autoroutable);
-		}
 	}
 	else {
 		 nameString = modelPart->description();

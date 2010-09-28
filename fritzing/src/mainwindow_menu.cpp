@@ -1696,13 +1696,11 @@ void MainWindow::createMenus()
 
 	m_pcbTraceMenu->addAction(m_changeTraceLayerAct);
 	m_pcbTraceMenu->addAction(m_createTraceAct);
-	m_pcbTraceMenu->addAction(m_createJumperAct);
 	m_pcbTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_pcbTraceMenu->addSeparator();
 
 	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
-	m_pcbTraceMenu->addAction(m_selectAllJumperWiresAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumperItemsAct);
 
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
@@ -1842,7 +1840,6 @@ void MainWindow::updateWireMenu() {
 	bool enableAll = true;
 	bool deleteOK = false;
 	bool createTraceOK = false;
-	bool createJumperOK = false;
 	bool excludeOK = false;
 	bool enableZOK = true;
 	bool gotRat = false;
@@ -1851,22 +1848,14 @@ void MainWindow::updateWireMenu() {
 	if (wire != NULL) {
 		if (wire->getRatsnest()) {
 			QList<ConnectorItem *> ends;
-			Wire * jt = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
-			createJumperOK = (jt == NULL) || (!jt->getJumper());
+			Wire * jt = wire->findTraced(ViewGeometry::TraceFlag, ends);
 			createTraceOK = (jt == NULL) || (!jt->getTrace());
 			deleteOK = true;
 			gotRat = true;
 			enableZOK = false;
 		}
-		else if (wire->getJumper()) {
-			deleteOK = true;
-			createTraceOK = true;
-			excludeOK = true;
-			m_excludeFromAutorouteWireAct->setChecked(!wire->getAutoroutable());
-		}
 		else if (wire->getTrace()) {
 			deleteOK = true;
-			createJumperOK = true;
 			excludeOK = true;
 			m_excludeFromAutorouteWireAct->setChecked(!wire->getAutoroutable());
 			if (m_currentGraphicsView == m_pcbGraphicsView && m_currentGraphicsView->boardLayers() > 1) {
@@ -1897,7 +1886,6 @@ void MainWindow::updateWireMenu() {
 	m_sendBackwardWireAct->setWire(wire);
 	m_sendToBackWireAct->setWire(wire);
 	m_createTraceWireAct->setWire(wire);
-	m_createJumperWireAct->setWire(wire);
 	m_deleteWireAct->setWire(wire);
 	m_excludeFromAutorouteWireAct->setWire(wire);
 	m_updateNetAct->setWire(wire);
@@ -1907,7 +1895,6 @@ void MainWindow::updateWireMenu() {
 	m_sendBackwardWireAct->setEnabled(enableZOK);
 	m_sendToBackWireAct->setEnabled(enableZOK);
 	m_createTraceWireAct->setEnabled(enableAll && createTraceOK);
-	m_createJumperWireAct->setEnabled(enableAll && createJumperOK);
 	m_deleteWireAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteWireAct->setEnabled(enableAll && excludeOK);
 	m_updateNetAct->setEnabled(gotRat);
@@ -2027,7 +2014,6 @@ void MainWindow::updateItemMenu() {
 
 		// TODO: if there's already a trace or jumper, disable appropriately
 		m_createTraceAct->setEnabled(enabled && count > 0);
-		m_createJumperAct->setEnabled(enabled && count > 0);
 	}
 
 	int selCount = 0;
@@ -2097,7 +2083,6 @@ void MainWindow::updateEditMenu() {
 }
 
 void MainWindow::updateTraceMenu() {
-	bool jEnabled = false;
 	bool jiEnabled = false;
 	bool tEnabled = false;
 	bool ctEnabled = false;
@@ -2140,17 +2125,6 @@ void MainWindow::updateTraceMenu() {
 					//cjEnabled = true;
 				//}
 			}
-			else if (wire->getJumper()) {
-				arEnabled = true;
-				jEnabled = true;
-				if (wire->isSelected()) {
-					ctEnabled = true;
-					exEnabled = true;
-					if (wire->getAutoroutable()) {
-						exChecked = false;
-					}
-				}
-			}
 			else if (wire->getTrace()) {
 				arEnabled = true;
 				tEnabled = true;
@@ -2178,7 +2152,6 @@ void MainWindow::updateTraceMenu() {
 	}
 
 	m_createTraceAct->setEnabled(ctEnabled);
-	m_createJumperAct->setEnabled(cjEnabled && (m_currentGraphicsView == m_pcbGraphicsView));
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
@@ -2187,7 +2160,6 @@ void MainWindow::updateTraceMenu() {
 	m_exportEtchableSvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
-	m_selectAllJumperWiresAct->setEnabled(jEnabled);
 	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
 	m_groundFillAct->setEnabled(gfEnabled);
@@ -2878,12 +2850,6 @@ void MainWindow::createTraceMenuActions() {
 	m_updateNetAct->setStatusTip(tr("Redraw this net"));
 	connect(m_updateNetAct, SIGNAL(triggered()), this, SLOT(updateNet()));
 
-	m_createJumperAct = new QAction(tr("&Create Jumper from Selected Wire(s)"), this);
-	m_createJumperAct->setStatusTip(tr("Create a jumper wire from the selected wire"));
-	connect(m_createJumperAct, SIGNAL(triggered()), this, SLOT(createJumper()));
-	m_createJumperWireAct = new WireAction(m_createJumperAct);
-	connect(m_createJumperWireAct, SIGNAL(triggered()), this, SLOT(createJumper()));
-
 	m_excludeFromAutorouteAct = new QAction(tr("&Don't Autoroute This Trace"), this);
 	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this wire"));
 	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
@@ -2906,10 +2872,6 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllExcludedTracesAct = new QAction(tr("Select All Traces Marked \"Don't Autoroute\""), this);
 	m_selectAllExcludedTracesAct->setStatusTip(tr("Select all trace wires excluded from autorouting"));
 	connect(m_selectAllExcludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllExcludedTraces()));
-
-	m_selectAllJumperWiresAct = new QAction(tr("Select All Jumper Wires"), this);
-	m_selectAllJumperWiresAct->setStatusTip(tr("Select all jumper wires"));
-	connect(m_selectAllJumperWiresAct, SIGNAL(triggered()), this, SLOT(selectAllJumperWires()));
 
 	m_selectAllJumperItemsAct = new QAction(tr("Select All Jumpers"), this);
 	m_selectAllJumperItemsAct->setStatusTip(tr("Select all jumper parts"));
@@ -3002,10 +2964,6 @@ void MainWindow::createTrace() {
 	m_currentGraphicsView->createTrace(retrieveWire());
 }
 
-void MainWindow::createJumper() {
-	m_pcbGraphicsView->createJumper(retrieveWire());
-}
-
 void MainWindow::excludeFromAutoroute() {
 	m_pcbGraphicsView->excludeFromAutoroute(m_excludeFromAutorouteAct->isChecked());
 }
@@ -3022,10 +2980,6 @@ void MainWindow::updateRoutingStatus() {
 
 void MainWindow::selectAllExcludedTraces() {
 	m_pcbGraphicsView->selectAllExcludedTraces();
-}
-
-void MainWindow::selectAllJumperWires() {
-	m_currentGraphicsView->selectAllWires(ViewGeometry::JumperFlag);
 }
 
 void MainWindow::selectAllJumperItems() {
@@ -3362,7 +3316,6 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addSeparator();
 	menu->addAction(m_changeTraceLayerAct);	
 	menu->addAction(m_createTraceWireAct);
-	menu->addAction(m_createJumperWireAct);
 	menu->addAction(m_excludeFromAutorouteWireAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteWireAct);

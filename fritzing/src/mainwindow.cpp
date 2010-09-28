@@ -1454,12 +1454,11 @@ void MainWindow::routingStatusSlot(SketchWidget * sketchWidget, const RoutingSta
 	if (routingStatus.m_netCount == 0) {
 		theText = tr("No connections to route");
 	} else if (routingStatus.m_netCount == routingStatus.m_netRoutedCount) {
-		if (routingStatus.m_jumperWireCount == 0 && routingStatus.m_jumperItemCount == 0) {
+		if (routingStatus.m_jumperItemCount == 0) {
 			theText = tr("Routing completed");
 		}
 		else {
-			theText = tr("Routing completed using %n jumper wire(s)", "", routingStatus.m_jumperWireCount) +
-						tr(" and %n jumper part(s)", "", routingStatus.m_jumperItemCount);
+			theText = tr("Routing completed using %n jumper part(s)", "", routingStatus.m_jumperItemCount);
 		}
 	} else {
 		theText = tr("%1 of %2 nets routed - %n connector(s) still to be routed", "", routingStatus.m_connectorsLeftToRoute)
