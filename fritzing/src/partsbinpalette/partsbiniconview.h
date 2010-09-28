@@ -66,7 +66,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void dragMoveEvent(QDragMoveEvent* event);
 		void dropEvent(QDropEvent* event);
 
-		void setItemAux(ModelPart *, int position = -1);
+		int setItemAux(ModelPart *, int position = -1);
 
 		void resizeEvent(QResizeEvent * event);
 		void updateSize(QSize newSize);

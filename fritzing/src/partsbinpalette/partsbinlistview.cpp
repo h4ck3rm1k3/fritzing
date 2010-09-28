@@ -72,11 +72,11 @@ void PartsBinListView::doClear() {
 	clear();
 }
 
-void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
-	if (modelPart->modelPartShared() == NULL) return;
+int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
+	if (modelPart->modelPartShared() == NULL) return position;
 	if (modelPart->itemType() == ModelPart::Unknown) {
 		// don't want the empty root to appear in the view
-		return;
+		return position;
 	}
 
 	QString moduleID = modelPart->moduleID();
@@ -100,12 +100,15 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 			insertItem(position, lwi);
 		} else {
 			addItem(lwi);
+			position = this->count();
 		}
 
 		m_partHash[moduleID] = modelPart;
 	} else {
 		m_partHash[moduleID]->copy(modelPart);
 	}
+
+	return position;
 }
 
 void PartsBinListView::mouseMoveEvent(QMouseEvent *event) {

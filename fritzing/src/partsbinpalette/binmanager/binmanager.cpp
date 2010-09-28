@@ -253,6 +253,9 @@ void BinManager::addPart(ModelPart *modelPart, int position) {
 void BinManager::addToMyPart(ModelPart *modelPart) {
 	PartsBinPaletteWidget *bin = getOrOpenMyPartsBin();
 	addPartAux(bin,modelPart);
+	if (bin) {
+		setAsCurrentTab(bin);
+	}
 }
 
 void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position) {

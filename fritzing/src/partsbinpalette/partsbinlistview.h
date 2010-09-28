@@ -70,7 +70,7 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		void dropEvent(QDropEvent* event);
 		void startDrag(Qt::DropActions supportedActions);
 
-		void setItemAux(ModelPart * modelPart, int position = -1);
+		int setItemAux(ModelPart * modelPart, int position = -1);
 
 		ModelPart *itemModelPart(const QListWidgetItem *item) const;
 		const QString& itemModuleID(const QListWidgetItem *item);

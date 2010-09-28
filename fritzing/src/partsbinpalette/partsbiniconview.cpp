@@ -191,10 +191,10 @@ void PartsBinIconView::removeParts() {
     updateSize();
 }
 
-void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
+int PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	if (!modelPart || modelPart->itemType() == ModelPart::Unknown) {
 		// don't want the empty root item to appear in the view
-		return;
+		return position;
 	}
 
 	QString moduleID = modelPart->moduleID();
@@ -218,11 +218,14 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 			m_layout->insertItem(position, svgicon);
 		} else {
 			m_layout->addItem(svgicon);
+			position = m_layout->count() - 1;
 		}
 		m_partHash[moduleID] = svgicon->modelPart();
 	} else {
 		m_partHash[moduleID]->copy(modelPart);
 	}
+
+	return position;
 }
 
 void PartsBinIconView::setPaletteModel(PaletteModel *model, bool clear) {

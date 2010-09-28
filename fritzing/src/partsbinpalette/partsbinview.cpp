@@ -74,8 +74,8 @@ void PartsBinView::setItem(ModelPart * modelPart) {
 }
 
 void PartsBinView::addPart(ModelPart * model, int position) {
-	setItemAux(model, position);
-	setSelected(position);
+	int newPosition = setItemAux(model, position);
+	setSelected(newPosition);
 }
 
 void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &moduleId, const QSize &size, const QPointF &dataPoint, const QPoint &hotspot) {
