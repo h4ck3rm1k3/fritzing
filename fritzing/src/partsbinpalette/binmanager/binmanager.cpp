@@ -523,8 +523,10 @@ void BinManager::importPartTo(PartsBinPaletteWidget* bin) {
 		tr("External Part (*%1)").arg(FritzingBundledPartExtension)
 	);
 	if(!newPartPath.isEmpty() && !newPartPath.isNull()) {
-		ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,false);
-		addPartTo(bin,mp);
+		ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,!bin->allowsChanges());
+		if (bin->allowsChanges()) {
+			addPartTo(bin,mp);
+		}
 	}
 }
 
