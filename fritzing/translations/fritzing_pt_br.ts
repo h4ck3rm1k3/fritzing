@@ -148,13 +148,6 @@
     </message>
 </context>
 <context>
-    <name>BreadboardSketchWidget</name>
-    <message>
-        <source>Delete ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -470,10 +463,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Jumper wire %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -733,10 +722,6 @@ y:%2</source>
     </message>
     <message>
         <source>Svg file &apos;%1&apos;: bad height attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sorry, Fritzing is unable to copy the svg file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1454,14 +1439,6 @@ Quantity	Part
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create a jumper wire from the selected wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>When autorouting, do not rip up this wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1471,14 +1448,6 @@ Quantity	Part
     </message>
     <message>
         <source>Select all trace wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select All Jumper Wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select all jumper wires</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1862,32 +1831,12 @@ Please check all views for potential side-effects.</source>
         <source>throw a fake exception to see what happens</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Routing completed using %n jumper wire(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source> and %n jumper part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>Select All Jumpers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select all jumper parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update ratsnest colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2099,35 +2048,53 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move selected traces to the other side of the board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed hack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hack for speeding up Fritzing--use at your own risk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update routing status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete (disconnect)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Routing completed using %n jumper part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>Hide Ratsnet</source>
+        <source>Unable to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide this net</source>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing is unable to save the svg file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Ratsnest Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redraw this net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force Update Routing Status and Ratsnests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2183,10 +2150,6 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <source>Create Jumper from this Wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create Trace from this Wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2215,7 +2178,7 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create trace</source>
+        <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3201,10 +3164,6 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Jumper wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Trace wires</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3600,6 +3559,15 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>schematic %1 unexpectedly ends (3) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to find module &apos;%1&apos; at
+&apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

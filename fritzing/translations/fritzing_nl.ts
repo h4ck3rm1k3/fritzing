@@ -79,7 +79,7 @@
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -148,13 +148,6 @@
     </message>
 </context>
 <context>
-    <name>BreadboardSketchWidget</name>
-    <message>
-        <source>Delete ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -204,7 +197,7 @@ om deze aansluiting in orde te brengen</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verwijderen</translation>
     </message>
     <message>
         <source>Don&apos;t remove</source>
@@ -474,10 +467,6 @@ Selecteer a.u.b. een Fritzing lettertype om ze te vervangen:</translation>
         <translation>Trace draad %1</translation>
     </message>
     <message>
-        <source>Jumper wire %1</source>
-        <translation>Jumper draad %1</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>Eigenschappen</translation>
     </message>
@@ -567,7 +556,7 @@ y:%2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -793,10 +782,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
     <message>
         <source>Svg file &apos;%1&apos;: bad height attribute</source>
         <translation>SVG bestand &apos;%1&apos;: slecht hoogte eigenschap</translation>
-    </message>
-    <message>
-        <source>Sorry, Fritzing is unable to copy the svg file.</source>
-        <translation>Sorry, Fritzing kan het SVG bestand niet kopiêren.</translation>
     </message>
     <message>
         <source>Sorry, Fritzing is unable to load the part template file.</source>
@@ -1721,14 +1706,6 @@ Aantal                   Onderdeel
         <translation>Creëer een baan van de geselecteerde draad</translation>
     </message>
     <message>
-        <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation>&amp;Creëer een jumper van de geselecteerde draden</translation>
-    </message>
-    <message>
-        <source>Create a jumper wire from the selected wire</source>
-        <translation>Creëer een jumper van de geselecteerde draad</translation>
-    </message>
-    <message>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
         <translation>&amp;Voer geen Autoroute uit voor deze baan</translation>
     </message>
@@ -1751,14 +1728,6 @@ Aantal                   Onderdeel
     <message>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>Selecteer alle baan draden die geëxcludeerd waren van autoroute</translation>
-    </message>
-    <message>
-        <source>Select All Jumper Wires</source>
-        <translation>Selecteer alle jumper draden</translation>
-    </message>
-    <message>
-        <source>Select all jumper wires</source>
-        <translation>Selecteer alle jumper draden</translation>
     </message>
     <message>
         <source>Tidy Wires</source>
@@ -1887,20 +1856,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>throw a fake exception to see what happens</source>
         <translation>Gooi een nep exception om te zien wat er gebeurd</translation>
     </message>
-    <message numerus="yes">
-        <source>Routing completed using %n jumper wire(s)</source>
-        <translation>
-            <numerusform>Routing klaar en gebruik gemaakt van %n jumper draden</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source> and %n jumper part(s)</source>
-        <translation>
-            <numerusform>en %n jumper componenten</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>Select All Jumpers</source>
         <translation>Selecteer alle jumpers</translation>
@@ -1908,14 +1863,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     <message>
         <source>Select all jumper parts</source>
         <translation>Selecteer alle jumper componenten</translation>
-    </message>
-    <message>
-        <source>Update ratsnest</source>
-        <translation>Update ratten nest</translation>
-    </message>
-    <message>
-        <source>Update ratsnest colors</source>
-        <translation>Update de kleuren van het ratten nest</translation>
     </message>
     <message>
         <source>New</source>
@@ -2019,15 +1966,15 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
     </message>
     <message>
         <source>&amp;Rotate 45° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;roteer 90° tegenwijzerzin {45°?}</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Roteer de huidige selectie 90° tegenwijzerzin {45 ?}</translation>
     </message>
     <message>
         <source>&amp;Rotate 45° Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Roteer 90° wijzerzin {45°?}</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees clockwise</source>
@@ -2122,35 +2069,54 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move selected traces to the other side of the board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed hack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hack for speeding up Fritzing--use at your own risk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update routing status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete (disconnect)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Routing completed using %n jumper part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>Hide Ratsnet</source>
+        <source>Unable to load</source>
+        <translation type="unfinished">Niet mogelijk om te laden</translation>
+    </message>
+    <message>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished">Niet mogelijk om de afbeelding te laden van %1</translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing is unable to save the svg file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide this net</source>
+        <source>Delete Ratsnest Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redraw this net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force Update Routing Status and Ratsnests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2194,7 +2160,7 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>chip label</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">IC label</translation>
     </message>
 </context>
 <context>
@@ -2206,10 +2172,6 @@ Reden : %2 (errcode %3)</translation>
 </context>
 <context>
     <name>PCBSketchWidget</name>
-    <message>
-        <source>Create Jumper from this Wire</source>
-        <translation>Creëer jumper van deze draad</translation>
-    </message>
     <message>
         <source>Create Trace from this Wire</source>
         <translation>Creëer trace van deze draad</translation>
@@ -2239,7 +2201,7 @@ Reden : %2 (errcode %3)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create trace</source>
+        <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2895,7 +2857,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opslaan</translation>
     </message>
     <message>
         <source>Port:</source>
@@ -2930,7 +2892,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 %2</translation>
     </message>
     <message>
         <source>No ports found</source>
@@ -2938,7 +2900,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Bestand</translation>
     </message>
     <message>
         <source>New</source>
@@ -2946,7 +2908,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new program</source>
@@ -2954,11 +2916,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Openen...</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+O</translation>
     </message>
     <message>
         <source>Open a program</source>
@@ -2966,11 +2928,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Opslaan</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+S</translation>
     </message>
     <message>
         <source>Save the current program</source>
@@ -2998,7 +2960,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+W</translation>
     </message>
     <message>
         <source>Remove the current program from the sketch</source>
@@ -3006,11 +2968,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Afdrukken...</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+P</translation>
     </message>
     <message>
         <source>Print the current program</source>
@@ -3018,71 +2980,71 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Afsluiten</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
         <source>Quit the application</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Applicatie afsluiten</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Editeer</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ongedaan maken</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Terug gedaan maken</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Knippen</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+X</translation>
     </message>
     <message>
         <source>Cut selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Knip selectie</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Kopiëren</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+C</translation>
     </message>
     <message>
         <source>Copy selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopiëer selectie</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Plakken</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+V</translation>
     </message>
     <message>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Plak clipbord inhoud</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Alles selecteren</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+A</translation>
     </message>
     <message>
         <source>Select all text</source>
@@ -3340,10 +3302,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation>Draad samenvoegen</translation>
     </message>
     <message>
-        <source>Jumper wires</source>
-        <translation>Jumper draden</translation>
-    </message>
-    <message>
         <source>Trace wires</source>
         <translation>Volg draden</translation>
     </message>
@@ -3585,7 +3543,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (7).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Het bestand %1 is geen Fritzing bestand (1). {1 ?} {7)?}</translation>
     </message>
     <message>
         <source>Design Rule Check (select items that are too close together)</source>
@@ -3625,7 +3583,7 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Select %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Selecteer %1</translation>
     </message>
     <message>
         <source>pad shape size is invalid</source>
@@ -3649,6 +3607,15 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>schematic %1 unexpectedly ends (3) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to find module &apos;%1&apos; at
+&apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3740,11 +3707,11 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>width(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">breedte (mm)</translation>
     </message>
     <message>
         <source>height(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">hoogte (mm)</translation>
     </message>
 </context>
 <context>

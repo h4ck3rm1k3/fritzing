@@ -76,11 +76,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -151,13 +151,6 @@
     </message>
 </context>
 <context>
-    <name>BreadboardSketchWidget</name>
-    <message>
-        <source>Delete ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -205,7 +198,7 @@ before adding any connectors</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">削除</translation>
     </message>
     <message>
         <source>Don&apos;t remove</source>
@@ -474,10 +467,6 @@ Fritzingのフォントを指定してください:</translation>
         <translation>ワイヤーを配線する %1</translation>
     </message>
     <message>
-        <source>Jumper wire %1</source>
-        <translation>ジャンパーワイヤー %1</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>プロパティ</translation>
     </message>
@@ -563,11 +552,11 @@ y:%2</source>
     <name>KicadModuleDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -738,10 +727,6 @@ y:%2</source>
     <message>
         <source>Svg file &apos;%1&apos;: bad height attribute</source>
         <translation>Svg ファイル &apos;%1&apos;: は高さが不正です</translation>
-    </message>
-    <message>
-        <source>Sorry, Fritzing is unable to copy the svg file.</source>
-        <translation>申し訳ありませんが Fritzing はsvg ファイルをコピーできませんでした.</translation>
     </message>
     <message>
         <source>Sorry, Fritzing is unable to load the part template file.</source>
@@ -1470,14 +1455,6 @@ Quantity	Part
         <translation>ワイヤ(ラッツネスト)を配線(トレース)する</translation>
     </message>
     <message>
-        <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation>選択されたワイヤをジャンパーにする (&amp;C)</translation>
-    </message>
-    <message>
-        <source>Create a jumper wire from the selected wire</source>
-        <translation>選択されたワイヤをジャンパーにする</translation>
-    </message>
-    <message>
         <source>When autorouting, do not rip up this wire</source>
         <translation>この配線を自動配線時にリップアップ(ラッツネスト化)しない</translation>
     </message>
@@ -1492,14 +1469,6 @@ Quantity	Part
     <message>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>自動配線された物以外の全ての配線を選択</translation>
-    </message>
-    <message>
-        <source>Select All Jumper Wires</source>
-        <translation>全てのジャンパーを選択</translation>
-    </message>
-    <message>
-        <source>Select all jumper wires</source>
-        <translation>全てのジャンパーを選択</translation>
     </message>
     <message>
         <source>Autorouting...</source>
@@ -1888,32 +1857,12 @@ Please check all views for potential side-effects.</source>
         <source>throw a fake exception to see what happens</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Routing completed using %n jumper wire(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source> and %n jumper part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>Select All Jumpers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select all jumper parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update ratsnest colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2022,15 +1971,15 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>&amp;Rotate 45° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">逆時計方向に回転(&amp;R) 90° {45°?}</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">現在の選択範囲を逆時計方向に90°回転 {45 ?}</translation>
     </message>
     <message>
         <source>&amp;Rotate 45° Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">時計方向に回転(&amp;R) 90° {45°?}</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees clockwise</source>
@@ -2125,35 +2074,53 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move selected traces to the other side of the board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed hack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hack for speeding up Fritzing--use at your own risk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update routing status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete (disconnect)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Routing completed using %n jumper part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>Hide Ratsnet</source>
+        <source>Unable to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide this net</source>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing is unable to save the svg file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Ratsnest Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redraw this net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force Update Routing Status and Ratsnests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2211,10 +2178,6 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <source>Create Jumper from this Wire</source>
-        <translation>このワイヤーからジャンパーを作成</translation>
-    </message>
-    <message>
         <source>Create Trace from this Wire</source>
         <translation>このワイヤーのトレースを作成</translation>
     </message>
@@ -2243,7 +2206,7 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create trace</source>
+        <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2504,7 +2467,7 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
 </context>
 <context>
@@ -2898,7 +2861,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存</translation>
     </message>
     <message>
         <source>Port:</source>
@@ -2933,7 +2896,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 %2</translation>
     </message>
     <message>
         <source>No ports found</source>
@@ -2941,7 +2904,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ファイル(&amp;F)</translation>
     </message>
     <message>
         <source>New</source>
@@ -2957,11 +2920,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">開く(&amp;O) ...</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+O</translation>
     </message>
     <message>
         <source>Open a program</source>
@@ -2969,11 +2932,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存(&amp;S)</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+S</translation>
     </message>
     <message>
         <source>Save the current program</source>
@@ -3001,7 +2964,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+W</translation>
     </message>
     <message>
         <source>Remove the current program from the sketch</source>
@@ -3009,11 +2972,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">印刷(&amp;P) ...</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+P</translation>
     </message>
     <message>
         <source>Print the current program</source>
@@ -3021,71 +2984,71 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">終了(&amp;Q)</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
         <source>Quit the application</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">アプリケーションを終了(</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">編集(&amp;E)</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">元に戻す</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">やり直し</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">切り取り(&amp;C)</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+X</translation>
     </message>
     <message>
         <source>Cut selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選択された範囲を切り取り</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">コピー (&amp;C)</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+C</translation>
     </message>
     <message>
         <source>Copy selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選択範囲をコピー</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">貼り付け(&amp;P)</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+V</translation>
     </message>
     <message>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">クリップボードの内容を貼り付け</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">すべて選択(&amp;S)</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+A</translation>
     </message>
     <message>
         <source>Select all text</source>
@@ -3249,10 +3212,6 @@ Vertical scroll</source>
     <message>
         <source>PCB View</source>
         <translation>基板表示</translation>
-    </message>
-    <message>
-        <source>Jumper wires</source>
-        <translation>ジャンパーワイヤー</translation>
     </message>
     <message>
         <source>Trace wires</source>
@@ -3587,7 +3546,7 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (7).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ファイル %1 はFritzingファイルではありません (4). {1 ?} {7)?}</translation>
     </message>
     <message>
         <source>Design Rule Check (select items that are too close together)</source>
@@ -3627,7 +3586,7 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Select %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1を選択</translation>
     </message>
     <message>
         <source>pad shape size is invalid</source>
@@ -3651,6 +3610,15 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>schematic %1 unexpectedly ends (3) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to find module &apos;%1&apos; at
+&apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

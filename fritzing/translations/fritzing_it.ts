@@ -75,11 +75,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annulla</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -148,13 +148,6 @@
     </message>
 </context>
 <context>
-    <name>BreadboardSketchWidget</name>
-    <message>
-        <source>Delete ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ConnectorsInfoWidget</name>
     <message>
         <source>Mismatching Connector IDs</source>
@@ -203,7 +196,7 @@ before adding any connectors</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rimuovi</translation>
     </message>
     <message>
         <source>Don&apos;t remove</source>
@@ -474,10 +467,6 @@ Please select one of the Fritzing fonts to replace them:</source>
         <translation>Traccia %1</translation>
     </message>
     <message>
-        <source>Jumper wire %1</source>
-        <translation>Ponticello %1</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>Proprietà</translation>
     </message>
@@ -563,11 +552,11 @@ y:%2</source>
     <name>KicadModuleDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annulla</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -767,10 +756,6 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
     <message>
         <source>Svg file &apos;%1&apos;: bad height attribute</source>
         <translation>File Svg &apos;%1&apos;: attributo altezza non valido</translation>
-    </message>
-    <message>
-        <source>Sorry, Fritzing is unable to copy the svg file.</source>
-        <translation>Spiacente, Fritzing non &amp;egrave; in grado di copiare il file SVG.</translation>
     </message>
     <message>
         <source>Sorry, Fritzing is unable to load the part template file.</source>
@@ -1529,14 +1514,6 @@ Quantità	Componente
         <translation>Crea traccia dal filo selezionato</translation>
     </message>
     <message>
-        <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation>&amp;Crea ponticello dal filo(i) selezionato</translation>
-    </message>
-    <message>
-        <source>Create a jumper wire from the selected wire</source>
-        <translation>Crea ponticello dal filo selezionato</translation>
-    </message>
-    <message>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
         <translation>&amp;non autoinstradare questa traccia</translation>
     </message>
@@ -1559,14 +1536,6 @@ Quantità	Componente
     <message>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>Seleziona tutte le tracce escluse dall&apos;autoinstradamento</translation>
-    </message>
-    <message>
-        <source>Select All Jumper Wires</source>
-        <translation>Seleziona tutti i Ponticelli</translation>
-    </message>
-    <message>
-        <source>Select all jumper wires</source>
-        <translation>Seleziona tutti i ponticelli</translation>
     </message>
     <message>
         <source>Autorouting...</source>
@@ -1881,34 +1850,12 @@ Please check all views for potential side-effects.</source>
         <source>throw a fake exception to see what happens</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Routing completed using %n jumper wire(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source> and %n jumper part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>Select All Jumpers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select all jumper parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update ratsnest colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2017,15 +1964,15 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>&amp;Rotate 45° Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Ruota di 90° in Senso anti-orario {45°?}</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ruota la selezione corrente di 90 gradi in senso anti-orario {45 ?}</translation>
     </message>
     <message>
         <source>&amp;Rotate 45° Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Ruota di 90° in Senso orario {45°?}</translation>
     </message>
     <message>
         <source>Rotate current selection 45 degrees clockwise</source>
@@ -2120,35 +2067,54 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move selected traces to the other side of the board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed hack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hack for speeding up Fritzing--use at your own risk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update routing status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete (disconnect)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Routing completed using %n jumper part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <source>Hide Ratsnet</source>
+        <source>Unable to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide this net</source>
+        <source>Unable to load image from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, Fritzing is unable to save the svg file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Ratsnest Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redraw this net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force Update Routing Status and Ratsnests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2204,10 +2170,6 @@ Reason: %2 (errcode %3)</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <source>Create Jumper from this Wire</source>
-        <translation>Crea ponticello da questo filo</translation>
-    </message>
-    <message>
         <source>Create Trace from this Wire</source>
         <translation>Crea traccia da questo filo</translation>
     </message>
@@ -2236,7 +2198,7 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create trace</source>
+        <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2497,7 +2459,7 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annulla</translation>
     </message>
 </context>
 <context>
@@ -2883,7 +2845,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Salva</translation>
     </message>
     <message>
         <source>Port:</source>
@@ -2926,7 +2888,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;File</translation>
     </message>
     <message>
         <source>New</source>
@@ -2942,7 +2904,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Apri...</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
@@ -2954,7 +2916,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Salva</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
@@ -2986,7 +2948,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+W</translation>
     </message>
     <message>
         <source>Remove the current program from the sketch</source>
@@ -2994,7 +2956,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Stampa...</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
@@ -3006,7 +2968,7 @@ Vertical scroll</source>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Esci</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -3014,23 +2976,23 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Quit the application</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esci dall&apos;applicazione</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Modifica</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annulla</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ripeti</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Taglia</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
@@ -3038,11 +3000,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Cut selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Taglia selezione</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Copia</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
@@ -3050,11 +3012,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Copy selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copia selezione</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Incolla</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
@@ -3062,11 +3024,11 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Incolla contenuto della clipboard</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Seleziona tutto</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
@@ -3222,10 +3184,6 @@ Vertical scroll</source>
     <message>
         <source>PCB View</source>
         <translation>Vista PCB</translation>
-    </message>
-    <message>
-        <source>Jumper wires</source>
-        <translation>Ponticello</translation>
     </message>
     <message>
         <source>Trace wires</source>
@@ -3573,7 +3531,7 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>The file %1 is not a Fritzing file (7).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Il file %1 non è un file di Fritzing (4). {1 ?} {7)?}</translation>
     </message>
     <message>
         <source>Design Rule Check (select items that are too close together)</source>
@@ -3613,7 +3571,7 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Select %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seleziona %1</translation>
     </message>
     <message>
         <source>pad shape size is invalid</source>
@@ -3637,6 +3595,15 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>schematic %1 unexpectedly ends (3) in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to find module &apos;%1&apos; at
+&apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
