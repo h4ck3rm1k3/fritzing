@@ -101,6 +101,14 @@
                 </iconView>
             </views>
         </instance>
+       <instance moduleIdRef="c7acdd26c5e6355cb2e7e05c0aa975c0" modelIndex="14" path="parts/core/AD5206 Digital Potentiometer.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+	
         <instance moduleIdRef="20A9BBEE34_ST-2leadbutton-horizon" modelIndex="15" path="parts/core/pushbutton_2_horizontal.fzp">
             <views>
                 <iconView layer="icon">
@@ -158,6 +166,13 @@
             </views>
         </instance>
         <instance moduleIdRef="2012BCEC1FB" modelIndex="21" path="parts/core/thermistor_300mil.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+       <instance moduleIdRef="ad901601e6d29266846fc9e4568504b6" modelIndex="21" path="parts/core/Barometric Pressure Sensor.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -472,6 +487,7 @@
                 </iconView>
             </views>
         </instance>
+
         <instance moduleIdRef="2c9d427b475ef8d07dc752a4362af0ae" modelIndex="48" path="parts/core/controller_wiring.fzp">
             <views>
                 <iconView layer="icon">
@@ -515,6 +531,13 @@
             </views>
         </instance>
         <instance moduleIdRef="c4256c251d53ee723058f86aa6d016a2" modelIndex="48" path="parts/core/gogoboard 4.0.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+     <instance moduleIdRef="7658504bdcb62998a7281b0d1baaac37" modelIndex="48" path="parts/core/Arduino Ethernet Shield.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
