@@ -42,6 +42,7 @@ public:
 	void initWire(Wire *, int penWidth);
 	bool canDisconnectAll();
 	bool ignoreFemale();
+	void addDefaultParts();
 
 protected:
 	void setWireVisible(Wire * wire);
@@ -58,6 +59,7 @@ protected:
 	void setNewPartVisible(ItemBase *);
 	double defaultGridSizeInches();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
+	QPoint calcFixedToCenterItemOffset(const QRectF & viewPortRect, const QSizeF & helpSize);
 
 };
 

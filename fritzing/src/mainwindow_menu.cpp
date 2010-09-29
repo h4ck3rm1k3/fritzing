@@ -2316,7 +2316,7 @@ void MainWindow::createNewSketch() {
     mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
 	QApplication::processEvents();
 
-	mw->addBoard();
+	mw->addDefaultParts();
     mw->show();
 
     QSettings settings;

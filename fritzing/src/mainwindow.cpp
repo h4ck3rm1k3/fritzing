@@ -1931,10 +1931,12 @@ void MainWindow::svgMissingLayer(const QString & layername, const QString & path
 	);
 }
 
-void MainWindow::addBoard() {
+void MainWindow::addDefaultParts() {
 	if (m_pcbGraphicsView == NULL) return;
 
-	m_pcbGraphicsView->addBoard();
+	m_pcbGraphicsView->addDefaultParts();
+	m_breadboardGraphicsView->addDefaultParts();
+	m_schematicGraphicsView->addDefaultParts();
 }
 
 MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress) {

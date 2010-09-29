@@ -108,7 +108,6 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	m_jumperColor = "jumper";
 	m_jumperWidth = 3;
 	m_cleanType = noClean;
-	m_addBoard = false;
 }
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
@@ -473,21 +472,21 @@ void PCBSketchWidget::connectSymbolPrep(ConnectorItem * fromConnectorItem, Conne
 	}
 }
 
-void PCBSketchWidget::addBoard() {
+void PCBSketchWidget::addDefaultParts() {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
-	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
 	// so position it in setCurrent()
-	m_addBoard = true;
+	m_addDefaultParts = true;
 }
 
 void PCBSketchWidget::setCurrent(bool current) {
 	SketchWidget::setCurrent(current);
-	if (current && m_addBoard && (m_addedBoard != NULL)) {
-		m_addBoard = false;
+	if (current && m_addDefaultParts && (m_addedDefaultPart != NULL)) {
+		m_addDefaultParts = false;
 
 		if (m_fixedToCenterItem != NULL) {
 			QSizeF helpsize = m_fixedToCenterItem->size();
@@ -502,8 +501,8 @@ void PCBSketchWidget::setCurrent(bool current) {
 
 			// add a board to the empty sketch, and place it in the help area.
 
-			m_addedBoard->setPos(mapToScene(p.toPoint()));
-			qobject_cast<ResizableBoard *>(m_addedBoard)->resizePixels(95, helpsize.height() - 30 - 30, m_viewLayers);
+			m_addedDefaultPart->setPos(mapToScene(p.toPoint()));
+			qobject_cast<ResizableBoard *>(m_addedDefaultPart)->resizePixels(95, helpsize.height() - 30 - 30, m_viewLayers);
 		}
 	}
 }

@@ -51,7 +51,6 @@ public:
 	int startup(bool firstRun);
 	int serviceStartup();
 	void finish();
-	void preloadSlowParts();
 
 public:
 	static bool spaceBarIsPressed();

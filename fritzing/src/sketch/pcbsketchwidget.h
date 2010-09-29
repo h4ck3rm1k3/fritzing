@@ -46,7 +46,7 @@ public:
 	void updateRoutingStatus(CleanUpWiresCommand*, RoutingStatus &, bool manual);
 	bool hasAnyNets();
 	void forwardRoutingStatus(const RoutingStatus &);
-	void addBoard();
+	void addDefaultParts();
 	void setCurrent(bool current);
 	void initWire(Wire *, int penWidth);
 	virtual bool autorouteNeedsBounds();
@@ -171,8 +171,6 @@ protected slots:
 
 protected:
 	RoutingStatus m_routingStatus;
-	bool m_addBoard;
-	QPointer<ItemBase> m_addedBoard;
 	QString m_jumperColor;
 	qreal m_jumperWidth;
 	CleanType m_cleanType;

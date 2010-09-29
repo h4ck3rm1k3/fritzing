@@ -91,6 +91,8 @@ const int SketchWidget::DragAutoScrollThreshold = 10;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_addDefaultParts = false;
+	m_addedDefaultPart = NULL;
 	m_movingItem = NULL;
 	m_movingSVGRenderer = NULL;
 	m_clearSceneRect = false;
@@ -5586,8 +5588,8 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 		if (m_fixedToCenterItem->getVisible()) {
 			QWidget * widget = m_fixedToCenterItem->widget();
 			if (widget != NULL) {
-				QSizeF helpsize = m_fixedToCenterItem->size();
-				QRectF vp = painter->viewport();
+				QSizeF helpSize = m_fixedToCenterItem->size();
+				QRectF vpRect = painter->viewport();
 
 				/*
 				// add in scrollbar widths so image doesn't jump when scroll bars appear or disappear?
@@ -5598,9 +5600,9 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 					vp.setHeight(vp.height() + horizontalScrollBar()->height());
 				}
 				*/
+			
+				m_fixedToCenterItemOffset = calcFixedToCenterItemOffset(vpRect, helpSize);
 
-				m_fixedToCenterItemOffset.setX((int) ((vp.width() - helpsize.width()) / 2.0));
-				m_fixedToCenterItemOffset.setY((int) ((vp.height() - helpsize.height()) / 2.0));
 				painter->save();
 				painter->setWindow(painter->viewport());
 				painter->setTransform(QTransform());
@@ -5610,6 +5612,12 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 			}
 		}
 	}
+}
+
+QPoint SketchWidget::calcFixedToCenterItemOffset(const QRectF & viewPortRect, const QSizeF & helpSize) {
+	QPoint p((int) ((viewPortRect.width() - helpSize.width()) / 2.0),
+			 (int) ((viewPortRect.height() - helpSize.height()) / 2.0));
+	return p;
 }
 
 void SketchWidget::pushCommand(QUndoCommand * command) {
@@ -6751,3 +6759,5 @@ bool SketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to,
 	return result;
 }
 
+void SketchWidget::addDefaultParts() {
+}

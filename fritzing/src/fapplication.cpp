@@ -92,25 +92,6 @@ static const QString LockFileName = "___lockfile___.txt";
 
 //////////////////////////
 
-class DoOnceThread : public QThread
-{
-public:
-	DoOnceThread();
-
-	void run();
-};
-
-
-DoOnceThread::DoOnceThread() {
-}
-
-void DoOnceThread::run()
-{
-	static_cast<FApplication *>(qApp)->preloadSlowParts();
-}
-
-//////////////////////////
-
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
 	MainWindow::RestartNeeded = RestartNeeded;
@@ -681,24 +662,7 @@ int FApplication::startup(bool firstRun)
 		return -1;
 	}
 
-	splash.showProgress(m_progressIndex, 0.8);
-	processEvents();
-
-	QTime t;
-	t.start();
-	//DebugDialog::debug("starting thread");
-	QMutex mutex;
-	mutex.lock();
-	DoOnceThread doOnceThread;
-	doOnceThread.start();
-	while (!doOnceThread.isFinished()) {
-		processEvents();
-		mutex.tryLock(10);							// always fails, but effectively sleeps for 10 ms
-	}
-	mutex.unlock();
-	//DebugDialog::debug(QString("ending thread %1").arg(t.elapsed()));
-
-	splash.showProgress(m_progressIndex, 0.85);
+	splash.showProgress(m_progressIndex, 0.825);
 	processEvents();
 
 	m_updateDialog = new UpdateDialog();
@@ -839,41 +803,7 @@ struct Thing {
         ViewLayer::ViewLayerID viewLayerID;
 };
 
-void FApplication::preloadSlowParts() {
 
-	// loads the part into a renderer and sets up its connectors
-	// so this doesn't have to happen the first time the part is dragged into the sketch
-
-	QTime t;
-	t.start();
-
-	QList<Thing> slowParts;
-	Thing thing1;
-	thing1.viewIdentifier = ViewIdentifierClass::BreadboardView;
-	thing1.viewLayerID = ViewLayer::BreadboardBreadboard;
-	thing1.moduleID = ModuleIDNames::breadboardModuleIDName;
-        slowParts << thing1;
-	//DebugDialog::debug(QString("preload slow parts"));
-	foreach (Thing thing, slowParts) {
-		ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(thing.moduleID);
-		if (modelPart == NULL) {
-			// something is badly wrong--parts folder is missing, for example
-			continue;
-		}
-
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, thing.viewIdentifier, thing.viewLayerID, ViewLayer::ThroughHoleThroughTop_OneLayer);
-		//DebugDialog::debug(QString("preload set up image"));
-		foreach (Connector * connector, modelPart->connectors().values()) {
-			if (connector == NULL) continue;
-
-			SvgIdLayer * svgIdLayer = connector->fullPinInfo(thing.viewIdentifier, thing.viewLayerID);
-			renderer->setUpConnector(svgIdLayer, false);
-			//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorSharedID()));
-		}
-	}
-	DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
-	//DebugDialog::debug(QString("preload slow parts done") );
-}
 
 void FApplication::checkForUpdates() {
 	checkForUpdates(true);
@@ -1178,7 +1108,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
 	// make sure to start an empty sketch with a board
     if (newBlankSketch) {
-        newBlankSketch->addBoard();
+        newBlankSketch->addDefaultParts();
     }
 
 	if (loadPrevious) {

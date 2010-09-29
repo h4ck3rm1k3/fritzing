@@ -73,7 +73,7 @@ public:
 
 	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id, ItemBase * fromItem, class PartsBinPaletteWidget* requester);
 	ModelPart *loadPartFromFile(const QString& newPartPath, bool connectorsChanged=false);
-	void addBoard();
+	void addDefaultParts();
 	void init();
 	void showFileProgressDialog(const QString & path);
 	void clearFileProgressDialog();

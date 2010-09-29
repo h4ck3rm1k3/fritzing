@@ -31,6 +31,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
 #include "../waitpushundostack.h"
+#include "../help/sketchmainhelp.h"
 
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
@@ -167,6 +168,33 @@ double BreadboardSketchWidget::defaultGridSizeInches() {
 
 ViewLayer::ViewLayerID BreadboardSketchWidget::getLabelViewLayerID(ViewLayer::ViewLayerSpec) {
 	return ViewLayer::BreadboardLabel;
+}
+
+void BreadboardSketchWidget::addDefaultParts() {
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(QPointF(0, 0));
+	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::breadboardModuleIDName), defaultViewLayerSpec(), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
+	if (m_fixedToCenterItem != NULL) {
+		QSizeF helpSize = m_fixedToCenterItem->size();
+		QSizeF vpSize = this->viewport()->size();
+		QSizeF partSize = m_addedDefaultPart->size();
+
+		QPointF p;
+		p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));
+		p.setY((int) ((vpSize.height() + helpSize.height()) / 2.0));
+
+		// add a board to the empty sketch, and place it below the help area.
+
+		p += QPointF(0, 10);
+		//m_addedDefaultPart->setPos(mapToScene(p.toPoint()));
+	}
+}
+
+QPoint BreadboardSketchWidget::calcFixedToCenterItemOffset(const QRectF & viewPortRect, const QSizeF & helpSize) {
+	QPoint p((int) ((viewPortRect.width() - helpSize.width()) / 2.0),
+			 10);
+	return p;
 }
 
 /*

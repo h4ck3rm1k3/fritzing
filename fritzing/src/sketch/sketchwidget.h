@@ -239,6 +239,7 @@ public:
 	virtual void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 	void ratsnestConnect(ConnectorItem * connectorItem, bool connect);
 	void ratsnestConnect(ItemBase *, bool connect);
+	virtual void addDefaultParts();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -371,6 +372,7 @@ protected:
 	virtual bool resizingBoardRelease();
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus);
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
+	virtual QPoint calcFixedToCenterItemOffset(const QRectF & viewPortRect, const QSizeF & helpSize);
 
 
 protected:
@@ -557,6 +559,8 @@ protected:
 	QList< QPointer<ConnectorItem> > m_ratsnestUpdateDisconnect;
 	QList< QPointer<ConnectorItem> > m_ratsnestUpdateConnect;
 	bool m_checkUnder;
+	bool m_addDefaultParts;
+	QPointer<ItemBase> m_addedDefaultPart;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);
