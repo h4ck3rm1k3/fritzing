@@ -31,12 +31,12 @@
     <message>
         <location filename="../src/help/aboutbox.cpp" line="137"/>
         <source>&lt;p&gt;Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, to Vladimir Savinov for the Russian translation,and to Steven Noppe for the Dutch translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Dank an unsere Übersetzer: Kurt Badelt und Miguel Solis (Spanisch), Gianluca Urgese (Italienisch), Nuno Pessanha Santos (Portugiesisch), Yuelin and Ninjia (Chinesisch), Hiroshi Suzuki (Japanisch), Robert Lee (Chinesisch trad.), Vladimir Savinov (Russisch), Steven Noppe (Niederländisch).&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/help/aboutbox.cpp" line="147"/>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar, IxDS, an anonymous donor, Parallax, Picaxe, and from each purchase of a Fritzing Starter Kit.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Fritzing wurde möglich gemacht durch die Förderung des MWFK Brandenburg, die Unterstützung der IxDS Interaction Design Studios, der Bauhaus-Universität Weimar, einem anonymen Spender, Parallax, Picaxe, und jeden Käufer eines Fritzing Starter Kits.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/help/aboutbox.cpp" line="153"/>
@@ -948,7 +948,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1858"/>
         <source>Sorry, Fritzing is unable to save the svg file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry, Fritzing kann diese SVG-Datei nicht speichern.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1500"/>
@@ -973,12 +973,12 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1791"/>
         <source>Unable to load</source>
-        <translation type="unfinished">Die Datei konnte nicht geladen werden</translation>
+        <translation>Die Datei konnte nicht geladen werden.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1792"/>
         <source>Unable to load image from %1</source>
-        <translation type="unfinished">Die Datei %1 konnte nicht geladen werden</translation>
+        <translation>Aus der Datei %1 konnte kein Bild geladen werden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1817"/>
@@ -2109,12 +2109,12 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1905"/>
         <source>Delete Ratsnest Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindung entfernen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1908"/>
         <source>Delete Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahn entfernen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2590"/>
@@ -2129,27 +2129,27 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2849"/>
         <source>Update Ratsnest</source>
-        <translation type="unfinished"></translation>
+        <translation>Luftlinien aktualisieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2850"/>
         <source>Redraw this net</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Luftliniennetz aktualisieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2861"/>
         <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Leiterbahnen auf die andere Seite verschieben</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2868"/>
         <source>Force Update Routing Status and Ratsnests</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisierung von Luftlinien und Routing-Status erzwingen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2869"/>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuberechnung des Routing-Status und aller Luftlinien (falls die automatische Aktualisierung nicht richtig funktioniert)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2880"/>
@@ -2432,9 +2432,9 @@ Please check all views for potential side-effects.</source>
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1461"/>
         <source>Routing completed using %n jumper part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Routing fertiggestellt mit %n Drahtbrücke</numerusform>
+            <numerusform>Routing fertiggestellt mit %n Drahtbrücken</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -2776,7 +2776,7 @@ Ursache: %2 (Fehlercode %3)</translation>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2356"/>
         <source>Delete ratsnest</source>
-        <translation type="unfinished">Verbindungen entfernen</translation>
+        <translation>Luftlinie entfernen</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="2385"/>
@@ -4016,7 +4016,7 @@ Vertikal scrollen</translation>
         <location filename="../src/model/modelbase.cpp" line="204"/>
         <source>Unable to find module &apos;%1&apos; at
 &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul %1 konnte nicht bei %2 gefunden werden</translation>
     </message>
     <message>
         <location filename="../src/model/modelbase.cpp" line="304"/>
@@ -4204,7 +4204,7 @@ Vertikal scrollen</translation>
     <message>
         <location filename="../src/viewlayer.cpp" line="90"/>
         <source>Part Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil-Abbild</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="98"/>
