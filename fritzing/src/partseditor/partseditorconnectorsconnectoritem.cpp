@@ -47,7 +47,7 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
 
-	QTimer::singleShot(300, this, SLOT(createTerminalPoint()));
+	createTerminalPoint();
 }
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds)
@@ -56,13 +56,13 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	init(true);
 
 	setRect(bounds);
-
-	setFlag(QGraphicsItem::ItemIsSelectable);
-	setFlag(QGraphicsItem::ItemIsMovable);
+	setAcceptedMouseButtons(ALLMOUSEBUTTONS);			// call setAcceptedMouseButtons here because this connectoritem is not created in the usual way through the itenbase
 
 	m_inFileDefined = false;
-	m_showingTerminalPoint = showingTerminalPoint;
 	m_terminalPoint = NON_DEFINED_TERMINAL_POINT;
+	m_terminalPointItem = NULL;
+	m_showingTerminalPoint = showingTerminalPoint;
+
 	createTerminalPoint();
 }
 
@@ -101,6 +101,8 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 	m_resized = false;
 
 	setFlag(QGraphicsItem::ItemIsMovable, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
+
 #if QT_VERSION >= 0x040600
 		this->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 #endif
