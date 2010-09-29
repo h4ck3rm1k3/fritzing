@@ -151,6 +151,7 @@ public:
 	void restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);				// on loading from a file
 	void movePartLabel(QPointF newPos, QPointF newOffset);												// coming down from the command object
 	void partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);			// coming up from the label
+	void partLabelSetHidden(bool hide);
 	void rotateFlipPartLabel(qreal degrees, Qt::Orientations);				// coming up from the label
 	void doRotateFlipPartLabel(qreal degrees, Qt::Orientations);			// coming down from the command object
 	QString makePartLabelSvg(bool blackOnly, qreal dpi, qreal printerScale);

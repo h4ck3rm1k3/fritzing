@@ -1186,7 +1186,11 @@ void PCBSketchWidget::showLabelFirstTime(long itemID, bool show, bool doEmit) {
 		case ModelPart::Part:
 		case ModelPart::Hole:
 		case ModelPart::Via:
-			itemBase->showPartLabel(itemBase->isVisible(), m_viewLayers.value(getLabelViewLayerID(itemBase->viewLayerSpec())));
+			{
+				ViewLayer * viewLayer = m_viewLayers.value(getLabelViewLayerID(itemBase->viewLayerSpec()));
+				itemBase->showPartLabel(itemBase->isVisible(), viewLayer);
+				itemBase->partLabelSetHidden(!viewLayer->visible());
+			}
 			break;
 		default:
 			break;

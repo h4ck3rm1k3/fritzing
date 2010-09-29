@@ -1396,7 +1396,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		viewLayerID = getPartViewLayerID();
 	}
 
-	ensureLayerVisible(viewLayerID);
+	ensureLayerVisible(viewLayerID);  // TODO: if any layer in the dragged part is visible, then don't bother calling ensureLayerVisible
 	return true;
 }
 
@@ -3131,9 +3131,12 @@ void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible) {
 	foreach (QGraphicsItem * item, scene()->items()) {
 		// want all items, not just topLevel
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase && (viewLayerIDs.contains(itemBase->viewLayerID()))) {
-			itemBase->setHidden(!visible);
-			//DebugDialog::debug(QString("setting visible %1").arg(viewLayer->visible()));
+		if (itemBase) {
+			if (viewLayerIDs.contains(itemBase->viewLayerID())) {
+				itemBase->setHidden(!visible);
+				//DebugDialog::debug(QString("setting visible %1").arg(viewLayer->visible()));
+			}
+			continue;
 		}
 
 		PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
@@ -4089,7 +4092,7 @@ void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewL
 
 void SketchWidget::dragIsDoneSlot(ItemDrag * itemDrag) {
 	disconnect(itemDrag, SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
-	killDroppingItem();			// 		// drag is done, but nothing dropped here: remove the temporary item
+	killDroppingItem();					// drag is done, but nothing dropped here: remove the temporary item
 }
 
 

@@ -1098,6 +1098,11 @@ void ItemBase::movePartLabel(QPointF newPos, QPointF newOffset) {
 	}
 }
 
+void ItemBase::partLabelSetHidden(bool hide) {
+	if (m_partLabel) {
+		m_partLabel->setHidden(hide);
+	}
+}
 
 void ItemBase::partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
