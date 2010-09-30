@@ -47,7 +47,7 @@ public:
 	bool hasAnyNets();
 	void forwardRoutingStatus(const RoutingStatus &);
 	void addDefaultParts();
-	void setCurrent(bool current);
+	void showEvent(QShowEvent * event);
 	void initWire(Wire *, int penWidth);
 	virtual bool autorouteNeedsBounds();
 	virtual bool autorouteCheckWires();
@@ -150,6 +150,7 @@ protected:
 	void resizeJumperItem();
 	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	bool checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems);
+	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 
 signals:
 	void setMaximumDRCProgress(int);

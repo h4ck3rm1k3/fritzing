@@ -43,6 +43,7 @@ public:
 	bool canDisconnectAll();
 	bool ignoreFemale();
 	void addDefaultParts();
+	void showEvent(QShowEvent * event);
 
 protected:
 	void setWireVisible(Wire * wire);

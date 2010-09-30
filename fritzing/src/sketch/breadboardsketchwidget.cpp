@@ -24,7 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
 #include "breadboardsketchwidget.h"
 #include "../debugdialog.h"
 #include "../items/virtualwire.h"
@@ -32,6 +31,8 @@ $Date$
 #include "../items/moduleidnames.h"
 #include "../waitpushundostack.h"
 #include "../help/sketchmainhelp.h"
+
+#include <QScrollBar>
 
 BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
@@ -175,25 +176,36 @@ void BreadboardSketchWidget::addDefaultParts() {
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
 	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::breadboardModuleIDName), defaultViewLayerSpec(), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
-	if (m_fixedToCenterItem != NULL) {
-		QSizeF helpSize = m_fixedToCenterItem->size();
-		QSizeF partSize = m_addedDefaultPart->size();
-		QPoint pCenter = m_painterViewPort.center();
+	m_addDefaultParts = true;
+	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
+}
 
-		QPointF p;
-		p.setX((int) (pCenter.x() - (partSize.width() / 2.0)));
-		p.setY((int) (helpSize.height() + m_painterViewPort.top()));
+void BreadboardSketchWidget::showEvent(QShowEvent * event) {
+	SketchWidget::showEvent(event);
+	if (m_addDefaultParts && (m_addedDefaultPart != NULL)) {
+		m_addDefaultParts = false;
+		if (m_fixedToCenterItem != NULL) {
+			QSizeF helpSize = m_fixedToCenterItem->size();
+			QSizeF partSize = m_addedDefaultPart->size();
+			QSizeF vpSize = this->viewport()->size();
 
-		// add a board to the empty sketch, and place it below the help area.
+			QPointF p;
+			p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));
+			p.setY((int) helpSize.height());
 
-		p += QPointF(0, 10);
-		m_addedDefaultPart->setPos(mapToScene(p.toPoint()));
+			// add a board to the empty sketch, and place it below the help area.
+
+			p += QPointF(0, 50);
+			QPointF q = mapToScene(p.toPoint());
+			m_addedDefaultPart->setPos(q);
+			QTimer::singleShot(10, this, SLOT(vScrollToZero()));
+		}
 	}
 }
 
 QPoint BreadboardSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize) {
 	QPoint p((int) ((viewPortRect.width() - helpSize.width()) / 2.0),
-			 10);
+			 30);
 	return p;
 }
 

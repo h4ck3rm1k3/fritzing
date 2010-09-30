@@ -48,6 +48,7 @@ $Date$
 
 #include <limits>
 #include <QApplication>
+#include <QScrollBar>
 
 static const int MAX_INT = std::numeric_limits<int>::max();
 
@@ -473,36 +474,45 @@ void PCBSketchWidget::connectSymbolPrep(ConnectorItem * fromConnectorItem, Conne
 }
 
 void PCBSketchWidget::addDefaultParts() {
+
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
-	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
-	// so position it in setCurrent()
+	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	m_addDefaultParts = true;
 }
 
-void PCBSketchWidget::setCurrent(bool current) {
-	SketchWidget::setCurrent(current);
-	if (current && m_addDefaultParts && (m_addedDefaultPart != NULL)) {
+QPoint PCBSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize) {
+	QPoint p((int) ((viewPortRect.width() - helpSize.width()) / 2.0),
+			 30);
+	return p;
+}
+
+void PCBSketchWidget::showEvent(QShowEvent * event) {
+	SketchWidget::showEvent(event);
+	if (m_addDefaultParts && (m_addedDefaultPart != NULL)) {
 		m_addDefaultParts = false;
 
 		if (m_fixedToCenterItem != NULL) {
 			QSizeF helpsize = m_fixedToCenterItem->size();
-			QSizeF vp = this->viewport()->size();
+			QSizeF vpSize = this->viewport()->size();
+			QSizeF partSize(400, 240);
 
 			QPointF p;
-			p.setX((int) ((vp.width() - helpsize.width()) / 2.0));
-			p.setY((int) ((vp.height() - helpsize.height()) / 2.0));
+			p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));
+			p.setY((int) helpsize.height());
 
 			// TODO: make these constants less arbitrary (get the size and location of the icon which the board is replacing)
-			p += QPointF(10, 30);
+			p += QPointF(0, 50);
 
 			// add a board to the empty sketch, and place it in the help area.
-
-			m_addedDefaultPart->setPos(mapToScene(p.toPoint()));
-			qobject_cast<ResizableBoard *>(m_addedDefaultPart)->resizePixels(95, helpsize.height() - 30 - 30, m_viewLayers);
+		
+			QPointF q = mapToScene(p.toPoint());
+			m_addedDefaultPart->setPos(q);
+			qobject_cast<ResizableBoard *>(m_addedDefaultPart)->resizePixels(partSize.width(), partSize.height(), m_viewLayers);
+			QTimer::singleShot(10, this, SLOT(vScrollToZero()));
 		}
 	}
 }

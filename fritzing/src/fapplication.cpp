@@ -1097,7 +1097,11 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 	if (sketchesToLoad.isEmpty()) {
 		DebugDialog::debug(QString("empty sketch"));
 		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
-		sketchesToLoad << newBlankSketch;
+		if (newBlankSketch) {
+			// make sure to start an empty sketch with a board
+			newBlankSketch->addDefaultParts();   // do this before call to show()
+			sketchesToLoad << newBlankSketch;
+		}
 	}
 
     // Finish loading the sketches and show them to the user
@@ -1105,11 +1109,6 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 		sketch->show();
 		sketch->clearFileProgressDialog();
 	}
-
-	// make sure to start an empty sketch with a board
-    if (newBlankSketch) {
-        newBlankSketch->addDefaultParts();
-    }
 
 	if (loadPrevious) {
 		doLoadPrevious(newBlankSketch);

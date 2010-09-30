@@ -71,6 +71,7 @@ public:
 	bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 
+
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);
 
@@ -83,6 +84,7 @@ protected:
 										QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry & viewGeometry, qint64 id, 
 										bool updateInfoView, long modelIndex, QUndoCommand *parent);
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
+	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 
 
 protected:

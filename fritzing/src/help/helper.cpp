@@ -68,7 +68,7 @@ void Helper::initText() {
 		"<table><tr><td>"
 		"The first thing you will need is a board to place your parts on. "
 		"There should already be one beneath this widget, but if not, "
-		"drag in the icon at the right from the parts bin. "
+		"drag in the board icon from the parts bin (image at right). "
 		"</td><td>"
 		"<img src=\":resources/parts/svg/core/icon/rectangle_pcb.svg\" />"
 		"</td></tr></table>"
@@ -78,9 +78,12 @@ void Helper::initText() {
         "You can also resize rectangular boards. "
 		"<br/>"
 		"<table><tr><td>"
-        "Once the parts are sorted out, you can drag from individual connections or use "
-        "Autoroute to generate the copper traces between parts. "
-        "The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is on the bottom left."
+        "Once the parts are sorted out, you connect them with copper traces. "
+		"You can drag out a trace from individual connections or use "
+        "the autorouter to generate them. "
+		"The Autoroute button is at the bottom of the window (image at right)."
+		"</td><td>"
+		"<img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" />"
 		"</td></tr></table>");
 }
 

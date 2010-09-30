@@ -440,6 +440,7 @@ protected slots:
 	void copyBoundingRectsSlot(QHash<QString, QRectF> &);
 	void disconnectWireSlot(QSet<ItemBase *> &, QList<long> & deletedIDs, QUndoCommand * parentCommand);
 	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
+	void vScrollToZero();
 
 public slots:
 	void changeWireColor(const QString newColor);
@@ -561,7 +562,6 @@ protected:
 	bool m_checkUnder;
 	bool m_addDefaultParts;
 	QPointer<ItemBase> m_addedDefaultPart;
-	QRect m_painterViewPort;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

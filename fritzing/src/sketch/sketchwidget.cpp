@@ -5589,7 +5589,6 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 			QWidget * widget = m_fixedToCenterItem->widget();
 			if (widget != NULL) {
 				QSizeF helpSize = m_fixedToCenterItem->size();
-				m_painterViewPort = painter->viewport();
 
 				/*
 				// add in scrollbar widths so image doesn't jump when scroll bars appear or disappear?
@@ -5601,7 +5600,7 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 				}
 				*/
 			
-				m_fixedToCenterItemOffset = calcFixedToCenterItemOffset(m_painterViewPort, helpSize);
+				m_fixedToCenterItemOffset = calcFixedToCenterItemOffset(painter->viewport(), helpSize);
 
 				painter->save();
 				painter->setWindow(painter->viewport());
@@ -6760,4 +6759,8 @@ bool SketchWidget::connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to,
 }
 
 void SketchWidget::addDefaultParts() {
+}
+
+void SketchWidget::vScrollToZero() {
+	verticalScrollBar()->setValue(verticalScrollBar()->minimum());
 }
