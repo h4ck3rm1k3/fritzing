@@ -113,7 +113,7 @@
  <rect xmlns="http://www.w3.org/2000/svg" width="9.998" x="1.135" y="181.694" fill="none" height="1.999" id="connector40pin"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="1.999" x="1.135" y="181.694" fill="none" height="1.999" id="connector40terminal"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="9.998" x="1.135" y="195.896" fill="none" height="2" id="connector41pin"/>
- <rect xmlns="http://www.w3.org/2000/svg" width="1.999" x="1.135" y="195.896" fill="none" height="2" id="connecto41terminal"/>
+ <rect xmlns="http://www.w3.org/2000/svg" width="1.999" x="1.135" y="195.896" fill="none" height="2" id="connector41terminal"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="9.998" x="204.156" y="97.834" fill="none" height="2" id="connector23pin"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="2" x="212.156" y="97.834" fill="none" height="2" id="connector23terminal"/>
  <rect xmlns="http://www.w3.org/2000/svg" width="9.998" x="204.156" y="111.998" fill="none" height="2" id="connector22pin"/>
