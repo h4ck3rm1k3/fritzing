@@ -21,7 +21,7 @@
         </iconView>
         <breadboardView>
             <layers image="breadboard/controller_wiring.svg">
-                <layer layerId="breadboard"/>
+                <layer layerId="breadboardbreadboard"/>
             </layers>
         </breadboardView>
         <schematicView>
@@ -41,7 +41,7 @@
             <description>Digital I/O 25 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector56pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector56pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector56pin" terminalId="connector56terminal"/>
@@ -55,7 +55,7 @@
             <description>Digital I/O 3 (Port 0)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector3pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector3pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
@@ -69,7 +69,7 @@
             <description>Digital I/O 24 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector57pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector57pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector57pin" terminalId="connector57terminal"/>
@@ -83,7 +83,7 @@
             <description>Digital I/O 20 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector20pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector20pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector20pin" terminalId="connector20terminal"/>
@@ -97,7 +97,7 @@
             <description>Digital I/O 4 (Port 0)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector4pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector4pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"/>
@@ -111,7 +111,7 @@
             <description>Digital I/O 21 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector21pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector21pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector21pin" terminalId="connector21terminal"/>
@@ -125,7 +125,7 @@
             <description>Digital I/O 50</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector58pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector58pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector58pin" terminalId="connector58terminal"/>
@@ -139,7 +139,7 @@
             <description>Digital I/O 5 (Port 0)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector5pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector5pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"/>
@@ -153,7 +153,7 @@
             <description>Digital I/O 22 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector22pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector22pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector22pin" terminalId="connector22terminal"/>
@@ -167,7 +167,7 @@
             <description>Digital I/O 49</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector59pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector59pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector59pin" terminalId="connector59terminal"/>
@@ -181,7 +181,7 @@
             <description>Digital I/O 6 (Port 0)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector6pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector6pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector6pin" terminalId="connector6terminal"/>
@@ -195,7 +195,7 @@
             <description>Digital I/O 23 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector23pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector23pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector23pin" terminalId="connector23terminal"/>
@@ -209,7 +209,7 @@
             <description>Digital I/O 7 (Port0)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector7pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector7pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector7pin" terminalId="connector7terminal"/>
@@ -223,7 +223,7 @@
             <description>Digital I/O 8 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector8pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector8pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector8pin" terminalId="connector8terminal"/>
@@ -237,7 +237,7 @@
             <description>Power Out</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector24pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector24pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector24pin" terminalId="connector24terminal"/>
@@ -251,7 +251,7 @@
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector25pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector25pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector25pin" terminalId="connector25terminal"/>
@@ -265,7 +265,7 @@
             <description>Digital I/O 9 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector9pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector9pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector9pin" terminalId="connector9terminal"/>
@@ -279,7 +279,7 @@
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector26pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector26pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector26pin" terminalId="connector26terminal"/>
@@ -293,7 +293,7 @@
             <description>Power In</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector27pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector27pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector27pin" terminalId="connector27terminal"/>
@@ -307,7 +307,7 @@
             <description>Analog Out PWM</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector28pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector28pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector28pin" terminalId="connector28terminal"/>
@@ -321,7 +321,7 @@
             <description>Power Out</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector60pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector60pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector60pin" terminalId="connector60terminal"/>
@@ -335,7 +335,7 @@
             <description>Analog Out PWM</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector29pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector29pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector29pin" terminalId="connector29terminal"/>
@@ -349,7 +349,7 @@
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector61pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector61pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector61pin" terminalId="connector61terminal"/>
@@ -363,7 +363,7 @@
             <description>Power Out</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector62pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector62pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector62pin" terminalId="connector62terminal"/>
@@ -377,7 +377,7 @@
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector63pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector63pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector63pin" terminalId="connector63terminal"/>
@@ -391,7 +391,7 @@
             <description>Reference Voltage</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector64pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector64pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector64pin" terminalId="connector64terminal"/>
@@ -405,7 +405,7 @@
             <description>Ground</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector65pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector65pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector65pin" terminalId="connector65terminal"/>
@@ -419,7 +419,7 @@
             <description>Analog Out PWM</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector30pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector30pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector30pin" terminalId="connector30terminal"/>
@@ -433,7 +433,7 @@
             <description>Analog Out PWM</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector31pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector31pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector31pin" terminalId="connector31terminal"/>
@@ -447,7 +447,7 @@
             <description>Analog Out PWM</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector32pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector32pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector32pin" terminalId="connector32terminal"/>
@@ -461,7 +461,7 @@
             <description>Analog Out PWM</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector33pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector33pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector33pin" terminalId="connector33terminal"/>
@@ -475,7 +475,7 @@
             <description>Analog In 7</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector34pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector34pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector34pin" terminalId="connector34terminal"/>
@@ -489,7 +489,7 @@
             <description>Analog In 6</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector35pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector35pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector35pin" terminalId="connector35terminal"/>
@@ -503,7 +503,7 @@
             <description>Analog In 5</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector36pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector36pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector36pin" terminalId="connector36terminal"/>
@@ -517,7 +517,7 @@
             <description>Analog In 4</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector37pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector37pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector37pin" terminalId="connector37terminal"/>
@@ -531,7 +531,7 @@
             <description>Analog In 3</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector38pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector38pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector38pin" terminalId="connector38terminal"/>
@@ -545,7 +545,7 @@
             <description>Analog In 2</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector39pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector39pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector39pin" terminalId="connector39terminal"/>
@@ -559,7 +559,7 @@
             <description>Analog In 1</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector40pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector40pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector40pin" terminalId="connector40terminal"/>
@@ -573,7 +573,7 @@
             <description>Analog In 0</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector41pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector41pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector41pin" terminalId="connector41terminal"/>
@@ -587,7 +587,7 @@
             <description>Digital I/O 39 (Port 4)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector42pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector42pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector42pin" terminalId="connector42terminal"/>
@@ -601,7 +601,7 @@
             <description>Digital I/O 38 (Port 4)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector43pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector43pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector43pin" terminalId="connector43terminal"/>
@@ -615,7 +615,7 @@
             <description>Digital I/O 37 (Port 4)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector44pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector44pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector44pin" terminalId="connector44terminal"/>
@@ -629,7 +629,7 @@
             <description>Digital I/O 36 (Port 4)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector45pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector45pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector45pin" terminalId="connector45terminal"/>
@@ -643,7 +643,7 @@
             <description>Digital I/O 35 (Port 4)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector46pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector46pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector46pin" terminalId="connector46terminal"/>
@@ -657,7 +657,7 @@
             <description>Digital I/O 34 (Port 4)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector47pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector47pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector47pin" terminalId="connector47terminal"/>
@@ -673,7 +673,7 @@
 TX</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector48pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector48pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector48pin" terminalId="connector48terminal"/>
@@ -688,7 +688,7 @@ TX</description>
 RX</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector49pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector49pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector49pin" terminalId="connector49terminal"/>
@@ -702,7 +702,7 @@ RX</description>
             <description>Digital I/O 10 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector10pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector10pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector10pin" terminalId="connector10terminal"/>
@@ -716,7 +716,7 @@ RX</description>
             <description>Digital I/O 11 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector11pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector11pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector11pin" terminalId="connector11terminal"/>
@@ -730,7 +730,7 @@ RX</description>
             <description>Digital I/O 12 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector12pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector12pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector12pin" terminalId="connector12terminal"/>
@@ -744,7 +744,7 @@ RX</description>
             <description>Digital I/O 13 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector13pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector13pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector13pin" terminalId="connector13terminal"/>
@@ -758,7 +758,7 @@ RX</description>
             <description>Digital I/O 14 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector14pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector14pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector14pin" terminalId="connector14terminal"/>
@@ -772,7 +772,7 @@ RX</description>
             <description>Digital I/O 15 (Port 1)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector15pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector15pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector15pin" terminalId="connector15terminal"/>
@@ -786,7 +786,7 @@ RX</description>
             <description>Digital I/O 16 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector16pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector16pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector16pin" terminalId="connector16terminal"/>
@@ -800,7 +800,7 @@ RX</description>
             <description>Digital I/O 17 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector17pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector17pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector17pin" terminalId="connector17terminal"/>
@@ -814,7 +814,7 @@ RX</description>
             <description>Digital I/O 18 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector18pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector18pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector18pin" terminalId="connector18terminal"/>
@@ -828,7 +828,7 @@ RX</description>
             <description>Digital I/O 19 (Port 2)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector19pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector19pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector19pin" terminalId="connector19terminal"/>
@@ -842,7 +842,7 @@ RX</description>
             <description>Digital I/O 31 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector50pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector50pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector50pin" terminalId="connector50terminal"/>
@@ -856,7 +856,7 @@ RX</description>
             <description>Digital I/O 30 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector51pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector51pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector51pin" terminalId="connector51terminal"/>
@@ -870,7 +870,7 @@ RX</description>
             <description>Digital I/O 29 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector52pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector52pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector52pin" terminalId="connector52terminal"/>
@@ -884,7 +884,7 @@ RX</description>
             <description>Digital I/O 28 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector53pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector53pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector53pin" terminalId="connector53terminal"/>
@@ -898,7 +898,7 @@ RX</description>
             <description>Digital I/O 0 (Port 0)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector0pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector0pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
@@ -915,7 +915,7 @@ RX</description>
 SDA</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector1pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector1pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
@@ -929,7 +929,7 @@ SDA</description>
             <description>Digital I/O 27 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector54pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector54pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector54pin" terminalId="connector54terminal"/>
@@ -943,7 +943,7 @@ SDA</description>
             <description>Digital I/O 26 (Port 3)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector55pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector55pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector55pin" terminalId="connector55terminal"/>
@@ -957,7 +957,7 @@ SDA</description>
             <description>Digital I/O 2 (Port 0)</description>
             <views>
                 <breadboardView>
-                    <p layer="breadboard" svgId="connector2pin"/>
+                    <p layer="breadboardbreadboard" svgId="connector2pin"/>
                 </breadboardView>
                 <schematicView>
                     <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
