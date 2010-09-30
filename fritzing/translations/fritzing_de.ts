@@ -306,44 +306,44 @@ um die Verbindung zu reparieren</translation>
 <context>
     <name>FApplication</name>
     <message>
-        <location filename="../src/fapplication.cpp" line="1216"/>
+        <location filename="../src/fapplication.cpp" line="1145"/>
         <source>Import files from previous version?</source>
         <translation>Dateien aus der alten Version importieren?</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1224"/>
+        <location filename="../src/fapplication.cpp" line="1153"/>
         <source>Import</source>
         <translation>Importieren</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1225"/>
+        <location filename="../src/fapplication.cpp" line="1154"/>
         <source>Do not import now</source>
         <translation>Jetzt nicht</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1103"/>
-        <location filename="../src/fapplication.cpp" line="1107"/>
+        <location filename="../src/fapplication.cpp" line="1033"/>
+        <location filename="../src/fapplication.cpp" line="1037"/>
         <source>Fritzing failure</source>
         <translation>Fehler in Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1103"/>
+        <location filename="../src/fapplication.cpp" line="1033"/>
         <source>Fritzing caught an exception %1 from %2 in event %3</source>
         <translation>Fritzing-Ausnahme %1 aus %2 im Ereignis %3</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1107"/>
+        <location filename="../src/fapplication.cpp" line="1037"/>
         <source>Fritzing caught an exception from %1 in event %2</source>
         <translation>Fritzing-Ausname aus %1 in Ereignis %2</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1217"/>
+        <location filename="../src/fapplication.cpp" line="1146"/>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 </source>
         <translation>Möchtest Du die Bauteile und Sortimente importieren, die Du in einer früheren Fritzing-Version erstellt hast?</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1218"/>
+        <location filename="../src/fapplication.cpp" line="1147"/>
         <source>
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
         <translation>Hinweis: Du kannst sie nachträglich importieren, indem Du &quot;Hilfe&quot; &gt; &quot;Bauteile und Sortimente aus einer alten Version importieren...&quot; aufrufst.</translation>
@@ -461,8 +461,8 @@ Bitte wähle eine der Fritzing-Schriftarten, um sie zu ersetzen:</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="62"/>
-        <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;The first thing you will need is a board to place your parts on. There should already be one to the left of this text, but if not, drag in this icon &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; from the parts bin. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation>In der &lt;b&gt;Leiterplattenansicht&lt;/b&gt; gestaltest Du, wie die Bauteile und Verbindungen auf der Leiterplatte (englisch: PCB, printed circuit board) angeordnet werden.&lt;br/&gt;&lt;br/&gt;(Leiterplatten können mit relativ geringem Aufwand zu Hause oder in einem kleinen Labor selber hergestellt werden. Sie können auch bei professionellen Herstellern in Auftrag gegeben werden, falls man eine höhere Qualität oder Stückzahlen benötigt.) &lt;br/&gt;&lt;br/&gt;Zunächst benötigst Du eine Leiterplatte &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot;/&gt;, auf die Du die Bauteile platzieren kannst. Versuche dabei möglichst die Überschneidungen der Verbindungen gering zu halten. Anschließend kannst Du mit dem Autorouting-Knopf &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot;/&gt; die Leiterbahnen erstellen lassen, oder es manuell versuchen.</translation>
+        <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;The first thing you will need is a board to place your parts on. There should already be one beneath this widget, but if not, drag in the board icon from the parts bin (image at right). &lt;/td&gt;&lt;td&gt;&lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;br/&gt;&lt;br/&gt;To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Once the parts are sorted out, you connect them with copper traces. You can drag out a trace from individual connections or use the autorouter to generate them. The Autoroute button is at the bottom of the window (image at right).&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -851,7 +851,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1037"/>
-        <location filename="../src/mainwindow.cpp" line="2160"/>
+        <location filename="../src/mainwindow.cpp" line="2162"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
@@ -1006,7 +1006,7 @@ Möchtest Du jetzt Fritzing neu starten?</translation>
         <translation>Der SVG-Datei %1 fehlt eine &apos;%2&apos;-Ebene. Um mehr darüber zu lernen, wie man eine eigene Leiterplattenform erstellt, schau Dir die &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;Anleitung&lt;/a&gt; an.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2067"/>
+        <location filename="../src/mainwindow.cpp" line="2069"/>
         <source>Backing up &apos;%1&apos;</source>
         <translation>&apos;%1&apos; wird gesichert</translation>
     </message>
@@ -2753,33 +2753,33 @@ Ursache: %2 (Fehlercode %3)</translation>
         <translation>Diese Verbindung anklicken und ziehen, um eine neue Leiterbahn zu erzeugen.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="652"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="661"/>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
         <translation>Sorry, Fritzing erlaubt nur eine Leiterplatte per Entwurf. Du kannst das aktuelle entfernen und ersetzen, oder seine Eigenschaften ändern.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1173"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2304"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1182"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2317"/>
         <source>Resize board to %1 %2</source>
         <translation>Größe anpassen auf %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1459"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1472"/>
         <source>Design Rules Check Progress...</source>
         <translation>Überprüfung der Entwurfsregeln</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2135"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2148"/>
         <source>Change trace layer</source>
         <translation>Auf andere Seite verschieben</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2356"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2369"/>
         <source>Delete ratsnest</source>
         <translation>Luftlinie entfernen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2385"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2398"/>
         <source>Create and connect trace</source>
         <translation>Leiterbahn erzeugen und verbinden</translation>
     </message>
@@ -3894,27 +3894,27 @@ Vertikal scrollen</translation>
         <translation>&lt;b&gt;Farbe für &quot;nicht verbunden&quot;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="103"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="104"/>
         <source>pcb</source>
         <translation>Leiterplatte</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1455"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1468"/>
         <source>Design Rule Check (select items that are too close together)</source>
         <translation>Entwurfsregeln (Elemente auswählen, die zu dicht zueinander sind)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="38"/>
+        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="40"/>
         <source>bb</source>
         <translation>Steckplatine</translation>
     </message>
     <message>
-        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="39"/>
+        <location filename="../src/sketch/breadboardsketchwidget.cpp" line="41"/>
         <source>Breadboard View</source>
         <translation>Steckplatinen-Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="680"/>
+        <location filename="../src/fapplication.cpp" line="661"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
         <location filename="../src/fritzingwindow.cpp" line="144"/>
         <location filename="../src/mainwindow_menu.cpp" line="3094"/>
@@ -3934,7 +3934,7 @@ Vertikal scrollen</translation>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="566"/>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="254"/>
         <location filename="../src/program/programtab.cpp" line="578"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="659"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="661"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
@@ -3959,12 +3959,12 @@ Vertikal scrollen</translation>
         <translation>Leiterplatte-Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="817"/>
+        <location filename="../src/fapplication.cpp" line="781"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="680"/>
+        <location filename="../src/fapplication.cpp" line="661"/>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="566"/>
         <source>Friting cannot load the parts bin</source>
         <translation>Sortiment konnte nicht geladen werden</translation>
@@ -4047,7 +4047,7 @@ Vertikal scrollen</translation>
         <translation>Bauteil &apos;%1&apos; bei &apos;%2&apos; hat keine eindeutige module id &apos;%3&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="102"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="103"/>
         <source>PCB View</source>
         <translation>Leiterplatte-Ansicht</translation>
     </message>
@@ -4062,48 +4062,48 @@ Vertikal scrollen</translation>
         <translation>Schaltplan-Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="660"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="662"/>
         <source>The file %1 is not a Fritzing file (1).</source>
         <translation>Die Datei %1 ist keine Fritzing Datei (1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2847"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2849"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2994"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2996"/>
         <source>%1 Layer</source>
         <translation>%1-Ebene</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3185"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3202"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3190"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3207"/>
         <source>Bring forward</source>
         <translation>Schrittweise nach vorne bringen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3194"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3199"/>
         <source>Send backward</source>
         <translation>Schrittweise nach hinten senden</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3211"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3216"/>
         <source>Bring to front</source>
         <translation>Nach vorne bringen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4230"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4235"/>
         <source>Split Wire</source>
         <translation>Kabel trennen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4286"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4291"/>
         <source>Join Wire</source>
         <translation>Kabel verbinden</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6169"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6179"/>
         <source>Select all jumpers</source>
         <translation>Alle Drahtbrücken auswählen</translation>
     </message>
@@ -4287,7 +4287,7 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
         <translation>Notizen</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="824"/>
+        <location filename="../src/fapplication.cpp" line="788"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)&lt;/font&gt;</translation>
     </message>
@@ -4297,17 +4297,17 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
         <translation>Verbindung hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5890"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5900"/>
         <source>Trace wires</source>
         <translation>Leiterbahnen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5893"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5903"/>
         <source>Ratsnest wires</source>
         <translation>Luftlinien</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5895"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5905"/>
         <source>Select all %1</source>
         <translation>Alles auswählen %1</translation>
     </message>
@@ -4337,12 +4337,12 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
         <translation>Die Datei %1 ist keine Fritzing-Datei (4).</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinview.cpp" line="172"/>
+        <location filename="../src/partsbinpalette/partsbinview.cpp" line="175"/>
         <source>Part already in bin</source>
         <translation>Bauteil bereits in Sortiment vorhanden</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinview.cpp" line="172"/>
+        <location filename="../src/partsbinpalette/partsbinview.cpp" line="175"/>
         <source>The part that you have just added,
 is already there, we won&apos;t add it again, right?</source>
         <translation>Dieses Bauteil befindet sich bereits
@@ -4354,7 +4354,7 @@ im Sortiment.</translation>
         <translation>Dateifortschritt...</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6184"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6194"/>
         <source>Select outdated parts</source>
         <translation>Veraltete Bauteile auswählen</translation>
     </message>
@@ -4780,139 +4780,139 @@ im Sortiment.</translation>
 <context>
     <name>SketchWidget</name>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="484"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="486"/>
         <source>loading part</source>
         <translation>Lade Bauteil..</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="486"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="488"/>
         <source>done loading</source>
         <translation>Bauteil geladen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="786"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="788"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="789"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="791"/>
         <source>%1 %2 items</source>
         <translation>%1 %2 Elemente</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1135"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1137"/>
         <source>Select All</source>
         <translation>Alles auswählen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1135"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1137"/>
         <source>Deselect</source>
         <translation>Auswahl zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1555"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1557"/>
         <source>Add %1</source>
         <translation>%1 hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2539"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2541"/>
         <source>Move %2 (%1)</source>
         <translation>%2 verschieben (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2542"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2544"/>
         <source>Move %2 items (%1)</source>
         <translation>%2 Elemente verschieben (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2726"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2728"/>
         <source>Select %1</source>
         <translation> %1 auswählen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2729"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2731"/>
         <source>Select %1 items</source>
         <translation>%1 Elemente auswählen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2831"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2833"/>
         <source>Disconnect</source>
         <translation>Verbindung lösen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2839"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2841"/>
         <source>Change</source>
         <translation>Ändere</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2843"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2845"/>
         <source>Connect</source>
         <translation>Verbinde</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2844"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2846"/>
         <source>to %1</source>
         <translation>mit %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="2895"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="2897"/>
         <source>Create and connect wire</source>
         <translation>Neues Kabel erstellen und verbinden </translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3502"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3507"/>
         <source>Rotate %2 (%1)</source>
         <translation>Rotieren %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3624"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3629"/>
         <source>%3 %2 (%1)</source>
         <translation>%3 %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3627"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5304"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3632"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5309"/>
         <source>Rotate</source>
         <translation>Rotieren</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3627"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5304"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3632"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5309"/>
         <source>Flip</source>
         <translation>Umdrehen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4358"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4363"/>
         <source>Double-click</source>
         <translation>Doppelklicken</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4358"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4363"/>
         <source>Drag or double-click</source>
         <translation>Ziehen oder doppelklicken</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4359"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4364"/>
         <source>or alt-drag to move the segment</source>
         <translation>oder Alt+Ziehen um ein Segment zu bewegen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4486"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4491"/>
         <source>Change %note to &apos;%2&apos;</source>
         <translation>Ändere %note nach &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4686"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4691"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>Farbe %1 von %2 nach %3 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4692"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4697"/>
         <source>Change color of %1 wires to %2</source>
         <translation>Farbe von %1 Kabel(n) nach %2 ändern</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="5334"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5339"/>
         <source>show part label(s)</source>
         <translation>
             <numerusform>Beschriftung(en) anzeigen</numerusform>
@@ -4920,7 +4920,7 @@ im Sortiment.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="5337"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5342"/>
         <source>hide part label(s)</source>
         <translation>
             <numerusform>Beschriftung(en) ausblenden</numerusform>
@@ -4928,82 +4928,82 @@ im Sortiment.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5659"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5669"/>
         <source>Change pin spacing from %1 to %2</source>
         <translation>Bein-Abstand von %1 nach %2 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5671"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5681"/>
         <source>Change form from %1 to %2</source>
         <translation>Form von %1 nach %2 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5696"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5706"/>
         <source>Change Resistance from %1 to %2</source>
         <translation>Wert des Widerstands von %1 nacg %2 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5718"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5728"/>
         <source>Change %1 from %2 to %3</source>
         <translation>%1 von %2 nach %2 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5777"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5787"/>
         <source>Resize ruler to %1%2</source>
         <translation>Größes des Lineals nach %1%2 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5989"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5999"/>
         <source>Disconnect all wires from %1</source>
         <translation>Alle Verbindungen zu %1 lösen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5992"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6002"/>
         <source>Disconnect all wires from %1 items</source>
         <translation>Alle Verbindungen zu %1 Elementen lösen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6241"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6251"/>
         <source>Change image from %1 to %2</source>
         <translation>Bild von %1 nach %2 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4511"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4516"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Beschriftung von &apos;%1&apos; nach &apos;%2&apos; ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4424"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4429"/>
         <source>Double-click to delete this bend point</source>
         <translation>Doppelklicken, um diesen Biegepunkt zu entfernen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5297"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5302"/>
         <source>Move label &apos;%1&apos;</source>
         <translation>Bezeichnung &apos;%1&apos; verschieben</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5304"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5309"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation>%1 Bezeichnung &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1647"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1649"/>
         <source>Selection</source>
         <translation>Auswahl</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5351"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5356"/>
         <source>Resize Note</source>
         <translation>Notizgröße ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4738"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4743"/>
         <source>Change %1 width from %2 to %3</source>
         <translation>Breite %1 von %2 nach %3 ändern</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4744"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4749"/>
         <source>Change width of %1 wires to %2</source>
         <translation>Breite von %1 Bahn(en) nach %2 ändern</translation>
     </message>
