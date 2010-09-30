@@ -188,6 +188,9 @@ void BreadboardSketchWidget::showEvent(QShowEvent * event) {
 			QSizeF helpSize = m_fixedToCenterItem->size();
 			QSizeF partSize = m_addedDefaultPart->size();
 			QSizeF vpSize = this->viewport()->size();
+			//if (vpSize.height() < helpSize.height() + 50 + partSize.height()) {
+				//vpSize.setWidth(vpSize.width() - verticalScrollBar()->width());
+			//}
 
 			QPointF p;
 			p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));

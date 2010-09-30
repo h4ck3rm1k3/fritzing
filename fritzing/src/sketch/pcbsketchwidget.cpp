@@ -496,13 +496,17 @@ void PCBSketchWidget::showEvent(QShowEvent * event) {
 		m_addDefaultParts = false;
 
 		if (m_fixedToCenterItem != NULL) {
-			QSizeF helpsize = m_fixedToCenterItem->size();
+			QSizeF helpSize = m_fixedToCenterItem->size();
 			QSizeF vpSize = this->viewport()->size();
-			QSizeF partSize(400, 240);
+			QSizeF partSize(600, 200);
+
+			//if (vpSize.height() < helpSize.height() + 50 + partSize.height()) {
+				//vpSize.setWidth(vpSize.width() - verticalScrollBar()->width());
+			//}
 
 			QPointF p;
 			p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));
-			p.setY((int) helpsize.height());
+			p.setY((int) helpSize.height());
 
 			// TODO: make these constants less arbitrary (get the size and location of the icon which the board is replacing)
 			p += QPointF(0, 50);
