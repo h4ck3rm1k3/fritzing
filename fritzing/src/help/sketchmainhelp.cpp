@@ -85,7 +85,7 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
-	textLabel->setFixedWidth(300);
+	textLabel->setFixedWidth(430 - 41 - pixmap.width());
 	textLabel->allTextVisible();
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 	textLabel->setToolTip("");

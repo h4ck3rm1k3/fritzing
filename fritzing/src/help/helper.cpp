@@ -64,17 +64,24 @@ void Helper::initText() {
 	"<br/><br/>"
         "PCBs can be made at home or in a small lab using DIY etching processes. "
         "They also can be sent to professional PCB manufacturing services for more precise fabrication. "
-        "<br/><br/>"
-        "The first thing you will need is a board to place your parts on. "
-		"There should already be one to the left of this text, but if not, "
-		"drag in this icon <img src=\":resources/parts/svg/core/icon/rectangle_pcb.svg\" /> from the parts bin. "
+        "<br/>"
+		"<table><tr><td>"
+		"The first thing you will need is a board to place your parts on. "
+		"There should already be one beneath this widget, but if not, "
+		"drag in the icon at the right from the parts bin. "
+		"</td><td>"
+		"<img src=\":resources/parts/svg/core/icon/rectangle_pcb.svg\" />"
+		"</td></tr></table>"
         "<br/><br/>"
 	    "To lay out your PCB, rearrange all the components so they fit nicely on the board. "
         "Then try to shift them around to minimize the length and confusion of connections. "
         "You can also resize rectangular boards. "
-        "Once the parts are sorted out, you can right-click on individual connections or use "
+		"<br/>"
+		"<table><tr><td>"
+        "Once the parts are sorted out, you can drag from individual connections or use "
         "Autoroute to generate the copper traces between parts. "
-        "The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is on the bottom left.");
+        "The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is on the bottom left."
+		"</td></tr></table>");
 }
 
 
