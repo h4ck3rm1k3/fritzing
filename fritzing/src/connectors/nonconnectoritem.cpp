@@ -35,7 +35,8 @@ $Date$
 #include "../debugdialog.h"
 #include "../utils/graphicsutils.h"
 
-static const qreal EffectiveAdjustment = 1.25;
+//static const qreal EffectiveAdjustment = 1.25;
+static const qreal EffectiveAdjustmentFactor = 5.0 / 27.0;
 
 /////////////////////////////////////////////////////////
 
@@ -93,12 +94,16 @@ void NonConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem
 	else if (m_effectivelyCircular) {
 		painter->setBrush(brush());  
 		painter->setPen(pen());
-		painter->drawEllipse(rect().adjusted(EffectiveAdjustment, EffectiveAdjustment, -EffectiveAdjustment, -EffectiveAdjustment));
+		QRectF r = rect();
+		qreal delta = r.width() * EffectiveAdjustmentFactor;
+		painter->drawEllipse(r.adjusted(delta, delta, -delta, -delta));
 	}
 	else if (m_effectivelyRectangular) {
 		painter->setBrush(brush());  
 		painter->setPen(pen());
-		painter->drawRect(rect().adjusted(EffectiveAdjustment, EffectiveAdjustment, -EffectiveAdjustment, -EffectiveAdjustment));
+		QRectF r = rect();
+		qreal delta = qMin(r.width(), r.height()) * EffectiveAdjustmentFactor;
+		painter->drawRect(r.adjusted(delta, delta, -delta, -delta));
 	}
 	else {
 		QGraphicsRectItem::paint(painter, option, widget);

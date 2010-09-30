@@ -59,7 +59,7 @@ protected:
 	void setNewPartVisible(ItemBase *);
 	double defaultGridSizeInches();
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
-	QPoint calcFixedToCenterItemOffset(const QRectF & viewPortRect, const QSizeF & helpSize);
+	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 
 };
 

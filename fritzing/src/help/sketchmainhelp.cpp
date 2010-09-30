@@ -112,7 +112,7 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	layout->setMargin(2);
 
 	m_shouldGetTransparent = false;
-	m_closeButton->doHide();
+	//m_closeButton->doHide();
 
 	QFile styleSheet(":/resources/styles/inviewhelp.qss");
     if (!styleSheet.open(QIODevice::ReadOnly)) {
@@ -137,7 +137,7 @@ void SketchMainHelpPrivate::enterEventAux() {
 		setWindowOpacity(1.0);
 		QTimer::singleShot(2000, this, SLOT(setTransparent()));
 	}
-	m_closeButton->doShow();
+	//m_closeButton->doShow();
 }
 
 void SketchMainHelpPrivate::setTransparent() {
@@ -153,7 +153,7 @@ void SketchMainHelpPrivate::leaveEventAux() {
 	if(m_shouldGetTransparent) {
 		setTransparent();
 	}
-	m_closeButton->doHide();
+	//m_closeButton->doHide();
 }
 
 bool SketchMainHelpPrivate::forwardMousePressEvent(QMouseEvent * event)

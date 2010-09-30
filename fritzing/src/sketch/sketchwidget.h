@@ -372,7 +372,7 @@ protected:
 	virtual bool resizingBoardRelease();
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus);
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
-	virtual QPoint calcFixedToCenterItemOffset(const QRectF & viewPortRect, const QSizeF & helpSize);
+	virtual QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 
 
 protected:
@@ -561,6 +561,7 @@ protected:
 	bool m_checkUnder;
 	bool m_addDefaultParts;
 	QPointer<ItemBase> m_addedDefaultPart;
+	QRect m_painterViewPort;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

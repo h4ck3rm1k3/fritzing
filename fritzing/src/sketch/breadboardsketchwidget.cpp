@@ -177,21 +177,21 @@ void BreadboardSketchWidget::addDefaultParts() {
 	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::breadboardModuleIDName), defaultViewLayerSpec(), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
 	if (m_fixedToCenterItem != NULL) {
 		QSizeF helpSize = m_fixedToCenterItem->size();
-		QSizeF vpSize = this->viewport()->size();
 		QSizeF partSize = m_addedDefaultPart->size();
+		QPoint pCenter = m_painterViewPort.center();
 
 		QPointF p;
-		p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));
-		p.setY((int) ((vpSize.height() + helpSize.height()) / 2.0));
+		p.setX((int) (pCenter.x() - (partSize.width() / 2.0)));
+		p.setY((int) (helpSize.height() + m_painterViewPort.top()));
 
 		// add a board to the empty sketch, and place it below the help area.
 
 		p += QPointF(0, 10);
-		//m_addedDefaultPart->setPos(mapToScene(p.toPoint()));
+		m_addedDefaultPart->setPos(mapToScene(p.toPoint()));
 	}
 }
 
-QPoint BreadboardSketchWidget::calcFixedToCenterItemOffset(const QRectF & viewPortRect, const QSizeF & helpSize) {
+QPoint BreadboardSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize) {
 	QPoint p((int) ((viewPortRect.width() - helpSize.width()) / 2.0),
 			 10);
 	return p;
