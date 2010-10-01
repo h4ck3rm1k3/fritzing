@@ -2753,33 +2753,33 @@ Ursache: %2 (Fehlercode %3)</translation>
         <translation>Diese Verbindung anklicken und ziehen, um eine neue Leiterbahn zu erzeugen.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="661"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="665"/>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
         <translation>Sorry, Fritzing erlaubt nur eine Leiterplatte per Entwurf. Du kannst das aktuelle entfernen und ersetzen, oder seine Eigenschaften ändern.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1182"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2317"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1186"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2321"/>
         <source>Resize board to %1 %2</source>
         <translation>Größe anpassen auf %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1472"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1476"/>
         <source>Design Rules Check Progress...</source>
         <translation>Überprüfung der Entwurfsregeln</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2148"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2152"/>
         <source>Change trace layer</source>
         <translation>Auf andere Seite verschieben</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2369"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2373"/>
         <source>Delete ratsnest</source>
         <translation>Luftlinie entfernen</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2398"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2402"/>
         <source>Create and connect trace</source>
         <translation>Leiterbahn erzeugen und verbinden</translation>
     </message>
@@ -3899,7 +3899,7 @@ Vertikal scrollen</translation>
         <translation>Leiterplatte</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1468"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1472"/>
         <source>Design Rule Check (select items that are too close together)</source>
         <translation>Entwurfsregeln (Elemente auswählen, die zu dicht zueinander sind)</translation>
     </message>
@@ -5193,6 +5193,11 @@ im Sortiment.</translation>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="69"/>
         <source>Czech - %1</source>
         <translation>Tschechisch - %1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="71"/>
+        <source>Turkish - %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="44"/>

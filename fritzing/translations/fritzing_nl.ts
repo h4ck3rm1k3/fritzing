@@ -4142,6 +4142,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Turkish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>

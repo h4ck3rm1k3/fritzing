@@ -2751,33 +2751,33 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="661"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="665"/>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1182"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2317"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1186"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2321"/>
         <source>Resize board to %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1472"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1476"/>
         <source>Design Rules Check Progress...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2148"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2152"/>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2369"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2373"/>
         <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2398"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2402"/>
         <source>Create and connect trace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4119,7 +4119,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1468"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1472"/>
         <source>Design Rule Check (select items that are too close together)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5198,6 +5198,11 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="69"/>
         <source>Czech - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="71"/>
+        <source>Turkish - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

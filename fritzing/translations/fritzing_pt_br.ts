@@ -4092,6 +4092,10 @@ is already there, we won&apos;t add it again, right?</source>
         <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Turkish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>

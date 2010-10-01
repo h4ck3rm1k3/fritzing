@@ -2760,33 +2760,33 @@ Razóon%2 (errcode %3)</translation>
         <translation>Da click sobre este conector para arrastrar una nueva traza.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="661"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="665"/>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
         <translation type="unfinished">Fritzing sólo permite una placa por bosquejo. O borras la placa actual, o seleccionala y cambiala por otra diferente.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1182"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2317"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1186"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2321"/>
         <source>Resize board to %1 %2</source>
         <translation type="unfinished">Cambiar el tamaño de la placa a %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1472"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1476"/>
         <source>Design Rules Check Progress...</source>
         <translation type="unfinished">Prueba del Diseño de Reglas, en progreso...</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2148"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2152"/>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2369"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2373"/>
         <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2398"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2402"/>
         <source>Create and connect trace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3908,7 +3908,7 @@ Avanze Vertical</translation>
         <translation type="unfinished">pcb</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1468"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1472"/>
         <source>Design Rule Check (select items that are too close together)</source>
         <translation type="unfinished">Verificar Diseño de Reglas (elije los items que estan colocados muy cerca)</translation>
     </message>
@@ -5205,6 +5205,11 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="69"/>
         <source>Czech - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="71"/>
+        <source>Turkish - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

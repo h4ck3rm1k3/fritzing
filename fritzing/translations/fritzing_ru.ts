@@ -4148,6 +4148,10 @@ Fritzing по-прежнему работает, но вы не сможете �
         <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Turkish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>

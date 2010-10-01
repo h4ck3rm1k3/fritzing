@@ -4138,6 +4138,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <source>Czech - %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Turkish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>
