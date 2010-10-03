@@ -191,7 +191,7 @@ void PaletteModel::writeCommonBinsHeader() {
 
 void PaletteModel::writeCommonBinsHeaderAux(bool doIt, const QString &filename, const QString &binName) {
 	QString header =
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+TextUtils::CreatedWithFritzing+
 		QString("<module fritzingVersion='%1'>\n").arg(Version::versionString())+
 		QString("\t<title>%1</title>\n").arg(binName)+
 		"\t<instances>\n";

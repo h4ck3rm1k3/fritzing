@@ -369,3 +369,7 @@ bool SchematicSketchWidget::routeBothSides() {
 QPoint SchematicSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize) {
 	return SketchWidget::calcFixedToCenterItemOffset(viewPortRect, helpSize);
 }
+
+void SchematicSketchWidget::addDefaultParts() {
+	SketchWidget::addDefaultParts();
+}

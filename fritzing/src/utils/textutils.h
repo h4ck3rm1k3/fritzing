@@ -74,6 +74,7 @@ public:
 	static const QString SMDFlipSuffix;
 	static const QString MicroSymbol;
 	static const QString PowerPrefixesString;
+	static const QString CreatedWithFritzing;
 
 protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);

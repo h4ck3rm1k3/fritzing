@@ -70,7 +70,7 @@ public:
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID,  ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
 	bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
-
+	void addDefaultParts();
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);

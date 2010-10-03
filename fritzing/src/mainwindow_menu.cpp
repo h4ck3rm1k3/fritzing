@@ -2716,7 +2716,7 @@ void MainWindow::exportNetlist() {
 	this->m_currentGraphicsView->collectAllNets(indexer, netList, true, m_currentGraphicsView->boardLayers() > 1);
 
 	QDomDocument doc;
-	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>"));
+	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>\n") + TextUtils::CreatedWithFritzing);
 	QDomElement netlist = doc.createElement("netlist");
 	doc.appendChild(netlist);
 	netlist.setAttribute("sketch", QFileInfo(m_fileName).fileName());
