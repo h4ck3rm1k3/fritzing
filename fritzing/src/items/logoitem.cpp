@@ -612,7 +612,7 @@ void LogoItem::logoEntry() {
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "logo", tr("logo"), this->logo(), edit->text());
+		infoGraphicsView->setProp(this, "logo", tr("logo"), this->logo(), edit->text(), true);
 	}
 }
 

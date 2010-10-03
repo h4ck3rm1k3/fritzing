@@ -53,10 +53,7 @@ $Date$
 
 /////////////////////////////////
 
-static const ushort MicroSymbolCode = 181;
-static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
-
-static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
+static QRegExp NumberMatcher;
 static QHash<QString, qreal> NumberMatcherValues;
 
 static const qreal InactiveOpacity = 0.4;
@@ -316,6 +313,10 @@ ModelPartShared * ItemBase::modelPartShared() {
 }
 
 void ItemBase::initNames() {
+	if (NumberMatcher.isEmpty()) {
+		NumberMatcher.setPattern(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + TextUtils::MicroSymbol + "]))?");
+	}
+
 	if (TranslatedPropertyNames.count() == 0) {
 		TranslatedPropertyNames.insert("family", tr("family"));
 		TranslatedPropertyNames.insert("size", tr("size"));
@@ -1676,7 +1677,10 @@ QStringList ItemBase::collectValues(const QString & family, const QString & prop
 		else if (unit.contains('p')) {
 			n *= 0.000000000001;
 		}
-		else if (unit.contains(MicroSymbol)) {
+		else if (unit.contains('n')) {
+			n *= 0.000000001;
+		}
+		else if (unit.contains(TextUtils::MicroSymbol)) {
 			n *= 0.000001;
 		}
 		NumberMatcherValues.insert(opt, n);
@@ -1807,3 +1811,8 @@ void ItemBase::updateConnectors()
 	//DebugDialog::debug(QString("set up connectors restore:%1").arg(count));
 }
 
+const QString & ItemBase::moduleID() {
+	if (m_modelPart) return m_modelPart->moduleID();
+
+	return ___emptyString___;
+}

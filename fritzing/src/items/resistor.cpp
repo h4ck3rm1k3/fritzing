@@ -26,6 +26,7 @@ $Date$
 
 #include "resistor.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
 #include "../utils/focusoutcombobox.h"
 #include "../utils/boundedregexpvalidator.h"
 #include "../fsvgrenderer.h"
@@ -42,7 +43,7 @@ static QString BreadboardLayerTemplate = "";
 static QStringList Resistances;
 static QStringList PinSpacings;
 static QHash<int, QColor> ColorBands;
-static QChar OhmSymbol(0x03A9);
+static QString OhmSymbol(QChar(0x03A9));
 static QRegExp Digits("(\\d)+");
 static QRegExp DigitsMil("(\\d)+mil");
 
@@ -138,7 +139,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 				if (infoGraphicsView == NULL) break;
 
 				// hack the dom element and call setUpImage
-				FSvgRenderer::removeFromHash(this->modelPart()->moduleID(), "");
+				FSvgRenderer::removeFromHash(moduleID(), "");
 				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
 				if (element.isNull()) break;
 
@@ -198,7 +199,7 @@ QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 }
 
 QString Resistor::makeBreadboardSvg(const QString & resistance) {
-	qreal ohms = toOhms(resistance, NULL);
+	qreal ohms = TextUtils::convertFromPowerPrefix(resistance, OhmSymbol);
 	QString sohms = QString::number(ohms, 'e', 3);
 	int firstband = sohms.at(0).toAscii() - '0';
 	int secondband = sohms.at(2).toAscii() - '0';
@@ -222,7 +223,8 @@ bool Resistor::collectExtraInfo(QWidget * parent, const QString & family, const 
 		focusOutComboBox->addItems(Resistances);
 		focusOutComboBox->setCurrentIndex(focusOutComboBox->findText(current));
 		BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
-		validator->setConverter(toOhms);
+		validator->setSymbol(OhmSymbol);
+		validator->setConverter(TextUtils::convertFromPowerPrefix);
 		validator->setBounds(0, 9900000000.0);
 		validator->setRegExp(QRegExp("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d))[kMG]{0,1}[\\x03A9]{0,1}"));
 		focusOutComboBox->setValidator(validator);
@@ -258,31 +260,7 @@ QString Resistor::pinSpacing() {
 	return m_pinSpacing;
 }
 
-qreal Resistor::toOhms(const QString & ohms, void * data) 
-{
-	Q_UNUSED(data);
 
-	qreal multiplier = 1;
-	QString temp = ohms;
-	if (temp.endsWith(OhmSymbol)) {
-		temp.chop(1);
-	}
-
-	if (temp.endsWith("k", Qt::CaseInsensitive)) {
-		multiplier = 1000;
-		temp.chop(1);
-	}
-	else if (temp.endsWith("M", Qt::CaseInsensitive)) {
-		multiplier = 1000000;
-		temp.chop(1);
-	}
-	else if (temp.endsWith("G", Qt::CaseInsensitive)) {
-		multiplier = 1000000000;
-		temp.chop(1);
-	}
-	temp = temp.trimmed();
-	return temp.toDouble() * multiplier;
-}
 
 QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
 {

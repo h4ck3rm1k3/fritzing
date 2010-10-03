@@ -23,7 +23,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="f124bae12ce2b49029499a70593456637" modelIndex="6" path="parts/core/capacitor_tantalum_10uF.fzp">
+        <instance moduleIdRef="TantalumCapacitorModuleID" modelIndex="6" path="parts/core/capacitor_tantalum.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

@@ -500,7 +500,7 @@ QPointF Hole::holeDiameterRange() {
 void Hole::changeHoleSize(const QString & newSize) {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "hole size", tr("hole size"), this->holeSize(), newSize);
+		infoGraphicsView->setProp(this, "hole size", tr("hole size"), this->holeSize(), newSize, true);
 	}
 }
 

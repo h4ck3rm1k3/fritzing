@@ -43,6 +43,8 @@ public:
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
 	static qreal convertToInches(const QString & string);
+	static QString convertToPowerPrefix(qreal);
+	static qreal convertFromPowerPrefix(const QString & val, const QString & symbol);
 
 	static QString replaceTextElement(const QString & svg, const QString & label);
     static bool squashElement(QString & svg, const QString & elementName, const QString & attName, const QRegExp & matchContent);
@@ -70,6 +72,8 @@ public:
 	static const QRegExp FindWhitespace;
 	static const QRegExp SodipodiDetector;
 	static const QString SMDFlipSuffix;
+	static const QString MicroSymbol;
+	static const QString PowerPrefixesString;
 
 protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);
@@ -77,6 +81,7 @@ protected:
     static void squashNotElement(QDomElement & element, const QString & elementName, const QString & attName, const QRegExp & matchContent, bool & result);
 	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altAtt, const QString & altElementID, qreal printerScale);
 	static void findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements);
+	static void initPowerPrefixes();
 
 };
 

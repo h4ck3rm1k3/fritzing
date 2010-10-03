@@ -18,6 +18,7 @@
 # ********************************************************************/
 
 HEADERS += \
+    src/items/capacitor.h \
     src/items/clipablewire.h \
     src/items/dip.h \
     src/items/graphicssvglineitem.h \
@@ -45,6 +46,7 @@ HEADERS += \
     src/items/wire.h 
 
 SOURCES += \
+    src/items/capacitor.cpp \
     src/items/clipablewire.cpp \
     src/items/dip.cpp \
     src/items/graphicssvglineitem.cpp \

@@ -193,13 +193,14 @@ void InfoGraphicsView::setResistance(QString resistance, QString pinSpacing)
 	Q_UNUSED(pinSpacing);
 }
 
-void InfoGraphicsView::setProp(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue)
+void InfoGraphicsView::setProp(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue, bool redraw)
 {
 	Q_UNUSED(item);
 	Q_UNUSED(prop);
 	Q_UNUSED(trProp);
 	Q_UNUSED(oldValue);
 	Q_UNUSED(newValue);
+	Q_UNUSED(redraw);
 }
 
 void InfoGraphicsView::changeWireWidthMils(const QString newWidth) {

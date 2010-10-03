@@ -404,8 +404,8 @@ const QString & ModelPartShared::replacedby() {
 	return m_replacedby;
 }
 
-void ModelPartShared::setReplacedBy(const QString & replacedBy) {
-	m_replacedby = replacedBy;
+void ModelPartShared::setReplacedby(const QString & replacedby) {
+	m_replacedby = replacedby;
 }
 
 void ModelPartShared::setFlippedSMD(bool f) {

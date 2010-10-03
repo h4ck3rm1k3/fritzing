@@ -1228,9 +1228,10 @@ QString SetResistanceCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SetPropCommand::SetPropCommand(SketchWidget * sketchWidget, long itemID, QString prop, QString oldValue, QString newValue, QUndoCommand * parent)
+SetPropCommand::SetPropCommand(SketchWidget * sketchWidget, long itemID, QString prop, QString oldValue, QString newValue, bool redraw, QUndoCommand * parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
+	m_redraw = redraw;
 	m_itemID = itemID;
 	m_prop = prop;
 	m_oldValue = oldValue;
@@ -1238,11 +1239,11 @@ SetPropCommand::SetPropCommand(SketchWidget * sketchWidget, long itemID, QString
 }
 
 void SetPropCommand::undo() {
-	m_sketchWidget->setProp(m_itemID, m_prop, m_oldValue, true);
+	m_sketchWidget->setProp(m_itemID, m_prop, m_oldValue, m_redraw, true);
 }
 
 void SetPropCommand::redo() {
-	m_sketchWidget->setProp(m_itemID, m_prop, m_newValue, true);
+	m_sketchWidget->setProp(m_itemID, m_prop, m_newValue, m_redraw, true);
 }
 
 QString SetPropCommand::getParamString() const {

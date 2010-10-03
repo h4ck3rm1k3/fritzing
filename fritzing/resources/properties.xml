@@ -1,0 +1,52 @@
+<properties>
+	<class name="TantalumCapacitorModuleID">
+		<property name="capacitance" symbol="F" minValue=".000000047" maxValue=".00033" defaultValue=".0000001">	
+			<menuItem value="0.00000039" />
+			<menuItem value="0.00000047" />
+			<menuItem value="0.00000056" />
+			<menuItem value="0.00000068" />
+			<menuItem value="0.00000082" />
+			<menuItem value="0.0000010" />
+			<menuItem value="0.0000012" />
+			<menuItem value="0.0000015" />
+			<menuItem value="0.0000018" />
+			<menuItem value="0.0000022" />
+			<menuItem value="0.0000027" />
+			<menuItem value="0.0000033" />
+			<menuItem value="0.0000039" />
+			<menuItem value="0.0000047" />
+			<menuItem value="0.0000056" />
+			<menuItem value="0.0000068" />
+			<menuItem value="0.0000082" />
+			<menuItem value="0.000010" />
+			<menuItem value="0.000012" />
+			<menuItem value="0.000015" />
+			<menuItem value="0.000018" />
+			<menuItem value="0.000022" />
+			<menuItem value="0.000027" />
+			<menuItem value="0.000033" />
+			<menuItem value="0.000039" />
+			<menuItem value="0.000047" />
+			<menuItem value="0.000056" />
+			<menuItem value="0.000068" />
+			<menuItem value="0.000082" />
+			<menuItem value="0.000100" />
+			<menuItem value="0.000120" />
+			<menuItem value="0.000150" />
+			<menuItem value="0.000180" />
+			<menuItem value="0.000220" />
+			<menuItem value="0.000270" />
+			<menuItem value="0.000330" />
+		</property>
+		<property name="rated voltage" symbol="V" minValue="4" maxValue="50" defaultValue="35">
+			<menuItem value="4" />
+			<menuItem value="6.3" />
+			<menuItem value="10" />
+			<menuItem value="16" />
+			<menuItem value="20" />
+			<menuItem value="25" />
+			<menuItem value="35" />
+			<menuItem value="50" />
+		</property>
+	</class>
+</properties>

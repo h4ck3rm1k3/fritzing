@@ -403,7 +403,7 @@ signals:
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
-	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doEmit);
+	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doRedraw, bool doEmit);
 	void setInstanceTitleSignal(long id, const QString & title, bool isUndoable, bool doEmit);
 	void statusMessageSignal(QString, int timeout);
 	void showLabelFirstTimeSignal(long itemID, bool show, bool doEmit);
@@ -455,8 +455,8 @@ public slots:
 	void disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistance(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setResistance(QString resistance, QString pinSpacing);
-	void setProp(long itemID, const QString & prop, const QString & value, bool doEmit);
-	void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue);
+	void setProp(long itemID, const QString & prop, const QString & value, bool redraw, bool doEmit);
+	void setProp(ItemBase *, const QString & propName, const QString & translatedPropName, const QString & oldValue, const QString & newValue, bool redraw);
 	void setSpacing(const QString & spacing);
 	void setForm(const QString & form);
 	virtual void showLabelFirstTime(long itemID, bool show, bool doEmit);

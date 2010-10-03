@@ -294,7 +294,7 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 	SymbolPaletteItem * sitem = qobject_cast<SymbolPaletteItem *>(item);
 	if (sitem == NULL) return;
 
-	if (sitem->modelPart()->moduleID().compare("ground symbol", Qt::CaseInsensitive) == 0) return;
+	if (sitem->moduleID().compare("ground symbol", Qt::CaseInsensitive) == 0) return;
 	if (v == sitem->voltage()) return;
 
 	QUndoCommand * parentCommand =  new QUndoCommand();
@@ -312,7 +312,7 @@ void SchematicSketchWidget::setVoltage(qreal v, bool doEmit)
 		removeWire(w, ends, done, parentCommand);
 	}
 
-	new SetPropCommand(this, item->id(), "voltage", QString::number(sitem->voltage()), QString::number(v), parentCommand);
+	new SetPropCommand(this, item->id(), "voltage", QString::number(sitem->voltage()), QString::number(v), true, parentCommand);
 	
 	foreach (QGraphicsItem * item, scene()->items()) {
 		SymbolPaletteItem * other = dynamic_cast<SymbolPaletteItem *>(item);

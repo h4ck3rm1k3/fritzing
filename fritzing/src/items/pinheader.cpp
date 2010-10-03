@@ -93,7 +93,7 @@ void PinHeader::setForm(QString form, bool force) {
 				if (infoGraphicsView == NULL) break;
 
 				// hack the dom element and call setUpImage
-				FSvgRenderer::removeFromHash(this->modelPart()->moduleID(), "");
+				FSvgRenderer::removeFromHash(moduleID(), "");
 				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
 				if (element.isNull()) break;
 

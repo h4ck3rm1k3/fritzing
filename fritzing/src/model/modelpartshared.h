@@ -100,7 +100,7 @@ public:
 
 	void setProperty(const QString & key, const QString & value);
 	const QString & replacedby();
-	void setReplacedBy(const QString & replacedBy);
+	void setReplacedby(const QString & replacedby);
 
 	void flipSMDAnd();
 	void setFlippedSMD(bool);

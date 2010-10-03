@@ -649,7 +649,7 @@ protected:
 class SetPropCommand : public BaseCommand
 {
 public:
-	SetPropCommand(class SketchWidget *, long itemID, QString prop, QString oldValue, QString newValue, QUndoCommand * parent);
+	SetPropCommand(class SketchWidget *, long itemID, QString prop, QString oldValue, QString newValue, bool redraw, QUndoCommand * parent);
 	void undo();
 	void redo();
 
@@ -657,6 +657,7 @@ protected:
 	QString getParamString() const;
 
 protected:
+	bool m_redraw;
 	QString m_prop;
 	QString m_oldValue;
 	QString m_newValue;

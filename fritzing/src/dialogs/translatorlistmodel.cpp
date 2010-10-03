@@ -68,6 +68,8 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 		ushort t8[] = { 0x010C, 0x65, 0x0161, 0x74, 0x69, 0x6E, 0x61, 0 };
         m_languages.insert("czech", tr("Czech - %1").arg(QString::fromUtf16(t8)));
 
+		m_languages.insert("turkish", tr("Turkish - %1").arg("Türkçe"));
+
         // More languages written in their own language can be found
         // at http://www.mozilla.com/en-US/firefox/all.html
 

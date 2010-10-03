@@ -48,6 +48,7 @@ public:
 	static const QString logoImageModuleIDName;
 	static const QString holeModuleIDName;
 	static const QString viaModuleIDName;
+	static const QString capacitorModuleIDName;
 
 };
 

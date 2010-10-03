@@ -3215,7 +3215,7 @@ void MainWindow::groundFill()
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
-		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
+		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, true, parentCommand);
 	}
 
 	foreach (QString svg, gpg2.newSVGs()) {
@@ -3223,7 +3223,7 @@ void MainWindow::groundFill()
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
 		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
-		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, parentCommand);
+		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, true, parentCommand);
 	}
 
 	m_undoStack->push(parentCommand);

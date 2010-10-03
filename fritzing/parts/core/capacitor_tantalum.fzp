@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="f9ebae12ce2b49029499a70593456637">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.4" moduleId="TantalumCapacitorModuleID">
     <version>4</version>
     <author>Don Roberts (blog.gogozer.net)</author>
     <title>Tantalum Capacitor</title>
@@ -11,9 +11,9 @@
     </tags>
     <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">1 µF</property>
+  <property name="Capacitance">100nF</property>
   <property name="Capacitor Type">Tantalum</property>
-  <property name="Rated Voltage">35 V</property>
+  <property name="Rated Voltage">35V</property>
     </properties>
     <description>Tantalum capacitor.  Plus lead is usually marked and is usually the longer lead.</description>
     <views>

@@ -30,7 +30,7 @@ $Date$
 #include <QRegExpValidator>
 #include <limits>
 
-typedef qreal (*Converter)(const QString &, void * data);
+typedef qreal (*Converter)(const QString &, const QString & symbol);
 
 class BoundedRegExpValidator : public QRegExpValidator 
 {
@@ -39,7 +39,7 @@ public:
 		m_max = std::numeric_limits<double>::max();
 		m_min = std::numeric_limits<double>::min();
 		m_converter = NULL;
-		m_data = NULL;
+		m_symbol = "";
 	}
 
 	void setBounds(qreal min, qreal max) {
@@ -51,8 +51,8 @@ public:
 		m_converter = converter;
 	}
 
-	void setData(void * data) {
-		m_data = data;
+	void setSymbol(const QString & symbol) {
+		m_symbol = symbol;
 	}
 
 	QValidator::State validate ( QString & input, int & pos ) const {
@@ -61,7 +61,7 @@ public:
 		if (state == QValidator::Intermediate) return state;
 		if (m_converter == NULL) return state;
 
-		qreal converted = m_converter(input, m_data);
+		qreal converted = m_converter(input, m_symbol);
 		if (converted < m_min) return QValidator::Invalid;
 		if (converted > m_max) return QValidator::Invalid;
 
@@ -71,7 +71,7 @@ public:
 protected:
 	qreal m_min;
 	qreal m_max;
-	void * m_data;
+	QString m_symbol;
 	Converter m_converter;
 };
 

@@ -328,7 +328,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	QString moduleID;
 	QString propertiesText;
 	QDomDocument* domDocument = NULL;
-	QString title, label, date, author, description, taxonomy, replacedBy, version;
+	QString title, label, date, author, description, taxonomy, replacedby, version;
 	QStringList tags;
 	QHash<QString, QString> properties;
 	QMultiHash<ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID> hasViewFor;
@@ -370,7 +370,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 						author = xml.readElementText();
 					}
 					else if (name.compare("version") == 0) {
-						replacedBy = xml.attributes().value("replacedBy").toString();
+						replacedby = xml.attributes().value("replacedby").toString();
 						version = xml.readElementText();
 					}
 					else if (name.compare("description") == 0) {
@@ -558,7 +558,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		modelPartShared->setDescription(description);
 		modelPartShared->setTaxonomy(taxonomy);
 		modelPartShared->setVersion(version);
-		modelPartShared->setReplacedBy(replacedBy);
+		modelPartShared->setReplacedby(replacedby);
 		modelPartShared->setTags(tags);
 		modelPartShared->setProperties(properties);
 		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasViewFor.keys()) {

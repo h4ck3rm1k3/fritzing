@@ -2919,7 +2919,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 
 		// create a new wire with the same id as the temporary wire
-		new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->viewLayerSpec(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
+		new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), m_connectorDragWire->viewLayerSpec(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
 		new CheckStickyCommand(this, crossViewType, fromID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(fromID);
@@ -4027,7 +4027,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 		case ModelPart::CopperFill:
 			{
 			GroundPlane * groundPlane = dynamic_cast<GroundPlane *>(itemBase);
-			new SetPropCommand(this, itemBase->id(), "svg", groundPlane->svg(), groundPlane->svg(), parentCommand);
+			new SetPropCommand(this, itemBase->id(), "svg", groundPlane->svg(), groundPlane->svg(), true, parentCommand);
 			}
 			return;
 
@@ -4037,14 +4037,14 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 
 	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(itemBase);
 	if (mysteryPart != NULL) {
-		new SetPropCommand(this, itemBase->id(), "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), parentCommand);
-		new SetPropCommand(this, itemBase->id(), "spacing", mysteryPart->spacing(), mysteryPart->spacing(), parentCommand);
+		new SetPropCommand(this, itemBase->id(), "chip label", mysteryPart->chipLabel(), mysteryPart->chipLabel(), true, parentCommand);
+		new SetPropCommand(this, itemBase->id(), "spacing", mysteryPart->spacing(), mysteryPart->spacing(), true, parentCommand);
 		return;
 	}
 
 	PinHeader * pinHeader = dynamic_cast<PinHeader *>(itemBase);
 	if (pinHeader != NULL) {
-		new SetPropCommand(this, itemBase->id(), "form", pinHeader->form(), pinHeader->form(), parentCommand);
+		new SetPropCommand(this, itemBase->id(), "form", pinHeader->form(), pinHeader->form(), true, parentCommand);
 		return;
 	}
 
@@ -4056,7 +4056,7 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 
 	Hole * hole = dynamic_cast<Hole *>(itemBase);
 	if (hole != NULL) {
-		new SetPropCommand(this, itemBase->id(), "hole size", hole->holeSize(), hole->holeSize(), parentCommand);
+		new SetPropCommand(this, itemBase->id(), "hole size", hole->holeSize(), hole->holeSize(), true, parentCommand);
 		return;
 	}
 }
@@ -5014,7 +5014,7 @@ void SketchWidget::moveAutoScrollTimeout()
 
 const QString &SketchWidget::selectedModuleID() {
 	if(m_lastPaletteItemSelected) {
-		return m_lastPaletteItemSelected->modelPart()->moduleID();
+		return m_lastPaletteItemSelected->moduleID();
 	}
 	return ___emptyString___;
 }
@@ -5665,7 +5665,7 @@ void SketchWidget::setSpacing(const QString & spacing) {
 	MysteryPart * mysteryPart = dynamic_cast<MysteryPart *>(item);
 	if (mysteryPart == NULL) return;
 
-	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "spacing", mysteryPart->spacing(), spacing, NULL);
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "spacing", mysteryPart->spacing(), spacing, true, NULL);
 	cmd->setText(tr("Change pin spacing from %1 to %2").arg(mysteryPart->spacing()).arg(spacing));
 	m_undoStack->push(cmd);
 }
@@ -5677,7 +5677,7 @@ void SketchWidget::setForm(const QString & form) {
 	PinHeader * pinHeader = dynamic_cast<PinHeader *>(item);
 	if (pinHeader == NULL) return;
 
-	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "form", pinHeader->form(), form, NULL);
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), "form", pinHeader->form(), form, true, NULL);
 	cmd->setText(tr("Change form from %1 to %2").arg(pinHeader->form()).arg(form));
 	m_undoStack->push(cmd);
 }
@@ -5722,22 +5722,24 @@ void SketchWidget::setResistance(long itemID, QString resistance, QString pinSpa
 	}
 }
 
-void SketchWidget::setProp(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue)
+void SketchWidget::setProp(ItemBase * item, const QString & prop, const QString & trProp, const QString & oldValue, const QString & newValue, bool redraw)
 {
-	SetPropCommand * cmd = new SetPropCommand(this, item->id(), prop, oldValue, newValue, NULL);
+	SetPropCommand * cmd = new SetPropCommand(this, item->id(), prop, oldValue, newValue, redraw, NULL);
 	cmd->setText(tr("Change %1 from %2 to %3").arg(trProp).arg(oldValue).arg(newValue));
 	m_undoStack->push(cmd);
 }
 
-void SketchWidget::setProp(long itemID, const QString & prop, const QString & value, bool doEmit) {
+void SketchWidget::setProp(long itemID, const QString & prop, const QString & value, bool redraw, bool doEmit) {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
 
 	item->setProp(prop, value);
-	viewItemInfo(item);
+	if (redraw) {
+		viewItemInfo(item);
+	}
 
 	if (doEmit) {
-		emit setPropSignal(itemID, prop, value, false);
+		emit setPropSignal(itemID, prop, value, false, false);
 	}
 }
 

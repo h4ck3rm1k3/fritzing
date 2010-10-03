@@ -899,7 +899,7 @@ void PCBSketchWidget::makeTwoWires(ConnectorItem * originalFromConnectorItem, Co
 		}
 
 		if (newBreadboard) {
-			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), originalFromConnectorItem->attachedTo()->viewLayerSpec(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
+			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->moduleID(), originalFromConnectorItem->attachedTo()->viewLayerSpec(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
 			m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
 		}
 	}
@@ -2415,7 +2415,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	vg1.setRatsnest(false);
 	vg1.setVirtual(false);
 	vg1.setTrace(true);
-	new AddItemCommand(this, crossViewType, m_connectorDragWire->modelPart()->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, m_connectorDragWire->moduleID(), viewLayerSpec, vg1, newID1, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID1, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID1, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
 	new WireWidthChangeCommand(this, newID1, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
@@ -2425,7 +2425,7 @@ void PCBSketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Co
 	vg2.setRatsnest(false);
 	vg2.setVirtual(false);
 	vg2.setTrace(true);
-	new AddItemCommand(this, crossViewType, m_bendpointWire->modelPart()->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, m_bendpointWire->moduleID(), viewLayerSpec, vg2, newID2, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID2, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID2, traceColor(viewLayerSpec), traceColor(viewLayerSpec), 1.0, 1.0, parentCommand);
 	new WireWidthChangeCommand(this, newID2, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);

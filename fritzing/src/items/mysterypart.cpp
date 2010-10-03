@@ -94,7 +94,7 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 				if (infoGraphicsView == NULL) break;
 
 				// hack the dom element and call setUpImage
-				FSvgRenderer::removeFromHash(this->modelPart()->moduleID(), "");
+				FSvgRenderer::removeFromHash(moduleID(), "");
 				QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
 				if (element.isNull()) break;
 
@@ -288,7 +288,7 @@ void MysteryPart::chipLabelEntry() {
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->setProp(this, "chip label", tr("chip label"), this->chipLabel(), edit->text());
+		infoGraphicsView->setProp(this, "chip label", tr("chip label"), this->chipLabel(), edit->text(), true);
 	}
 }
 
