@@ -81,6 +81,7 @@ $Date$
 #include "../items/groundplane.h"
 #include "../items/moduleidnames.h"
 #include "../items/hole.h"
+#include "../items/capacitor.h"
 #include "../lib/ff/flow.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -4057,6 +4058,15 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 	Hole * hole = dynamic_cast<Hole *>(itemBase);
 	if (hole != NULL) {
 		new SetPropCommand(this, itemBase->id(), "hole size", hole->holeSize(), hole->holeSize(), true, parentCommand);
+		return;
+	}
+
+	Capacitor * capacitor = dynamic_cast<Capacitor *>(itemBase);
+	if (capacitor != NULL) {
+		QString capacitance = capacitor->modelPart()->prop("capacitance").toString();
+		QString voltage = capacitor->modelPart()->prop("rated voltage").toString();
+		new SetPropCommand(this, itemBase->id(), "capacitance", capacitance, capacitance, true, parentCommand);
+		new SetPropCommand(this, itemBase->id(), "rated voltage", voltage, voltage, true, parentCommand);
 		return;
 	}
 }
