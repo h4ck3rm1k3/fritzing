@@ -50,7 +50,6 @@ protected:
  	class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	void hideConnectors();	
 	void inactivateConnectors();
-	qreal calcClipRadius(ConnectorItem *);
 
 protected:
 	bool m_colorWasNamed;

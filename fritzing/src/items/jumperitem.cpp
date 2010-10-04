@@ -241,10 +241,12 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 	qreal w = GraphicsUtils::pixels2ins(r.width() + m_connectorTL.x() + m_connectorBR.x());
 	qreal h = GraphicsUtils::pixels2ins(r.height() + m_connectorTL.y() + m_connectorBR.y());
 
-	qreal r0x = GraphicsUtils::pixels2mils(r0.center().x());
-	qreal r0y = GraphicsUtils::pixels2mils(r0.center().y());
-	qreal r1x = GraphicsUtils::pixels2mils(r1.center().x());
-	qreal r1y = GraphicsUtils::pixels2mils(r1.center().y());
+	QPointF r0c = r0.center();
+	QPointF r1c = r1.center();
+	qreal r0x = GraphicsUtils::pixels2mils(r0c.x());
+	qreal r0y = GraphicsUtils::pixels2mils(r0c.y());
+	qreal r1x = GraphicsUtils::pixels2mils(r1c.x());
+	qreal r1y = GraphicsUtils::pixels2mils(r1c.y());
 
 	modelPart()->setProp("r0x", r0x);
 	modelPart()->setProp("r0y", r0y);
@@ -265,6 +267,15 @@ QString JumperItem::makeSvg(ViewLayer::ViewLayerID viewLayerID)
 
 		case ViewLayer::Silkscreen0:
 		case ViewLayer::Silkscreen1:
+			{
+			qreal radius = r0.width() / 2.0;
+			GraphicsUtils::shortenLine(r0c, r1c, radius, radius);
+			r0x = GraphicsUtils::pixels2mils(r0c.x());
+			r0y = GraphicsUtils::pixels2mils(r0c.y());
+			r1x = GraphicsUtils::pixels2mils(r1c.x());
+			r1y = GraphicsUtils::pixels2mils(r1c.y());
+			}
+			
 			thickness = 10;
 		case ViewLayer::PartImage:
 			return JumperWireLayerTemplate
@@ -285,7 +296,6 @@ void JumperItem::resize(QPointF p0, QPointF p1) {
 	QPointF p = calcPos(p0, p1);
 	resize(p, p0 - p, p1 - p);
 }
-
 
 void JumperItem::resize() {
 	if (m_viewIdentifier != ViewIdentifierClass::PCBView) return;

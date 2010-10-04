@@ -1259,3 +1259,15 @@ bool ConnectorItem::marked() {
 void ConnectorItem::setMarked(bool m) {
 	m_marked = m;
 }
+
+qreal ConnectorItem::calcClipRadius() {
+	if (m_circular) {
+		return radius() - (strokeWidth() / 2.0);
+	}
+
+	return 0;
+}
+
+bool ConnectorItem::isCircular() {
+	return m_circular;
+}

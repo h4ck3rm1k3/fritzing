@@ -96,6 +96,8 @@ public:
 	void clearRatsnestDisplay(QList<ConnectorItem *> & connectorItems);
 	bool marked();
 	void setMarked(bool);
+	qreal calcClipRadius();
+	bool isCircular();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

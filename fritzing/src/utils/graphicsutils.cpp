@@ -225,3 +225,16 @@ bool GraphicsUtils::is90(const QMatrix & matrix) {
 
 	return false;
 }
+
+void GraphicsUtils::shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2) {
+	qreal angle1 = atan2(p2.y() - p1.y(), p2.x() - p1.x());
+	qreal angle2 = angle1 - M_PI;  
+	qreal dx1 = d1 * cos(angle1);
+	qreal dy1 = d1 * sin(angle1);
+	qreal dx2 = d2 * cos(angle2);
+	qreal dy2 = d2 * sin(angle2);
+	p1.setX(p1.x() + dx1);
+	p1.setY(p1.y() + dy1);
+	p2.setX(p2.x() + dx2);
+	p2.setY(p2.y() + dy2);
+}

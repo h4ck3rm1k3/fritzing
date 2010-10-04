@@ -46,12 +46,12 @@ public:
 	void hoverMoveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 
 protected:
-	QPointF findIntersection(ConnectorItem * connectorItem, QPointF original);
-	virtual qreal calcClipRadius(ConnectorItem *);
 	bool insideInnerCircle(ConnectorItem * connectorItem, QPointF localPos);
 	bool insideSpoke(ClipableWire * wire, QPointF scenePos); 
 	void dispatchHover(QPointF scenePos);
 	void dispatchHoverAux(bool inInner, Wire * inWire);
+	QPointF findIntersection(ConnectorItem * connectorItem);
+	void calcClip(QPointF & p1, QPointF & p2, ConnectorItem * c1, ConnectorItem * c2);
 
 protected:
 	bool m_clipEnds;

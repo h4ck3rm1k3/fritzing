@@ -51,6 +51,8 @@ public:
 	static void saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform);
 	static bool loadTransform(const QDomElement & transformElement, QTransform & transform);
 	static bool is90(const QMatrix & matrix);
+	static void shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2);
+
 
 public:
 	static const int IllustratorDPI = 72;
