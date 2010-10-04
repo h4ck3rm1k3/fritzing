@@ -44,6 +44,7 @@ public:
 	void setProp(const QString & prop, const QString & value);
 	QString svg();
 	bool hasPartLabel();
+	void loadLayerKin( const LayerHash & viewLayers, ViewLayer::ViewLayerSpec viewLayerSpec);
 
 protected:
 	void setSvg(const QString &);

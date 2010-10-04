@@ -3236,17 +3236,17 @@ void MainWindow::groundFill()
 }
 
 void MainWindow::removeGroundFill() {
-	QList<ItemBase *> toDelete;
+	QSet<ItemBase *> toDelete;
 	foreach (QGraphicsItem * item, m_pcbGraphicsView->scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 
 		if (isGroundFill(itemBase)) {
-			toDelete.append(itemBase);
+			toDelete.insert(itemBase->layerKinChief());
 		}
 	}
 
-	if (toDelete.length() <= 0) return;
+	if (toDelete.count() <= 0) return;
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Remove copper fill"));
 
