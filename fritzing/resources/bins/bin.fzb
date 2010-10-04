@@ -30,7 +30,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1001ABDC03F" modelIndex="7" path="parts/core/electrolytic_capacitor_small.fzp">
+        <instance moduleIdRef="SmallElectrolyticCapacitorModuleID" modelIndex="7" path="parts/core/electrolytic_capacitor_small.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
