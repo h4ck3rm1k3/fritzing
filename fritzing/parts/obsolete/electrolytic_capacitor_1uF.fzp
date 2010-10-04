@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.1223" moduleId="1001ABDC03A">
- <version>4</version>
+ <version replacedby="SmallElectrolyticCapacitorModuleID">4</version>
  <author>Brendan Howell</author>
  <title>Electrolytic Capacitor</title>
  <label>C</label>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.1223" moduleId="1001ABDC03F">
- <version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.1223" moduleId="1001ABDC03G">
+ <version  replacedby="LargeElectrolyticCapacitorModuleID">4</version>
  <author>Brendan Howell</author>
  <title>Electrolytic Capacitor</title>
  <label>C</label>
@@ -11,20 +11,20 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">100 µF</property>
+  <property name="Capacitance">1000 µF</property>
   <property name="Capacitor Type">Electrolytic</property>
   <property name="Rated Voltage">35 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>100µF electrolytic capacitor</description>
+ <description>1000µF electrolytic capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/electrolytic_capacitor_100uF_icon.svg">
+   <layers image="icon/electrolytic_capacitor_1000uF_icon.svg">
     <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true">
-   <layers image="breadboard/electrolytic_capacitor_100uF_35v.svg">
+   <layers image="breadboard/electrolytic_capacitor_1000uF_35v.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
@@ -36,7 +36,7 @@
   <pcbView>
    <layers image="pcb/radial_can_200mil.svg">
     <layer layerId="copper0"/>
-	 <layer layerId="silkscreen"/>
+    <layer layerId="silkscreen"/>
    <layer layerId="copper1"/></layers>
   </pcbView>
  </views>

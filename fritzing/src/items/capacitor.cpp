@@ -37,7 +37,8 @@ $Date: 2010-07-01 22:27:57 +0200 (Thu, 01 Jul 2010) $
 #include <QDomElement>
 #include <QMultiHash>
 
-QMultiHash <QString, PropertyDef *> PropertyDefs;
+QHash <QString, PropertyDef *> PropertyDefs;
+QHash <QString, InstanceDef *> InstanceDefs;
 
 // TODO
 //	save into parts bin
@@ -72,35 +73,49 @@ void Capacitor::loadPropertyDefs() {
 	if (root.isNull()) return;
 	if (root.tagName() != "properties") return;
 
-	QDomElement classElement = root.firstChildElement("class");
-	while (!classElement.isNull()) {
-		QString name = classElement.attribute("name");
-		if (!name.isEmpty()) {
-			QDomElement propertyElement = classElement.firstChildElement("property");
-			while (!propertyElement.isNull()) {
-				PropertyDef * propertyDef = new PropertyDef;
-				propertyDef->name = propertyElement.attribute("name");
-				propertyDef->symbol = propertyElement.attribute("symbol");
-				propertyDef->minValue = propertyElement.attribute("minValue").toDouble();
-				propertyDef->maxValue = propertyElement.attribute("maxValue").toDouble();
-				propertyDef->defaultValue = propertyElement.attribute("defaultValue").toDouble();
-				QDomElement menuItem = propertyElement.firstChildElement("menuItem");
-				while (!menuItem.isNull()) {
-					propertyDef->menuItems.append(menuItem.attribute("value").toDouble());
-					menuItem = menuItem.nextSiblingElement("menuItem");
-				}
-				PropertyDefs.insert(name, propertyDef);
-
-				propertyElement = propertyElement.nextSiblingElement("property");
-			}
+	QDomElement propertyElement = root.firstChildElement("property");
+	while (!propertyElement.isNull()) {
+		PropertyDef * propertyDef = new PropertyDef;
+		propertyDef->name = propertyElement.attribute("name");
+		propertyDef->id = propertyElement.attribute("id");
+		propertyDef->symbol = propertyElement.attribute("symbol");
+		propertyDef->minValue = propertyElement.attribute("minValue").toDouble();
+		propertyDef->maxValue = propertyElement.attribute("maxValue").toDouble();
+		propertyDef->defaultValue = propertyElement.attribute("defaultValue").toDouble();
+		QDomElement menuItem = propertyElement.firstChildElement("menuItem");
+		while (!menuItem.isNull()) {
+			propertyDef->menuItems.append(menuItem.attribute("value").toDouble());
+			menuItem = menuItem.nextSiblingElement("menuItem");
 		}
-		
-		classElement = classElement.nextSiblingElement("class");
+		PropertyDefs.insert(propertyDef->id, propertyDef);
+
+		propertyElement = propertyElement.nextSiblingElement("property");
 	}
+
+	QDomElement instanceElement = root.firstChildElement("instance");
+	while (!instanceElement.isNull()) {
+		InstanceDef * instanceDef = new InstanceDef;
+		instanceDef->moduleID = instanceElement.attribute("moduleID");
+		InstanceDefs.insert(instanceDef->moduleID, instanceDef);
+		QDomElement propertyElement = instanceElement.firstChildElement("property");
+		while (!propertyElement.isNull()) {
+			PropertyDef * propertyDef = PropertyDefs.value(propertyElement.attribute("id"), NULL);
+			if (propertyDef) {
+				instanceDef->propertyDefs.append(propertyDef);
+			}
+			propertyElement = propertyElement.nextSiblingElement("property");
+		}
+
+		instanceElement = instanceElement.nextSiblingElement("instance");
+	}
+
 }
 
 void Capacitor::initPropertyDefs() {
-	foreach (PropertyDef * propertyDef, PropertyDefs.values(moduleID())) {
+	InstanceDef * instanceDef = InstanceDefs.value(moduleID(), NULL);
+	if (instanceDef == NULL) return;
+
+	foreach (PropertyDef * propertyDef, instanceDef->propertyDefs) {
 		QString defaultValue = TextUtils::convertToPowerPrefix(propertyDef->defaultValue) + propertyDef->symbol;
 		QString savedValue = modelPart()->prop(propertyDef->name).toString();
 		if (savedValue.isEmpty()) {

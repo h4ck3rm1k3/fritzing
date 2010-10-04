@@ -36,11 +36,17 @@ $Date: 2010-07-01 22:27:57 +0200 (Thu, 01 Jul 2010) $
 
 struct PropertyDef {
 	QString name;
+	QString id;
 	QString symbol;
 	qreal minValue;
 	qreal maxValue;
 	qreal defaultValue;
 	QList<qreal> menuItems;
+};
+
+struct InstanceDef {
+	QString moduleID;
+	QList<PropertyDef *> propertyDefs;
 };
 
 class Capacitor : public PaletteItem 

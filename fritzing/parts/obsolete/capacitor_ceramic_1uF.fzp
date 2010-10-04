@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="2013BasfdBEC12">
- <version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="2015BasfdBEC12">
+ <version replacedby="BlueCeramicCapacitorModuleID">4</version>
  <author>André Knörig</author>
  <title>Ceramic Capacitor</title>
  <label>C</label>
@@ -11,12 +11,12 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">0.1 µF</property>
+  <property name="Capacitance">1 µF</property>
   <property name="Capacitor Type">Ceramic Multilayer</property>
   <property name="Rated Voltage">50 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
- <description>0.1 µF multilayered Ceramic Capacitor</description>
+ <description>1 µF multilayered Ceramic Capacitor</description>
  <views>
   <iconView>
    <layers image="icon/ceramic_capacitor_blue_icon.svg">

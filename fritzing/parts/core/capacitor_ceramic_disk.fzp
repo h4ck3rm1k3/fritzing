@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="2014BasfdBEC12">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.1201" moduleId="CeramicDiskCapacitorModuleID">
  <version>4</version>
- <author>André Knörig</author>
+ <author>Stefan Hermann</author>
  <title>Ceramic Capacitor</title>
  <label>C</label>
- <date>2010-03-06</date>
+ <date>2008-09-23</date>
  <tags>
   <tag>Capacitor</tag>
   <tag>Ceramic Capacitor</tag>
@@ -11,20 +11,20 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">1 nF</property>
-  <property name="Capacitor Type">Ceramic Multilayer</property>
-  <property name="Rated Voltage">50 v</property>
+  <property name="Capacitance">0.01µF</property>
+  <property name="Capacitor Type">Ceramic Disk</property>
+  <property name="Rated Voltage">500V</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
- <description>1 nF multilayered Ceramic Capacitor</description>
+ <description>0.01 µF Ceramic Disk Capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/ceramic_capacitor_blue_icon.svg">
+   <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg">
     <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true">
-   <layers image="breadboard/ceramic_capacitor_blue.svg">
+   <layers image="breadboard/ceramic_disk_capacitor_ochre.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
@@ -34,7 +34,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_200mil.svg">
+   <layers image="pcb/axial_lay_2_300mil_pcb.svg">
     <layer layerId="copper0"/>
     <layer layerId="silkscreen"/>
    <layer layerId="copper1"/></layers>

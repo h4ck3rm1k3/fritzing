@@ -31,7 +31,8 @@ $Date$
 #include <QRegExp>
 #include <QBuffer>
 
-const QString TextUtils::CreatedWithFritzing("<!-- Created with Fritzing (http://www.fritzing.org/) -->\n");
+const QString TextUtils::CreatedWithFritzingString("Created with Fritzing (http://www.fritzing.org/)");
+const QString TextUtils::CreatedWithFritzingXmlComment("<!-- " + CreatedWithFritzingString + " -->\n");
 
 const QRegExp TextUtils::FindWhitespace("[\\s]+");
 const QRegExp TextUtils::SodipodiDetector("((inkscape)|(sodipodi)):[^=\\s]+=\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"");
@@ -300,7 +301,7 @@ QString TextUtils::makeSVGHeader(qreal printerScale, qreal dpi, qreal width, qre
 						.arg(trueHeight)
 						.arg(trueWidth * dpi)
 						.arg(trueHeight * dpi)
-						.arg(TextUtils::CreatedWithFritzing);
+						.arg(TextUtils::CreatedWithFritzingXmlComment);
 }
 
 bool TextUtils::isIllustratorFile(const QString &fileContent) {

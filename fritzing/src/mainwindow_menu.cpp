@@ -27,6 +27,7 @@ $Date$
 #include <QtGui>
 #include <QSvgGenerator>
 #include <QColor>
+#include <QImageWriter>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -478,7 +479,12 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 		m_currentGraphicsView->setBackground(color);
 	}
 
-	bool result = image.save(fileName);
+	QImageWriter imageWriter(fileName);
+	if (imageWriter.supportsOption(QImageIOHandler::Description)) {
+		imageWriter.setText("", TextUtils::CreatedWithFritzingString);
+	}
+	bool result = imageWriter.write(image);
+	//bool result = image.save(fileName);
 	if (!result) {
 		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save %1").arg(fileName) );
 	}
@@ -2716,7 +2722,7 @@ void MainWindow::exportNetlist() {
 	this->m_currentGraphicsView->collectAllNets(indexer, netList, true, m_currentGraphicsView->boardLayers() > 1);
 
 	QDomDocument doc;
-	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>\n") + TextUtils::CreatedWithFritzing);
+	doc.setContent(QString("<?xml version='1.0' encoding='UTF-8'?>\n") + TextUtils::CreatedWithFritzingXmlComment);
 	QDomElement netlist = doc.createElement("netlist");
 	doc.appendChild(netlist);
 	netlist.setAttribute("sketch", QFileInfo(m_fileName).fileName());
