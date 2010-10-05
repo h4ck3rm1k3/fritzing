@@ -115,7 +115,10 @@ void VirtualWire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 		return;
 	}
 
+	// set selectable flag temporarily here so that dragging out a bendpoint is enabled
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
 	ClipableWire::mousePressEvent(event);
+	setFlag(QGraphicsItem::ItemIsSelectable, false);
 }
 
 void VirtualWire::setColorWasNamed(bool colorWasNamed) {

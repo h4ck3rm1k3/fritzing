@@ -174,7 +174,7 @@ const QLineF & ClipableWire::getPaintLine() {
 		}
 	}
 
-	if (to0 == NULL && to1 == NULL) {
+	if (to0 == NULL || to1 == NULL) {
 		// no need to clip; get out
 		return Wire::getPaintLine();
 	}
