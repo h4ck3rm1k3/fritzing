@@ -50,15 +50,20 @@ def main():
                 svg = infile.read()
                 infile.close()
                 match = None
+                m2 = None
                 for layer in layers:
                     match = re.search('id=[\'\"]' + layer, svg)
                     if (match != None):
+                        m2 = re.search('<svg.*?id=[\'\"]' + layer  , svg)
                         break
                         
                 if match == None:
                     print "{0} {1}".format(os.path.join(root, filename), "")
                 else:
-                    print "{1} {0}".format(os.path.join(root, filename), match.group(0))
+                    #print "{0} {1}".format(os.path.join(root, filename), match.group(0))
+                    if (m2 != None):
+                        print "{0} {1}".format(os.path.join(root, filename), m2.group(0))
+                       
 
     
 if __name__ == "__main__":
