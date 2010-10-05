@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="schematic" xmlns:svg="http://www.w3.org/2000/svg"
+<svg version="1.1" xmlns:svg="http://www.w3.org/2000/svg"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2.973in"
 	 height="6.814in" viewBox="0 0 214.057 490.607" enable-background="new 0 0 214.057 490.607" xml:space="preserve">
+<g id="schematic">
 <rect x="22.946" y="23.143" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="168.58" height="444.961"/>
 <text id="label" transform="matrix(0.9912 0 0 1 85.0261 101.7073)" font-family="'DroidSans'" font-size="16.6437">mbed</text>
 <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="106.446" y1="490.111" x2="106.446" y2="469.924"/>
@@ -212,4 +213,5 @@
 <text transform="matrix(1 0 0 1 4.5305 146.7224)" font-family="'DroidSans'" font-size="5.9982">MISO</text>
 <text transform="matrix(1 0 0 1 -0.1482 209.677)" font-family="'DroidSans'" font-size="5.9982">TX/SDA</text>
 <text transform="matrix(1 0 0 1 0.6135 231.0017)" font-family="'DroidSans'" font-size="5.9982">RX/SCL</text>
+</g>
 </svg>

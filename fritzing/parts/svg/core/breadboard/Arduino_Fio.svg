@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="breadboard" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="187.833px" height="78.667px" viewBox="0 0 187.833 78.667" enable-background="new 0 0 187.833 78.667"
 	 xml:space="preserve">
+<g id="breadboard" >
 <g id="connectors">
 	<rect id="connector0pin" x="2.354" y="69.771" fill="none" width="2.16" height="3.125"/>
 	<rect id="connector0terminal" x="2.354" y="70.736" fill="none" width="2.16" height="2.16"/>
@@ -516,5 +517,6 @@
 		103.208,65.959 103.208,69.208 107.999,69.208 107.999,65.877 116.291,65.877 116.291,69.208 121.021,69.208 121.021,65.959 
 		122.416,65.959 122.416,62.875 	"/>
 	<rect x="112.708" y="65.521" fill="#252821" width="3.5" height="3.563"/>
+</g>
 </g>
 </svg>

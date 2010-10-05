@@ -1,42 +1,42 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
-<svg width="0.794347in" x="0px" version="1.2" y="0px" xmlns="http://www.w3.org/2000/svg" height="0.926194in" viewBox="0 0 57.193 66.686" baseProfile="tiny" xmlns:xml="http://www.w3.org/XML/1998/namespace" id="breadboard" xml:space="preserve" >
+<svg width="0.794347in" x="0px" version="1.2" y="0px" xmlns="http://www.w3.org/2000/svg" height="0.926194in" viewBox="0 0 57.193 66.686" baseProfile="tiny" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve" >
  <g id="breadboard" >
-  <g xmlns="http://www.w3.org/2000/svg" >
-   <g xmlns="http://www.w3.org/2000/svg" >
-    <g xmlns="http://www.w3.org/2000/svg" >
-     <rect width="2.16" x="8.972" y="0" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.811" id="rect28_1_" />
-     <rect width="2.16" x="16.171" y="0" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.811" id="rect30_1_" />
-     <rect width="2.159" x="23.37" y="0" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.811" id="rect32_1_" />
-     <rect width="2.158" x="30.571" y="0" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.811" id="rect34_1_" />
-     <rect width="2.16" x="37.734" y="0" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.811" id="rect32_2_" />
-     <rect width="2.158" x="44.936" y="0" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.811" id="rect34_2_" />
-     <rect width="2.16" x="9.046" y="62.004" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.812" id="rect30_2_" />
-     <rect width="2.159" x="16.245" y="62.004" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.812" id="rect32_4_" />
-     <rect width="2.158" x="23.445" y="62.004" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.812" id="rect34_4_" />
-     <rect width="2.159" x="30.609" y="62.004" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.812" id="rect32_3_" />
-     <rect width="2.158" x="37.81" y="62.004" fill="#8C8C8C" xmlns="http://www.w3.org/2000/svg" height="4.812" id="rect34_3_" />
+  <g >
+   <g >
+    <g >
+     <rect width="2.16" x="8.972" y="0" fill="#8C8C8C" height="4.811" id="rect28_1_" />
+     <rect width="2.16" x="16.171" y="0" fill="#8C8C8C" height="4.811" id="rect30_1_" />
+     <rect width="2.159" x="23.37" y="0" fill="#8C8C8C" height="4.811" id="rect32_1_" />
+     <rect width="2.158" x="30.571" y="0" fill="#8C8C8C" height="4.811" id="rect34_1_" />
+     <rect width="2.16" x="37.734" y="0" fill="#8C8C8C" height="4.811" id="rect32_2_" />
+     <rect width="2.158" x="44.936" y="0" fill="#8C8C8C" height="4.811" id="rect34_2_" />
+     <rect width="2.16" x="9.046" y="62.004" fill="#8C8C8C" height="4.812" id="rect30_2_" />
+     <rect width="2.159" x="16.245" y="62.004" fill="#8C8C8C" height="4.812" id="rect32_4_" />
+     <rect width="2.158" x="23.445" y="62.004" fill="#8C8C8C" height="4.812" id="rect34_4_" />
+     <rect width="2.159" x="30.609" y="62.004" fill="#8C8C8C" height="4.812" id="rect32_3_" />
+     <rect width="2.158" x="37.81" y="62.004" fill="#8C8C8C" height="4.812" id="rect34_3_" />
     </g>
    </g>
-   <g xmlns="http://www.w3.org/2000/svg" >
-    <text fill="#E6E6E6" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 21.5344 32.4695)" font-size="5" >Part</text>
-    <text fill="#E6E6E6" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 21.5344 38.4695)" font-size="5" >Title</text>
+   <g >
+    <text fill="#E6E6E6" font-family="Droid Sans" transform="matrix(1 0 0 1 21.5344 32.4695)" font-size="5" >Part</text>
+    <text fill="#E6E6E6" font-family="Droid Sans" transform="matrix(1 0 0 1 21.5344 38.4695)" font-size="5" >Title</text>
    </g>
   </g>
-  <rect width="57.193" x="0" y="52.781" fill="#231F20" xmlns="http://www.w3.org/2000/svg" height="9.135" />
-  <rect width="57.193" x="0" y="2.438" fill="#414141" xmlns="http://www.w3.org/2000/svg" height="50.441" />
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 6.0842 35.0154)" font-size="8" >ID12</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 6.0842 42.7654)" font-size="7" >I</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 8.4563 42.7654)" font-size="7" >N</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 13.5588 42.7654)" font-size="7" >N</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 18.6624 42.7654)" font-size="7" >O</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 23.717 42.7654)" font-size="7" >V</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 27.4846 42.7654)" font-size="7" >A</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 31.3186 42.7654)" font-size="7" >T</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 34.9524 42.7654)" font-size="7" >I</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 37.2561 42.7654)" font-size="7" >O</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 42.4514 42.7654)" font-size="7" >N</text>
-  <text fill="#FFFFFF" font-family="Droid Sans" xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 47.5549 42.7654)" font-size="7" >S</text>
+  <rect width="57.193" x="0" y="52.781" fill="#231F20" height="9.135" />
+  <rect width="57.193" x="0" y="2.438" fill="#414141" height="50.441" />
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 6.0842 35.0154)" font-size="8" >ID12</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 6.0842 42.7654)" font-size="7" >I</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 8.4563 42.7654)" font-size="7" >N</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 13.5588 42.7654)" font-size="7" >N</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 18.6624 42.7654)" font-size="7" >O</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 23.717 42.7654)" font-size="7" >V</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 27.4846 42.7654)" font-size="7" >A</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 31.3186 42.7654)" font-size="7" >T</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 34.9524 42.7654)" font-size="7" >I</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 37.2561 42.7654)" font-size="7" >O</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 42.4514 42.7654)" font-size="7" >N</text>
+  <text fill="#FFFFFF" font-family="Droid Sans" transform="matrix(1 0 0 1 47.5549 42.7654)" font-size="7" >S</text>
   <rect width="4.000001119018375" x="43.92516850310465" y="-1.153537709780176" fill="none" height="4.000001919444283" />
   <rect width="4.000001119018375" x="29.49451374572888" y="61.65717244400545" fill="none" height="4.000001919444283" />
   <rect width="4.000001119018375" x="22.45420177385311" y="62.26840747391407" fill="none" height="4.000001919444283" />

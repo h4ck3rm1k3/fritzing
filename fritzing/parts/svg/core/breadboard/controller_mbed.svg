@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="breadboard" xmlns:svg="http://www.w3.org/2000/svg"
+<svg version="1.1" xmlns:svg="http://www.w3.org/2000/svg"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2.126in" height="1.012in"
 	 viewBox="0 0 153.105 73" enable-background="new 0 0 153.105 73" xml:space="preserve">
+<g id="breadboard" >
 <g id="pins">
 	<rect id="connector0pin" x="8.108" y="67.385" fill="none" width="2.16" height="2.375"/>
 	<rect id="connector0terminal" x="8.108" y="67.6" fill="none" width="2.16" height="2.16"/>
@@ -580,5 +581,6 @@
 	<polyline fill="none" stroke="#FFFFFF" stroke-width="0.5" points="91.481,10.961 92.736,12.41 102.689,12.41 104.089,10.961 	"/>
 	<polyline fill="none" stroke="#FFFFFF" stroke-width="0.5" points="104.089,53.535 102.833,52.088 92.882,52.088 91.481,53.535 	
 		"/>
+</g>
 </g>
 </svg>
