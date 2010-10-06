@@ -8,7 +8,7 @@
     <properties>
         <property name="family">Tilt Switch</property>
         <property name="Tilt Mechanism">Mechanical Ball</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <views>
         <iconView>
             <layers image="icon/tilt_switch.svg">

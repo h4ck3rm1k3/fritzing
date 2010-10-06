@@ -11,7 +11,7 @@
     <properties>
         <property name="family">Stepper Motor</property>
         <property name="Stepper Type">Unipolar</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>A basic unipolar stepper motor</description>
     <views>
         <breadboardView>

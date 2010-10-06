@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<module moduleId="1e03b5a4-ed62-11dd-b332-001a4d5c439f" >
- <version replacedby="mystery_part_6" >1</version>
+<?xml version="1.0" encoding="UTF-8"?><module moduleId="1e03b5a4-ed62-11dd-b332-001a4d5c439f">
+ <version replacedby="mystery_part_6">1</version>
  <author>Fritzing Part-o-matic</author>
  <title>Mystery Part - 6 pins</title>
  <label>U</label>
@@ -10,118 +9,118 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family" >obsolete Mystery Part</property>
+  <property name="family">obsolete Mystery Part</property>
   <property name="pins">6</property>
   <property name="footprint">100 mil jumper</property>
   <property name="chip label">?</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>part.mystery.magical.6pins</taxonomy>
  <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With 6 pins on a 100 mil inline pin header footprint.</description>
  <views>
   <iconView>
-   <layers image="icon/mystery_part_icon.svg" >
-    <layer layerId="icon" />
+   <layers image="icon/mystery_part_icon.svg">
+    <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/mystery_part6.svg" >
-    <layer layerId="breadboard" />
+   <layers image="breadboard/mystery_part6.svg">
+    <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/mystery_part6.svg" >
-    <layer layerId="schematic" />
+   <layers image="schematic/mystery_part6.svg">
+    <layer layerId="schematic"/>
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/jumper6.svg" >
-    <layer layerId="silkscreen" />
-    <layer layerId="copper0" />
+   <layers image="pcb/jumper6.svg">
+    <layer layerId="silkscreen"/>
+    <layer layerId="copper0"/>
    </layers>
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="leg1" >
+  <connector id="connector0" name="leg1" type="male">
    <description>pin 1</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector0pin" layer="copper0" />
+     <p layer="copper0" svgId="connector0pin"/>
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="leg2" >
+  <connector id="connector1" name="leg2" type="male">
    <description>pin 2</description>
    <views>
     <breadboardView>
-     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector1pin" layer="copper0" />
+     <p layer="copper0" svgId="connector1pin"/>
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector2" name="leg3" >
+  <connector id="connector2" name="leg3" type="male">
    <description>pin 3</description>
    <views>
     <breadboardView>
-     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
+     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
+     <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector2pin" layer="copper0" />
+     <p layer="copper0" svgId="connector2pin"/>
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector3" name="leg4" >
+  <connector id="connector3" name="leg4" type="male">
    <description>pin 4</description>
    <views>
     <breadboardView>
-     <p svgId="connector3pin" layer="breadboard" terminalId="connector3terminal" />
+     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector3pin" layer="schematic" terminalId="connector3terminal" />
+     <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector3pin" layer="copper0" />
+     <p layer="copper0" svgId="connector3pin"/>
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector4" name="leg5" >
+  <connector id="connector4" name="leg5" type="male">
    <description>pin 5</description>
    <views>
     <breadboardView>
-     <p svgId="connector4pin" layer="breadboard" terminalId="connector4terminal" />
+     <p layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector4pin" layer="schematic" terminalId="connector4terminal" />
+     <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector4pin" layer="copper0" />
+     <p layer="copper0" svgId="connector4pin"/>
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector5" name="leg6" >
+  <connector id="connector5" name="leg6" type="male">
    <description>pin 6</description>
    <views>
     <breadboardView>
-     <p svgId="connector5pin" layer="breadboard" terminalId="connector5terminal" />
+     <p layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector5pin" layer="schematic" terminalId="connector5terminal" />
+     <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector5pin" layer="copper0" />
+     <p layer="copper0" svgId="connector5pin"/>
     </pcbView>
    </views>
   </connector>

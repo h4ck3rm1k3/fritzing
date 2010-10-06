@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.4.3b.08.08.4406" moduleId="77c36646df552e9fe72f360837f556cc">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.3b.08.08.4406" moduleId="77c36646df552e9fe72f360837f556cc">
     <version>4</version>
     <author>Lionel Michel</author>
     <title>Battery block 9V</title>
@@ -13,7 +12,7 @@
     <properties>
         <property name="family">Battery</property>
         <property name="voltage">9V</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Your standard 9 Volts battery block</description>
     <views>
         <iconView>
@@ -40,7 +39,7 @@
         </breadboardView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="-">
+        <connector id="connector0" name="-" type="male">
             <description>negative side</description>
             <views>
                 <breadboardView>
@@ -55,7 +54,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="+">
+        <connector id="connector1" name="+" type="male">
             <description>positive side</description>
             <views>
                 <breadboardView>

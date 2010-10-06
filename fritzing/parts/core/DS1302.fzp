@@ -12,7 +12,7 @@
     <properties>
         <property name="family">RTC</property>
         <property name="variant">DS1302</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>DS1302 SPI Real Time Clock</description>
       <views>
         <iconView>

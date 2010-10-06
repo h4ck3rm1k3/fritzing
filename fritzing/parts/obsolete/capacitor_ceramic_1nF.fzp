@@ -14,7 +14,7 @@
   <property name="Capacitance">1nF</property>
   <property name="Capacitor Type">Ceramic Multilayer</property>
   <property name="Rated Voltage">50V</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>1 nF multilayered Ceramic Capacitor</description>
  <views>

@@ -14,7 +14,7 @@
   <property name="Capacitance">100nF</property>
   <property name="Capacitor Type">Tantalum</property>
   <property name="Rated Voltage">35V</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Tantalum capacitor.  Plus lead is usually marked and is usually the longer lead.</description>
     <views>
         <iconView>

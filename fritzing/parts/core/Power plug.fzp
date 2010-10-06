@@ -7,7 +7,7 @@
     <tags/>
     <properties>
         <property name="family">Power Plug</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>power plug</description>
     <views>
         <iconView>

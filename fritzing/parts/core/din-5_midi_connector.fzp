@@ -12,7 +12,7 @@
         <property name="pins">5</property>
         <property name="form">jack (female)</property>
         <property name="family">DIN connector</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Female DIN connector with 5 pins, as used for MIDI and SYNC</description>
     <views>
         <iconView>

@@ -12,7 +12,7 @@
   <property name="family">Switch - 4 pin</property>
   <property name="switching circuit">SPST</property>
   <property name="default state">Normally Open</property>
- </properties>
+ <property name="package">THT</property></properties>
  <description>A generic pushbutton.</description>
  <views>
   <iconView>

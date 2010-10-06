@@ -15,7 +15,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>The awesome Arduino microcontroller</description>
     <views>
         <iconView>

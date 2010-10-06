@@ -13,7 +13,7 @@
        <property name="family">EEPROM</property>
         <property name="interface">SPI</property>
         <property name="variant">25LC512</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>25LC512 SPI EEPROM</description>
       <views>
         <iconView>

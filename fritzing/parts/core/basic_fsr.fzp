@@ -11,7 +11,7 @@
  <properties>
   <property name="family">FSR</property>
   <property name="Sensing Area Diameter">.5 &quot;</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.resistor.fsr</taxonomy>
  <description>A generic force sensitive resistor</description>
  <views>

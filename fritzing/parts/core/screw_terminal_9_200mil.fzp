@@ -9,7 +9,7 @@
         <property name="family">Screw Terminal</property>
         <property name="Pins">9</property>
         <property name="Pin Spacing">0.2in (5.08mm)</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Screw terminal with 9 pins</description>
     <views>
         <iconView>

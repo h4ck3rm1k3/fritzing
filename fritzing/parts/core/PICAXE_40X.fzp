@@ -11,7 +11,7 @@
     <properties>
         <property name="family">Microcontroller Board (PICAXE)</property>
         <property name="variant">PICAXE-40X</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>PICAXE-40X from Revolution Education Ltd</description>
       <views>
         <iconView>

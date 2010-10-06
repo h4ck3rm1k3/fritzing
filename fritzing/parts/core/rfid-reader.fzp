@@ -9,7 +9,7 @@
     </tags>
     <properties>
         <property name="family">RFID reader</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Simple RFID reader module with internal antenna</description>
     <views>
         <iconView>

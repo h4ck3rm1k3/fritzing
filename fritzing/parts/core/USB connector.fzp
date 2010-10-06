@@ -11,7 +11,7 @@
     <properties>
         <property name="family">USB Connector</property>
         <property name="Connector Shape">USB-B</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>USB connector</description>
     <views>
         <schematicView>

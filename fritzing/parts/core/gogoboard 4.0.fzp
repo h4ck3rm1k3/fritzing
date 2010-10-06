@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.4.0b.06.21.4282" moduleId="c4256c251d53ee723058f86aa6d016a2">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.0b.06.21.4282" moduleId="c4256c251d53ee723058f86aa6d016a2">
     <author>Lionel Michel</author>
     <title>GogoBoard 4.0</title>
     <label>GogoBoard 4.0</label>
@@ -8,7 +7,7 @@
     <properties>
         <property name="family">Microcontroller Board (GogoBoard)</property>
         <property name="variant">4.0</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>The GoGo board framework is a collection of open-source hardware platforms mainly aimed for educational projects.</description>
     <views>
         <iconView>
@@ -34,7 +33,7 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector56" type="female" name="GND">
+        <connector id="connector56" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -49,7 +48,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="female" name="SV1/A">
+        <connector id="connector3" name="SV1/A" type="female">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -64,7 +63,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector20" type="female" name="+5V">
+        <connector id="connector20" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -79,7 +78,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector57" type="female" name="GND">
+        <connector id="connector57" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -94,7 +93,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="female" name="+5V">
+        <connector id="connector4" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -109,7 +108,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector21" type="male" name="SV4/D">
+        <connector id="connector21" name="SV4/D" type="male">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -124,7 +123,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector58" type="female" name="GND">
+        <connector id="connector58" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -139,7 +138,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="female" name="+5V">
+        <connector id="connector5" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -154,7 +153,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector22" type="male" name="+5V">
+        <connector id="connector22" name="+5V" type="male">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -169,7 +168,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector59" type="female" name="GND">
+        <connector id="connector59" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -184,7 +183,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="female" name="SV2/B">
+        <connector id="connector6" name="SV2/B" type="female">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -199,7 +198,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="female" name="+5V">
+        <connector id="connector7" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -214,7 +213,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector23" type="male" name="GND">
+        <connector id="connector23" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -229,7 +228,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="female" name="+5V">
+        <connector id="connector8" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -244,7 +243,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector24" type="female" name="GND">
+        <connector id="connector24" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -259,7 +258,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="SV2/B">
+        <connector id="connector9" name="SV2/B" type="male">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -274,7 +273,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector25" type="female" name="SCL">
+        <connector id="connector25" name="SCL" type="female">
             <description>Noch keine Beschreibung</description>
             <views>
                 <breadboardView>
@@ -289,7 +288,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector26" type="female" name="SDA">
+        <connector id="connector26" name="SDA" type="female">
             <description>Noch keine Beschreibung</description>
             <views>
                 <breadboardView>
@@ -304,7 +303,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector27" type="female" name="+5V">
+        <connector id="connector27" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -319,7 +318,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector28" type="female" name="GND">
+        <connector id="connector28" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -334,7 +333,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector60" type="female" name="VIN/BAT">
+        <connector id="connector60" name="VIN/BAT" type="female">
             <description>Unregulated Voltage / Battery</description>
             <views>
                 <breadboardView>
@@ -349,7 +348,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector29" type="female" name="SCL">
+        <connector id="connector29" name="SCL" type="female">
             <description>Serial Clock Line</description>
             <views>
                 <breadboardView>
@@ -364,7 +363,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector30" type="female" name="SDA">
+        <connector id="connector30" name="SDA" type="female">
             <description>Serial Data Line</description>
             <views>
                 <breadboardView>
@@ -379,7 +378,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector31" type="female" name="+5V">
+        <connector id="connector31" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -394,7 +393,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector32" type="female" name="VUNR">
+        <connector id="connector32" name="VUNR" type="female">
             <description>Unregulated Voltage</description>
             <views>
                 <breadboardView>
@@ -409,7 +408,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector33" type="female" name="GND">
+        <connector id="connector33" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -424,7 +423,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector34" type="female" name="+5V">
+        <connector id="connector34" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -439,7 +438,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector35" type="female" name="A1">
+        <connector id="connector35" name="A1" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -454,7 +453,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector36" type="female" name="A2">
+        <connector id="connector36" name="A2" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -469,7 +468,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector37" type="female" name="A3">
+        <connector id="connector37" name="A3" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -484,7 +483,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector38" type="female" name="A4">
+        <connector id="connector38" name="A4" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -499,7 +498,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector39" type="female" name="A5">
+        <connector id="connector39" name="A5" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -514,7 +513,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector40" type="female" name="A6">
+        <connector id="connector40" name="A6" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -529,7 +528,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector41" type="female" name="A7">
+        <connector id="connector41" name="A7" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -544,7 +543,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector42" type="female" name="A8">
+        <connector id="connector42" name="A8" type="female">
             <description>Sensor / Digital &amp; Analog Input</description>
             <views>
                 <breadboardView>
@@ -559,7 +558,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector43" type="female" name="+5V">
+        <connector id="connector43" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -574,7 +573,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector44" type="female" name="+5V">
+        <connector id="connector44" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -589,7 +588,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector45" type="female" name="+5V">
+        <connector id="connector45" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -604,7 +603,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector46" type="female" name="+5V">
+        <connector id="connector46" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -619,7 +618,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector47" type="female" name="GND">
+        <connector id="connector47" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -634,7 +633,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector48" type="female" name="GND">
+        <connector id="connector48" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -649,7 +648,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector49" type="female" name="GND">
+        <connector id="connector49" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -664,7 +663,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="+5V">
+        <connector id="connector10" name="+5V" type="male">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -679,7 +678,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="GND">
+        <connector id="connector11" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -694,7 +693,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="SV3/C">
+        <connector id="connector12" name="SV3/C" type="male">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -709,7 +708,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="+5V">
+        <connector id="connector13" name="+5V" type="male">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -724,7 +723,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="GND">
+        <connector id="connector14" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -739,7 +738,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector15" type="female" name="SV3/C">
+        <connector id="connector15" name="SV3/C" type="female">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -754,7 +753,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="female" name="+5V">
+        <connector id="connector16" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -769,7 +768,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector17" type="female" name="+5V">
+        <connector id="connector17" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -784,7 +783,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector18" type="female" name="SV4/D">
+        <connector id="connector18" name="SV4/D" type="female">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -799,7 +798,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector19" type="female" name="+5V">
+        <connector id="connector19" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -814,7 +813,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector50" type="female" name="GND">
+        <connector id="connector50" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -829,7 +828,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector51" type="female" name="+5V">
+        <connector id="connector51" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -844,7 +843,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector52" type="female" name="+5V">
+        <connector id="connector52" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -859,7 +858,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector53" type="female" name="+5V">
+        <connector id="connector53" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -874,7 +873,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="SV1/A">
+        <connector id="connector0" name="SV1/A" type="male">
             <description>Servo Motor / Output</description>
             <views>
                 <breadboardView>
@@ -889,7 +888,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector54" type="female" name="+5V">
+        <connector id="connector54" name="+5V" type="female">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -904,7 +903,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="+5V">
+        <connector id="connector1" name="+5V" type="male">
             <description>+5 V Regulated DC</description>
             <views>
                 <breadboardView>
@@ -919,7 +918,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector55" type="female" name="GND">
+        <connector id="connector55" name="GND" type="female">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -934,7 +933,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="GND">
+        <connector id="connector2" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -951,56 +950,56 @@
         </connector>
     </connectors>
      <buses>
-		<bus id="GND" >
-			<nodeMember connectorId="connector56" />
-			<nodeMember connectorId="connector57" />
-			<nodeMember connectorId="connector58" />
-			<nodeMember connectorId="connector59" />
-			<nodeMember connectorId="connector23" />
-			<nodeMember connectorId="connector24" />
-			<nodeMember connectorId="connector28" />
-			<nodeMember connectorId="connector33" />
-			<nodeMember connectorId="connector47" />
-			<nodeMember connectorId="connector48" />
-			<nodeMember connectorId="connector49" />
-			<nodeMember connectorId="connector11" />
-			<nodeMember connectorId="connector14" />
-			<nodeMember connectorId="connector50" />
-			<nodeMember connectorId="connector2" />
-			<nodeMember connectorId="connector55" />
+		<bus id="GND">
+			<nodeMember connectorId="connector56"/>
+			<nodeMember connectorId="connector57"/>
+			<nodeMember connectorId="connector58"/>
+			<nodeMember connectorId="connector59"/>
+			<nodeMember connectorId="connector23"/>
+			<nodeMember connectorId="connector24"/>
+			<nodeMember connectorId="connector28"/>
+			<nodeMember connectorId="connector33"/>
+			<nodeMember connectorId="connector47"/>
+			<nodeMember connectorId="connector48"/>
+			<nodeMember connectorId="connector49"/>
+			<nodeMember connectorId="connector11"/>
+			<nodeMember connectorId="connector14"/>
+			<nodeMember connectorId="connector50"/>
+			<nodeMember connectorId="connector2"/>
+			<nodeMember connectorId="connector55"/>
 		</bus>
-		<bus id="+5V" >
-			<nodeMember connectorId="connector20" />
-			<nodeMember connectorId="connector4" />
-			<nodeMember connectorId="connector5" />
-			<nodeMember connectorId="connector22" />
-			<nodeMember connectorId="connector7" />
-			<nodeMember connectorId="connector8" />
-			<nodeMember connectorId="connector27" />
-			<nodeMember connectorId="connector31" />
-			<nodeMember connectorId="connector34" />
-			<nodeMember connectorId="connector43" />
-			<nodeMember connectorId="connector44" />
-			<nodeMember connectorId="connector45" />
-			<nodeMember connectorId="connector46" />
-			<nodeMember connectorId="connector10" />
-			<nodeMember connectorId="connector13" />
-			<nodeMember connectorId="connector16" />
-			<nodeMember connectorId="connector17" />
-			<nodeMember connectorId="connector19" />
-			<nodeMember connectorId="connector51" />
-			<nodeMember connectorId="connector52" />
-			<nodeMember connectorId="connector53" />
-			<nodeMember connectorId="connector54" />
-			<nodeMember connectorId="connector1" />
+		<bus id="+5V">
+			<nodeMember connectorId="connector20"/>
+			<nodeMember connectorId="connector4"/>
+			<nodeMember connectorId="connector5"/>
+			<nodeMember connectorId="connector22"/>
+			<nodeMember connectorId="connector7"/>
+			<nodeMember connectorId="connector8"/>
+			<nodeMember connectorId="connector27"/>
+			<nodeMember connectorId="connector31"/>
+			<nodeMember connectorId="connector34"/>
+			<nodeMember connectorId="connector43"/>
+			<nodeMember connectorId="connector44"/>
+			<nodeMember connectorId="connector45"/>
+			<nodeMember connectorId="connector46"/>
+			<nodeMember connectorId="connector10"/>
+			<nodeMember connectorId="connector13"/>
+			<nodeMember connectorId="connector16"/>
+			<nodeMember connectorId="connector17"/>
+			<nodeMember connectorId="connector19"/>
+			<nodeMember connectorId="connector51"/>
+			<nodeMember connectorId="connector52"/>
+			<nodeMember connectorId="connector53"/>
+			<nodeMember connectorId="connector54"/>
+			<nodeMember connectorId="connector1"/>
 		</bus>
-		<bus id="SCL" >
-			<nodeMember connectorId="connector25" />
-			<nodeMember connectorId="connector29" />
+		<bus id="SCL">
+			<nodeMember connectorId="connector25"/>
+			<nodeMember connectorId="connector29"/>
 		</bus>
-		<bus id="SDA" >
-			<nodeMember connectorId="connector30" />
-			<nodeMember connectorId="connector26" />
+		<bus id="SDA">
+			<nodeMember connectorId="connector30"/>
+			<nodeMember connectorId="connector26"/>
 		</bus>
 		</buses>
 </module>

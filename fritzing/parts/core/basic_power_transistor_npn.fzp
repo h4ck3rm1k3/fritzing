@@ -12,7 +12,7 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="package">TO220</property>
+  <property name="package">TO220 [THT]</property>
   <property name="family">Bipolar Transistor</property>
   <property name="doping">npn</property>
  </properties>

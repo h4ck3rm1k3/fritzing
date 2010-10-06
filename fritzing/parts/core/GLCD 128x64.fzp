@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.15b.02.03.3943" moduleId="573db3a7829811cf0df27fae150514b3">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.15b.02.03.3943" moduleId="573db3a7829811cf0df27fae150514b3">
     <author>Vince Callahan</author>
     <title>128 x 64 Graphic LCD</title>
     <label>GLCD 128x64</label>
@@ -9,7 +8,7 @@
         <property name="resolution">128x64</property>
         <property name="family">Display</property>
         <property name="type">GLCD</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <views>
         <iconView>
             <layers image="icon/GLCD_128x64.svg">
@@ -35,7 +34,7 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector6" type="male" name="7 DB0">
+        <connector id="connector6" name="7 DB0" type="male">
             <description>Data Input/Output (LSB)</description>
             <views>
                 <breadboardView>
@@ -50,7 +49,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="8 DB1">
+        <connector id="connector7" name="8 DB1" type="male">
             <description>Data Input/Output</description>
             <views>
                 <breadboardView>
@@ -65,7 +64,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="9 BD2">
+        <connector id="connector8" name="9 BD2" type="male">
             <description>Data Input/Output</description>
             <views>
                 <breadboardView>
@@ -80,7 +79,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="1 Vss">
+        <connector id="connector0" name="1 Vss" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -95,7 +94,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="10 DB3">
+        <connector id="connector9" name="10 DB3" type="male">
             <description>Data Input/Output</description>
             <views>
                 <breadboardView>
@@ -110,7 +109,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="11 DB4">
+        <connector id="connector10" name="11 DB4" type="male">
             <description>Data Input/Output</description>
             <views>
                 <breadboardView>
@@ -125,7 +124,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="12 DB5">
+        <connector id="connector11" name="12 DB5" type="male">
             <description>Data Input/Output</description>
             <views>
                 <breadboardView>
@@ -140,7 +139,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="13 DB6">
+        <connector id="connector12" name="13 DB6" type="male">
             <description>Data Input/Output</description>
             <views>
                 <breadboardView>
@@ -155,7 +154,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="14 DB7">
+        <connector id="connector13" name="14 DB7" type="male">
             <description>Data Input/Output (MSB)</description>
             <views>
                 <breadboardView>
@@ -170,7 +169,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="15 CS1">
+        <connector id="connector14" name="15 CS1" type="male">
             <description>H: Chip selection for IC 1</description>
             <views>
                 <breadboardView>
@@ -185,7 +184,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector15" type="male" name="16 CS2">
+        <connector id="connector15" name="16 CS2" type="male">
             <description>H: Chip selection for IC 2</description>
             <views>
                 <breadboardView>
@@ -200,7 +199,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="male" name="17 RST">
+        <connector id="connector16" name="17 RST" type="male">
             <description>L: Reset</description>
             <views>
                 <breadboardView>
@@ -215,7 +214,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector17" type="male" name="18 Vout">
+        <connector id="connector17" name="18 Vout" type="male">
             <description>Power Supply for LCD Driving</description>
             <views>
                 <breadboardView>
@@ -230,7 +229,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector18" type="male" name="19 A(+)">
+        <connector id="connector18" name="19 A(+)" type="male">
             <description>Power Supply for LED Backlight (+)</description>
             <views>
                 <breadboardView>
@@ -245,7 +244,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector19" type="male" name="20 K(-)">
+        <connector id="connector19" name="20 K(-)" type="male">
             <description>Power Supply for LED Backlight (-)</description>
             <views>
                 <breadboardView>
@@ -260,7 +259,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="2 Vdd">
+        <connector id="connector1" name="2 Vdd" type="male">
             <description>+5V Power for logic</description>
             <views>
                 <breadboardView>
@@ -275,7 +274,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="3 Vo">
+        <connector id="connector2" name="3 Vo" type="male">
             <description>Operating voltage for LCD Driving</description>
             <views>
                 <breadboardView>
@@ -290,7 +289,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="4 D/I">
+        <connector id="connector3" name="4 D/I" type="male">
             <description>H: Data Input
 L: Instruction Code Input</description>
             <views>
@@ -306,7 +305,7 @@ L: Instruction Code Input</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="5 R/W">
+        <connector id="connector4" name="5 R/W" type="male">
             <description>H: Data Read (LCD Module   MPU)
 L: Dara Write (LCD Module   MPU)</description>
             <views>
@@ -322,7 +321,7 @@ L: Dara Write (LCD Module   MPU)</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="6 Enable">
+        <connector id="connector5" name="6 Enable" type="male">
             <description>Enable Signal</description>
             <views>
                 <breadboardView>

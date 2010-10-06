@@ -14,7 +14,7 @@
   <property name="Capacitance">1pF</property>
   <property name="Capacitor Type">Ceramic Disk</property>
   <property name="Rated Voltage">500V</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>A 1 pF Ceramic Disk Capacitor</description>
  <views>

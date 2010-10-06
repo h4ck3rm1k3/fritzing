@@ -9,7 +9,7 @@
     </tags>
     <properties>
         <property name="family">Serial Interface</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>FRM010 Serial LCD Interface from revolution Education</description>
       <views>
         <iconView>

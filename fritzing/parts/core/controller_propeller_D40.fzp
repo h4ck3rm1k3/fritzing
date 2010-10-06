@@ -12,7 +12,7 @@
     <properties>
         <property name="family">Microcontroller (Propeller)</property>
         <property name="type">Parallax Propeller</property>
-        <property name="package">DIP</property>
+        <property name="package">DIP [THT]</property>
     </properties>
     <description>The Propeller chip makes it easy to rapidly develop embedded applications. Its eight processors (cogs) can operate simultaneously, either independently or cooperatively, sharing common resources through a central hub. The developer has full control over how and when each cog is employed; there is no compiler-driven or operating system-driven splitting of tasks among multiple cogs. A shared system clock keeps each cog on the same time reference, allowing for true deterministic timing and synchronization. Two programming languages are available: the easy-to-learn high-level Spin, and Propeller Assembly which can execute at up to 160 MIPS (20 MIPS per cog).</description>
     <views>

@@ -10,7 +10,7 @@
     </tags>
     <properties>
         <property name="family">air-core inductor</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Inductor</description>
     <views>
         <iconView>

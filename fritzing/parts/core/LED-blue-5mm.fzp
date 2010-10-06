@@ -11,7 +11,7 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="package">T1.75 (5mm)</property>
+  <property name="package">T1.75 (5mm) [THT]</property>
   <property name="family">LED</property>
   <property name="forward voltage">1.8V</property>
   <property name="color">blue</property>

@@ -12,7 +12,7 @@
     </tags>
     <properties>
         <property name="family">DC Motor</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Your standard 2x AA battery pack (3 Volts)</description>
     <views>
         <iconView>

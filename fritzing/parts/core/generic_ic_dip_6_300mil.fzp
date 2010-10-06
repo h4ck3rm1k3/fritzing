@@ -10,7 +10,7 @@
  </tags>
  <properties>
   <property name="family">Generic IC</property>
-  <property name="package">DIP (Dual Inline)</property>
+  <property name="package">DIP (Dual Inline) [THT]</property>
   <property name="pins">6</property>
   <property name="spacing">300mil</property>
   <property name="chip label">IC</property>

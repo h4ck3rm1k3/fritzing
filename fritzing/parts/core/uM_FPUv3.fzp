@@ -13,7 +13,7 @@
     <properties>
         <property name="family">FPU</property>
         <property name="variant">uM-FPUv3</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>uM Floating Point Unit</description>
       <views>
         <iconView>

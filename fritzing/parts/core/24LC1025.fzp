@@ -13,7 +13,7 @@
        <property name="family">EEPROM</property>
         <property name="interface">I2C</property>
         <property name="variant">24LC1025</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>24LC1025 I2C EEPROM</description>
       <views>
         <iconView>

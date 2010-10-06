@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.4.0b.06.21.4282" moduleId="3661e4bbb7d863e04ccf7a9994dc65ff">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.0b.06.21.4282" moduleId="3661e4bbb7d863e04ccf7a9994dc65ff">
     <version>4</version>
     <author>André Knörig</author>
     <title>Arduino Fio</title>
@@ -16,7 +15,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino Fio</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>The Arduino Fio is a microcontroller board based on the ATmega328P runs at 3.3V and 8 MHz. It has 14 digital input/output pins (of which 6 can be used as PWM outputs), 8 analog inputs, an on-board resonator, a reset button, and holes for mounting pin headers. It has connections for a Lithium Polymer battery and includes a charge circuit over USB. An XBee socket is available on the bottom of the board.
 The Arduino Fio is intended for wireless applications. The user can upload sketches with an a FTDI cable or Sparkfun breakout board. Additionally, by using a modified USB-to-XBee adaptor such as XBee Explorer USB, the user can upload sketches wirelessly. The board comes without pre-mounted headers, allowing the use of various types of connectors or direct soldering of wires.
 The Arduino Fio was designed by Shigeru Kobayashi and SparkFun Electronics, and manufactured by SparkFunElectronics.
@@ -47,7 +46,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector15" type="male" name="GND">
+        <connector id="connector15" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -62,7 +61,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="A0">
+        <connector id="connector7" name="A0" type="male">
             <description>Analog Input 0</description>
             <views>
                 <breadboardView>
@@ -77,7 +76,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="male" name="D2">
+        <connector id="connector16" name="D2" type="male">
             <description>Digital I/O 2 (External Interrupt)</description>
             <views>
                 <breadboardView>
@@ -92,7 +91,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="DTR">
+        <connector id="connector8" name="DTR" type="male">
             <description>Data Terminal Ready - Bring low to reset the microcontroller</description>
             <views>
                 <breadboardView>
@@ -107,7 +106,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector17" type="male" name="D3">
+        <connector id="connector17" name="D3" type="male">
             <description>Digital I/O 3 (PWM, External Interrupt)</description>
             <views>
                 <breadboardView>
@@ -122,7 +121,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="TXO">
+        <connector id="connector9" name="TXO" type="male">
             <description>Serial Transmit (connected to DIN on XBee)</description>
             <views>
                 <breadboardView>
@@ -137,7 +136,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector18" type="male" name="D4">
+        <connector id="connector18" name="D4" type="male">
             <description>Digital I/O 4</description>
             <views>
                 <breadboardView>
@@ -152,7 +151,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector19" type="male" name="D5">
+        <connector id="connector19" name="D5" type="male">
             <description>Digital I/O 5 (PWM)</description>
             <views>
                 <breadboardView>
@@ -167,7 +166,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector20" type="male" name="D6">
+        <connector id="connector20" name="D6" type="male">
             <description>Digital I/O 6 (PWM)</description>
             <views>
                 <breadboardView>
@@ -182,7 +181,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector21" type="male" name="D7">
+        <connector id="connector21" name="D7" type="male">
             <description>Digital I/O 7</description>
             <views>
                 <breadboardView>
@@ -197,7 +196,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector22" type="male" name="D8">
+        <connector id="connector22" name="D8" type="male">
             <description>Digital I/O 8</description>
             <views>
                 <breadboardView>
@@ -212,7 +211,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector23" type="male" name="D9">
+        <connector id="connector23" name="D9" type="male">
             <description>Digital I/O 9 (PWM)</description>
             <views>
                 <breadboardView>
@@ -227,7 +226,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector24" type="male" name="D10">
+        <connector id="connector24" name="D10" type="male">
             <description>Digital I/O 10 (PWM, SPI SS)</description>
             <views>
                 <breadboardView>
@@ -242,7 +241,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector25" type="male" name="D11">
+        <connector id="connector25" name="D11" type="male">
             <description>Digital I/O 11 (PWM, SPI MOSI)</description>
             <views>
                 <breadboardView>
@@ -257,7 +256,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector26" type="male" name="D12">
+        <connector id="connector26" name="D12" type="male">
             <description>Digital I/O 12 (SPI MISO)</description>
             <views>
                 <breadboardView>
@@ -272,7 +271,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector27" type="male" name="D13">
+        <connector id="connector27" name="D13" type="male">
             <description>Digital I/O 13 (SPI SCK)</description>
             <views>
                 <breadboardView>
@@ -287,7 +286,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="A7">
+        <connector id="connector0" name="A7" type="male">
             <description>Analog Input 7</description>
             <views>
                 <breadboardView>
@@ -302,7 +301,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="A6">
+        <connector id="connector1" name="A6" type="male">
             <description>Analog Input 6</description>
             <views>
                 <breadboardView>
@@ -317,7 +316,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="RXI">
+        <connector id="connector10" name="RXI" type="male">
             <description>Serial Receive (connected to DOUT on XBee)</description>
             <views>
                 <breadboardView>
@@ -332,7 +331,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="A5">
+        <connector id="connector2" name="A5" type="male">
             <description>Analog Input 5 (I2C SCL)</description>
             <views>
                 <breadboardView>
@@ -347,7 +346,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="A4">
+        <connector id="connector3" name="A4" type="male">
             <description>Analog Input 4 (I2C SDA)</description>
             <views>
                 <breadboardView>
@@ -362,7 +361,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="3V3">
+        <connector id="connector11" name="3V3" type="male">
             <description>Power 3.3V</description>
             <views>
                 <breadboardView>
@@ -377,7 +376,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="A3">
+        <connector id="connector4" name="A3" type="male">
             <description>Analog Input 3</description>
             <views>
                 <breadboardView>
@@ -392,7 +391,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="AREF">
+        <connector id="connector12" name="AREF" type="male">
             <description>Reference voltage for analog input</description>
             <views>
                 <breadboardView>
@@ -407,7 +406,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="A2">
+        <connector id="connector5" name="A2" type="male">
             <description>Analog Input 2</description>
             <views>
                 <breadboardView>
@@ -422,7 +421,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="GND">
+        <connector id="connector13" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -437,7 +436,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="A1">
+        <connector id="connector6" name="A1" type="male">
             <description>Analog Input 1</description>
             <views>
                 <breadboardView>
@@ -452,7 +451,7 @@ http://arduino.cc/en/Main/ArduinoBoardFio</description>
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="3V3">
+        <connector id="connector14" name="3V3" type="male">
             <description>Power (3.3V)</description>
             <views>
                 <breadboardView>

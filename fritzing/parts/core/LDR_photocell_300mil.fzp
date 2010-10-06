@@ -15,7 +15,7 @@
         <property name="resistance@ dark">300 kOhms@ 10 seconds</property>
         <property name="family">Photo-Resistor</property>
         <property name="resistance@ luminance">16 kOhms@ 10 lux</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>A generic light dependent resistor (LDR)</description>
     <views>
         <iconView>

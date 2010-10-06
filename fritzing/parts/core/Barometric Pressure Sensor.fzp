@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.4.1b.07.17.4356" moduleId="ad901601e6d29266846fc9e4568504b6">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.1b.07.17.4356" moduleId="ad901601e6d29266846fc9e4568504b6">
     <author>tigoe</author>
     <title>Barometric Pressure Sensor</title>
     <label>U</label>
@@ -12,7 +11,7 @@
     </tags>
     <properties>
         <property name="family">Pressure Sensors</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>SCP1000 Barometric Pressure sensor.  Can sense air pressure and temperature.  SPI interface.</description>
     <views>
         <iconView>
@@ -39,7 +38,7 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="MOSI">
+        <connector id="connector3" name="MOSI" type="male">
             <description>Master Out, Slave In</description>
             <views>
                 <breadboardView>
@@ -54,7 +53,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="SCK">
+        <connector id="connector4" name="SCK" type="male">
             <description>SPI Clock</description>
             <views>
                 <breadboardView>
@@ -69,7 +68,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="3.3V">
+        <connector id="connector5" name="3.3V" type="male">
             <description>3.3v voltage input</description>
             <views>
                 <breadboardView>
@@ -84,7 +83,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="GND">
+        <connector id="connector6" name="GND" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -99,7 +98,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="DRDY">
+        <connector id="connector0" name="DRDY" type="male">
             <description>Data Ready Pin</description>
             <views>
                 <breadboardView>
@@ -114,7 +113,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="CSB">
+        <connector id="connector1" name="CSB" type="male">
             <description>Chip Select (or Slave Select, in SPI terms)</description>
             <views>
                 <breadboardView>
@@ -129,7 +128,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="MISO">
+        <connector id="connector2" name="MISO" type="male">
             <description>Master in, Slave Out</description>
             <views>
                 <breadboardView>

@@ -12,7 +12,7 @@
         <property name="family">Microcontroller Board (Basic Stamp)</property>
         <property name="processor">PBASIC</property>
         <property name="variant">Basic Stamp 2pe</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>The BASIC Stamp 2pe serves as the brains inside of electronics projects and applications that require a programmable microcontroller. It is able to control and monitor timers, keypads, motors, sensors, switches, relays, lights, and more. Programming is performed in an easy-to-learn language called PBASIC.</description>
     <views>
         <iconView>

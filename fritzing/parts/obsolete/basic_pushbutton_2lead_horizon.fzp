@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<module fritzingVersion="0.1.1201" moduleId="1099ABDE24_ST-2leadbutton-horizon" >
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.1201" moduleId="1099ABDE24_ST-2leadbutton-horizon">
  <version replacedby="20A9BBEE34_ST-2leadbutton-horizon">1</version>
  <title>Pushbutton</title>
  <date>2008-09-16</date>
@@ -10,61 +9,61 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="Default State" >Normally Open</property>
-  <property name="family" >obsolete Switch - 2 pin</property>
-  <property name="Switching Circuit" >SPST</property>
- </properties>
+  <property name="Default State">Normally Open</property>
+  <property name="family">obsolete Switch - 2 pin</property>
+  <property name="Switching Circuit">SPST</property>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.switches.pushbutton</taxonomy>
  <description>A generic pushbutton.</description>
  <views>
   <iconView>
-   <layers image="icon/basic_pbutton_2leg_horizon.svg" >
-    <layer layerId="icon" />
+   <layers image="icon/basic_pbutton_2leg_horizon.svg">
+    <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/basic_pbutton_2leg_horizon.svg" >
-    <layer layerId="breadboard" />
+   <layers image="breadboard/basic_pbutton_2leg_horizon.svg">
+    <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
    <schematicView fliphorizontal="true" flipvertical="true">
-   <layers image="schematic/pushbutton.svg" >
-    <layer layerId="schematic" />
+   <layers image="schematic/pushbutton.svg">
+    <layer layerId="schematic"/>
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/axial_lay_300mil.svg" >
-     <layer layerId="copper0" />
-	<layer layerId="silkscreen" />
+   <layers image="pcb/axial_lay_300mil.svg">
+     <layer layerId="copper0"/>
+	<layer layerId="silkscreen"/>
    </layers>
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="leg0" >
+  <connector id="connector0" name="leg0" type="male">
    <description>leg</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" />
+     <p layer="breadboard" svgId="connector0pin"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector0pad" layer="copper0" />
+     <p layer="copper0" svgId="connector0pad"/>
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="leg1" >
+  <connector id="connector1" name="leg1" type="male">
    <description>leg</description>
    <views>
     <breadboardView>
-     <p svgId="connector1pin" layer="breadboard" />
+     <p layer="breadboard" svgId="connector1pin"/>
     </breadboardView>
     <schematicView>
-     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
     </schematicView>
     <pcbView>
-     <p svgId="connector1pad" layer="copper0" />
+     <p layer="copper0" svgId="connector1pad"/>
     </pcbView>
    </views>
   </connector>

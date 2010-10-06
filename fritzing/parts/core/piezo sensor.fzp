@@ -12,7 +12,7 @@
     </tags>
     <properties>
         <property name="family">Piezo</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Piezo</description>
     <views>
         <iconView>

@@ -11,7 +11,7 @@
  <properties>
   <property name="family">Switch - 3 pin</property>
   <property name="switching circuit">SPDT</property>
- </properties>
+ <property name="package">THT</property></properties>
  <description>Toggle Switch</description>
  <views>
   <iconView>

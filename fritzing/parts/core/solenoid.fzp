@@ -6,7 +6,7 @@
     <tags>solenoid, output, actuator, electromagnet</tags>
     <properties>
         <property name="family">Solenoid</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <views>
         <iconView>
             <layers image="icon/solenoid.svg">

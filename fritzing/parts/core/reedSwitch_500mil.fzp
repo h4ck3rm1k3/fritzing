@@ -10,7 +10,7 @@
     </tags>
     <properties>
         <property name="family">Reed Switch</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Reed switch</description>
     <views>
         <iconView>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.3.7b.08.26.3377" moduleId="1000ABDD10012">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.7b.08.26.3377" moduleId="1000ABDD10012">
     <version replacedby="2010BBCD20113">2</version>
     <title>Basic Photo-Resistor (Photocell)</title>
     <label>R</label>
@@ -16,7 +15,7 @@
         <property name="resistance@ dark">300 kOhms@ 10 seconds</property>
         <property name="family">obsolete Photo-Resistor</property>
         <property name="resistance@ luminance">16 kOhms@ 10 lux</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>A generic light dependent resistor</description>
     <views>
         <iconView>
@@ -42,7 +41,7 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="pin 0">
+        <connector id="connector0" name="pin 0" type="male">
             <description>pin0</description>
             <views>
                 <breadboardView>
@@ -56,7 +55,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin 1">
+        <connector id="connector1" name="pin 1" type="male">
             <description>pin1</description>
             <views>
                 <breadboardView>

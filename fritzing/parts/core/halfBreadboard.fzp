@@ -11,7 +11,7 @@
   <properties>
     <property name="family">Breadboard</property>
     <property name="size">half</property>
-  </properties>
+  <property name="package">THT</property></properties>
   <taxonomy>prototyping.breadboard.breadboard.halfbreadboard</taxonomy>
   <description>A half-length breadboard for prototyping circuits</description>
   <views>

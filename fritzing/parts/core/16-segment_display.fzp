@@ -6,7 +6,7 @@
     <tags/>
     <properties>
         <property name="family">Character Display</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <views>
         <iconView>
             <layers image="icon/16-segment display.svg">

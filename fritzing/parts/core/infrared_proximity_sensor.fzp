@@ -6,7 +6,7 @@
     <tags>sensor, input, proximity, distance</tags>
     <properties>
         <property name="family">Distance Sensor</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <views>
         <iconView>
             <layers image="icon/infrared proximity sensor.svg">

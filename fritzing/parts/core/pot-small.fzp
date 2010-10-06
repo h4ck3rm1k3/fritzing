@@ -17,7 +17,7 @@
         <property name="type">Rotary Shaft Potentiometer</property>
         <property name="size">Rotary - 9mm</property>
         <property name="maximum resistance">100kΩ</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>A rotary adjustable resistor (potentiometer).</description>
     <views>
         <iconView>

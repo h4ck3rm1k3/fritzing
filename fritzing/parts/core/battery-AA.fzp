@@ -12,7 +12,7 @@
     <properties>
         <property name="family">Battery</property>
         <property name="voltage">3V</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Your standard 2x AA battery pack (3 Volts)</description>
     <views>
         <iconView>

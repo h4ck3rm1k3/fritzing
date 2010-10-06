@@ -17,7 +17,7 @@
    <property name="Maximum Resistance">10kΩ</property>
    <property name="Track">Linear</property>
    <property name="Size">Trimmer - 6mm</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
  <description>A standard 6mm trimmer potentiometer.</description>
  <views>

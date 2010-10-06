@@ -11,7 +11,7 @@
     <properties>
         <property name="family">Motor Driver</property>
         <property name="variant">L293D</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>L293D Motor Driver</description>
       <views>
         <iconView>

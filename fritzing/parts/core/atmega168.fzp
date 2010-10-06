@@ -14,7 +14,7 @@
     <properties>
         <property name="version">atmega168-20PU</property>
         <property name="family">Microcontroller (AVR)</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Atmel ATmega168 microcontroller.  The hardware hacker favorite.</description>
     <views>
         <iconView>
@@ -434,9 +434,9 @@
         </connector>
     </connectors>
     <buses>
-        <bus id="ground" >
-            <nodeMember connectorId="connector7" />
-            <nodeMember connectorId="connector21" />
+        <bus id="ground">
+            <nodeMember connectorId="connector7"/>
+            <nodeMember connectorId="connector21"/>
         </bus>
     </buses>
 </module>

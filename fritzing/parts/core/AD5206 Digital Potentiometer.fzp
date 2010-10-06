@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.4.2b.08.04.4392" moduleId="c7acdd26c5e6355cb2e7e05c0aa975c0">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.2b.08.04.4392" moduleId="c7acdd26c5e6355cb2e7e05c0aa975c0">
     <author>tigoe</author>
     <title>AD5206 Digital Potentiometer</title>
     <label>U</label>
@@ -10,7 +9,7 @@
     </tags>
     <properties>
         <property name="family">IC</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Digital potentiometer. 6 channels with SPI-compatible interface.</description>
     <views>
         <breadboardView>
@@ -37,7 +36,7 @@
         </iconView>
     </views>
     <connectors>
-        <connector id="connector15" type="male" name="B1">
+        <connector id="connector15" name="B1" type="male">
             <description>Channel 1 voltage low</description>
             <views>
                 <breadboardView>
@@ -52,7 +51,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector7" type="male" name="CLK">
+        <connector id="connector7" name="CLK" type="male">
             <description>Serial clock</description>
             <views>
                 <breadboardView>
@@ -67,7 +66,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector16" type="male" name="W1">
+        <connector id="connector16" name="W1" type="male">
             <description>Channel 1 wiper</description>
             <views>
                 <breadboardView>
@@ -82,7 +81,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector8" type="male" name="Vss">
+        <connector id="connector8" name="Vss" type="male">
             <description>Voltage low (usually ground)</description>
             <views>
                 <breadboardView>
@@ -97,7 +96,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector17" type="male" name="A1">
+        <connector id="connector17" name="A1" type="male">
             <description>Channel 1 voltage high</description>
             <views>
                 <breadboardView>
@@ -112,7 +111,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector9" type="male" name="B5">
+        <connector id="connector9" name="B5" type="male">
             <description>Channel 5 voltage low</description>
             <views>
                 <breadboardView>
@@ -127,7 +126,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector18" type="male" name="A2">
+        <connector id="connector18" name="A2" type="male">
             <description>Channel 2 voltage high</description>
             <views>
                 <breadboardView>
@@ -142,7 +141,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector19" type="male" name="W2">
+        <connector id="connector19" name="W2" type="male">
             <description>Channel 2 wiper</description>
             <views>
                 <breadboardView>
@@ -157,7 +156,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector20" type="male" name="B2">
+        <connector id="connector20" name="B2" type="male">
             <description>Channel 2 voltage low</description>
             <views>
                 <breadboardView>
@@ -172,7 +171,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector21" type="male" name="A4">
+        <connector id="connector21" name="A4" type="male">
             <description>Channel 4 voltage high</description>
             <views>
                 <breadboardView>
@@ -187,7 +186,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector22" type="male" name="W4">
+        <connector id="connector22" name="W4" type="male">
             <description>Channel 4 wiper</description>
             <views>
                 <breadboardView>
@@ -202,7 +201,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector23" type="male" name="B4">
+        <connector id="connector23" name="B4" type="male">
             <description>Channel 4 voltage low</description>
             <views>
                 <breadboardView>
@@ -217,7 +216,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="A6">
+        <connector id="connector0" name="A6" type="male">
             <description>Channel 6 voltage high</description>
             <views>
                 <breadboardView>
@@ -232,7 +231,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="W6">
+        <connector id="connector1" name="W6" type="male">
             <description>Channel 6 wiper</description>
             <views>
                 <breadboardView>
@@ -247,7 +246,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector10" type="male" name="W5">
+        <connector id="connector10" name="W5" type="male">
             <description>Channel 5 wiper</description>
             <views>
                 <breadboardView>
@@ -262,7 +261,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="B6">
+        <connector id="connector2" name="B6" type="male">
             <description>Channel 6 voltage low</description>
             <views>
                 <breadboardView>
@@ -277,7 +276,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector11" type="male" name="A5">
+        <connector id="connector11" name="A5" type="male">
             <description>Channel 5 voltage high</description>
             <views>
                 <breadboardView>
@@ -292,7 +291,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector3" type="male" name="Gnd">
+        <connector id="connector3" name="Gnd" type="male">
             <description>Ground</description>
             <views>
                 <breadboardView>
@@ -307,7 +306,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector12" type="male" name="B3">
+        <connector id="connector12" name="B3" type="male">
             <description>Channel 3 voltage low</description>
             <views>
                 <breadboardView>
@@ -322,7 +321,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="CS">
+        <connector id="connector4" name="CS" type="male">
             <description>Chip Select (active low)</description>
             <views>
                 <breadboardView>
@@ -337,7 +336,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector13" type="male" name="W3">
+        <connector id="connector13" name="W3" type="male">
             <description>Channel 3 wiper</description>
             <views>
                 <breadboardView>
@@ -352,7 +351,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="male" name="Vdd">
+        <connector id="connector5" name="Vdd" type="male">
             <description>Voltage high</description>
             <views>
                 <breadboardView>
@@ -367,7 +366,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector14" type="male" name="A3">
+        <connector id="connector14" name="A3" type="male">
             <description>Channel 3 voltage high</description>
             <views>
                 <breadboardView>
@@ -382,7 +381,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector6" type="male" name="SDI">
+        <connector id="connector6" name="SDI" type="male">
             <description>Serial Data In</description>
             <views>
                 <breadboardView>

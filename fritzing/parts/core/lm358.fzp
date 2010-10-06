@@ -12,7 +12,7 @@
     </tags>
     <properties>
         <property name="family">Op-Amp IC</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>The classic LM 358 Dual Operational Amplifier (Op-Amp).  The analog swiss-army knife.</description>
     <views>
         <iconView>

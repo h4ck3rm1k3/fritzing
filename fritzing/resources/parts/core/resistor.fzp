@@ -15,6 +15,7 @@
         <property name="family">Resistor</property>
       <property name="Rated Power">0.25 watt</property>
       <property name="Pin Spacing">400 mil</property>
+      <property name="package">THT</property>
     </properties>
     <taxonomy>discreteParts.resistor.220</taxonomy>
     <description>A generic resistor (0.25W)</description>

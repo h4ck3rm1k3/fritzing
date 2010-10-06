@@ -10,7 +10,7 @@
     <properties>
         <property name="family">Motor Driver</property>
         <property name="variant">FRM050</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>FRM050 PWM Motor Driver from Revolution Education Ltd</description>
       <views>
         <iconView>

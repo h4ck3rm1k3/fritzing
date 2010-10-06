@@ -14,7 +14,7 @@
         <property name="family">Accelerometers</property>
         <property name="axes">3 (x, y, z)</property>
 				<property name="chip">ADXL</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Accelerometer for sensing three-dimensional orientation/acceleration on a breakout board. Compatible to the ADXL3xx series of sensor chips.</description>
     <views>
         <breadboardView>

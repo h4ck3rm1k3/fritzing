@@ -14,7 +14,7 @@
   <property name="layout">Single Row</property>
   <property name="pin spacing">100mil</property>
   <property name="chip label">?</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>part.mystery.magical.44pins</taxonomy>
  <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With 44 pins on a 100 mil inline pin header footprint.</description>
  <views>

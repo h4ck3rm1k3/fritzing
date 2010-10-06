@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.1223" moduleId="1001ABDC03B">
- <version  replacedby="SmallElectrolyticCapacitorModuleID">4</version>
+ <version replacedby="SmallElectrolyticCapacitorModuleID">4</version>
  <author>Brendan Howell</author>
  <title>Electrolytic Capacitor</title>
  <label>C</label>
@@ -11,12 +11,12 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">47&micro;F</property>
+  <property name="Capacitance">47&#181;F</property>
   <property name="Capacitor Type">Electrolytic</property>
   <property name="Rated Voltage">35V</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>47&micro;F electrolytic capacitor</description>
+ <description>47&#181;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_100uF_icon.svg">

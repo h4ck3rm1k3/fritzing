@@ -16,7 +16,7 @@
         <property name="family">Display</property>
         <property name="type">Character</property>
         <property name="pins">16</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>A standard character display, usually with 2x16 characters. Comes in many colors.</description>
     <views>
         <iconView>

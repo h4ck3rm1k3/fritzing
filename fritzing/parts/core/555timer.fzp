@@ -14,7 +14,7 @@
  </tags>
  <properties>
   <property name="family">Timer IC</property>
- </properties>
+ <property name="package">THT</property></properties>
  <description>The classic 555 general purpose timer/oscillator.</description>
  <views>
   <iconView>

@@ -15,7 +15,7 @@
         <property name="type">ceramic resonator</property>
         <property name="frequency">16 Mhz</property>
 	<property name="features">built-in capacitors</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Ceramic resonator with built-in capacitors</description>
     <views>
         <iconView>

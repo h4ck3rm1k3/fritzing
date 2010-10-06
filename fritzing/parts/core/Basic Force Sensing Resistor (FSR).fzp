@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.4.1b.07.17.4356" moduleId="fa3e296736059e8c25d88ac262af999a">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.1b.07.17.4356" moduleId="fa3e296736059e8c25d88ac262af999a">
     <version>4</version>
     <author>tigoe</author>
     <title>Basic Flex Resistor</title>
@@ -15,7 +14,7 @@
     <properties>
         <property name="family">FSR</property>
         <property name="Sensing Area Diameter">6 &quot;</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>A generic Flex resistor</description>
     <views>
         <breadboardView>
@@ -42,7 +41,7 @@
         </iconView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="Pin 2">
+        <connector id="connector0" name="Pin 2" type="male">
             <description>Pin 2</description>
             <views>
                 <breadboardView>
@@ -57,7 +56,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin 1">
+        <connector id="connector1" name="pin 1" type="male">
             <description>Pin 1</description>
             <views>
                 <breadboardView>

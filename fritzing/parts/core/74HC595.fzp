@@ -11,7 +11,7 @@
     <properties>
         <property name="family">Logic IC</property>
         <property name="logic family">74xx</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>8-bit parallel-load shift registers</description>
     <views>
         <iconView>

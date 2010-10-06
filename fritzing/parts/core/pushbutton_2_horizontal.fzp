@@ -12,7 +12,7 @@
   <property name="Default State">Normally Open</property>
   <property name="family">Switch - 2 pin</property>
   <property name="Switching Circuit">SPST</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.switches.pushbutton</taxonomy>
  <description>A generic pushbutton.</description>
  <views>

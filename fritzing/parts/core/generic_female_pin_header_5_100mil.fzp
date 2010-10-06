@@ -10,7 +10,7 @@
         <property name="Pins">5</property>
         <property name="Form">♀ (female)</property>
         <property name="Pin Spacing">0.1in (2.54mm)</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>Generic female header</description>
     <views>
         <iconView>

@@ -14,7 +14,7 @@
   <property name="layers">1</property>
   <property name="Shape">Arduino Shield</property>
   <property name="family">Plain Vanilla PCB</property>
- </properties>
+ <property name="package">THT</property></properties>
  <taxonomy>discreteParts.pcb.plain.arduino_shield</taxonomy>
  <description>Plain PCB Shaped to fit an Arduino &quot;Shield&quot;</description>
  <views>

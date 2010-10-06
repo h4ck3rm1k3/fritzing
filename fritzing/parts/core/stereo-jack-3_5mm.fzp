@@ -13,7 +13,7 @@
         <tag>tip ring sleeve</tag>
     </tags>
     <properties>
-        <property name="package">PG203J</property>
+        <property name="package">PG203J [THT]</property>
         <property name="channels">Stereo</property>
         <property name="size">3.5 mm</property>
         <property name="family">Audio Connector</property>

@@ -12,7 +12,7 @@
     <properties>
         <property name="family">Darlington Transistor Driver</property>
         <property name="variant">ULN2803A</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <description>ULN2803A 8-way Darlington Transistor Driver</description>
       <views>
         <iconView>

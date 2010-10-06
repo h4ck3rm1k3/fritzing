@@ -6,7 +6,7 @@
     <tags>LED, 7-Segment, display, output</tags>
     <properties>
         <property name="family">Character Display</property>
-    </properties>
+    <property name="package">THT</property></properties>
     <views>
         <iconView>
             <layers image="icon/7-segment display.svg">
