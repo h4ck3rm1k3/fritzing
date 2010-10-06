@@ -11,12 +11,12 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">100µF</property>
+  <property name="Capacitance">100&micro;F</property>
   <property name="Capacitor Type">Electrolytic</property>
   <property name="Rated Voltage">35V</property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>100µF electrolytic capacitor</description>
+ <description>100&micro;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_100uF_icon.svg">
