@@ -103,7 +103,7 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 		if (delta == 0) return;
 
 		// Scroll zooming relative to the current size
-		relativeZoom(delta, true);
+		relativeZoom(2*delta, true);
 
 		emit wheelSignal();
 	}
