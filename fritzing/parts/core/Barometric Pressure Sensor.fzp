@@ -11,7 +11,7 @@
     </tags>
     <properties>
         <property name="family">Pressure Sensors</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>SCP1000 Barometric Pressure sensor.  Can sense air pressure and temperature.  SPI interface.</description>
     <views>
         <iconView>

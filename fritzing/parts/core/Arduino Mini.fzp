@@ -13,7 +13,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino Mini</property>
-    <property name="package">THT</property></properties>
+   </properties>
     <description>
     The Arduino Mini is a small microcontroller board based on the ATmega168 (datasheet), intended for use on breadboards and when space is at a premium. It has 14 digital input/output pins (of which 6 can be used as PWM outputs), 8 analog inputs, and a 16 MHz crystal oscillator. It can be programmed with the Mini USB adapter or other USB or RS232 to TTL serial adapter.
     

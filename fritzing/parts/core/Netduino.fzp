@@ -13,7 +13,7 @@
 		<property name="family">Microcontroller Board (Netduino)</property>
 		<property name="processor">AT91SAM7X512</property>
 		<property name="variant">Netduino</property>
-	<property name="package">THT</property></properties>
+	</properties>
 	<description>An open-source electronics platform using the .NET Micro Framework</description>
 	<views>
 		<iconView>

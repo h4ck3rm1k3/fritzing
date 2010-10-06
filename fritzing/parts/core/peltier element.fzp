@@ -11,7 +11,7 @@
     </tags>
     <properties>
         <property name="family">Peltier Element</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>Peltier Element</description>
     <views>
         <iconView>

@@ -7,7 +7,7 @@
     <properties>
         <property name="family">Microcontroller Board (GogoBoard)</property>
         <property name="variant">4.0</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>The GoGo board framework is a collection of open-source hardware platforms mainly aimed for educational projects.</description>
     <views>
         <iconView>

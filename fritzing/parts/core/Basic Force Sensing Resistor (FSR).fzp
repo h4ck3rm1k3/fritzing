@@ -14,7 +14,7 @@
     <properties>
         <property name="family">FSR</property>
         <property name="Sensing Area Diameter">6 &quot;</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>A generic Flex resistor</description>
     <views>
         <breadboardView>

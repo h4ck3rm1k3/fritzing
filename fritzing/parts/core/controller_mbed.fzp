@@ -15,7 +15,7 @@
         <property name="family">Microcontroller Board (MBED)</property>
         <property name="processor">NXP/ARM Cortex</property>
         <property name="variant">mbed</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>A powerful microcontroller board based on the NXP LPC processor with an ARM Cortex core. See http://mbed.org for more info.</description>
     <views>
         <iconView>

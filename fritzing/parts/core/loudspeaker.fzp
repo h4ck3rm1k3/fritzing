@@ -6,7 +6,7 @@
     <tags>audio, output</tags>
     <properties>
         <property name="family">Loudspeaker</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <views>
         <iconView>
             <layers image="icon/loudspeaker.svg">

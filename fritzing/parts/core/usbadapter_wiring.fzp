@@ -12,7 +12,7 @@
     <properties>
         <property name="family">USB-to-Serial Adapter</property>
         <property name="type">Wiring USB Adapter</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>The Wiring USB Adapter connects the Wiring Mini to a host computer. It uses an FTDI FT232R to convert between USB and RS-232 serial commands.</description>
     <views>
         <iconView>

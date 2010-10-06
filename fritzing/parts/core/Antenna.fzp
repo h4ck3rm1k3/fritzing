@@ -7,7 +7,7 @@
     <tags/>
     <properties>
         <property name="family">Antenna</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>Random Wire Antenna</description>
     <views>
         <iconView>

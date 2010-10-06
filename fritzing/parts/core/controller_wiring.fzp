@@ -11,7 +11,7 @@
         <property name="family">Microcontroller Board (Wiring)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Wiring</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>Wiring microcontroller</description>
     <views>
         <iconView>

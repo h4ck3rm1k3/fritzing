@@ -12,7 +12,7 @@
     <properties>
         <property name="family">Battery</property>
         <property name="voltage">9V</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>Your standard 9 Volts battery block</description>
     <views>
         <iconView>

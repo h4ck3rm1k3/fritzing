@@ -692,6 +692,7 @@ void HtmlInfoView::displayProps(ModelPart * modelPart, ItemBase * itemBase, bool
 			vlayout->setMargin(0);
 
 			QLabel * propValueLabel = new QLabel(valueFrame);
+			propValueLabel->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
 			vlayout->addWidget(propValueLabel);
 			propThing->m_value = propValueLabel;
 			m_propLayout->addWidget(valueFrame, ix, 1);

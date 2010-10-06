@@ -10,7 +10,7 @@
  </tags>
  <properties>
   <property name="family">Servo</property>
- <property name="package">THT</property></properties>
+ </properties>
  <taxonomy>discreteParts.servo</taxonomy>
  <description>A generic servo.</description>
  <views>

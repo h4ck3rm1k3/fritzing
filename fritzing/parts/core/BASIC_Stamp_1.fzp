@@ -12,7 +12,7 @@
         <property name="family">Microcontroller Board (Basic Stamp)</property>
         <property name="processor">PBASIC</property>
         <property name="variant">Basic Stamp 1</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>It's amazing what you can accomplish with this well-proven microcontroller and its simple PBASIC 1 language.  All vital components (processor, clock source, memory, power regulator) are provided on the BS1's tiny PCB; just connect power and go!  The BASIC Stamp 1 (BS1-IC) is an ideal fit for applications that don't require the speed, I/O, and memory of the BASIC Stamp 2 series of microcontrollers.</description>
     <views>
         <iconView>

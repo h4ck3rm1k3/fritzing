@@ -12,7 +12,7 @@
         <property name="family">Microcontroller Board (Wiring)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Wiring Mini</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>Wiring Mini Microcontroller</description>
     <views>
         <iconView>

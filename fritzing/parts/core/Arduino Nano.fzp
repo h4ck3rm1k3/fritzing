@@ -13,7 +13,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino Nano</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <views>
         <iconView>
             <layers image="icon/controller_arduino_nano.svg">

@@ -19,7 +19,7 @@
         <property name="step angle">1.8</property>
         <property name="detent torque">120 g*cm</property>
         <property name="holding torque"> 2.4 kg*cm</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>Simple, but very powerful bi polar stepper motor. 4 wire</description>
     <views>
         <breadboardView>

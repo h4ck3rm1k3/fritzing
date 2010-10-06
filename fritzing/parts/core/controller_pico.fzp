@@ -8,7 +8,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Modified pico</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>Arduino compatible microcontroller. http://www.modifiedelectronics.com</description>
     <views>
         <iconView>

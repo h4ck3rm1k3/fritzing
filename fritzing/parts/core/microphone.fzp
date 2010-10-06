@@ -6,7 +6,7 @@
     <tags>microphone, input, audio, sensor</tags>
     <properties>
         <property name="family">Microphone</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <views>
         <iconView>
             <layers image="icon/microphone.svg">

@@ -8,7 +8,7 @@
         <property name="resolution">128x64</property>
         <property name="family">Display</property>
         <property name="type">GLCD</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <views>
         <iconView>
             <layers image="icon/GLCD_128x64.svg">

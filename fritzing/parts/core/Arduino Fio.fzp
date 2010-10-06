@@ -15,7 +15,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino Fio</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>The Arduino Fio is a microcontroller board based on the ATmega328P runs at 3.3V and 8 MHz. It has 14 digital input/output pins (of which 6 can be used as PWM outputs), 8 analog inputs, an on-board resonator, a reset button, and holes for mounting pin headers. It has connections for a Lithium Polymer battery and includes a charge circuit over USB. An XBee socket is available on the bottom of the board.
 The Arduino Fio is intended for wireless applications. The user can upload sketches with an a FTDI cable or Sparkfun breakout board. Additionally, by using a modified USB-to-XBee adaptor such as XBee Explorer USB, the user can upload sketches wirelessly. The board comes without pre-mounted headers, allowing the use of various types of connectors or direct soldering of wires.
 The Arduino Fio was designed by Shigeru Kobayashi and SparkFun Electronics, and manufactured by SparkFunElectronics.

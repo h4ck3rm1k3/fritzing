@@ -12,7 +12,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino Mega</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>The biggest, baddest Arduino board yet.</description>
     <views>
         <iconView>

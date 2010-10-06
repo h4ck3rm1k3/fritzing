@@ -12,7 +12,7 @@
         <property name="family">Microcontroller Board (Arduino)</property>
         <property name="processor">ATmega</property>
         <property name="variant">Arduino LiliyPad</property>
-    <property name="package">THT</property></properties>
+    </properties>
     <description>The LilyPad Arduino is a microcontroller board designed for wearables and e-textiles. It can be sewn to fabric and similarly mounted power supplies, sensors and actuators with conductive thread.</description>
     <views>
         <iconView>
