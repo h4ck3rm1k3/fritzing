@@ -41,6 +41,7 @@ $Date$
 #include "../model/palettemodel.h"
 #include "../model/sketchmodel.h"
 #include "../utils/folderutils.h"
+#include "../processeventblocker.h"
 
 #include <QtGui>
 #include <QCryptographicHash>
@@ -777,7 +778,7 @@ bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
 		if(keyEvent && keyEvent->matches(QKeySequence::Close)) {
 			this->close();
 			event->ignore();
-			QCoreApplication::processEvents();
+			ProcessEventBlocker::processEvents();
 #ifdef Q_WS_MAC
 			FritzingWindow *parent = dynamic_cast<FritzingWindow*>(parentWidget());
 			if(parent) {

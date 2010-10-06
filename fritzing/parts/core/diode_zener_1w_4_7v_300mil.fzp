@@ -13,8 +13,8 @@
     <properties>
         <property name="family">Diode</property>
         <property name="type">Zener</property>
-        <property name="power dissipation">1 W</property>
-        <property name="breakdown voltage">4.7 V</property>
+        <property name="power dissipation">1W</property>
+        <property name="breakdown voltage">4.7V</property>
         <property name="part">1N747A</property>
     </properties>
     <description>A standard zener diode</description>

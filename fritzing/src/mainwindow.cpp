@@ -65,7 +65,7 @@ $Date$
 #include "layerpalette.h"
 #include "items/paletteitem.h"
 #include "items/virtualwire.h"
-
+#include "processeventblocker.h"
 #include "help/helper.h"
 #include "dockmanager.h"
 
@@ -974,7 +974,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 		// for some reason, the enabling of the m_deleteAct in UpdateEditMenu doesn't "take" until the next time the event loop is processed
 		// Thereafter, the delete key works as it should.
 		// So this call to processEvents() makes sure m_deleteAct is enabled.
-		QCoreApplication::processEvents();
+		ProcessEventBlocker::processEvents();
 	}
 
 	return QMainWindow::eventFilter(object, event);
@@ -1046,7 +1046,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 		bundledFileName += extension;
 	}
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 
 	QDir destFolder = QDir::temp();
 	FolderUtils::createFolderAnCdIntoIt(destFolder, FolderUtils::getRandText());
@@ -1065,7 +1065,7 @@ void MainWindow::saveBundledNonAtomicEntity(QString &filename, const QString &ex
 	}
 
 	QString prevFileName = filename;
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	bundler->saveAsAux(destSketchPath);
 	filename = prevFileName;
 
@@ -2062,12 +2062,17 @@ void MainWindow::updateActiveLayerButtons() {
  * an autosave to be attempted.
  */
 void  MainWindow::backupSketch() {
+	if (ProcessEventBlocker::isProcessing()) {
+		// don't want to autosave during autorouting, for example
+		return;
+	}
+
     if (m_autosaveNeeded && !m_undoStack->isClean()) {
         m_autosaveNeeded = false;			// clear this now in case the save takes a really long time
 
         DebugDialog::debug(QString("%1 autosaved as %2").arg(m_fileName).arg(m_backupFileNameAndPath));
         statusBar()->showMessage(tr("Backing up '%1'").arg(m_fileName), 2000);
-		QApplication::processEvents();
+		ProcessEventBlocker::processEvents();
 		m_backingUp = true;
 		saveAsAuxAux(m_backupFileNameAndPath);
 		m_backingUp = false;

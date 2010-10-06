@@ -66,6 +66,7 @@ $Date$
 #include "layerpalette.h"
 #include "program/programwindow.h"
 #include "utils/autoclosemessagebox.h"
+#include "processeventblocker.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -755,7 +756,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	}
 	this->show();
 	showAllFirstTimeHelp(false);
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 
 
 	QString displayName2 = displayName;
@@ -769,7 +770,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMaximum(100);
 		m_fileProgressDialog->setValue(10);
 	}
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 
 
 	QList<ModelPart *> modelParts;
@@ -784,7 +785,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	disconnect(m_sketchModel, SIGNAL(loadedRoot(const QString &, ModelBase *, QDomElement &)),
 				this, SLOT(loadedRootSlot(const QString &, ModelBase *, QDomElement &)));
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(55);
 		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(displayName2));
@@ -792,7 +793,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(70);
 		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(displayName2));
@@ -800,7 +801,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(85);
 		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(displayName2));
@@ -808,7 +809,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(98);
 	}
@@ -2320,7 +2321,7 @@ void MainWindow::openInPartsEditor() {
 void MainWindow::createNewSketch() {
     MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, "new sketch", true);
     mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 
 	mw->addDefaultParts();
     mw->show();
@@ -2954,7 +2955,8 @@ void MainWindow::autoroute() {
 	connect(&progress, SIGNAL(stop()), autorouter1, SLOT(stopTrace()), Qt::DirectConnection);
 	connect(autorouter1, SIGNAL(setMaximumProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
 	connect(autorouter1, SIGNAL(setProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
+	ProcessEventBlocker::block();
 
 	autorouter1->start();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(false);
@@ -2964,6 +2966,8 @@ void MainWindow::autoroute() {
 	pcbSketchWidget->setLayerActive(ViewLayer::Copper1, copper1Active);
 	pcbSketchWidget->setLayerActive(ViewLayer::Copper0, copper0Active);
 	updateActiveLayerButtons();
+
+	ProcessEventBlocker::unblock();
 }
 
 void MainWindow::createTrace() {

@@ -13,8 +13,8 @@
  <properties>
   <property name="family">Diode</property>
   <property name="type">Schottky</property>
-  <property name="nominal current">1 A</property>
-  <property name="reverse voltage">20 V</property>
+  <property name="nominal current">1A</property>
+  <property name="reverse voltage">20V</property>
   <property name="part">1N5817</property>
  </properties>
  <description>A standard schottky barrier rectifier diode</description>

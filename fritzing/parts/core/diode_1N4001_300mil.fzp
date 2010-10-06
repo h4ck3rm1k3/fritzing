@@ -13,8 +13,8 @@
  <properties>
   <property name="family">Diode</property>
   <property name="type">Rectifier</property>
-  <property name="nominal current">1 A</property>
-  <property name="reverse voltage">50 V</property>
+  <property name="nominal current">1A</property>
+  <property name="reverse voltage">50V</property>
   <property name="part">1N4001</property>
  </properties>
  <description>A standard rectifier diode</description>

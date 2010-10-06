@@ -33,6 +33,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
+#include "../processeventblocker.h"
 
 #include <qmath.h>
 #include <QApplication>
@@ -203,7 +204,7 @@ void Autorouter1::start()
 	if (m_bothSidesNow) {
 		m_maximumProgressPart = 3;
 		emit wantBottomVisible();
-		QApplication::processEvents();
+		ProcessEventBlocker::processEvents();
 	}
 
 	clearTraces(m_sketchWidget, false, parentCommand);
@@ -230,7 +231,7 @@ void Autorouter1::start()
 		return;
 	}
 
-	QApplication::processEvents(); // to keep the app  from freezing
+	ProcessEventBlocker::processEvents(); // to keep the app  from freezing
 
 	QGraphicsLineItem * lineItem = new QGraphicsLineItem(0, 0, 0, 0, NULL, m_sketchWidget->scene());
 	QPen pen = lineItem->pen();
@@ -252,7 +253,7 @@ void Autorouter1::start()
 
 	if (m_bothSidesNow) {
 		emit wantTopVisible();
-		QApplication::processEvents();
+		ProcessEventBlocker::processEvents();
 		m_viewLayerSpec = ViewLayer::Top;
 		dijkstraNets(indexer, netCounters, edges);
 		m_lastDrawTraces.clear();		// start this over; don't bail because we tried this point on the other side
@@ -413,7 +414,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 		}
 		m_sketchWidget->forwardRoutingStatus(routingStatus);
 
-		QApplication::processEvents();
+		ProcessEventBlocker::processEvents();
 
 		if (m_cancelled) {
 			return;
@@ -506,7 +507,7 @@ bool Autorouter1::traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase
 		subedge->wire->setLine(newLine);
 		splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1, m_viewLayerSpec);
 		from = splitWire->connector0();
-		QApplication::processEvents();
+		ProcessEventBlocker::processEvents();
 	}
 	
 	if (from != NULL && to != NULL) {
@@ -1092,7 +1093,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * & from, JumperItem * jumperItem, 
 								 candidate.y() - (jsz.height() / 2), 
 								 jsz.width(), jsz.height());
 			}
-			QApplication::processEvents();
+			ProcessEventBlocker::processEvents();
 
 			if (hasCollisions(jumperItem, ViewLayer::UnknownLayer, ellipse, NULL)) {
 				continue;
@@ -1108,7 +1109,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * & from, JumperItem * jumperItem, 
 			else {
 				lineItem->setLine(c.x(), c.y(), candidate.x(), candidate.y());
 			}
-			QApplication::processEvents();
+			ProcessEventBlocker::processEvents();
 			
 			if (!hasCollisions(jumperItem, from->attachedToViewLayerID(), lineItem, from)) {
 				if (ellipse) delete ellipse;
@@ -1141,7 +1142,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		return false;
 	}
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	//DebugDialog::debug(QString("%5 drawtrace from:%1 %2, to:%3 %4")
 		//.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );
 	if (m_cancelled || m_cancelTrace || m_stopTrace) {

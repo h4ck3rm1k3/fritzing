@@ -45,6 +45,7 @@ $Date$
 #include "../utils/autoclosemessagebox.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/graphutils.h"
+#include "../processeventblocker.h"
 
 #include <limits>
 #include <QApplication>
@@ -1481,7 +1482,7 @@ int PCBSketchWidget::designRulesCheck()
 	connect(&progress, SIGNAL(stop()), this, SLOT(stopDRC()), Qt::DirectConnection);
 	connect(this, SIGNAL(setMaximumDRCProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
 	connect(this, SIGNAL(setDRCProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 
 	emit setMaximumDRCProgress(1000);
 	
@@ -1652,7 +1653,7 @@ bool PCBSketchWidget::drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> &
 	foreach (QGraphicsItem * candidate, scene()->items(expandedCheckItemPoly)) {
 		if (m_cancelDRC) break;
 
-		QApplication::processEvents();
+		ProcessEventBlocker::processEvents();
 
 		if (!candidate->isVisible()) {
 			continue;
@@ -1714,7 +1715,7 @@ bool PCBSketchWidget::drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> &
 		checkItem->setVisible(false);
 	}
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 
 	foreach (QGraphicsItem * item, scene()->items(expandedPolyBounds)) {
 		if (!item->isVisible()) continue;
@@ -1728,7 +1729,7 @@ bool PCBSketchWidget::drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> &
 		setDRCVisibility(item, equipotentialConnectorItems, visibility);
 	}
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	if (m_cancelDRC) return false;
 
 	QSize sz(qCeil(expandedPolyBounds.width()), qCeil(expandedPolyBounds.height()));
@@ -1777,7 +1778,7 @@ bool PCBSketchWidget::drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> &
 		checkItemParent->setVisible(true);
 	}
 
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 	if (m_cancelDRC) return false;
 
 	QPolygonF poly = checkItem->mapToScene(checkItem->boundingRect());						
@@ -1869,7 +1870,7 @@ bool PCBSketchWidget::drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> &
 #endif
 
 	emit setDRCProgressValue(progressOffset + (progressGoal * progressRange * ++progressSoFar / maxProgress));
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 
 	return colliding;
 }

@@ -31,6 +31,7 @@ HEADERS += \
     src/layerattributes.h \
     src/layerpalette.h \
     src/mainwindow.h \
+    src/processeventblocker.h \
     src/routingstatus.h \
     src/sketchareawidget.h \
     src/sketchtoolbutton.h \
@@ -56,6 +57,7 @@ SOURCES += \
     src/mainwindow.cpp \
     src/mainwindow_gerber.cpp \
     src/mainwindow_menu.cpp \
+    src/processeventblocker.cpp \
     src/sketchareawidget.cpp \
     src/sketchtoolbutton.cpp \
     src/viewgeometry.cpp \

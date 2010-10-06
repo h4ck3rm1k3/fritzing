@@ -55,6 +55,7 @@ $Date$
 #include "items/pinheader.h"
 #include "dialogs/recoverydialog.h"
 #include "lib/qtlockedfile/qtlockedfile.h"
+#include "processeventblocker.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -423,7 +424,7 @@ MainWindow * FApplication::loadWindows(bool showProgress, int & loaded) {
 
 	if (showProgress) {
 		m_splash->showProgress(m_progressIndex, 0.9);
-		processEvents();
+		ProcessEventBlocker::processEvents();
 	}
 
 	loaded = 0;
@@ -602,10 +603,10 @@ int FApplication::startup(bool firstRun)
 	QPixmap pixmap(":/resources/images/splash_2010.png");
 	FSplashScreen splash(pixmap);
 	m_splash = &splash;
-	processEvents();								// seems to need this (sometimes?) to display the splash screen
+	ProcessEventBlocker::processEvents();								// seems to need this (sometimes?) to display the splash screen
 
 	initSplash(splash, pixmap);
-	processEvents();
+	ProcessEventBlocker::processEvents();
 
 	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
 
@@ -613,7 +614,7 @@ int FApplication::startup(bool firstRun)
 		registerFonts();
 
 		splash.showProgress(m_progressIndex, LoadProgressStart);
-		processEvents();
+		ProcessEventBlocker::processEvents();
 
 		#ifdef Q_WS_WIN
 			// associate .fz file with fritzing app on windows (xp only--vista is different)
@@ -654,7 +655,7 @@ int FApplication::startup(bool firstRun)
 	//DebugDialog::debug("after createUserDataStoreFolderStructure");
 
 	splash.showProgress(m_progressIndex, 0.65);
-	processEvents();
+	ProcessEventBlocker::processEvents();
 
 	if (!loadBin(settings.value("lastBin").toString())) {
 			// TODO: we're really screwed, what now?
@@ -663,7 +664,7 @@ int FApplication::startup(bool firstRun)
 	}
 
 	splash.showProgress(m_progressIndex, 0.825);
-	processEvents();
+	ProcessEventBlocker::processEvents();
 
 	m_updateDialog = new UpdateDialog();
 	connect(m_updateDialog, SIGNAL(enableAgainSignal(bool)), this, SLOT(enableCheckUpdates(bool)));
@@ -675,7 +676,7 @@ int FApplication::startup(bool firstRun)
 	m_started = true;
 
 	splash.showProgress(m_progressIndex, 0.99);
-	processEvents();
+	ProcessEventBlocker::processEvents();
 
 	return 0;
 }
@@ -874,7 +875,7 @@ void FApplication::copyBin(const QString & dest, const QString & source) {
     if(!QFile(source).copy(dest)) {
 #ifdef Q_WS_WIN // may not be needed from qt 4.5.2 on
         DebugDialog::debug("Failed to copy a file from the resources");
-        QApplication::processEvents();
+        ProcessEventBlocker::processEvents();
         QDir binsFolder = QFileInfo(dest).dir().absolutePath();
         QStringList binFiles = binsFolder.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
         foreach(QString binName, binFiles) {

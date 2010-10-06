@@ -26,6 +26,7 @@ $Date$
 
 #include "fileprogressdialog.h"
 #include "../debugdialog.h"
+#include "../processeventblocker.h"
 
 #include <QFormLayout>
 #include <QLabel>
@@ -44,7 +45,7 @@ FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum
 	init(title, initialMaximum);
 	setModal(true);
 	show();
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 }
 
 FileProgressDialog::FileProgressDialog(QWidget *parent) : QDialog(parent) 
@@ -94,7 +95,7 @@ void FileProgressDialog::setMaximum(int maximum) {
 
 void FileProgressDialog::setValue(int value) {
 	m_progressBar->setValue(value);
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 }
 
 void FileProgressDialog::sendCancel() {
@@ -108,7 +109,7 @@ void FileProgressDialog::closeEvent(QCloseEvent *event)
 
 void FileProgressDialog::setMessage(const QString & message) {
 	m_message->setText(message);
-	QApplication::processEvents();
+	ProcessEventBlocker::processEvents();
 }
 
 

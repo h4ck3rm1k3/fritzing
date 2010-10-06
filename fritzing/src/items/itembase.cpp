@@ -314,7 +314,7 @@ ModelPartShared * ItemBase::modelPartShared() {
 
 void ItemBase::initNames() {
 	if (NumberMatcher.isEmpty()) {
-		NumberMatcher.setPattern(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + TextUtils::MicroSymbol + "]))?");
+		NumberMatcher.setPattern(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([") + TextUtils::PowerPrefixesString + "]))?");
 	}
 
 	if (TranslatedPropertyNames.count() == 0) {
@@ -1661,6 +1661,9 @@ QStringList ItemBase::collectValues(const QString & family, const QString & prop
 			ok = false;
 			break;
 		}
+
+		qreal n = TextUtils::convertFromPowerPrefix(NumberMatcher.cap(1) + NumberMatcher.cap(5), "");
+		/*
 		qreal n = NumberMatcher.cap(1).toDouble(&ok);
 		if (!ok) break;
 
@@ -1683,6 +1686,10 @@ QStringList ItemBase::collectValues(const QString & family, const QString & prop
 		else if (unit.contains(TextUtils::MicroSymbol)) {
 			n *= 0.000001;
 		}
+		else if (unit.contains('m')) {
+			n *= 0.001;
+		}
+		*/
 		NumberMatcherValues.insert(opt, n);
 	}
 	if (ok) {

@@ -39,7 +39,7 @@
     </views>
     <connectors>
          <connector id="connector0" name="5V" type="male">
-            <description>+5 V</description>
+            <description>+5V</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"/>

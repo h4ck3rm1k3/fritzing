@@ -11,9 +11,9 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">0.1 nF</property>
+  <property name="Capacitance">0.1nF</property>
   <property name="Capacitor Type">Ceramic Multilayer</property>
-  <property name="Rated Voltage">50 v</property>
+  <property name="Rated Voltage">50V</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>0.01 nF multilayered Ceramic Capacitor</description>

@@ -36,6 +36,7 @@ $Date$
 #include "partseditorviewswidget.h"
 #include "../debugdialog.h"
 #include "../connectors/connectorshared.h"
+#include "../processeventblocker.h"
 
 ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent)
 	: QFrame(parent)
@@ -316,7 +317,7 @@ void ConnectorsInfoWidget::connectorsFound(QList< QPointer<Connector> > conns) {
 	progress.show();
 	for(int i=0; i < conns.size(); i++) {
 		progress.setValue(i);
-		qApp->processEvents(); // to keep the app away from freezing
+		ProcessEventBlocker::processEvents(); // to keep the app away from freezing
 		addConnectorInfo(conns[i]);
 	}
 	progress.setValue(conns.size());
