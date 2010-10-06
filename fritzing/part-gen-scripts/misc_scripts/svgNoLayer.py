@@ -4,7 +4,7 @@
 #    <directory> is a folder, with subfolders, containing .svg files.  In each svg file in the directory or its children
 #    look for id='[layer]' where layer is the set of all layers in fritzing
 
-import getopt, sys, os, re
+import getopt, sys, os, re, xml.dom.minidom, xml.dom
     
 def usage():
     print """
@@ -49,28 +49,61 @@ def main():
                 svg = infile.read()
                 infile.close()
                 match = None
-                m2 = None
                 for layer in layers:
                     match = re.search('id=[\'\"]' + layer, svg)
                     if (match != None):
                         break
                         
                 if match == None:
-                    print "{0} {1}".format(os.path.join(root, filename), "")
+                    print "{0} {1}".format(os.path.join(root, filename), "has no layer ids")
                 else:
-                    if lookForSvgId(svg):
-                        print "{0} {1}".format(os.path.join(root, filename), "svg has id")
+        
+                   msg = parseIDs(svg)
+                   if (msg != None):
+                        print "{0} {1}".format(os.path.join(root, filename), msg)
                         
 
-def lookForSvgId(svg):
-    for layer in layers:
-        match = re.search('<svg(.*?)id=[\'\"]' + layer  , svg)
-        if (match != None):
-            if (match.group(1).find(">") < 0):
-                return 1
+def parseIDs(svg):
+    try:
+        dom = xml.dom.minidom.parseString(svg)
+    except xml.parsers.expat.ExpatError, err:
+        return "xml error " + str(err)
+    
+    root = dom.documentElement
+    id = root.getAttribute("id")
+    if id != None:
+        for layer in layers:
+            if (layer == id):
+                return "svg contains layer id " + id
+     
+    for c in root.childNodes:
+        if c.nodeType != c.ELEMENT_NODE:
+            continue
             
-
-    return 0
+        tag = c.tagName
+        if tag == "metadata":
+            continue
+        if tag == "title":
+            continue
+        if tag == "desc":
+            continue
+        if tag == "defs":
+            continue
+        if tag == "sodipodi:namedview":
+            continue
+            
+        gotOne = 0
+        id = c.getAttribute("id")
+        if (id != None):
+            for layer in layers:
+                if (layer == id):
+                    gotOne = 1
+                    break
+        
+        if gotOne == 0:
+            return "child element '" + tag + "' with no layer id"
+    
+    return None
     
     
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" x="0in" y="0in" width="0.12in" height="0.08in" viewBox="0 0 1200 800" >
 <title>SparkFun.mod</title>
-<desc>Kicad module 'SparkFun-SJ_3_PASTE1&2' from file 'SparkFun.mod' converted by Fritzing</desc>
+<desc>Kicad module 'SparkFun-SJ_3_PASTE1&amp;2' from file 'SparkFun.mod' converted by Fritzing</desc>
 <metadata xmlns:fz='http://fritzing.org/kicadmetadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
 <rdf:RDF><rdf:Description rdf:about=''>
 <fz:attr name='kicad filename'>SparkFun.mod</fz:attr>

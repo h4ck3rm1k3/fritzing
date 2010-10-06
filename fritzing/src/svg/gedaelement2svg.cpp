@@ -77,7 +77,7 @@ QString GedaElement2Svg::convert(const QString & filename, bool allowPadsAndPins
 
 	QString title = QString("<title>%1</title>").arg(fileInfo.fileName());
 	QString description = QString("<desc>Geda footprint file '%1' converted by Fritzing</desc>")
-			.arg(fileInfo.fileName());
+			.arg(TextUtils::stripNonValidXMLCharacters(TextUtils::escapeAnd(fileInfo.fileName())));
 
 
 	QString metadata("<metadata xmlns:fz='http://fritzing.org/gedametadata/1.0/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>");
