@@ -711,6 +711,6 @@ qreal TextUtils::convertFromPowerPrefix(const QString & val, const QString & sym
 void TextUtils::initPowerPrefixes() {
 	if (PowerPrefixes.count() == 0) {
 		PowerPrefixes << "p" << "n" << MicroSymbol << "m" << "" << "k" << "M" << "G" << "T";
-		PowerPrefixValues << 0.000000000001 << 0.000000001 << 0.000001 << 0.001 << 1 << 1000 << 1000000 << 1000000000 << 1000000000000;
+                PowerPrefixValues << 0.000000000001 << 0.000000001 << 0.000001 << 0.001 << 1 << 1000 << 1000000 << 1000000000. << 1000000000000.;
 	}
 }
