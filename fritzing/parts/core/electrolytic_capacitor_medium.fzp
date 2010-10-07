@@ -3,7 +3,7 @@
  <author>Brendan Howell</author>
  <title>Electrolytic Capacitor</title>
  <label>C</label>
- <date>2008-12-22</date>
+ <date>2010-10-07</date>
  <tags>
   <tag>Electrolytic</tag>
   <tag>Capacitor</tag>
@@ -11,13 +11,12 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">220&#181;F</property>
-  <property name="Capacitor Type">Electrolytic</property>
-  <property name="Rated Voltage">35 V</property>
+  <property name="capacitance">100&#181;F</property>
+  <property name="type">electrolytic</property>
   <property name="size">medium - 200 mil</property>
  <property name="package">THT</property></properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
- <description>220&#181;F electrolytic capacitor</description>
+ <description>electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_220uF_icon.svg">
@@ -35,7 +34,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_200mil.svg">
+   <layers image="pcb/radial_can_medium_200mil.svg">
     <layer layerId="copper0"/>
 	 <layer layerId="silkscreen"/>
    <layer layerId="copper1"/></layers>

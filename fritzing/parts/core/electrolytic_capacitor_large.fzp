@@ -11,11 +11,10 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
+  <property name="package">THT</property>
   <property name="capacitance">1000&#181;F</property>
-  <property name="capacitor Type">Electrolytic</property>
-  <property name="rated voltage">35 V</property>
+  <property name="capacitor Type">electrolytic</property>
   <property name="size">large - 300 mil</property>
-<property name="package">THT</property>
 </properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
  <description>1000&#181;F electrolytic capacitor</description>
@@ -36,7 +35,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_200mil.svg">
+   <layers image="pcb/radial_can_large_300mil.svg">
     <layer layerId="copper0"/>
     <layer layerId="silkscreen"/>
    <layer layerId="copper1"/></layers>

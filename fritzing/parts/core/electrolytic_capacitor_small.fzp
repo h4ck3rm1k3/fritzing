@@ -11,13 +11,12 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">1&#181;F</property>
-  <property name="Capacitor Type">Electrolytic</property>
-  <property name="Rated Voltage">35 V</property>
+  <property name="capacitance">1&#181;F</property>
+  <property name="capacitor Type">electrolytic</property>
   <property name="size">small - 100 mil</property>
  <property name="package">THT</property></properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
- <description>An 1&#181;F electrolytic capacitor</description>
+ <description>A small electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_small_icon.svg">
@@ -35,7 +34,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_200mil.svg">
+   <layers image="pcb/radial_can_small_100mil.svg">
      <layer layerId="copper0"/>
      <layer layerId="silkscreen"/>
   <layer layerId="copper1"/></layers>
