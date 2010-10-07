@@ -12,7 +12,7 @@
  <properties>
   <property name="family">Capacitor</property>
   <property name="Capacitance">220pF</property>
-  <property name="Capacitor Type">Ceramic Disk</property>
+  <property name="type">multilayer</property>
   <property name="Rated Voltage">500V</property>
  <property name="package">THT</property></properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
