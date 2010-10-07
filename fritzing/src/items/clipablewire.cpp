@@ -174,7 +174,7 @@ const QLineF & ClipableWire::getPaintLine() {
 		}
 	}
 
-	if (to0 == NULL || to1 == NULL) {
+	if (to0 == NULL && to1 == NULL) {
 		// no need to clip; get out
 		return Wire::getPaintLine();
 	}
@@ -198,29 +198,31 @@ void ClipableWire::setClipEnds(bool clipEnds ) {
 
 void ClipableWire::calcClip(QPointF & p1, QPointF & p2, ConnectorItem * c1, ConnectorItem * c2) {
 
-	if (c1->isCircular() && c2->isCircular()) {
+	if (c1 != NULL && c2 != NULL && c1->isCircular() && c2->isCircular()) {
 		GraphicsUtils::shortenLine(p1, p2, c1->calcClipRadius() + (m_pen.width() / 2.0), c2->calcClipRadius() + (m_pen.width() / 2.0));
 		return;
 	}
 
-	if (c1->isCircular()) {
+	if (c1 != NULL && c1->isCircular()) {
 		GraphicsUtils::shortenLine(p1, p2, c1->calcClipRadius() + (m_pen.width() / 2.0), 0);
-		p2 = findIntersection(c2);
+		p2 = findIntersection(c2, p2);
 		return;
 	}
 
-	if (c2->isCircular()) {
+	if (c2 != NULL && c2->isCircular()) {
 		GraphicsUtils::shortenLine(p1, p2, 0, c2->calcClipRadius() + (m_pen.width() / 2.0));
-		p1 = findIntersection(c1);
+		p1 = findIntersection(c1, p1);
 		return;
 	}
 
-	p1 = findIntersection(c1);
-	p2 = findIntersection(c2);
+	p1 = findIntersection(c1, p1);
+	p2 = findIntersection(c2, p2);
 }
 
-QPointF ClipableWire::findIntersection(ConnectorItem * connectorItem)
+QPointF ClipableWire::findIntersection(ConnectorItem * connectorItem, const QPointF & p)
 {
+	if (connectorItem == NULL) return p;
+
 	QRectF r = connectorItem->rect();
 	r.adjust(connectorRectClipInset, connectorRectClipInset, -connectorRectClipInset, -connectorRectClipInset);	// inset it a little bit so the wire touches
 	QPolygonF poly = this->mapFromScene(connectorItem->mapToScene(r));

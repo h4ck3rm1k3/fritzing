@@ -50,7 +50,7 @@ protected:
 	bool insideSpoke(ClipableWire * wire, QPointF scenePos); 
 	void dispatchHover(QPointF scenePos);
 	void dispatchHoverAux(bool inInner, Wire * inWire);
-	QPointF findIntersection(ConnectorItem * connectorItem);
+	QPointF findIntersection(ConnectorItem * connectorItem, const QPointF & p);
 	void calcClip(QPointF & p1, QPointF & p2, ConnectorItem * c1, ConnectorItem * c2);
 
 protected:
