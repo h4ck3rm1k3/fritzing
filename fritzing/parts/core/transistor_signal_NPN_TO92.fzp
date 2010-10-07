@@ -14,7 +14,7 @@
  <properties>
   <property name="package">TO92 [THT]</property>
   <property name="family">Bipolar Transistor</property>
-  <property name="doping">NPN</property>
+  <property name="type">NPN</property>
  </properties>
  <description>A standard NPN-transistor</description>
  <views>
