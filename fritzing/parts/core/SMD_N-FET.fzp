@@ -1,45 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.1255" moduleId="1001ABDC27">
- <version>4</version>
- <author>Stefan Hermann</author>
- <title>Basic FET P-Channel</title>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.1255" moduleId="034578dd-8cbd-41f9-a9c1-5aee236347ce">
+ <version>0</version>
+ <author>Mr.T</author>
+ <title>Basic FET N-Channel</title>
  <label>Q</label>
- <date>2008-09-24</date>
+ <date>2010-09-30</date>
  <tags>
   <tag>Transistor</tag>
   <tag>FET</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="package">TO220 [THT]</property>
+  <property name="package">D2Pak [SMD]</property>
   <property name="family">FET-Transistor</property>
-  <property name="type">p-channel</property>
+  <property name="type">n-channel</property>
  </properties>
- <description>A MOSFET P-Channel Transistor</description>
+ <description>A MOSFET N-Channel Transistor</description>
  <views>
   <iconView>
-   <layers image="icon/mosfet_p_channel_icon.svg">
+   <layers image="icon/mosfet_n_channel_icon.svg">
     <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/mosfet_p_channel.svg">
+   <layers image="breadboard/mosfet_n_channel.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/fet_p.svg">
+   <layers image="schematic/fet_n.svg">
     <layer layerId="schematic"/>
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/TO-220.svg">
-    <layer layerId="copper0"/>
+   <layers image="pcb/_D2Pak_smd_PRE.svg">
     <layer layerId="silkscreen"/>
    <layer layerId="copper1"/></layers>
   </pcbView>
  </views>
  <connectors>
-  <connector id="connector0" name="gate" type="male">
+  <connector id="connector0" name="Gate" type="male">
    <description>gate</description>
    <views>
     <breadboardView>
@@ -49,8 +48,7 @@
      <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector0pad"/>
-    <p layer="copper1" svgId="connector0pad"/></pcbView>
+    <p layer="copper1" svgId="connector0pad" terminalId="connector0terminal"/></pcbView>
    </views>
   </connector>
   <connector id="connector1" name="drain" type="male">
@@ -63,8 +61,7 @@
      <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector1pad"/>
-    <p layer="copper1" svgId="connector1pad"/></pcbView>
+    <p layer="copper1" svgId="connector1pad"  terminalId="connector1terminal"/></pcbView>
    </views>
   </connector>
   <connector id="connector2" name="source" type="male">
@@ -77,8 +74,7 @@
      <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector2pad"/>
-    <p layer="copper1" svgId="connector2pad"/></pcbView>
+    <p layer="copper1" svgId="connector2pad" terminalId="connector2terminal"/></pcbView>
    </views>
   </connector>
  </connectors>

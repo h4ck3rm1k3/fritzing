@@ -12,7 +12,7 @@
  <properties>
   <property name="package">TO220 [THT]</property>
   <property name="family">FET-Transistor</property>
-  <property name="doping">n-channel</property>
+  <property name="type">n-channel</property>
  </properties>
  <description>A MOSFET N-Channel Transistor</description>
  <views>

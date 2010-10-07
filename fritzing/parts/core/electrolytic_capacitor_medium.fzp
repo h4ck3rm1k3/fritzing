@@ -13,8 +13,8 @@
   <property name="family">Capacitor</property>
   <property name="Capacitance">220&#181;F</property>
   <property name="Capacitor Type">Electrolytic</property>
-  <property name="Rated Voltage">35V</property>
-  <property name="size">medium</property>
+  <property name="Rated Voltage">35 V</property>
+  <property name="size">medium - 200 mil</property>
  <property name="package">THT</property></properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
  <description>220&#181;F electrolytic capacitor</description>

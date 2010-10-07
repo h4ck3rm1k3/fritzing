@@ -11,11 +11,12 @@
  </tags>
  <properties>
   <property name="family">Capacitor</property>
-  <property name="Capacitance">1000&#181;F</property>
-  <property name="Capacitor Type">Electrolytic</property>
-  <property name="Rated Voltage">35V</property>
-   <property name="size">large</property>
-<property name="package">THT</property></properties>
+  <property name="capacitance">1000&#181;F</property>
+  <property name="capacitor Type">Electrolytic</property>
+  <property name="rated voltage">35 V</property>
+  <property name="size">large - 300 mil</property>
+<property name="package">THT</property>
+</properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
  <description>1000&#181;F electrolytic capacitor</description>
  <views>
