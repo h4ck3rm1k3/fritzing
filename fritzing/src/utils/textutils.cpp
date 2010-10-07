@@ -121,68 +121,7 @@ qreal TextUtils::convertToInches(const QString & s, bool * ok, bool isIllustrato
 	return result / divisor;
 }
 
-bool TextUtils::squashNotElement(QString & svg, const QString & elementName, const QString &attName, const QRegExp &matchContent) {
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument doc;
-	if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return false;
-
-	QDomElement root = doc.documentElement();
-	QString tagName = root.tagName();
-	bool result = false;
-    squashNotElement(root, elementName, attName, matchContent, result);
-	root.setTagName(tagName);
-	if (result) {
-		svg = removeXMLEntities(doc.toString());
-	}
-	return result;
-}
-
-void TextUtils::squashNotElement(QDomElement & element, const QString & elementName, const QString &attName, const QRegExp &matchContent, bool & result) {
-	bool setG = false;
-	if (element.tagName().compare(elementName) != 0) {
-		element.setTagName("g");
-		setG = result = true;
-
-	}
-    else {
-        if (!attName.isEmpty()) {
-            QString att = element.attribute(attName);
-            if (att.isEmpty()) {
-                element.setTagName("g");
-                setG = result = true;
-            }
-            else {
-                if (!matchContent.isEmpty()) {
-                    if (matchContent.indexIn(att) < 0) {
-                        element.setTagName("g");
-                        setG = result = true;
-                    }
-                }
-            }
-        }
-    }
-
-	if (!setG) {
-		// don't recurse deeper if element is matched
-		return;
-	}
-
-	QDomElement child = element.firstChildElement();
-	while (!child.isNull()) {
-        squashNotElement(child, elementName, attName, matchContent, result);
-		child = child.nextSiblingElement();
-	}
-}
-
-bool TextUtils::squashElement(QString & svg, const QString & elementName, const QString &attName, const QRegExp &matchContent) {
-    QString errorStr;
-    int errorLine;
-    int errorColumn;
-    QDomDocument doc;
-    if (!doc.setContent(svg, &errorStr, &errorLine, &errorColumn)) return false;
-
+bool TextUtils::squashElement(QDomDocument & doc, const QString & elementName, const QString &attName, const QRegExp &matchContent) {
     bool result = false;
     QDomElement root = doc.documentElement();
     QDomNodeList domNodeList = root.elementsByTagName(elementName);
@@ -201,10 +140,6 @@ bool TextUtils::squashElement(QString & svg, const QString & elementName, const 
 
         node.setTagName("g");
         result = true;
-    }
-
-    if (result) {
-        svg = removeXMLEntities(doc.toString());
     }
 
     return result;
@@ -712,5 +647,20 @@ void TextUtils::initPowerPrefixes() {
 	if (PowerPrefixes.count() == 0) {
 		PowerPrefixes << "p" << "n" << MicroSymbol << "m" << "" << "k" << "M" << "G" << "T";
                 PowerPrefixValues << 0.000000000001 << 0.000000001 << 0.000001 << 0.001 << 1 << 1000 << 1000000 << 1000000000. << 1000000000000.;
+	}
+}
+
+void TextUtils::collectLeaves(QDomElement & element, int & index, QVector<QDomElement> & leaves) {
+	if (element.hasChildNodes()) {
+		element.removeAttribute("id");
+		QDomElement c = element.firstChildElement();
+		while (!c.isNull()) {
+			collectLeaves(c, index, leaves);
+			c = c.nextSiblingElement();
+		}
+	}
+	else {
+		leaves.insert(index, element);
+		element.setAttribute("id", QString::number(index++));
 	}
 }

@@ -28,6 +28,7 @@ $Date$
 #include <QFileDialog>
 #include <QWebPage>
 #include <QWebFrame>
+#include <QSvgRenderer>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -141,6 +142,12 @@ void MainWindow::doCopper(ItemBase * board, LayerList & viewLayerIDs, const QStr
 		return;
 	}
 
+	svg = clipToBoard(svg, board);
+	if (svg.isEmpty()) {
+		displayMessage(tr("%1 file export failure (3)").arg(copperName), displayMessageBoxes);
+		return;
+	}
+
 	QDomDocument domDocument;
 	QString errorStr;
 	int errorLine;
@@ -211,100 +218,20 @@ void MainWindow::doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, It
         return;
     }
 
-	bool anyConverted = false;
-	bool converted[3];
-	converted[0] = converted[1] = converted[2] = false;
-	QString text[3];
-	text[0] = text[1] = text[2] = svgSilk;
-    if (TextUtils::squashElement(svgSilk, "text", "", QRegExp())) {
-        TextUtils::squashNotElement(text[0], "text", "", QRegExp());
-        anyConverted = converted[0] = true; 
-	}
-
-	// gerber can't handle ellipses that are rotated, so cull them all
-    if (TextUtils::squashElement(svgSilk, "ellipse", "", QRegExp())) {
-        TextUtils::squashNotElement(text[1], "ellipse", "", QRegExp());
-		anyConverted = converted[1] = true;
-    }
-
-	// gerber can't handle paths with curves
-    if (TextUtils::squashElement(svgSilk, "path", "d", AaCc)) {
-        TextUtils::squashNotElement(text[2], "path", "d", AaCc);
-		anyConverted = converted[2] = true;
-    }
-
-    if (anyConverted) {
-		QString svg;
-		bool firstTime = true;
-		for (int i = 0; i < 3; i++) {
-			if (converted[i]) {
-				if (firstTime) {
-					firstTime = false;
-					svg = text[i];
-				}
-				else {
-					svg = TextUtils::mergeSvg(svg, text[i], "");
-				}
-			}
-		}
-
-		qreal res = GraphicsUtils::StandardFritzingDPI;
-		QRectF source = board->boundingRect();
-		int swidth = source.width();
-		int sheight = source.height();
-		int twidth = res * swidth / FSvgRenderer::printerScale();
-		int theight = res * sheight / FSvgRenderer::printerScale();
-
-		QSize imgSize(twidth, theight);
-
-		// expand the svg to fill the space of the image
-		QRegExp widthFinder("width=([^i]+)in");
-		svg.replace(widthFinder, QString("width=\"%1px").arg(twidth));
-		QRegExp heightFinder("height=([^i]+)in");
-		svg.replace(heightFinder, QString("height=\"%1px").arg(theight));
-
-		QStringList exceptions;
-		exceptions << "none" << "";
-		QString toColor("#000000");
-		QByteArray svgByteArray;
-		SvgFileSplitter::changeColors(svg, toColor, exceptions, svgByteArray);
-
-		QImage image(imgSize, QImage::Format_RGB32);
-		image.fill(0);
-		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
-		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
-		QRectF target(0, 0, twidth, theight);
-
-		//QString simple = "<html>"
-			//"<body><font color='#ff0000'>hello world</font>"
-			//"</body></html>";
-
-		QWebPage webpage;
-		webpage.setViewportSize(image.size());
-		webpage.mainFrame()->setContent(svgByteArray, "image/svg+xml");
-		//webpage.mainFrame()->setContent(simple.toUtf8());
-		QPainter painter;
-		painter.begin(&image);
-		webpage.mainFrame()->render(&painter);
-		painter.end();
-		image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
-		//image.save("output.png");
-
-		GroundPlaneGenerator gpg;
-		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen", false);
-		foreach (QString gsvg, gpg.newSVGs()) {
-			svgSilk = TextUtils::mergeSvg(svgSilk, gsvg, "");
-		}
+	svgSilk = clipToBoard(svgSilk, board);
+	if (svgSilk.isEmpty()) {
+		displayMessage(tr("silk export failure"), displayMessageBoxes);
+		return;
 	}
 
 #ifndef QT_NO_DEBUG
 	// for debugging silkscreen svg
-    QFile silkout(QDir::temp().absoluteFilePath(gerberSuffix + ".svg"));
-	if (silkout.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QTextStream silkStream(&silkout);
-		silkStream << svgSilk;
-		silkout.close();
-	}
+    //QFile silkout(QDir::temp().absoluteFilePath(gerberSuffix + ".svg"));
+	//if (silkout.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		//QTextStream silkStream(&silkout);
+		//silkStream << svgSilk;
+		//silkout.close();
+	//}
 #endif
 
     // create silk gerber from svg
@@ -336,3 +263,130 @@ void MainWindow::displayMessage(const QString & message, bool displayMessageBoxe
 	DebugDialog::debug(message);
 }
 
+QString MainWindow::clipToBoard(QString svgString, ItemBase * board) {
+	QDomDocument domDocument1;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	bool result = domDocument1.setContent(svgString, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		return "";
+	}
+
+	QDomDocument domDocument2;
+	domDocument2.setContent(svgString, &errorStr, &errorLine, &errorColumn);
+
+	bool anyConverted = false;
+    if (TextUtils::squashElement(domDocument1, "text", "", QRegExp())) {
+        anyConverted = true; 
+	}
+
+	// gerber can't handle ellipses that are rotated, so cull them all
+    if (TextUtils::squashElement(domDocument1, "ellipse", "", QRegExp())) {
+		anyConverted = true;
+    }
+
+	// gerber can't handle paths with curves
+    if (TextUtils::squashElement(domDocument1, "path", "d", AaCc)) {
+		anyConverted = true;
+    }
+
+	QVector <QDomElement> leaves1;
+	int transformCount1 = 0;
+	TextUtils::collectLeaves(domDocument1.documentElement(), transformCount1, leaves1);
+
+	QVector <QDomElement> leaves2;
+	int transformCount2 = 0;
+	TextUtils::collectLeaves(domDocument2.documentElement(), transformCount2, leaves2);
+
+	qreal res = GraphicsUtils::StandardFritzingDPI;
+	QRectF source = board->boundingRect();
+	int twidth = res * source.width() / FSvgRenderer::printerScale();
+	int theight = res * source.height() / FSvgRenderer::printerScale();
+
+	svgString = TextUtils::removeXMLEntities(domDocument1.toString());
+	QXmlStreamReader reader(svgString);
+	QSvgRenderer renderer(&reader);
+	bool anyClipped = false;
+	for (int i = 0; i < transformCount1; i++) {
+		QString n = QString::number(i);
+		QRectF bounds = renderer.boundsOnElement(n);
+		QMatrix m = renderer.matrixForElement(n);
+		QDomElement element = leaves1.at(i);
+		QString ms = element.attribute("transform");
+		if (!ms.isEmpty()) {
+			m *= SvgFileSplitter::transformStringToMatrix(ms);
+		}
+		QRectF mBounds = m.mapRect(bounds);
+		if (mBounds.left() < 0 || mBounds.top() < 0 || bounds.right() > twidth || bounds.bottom() > theight) {
+			// element is outside of bounds, squash it so it will be clipped
+			element.setTagName("g");
+			anyClipped = anyConverted = true;
+		}	
+	}
+
+	if (anyClipped) {
+		svgString = TextUtils::removeXMLEntities(domDocument1.toString());
+	}
+
+    if (anyConverted) {
+		for (int i = 0; i < transformCount1; i++) {
+			QDomElement element1 = leaves1.at(i);
+			if (element1.tagName() != "g") {
+				QDomElement element2 = leaves2.at(i);
+				element2.setTagName("g");
+			}
+		}
+		
+		QString svg = TextUtils::removeXMLEntities(domDocument2.toString());
+
+		QSize imgSize(twidth, theight);
+
+		// expand the svg to fill the space of the image
+		QRegExp widthFinder("width=[^i]+in.");
+		int ix = widthFinder.indexIn(svg);
+		if (ix >= 0) {
+			svg.replace(ix, widthFinder.cap(0).length(), QString("width=\"%1px\"").arg(twidth));
+		}
+		QRegExp heightFinder("height=[^i]+in.");
+		ix = heightFinder.indexIn(svg);
+		if (ix > 0) {
+			svg.replace(ix, heightFinder.cap(0).length(), QString("height=\"%1px\"").arg(theight));
+		}
+
+		QStringList exceptions;
+		exceptions << "none" << "";
+		QString toColor("#000000");
+		QByteArray svgByteArray;
+		SvgFileSplitter::changeColors(svg, toColor, exceptions, svgByteArray);
+
+		QImage image(imgSize, QImage::Format_RGB32);
+		image.fill(0);
+		image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+		image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
+		QRectF target(0, 0, twidth, theight);
+
+		//QString simple = "<html>"
+			//"<body><font color='#ff0000'>hello world</font>"
+			//"</body></html>";
+
+		QWebPage webpage;
+		webpage.setViewportSize(image.size());
+		webpage.mainFrame()->setContent(svgByteArray, "image/svg+xml");
+		//webpage.mainFrame()->setContent(simple.toUtf8());
+		QPainter painter;
+		painter.begin(&image);
+		webpage.mainFrame()->render(&painter);
+		painter.end();
+		image.invertPixels();				// need white pixels on a black background for GroundPlaneGenerator
+		//image.save("output.png");
+
+		GroundPlaneGenerator gpg;
+		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen", false);
+		foreach (QString gsvg, gpg.newSVGs()) {
+			svgString = TextUtils::mergeSvg(svgString, gsvg, "");
+		}
+	}
+
+	return svgString;
+}

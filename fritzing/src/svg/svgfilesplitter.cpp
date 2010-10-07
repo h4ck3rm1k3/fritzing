@@ -1220,6 +1220,11 @@ QMatrix SvgFileSplitter::elementToMatrix(QDomElement & element) {
 	QString transform = element.attribute("transform");
 	if (transform.isEmpty()) return QMatrix();
 
+	return transformStringToMatrix(transform);
+}
+
+QMatrix SvgFileSplitter::transformStringToMatrix(const QString & transform) {
+
 	QList<qreal> floats = getTransformFloats(transform);
 
 	if (transform.startsWith("translate")) {

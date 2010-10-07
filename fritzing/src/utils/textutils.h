@@ -41,14 +41,14 @@ class TextUtils
 public:
 	static QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
+	static void findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements);
 	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
 	static qreal convertToInches(const QString & string);
 	static QString convertToPowerPrefix(qreal);
 	static qreal convertFromPowerPrefix(const QString & val, const QString & symbol);
 
 	static QString replaceTextElement(const QString & svg, const QString & label);
-    static bool squashElement(QString & svg, const QString & elementName, const QString & attName, const QRegExp & matchContent);
-    static bool squashNotElement(QString & svg, const QString & elementName, const QString & attName, const QRegExp & matchContent);
+    static bool squashElement(QDomDocument &, const QString & elementName, const QString & attName, const QRegExp & matchContent);
     static QString mergeSvg(const QString & svg1, const QString & svg2, const QString & id);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
@@ -76,13 +76,13 @@ public:
 	static const QString PowerPrefixesString;
 	static const QString CreatedWithFritzingString;
 	static const QString CreatedWithFritzingXmlComment;
+	static void collectLeaves(QDomElement & element, int & index, QVector<QDomElement> & leaves);
 
 protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);
 	static bool pxToInches(QDomElement &elem, const QString &attrName, bool isIllustrator);
     static void squashNotElement(QDomElement & element, const QString & elementName, const QString & attName, const QRegExp & matchContent, bool & result);
 	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altAtt, const QString & altElementID, qreal printerScale);
-	static void findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements);
 	static void initPowerPrefixes();
 
 };

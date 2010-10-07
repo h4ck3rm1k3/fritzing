@@ -5377,7 +5377,8 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 }
 
 QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
-								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool selectedItems, bool flatten, bool fillHoles)
+								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, 
+								  bool selectedItems, bool flatten, bool fillHoles)
 {
 
 	QList<ItemBase *> itemBases;
@@ -5428,7 +5429,7 @@ QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) 
 
 QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
-								  bool fillHoles, 
+								  bool fillHoles,
 								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
 {
 	Q_UNUSED(fillHoles);
