@@ -4,48 +4,48 @@
 <svg
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   version="1.2"
-   width="16.200001"
-   height="9"
-   viewBox="0 0 180.00001 100"
+   version="1.1"
+   width="18"
+   height="7.1999998"
    id="svg2">
-  <desc
-     id="desc4">Fritzing footprint SVG</desc>
   <defs
-     id="defs20" />
+     id="defs4" />
   <g
-     transform="translate(0,-110.00037)"
-     id="keepout" />
-  <g
-     transform="translate(0,-110.00037)"
-     id="soldermask" />
-  <g
-     transform="translate(0,-110.00037)"
-     id="outline" />
-  <g
-     id="silkscreen">
-    <path
-       d="m 6.3344566,0.91455468 a 9.2250004,9.2250004 0 0 1 5.8079354,0.008904"
-       transform="matrix(10.231791,0,0,10.231791,-4.3882751,0.39570538)"
-       id="path2863"
-       style="fill:none;stroke:#ffffff;stroke-width:0.5864076;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    <path
-       d="m 6.3344566,0.91455468 a 9.2250004,9.2250004 0 0 1 5.8079354,0.008904"
-       transform="matrix(10.231791,0,0,-10.231791,-4.7384174,99.948639)"
-       id="path2863-4"
-       style="fill:none;stroke:#ffffff;stroke-width:0.5864076;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-  </g>
-  <g
-     id="copper0">
-    <path
-       d="M 6.0749998,4.5 A 2.4749999,2.4749999 0 1 1 1.125,4.5 a 2.4749999,2.4749999 0 1 1 4.9499998,0 z"
-       transform="scale(11.111111,11.111111)"
-       id="path3715"
-       style="fill:none;stroke:#ffbf00;stroke-width:1.80000007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    <path
-       d="M 6.0749998,4.5 A 2.4749999,2.4749999 0 1 1 1.125,4.5 a 2.4749999,2.4749999 0 1 1 4.9499998,0 z"
-       transform="matrix(11.111111,0,0,11.111111,100,5e-7)"
-       id="path3715-9"
-       style="fill:none;stroke:#ffbf00;stroke-width:1.80000007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+     id="layer1">
+    <g
+       id="copper0">
+      <path
+         d="m 5.8499999,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector0pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="m 16.65,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector1pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       id="copper1">
+      <path
+         d="m 5.8499999,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector0pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="m 16.65,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector1pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       id="silkscreen">
+      <path
+         d="m 1.3627411,-7.8845092 a 3.375,3.375 0 0 1 4.0543119,0.022383"
+         transform="translate(5.625,9.45)"
+         id="path3636"
+         style="fill:none;stroke:#ffffff;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="m 5.3974365,17.776921 a 3.375,3.375 0 0 1 -3.9688058,0.0553"
+         transform="translate(5.625,-12.15)"
+         id="path3641"
+         style="fill:none;stroke:#ffffff;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
   </g>
 </svg>
