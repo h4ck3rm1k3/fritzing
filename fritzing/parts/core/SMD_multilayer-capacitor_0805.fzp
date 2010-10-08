@@ -10,11 +10,9 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family">Capacitor</property>
+  <property name="family">Capacitor [bidirectional]</property>
   <property name="capacitance">100 nF</property>
-  <property name="type">multilayer</property>
-  <property name="size">0805</property>
-  <property name="package">SMD</property>
+  <property name="package">0805 [SMD, multilayer]</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>0.01 nF multilayered Ceramic Capacitor</description>

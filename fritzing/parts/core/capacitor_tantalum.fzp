@@ -9,12 +9,11 @@
         <tag>capacitor</tag>
         <tag>fritzing core</tag>
     </tags>
-    <properties>
-  <property name="family">Capacitor</property>
-  <property name="Capacitance">100nF</property>
-  <property name="Capacitor Type">Tantalum</property>
-  <property name="Rated Voltage">35V</property>
-    <property name="package">THT</property></properties>
+  <properties>
+  	<property name="family">Capacitor [unidirectional]</property>
+  	<property name="Capacitance">100nF</property>
+    <property name="package">100 mil [THT, tantalum]</property>
+  </properties>
     <description>Tantalum capacitor.  Plus lead is usually marked and is usually the longer lead.</description>
     <views>
         <iconView>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.2"
+   width="16.200001"
+   height="9"
+   viewBox="0 0 180.00001 100"
+   id="svg2">
+  <desc
+     id="desc4">Fritzing footprint SVG</desc>
+  <defs
+     id="defs20" />
+  <g
+     transform="translate(0,-110.00037)"
+     id="keepout" />
+  <g
+     transform="translate(0,-110.00037)"
+     id="soldermask" />
+  <g
+     transform="translate(0,-110.00037)"
+     id="outline" />
+  <g
+     id="silkscreen">
+    <path
+       d="m 6.3344566,0.91455468 a 9.2250004,9.2250004 0 0 1 5.8079354,0.008904"
+       transform="matrix(10.231791,0,0,10.231791,-4.3882751,0.39570538)"
+       id="path2863"
+       style="fill:none;stroke:#ffffff;stroke-width:0.5864076;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       d="m 6.3344566,0.91455468 a 9.2250004,9.2250004 0 0 1 5.8079354,0.008904"
+       transform="matrix(10.231791,0,0,-10.231791,-4.7384174,99.948639)"
+       id="path2863-4"
+       style="fill:none;stroke:#ffffff;stroke-width:0.5864076;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  </g>
+  <g
+     id="copper0">
+    <path
+       d="M 6.0749998,4.5 A 2.4749999,2.4749999 0 1 1 1.125,4.5 a 2.4749999,2.4749999 0 1 1 4.9499998,0 z"
+       transform="scale(11.111111,11.111111)"
+       id="path3715"
+       style="fill:none;stroke:#ffbf00;stroke-width:1.80000007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       d="M 6.0749998,4.5 A 2.4749999,2.4749999 0 1 1 1.125,4.5 a 2.4749999,2.4749999 0 1 1 4.9499998,0 z"
+       transform="matrix(11.111111,0,0,11.111111,100,5e-7)"
+       id="path3715-9"
+       style="fill:none;stroke:#ffbf00;stroke-width:1.80000007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  </g>
+</svg>

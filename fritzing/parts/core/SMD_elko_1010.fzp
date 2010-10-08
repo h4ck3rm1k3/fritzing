@@ -10,11 +10,9 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-   <property name="family">Capacitor</property>
+  <property name="family">Capacitor [unidirectional]</property>
   <property name="capacitance">1000&#x3BC;F</property>
-  <property name="type">electrolytic</property>
-  <property name="size">1010</property>
-  <property name="package">SMD</property>
+  <property name="package">1010 [SMD, electrolytic]</property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
  <description>An 1&#x3BC;F electrolytic capacitor</description>

@@ -10,11 +10,10 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="family">Capacitor</property>
+  <property name="family">Capacitor [unidirectional]</property>
   <property name="capacitance">1&#181;F</property>
-  <property name="capacitor Type">electrolytic</property>
-  <property name="size">small - 100 mil</property>
- <property name="package">THT</property></properties>
+  <property name="package">100 mil [THT, electrolytic]</property>
+ </properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
  <description>A small electrolytic capacitor</description>
  <views>
