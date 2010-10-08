@@ -293,11 +293,13 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board) {
 
 	QVector <QDomElement> leaves1;
 	int transformCount1 = 0;
-	TextUtils::collectLeaves(domDocument1.documentElement(), transformCount1, leaves1);
+        QDomElement e1 = domDocument1.documentElement();
+        TextUtils::collectLeaves(e1, transformCount1, leaves1);
 
 	QVector <QDomElement> leaves2;
 	int transformCount2 = 0;
-	TextUtils::collectLeaves(domDocument2.documentElement(), transformCount2, leaves2);
+        QDomElement e2 = domDocument2.documentElement();
+        TextUtils::collectLeaves(e2, transformCount2, leaves2);
 
 	qreal res = GraphicsUtils::StandardFritzingDPI;
 	QRectF source = board->boundingRect();
