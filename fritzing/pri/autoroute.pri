@@ -19,8 +19,10 @@
 
 HEADERS += \
 src/autoroute/autorouter1.h \
+src/autoroute/jrouter.h \
 src/autoroute/autorouteprogressdialog.h 
  
 SOURCES += \
 src/autoroute/autorouter1.cpp \
+src/autoroute/jrouter.cpp \
 src/autoroute/autorouteprogressdialog.cpp 
