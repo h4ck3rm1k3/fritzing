@@ -50,6 +50,63 @@ GroundPlaneGenerator::GroundPlaneGenerator()
 GroundPlaneGenerator::~GroundPlaneGenerator() {
 }
 
+bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem * board, qreal res, QList<QRect> & rects)
+{
+	QByteArray boardByteArray;
+    QString tempColor("#000000");
+	QStringList exceptions;
+    if (!SvgFileSplitter::changeColors(boardSvg, tempColor, exceptions, boardByteArray)) {
+		return false;
+	}
+
+	QRectF br = board->sceneBoundingRect();
+	qreal bWidth = res * br.width() / FSvgRenderer::printerScale();
+	qreal bHeight = res * br.height() / FSvgRenderer::printerScale();
+	QImage image(bWidth, bHeight, QImage::Format_RGB32);
+	//image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+	//image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
+	image.fill(0xffffffff);
+
+	QSvgRenderer renderer(boardByteArray);
+	QPainter painter;
+	painter.begin(&image);
+	renderer.render(&painter);
+	painter.end();
+
+	image.save("test.png");
+
+	scanLines(image, bWidth, bHeight, rects);
+
+	// combine same size rects
+	int ix = 0;
+	while (ix < rects.count()) {
+		QRect r = rects.at(ix++);
+		for (int j = ix; j < rects.count(); j++) {
+			QRect s = rects.at(j);
+			if (s.bottom() == r.bottom()) {
+				// on same row; keep going
+				continue;
+			}
+
+			if (s.bottom() > r.bottom() + 1) {
+				// skipped row, can't join
+				break;
+			}
+
+			if (s.left() == r.left() && s.right() == r.right()) {
+				// join these
+				r.setBottom(s.bottom());
+				rects.removeAt(j);
+				ix--;
+				rects.replace(ix, r);
+				break;
+			}
+		}
+	}
+
+	return true;
+}
+
 bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
 								 QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName) 
 {

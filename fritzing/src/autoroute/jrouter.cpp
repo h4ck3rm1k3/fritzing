@@ -26,15 +26,20 @@ $Date: 2010-10-06 08:54:14 +0200 (Wed, 06 Oct 2010) $
 
 
 // TODO:
-//	deal with actual trace width: block is rect isn't "wide" enough
-//		in backpropagate, don't allow change of direction along short side
+//	in backpropagate, don't allow change of direction along short side
 //	wire bendpoint is not a blocker if wire is ownside
 //	insert new traces into the tile plane by divvying up rectangles
-//		note: each rectangular part of the trace can be used as a source/dest
+//		note: each rectangular part of the trace can be used as a source/dest in subsequent rounds
 //	data structure handles DRC overlaps
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
 //	deal with board outline
+//		render to a bitmap with resolution tracewidth
+//		trace out rows as rects
+//			combine vertically
+//	backpropagate: tighten path between connectors once trace has succeeded
+//	fix up cancel/stop
+//	can we use tiles to place jumpers?
 
 #include "jrouter.h"
 #include "../sketch/pcbsketchwidget.h"
@@ -43,9 +48,12 @@ $Date: 2010-10-06 08:54:14 +0200 (Wed, 06 Oct 2010) $
 #include "../items/tracewire.h"
 #include "../items/jumperitem.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
 #include "../processeventblocker.h"
+#include "../svg/groundplanegenerator.h"
+#include "../fsvgrenderer.h"
 
 #include "tile.h"
 
@@ -54,6 +62,7 @@ $Date: 2010-10-06 08:54:14 +0200 (Wed, 06 Oct 2010) $
 #include <limits>
 
 static const int MaximumProgress = 1000;
+static const int NOTBOARD = 33;
 
 struct JumperItemStruct {
 	ConnectorItem * from;
@@ -120,10 +129,7 @@ void JRouter::stopTrace() {
 }
 
 void JRouter::start()
-{
-	// TODO: tighten path between connectors once trace has succeeded
-	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
-	
+{	
 	m_maximumProgressPart = 2;
 	m_currentProgressPart = 0;
 
@@ -267,6 +273,30 @@ void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem,
 		TOP(boardTile) = m_maxRect.bottom();		// TILE is Math Y-axis not computer-graphic Y-axis
 	}
 
+	// if board is not rectangular, add tiles for the outside edges;
+
+	if (board) {
+		QHash<QString, SvgFileSplitter *> svgHash;
+		qreal res = FSvgRenderer::printerScale();
+		QRectF boundingRect = board->boundingRect();
+		QString svg = TextUtils::makeSVGHeader(res, res, boundingRect.width(), boundingRect.height());
+		svg += board->retrieveSvg(ViewLayer::Board, svgHash, true, FSvgRenderer::printerScale());
+		svg += "</svg>";
+		GroundPlaneGenerator gpg;
+		QList<QRect> rects;
+		gpg.getBoardRects(svg, board, res, rects);
+		QPointF boardPos = board->pos();
+		foreach (QRect r, rects) {
+			TileRect tileRect;
+			tileRect.xmin = r.left() + boardPos.x();
+			tileRect.xmax = r.right() + boardPos.x();
+			tileRect.ymin = r.top() + boardPos.y();		// TILE is Math Y-axis not computer-graphic Y-axis
+			// note off-by-one weirdness
+			tileRect.ymax = r.bottom() + 1 + boardPos.y();  
+			TiInsertTile(thePlane, &tileRect, NULL, NULL, (void *) &NOTBOARD);
+		}
+	}
+
 
 	// deal with "rectangular" elements first
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
@@ -358,9 +388,6 @@ void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem,
 			QPointF p1 = to->sceneAdjustedTerminalPoint(NULL);
 			subedges.append(makeSubedge(edge, p1, to, fp, edge->from, false));
 		}
-
-		// TODO: add subedges for each trace based on splitting it into rectangles to fit it on the tile grid
-
 		qSort(subedges.begin(), subedges.end(), subedgeLessThan);
 
 		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
@@ -836,7 +863,7 @@ bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane,
 		DebugDialog::debug(QString("wave:%1 fof:%2").arg(seed.wave).arg(consensusFOF), r);
 		gridEntry = drawGridItem(x1, y1, x2, y2, seed.wave, consensusFOF);
 		TiSetClient(seed.tile, gridEntry);
-		//TODO: this should only happen every once in a while
+		//TODO: processEvents should only happen every once in a while
 		ProcessEventBlocker::processEvents();
 		if (consensusFOF == GridEntry::GOAL) {
 			path.append(seed);
@@ -847,34 +874,27 @@ bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane,
 		}
 
 		path.append(seed);
-
-		// safe to try the next grid blocks
-		// TODO: clip the first and last blocks if they're not wide enough for a trace?
-
 		seedNext(seed, seeds);
-
-
 	}
 
 	return false;
 }
 
-void appendIfNotAlready(Seed & seed, Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*)) {
-	if (TiGetClient(tile) == NULL) {					// not already visited
-		if (enoughOverlap(seed.tile, tile)) {			
-			seeds.append(Seed(seed.wave + 1, tile));
-		}
-		/*
-		else {
-			// for debugging
-			QRectF r1, r2;
-			tileToRect(seed.tile, r1);
-			tileToRect(tile, r2);
-			DebugDialog::debug("no overlap", r1);
-			DebugDialog::debug("        ", r2);
-		}
-		*/
+void appendIf(Seed & seed, Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*)) {
+	
+	if (TiGetClient(tile) != NULL) {
+		return;			// already visited
 	}
+
+	if (TiGetBody(tile) == &NOTBOARD) {
+		return;		// outside board boundaries
+	}
+
+	if (!enoughOverlap(seed.tile, tile)) {
+		return;	// not wide/high enough 
+	}
+
+	seeds.append(Seed(seed.wave + 1, tile));
 }
 
 bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2) {
@@ -889,53 +909,53 @@ bool enoughOverlapVertical(Tile* tile1, Tile* tile2) {
 void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
 	if (RIGHT(seed.tile) < m_maxRect.right()) {
 		Tile * next = TR(seed.tile);
-		appendIfNotAlready(seed, next, seeds, enoughOverlapVertical);
+		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
 			next = LB(next);
 			if (TOP(next) <= BOTTOM(seed.tile)) {
 				break;
 			}
 
-			appendIfNotAlready(seed, next, seeds, enoughOverlapVertical);
+			appendIf(seed, next, seeds, enoughOverlapVertical);
 		}
 	}
 
 	if (LEFT(seed.tile) > m_maxRect.left()) {
 		Tile * next = BL(seed.tile);
-		appendIfNotAlready(seed, next, seeds, enoughOverlapVertical);
+		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
 			next = RT(next);
 			if (BOTTOM(next) >= TOP(seed.tile)) {
 				break;
 			}
 
-			appendIfNotAlready(seed, next, seeds, enoughOverlapVertical);
+			appendIf(seed, next, seeds, enoughOverlapVertical);
 		}
 	}
 
 	if (TOP(seed.tile) < m_maxRect.bottom()) {		// reverse axis
 		Tile * next = RT(seed.tile);
-		appendIfNotAlready(seed, next, seeds, enoughOverlapHorizontal);
+		appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		while (true) {
 			next = BL(next);
 			if (RIGHT(next) <= LEFT(seed.tile)) {
 				break;
 			}
 
-			appendIfNotAlready(seed, next, seeds, enoughOverlapHorizontal);
+			appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		}
 	}
 
 	if (BOTTOM(seed.tile) > m_maxRect.top()) {		// reverse axis
 		Tile * next = LB(seed.tile);
-		appendIfNotAlready(seed, next, seeds, enoughOverlapHorizontal);
+		appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		while (true) {
 			next = TR(next);
 			if (LEFT(next) >= RIGHT(seed.tile)) {
 				break;
 			}
 
-			appendIfNotAlready(seed, next, seeds, enoughOverlapHorizontal);
+			appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		}
 	}
 }
@@ -1182,8 +1202,6 @@ void JRouter::collectEdges(QVector<int> & netCounters, QList<JEdge *> & edges, V
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
 		if (vw == NULL) continue;
-
-		//  TODO: make sure we're on the right side
 
 		ConnectorItem * from = vw->connector0()->firstConnectedToIsh();
 		if (!m_sketchWidget->sameElectricalLayer2(viewLayerID, from->attachedToViewLayerID())) {
