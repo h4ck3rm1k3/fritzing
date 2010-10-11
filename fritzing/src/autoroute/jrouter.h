@@ -49,16 +49,14 @@ struct FourInts {
 	int maxY;
 };
 
-struct JPoint {
-	JPoint(qreal _x, qreal _y, int _d) {
-		x = _x;
-		y = _y;
-		d = _d;
+struct Seed {
+	Seed(int _wave, struct Tile * _tile) {
+		wave = _wave;
+		tile = _tile;
 	}
 
-	qreal x;
-	qreal y;
-	int d;
+	struct Tile * tile;
+	int wave;
 };
 
 struct JEdge {
@@ -82,6 +80,7 @@ struct JSubedge {
 	class Wire * toWire;
 	QPointF point;
 	double distance;
+	bool forward;
 };
 
 struct GridEntry {
@@ -92,10 +91,10 @@ struct GridEntry {
 		SELF = 8,
 		GOAL = 16,
 		OWNSIDE = 32,
-		BLOCKER = 64
+		BLOCK = 64
 	};
 
-	int distance;
+	int wave;
 	short flags;
 	QGraphicsRectItem* item;
 };
@@ -111,8 +110,7 @@ public:
 	void start();
 	
 protected:
-	bool drawTrace(struct JSubedge *, struct Plane *, ViewLayer::ViewLayerID viewLayerID);
-	bool drawTrace(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool recurse, bool & shortcut);
+	bool drawTrace(struct JSubedge *, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> &);
 	void cleanUp();
 	void updateRoutingStatus();
 	class JumperItem * drawJumperItem(struct JumperItemStruct *);
@@ -141,11 +139,12 @@ protected:
 	bool hasCollisions(JumperItem *, ViewLayer::ViewLayerID, QGraphicsItem *, ConnectorItem * from); 
 	void updateProgress(int num, int denom);
 	GridEntry * drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int distance, short flag);
-	bool propagate(JSubedge * subedge, QList<JPoint> seeds, struct Plane *, ViewLayer::ViewLayerID);
-	bool backPropagate(JSubedge * subedge, QList<JPoint> seeds, struct Plane *, ViewLayer::ViewLayerID viewLayerID);
+	bool propagate(JSubedge * subedge, QList<Seed> & path, struct Plane *, ViewLayer::ViewLayerID);
+	bool backPropagate(JSubedge * subedge, QList<Seed> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires);
 	short checkCandidate(JSubedge * subedge, QGraphicsItem * item, ViewLayer::ViewLayerID);
-	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to);
+	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to, bool forward);
 	struct Tile * addTile(class NonConnectorItem * nci, struct Plane *);
+	void seedNext(struct Seed & seed, QList<struct Seed> & seeds);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
