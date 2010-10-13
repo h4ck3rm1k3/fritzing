@@ -122,16 +122,12 @@ protected:
 	void findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance); 
 	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
 	void reduceColinearWires(QList<Wire *> &);
-	bool sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
-	bool sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited);
 	bool findSpaceFor(ConnectorItem * & from, class JumperItem *, struct JumperItemStruct *, QPointF & candidate); 
 	void collectEdges(QVector<int> & netCounters, QList<struct JEdge *> & edges, ViewLayer::ViewLayerID);
-	bool traceSubedge(struct JSubedge* subedge, struct Plane *, class ItemBase * partForBounds, QGraphicsLineItem *, ViewLayer::ViewLayerID);
-	ItemBase * getPartForBounds(struct JEdge *);
+	bool traceSubedge(struct JSubedge* subedge, struct Plane *, class ItemBase * partForBounds, ViewLayer::ViewLayerID);
 	void fixupJumperItems(QList<struct JumperItemStruct *> &);
-	void runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem, 	
-				  QList<struct JumperItemStruct *> & jumperItemStructs,
+	void runEdges(QList<JEdge *> & edges, QList<struct JumperItemStruct *> & jumperItemStructs,
 				  QVector<int> & netCounters, struct RoutingStatus &);
 	void clearEdges(QList<JEdge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
@@ -141,10 +137,15 @@ protected:
 	GridEntry * drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int distance, short flag);
 	bool propagate(JSubedge * subedge, QList<Seed> & path, struct Plane *, ViewLayer::ViewLayerID);
 	bool backPropagate(JSubedge * subedge, QList<Seed> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires);
-	short checkCandidate(JSubedge * subedge, QGraphicsItem * item, ViewLayer::ViewLayerID);
+	short checkCandidate(JSubedge * subedge, struct Tile *, ViewLayer::ViewLayerID);
 	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to, bool forward);
-	struct Tile * addTile(class NonConnectorItem * nci, struct Plane *);
+	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *);
 	void seedNext(struct Seed & seed, QList<struct Seed> & seeds);
+	struct Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID);
+	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere);
+	short checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem *);
+	short checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire *);
+
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);

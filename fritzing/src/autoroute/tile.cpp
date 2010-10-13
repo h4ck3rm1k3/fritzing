@@ -22,6 +22,15 @@
 #include <limits>
 #include "tile.h"
 
+
+// make sure nobody else uses these values for tile type
+enum {
+	DUMMYLEFT = 999999,
+	DUMMYTOP,
+	DUMMYRIGHT,
+	DUMMYBOTTOM
+};
+
 /*
  * Debugging version of TiSetBody() macro in tile.h
  * Includes sanity check that a tile at "infinity"
@@ -31,9 +40,9 @@
 void
 TiSetBody(tp, b)
    Tile *tp;
-   ClientData b;
+   BodyPointer b;
 {
-   if (b != (ClientData)0 && b != (ClientData)(-1))
+   if (b != (BodyPointer)0 && b != (BodyPointer)(-1))
 	if (RIGHT(tp) == INFINITY || TOP(tp) == INFINITY ||
 		LEFT(tp) == MINFINITY || BOTTOM(tp) == MINFINITY)
 	    TxError("Error:  Tile at infinity set to non-space value %d\n", (int)b);
@@ -115,7 +124,8 @@ TiNewPlane(Tile *tile)
     TR(newplane->pl_bottom) = newplane->pl_right;
     LB(newplane->pl_bottom) = BADTILE;
     BL(newplane->pl_bottom) = newplane->pl_left;
-    TiSetBody(newplane->pl_bottom, -1);
+    TiSetBody(newplane->pl_bottom, 0);
+    TiSetType(newplane->pl_bottom, DUMMYBOTTOM);
 
     LEFT(newplane->pl_top) = MINFINITY;
     BOTTOM(newplane->pl_top) = INFINITY;
@@ -123,7 +133,8 @@ TiNewPlane(Tile *tile)
     TR(newplane->pl_top) = newplane->pl_right;
     LB(newplane->pl_top) = tile;
     BL(newplane->pl_top) = newplane->pl_left;
-    TiSetBody(newplane->pl_top, -1);
+    TiSetBody(newplane->pl_top, 0);
+    TiSetType(newplane->pl_bottom, DUMMYTOP);
 
     LEFT(newplane->pl_left) = MINFINITY;
     BOTTOM(newplane->pl_left) = MINFINITY;
@@ -131,7 +142,8 @@ TiNewPlane(Tile *tile)
     TR(newplane->pl_left) = tile;
     LB(newplane->pl_left) = newplane->pl_bottom;
     BL(newplane->pl_left) = BADTILE;
-    TiSetBody(newplane->pl_left, -1);
+    TiSetBody(newplane->pl_left, 0);
+    TiSetType(newplane->pl_bottom, DUMMYLEFT);
 
     LEFT(newplane->pl_right) = INFINITY;
     BOTTOM(newplane->pl_right) = MINFINITY;
@@ -139,7 +151,8 @@ TiNewPlane(Tile *tile)
     TR(newplane->pl_right) = infinityTile;
     LB(newplane->pl_right) = newplane->pl_bottom;
     BL(newplane->pl_right) = tile;
-    TiSetBody(newplane->pl_right, -1);
+    TiSetBody(newplane->pl_right, 0);
+    TiSetType(newplane->pl_bottom, DUMMYRIGHT);
 
     newplane->pl_hint = tile;
     return (newplane);
@@ -621,15 +634,17 @@ TiJoinY(Tile *tile1, Tile *tile2, Plane *plane)
     //ASSERT(BOTTOM(tile1) != BOTTOM(tile2), "TiJoinY");
     if (BOTTOM(tile1) < BOTTOM(tile2))
     {
-	for (tp = RT(tile2); LB(tp) == tile2; tp = BL(tp))
-	    LB(tp) = tile1;
+		for (tp = RT(tile2); LB(tp) == tile2; tp = BL(tp)) {
+			LB(tp) = tile1;
+		}
 	RT(tile1) = RT(tile2);
 	TR(tile1) = TR(tile2);
     }
     else
     {
-	for (tp = LB(tile2); RT(tp) == tile2; tp = TR(tp))
-	    RT(tp) = tile1;
+		for (tp = LB(tile2); RT(tp) == tile2; tp = TR(tp)) {
+			RT(tp) = tile1;
+		}
 	LB(tile1) = LB(tile2);
 	BL(tile1) = BL(tile2);
 	BOTTOM(tile1) = BOTTOM(tile2);
@@ -662,6 +677,7 @@ TiAlloc()
     newtile = new Tile;
     TiSetClient(newtile, 0);
     TiSetBody(newtile, 0);
+	TiSetType(newtile, 0);
 	LB(newtile) = BL(newtile) = RT(newtile) = TR(newtile) = 0;
     return (newtile);
 }

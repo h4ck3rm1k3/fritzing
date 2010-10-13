@@ -63,20 +63,22 @@ struct TilePoint {
  * tile body.
  */
 
-typedef void * ClientData;
+typedef void * UserData;
+typedef void * BodyPointer;
+typedef void * ClientPointer;
 
 struct Tile
 {
-    ClientData	 ti_body;	/* Body of tile */
+	int		 ti_type;		/* another free field */
+    BodyPointer	 ti_body;	/* Body of tile */
     struct Tile	*ti_lb;		/* Left bottom corner stitch */
     struct Tile	*ti_bl;		/* Bottom left corner stitch */
     struct Tile	*ti_tr;		/* Top right corner stitch */
     struct Tile	*ti_rt;		/* Right top corner stitch */
     TilePoint	 ti_ll;		/* Lower left coordinate */
-    ClientData	 ti_client;	/* This space for hire.  Warning: the default
+    ClientPointer	 ti_client;	/* This space for hire.  Warning: the default
 				 * value for this field, to which all users
-				 * should return it when done, is CLNTDEFAULT
-				 * instead of NULL.
+				 * should return it when done, is NULL
 				 */
 };
 
@@ -154,7 +156,7 @@ extern qreal INFINITY;
 extern qreal MINFINITY;
 extern qreal MINDIFF;
 
-typedef int (*TileCallback)(Tile *, ClientData);
+typedef int (*TileCallback)(Tile *, UserData);
 
 /* ------------------------ Flags, etc -------------------------------- */
 
@@ -176,76 +178,27 @@ Tile *TiSplitX_Left(Tile *tile, qreal x);
 Tile *TiSplitY_Bottom(Tile *tile, qreal y);
 void  TiJoinX(Tile *tile1, Tile *tile2, Plane *plane);
 void  TiJoinY(Tile *tile1, Tile *tile2, Plane *plane);
-int   TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback, ClientData arg);
+int   TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback, UserData arg);
 Tile *TiSrPoint( Tile * hintTile, Plane * plane, qreal x, qreal y);
-Tile* TiInsertTile(Plane *, TileRect * rect, TileCallback, ClientData arg, ClientData body);
+Tile* TiInsertTile(Plane *, TileRect * rect, TileCallback, UserData arg, BodyPointer body, int type);
 
 #define	TiBottom(tp)	(BOTTOM(tp))
 #define	TiLeft(tp)		(LEFT(tp))
 #define	TiTop(tp)		(TOP(tp))
 #define	TiRight(tp)		(RIGHT(tp))
 
-/*
- * For the following to work, the caller must include database.h
- * (to get the definition of TileType).
- */
-
-#ifdef NONMANHATTAN
-
-/*
- *  Non-Manhattan split tiles are defined as follows:
- *  d = SplitDirection, s = SplitSide
- *
- *   d=1      d=0
- *  +---+    +---+
- *  |\XX|    |  /|
- *  | \X|    | /X|  s=1
- *  |  \|    |/XX|
- *  +---+    +---+
- *   0x7      0x6
- *
- *  +---+    +---+
- *  |\  |    |XX/|
- *  |X\ |    |X/ |  s=0
- *  |XX\|    |/  |
- *  +---+    +---+
- *   0x5      0x4
- *
- */
-
-#define TiGetType(tp)		((TileType)(spointertype)((tp)->ti_body) & TT_LEFTMASK)
-#define TiGetTypeExact(tp)	((TileType)(spointertype) (tp)->ti_body)
-#define SplitDirection(tp)	((TileType)(spointertype)((tp)->ti_body) & TT_DIRECTION ? 1 : 0)
-#define SplitSide(tp)		((TileType)(spointertype)((tp)->ti_body) & TT_SIDE ? 1 : 0)
-#define IsSplit(tp)		((TileType)(spointertype)((tp)->ti_body) & TT_DIAGONAL ? TRUE : FALSE)
-   
-#define SplitLeftType(tp)	((TileType)(spointertype)((tp)->ti_body) & TT_LEFTMASK)
-#define SplitRightType(tp)	(((TileType)(spointertype)((tp)->ti_body) & TT_RIGHTMASK) >> 14)
-#define SplitTopType(tp)	(((TileType)(spointertype)((tp)->ti_body) & TT_DIRECTION) ? \
-					SplitRightType(tp) : SplitLeftType(tp))
-#define SplitBottomType(tp)	(((TileType)(spointertype)((tp)->ti_body) & TT_DIRECTION) ? \
-					SplitLeftType(tp) : SplitRightType(tp))
-
-#define TiGetLeftType(tp)	SplitLeftType(tp)
-#define TiGetRightType(tp)	((IsSplit(tp)) ? SplitRightType(tp) : TiGetType(tp))
-#define TiGetTopType(tp)	((IsSplit(tp)) ? SplitTopType(tp) : TiGetType(tp))
-#define TiGetBottomType(tp)	((IsSplit(tp)) ? SplitBottomType(tp) : TiGetType(tp))
- 
-#else
-#define	TiGetType(tp)		((TileType)(spointertype) (tp)->ti_body)
-#define TiGetTypeExact(tp)	TiGetType(tp)
-#define TiGetLeftType(tp)	TiGetType(tp)
-#define TiGetRightType(tp)	TiGetType(tp)
-#define TiGetTopType(tp)	TiGetType(tp)
-#define TiGetBottomType(tp)	TiGetType(tp)
-#define IsSplit(tp)		0
-#endif
+#define	TiGetType(tp)		((tp)->ti_type)
+#define TiSetType(tp, t)	((tp)->ti_type = (int) (t))
+#define TiGetLeftType(tp)	TiGetType(LEFT(tp))
+#define TiGetRightType(tp)	TiGetType(RIGHT(tp))
+#define TiGetTopType(tp)	TiGetType(TOP(tp))
+#define TiGetBottomType(tp)	TiGetType(BOTTOM(tp))
 
 #define	TiGetBody(tp)		((tp)->ti_body)
 /* See diagnostic subroutine version in tile.c */
-#define	TiSetBody(tp, b)	((tp)->ti_body = (ClientData) (b))
+#define	TiSetBody(tp, b)	((tp)->ti_body = (BodyPointer) (b))
 #define	TiGetClient(tp)		((tp)->ti_client)
-#define	TiSetClient(tp,b)	((tp)->ti_client = (ClientData) (b))
+#define	TiSetClient(tp,b)	((tp)->ti_client = (ClientPointer) (b))
 
 Tile *TiAlloc();
 void TiFree(Tile *);
@@ -286,11 +239,6 @@ void TiFree(Tile *);
 #define	TiSrPointNoHint(plane, point)	(TiSrPoint((Tile *) NULL, plane, point))
 
 Tile * gotoPoint(Tile * tile, TilePoint p);
-
-/* Fill in the bounding rectangle for a tile */
-#define	TITORECT(tp, rp) \
-	((rp)->r_xbot = LEFT(tp), (rp)->r_ybot = BOTTOM(tp), \
-	 (rp)->r_xtop = RIGHT(tp), (rp)->r_ytop = TOP(tp))
 
 extern TileRect TiPlaneRect;	/* Rectangle large enough to force area
 				 * search to visit every tile in the

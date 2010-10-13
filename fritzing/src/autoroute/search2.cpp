@@ -26,7 +26,7 @@ qreal MINDIFF = .00001;
 
 /* -------------------- Local function headers ------------------------ */
 
-int tiSrAreaEnum(Tile *enumRT, int enumBottom,  TileRect *rect, TileCallback, ClientData arg);
+int tiSrAreaEnum(Tile *enumRT, int enumBottom,  TileRect *rect, TileCallback, UserData arg);
 
 /*
  * --------------------------------------------------------------------
@@ -40,7 +40,7 @@ int tiSrAreaEnum(Tile *enumRT, int enumBottom,  TileRect *rect, TileCallback, Cl
  *	int
  *	func(tile, cdata)
  *	    Tile *tile;
- *	    ClientData cdata;
+ *	    UserData cdata;
  *	{
  *	}
  *
@@ -80,7 +80,7 @@ int tiSrAreaEnum(Tile *enumRT, int enumBottom,  TileRect *rect, TileCallback, Cl
  */
 
 int
-TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback, ClientData arg)
+TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback, UserData arg)
     /* Tile at which to begin search, if not NULL.
 			 * If this is NULL, use the hint tile supplied
 			 * with plane.
@@ -164,7 +164,7 @@ TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback
  */
 
 int
-tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCallback, ClientData arg)
+tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCallback, UserData arg)
    /* TR corner stitch of tile just enumerated */
    /* Bottom coordinate of tile just enumerated */
    /* Area to search */

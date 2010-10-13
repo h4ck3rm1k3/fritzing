@@ -22,8 +22,8 @@
 
 #include "tile.h"
 
-int placeCellFunc(Tile *, ClientData);
-int deleteCellFunc(Tile *, ClientData);
+int placeCellFunc(Tile *, UserData);
+int deleteCellFunc(Tile *, UserData);
 Tile * clipCellTile(Tile * tile, Plane * plane, TileRect * rect);
 void cellTileMerge(Tile  * tile, Plane * plane, int direction); 
 bool ctbListMatch (Tile *tp1, Tile *tp2);
@@ -33,7 +33,8 @@ struct searchArg
 {
     TileRect * rect;
     Plane * plane;
-	ClientData body;
+	BodyPointer body;
+	int type;
 };
 
 #define		TOPLEFT			10
@@ -64,7 +65,7 @@ struct searchArg
  */
 
 void
-DBPlaceCell (Plane * plane, TileRect * rect, ClientData body)
+DBPlaceCell (Plane * plane, TileRect * rect, BodyPointer body, int type)
 /* argument to TiSrArea(), placeCellFunc() */
 /* argument to TiSrArea(), placeCellFunc() */
 {
@@ -72,8 +73,9 @@ DBPlaceCell (Plane * plane, TileRect * rect, ClientData body)
     arg.rect = rect;
     arg.plane = plane;
 	arg.body = body;
+	arg.type = type;
 
-    (void) TiSrArea((Tile *) NULL, plane, rect, placeCellFunc, (ClientData) &arg);
+    (void) TiSrArea((Tile *) NULL, plane, rect, placeCellFunc, (UserData) &arg);
 
 }
 
@@ -99,7 +101,7 @@ DBDeleteCell (Plane  * plane, TileRect * rect)
 {
     struct searchArg arg;	/* argument to deleteCellFunc() */
 
-    (void) TiSrArea((Tile *) NULL, plane, rect, deleteCellFunc, (ClientData) &arg);
+    (void) TiSrArea((Tile *) NULL, plane, rect, deleteCellFunc, (UserData) &arg);
 
 }
 
@@ -123,12 +125,13 @@ DBDeleteCell (Plane  * plane, TileRect * rect)
  */
 
 int
-placeCellFunc (Tile * tile, ClientData data)
+placeCellFunc (Tile * tile, UserData data)
     /* target tile */
     /* celluse, rect, plane */
 {
 	struct searchArg * arg = (struct searchArg *) data;
     Tile * tp = clipCellTile (tile, arg->plane, arg->rect);
+	TiSetType(tp, arg->type);
 	TiSetBody(tp, arg->body);
 
 /* merge tiles back into the the plane */
@@ -165,7 +168,7 @@ placeCellFunc (Tile * tile, ClientData data)
  */
 
 int
-deleteCellFunc (Tile * tile, ClientData data)
+deleteCellFunc (Tile * tile, UserData data)
 {
 
 	struct searchArg * arg = (struct searchArg *) data;
@@ -411,7 +414,7 @@ bool
 ctbListMatch (Tile *tp1, Tile *tp2)
 
 {
-	return tp1->ti_body == tp2->ti_body;
+	return (tp1->ti_body == tp2->ti_body) && (tp1->ti_type == tp2->ti_type);
 }
 
 /*
@@ -432,6 +435,7 @@ void
 dupTileBody (Tile * oldtp, Tile * newtp)
 {
 	TiSetBody(newtp, TiGetBody(oldtp));
+	TiSetType(newtp, TiGetType(oldtp));
 }
 	
 	
@@ -452,11 +456,11 @@ dupTileBody (Tile * oldtp, Tile * newtp)
 	
 struct AlreadyThing {
 	TileCallback otherCallback;
-	ClientData data;
+	UserData data;
 	bool found;
 };
 
-int checkAlready(Tile * tile, ClientData data) {
+int checkAlready(Tile * tile, UserData data) {
 	AlreadyThing * alreadyThing = (AlreadyThing *) data;
 	alreadyThing->found = alreadyThing->found || (tile->ti_client != NULL);
 	if (alreadyThing->otherCallback) {
@@ -465,7 +469,7 @@ int checkAlready(Tile * tile, ClientData data) {
 	return 0;
 }
 
-Tile* TiInsertTile(Plane * plane, TileRect * rect, TileCallback ifAlready, ClientData data, ClientData body) {
+Tile* TiInsertTile(Plane * plane, TileRect * rect, TileCallback ifAlready, UserData data, BodyPointer body, int type) {
 	AlreadyThing alreadyThing;
 	alreadyThing.found = false;
 	alreadyThing.data = data;
@@ -473,6 +477,6 @@ Tile* TiInsertTile(Plane * plane, TileRect * rect, TileCallback ifAlready, Clien
 	TiSrArea(NULL, plane, rect, checkAlready, &alreadyThing);
 	if (alreadyThing.found) return NULL;
 
-	DBPlaceCell(plane, rect, body);
+	DBPlaceCell(plane, rect, body, type);
 	return TiSrPoint(NULL, plane, rect->xmin, rect->ymin);
 }

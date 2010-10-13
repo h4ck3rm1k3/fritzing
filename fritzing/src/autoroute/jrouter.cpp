@@ -28,18 +28,21 @@ $Date: 2010-10-06 08:54:14 +0200 (Wed, 06 Oct 2010) $
 // TODO:
 //	in backpropagate, don't allow change of direction along short side
 //	wire bendpoint is not a blocker if wire is ownside
-//	insert new traces into the tile plane by divvying up rectangles
-//		note: each rectangular part of the trace can be used as a source/dest in subsequent rounds
+//	insert new traces
 //	data structure handles DRC overlaps
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
-//	deal with board outline
-//		render to a bitmap with resolution tracewidth
-//		trace out rows as rects
-//			combine vertically
-//	backpropagate: tighten path between connectors once trace has succeeded
+//	backpropagate: tighten path between connectors once trace has succeeded?
 //	fix up cancel/stop
-//	can we use tiles to place jumpers?
+//	use tiles to place jumpers
+//		foreach ownside tile
+//			do normal trace search, except goal is an empty connector-sized region
+//	use tile to place vias
+//		tile both sides
+//		for each onside tile
+//			do jumper search, but goal is empty space that has overlapping tile on the other side
+//				when such tile is found, do normal trace search on the other side from via to connector
+
 
 #include "jrouter.h"
 #include "../sketch/pcbsketchwidget.h"
@@ -62,7 +65,15 @@ $Date: 2010-10-06 08:54:14 +0200 (Wed, 06 Oct 2010) $
 #include <limits>
 
 static const int MaximumProgress = 1000;
-static const int NOTBOARD = 33;
+enum TileType {
+	NOTBOARD = 1,
+	NONCONNECTOR,
+	TRACE,
+	TRACECONNECTOR,
+	CONNECTOR,
+	PART,
+	SPACE
+};
 
 struct JumperItemStruct {
 	ConnectorItem * from;
@@ -74,7 +85,6 @@ struct JumperItemStruct {
 	ViewLayer::ViewLayerID toViewLayerID;
 	bool deleted;
 };
-
 
 bool edgeLessThan(JEdge * e1, JEdge * e2)
 {
@@ -175,19 +185,11 @@ void JRouter::start()
 
 	ProcessEventBlocker::processEvents(); // to keep the app  from freezing
 
-	QGraphicsLineItem * lineItem = new QGraphicsLineItem(0, 0, 0, 0, NULL, m_sketchWidget->scene());
-	QPen pen = lineItem->pen();
-	pen.setColor(QColor(255, 200, 200));
-	pen.setWidthF(5);
-	pen.setCapStyle(Qt::RoundCap);
-	lineItem->setPen(pen);
-
 	QList<JumperItemStruct *> jumperItemStructs;
-	runEdges(edges, lineItem, jumperItemStructs, netCounters, routingStatus);
+	runEdges(edges, jumperItemStructs, netCounters, routingStatus);
 	clearEdges(edges);
 
 	if (m_cancelled) {
-		delete lineItem;
 		doCancel(parentCommand);
 		return;
 	}
@@ -197,17 +199,14 @@ void JRouter::start()
 		ProcessEventBlocker::processEvents();
 		m_viewLayerSpec = ViewLayer::Top;
 		m_currentProgressPart++;
-		runEdges(edges, lineItem, jumperItemStructs, netCounters, routingStatus);
+		runEdges(edges, jumperItemStructs, netCounters, routingStatus);
 		clearEdges(edges);
 	}
 
 	if (m_cancelled) {
-		delete lineItem;
 		doCancel(parentCommand);
 		return;
 	}
-
-	delete lineItem;
 
 	m_currentProgressPart++;
 	fixupJumperItems(jumperItemStructs);
@@ -232,17 +231,11 @@ void JRouter::start()
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
-void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem, 
+void JRouter::runEdges(QList<JEdge *> & edges, 
 						   QList<struct JumperItemStruct *> & jumperItemStructs, 
 						   QVector<int> & netCounters, RoutingStatus & routingStatus)
 {
 	ViewGeometry vg;
-	vg.setRatsnest(true);
-	ViewLayer::ViewLayerID tempViewLayerID = m_sketchWidget->getWireViewLayerID(vg, m_viewLayerSpec);
-	lineItem->setZValue(m_sketchWidget->viewLayers().value(tempViewLayerID)->nextZ());
-	lineItem->setOpacity(0.0);
-
-	vg.setRatsnest(false);
 	vg.setTrace(true);
 	ViewLayer::ViewLayerID viewLayerID = m_sketchWidget->getWireViewLayerID(vg, m_viewLayerSpec);
 
@@ -250,124 +243,13 @@ void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem,
 	// sort the edges by distance
 	qSort(edges.begin(), edges.end(), edgeLessThan);
 
+
 	ItemBase * board = NULL;
 	if (m_sketchWidget->autorouteNeedsBounds()) {
 		board = m_sketchWidget->findBoard();
 	}
 
-	Tile * boardTile = NULL;
-	if (board) {
-		boardTile = TiAlloc();
-
-		TiSetBody(boardTile, 0);
-		m_maxRect = board->boundingRect();
-		m_maxRect.translate(board->pos());
-
-		LEFT(boardTile) = m_maxRect.left();
-		BOTTOM(boardTile) = m_maxRect.top();		// TILE is Math Y-axis not computer-graphic Y-axis
-	}
-
-	Plane * thePlane = TiNewPlane(boardTile);
-	if (boardTile) {
-		RIGHT(boardTile) = m_maxRect.right();
-		TOP(boardTile) = m_maxRect.bottom();		// TILE is Math Y-axis not computer-graphic Y-axis
-	}
-
-	// if board is not rectangular, add tiles for the outside edges;
-
-	if (board) {
-		QHash<QString, SvgFileSplitter *> svgHash;
-		qreal res = FSvgRenderer::printerScale();
-		QRectF boundingRect = board->boundingRect();
-		QString svg = TextUtils::makeSVGHeader(res, res, boundingRect.width(), boundingRect.height());
-		svg += board->retrieveSvg(ViewLayer::Board, svgHash, true, FSvgRenderer::printerScale());
-		svg += "</svg>";
-		GroundPlaneGenerator gpg;
-		QList<QRect> rects;
-		gpg.getBoardRects(svg, board, res, rects);
-		QPointF boardPos = board->pos();
-		foreach (QRect r, rects) {
-			TileRect tileRect;
-			tileRect.xmin = r.left() + boardPos.x();
-			tileRect.xmax = r.right() + boardPos.x();
-			tileRect.ymin = r.top() + boardPos.y();		// TILE is Math Y-axis not computer-graphic Y-axis
-			// note off-by-one weirdness
-			tileRect.ymax = r.bottom() + 1 + boardPos.y();  
-			TiInsertTile(thePlane, &tileRect, NULL, NULL, (void *) &NOTBOARD);
-		}
-	}
-
-
-	// deal with "rectangular" elements first
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		// TODO: need to leave expansion area around coords?
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem != NULL) {
-			if (!connectorItem->attachedTo()->isVisible()) continue;
-			if (connectorItem->attachedTo()->hidden()) continue;
-			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
-
-			DebugDialog::debug(QString("coords connectoritem %1 %2 %3 %4 %5")
-									.arg(connectorItem->connectorSharedID())
-									.arg(connectorItem->connectorSharedName())
-									.arg(connectorItem->attachedToTitle())
-									.arg(connectorItem->attachedToID())
-									.arg(connectorItem->attachedToInstanceTitle())
-							);
-
-			Tile * tile = addTile(connectorItem, thePlane);
-			if (tile == NULL) {
-				// we're screwed
-				continue;
-			}
-			continue;
-		}
-		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-		if (nonConnectorItem != NULL) {
-			if (!nonConnectorItem->attachedTo()->isVisible()) continue;
-			if (nonConnectorItem->attachedTo()->hidden()) continue;
-			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
-
-			DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
-									.arg(nonConnectorItem->attachedToTitle())
-									.arg(nonConnectorItem->attachedToID())
-									);
-
-			Tile * tile = addTile(nonConnectorItem, thePlane);
-			if (tile == NULL) {
-				// we're screwed;
-				continue;
-			}
-			continue;
-		}
-	}
-
-	// now insert the wires (yuck)
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire != NULL) {
-			if (!wire->isVisible()) continue;
-			if (wire->hidden()) continue;
-			if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
-
-			if (wire->getTrace()) {
-
-				DebugDialog::debug(QString("coords wire %1, trace:%2, x1:%3 y1:%4, x2:%5 y2:%6")
-				.arg(wire->id())
-				.arg(wire->getTrace())
-				.arg(wire->pos().x())
-				.arg(wire->pos().y())
-				.arg(wire->line().p2().x())
-				.arg(wire->line().p2().y()) );			
-
-				qreal x1 = wire->pos().x();
-				qreal y1 = wire->pos().y();
-				qreal x2 = wire->line().p2().x();
-				qreal y2 = wire->line().p2().y();
-			}
-			continue;
-		}
-	}
+	Plane * thePlane = tilePlane(board, viewLayerID);
 
 	int edgesDone = 0;
 	foreach (JEdge * edge, edges) {		
@@ -376,7 +258,6 @@ void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem,
 
 		QPointF fp = edge->from->sceneAdjustedTerminalPoint(NULL);
 		QPointF tp = edge->to->sceneAdjustedTerminalPoint(NULL);
-		lineItem->setLine(fp.x(), fp.y(), tp.x(), tp.y());
 
 		QList<JSubedge *> subedges;
 		foreach (ConnectorItem * from, edge->fromConnectorItems) {
@@ -399,17 +280,13 @@ void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem,
 			.arg(edge->to->connectorSharedID())
 			.arg(edge->distance) );
 
-		ItemBase * partForBounds = getPartForBounds(edge);
-
 		bool routedFlag = false;
 		foreach (JSubedge * subedge, subedges) {
 			if (m_cancelled || m_stopTrace) break;
 
-			routedFlag = traceSubedge(subedge, thePlane, partForBounds, lineItem, viewLayerID);
+			routedFlag = traceSubedge(subedge, thePlane, board, viewLayerID);
 			if (routedFlag) break;
 		}
-
-		lineItem->setLine(0, 0, 0, 0);
 
 		foreach (JSubedge * subedge, subedges) {
 			delete subedge;
@@ -423,7 +300,7 @@ void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem,
 					jumperItemStruct->jumperItem = NULL;
 					jumperItemStruct->from = edge->from;
 					jumperItemStruct->to = edge->to;
-					jumperItemStruct->partForBounds = partForBounds;
+					jumperItemStruct->partForBounds = board;
 					jumperItemStruct->boundingPoly = NULL;   // TODO: boundingPoly;
 					jumperItemStruct->deleted = false;
 					jumperItemStructs.append(jumperItemStruct);
@@ -460,6 +337,192 @@ void JRouter::runEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem,
 		}
 	}
 }
+
+Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID) {
+	Tile * boardTile = NULL;
+	if (board) {
+		boardTile = TiAlloc();
+
+		TiSetBody(boardTile, board);
+		TiSetType(boardTile, SPACE);
+		m_maxRect = board->boundingRect();
+		m_maxRect.translate(board->pos());
+
+		LEFT(boardTile) = m_maxRect.left();
+		BOTTOM(boardTile) = m_maxRect.top();		// TILE is Math Y-axis not computer-graphic Y-axis
+	}
+
+	Plane * thePlane = TiNewPlane(boardTile);
+	if (boardTile) {
+		RIGHT(boardTile) = m_maxRect.right();
+		TOP(boardTile) = m_maxRect.bottom();		// TILE is Math Y-axis not computer-graphic Y-axis
+	}
+
+	// if board is not rectangular, add tiles for the outside edges;
+
+	if (board) {
+		QHash<QString, SvgFileSplitter *> svgHash;
+		qreal res = FSvgRenderer::printerScale();
+		QRectF boundingRect = board->boundingRect();
+		QString svg = TextUtils::makeSVGHeader(res, res, boundingRect.width(), boundingRect.height());
+		svg += board->retrieveSvg(ViewLayer::Board, svgHash, true, FSvgRenderer::printerScale());
+		svg += "</svg>";
+		GroundPlaneGenerator gpg;
+		QList<QRect> rects;
+		gpg.getBoardRects(svg, board, res, rects);
+		QPointF boardPos = board->pos();
+		foreach (QRect r, rects) {
+			TileRect tileRect;
+			tileRect.xmin = r.left() + boardPos.x();
+			tileRect.xmax = r.right() + boardPos.x();
+			tileRect.ymin = r.top() + boardPos.y();		// TILE is Math Y-axis not computer-graphic Y-axis
+			// note off-by-one weirdness
+			tileRect.ymax = r.bottom() + 1 + boardPos.y();  
+			TiInsertTile(thePlane, &tileRect, NULL, NULL, NULL, NOTBOARD);
+		}
+	}
+
+
+	// deal with "rectangular" elements first
+	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+		// TODO: need to leave expansion area around coords?
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem != NULL) {
+			if (!connectorItem->attachedTo()->isVisible()) continue;
+			if (connectorItem->attachedTo()->hidden()) continue;
+			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+
+			DebugDialog::debug(QString("coords connectoritem %1 %2 %3 %4 %5")
+									.arg(connectorItem->connectorSharedID())
+									.arg(connectorItem->connectorSharedName())
+									.arg(connectorItem->attachedToTitle())
+									.arg(connectorItem->attachedToID())
+									.arg(connectorItem->attachedToInstanceTitle())
+							);
+
+			Tile * tile = addTile(connectorItem, CONNECTOR, thePlane);
+			if (tile == NULL) {
+				// we're screwed
+				continue;
+			}
+			continue;
+		}
+		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+		if (nonConnectorItem != NULL) {
+			if (!nonConnectorItem->attachedTo()->isVisible()) continue;
+			if (nonConnectorItem->attachedTo()->hidden()) continue;
+			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+
+			DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
+									.arg(nonConnectorItem->attachedToTitle())
+									.arg(nonConnectorItem->attachedToID())
+									);
+
+			Tile * tile = addTile(nonConnectorItem, NONCONNECTOR, thePlane);
+			if (tile == NULL) {
+				// we're screwed;
+				continue;
+			}
+			continue;
+		}
+	}
+
+	// now insert the wires
+	QList<Wire *> beenThere;
+	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+		if (!wire->isVisible()) continue;
+		if (wire->hidden()) continue;
+		if (!wire->getTrace()) continue;
+		if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
+		if (beenThere.contains(wire)) continue;
+
+		tileWire(wire, thePlane, beenThere);
+	}
+
+	return thePlane;
+}
+
+void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere) 
+{
+	DebugDialog::debug(QString("coords wire %1, x1:%2 y1:%3, x2:%4 y2:%5")
+		.arg(wire->id())
+		.arg(wire->pos().x())
+		.arg(wire->pos().y())
+		.arg(wire->line().p2().x())
+		.arg(wire->line().p2().y()) );			
+
+
+	QList<ConnectorItem *> ends;
+	QList<Wire *> wires;
+	wire->collectChained(wires, ends);
+	beenThere.append(wires);
+	if (ends.count() < 1) {
+		// something is very wrong
+		return;
+	}
+
+	QList<ConnectorItem *> uniqueEnds;
+	foreach (Wire * cw, wires) {
+		ConnectorItem * c0 = cw->connector0();
+		if ((c0 != NULL) && c0->chained()) {
+			uniqueEnds.append(c0);
+			// tile these 
+		}
+	}
+
+	Wire * currentWire = NULL;
+	ConnectorItem * currentEnd = ends[0];
+	foreach (ConnectorItem * toConnectorItem, currentEnd->connectedToItems()) {
+	}
+
+
+
+		// order them
+		// tile the connectors
+		// tile the lines
+
+	
+
+
+
+	
+
+
+
+		// order them
+		// tile the connectors
+		// tile the lines
+
+
+
+			qreal x1 = wire->pos().x();
+			qreal y1 = wire->pos().y();
+			qreal x2 = wire->line().p2().x();
+			qreal y2 = wire->line().p2().y();
+
+
+			if (x1 == x2 || y1 == y2) {
+				// treat it as a normal rectangular tile 
+				TileRect tileRect;
+				QList<Tile *> already;
+				if (x1 == x2) {
+					// clip the two ends
+					// check if p2 coords are negative
+					tileRect.xmin = x1;
+					tileRect.xmax = x2;
+					tileRect.ymin = y1 - 1;		// TILE is Math Y-axis not computer-graphic Y-axis
+					tileRect.ymax = y2 + 1;  
+				}
+				else {
+				}
+				TiInsertTile(thePlane, &tileRect, alreadyCallback, &already, wire, TRACE);
+			}
+
+
+}
+
 
 void JRouter::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
 	if (jumperItemStructs.count() <= 0) return;
@@ -505,29 +568,7 @@ void JRouter::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
 	}
 }
 
-ItemBase * JRouter::getPartForBounds(JEdge * edge) {
-	if (m_sketchWidget->autorouteNeedsBounds()) {
-		if (edge->from->attachedTo()->stickingTo() != NULL && edge->from->attachedTo()->stickingTo() == edge->to->attachedTo()->stickingTo()) {
-			return edge->from->attachedTo()->stickingTo();
-		}
-		else if (edge->from->attachedTo()->sticky() && edge->from->attachedTo() == edge->to->attachedTo()->stickingTo()) {
-			return edge->from->attachedTo();
-		}
-		else if (edge->to->attachedTo()->sticky() && edge->to->attachedTo() == edge->from->attachedTo()->stickingTo()) {
-			return edge->to->attachedTo();
-		}
-		else if (edge->to->attachedTo() == edge->from->attachedTo()) {
-			return edge->from->attachedTo();
-		}
-		else {
-			// TODO:  if we're stuck on two boards, use the union as the constraint?
-		}
-	}
-
-	return NULL;
-}
-
-bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partForBounds, QGraphicsLineItem * lineItem, ViewLayer::ViewLayerID viewLayerID) 
+bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partForBounds, ViewLayer::ViewLayerID viewLayerID) 
 {
 	bool routedFlag = false;
 
@@ -547,12 +588,6 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 		ProcessEventBlocker::processEvents();
 
 		*/
-	}
-	
-	if (subedge->from != NULL && subedge->to != NULL) {
-		QPointF fp = subedge->from->sceneAdjustedTerminalPoint(NULL);
-		QPointF tp = subedge->to->sceneAdjustedTerminalPoint(NULL);
-		lineItem->setLine(fp.x(), fp.y(), tp.x(), tp.y());
 	}
 
 	QList<Wire *> wires;
@@ -643,7 +678,7 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 	return routedFlag;
 }
 
-int JRouter::alreadyCallback(Tile * tile, ClientData data) {
+int JRouter::alreadyCallback(Tile * tile, UserData data) {
 	QList<Tile *> * tiles = (QList<Tile *> *) data;
 	if (tiles == NULL) return 0;
 
@@ -651,7 +686,7 @@ int JRouter::alreadyCallback(Tile * tile, ClientData data) {
 	return 0;
 }
 
-int JRouter::deleteGridEntry(Tile * tile, ClientData) {
+int JRouter::deleteGridEntry(Tile * tile, UserData) {
 	GridEntry * gridEntry = (GridEntry *) TiGetClient(tile);
 	if (gridEntry == NULL) return 0;
 
@@ -852,24 +887,20 @@ bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane,
 		qreal x2 = RIGHT(seed.tile);
 		qreal y2 = TOP(seed.tile);
 			
-		short consensusFOF = GridEntry::EMPTY;
+		short fof = checkCandidate(subedge, seed.tile, viewLayerID);
 		QRectF r(x1, y1, x2 - x1, y2 - y1);
 		DebugDialog::debug("=================", r);
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items(r)) {
-			short fof = checkCandidate(subedge, item, viewLayerID);
-			DebugDialog::debug(QString("fof:%1").arg(fof));
-			if (fof > consensusFOF) consensusFOF = fof;
-		}
-		DebugDialog::debug(QString("wave:%1 fof:%2").arg(seed.wave).arg(consensusFOF), r);
-		gridEntry = drawGridItem(x1, y1, x2, y2, seed.wave, consensusFOF);
+
+		DebugDialog::debug(QString("wave:%1 fof:%2").arg(seed.wave).arg(fof), r);
+		gridEntry = drawGridItem(x1, y1, x2, y2, seed.wave, fof);
 		TiSetClient(seed.tile, gridEntry);
 		//TODO: processEvents should only happen every once in a while
 		ProcessEventBlocker::processEvents();
-		if (consensusFOF == GridEntry::GOAL) {
+		if (fof == GridEntry::GOAL) {
 			path.append(seed);
 			return true;		// yeeha!
 		}
-		if (consensusFOF > GridEntry::GOAL) {
+		if (fof > GridEntry::GOAL) {
 			continue;			// blocked
 		}
 
@@ -886,7 +917,7 @@ void appendIf(Seed & seed, Tile * tile, QList<Seed> & seeds, bool (*enoughOverla
 		return;			// already visited
 	}
 
-	if (TiGetBody(tile) == &NOTBOARD) {
+	if (TiGetType(tile) == NOTBOARD) {
 		return;		// outside board boundaries
 	}
 
@@ -960,197 +991,161 @@ void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
 	}
 }
 
-short JRouter::checkCandidate(JSubedge * subedge, QGraphicsItem * item, ViewLayer::ViewLayerID viewLayerID) 
-{		
-	Wire * candidateWire = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<TraceWire *>(item) : NULL;
-	if (candidateWire != NULL) {
-		if (!candidateWire->isVisible()) return GridEntry::IGNORE;
-		if (candidateWire->hidden()) return GridEntry::IGNORE;
-		if (!m_sketchWidget->sameElectricalLayer2(candidateWire->viewLayerID(), viewLayerID)) return GridEntry::IGNORE;
+short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID) 
+{	
+	switch (TiGetType(tile)) {
+		case SPACE:
+			return GridEntry::EMPTY;
+
+		case CONNECTOR:
+			if (!m_sketchWidget->autorouteCheckConnectors()) {
+				return GridEntry::IGNORE;
+			}
+			return checkConnector(subedge, tile, viewLayerID, (ConnectorItem *) TiGetBody(tile));
+
+		case TRACE:
+			if (!m_sketchWidget->autorouteCheckWires()) {
+				return GridEntry::IGNORE;
+			}
+
+			return checkTrace(subedge, tile, viewLayerID, (Wire *) TiGetBody(tile));
+
+		case TRACECONNECTOR:
+			if (!m_sketchWidget->autorouteCheckWires()) {
+				return GridEntry::IGNORE;
+			}
+			else {
+				ConnectorItem * connectorItem = (ConnectorItem *) TiGetBody(tile);
+				return checkTrace(subedge, tile, viewLayerID, qobject_cast<Wire *>(connectorItem->attachedTo()));
+			}
+
+		case PART:
+			if (!m_sketchWidget->autorouteCheckParts()) {
+				return GridEntry::IGNORE;
+			}
+
+			return GridEntry::BLOCK;
+
+		case NONCONNECTOR:
+		case NOTBOARD:
+			return GridEntry::BLOCK;
+
+		default:
+			// shouldn't happen:
+			return GridEntry::IGNORE;
+	}
+}
+
+short JRouter::checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire * candidateWire) {
+	Q_UNUSED(viewLayerID);
+	Q_UNUSED(tile);
+
+	//if (candidateWire == NULL) return GridEntry::IGNORE;
+	//if (!candidateWire->isVisible()) return GridEntry::IGNORE;
+	//if (candidateWire->hidden()) return GridEntry::IGNORE;
+	//if (!m_sketchWidget->sameElectricalLayer2(candidateWire->viewLayerID(), viewLayerID)) return GridEntry::IGNORE;
 		
-		DebugDialog::debug(QString("candidate wire %1, trace:%2, x1:%3 y1:%4, x2:%5 y2:%6")
-				.arg(candidateWire->id())
-				.arg(candidateWire->getTrace())
-				.arg(candidateWire->pos().x())
-				.arg(candidateWire->pos().y())
-				.arg(candidateWire->line().p2().x())
-				.arg(candidateWire->line().p2().y()) );			
+	DebugDialog::debug(QString("candidate wire %1, x1:%2 y1:%3, x2:%4 y2:%5")
+			.arg(candidateWire->id())
+			.arg(candidateWire->pos().x())
+			.arg(candidateWire->pos().y())
+			.arg(candidateWire->line().p2().x())
+			.arg(candidateWire->line().p2().y()) );			
 
-		if (subedge->forward) {
-			if (subedge->edge->fromTraces.contains(candidateWire)) {
-				DebugDialog::debug("SAFE");
-				return GridEntry::SAFE;
-			}
-			if (subedge->edge->toTraces.contains(candidateWire)) {
-				subedge->toWire = candidateWire;
-				DebugDialog::debug("GOAL");
-				return GridEntry::GOAL;
-			}
+	if (subedge->forward) {
+		if (subedge->edge->fromTraces.contains(candidateWire)) {
+			DebugDialog::debug("SAFE");
+			return GridEntry::SAFE;
 		}
-		else {
-			if (subedge->edge->toTraces.contains(candidateWire)) {
-				DebugDialog::debug("SAFE");
-				return GridEntry::SAFE;
-			}
-			if (subedge->edge->fromTraces.contains(candidateWire)) {
-				subedge->toWire = candidateWire;
-				DebugDialog::debug("GOAL");
-				return GridEntry::GOAL;
-			}
+		if (subedge->edge->toTraces.contains(candidateWire)) {
+			subedge->toWire = candidateWire;
+			DebugDialog::debug("GOAL");
+			return GridEntry::GOAL;
 		}
-
-		DebugDialog::debug("BLOCK");
-
-		return GridEntry::BLOCK;
+	}
+	else {
+		if (subedge->edge->toTraces.contains(candidateWire)) {
+			DebugDialog::debug("SAFE");
+			return GridEntry::SAFE;
+		}
+		if (subedge->edge->fromTraces.contains(candidateWire)) {
+			subedge->toWire = candidateWire;
+			DebugDialog::debug("GOAL");
+			return GridEntry::GOAL;
+		}
 	}
 
-	ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteCheckConnectors() ? dynamic_cast<ConnectorItem *>(item) : NULL;
-	if (candidateConnectorItem != NULL) {
-		if (!candidateConnectorItem->attachedTo()->isVisible()) return GridEntry::IGNORE;
-		if (candidateConnectorItem->attachedTo()->hidden()) return GridEntry::IGNORE;
-		if (!m_sketchWidget->sameElectricalLayer2(candidateConnectorItem->attachedToViewLayerID(), viewLayerID)) return GridEntry::IGNORE;
+	DebugDialog::debug("BLOCK");
 
-			DebugDialog::debug(QString("candidate connectoritem %1 %2 %3 %4 %5")
-									.arg(candidateConnectorItem->connectorSharedID())
-									.arg(candidateConnectorItem->connectorSharedName())
-									.arg(candidateConnectorItem->attachedToTitle())
-									.arg(candidateConnectorItem->attachedToID())
-									.arg(candidateConnectorItem->attachedToInstanceTitle())
-									);
+	return GridEntry::BLOCK;
+}
 
 
-		if (candidateConnectorItem == subedge->from) {
-			DebugDialog::debug("SELF");
-			return GridEntry::SELF;
-		}
 
+short JRouter::checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem * candidateConnectorItem) {
+	Q_UNUSED(viewLayerID);
+	Q_UNUSED(tile);
+
+	//if (candidateConnectorItem == NULL) return GridEntry::IGNORE;
+	//if (!candidateConnectorItem->attachedTo()->isVisible()) return GridEntry::IGNORE;
+	//if (candidateConnectorItem->attachedTo()->hidden()) return GridEntry::IGNORE;
+	//if (!m_sketchWidget->sameElectricalLayer2(candidateConnectorItem->attachedToViewLayerID(), viewLayerID)) return GridEntry::IGNORE;
+
+	DebugDialog::debug(QString("candidate connectoritem %1 %2 %3 %4 %5")
+							.arg(candidateConnectorItem->connectorSharedID())
+							.arg(candidateConnectorItem->connectorSharedName())
+							.arg(candidateConnectorItem->attachedToTitle())
+							.arg(candidateConnectorItem->attachedToID())
+							.arg(candidateConnectorItem->attachedToInstanceTitle())
+							);
+
+
+	if (candidateConnectorItem == subedge->from) {
+		DebugDialog::debug("SELF");
+		return GridEntry::SELF;
+	}
+
+	/*
 		candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
 		if (candidateWire != NULL) {
 			// handle this from the wire rather than the connector
 			return GridEntry::IGNORE;
 		}
+	*/
 
-		if (subedge->forward) {
-			if (subedge->edge->fromConnectorItems.contains(candidateConnectorItem)) {
-				DebugDialog::debug("OWNSIDE");
-				return GridEntry::OWNSIDE;			// still a blocker
-			}
+	if (subedge->forward) {
+		if (subedge->edge->fromConnectorItems.contains(candidateConnectorItem)) {
+			DebugDialog::debug("OWNSIDE");
+			return GridEntry::OWNSIDE;			// still a blocker
 		}
-		else {
-			if (subedge->edge->toConnectorItems.contains(candidateConnectorItem)) {
-				DebugDialog::debug("OWNSIDE");
-				return GridEntry::OWNSIDE;			// still a blocker
-			}
+	}
+	else {
+		if (subedge->edge->toConnectorItems.contains(candidateConnectorItem)) {
+			DebugDialog::debug("OWNSIDE");
+			return GridEntry::OWNSIDE;			// still a blocker
 		}
-
-		if (subedge->forward) {
-			if (subedge->edge->toConnectorItems.contains(candidateConnectorItem)) {
-				subedge->to = candidateConnectorItem;
-				DebugDialog::debug("GOAL");
-				return GridEntry::GOAL;			
-			}
-		}
-		else {
-			if (subedge->edge->fromConnectorItems.contains(candidateConnectorItem)) {
-				subedge->to = candidateConnectorItem;
-				DebugDialog::debug("GOAL");
-				return GridEntry::GOAL;			
-			}
-		}
-
-		DebugDialog::debug("BLOCK");
-
-		return GridEntry::BLOCK;
 	}
 
-
-	NonConnectorItem * candidateNonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-	if (candidateNonConnectorItem != NULL) {
-		if (!candidateNonConnectorItem->attachedTo()->isVisible()) return GridEntry::IGNORE;
-		if (candidateNonConnectorItem->attachedTo()->hidden()) return GridEntry::IGNORE;
-		if (!m_sketchWidget->sameElectricalLayer2(candidateNonConnectorItem->attachedTo()->viewLayerID(), viewLayerID)) return GridEntry::IGNORE;
-
-		DebugDialog::debug(QString("BLOCK nonconnectoritem %1 %2")
-						.arg(candidateConnectorItem->attachedToTitle())
-						.arg(candidateConnectorItem->attachedToID())
-						);
-
-		return GridEntry::BLOCK;		
+	if (subedge->forward) {
+		if (subedge->edge->toConnectorItems.contains(candidateConnectorItem)) {
+			subedge->to = candidateConnectorItem;
+			DebugDialog::debug("GOAL");
+			return GridEntry::GOAL;			
+		}
+	}
+	else {
+		if (subedge->edge->fromConnectorItems.contains(candidateConnectorItem)) {
+			subedge->to = candidateConnectorItem;
+			DebugDialog::debug("GOAL");
+			return GridEntry::GOAL;			
+		}
 	}
 
-	ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
-	if (candidateItemBase != NULL) {
-		if (!candidateItemBase->isVisible()) return GridEntry::IGNORE;
-		if (candidateItemBase->hidden()) return GridEntry::IGNORE;
-		if (!m_sketchWidget->sameElectricalLayer2(candidateItemBase->viewLayerID(), viewLayerID)) return GridEntry::IGNORE;
-		
-		DebugDialog::debug(QString("candidate itembase %1 %2 ")
+	DebugDialog::debug("BLOCK");
 
-							.arg(candidateItemBase->title())
-							.arg(candidateItemBase->id())
-					);
-
-
-		if (candidateItemBase->itemType() == ModelPart::Wire) {
-
-			/*
-			Wire * candidateWire = qobject_cast<Wire *>(candidateItemBase);
-			if (!m_cleanWires.contains(candidateWire)) return GridEntry::IGNORE;
-
-			QPointF fromPos0 = traceWire->connector0()->sceneAdjustedTerminalPoint(NULL);
-			QPointF fromPos1 = traceWire->connector1()->sceneAdjustedTerminalPoint(NULL);
-			QPointF toPos0 = candidateWire->connector0()->sceneAdjustedTerminalPoint(NULL);
-			QPointF toPos1 = candidateWire->connector1()->sceneAdjustedTerminalPoint(NULL);
-
-			if (sameY(fromPos0, fromPos1, toPos0, toPos1)) {
-				// if we're going in the same direction it's an obstacle
-				// eventually, if it's the same potential, combine it
-				if (qMax(fromPos0.x(), fromPos1.x()) <= qMin(toPos0.x(), toPos1.x()) || 
-					qMax(toPos0.x(), toPos1.x()) <= qMin(fromPos0.x(), fromPos1.x())) 
-				{
-					// no overlap
-					return GridEntry::IGNORE;
-				}
-				//DebugDialog::debug("got an obstacle in y");
-			}
-			else if (sameX(fromPos0, fromPos1, toPos0, toPos1)) {
-				if (qMax(fromPos0.y(), fromPos1.y()) <= qMin(toPos0.y(), toPos1.y()) || 
-					qMax(toPos0.y(), toPos1.y()) <= qMin(fromPos0.y(), fromPos1.y())) 
-				{
-					// no overlap
-					return GridEntry:IGNORE;
-				}
-				//DebugDialog::debug("got an obstacle in x");
-			}
-			else {
-				return GridEntry::IGNORE;
-			}
-
-			*/
-
-			return GridEntry::IGNORE;
-
-		}
-		else {
-			if (subedge->from && (subedge->from->attachedTo() == candidateItemBase)) {
-				return GridEntry::IGNORE;
-			}
-
-			if (subedge->to && (subedge->to->attachedTo() == candidateItemBase)) {
-				return GridEntry::IGNORE;
-			}
-		}
-
-		//if (candidateConnectorItem->attachedToViewLayerID() != traceWire->viewLayerID()) {
-			// needs to be on the same layer
-			//continue;
-		//}
-
-		return GridEntry::IGNORE;
-	}
-
-	return GridEntry::IGNORE;
+	return GridEntry::BLOCK;
 }
+
 
 GridEntry * JRouter::drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int wave, short flag) 
 {
@@ -1326,7 +1321,6 @@ void JRouter::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoC
 		}
 
 	}
-
 
 	if (parentCommand) {
 		addUndoConnections(sketchWidget, false, oldTraces, parentCommand);
@@ -1756,18 +1750,6 @@ TraceWire * JRouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, Vie
 	return traceWire;
 }
 
-bool JRouter::sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1) {
-	return  qAbs(toPos1.y() - fromPos1.y()) < 1.0 &&
-		    qAbs(toPos0.y() - fromPos0.y()) < 1.0 &&
-			qAbs(toPos0.y() - toPos1.y()) < 1.0;
-}
-
-bool JRouter::sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1) {
-	return  qAbs(toPos1.x() - fromPos1.x()) < 1.0 &&
-		    qAbs(toPos0.x() - fromPos0.x()) < 1.0 &&
-			qAbs(toPos0.x() - toPos1.x()) < 1.0;
-}
-
 void JRouter::clearEdges(QList<JEdge *> & edges) {
 	foreach (JEdge * edge, edges) {
 		delete edge;
@@ -1883,7 +1865,7 @@ JSubedge * JRouter::makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, 
 	return subedge;
 }
 
-Tile * JRouter::addTile(NonConnectorItem * nci, Plane * thePlane) 
+Tile * JRouter::addTile(NonConnectorItem * nci, int type, Plane * thePlane) 
 {
 	QRectF r = nci->rect();
 	QRectF r2 = nci->attachedTo()->mapRectToScene(r);
@@ -1894,6 +1876,6 @@ Tile * JRouter::addTile(NonConnectorItem * nci, Plane * thePlane)
 	tileRect.xmax = r2.right();
 	tileRect.ymin = r2.top();		// TILE is Math Y-axis not computer-graphic Y-axis
 	tileRect.ymax = r2.bottom();  
-	return TiInsertTile(thePlane, &tileRect, alreadyCallback, &already, nci);
+	return TiInsertTile(thePlane, &tileRect, alreadyCallback, &already, nci, type);
 }
 
