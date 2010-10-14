@@ -33,7 +33,7 @@ struct searchArg
 {
     TileRect * rect;
     Plane * plane;
-	BodyPointer body;
+	QGraphicsItem * body;
 	int type;
 };
 
@@ -65,7 +65,7 @@ struct searchArg
  */
 
 void
-DBPlaceCell (Plane * plane, TileRect * rect, BodyPointer body, int type)
+DBPlaceCell (Plane * plane, TileRect * rect, QGraphicsItem * body, int type)
 /* argument to TiSrArea(), placeCellFunc() */
 /* argument to TiSrArea(), placeCellFunc() */
 {
@@ -451,31 +451,9 @@ dupTileBody (Tile * oldtp, Tile * newtp)
  * Side effects:
  *	Modifies the database plane that contains the given tile.
  * ----------------------------------------------------------------------------
- */
+ */	
 
-	
-struct AlreadyThing {
-	TileCallback otherCallback;
-	UserData data;
-	bool found;
-};
-
-int checkAlready(Tile * tile, UserData data) {
-	AlreadyThing * alreadyThing = (AlreadyThing *) data;
-	alreadyThing->found = alreadyThing->found || (tile->ti_client != NULL);
-	if (alreadyThing->otherCallback) {
-		return (*alreadyThing->otherCallback)(tile, alreadyThing->data);
-	}
-	return 0;
-}
-
-Tile* TiInsertTile(Plane * plane, TileRect * rect, TileCallback ifAlready, UserData data, BodyPointer body, int type) {
-	AlreadyThing alreadyThing;
-	alreadyThing.found = false;
-	alreadyThing.data = data;
-	alreadyThing.otherCallback = ifAlready;
-	TiSrArea(NULL, plane, rect, checkAlready, &alreadyThing);
-	if (alreadyThing.found) return NULL;
+Tile* TiInsertTile(Plane * plane, TileRect * rect, QGraphicsItem * body, int type) {
 
 	DBPlaceCell(plane, rect, body, type);
 	return TiSrPoint(NULL, plane, rect->xmin, rect->ymin);

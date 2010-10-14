@@ -23,14 +23,6 @@
 #include "tile.h"
 
 
-// make sure nobody else uses these values for tile type
-enum {
-	DUMMYLEFT = 999999,
-	DUMMYTOP,
-	DUMMYRIGHT,
-	DUMMYBOTTOM
-};
-
 /*
  * Debugging version of TiSetBody() macro in tile.h
  * Includes sanity check that a tile at "infinity"
@@ -56,9 +48,8 @@ TiSetBody(tp, b)
  * this area.
  */
 
-qreal INFINITY = std::numeric_limits<double>::max() - 4;
+qreal INFINITY = (std::numeric_limits<int>::max() >> 2) - 4;
 qreal MINFINITY	= -INFINITY;
-TileRect TiPlaneRect = { MINFINITY+2, MINFINITY+2, INFINITY-2, INFINITY-2 };
 
 
 /*
@@ -634,17 +625,16 @@ TiJoinY(Tile *tile1, Tile *tile2, Plane *plane)
     //ASSERT(BOTTOM(tile1) != BOTTOM(tile2), "TiJoinY");
     if (BOTTOM(tile1) < BOTTOM(tile2))
     {
-		for (tp = RT(tile2); LB(tp) == tile2; tp = BL(tp)) {
+		for (tp = RT(tile2); LB(tp) == tile2; tp = BL(tp)) 
 			LB(tp) = tile1;
-		}
+
 	RT(tile1) = RT(tile2);
 	TR(tile1) = TR(tile2);
     }
     else
     {
-		for (tp = LB(tile2); RT(tp) == tile2; tp = TR(tp)) {
+		for (tp = LB(tile2); RT(tp) == tile2; tp = TR(tp)) 
 			RT(tp) = tile1;
-		}
 	LB(tile1) = LB(tile2);
 	BL(tile1) = BL(tile2);
 	BOTTOM(tile1) = BOTTOM(tile2);

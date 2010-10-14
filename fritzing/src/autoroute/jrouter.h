@@ -83,7 +83,8 @@ struct JSubedge {
 	bool forward;
 };
 
-struct GridEntry {
+class GridEntry : public QGraphicsRectItem {
+public:
 	enum {
 		EMPTY = 1,
 		IGNORE = 2,
@@ -94,9 +95,12 @@ struct GridEntry {
 		BLOCK = 64
 	};
 
-	int wave;
-	short flags;
-	QGraphicsRectItem* item;
+public:
+	GridEntry(qreal x, qreal y, qreal width, qreal height, int wave, int flags, QGraphicsItem * parent); 
+
+public:
+	int m_wave;
+	short m_flags;
 };
 
 class JRouter : public QObject
@@ -139,19 +143,20 @@ protected:
 	bool backPropagate(JSubedge * subedge, QList<Seed> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires);
 	short checkCandidate(JSubedge * subedge, struct Tile *, ViewLayer::ViewLayerID);
 	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to, bool forward);
-	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *);
+	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *, QList<struct Tile *> & alreadyTiled);
 	void seedNext(struct Seed & seed, QList<struct Seed> & seeds);
-	struct Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID);
-	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere);
+	struct Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID, QList<struct Tile *> & alreadyTiled);
+	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere, QList<struct Tile *> & alreadyTiled);
 	short checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem *);
 	short checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire *);
-
+	void clearTiles(struct Plane * thePlane);
+	void displayBadTiles(QList<struct Tile *> & alreadyTiled);
+	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type);
+	void clearGridEntries();
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
 	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
-	static int deleteGridEntry(struct Tile * tile, void *);
-	static int alreadyCallback(struct Tile * tile, void *);
 
 public slots:
 	void cancel();

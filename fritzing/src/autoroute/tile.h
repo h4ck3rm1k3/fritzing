@@ -23,7 +23,7 @@
 #ifndef _TILES_H
 #define	_TILES_H
 
-#include <QLine>
+#include <QGraphicsItem>
 
 // note: Tile uses math axes as opposed to computer graphic axes.  In other words y increases up.
 struct TileRect {
@@ -64,22 +64,17 @@ struct TilePoint {
  */
 
 typedef void * UserData;
-typedef void * BodyPointer;
-typedef void * ClientPointer;
 
 struct Tile
 {
 	int		 ti_type;		/* another free field */
-    BodyPointer	 ti_body;	/* Body of tile */
+    QGraphicsItem *	 ti_body;	/* Body of tile */
     struct Tile	*ti_lb;		/* Left bottom corner stitch */
     struct Tile	*ti_bl;		/* Bottom left corner stitch */
     struct Tile	*ti_tr;		/* Top right corner stitch */
     struct Tile	*ti_rt;		/* Right top corner stitch */
     TilePoint	 ti_ll;		/* Lower left coordinate */
-    ClientPointer	 ti_client;	/* This space for hire.  Warning: the default
-				 * value for this field, to which all users
-				 * should return it when done, is NULL
-				 */
+    QGraphicsItem *	 ti_client;	/* This space for hire.  */
 };
 
     /*
@@ -180,7 +175,7 @@ void  TiJoinX(Tile *tile1, Tile *tile2, Plane *plane);
 void  TiJoinY(Tile *tile1, Tile *tile2, Plane *plane);
 int   TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback, UserData arg);
 Tile *TiSrPoint( Tile * hintTile, Plane * plane, qreal x, qreal y);
-Tile* TiInsertTile(Plane *, TileRect * rect, TileCallback, UserData arg, BodyPointer body, int type);
+Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, int type);
 
 #define	TiBottom(tp)	(BOTTOM(tp))
 #define	TiLeft(tp)		(LEFT(tp))
@@ -196,9 +191,17 @@ Tile* TiInsertTile(Plane *, TileRect * rect, TileCallback, UserData arg, BodyPoi
 
 #define	TiGetBody(tp)		((tp)->ti_body)
 /* See diagnostic subroutine version in tile.c */
-#define	TiSetBody(tp, b)	((tp)->ti_body = (BodyPointer) (b))
+#define	TiSetBody(tp, b)	((tp)->ti_body = (b))
 #define	TiGetClient(tp)		((tp)->ti_client)
-#define	TiSetClient(tp,b)	((tp)->ti_client = (ClientPointer) (b))
+#define	TiSetClient(tp,b)	((tp)->ti_client = (b))
+
+// make sure nobody else uses these values for tile type
+enum {
+	DUMMYLEFT = 999999,
+	DUMMYTOP,
+	DUMMYRIGHT,
+	DUMMYBOTTOM
+};
 
 Tile *TiAlloc();
 void TiFree(Tile *);
@@ -239,11 +242,5 @@ void TiFree(Tile *);
 #define	TiSrPointNoHint(plane, point)	(TiSrPoint((Tile *) NULL, plane, point))
 
 Tile * gotoPoint(Tile * tile, TilePoint p);
-
-extern TileRect TiPlaneRect;	/* Rectangle large enough to force area
-				 * search to visit every tile in the
-				 * plane.  This is the largest rectangle
-				 * that should ever be painted in a plane.
-				 */
 
 #endif /* _TILES_H */
