@@ -220,7 +220,7 @@
                                            title="{{ p.tittle }}"
                                         >{{ p.title }}</a>
                                         <a class="portletItemDetails"
-                                           href="{% url profile_detail project.author.username %}"
+                                           href="{% url profile_detail p.author.username %}"
                                         >{% firstof p.author.get_fullname p.author.username %}</a>
                                     </div>
                                 </dd>
