@@ -220,7 +220,7 @@
                                            title="{{ p.tittle }}"
                                         >{{ p.title }}</a>
                                         <a class="portletItemDetails"
-                                           href="{{ thread.forum.get_absolute_url }}"
+                                           href="{% url profile_detail project.author.username %}"
                                         >{% firstof p.author.get_fullname p.author.username %}</a>
                                     </div>
                                 </dd>

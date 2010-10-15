@@ -2351,12 +2351,16 @@ border: none;
 }
 
 
+#visual-portlet-wrapper {
+	margin-left:auto;
+	margin-right:auto;
+	width:910px;
+}
+
 
 #portal-columns {
 margin: 0;
-padding: 0
-
-;
+padding: 0;
 }
 
 #portal-column-one {
@@ -2388,10 +2392,11 @@ border: none;
 
 #portal-column-two {
 position: absolute;
-left: 760px;
+
 top: 55px;
 width: 150px;
 margin: 0;
+margin-left: 760px;
 }
 
 
@@ -2861,14 +2866,4 @@ code {
 }
 
 
-#visual-portlet-wrapper {
-	margin-left:auto;
-	margin-right:auto;
-	width:910px;
-}
 
-#portal-column-two {
-	// remove left
-	left: 0;
-	margin-left: 760px;
-}
