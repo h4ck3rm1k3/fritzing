@@ -121,6 +121,57 @@ void tileToRect(Tile * tile, QRectF & rect) {
 	rect.setCoords(tileRect.xmin, tileRect.ymin, tileRect.xmax, tileRect.ymax);
 }
 
+bool tileRectIntersects(TileRect * tile1, TileRect * tile2)
+{
+    qreal l1 = tile1->xmin;
+    qreal r1 = tile1->xmin;
+	qreal w1 = tile1->xmax - tile1->xmin;
+    if (w1 < 0)
+        l1 += w1;
+    else
+        r1 += w1;
+    if (l1 == r1) // null rect
+        return false;
+
+    qreal l2 = tile2->xmin;
+    qreal r2 = tile2->xmin;
+	qreal w2 = tile2->xmax - tile2->xmin;
+    if (w2 < 0)
+        l2 += w2;
+    else
+        r2 += w2;
+    if (l2 == r2) // null rect
+        return false;
+
+    if (l1 >= r2 || l2 >= r1)
+        return false;
+
+    qreal t1 = tile1->ymin;
+    qreal b1 = tile1->ymin;
+	qreal h1 = tile1->ymax - tile1->ymin;
+    if (h1 < 0)
+        t1 += h1;
+    else
+        b1 += h1;
+    if (t1 == b1) // null rect
+        return false;
+
+    qreal t2 = tile2->ymin;
+    qreal b2 = tile2->ymin;
+	qreal h2 = tile2->ymax - tile2->ymin;
+    if (h2 < 0)
+        t2 += h2;
+    else
+        b2 += h2;
+    if (t2 == b2) // null rect
+        return false;
+
+    if (t1 >= b2 || t2 >= b1)
+        return false;
+
+    return true;
+}
+
 static int keepOut = 4;
 static int boundingKeepOut = 4;
 
@@ -397,7 +448,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 	// if board is not rectangular, add tiles for the outside edges;
 
 	if (board) {
-		qreal factor = 1.0;	// Wire::STANDARD_TRACE_WIDTH
+		qreal factor = Wire::STANDARD_TRACE_WIDTH;
 		QHash<QString, SvgFileSplitter *> svgHash;
 		QRectF boundingRect = board->boundingRect();
 		QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), FSvgRenderer::printerScale(), boundingRect.width(), boundingRect.height());
@@ -992,7 +1043,6 @@ bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane,
 		return false;
 	}
 
-
 	Seed firstSeed = Seed(0, firstTile);
 	QList<Seed> seeds;
 	seeds.append(firstSeed);
@@ -1038,13 +1088,21 @@ bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane,
 	return false;
 }
 
-void appendIf(Seed & seed, Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*)) {
+void JRouter::appendIf(Seed & seed, Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*)) {
 	
 	if (TiGetClient(tile) != NULL) {
 		return;			// already visited
 	}
 
 	if (TiGetType(tile) == NOTBOARD) {
+		if (TiGetClient(tile) == NULL) {
+			qreal x1 = LEFT(tile);
+			qreal y1 = BOTTOM(tile);
+			qreal x2 = RIGHT(tile);
+			qreal y2 = TOP(tile);
+			drawGridItem(x1, y1, x2, y2, 0, GridEntry::NOTBOARD);
+		}
+
 		return;		// outside board boundaries
 	}
 
@@ -1065,7 +1123,7 @@ bool enoughOverlapVertical(Tile* tile1, Tile* tile2) {
 }
 
 void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
-	if (RIGHT(seed.tile) < m_maxRect.right()) {
+	if (TiGetType(seed.tile) != GRIDALIGN && RIGHT(seed.tile) < m_maxRect.right()) {
 		Tile * next = TR(seed.tile);
 		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
@@ -1078,7 +1136,7 @@ void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
 		}
 	}
 
-	if (LEFT(seed.tile) > m_maxRect.left()) {
+	if (TiGetType(seed.tile) != GRIDALIGN && LEFT(seed.tile) > m_maxRect.left()) {
 		Tile * next = BL(seed.tile);
 		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
@@ -1123,6 +1181,9 @@ short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, ViewLayer::ViewLa
 	switch (TiGetType(tile)) {
 		case SPACE:
 			return GridEntry::EMPTY;
+
+		case GRIDALIGN:
+			return GridEntry::ALIGN;
 
 		case CONNECTOR:
 			if (!m_sketchWidget->autorouteCheckConnectors()) {
@@ -1300,6 +1361,12 @@ GridEntry * JRouter::drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int wa
 			break;
 		case GridEntry::GOAL:
 			c = QColor(0, 255, 0, alpha);
+			break;
+		case GridEntry::NOTBOARD:
+			c = QColor(0, 0, 0, alpha);
+			break;
+		case GridEntry::ALIGN:
+			c = QColor(0, 0, 255, alpha);
 			break;
 	}
 
@@ -2013,7 +2080,7 @@ int prepDeleteTile(Tile * tile, UserData data) {
 			return 0;
 	}
 
-	DebugDialog::debug(QString("tile %1 %2 %3 %4").arg(LEFT(tile)).arg(BOTTOM(tile)).arg(RIGHT(tile)).arg(TOP(tile)));
+	//DebugDialog::debug(QString("tile %1 %2 %3 %4").arg(LEFT(tile)).arg(BOTTOM(tile)).arg(RIGHT(tile)).arg(TOP(tile)));
 	QSet<Tile *> * tiles = (QSet<Tile *> *) data;
 	tiles->insert(tile);
 
@@ -2068,11 +2135,72 @@ int checkAlready(Tile * tile, UserData data) {
 	return 0;
 }
 
-Tile * JRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type) {
-	TiSrArea(NULL, thePlane, &tileRect, checkAlready, &alreadyTiled);
-	if (alreadyTiled.count() > 0) return NULL;
+Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type) {
+	TileRect tileRect = trueRect;
+	// make sure all tiles are on the grid in the y-axis
+	// so that we're sure all traces going left and right will fit
+	tileRect.ymin = qFloor(trueRect.ymin / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH;
+	tileRect.ymax = qCeil(trueRect.ymax / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH;
 
-	return TiInsertTile(thePlane, &tileRect, item, type);
+	DebugDialog::debug(QString("insert tile xmin:%1 xmax:%2 ymin:%3 ymax:%4 aymin:%5 aymax:%6").
+		arg(tileRect.xmin).arg(tileRect.xmax).arg(trueRect.ymin).arg(trueRect.ymax).arg(tileRect.ymin).arg(tileRect.ymax));
+
+
+
+	if (tileRect.ymin != trueRect.ymin || tileRect.ymax != trueRect.ymax) {
+		DebugDialog::debug("diff rects");
+	}
+
+	TiSrArea(NULL, thePlane, &tileRect, checkAlready, &alreadyTiled);
+	if (alreadyTiled.count() > 0) {
+		foreach (Tile * intersectingTile, alreadyTiled) {
+			TileRect intersectingRect;
+			TiToRect(intersectingTile, &intersectingRect);
+			DebugDialog::debug(QString("intersecting tile l:%1 t:%2 r:%3 b:%4 t:%5").arg(LEFT(intersectingTile))
+				.arg(BOTTOM(intersectingTile)).arg(RIGHT(intersectingTile)).arg(TOP(intersectingTile)).arg(intersectingTile->ti_type));
+
+			if (TiGetType(intersectingTile) != GRIDALIGN) {
+				if (tileRectIntersects(&trueRect, &intersectingRect)) {
+					return NULL;
+				}
+			}
+			else {
+				DebugDialog::debug("intersected grid align");
+			}
+		}
+	}
+
+
+	if (alreadyTiled.count() > 0) {
+		// we are only intersecting GRIDALIGN tiles so deal with that here...
+		alreadyTiled.clear();
+
+	}
+
+
+	Tile * tile = TiInsertTile(thePlane, &tileRect, item, type);
+	if (tileRect.ymin < trueRect.ymin) {
+		Tile * alignTile = TiSplitY_Bottom(tile, trueRect.ymin);
+		TiSetType(alignTile, GRIDALIGN);
+		TiSetBody(alignTile, item);
+		DebugDialog::debug(QString("align tile min l:%1 t:%2 r:%3 b:%4")
+				.arg(LEFT(alignTile)).arg(BOTTOM(alignTile)).arg(RIGHT(alignTile)).arg(TOP(alignTile)));
+	}
+	if (tileRect.ymax > trueRect.ymax) {
+		Tile * alignTile = TiSplitY(tile, trueRect.ymax);
+		TiSetType(alignTile, GRIDALIGN);
+		TiSetBody(alignTile, item);		
+		DebugDialog::debug(QString("align tile max l:%1 t:%2 r:%3 b:%4")
+				.arg(LEFT(alignTile)).arg(BOTTOM(alignTile)).arg(RIGHT(alignTile)).arg(TOP(alignTile)));
+	}
+
+	if (tileRect.ymin < trueRect.ymin || tileRect.ymax > trueRect.ymax) {
+		DebugDialog::debug(QString("new tile max l:%1 t:%2 r:%3 b:%4")
+				.arg(LEFT(tile)).arg(BOTTOM(tile)).arg(RIGHT(tile)).arg(TOP(tile)));
+	}
+
+
+	return tile;
 }
 
 void JRouter::clearGridEntries() {
@@ -2083,3 +2211,4 @@ void JRouter::clearGridEntries() {
 		delete gridEntry;
 	}
 }
+

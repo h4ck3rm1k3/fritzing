@@ -52,7 +52,7 @@ public:
 	static QString ConnectorName;
 
 protected:
-	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects);
+	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshhold);
 	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
 	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
 	QString makePolySvg(QList<QPolygon> & polygons, qreal res, qreal bWidth, qreal bHeight, qreal pixelFactor, const QString & colorString, const QString & layerName, bool makeConnector);

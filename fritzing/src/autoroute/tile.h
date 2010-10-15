@@ -195,6 +195,7 @@ Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, int type);
 #define	TiGetClient(tp)		((tp)->ti_client)
 #define	TiSetClient(tp,b)	((tp)->ti_client = (b))
 
+
 // make sure nobody else uses these values for tile type
 enum {
 	DUMMYLEFT = 999999,

@@ -89,10 +89,12 @@ public:
 		EMPTY = 1,
 		IGNORE = 2,
 		SAFE = 4,
-		SELF = 8,
-		GOAL = 16,
-		OWNSIDE = 32,
-		BLOCK = 64
+		ALIGN = 8,
+		SELF = 16,
+		GOAL = 32,   // goal followed by blockers must be highest values
+		OWNSIDE = 64,
+		BLOCK = 128,
+		NOTBOARD = 256
 	};
 
 public:
@@ -100,7 +102,7 @@ public:
 
 public:
 	int m_wave;
-	short m_flags;
+	int m_flags;
 };
 
 class JRouter : public QObject
@@ -153,6 +155,7 @@ protected:
 	void displayBadTiles(QList<struct Tile *> & alreadyTiled);
 	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type);
 	void clearGridEntries();
+	void appendIf(Seed & seed, struct Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*));
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);

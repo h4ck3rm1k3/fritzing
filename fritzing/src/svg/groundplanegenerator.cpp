@@ -75,7 +75,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 
 	image.save("test.png");
 
-	scanLines(image, bWidth, bHeight, rects);
+	scanLines(image, bWidth, bHeight, rects, 1);
 
 	// combine same size rects
 	int ix = 0;
@@ -173,7 +173,7 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector)  
 {
 	QList<QRect> rects;
-	scanLines(image, bWidth, bHeight, rects);
+	scanLines(image, bWidth, bHeight, rects, 192);
 	QList< QList<int> * > pieces;
 	splitScanLines(rects, pieces);
 	foreach (QList<int> * piece, pieces) {
@@ -224,8 +224,9 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 
 }
 
-void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects)
+void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshhold)
 {
+	// threshhold should be between 0 and 255 exclusive; smaller will include more of the svg
 	for (int y = 0; y < bHeight; y++) {
 		bool inWhite = false;
 		int whiteStart = 0;
@@ -237,7 +238,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 			//}
 			int gray = qGray(current);
 			if (inWhite) {
-				if (gray > 192) {			// qBlue(current) == 0xff    gray > 128
+				if (gray > threshhold) {			// qBlue(current) == 0xff    gray > 128
 					// another white pixel, keep moving
 					continue;
 				}
@@ -252,7 +253,7 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 				rects.append(QRect(whiteStart, y, x - whiteStart + 1, 1));
 			}
 			else {
-				if (gray <= 192) {		// qBlue(current) != 0xff				
+				if (gray <= threshhold) {		// qBlue(current) != 0xff				
 					// another black pixel, keep moving
 					continue;
 				}
