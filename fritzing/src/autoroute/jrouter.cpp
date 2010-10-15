@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 4508 $:
-$Author: cohen@irascible.com $:
-$Date: 2010-10-06 08:54:14 +0200 (Wed, 06 Oct 2010) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -28,9 +28,13 @@ $Date: 2010-10-06 08:54:14 +0200 (Wed, 06 Oct 2010) $
 // TODO:
 //	in backpropagate, don't allow change of direction along short side
 //		draw wires as feedback in all paths, count number of wires, erase paths we don't use?
+//  make all parts align to grid along y axis by extending all blocking tiles with a GRIDALIGN tile
+//		when checking overlaps, if the overlap is only with GRIDALIGN tiles, then just split the GRIDALIGN tile
+//		no longer need to check for height to move left and right
 //	wire bendpoint is not a blocker if wire is ownside
 //	insert new traces
 //	data structure handles DRC overlaps
+//		make it available from trace menu
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
 //	backpropagate: tighten path between connectors once trace has succeeded?
@@ -77,7 +81,8 @@ enum TileType {
 	TRACECONNECTOR,
 	CONNECTOR,
 	PART,
-	SPACE
+	SPACE,
+	GRIDALIGN
 };
 
 struct JumperItemStruct {
@@ -560,8 +565,12 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 			rects.append(r);
 		}
 		else {
-			qreal angle = atan2(p2.y() - p1.y(), p2.x() - p1.x());
-			qreal slantWidth = qAbs((w->width() + 2) / sin(angle));
+			//qreal angle = atan2(p2.y() - p1.y(), p2.x() - p1.x());
+			//qreal slantWidth = qAbs((w->width() + 2) / sin(angle));
+
+			qreal deltaY = Wire::STANDARD_TRACE_WIDTH;
+			qreal deltaX = deltaY * dx / dy;
+			qreal slantWidth = deltaX + w->width() + MinWireSpace + MinWireSpace;
 			if (dx > dy) {
 				if (slantWidth > dx) {
 					slantWidth = dx;
@@ -588,7 +597,7 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 				qreal bottom = qMin(yend, cy + Wire::STANDARD_TRACE_WIDTH);
 				QRectF r(x + dx - (slantWidth / 2), cy, slantWidth, bottom - cy);
 				rects.append(r);
-				cy += Wire::STANDARD_TRACE_WIDTH;
+				cy += deltaY;
 			}		
 		}
 
