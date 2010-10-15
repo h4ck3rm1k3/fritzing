@@ -2859,3 +2859,16 @@ code {
 	white-space: pre;
 	overflow: auto;
 }
+
+
+#visual-portlet-wrapper {
+	margin-left:auto;
+	margin-right:auto;
+	width:910px;
+}
+
+#portal-column-two {
+	// remove left
+	left: 0;
+	margin-left: 760px;
+}
