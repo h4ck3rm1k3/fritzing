@@ -242,6 +242,7 @@ public:
 	void ratsnestConnect(ConnectorItem * connectorItem, bool connect);
 	void ratsnestConnect(ItemBase *, bool connect);
 	virtual void addDefaultParts();
+	float getTopZ();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -564,6 +565,7 @@ protected:
 	bool m_checkUnder;
 	bool m_addDefaultParts;
 	QPointer<ItemBase> m_addedDefaultPart;
+	float m_z;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

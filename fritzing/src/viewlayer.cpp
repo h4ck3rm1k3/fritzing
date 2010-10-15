@@ -186,7 +186,6 @@ const QList<ViewLayer *> & ViewLayer::childLayers() {
 	return m_childLayers;
 }
 
-
 bool ViewLayer::alreadyInLayer(qreal z) {
 	return (z >= m_initialZ && z <= m_nextZ);
 }

@@ -565,40 +565,60 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 			rects.append(r);
 		}
 		else {
-			//qreal angle = atan2(p2.y() - p1.y(), p2.x() - p1.x());
-			//qreal slantWidth = qAbs((w->width() + 2) / sin(angle));
-
-			qreal deltaY = Wire::STANDARD_TRACE_WIDTH;
-			qreal deltaX = deltaY * dx / dy;
-			qreal slantWidth = deltaX + w->width() + MinWireSpace + MinWireSpace;
-			if (dx > dy) {
-				if (slantWidth > dx) {
-					slantWidth = dx;
-				}
-			}
+			qreal angle = atan2(p2.y() - p1.y(), p2.x() - p1.x());
 			qreal x, y, xend, yend;
-			if (p1.y() < p2.y()) {
-				x = p1.x();
-				y = p1.y();
-				xend = p2.x();
-				yend = p2.y();
+			if (dy >= dx) {
+				// horizontal slices
+				qreal slantWidth = qAbs((w->width() + MinWireSpace + MinWireSpace) / sin(angle));
+				if (p1.y() < p2.y()) {
+					x = p1.x();
+					y = p1.y();
+					xend = p2.x();
+					yend = p2.y();
+				}
+				else {
+					x = p2.x();
+					y = p2.y();
+					xend = p1.x();
+					yend = p1.y();
+				}
+
+				qreal cy = y;
+				while (cy < yend) {
+					qreal dy = cy - y;
+					qreal dx = dy * (xend - x) / (yend - y);
+					qreal bottom = qMin(yend, cy + Wire::STANDARD_TRACE_WIDTH);
+					QRectF r(x + dx - (slantWidth / 2), cy, slantWidth, bottom - cy);
+					rects.append(r);
+					cy += Wire::STANDARD_TRACE_WIDTH;
+				}	
 			}
 			else {
-				x = p2.x();
-				y = p2.y();
-				xend = p1.x();
-				yend = p1.y();
-			}
+				// vertical slices
+				qreal slantWidth = qAbs((w->width() + MinWireSpace + MinWireSpace) / cos(angle));
+				if (p1.x() < p2.x()) {
+					x = p1.x();
+					y = p1.y();
+					xend = p2.x();
+					yend = p2.y();
+				}
+				else {
+					x = p2.x();
+					y = p2.y();
+					xend = p1.x();
+					yend = p1.y();
+				}
 
-			qreal cy = y;
-			while (cy < yend) {
-				qreal dy = cy - y;
-				qreal dx = dy * (xend - x) / (yend - y);
-				qreal bottom = qMin(yend, cy + Wire::STANDARD_TRACE_WIDTH);
-				QRectF r(x + dx - (slantWidth / 2), cy, slantWidth, bottom - cy);
-				rects.append(r);
-				cy += deltaY;
-			}		
+				qreal cx = x;
+				while (cx < xend) {
+					qreal dx = cx - x;
+					qreal dy = dx * (yend - y) / (xend - x);
+					qreal right = qMin(xend, cx + Wire::STANDARD_TRACE_WIDTH);
+					QRectF r(cx, y + dy - (slantWidth / 2), right - cx, slantWidth);
+					rects.append(r);
+					cx += Wire::STANDARD_TRACE_WIDTH;
+				}	
+			}
 		}
 
 		QList<ConnectorItem *> clipConnectorItems;

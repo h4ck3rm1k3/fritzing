@@ -2107,6 +2107,25 @@ bool PCBSketchWidget::routeBothSides() {
 	return m_boardLayers > 1;
 }
 
+bool PCBSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID id1, ViewLayer::ViewLayerID id2) {
+	switch (id1) {
+		case ViewLayer::Copper0Trace:
+			if (id1 == id2) return true;
+			return (id2 == ViewLayer::Copper0);
+		case ViewLayer::Copper0:
+			if (id1 == id2) return true;
+			return (id2 == ViewLayer::Copper0Trace);
+		case ViewLayer::Copper1Trace:
+			if (id1 == id2) return true;
+			return (id2 == ViewLayer::Copper1);
+		case ViewLayer::Copper1:
+			if (id1 == id2) return true;
+			return (id2 == ViewLayer::Copper1Trace);
+	}
+
+	return false;
+}
+
 bool PCBSketchWidget::sameElectricalLayer(ViewLayer::ViewLayerID id1, ViewLayer::ViewLayerID id2) {
 	// assumes both ids are in a copper layer or one id is a wildcard (UnknownLayer)
 

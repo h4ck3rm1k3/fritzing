@@ -79,6 +79,7 @@ public:
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
+	virtual bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void changeTraceLayer();
 	void changeLayer(long id, qreal z, ViewLayer::ViewLayerID viewLayerID);
 	void deleteSelected(Wire *);

@@ -4882,10 +4882,10 @@ void SketchWidget::addViewLayers() {
 }
 
 void SketchWidget::addViewLayersAux(const LayerList &layers, float startZ) {
-	float z = startZ;
+	m_z = startZ;
 	foreach(ViewLayer::ViewLayerID vlId, layers) {
-		addViewLayer(new ViewLayer(vlId, true, z));
-		z+=1;
+		addViewLayer(new ViewLayer(vlId, true, m_z));
+		m_z += 1;
 	}
 }
 
@@ -6776,4 +6776,8 @@ void SketchWidget::addDefaultParts() {
 
 void SketchWidget::vScrollToZero() {
 	verticalScrollBar()->setValue(verticalScrollBar()->minimum());
+}
+
+float SketchWidget::getTopZ() {
+	return m_z;
 }
