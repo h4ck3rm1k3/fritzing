@@ -75,6 +75,7 @@ struct Tile
     struct Tile	*ti_rt;		/* Right top corner stitch */
     TilePoint	 ti_ll;		/* Lower left coordinate */
     QGraphicsItem *	 ti_client;	/* This space for hire.  */
+	int ti_wave;
 };
 
     /*
@@ -194,6 +195,8 @@ Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, int type);
 #define	TiSetBody(tp, b)	((tp)->ti_body = (b))
 #define	TiGetClient(tp)		((tp)->ti_client)
 #define	TiSetClient(tp,b)	((tp)->ti_client = (b))
+#define	TiGetWave(tp)		((tp)->ti_wave)
+#define	TiSetWave(tp,b)		((tp)->ti_wave = (b))
 
 
 // make sure nobody else uses these values for tile type

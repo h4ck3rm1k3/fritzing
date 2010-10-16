@@ -49,16 +49,6 @@ struct FourInts {
 	int maxY;
 };
 
-struct Seed {
-	Seed(int _wave, struct Tile * _tile) {
-		wave = _wave;
-		tile = _tile;
-	}
-
-	struct Tile * tile;
-	int wave;
-};
-
 struct JEdge {
 	class ConnectorItem * from;
 	class ConnectorItem * to;
@@ -141,12 +131,12 @@ protected:
 	bool hasCollisions(JumperItem *, ViewLayer::ViewLayerID, QGraphicsItem *, ConnectorItem * from); 
 	void updateProgress(int num, int denom);
 	GridEntry * drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int distance, short flag);
-	bool propagate(JSubedge * subedge, QList<Seed> & path, struct Plane *, ViewLayer::ViewLayerID);
-	bool backPropagate(JSubedge * subedge, QList<Seed> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires);
+	bool propagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID);
+	bool backPropagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires);
 	short checkCandidate(JSubedge * subedge, struct Tile *, ViewLayer::ViewLayerID);
 	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to, bool forward);
 	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *, QList<struct Tile *> & alreadyTiled);
-	void seedNext(struct Seed & seed, QList<struct Seed> & seeds);
+	void seedNext(Tile * seed, QList<Tile *> & seeds);
 	struct Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID, QList<struct Tile *> & alreadyTiled);
 	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere, QList<struct Tile *> & alreadyTiled);
 	short checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem *);
@@ -155,7 +145,7 @@ protected:
 	void displayBadTiles(QList<struct Tile *> & alreadyTiled);
 	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type, bool adjustToGrid);
 	void clearGridEntries();
-	void appendIf(Seed & seed, struct Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*));
+	void appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*enoughOverlap)(Tile*, Tile*));
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 

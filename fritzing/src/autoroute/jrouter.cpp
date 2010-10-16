@@ -28,16 +28,14 @@ $Date$
 // TODO:
 //	in backpropagate, don't allow change of direction along short side
 //		draw wires as feedback in all paths, count number of wires, erase paths we don't use?
-//  make all parts align to grid along y axis by extending all blocking tiles with a GRIDALIGN tile
-//		when checking overlaps, if the overlap is only with GRIDALIGN tiles, then just split the GRIDALIGN tile
-//		no longer need to check for height to move left and right
+//	backpropagate: tighten path between connectors once trace has succeeded?
+//		turn corners into 45's?
 //	wire bendpoint is not a blocker if wire is ownside
 //	insert new traces
 //	data structure handles DRC overlaps
 //		make it available from trace menu
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
-//	backpropagate: tighten path between connectors once trace has succeeded?
 //	fix up cancel/stop
 //	use tiles to place jumpers
 //		foreach ownside tile
@@ -940,10 +938,10 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 
 bool JRouter::drawTrace(JSubedge * subedge, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires) 
 {
-	QList<Seed> path;
+	QList<Tile *> path;
 	bool result = propagate(subedge, path, thePlane, viewLayerID);
 	if (result) {
-		//backPropagate(subedge, path, thePlane, viewLayerID, wires);
+		backPropagate(subedge, path, thePlane, viewLayerID, wires);
 	}
 
 	// clear the cancel flag if it's been set so the next trace can proceed
@@ -952,142 +950,179 @@ bool JRouter::drawTrace(JSubedge * subedge, Plane * thePlane, ViewLayer::ViewLay
 }
 
 struct SeedTree {
-	Seed * parent;
+	Tile * seed;
+	SeedTree * parent;
 	QList<SeedTree *> children;
-	QList<qreal> distances;
 };
 
-bool JRouter::backPropagate(JSubedge * subedge, QList<Seed> & path, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires) {
+QPointF figureMidVertical(SeedTree * from, bool isDestination, QRectF & fromTileRect, QPointF & fromPoint, QPointF & toPoint) {
+	if (isDestination) {
+		return fromTileRect.center();
+	}
+
+	if (fromPoint.y() == TOP(from->seed) || fromPoint.y() == BOTTOM(from->seed)) {
+		// in and out left;
+		qreal x = (fromPoint.x() + toPoint.x()) / 2;
+		qreal y = fromTileRect.center().y();
+		return QPointF(x, y);
+	}
+
+	return QPointF(toPoint.x(), fromPoint.y());
+}
+
+QPointF figureMidHorizontal(SeedTree * from, bool isDestination, QRectF & fromTileRect, QPointF & fromPoint, QPointF & toPoint) {
+	if (isDestination) {
+		return fromTileRect.center();
+	}
+
+	if (fromPoint.x() == LEFT(from->seed) || fromPoint.x() == RIGHT(from->seed)) {
+		// in and out left;
+		qreal y = (fromPoint.y() + toPoint.y()) / 2;
+		qreal x = fromTileRect.center().x();
+		return QPointF(x, y);
+	}
+
+	return QPointF(fromPoint.x(), toPoint.y());
+}
+
+
+bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2) {
+	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > Wire::STANDARD_TRACE_WIDTH);
+}
+
+bool enoughOverlapVertical(Tile* tile1, Tile* tile2) {
+	// remember that axes are switched
+	return (qMin(TOP(tile1), TOP(tile2)) - qMax(BOTTOM(tile1), BOTTOM(tile2)) > Wire::STANDARD_TRACE_WIDTH);
+}
+
+bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires) {
 	// TODO: handle wire as destination
 
-	QList<Seed> todoList;
-	todoList.append(path.last());
-	QHash<Seed *, SeedTree *> seedTrees;
+	QList<SeedTree *> todoList;
 	SeedTree * root = new SeedTree;
-	root->parent = &path.last();
-	seedTrees.insert(root->parent, root);
-	while (todoList.count() > 0) {
-		Seed currentSeed = todoList.takeFirst();
-		SeedTree * seedTree = seedTrees.value(&currentSeed);		
+	root->seed = path.last();
+	root->parent = NULL;
+	todoList.append(root);
+	SeedTree * destination = NULL;
+	while (todoList.count() > 0 && destination == NULL) {
+		SeedTree * currentSeedTree = todoList.takeFirst();
 
-		QRectF currentRect;
-		tileToRect(currentSeed.tile, currentRect);
-		for (int i = path.count() - 1; i >= 0; i--) {
-			Seed seed = path.at(i);
-			if (seed.wave != currentSeed.wave - 1) {
+		// for now take the shortest path;
+
+		foreach (Tile * seed, path) {
+			if (TiGetWave(seed) != TiGetWave(currentSeedTree->seed) - 1) {
 				continue;
 			}
 
-			if (LEFT(seed.tile) == RIGHT(currentSeed.tile) || 
-				RIGHT(seed.tile) == LEFT(currentSeed.tile) ||
-				TOP(seed.tile) == BOTTOM(currentSeed.tile) ||
-				BOTTOM(seed.tile) == TOP(currentSeed.tile))
+			if ((LEFT(seed) == RIGHT(currentSeedTree->seed)) ||
+				(RIGHT(seed) == LEFT(currentSeedTree->seed))) 
 			{
-				QRectF rect;
-				tileToRect(seed.tile, rect);
+				if (!enoughOverlapVertical(seed, currentSeedTree->seed)) {
+					continue;
+				}
+			}
+			else if ((TOP(seed) == BOTTOM(currentSeedTree->seed)) ||
+				     (BOTTOM(seed) == TOP(currentSeedTree->seed)))
+			{
+				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed)) {
+					continue;
+				}
+			}
+			else {
+				continue;
+			}
 
-				qreal distance = GraphicsUtils::distance2(currentRect.center(), rect.center());
-				SeedTree * st = new SeedTree;
-				st->parent = &seed;
-				seedTrees.insert(st->parent, st);
-				seedTree->children.append(st);
-				seedTree->distances.append(distance);
-				
-
-
-				DebugDialog::debug(QString("inserting %1:%2 (%3 %4 %5 %6) (%7 %8 %9 %10) ")
-					.arg(currentSeed.wave)
-					.arg(seed.wave)
-					.arg(LEFT(currentSeed.tile))
-					.arg(BOTTOM(currentSeed.tile))
-					.arg(RIGHT(currentSeed.tile))
-					.arg(TOP(currentSeed.tile))
-					.arg(LEFT(seed.tile))
-					.arg(BOTTOM(seed.tile))
-					.arg(RIGHT(seed.tile))
-					.arg(TOP(seed.tile))
-
-					);
-
-				todoList.append(path.at(i));
+			SeedTree * newst = new SeedTree;
+			newst->seed = seed;
+			newst->parent = currentSeedTree;
+			todoList.append(newst);
+			currentSeedTree->children.append(newst);
+			if (TiGetWave(seed) == 0) {
+				destination = newst;
+				break;
 			}
 		}
 	}
 
+	SeedTree * from = destination;
+	QPointF fromPoint;
+	while (from) {
+		SeedTree * to = from->parent;
 
+		QPointF midPoint, toPoint;
+		QRectF fromTileRect, toTileRect;
+		tileToRect(from->seed, fromTileRect);
+		if (to) {
+			tileToRect(to->seed, toTileRect);
+		}
 
-
-
-	Seed cs = path[path.count() - 1];
-	cs.wave = 9999999;
-	path.removeLast();
-	QList<Seed> newPath;
-	newPath.append(cs);
-	int newix = 0;
-	while (newix < newPath.count()) {
-		Seed cs = newPath.at(newix++);
-
-		int ix = path.count() - 1;
-		while (ix > 0) {
-			Seed seed = path.at(--ix);
-			if (LEFT(seed.tile) == RIGHT(cs.tile) || 
-				RIGHT(seed.tile) == LEFT(cs.tile) ||
-				TOP(seed.tile) == BOTTOM(cs.tile) ||
-				BOTTOM(seed.tile) == TOP(cs.tile))
-			{
-				seed.wave = cs.wave - 1;
-				newPath.push_front(seed);
-				path.removeAt(ix);
+		if (to == NULL) {
+			// assume center for now; if it's a wire tile that may be wrong
+			midPoint = fromTileRect.center();
+		}
+		else {
+			// find the center of the overlap
+			if (RIGHT(to->seed) == LEFT(from->seed)) {
+				toPoint.setX(fromTileRect.left());
+				qreal mid = qMax(fromTileRect.top(), toTileRect.top()) + qMin(fromTileRect.bottom(), toTileRect.bottom());
+				toPoint.setY(mid / 2);
+				midPoint = figureMidHorizontal(from, from == destination, fromTileRect, fromPoint, toPoint);
 			}
+			else if (LEFT(to->seed) == RIGHT(from->seed)) {
+				toPoint.setX(fromTileRect.right());
+				qreal mid = qMax(fromTileRect.top(), toTileRect.top()) + qMin(fromTileRect.bottom(), toTileRect.bottom());
+				toPoint.setY(mid / 2);
+				midPoint = figureMidHorizontal(from, from == destination, fromTileRect, fromPoint, toPoint);
+			}
+			else if (TOP(to->seed) == BOTTOM(from->seed)) {
+				toPoint.setY(fromTileRect.top());
+				qreal mid = qMax(fromTileRect.left(), toTileRect.left()) + qMin(fromTileRect.right(), toTileRect.right());
+				toPoint.setX(mid / 2);
+				midPoint = figureMidVertical(from, from == destination, fromTileRect, fromPoint, toPoint);
+			}
+			else if (BOTTOM(to->seed) == TOP(from->seed)) {
+				toPoint.setY(fromTileRect.bottom());
+				qreal mid = qMax(fromTileRect.left(), toTileRect.left()) + qMin(fromTileRect.right(), toTileRect.right());
+				toPoint.setX(mid / 2);
+				midPoint = figureMidVertical(from, from == destination, fromTileRect, fromPoint, toPoint);
+			}
+			else {
+				// shouldn't happen
+			}
+
+
+
+
 		}
+
+		if (from != destination) {
+			TraceWire * trace = drawOneTrace(fromPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+			wires.append(trace);
+		}
+		if (to != NULL) {
+			TraceWire * trace = drawOneTrace(midPoint, toPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+			wires.append(trace);
+		}
+
+		QGraphicsItem * item = TiGetClient(from->seed);
+		if (item != NULL) item->setVisible(false);
+
+		// TODO: process events just for debugging
+		ProcessEventBlocker::processEvents();	
+
+		fromPoint = toPoint;
+		from = to;
 	}
-
-	int ix = newPath.count() - 1;
-	Seed * currentSeed = &(newPath[ix]);
-	QPointF currentPoint = subedge->to->sceneAdjustedTerminalPoint(NULL);
-	QPointF last = subedge->from->sceneAdjustedTerminalPoint(NULL);
-
-	Seed * bestSeed = NULL;
-	QRectF bestRect;
-	qreal bestDistance;
-	while (ix > 0) {
-		Seed seed = newPath[--ix];
-		if (seed.tile == currentSeed->tile || seed.wave > currentSeed->wave) {
-			continue;
-		}
-
-		if (seed.wave < currentSeed->wave - 1) {
-			TraceWire * wire = drawOneTrace(currentPoint, bestRect.center(), Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
-			wires.append(wire);
-			currentSeed = bestSeed;
-			currentPoint = bestRect.center();
-			bestSeed = NULL;
-		}
-
-		if (bestSeed == NULL) {
-			bestSeed = &seed;
-			tileToRect(seed.tile, bestRect);
-			bestDistance = GraphicsUtils::distance2(bestRect.center(), currentPoint);
-			continue;
-		}
-
-		QRectF candidateRect;
-		tileToRect(seed.tile, candidateRect);
-		qreal candidateDistance = GraphicsUtils::distance2(candidateRect.center(), currentPoint);
-		if (candidateDistance < bestDistance) {
-			bestSeed = &seed;
-			bestRect = candidateRect;
-			bestDistance = candidateDistance;
-		}
-
+	
+	foreach (Wire * wire, wires) {
+		delete wire;
 	}
-
-	TraceWire * wire = drawOneTrace(currentPoint, last, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
-
-	return false;
+	wires.clear();
+		
+	return true;
 }
 
-bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane, ViewLayer::ViewLayerID viewLayerID) {
+bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlane, ViewLayer::ViewLayerID viewLayerID) {
 
 	DebugDialog::debug("((((((((((((((((((((((((((((");
 		DebugDialog::debug(QString("starting from connectoritem %1 %2 %3 %4 %5")
@@ -1104,34 +1139,34 @@ bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane,
 		return false;
 	}
 
-	Seed firstSeed = Seed(0, firstTile);
-	QList<Seed> seeds;
-	seeds.append(firstSeed);
+	TiSetWave(firstTile, 0);
+	QList<Tile *> seeds;
+	seeds.append(firstTile);
 
 	int ix = 0;
 	while (ix < seeds.count()) {
 		if (m_cancelTrace || m_stopTrace || m_cancelled) break;
 
-		Seed seed = seeds[ix++];
+		Tile * seed = seeds[ix++];
 		
-		GridEntry * gridEntry = dynamic_cast<GridEntry *>(TiGetClient(seed.tile));
+		GridEntry * gridEntry = dynamic_cast<GridEntry *>(TiGetClient(seed));
 		if (gridEntry != NULL) {
 			continue;				
 		}
 
 		// TILE math reverses y-axis!
-		qreal x1 = LEFT(seed.tile);
-		qreal y1 = BOTTOM(seed.tile);
-		qreal x2 = RIGHT(seed.tile);
-		qreal y2 = TOP(seed.tile);
+		qreal x1 = LEFT(seed);
+		qreal y1 = BOTTOM(seed);
+		qreal x2 = RIGHT(seed);
+		qreal y2 = TOP(seed);
 			
-		short fof = checkCandidate(subedge, seed.tile, viewLayerID);
+		short fof = checkCandidate(subedge, seed, viewLayerID);
 		QRectF r(x1, y1, x2 - x1, y2 - y1);
 		DebugDialog::debug("=================", r);
 
-		DebugDialog::debug(QString("wave:%1 fof:%2").arg(seed.wave).arg(fof), r);
-		gridEntry = drawGridItem(x1, y1, x2, y2, seed.wave, fof);
-		TiSetClient(seed.tile, gridEntry);
+		DebugDialog::debug(QString("wave:%1 fof:%2").arg(TiGetWave(seed)).arg(fof), r);
+		gridEntry = drawGridItem(x1, y1, x2, y2, TiGetWave(seed), fof);
+		TiSetClient(seed, gridEntry);
 		//TODO: processEvents should only happen every once in a while
 		ProcessEventBlocker::processEvents();
 		if (fof == GridEntry::GOAL) {
@@ -1149,47 +1184,40 @@ bool JRouter::propagate(JSubedge * subedge, QList<Seed> & path, Plane* thePlane,
 	return false;
 }
 
-void JRouter::appendIf(Seed & seed, Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*)) {
+void JRouter::appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*enoughOverlap)(Tile*, Tile*)) {
 	
-	if (TiGetClient(tile) != NULL) {
+	if (TiGetClient(next) != NULL) {
 		return;			// already visited
 	}
 
-	if (TiGetType(tile) == NOTBOARD) {
-		if (TiGetClient(tile) == NULL) {
-			qreal x1 = LEFT(tile);
-			qreal y1 = BOTTOM(tile);
-			qreal x2 = RIGHT(tile);
-			qreal y2 = TOP(tile);
+	if (TiGetType(next) == NOTBOARD) {
+		if (TiGetClient(next) == NULL) {
+			qreal x1 = LEFT(next);
+			qreal y1 = BOTTOM(next);
+			qreal x2 = RIGHT(next);
+			qreal y2 = TOP(next);
 			drawGridItem(x1, y1, x2, y2, 0, GridEntry::NOTBOARD);
 		}
 
 		return;		// outside board boundaries
 	}
 
-	if (!enoughOverlap(seed.tile, tile)) {
+	if (!enoughOverlap(seed, next)) {
 		return;	// not wide/high enough 
 	}
 
-	seeds.append(Seed(seed.wave + 1, tile));
+	TiSetWave(next, TiGetWave(seed) + 1);
+	seeds.append(next);
 }
 
-bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2) {
-	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > Wire::STANDARD_TRACE_WIDTH);
-}
 
-bool enoughOverlapVertical(Tile* tile1, Tile* tile2) {
-	// remember that axes are switched
-	return (qMin(TOP(tile1), TOP(tile2)) - qMax(BOTTOM(tile1), BOTTOM(tile2)) > Wire::STANDARD_TRACE_WIDTH);
-}
-
-void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
-	if (TiGetType(seed.tile) != GRIDALIGN && RIGHT(seed.tile) < m_maxRect.right()) {
-		Tile * next = TR(seed.tile);
+void JRouter::seedNext(Tile * seed, QList<Tile *> & seeds) {
+	if (TiGetType(seed) != GRIDALIGN && RIGHT(seed) < m_maxRect.right()) {
+		Tile * next = TR(seed);
 		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
 			next = LB(next);
-			if (TOP(next) <= BOTTOM(seed.tile)) {
+			if (TOP(next) <= BOTTOM(seed)) {
 				break;
 			}
 
@@ -1197,12 +1225,12 @@ void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
 		}
 	}
 
-	if (TiGetType(seed.tile) != GRIDALIGN && LEFT(seed.tile) > m_maxRect.left()) {
-		Tile * next = BL(seed.tile);
+	if (TiGetType(seed) != GRIDALIGN && LEFT(seed) > m_maxRect.left()) {
+		Tile * next = BL(seed);
 		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
 			next = RT(next);
-			if (BOTTOM(next) >= TOP(seed.tile)) {
+			if (BOTTOM(next) >= TOP(seed)) {
 				break;
 			}
 
@@ -1210,12 +1238,12 @@ void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
 		}
 	}
 
-	if (TOP(seed.tile) < m_maxRect.bottom()) {		// reverse axis
-		Tile * next = RT(seed.tile);
+	if (TOP(seed) < m_maxRect.bottom()) {		// reverse axis
+		Tile * next = RT(seed);
 		appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		while (true) {
 			next = BL(next);
-			if (RIGHT(next) <= LEFT(seed.tile)) {
+			if (RIGHT(next) <= LEFT(seed)) {
 				break;
 			}
 
@@ -1223,12 +1251,12 @@ void JRouter::seedNext(Seed & seed, QList<Seed> & seeds) {
 		}
 	}
 
-	if (BOTTOM(seed.tile) > m_maxRect.top()) {		// reverse axis
-		Tile * next = LB(seed.tile);
+	if (BOTTOM(seed) > m_maxRect.top()) {		// reverse axis
+		Tile * next = LB(seed);
 		appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		while (true) {
 			next = TR(next);
-			if (LEFT(next) >= RIGHT(seed.tile)) {
+			if (LEFT(next) >= RIGHT(seed)) {
 				break;
 			}
 
