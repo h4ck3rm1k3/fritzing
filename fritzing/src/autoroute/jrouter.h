@@ -153,9 +153,11 @@ protected:
 	short checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire *);
 	void clearTiles(struct Plane * thePlane);
 	void displayBadTiles(QList<struct Tile *> & alreadyTiled);
-	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type);
+	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type, bool adjustToGrid);
 	void clearGridEntries();
 	void appendIf(Seed & seed, struct Tile * tile, QList<Seed> & seeds, bool (*enoughOverlap)(Tile*, Tile*));
+	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
+	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);

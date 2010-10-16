@@ -465,7 +465,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 			tileRect.ymin = (r.top() * factor) + boardPos.y();		// TILE is Math Y-axis not computer-graphic Y-axis
 			// note off-by-one weirdness
 			tileRect.ymax = ((r.bottom() + 1) * factor) + boardPos.y();  
-			insertTile(thePlane, tileRect, alreadyTiled, NULL, NOTBOARD);
+			insertTile(thePlane, tileRect, alreadyTiled, NULL, NOTBOARD, false);
 			if (alreadyTiled.count() > 0) {
 				return thePlane;
 			}
@@ -565,7 +565,6 @@ bool clipRect(QRectF & r, QRectF & clip, QList<QRectF> & rects) {
 		r.setRight(clip.right());
 	}
 
-
 	return true;
 }
 
@@ -617,75 +616,48 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 		}
 		else {
 			qreal angle = atan2(p2.y() - p1.y(), p2.x() - p1.x());
-			qreal x, y, xend, yend;
 			if (dy >= dx) {
-				// horizontal slices
-				qreal slantWidth = qAbs((w->width() + MinWireSpace + MinWireSpace) / sin(angle));
-				if (p1.y() < p2.y()) {
-					x = p1.x();
-					y = p1.y();
-					xend = p2.x();
-					yend = p2.y();
-				}
-				else {
-					x = p2.x();
-					y = p2.y();
-					xend = p1.x();
-					yend = p1.y();
-				}
-
-				qreal cy = y;
-				while (cy < yend) {
-					qreal dy = cy - y;
-					qreal dx = dy * (xend - x) / (yend - y);
-					qreal bottom = qMin(yend, cy + Wire::STANDARD_TRACE_WIDTH);
-					QRectF r(x + dx - (slantWidth / 2), cy, slantWidth, bottom - cy);
-					rects.append(r);
-					cy += Wire::STANDARD_TRACE_WIDTH;
-				}	
+				sliceWireHorizontally(w, angle, p1, p2, rects);
 			}
 			else {
-				// vertical slices
-				qreal slantWidth = qAbs((w->width() + MinWireSpace + MinWireSpace) / cos(angle));
-				if (p1.x() < p2.x()) {
-					x = p1.x();
-					y = p1.y();
-					xend = p2.x();
-					yend = p2.y();
-				}
-				else {
-					x = p2.x();
-					y = p2.y();
-					xend = p1.x();
-					yend = p1.y();
-				}
-
-				qreal cx = x;
-				while (cx < xend) {
-					qreal dx = cx - x;
-					qreal dy = dx * (yend - y) / (xend - x);
-					qreal right = qMin(xend, cx + Wire::STANDARD_TRACE_WIDTH);
-					QRectF r(cx, y + dy - (slantWidth / 2), right - cx, slantWidth);
-					rects.append(r);
-					cx += Wire::STANDARD_TRACE_WIDTH;
-				}	
+				sliceWireVertically(w, angle, p1, p2, rects);
 			}
 		}
 
 		QList<ConnectorItem *> clipConnectorItems;
-		clipConnectorItems.append(w->connector0());
-		clipConnectorItems.append(w->connector1());
 		foreach (ConnectorItem * connectorItem, w->connector0()->connectedToItems()) {
 			clipConnectorItems.append(connectorItem);
 		}
 		foreach (ConnectorItem * connectorItem, w->connector1()->connectedToItems()) {
 			clipConnectorItems.append(connectorItem);
 		}
+		clipConnectorItems.append(w->connector0());
+		clipConnectorItems.append(w->connector1());
 		QList<QRectF> clipRects;
 		foreach (ConnectorItem * connectorItem, clipConnectorItems) {
 			QRectF r = connectorItem->rect();
 			QRectF clip = connectorItem->attachedTo()->mapRectToScene(r);
-			clip.adjust(-MinWireSpace, -MinWireSpace, MinWireSpace, MinWireSpace);
+			clip.adjust(-MinConnectorSpace, -MinConnectorSpace, MinConnectorSpace, MinConnectorSpace);
+			// ensure cliping rect goes to y pseudo-grid boundaries
+			clip.setTop(qFloor(clip.top() / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH);
+			clip.setBottom(qCeil(clip.bottom() / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH);
+			bool redundant = false;
+			for (int i = 0; i < clipRects.count(); i++) {
+				if (clipRects[i] == clip) {
+					redundant = true;
+					break;
+				}
+				if (clipRects[i].contains(clip)) {
+					redundant = true;
+					break;
+				}
+				if (clip.contains(clipRects[i])) {
+					clipRects.removeAt(i);
+					break;
+				}
+			}
+			if (redundant) continue;
+
 			clipRects.append(clip);
 		}
 
@@ -706,13 +678,102 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 			tileRect.xmax = r.right();
 			tileRect.ymin = r.top();
 			tileRect.ymax = r.bottom();
-			insertTile(thePlane, tileRect, alreadyTiled, w, TRACE);
+			DebugDialog::debug("tile wire", r);
+			insertTile(thePlane, tileRect, alreadyTiled, w, TRACE, false);
 			if (alreadyTiled.count() > 0) break;
 		}
 		if (alreadyTiled.count() > 0) break;
 	}
 }
 
+
+void JRouter::sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects) {
+	// tiler gets confused when horizontally contiguous tiles are the same type, so join rects horizontally
+	qreal x, y, xend, yend;
+	qreal slantWidth = qAbs((w->width() + MinWireSpace + MinWireSpace) / cos(angle));
+	if (p1.x() < p2.x()) {
+		x = p1.x();
+		y = p1.y();
+		xend = p2.x();
+		yend = p2.y();
+	}
+	else {
+		x = p2.x();
+		y = p2.y();
+		xend = p1.x();
+		yend = p1.y();
+	}
+
+	int xunits = qCeil((xend - x) / Wire::STANDARD_TRACE_WIDTH);
+	int miny = qFloor((qMin(y, yend) - (slantWidth / 2)) / Wire::STANDARD_TRACE_WIDTH);
+	int maxy = qCeil((qMax(y, yend) + (slantWidth / 2)) / Wire::STANDARD_TRACE_WIDTH);
+	int yunits = maxy - miny;
+	QVector< QVector<char> > tiler(yunits, QVector<char>(xunits + 1, 0));
+	
+	qreal cx = x;
+	for (int ix = 0; cx < xend; ix++) {
+		qreal dx = cx - x;
+		qreal dy = dx * (yend - y) / (xend - x);
+		qreal y1 = y + dy - (slantWidth / 2);
+		qreal y2 = y1 + slantWidth;
+		int yi1 = qFloor(y1 / Wire::STANDARD_TRACE_WIDTH);
+		int yi2 = qCeil(y2 / Wire::STANDARD_TRACE_WIDTH);
+		for (int iy = yi1; iy < yi2; iy++) {
+			tiler[iy - miny][ix] = 1;
+		}
+		cx += Wire::STANDARD_TRACE_WIDTH;
+	}
+
+	for (int iy = 0; iy < yunits; iy++) {
+		bool inRect = false;
+		int started;
+		for (int ix = 0; ix < xunits + 1; ix++) {
+			if (tiler[iy][ix] == 1) {
+				if (!inRect) {
+					inRect = true;
+					started = ix;
+				}
+			}
+			else {
+				if (inRect) {
+					inRect = false;
+					QRectF r(x + (Wire::STANDARD_TRACE_WIDTH * started), 
+							 (miny + iy) * Wire::STANDARD_TRACE_WIDTH,
+							 (ix - started) * Wire::STANDARD_TRACE_WIDTH,
+							 Wire::STANDARD_TRACE_WIDTH);
+					rects.append(r);
+				}
+			}
+		}
+	}
+}
+
+void JRouter::sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects) {
+	qreal x, y, xend, yend;
+	qreal slantWidth = qAbs((w->width() + MinWireSpace + MinWireSpace) / sin(angle));
+	if (p1.y() < p2.y()) {
+		x = p1.x();
+		y = p1.y();
+		xend = p2.x();
+		yend = p2.y();
+	}
+	else {
+		x = p2.x();
+		y = p2.y();
+		xend = p1.x();
+		yend = p1.y();
+	}
+
+	// begin somewhere on the pseudo-grid
+	int ystart = qFloor(y / Wire::STANDARD_TRACE_WIDTH);
+	for (qreal cy = ystart * Wire::STANDARD_TRACE_WIDTH; cy < yend; ystart++) {
+		qreal dy = cy - y;
+		qreal dx = dy * (xend - x) / (yend - y);
+		QRectF r(x + dx - (slantWidth / 2), cy, slantWidth, Wire::STANDARD_TRACE_WIDTH);
+		rects.append(r);
+		cy += Wire::STANDARD_TRACE_WIDTH;
+	}	
+}
 
 void JRouter::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
 	if (jumperItemStructs.count() <= 0) return;
@@ -2067,7 +2128,7 @@ Tile * JRouter::addTile(NonConnectorItem * nci, int type, Plane * thePlane, QLis
 	tileRect.ymin = r2.top();		// TILE is Math Y-axis not computer-graphic Y-axis
 	tileRect.ymax = r2.bottom(); 
 	DebugDialog::debug(QString("   add tile %1").arg((long) nci, 0, 16), r2);
-	return insertTile(thePlane, tileRect, alreadyTiled, nci, type);
+	return insertTile(thePlane, tileRect, alreadyTiled, nci, type, true);
 }
 
 
@@ -2135,21 +2196,23 @@ int checkAlready(Tile * tile, UserData data) {
 	return 0;
 }
 
-Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type) {
+Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type, bool adjustToGrid) {
 	TileRect tileRect = trueRect;
-	// make sure all tiles are on the grid in the y-axis
-	// so that we're sure all traces going left and right will fit
-	tileRect.ymin = qFloor(trueRect.ymin / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH;
-	tileRect.ymax = qCeil(trueRect.ymax / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH;
+	if (adjustToGrid) {
+		// make sure all tiles are on the grid in the y-axis
+		// so that we're sure all horizontal traces will fit
+		tileRect.ymin = qFloor(trueRect.ymin / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH;
+		tileRect.ymax = qCeil(trueRect.ymax / Wire::STANDARD_TRACE_WIDTH) * Wire::STANDARD_TRACE_WIDTH;
+	}
+	else {
+		int y1 = qRound(trueRect.ymin / Wire::STANDARD_TRACE_WIDTH);
+		int y2 = qRound(trueRect.ymax / Wire::STANDARD_TRACE_WIDTH);
+		trueRect.ymin = tileRect.ymin = y1 *  Wire::STANDARD_TRACE_WIDTH;
+		trueRect.ymax = tileRect.ymax = y2 *  Wire::STANDARD_TRACE_WIDTH;
+	}
 
 	DebugDialog::debug(QString("insert tile xmin:%1 xmax:%2 ymin:%3 ymax:%4 aymin:%5 aymax:%6").
 		arg(tileRect.xmin).arg(tileRect.xmax).arg(trueRect.ymin).arg(trueRect.ymax).arg(tileRect.ymin).arg(tileRect.ymax));
-
-
-
-	if (tileRect.ymin != trueRect.ymin || tileRect.ymax != trueRect.ymax) {
-		DebugDialog::debug("diff rects");
-	}
 
 	TiSrArea(NULL, thePlane, &tileRect, checkAlready, &alreadyTiled);
 	if (alreadyTiled.count() > 0) {
@@ -2174,7 +2237,6 @@ Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> 
 	if (alreadyTiled.count() > 0) {
 		// we are only intersecting GRIDALIGN tiles so deal with that here...
 		alreadyTiled.clear();
-
 	}
 
 
