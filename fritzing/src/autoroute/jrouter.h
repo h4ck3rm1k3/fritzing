@@ -140,8 +140,10 @@ protected:
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	struct SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
-	void drawDirectionHorizontal(QPointF & startPoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
-	void drawDirectionVertical(QPointF & startPoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
+	void drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
+	void drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
+	QPointF drawLastNotHorizontal(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires);
+	QPointF drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
