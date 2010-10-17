@@ -56,6 +56,7 @@ QStringList Wire::colorNames;
 QHash<long, QString> Wire::widthTrans;
 QList<long> Wire::widths;
 qreal Wire::STANDARD_TRACE_WIDTH;
+qreal Wire::HALF_STANDARD_TRACE_WIDTH;
 
 ////////////////////////////////////////////////////////////
 
@@ -1000,6 +1001,7 @@ void Wire::initNames() {
 	widthTrans.insert(widths[3], tr("extra thick (48 mil)"));
 
 	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[1]);
+	HALF_STANDARD_TRACE_WIDTH = STANDARD_TRACE_WIDTH / 2.0;
 
     // need a list because a hash table doesn't guarantee order
     colorNames.append(tr("blue"));

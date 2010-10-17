@@ -153,6 +153,7 @@ protected slots:
 
 public:
 	static qreal STANDARD_TRACE_WIDTH;
+	static qreal HALF_STANDARD_TRACE_WIDTH;
 
 public:
 	static void initNames();

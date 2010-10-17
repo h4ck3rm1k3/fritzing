@@ -175,12 +175,11 @@ static int boundingKeepOut = 4;
 
 ////////////////////////////////////////////////////////////////////
 
-GridEntry::GridEntry(qreal x, qreal y, qreal w, qreal h, int wave, int flags, QGraphicsItem * parent) : QGraphicsRectItem(x, y, w, h, parent)
+GridEntry::GridEntry(qreal x, qreal y, qreal w, qreal h, int flags, QGraphicsItem * parent) : QGraphicsRectItem(x, y, w, h, parent)
 {
 	setAcceptedMouseButtons(Qt::NoButton);
 	setAcceptsHoverEvents(false);
 	m_flags = flags;
-	m_wave = wave;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -949,42 +948,129 @@ bool JRouter::drawTrace(JSubedge * subedge, Plane * thePlane, ViewLayer::ViewLay
 	return result;
 }
 
-struct SeedTree {
-	Tile * seed;
-	SeedTree * parent;
-	QList<SeedTree *> children;
-};
+void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires) {
+	qreal maxLeft = qMax(fromTileRect.left(), toTileRect.left()) + Wire::HALF_STANDARD_TRACE_WIDTH;
+	qreal minRight = qMin(fromTileRect.right(), toTileRect.right()) - Wire::HALF_STANDARD_TRACE_WIDTH;
 
-QPointF figureMidVertical(SeedTree * from, bool isDestination, QRectF & fromTileRect, QPointF & fromPoint, QPointF & toPoint) {
-	if (isDestination) {
-		return fromTileRect.center();
+	if (startPoint.y() == endPoint.y()) {
+		// u-shape: need three lines
+
+		if (toTileRect.right() < startPoint.x()) {
+			endPoint.setX(minRight);
+		}
+		else {
+			endPoint.setX(maxLeft);
+		}
+		QPointF midPoint1;
+		midPoint1.setX(startPoint.x());
+		midPoint1.setY(startPoint.y() == fromTileRect.top() ? startPoint.y() + Wire::HALF_STANDARD_TRACE_WIDTH : startPoint.y() - Wire::HALF_STANDARD_TRACE_WIDTH);
+		Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		QPointF midPoint2;
+		midPoint2.setY(midPoint1.y());
+		midPoint2.setX(endPoint.x());
+		trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		return;
 	}
 
-	if (fromPoint.y() == TOP(from->seed) || fromPoint.y() == BOTTOM(from->seed)) {
-		// in and out left;
-		qreal x = (fromPoint.x() + toPoint.x()) / 2;
-		qreal y = fromTileRect.center().y();
-		return QPointF(x, y);
+	bool isTurn = false;
+	if (startPoint.x() == fromTileRect.left()) {
+		isTurn = true;
+		endPoint.setX(maxLeft);
+	}
+	else if (startPoint.x() == fromTileRect.right()) {
+		isTurn = true;
+		endPoint.setX(minRight);
+	}
+	if (isTurn) {
+		QPointF midPoint;
+		midPoint.setY(startPoint.y());
+		midPoint.setX(endPoint.x());
+		Wire *trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		return;
 	}
 
-	return QPointF(toPoint.x(), fromPoint.y());
+	if (startPoint.x() <= minRight && startPoint.x() >= maxLeft) {
+		endPoint.setX(startPoint.x());
+	}
+	else if (minRight < startPoint.x()) {
+		endPoint.setX(minRight);
+	}
+	else {
+		endPoint.setX(maxLeft);
+	}
+
+	Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	wires.append(trace);
 }
 
-QPointF figureMidHorizontal(SeedTree * from, bool isDestination, QRectF & fromTileRect, QPointF & fromPoint, QPointF & toPoint) {
-	if (isDestination) {
-		return fromTileRect.center();
+void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires) {
+	qreal maxTop = qMax(fromTileRect.top(), toTileRect.top()) + Wire::HALF_STANDARD_TRACE_WIDTH;
+	qreal minBottom = qMin(fromTileRect.bottom(), toTileRect.bottom()) - Wire::HALF_STANDARD_TRACE_WIDTH;
+
+	if (startPoint.x() == endPoint.x()) {
+		// u-shape: need three lines
+
+		if (toTileRect.bottom() < startPoint.y()) {
+			endPoint.setY(minBottom);
+		}
+		else {
+			endPoint.setY(maxTop);
+		}
+		QPointF midPoint1;
+		midPoint1.setY(startPoint.y());
+		midPoint1.setX(startPoint.x() == fromTileRect.left() ? startPoint.x() + Wire::HALF_STANDARD_TRACE_WIDTH : startPoint.x() - Wire::HALF_STANDARD_TRACE_WIDTH);
+		Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		QPointF midPoint2;
+		midPoint2.setX(midPoint1.x());
+		midPoint2.setY(endPoint.y());
+		trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		return;
 	}
 
-	if (fromPoint.x() == LEFT(from->seed) || fromPoint.x() == RIGHT(from->seed)) {
-		// in and out left;
-		qreal y = (fromPoint.y() + toPoint.y()) / 2;
-		qreal x = fromTileRect.center().x();
-		return QPointF(x, y);
+	bool isTurn = false;
+	if (startPoint.y() == fromTileRect.top()) {
+		isTurn = true;
+		endPoint.setY(maxTop);
+	}
+	else if (startPoint.y() == fromTileRect.bottom()) {
+		isTurn = true;
+		endPoint.setY(minBottom);
+	}
+	if (isTurn) {
+		QPointF midPoint;
+		midPoint.setX(startPoint.x());
+		midPoint.setY(endPoint.y());
+		Wire *trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		wires.append(trace);
+		return;
 	}
 
-	return QPointF(fromPoint.x(), toPoint.y());
+	if (startPoint.y() <= minBottom && startPoint.y() >= maxTop) {
+		endPoint.setY(startPoint.y());
+	}
+	else if (minBottom < startPoint.y()) {
+		endPoint.setY(minBottom);
+	}
+	else {
+		endPoint.setY(maxTop);
+	}
+
+	Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	wires.append(trace);
 }
-
 
 bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2) {
 	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > Wire::STANDARD_TRACE_WIDTH);
@@ -995,16 +1081,86 @@ bool enoughOverlapVertical(Tile* tile1, Tile* tile2) {
 	return (qMin(TOP(tile1), TOP(tile2)) - qMax(BOTTOM(tile1), BOTTOM(tile2)) > Wire::STANDARD_TRACE_WIDTH);
 }
 
+struct SeedTree {
+	Tile * seed;
+	SeedTree * parent;
+	QList<SeedTree *> children;
+};
+
 bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires) {
 	// TODO: handle wire as destination
 
-	QList<SeedTree *> todoList;
 	SeedTree * root = new SeedTree;
+	SeedTree * destination = followPath(root, path);
+	if (destination == NULL) {
+		// shouldn't happen
+		return false;
+	}
+
+	SeedTree * from = destination;
+	QRectF r;
+	tileToRect(from->seed, r);
+	QPointF startPoint = r.center();
+	while (from) {
+		SeedTree * to = from->parent;
+		QPointF endPoint;
+		QRectF fromTileRect, toTileRect;
+		tileToRect(from->seed, fromTileRect);
+
+		if (to == NULL) {
+			// TODO: assuming center for now; if it's a wire tile that may be wrong
+			endPoint = fromTileRect.center();
+			Wire * trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+			wires.append(trace);
+		}
+		else {
+			tileToRect(to->seed, toTileRect);
+			if (RIGHT(to->seed) == LEFT(from->seed)) {
+				endPoint.setX(fromTileRect.left());
+				drawDirectionHorizontal(startPoint, endPoint, fromTileRect, toTileRect, wires);
+			}
+			else if (LEFT(to->seed) == RIGHT(from->seed)) {
+				endPoint.setX(fromTileRect.right());
+				drawDirectionHorizontal(startPoint, endPoint, fromTileRect, toTileRect, wires);
+			}
+			else if (TOP(to->seed) == BOTTOM(from->seed)) {
+				endPoint.setY(fromTileRect.top());
+				drawDirectionVertical(startPoint, endPoint, fromTileRect, toTileRect, wires);
+			}
+			else if (BOTTOM(to->seed) == TOP(from->seed)) {
+				endPoint.setY(fromTileRect.bottom());
+				drawDirectionVertical(startPoint, endPoint, fromTileRect, toTileRect, wires);
+			}
+			else {
+				// shouldn't happen
+			}
+		}
+
+		QGraphicsItem * item = TiGetClient(from->seed);
+		if (item != NULL) item->setVisible(false);
+
+		// TODO: process events just for debugging
+		ProcessEventBlocker::processEvents();	
+
+		startPoint = endPoint;
+		from = to;
+	}
+	
+	foreach (Wire * wire, wires) {
+		delete wire;
+	}
+	wires.clear();
+		
+	return true;
+}
+
+SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
+	QList<SeedTree *> todoList;
 	root->seed = path.last();
 	root->parent = NULL;
 	todoList.append(root);
-	SeedTree * destination = NULL;
-	while (todoList.count() > 0 && destination == NULL) {
+
+	while (todoList.count() > 0) {
 		SeedTree * currentSeedTree = todoList.takeFirst();
 
 		// for now take the shortest path;
@@ -1038,89 +1194,15 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 			todoList.append(newst);
 			currentSeedTree->children.append(newst);
 			if (TiGetWave(seed) == 0) {
-				destination = newst;
-				break;
+				return newst;
 			}
 		}
 	}
 
-	SeedTree * from = destination;
-	QPointF fromPoint;
-	while (from) {
-		SeedTree * to = from->parent;
-
-		QPointF midPoint, toPoint;
-		QRectF fromTileRect, toTileRect;
-		tileToRect(from->seed, fromTileRect);
-		if (to) {
-			tileToRect(to->seed, toTileRect);
-		}
-
-		if (to == NULL) {
-			// assume center for now; if it's a wire tile that may be wrong
-			midPoint = fromTileRect.center();
-		}
-		else {
-			// find the center of the overlap
-			if (RIGHT(to->seed) == LEFT(from->seed)) {
-				toPoint.setX(fromTileRect.left());
-				qreal mid = qMax(fromTileRect.top(), toTileRect.top()) + qMin(fromTileRect.bottom(), toTileRect.bottom());
-				toPoint.setY(mid / 2);
-				midPoint = figureMidHorizontal(from, from == destination, fromTileRect, fromPoint, toPoint);
-			}
-			else if (LEFT(to->seed) == RIGHT(from->seed)) {
-				toPoint.setX(fromTileRect.right());
-				qreal mid = qMax(fromTileRect.top(), toTileRect.top()) + qMin(fromTileRect.bottom(), toTileRect.bottom());
-				toPoint.setY(mid / 2);
-				midPoint = figureMidHorizontal(from, from == destination, fromTileRect, fromPoint, toPoint);
-			}
-			else if (TOP(to->seed) == BOTTOM(from->seed)) {
-				toPoint.setY(fromTileRect.top());
-				qreal mid = qMax(fromTileRect.left(), toTileRect.left()) + qMin(fromTileRect.right(), toTileRect.right());
-				toPoint.setX(mid / 2);
-				midPoint = figureMidVertical(from, from == destination, fromTileRect, fromPoint, toPoint);
-			}
-			else if (BOTTOM(to->seed) == TOP(from->seed)) {
-				toPoint.setY(fromTileRect.bottom());
-				qreal mid = qMax(fromTileRect.left(), toTileRect.left()) + qMin(fromTileRect.right(), toTileRect.right());
-				toPoint.setX(mid / 2);
-				midPoint = figureMidVertical(from, from == destination, fromTileRect, fromPoint, toPoint);
-			}
-			else {
-				// shouldn't happen
-			}
-
-
-
-
-		}
-
-		if (from != destination) {
-			TraceWire * trace = drawOneTrace(fromPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
-			wires.append(trace);
-		}
-		if (to != NULL) {
-			TraceWire * trace = drawOneTrace(midPoint, toPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
-			wires.append(trace);
-		}
-
-		QGraphicsItem * item = TiGetClient(from->seed);
-		if (item != NULL) item->setVisible(false);
-
-		// TODO: process events just for debugging
-		ProcessEventBlocker::processEvents();	
-
-		fromPoint = toPoint;
-		from = to;
-	}
-	
-	foreach (Wire * wire, wires) {
-		delete wire;
-	}
-	wires.clear();
-		
-	return true;
+	// shouldn't happen
+	return NULL;
 }
+
 
 bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlane, ViewLayer::ViewLayerID viewLayerID) {
 
@@ -1427,7 +1509,7 @@ short JRouter::checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLa
 GridEntry * JRouter::drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int wave, short flag) 
 {
 	int alpha = 128;
-	GridEntry * gridEntry = new GridEntry(x1, y1, x2 - x1, y2 - y1, wave, flag, NULL);
+	GridEntry * gridEntry = new GridEntry(x1, y1, x2 - x1, y2 - y1, flag, NULL);
 	gridEntry->setZValue(m_sketchWidget->getTopZ());
 
 	QColor c;

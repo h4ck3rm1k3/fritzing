@@ -41,14 +41,6 @@ $Date$
 #include "../viewgeometry.h"
 #include "../viewlayer.h"
 
-
-struct FourInts {
-	int minX;
-	int minY;
-	int maxX;
-	int maxY;
-};
-
 struct JEdge {
 	class ConnectorItem * from;
 	class ConnectorItem * to;
@@ -88,10 +80,9 @@ public:
 	};
 
 public:
-	GridEntry(qreal x, qreal y, qreal width, qreal height, int wave, int flags, QGraphicsItem * parent); 
+	GridEntry(qreal x, qreal y, qreal width, qreal height, int flags, QGraphicsItem * parent); 
 
 public:
-	int m_wave;
 	int m_flags;
 };
 
@@ -148,6 +139,9 @@ protected:
 	void appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*enoughOverlap)(Tile*, Tile*));
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
+	struct SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
+	void drawDirectionHorizontal(QPointF & startPoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
+	void drawDirectionVertical(QPointF & startPoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
