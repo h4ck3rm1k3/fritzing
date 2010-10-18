@@ -2514,6 +2514,8 @@ void PCBSketchWidget::jumperItemHack() {
 	viewGeometry.setLoc(QPointF(0, 0));
 	ItemBase * itemBase = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase) {
+		JumperItem * jumperItem = qobject_cast<JumperItem *>(itemBase);
+		m_jumperItemSize = jumperItem->connector0()->rect().size();
 		deleteItem(itemBase, true, false, false);
 	}
 }
@@ -2536,3 +2538,6 @@ bool PCBSketchWidget::hasAnyNets() {
 	return m_routingStatus.m_netCount > 0;
 }
 
+QSizeF PCBSketchWidget::jumperItemSize() {
+	return m_jumperItemSize;
+}

@@ -87,6 +87,7 @@ public:
 	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	void getRatsnestColor(QColor &);
 	void updateNet(Wire*);
+	QSizeF jumperItemSize();
 
 public slots:
 	void resizeBoard(qreal w, qreal h, bool doEmit);
@@ -180,6 +181,7 @@ protected:
 	QPointF m_jumperDragOffset;
 	QPointer<class JumperItem> m_resizingJumperItem;
 	QPointer<class ResizableBoard> m_resizingBoard;
+	QSizeF m_jumperItemSize;
 };
 
 #endif
