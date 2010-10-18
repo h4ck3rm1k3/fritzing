@@ -48,6 +48,7 @@ $Date$
 //	option to turn off propagation feedback
 //	deal with using traces as source and dest
 //	remove debugging output and extra calls to processEvents
+//	consider using lastTrace instead of lastTracePoint, then extend the wire
 //
 
 #include "jrouter.h"
@@ -462,7 +463,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 			tileRect.ymin = (r.top() * factor) + boardPos.y();		// TILE is Math Y-axis not computer-graphic Y-axis
 			// note off-by-one weirdness
 			tileRect.ymax = ((r.bottom() + 1) * factor) + boardPos.y();  
-			insertTile(thePlane, tileRect, alreadyTiled, NULL, NOTBOARD, false);
+			insertTile(thePlane, tileRect, alreadyTiled, NULL, NOTBOARD, false, false);
 			if (alreadyTiled.count() > 0) {
 				return thePlane;
 			}
@@ -487,7 +488,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 									.arg(connectorItem->attachedToInstanceTitle())
 							);
 
-			addTile(connectorItem, CONNECTOR, thePlane, alreadyTiled);
+			addTile(connectorItem, CONNECTOR, thePlane, alreadyTiled, false);
 			if (alreadyTiled.count() > 0) {
 				return thePlane;
 			}
@@ -505,7 +506,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 									.arg(nonConnectorItem->attachedToID())
 									);
 
-			addTile(nonConnectorItem, NONCONNECTOR, thePlane, alreadyTiled);
+			addTile(nonConnectorItem, NONCONNECTOR, thePlane, alreadyTiled, false);
 			if (alreadyTiled.count() > 0) {
 				return thePlane;
 			}
@@ -525,7 +526,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 		if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
 		if (beenThere.contains(wire)) continue;
 
-		tileWire(wire, thePlane, beenThere, alreadyTiled);
+		tileWire(wire, thePlane, beenThere, alreadyTiled, false);
 		if (alreadyTiled.count() > 0) {
 			return thePlane;
 		}	
@@ -566,7 +567,7 @@ bool clipRect(QRectF & r, QRectF & clip, QList<QRectF> & rects) {
 }
 
 
-void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled) 
+void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, bool force) 
 {
 	DebugDialog::debug(QString("coords wire %1, x1:%2 y1:%3, x2:%4 y2:%5")
 		.arg(wire->id())
@@ -585,13 +586,18 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 		return;
 	}
 
+	/*
 	QList<ConnectorItem *> uniqueEnds;
 	foreach (Wire * cw, wires) {
 		ConnectorItem * c0 = cw->connector0();
 		if ((c0 != NULL) && c0->chained()) {
-			addTile(c0, TRACECONNECTOR, thePlane, alreadyTiled);
+			addTile(c0, TRACECONNECTOR, thePlane, alreadyTiled, force);
+			if (!force && (alreadyTiled.count() > 0)) {
+				return;
+			}
 		}
 	}
+	*/
 
 	foreach (Wire * w, wires) {
 		QList<QRectF> rects;
@@ -623,13 +629,17 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 
 		QList<ConnectorItem *> clipConnectorItems;
 		foreach (ConnectorItem * connectorItem, w->connector0()->connectedToItems()) {
+			if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
+
 			clipConnectorItems.append(connectorItem);
 		}
 		foreach (ConnectorItem * connectorItem, w->connector1()->connectedToItems()) {
+			if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
+
 			clipConnectorItems.append(connectorItem);
 		}
-		clipConnectorItems.append(w->connector0());
-		clipConnectorItems.append(w->connector1());
+		//clipConnectorItems.append(w->connector0());
+		//clipConnectorItems.append(w->connector1());
 		QList<QRectF> clipRects;
 		foreach (ConnectorItem * connectorItem, clipConnectorItems) {
 			QRectF r = connectorItem->rect();
@@ -676,10 +686,10 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 			tileRect.ymin = r.top();
 			tileRect.ymax = r.bottom();
 			DebugDialog::debug("tile wire", r);
-			insertTile(thePlane, tileRect, alreadyTiled, w, TRACE, false);
-			if (alreadyTiled.count() > 0) break;
+			insertTile(thePlane, tileRect, alreadyTiled, w, TRACE, false, force);
+			if (!force && (alreadyTiled.count() > 0)) break;
 		}
-		if (alreadyTiled.count() > 0) break;
+		if (!force && (alreadyTiled.count() > 0)) break;
 	}
 }
 
@@ -850,15 +860,8 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 	QList<Wire *> wires;
 	routedFlag = drawTrace(subedge, thePlane, viewLayerID, wires);	
 	if (routedFlag) {
-		//TODO: backtrace and convert QGraphicsRectItems into a set of wires
-		//	on backtrace keep direction the same, 
-		//		but if cleantype is noClean, then when you make a bend, 
-		//		if all the intersecting grid regions contain a qgraphicsrect item
-		//		then you can draw a straight line 
 
 		// TODO: handle wire stickyness
-
-		// TODO: backtrace to create a set of wires
 
 
 		/*
@@ -890,7 +893,12 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 				c1->tempConnectTo(c0, false);
 				c0->tempConnectTo(c1, false);
 			}
+
+			QList<Tile *> alreadyTiled;
+			QList<Wire *> beenThere;
+			tileWire(wires[0], thePlane, beenThere, alreadyTiled, true);
 		}
+
 	}
 
 
@@ -940,7 +948,7 @@ bool JRouter::drawTrace(JSubedge * subedge, Plane * thePlane, ViewLayer::ViewLay
 	QList<Tile *> path;
 	bool result = propagate(subedge, path, thePlane, viewLayerID);
 	if (result) {
-		backPropagate(subedge, path, thePlane, viewLayerID, wires);
+		result = backPropagate(subedge, path, thePlane, viewLayerID, wires);
 	}
 
 	// clear the cancel flag if it's been set so the next trace can proceed
@@ -1142,8 +1150,18 @@ bool enoughOverlapVertical(Tile* tile1, Tile* tile2) {
 }
 
 struct SeedTree {
+	enum Direction {
+		None = 0,
+		Left,
+		Up,
+		Right,
+		Down
+	};
+	
 	Tile * seed;
 	SeedTree * parent;
+	Direction direction;
+	int directionChanges;
 	QList<SeedTree *> children;
 };
 
@@ -1249,32 +1267,44 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 }
 
 SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
-	// TODO: instead of taking the shortest path,  somehow choose between paths
 	QList<SeedTree *> todoList;
 	root->seed = path.last();
 	root->parent = NULL;
+	root->direction = SeedTree::None;
+	root->directionChanges = 0;
 	todoList.append(root);
+	SeedTree * candidate = NULL;
 
 	while (todoList.count() > 0) {
 		SeedTree * currentSeedTree = todoList.takeFirst();
-
-		// for now take the shortest path;
 
 		foreach (Tile * seed, path) {
 			if (TiGetWave(seed) != TiGetWave(currentSeedTree->seed) - 1) {
 				continue;
 			}
 
-			if ((LEFT(seed) == RIGHT(currentSeedTree->seed)) ||
-				(RIGHT(seed) == LEFT(currentSeedTree->seed))) 
-			{
+			SeedTree::Direction direction = SeedTree::None;
+
+			if (LEFT(seed) == RIGHT(currentSeedTree->seed)) {
+				direction = SeedTree::Right;
 				if (!enoughOverlapVertical(seed, currentSeedTree->seed)) {
 					continue;
 				}
 			}
-			else if ((TOP(seed) == BOTTOM(currentSeedTree->seed)) ||
-				     (BOTTOM(seed) == TOP(currentSeedTree->seed)))
-			{
+			else if (RIGHT(seed) == LEFT(currentSeedTree->seed)) {
+				direction = SeedTree::Left;
+				if (!enoughOverlapVertical(seed, currentSeedTree->seed)) {
+					continue;
+				}
+			}
+			else if (TOP(seed) == BOTTOM(currentSeedTree->seed)) {
+				direction = SeedTree::Down;
+				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed)) {
+					continue;
+				}
+			}
+			else if (BOTTOM(seed) == TOP(currentSeedTree->seed)) {
+				direction = SeedTree::Up;
 				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed)) {
 					continue;
 				}
@@ -1285,17 +1315,31 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 
 			SeedTree * newst = new SeedTree;
 			newst->seed = seed;
+			newst->direction = direction;
+			if (currentSeedTree->direction == SeedTree::None || currentSeedTree->direction == direction) {
+				newst->directionChanges = currentSeedTree->directionChanges;
+			}
+			else {
+				newst->directionChanges = currentSeedTree->directionChanges + 1;
+			}
 			newst->parent = currentSeedTree;
-			todoList.append(newst);
 			currentSeedTree->children.append(newst);
 			if (TiGetWave(seed) == 0) {
-				return newst;
+				if (candidate == NULL) {
+					candidate = newst;
+				}
+				else if (newst->directionChanges < candidate->directionChanges) {
+					candidate = newst;
+				}
+			}
+			else {
+				todoList.append(newst);
 			}
 		}
 	}
 
 	// shouldn't happen
-	return NULL;
+	return candidate;
 }
 
 
@@ -2325,7 +2369,7 @@ JSubedge * JRouter::makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, 
 	return subedge;
 }
 
-Tile * JRouter::addTile(NonConnectorItem * nci, int type, Plane * thePlane, QList<Tile *> & alreadyTiled) 
+Tile * JRouter::addTile(NonConnectorItem * nci, int type, Plane * thePlane, QList<Tile *> & alreadyTiled, bool force) 
 {
 	QRectF r = nci->rect();
 	QRectF r2 = nci->attachedTo()->mapRectToScene(r);
@@ -2337,7 +2381,7 @@ Tile * JRouter::addTile(NonConnectorItem * nci, int type, Plane * thePlane, QLis
 	tileRect.ymin = r2.top();		// TILE is Math Y-axis not computer-graphic Y-axis
 	tileRect.ymax = r2.bottom(); 
 	DebugDialog::debug(QString("   add tile %1").arg((long) nci, 0, 16), r2);
-	return insertTile(thePlane, tileRect, alreadyTiled, nci, type, true);
+	return insertTile(thePlane, tileRect, alreadyTiled, nci, type, true, force);
 }
 
 
@@ -2405,7 +2449,10 @@ int checkAlready(Tile * tile, UserData data) {
 	return 0;
 }
 
-Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type, bool adjustToGrid) {
+Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type, bool adjustToGrid, bool force) {
+	// to make comparing coords more accurate (I hope)
+	trueRect.xmin = qRound(trueRect.xmin * 100) / 100.0;
+	trueRect.xmax = qRound(trueRect.xmax * 100) / 100.0;
 	TileRect tileRect = trueRect;
 	if (adjustToGrid) {
 		// make sure all tiles are on the grid in the y-axis
@@ -2422,6 +2469,7 @@ Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> 
 
 	DebugDialog::debug(QString("insert tile xmin:%1 xmax:%2 ymin:%3 ymax:%4 aymin:%5 aymax:%6").
 		arg(tileRect.xmin).arg(tileRect.xmax).arg(trueRect.ymin).arg(trueRect.ymax).arg(tileRect.ymin).arg(tileRect.ymax));
+
 
 	TiSrArea(NULL, thePlane, &tileRect, checkAlready, &alreadyTiled);
 	if (alreadyTiled.count() > 0) {
@@ -2442,11 +2490,13 @@ Tile * JRouter::insertTile(Plane * thePlane, TileRect & trueRect, QList<Tile *> 
 		}
 	}
 
-
 	if (alreadyTiled.count() > 0) {
 		// we are only intersecting GRIDALIGN tiles so deal with that here...
 		alreadyTiled.clear();
 	}
+
+
+	// TODO: if there's an intersection, check if it's electrically consistent
 
 
 	Tile * tile = TiInsertTile(thePlane, &tileRect, item, type);
