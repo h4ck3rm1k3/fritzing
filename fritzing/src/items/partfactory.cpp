@@ -100,7 +100,7 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			return new Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		default:
 			{
-				if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) == 0) {
+				if (modelPart->moduleID().endsWith(ModuleIDNames::resistorModuleIDName)) {
 					return new Resistor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 				}
 				if (modelPart->moduleID().endsWith(ModuleIDNames::capacitorModuleIDName)) {
