@@ -4,50 +4,38 @@
 <svg
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   version="1.2"
+   version="1.1"
    width="25.200001"
    height="7.1999998"
-   viewBox="0 0 280 79.999998"
    id="svg2">
-  <desc
-     id="desc4">Fritzing footprint SVG</desc>
   <defs
-     id="defs20" />
+     id="defs4" />
   <g
-     transform="translate(0,-130.00037)"
-     id="keepout" />
-  <g
-     transform="translate(0,-130.00037)"
-     id="soldermask" />
-  <g
-     transform="translate(0,-130.00037)"
-     id="outline" />
-  <g
-     transform="translate(-2.9280097e-6,-9.9999989)"
+     transform="translate(0,-2.0190735e-5)"
      id="copper0">
-    <path
-       d="M 6.0749998,4.5 A 2.4749999,2.4749999 0 1 1 1.125,4.5 a 2.4749999,2.4749999 0 1 1 4.9499998,0 z"
-       transform="scale(11.111111,11.111111)"
-       id="path3715"
-       style="fill:none;stroke:#ffbf00;stroke-width:1.80000007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    <path
-       d="M 6.0749998,4.5 A 2.4749999,2.4749999 0 1 1 1.125,4.5 a 2.4749999,2.4749999 0 1 1 4.9499998,0 z"
-       transform="matrix(11.111111,0,0,11.111111,200,-1.0673026e-6)"
-       id="path3715-9"
-       style="fill:none;stroke:#ffbf00;stroke-width:1.80000007;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <g
+       id="copper1">
+      <path
+         d="m 5.8499999,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector0pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="m 23.85,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector1pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
   </g>
   <g
-     transform="translate(-2.9280097e-6,-9.9999989)"
      id="silkscreen">
     <path
-       d="m -4.7520686,1.3568433 a 9,9 0 0 1 9.4982172,-0.00368"
-       transform="matrix(11.111111,0,0,11.111111,140,15)"
-       id="path3817"
-       style="fill:none;stroke:#ffffff;stroke-width:0.90000004;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+       d="M 2.2317108,-0.06473477 A 6.75,6.75 0 0 1 11.226169,-0.10236673"
+       transform="translate(5.85,2.25)"
+       id="path4213"
+       style="fill:none;stroke:#ffffff;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
-       d="m -4.7520686,1.3568433 a 9,9 0 0 1 9.4982172,-0.00368"
-       transform="matrix(11.111111,0,0,-11.111111,140.30076,85.076037)"
-       id="path3817-8"
-       style="fill:none;stroke:#ffffff;stroke-width:0.90000004;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+       d="M 2.2317108,-0.06473477 A 6.75,6.75 0 0 1 11.226169,-0.10236673"
+       transform="matrix(-1,0,0,-1,19.35,4.9499996)"
+       id="path4213-0"
+       style="fill:none;stroke:#ffffff;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   </g>
 </svg>
