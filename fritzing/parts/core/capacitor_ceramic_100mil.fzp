@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="BlueCeramicCapacitorModuleID">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="100milCeramicCapacitorModuleID">
  <version>4</version>
  <author>André Knörig</author>
  <title>Ceramic Capacitor</title>
@@ -33,7 +33,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_200mil.svg">
+   <layers image="pcb/capacitor_ceramic_100mil.svg">
     <layer layerId="copper0"/>
     <layer layerId="silkscreen"/>
    <layer layerId="copper1"/></layers>
