@@ -2119,6 +2119,10 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>silk export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3616,6 +3620,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Part Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2115,6 +2115,10 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>silk export failure</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3612,6 +3616,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Part Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

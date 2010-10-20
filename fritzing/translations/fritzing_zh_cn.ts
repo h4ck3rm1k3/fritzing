@@ -33,11 +33,11 @@
     </message>
     <message>
         <source>&lt;p&gt;Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, to Vladimir Savinov for the Russian translation,and to Steven Noppe for the Dutch translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;感谢 Kurt Badelt 对西班牙版的翻译, Gianluca Urgese 对意大利版的翻译, Nuno Pessanha Santos 对葡萄牙版的翻译,Yuelin和Ninjia 对简体中文版的翻译,  Hiroshi Suzuki 对日文版的翻译,  Robert Lee 对繁体中文版的翻译, Vladimir Savinov 对俄罗斯版的翻译,和 Steven Noppe 对荷兰版的翻译。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar, IxDS, an anonymous donor, Parallax, Picaxe, and from each purchase of a Fritzing Starter Kit.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -109,7 +109,7 @@
     </message>
     <message>
         <source>BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</source>
-        <translation type="unfinished">BinManager::setDirtyTab: Couldn&apos;t set the bin &apos;%1&apos; as dirty</translation>
+        <translation>库管理器::设置废标签:不能设置库&apos;%1&apos;作为dirty</translation>
     </message>
     <message>
         <source>New bin (%1)</source>
@@ -193,15 +193,15 @@ in order to fix this connector</source>
     <name>DeleteDialog</name>
     <message>
         <source>Also delete the file</source>
-        <translation type="unfinished"></translation>
+        <translation>同时删除文件</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">移除</translation>
+        <translation>移除</translation>
     </message>
     <message>
         <source>Don&apos;t remove</source>
-        <translation type="unfinished"></translation>
+        <translation>不要移除</translation>
     </message>
 </context>
 <context>
@@ -381,7 +381,7 @@ Please select one of the Fritzing fonts to replace them:</source>
     </message>
     <message>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;The first thing you will need is a board to place your parts on. There should already be one beneath this widget, but if not, drag in the board icon from the parts bin (image at right). &lt;/td&gt;&lt;td&gt;&lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;br/&gt;&lt;br/&gt;To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Once the parts are sorted out, you connect them with copper traces. You can drag out a trace from individual connections or use the autorouter to generate them. The Autoroute button is at the bottom of the window (image at right).&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;PCB视图&lt;/b&gt;时用来设计组件如何出现在真实的PCB(印刷电路板)上.&lt;br/&gt;&lt;br/&gt;PCB可以在家中或者小实验室中使用DIY的蚀刻工艺来制作。他们也可以被送到专业的PCB生产服务的地方更严谨精确的生产。&lt;br/&gt;首先需要的是一块板子&lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt;来放置元件. 布置PCB板,重新排布所有组件以使他们在板上能够很好的排布。然后试着移动他们以便最小化接插件的长度和次序。也可以重新确定矩形板的大小。一旦元件排布好，右击单独的接插件或者使用自动布线在元件之间生成。自动连线按钮&lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;在左下角。</translation>
     </message>
 </context>
 <context>
@@ -1836,11 +1836,11 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Shell launch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>启动框架%1</translation>
     </message>
     <message>
         <source>Launch %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>启动%1...</translation>
     </message>
     <message>
         <source>All</source>
@@ -2040,84 +2040,88 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>Please specify a location for the archived sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>请为打包的程序文件指定一个位置</translation>
     </message>
     <message>
         <source>Fritzing File (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing文件(*%1)</translation>
     </message>
     <message>
         <source>Please choose a folder to save the archived sketch and program files</source>
-        <translation type="unfinished"></translation>
+        <translation>请选择一个文件夹以保存打包程序和程序文件</translation>
     </message>
     <message>
         <source>Unable to save sketch to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能保存程序到%1</translation>
     </message>
     <message>
         <source>File &apos;%1&apos; not found</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到文件&apos;%1&apos;</translation>
     </message>
     <message>
         <source>Paste in Place</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴到这里</translation>
     </message>
     <message>
         <source>Paste clipboard contents in place</source>
-        <translation type="unfinished"></translation>
+        <translation>将剪贴板内容粘贴到这里</translation>
     </message>
     <message>
         <source>Change Trace Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>改变引导线层</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message numerus="yes">
         <source>Routing completed using %n jumper part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>使用%n个跳线元件完成了布线</numerusform>
         </translation>
     </message>
     <message>
         <source>Unable to load</source>
-        <translation type="unfinished">不能载入</translation>
+        <translation>不能载入</translation>
     </message>
     <message>
         <source>Unable to load image from %1</source>
-        <translation type="unfinished">不能从%1中载入图像</translation>
+        <translation>不能从%1中载入图像</translation>
     </message>
     <message>
         <source>Sorry, Fritzing is unable to save the svg file.</source>
-        <translation type="unfinished"></translation>
+        <translation>抱歉,Fritzing不能保存svg文件。</translation>
     </message>
     <message>
         <source>Delete Ratsnest Line</source>
-        <translation type="unfinished"></translation>
+        <translation>删除覆铜线</translation>
     </message>
     <message>
         <source>Delete Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>删除导线</translation>
     </message>
     <message>
         <source>Update Ratsnest</source>
-        <translation type="unfinished"></translation>
+        <translation>更新飞线和覆铜预览</translation>
     </message>
     <message>
         <source>Redraw this net</source>
-        <translation type="unfinished"></translation>
+        <translation>重画此网络</translation>
     </message>
     <message>
         <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
-        <translation type="unfinished"></translation>
+        <translation>将选择的引导线移至板的另一面(注释：一条引导线移动了和其相关的也将移到另一面)</translation>
     </message>
     <message>
         <source>Force Update Routing Status and Ratsnests</source>
-        <translation type="unfinished"></translation>
+        <translation>强制更新布线状态和覆铜</translation>
     </message>
     <message>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
+        <translation>重新计算布线状态和覆铜线(在自动更新不能正确工作的情况下)</translation>
+    </message>
+    <message>
+        <source>silk export failure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2129,11 +2133,11 @@ Please check all views for potential side-effects.</source>
     </message>
     <message>
         <source>In </source>
-        <translation type="unfinished">In</translation>
+        <translation>In</translation>
     </message>
     <message>
         <source>and </source>
-        <translation type="unfinished">and</translation>
+        <translation>and</translation>
     </message>
     <message>
         <source>view only</source>
@@ -2195,15 +2199,15 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Change trace layer</source>
-        <translation type="unfinished"></translation>
+        <translation>改变引导线层</translation>
     </message>
     <message>
         <source>Create and connect trace</source>
-        <translation type="unfinished"></translation>
+        <translation>创建并连接引导线</translation>
     </message>
     <message>
         <source>Delete ratsnest</source>
-        <translation type="unfinished"></translation>
+        <translation>删除覆铜</translation>
     </message>
 </context>
 <context>
@@ -2600,7 +2604,7 @@ Please, specify a new filename</source>
     </message>
     <message>
         <source>Fritzing Parts (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing元件(*%1)</translation>
     </message>
 </context>
 <context>
@@ -2662,7 +2666,7 @@ Fritzing和这种svg文件不兼容。请检查你的权限并重试。
     </message>
     <message>
         <source>no footprints found in %1</source>
-        <translation>在%1中未找到footprints</translation>
+        <translation>在%1中未找到器件封装</translation>
     </message>
     <message>
         <source>unable to open temp file %1</source>
@@ -2670,15 +2674,15 @@ Fritzing和这种svg文件不兼容。请检查你的权限并重试。
     </message>
     <message>
         <source>Image &amp; Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)</source>
-        <translation type="unfinished"></translation>
+        <translation>图形和器件封装文件(%1 %2 %3 %4);;SVG文件 (%1);;JPEG文件 (%2);;PNG文件 (%3);;Kicad Schematic 文件 (%4)</translation>
     </message>
     <message>
         <source>no schematics found in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>在%1中未找到原理图</translation>
     </message>
     <message>
         <source>schematic part</source>
-        <translation type="unfinished"></translation>
+        <translation>原理图元件</translation>
     </message>
 </context>
 <context>
@@ -2864,39 +2868,39 @@ Vertical scroll</source>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>语言:</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">新建</translation>
+        <translation>新建</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <translation>端口:</translation>
     </message>
     <message>
         <source>Programmer:</source>
-        <translation type="unfinished"></translation>
+        <translation>程序:</translation>
     </message>
     <message>
         <source>Remove &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation>移除&quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove &quot;%1&quot; from the sketch?</source>
-        <translation type="unfinished"></translation>
+        <translation>确定从程序中移除&quot;%1&quot;?</translation>
     </message>
     <message>
         <source>The file &apos;%1&apos; must be saved before it can be sent to the programmer.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos;文件在发送给其他程序前必须保存.</translation>
     </message>
     <message>
         <source>Select a programmer (executable) for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>为%1选择一个程序(可执行)</translation>
     </message>
 </context>
 <context>
@@ -2911,191 +2915,191 @@ Vertical scroll</source>
     </message>
     <message>
         <source>No ports found</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到端口</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">文件(&amp;F)</translation>
+        <translation>文件(&amp;F)</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">新建</translation>
+        <translation>新建</translation>
     </message>
     <message>
         <source>Ctrl+N</source>
-        <translation type="unfinished">Ctrl+N</translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new program</source>
-        <translation type="unfinished"></translation>
+        <translation>创建一个新程序</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">打开(&amp;O)...</translation>
+        <translation>打开(&amp;O)...</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
-        <translation type="unfinished">Ctrl+O</translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <source>Open a program</source>
-        <translation type="unfinished"></translation>
+        <translation>打开一个程序</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">保存(&amp;S)</translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Save the current program</source>
-        <translation type="unfinished"></translation>
+        <translation>保存当前程序</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名</translation>
     </message>
     <message>
         <source>Rename the current program</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名当前程序</translation>
     </message>
     <message>
         <source>Duplicate tab</source>
-        <translation type="unfinished"></translation>
+        <translation>复制标签</translation>
     </message>
     <message>
         <source>Copies the current program into a new tab</source>
-        <translation type="unfinished"></translation>
+        <translation>复制当前的程序到新标签中</translation>
     </message>
     <message>
         <source>Remove tab</source>
-        <translation type="unfinished"></translation>
+        <translation>移除标签</translation>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation type="unfinished">Ctrl+W</translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <source>Remove the current program from the sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>从程序中移除当前程序段</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">打印(&amp;P)...</translation>
+        <translation>打印(&amp;P)...</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>Print the current program</source>
-        <translation type="unfinished"></translation>
+        <translation>打印当前程序</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">退出(&amp;Q)</translation>
+        <translation>退出(&amp;Q)</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>Quit the application</source>
-        <translation type="unfinished">退出程序</translation>
+        <translation>退出程序</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished">编辑(&amp;E)</translation>
+        <translation>编辑(&amp;E)</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">撤销</translation>
+        <translation>撤销</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">恢复</translation>
+        <translation>恢复</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation type="unfinished">剪切(&amp;C)</translation>
+        <translation>剪切(&amp;C)</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation type="unfinished">Ctrl+X</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <source>Cut selection</source>
-        <translation type="unfinished">剪切选择</translation>
+        <translation>剪切选择</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">复制(&amp;C)</translation>
+        <translation>复制(&amp;C)</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation type="unfinished">Ctrl+C</translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <source>Copy selection</source>
-        <translation type="unfinished">复制选择</translation>
+        <translation>复制选择</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">粘贴(&amp;P)</translation>
+        <translation>粘贴(&amp;P)</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
-        <translation type="unfinished">Ctrl+V</translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished">粘贴剪切板内容</translation>
+        <translation>粘贴剪切板内容</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation type="unfinished">全选(&amp;S)</translation>
+        <translation>全选(&amp;S)</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation type="unfinished">Ctrl+A</translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <source>Select all text</source>
-        <translation type="unfinished"></translation>
+        <translation>选择所有文本</translation>
     </message>
     <message>
         <source>&amp;Program</source>
-        <translation type="unfinished"></translation>
+        <translation>程序(&amp;P)</translation>
     </message>
     <message>
         <source>Select language</source>
-        <translation type="unfinished"></translation>
+        <translation>选择语言</translation>
     </message>
     <message>
         <source>Select port</source>
-        <translation type="unfinished"></translation>
+        <translation>选择端口</translation>
     </message>
     <message>
         <source>Select programmer</source>
-        <translation type="unfinished"></translation>
+        <translation>选择程序</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished">程序</translation>
+        <translation>程序</translation>
     </message>
     <message>
         <source>Load the current program onto a microcontroller</source>
-        <translation type="unfinished"></translation>
+        <translation>载入当前程序到微控制器</translation>
     </message>
     <message>
         <source>Programming Window - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>编程窗口-%1</translation>
     </message>
     <message>
         <source>Locate...</source>
-        <translation type="unfinished"></translation>
+        <translation>载入..</translation>
     </message>
 </context>
 <context>
@@ -3599,39 +3603,43 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Select %1</source>
-        <translation type="unfinished">选择 %1</translation>
+        <translation>选择 %1</translation>
     </message>
     <message>
         <source>pad shape size is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的板型尺寸</translation>
     </message>
     <message>
         <source>bad schematic definition %1</source>
-        <translation type="unfinished"></translation>
+        <translation>错误的原理图定义%1</translation>
     </message>
     <message>
         <source>schematic part %1 not found in %2</source>
-        <translation type="unfinished"></translation>
+        <translation>在%2中未找到原理图元件%1</translation>
     </message>
     <message>
         <source>schematic %1 unexpectedly ends (1) in %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%2中原理图%1未预料到的尾部(1)</translation>
     </message>
     <message>
         <source>schematic %1 unexpectedly ends (2) in %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%2中原理图%1未预料到的尾部(2)</translation>
     </message>
     <message>
         <source>schematic %1 unexpectedly ends (3) in %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%2中原理图%1未预料到的尾部(3)</translation>
     </message>
     <message>
         <source>Unable to find module &apos;%1&apos; at
 &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%2&apos;中找不到模块&apos;%1&apos;</translation>
     </message>
     <message>
         <source>Part Image</source>
+        <translation>元件图像</translation>
+    </message>
+    <message>
+        <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4064,11 +4072,11 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>&lt;li&gt;To drag the canvas, hold down the space bar and drag it with the mouse.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;要拖动画布，按住空格键使用鼠标拖动它。&lt;/li&gt;</translation>
     </message>
     <message>
         <source>&lt;li&gt;To display different properties in a part label, rotate it, or change the font, right-click the label.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;要在元件标签中显示不同的属性，转动它或者改变字体，右击此标签。&lt;/li&gt;</translation>
     </message>
 </context>
 <context>
@@ -4150,15 +4158,15 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Polish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>波兰语 - %1</translation>
     </message>
     <message>
         <source>Czech - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>捷克语 - %1</translation>
     </message>
     <message>
         <source>Turkish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>土耳其语 - %1</translation>
     </message>
 </context>
 <context>
