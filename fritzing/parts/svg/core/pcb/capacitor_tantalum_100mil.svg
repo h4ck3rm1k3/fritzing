@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="16.200001"
+   height="13.5"
+   id="svg2">
+  <defs
+     id="defs4" />
+  <g
+     transform="translate(-0.016667,3.14998)"
+     id="layer1">
+    <g
+       id="copper0">
+      <path
+         d="m 5.8499999,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector0pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="m 14.866667,3.60002 a 2.25,2.25 0 0 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="connector1pin"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       id="copper1">
+      <path
+         d="m 5.8499999,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="path9"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         d="m 14.85,3.60002 a 2.25,2.25 0 0 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
+         id="path11"
+         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+  </g>
+  <g
+     id="silkscreen">
+    <path
+       d="m 2.1653763,1.7958376 a 6.75,6.75 0 0 1 9.1760027,0.00626"
+       transform="translate(1.35,0.45)"
+       id="path3669"
+       style="fill:none;stroke:#ffffff;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       d="m 2.1653763,1.7958376 a 6.75,6.75 0 0 1 9.1760027,0.00626"
+       transform="matrix(-1,0,0,-1,14.85,13.05)"
+       id="path3669-0"
+       style="fill:none;stroke:#ffffff;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  </g>
+</svg>

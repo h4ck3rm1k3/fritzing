@@ -16,7 +16,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="TantalumCapacitorModuleID" modelIndex="6" path="parts/core/capacitor_tantalum.fzp">
+        <instance moduleIdRef="100milTantalumCapacitorModuleID" modelIndex="6" path="parts/core/capacitor_tantalum_100mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
