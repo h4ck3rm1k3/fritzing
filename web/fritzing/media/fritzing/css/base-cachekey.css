@@ -2262,7 +2262,7 @@ border: none;
 
 body {
 font: 69% Verdana, sans-serif;
-background: white url(../img/top-bar.png) repeat-x;
+background: #F2F0F0 url(../img/top-bar.png) repeat-x;
 color: #303030;
 margin: 0;
 padding: 0;
@@ -2273,7 +2273,8 @@ width:910px;
 }
 
 
-#visual-portlet-wrapper {
+#visual-portal-wrapper {
+width: 960px;
 }
 
 #portal-columns {
@@ -2294,12 +2295,13 @@ height: 43px;
 }
 
 #portal-column-content {
+background-color: white;
 position: static;
 left: 0;
 clear: left;
 float: left;
-padding: 15px 15px 10px 15px;
-margin: 0;
+padding: 25px 15px 10px 15px;
+margin-top: -10px;
 border: none;
 width: 730px;
 }
