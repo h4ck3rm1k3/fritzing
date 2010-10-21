@@ -12,15 +12,11 @@
   {% endif %}
 {% else %}
   <dt style="margin-top:3em" id="{{ entry.pk|escape }}">
-    <span class="contenttype-news-item summary">
       <h2><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h2>
-      <div style="font-size: xx-small; font-weight: normal;">by <a href="{% url profile_detail entry.author %}">{{ entry.author }}</a> on {{ entry.date|date:_("DATETIME_FORMAT") }}</div>
-    </span>
+      <div class="discreet">by <a href="{% url profile_detail entry.author %}">{{ entry.author }}</a> on {{ entry.date|date:_("DATETIME_FORMAT") }}</div>
   </dt>
   <dd>
-    <span="description">
       {{ entry.content|safe }}
-    </span>
     <br/><hr/>
   </dd>
 {% endif %}
