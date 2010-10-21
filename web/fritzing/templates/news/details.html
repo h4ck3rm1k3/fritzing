@@ -18,12 +18,11 @@
 
 {% block teaser %}
 	by <a href="{% url profile_detail entry.author %}">{{ entry.author }}</a> on {{ entry.date|date:_("DATETIME_FORMAT") }}
-	<div>{{ entry.content|safe }}</div>
 {% endblock %}
 
 {% block content %}
 <div class="content first-content">
-    {% include "news/entry.html" %}
+    {{ entry.content|safe }}
     {% include "comments/fritzing_comments.html" %}
 </div>
 {% endblock %}
