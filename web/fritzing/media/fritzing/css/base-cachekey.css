@@ -543,14 +543,6 @@ border-color: black !important;
 }
 
 
-.narrow #portal-column-two {
-clear: left;
-}
-
-
-
-
-
 
 div.portletAssignments div.portletHeader {
 background-color: #666;
@@ -588,10 +580,6 @@ margin-bottom: 20px;
 padding-top: 20px;
 }
 
-.narrow #portal-column-one div.managePortletsLink {
-display: none;
-}
-
 div.managePortletsLink a {
 -moz-border-radius: 1.1em;
 -webkit-border-radius: 1.1em;
@@ -622,7 +610,7 @@ padding: 0 8px 8px 0;
 }
 
 
-#portal-column-one dl,.narrow #portal-column-two dl {
+#portal-column-one dl {
 font-size: 12px;
 color: #666;
 padding: 0 25px;
@@ -631,24 +619,15 @@ width: 200px;
 float: left;
 }
 
-#portal-column-one dt,.narrow #portal-column-two dt,.narrow #portal-column-two dt a {
+#portal-column-one dt {
 padding: 7px 0;
 margin: 0;
 background-color: white;
 color: gray;
 }
 
-.narrow #portal-column-two dt a {
-color: #5a9bc6;
-}
 
-.narrow #portal-column-two dt a:hover {
-color: black;
-text-decoration: underline;
-background-color: white;
-}
-
-#portal-column-one dd,.narrow #portal-column-two dd {
+#portal-column-one dd {
 margin-right: 0;
 margin-left: 0;
 padding-right: 0;
@@ -925,16 +904,6 @@ right: 10px;
 margin: 0 !important;
 }
 
-.narrow dl.portletCalendar dt a.calendarPrevious {
-right: 16px;
-top: 4px;
-}
-
-.narrow dl.portletCalendar dt a.calendarNext {
-right: -3px;
-top: 4px;
-}
-
 dl.portletCalendar dt a.calendarPrevious:hover {
 background-position: -16px 0 !important;
 }
@@ -959,12 +928,6 @@ display: block;
 dl.portletCalendar table {
 width: 100%;
 font-size: 0.9em;
-}
-
-.narrow dl.portletCalendar table {
-width: 216px;
-position: relative;
-left: -8px;
 }
 
 dl.portletCalendar table td {
@@ -1239,10 +1202,6 @@ left: 266px;
 width: 450px;
 }
 
-.narrow #portal-breadcrumbs {
-width: 220px;
-}
-
 #portal-breadcrumbs a,
 #portal-breadcrumbs span span {
 font-size: 11px;
@@ -1279,9 +1238,6 @@ margin-top: 15px;
 border-left: 1px solid gray;
 }
 
-.narrow ul#portal-globalnav {
-width: 450px;
-}
 
 .medium ul#portal-globalnav {
 }
@@ -2832,3 +2788,6 @@ code {
 	white-space: pre;
 	overflow: auto;
 }
+
+
+
