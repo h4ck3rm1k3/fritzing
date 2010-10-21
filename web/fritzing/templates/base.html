@@ -181,13 +181,12 @@
                         {% cache 600 sidebar_forum %}
                         {% get_latest_objects_with_relatives forum.thread 3 order_by -latest_post_time as latest_forum_threads %}
                         <div class="portletWrapper">
-                            <dl class="portlet portletPloneboardRecent">
+                            <dl class="portlet portletNews">
                                 <dt class="portletHeader">
                                     <a href="/forum/" class="tile">On the forum</a>
                                 </dt>
                                 {% for thread in latest_forum_threads %}
                                 <dd class="portletItem">
-                                    <div class="contenttype-ploneboardconversation">
                                         <a href="{{ thread.thread_latest_post.get_feed_url }}"
                                            class="state-active tile"
                                            title="{{ thread.title }}"
@@ -195,7 +194,6 @@
                                         <a class="portletItemDetails"
                                            href="{{ thread.forum.get_absolute_url }}"
                                         >{{ thread.forum.title }}</a>
-                                    </div>
                                 </dd>
                                 {% endfor %}
                                 <dd class="portletFooter">
@@ -206,15 +204,14 @@
                         {% endcache %}
                         
 			
-                        {% get_latest_objects projects.project 4 as latest_projects %}
+                        {% get_latest_objects projects.project 3 as latest_projects %}
                         <div class="portletWrapper">
-                            <dl class="portlet portletPloneboardRecent">
+                            <dl class="portlet portletNews">
                                 <dt class="portletHeader">
                                     <a href="/projects/" class="tile">New projects</a>
                                 </dt>
                                 {% for p in latest_projects %}
                                 <dd class="portletItem">
-                                    <div class="contenttype-ploneboardconversation">
                                         <a href="/projects/{{ p.slug }}"
                                            class="state-active tile"
                                            title="{{ p.tittle }}"
@@ -222,7 +219,6 @@
                                         <a class="portletItemDetails"
                                            href="{% url profile_detail p.author.username %}"
                                         >{% firstof p.author.get_fullname p.author.username %}</a>
-                                    </div>
                                 </dd>
                                 {% endfor %}
                                 <dd class="portletFooter">
@@ -233,14 +229,12 @@
 			
 			
 		    <div class="portletWrapper">
-                            <dl class="portlet portletPloneboardRecent">
+                            <dl class="portlet portletNews">
                                 <dt class="portletHeader">
                                     <a href="/shop/starter-kit/" class="tile">Get a starter kit</a>
                                 </dt>
                                 <dd class="portletItem">
-                                    <div class="contenttype-ploneboardconversation">
 				<a href="/shop/starter-kit/"><img align="center" src="/media/uploads/shop/img_7902_jpg_versions/thumbnail_IMG_7902.jpg"/></a>
-                                    </div>
                                 </dd>
                             </dl>
                         </div>&nbsp;
