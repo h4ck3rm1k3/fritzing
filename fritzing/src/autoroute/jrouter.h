@@ -117,10 +117,10 @@ protected:
 	void doCancel(QUndoCommand * parentCommand);
 	bool alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to);
 	void updateProgress(int num, int denom);
-	GridEntry * drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int distance, short flag);
+	GridEntry * drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, short flag, GridEntry *);
 	bool propagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID, bool forEmpty);
-	bool backPropagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires);
-	short checkCandidate(JSubedge * subedge, struct Tile *, ViewLayer::ViewLayerID, bool forEmpty);
+	bool backPropagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires, bool forEmpty);
+	short checkCandidate(JSubedge * subedge, struct Tile *, ViewLayer::ViewLayerID, Plane *, bool forEmpty);
 	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to, bool forward);
 	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *, QList<struct Tile *> & alreadyTiled, bool force);
 	void seedNext(Tile * seed, QList<Tile *> & seeds);
@@ -128,7 +128,9 @@ protected:
 	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere, QList<struct Tile *> & alreadyTiled, bool force);
 	short checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem *, bool forEmpty);
 	short checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire *, bool forEmpty);
+	short checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Plane *, bool forEmpty); 
 	void clearTiles(struct Plane * thePlane);
+	void hideTiles();
 	void displayBadTiles(QList<struct Tile *> & alreadyTiled);
 	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type, bool adjustToGrid, bool force);
 	void clearGridEntries();
@@ -142,6 +144,7 @@ protected:
 	QPointF drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires);
 	void clearJumperItemStructs(QList<JumperItemStruct *> jumperItemStructs);
 	void hookUpWires(JSubedge * subedge, QList<Wire *> & wires, Plane * thePlane);
+	QPointF findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNeeded, Plane * thePlane, const QPointF & nearPoint);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);

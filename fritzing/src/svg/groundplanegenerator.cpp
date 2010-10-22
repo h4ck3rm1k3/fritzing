@@ -63,8 +63,8 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	qreal bWidth = res * br.width() / FSvgRenderer::printerScale();
 	qreal bHeight = res * br.height() / FSvgRenderer::printerScale();
 	QImage image(bWidth, bHeight, QImage::Format_RGB32);
-	//image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
-	//image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
+	image.setDotsPerMeterX(res * GraphicsUtils::InchesPerMeter);
+	image.setDotsPerMeterY(res * GraphicsUtils::InchesPerMeter);
 	image.fill(0xffffffff);
 
 	QSvgRenderer renderer(boardByteArray);
@@ -73,7 +73,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	renderer.render(&painter);
 	painter.end();
 
-	image.save("test.png");
+	image.save("getBoardRects.png");
 
 	scanLines(image, bWidth, bHeight, rects, 1);
 

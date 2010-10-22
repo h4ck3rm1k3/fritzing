@@ -73,6 +73,7 @@ public:
 	bool stickyEnabled();
 	PluralType isPlural();
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
+	QSizeF getSizeMM();
 
 public:
 	static QString customShapeTranslated;

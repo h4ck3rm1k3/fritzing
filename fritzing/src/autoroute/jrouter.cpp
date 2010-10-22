@@ -40,6 +40,7 @@ $Date$
 //	use tiles to place jumpers
 //		foreach ownside tile
 //			do normal trace search, except goal is an empty connector-sized region
+//			need to check adjacent spaces vertically, since two together might buy enough vertical height
 //	use tile to place vias
 //		tile both sides
 //		for each onside tile
@@ -52,6 +53,11 @@ $Date$
 //	bugs: 
 //		sometimes takes a longer route than expected; why?
 //		new trace insertion is failing or will cause drc errors later;  need to clip against all ownside items in insert tile function	
+//		off-by-one weirdness with rasterizer
+//	new double-sided strategy:
+//		collect all edges from both sides and expand them from both sides so there is still a single router pass
+//		if there are jumpers at the end then ripup edges to there and move that edge upward
+//	need to put a border no-go area around the board
 
 #include "jrouter.h"
 #include "../sketch/pcbsketchwidget.h"
@@ -59,6 +65,7 @@ $Date$
 #include "../items/virtualwire.h"
 #include "../items/tracewire.h"
 #include "../items/jumperitem.h"
+#include "../items/resizableboard.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
 #include "../connectors/connectoritem.h"
@@ -92,7 +99,6 @@ enum TileType {
 struct JumperItemStruct {
 	JEdge * edge;
 	ItemBase * partForBounds;
-	QPolygonF boundingPoly;
 	JumperItem * jumperItem;
 	ViewLayer::ViewLayerID fromViewLayerID;
 	ViewLayer::ViewLayerID toViewLayerID;
@@ -379,11 +385,10 @@ Plane * JRouter::runEdges(QList<JEdge *> & edges,
 		if (!routedFlag && !m_stopTrace) {
 			if (m_sketchWidget->usesJumperItem()) {
 				if (!alreadyJumper(jumperItemStructs, edge->from, edge->to)) {
-					JumperItemStruct * jumperItemStruct = new JumperItemStruct();
+					JumperItemStruct * jumperItemStruct = new JumperItemStruct;
 					jumperItemStruct->jumperItem = NULL;
 					jumperItemStruct->edge = edge;
 					jumperItemStruct->partForBounds = board;
-					jumperItemStruct->boundingPoly = NULL;   // TODO: boundingPoly;
 					jumperItemStruct->deleted = false;
 					jumperItemStruct->plane = thePlane;
 					jumperItemStructs.append(jumperItemStruct);
@@ -452,8 +457,15 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 	if (board) {
 		qreal factor = Wire::STANDARD_TRACE_WIDTH;
 		QHash<QString, SvgFileSplitter *> svgHash;
-		QRectF boundingRect = board->boundingRect();
-		QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), FSvgRenderer::printerScale(), boundingRect.width(), boundingRect.height());
+		QSizeF boardSize = board->size();
+		ResizableBoard * resizableBoard = qobject_cast<ResizableBoard *>(board->layerKinChief());
+		if (resizableBoard != NULL) {
+			boardSize = resizableBoard->getSizeMM() * FSvgRenderer::printerScale() / 25.4;
+		}
+		QString svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), 
+											   FSvgRenderer::printerScale(), 
+											   boardSize.width(), 
+											   boardSize.height());
 		svg += board->retrieveSvg(ViewLayer::Board, svgHash, true, FSvgRenderer::printerScale());
 		svg += "</svg>";
 		GroundPlaneGenerator gpg;
@@ -810,19 +822,9 @@ void JRouter::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
 	}
 }
 
-int deleteGridEntry(Tile * tile, UserData) {
-	GridEntry * gridEntry = dynamic_cast<GridEntry *>(TiGetClient(tile));
-	if (gridEntry == NULL) return 0;
-
-	TiSetClient(tile, NULL);
-	delete gridEntry;
-	return 0;				// keep enumerating;
-}
-
 bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partForBounds, ViewLayer::ViewLayerID viewLayerID) 
 {
-	bool routedFlag = false;
-
+	Tile * tile = NULL;
 	TraceWire * splitWire = NULL;
 	QLineF originalLine;
 	if (subedge->from == NULL) {
@@ -842,7 +844,7 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 	}
 
 	QList<Wire *> wires;
-	Tile * tile = drawTrace(subedge, thePlane, viewLayerID, wires, false);	
+	tile = drawTrace(subedge, thePlane, viewLayerID, wires, false);	
 	if (tile) {
 
 		// TODO: handle wire stickyness
@@ -900,18 +902,13 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 
 	*/
 
-	TileRect tileRect;
-	tileRect.xmin = m_maxRect.left();
-	tileRect.xmax = m_maxRect.right();
-	tileRect.ymax = m_maxRect.bottom();
-	tileRect.ymin = m_maxRect.top();
-	TiSrArea(NULL, thePlane, &tileRect, deleteGridEntry, NULL);
+	hideTiles();
 
-	return routedFlag;
+	return (tile != NULL);
 }
 
 void JRouter::hookUpWires(JSubedge * subedge, QList<Wire *> & wires, Plane * thePlane) {
-	if (wires.count() <= 0) return;
+	if (wires.count() <= 0) return
 			
 	subedge->from->tempConnectTo(wires[0]->connector0(), false);
 	wires[0]->connector0()->tempConnectTo(subedge->from, false);
@@ -937,7 +934,7 @@ Tile * JRouter::drawTrace(JSubedge * subedge, Plane * thePlane, ViewLayer::ViewL
 	bool result = propagate(subedge, path, thePlane, viewLayerID, forEmpty);
 	if (result) {
 		tile = path.last();
-		result = backPropagate(subedge, path, thePlane, viewLayerID, wires);
+		result = backPropagate(subedge, path, thePlane, viewLayerID, wires, forEmpty);
 		if (!result) tile = NULL;
 	}
 
@@ -1155,7 +1152,7 @@ struct SeedTree {
 	QList<SeedTree *> children;
 };
 
-bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires) {
+bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires, bool forEmpty) {
 	// TODO: handle wire as destination
 
 	SeedTree * root = new SeedTree;
@@ -1176,43 +1173,51 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 		tileToRect(from->seed, fromTileRect);
 
 		if (to == NULL) {
-			// TODO: may be wire here...
-			endPoint = subedge->to->sceneAdjustedTerminalPoint(NULL);
-			if (qAbs(endPoint.x() - startPoint.x()) < Wire::STANDARD_TRACE_WIDTH) {
-				if (startPoint.x() == lastTracePoint.x()) {
-					startPoint.setX(endPoint.x());
-					lastTracePoint.setX(endPoint.x());
-				}
-				startPoint = drawLastNotVertical(startPoint, endPoint, lastTracePoint, wires);
-				Wire * trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
-				wires.append(trace);
-			}
-			else if (qAbs(endPoint.y() - startPoint.y()) < Wire::STANDARD_TRACE_WIDTH) {
-				if (startPoint.y() == lastTracePoint.y()) {
-					startPoint.setY(endPoint.y());
-					lastTracePoint.setY(endPoint.y());
-				}
-				startPoint = drawLastNotHorizontal(startPoint, endPoint, lastTracePoint, wires);
-				Wire * trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
-				wires.append(trace);
-			}
-			else {
-				QPointF midPoint;
-				if (lastTracePoint.y() == startPoint.y()) {
-					midPoint.setX(lastTracePoint.x());
-					midPoint.setY(endPoint.y());
-				}
-				else {
-					midPoint.setY(lastTracePoint.y());
-					midPoint.setX(endPoint.x());
-				}
-				startPoint = lastTracePoint;
-				if (startPoint != midPoint) {
-					Wire * trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+			if (forEmpty) {
+				if (lastTracePoint != startPoint) {
+					Wire * trace = drawOneTrace(lastTracePoint, startPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
 					wires.append(trace);
 				}
-				Wire * trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
-				wires.append(trace);
+			}
+			else {
+				// TODO: may be wire here...
+				endPoint = subedge->to->sceneAdjustedTerminalPoint(NULL);
+				if (qAbs(endPoint.x() - startPoint.x()) < Wire::STANDARD_TRACE_WIDTH) {
+					if (startPoint.x() == lastTracePoint.x()) {
+						startPoint.setX(endPoint.x());
+						lastTracePoint.setX(endPoint.x());
+					}
+					startPoint = drawLastNotVertical(startPoint, endPoint, lastTracePoint, wires);
+					Wire * trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+					wires.append(trace);
+				}
+				else if (qAbs(endPoint.y() - startPoint.y()) < Wire::STANDARD_TRACE_WIDTH) {
+					if (startPoint.y() == lastTracePoint.y()) {
+						startPoint.setY(endPoint.y());
+						lastTracePoint.setY(endPoint.y());
+					}
+					startPoint = drawLastNotHorizontal(startPoint, endPoint, lastTracePoint, wires);
+					Wire * trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+					wires.append(trace);
+				}
+				else {
+					QPointF midPoint;
+					if (lastTracePoint.y() == startPoint.y()) {
+						midPoint.setX(lastTracePoint.x());
+						midPoint.setY(endPoint.y());
+					}
+					else {
+						midPoint.setY(lastTracePoint.y());
+						midPoint.setX(endPoint.x());
+					}
+					startPoint = lastTracePoint;
+					if (startPoint != midPoint) {
+						Wire * trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+						wires.append(trace);
+					}
+					Wire * trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+					wires.append(trace);
+				}
 			}
 		}
 		else {
@@ -1248,10 +1253,10 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 		from = to;
 	}
 	
-	foreach (Wire * wire, wires) {
-		delete wire;
-	}
-	wires.clear();
+	//foreach (Wire * wire, wires) {
+		//delete wire;
+	//}
+	//wires.clear();
 		
 	return true;
 }
@@ -1362,8 +1367,9 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlan
 		Tile * seed = seeds[ix++];
 		
 		GridEntry * gridEntry = dynamic_cast<GridEntry *>(TiGetClient(seed));
-		if (gridEntry != NULL) {
-			continue;				
+		if (gridEntry != NULL && gridEntry->isVisible()) {
+			// been here already
+			continue;			
 		}
 
 		// TILE math reverses y-axis!
@@ -1372,12 +1378,12 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlan
 		qreal x2 = RIGHT(seed);
 		qreal y2 = TOP(seed);
 			
-		short fof = checkCandidate(subedge, seed, viewLayerID, forEmpty);
+		short fof = checkCandidate(subedge, seed, viewLayerID, thePlane, forEmpty);
 		QRectF r(x1, y1, x2 - x1, y2 - y1);
 		DebugDialog::debug("=================", r);
 
 		DebugDialog::debug(QString("wave:%1 fof:%2").arg(TiGetWave(seed)).arg(fof), r);
-		gridEntry = drawGridItem(x1, y1, x2, y2, TiGetWave(seed), fof);
+		gridEntry = drawGridItem(x1, y1, x2, y2, fof, gridEntry);
 		TiSetClient(seed, gridEntry);
 		//TODO: processEvents should only happen every once in a while
 		ProcessEventBlocker::processEvents();
@@ -1398,7 +1404,7 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlan
 
 void JRouter::appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*enoughOverlap)(Tile*, Tile*)) {
 	
-	if (TiGetClient(next) != NULL) {
+	if (TiGetClient(next) != NULL && TiGetClient(next)->isVisible()) {
 		return;			// already visited
 	}
 
@@ -1408,7 +1414,7 @@ void JRouter::appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*e
 			qreal y1 = BOTTOM(next);
 			qreal x2 = RIGHT(next);
 			qreal y2 = TOP(next);
-			drawGridItem(x1, y1, x2, y2, 0, GridEntry::NOTBOARD);
+			TiSetClient(next, drawGridItem(x1, y1, x2, y2, GridEntry::NOTBOARD, NULL));
 		}
 
 		return;		// outside board boundaries
@@ -1477,22 +1483,11 @@ void JRouter::seedNext(Tile * seed, QList<Tile *> & seeds) {
 	}
 }
 
-short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, bool forEmpty) 
+short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Plane * thePlane, bool forEmpty) 
 {	
 	switch (TiGetType(tile)) {
 		case SPACE:
-			if (forEmpty) {
-				QSizeF size = m_sketchWidget->jumperItemSize();
-				TileRect tileRect;
-				TiToRect(tile, &tileRect);
-				if ((tileRect.xmax - tileRect.xmin  > size.width() + MinConnectorSpace) &&
-					(tileRect.ymax - tileRect.ymin  < size.height() + MinConnectorSpace)) 
-				{
-					DebugDialog::debug("empty GOAL");
-					return GridEntry::GOAL;
-				}
-			}
-			return GridEntry::EMPTY;
+			return checkSpace(subedge, tile, viewLayerID, thePlane, forEmpty);
 
 		case GRIDALIGN:
 			return GridEntry::ALIGN;
@@ -1534,6 +1529,98 @@ short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, ViewLayer::ViewLa
 			// shouldn't happen:
 			return GridEntry::IGNORE;
 	}
+}
+
+struct EmptyThing {
+	QList<qreal> x_s;
+	QList<qreal> x2_s;
+	QList<qreal> y_s;
+	qreal maxY;
+};
+
+int collectXandY(Tile * tile, UserData data) {
+	EmptyThing * emptyThing = (EmptyThing *) data;
+	int type = TiGetType(tile);
+	if (type == SPACE || type == GRIDALIGN) {
+		if (!emptyThing->x_s.contains(LEFT(tile))) {
+			emptyThing->x_s.append(LEFT(tile));
+		}
+		if (!emptyThing->x2_s.contains(RIGHT(tile))) {
+			emptyThing->x2_s.append(RIGHT(tile));
+		}
+		if (BOTTOM(tile) <= emptyThing->maxY && !emptyThing->y_s.contains(BOTTOM(tile))) {
+			emptyThing->y_s.append(BOTTOM(tile));
+		}
+	}
+
+	return 0;
+}
+
+int allEmpty(Tile * tile, UserData) {
+	int type = TiGetType(tile);
+	if (type == SPACE || type == GRIDALIGN) {
+		return 0;
+	}
+
+	return 1;		// not empty; will stop the search
+}
+
+
+short JRouter::checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Plane * thePlane, bool forEmpty) 
+{
+	Q_UNUSED(subedge);
+	Q_UNUSED(viewLayerID);
+
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+
+	// assumes this only happens at borders, so no need to pass through
+	qreal tileHeight = tileRect.ymax - tileRect.ymin;
+	if (tileHeight < Wire::STANDARD_TRACE_WIDTH - .001) {
+		DebugDialog::debug("thin empty space BLOCK");
+		return GridEntry::BLOCK;
+	}
+
+	if (!forEmpty) {
+		return GridEntry::EMPTY;
+	}
+
+	QSizeF sizeNeeded = m_sketchWidget->jumperItemSize();
+	qreal widthNeeded = sizeNeeded.width() + MinConnectorSpace + MinConnectorSpace;
+	qreal heightNeeded = sizeNeeded.height() + MinConnectorSpace + MinConnectorSpace;
+	if (tileRect.xmax - tileRect.xmin  < widthNeeded) {
+		return GridEntry::EMPTY;
+	}
+
+	// need to figure out how to minimize the distance between this space and the previous wire;
+	// need to save the set of open spaces found....
+
+	if (tileRect.ymax - tileRect.ymin  >= heightNeeded) {
+		DebugDialog::debug("empty GOAL");
+		return GridEntry::GOAL;
+	}
+
+	TileRect searchRect = tileRect;
+	searchRect.ymin = qMax(m_maxRect.top(), tileRect.ymin - heightNeeded + (tileRect.ymax - tileRect.ymin));
+	searchRect.ymax = qMin(m_maxRect.bottom(), tileRect.ymin + heightNeeded);
+
+	EmptyThing emptyThing;
+	emptyThing.maxY = tileRect.ymin;
+	TiSrArea(tile, thePlane, &searchRect, collectXandY, &emptyThing);
+
+	foreach (qreal y, emptyThing.y_s) {
+		foreach (qreal x, emptyThing.x_s) {
+			searchRect.xmin = x;
+			searchRect.xmax = x + widthNeeded;
+			searchRect.ymin = y;
+			searchRect.ymax = y + heightNeeded;
+			if (TiSrArea(tile, thePlane, &searchRect, allEmpty, NULL) == 0) {
+				return GridEntry::GOAL;
+			}
+		}
+	}
+
+	return GridEntry::EMPTY;
 }
 
 short JRouter::checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire * candidateWire, bool forEmpty) {
@@ -1657,12 +1744,13 @@ short JRouter::checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLa
 }
 
 
-GridEntry * JRouter::drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int wave, short flag) 
+GridEntry * JRouter::drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, short flag, GridEntry * gridEntry) 
 {
-	Q_UNUSED(wave);
 	int alpha = 128;
-	GridEntry * gridEntry = new GridEntry(x1, y1, x2 - x1, y2 - y1, flag, NULL);
-	gridEntry->setZValue(m_sketchWidget->getTopZ());
+	if (gridEntry == NULL) {
+		gridEntry = new GridEntry(x1, y1, x2 - x1, y2 - y1, flag, NULL);
+		gridEntry->setZValue(m_sketchWidget->getTopZ());
+	}
 
 	QColor c;
 	switch (flag) {
@@ -1695,7 +1783,9 @@ GridEntry * JRouter::drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, int wa
 
 	gridEntry->setPen(c);
 	gridEntry->setBrush(QBrush(c));
-	m_sketchWidget->scene()->addItem(gridEntry);
+	if (gridEntry->scene() == NULL) {
+		m_sketchWidget->scene()->addItem(gridEntry);
+	}
 	gridEntry->show();
 	return gridEntry;
 }
@@ -1912,24 +2002,29 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 		}
 	}
 
-	if (fromSubedge != NULL || toSubedge != NULL) {
+	if (fromSubedge != NULL && toSubedge != NULL) {
 		long newID = ItemBase::getNextID();
 		ViewGeometry viewGeometry;
-		ItemBase * temp = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
+		ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
 												  jumperItemStruct->edge->from->attachedTo()->viewLayerSpec(), 
 												  BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-		if (temp == NULL) {
+		if (itemBase == NULL) {
 			// we're in trouble
 			return NULL;
 		}
 
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(temp);
+		JumperItem * jumperItem = dynamic_cast<JumperItem *>(itemBase);
 
-		QRectF fromDestRect;
-		QRectF toDestRect;
-		tileToRect(fromTile, fromDestRect);
-		tileToRect(toTile, toDestRect);
-		jumperItem->resize(fromDestRect.center(), toDestRect.center());
+		QPointF fromDestPoint = fromWires.last()->connector1()->sceneAdjustedTerminalPoint(NULL);
+		QPointF toDestPoint = toWires.last()->connector1()->sceneAdjustedTerminalPoint(NULL);
+
+		QSizeF sizeNeeded = m_sketchWidget->jumperItemSize();
+		qreal widthNeeded = sizeNeeded.width() + MinConnectorSpace + MinConnectorSpace;
+		qreal heightNeeded = sizeNeeded.height() + MinConnectorSpace + MinConnectorSpace;
+
+		fromDestPoint = findNearestSpace(fromTile, widthNeeded, heightNeeded, jumperItemStruct->plane, fromDestPoint);
+		toDestPoint = findNearestSpace(toTile, widthNeeded, heightNeeded, jumperItemStruct->plane, toDestPoint); 
+		jumperItem->resize(fromDestPoint, toDestPoint);
 
 		if (jumperItemStruct->partForBounds) {
 			jumperItem->addSticky(jumperItemStruct->partForBounds, true);
@@ -1939,6 +2034,8 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 		m_sketchWidget->scene()->addItem(jumperItem);
 		fromSubedge->to = jumperItem->connector0();
 		hookUpWires(fromSubedge, fromWires, jumperItemStruct->plane);
+
+
 		toSubedge->to = jumperItem->connector1();
 		hookUpWires(toSubedge, toWires, jumperItemStruct->plane);
 		jumperItemStruct->jumperItem = jumperItem;
@@ -2302,9 +2399,23 @@ int prepDeleteTile(Tile * tile, UserData data) {
 	return 0;
 }
 
+
+void JRouter::hideTiles() 
+{
+	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
+		GridEntry * gridEntry = dynamic_cast<GridEntry *>(item);
+		if (gridEntry) gridEntry->setVisible(false);
+	}
+}
+
 void JRouter::clearTiles(Plane * thePlane) 
 {
 	if (thePlane == NULL) return;
+
+	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
+		GridEntry * gridEntry = dynamic_cast<GridEntry *>(item);
+		if (gridEntry) delete gridEntry;
+	}
 
 	QSet<Tile *> tiles;
 	TileRect tileRect;
@@ -2327,7 +2438,7 @@ void JRouter::displayBadTiles(QList<Tile *> & alreadyTiled) {
 		qreal x2 = RIGHT(tile);
 		qreal y2 = TOP(tile);
 			
-		drawGridItem(x1, y1, x2, y2, 0, GridEntry::BLOCK);
+		drawGridItem(x1, y1, x2, y2, GridEntry::BLOCK, dynamic_cast<GridEntry *>(TiGetClient(tile)));
 	}
 }
 
@@ -2446,3 +2557,67 @@ void JRouter::clearJumperItemStructs(QList<JumperItemStruct *> jumperItemStructs
 	}
 	jumperItemStructs.clear();
 }
+
+QPointF JRouter::findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNeeded, Plane * thePlane, const QPointF & nearPoint) 
+{
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+
+	if (tileRect.ymax - tileRect.ymin  >= heightNeeded && tileRect.xmax - tileRect.xmin  >= widthNeeded ) {
+		qreal cy, cx;
+		if (nearPoint.y() <= (tileRect.ymax + tileRect.ymin) / 2) {
+			cy = qMax(nearPoint.y() - (heightNeeded / 2), tileRect.ymin) + (heightNeeded / 2);
+		}
+		else {
+			cy = qMin(nearPoint.y() + (heightNeeded / 2), tileRect.ymax) - (heightNeeded / 2);
+		}
+		if (nearPoint.x() <= (tileRect.xmax + tileRect.xmin) / 2) {
+			cx = qMax(nearPoint.x() - (widthNeeded / 2), tileRect.xmin) + (widthNeeded / 2);
+		}
+		else {
+			cy = qMin(nearPoint.x() + (widthNeeded / 2), tileRect.xmax) - (widthNeeded / 2);
+		}
+		return QPointF(cx, cy);
+	}
+	else {
+		TileRect searchRect = tileRect;
+		searchRect.ymin = qMax(m_maxRect.top(), tileRect.ymin - heightNeeded + (tileRect.ymax - tileRect.ymin));
+		searchRect.ymax = qMin(m_maxRect.bottom(), tileRect.ymin + heightNeeded);
+
+		EmptyThing emptyThing;
+		emptyThing.maxY = tileRect.ymin;
+		TiSrArea(tile, thePlane, &searchRect, collectXandY, &emptyThing);
+
+		qreal bestD = std::numeric_limits<double>::max();
+		qreal bestX, bestY;
+
+		QList<QPointF> points;
+		foreach (qreal y, emptyThing.y_s) {
+			foreach (qreal x, emptyThing.x_s) {
+				points.append(QPointF(x, y));
+			}
+			foreach (qreal x, emptyThing.x2_s) {
+				points.append(QPointF(x - widthNeeded, y));
+			}
+		}
+		foreach (QPointF p, points) {
+			searchRect.xmin = p.x();
+			searchRect.xmax = p.x() + widthNeeded;
+			searchRect.ymin = p.y();
+			searchRect.ymax = p.y() + heightNeeded;
+			if (TiSrArea(tile, thePlane, &searchRect, allEmpty, NULL) == 0) {
+				qreal cx = p.x() + (widthNeeded / 2);
+				qreal cy = p.y() + (heightNeeded / 2);
+				qreal d = (cx - nearPoint.x()) * (cx - nearPoint.x()) + (cy - nearPoint.y()) * (cy - nearPoint.y());
+				if (d < bestD) {
+					bestD = d;
+					bestX = cx;
+					bestY = cy;
+				}
+			}
+		}
+
+		return QPointF(bestX, bestY);
+	}
+}
+

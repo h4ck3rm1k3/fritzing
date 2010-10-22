@@ -43,7 +43,7 @@ $Date$
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
-static const int LineThickness = 4;
+static const int LineThickness = 8;
 static const QRegExp HeightExpr("height=\\'\\d*px");
 
 QString ResizableBoard::customShapeTranslated;
@@ -455,7 +455,7 @@ void ResizableBoard::setInitialSize() {
 	}
 }
 
-QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi)
 {
 	qreal w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {
@@ -488,6 +488,12 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 	}
 
 	return Board::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+}
+
+QSizeF ResizableBoard::getSizeMM() {
+	qreal w = m_modelPart->prop("width").toDouble();
+	qreal h = m_modelPart->prop("height").toDouble();
+	return QSizeF(w, h);
 }
 
 QString ResizableBoard::makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
