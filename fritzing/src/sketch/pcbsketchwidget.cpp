@@ -1332,6 +1332,7 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 
 		for (int i = partConnectorItems.count() - 1; i >= 0; i--) {
 			ConnectorItem * ci = partConnectorItems[i];
+			
 			/*
 			DebugDialog::debug(QString("pc '%1' id:%2 cid:%3 vid:%4 vlid:%5 vis:%6")
 				.arg(ci->attachedToTitle())
@@ -1341,7 +1342,8 @@ void PCBSketchWidget::updateRoutingStatus(RoutingStatus & routingStatus, bool ma
 				.arg(ci->attachedToViewLayerID())
 				.arg(ci->attachedTo()->isEverVisible())
 				);
-				*/
+			*/
+
 			if (!ci->attachedTo()->isEverVisible()) {
 				// may not be necessary when views are brought completely into sync
 				partConnectorItems.removeAt(i);

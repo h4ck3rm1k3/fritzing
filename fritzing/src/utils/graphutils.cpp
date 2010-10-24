@@ -67,11 +67,14 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorIte
 		locs << connectorItem->sceneAdjustedTerminalPoint(NULL);
 	}
 
+	QList < QList<ConnectorItem *> > wiredTo;
+
 	int num_nodes = temp.count();
 	int num_edges = num_nodes * (num_nodes - 1) / 2;
 	E * edges = new E[num_edges];
 	double * weights = new double[num_edges];
 	int ix = 0;
+	QVector< QVector<qreal> > reverseWeights(num_nodes, QVector<qreal>(num_nodes, 0));
 	for (int i = 0; i < num_nodes; i++) {
 		ConnectorItem * c1 = temp.at(i);
 		for (int j = i + 1; j < num_nodes; j++) {
@@ -80,12 +83,37 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorIte
 			ConnectorItem * c2 = temp.at(j);
 			if ((c1->attachedTo() == c2->attachedTo()) && (c1->bus() != NULL) && (c1->bus() == c2->bus())) {
 				weights[ix++] = 0;
+				continue;
 			}
-			else {
-				double dx = locs[i].x() - locs[j].x();
-				double dy = locs[i].y() - locs[j].y();
-				weights[ix++] = (dx * dx) + (dy * dy);
+
+			bool already = false;
+			bool checkWiredTo = true;
+			foreach (QList<ConnectorItem *> list, wiredTo) {
+				if (list.contains(c1)) {
+					checkWiredTo = false;
+					if (list.contains(c2)) {
+						weights[ix++] = 0;
+						already = true;
+					}
+					break;
+				}
 			}
+			if (already) continue;
+
+			if (checkWiredTo) {
+				QList<ConnectorItem *> connectorItems;
+				connectorItems.append(c1);
+				ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::NotTraceFlags);
+				wiredTo.append(connectorItems);
+				if (connectorItems.contains(c2)) {
+					weights[ix++] = 0;
+					continue;
+				}
+			}
+
+			double dx = locs[i].x() - locs[j].x();
+			double dy = locs[i].y() - locs[j].y();
+			weights[ix++] = reverseWeights[i][j] = reverseWeights[j][i] = (dx * dx) + (dy * dy);
 		}
 	}
 
@@ -96,14 +124,15 @@ bool GraphUtils::chooseRatsnestGraph(const QList<ConnectorItem *> & connectorIte
 
 	prim_minimum_spanning_tree(g, &p[0]);
 
-	delete edges;
-	delete weights;
-
 	for (std::size_t i = 0; i != p.size(); ++i) {
 		if (i == p[i]) continue;
+		if (reverseWeights[i][p[i]] == 0) continue;
 
 		result.insert(temp[i], temp[p[i]]);
 	}
+
+	delete edges;
+	delete weights;
 
 	return true;
 }

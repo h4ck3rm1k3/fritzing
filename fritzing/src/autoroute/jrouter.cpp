@@ -27,7 +27,6 @@ $Date$
 
 // TODO:
 //	backPropagate: 
-//		draw wires as feedback in all paths, count number of wires or total distance, erase paths we don't use?
 //		tighten path between connectors once trace has succeeded?
 //		turn corners into 45's?
 //	wire bendpoint is not a blocker if wire is ownside
@@ -37,10 +36,8 @@ $Date$
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
 //	fix up cancel/stop
-//	use tiles to place jumpers
-//		foreach ownside tile
-//			do normal trace search, except goal is an empty connector-sized region
-//			need to check adjacent spaces vertically, since two together might buy enough vertical height
+//	placing jumpers: if double-sided, must make sure there is room on both sides
+//	space finder needs to be tweaked?
 //	use tile to place vias
 //		tile both sides
 //		for each onside tile
@@ -54,6 +51,7 @@ $Date$
 //		sometimes takes a longer route than expected; why?
 //		new trace insertion is failing or will cause drc errors later;  need to clip against all ownside items in insert tile function	
 //		off-by-one weirdness with rasterizer
+//		routewithtrace1.fz, why isn't sideways working earlier?
 //	new double-sided strategy:
 //		collect all edges from both sides and expand them from both sides so there is still a single router pass
 //		if there are jumpers at the end then ripup edges to there and move that edge upward
@@ -84,9 +82,11 @@ $Date$
 static const int MaximumProgress = 1000;
 static const qreal MinWireSpace = 1.5;
 static const qreal MinConnectorSpace = 1.0;
+static const qreal FloatingPointFudge = .001;
 
 enum TileType {
-	NOTBOARD = 1,
+	BUFFER = 1,
+	NOTBOARD,
 	NONCONNECTOR,
 	TRACE,
 	TRACECONNECTOR,
@@ -351,12 +351,22 @@ Plane * JRouter::runEdges(QList<JEdge *> & edges,
 		QList<JSubedge *> subedges;
 		foreach (ConnectorItem * from, edge->fromConnectorItems) {
 			QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
-			subedges.append(makeSubedge(edge, p1, from, tp, edge->to, true));
+			subedges.append(makeSubedge(edge, p1, from, NULL, tp, edge->to, true));
+		}
+		foreach (Wire * from, edge->fromTraces) {
+			QPointF p1 = from->connector0()->sceneAdjustedTerminalPoint(NULL);
+			QPointF p2 = from->connector1()->sceneAdjustedTerminalPoint(NULL);
+			subedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, from, tp, edge->to, true));
 		}
 		// reverse direction
 		foreach (ConnectorItem * to, edge->toConnectorItems) {
 			QPointF p1 = to->sceneAdjustedTerminalPoint(NULL);
-			subedges.append(makeSubedge(edge, p1, to, fp, edge->from, false));
+			subedges.append(makeSubedge(edge, p1, to, NULL, fp, edge->from, false));
+		}
+		foreach (Wire * to, edge->toTraces) {
+			QPointF p1 = to->connector0()->sceneAdjustedTerminalPoint(NULL);
+			QPointF p2 = to->connector1()->sceneAdjustedTerminalPoint(NULL);
+			subedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, to, fp, edge->from, false));
 		}
 		qSort(subedges.begin(), subedges.end(), subedgeLessThan);
 
@@ -433,25 +443,38 @@ Plane * JRouter::runEdges(QList<JEdge *> & edges,
 }
 
 Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled) {
-	Tile * boardTile = NULL;
-	if (board) {
-		boardTile = TiAlloc();
+	Tile * bufferTile = TiAlloc();
+	TiSetType(bufferTile, BUFFER);
+	TiSetBody(bufferTile, NULL);
 
-		TiSetBody(boardTile, board);
-		TiSetType(boardTile, SPACE);
+	if (board) {
 		m_maxRect = board->boundingRect();
 		m_maxRect.translate(board->pos());
-
-		LEFT(boardTile) = m_maxRect.left();
-		BOTTOM(boardTile) = m_maxRect.top();		// TILE is Math Y-axis not computer-graphic Y-axis
+	}
+	else {
+		m_maxRect = m_sketchWidget->scene()->itemsBoundingRect();
+		m_maxRect.adjust(-m_maxRect.width() / 4, -m_maxRect.height() / 4, m_maxRect.width() / 4, m_maxRect.height() / 4);
 	}
 
-	Plane * thePlane = TiNewPlane(boardTile);
-	if (boardTile) {
-		RIGHT(boardTile) = m_maxRect.right();
-		TOP(boardTile) = m_maxRect.bottom();		// TILE is Math Y-axis not computer-graphic Y-axis
-	}
+	QRectF bufferRect(m_maxRect);
+	bufferRect.adjust(-m_maxRect.width(), -m_maxRect.height(), m_maxRect.width(), m_maxRect.height());
 
+	LEFT(bufferTile) = bufferRect.left();
+	BOTTOM(bufferTile) = bufferRect.top();		// TILE is Math Y-axis not computer-graphic Y-axis
+
+	Plane * thePlane = TiNewPlane(bufferTile);
+
+	RIGHT(bufferTile) = bufferRect.right();
+	TOP(bufferTile) = bufferRect.bottom();		// TILE is Math Y-axis not computer-graphic Y-axis
+
+
+	TileRect boardRect;
+	boardRect.xmin = m_maxRect.left();
+	boardRect.xmax = m_maxRect.right();
+	boardRect.ymin = m_maxRect.top();
+	boardRect.ymax = m_maxRect.bottom();
+	QList<Tile *> already;
+	insertTile(thePlane, boardRect, already, NULL, SPACE, false, false);
 	// if board is not rectangular, add tiles for the outside edges;
 
 	if (board) {
@@ -601,19 +624,6 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 		// something is very wrong
 		return;
 	}
-
-	/*
-	QList<ConnectorItem *> uniqueEnds;
-	foreach (Wire * cw, wires) {
-		ConnectorItem * c0 = cw->connector0();
-		if ((c0 != NULL) && c0->chained()) {
-			addTile(c0, TRACECONNECTOR, thePlane, alreadyTiled, force);
-			if (!force && (alreadyTiled.count() > 0)) {
-				return;
-			}
-		}
-	}
-	*/
 
 	foreach (Wire * w, wires) {
 		QList<QRectF> rects;
@@ -825,23 +835,6 @@ void JRouter::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
 bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partForBounds, ViewLayer::ViewLayerID viewLayerID) 
 {
 	Tile * tile = NULL;
-	TraceWire * splitWire = NULL;
-	QLineF originalLine;
-	if (subedge->from == NULL) {
-
-		// TODO: starting from trace rather than connector
-
-		/*
-		// split the trace at subedge->point then restore it later
-		originalLine = subedge->wire->line();
-		QLineF newLine(QPointF(0,0), subedge->point - subedge->wire->pos());
-		subedge->wire->setLine(newLine);
-		splitWire = drawOneTrace(subedge->point, originalLine.p2() + subedge->wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1, m_viewLayerSpec);
-		from = splitWire->connector0();
-		ProcessEventBlocker::processEvents();
-
-		*/
-	}
 
 	QList<Wire *> wires;
 	tile = drawTrace(subedge, thePlane, viewLayerID, wires, false);	
@@ -866,55 +859,71 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 		}
 		*/
 
+
+		if (subedge->from == NULL) {
+			subedge->from = splitTrace(subedge->fromWire, subedge->fromPoint);
+		}
+		if (subedge->to == NULL) {
+			subedge->to = splitTrace(subedge->toWire, subedge->toPoint);
+		}
+
 		// hook everyone up
 		hookUpWires(subedge, wires, thePlane);
 	}
-
-
-	// TODO: deal with routing from trace later
-
-	/*
-	if (subedge->wire != NULL) {
-		if (routedFlag) {
-			// hook up the split trace
-			ConnectorItem * connector1 = subedge->wire->connector1();
-			ConnectorItem * newConnector1 = splitWire->connector1();
-			foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
-				connector1->tempRemove(toConnectorItem, false);
-				toConnectorItem->tempRemove(connector1, false);
-				newConnector1->tempConnectTo(toConnectorItem, false);
-				toConnectorItem->tempConnectTo(newConnector1, false);
-				if (partForBounds) {
-					splitWire->addSticky(partForBounds, true);
-					partForBounds->addSticky(splitWire, true);
-				}
-			}
-
-			connector1->tempConnectTo(splitWire->connector0(), false);
-			splitWire->connector0()->tempConnectTo(connector1, false);
-		}
-		else {
-			// restore the old trace
-			subedge->wire->setLine(originalLine);
-			m_sketchWidget->deleteItem(splitWire, true, false, false);
-		}
-	}
-
-	*/
 
 	hideTiles();
 
 	return (tile != NULL);
 }
 
+ConnectorItem * JRouter::splitTrace(Wire * wire, QPointF point) 
+{
+	// split the trace at point
+	QLineF originalLine = wire->line();
+	QLineF newLine(QPointF(0,0), point - wire->pos());
+	wire->setLine(newLine);
+	TraceWire * splitWire = drawOneTrace(point, originalLine.p2() + wire->pos(), Wire::STANDARD_TRACE_WIDTH + 1, m_viewLayerSpec);
+	ConnectorItem * connector1 = wire->connector1();
+	ConnectorItem * newConnector1 = splitWire->connector1();
+	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
+		connector1->tempRemove(toConnectorItem, false);
+		toConnectorItem->tempRemove(connector1, false);
+		newConnector1->tempConnectTo(toConnectorItem, false);
+		toConnectorItem->tempConnectTo(newConnector1, false);
+	}
+
+	connector1->tempConnectTo(splitWire->connector0(), false);
+	splitWire->connector0()->tempConnectTo(connector1, false);
+
+	//if (partForBounds) {
+		//splitWire->addSticky(partForBounds, true);
+		//partForBounds->addSticky(splitWire, true);
+	//}
+
+	if (!wire->getAutoroutable()) {
+		// TODO: deal with undo
+	}
+
+	return splitWire->connector0();
+}
+
+
 void JRouter::hookUpWires(JSubedge * subedge, QList<Wire *> & wires, Plane * thePlane) {
-	if (wires.count() <= 0) return
-			
-	subedge->from->tempConnectTo(wires[0]->connector0(), false);
-	wires[0]->connector0()->tempConnectTo(subedge->from, false);
+	if (wires.count() <= 0) return;
+		
+	if (subedge->from) {
+		subedge->from->tempConnectTo(wires[0]->connector0(), false);
+		wires[0]->connector0()->tempConnectTo(subedge->from, false);
+	}
+	else {
+	}
 	int last = wires.count() - 1;
-	subedge->to->tempConnectTo(wires[last]->connector1(), false);
-	wires[last]->connector1()->tempConnectTo(subedge->to, false);
+	if (subedge->to) {
+		subedge->to->tempConnectTo(wires[last]->connector1(), false);
+		wires[last]->connector1()->tempConnectTo(subedge->to, false);
+	}
+	else {
+	}
 	for (int i = 0; i < last; i++) {
 		ConnectorItem * c1 = wires[i]->connector1();
 		ConnectorItem * c0 = wires[i + 1]->connector0();
@@ -1128,12 +1137,12 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 }
 
 bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2) {
-	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > Wire::STANDARD_TRACE_WIDTH);
+	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > Wire::STANDARD_TRACE_WIDTH - FloatingPointFudge);
 }
 
 bool enoughOverlapVertical(Tile* tile1, Tile* tile2) {
 	// remember that axes are switched
-	return (qMin(TOP(tile1), TOP(tile2)) - qMax(BOTTOM(tile1), BOTTOM(tile2)) > Wire::STANDARD_TRACE_WIDTH);
+	return (qMin(TOP(tile1), TOP(tile2)) - qMax(BOTTOM(tile1), BOTTOM(tile2)) > Wire::STANDARD_TRACE_WIDTH - FloatingPointFudge);
 }
 
 struct SeedTree {
@@ -1162,9 +1171,11 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 		return false;
 	}
 
+	Tile * last = path.last();
+
 	SeedTree * from = destination;
 	// TODO: may be wire here
-	QPointF startPoint = subedge->from->sceneAdjustedTerminalPoint(NULL);
+	QPointF startPoint = subedge->fromPoint;
 	QPointF lastTracePoint = startPoint;
 	while (from) {
 		SeedTree * to = from->parent;
@@ -1180,8 +1191,15 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 				}
 			}
 			else {
-				// TODO: may be wire here...
-				endPoint = subedge->to->sceneAdjustedTerminalPoint(NULL);
+				if (subedge->to) {
+					endPoint = subedge->to->sceneAdjustedTerminalPoint(NULL);
+				}
+				else {
+					QPointF p1 = subedge->toWire->connector0()->sceneAdjustedTerminalPoint(NULL);
+					QPointF p2 = subedge->toWire->connector1()->sceneAdjustedTerminalPoint(NULL);
+					// TODO: use the last tile to get closer to the true intersection
+					endPoint = (p1 + p2) / 2;
+				}
 				if (qAbs(endPoint.x() - startPoint.x()) < Wire::STANDARD_TRACE_WIDTH) {
 					if (startPoint.x() == lastTracePoint.x()) {
 						startPoint.setX(endPoint.x());
@@ -1342,6 +1360,7 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlane, ViewLayer::ViewLayerID viewLayerID, bool forEmpty) {
 
 	DebugDialog::debug("((((((((((((((((((((((((((((");
+	if (subedge->from) {
 		DebugDialog::debug(QString("starting from connectoritem %1 %2 %3 %4 %5")
 								.arg(subedge->from->connectorSharedID())
 								.arg(subedge->from->connectorSharedName())
@@ -1349,6 +1368,7 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlan
 								.arg(subedge->from->attachedToID())
 								.arg(subedge->from->attachedToInstanceTitle())
 								);
+	}
 
 	Tile * firstTile = TiSrPoint(NULL, thePlane, subedge->fromPoint.x(), subedge->fromPoint.y());
 	if (firstTile == NULL) {
@@ -1406,6 +1426,10 @@ void JRouter::appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*e
 	
 	if (TiGetClient(next) != NULL && TiGetClient(next)->isVisible()) {
 		return;			// already visited
+	}
+
+	if (TiGetType(next) == BUFFER) {
+		return;
 	}
 
 	if (TiGetType(next) == NOTBOARD) {
@@ -1523,6 +1547,7 @@ short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, ViewLayer::ViewLa
 
 		case NONCONNECTOR:
 		case NOTBOARD:
+		case BUFFER:
 			return GridEntry::BLOCK;
 
 		default:
@@ -1576,7 +1601,7 @@ short JRouter::checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerI
 
 	// assumes this only happens at borders, so no need to pass through
 	qreal tileHeight = tileRect.ymax - tileRect.ymin;
-	if (tileHeight < Wire::STANDARD_TRACE_WIDTH - .001) {
+	if (tileHeight < Wire::STANDARD_TRACE_WIDTH - FloatingPointFudge) {
 		DebugDialog::debug("thin empty space BLOCK");
 		return GridEntry::BLOCK;
 	}
@@ -1960,12 +1985,22 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 	QList<JSubedge *> fromSubedges, toSubedges;
 	foreach (ConnectorItem * from, jumperItemStruct->edge->fromConnectorItems) {
 		QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
-		fromSubedges.append(makeSubedge(jumperItemStruct->edge, p1, from, tp, jumperItemStruct->edge->to, true));
+		fromSubedges.append(makeSubedge(jumperItemStruct->edge, p1, from, NULL, tp, jumperItemStruct->edge->to, true));
+	}
+	foreach (Wire * from, jumperItemStruct->edge->fromTraces) {
+		QPointF p1 = from->connector0()->sceneAdjustedTerminalPoint(NULL);
+		QPointF p2 = from->connector1()->sceneAdjustedTerminalPoint(NULL);
+		fromSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, from, tp, jumperItemStruct->edge->to, true));
 	}
 	// reverse direction
 	foreach (ConnectorItem * to, jumperItemStruct->edge->toConnectorItems) {
 		QPointF p1 = to->sceneAdjustedTerminalPoint(NULL);
-		toSubedges.append(makeSubedge(jumperItemStruct->edge, p1, jumperItemStruct->edge->to, fp, jumperItemStruct->edge->from, false));
+		toSubedges.append(makeSubedge(jumperItemStruct->edge, p1, to, NULL, fp, jumperItemStruct->edge->from, false));
+	}
+	foreach (Wire * to, jumperItemStruct->edge->toTraces) {
+		QPointF p1 = to->connector0()->sceneAdjustedTerminalPoint(NULL);
+		QPointF p2 = to->connector1()->sceneAdjustedTerminalPoint(NULL);
+		toSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, to, fp, jumperItemStruct->edge->from, false));
 	}
 
 	DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
@@ -2352,13 +2387,13 @@ void JRouter::updateProgress(int num, int denom)
 	emit setProgressValue((int) MaximumProgress * (m_currentProgressPart + (num / (qreal) denom)) / (qreal) m_maximumProgressPart);
 }
 
-JSubedge * JRouter::makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, QPointF p2, ConnectorItem * to, bool forward) 
+JSubedge * JRouter::makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, Wire * fromWire, QPointF p2, ConnectorItem * to, bool forward) 
 {
 	JSubedge * subedge = new JSubedge;
 	subedge->edge = edge;
 	subedge->from = from;
 	subedge->to = to;
-	subedge->fromWire = NULL;
+	subedge->fromWire = fromWire;
 	subedge->toWire = NULL;
 	subedge->distance = (p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y());	
 	subedge->fromPoint = p1;
