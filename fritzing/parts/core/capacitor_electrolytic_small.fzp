@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.1223" moduleId="LargeElectrolyticCapacitorModuleID">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.1223" moduleId="SmallElectrolyticCapacitorModuleID">
  <version>4</version>
  <author>Brendan Howell</author>
  <title>Electrolytic Capacitor</title>
  <label>C</label>
- <date>2008-12-22</date>
+ <date>2008-11-04</date>
  <tags>
   <tag>Electrolytic</tag>
   <tag>Capacitor</tag>
@@ -11,19 +11,19 @@
  </tags>
  <properties>
   <property name="family">Capacitor [unidirectional]</property>
-  <property name="capacitance">1000&#181;F</property>
-  <property name="package">300 mil [THT, electrolytic]</property>
-</properties>
+  <property name="capacitance">1&#181;F</property>
+  <property name="package">100 mil [THT, electrolytic]</property>
+ </properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
- <description>1000&#181;F electrolytic capacitor</description>
+ <description>A small electrolytic capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/electrolytic_capacitor_1000uF_icon.svg">
+   <layers image="icon/electrolytic_capacitor_small_icon.svg">
     <layer layerId="icon"/>
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true">
-   <layers image="breadboard/electrolytic_capacitor_1000uF_35v.svg">
+   <layers image="breadboard/electrolytic_capacitor_small.svg">
     <layer layerId="breadboard"/>
    </layers>
   </breadboardView>
@@ -33,10 +33,10 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_large_300mil.svg">
-    <layer layerId="copper0"/>
-    <layer layerId="silkscreen"/>
-   <layer layerId="copper1"/></layers>
+   <layers image="pcb/capacitor_elko_small_100mil.svg">
+     <layer layerId="copper0"/>
+     <layer layerId="silkscreen"/>
+  <layer layerId="copper1"/></layers>
   </pcbView>
  </views>
  <connectors>
