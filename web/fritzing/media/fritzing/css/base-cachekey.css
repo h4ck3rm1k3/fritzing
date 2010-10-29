@@ -1645,6 +1645,7 @@ text-align: left;
 font-weight: bold;
 color: gray;
 font-size: 1em;
+max-width: 100%;
 }
 
 #archetypes-fieldname-description textarea {

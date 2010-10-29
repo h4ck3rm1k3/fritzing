@@ -1,6 +1,7 @@
 {% extends "forum_base.html" %}{% load i18n %}
 
 {% block subnav %}
+{{ block.super}}
 <ul class="navTree navTreeLevel1">
 {% for forum in object_list %}
 <li class="navTreeItem visualNoMarker navTreeFolderish">
@@ -14,13 +15,13 @@
 {% endblock subnav %}
 
 {% block content %}
-<div style="clear: both; float: left;">
+<div>
 	<h1 class="documentFirstHeading">Forums</h1>
 </div>
  <p class="documentDescription"> 
-<span class="" id="parent-fieldname-description"> 
+	<span class="" id="parent-fieldname-description"> 
 	Discuss anything related to Fritzing
-</span> 
+	</span> 
 </p> 
 <div style="float: right">
 	<form id="searchForm" class="forumSearch" style="margin-bottom: 0; " action="http://www.google.com/search" method="get">
