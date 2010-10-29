@@ -1,10 +1,27 @@
 {% extends "forum_base.html" %}{% load i18n %}
 
+{% block subnav %}
+<ul class="navTree navTreeLevel1">
+{% for forum in object_list %}
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+	<div>
+            <a href='{{ forum.get_absolute_url }}' class="state-published navTreeFolderish ">
+	    {{ forum.title }}</a>
+	</div>
+</li>
+{% endfor %}
+</ul>
+{% endblock subnav %}
+
 {% block content %}
 <div style="clear: both; float: left;">
-	<h1>Forums</h1>
+	<h1 class="documentFirstHeading">Forums</h1>
 </div>
-
+ <p class="documentDescription"> 
+<span class="" id="parent-fieldname-description"> 
+	Discuss anything related to Fritzing
+</span> 
+</p> 
 <div style="float: right">
 	<form id="searchForm" class="forumSearch" style="margin-bottom: 0; " action="http://www.google.com/search" method="get">
 		<input style="margin: 0; width: 150px" type="text" value="" name="q" />
@@ -13,6 +30,9 @@
 </div>
 
 <div class="visualClear"/>
+
+<p><img src="/media/uploads/headers/forum.jpg" alt="" width="700" height="233" /></p> 
+
 <table class='listing nosort'>
 <thead>
 <tr>
