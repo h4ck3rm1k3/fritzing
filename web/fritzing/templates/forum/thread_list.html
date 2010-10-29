@@ -32,8 +32,6 @@
 
 <div class="visualClear"/>
 
-{% for title, url in forum.get_url_name %} &raquo; <a href='{{ url }}'>{{ title }}</a> {% endfor %} ({{ forum.threads }} thread{{ forum.threads|pluralize }}, {{ forum.posts }} post{{ forum.posts|pluralize }})
-
 {% if forum.child.all %}
 <table id='djangoForumList'>
 <tr>
