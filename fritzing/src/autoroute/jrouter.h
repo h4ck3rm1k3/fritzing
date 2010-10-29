@@ -68,21 +68,21 @@ class GridEntry : public QGraphicsRectItem {
 public:
 	enum {
 		EMPTY = 1,
-		IGNORE = 2,
-		SAFE = 4,
-		ALIGN = 8,
-		SELF = 16,
-		GOAL = 32,   // goal followed by blockers must be highest values
-		OWNSIDE = 64,
-		BLOCK = 128,
-		NOTBOARD = 256
+		TINY,
+		IGNORE,
+		SAFE,
+		SELF,
+		GOAL,   // goal followed by blockers must be highest values
+		OWNSIDE,
+		BLOCK,
+		NOTBOARD
 	};
 
 public:
-	GridEntry(qreal x, qreal y, qreal width, qreal height, int flags, QGraphicsItem * parent); 
+	GridEntry(qreal x, qreal y, qreal width, qreal height, int type, QGraphicsItem * parent); 
 
 public:
-	int m_flags;
+	int m_type;
 };
 
 class JRouter : public QObject
@@ -121,19 +121,19 @@ protected:
 	bool backPropagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires, bool forEmpty);
 	short checkCandidate(JSubedge * subedge, struct Tile *, ViewLayer::ViewLayerID, Plane *, bool forEmpty);
 	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, Wire * fromWire, QPointF p2, ConnectorItem * to, bool forward);
-	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *, QList<struct Tile *> & alreadyTiled, bool force);
+	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *, QList<struct Tile *> & alreadyTiled);
 	void seedNext(Tile * seed, QList<Tile *> & seeds);
 	struct Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID, QList<struct Tile *> & alreadyTiled);
-	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere, QList<struct Tile *> & alreadyTiled, bool force);
+	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere, QList<struct Tile *> & alreadyTiled);
 	short checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem *, bool forEmpty);
 	short checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire *, bool forEmpty);
 	short checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Plane *, bool forEmpty); 
 	void clearTiles(struct Plane * thePlane);
 	void hideTiles();
 	void displayBadTiles(QList<struct Tile *> & alreadyTiled);
-	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type, bool adjustToGrid, bool force);
+	struct Tile * insertTile(struct Plane* thePlane, struct TileRect &tileRect, QList<struct Tile *> &alreadyTiled, QGraphicsItem *, int type, bool clipWire);
 	void clearGridEntries();
-	void appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*enoughOverlap)(Tile*, Tile*));
+	void appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*enoughOverlap)(Tile*, Tile*, qreal));
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	struct SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
@@ -145,6 +145,9 @@ protected:
 	void hookUpWires(JSubedge * subedge, QList<Wire *> & wires, Plane * thePlane);
 	QPointF findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNeeded, Plane * thePlane, const QPointF & nearPoint);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
+	Tile * clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type);
+	void handleChangedTiles(Plane * thePlane, TileRect &);
+	Tile * tileOneWire(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, Wire * w);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
@@ -173,6 +176,10 @@ protected:
 	int m_maximumProgressPart;
 	int m_currentProgressPart;
 	QRectF m_maxRect;
+	qreal m_wireWidthNeeded;
+	qreal m_halfWireWidthNeeded;
+
+
 };
 
 #endif

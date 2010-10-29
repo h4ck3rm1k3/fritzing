@@ -65,6 +65,7 @@ struct TilePoint {
 
 typedef void * UserData;
 
+
 struct Tile
 {
 	int		 ti_type;		/* another free field */
@@ -84,16 +85,20 @@ struct Tile
      * are stored inside it.
      */
 
-#define	BOTTOM(tp)		((tp)->ti_ll.y)
-#define	LEFT(tp)		((tp)->ti_ll.x)
-#define	TOP(tp)			(BOTTOM(RT(tp)))
-#define	RIGHT(tp)		(LEFT(TR(tp)))
+#define	YMIN(tileP)		((tileP)->ti_ll.y)
+#define	LEFT(tileP)		((tileP)->ti_ll.x)
+#define	YMAX(tileP)			(YMIN(RT(tileP)))
+#define	RIGHT(tileP)		(LEFT(TR(tileP)))
 
-#define	LB(tp)		((tp)->ti_lb)
-#define	BL(tp)		((tp)->ti_bl)
-#define	TR(tp)		((tp)->ti_tr)
-#define	RT(tp)		((tp)->ti_rt)
+#define	LB(tileP)		((tileP)->ti_lb)
+#define	BL(tileP)		((tileP)->ti_bl)
+#define	TR(tileP)		((tileP)->ti_tr)
+#define	RT(tileP)		((tileP)->ti_rt)
 
+typedef void (*TileFunc)(Tile *);
+
+void TiSetChangedFunc(TileFunc);
+void TiSetFreeFunc(TileFunc);
 
 /* ----------------------- Tile planes -------------------------------- */
 
@@ -178,25 +183,21 @@ int   TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback, UserD
 Tile *TiSrPoint( Tile * hintTile, Plane * plane, qreal x, qreal y);
 Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, int type);
 
-#define	TiBottom(tp)	(BOTTOM(tp))
-#define	TiLeft(tp)		(LEFT(tp))
-#define	TiTop(tp)		(TOP(tp))
-#define	TiRight(tp)		(RIGHT(tp))
+#define	TiBottom(tileP)	(YMIN(tileP))
+#define	TiLeft(tileP)		(LEFT(tileP))
+#define	TiTop(tileP)		(YMAX(tileP))
+#define	TiRight(tileP)		(RIGHT(tileP))
 
-#define	TiGetType(tp)		((tp)->ti_type)
-#define TiSetType(tp, t)	((tp)->ti_type = (int) (t))
-#define TiGetLeftType(tp)	TiGetType(LEFT(tp))
-#define TiGetRightType(tp)	TiGetType(RIGHT(tp))
-#define TiGetTopType(tp)	TiGetType(TOP(tp))
-#define TiGetBottomType(tp)	TiGetType(BOTTOM(tp))
+#define	TiGetType(tileP)		((tileP)->ti_type)
+#define TiSetType(tileP, t)	((tileP)->ti_type = (int) (t))
 
-#define	TiGetBody(tp)		((tp)->ti_body)
+#define	TiGetBody(tileP)		((tileP)->ti_body)
 /* See diagnostic subroutine version in tile.c */
-#define	TiSetBody(tp, b)	((tp)->ti_body = (b))
-#define	TiGetClient(tp)		((tp)->ti_client)
-#define	TiSetClient(tp,b)	((tp)->ti_client = (b))
-#define	TiGetWave(tp)		((tp)->ti_wave)
-#define	TiSetWave(tp,b)		((tp)->ti_wave = (b))
+#define	TiSetBody(tileP, b)	((tileP)->ti_body = (b))
+#define	TiGetClient(tileP)		((tileP)->ti_client)
+#define	TiSetClient(tileP,b)	((tileP)->ti_client = (b))
+#define	TiGetWave(tileP)		((tileP)->ti_wave)
+#define	TiSetWave(tileP,b)		((tileP)->ti_wave = (b))
 
 
 // make sure nobody else uses these values for tile type
@@ -212,13 +213,13 @@ void TiFree(Tile *);
 
 #define EnclosePoint(tile,point)	((LEFT(tile)   <= (point)->p_x ) && \
 					 ((point)->p_x   <  RIGHT(tile)) && \
-					 (BOTTOM(tile) <= (point)->p_y ) && \
-					 ((point)->p_y   <  TOP(tile)  ))
+					 (YMIN(tile) <= (point)->p_y ) && \
+					 ((point)->p_y   <  YMAX(tile)  ))
 
 #define EnclosePoint4Sides(tile,point)	((LEFT(tile)   <= (point)->p_x ) && \
 					 ((point)->p_x  <=  RIGHT(tile)) && \
-					 (BOTTOM(tile) <= (point)->p_y ) && \
-					 ((point)->p_y  <=  TOP(tile)  ))
+					 (YMIN(tile) <= (point)->p_y ) && \
+					 ((point)->p_y  <=  YMAX(tile)  ))
 
 /* The four macros below are for finding next tile RIGHT, UP, LEFT or DOWN 
  * from current tile at a given coordinate value.
@@ -228,7 +229,7 @@ void TiFree(Tile *);
  */
 
 #define NEXT_TILE_RIGHT(tResult, t, y) \
-    for ((tResult) = TR(t); BOTTOM(tResult) > (y); (tResult) = LB(tResult)) \
+    for ((tResult) = TR(t); YMIN(tResult) > (y); (tResult) = LB(tResult)) \
         /* Nothing */;
 
 #define NEXT_TILE_UP(tResult, t, x) \
@@ -236,7 +237,7 @@ void TiFree(Tile *);
         /* Nothing */;
 
 #define NEXT_TILE_LEFT(tResult, t, y) \
-    for ((tResult) = BL(t); TOP(tResult) <= (y); (tResult) = RT(tResult)) \
+    for ((tResult) = BL(t); YMAX(tResult) <= (y); (tResult) = RT(tResult)) \
         /* Nothing */;
  
 #define NEXT_TILE_DOWN(tResult, t, x) \

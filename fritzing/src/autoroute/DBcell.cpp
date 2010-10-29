@@ -139,12 +139,12 @@ placeCellFunc (Tile * tile, UserData data)
 
     if ( RIGHT(tp) == arg->rect->xmax)
     {
-        if (BOTTOM(tp) == arg->rect->ymin)
+        if (YMIN(tp) == arg->rect->ymin)
             cellTileMerge (tp, arg->plane, TOPBOTTOMLEFTRIGHT);
         else
             cellTileMerge (tp, arg->plane, TOPLEFTRIGHT);
     }
-    else if (BOTTOM(tp) == arg->rect->ymin)
+    else if (YMIN(tp) == arg->rect->ymin)
             cellTileMerge (tp, arg->plane, TOPBOTTOMLEFT);
     else
     	    cellTileMerge (tp, arg->plane, TOPLEFT);
@@ -178,12 +178,12 @@ deleteCellFunc (Tile * tile, UserData data)
 
     if ( RIGHT(tile) == arg->rect->xmax)
     {
-        if (BOTTOM(tile) == arg->rect->ymin)
+        if (YMIN(tile) == arg->rect->ymin)
             cellTileMerge (tile, arg->plane, TOPBOTTOMLEFTRIGHT);
         else
             cellTileMerge (tile, arg->plane, TOPLEFTRIGHT);
     }
-    else if (BOTTOM(tile) == arg->rect->ymin)
+    else if (YMIN(tile) == arg->rect->ymin)
             cellTileMerge (tile, arg->plane, TOPBOTTOMLEFT);
     else
     	    cellTileMerge (tile, arg->plane, TOPLEFT);
@@ -209,13 +209,13 @@ clipCellTile (Tile * tile, Plane * plane, TileRect * rect)
 {
     Tile     * newtile;
 
-    if (TOP(tile) > rect->ymax)
+    if (YMAX(tile) > rect->ymax)
     {
 
         newtile = TiSplitY (tile, rect->ymax);	/* no merge */
 		dupTileBody (tile, newtile);
     }
-    if (BOTTOM(tile) < rect->ymin)
+    if (YMIN(tile) < rect->ymin)
     {
 
 	newtile = tile;
@@ -255,51 +255,51 @@ clipCellTile (Tile * tile, Plane * plane, TileRect * rect)
 
 void
 cellTileMerge (Tile  * tile, Plane * plane, int direction) 
-/* TOP = 8, BOTTOM = 4, LEFT = 2, RIGHT = 1 */
+/* YMAX = 8, YMIN = 4, LEFT = 2, RIGHT = 1 */
 {
     TilePoint       topleft, bottomright;
     Tile      * dummy, * tpleft, * tpright, * tp1, * tp2;
 
 
     topleft.x = LEFT(tile);
-    topleft.y = TOP(tile);
+    topleft.y = YMAX(tile);
     bottomright.x = RIGHT(tile);
-    bottomright.y = BOTTOM(tile);
+    bottomright.y = YMIN(tile);
 
     if ((direction >> 1) % 2)			/* LEFT */
     {
 	tpright = tile;
         tpleft = BL(tpright);
 
-	while (BOTTOM(tpleft) < topleft.y)	/* go up left edge */
+	while (YMIN(tpleft) < topleft.y)	/* go up left edge */
 	{
 	    if (ctbListMatch (tpleft, tpright))
 	    {
-	        if (BOTTOM(tpleft) < BOTTOM(tpright))
+	        if (YMIN(tpleft) < YMIN(tpright))
 		{
 		    dummy = tpleft;
-		    tpleft = TiSplitY (tpleft, BOTTOM (tpright));
+		    tpleft = TiSplitY (tpleft, YMIN (tpright));
 		}
-		else if (BOTTOM(tpleft) > BOTTOM(tpright))
+		else if (YMIN(tpleft) > YMIN(tpright))
 		{
 		    dummy = tpright;
-		    tpright = TiSplitY (tpright, BOTTOM (tpleft));
+		    tpright = TiSplitY (tpright, YMIN (tpleft));
 		}
 
-		if (TOP(tpleft) > TOP(tpright))
+		if (YMAX(tpleft) > YMAX(tpright))
 		{
-		    dummy = TiSplitY (tpleft, TOP(tpright));
+		    dummy = TiSplitY (tpleft, YMAX(tpright));
 		}
-		else if (TOP(tpright) > TOP(tpleft))
+		else if (YMAX(tpright) > YMAX(tpleft))
 		{
-		    dummy = TiSplitY (tpright, TOP(tpleft));
+		    dummy = TiSplitY (tpright, YMAX(tpleft));
 		}
 
 		// if (plane->pl_hint == tpright) plane->pl_hint = tpleft;
 		TiJoinX (tpleft, tpright, plane);  /* tpright disappears */
 
 		tpright = RT(tpleft);
-		if (BOTTOM(tpright) < topleft.y) tpleft = BL(tpright);
+		if (YMIN(tpright) < topleft.y) tpleft = BL(tpright);
 		else tpleft = tpright;	/* we're off the top of the tile */
 					/* this will break the while loop */
 	    } /* if (ctbListMatch (tpleft, tpright)) */
@@ -315,28 +315,28 @@ cellTileMerge (Tile  * tile, Plane * plane, int direction)
 	tpleft = TiSrPoint (tpright, plane, bottomright.x - MINDIFF, bottomright.y);
 
 
-	while (BOTTOM(tpright) < topleft.y)	/* go up right edge */
+	while (YMIN(tpright) < topleft.y)	/* go up right edge */
 	{
 	    if (ctbListMatch (tpleft, tpright))
 	    {
-	        if (BOTTOM(tpright) < BOTTOM(tpleft))
+	        if (YMIN(tpright) < YMIN(tpleft))
 		{
 		    dummy = tpright;
-		    tpright = TiSplitY (tpright, BOTTOM(tpleft));
+		    tpright = TiSplitY (tpright, YMIN(tpleft));
 		}
-		else if (BOTTOM(tpleft) < BOTTOM(tpright))
+		else if (YMIN(tpleft) < YMIN(tpright))
 		{
 		    dummy = tpleft;
-		    tpleft = TiSplitY (tpleft, BOTTOM(tpright));
+		    tpleft = TiSplitY (tpleft, YMIN(tpright));
 		}
 
-		if (TOP(tpright) > TOP(tpleft))
+		if (YMAX(tpright) > YMAX(tpleft))
 		{
-		    dummy = TiSplitY (tpright, TOP(tpleft));
+		    dummy = TiSplitY (tpright, YMAX(tpleft));
 		}
-		else if (TOP(tpleft) > TOP(tpright))
+		else if (YMAX(tpleft) > YMAX(tpright))
 		{
-   		    dummy = TiSplitY (tpleft, TOP(tpright));
+   		    dummy = TiSplitY (tpleft, YMAX(tpright));
 		}
 
 		// if (plane->pl_hint == tpright) plane->pl_hint = tpleft;
@@ -362,7 +362,7 @@ cellTileMerge (Tile  * tile, Plane * plane, int direction)
 	tile = tpright;		/* for TiSrPoint in next IF statement */
     }
 
-    if ((direction >> 3) % 2)			/* TOP */
+    if ((direction >> 3) % 2)			/* YMAX */
     {
 	tp1 = TiSrPoint (tile, plane, topleft.x, topleft.y);	/* merge across top */
 	tp2 = TiSrPoint (tile, plane, topleft.x, topleft.y - MINDIFF);/* top slice of original tile */
@@ -379,7 +379,7 @@ cellTileMerge (Tile  * tile, Plane * plane, int direction)
 	tile = tp1;		/* for TiSrPoint in next IF statement */
     }
 
-    if ((direction >> 2) % 2)			/* BOTTOM */
+    if ((direction >> 2) % 2)			/* YMIN */
     {
 	                                       /* bottom slice of orig tile */
 	tp1 = TiSrPoint (tile, plane, bottomright.x - MINDIFF, bottomright.y);

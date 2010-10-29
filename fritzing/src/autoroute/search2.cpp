@@ -118,12 +118,12 @@ TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback
 	 * it can result in its deallocation or modification in
 	 * some other way.
 	 */
-	here.y = BOTTOM(enumTile) - MINDIFF;
+	here.y = YMIN(enumTile) - MINDIFF;
 	tp = enumTile;
 	plane->pl_hint = tp = gotoPoint(tp, here);
 
 	enumRight = RIGHT(enumTile);
-	enumBottom = BOTTOM(enumTile);
+	enumBottom = YMIN(enumTile);
 	enumTR = TR(enumTile);
 	if ((*tileCallback)(enumTile, arg)) return 1;
 
@@ -187,7 +187,7 @@ tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCal
     if ((srchBottom = enumBottom) < rect->ymin)
 	srchBottom = rect->ymin;
 
-    for (tp = enumRT, tpNextTop = TOP(tp); tpNextTop > srchBottom; tp = tpLB)
+    for (tp = enumRT, tpNextTop = YMAX(tp); tpNextTop > srchBottom; tp = tpLB)
     {
 
 	/*
@@ -198,9 +198,9 @@ tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCal
 	 */
 
 	tpLB = LB(tp);
-	tpNextTop = TOP(tpLB);	/* Since TOP(tpLB) comes from tp */
+	tpNextTop = YMAX(tpLB);	/* Since YMAX(tpLB) comes from tp */
 
-	if (BOTTOM(tp) < rect->ymax && (atBottom || BOTTOM(tp) >= enumBottom))
+	if (YMIN(tp) < rect->ymax && (atBottom || YMIN(tp) >= enumBottom))
 	{
 	    /*
 	     * We extract more information from the tile, which we will use
@@ -208,7 +208,7 @@ tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCal
 	     */
 
 	    tpRight = RIGHT(tp);
-	    tpBottom = BOTTOM(tp);
+	    tpBottom = YMIN(tp);
 	    tpTR = TR(tp);
 	    if ((*tileCallback)(tp, arg)) return 1;
 
