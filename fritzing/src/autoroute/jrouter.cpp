@@ -52,6 +52,14 @@ $Date$
 //		sometimes takes a longer route than expected; why?
 //		off-by-one weirdness with rasterizer
 //		weird slanted line in one trace with stepper-motor-unrouted example
+//		arduino isp example: goes into infinite loop
+//		barebones arduino examples: overlapping wires
+//		dc motor example: routing into border area
+//		parking assistant: overlaps
+//		op-amp: overlaps
+//		midi drum kit: overlaps
+//		loop: funny attachment to connectors
+//		lcd example: runs outside of border; overlaps
 //	new double-sided strategy:
 //		collect all edges from both sides and expand them from both sides so there is still a single router pass
 //		if there are jumpers at the end then ripup edges to there and move that edge upward
@@ -408,22 +416,22 @@ Plane * JRouter::runEdges(QList<JEdge *> & edges,
 		QList<JSubedge *> subedges;
 		foreach (ConnectorItem * from, edge->fromConnectorItems) {
 			QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
-			subedges.append(makeSubedge(edge, p1, from, NULL, tp, /* edge->to */ NULL, true));
+			subedges.append(makeSubedge(edge, p1, from, NULL, tp, true));
 		}
 		foreach (Wire * from, edge->fromTraces) {
 			QPointF p1 = from->connector0()->sceneAdjustedTerminalPoint(NULL);
 			QPointF p2 = from->connector1()->sceneAdjustedTerminalPoint(NULL);
-			subedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, from, tp, /* edge->to */ NULL, true));
+			subedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, from, tp, true));
 		}
 		// reverse direction
 		foreach (ConnectorItem * to, edge->toConnectorItems) {
 			QPointF p1 = to->sceneAdjustedTerminalPoint(NULL);
-			subedges.append(makeSubedge(edge, p1, to, NULL, fp, /* edge->from */ NULL, false));
+			subedges.append(makeSubedge(edge, p1, to, NULL, fp, false));
 		}
 		foreach (Wire * to, edge->toTraces) {
 			QPointF p1 = to->connector0()->sceneAdjustedTerminalPoint(NULL);
 			QPointF p2 = to->connector1()->sceneAdjustedTerminalPoint(NULL);
-			subedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, to, fp, /* edge->from */ NULL, false));
+			subedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, to, fp, false));
 		}
 		qSort(subedges.begin(), subedges.end(), subedgeLessThan);
 
@@ -2050,22 +2058,22 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 	QList<JSubedge *> fromSubedges, toSubedges;
 	foreach (ConnectorItem * from, jumperItemStruct->edge->fromConnectorItems) {
 		QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
-		fromSubedges.append(makeSubedge(jumperItemStruct->edge, p1, from, NULL, tp, /* jumperItemStruct->edge->to */ NULL, true));
+		fromSubedges.append(makeSubedge(jumperItemStruct->edge, p1, from, NULL, tp, true));
 	}
 	foreach (Wire * from, jumperItemStruct->edge->fromTraces) {
 		QPointF p1 = from->connector0()->sceneAdjustedTerminalPoint(NULL);
 		QPointF p2 = from->connector1()->sceneAdjustedTerminalPoint(NULL);
-		fromSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, from, tp, /* jumperItemStruct->edge->to */ NULL, true));
+		fromSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, from, tp, true));
 	}
 	// reverse direction
 	foreach (ConnectorItem * to, jumperItemStruct->edge->toConnectorItems) {
 		QPointF p1 = to->sceneAdjustedTerminalPoint(NULL);
-		toSubedges.append(makeSubedge(jumperItemStruct->edge, p1, to, NULL, fp, /* jumperItemStruct->edge->from */ NULL, false));
+		toSubedges.append(makeSubedge(jumperItemStruct->edge, p1, to, NULL, fp, false));
 	}
 	foreach (Wire * to, jumperItemStruct->edge->toTraces) {
 		QPointF p1 = to->connector0()->sceneAdjustedTerminalPoint(NULL);
 		QPointF p2 = to->connector1()->sceneAdjustedTerminalPoint(NULL);
-		toSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, to, fp, /* jumperItemStruct->edge->from */ NULL, false));
+		toSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, to, fp, false));
 	}
 
 	DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
@@ -2092,6 +2100,11 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 		}
 	}
 
+	hideTiles();
+
+	// TODO: two jumper items may try to share the same tiles
+	// so should insert the tiles from the first jumper now
+
 	if (fromSubedge != NULL) {
 		foreach (JSubedge * subedge, toSubedges) {
 			toTile = drawTrace(subedge, jumperItemStruct->plane, jumperItemStruct->toViewLayerID, toWires, true);
@@ -2101,6 +2114,8 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 			}
 		}
 	}
+
+	hideTiles();
 
 	if (fromSubedge != NULL && toSubedge != NULL) {
 		long newID = ItemBase::getNextID();
@@ -2133,9 +2148,13 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 
 		m_sketchWidget->scene()->addItem(jumperItem);
 		fromSubedge->toConnectorItem = jumperItem->connector0();
+		QList<Tile *> already;
+		addTile(jumperItem->connector0(), CONNECTOR, jumperItemStruct->plane, already);
 		hookUpWires(fromSubedge, fromWires, jumperItemStruct->plane);
 
+
 		toSubedge->toConnectorItem = jumperItem->connector1();
+		addTile(jumperItem->connector1(), CONNECTOR, jumperItemStruct->plane, already);
 		hookUpWires(toSubedge, toWires, jumperItemStruct->plane);
 		jumperItemStruct->jumperItem = jumperItem;
 	}
@@ -2451,12 +2470,12 @@ void JRouter::updateProgress(int num, int denom)
 	emit setProgressValue((int) MaximumProgress * (m_currentProgressPart + (num / (qreal) denom)) / (qreal) m_maximumProgressPart);
 }
 
-JSubedge * JRouter::makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, Wire * fromWire, QPointF p2, ConnectorItem * to, bool forward) 
+JSubedge * JRouter::makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, Wire * fromWire, QPointF p2, bool forward) 
 {
 	JSubedge * subedge = new JSubedge;
 	subedge->edge = edge;
 	subedge->fromConnectorItem = from;
-	subedge->toConnectorItem = to;
+	subedge->toConnectorItem = NULL;
 	subedge->fromWire = fromWire;
 	subedge->toWire = NULL;
 	subedge->distance = (p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y());	
