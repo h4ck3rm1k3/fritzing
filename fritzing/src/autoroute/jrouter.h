@@ -54,8 +54,8 @@ struct JEdge {
 
 struct JSubedge {
 	struct JEdge * edge;
-	ConnectorItem * from;
-	ConnectorItem * to;
+	ConnectorItem * fromConnectorItem;
+	ConnectorItem * toConnectorItem;
 	QPointF fromPoint;
 	QPointF toPoint;
 	class Wire * fromWire;
@@ -137,8 +137,12 @@ protected:
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	struct SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
-	void drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
-	void drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, QList<Wire *> & wires);
+	void drawDirection(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
+		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire);
+	void drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
+		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire);
+	void drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
+		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire);
 	QPointF drawLastNotHorizontal(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires);
 	QPointF drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires);
 	void clearJumperItemStructs(QList<JumperItemStruct *> jumperItemStructs);
