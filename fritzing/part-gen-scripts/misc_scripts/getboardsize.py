@@ -75,32 +75,9 @@ def main():
     assert instances.length > 0, "'" + fzz + "' has no instances"
     
     pairs = []
+    customPairs = {}
     
-    #now look for standard boards in the fz file:
-    for instance in instances:
-        id = instance.getAttribute('moduleIdRef')
-        if id == 'RectanglePCBModuleID' or id == 'TwoLayerRectanglePCBModuleID':
-            w = None
-            h = None
-            properties = instance.getElementsByTagName("property")
-            for property in properties:
-                pname = property.getAttribute("name")
-                if pname == "width":
-                    w = float(property.getAttribute("value"))
-                elif pname == "height":
-                    h = float(property.getAttribute("value"))
-            pairs.append(w)
-            pairs.append(h)
-        elif id == '423120090505':          # arduino shield
-            pairs.append(69.215)				#width="2.725in" 
-            pairs.append(53.37556)			#height="2.1014in" 
-
-    print "standard pairs ", pairs
-    
-    fzdom = None
-    fzString = None
-    
-    #now look for custom boards
+     #now look for custom boards
     for i, name in enumerate(zf.namelist()):   
         if name.endswith('fzp'):
             fzpString = zf.read(name)
@@ -137,17 +114,47 @@ def main():
                 if not match:
                     continue
                     
-                print "match", match.groups()
+                #print "match", match.groups()
                     
                 if len(match.groups()) < 2:
                     continue
                     
                 w = float(match.group(1))
                 h = float(match.group(2))
-                pairs.append(w)
-                pairs.append(h)
+                customPairs[root.getAttribute("moduleId")] = [w,h]
                 break
+   
+    #now look for board instances in the fz file:
+    for instance in instances:
+        id = instance.getAttribute('moduleIdRef')
+        if id == 'RectanglePCBModuleID' or id == 'TwoLayerRectanglePCBModuleID':
+            w = None
+            h = None
+            properties = instance.getElementsByTagName("property")
+            for property in properties:
+                pname = property.getAttribute("name")
+                if pname == "width":
+                    w = float(property.getAttribute("value"))
+                elif pname == "height":
+                    h = float(property.getAttribute("value"))
+            pairs.append(w)
+            pairs.append(h)
+        elif id == '423120090505':           #arduino shield
+            pairs.append(69.215)				#width="2.725in" 
+            pairs.append(53.37556)			#height="2.1014in" 
+        else:
+            pair = None
+            try:
+                pair = customPairs[id]
+            except:
+                pass
+                
+            if pair != None:
+                pairs.append(pair[0])
+                pairs.append(pair[1])
      
+    print "pairs", pairs
+    
     assert len(pairs) >= 2, "no boards found in '" + fzz + "'"
     assert len(pairs) == 2, "multiple boards found in '" + fzz + "'"
     
