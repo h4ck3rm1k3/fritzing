@@ -192,11 +192,11 @@ public:
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
 	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 						bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, 
-						bool selectedItems, bool flatten, bool fillHoles);
+						bool selectedItems, bool flatten, bool fillHoles, bool & empty);
 	QString renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, 
 								  bool flatten, bool fillHoles, 
-								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect);
+								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect, bool & empty);
 
 	bool spaceBarIsPressed();
 	virtual long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);

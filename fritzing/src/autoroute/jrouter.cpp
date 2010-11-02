@@ -147,22 +147,12 @@ void tileToRect(Tile * tile, QRectF & rect) {
 bool tileRectIntersects(TileRect * tile1, TileRect * tile2)
 {
     qreal l1 = tile1->xmin;
-    qreal r1 = tile1->xmin;
-	qreal w1 = tile1->xmax - tile1->xmin;
-    if (w1 < 0)
-        l1 += w1;
-    else
-        r1 += w1;
+    qreal r1 = tile1->xmax;
     if (l1 == r1) // null rect
         return false;
 
     qreal l2 = tile2->xmin;
-    qreal r2 = tile2->xmin;
-	qreal w2 = tile2->xmax - tile2->xmin;
-    if (w2 < 0)
-        l2 += w2;
-    else
-        r2 += w2;
+    qreal r2 = tile2->xmax;
     if (l2 == r2) // null rect
         return false;
 
@@ -170,22 +160,12 @@ bool tileRectIntersects(TileRect * tile1, TileRect * tile2)
         return false;
 
     qreal t1 = tile1->ymin;
-    qreal b1 = tile1->ymin;
-	qreal h1 = tile1->ymax - tile1->ymin;
-    if (h1 < 0)
-        t1 += h1;
-    else
-        b1 += h1;
+    qreal b1 = tile1->ymax;
     if (t1 == b1) // null rect
         return false;
 
     qreal t2 = tile2->ymin;
-    qreal b2 = tile2->ymin;
-	qreal h2 = tile2->ymax - tile2->ymin;
-    if (h2 < 0)
-        t2 += h2;
-    else
-        b2 += h2;
+    qreal b2 = tile2->ymax;
     if (t2 == b2) // null rect
         return false;
 

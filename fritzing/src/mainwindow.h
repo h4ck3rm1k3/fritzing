@@ -386,7 +386,7 @@ protected:
 	bool wannaRestart();
 
 	QString clipToBoard(QString svgString, ItemBase * board);
-	void doSilk(LayerList silkLayerIDs, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
+	void doSilk(LayerList silkLayerIDs, const QString & silkName, const QString & gerberSuffix, ItemBase * board, const QString & exportDir, bool displayMessageBoxes);
 	void doCopper(ItemBase * board, LayerList & viewLayerIDs, const QString & copperName, const QString & copperSuffix, const QString & solderMaskSuffix, bool doDrill, const QString & exportDir, bool displayMessageBoxes);
 	void displayMessage(const QString & message, bool displayMessageBoxes);
 	void updateActiveLayerButtons();

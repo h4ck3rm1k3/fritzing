@@ -5378,7 +5378,7 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 
 QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, 
-								  bool selectedItems, bool flatten, bool fillHoles)
+								  bool selectedItems, bool flatten, bool fillHoles, bool & empty)
 {
 
 	QList<ItemBase *> itemBases;
@@ -5412,7 +5412,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 		}
 	}
 
-	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, fillHoles, itemBases, itemsBoundingRect);
+	return renderToSVG(printerScale, partLayers, wireLayers, blackOnly, imageSize, offsetPart, dpi, flatten, fillHoles, itemBases, itemsBoundingRect, empty);
 }
 
 QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) {
@@ -5430,9 +5430,12 @@ QString translateSVG(QString & svg, QPointF loc, qreal dpi, qreal printerScale) 
 QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLayers, const LayerList & wireLayers, 
 								  bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart, qreal dpi, bool flatten,
 								  bool fillHoles,
-								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect)
+								  QList<ItemBase *> & itemBases, QRectF itemsBoundingRect,
+								  bool & empty)
 {
 	Q_UNUSED(fillHoles);
+	empty = true;
+
 	qreal width = itemsBoundingRect.width();
 	qreal height = itemsBoundingRect.height();
 	QPointF offset = itemsBoundingRect.topLeft();
@@ -5466,6 +5469,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 					if (partLayers.contains(viewLayerID)) {
 						QString labelSvg = chief->makePartLabelSvg(blackOnly, dpi, printerScale);
 						if (!labelSvg.isEmpty()) {
+							empty = false;
 							outputSVG.append(translateSVG(labelSvg, chief->partLabelScenePos() - offset, dpi, printerScale));
 						}
 					}
@@ -5515,11 +5519,13 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
                 QTransform t = itemBase->transform();
                 itemSvg = TextUtils::svgTransform(itemSvg, t, false, QString());
 				outputSVG.append(translateSVG(itemSvg, itemBase->scenePos() - offset, dpi, printerScale));
+				empty = false;
 
 				/*
 				// TODO:  deal with rotations and flips
 				QString shifted = splitter->shift(loc.x(), loc.y(), xmlName);
 				outputSVG.append(shifted);
+				empty = false;
 				splitter->shift(-loc.x(), -loc.y(), xmlName);
 				*/
 			}
@@ -5531,7 +5537,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 				if (wire->viewLayerID() != viewLayerID) continue;
 
 				outputSVG.append(makeWireSVG(wire, offset, dpi, printerScale, blackOnly));
-
+				empty = false;
 			}
 		}
 	}

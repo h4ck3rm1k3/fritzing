@@ -36,7 +36,7 @@ SVG2gerber::SVG2gerber()
 {
 }
 
-void SVG2gerber::convert(QString svgStr, bool doubleSided, QString debugStr)
+void SVG2gerber::convert(const QString & svgStr, bool doubleSided, const QString & mainLayerName, const QString & maskLayerName)
 {
     m_SVGDom = QDomDocument("svg");
     QString errorStr;
@@ -50,7 +50,7 @@ void SVG2gerber::convert(QString svgStr, bool doubleSided, QString debugStr)
 #ifndef QT_NO_DEBUG
     QString temp;
     // dump paths SVG to tmp file for now
-    QFile dump(QDir::temp().absoluteFilePath("paths_in" + debugStr + ".svg"));
+    QFile dump(QDir::temp().absoluteFilePath("paths_in" + mainLayerName + ".svg"));
     if (!dump.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber svg dump: cannot open output file");
     }
@@ -60,15 +60,13 @@ void SVG2gerber::convert(QString svgStr, bool doubleSided, QString debugStr)
         out << m_SVGDom.toString();
     }
     temp = m_SVGDom.toString();
-#else
-    Q_UNUSED(debugStr);
 #endif
 
     normalizeSVG();
 
 #ifndef QT_NO_DEBUG
     // dump paths SVG to tmp file for now
-    QFile dump2(QDir::temp().absoluteFilePath("paths_normal" + debugStr + ".svg"));
+    QFile dump2(QDir::temp().absoluteFilePath("paths_normal" + mainLayerName + ".svg"));
     if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text)) {
         DebugDialog::debug("gerber svg dump: cannot open output file");
     }
@@ -80,7 +78,7 @@ void SVG2gerber::convert(QString svgStr, bool doubleSided, QString debugStr)
     temp = m_SVGDom.toString();
 #endif
 
-    renderGerber(doubleSided);
+    renderGerber(doubleSided, mainLayerName, maskLayerName);
 }
 
 QString SVG2gerber::getGerber(){
@@ -99,7 +97,7 @@ QString SVG2gerber::getNCDrill(){
     return m_drill_header + m_drill_paths + m_drill_slots + m_drill_footer;
 }
 
-void SVG2gerber::renderGerber(bool doubleSided){
+void SVG2gerber::renderGerber(bool doubleSided, const QString & mainLayerName, const QString & maskLayerName){
     // human readable description comments
     m_gerber_header = "G04 MADE WITH FRITZING*\n";
     m_gerber_header += "G04 WWW.FRITZING.ORG*\n";
@@ -144,8 +142,8 @@ void SVG2gerber::renderGerber(bool doubleSided){
     allPaths2gerber();
 
     // label our layers
-    m_gerber_header += "%LNCOPPER0*%\n";
-    m_soldermask_header += "%LNMASK*%\n";
+    m_gerber_header += QString("%LN%1*%\n").arg(mainLayerName.toUpper());
+    m_soldermask_header += QString("%LN%1*%\n").arg(maskLayerName.toUpper());
     m_contour_header += "%LNCONTOUR*%\n";
 
     // rewind drill to start position
@@ -158,8 +156,8 @@ void SVG2gerber::renderGerber(bool doubleSided){
 
     // now write the footer
     // comment to indicate end-of-sketch
-    m_gerber_paths += "G04 End of Copper0*\n";
-    m_soldermask_paths += "G04 End of solder mask*\n";
+    m_gerber_paths += QString("G04 End of %1*\n").arg(mainLayerName);
+	m_soldermask_paths += QString("G04 End of %1*\n").arg(maskLayerName);
     m_contour_paths += "G04 End of contour layer*\n";
 
     // write gerber end-of-program

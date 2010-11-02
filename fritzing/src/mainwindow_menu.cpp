@@ -35,6 +35,7 @@ $Date$
 #include "partseditor/partseditormainwindow.h"
 #include "help/aboutbox.h"
 #include "autoroute/autorouter1.h"
+#include "autoroute/jrouter.h"
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
 #include "fsvgrenderer.h"
@@ -228,7 +229,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
 		QSizeF imageSize;
 		if (wantSVG) {
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false);
+			bool empty;
+			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false, empty);
 			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize);
 			
 			QFile file(fileName);
@@ -243,7 +245,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 			printer.setOutputFormat(filePrintFormats[fileExt]);
 			printer.setOutputFileName(fileName);
 			int res = printer.resolution();
-			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false);
+			bool empty;
+			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false, empty);
 			svg = mergeBoardSvg(svg, board, res, imageSize);
 			
 			// now convert to pdf
@@ -361,7 +364,8 @@ QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & im
 	board->setSelected(true);
 	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::Silkscreen1;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, true, false, false);
+	bool empty;
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, true, false, false, empty);
 	board->setSelected(false);
 	foreach (QGraphicsItem * item, items) {
 		item->setSelected(true);
@@ -2611,7 +2615,8 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 	}
 
 	QSizeF imageSize;
-	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL, res, selectedItems, flatten, false);
+	bool empty;
+	QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL, res, selectedItems, flatten, false, empty);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -2946,22 +2951,23 @@ void MainWindow::autoroute() {
 
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
-	Autorouter1 * autorouter1 = new Autorouter1(pcbSketchWidget);
+	Autorouter1 * autorouter = new Autorouter1(pcbSketchWidget);
+	//JRouter * autorouter = new JRouter(pcbSketchWidget);
 
-	connect(autorouter1, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
-	connect(autorouter1, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
-	connect(&progress, SIGNAL(cancel()), autorouter1, SLOT(cancel()), Qt::DirectConnection);
-	connect(&progress, SIGNAL(skip()), autorouter1, SLOT(cancelTrace()), Qt::DirectConnection);
-	connect(&progress, SIGNAL(stop()), autorouter1, SLOT(stopTrace()), Qt::DirectConnection);
-	connect(autorouter1, SIGNAL(setMaximumProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
-	connect(autorouter1, SIGNAL(setProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
+	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
+	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(cancel()), autorouter, SLOT(cancel()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(skip()), autorouter, SLOT(cancelTrace()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(stop()), autorouter, SLOT(stopTrace()), Qt::DirectConnection);
+	connect(autorouter, SIGNAL(setMaximumProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
+	connect(autorouter, SIGNAL(setProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
 	ProcessEventBlocker::processEvents();
 	ProcessEventBlocker::block();
 
-	autorouter1->start();
+	autorouter->start();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(false);
 
-	delete autorouter1;
+	delete autorouter;
 
 	pcbSketchWidget->setLayerActive(ViewLayer::Copper1, copper1Active);
 	pcbSketchWidget->setLayerActive(ViewLayer::Copper0, copper0Active);
@@ -3165,7 +3171,8 @@ void MainWindow::groundFill()
 	LayerList viewLayerIDs;
 	viewLayerIDs << ViewLayer::Board;
 	QSizeF boardImageSize;
-	QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false);
+	bool empty;
+	QString boardSvg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, false, empty);
 	if (boardSvg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
 		return;
@@ -3176,7 +3183,7 @@ void MainWindow::groundFill()
 	QSizeF copperImageSize;
 
 	m_pcbGraphicsView->showGroundTraces(false);
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
 	m_pcbGraphicsView->showGroundTraces(true);
 	if (svg.isEmpty()) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
@@ -3188,7 +3195,7 @@ void MainWindow::groundFill()
 		viewLayerIDs.clear();
 		viewLayerIDs << ViewLayer::Copper1 << ViewLayer::Copper1Trace;
 		m_pcbGraphicsView->showGroundTraces(false);
-		svg2 = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true);
+		svg2 = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board, GraphicsUtils::StandardFritzingDPI, false, false, true, empty);
 		m_pcbGraphicsView->showGroundTraces(true);
 		if (svg2.isEmpty()) {
 			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
