@@ -22,14 +22,13 @@
   <defs
      id="defs4" />
   <g
-     transform="translate(6.3779525,-1015.866)"
      id="g3651">
     <g
-       id="copper1">
+       id="copper1" transform="translate(0,-1015.866)">
       <rect
          width="14.173228"
          height="5.6692915"
-         x="-6.3779526"
+         x="0"
          y="1028.9762"
          stroke-width="0"
          id="connector1pin"
@@ -37,7 +36,7 @@
       <rect
          width="14.173228"
          height="5.6692915"
-         x="15.23622"
+         x="21.6141726"
          y="1028.9762"
          stroke-width="0"
          id="connector0pin"

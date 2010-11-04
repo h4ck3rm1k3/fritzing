@@ -49,7 +49,7 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 
     //do translate
     if(hasTranslate(element)){
-		QList<qreal> params = getTransformFloats(element);
+		QList<qreal> params = TextUtils::getTransformFloats(element);
 		if(params.size() > 1) {
             shiftChild(element, params.at(0), params.at(1), false);
 			DebugDialog::debug(QString("translating %1 %2").arg(params.at(0)).arg(params.at(1)));
@@ -61,7 +61,7 @@ void SvgFlattener::flattenChildren(QDomElement &element){
     }
     //do rotate
     if(hasRotate(element)){
-        QList<qreal> params = getTransformFloats(element);
+		QList<qreal> params = TextUtils::getTransformFloats(element);
         QMatrix transform = QMatrix(params.at(0), params.at(1), params.at(2), params.at(3), params.at(4), params.at(5));
 
         DebugDialog::debug(QString("rotating %1 %2 %3 %4 %5 %6").arg(params.at(0)).arg(params.at(1)).arg(params.at(2)).arg(params.at(3)).arg(params.at(4)).arg(params.at(5)));
@@ -291,10 +291,11 @@ void SvgFlattener::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & ren
 	Q_UNUSED(printerScale);
 	Q_UNUSED(att);
 
-	QRectF bounds = renderer.viewBoxF();
-	QMatrix cm = QMatrix().translate(-bounds.center().x(), -bounds.center().y()) * 
-				 QMatrix().scale(-1, 1) * 
-				 QMatrix().translate(bounds.center().x(), bounds.center().y());
+	QMatrix m = renderer.matrixForElement(att) * TextUtils::elementToMatrix(element);
+	QRectF bounds = renderer.boundsOnElement(att);
+	m.translate(bounds.center().x(), bounds.center().y());
+	QMatrix mMinus = m.inverted();
+	QMatrix cm = mMinus * QMatrix().scale(-1, 1) * m;
 	QDomElement newElement = element.cloneNode(true).toElement();
 	newElement.removeAttribute("id");
 	QDomElement pElement = domDocument.createElement("g");

@@ -42,8 +42,7 @@ public:
 	QChar currentCommand();
 	double currentNumber();
 
-	static const QString RegexFloatDetector;
-	static const QRegExp floatingPointMatcher;
+public:
 	static const char FakeClosePathChar = 'x';
 
 protected:

@@ -405,7 +405,7 @@ void FSvgRenderer::initTerminalInfoAux(QDomElement & element, const QStringList 
 	if (ix >= 0) {
 		ConnectorInfo * connectorInfo = m_connectorInfoHash.value(connectorIDs.at(ix), NULL);
 		if (connectorInfo) {
-			connectorInfo->terminalMatrix = SvgFileSplitter::elementToMatrix(element);
+			connectorInfo->terminalMatrix = TextUtils::elementToMatrix(element);
 		}
 	}
 	QDomElement child = element.firstChildElement();
@@ -436,7 +436,7 @@ ConnectorInfo * FSvgRenderer::initConnectorInfo(QDomElement & connectorElement) 
 
 	if (connectorElement.isNull()) return connectorInfo;
 
-	connectorInfo->matrix = SvgFileSplitter::elementToMatrix(connectorElement);
+	connectorInfo->matrix = TextUtils::elementToMatrix(connectorElement);
 	QList<QDomElement> stack;
 	stack.append(connectorElement);
 	initConnectorInfoAux(stack, connectorInfo);

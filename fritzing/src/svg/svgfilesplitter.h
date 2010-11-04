@@ -73,10 +73,6 @@ public:
 	static void fixStyleAttributeRecurse(QDomElement & element);
 	static void fixColorRecurse(QDomElement & element, const QString & newColor, const QStringList & exceptions);
 	static void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
-    static QList<qreal> getTransformFloats(QDomElement & element);
-	static QList<qreal> getTransformFloats(const QString & transform);
-	static QMatrix elementToMatrix(QDomElement & element);
-	static QMatrix transformStringToMatrix(const QString & transform);
 
 protected:
 	void normalizeChild(QDomElement & childElement, 

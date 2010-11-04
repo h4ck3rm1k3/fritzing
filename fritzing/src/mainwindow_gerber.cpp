@@ -326,7 +326,7 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board) {
 		QDomElement element = leaves1.at(i);
 		QString ms = element.attribute("transform");
 		if (!ms.isEmpty()) {
-			m *= SvgFileSplitter::transformStringToMatrix(ms);
+			m *= TextUtils::transformStringToMatrix(ms);
 		}
 		QRectF mBounds = m.mapRect(bounds);
 		if (mBounds.left() < 0 || mBounds.top() < 0 || bounds.right() > twidth || bounds.bottom() > theight) {

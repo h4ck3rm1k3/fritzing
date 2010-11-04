@@ -195,10 +195,10 @@ void ConnectorShared::loadPins(const QDomElement & domElement) {
 void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentifier viewId) {
 	QDomElement pinElem = elem.firstChildElement("p");
 	while (!pinElem.isNull()) {
-		QString temp;
-		QTextStream stream(&temp);
-		pinElem.save(stream, 0);
-		stream.flush();
+		//QString temp;
+		//QTextStream stream(&temp);
+		//pinElem.save(stream, 0);
+		//stream.flush();
 		QString svgId = pinElem.attribute("svgId");
 		//svgId = svgId.left(svgId.lastIndexOf(QRegExp("\\d"))+1);
 		QString layer = pinElem.attribute("layer");

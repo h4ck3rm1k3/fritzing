@@ -326,7 +326,7 @@ void SvgFileSplitter::normalizeTranslation(QDomElement & element,
 	QString attr = element.attribute("transform");
 	if (attr.isEmpty()) return;
 
-	QMatrix matrix = elementToMatrix(element);
+	QMatrix matrix = TextUtils::elementToMatrix(element);
 	if (matrix.dx() == 0 && matrix.dy() == 0) return;
 
 	qreal dx = matrix.dx() * sNewWidth / vbWidth;
@@ -485,7 +485,7 @@ bool SvgFileSplitter::shiftTranslation(QDomElement & element, qreal x, qreal y)
 	QString attr = element.attribute("transform");
 	if (attr.isEmpty()) return false;
 
-	QMatrix m0 = elementToMatrix(element);
+	QMatrix m0 = TextUtils::elementToMatrix(element);
 
 	bool ok1, ok2, ok3;
 	qreal _x = element.attribute("_x").toDouble(&ok1);
@@ -1189,69 +1189,6 @@ void SvgFileSplitter::changeColors(QDomElement & element, QString & toColor, QSt
 		changeColors(child, toColor, exceptions);
 		child = child.nextSiblingElement();
 	}
-}
-
-QList<qreal> SvgFileSplitter::getTransformFloats(QDomElement & element){
-	return getTransformFloats(element.attribute("transform"));
-}
-
-QList<qreal> SvgFileSplitter::getTransformFloats(const QString & transform){
-    QList<qreal> list;
-    int pos = 0;
-
-	while ((pos = SVGPathLexer::floatingPointMatcher.indexIn(transform, pos)) != -1) {
-		list << transform.mid(pos, SVGPathLexer::floatingPointMatcher.matchedLength()).toDouble();
-        pos += SVGPathLexer::floatingPointMatcher.matchedLength();
-    }
-
-#ifndef QT_NO_DEBUG
-   // QString dbg = "got transform params: \n";
-    //dbg += transform + "\n";
-    //for(int i=0; i < list.size(); i++){
-        //dbg += QString::number(list.at(i)) + " ";
-    // }
-    //DebugDialog::debug(dbg);
-#endif
-
-    return list;
-}
-
-QMatrix SvgFileSplitter::elementToMatrix(QDomElement & element) {
-	QString transform = element.attribute("transform");
-	if (transform.isEmpty()) return QMatrix();
-
-	return transformStringToMatrix(transform);
-}
-
-QMatrix SvgFileSplitter::transformStringToMatrix(const QString & transform) {
-
-	QList<qreal> floats = getTransformFloats(transform);
-
-	if (transform.startsWith("translate")) {
-		return QMatrix().translate(floats[0], (floats.length() > 1) ? floats[1] : 0);
-	}
-	else if (transform.startsWith("rotate")) {
-		if (floats.length() == 1) {
-			return QMatrix().rotate(floats[0]);
-		}
-		else if (floats.length() == 3) {
-			return  QMatrix().translate(-floats[1], -floats[2]) * QMatrix().rotate(floats[0]) * QMatrix().translate(floats[1], floats[2]);
-		}
-	}
-	else if (transform.startsWith("matrix")) {
-        return QMatrix(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5]);
-	}
-	else if (transform.startsWith("scale")) {
-		return QMatrix().scale(floats[0], floats[1]);
-	}
-	else if (transform.startsWith("skewX")) {
-		return QMatrix().shear(floats[0], 0);
-	}
-	else if (transform.startsWith("skewY")) {
-		return QMatrix().shear(0, floats[0]);
-	}
-
-	return QMatrix();
 }
 
 bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attributeName, qreal d)

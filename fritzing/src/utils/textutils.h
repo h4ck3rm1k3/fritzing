@@ -65,7 +65,10 @@ public:
 	static bool findText(QDomNode & node, QString & text);
 	static QString stripNonValidXMLCharacters(const QString & str); 
 	static QString escapeAnd(const QString &);
-
+	static QMatrix elementToMatrix(QDomElement & element);
+	static QMatrix transformStringToMatrix(const QString & transform);
+    static QList<qreal> getTransformFloats(QDomElement & element);
+	static QList<qreal> getTransformFloats(const QString & transform);
 
 public:
 	static const QRegExp FindWhitespace;
@@ -76,6 +79,8 @@ public:
 	static const QString CreatedWithFritzingString;
 	static const QString CreatedWithFritzingXmlComment;
 	static void collectLeaves(QDomElement & element, int & index, QVector<QDomElement> & leaves);
+	static const QRegExp floatingPointMatcher;
+	static const QString RegexFloatDetector;
 
 protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);

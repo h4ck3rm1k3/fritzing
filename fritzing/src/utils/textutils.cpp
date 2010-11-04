@@ -38,6 +38,9 @@ const QRegExp TextUtils::FindWhitespace("[\\s]+");
 const QRegExp TextUtils::SodipodiDetector("((inkscape)|(sodipodi)):[^=\\s]+=\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"");
 const QString TextUtils::SMDFlipSuffix("___");
 
+const QString TextUtils::RegexFloatDetector = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+const QRegExp TextUtils::floatingPointMatcher(RegexFloatDetector);		
+
 const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
 
 static const ushort MicroSymbolCode = 181;
@@ -615,3 +618,67 @@ void TextUtils::collectLeaves(QDomElement & element, int & index, QVector<QDomEl
 		element.setAttribute("id", QString::number(index++));
 	}
 }
+
+QMatrix TextUtils::elementToMatrix(QDomElement & element) {
+	QString transform = element.attribute("transform");
+	if (transform.isEmpty()) return QMatrix();
+
+	return transformStringToMatrix(transform);
+}
+
+QMatrix TextUtils::transformStringToMatrix(const QString & transform) {
+
+	QList<qreal> floats = getTransformFloats(transform);
+
+	if (transform.startsWith("translate")) {
+		return QMatrix().translate(floats[0], (floats.length() > 1) ? floats[1] : 0);
+	}
+	else if (transform.startsWith("rotate")) {
+		if (floats.length() == 1) {
+			return QMatrix().rotate(floats[0]);
+		}
+		else if (floats.length() == 3) {
+			return  QMatrix().translate(-floats[1], -floats[2]) * QMatrix().rotate(floats[0]) * QMatrix().translate(floats[1], floats[2]);
+		}
+	}
+	else if (transform.startsWith("matrix")) {
+        return QMatrix(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5]);
+	}
+	else if (transform.startsWith("scale")) {
+		return QMatrix().scale(floats[0], floats[1]);
+	}
+	else if (transform.startsWith("skewX")) {
+		return QMatrix().shear(floats[0], 0);
+	}
+	else if (transform.startsWith("skewY")) {
+		return QMatrix().shear(0, floats[0]);
+	}
+
+	return QMatrix();
+}
+
+QList<qreal> TextUtils::getTransformFloats(QDomElement & element){
+	return getTransformFloats(element.attribute("transform"));
+}
+
+QList<qreal> TextUtils::getTransformFloats(const QString & transform){
+    QList<qreal> list;
+    int pos = 0;
+
+	while ((pos = TextUtils::floatingPointMatcher.indexIn(transform, pos)) != -1) {
+		list << transform.mid(pos, TextUtils::floatingPointMatcher.matchedLength()).toDouble();
+        pos += TextUtils::floatingPointMatcher.matchedLength();
+    }
+
+#ifndef QT_NO_DEBUG
+   // QString dbg = "got transform params: \n";
+    //dbg += transform + "\n";
+    //for(int i=0; i < list.size(); i++){
+        //dbg += QString::number(list.at(i)) + " ";
+    // }
+    //DebugDialog::debug(dbg);
+#endif
+
+    return list;
+}
+

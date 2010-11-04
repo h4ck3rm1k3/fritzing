@@ -33,9 +33,6 @@ static const QRegExp findWhitespaceBefore(" ([AaCcMmVvTtQqSsLlVvHhZz,])");
 static const QRegExp findWhitespaceAfter("([AaCcMmVvTtQqSsLlVvHhZz,]) ");
 static const QRegExp findWhitespaceAtEnd(" $");
 
-const QString SVGPathLexer::RegexFloatDetector = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
-const QRegExp SVGPathLexer::floatingPointMatcher(RegexFloatDetector);		
-
 SVGPathLexer::SVGPathLexer(const QString &source)
 {
     m_source = clean(source);
@@ -69,9 +66,9 @@ QString SVGPathLexer::clean(const QString & source) {
 
 int SVGPathLexer::lex()
 {
-	if (floatingPointMatcher.indexIn(m_source, m_pos - 1) == m_pos - 1) {
-		m_currentNumber = m_source.mid(m_pos - 1, floatingPointMatcher.matchedLength()).toDouble();
-		m_pos += floatingPointMatcher.matchedLength() - 1;
+	if (TextUtils::floatingPointMatcher.indexIn(m_source, m_pos - 1) == m_pos - 1) {
+		m_currentNumber = m_source.mid(m_pos - 1, TextUtils::floatingPointMatcher.matchedLength()).toDouble();
+		m_pos += TextUtils::floatingPointMatcher.matchedLength() - 1;
 		next();
 		return SVGPathGrammar::NUMBER;
 	}
