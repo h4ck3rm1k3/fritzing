@@ -60,6 +60,7 @@ $Date$
 //		midi drum kit: overlaps
 //		loop: funny attachment to connectors
 //		lcd example: runs outside of border; overlaps
+//		not routing a second time
 //	new double-sided strategy:
 //		collect all edges from both sides and expand them from both sides so there is still a single router pass
 //		if there are jumpers at the end then ripup edges to there and move that edge upward
@@ -68,6 +69,19 @@ $Date$
 //	rethink dealing with non-manhattan wires?
 //	still seeing a few thin tiles going across the board
 //	put in trace connectors, but make the tile size small
+//	rip up and reroute:
+//		keep a hash table from traces to edges
+//		when first pass at routing is over and there are jumperitemstructs
+//		save the traces (how) along with some score (number of open edges)
+//		foreach ratsnest wire remaining (i.e. edge remaining) 
+//			find all intersections with traces and map to edges
+//			move this edge above that edge in the list of edges
+//			just do one edge or all open edges?  
+//		keep the traces from edges above those that got moved, clear the rest
+//		now route again with the new edge order from the point of change
+//		if no open edges we are done
+//			compare edge score with previous and keep the best set of traces
+//		how to stop--keep going until user stops or some repeat condition occurs..
 
 
 #include "jrouter.h"

@@ -27,6 +27,7 @@ $Date$
 #include "svgflattener.h"
 #include "svgpathlexer.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
 #include "../debugdialog.h"
 #include <QMatrix>
 #include <QRegExp>   
@@ -258,3 +259,52 @@ void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double>
 	}
 }
 
+void SvgFlattener::flipSMDSvg(const QString & filename, QDomDocument & domDocument, const QString & elementID, const QString & altElementID, qreal printerScale) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QFile file(filename);
+	bool result = domDocument.setContent(&file, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		domDocument.clear();			// probably redundant
+		return;
+	}
+
+    QDomElement root = domDocument.documentElement();
+
+	QSvgRenderer renderer(filename);
+
+	QDomElement element = TextUtils::findElementWithAttribute(root, "id", elementID);
+	if (!element.isNull()) {
+		QDomElement altElement = TextUtils::findElementWithAttribute(root, "id", altElementID);
+		flipSMDElement(domDocument, renderer, element, elementID, altElement, altElementID, printerScale);
+	}
+
+#ifndef QT_NO_DEBUG
+	QString temp = domDocument.toString();
+	Q_UNUSED(temp);
+#endif
+}
+
+void SvgFlattener::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altElement, const QString & altAtt, qreal printerScale) 
+{
+	Q_UNUSED(printerScale);
+	Q_UNUSED(att);
+
+	QRectF bounds = renderer.viewBoxF();
+	QMatrix cm = QMatrix().translate(-bounds.center().x(), -bounds.center().y()) * 
+				 QMatrix().scale(-1, 1) * 
+				 QMatrix().translate(bounds.center().x(), bounds.center().y());
+	QDomElement newElement = element.cloneNode(true).toElement();
+	newElement.removeAttribute("id");
+	QDomElement pElement = domDocument.createElement("g");
+	pElement.appendChild(newElement);
+	TextUtils::setSVGTransform(pElement, cm);
+	pElement.setAttribute("id", altAtt);
+	pElement.setAttribute("flipped", true);
+	if (!altElement.isNull()) {
+		pElement.appendChild(altElement);
+		altElement.removeAttribute("id");
+	}
+	element.parentNode().appendChild(pElement);
+}

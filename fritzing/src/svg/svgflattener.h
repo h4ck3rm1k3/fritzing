@@ -29,6 +29,7 @@ $Date$
 
 #include "svgfilesplitter.h"
 #include <QMatrix>
+#include <QSvgRenderer>
 
 class SvgFlattener : public SvgFileSplitter
 {
@@ -41,6 +42,10 @@ public:
 public:
     static bool hasTranslate(QDomElement & element);
     static bool hasRotate(QDomElement & element);
+	static void flipSMDSvg(const QString & filename, QDomDocument & flipDoc, const QString & elementID, const QString & altElementID, qreal printerScale);
+
+protected:
+	static void flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altAtt, const QString & altElementID, qreal printerScale);
 
 protected slots:
     void rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

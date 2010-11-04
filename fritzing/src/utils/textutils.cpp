@@ -396,55 +396,6 @@ QString TextUtils::svgTransform(const QString & svg, QTransform & transform, boo
 			.arg(extras);
 }
 
-void TextUtils::flipSMDSvg(const QString & filename, QDomDocument & domDocument, const QString & elementID, const QString & altElementID, qreal printerScale) {
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QFile file(filename);
-	bool result = domDocument.setContent(&file, &errorStr, &errorLine, &errorColumn);
-	if (!result) {
-		domDocument.clear();			// probably redundant
-		return;
-	}
-
-	QSvgRenderer renderer(filename);
-
-	QDomElement root = domDocument.documentElement();
-	QDomElement element = TextUtils::findElementWithAttribute(root, "id", elementID);
-	if (!element.isNull()) {
-		QDomElement altElement = TextUtils::findElementWithAttribute(root, "id", altElementID);
-		flipSMDElement(domDocument, renderer, element, elementID, altElement, altElementID, printerScale);
-	}
-
-#ifndef QT_NO_DEBUG
-	QString temp = domDocument.toString();
-	Q_UNUSED(temp);
-#endif
-}
-
-void TextUtils::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & renderer, QDomElement & element, const QString & att, QDomElement altElement, const QString & altAtt, qreal printerScale) 
-{
-	Q_UNUSED(printerScale);
-	Q_UNUSED(att);
-
-	QRectF bounds = renderer.viewBoxF();
-	QMatrix cm = QMatrix().translate(-bounds.center().x(), -bounds.center().y()) * 
-				 QMatrix().scale(-1, 1) * 
-				 QMatrix().translate(bounds.center().x(), bounds.center().y());
-	QDomElement newElement = element.cloneNode(true).toElement();
-	newElement.removeAttribute("id");
-	QDomElement pElement = domDocument.createElement("g");
-	pElement.appendChild(newElement);
-	setSVGTransform(pElement, cm);
-	pElement.setAttribute("id", altAtt);
-	pElement.setAttribute("flipped", true);
-	if (!altElement.isNull()) {
-		pElement.appendChild(altElement);
-		altElement.removeAttribute("id");
-	}
-	element.parentNode().appendChild(pElement);
-}
-
 bool TextUtils::getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight) 
 {
 	QDomElement root = doc.documentElement();

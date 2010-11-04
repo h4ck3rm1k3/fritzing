@@ -538,7 +538,7 @@ void ModelPartShared::flipSMDAnd() {
 				newP.setAttribute("svgId", p.attribute("svgId"));
 				QString terminalId = p.attribute("terminalId");
 				if (!terminalId.isEmpty()) {
-					newP.setAttribute("svgId", terminalId);
+					newP.setAttribute("terminalId", terminalId);
 				}
 			}
 			p = p.nextSiblingElement("p");
