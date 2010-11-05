@@ -49,6 +49,7 @@ protected:
 	void setWireVisible(Wire * wire);
 	bool collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
 	void findConnectorsUnder(ItemBase * item);
+	bool checkUnder();
 	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
 	bool canDropModelPart(ModelPart * modelPart); 

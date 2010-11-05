@@ -1319,6 +1319,8 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	if (!event->mimeData()->hasFormat("application/x-dnditemdata")) return false;
 
+
+	m_checkUnder = checkUnder();
 	scene()->setSceneRect(scene()->sceneRect());	// prevents inadvertent scrolling when dragging in items from the parts bin
 	m_clearSceneRect = true;
 
@@ -1477,7 +1479,9 @@ void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 	}
 
 	m_droppingItem->setItemPos(loc);
-	m_droppingItem->findConnectorsUnder();
+	if (m_checkUnder) {
+		m_droppingItem->findConnectorsUnder();
+	}
 
 }
 
@@ -1826,7 +1830,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void SketchWidget::prepMove(ItemBase * originatingItem) {
-	m_checkUnder = true;
+	m_checkUnder = false;
 	QSet<Wire *> wires;
 	QList<ItemBase *> items;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
@@ -1865,7 +1869,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 
 		QSet<ItemBase *> set;
 		if (collectFemaleConnectees(chief, set)) {
-			m_checkUnder = false;
+			m_checkUnder = true;
 		}
 		foreach (ItemBase * sitemBase, set) {
 			if (!items.contains(sitemBase)) {
@@ -2200,12 +2204,15 @@ void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos)
 
 }
 
-
 bool SketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<ItemBase *> & items) {
 	Q_UNUSED(itemBase);
 	Q_UNUSED(items);
 	return false;
 }
+
+bool SketchWidget::checkUnder() {
+	return false;
+};
 
 bool SketchWidget::draggingWireEnd() {
 	if (m_connectorDragWire != NULL) return true;

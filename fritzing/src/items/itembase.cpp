@@ -1257,7 +1257,7 @@ void ItemBase::collectWireConnectees(QSet<class Wire *> & wires) {
 
 bool ItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	Q_UNUSED(items);
-	return false;
+	return false;			// means no male connectors
 }
 
 void ItemBase::prepareGeometryChange() {

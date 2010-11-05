@@ -302,6 +302,7 @@ protected:
 	ItemBase * overSticky(ItemBase *);
 	virtual void setNewPartVisible(ItemBase *);
 	virtual bool collectFemaleConnectees(ItemBase *, QSet<ItemBase *> &);
+	virtual bool checkUnder();
 	virtual void findConnectorsUnder(ItemBase * item);
 
 	bool currentlyInfoviewed(ItemBase *item);

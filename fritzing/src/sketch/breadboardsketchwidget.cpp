@@ -55,6 +55,10 @@ bool BreadboardSketchWidget::collectFemaleConnectees(ItemBase * itemBase, QSet<I
 	return itemBase->collectFemaleConnectees(items);
 }
 
+bool BreadboardSketchWidget::checkUnder() {
+	return true;
+};
+
 void BreadboardSketchWidget::findConnectorsUnder(ItemBase * item) {
 	item->findConnectorsUnder();
 }
