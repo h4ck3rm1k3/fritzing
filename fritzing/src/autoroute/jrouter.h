@@ -45,11 +45,15 @@ struct JEdge {
 	class ConnectorItem * from;
 	class ConnectorItem * to;
 	double distance;
-	bool ground;
+	ViewLayer::ViewLayerSpec viewLayerSpec;
+	ViewLayer::ViewLayerID viewLayerID;
 	QList<class ConnectorItem *> fromConnectorItems;
 	QSet<class Wire *> fromTraces;
 	QList<class ConnectorItem *> toConnectorItems;
 	QSet<class Wire *> toTraces;
+	JEdge * linkedEdge;
+	struct Plane * plane;
+	bool routed;
 };
 
 struct JSubedge {
@@ -96,38 +100,36 @@ public:
 	void start();
 	
 protected:
-	struct Tile * drawTrace(struct JSubedge *, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> &, bool forEmpty);
+	struct Tile * drawTrace(struct JSubedge *, QList<Wire *> &, bool forEmpty);
 	void cleanUp();
 	void updateRoutingStatus();
 	class JumperItem * drawJumperItem(struct JumperItemStruct *);
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand, QList<struct JumperItemStruct *> &);
-	void reduceWires(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly);
-	Wire * reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, QPointF fromPos, QPointF toPos, const QPolygonF & boundingPoly);
 	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
 	void reduceColinearWires(QList<Wire *> &);
 	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited);
-	void collectEdges(QVector<int> & netCounters, QList<struct JEdge *> & edges, ViewLayer::ViewLayerID);
-	bool traceSubedge(struct JSubedge* subedge, struct Plane *, class ItemBase * partForBounds, ViewLayer::ViewLayerID);
+	void collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane1, ViewLayer::ViewLayerID copper0, ViewLayer::ViewLayerID copper1);
+	bool traceSubedge(struct JSubedge* subedge, class ItemBase * partForBounds, QHash<Wire *, JEdge *> &);
 	void fixupJumperItems(QList<struct JumperItemStruct *> &);
-	struct Plane * runEdges(QList<JEdge *> &, QList<struct JumperItemStruct *> &, QVector<int> & netCounters, struct RoutingStatus &);
+	void runEdges(QList<JEdge *> &, QList<struct Plane *> &, QList<struct JumperItemStruct *> &, QVector<int> & netCounters, struct RoutingStatus &);
 	void clearEdges(QList<JEdge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
 	bool alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to);
 	void updateProgress(int num, int denom);
 	GridEntry * drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, short flag, GridEntry *);
-	bool propagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID, bool forEmpty);
-	bool backPropagate(JSubedge * subedge, QList<struct Tile *> & path, struct Plane *, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires, bool forEmpty);
-	short checkCandidate(JSubedge * subedge, struct Tile *, ViewLayer::ViewLayerID, Plane *, bool forEmpty);
+	bool propagate(JSubedge * subedge, QList<struct Tile *> & path, bool forEmpty);
+	bool backPropagate(JSubedge * subedge, QList<struct Tile *> & path, QList<Wire *> & wires, bool forEmpty);
+	short checkCandidate(JSubedge * subedge, struct Tile *, bool forEmpty);
 	JSubedge * makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, Wire * fromWire, QPointF p2, bool forward);
 	struct Tile * addTile(class NonConnectorItem * nci, int type, struct Plane *, QList<struct Tile *> & alreadyTiled);
 	void seedNext(Tile * seed, QList<Tile *> & seeds);
 	struct Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID, QList<struct Tile *> & alreadyTiled);
 	void tileWire(Wire *, struct Plane *, QList<Wire *> & beenThere, QList<struct Tile *> & alreadyTiled);
-	short checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem *, bool forEmpty);
-	short checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire *, bool forEmpty);
-	short checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Plane *, bool forEmpty); 
+	short checkConnector(JSubedge * subedge, Tile * tile, ConnectorItem *, bool forEmpty);
+	short checkTrace(JSubedge * subedge, Tile * tile, Wire *, bool forEmpty);
+	short checkSpace(JSubedge * subedge, Tile * tile, bool forEmpty); 
 	void clearTiles(struct Plane * thePlane);
 	void hideTiles();
 	void displayBadTiles(QList<struct Tile *> & alreadyTiled);
@@ -138,20 +140,21 @@ protected:
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	struct SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
 	void drawDirection(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire);
+		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec);
 	void drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire);
+		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec);
 	void drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire);
-	QPointF drawLastNotHorizontal(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires);
-	QPointF drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires);
+		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec);
+	QPointF drawLastNotHorizontal(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires, ViewLayer::ViewLayerSpec);
+	QPointF drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires, ViewLayer::ViewLayerSpec);
 	void clearJumperItemStructs(QList<JumperItemStruct *> jumperItemStructs);
-	void hookUpWires(JSubedge * subedge, QList<Wire *> & wires, Plane * thePlane);
+	void hookUpWires(JSubedge * subedge, QList<Wire *> & wires);
 	QPointF findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNeeded, Plane * thePlane, const QPointF & nearPoint);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
 	Tile * clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type);
 	void handleChangedTiles(Plane * thePlane, TileRect &);
 	Tile * tileOneWire(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, Wire * w);
+	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
@@ -176,7 +179,6 @@ protected:
 	bool m_stopTrace;
 	bool m_bothSidesNow;
 	QList<Wire *> m_cleanWires;
-	ViewLayer::ViewLayerSpec m_viewLayerSpec;
 	int m_maximumProgressPart;
 	int m_currentProgressPart;
 	QRectF m_maxRect;

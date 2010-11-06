@@ -181,11 +181,11 @@ QString SvgFileSplitter::elementString(const QString & elementID) {
 	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
 	if (mainElement.isNull()) return ___emptyString___;
 
-	QDomDocument document;
-	QDomNode node = document.importNode(mainElement, true);
-	document.appendChild(node);
+	QString text;
+	QTextStream textStream(&text);
+	mainElement.save(textStream, 0);
 
-	return document.toString();
+	return text;
 }
 
 bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool blackOnly)

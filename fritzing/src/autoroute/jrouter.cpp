@@ -29,30 +29,39 @@ $Date$
 //	backPropagate: 
 //		tighten path between connectors once trace has succeeded?
 //		turn corners into 45's?
+
 //	wire bendpoint is not a blocker if wire is ownside
-//	insert new traces
+
 //	make DRC available from trace menu
+
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
+
 //	fix up cancel/stop
+
 //	placing jumpers: if double-sided, must make sure there is room on both sides
 //	space finder needs to be tweaked?
+
 //	use tile to place vias
 //		tile both sides
 //		for each onside tile
-//			do jumper search, but goal is empty space that has overlapping tile on the other side
+//			do jumper search, but for only one connector
 //				when such tile is found, do normal trace search on the other side from via to connector
+
 //	option to turn off propagation feedback
+
 //	deal with using traces as source and dest
 //		why does start wire look screwy
 //		figure out end wire point
+
 //	remove debugging output and extra calls to processEvents
+
 //	consider using lastTrace instead of lastTracePoint, then extend the wire
+
 //	bugs: 
 //		sometimes takes a longer route than expected; why?
 //		off-by-one weirdness with rasterizer
 //		weird slanted line in one trace with stepper-motor-unrouted example
-//		arduino isp example: goes into infinite loop
 //		barebones arduino examples: overlapping wires
 //		dc motor example: routing into border area
 //		parking assistant: overlaps
@@ -61,14 +70,14 @@ $Date$
 //		loop: funny attachment to connectors
 //		lcd example: runs outside of border; overlaps
 //		not routing a second time
-//	new double-sided strategy:
-//		collect all edges from both sides and expand them from both sides so there is still a single router pass
-//		if there are jumpers at the end then ripup edges to there and move that edge upward
+
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
-//	rethink dealing with non-manhattan wires?
+
+//	redo non-manhattan wires
+
 //	still seeing a few thin tiles going across the board
-//	put in trace connectors, but make the tile size small
+
 //	rip up and reroute:
 //		keep a hash table from traces to edges
 //		when first pass at routing is over and there are jumperitemstructs
@@ -135,21 +144,17 @@ struct JumperItemStruct {
 
 bool edgeLessThan(JEdge * e1, JEdge * e2)
 {
-	if (e1->ground == e2->ground) {
-		return e1->distance < e2->distance;
+	if (e1->viewLayerSpec != e2->viewLayerSpec) {
+		// do bottom edges first
+		return e1->viewLayerSpec == ViewLayer::Bottom;
 	}
 
-	return e2->ground;
-}
-
-bool subedgeLessThan(JSubedge * e1, JSubedge * e2)
-{
 	return e1->distance < e2->distance;
 }
 
-bool edgeGreaterThan(JEdge * e1, JEdge * e2)
+bool subedgeLessThan(JSubedge * se1, JSubedge * se2)
 {
-	return e1->distance > e2->distance;
+	return se1->distance < se2->distance;
 }
 
 void tileToRect(Tile * tile, QRectF & rect) {
@@ -311,9 +316,10 @@ void JRouter::start()
 	// will list connectors on both sides separately
 	routingStatus.m_netCount = m_allPartConnectorItems.count();
 
-	QList<JEdge *> edges;
 	QVector<int> netCounters(m_allPartConnectorItems.count());
-	m_viewLayerSpec = ViewLayer::Bottom;
+	for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
+		netCounters[i] = (m_allPartConnectorItems[i]->count() - 1) * 2;			// since we use two connectors at a time on a net
+	}
 
 	if (m_cancelled || m_stopTrace) {
 		restoreOriginalState(parentCommand);
@@ -326,30 +332,21 @@ void JRouter::start()
 	// TODO: if double-sided, tile both planes first and bail on drc overlap
 
 	QList<JumperItemStruct *> jumperItemStructs;
-	Plane * plane0 = runEdges(edges, jumperItemStructs, netCounters, routingStatus);
+	QList<JEdge *> edges;
+	QList<Plane *> planes;
+	runEdges(edges, planes, jumperItemStructs, netCounters, routingStatus);
 	clearEdges(edges);
 
 	if (m_cancelled) {
 		clearJumperItemStructs(jumperItemStructs);
-		clearTiles(plane0);
+		foreach (Plane * plane, planes) clearTiles(plane);
 		doCancel(parentCommand);
 		return;
 	}
 
-	Plane * plane1 = NULL;
-	if (m_bothSidesNow) {
-		emit wantTopVisible();
-		ProcessEventBlocker::processEvents();
-		m_viewLayerSpec = ViewLayer::Top;
-		m_currentProgressPart++;
-		runEdges(edges, jumperItemStructs, netCounters, routingStatus);
-		clearEdges(edges);
-	}
-
 	if (m_cancelled) {
 		clearJumperItemStructs(jumperItemStructs);
-		clearTiles(plane0);
-		clearTiles(plane1);
+		foreach (Plane * plane, planes) clearTiles(plane);
 		doCancel(parentCommand);
 		return;
 	}
@@ -362,8 +359,7 @@ void JRouter::start()
 	addToUndo(parentCommand, jumperItemStructs);
 
 	clearJumperItemStructs(jumperItemStructs);
-	clearTiles(plane0);
-	clearTiles(plane1);
+	foreach (Plane * plane, planes) clearTiles(plane);
 	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	m_sketchWidget->pushCommand(parentCommand);
@@ -371,36 +367,57 @@ void JRouter::start()
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
-Plane * JRouter::runEdges(QList<JEdge *> & edges, 
+void JRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes,
 						   QList<struct JumperItemStruct *> & jumperItemStructs, 
 						   QVector<int> & netCounters, RoutingStatus & routingStatus)
 {
-	ViewGeometry vg;
-	vg.setTrace(true);
-	ViewLayer::ViewLayerID viewLayerID = m_sketchWidget->getWireViewLayerID(vg, m_viewLayerSpec);
-
-	collectEdges(netCounters, edges, viewLayerID);
-	// sort the edges by distance
-	qSort(edges.begin(), edges.end(), edgeLessThan);
-
-
 	ItemBase * board = NULL;
 	if (m_sketchWidget->autorouteNeedsBounds()) {
 		board = m_sketchWidget->findBoard();
 	}
 
+	ViewGeometry vg;
+	vg.setTrace(true);
+	ViewLayer::ViewLayerID copper0 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Bottom);
+	ViewLayer::ViewLayerID copper1 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Top);
+
 	QList<Tile *> alreadyTiled;
-	Plane * thePlane = tilePlane(board, viewLayerID, alreadyTiled);
+	Plane * plane0 = tilePlane(board, copper0, alreadyTiled);
+	if (plane0) planes.append(plane0);
+	Plane * plane1 = NULL;
 	if (alreadyTiled.count() > 0) {
 		m_cancelled = true;
 		displayBadTiles(alreadyTiled);
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
-		clearTiles(thePlane);
-		return NULL;
+		return;
 	}
 
+	if (m_bothSidesNow) {
+		plane1 = tilePlane(board, copper1, alreadyTiled);
+		if (plane1) planes.append(plane1);
+		if (alreadyTiled.count() > 0) {
+			m_cancelled = true;
+			displayBadTiles(alreadyTiled);
+			QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
+			return;
+		}
+	}
+
+	collectEdges(edges, plane0, plane1, copper0, copper1);
+
+	// sort the edges by distance and layer
+	qSort(edges.begin(), edges.end(), edgeLessThan);
+
+	QHash<Wire *, JEdge *> tracesToEdges;
 	int edgesDone = 0;
-	foreach (JEdge * edge, edges) {		
+	foreach (JEdge * edge, edges) {	
+		if (edge->linkedEdge && edge->linkedEdge->routed) {
+			// got it one one side; no need to route it on the other
+			continue;
+		}
+
+		// TODO: hide the side that's not involved
+
 		expand(edge->from, edge->fromConnectorItems, edge->fromTraces);
 		expand(edge->to, edge->toConnectorItems, edge->toTraces);
 
@@ -442,8 +459,11 @@ Plane * JRouter::runEdges(QList<JEdge *> & edges,
 		foreach (JSubedge * subedge, subedges) {
 			if (m_cancelled || m_stopTrace) break;
 
-			routedFlag = traceSubedge(subedge, thePlane, board, viewLayerID);
-			if (routedFlag) break;
+			routedFlag = traceSubedge(subedge, board, tracesToEdges);
+			if (routedFlag) {
+				edge->routed = true;
+				break;
+			}
 		}
 
 		foreach (JSubedge * subedge, subedges) {
@@ -459,7 +479,7 @@ Plane * JRouter::runEdges(QList<JEdge *> & edges,
 					jumperItemStruct->edge = edge;
 					jumperItemStruct->partForBounds = board;
 					jumperItemStruct->deleted = false;
-					jumperItemStruct->plane = thePlane;
+					jumperItemStruct->plane = edge->plane;
 					jumperItemStructs.append(jumperItemStruct);
 				}
 			}
@@ -497,8 +517,6 @@ Plane * JRouter::runEdges(QList<JEdge *> & edges,
 	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
 		edges.removeOne(jumperItemStruct->edge);
 	}
-
-	return thePlane;
 }
 
 Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled) {
@@ -893,12 +911,12 @@ void JRouter::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
 	}
 }
 
-bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partForBounds, ViewLayer::ViewLayerID viewLayerID) 
+bool JRouter::traceSubedge(JSubedge* subedge, ItemBase * partForBounds, QHash<Wire *, JEdge *> & tracesToEdges) 
 {
 	Tile * tile = NULL;
 
 	QList<Wire *> wires;
-	tile = drawTrace(subedge, thePlane, viewLayerID, wires, false);	
+	tile = drawTrace(subedge, wires, false);	
 	if (tile) {
 
 		// TODO: handle wire stickyness
@@ -929,7 +947,10 @@ bool JRouter::traceSubedge(JSubedge* subedge, Plane * thePlane, ItemBase * partF
 		}
 
 		// hook everyone up
-		hookUpWires(subedge, wires, thePlane);
+		hookUpWires(subedge, wires);
+		foreach (Wire * wire, wires) {
+			tracesToEdges.insert(wire, subedge->edge);
+		}
 	}
 
 	hideTiles();
@@ -943,7 +964,7 @@ ConnectorItem * JRouter::splitTrace(Wire * wire, QPointF point)
 	QLineF originalLine = wire->line();
 	QLineF newLine(QPointF(0,0), point - wire->pos());
 	wire->setLine(newLine);
-	TraceWire * splitWire = drawOneTrace(point, originalLine.p2() + wire->pos(), wire->width(), m_viewLayerSpec);
+	TraceWire * splitWire = drawOneTrace(point, originalLine.p2() + wire->pos(), wire->width(), wire->viewLayerSpec());
 	ConnectorItem * connector1 = wire->connector1();
 	ConnectorItem * newConnector1 = splitWire->connector1();
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
@@ -969,7 +990,7 @@ ConnectorItem * JRouter::splitTrace(Wire * wire, QPointF point)
 }
 
 
-void JRouter::hookUpWires(JSubedge * subedge, QList<Wire *> & wires, Plane * thePlane) {
+void JRouter::hookUpWires(JSubedge * subedge, QList<Wire *> & wires) {
 	if (wires.count() <= 0) return;
 		
 	if (subedge->fromConnectorItem) {
@@ -994,17 +1015,17 @@ void JRouter::hookUpWires(JSubedge * subedge, QList<Wire *> & wires, Plane * the
 
 	QList<Tile *> alreadyTiled;
 	QList<Wire *> beenThere;
-	tileWire(wires[0], thePlane, beenThere, alreadyTiled);
+	tileWire(wires[0], subedge->edge->plane, beenThere, alreadyTiled);
 }
 
-Tile * JRouter::drawTrace(JSubedge * subedge, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires, bool forEmpty) 
+Tile * JRouter::drawTrace(JSubedge * subedge, QList<Wire *> & wires, bool forEmpty) 
 {
 	QList<Tile *> path;
 	Tile * tile = NULL;
-	bool result = propagate(subedge, path, thePlane, viewLayerID, forEmpty);
+	bool result = propagate(subedge, path, forEmpty);
 	if (result) {
 		tile = path.last();
-		result = backPropagate(subedge, path, thePlane, viewLayerID, wires, forEmpty);
+		result = backPropagate(subedge, path, wires, forEmpty);
 		if (!result) tile = NULL;
 	}
 
@@ -1013,41 +1034,41 @@ Tile * JRouter::drawTrace(JSubedge * subedge, Plane * thePlane, ViewLayer::ViewL
 	return tile;
 }
 
-QPointF JRouter::drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires) {
+QPointF JRouter::drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	if (startPoint.x() == lastTracePoint.x() && startPoint.x() == nextPoint.x()) return lastTracePoint;
 
-	Wire * trace = drawOneTrace(lastTracePoint, startPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	Wire * trace = drawOneTrace(lastTracePoint, startPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
 	return startPoint;
 }
 
-QPointF JRouter::drawLastNotHorizontal(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires) {
+QPointF JRouter::drawLastNotHorizontal(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires, ViewLayer::ViewLayerSpec viewLayerSpec) {
 	if (startPoint.y() == lastTracePoint.y() && startPoint.y() == nextPoint.y()) return lastTracePoint;
 
-	Wire * trace = drawOneTrace(lastTracePoint, startPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	Wire * trace = drawOneTrace(lastTracePoint, startPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
 	return startPoint;
 }
 
 
 void JRouter::drawDirection(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-							QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire) 
+							QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec viewLayerSpec) 
 {
 	if (toTileRect.right() == fromTileRect.left()) {
 		endPoint.setX(fromTileRect.left());
-		drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire);
+		drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
 	}
 	else if (toTileRect.left() == fromTileRect.right()) {
 		endPoint.setX(fromTileRect.right());
-		drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire);
+		drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
 	}
 	else if (toTileRect.bottom() == fromTileRect.top()) {
 		endPoint.setY(fromTileRect.top());
-		drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire);
+		drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
 	}
 	else if (toTileRect.top() == fromTileRect.bottom()) {
 		endPoint.setY(fromTileRect.bottom());
-		drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire);
+		drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
 	}
 	else {
 		// shouldn't happen
@@ -1055,7 +1076,7 @@ void JRouter::drawDirection(QPointF & startPoint, QPointF & lastTracePoint, QPoi
 }
 
 void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-									QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire) 
+									QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec viewLayerSpec) 
 {
 	qreal maxLeft = qMax(fromTileRect.left(), toTileRect.left()) + m_halfWireWidthNeeded;
 	qreal minRight = qMin(fromTileRect.right(), toTileRect.right()) - m_halfWireWidthNeeded;
@@ -1084,15 +1105,15 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 		QPointF midPoint1;
 		midPoint1.setX(startPoint.x());
 		midPoint1.setY(startPoint.y() == fromTileRect.top() ? startPoint.y() + m_halfWireWidthNeeded : startPoint.y() - m_halfWireWidthNeeded);
-		startPoint = drawLastNotVertical(startPoint, midPoint1, lastTracePoint, wires);
-		Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		startPoint = drawLastNotVertical(startPoint, midPoint1, lastTracePoint, wires, viewLayerSpec);
+		Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		wires.append(trace);
 		QPointF midPoint2;
 		midPoint2.setY(midPoint1.y());
 		midPoint2.setX(endPoint.x());
-		trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		wires.append(trace);
-		//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = midPoint2;
 		return;
@@ -1118,10 +1139,10 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 		QPointF midPoint;
 		midPoint.setY(startPoint.y());
 		midPoint.setX(endPoint.x());
-		startPoint = drawLastNotHorizontal(startPoint, midPoint, lastTracePoint, wires);
-		Wire *trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		startPoint = drawLastNotHorizontal(startPoint, midPoint, lastTracePoint, wires, viewLayerSpec);
+		Wire *trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		wires.append(trace);
-		//trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		//trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = midPoint;
 		return;
@@ -1134,8 +1155,8 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 		if (terminalWire != NULL) {
 			endPoint.setY(wireYFromX(terminalWire, endPoint.x(), startPoint.y()));
 		}
-		startPoint = drawLastNotVertical(startPoint, endPoint, lastTracePoint, wires);
-		//Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		startPoint = drawLastNotVertical(startPoint, endPoint, lastTracePoint, wires, viewLayerSpec);
+		//Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = startPoint;
 		return;
@@ -1156,21 +1177,21 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 	QPointF midPoint1;
 	midPoint1.setX(startPoint.x());
 	midPoint1.setY((originalY + startPoint.y()) / 2);
-	startPoint = drawLastNotVertical(startPoint, midPoint1, lastTracePoint, wires);
-	Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	startPoint = drawLastNotVertical(startPoint, midPoint1, lastTracePoint, wires, viewLayerSpec);
+	Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
 	QPointF midPoint2;
 	midPoint2.setX(endPoint.x());
 	midPoint2.setY(midPoint1.y());
-	trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
-	//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	//wires.append(trace);
 	lastTracePoint = midPoint2;
 }
 
 void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-									  QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire) 
+									  QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec viewLayerSpec) 
 {
 	qreal maxTop = qMax(fromTileRect.top(), toTileRect.top()) + m_halfWireWidthNeeded;
 	qreal minBottom = qMin(fromTileRect.bottom(), toTileRect.bottom()) - m_halfWireWidthNeeded;
@@ -1199,15 +1220,15 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 		QPointF midPoint1;
 		midPoint1.setY(startPoint.y());
 		midPoint1.setX(startPoint.x() == fromTileRect.left() ? startPoint.x() + m_halfWireWidthNeeded : startPoint.x() - m_halfWireWidthNeeded);
-		startPoint = drawLastNotHorizontal(startPoint, midPoint1, lastTracePoint, wires);
-		Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		startPoint = drawLastNotHorizontal(startPoint, midPoint1, lastTracePoint, wires, viewLayerSpec);
+		Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		wires.append(trace);
 		QPointF midPoint2;
 		midPoint2.setX(midPoint1.x());
 		midPoint2.setY(endPoint.y());
-		trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		wires.append(trace);
-		//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = midPoint2;
 		return;
@@ -1233,10 +1254,10 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 		QPointF midPoint;
 		midPoint.setX(startPoint.x());
 		midPoint.setY(endPoint.y());
-		startPoint = drawLastNotVertical(startPoint, midPoint, lastTracePoint, wires);
-		Wire *trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		startPoint = drawLastNotVertical(startPoint, midPoint, lastTracePoint, wires, viewLayerSpec);
+		Wire *trace = drawOneTrace(startPoint, midPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		wires.append(trace);
-		//trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		//trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		///wires.append(trace);
 		lastTracePoint = midPoint;
 		return;
@@ -1249,8 +1270,8 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 		if (terminalWire) {
 			endPoint.setX(wireXFromY(terminalWire, endPoint.y(), startPoint.x()));
 		}
-		startPoint = drawLastNotHorizontal(startPoint, endPoint, lastTracePoint, wires);
-		//Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+		startPoint = drawLastNotHorizontal(startPoint, endPoint, lastTracePoint, wires, viewLayerSpec);
+		//Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = startPoint;
 		return;
@@ -1270,15 +1291,15 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 	QPointF midPoint1;
 	midPoint1.setY(startPoint.y());
 	midPoint1.setX((startPoint.x() + originalX) / 2);
-	startPoint = drawLastNotHorizontal(startPoint, midPoint1, lastTracePoint, wires);
-	Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	startPoint = drawLastNotHorizontal(startPoint, midPoint1, lastTracePoint, wires, viewLayerSpec);
+	Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
 	QPointF midPoint2;
 	midPoint2.setY(endPoint.y());
 	midPoint2.setX(midPoint1.x());
-	trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	trace = drawOneTrace(midPoint1, midPoint2, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
-	//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+	//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	//wires.append(trace);
 	lastTracePoint = midPoint2;
 }
@@ -1308,10 +1329,8 @@ struct SeedTree {
 	QList<SeedTree *> children;
 };
 
-bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * thePlane, ViewLayer::ViewLayerID viewLayerID, QList<Wire *> & wires, bool forEmpty) {
+bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire *> & wires, bool forEmpty) {
 	// TODO: handle wire as destination
-
-	Q_UNUSED(thePlane);
 
 	SeedTree * root = new SeedTree;
 	SeedTree * destination = followPath(root, path);
@@ -1332,7 +1351,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 
 		if (to == NULL) {
 			if (lastTracePoint != startPoint) {
-				Wire * trace = drawOneTrace(lastTracePoint, startPoint, Wire::STANDARD_TRACE_WIDTH, m_viewLayerSpec);
+				Wire * trace = drawOneTrace(lastTracePoint, startPoint, Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
 				wires.append(trace);
 			}
 		}
@@ -1344,7 +1363,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, Plane * th
 				terminalConnectorItem = subedge->toConnectorItem;
 				terminalWire = subedge->toWire;
 			}
-			drawDirection(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire);
+			drawDirection(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, subedge->edge->viewLayerSpec);
 		}
 
 		QGraphicsItem * item = TiGetClient(from->seed);
@@ -1437,7 +1456,7 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 }
 
 
-bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlane, ViewLayer::ViewLayerID viewLayerID, bool forEmpty) {
+bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, bool forEmpty) {
 
 	DebugDialog::debug("((((((((((((((((((((((((((((");
 	if (subedge->fromConnectorItem) {
@@ -1450,7 +1469,7 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlan
 								);
 	}
 
-	Tile * firstTile = TiSrPoint(NULL, thePlane, subedge->fromPoint.x(), subedge->fromPoint.y());
+	Tile * firstTile = TiSrPoint(NULL, subedge->edge->plane, subedge->fromPoint.x(), subedge->fromPoint.y());
 	if (firstTile == NULL) {
 		// shouldn't happen
 		return false;
@@ -1478,7 +1497,7 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, Plane* thePlan
 		qreal x2 = RIGHT(seed);
 		qreal y2 = YMAX(seed);
 			
-		short fof = checkCandidate(subedge, seed, viewLayerID, thePlane, forEmpty);
+		short fof = checkCandidate(subedge, seed, forEmpty);
 		QRectF r(x1, y1, x2 - x1, y2 - y1);
 		DebugDialog::debug("=================", r);
 
@@ -1587,25 +1606,25 @@ void JRouter::seedNext(Tile * seed, QList<Tile *> & seeds) {
 	}
 }
 
-short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Plane * thePlane, bool forEmpty) 
+short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, bool forEmpty) 
 {	
 	switch (TiGetType(tile)) {
 		case SPACE:
 		case TINYSPACE:
-			return checkSpace(subedge, tile, viewLayerID, thePlane, forEmpty);
+			return checkSpace(subedge, tile, forEmpty);
 
 		case CONNECTOR:
 			if (!m_sketchWidget->autorouteCheckConnectors()) {
 				return GridEntry::IGNORE;
 			}
-			return checkConnector(subedge, tile, viewLayerID, dynamic_cast<ConnectorItem *>(TiGetBody(tile)), forEmpty);
+			return checkConnector(subedge, tile, dynamic_cast<ConnectorItem *>(TiGetBody(tile)), forEmpty);
 
 		case TRACE:
 			if (!m_sketchWidget->autorouteCheckWires()) {
 				return GridEntry::IGNORE;
 			}
 
-			return checkTrace(subedge, tile, viewLayerID, dynamic_cast<Wire *>(TiGetBody(tile)), forEmpty);
+			return checkTrace(subedge, tile, dynamic_cast<Wire *>(TiGetBody(tile)), forEmpty);
 
 		case PART:
 			if (!m_sketchWidget->autorouteCheckParts()) {
@@ -1660,11 +1679,8 @@ int allEmpty(Tile * tile, UserData) {
 }
 
 
-short JRouter::checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Plane * thePlane, bool forEmpty) 
+short JRouter::checkSpace(JSubedge * subedge, Tile * tile, bool forEmpty) 
 {
-	Q_UNUSED(subedge);
-	Q_UNUSED(viewLayerID);
-	
 	short result = TiGetType(tile) == SPACE ? GridEntry::EMPTY : GridEntry::TINY;
 
 	if (!forEmpty) {
@@ -1695,7 +1711,7 @@ short JRouter::checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerI
 
 	EmptyThing emptyThing;
 	emptyThing.maxY = tileRect.ymin;
-	TiSrArea(tile, thePlane, &searchRect, collectXandY, &emptyThing);
+	TiSrArea(tile, subedge->edge->plane, &searchRect, collectXandY, &emptyThing);
 
 	foreach (qreal y, emptyThing.y_s) {
 		foreach (qreal x, emptyThing.x_s) {
@@ -1703,7 +1719,7 @@ short JRouter::checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerI
 			searchRect.xmax = x + widthNeeded;
 			searchRect.ymin = y;
 			searchRect.ymax = y + heightNeeded;
-			if (TiSrArea(tile, thePlane, &searchRect, allEmpty, NULL) == 0) {
+			if (TiSrArea(tile, subedge->edge->plane, &searchRect, allEmpty, NULL) == 0) {
 				return GridEntry::GOAL;
 			}
 		}
@@ -1712,8 +1728,7 @@ short JRouter::checkSpace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerI
 	return result;
 }
 
-short JRouter::checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, Wire * candidateWire, bool forEmpty) {
-	Q_UNUSED(viewLayerID);
+short JRouter::checkTrace(JSubedge * subedge, Tile * tile, Wire * candidateWire, bool forEmpty) {
 	Q_UNUSED(tile);
 
 	//if (candidateWire == NULL) return GridEntry::IGNORE;
@@ -1763,8 +1778,7 @@ short JRouter::checkTrace(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerI
 
 
 
-short JRouter::checkConnector(JSubedge * subedge, Tile * tile, ViewLayer::ViewLayerID viewLayerID, ConnectorItem * candidateConnectorItem, bool forEmpty) {
-	Q_UNUSED(viewLayerID);
+short JRouter::checkConnector(JSubedge * subedge, Tile * tile, ConnectorItem * candidateConnectorItem, bool forEmpty) {
 	Q_UNUSED(tile);
 
 	//if (candidateConnectorItem == NULL) return GridEntry::IGNORE;
@@ -1883,43 +1897,60 @@ GridEntry * JRouter::drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, short 
 }
 
 
-void JRouter::collectEdges(QVector<int> & netCounters, QList<JEdge *> & edges, ViewLayer::ViewLayerID viewLayerID) {
-
-	for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
-		netCounters[i] = (m_allPartConnectorItems[i]->count() - 1) * 2;			// since we use two connectors at a time on a net
-	}
-
+void JRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane1, ViewLayer::ViewLayerID copper0, ViewLayer::ViewLayerID copper1)
+{
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
 		if (vw == NULL) continue;
 
 		ConnectorItem * from = vw->connector0()->firstConnectedToIsh();
-		if (!m_sketchWidget->sameElectricalLayer2(viewLayerID, from->attachedToViewLayerID())) {
-			from = from->getCrossLayerConnectorItem();
+		ConnectorItem * otherFrom = from->getCrossLayerConnectorItem();
+		if (!m_sketchWidget->sameElectricalLayer2(copper0, from->attachedToViewLayerID())) {
+			ConnectorItem * temp = from;
+			from = otherFrom;
+			otherFrom = temp;
 		}
 		if (!from) {
-			DebugDialog::debug("something's fishy 1");
 			continue;
 		}
+
 		ConnectorItem * to = vw->connector1()->firstConnectedToIsh();
-		if (!m_sketchWidget->sameElectricalLayer2(viewLayerID, to->attachedToViewLayerID())) {
-			to = to->getCrossLayerConnectorItem();
+		ConnectorItem * otherTo = to->getCrossLayerConnectorItem();
+		if (!m_sketchWidget->sameElectricalLayer2(copper0, to->attachedToViewLayerID())) {
+			ConnectorItem * temp = to;
+			to = otherTo;
+			otherTo = temp;
 		}
 		if (!to) {
-			DebugDialog::debug("something's fishy 2");
 			continue;
 		}
-		JEdge * edge = new JEdge;
-		edge->from = from;
-		edge->to = to;
-		QPointF pi = from->sceneAdjustedTerminalPoint(NULL);
-		QPointF pj = to->sceneAdjustedTerminalPoint(NULL);
-		double px = pi.x() - pj.x();
-		double py = pi.y() - pj.y();
-		edge->distance = (px * px) + (py * py);
-		edge->ground = false;			// TODO: figure out which set of part connectors this belongs to and check isGrounded()
-		edges.append(edge);
+
+		JEdge * edge0 = makeEdge(from, to, ViewLayer::Bottom, copper0, plane0);
+		edges.append(edge0);
+		if (m_bothSidesNow && otherFrom != NULL && otherTo != NULL) {
+			JEdge * edge1 = makeEdge(otherFrom, otherTo, ViewLayer::Top, copper1, plane1);
+			edges.append(edge1);
+			edge0->linkedEdge = edge1;
+			edge1->linkedEdge = edge0;
+		}
 	}
+}
+
+JEdge * JRouter::makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec viewLayerSpec, ViewLayer::ViewLayerID viewLayerID, Plane * plane) {
+	JEdge * edge = new JEdge;
+	edge->linkedEdge = NULL;
+	edge->from = from;
+	edge->to = to;
+	edge->viewLayerSpec = viewLayerSpec;
+	edge->viewLayerID = viewLayerID;
+	edge->plane = plane;
+	edge->routed = false;
+	QPointF pi = from->sceneAdjustedTerminalPoint(NULL);
+	QPointF pj = to->sceneAdjustedTerminalPoint(NULL);
+	double px = pi.x() - pj.x();
+	double py = pi.y() - pj.y();
+	edge->distance = (px * px) + (py * py);
+	return edge;
 }
 
 void JRouter::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited) 
@@ -1929,10 +1960,17 @@ void JRouter::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem 
 		connectorItems.append(originalConnectorItem);
 	}
 	else {
-		originalConnectorItem->attachedTo()->busConnectorItems(bus, connectorItems);
-	}
+		// TODO: make sure both sides get bus relatives correctly
 
-	// TODO: worry about side?
+		QList<ConnectorItem *> tempConnectorItems;
+		originalConnectorItem->attachedTo()->busConnectorItems(bus, tempConnectorItems);
+		ViewLayer::ViewLayerID originalViewLayerID = originalConnectorItem->attachedToViewLayerID();
+		foreach (ConnectorItem * connectorItem, tempConnectorItems) {
+			if (m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), originalViewLayerID)) {
+				connectorItems.append(connectorItem);
+			}
+		}
+	}
 
 	for (int i = 0; i < connectorItems.count(); i++) { 
 		ConnectorItem * fromConnectorItem = connectorItems[i];
@@ -2087,7 +2125,7 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 	Tile * toTile = NULL;
 
 	foreach (JSubedge * subedge, fromSubedges) {
-		fromTile = drawTrace(subedge, jumperItemStruct->plane, jumperItemStruct->fromViewLayerID, fromWires, true); 
+		fromTile = drawTrace(subedge, fromWires, true); 
 		if (fromTile) {
 			fromSubedge = subedge;
 			break;
@@ -2101,7 +2139,7 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 
 	if (fromSubedge != NULL) {
 		foreach (JSubedge * subedge, toSubedges) {
-			toTile = drawTrace(subedge, jumperItemStruct->plane, jumperItemStruct->toViewLayerID, toWires, true);
+			toTile = drawTrace(subedge, toWires, true);
 			if (toTile) {
 				toSubedge = subedge;
 				break;
@@ -2144,12 +2182,12 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 		fromSubedge->toConnectorItem = jumperItem->connector0();
 		QList<Tile *> already;
 		addTile(jumperItem->connector0(), CONNECTOR, jumperItemStruct->plane, already);
-		hookUpWires(fromSubedge, fromWires, jumperItemStruct->plane);
+		hookUpWires(fromSubedge, fromWires);
 
 
 		toSubedge->toConnectorItem = jumperItem->connector1();
 		addTile(jumperItem->connector1(), CONNECTOR, jumperItemStruct->plane, already);
-		hookUpWires(toSubedge, toWires, jumperItemStruct->plane);
+		hookUpWires(toSubedge, toWires);
 		jumperItemStruct->jumperItem = jumperItem;
 	}
 	else {
@@ -2283,108 +2321,6 @@ void JRouter::reduceColinearWires(QList<Wire *> & wires)
 			i--;								// don't forget to check the new wire
 		}
 	}
-}
-
-void JRouter::reduceWires(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly)
-{
-	if (wires.count() < 2) return;
-
-	for (int i = 0; i < wires.count() - 1; i++) {
-		Wire * w0 = wires[i];
-		Wire * w1 = wires[i + 1];
-
-		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint(NULL);
-		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint(NULL);
-
-		Wire * traceWire = reduceWiresAux(wires, from, to, fromPos, toPos, boundingPoly);
-		if (traceWire == NULL) continue;
-
-		m_sketchWidget->deleteItem(wires[i], true, false, false);
-		m_sketchWidget->deleteItem(wires[i + 1], true, false, false);
-
-		wires[i] = traceWire;
-		wires.removeAt(i + 1);
-		i--;								// don't forget to check the new wire
-	}
-}
-
-Wire * JRouter::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, QPointF fromPos, QPointF toPos, const QPolygonF & boundingPoly)
-{
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-
-	bool insidePoly = true;
-	if (!boundingPoly.isEmpty()) {
-		int count = boundingPoly.count();
-		for (int i = 0; i < count; i++) {
-			QLineF l2(boundingPoly[i], boundingPoly[(i + 1) % count]);
-			QPointF intersectingPoint;
-			if (line.intersect(l2, &intersectingPoint) == QLineF::BoundedIntersection) {
-				insidePoly = false;
-				break;
-			}
-		}
-	}
-	if (!insidePoly) return NULL;
-
-	TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, m_viewLayerSpec);
-	if (traceWire == NULL) return NULL;
-
-	bool intersects = false;
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(traceWire)) {
-		if (item == from) continue;
-		if (item == to) continue;
-
-		Wire * candidateWire = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<Wire *>(item) : NULL;
-		if (candidateWire) {
-			if (!candidateWire->getTrace()) {
-				continue;
-			}
-
-			if (candidateWire->viewLayerID() != traceWire->viewLayerID()) {
-				// needs to be on the same layer (shouldn't get here until we have traces on multiple layers)
-				continue;
-			}
-
-			if (wires.contains(candidateWire)) continue;
-
-			// eventually check if intersecting wire has the same potential
-
-			intersects = true;
-			break;
-		}
-
-		ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<ConnectorItem *>(item) : NULL;
-		if (candidateConnectorItem) {
-			candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
-			if (candidateWire != NULL) {
-				// handle this from the wire rather than the connector
-				continue;
-			}
-
-			if (!m_sketchWidget->sameElectricalLayer2(candidateConnectorItem->attachedToViewLayerID(), traceWire->viewLayerID())) {
-				// needs to be on the same layer
-				continue;
-			}
-
-			intersects = true;
-			break;
-		}
-
-		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-		if (nonConnectorItem) {
-			if (dynamic_cast<ConnectorItem *>(item) == NULL) {
-				intersects = true;
-				break;
-			}
-		}
-	}	
-	if (intersects) {
-		m_sketchWidget->deleteItem(traceWire, true, false, false);
-		return NULL;
-	}
-
-	traceWire->setWireWidth(Wire::STANDARD_TRACE_WIDTH, m_sketchWidget);									// restore normal width
-	return traceWire;
 }
 
 TraceWire * JRouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec)
@@ -2593,7 +2529,7 @@ Tile * JRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> 
 		if (clip) {
 			clipInsertTile(thePlane, tileRect, alreadyTiled, item, type);
 			if (alreadyTiled.count() > 0) {
-				DebugDialog::debug("wire overlaps");
+				DebugDialog::debug("!!!!!!!!!!!!!! wire overlaps !!!!!!!!!!!!!!!");
 			}
 			return NULL;
 		}
