@@ -24,40 +24,39 @@ $Date$
 
 ********************************************************************/
 
-
 // TODO:
 //	backPropagate: 
 //		tighten path between connectors once trace has succeeded?
 //		turn corners into 45's?
-
+//
 //	wire bendpoint is not a blocker if wire is ownside
-
+//
 //	make DRC available from trace menu
-
+//
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
-
+//
 //	fix up cancel/stop
-
+//
 //	placing jumpers: if double-sided, must make sure there is room on both sides
 //	space finder needs to be tweaked?
-
+//
 //	use tile to place vias
 //		tile both sides
 //		for each onside tile
 //			do jumper search, but for only one connector
 //				when such tile is found, do normal trace search on the other side from via to connector
-
+//
 //	option to turn off propagation feedback
-
+//
 //	deal with using traces as source and dest
 //		why does start wire look screwy
 //		figure out end wire point
-
+//
 //	remove debugging output and extra calls to processEvents
-
+//
 //	consider using lastTrace instead of lastTracePoint, then extend the wire
-
+//
 //	bugs: 
 //		sometimes takes a longer route than expected; why?
 //		off-by-one weirdness with rasterizer
@@ -70,17 +69,17 @@ $Date$
 //		loop: funny attachment to connectors
 //		lcd example: runs outside of border; overlaps
 //		not routing a second time
-
+//
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
-
+//
 //	redo non-manhattan wires
-
+//
 //	still seeing a few thin tiles going across the board
-
+//
 //	rip up and reroute:
 //		keep a hash table from traces to edges
-//		when first pass at routing is over and there are jumperitemstructs
+//		when first pass at routing is over and there are unrouted edges
 //		save the traces (how) along with some score (number of open edges)
 //		foreach ratsnest wire remaining (i.e. edge remaining) 
 //			find all intersections with traces and map to edges
@@ -91,6 +90,7 @@ $Date$
 //		if no open edges we are done
 //			compare edge score with previous and keep the best set of traces
 //		how to stop--keep going until user stops or some repeat condition occurs..
+//
 
 
 #include "jrouter.h"
@@ -130,16 +130,6 @@ enum TileType {
 	PART,
 	SPACE,
 	TINYSPACE
-};
-
-struct JumperItemStruct {
-	JEdge * edge;
-	ItemBase * partForBounds;
-	JumperItem * jumperItem;
-	ViewLayer::ViewLayerID fromViewLayerID;
-	ViewLayer::ViewLayerID toViewLayerID;
-	Plane * plane;
-	bool deleted;
 };
 
 bool edgeLessThan(JEdge * e1, JEdge * e2)
@@ -329,36 +319,45 @@ void JRouter::start()
 
 	ProcessEventBlocker::processEvents(); // to keep the app  from freezing
 
-	// TODO: if double-sided, tile both planes first and bail on drc overlap
+	ItemBase * board = NULL;
+	if (m_sketchWidget->autorouteNeedsBounds()) {
+		board = m_sketchWidget->findBoard();
+	}
 
-	QList<JumperItemStruct *> jumperItemStructs;
 	QList<JEdge *> edges;
 	QList<Plane *> planes;
-	runEdges(edges, planes, jumperItemStructs, netCounters, routingStatus);
-	clearEdges(edges);
+	bool allDone = false;
+	QHash<Wire *, JEdge *> tracesToEdges;
+	for (int i = 0; i < 10; i++) {
+		allDone = runEdges(edges, planes, board, netCounters, routingStatus, i == 0, tracesToEdges);
+		if (m_cancelled) break;
+		if (allDone) break;
 
-	if (m_cancelled) {
-		clearJumperItemStructs(jumperItemStructs);
+		reorderEdges(edges, tracesToEdges);
+		// TODO: only delete the ones that have been reordered
+		foreach (Wire * trace, tracesToEdges.keys()) {
+			delete trace;
+		}
+		tracesToEdges.clear();
 		foreach (Plane * plane, planes) clearTiles(plane);
-		doCancel(parentCommand);
-		return;
+		planes.clear();
 	}
 
 	if (m_cancelled) {
-		clearJumperItemStructs(jumperItemStructs);
+		clearEdges(edges);
 		foreach (Plane * plane, planes) clearTiles(plane);
 		doCancel(parentCommand);
 		return;
 	}
 
 	m_currentProgressPart++;
-	fixupJumperItems(jumperItemStructs);
+	fixupJumperItems(edges, board);
 
 	cleanUp();
 
-	addToUndo(parentCommand, jumperItemStructs);
+	addToUndo(parentCommand, edges);
 
-	clearJumperItemStructs(jumperItemStructs);
+	clearEdges(edges);
 	foreach (Plane * plane, planes) clearTiles(plane);
 	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::RedoOnly, parentCommand);
 
@@ -367,14 +366,11 @@ void JRouter::start()
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
-void JRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes,
-						   QList<struct JumperItemStruct *> & jumperItemStructs, 
-						   QVector<int> & netCounters, RoutingStatus & routingStatus)
-{
-	ItemBase * board = NULL;
-	if (m_sketchWidget->autorouteNeedsBounds()) {
-		board = m_sketchWidget->findBoard();
-	}
+bool JRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBase * board,
+					   QVector<int> & netCounters, RoutingStatus & routingStatus, bool firstTime,
+					   QHash<Wire *, JEdge *> & tracesToEdges)
+{	
+	bool allRouted = true;
 
 	ViewGeometry vg;
 	vg.setTrace(true);
@@ -389,7 +385,7 @@ void JRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes,
 		m_cancelled = true;
 		displayBadTiles(alreadyTiled);
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
-		return;
+		return false;
 	}
 
 	if (m_bothSidesNow) {
@@ -399,16 +395,25 @@ void JRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes,
 			m_cancelled = true;
 			displayBadTiles(alreadyTiled);
 			QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
-			return;
+			return false;
 		}
 	}
 
-	collectEdges(edges, plane0, plane1, copper0, copper1);
+	if (firstTime) {
+		collectEdges(edges, plane0, plane1, copper0, copper1);
+		qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
+	}
+	else {
+		foreach (JEdge * edge, edges) {
+			edge->plane = (edge->viewLayerID == copper0) ? plane0 : plane1;
+			edge->routed = false;
+			edge->fromConnectorItems.clear();
+			edge->toConnectorItems.clear();
+			edge->fromTraces.clear();
+			edge->toTraces.clear();
+		}
+	}
 
-	// sort the edges by distance and layer
-	qSort(edges.begin(), edges.end(), edgeLessThan);
-
-	QHash<Wire *, JEdge *> tracesToEdges;
 	int edgesDone = 0;
 	foreach (JEdge * edge, edges) {	
 		if (edge->linkedEdge && edge->linkedEdge->routed) {
@@ -471,18 +476,8 @@ void JRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes,
 		}
 		subedges.clear();
 
-		if (!routedFlag && !m_stopTrace) {
-			if (m_sketchWidget->usesJumperItem()) {
-				if (!alreadyJumper(jumperItemStructs, edge->from, edge->to)) {
-					JumperItemStruct * jumperItemStruct = new JumperItemStruct;
-					jumperItemStruct->jumperItem = NULL;
-					jumperItemStruct->edge = edge;
-					jumperItemStruct->partForBounds = board;
-					jumperItemStruct->deleted = false;
-					jumperItemStruct->plane = edge->plane;
-					jumperItemStructs.append(jumperItemStruct);
-				}
-			}
+		if (!routedFlag) {
+			allRouted = false;
 		}
 
 		updateProgress(++edgesDone, edges.count());
@@ -514,9 +509,7 @@ void JRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes,
 		}
 	}
 
-	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-		edges.removeOne(jumperItemStruct->edge);
-	}
+	return allRouted;
 }
 
 Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled) {
@@ -887,31 +880,31 @@ void JRouter::sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p
 	}	
 }
 
-void JRouter::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs) {
-	if (jumperItemStructs.count() <= 0) return;
+void JRouter::fixupJumperItems(QList<JEdge *> & edges, ItemBase * board) {
+	if (edges.count() <= 0) return;
 
-	if (m_bothSidesNow) {
-		// clear any jumpers that have been routed on the other side
-		foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-			ConnectorItem * from = jumperItemStruct->edge->from;
-			ConnectorItem * to = jumperItemStruct->edge->to;
-			if (from->wiredTo(to, ViewGeometry::NotTraceFlags)) {
-				jumperItemStruct->deleted = true;
-			}
+	int todo = 0;
+	foreach (JEdge * edge, edges) {
+		if (!edge->routed && (edge->linkedEdge && !edge->linkedEdge->routed)) {
+			todo++;
 		}
 	}
 
 	int jumpersDone = 0;
-	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-		if (!jumperItemStruct->deleted) {
-			drawJumperItem(jumperItemStruct);
+	foreach (JEdge * edge, edges) {
+		if (edge->routed) continue;
+		if (edge->linkedEdge) {
+			if (edge->linkedEdge->routed) continue;
+			if (edge->linkedEdge->jumperItem) continue;
 		}
 
-		updateProgress(++jumpersDone, jumperItemStructs.count());
+		drawJumperItem(edge, board);
+		jumpersDone += ((edge->linkedEdge) ? 2 : 1);
+		updateProgress(jumpersDone, todo);
 	}
 }
 
-bool JRouter::traceSubedge(JSubedge* subedge, ItemBase * partForBounds, QHash<Wire *, JEdge *> & tracesToEdges) 
+bool JRouter::traceSubedge(JSubedge* subedge, ItemBase * board, QHash<Wire *, JEdge *> & tracesToEdges) 
 {
 	Tile * tile = NULL;
 
@@ -940,10 +933,10 @@ bool JRouter::traceSubedge(JSubedge* subedge, ItemBase * partForBounds, QHash<Wi
 
 
 		if (subedge->fromConnectorItem == NULL) {
-			subedge->fromConnectorItem = splitTrace(subedge->fromWire, subedge->fromPoint);
+			subedge->fromConnectorItem = splitTrace(subedge->fromWire, subedge->fromPoint, board);
 		}
 		if (subedge->toConnectorItem == NULL) {
-			subedge->toConnectorItem = splitTrace(subedge->toWire, subedge->toPoint);
+			subedge->toConnectorItem = splitTrace(subedge->toWire, subedge->toPoint, board);
 		}
 
 		// hook everyone up
@@ -958,7 +951,7 @@ bool JRouter::traceSubedge(JSubedge* subedge, ItemBase * partForBounds, QHash<Wi
 	return (tile != NULL);
 }
 
-ConnectorItem * JRouter::splitTrace(Wire * wire, QPointF point) 
+ConnectorItem * JRouter::splitTrace(Wire * wire, QPointF point, ItemBase * board) 
 {
 	// split the trace at point
 	QLineF originalLine = wire->line();
@@ -977,10 +970,10 @@ ConnectorItem * JRouter::splitTrace(Wire * wire, QPointF point)
 	connector1->tempConnectTo(splitWire->connector0(), false);
 	splitWire->connector0()->tempConnectTo(connector1, false);
 
-	//if (partForBounds) {
-		//splitWire->addSticky(partForBounds, true);
-		//partForBounds->addSticky(splitWire, true);
-	//}
+	if (board) {
+		splitWire->addSticky(board, true);
+		board->addSticky(splitWire, true);
+	}
 
 	if (!wire->getAutoroutable()) {
 		// TODO: deal with undo
@@ -1925,10 +1918,10 @@ void JRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane
 			continue;
 		}
 
-		JEdge * edge0 = makeEdge(from, to, ViewLayer::Bottom, copper0, plane0);
+		JEdge * edge0 = makeEdge(from, to, ViewLayer::Bottom, copper0, plane0, vw);
 		edges.append(edge0);
 		if (m_bothSidesNow && otherFrom != NULL && otherTo != NULL) {
-			JEdge * edge1 = makeEdge(otherFrom, otherTo, ViewLayer::Top, copper1, plane1);
+			JEdge * edge1 = makeEdge(otherFrom, otherTo, ViewLayer::Top, copper1, plane1, vw);
 			edges.append(edge1);
 			edge0->linkedEdge = edge1;
 			edge1->linkedEdge = edge0;
@@ -1936,7 +1929,9 @@ void JRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane
 	}
 }
 
-JEdge * JRouter::makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec viewLayerSpec, ViewLayer::ViewLayerID viewLayerID, Plane * plane) {
+JEdge * JRouter::makeEdge(ConnectorItem * from, ConnectorItem * to, 
+						  ViewLayer::ViewLayerSpec viewLayerSpec, ViewLayer::ViewLayerID viewLayerID, 
+						  Plane * plane, VirtualWire * vw) {
 	JEdge * edge = new JEdge;
 	edge->linkedEdge = NULL;
 	edge->from = from;
@@ -1945,6 +1940,8 @@ JEdge * JRouter::makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::V
 	edge->viewLayerID = viewLayerID;
 	edge->plane = plane;
 	edge->routed = false;
+	edge->vw = vw;
+	edge->jumperItem = NULL;
 	QPointF pi = from->sceneAdjustedTerminalPoint(NULL);
 	QPointF pj = to->sceneAdjustedTerminalPoint(NULL);
 	double px = pi.x() - pj.x();
@@ -2080,42 +2077,42 @@ void JRouter::updateRoutingStatus() {
 	m_sketchWidget->updateRoutingStatus(routingStatus, false);
 }
 
-JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct) 
+JumperItem * JRouter::drawJumperItem(JEdge * edge, ItemBase * board) 
 {
 	// TODO: check across planes...
 
-	QPointF fp = jumperItemStruct->edge->from->sceneAdjustedTerminalPoint(NULL);
-	QPointF tp = jumperItemStruct->edge->to->sceneAdjustedTerminalPoint(NULL);
+	QPointF fp = edge->from->sceneAdjustedTerminalPoint(NULL);
+	QPointF tp = edge->to->sceneAdjustedTerminalPoint(NULL);
 
 	QList<JSubedge *> fromSubedges, toSubedges;
-	foreach (ConnectorItem * from, jumperItemStruct->edge->fromConnectorItems) {
+	foreach (ConnectorItem * from, edge->fromConnectorItems) {
 		QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
-		fromSubedges.append(makeSubedge(jumperItemStruct->edge, p1, from, NULL, tp, true));
+		fromSubedges.append(makeSubedge(edge, p1, from, NULL, tp, true));
 	}
-	foreach (Wire * from, jumperItemStruct->edge->fromTraces) {
+	foreach (Wire * from, edge->fromTraces) {
 		QPointF p1 = from->connector0()->sceneAdjustedTerminalPoint(NULL);
 		QPointF p2 = from->connector1()->sceneAdjustedTerminalPoint(NULL);
-		fromSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, from, tp, true));
+		fromSubedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, from, tp, true));
 	}
 	// reverse direction
-	foreach (ConnectorItem * to, jumperItemStruct->edge->toConnectorItems) {
+	foreach (ConnectorItem * to, edge->toConnectorItems) {
 		QPointF p1 = to->sceneAdjustedTerminalPoint(NULL);
-		toSubedges.append(makeSubedge(jumperItemStruct->edge, p1, to, NULL, fp, false));
+		toSubedges.append(makeSubedge(edge, p1, to, NULL, fp, false));
 	}
-	foreach (Wire * to, jumperItemStruct->edge->toTraces) {
+	foreach (Wire * to, edge->toTraces) {
 		QPointF p1 = to->connector0()->sceneAdjustedTerminalPoint(NULL);
 		QPointF p2 = to->connector1()->sceneAdjustedTerminalPoint(NULL);
-		toSubedges.append(makeSubedge(jumperItemStruct->edge, (p1 + p2) / 2, NULL, to, fp, false));
+		toSubedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, to, fp, false));
 	}
 
 	DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
-		.arg(jumperItemStruct->edge->from->attachedToTitle())
-		.arg(jumperItemStruct->edge->from->attachedToID())
-		.arg(jumperItemStruct->edge->from->connectorSharedID())
-		.arg(jumperItemStruct->edge->to->attachedToTitle())
-		.arg(jumperItemStruct->edge->to->attachedToID())
-		.arg(jumperItemStruct->edge->to->connectorSharedID())
-		.arg(jumperItemStruct->edge->distance) );
+		.arg(edge->from->attachedToTitle())
+		.arg(edge->from->attachedToID())
+		.arg(edge->from->connectorSharedID())
+		.arg(edge->to->attachedToTitle())
+		.arg(edge->to->attachedToID())
+		.arg(edge->to->connectorSharedID())
+		.arg(edge->distance) );
 
 	QList<Wire *> fromWires;
 	QList<Wire *> toWires;
@@ -2153,7 +2150,7 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 		long newID = ItemBase::getNextID();
 		ViewGeometry viewGeometry;
 		ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
-												  jumperItemStruct->edge->from->attachedTo()->viewLayerSpec(), 
+												  edge->from->attachedTo()->viewLayerSpec(), 
 												  BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 		if (itemBase == NULL) {
 			// we're in trouble
@@ -2169,26 +2166,25 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 		qreal widthNeeded = sizeNeeded.width() + KeepoutSpace + KeepoutSpace;
 		qreal heightNeeded = sizeNeeded.height() + KeepoutSpace + KeepoutSpace;
 
-		fromDestPoint = findNearestSpace(fromTile, widthNeeded, heightNeeded, jumperItemStruct->plane, fromDestPoint);
-		toDestPoint = findNearestSpace(toTile, widthNeeded, heightNeeded, jumperItemStruct->plane, toDestPoint); 
+		fromDestPoint = findNearestSpace(fromTile, widthNeeded, heightNeeded, edge->plane, fromDestPoint);
+		toDestPoint = findNearestSpace(toTile, widthNeeded, heightNeeded, edge->plane, toDestPoint); 
 		jumperItem->resize(fromDestPoint, toDestPoint);
 
-		if (jumperItemStruct->partForBounds) {
-			jumperItem->addSticky(jumperItemStruct->partForBounds, true);
-			jumperItemStruct->partForBounds->addSticky(jumperItem, true);
+		if (board) {
+			jumperItem->addSticky(board, true);
+			board->addSticky(jumperItem, true);
 		}
 
 		m_sketchWidget->scene()->addItem(jumperItem);
 		fromSubedge->toConnectorItem = jumperItem->connector0();
 		QList<Tile *> already;
-		addTile(jumperItem->connector0(), CONNECTOR, jumperItemStruct->plane, already);
+		addTile(jumperItem->connector0(), CONNECTOR, edge->plane, already);
 		hookUpWires(fromSubedge, fromWires);
 
-
 		toSubedge->toConnectorItem = jumperItem->connector1();
-		addTile(jumperItem->connector1(), CONNECTOR, jumperItemStruct->plane, already);
+		addTile(jumperItem->connector1(), CONNECTOR, edge->plane, already);
 		hookUpWires(toSubedge, toWires);
-		jumperItemStruct->jumperItem = jumperItem;
+		edge->jumperItem = jumperItem;
 	}
 	else {
 		foreach (Wire * wire, fromWires) {
@@ -2209,13 +2205,13 @@ JumperItem * JRouter::drawJumperItem(JumperItemStruct * jumperItemStruct)
 	}
 	toSubedges.clear();
 
-	return jumperItemStruct->jumperItem;
+	return edge->jumperItem;
 }
 
 void JRouter::restoreOriginalState(QUndoCommand * parentCommand) {
 	QUndoStack undoStack;
-	QList<struct JumperItemStruct *> jumperItemStructs;
-	addToUndo(parentCommand, jumperItemStructs);
+	QList<JEdge *> edges;
+	addToUndo(parentCommand, edges);
 	undoStack.push(parentCommand);
 	undoStack.undo();
 }
@@ -2234,7 +2230,7 @@ void JRouter::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 	addItemCommand->turnOffFirstRedo();
 }
 
-void JRouter::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct *> & jumperItemStructs) 
+void JRouter::addToUndo(QUndoCommand * parentCommand, QList<JEdge *> & edges) 
 {
 	QList<Wire *> wires;
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
@@ -2251,8 +2247,8 @@ void JRouter::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct *> 
 		}
 	}
 
-	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {	
-		JumperItem * jumperItem = jumperItemStruct->jumperItem;
+	foreach (JEdge * edge, edges) {	
+		JumperItem * jumperItem = edge->jumperItem;
 		if (jumperItem == NULL) continue;
 
 		jumperItem->saveParams();
@@ -2263,8 +2259,8 @@ void JRouter::addToUndo(QUndoCommand * parentCommand, QList<JumperItemStruct *> 
 		new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
 		new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 
-		m_sketchWidget->createWire(jumperItem->connector0(), jumperItemStruct->edge->from, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
-		m_sketchWidget->createWire(jumperItem->connector1(), jumperItemStruct->edge->to, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+		m_sketchWidget->createWire(jumperItem->connector0(), edge->from, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+		m_sketchWidget->createWire(jumperItem->connector1(), edge->to, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
 
 	}
 
@@ -2294,31 +2290,6 @@ void JRouter::addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, Q
 												ViewLayer::specFromID(wire->viewLayerID()),
 												connect, parentCommand);
 			ccc->setUpdateConnections(false);
-		}
-	}
-}
-
-void JRouter::reduceColinearWires(QList<Wire *> & wires)
-{
-	if (wires.count() < 2) return;
-
-	for (int i = 0; i < wires.count() - 1; i++) {
-		Wire * w0 = wires[i];
-		Wire * w1 = wires[i + 1];
-
-		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint(NULL);
-		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint(NULL);
-
-		if (qAbs(fromPos.y() - toPos.y()) < .001 || qAbs(fromPos.x() - toPos.x()) < .001) {
-			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5, w0->viewLayerSpec());
-			if (traceWire == NULL)continue;
-
-			m_sketchWidget->deleteItem(wires[i], true, false, false);
-			m_sketchWidget->deleteItem(wires[i + 1], true, false, false);
-
-			wires[i] = traceWire;
-			wires.removeAt(i + 1);
-			i--;								// don't forget to check the new wire
 		}
 	}
 }
@@ -2356,6 +2327,9 @@ TraceWire * JRouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, Vie
 
 void JRouter::clearEdges(QList<JEdge *> & edges) {
 	foreach (JEdge * edge, edges) {
+		if (edge->jumperItem) {
+			m_sketchWidget->deleteItem(edge->jumperItem->id(), true, false, false);
+		}
 		delete edge;
 	}
 	edges.clear();
@@ -2365,34 +2339,6 @@ void JRouter::doCancel(QUndoCommand * parentCommand) {
 	clearTraces(m_sketchWidget, false, NULL);
 	restoreOriginalState(parentCommand);
 	cleanUp();
-}
-
-bool JRouter::alreadyJumper(QList<struct JumperItemStruct *> & jumperItemStructs, ConnectorItem * from, ConnectorItem * to) {
-	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-		if (jumperItemStruct->edge->from == from && jumperItemStruct->edge->to == to) {
-			return true;
-		}
-		if (jumperItemStruct->edge->to == from && jumperItemStruct->edge->from == to) {
-			return true;
-		}
-	}
-
-	if (m_bothSidesNow) {
-		from = from->getCrossLayerConnectorItem();
-		to = to->getCrossLayerConnectorItem();
-		if (from != NULL && to != NULL) {
-			foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-				if (jumperItemStruct->edge->from == from && jumperItemStruct->edge->to == to) {
-					return true;
-				}
-				if (jumperItemStruct->edge->to == from && jumperItemStruct->edge->from == to) {
-					return true;
-				}
-			}
-		}
-	}
-
-	return false;
 }
 
 void JRouter::updateProgress(int num, int denom) 
@@ -2685,17 +2631,6 @@ void JRouter::clearGridEntries() {
 	}
 }
 
-void JRouter::clearJumperItemStructs(QList<JumperItemStruct *> jumperItemStructs) {
-	foreach (JumperItemStruct * jumperItemStruct, jumperItemStructs) {
-		if (jumperItemStruct->jumperItem) {
-			m_sketchWidget->deleteItem(jumperItemStruct->jumperItem->id(), true, false, false);
-		}
-		delete jumperItemStruct->edge;
-		delete jumperItemStruct;
-	}
-	jumperItemStructs.clear();
-}
-
 QPointF JRouter::findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNeeded, Plane * thePlane, const QPointF & nearPoint) 
 {
 	TileRect tileRect;
@@ -2759,3 +2694,28 @@ QPointF JRouter::findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNe
 	}
 }
 
+void JRouter::reorderEdges(QList<JEdge *> & edges, QHash<Wire *, JEdge *> & tracesToEdges) {
+	int ix = 0;
+	while (ix < edges.count()) {
+		JEdge * edge = edges.at(ix++);
+		if (edge->routed) continue;
+		if (edge->linkedEdge && edge->linkedEdge->routed) continue;
+
+		int minIndex = edges.count();
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(edge->vw)) {
+			TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
+			if (traceWire == NULL) continue;
+
+			JEdge * tedge = tracesToEdges.value(traceWire, NULL);
+			if (tedge != NULL) {
+				int tix = edges.indexOf(tedge);
+				minIndex = qMin(tix, minIndex);
+			}
+		}
+
+		if (minIndex < ix) {
+			edges.removeOne(edge);
+			edges.insert(minIndex, edge);
+		}
+	}
+}
