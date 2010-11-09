@@ -36,7 +36,9 @@ $Date$
 //	schematic view: blocks parts, not traces
 //	schematic view: come up with a max board size
 //
-//	fix up cancel/stop
+//	fix up cancel/stop: 
+//		stop either stops you where you are, 
+//		or goes back to the best outcome, if you're in ripup-and-reroute phase
 //
 //	placing jumpers: if double-sided, must make sure there is room on both sides
 //	space finder needs to be tweaked?
@@ -79,17 +81,21 @@ $Date$
 //
 //	rip up and reroute:
 //		keep a hash table from traces to edges
+//		when edges are generated give each an integer ID
 //		when first pass at routing is over and there are unrouted edges
 //		save the traces (how) along with some score (number of open edges)
+//		save the list of IDs in order
 //		foreach ratsnest wire remaining (i.e. edge remaining) 
 //			find all intersections with traces and map to edges
 //			move this edge above that edge in the list of edges
 //			just do one edge or all open edges?  
 //		keep the traces from edges above those that got moved, clear the rest
+//		save the new ordering (list of IDs)
 //		now route again with the new edge order from the point of change
 //		if no open edges we are done
 //			compare edge score with previous and keep the best set of traces
-//		how to stop--keep going until user stops or some repeat condition occurs..
+//		how to stop--keep going until user stops or some repeat condition occurs.
+//			check the reordering of edges and if they match a previous set quit 
 //
 
 
@@ -130,6 +136,13 @@ enum TileType {
 	PART,
 	SPACE,
 	TINYSPACE
+};
+
+enum Direction {
+	LEFTD = 1,
+	UPD,
+	RIGHTD,
+	DOWND
 };
 
 bool edgeLessThan(JEdge * e1, JEdge * e2)
@@ -327,13 +340,39 @@ void JRouter::start()
 	QList<JEdge *> edges;
 	QList<Plane *> planes;
 	bool allDone = false;
+	QList< QList<int> > orderings;
 	QHash<Wire *, JEdge *> tracesToEdges;
-	for (int i = 0; i < 10; i++) {
-		allDone = runEdges(edges, planes, board, netCounters, routingStatus, i == 0, tracesToEdges);
+	for (int run = 0; run < 10; run++) {
+		allDone = runEdges(edges, planes, board, netCounters, routingStatus, run == 0, tracesToEdges);
 		if (m_cancelled) break;
 		if (allDone) break;
 
+		QList<int> ordering;
+		foreach (JEdge * edge, edges) {
+			ordering.append(edge->id);
+		}
+		orderings.append(ordering);	
+
 		reorderEdges(edges, tracesToEdges);
+		bool gotOne = false;
+		foreach (QList<int> ordering, orderings) {
+			bool allGood = true;
+			for (int i = 0; i < edges.count(); i++) {
+				if (ordering.at(i) != edges.at(i)->id) {
+					allGood = false;
+					break;
+				}
+			}
+			if (allGood) {
+				gotOne = true;
+				break;
+			}
+		}
+		if (gotOne) {
+			// we cycled back to a previous order
+			break;
+		}
+
 		// TODO: only delete the ones that have been reordered
 		foreach (Wire * trace, tracesToEdges.keys()) {
 			delete trace;
@@ -711,6 +750,16 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 		return;
 	}
 
+	foreach (ConnectorItem * connectorItem, ends) {
+		DebugDialog::debug(QString("tile wire end %1 %2 %3 %4 %5")
+								.arg(connectorItem->connectorSharedID())
+								.arg(connectorItem->connectorSharedName())
+								.arg(connectorItem->attachedToTitle())
+								.arg(connectorItem->attachedToID())
+								.arg(connectorItem->attachedToInstanceTitle())
+								);
+	}
+
 	QList<ConnectorItem *> uniqueEnds;
 	foreach (Wire * cw, wires) {
 		ConnectorItem * c0 = cw->connector0();
@@ -1044,50 +1093,62 @@ QPointF JRouter::drawLastNotHorizontal(const QPointF & startPoint, const QPointF
 }
 
 
-void JRouter::drawDirection(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-							QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec viewLayerSpec) 
+QPointF JRouter::drawDirection(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
+							QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, 
+							ViewLayer::ViewLayerSpec viewLayerSpec, int doglegDirection) 
 {
 	if (toTileRect.right() == fromTileRect.left()) {
 		endPoint.setX(fromTileRect.left());
-		drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
+		return drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec, doglegDirection);
 	}
 	else if (toTileRect.left() == fromTileRect.right()) {
 		endPoint.setX(fromTileRect.right());
-		drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
+		return drawDirectionHorizontal(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec, doglegDirection);
 	}
 	else if (toTileRect.bottom() == fromTileRect.top()) {
 		endPoint.setY(fromTileRect.top());
-		drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
+		return drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec, doglegDirection);
 	}
 	else if (toTileRect.top() == fromTileRect.bottom()) {
 		endPoint.setY(fromTileRect.bottom());
-		drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec);
+		return drawDirectionVertical(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, viewLayerSpec, doglegDirection);
 	}
 	else {
 		// shouldn't happen
+		return QPointF(0, 0);
 	}
 }
 
-void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-									QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec viewLayerSpec) 
+QPointF JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
+									QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, 
+									ViewLayer::ViewLayerSpec viewLayerSpec, int doglegDirection) 
 {
-	qreal maxLeft = qMax(fromTileRect.left(), toTileRect.left()) + m_halfWireWidthNeeded;
-	qreal minRight = qMin(fromTileRect.right(), toTileRect.right()) - m_halfWireWidthNeeded;
-	qreal originalY = endPoint.y();
-
-	bool normalX = true;
-	if (terminalConnectorItem) {
-		endPoint = terminalConnectorItem->sceneAdjustedTerminalPoint(NULL);
-		normalX = (endPoint.x() < maxLeft || endPoint.x() > minRight);
-		if (normalX) {
-			DebugDialog::debug("end point jog");
+	bool dogleg = terminalConnectorItem != NULL || terminalWire != NULL;
+	QPointF trueEndPoint;
+	if (dogleg) {
+		if (terminalConnectorItem) {
+			trueEndPoint = terminalConnectorItem->sceneAdjustedTerminalPoint(NULL);
+		}
+		else {
+			trueEndPoint = calcWireEndPoint(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, terminalWire, doglegDirection);
+		}
+		if (doglegDirection == LEFTD || doglegDirection == RIGHTD) {
+			endPoint.setX(toTileRect.center().x());
+			endPoint.setY(trueEndPoint.y());
+		}
+		else {
+			endPoint.setY(toTileRect.center().y());
+			endPoint.setX(trueEndPoint.x());
 		}
 	}
 
-	if (startPoint.y() == endPoint.y() && terminalWire == NULL) {
+	qreal maxLeft = qMax(fromTileRect.left(), toTileRect.left()) + m_halfWireWidthNeeded;
+	qreal minRight = qMin(fromTileRect.right(), toTileRect.right()) - m_halfWireWidthNeeded;
+
+	if (startPoint.y() == endPoint.y()) {
 		// u-shape: need three lines
 
-		if (normalX) {
+		if (!dogleg) {
 			if (toTileRect.right() < startPoint.x()) {
 				endPoint.setX(minRight);
 			}
@@ -1109,26 +1170,23 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 		//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = midPoint2;
-		return;
+		return trueEndPoint;
 	}
 
 	bool isTurn = false;
 	if (startPoint.x() == fromTileRect.left()) {
 		isTurn = true;
-		if (normalX) {
+		if (!dogleg) {
 			endPoint.setX(maxLeft);
 		}
 	}
 	else if (startPoint.x() == fromTileRect.right()) {
 		isTurn = true;
-		if (normalX) {
+		if (!dogleg) {
 			endPoint.setX(minRight);
 		}
 	}
 	if (isTurn) {
-		if (terminalWire) {
-			endPoint.setY(wireYFromX(terminalWire, endPoint.x(), startPoint.y()));
-		}
 		QPointF midPoint;
 		midPoint.setY(startPoint.y());
 		midPoint.setX(endPoint.x());
@@ -1138,24 +1196,21 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 		//trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = midPoint;
-		return;
+		return trueEndPoint;
 	}
 
 	if (startPoint.x() <= minRight && startPoint.x() >= maxLeft) {
-		if (normalX) {
+		if (!dogleg) {
 			endPoint.setX(startPoint.x());
-		}
-		if (terminalWire != NULL) {
-			endPoint.setY(wireYFromX(terminalWire, endPoint.x(), startPoint.y()));
 		}
 		startPoint = drawLastNotVertical(startPoint, endPoint, lastTracePoint, wires, viewLayerSpec);
 		//Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = startPoint;
-		return;
+		return trueEndPoint;
 	}
 
-	if (normalX) {
+	if (!dogleg) {
 		if (minRight < startPoint.x()) {
 			endPoint.setX(minRight);
 		}
@@ -1163,13 +1218,9 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 			endPoint.setX(maxLeft);
 		}
 	}
-	if (terminalWire) {
-		endPoint.setY(wireYFromX(terminalWire, endPoint.x(), startPoint.y()));
-	}
-
 	QPointF midPoint1;
 	midPoint1.setX(startPoint.x());
-	midPoint1.setY((originalY + startPoint.y()) / 2);
+	midPoint1.setY((endPoint.y() + startPoint.y()) / 2);
 	startPoint = drawLastNotVertical(startPoint, midPoint1, lastTracePoint, wires, viewLayerSpec);
 	Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
@@ -1181,28 +1232,38 @@ void JRouter::drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoi
 	//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	//wires.append(trace);
 	lastTracePoint = midPoint2;
+	return trueEndPoint;
 }
 
-void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-									  QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec viewLayerSpec) 
+QPointF JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
+									  QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, 
+									  ViewLayer::ViewLayerSpec viewLayerSpec, int doglegDirection) 
 {
-	qreal maxTop = qMax(fromTileRect.top(), toTileRect.top()) + m_halfWireWidthNeeded;
-	qreal minBottom = qMin(fromTileRect.bottom(), toTileRect.bottom()) - m_halfWireWidthNeeded;
-	qreal originalX = endPoint.x();
-
-	bool normalY = true;
-	if (terminalConnectorItem) {
-		endPoint = terminalConnectorItem->sceneAdjustedTerminalPoint(NULL);
-		normalY = (endPoint.y() < maxTop || endPoint.y() > minBottom);
-		if (normalY) {
-			DebugDialog::debug("end point jog");
+	bool dogleg = terminalConnectorItem != NULL || terminalWire != NULL;
+	QPointF trueEndPoint;
+	if (dogleg) {
+		if (terminalConnectorItem) {
+			trueEndPoint = terminalConnectorItem->sceneAdjustedTerminalPoint(NULL);
+		}
+		else {
+			trueEndPoint = calcWireEndPoint(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, terminalWire, doglegDirection);
+		}
+		if (doglegDirection == LEFTD || doglegDirection == RIGHTD) {
+			endPoint.setX(toTileRect.center().x());
+			endPoint.setY(trueEndPoint.y());
+		}
+		else {
+			endPoint.setY(toTileRect.center().y());
+			endPoint.setX(trueEndPoint.x());
 		}
 	}
+	qreal maxTop = qMax(fromTileRect.top(), toTileRect.top()) + m_halfWireWidthNeeded;
+	qreal minBottom = qMin(fromTileRect.bottom(), toTileRect.bottom()) - m_halfWireWidthNeeded;
 
-	if (startPoint.x() == endPoint.x() && terminalWire == NULL) {
+	if (startPoint.x() == endPoint.x()) {
 		// u-shape: need three lines
 
-		if (normalY) {
+		if (!dogleg) {
 			if (toTileRect.bottom() < startPoint.y()) {
 				endPoint.setY(minBottom);
 			}
@@ -1224,26 +1285,23 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 		//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = midPoint2;
-		return;
+		return trueEndPoint;
 	}
 
 	bool isTurn = false;
 	if (startPoint.y() == fromTileRect.top()) {
 		isTurn = true;
-		if (normalY) {
+		if (!dogleg) {
 			endPoint.setY(maxTop);
 		}
 	}
 	else if (startPoint.y() == fromTileRect.bottom()) {
 		isTurn = true;
-		if (normalY) {
+		if (!dogleg) {
 			endPoint.setY(minBottom);
 		}
 	}
 	if (isTurn) {
-		if (terminalWire) {
-			endPoint.setX(wireXFromY(terminalWire, endPoint.y(), startPoint.x()));
-		}
 		QPointF midPoint;
 		midPoint.setX(startPoint.x());
 		midPoint.setY(endPoint.y());
@@ -1253,24 +1311,21 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 		//trace = drawOneTrace(midPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		///wires.append(trace);
 		lastTracePoint = midPoint;
-		return;
+		return trueEndPoint;
 	}
 
 	if (startPoint.y() <= minBottom && startPoint.y() >= maxTop) {
-		if (normalY) {
+		if (!dogleg) {
 			endPoint.setY(startPoint.y());
-		}
-		if (terminalWire) {
-			endPoint.setX(wireXFromY(terminalWire, endPoint.y(), startPoint.x()));
 		}
 		startPoint = drawLastNotHorizontal(startPoint, endPoint, lastTracePoint, wires, viewLayerSpec);
 		//Wire *trace = drawOneTrace(startPoint, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 		//wires.append(trace);
 		lastTracePoint = startPoint;
-		return;
+		return trueEndPoint;
 	}
 
-	if (normalY) {
+	if (!dogleg) {
 		if (minBottom < startPoint.y()) {
 			endPoint.setY(minBottom);
 		}
@@ -1278,12 +1333,9 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 			endPoint.setY(maxTop);
 		}
 	}
-	if (terminalWire) {
-		endPoint.setX(wireXFromY(terminalWire, endPoint.y(), startPoint.x()));
-	}
 	QPointF midPoint1;
 	midPoint1.setY(startPoint.y());
-	midPoint1.setX((startPoint.x() + originalX) / 2);
+	midPoint1.setX((startPoint.x() + endPoint.x()) / 2);
 	startPoint = drawLastNotHorizontal(startPoint, midPoint1, lastTracePoint, wires, viewLayerSpec);
 	Wire * trace = drawOneTrace(startPoint, midPoint1, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	wires.append(trace);
@@ -1295,7 +1347,14 @@ void JRouter::drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTraceP
 	//trace = drawOneTrace(midPoint2, endPoint, Wire::STANDARD_TRACE_WIDTH, viewLayerSpec);
 	//wires.append(trace);
 	lastTracePoint = midPoint2;
+	return trueEndPoint;
 }
+
+
+QPointF JRouter::calcWireEndPoint(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, Wire * terminalWire, int doglegDirection) {
+	return endPoint;
+}
+
 
 bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2, qreal widthNeeded) {
 	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > widthNeeded - FloatingPointFudge);
@@ -1332,6 +1391,56 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		return false;
 	}
 
+	SeedTree * dogleg = NULL;
+	int doglegDirection = 0;
+	if (!forEmpty) {
+		QList<SeedTree *> list;
+		SeedTree * from = destination;
+		while(from) {
+			list.append(from);
+			from = from->parent;
+		}
+
+		// determine final dogleg
+		SeedTree * final = list.last();
+		dogleg = list.at(list.length() - 2);
+		QRectF finalTileRect, doglegTileRect;
+		tileToRect(final->seed, finalTileRect);
+		tileToRect(dogleg->seed, doglegTileRect);
+
+		if (doglegTileRect.right() == finalTileRect.left()) {
+			doglegDirection = LEFTD;
+			if (doglegTileRect.width() < m_wireWidthNeeded && list.length() > 2) {
+				// what if there are two in a row
+				dogleg = list.at(list.length() - 3);
+			}
+		}
+		else if (doglegTileRect.left() == finalTileRect.right() && list.length() > 2) {
+			doglegDirection = RIGHTD;
+			if (doglegTileRect.width() < m_wireWidthNeeded) {
+				// what if there are two in a row
+				dogleg = list.at(list.length() - 3);
+			}
+		}
+		else if (doglegTileRect.bottom() == finalTileRect.top() && list.length() > 2) {
+			doglegDirection = UPD;
+			if (doglegTileRect.height() < m_wireWidthNeeded) {
+				// what if there are two in a row
+				dogleg = list.at(list.length() - 3);
+			}
+		}
+		else if (doglegTileRect.top() == finalTileRect.bottom() && list.length() > 2) {
+			doglegDirection = DOWND;
+			if (doglegTileRect.height() < m_wireWidthNeeded) {
+				// what if there are two in a row
+				dogleg = list.at(list.length() - 3);
+			}
+		}
+		else {
+			// shouldn't happen
+		}
+	}
+
 	SeedTree * from = destination;
 	// TODO: may be wire here
 	QPointF startPoint = subedge->fromPoint;
@@ -1352,11 +1461,61 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 			tileToRect(to->seed, toTileRect);
 			ConnectorItem * terminalConnectorItem = NULL;
 			Wire * terminalWire = NULL;
-			if (to->parent == NULL && !forEmpty) {
+			if (to == dogleg) {
 				terminalConnectorItem = subedge->toConnectorItem;
 				terminalWire = subedge->toWire;
 			}
-			drawDirection(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, subedge->edge->viewLayerSpec);
+			QPointF trueEndPoint = drawDirection(startPoint, lastTracePoint, endPoint, fromTileRect, toTileRect, wires, terminalConnectorItem, terminalWire, subedge->edge->viewLayerSpec, doglegDirection);
+			if (to == dogleg) {
+				QList<QPointF> points;
+				points << lastTracePoint << endPoint << trueEndPoint;
+				int ix = points.count() - 1;
+				while (ix > 0) {
+					if (points[ix] == points[ix -1]) {
+						points.removeAt(ix);
+					}
+					ix--;
+				}
+				ix = 0;
+				while (ix < points.count() - 1) {
+					QPointF p1 = points[ix];
+					QPointF p2 = points[ix + 1];
+					if (p1.x() != p2.x() && p1.y() != p2.y()) {
+						// insert another point
+						QPointF p3(p1.x(), p2.y());
+						points.insert(ix + 1, p3);
+					}
+					ix++;
+				}
+
+				int lastDirection = 0;
+				lastTracePoint = points[0];
+				for (int i = 0; i < points.count() - 1; i++) {
+					int direction = 0;
+					if (points[i].x() == points[i + 1].x()) {
+						direction = LEFTD;
+					}
+					else {
+						direction = UPD;
+					}
+					if (lastDirection != 0) {
+						if (direction != lastDirection) {
+							Wire * trace = drawOneTrace(lastTracePoint, points[i], Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
+							wires.append(trace);
+							lastTracePoint = points[i];
+						}
+					}
+					lastDirection = direction;
+				}
+
+				Wire * trace = drawOneTrace(lastTracePoint, trueEndPoint, Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
+				wires.append(trace);
+
+				QGraphicsItem * item = TiGetClient(from->seed);
+				if (item != NULL) item->setVisible(false);
+				break;
+			}
+		
 		}
 
 		QGraphicsItem * item = TiGetClient(from->seed);
@@ -1919,9 +2078,11 @@ void JRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane
 		}
 
 		JEdge * edge0 = makeEdge(from, to, ViewLayer::Bottom, copper0, plane0, vw);
+		edge0->id = edges.count();
 		edges.append(edge0);
 		if (m_bothSidesNow && otherFrom != NULL && otherTo != NULL) {
 			JEdge * edge1 = makeEdge(otherFrom, otherTo, ViewLayer::Top, copper1, plane1, vw);
+			edge1->id = edges.count();
 			edges.append(edge1);
 			edge0->linkedEdge = edge1;
 			edge1->linkedEdge = edge0;
@@ -2580,7 +2741,7 @@ Tile * JRouter::clipInsertTile(Plane * thePlane, TileRect & tileRect, QList<Tile
 				// overlap not allowed
 				TileRect tr;
 				TiToRect(intersectingTile, &tr);
-				DebugDialog::debug(QString("intersecting %1 %2 %3 %$").arg(tr.xmin).arg(tr.ymin).arg(tr.xmax).arg(tr.ymax));
+				DebugDialog::debug(QString("intersecting %1 %2 %3 %4").arg(tr.xmin).arg(tr.ymin).arg(tr.xmax).arg(tr.ymax));
 				return NULL;
 			}
 		}
