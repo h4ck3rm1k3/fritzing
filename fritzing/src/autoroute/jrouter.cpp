@@ -57,16 +57,13 @@ $Date$
 //
 //	remove debugging output and extra calls to processEvents
 //
-//	consider using lastTrace instead of lastTracePoint, then extend the wire
-//
 //	bugs: 
 //		sometimes takes a longer route than expected; why?
 //		off-by-one weirdness with rasterizer
-//		weird slanted line in one trace with stepper-motor-unrouted example
-//		barebones arduino examples: overlapping wires
 //		dc motor example: routing into border area
 //		parking assistant: overlaps
-//		op-amp: overlaps
+//		op-amp: weird dangling tiny trace
+//		dogleg sometimes draws tiny trace within destination (op-amp example).  This may be ok...
 //		midi drum kit: overlaps
 //		loop: funny attachment to connectors
 //		lcd example: runs outside of border; overlaps
@@ -74,6 +71,8 @@ $Date$
 //
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
+//
+//	fix endpoint calculation for wire
 //
 //	redo non-manhattan wires
 //
@@ -1482,7 +1481,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 					QPointF p2 = points[ix + 1];
 					if (p1.x() != p2.x() && p1.y() != p2.y()) {
 						// insert another point
-						QPointF p3(p1.x(), p2.y());
+						QPointF p3(p2.x(), p1.y());
 						points.insert(ix + 1, p3);
 					}
 					ix++;

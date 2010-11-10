@@ -183,6 +183,7 @@ ModelPart * ModelBase::fixObsoleteModuleID(QDomDocument & domDocument, QDomEleme
 
 bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instances, QList<ModelPart *> & modelParts, bool checkForRats)
 {
+	QHash<QString, QString> missingModules;
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
    	while (!instance.isNull()) {
@@ -199,14 +200,7 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 			DebugDialog::debug(QString("module id %1 not found in database").arg(moduleIDRef));
 			modelPart = fixObsoleteModuleID(domDocument, instance, moduleIDRef);
 			if (modelPart == NULL) {
-				if (m_reportMissingModules) {
-					QMessageBox::warning(NULL, QObject::tr("Fritzing"),
-                        QObject::tr("Unable to find module '%1' at\n'%2'")
-									.arg(moduleIDRef)
-									.arg(instance.attribute("path"))
-							  );
-
-				}
+				missingModules.insert(moduleIDRef, instance.attribute("path"));
    				instance = instance.nextSiblingElement("instance");
    				continue;
 			}
@@ -265,6 +259,18 @@ bool ModelBase::loadInstances(QDomDocument & domDocument, QDomElement & instance
 
    		instance = instance.nextSiblingElement("instance");
   	}
+
+	if (m_reportMissingModules && missingModules.count() > 0) {
+		QString unableToFind = QString("<html><body><b>%1</b><br/><table style='border-spacing: 0px 12px;'>")
+			.arg(tr("Unable to find the following %n part(s):", "", missingModules.count()));
+		foreach (QString key, missingModules.keys()) {
+			unableToFind += QString("<tr><td>'%1'</td><td><b>%2</b></td><td>'%3'</td></tr>")
+				.arg(key).arg(tr("at")).arg(missingModules.value(key, ""));
+		}
+		unableToFind += "</table></body></html>";
+		QMessageBox::warning(NULL, QObject::tr("Fritzing"), unableToFind);
+	}
+
 
 	return true;
 }

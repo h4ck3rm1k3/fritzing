@@ -63,7 +63,6 @@ protected:
 	QPointer<ModelPart> m_root;
 	QPointer<ModelBase> m_referenceModel;
 	bool m_reportMissingModules;
-
 };
 
 #endif
