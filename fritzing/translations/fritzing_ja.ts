@@ -2160,6 +2160,16 @@ Reason: %2 (errcode %3)</source>
         <translation>%1に 上書きできませんでした.
 理由 %2 (エラーコード %3)</translation>
     </message>
+    <message numerus="yes">
+        <source>Unable to find the following %n part(s):</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MysteryPart</name>
@@ -3617,11 +3627,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to find module &apos;%1&apos; at
-&apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3960,10 +3965,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change %note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resize ruler to %1%2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3973,6 +3974,10 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Change %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

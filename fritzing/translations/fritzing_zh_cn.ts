@@ -2156,6 +2156,16 @@ Reason: %2 (errcode %3)</source>
         <translation>不能覆盖文件 &apos;%1&apos;.
 原因是:%2 (错误代码为 %3)</translation>
     </message>
+    <message numerus="yes">
+        <source>Unable to find the following %n part(s):</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MysteryPart</name>
@@ -3630,11 +3640,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>%2中原理图%1未预料到的尾部(3)</translation>
     </message>
     <message>
-        <source>Unable to find module &apos;%1&apos; at
-&apos;%2&apos;</source>
-        <translation>&apos;%2&apos;中找不到模块&apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Part Image</source>
         <translation>元件图像</translation>
     </message>
@@ -3973,10 +3978,6 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <translation>改变电阻从 %1 至 %2</translation>
     </message>
     <message>
-        <source>Change %note to &apos;%2&apos;</source>
-        <translation>改变 %note 为 &apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>Resize ruler to %1%2</source>
         <translation>复位标尺为%1%2</translation>
     </message>
@@ -3987,6 +3988,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     <message>
         <source>Change %1 from %2 to %3</source>
         <translation>改变%1从%2至%3</translation>
+    </message>
+    <message>
+        <source>Change note to &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

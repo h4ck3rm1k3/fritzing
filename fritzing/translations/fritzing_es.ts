@@ -2719,13 +2719,26 @@ Estamos trabajando para evitar este mesaje y permitirte seleccionar propiedades 
 </context>
 <context>
     <name>ModelBase</name>
+    <message numerus="yes">
+        <location filename="../src/model/modelbase.cpp" line="265"/>
+        <source>Unable to find the following %n part(s):</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="317"/>
+        <location filename="../src/model/modelbase.cpp" line="268"/>
+        <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/modelbase.cpp" line="323"/>
         <source>File save failed!</source>
         <translation>¡Error! archivo ¡No guardado!</translation>
     </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="318"/>
+        <location filename="../src/model/modelbase.cpp" line="324"/>
         <source>Couldn&apos;t overwrite file &apos;%1&apos;.
 Reason: %2 (errcode %3)</source>
         <translation>No se puede sobre escribir el archivo &apos;%1&apos;.
@@ -3929,8 +3942,8 @@ Avanze Vertical</translation>
         <translation>Vista de Protoboard (placa de Prototipos)</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="426"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="436"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="425"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="435"/>
         <location filename="../src/fapplication.cpp" line="662"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
         <location filename="../src/fritzingwindow.cpp" line="144"/>
@@ -3941,8 +3954,8 @@ Avanze Vertical</translation>
         <location filename="../src/model/modelbase.cpp" line="87"/>
         <location filename="../src/model/modelbase.cpp" line="94"/>
         <location filename="../src/model/modelbase.cpp" line="122"/>
-        <location filename="../src/model/modelbase.cpp" line="203"/>
-        <location filename="../src/model/modelbase.cpp" line="303"/>
+        <location filename="../src/model/modelbase.cpp" line="271"/>
+        <location filename="../src/model/modelbase.cpp" line="309"/>
         <location filename="../src/model/palettemodel.cpp" line="84"/>
         <location filename="../src/model/palettemodel.cpp" line="94"/>
         <location filename="../src/model/palettemodel.cpp" line="318"/>
@@ -3956,8 +3969,8 @@ Avanze Vertical</translation>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="426"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="436"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="425"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="435"/>
         <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4033,13 +4046,7 @@ Avanze Vertical</translation>
         <translation>Este Archivo %1 no es un archivo valido de Fritzing (3).</translation>
     </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="204"/>
-        <source>Unable to find module &apos;%1&apos; at
-&apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/model/modelbase.cpp" line="304"/>
+        <location filename="../src/model/modelbase.cpp" line="310"/>
         <source>Cannot write file temp file:
 %1.</source>
         <translation>No se puede escribir el archivo temporal:%1.</translation>
@@ -4924,11 +4931,6 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4508"/>
-        <source>Change %note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="4708"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>Cambiar el color de %1 de %2 a %3</translation>
@@ -5002,6 +5004,11 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="4446"/>
         <source>Double-click to delete this bend point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4508"/>
+        <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

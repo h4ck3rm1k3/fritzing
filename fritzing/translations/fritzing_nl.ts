@@ -2155,6 +2155,17 @@ Reason: %2 (errcode %3)</source>
         <translation>Kon bestand niet overschrijven &apos;%1&apos;.
 Reden : %2 (errcode %3)</translation>
     </message>
+    <message numerus="yes">
+        <source>Unable to find the following %n part(s):</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MysteryPart</name>
@@ -3614,11 +3625,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to find module &apos;%1&apos; at
-&apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3893,10 +3899,6 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
         <translation>Dubbel klik om dit plooi punt te verwijderen</translation>
     </message>
     <message>
-        <source>Change %note to &apos;%2&apos;</source>
-        <translation>Wijzig %1 notitie naar &apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Wijzig %1 label naar %2</translation>
     </message>
@@ -3972,6 +3974,10 @@ Fritzing werkt nog steeds, maar je kunt geen eigenschappen van de componenten wi
     </message>
     <message>
         <source>Change %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

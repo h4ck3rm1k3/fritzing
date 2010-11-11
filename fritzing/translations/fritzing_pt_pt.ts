@@ -2151,6 +2151,17 @@ Reason: %2 (errcode %3)</source>
         <translation>Não foi possível reescrever ficheiro &apos;%1&apos;.
 Razão: %2 (código do erro %3)</translation>
     </message>
+    <message numerus="yes">
+        <source>Unable to find the following %n part(s):</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MysteryPart</name>
@@ -3610,11 +3621,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to find module &apos;%1&apos; at
-&apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Part Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3955,10 +3961,6 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
         <translation>Mudar o formato de %1 para %2</translation>
     </message>
     <message>
-        <source>Change %note to &apos;%2&apos;</source>
-        <translation>Mudar a %nota para &apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>Resize ruler to %1%2</source>
         <translation>Redimensionar a régua para %1 %2</translation>
     </message>
@@ -3968,6 +3970,10 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Change %1 from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

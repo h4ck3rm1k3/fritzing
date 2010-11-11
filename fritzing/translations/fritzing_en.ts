@@ -960,8 +960,8 @@ Do you want to restart now?</source>
         <location filename="../src/mainwindow.cpp" line="1461"/>
         <source>Routing completed using %n jumper part(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Routing completed using %n jumper part</numerusform>
+            <numerusform>Routing completed using %n jumper parts</numerusform>
         </translation>
     </message>
     <message>
@@ -1938,8 +1938,8 @@ All your parts are up-to-date.</source>
         <location filename="../src/mainwindow_menu.cpp" line="3642"/>
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Found %n outdated part. Do you want to update it now?</numerusform>
+            <numerusform>Found %n outdated parts. Do you want to update them now?</numerusform>
         </translation>
     </message>
     <message>
@@ -2695,13 +2695,26 @@ We&apos;re working to avoid this message, and only let you choose between proper
 </context>
 <context>
     <name>ModelBase</name>
+    <message numerus="yes">
+        <location filename="../src/model/modelbase.cpp" line="265"/>
+        <source>Unable to find the following %n part(s):</source>
+        <translation type="unfinished">
+            <numerusform>Unable to find the following  part:</numerusform>
+            <numerusform>Unable to find the following %n parts:</numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="317"/>
+        <location filename="../src/model/modelbase.cpp" line="268"/>
+        <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/modelbase.cpp" line="323"/>
         <source>File save failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="318"/>
+        <location filename="../src/model/modelbase.cpp" line="324"/>
         <source>Couldn&apos;t overwrite file &apos;%1&apos;.
 Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
@@ -3874,8 +3887,8 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="426"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="436"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="425"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="435"/>
         <location filename="../src/fapplication.cpp" line="662"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
         <location filename="../src/fritzingwindow.cpp" line="144"/>
@@ -3886,8 +3899,8 @@ Vertical scroll</source>
         <location filename="../src/model/modelbase.cpp" line="87"/>
         <location filename="../src/model/modelbase.cpp" line="94"/>
         <location filename="../src/model/modelbase.cpp" line="122"/>
-        <location filename="../src/model/modelbase.cpp" line="203"/>
-        <location filename="../src/model/modelbase.cpp" line="303"/>
+        <location filename="../src/model/modelbase.cpp" line="271"/>
+        <location filename="../src/model/modelbase.cpp" line="309"/>
         <location filename="../src/model/palettemodel.cpp" line="84"/>
         <location filename="../src/model/palettemodel.cpp" line="94"/>
         <location filename="../src/model/palettemodel.cpp" line="318"/>
@@ -3901,8 +3914,8 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="426"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="436"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="425"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="435"/>
         <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3976,13 +3989,7 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="204"/>
-        <source>Unable to find module &apos;%1&apos; at
-&apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/model/modelbase.cpp" line="304"/>
+        <location filename="../src/model/modelbase.cpp" line="310"/>
         <source>Cannot write file temp file:
 %1.</source>
         <translation type="unfinished"></translation>
@@ -4863,11 +4870,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4508"/>
-        <source>Change %note to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="4708"/>
         <source>Change %1 color from %2 to %3</source>
         <translation type="unfinished"></translation>
@@ -4941,6 +4943,11 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <location filename="../src/sketch/sketchwidget.cpp" line="4446"/>
         <source>Double-click to delete this bend point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4508"/>
+        <source>Change note to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
