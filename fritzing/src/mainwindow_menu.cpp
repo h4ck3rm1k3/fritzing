@@ -463,7 +463,9 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	}
 	*/
 
-	QSize imgSize(width, height);
+	QImage watermark(":resources/images/fritzing_watermark.png");
+
+	QSize imgSize(width, height + watermark.height());
 	QImage image(imgSize,format);
 	image.setDotsPerMeterX(1200*254);
 	image.setDotsPerMeterY(1200*254);
@@ -478,6 +480,8 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	//m_currentGraphicsView->render(&painter);
 	QRectF target(0, 0, width, height);
 	m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+	painter.fillRect(0, height, width, watermark.height(), m_currentGraphicsView->background());
+	painter.drawImage(width - watermark.width(), height, watermark);
 	painter.end();
 
 	if (removeBackground) {
@@ -516,9 +520,13 @@ void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginat
 	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
 	QRectF target(0, 0, source.width() * scale2, source.height() * scale2);
 
+	QImage watermark(":resources/images/fritzing_watermark.png");
+	qreal watermarkTargetHeight = watermark.height() * scale2;
+	qreal watermarkTargetWidth = watermark.width() * scale2;
+
 	if (!paginate) {
 		QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
-					 (target.height() + printer.paperRect().height() - printer.height()) / res);
+					 (target.height() + printer.paperRect().height() - printer.height() + watermarkTargetHeight) / res);
 		printer.setPaperSize(psize, QPrinter::Inch);
 	}
 
@@ -561,6 +569,9 @@ void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginat
 		}
 		else {
 			m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+			painter.fillRect(0, target.height(), target.width(), watermarkTargetHeight, m_currentGraphicsView->background());
+			QRectF wt(target.width() - watermarkTargetWidth, target.height(), watermarkTargetWidth, watermarkTargetHeight);
+			painter.drawImage(wt, watermark, watermark.rect());
 		}
 
 		foreach(QGraphicsItem *item, selItems) {
