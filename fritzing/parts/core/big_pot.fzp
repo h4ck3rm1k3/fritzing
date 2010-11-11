@@ -15,7 +15,7 @@
   <property name="family">Potentiometer</property>
   <property name="type">Rotary Shaft Potentiometer</property>
 	<property name="size">Rotary - 16mm</property>
-  <property name="Maximum Resistance">100kΩ</property>
+  <property name="Maximum Resistance">100k&#937;</property>
   <property name="Track">Linear</property>
  <property name="package">THT</property></properties>
  <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>

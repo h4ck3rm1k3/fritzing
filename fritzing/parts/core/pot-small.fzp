@@ -16,7 +16,7 @@
         <property name="track">Linear</property>
         <property name="type">Rotary Shaft Potentiometer</property>
         <property name="size">Rotary - 9mm</property>
-        <property name="maximum resistance">100kΩ</property>
+        <property name="maximum resistance">100k&#937;</property>
     </properties>
     <description>A rotary adjustable resistor (potentiometer).</description>
     <views>

@@ -13,7 +13,7 @@
  </tags>
  <properties>
   <property name="family">Thermistor</property>
-  <property name="Resistance at 25°">10k Ω</property>
+  <property name="Resistance at 25°">10k&#937;</property>
   <property name="Thermistor Type">NTC (Negative Temperature Coefficient)</property>
  <property name="package">THT</property></properties>
  <taxonomy>discreteParts.sensor.heat.thermistor</taxonomy>
