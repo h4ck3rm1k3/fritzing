@@ -2519,8 +2519,10 @@ void PCBSketchWidget::jumperItemHack() {
 	ItemBase * itemBase = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase) {
 		JumperItem * jumperItem = qobject_cast<JumperItem *>(itemBase);
-		m_jumperItemSize = jumperItem->connector0()->rect().size();
-		deleteItem(itemBase, true, false, false);
+                if (jumperItem) {
+                    m_jumperItemSize = jumperItem->connector0()->rect().size();
+                    deleteItem(itemBase, true, false, false);
+                }
 	}
 }
 
