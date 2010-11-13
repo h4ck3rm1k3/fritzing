@@ -2123,6 +2123,8 @@ bool PCBSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID id1, ViewLayer
 		case ViewLayer::Copper1:
 			if (id1 == id2) return true;
 			return (id2 == ViewLayer::Copper1Trace);
+                default:
+                        break;
 	}
 
 	return false;
