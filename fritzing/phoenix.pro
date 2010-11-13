@@ -33,7 +33,7 @@ win32 {
 }
 macx {
 	MOC_DIR = build/moc
-	CONFIG += x86 ppc x86_64
+        CONFIG += x86 x86_64 # ppc
 	QMAKE_INFO_PLIST = FritzingInfo.plist
 	#DEFINES += QT_NO_DEBUG   		# uncomment this for xcode
         LIBS += /usr/lib/libz.dylib
