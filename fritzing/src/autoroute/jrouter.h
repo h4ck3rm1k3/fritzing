@@ -140,14 +140,8 @@ protected:
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	struct SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
-	QPointF drawDirection(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec, int doglegDirection);
-	QPointF drawDirectionHorizontal(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec, int doglegDirection);
-	QPointF drawDirectionVertical(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, 
-		QList<Wire *> & wires, ConnectorItem * terminalConnectorItem, Wire * terminalWire, ViewLayer::ViewLayerSpec, int doglegDirection);
-	QPointF drawLastNotHorizontal(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires, ViewLayer::ViewLayerSpec);
-	QPointF drawLastNotVertical(const QPointF & startPoint, const QPointF & nextPoint, const QPointF & lastTracePoint, QList<Wire *> & wires, ViewLayer::ViewLayerSpec);
+	void drawDirectionHorizontal(QList<QPointF> & allPoints, QRectF & fromTileRect, QRectF & toTileRect);
+	void drawDirectionVertical(QList<QPointF> & allPoints, QRectF & fromTileRect, QRectF & toTileRect);
 	void hookUpWires(JSubedge * subedge, QList<Wire *> & wires);
 	QPointF findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNeeded, Plane * thePlane, const QPointF & nearPoint);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point, ItemBase * board);
@@ -156,7 +150,7 @@ protected:
 	Tile * tileOneWire(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, Wire * w);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *, VirtualWire *);
 	void reorderEdges(QList<JEdge *> & edges, QHash<Wire *, JEdge *> & tracesToEdges);
-	QPointF calcWireEndPoint(QPointF & startPoint, QPointF & lastTracePoint, QPointF & endPoint, QRectF & fromTileRect, QRectF & toTileRect, Wire * terminalWire, int doglegDirection);
+	QPointF calcWireEndPoint(QPointF & startPoint, QRectF & toTileRect, Wire * terminalWire);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
