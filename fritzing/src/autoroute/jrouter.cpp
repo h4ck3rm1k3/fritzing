@@ -137,13 +137,6 @@ enum TileType {
 	TINYSPACE
 };
 
-enum Direction {
-	LEFTD = 1,
-	UPD,
-	RIGHTD,
-	DOWND
-};
-
 bool edgeLessThan(JEdge * e1, JEdge * e2)
 {
 	if (e1->viewLayerSpec != e2->viewLayerSpec) {
@@ -1039,6 +1032,46 @@ Tile * JRouter::drawTrace(JSubedge * subedge, QList<Wire *> & wires, bool forEmp
 	return tile;
 }
 
+int JRouter::drawOneStep(int ix, QList<SeedTree *> & seedTreeList, QList<QPointF> & allPoints) {
+
+	// TODO: instead of picking maxTop, minBottom, maxLeft, minRight, choose the center
+	// TODO: use 3 lines instead of 2 for turns
+
+	for (int i = ix; i < seedTreeList.count() - 1; i++) {
+		SeedTree * from = seedTreeList.at(i);
+		SeedTree * to = seedTreeList.at(i + 1);
+		QRectF fromTileRect, toTileRect;
+		tileToRect(from->seed, fromTileRect);
+		tileToRect(to->seed, toTileRect);
+
+		QGraphicsItem * item = TiGetClient(from->seed);
+		if (item != NULL) item->setVisible(false);
+		// TODO: process events just for debugging
+		ProcessEventBlocker::processEvents();	
+
+		if ((toTileRect.height() < m_wireWidthNeeded) || (toTileRect.width() < m_wireWidthNeeded)) {
+			// don't draw into this tile; assume next tile is in same direction
+			continue;
+		}
+
+		if (toTileRect.right() == fromTileRect.left()) {
+			drawDirectionHorizontal(allPoints, fromTileRect, toTileRect);
+		}
+		else if (toTileRect.left() == fromTileRect.right()) {
+			drawDirectionHorizontal(allPoints, fromTileRect, toTileRect);
+		}
+		else if (toTileRect.bottom() == fromTileRect.top()) {
+			drawDirectionVertical(allPoints, fromTileRect, toTileRect);
+		}
+		else if (toTileRect.top() == fromTileRect.bottom()) {
+			drawDirectionVertical(allPoints, fromTileRect, toTileRect);
+		}
+		return i + 1;
+	}
+
+	return seedTreeList.count() - 1;
+}
+
 void JRouter::drawDirectionVertical(QList<QPointF> & allPoints, QRectF & fromTileRect, QRectF & toTileRect) 
 {
 	qreal maxLeft = qMax(fromTileRect.left(), toTileRect.left()) + m_halfWireWidthNeeded;
@@ -1093,16 +1126,94 @@ void JRouter::drawDirectionHorizontal(QList<QPointF> & allPoints, QRectF & fromT
 	allPoints.append(QPointF(leastX, minBottom));
 }
 
+QPointF JRouter::calcSpaceEndPoint(JSubedge * subedge, QPointF startPoint, QList<SeedTree *> & seedTreeList) {
+	int currentDirection = SeedTree::None;
+	for (int i = seedTreeList.count() - 2; i >= 0; i--) {
+		SeedTree * to = seedTreeList.at(i + 1);
+		SeedTree * from = seedTreeList.at(i);
+		if (calcOneStep(from, to, currentDirection, startPoint)) break;
+	}
 
-QPointF JRouter::calcWireEndPoint(QPointF & startPoint, QRectF & toTileRect, Wire * wire) {
+	QSizeF sizeNeeded = m_sketchWidget->jumperItemSize();
+	qreal widthNeeded = sizeNeeded.width() + KeepoutSpace + KeepoutSpace;
+	qreal heightNeeded = sizeNeeded.height() + KeepoutSpace + KeepoutSpace;
+
+	subedge->spacePoint = findNearestSpace(seedTreeList.last()->seed, widthNeeded, heightNeeded, subedge->edge->plane, startPoint);
+	return subedge->spacePoint;
+}
+
+QPointF JRouter::calcWireEndPoint(Wire * wire, QPointF & startPoint, QList<SeedTree *> & seedTreeList) {
+	int currentDirection = SeedTree::None;
+	for (int i = seedTreeList.count() - 2; i >= 0; i--) {
+		SeedTree * to = seedTreeList.at(i + 1);
+		SeedTree * from = seedTreeList.at(i);
+		if (calcOneStep(from, to, currentDirection, startPoint)) break;
+
+	}
+
 	bool atEndpoint;
 	double distance, dx, dy;
 	QPointF p = wire->pos();
 	QPointF pp = wire->line().p2() + p;
-	GraphicsUtils::distanceFromLine(startPoint.x(), startPoint.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
+	double cx1, cy1, cx2, cy2;
+	QRectF toTileRect;
+	tileToRect(seedTreeList.last()->seed, toTileRect);
+	GraphicsUtils::LiangBarsky(toTileRect.left() + m_halfWireWidthNeeded, toTileRect.right() - m_halfWireWidthNeeded, toTileRect.bottom() - m_halfWireWidthNeeded, toTileRect.top() + m_halfWireWidthNeeded, 
+								p.x(), p.y(), pp.x(), pp.y(), cx1, cy1, cx2, cy2);
+	GraphicsUtils::distanceFromLine(startPoint.x(), startPoint.y(), cx1, cy1, cx2, cy2, dx, dy, distance, atEndpoint);
 	return QPointF(dx, dy);
 }
 
+bool JRouter::calcOneStep(SeedTree * from, SeedTree * to, int & currentDirection, QPointF & startPoint) {
+	QRectF fromTileRect, toTileRect;
+	tileToRect(from->seed, fromTileRect);
+	tileToRect(to->seed, toTileRect);
+
+	int newDirection = SeedTree::None;
+	if (toTileRect.right() == fromTileRect.left()) {
+		newDirection = SeedTree::Left;
+	}
+	else if (toTileRect.left() == fromTileRect.right()) {
+		newDirection = SeedTree::Right;
+	}
+	else if (toTileRect.bottom() == fromTileRect.top()) {
+		newDirection = SeedTree::Up;
+	}
+	else if (toTileRect.top() == fromTileRect.bottom()) {
+		newDirection = SeedTree::Down;
+	}
+	if (currentDirection == SeedTree::None) {
+		currentDirection = newDirection;
+	}
+	else if (currentDirection != newDirection) {
+		// turn; use this as the nearest
+		qreal maxTop = qMax(fromTileRect.top(), toTileRect.top()) + m_halfWireWidthNeeded;
+		qreal minBottom = qMin(fromTileRect.bottom(), toTileRect.bottom()) - m_halfWireWidthNeeded;
+		qreal maxLeft = qMax(fromTileRect.left(), toTileRect.left()) + m_halfWireWidthNeeded;
+		qreal minRight = qMin(fromTileRect.right(), toTileRect.right()) - m_halfWireWidthNeeded;
+		switch (newDirection) {
+			case SeedTree::Left:
+				startPoint.setX(fromTileRect.left());
+				startPoint.setY((maxTop + minBottom) / 2);
+				break;
+			case SeedTree::Right:
+				startPoint.setX(fromTileRect.right());
+				startPoint.setY((maxTop + minBottom) / 2);
+				break;
+			case SeedTree::Up:
+				startPoint.setY(fromTileRect.top());
+				startPoint.setX((maxLeft + minRight) / 2);
+				break;
+			case SeedTree::Down:
+				startPoint.setY(fromTileRect.top());
+				startPoint.setX((maxLeft + minRight) / 2);
+				break;
+		}
+		return true;
+	}
+
+	return false;
+}
 
 bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2, qreal widthNeeded) {
 	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > widthNeeded - FloatingPointFudge);
@@ -1113,97 +1224,97 @@ bool enoughOverlapVertical(Tile* tile1, Tile* tile2, qreal widthNeeded) {
 	return (qMin(YMAX(tile1), YMAX(tile2)) - qMax(YMIN(tile1), YMIN(tile2)) > widthNeeded - FloatingPointFudge);
 }
 
-struct SeedTree {
-	enum Direction {
-		None = 0,
-		Left,
-		Up,
-		Right,
-		Down
-	};
-	
-	Tile * seed;
-	SeedTree * parent;
-	Direction direction;
-	int directionChanges;
-	QList<SeedTree *> children;
-};
-
 bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire *> & wires, bool forEmpty) {
+	// path goes from start to end
+	// root is end
+	// leaf is start (again)
 	SeedTree * root = new SeedTree;
-	SeedTree * destination = followPath(root, path);
-	if (destination == NULL) {
+	SeedTree * leaf = followPath(root, path);
+	if (leaf == NULL) {
 		// shouldn't happen
 		return false;
 	}
 
+	// seedTreeList is in same order as path
 	QList<SeedTree *> seedTreeList;
-	SeedTree * st = destination;
+	QList<SeedTree *> revSeedTreeList;
+	SeedTree * st = leaf;
 	while(st) {
 		seedTreeList.append(st);
+		revSeedTreeList.push_front(st);
 		QRectF r;
 		tileToRect(st->seed, r);
 		DebugDialog::debug("seed", r);
 		st = st->parent;
 	}
 
+	QPointF end1, end2;
+	if (subedge->fromConnectorItem != NULL) {
+		end1 = subedge->fromConnectorItem->sceneAdjustedTerminalPoint(NULL);
+	}
+	else {
+		QPointF end2;
+		if (subedge->toConnectorItem) {
+			end2 = subedge->toConnectorItem->sceneAdjustedTerminalPoint(NULL);
+		}
+		else {
+			// just have to guess
+			QRectF r;
+			tileToRect(seedTreeList.at(0)->seed, r);
+			end2 = r.center();
+		}
+		end1 = this->calcWireEndPoint(subedge->fromWire, end2, revSeedTreeList);
+	}
+	if (forEmpty) {
+		end2 = calcSpaceEndPoint(subedge, end1, seedTreeList);
+	}
+	else if (subedge->toConnectorItem) {
+		end2 = subedge->toConnectorItem->sceneAdjustedTerminalPoint(NULL);
+	}
+	else {
+		end2 = this->calcWireEndPoint(subedge->fromWire, end1, seedTreeList);
+	}
+	
+	// figure out first points from both ends
 	QList<QPointF> allPoints;
-	// TODO: may be wire here
-	allPoints.append(subedge->fromPoint);
-	for (int i = 0; i < seedTreeList.count() - 1; i++) {
-		SeedTree * from = seedTreeList.at(i);
-		SeedTree * to = seedTreeList.at(i + 1);
-		QRectF fromTileRect, toTileRect;
-		tileToRect(from->seed, fromTileRect);
-		tileToRect(to->seed, toTileRect);
-		if ((toTileRect.height() < m_wireWidthNeeded) || (toTileRect.width() < m_wireWidthNeeded)) {
-			// don't draw into this tile; assume next tile is in same direction
-			continue;
-		}
+	allPoints.append(end1);
+	int j = drawOneStep(0, seedTreeList, allPoints);
+	QList<QPointF> revAllPoints;
+	revAllPoints.append(end2);
+	int revJ = seedTreeList.count() - drawOneStep(0, revSeedTreeList, revAllPoints) - 1;
+	if (j == revJ) {
+		// reached the same tile
+	}
+	else if (j > revJ) {
+		// crossed over
+		j = seedTreeList.count() / 2;
+		revJ = j + 1;
+		allPoints.clear();
+		revAllPoints.clear();
+		allPoints.append(end1);
+		revAllPoints.append(end2);
+	}
 
-		if (toTileRect.right() == fromTileRect.left()) {
-			drawDirectionHorizontal(allPoints, fromTileRect, toTileRect);
-		}
-		else if (toTileRect.left() == fromTileRect.right()) {
-			drawDirectionHorizontal(allPoints, fromTileRect, toTileRect);
-		}
-		else if (toTileRect.bottom() == fromTileRect.top()) {
-			drawDirectionVertical(allPoints, fromTileRect, toTileRect);
-		}
-		else if (toTileRect.top() == fromTileRect.bottom()) {
-			drawDirectionVertical(allPoints, fromTileRect, toTileRect);
-		}
+	for (int i = j; i < revJ; i++) {
+		j = drawOneStep(i, seedTreeList, allPoints);
+	}
 
-		if (!forEmpty && i == seedTreeList.count() - 2) {
-			QPointF endPoint;
-			if (subedge->toConnectorItem) {
-				endPoint = subedge->toConnectorItem->sceneAdjustedTerminalPoint(NULL);
-			}
-			else {
-				// TODO: clip the wire line to the tile (minus the m_wireWidthNeeded border)
-				endPoint = calcWireEndPoint(allPoints.last(), toTileRect, subedge->toWire);
-			}
-			QPointF startPoint = allPoints.last();
-			if (startPoint.x() < endPoint.x() || startPoint.x() > endPoint.x()) {
-				allPoints.append(QPointF(startPoint.x(), endPoint.y()));
-				allPoints.append(QPointF(endPoint.x(), endPoint.y()));
-			}
-			else if (startPoint.y() < endPoint.y() || startPoint.y() > endPoint.y()) {
-				allPoints.append(endPoint);
-			}
-		}
-
-		QGraphicsItem * item = TiGetClient(from->seed);
-		if (item != NULL) item->setVisible(false);
-
-		// TODO: process events just for debugging
-		ProcessEventBlocker::processEvents();	
+	QPointF startPoint = allPoints.last();
+	QPointF endPoint = revAllPoints.last();
+	if (startPoint.x() < endPoint.x() || startPoint.x() > endPoint.x()) {
+		allPoints.append(QPointF(startPoint.x(), endPoint.y()));
+		allPoints.append(QPointF(endPoint.x(), endPoint.y()));
+	}
+	else if (startPoint.y() < endPoint.y() || startPoint.y() > endPoint.y()) {
+		allPoints.append(endPoint);
+	}
+	for (int i = revAllPoints.count() - 1; i >= 0; i--) {
+		allPoints.append(revAllPoints.at(i));
 	}
 
 	foreach (QPointF p, allPoints) {
 		DebugDialog::debug("allpoint:", p);
 	}
-
 
 	int ix = allPoints.count() - 1;
 	while (ix > 0) {
@@ -1300,6 +1411,9 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 
 			SeedTree * newst = new SeedTree;
 			newst->seed = seed;
+			QRectF r;
+			tileToRect(seed, r);
+			DebugDialog::debug("next candidate", r);
 			newst->direction = direction;
 			if (currentSeedTree->direction == SeedTree::None || currentSeedTree->direction == direction) {
 				newst->directionChanges = currentSeedTree->directionChanges;
@@ -2533,6 +2647,12 @@ QPointF JRouter::findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNe
 		return QPointF(cx, cy);
 	}
 	else {
+		// need to consider tiles above and below the originating tile
+		// the potential region above and below being the amount left over from the height needed minus the height of this tile
+		// so we collect all the empty tiles in that region
+		// then we generate candidate rects by using the collected set of y coordinates, paired with the left and (right - needed width) x coordinates
+		// then we make sure those candidates are actually all space tiles, and if so, compare the distance with the nearPoint
+
 		TileRect searchRect = tileRect;
 		searchRect.ymin = qMax(m_maxRect.top(), tileRect.ymin - heightNeeded + (tileRect.ymax - tileRect.ymin));
 		searchRect.ymax = qMin(m_maxRect.bottom(), tileRect.ymin + heightNeeded);

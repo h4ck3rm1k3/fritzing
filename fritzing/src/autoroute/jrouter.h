@@ -69,6 +69,23 @@ struct JSubedge {
 	class Wire * toWire;
 	double distance;
 	bool forward;
+	QPointF spacePoint;
+};
+
+struct SeedTree {
+	enum Direction {
+		None = 0,
+		Left,
+		Up,
+		Right,
+		Down
+	};
+	
+	struct Tile * seed;
+	SeedTree * parent;
+	Direction direction;
+	int directionChanges;
+	QList<SeedTree *> children;
 };
 
 class GridEntry : public QGraphicsRectItem {
@@ -139,7 +156,7 @@ protected:
 	void appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*enoughOverlap)(Tile*, Tile*, qreal));
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
-	struct SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
+	SeedTree * followPath(SeedTree * & root, QList<Tile *> & path);
 	void drawDirectionHorizontal(QList<QPointF> & allPoints, QRectF & fromTileRect, QRectF & toTileRect);
 	void drawDirectionVertical(QList<QPointF> & allPoints, QRectF & fromTileRect, QRectF & toTileRect);
 	void hookUpWires(JSubedge * subedge, QList<Wire *> & wires);
@@ -150,7 +167,10 @@ protected:
 	Tile * tileOneWire(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, Wire * w);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *, VirtualWire *);
 	void reorderEdges(QList<JEdge *> & edges, QHash<Wire *, JEdge *> & tracesToEdges);
-	QPointF calcWireEndPoint(QPointF & startPoint, QRectF & toTileRect, Wire * terminalWire);
+	QPointF calcWireEndPoint(Wire * wire, QPointF & startPoint, QList<SeedTree *> & seedTreeList);
+	QPointF calcSpaceEndPoint(JSubedge * subedge, QPointF startPoint, QList<SeedTree *> & seedTreeList);
+	bool calcOneStep(SeedTree * from, SeedTree * to, int & currentDirection, QPointF & startPoint);
+	int drawOneStep(int i, QList<SeedTree *> & seedTreeList, QList<QPointF> & allPoints);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
