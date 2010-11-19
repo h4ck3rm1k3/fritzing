@@ -781,7 +781,7 @@ y:%2</source>
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.cpp" line="570"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1639"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1650"/>
         <source>Rotate</source>
         <translation>旋轉</translation>
     </message>
@@ -817,7 +817,7 @@ y:%2</source>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="630"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1282"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1293"/>
         <source>Add a note</source>
         <translation>增加註解</translation>
     </message>
@@ -878,23 +878,23 @@ Do you want to restart now?</source>
         <location filename="../src/mainwindow.cpp" line="1925"/>
         <location filename="../src/mainwindow_gerber.cpp" line="56"/>
         <location filename="../src/mainwindow_gerber.cpp" line="268"/>
-        <location filename="../src/mainwindow_menu.cpp" line="494"/>
-        <location filename="../src/mainwindow_menu.cpp" line="601"/>
-        <location filename="../src/mainwindow_menu.cpp" line="609"/>
-        <location filename="../src/mainwindow_menu.cpp" line="695"/>
+        <location filename="../src/mainwindow_menu.cpp" line="498"/>
+        <location filename="../src/mainwindow_menu.cpp" line="612"/>
+        <location filename="../src/mainwindow_menu.cpp" line="620"/>
         <location filename="../src/mainwindow_menu.cpp" line="706"/>
-        <location filename="../src/mainwindow_menu.cpp" line="724"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2419"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2509"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2546"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3165"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3177"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3189"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3201"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3214"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3223"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3637"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3711"/>
+        <location filename="../src/mainwindow_menu.cpp" line="717"/>
+        <location filename="../src/mainwindow_menu.cpp" line="735"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2430"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2520"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2557"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3176"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3188"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3200"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3212"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3225"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3234"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3648"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3722"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
@@ -1004,8 +1004,8 @@ Do you want to restart now?</source>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1618"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3675"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3685"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3686"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3696"/>
         <source>Sorry!</source>
         <translation>抱歉！</translation>
     </message>
@@ -1153,1146 +1153,1146 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>正在匯出...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="494"/>
+        <location filename="../src/mainwindow_menu.cpp" line="498"/>
         <source>Unable to save %1</source>
         <translation>無法儲存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="602"/>
+        <location filename="../src/mainwindow_menu.cpp" line="613"/>
         <source>Cannot print to %1</source>
         <translation>無法列印到 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="610"/>
+        <location filename="../src/mainwindow_menu.cpp" line="621"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>無法寫入檔案 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="625"/>
+        <location filename="../src/mainwindow_menu.cpp" line="636"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>&apos;%1&apos; 已儲存</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="685"/>
+        <location filename="../src/mainwindow_menu.cpp" line="696"/>
         <source>Select a Fritzing File to Open</source>
         <translation>選取要開啟的 Fritzing 檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="687"/>
+        <location filename="../src/mainwindow_menu.cpp" line="698"/>
         <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
         <translation>Fritzing 檔(*%1 *%2);;Fritzing (*%1);;Fritzing 分享檔(*%2)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="696"/>
+        <location filename="../src/mainwindow_menu.cpp" line="707"/>
         <source>Cannot find file %1.</source>
         <translation>找不到檔案 %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="707"/>
+        <location filename="../src/mainwindow_menu.cpp" line="718"/>
         <source>Cannot read file  1 %1:
 %2.</source>
         <translation>無法讀檔 1 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="742"/>
+        <location filename="../src/mainwindow_menu.cpp" line="753"/>
         <source>directly loading parts</source>
         <translation>直接載入元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="773"/>
+        <location filename="../src/mainwindow_menu.cpp" line="784"/>
         <source>loading %1 (model)</source>
         <translation>載入 %1 (模組)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="795"/>
+        <location filename="../src/mainwindow_menu.cpp" line="806"/>
         <source>loading %1 (breadboard)</source>
         <translation>載入 %1 (麵包板)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="803"/>
+        <location filename="../src/mainwindow_menu.cpp" line="814"/>
         <source>loading %1 (pcb)</source>
         <translation>載入 %1 (PCB)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="811"/>
+        <location filename="../src/mainwindow_menu.cpp" line="822"/>
         <source>loading %1 (schematic)</source>
         <translation>載入 %1 (概要圖)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1292"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1303"/>
         <source>&amp;New</source>
         <translation>新增 (&amp;N)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="938"/>
+        <location filename="../src/mainwindow_menu.cpp" line="949"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="724"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2509"/>
+        <location filename="../src/mainwindow_menu.cpp" line="735"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2520"/>
         <source>File &apos;%1&apos; not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="939"/>
+        <location filename="../src/mainwindow_menu.cpp" line="950"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="940"/>
+        <location filename="../src/mainwindow_menu.cpp" line="951"/>
         <source>Create a new sketch</source>
         <translation>建立新草圖</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="943"/>
+        <location filename="../src/mainwindow_menu.cpp" line="954"/>
         <source>&amp;Open...</source>
         <translation>開啟 (&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="944"/>
+        <location filename="../src/mainwindow_menu.cpp" line="955"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="945"/>
+        <location filename="../src/mainwindow_menu.cpp" line="956"/>
         <source>Open a sketch</source>
         <translation>開啟草圖</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="952"/>
+        <location filename="../src/mainwindow_menu.cpp" line="963"/>
         <source>&amp;Save</source>
         <translation>存檔 (&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="953"/>
+        <location filename="../src/mainwindow_menu.cpp" line="964"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="954"/>
-        <location filename="../src/mainwindow_menu.cpp" line="959"/>
+        <location filename="../src/mainwindow_menu.cpp" line="965"/>
+        <location filename="../src/mainwindow_menu.cpp" line="970"/>
         <source>Save the current sketch</source>
         <translation>儲存草圖</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="957"/>
+        <location filename="../src/mainwindow_menu.cpp" line="968"/>
         <source>&amp;Save As...</source>
         <translation>另存新檔 (&amp;S)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="958"/>
+        <location filename="../src/mainwindow_menu.cpp" line="969"/>
         <source>Shift+Ctrl+S</source>
         <translation>Shift+Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="962"/>
+        <location filename="../src/mainwindow_menu.cpp" line="973"/>
         <source>Save As Shareable...</source>
         <translation>轉存為分享格式...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="963"/>
+        <location filename="../src/mainwindow_menu.cpp" line="974"/>
         <source>Alt+Ctrl+S</source>
         <translation>Alt+Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="964"/>
+        <location filename="../src/mainwindow_menu.cpp" line="975"/>
         <source>Export current sketch and its non-core parts</source>
         <translation>匯出草圖與其非核心元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="967"/>
+        <location filename="../src/mainwindow_menu.cpp" line="978"/>
         <source>Share online...</source>
         <translation>線上分享...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="968"/>
+        <location filename="../src/mainwindow_menu.cpp" line="979"/>
         <source>Post a project to the Fritzing website</source>
         <translation>在 Fritzing 官網，發佈一個專案</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="971"/>
+        <location filename="../src/mainwindow_menu.cpp" line="982"/>
         <source>to &amp;JPG...</source>
         <translation>轉成 &amp;JPG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="973"/>
+        <location filename="../src/mainwindow_menu.cpp" line="984"/>
         <source>Export the visible area of the current sketch as a JPG image</source>
         <translation>匯出草圖的可見區域為 JPG 圖檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="976"/>
+        <location filename="../src/mainwindow_menu.cpp" line="987"/>
         <source>to P&amp;NG...</source>
         <translation>轉成 P&amp;NG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="978"/>
+        <location filename="../src/mainwindow_menu.cpp" line="989"/>
         <source>Export the visible area of the current sketch as a PNG image</source>
         <translation>匯出草圖的可見區域為 PNG 圖檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="981"/>
+        <location filename="../src/mainwindow_menu.cpp" line="992"/>
         <source>to Post&amp;Script...</source>
         <translation>發佈手稿 (&amp;S)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="983"/>
+        <location filename="../src/mainwindow_menu.cpp" line="994"/>
         <source>Export the visible area of the current sketch as a PostScript image</source>
         <translation>匯出草圖的可見區域為 PostScript 圖檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="986"/>
+        <location filename="../src/mainwindow_menu.cpp" line="997"/>
         <source>to &amp;PDF...</source>
         <translation>轉成 &amp;PDF...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="988"/>
+        <location filename="../src/mainwindow_menu.cpp" line="999"/>
         <source>Export the visible area of the current sketch as a PDF image</source>
         <translation>匯出草圖的可見區域為 PDF 圖檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="991"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1002"/>
         <source>to &amp;SVG...</source>
         <translation>轉成 &amp;SVG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="993"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1004"/>
         <source>Export the current sketch as an SVG image</source>
         <translation>匯出草圖為 SVG 圖檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="996"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1007"/>
         <source>List of parts (&amp;Bill of Materials)...</source>
         <translation>列出元件清單 (&amp;BOM)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="998"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1009"/>
         <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
         <translation>儲存元件清單(BOM)/採購清單為存文字檔</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1001"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1012"/>
         <source>XML Netlist...</source>
         <translation>XML 巢狀清單</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1003"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1014"/>
         <source>Save a netlist in XML format</source>
         <translation>以 XML 格式儲存巢狀清單</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1006"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1017"/>
         <source>to &amp;Eagle...</source>
         <translation>轉成 &amp;Eagle...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1008"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1019"/>
         <source>Export the current sketch to Eagle CAD</source>
         <translation>草圖匯出為 Eagle CAD</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1011"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1022"/>
         <source>to &amp;Gerber...</source>
         <translation>轉為 &amp;Gerber...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1013"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1024"/>
         <source>Export the current sketch to Gerber</source>
         <translation>草圖匯出為 Gerber</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1016"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1027"/>
         <source>Etchable PDF...</source>
         <translation>可蝕刻的 PDF...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1017"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1028"/>
         <source>Export the current sketch to PDF for DIY production</source>
         <translation>草圖匯出為 PDF 的 DIY 產品</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1020"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1031"/>
         <source>Etchable SVG...</source>
         <translation>可蝕刻的 SVG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1021"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1032"/>
         <source>Export the current sketch to SVG for DIY production</source>
         <translation>草圖匯出為 SVG 的 DIY 產品</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1029"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1040"/>
         <source>&amp;Print...</source>
         <translation>列印 (&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1030"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1041"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1031"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1042"/>
         <source>Print the current view</source>
         <translation>列印目前檢視</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1039"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1050"/>
         <source>Shell launch %1</source>
         <translation>啟動 Shell</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1044"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1055"/>
         <source>throw test exception</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1045"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1056"/>
         <source>throw a fake exception to see what happens</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1049"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1060"/>
         <source>&amp;Quit</source>
         <translation>離開</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1050"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1061"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1051"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1062"/>
         <source>Quit the application</source>
         <translation>關閉程式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1058"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1069"/>
         <source>&amp;Open Example</source>
         <translation>開啟範例 (&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1085"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1096"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1133"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1144"/>
         <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
         <translation>MainWindow::populateMenuWithIndex: 無法載入 id=&apos;%1&apos; 的範例 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1174"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1185"/>
         <source>&amp;Open Recent Files</source>
         <translation>最近開啟的檔案 (&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1211"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1222"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1228"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1230"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1239"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1241"/>
         <source>Undo</source>
         <translation>復原</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1232"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1234"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1243"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1245"/>
         <source>Redo</source>
         <translation>重作</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1236"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1247"/>
         <source>&amp;Cut</source>
         <translation>剪下 (&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1237"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1248"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1238"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1249"/>
         <source>Cut selection</source>
         <translation>剪下選取區塊</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1241"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1252"/>
         <source>&amp;Copy</source>
         <translation>複製(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1242"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1253"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1243"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1254"/>
         <source>Copy selection</source>
         <translation>複製選取區塊</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1246"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1257"/>
         <source>&amp;Paste</source>
         <translation>貼上 (&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1247"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1258"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1248"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1259"/>
         <source>Paste clipboard contents</source>
         <translation>貼上剪貼簿內容</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1251"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1262"/>
         <source>Paste in Place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1252"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1263"/>
         <source>Paste clipboard contents in place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1255"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1266"/>
         <source>&amp;Duplicate</source>
         <translation>複製 (&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1256"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1267"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1257"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1268"/>
         <source>Duplicate selection</source>
         <translation>複製選取</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1260"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1271"/>
         <source>&amp;Delete</source>
         <translation>刪除 (&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1261"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1272"/>
         <source>Delete selection</source>
         <translation>刪除選取</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1272"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1283"/>
         <source>&amp;Select All</source>
         <translation>全選 (&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1273"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1284"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1274"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1285"/>
         <source>Select all elements</source>
         <translation>全選所有元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1277"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1288"/>
         <source>&amp;Deselect</source>
         <translation>取消選取 (&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1278"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1289"/>
         <source>Deselect</source>
         <translation>取消選取</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1281"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3032"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1292"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3043"/>
         <source>Add Note</source>
         <translation>新增註解</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1285"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1296"/>
         <source>&amp;Preferences...</source>
         <translation>喜好設定 (&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1286"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1533"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1297"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1544"/>
         <source>Show the application&apos;s about box</source>
         <translation>顯示程式關於對話視窗</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1293"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1304"/>
         <source>Alt+Ctrl+N</source>
         <translation>Alt+Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1294"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1305"/>
         <source>Create new part</source>
         <translation>建立新元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1297"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1608"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1308"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1619"/>
         <source>&amp;Edit</source>
         <translation>編輯 (&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1298"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1309"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Return</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1299"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1310"/>
         <source>Open the old parts editor</source>
         <translation>開啟舊元件編輯器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1302"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1313"/>
         <source>&amp;Add to bin...</source>
         <translation>加入元件庫 (&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1303"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1314"/>
         <source>Add selected part to bin</source>
         <translation>所選元件加入元件庫</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1305"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1316"/>
         <source>Disconnect All Wires</source>
         <translation>Disconnect 所有線路</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1306"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1317"/>
         <source>Disconnect all wires connected to this connector</source>
         <translation>Disconnect 連接此元件的所有線路</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1310"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1321"/>
         <source>Update InfoView on hover</source>
         <translation>在鼠標翻轉時，更新訊息視窗</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1317"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1328"/>
         <source>Export Normalized SVG</source>
         <translation>匯出正規化的 SVG</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1318"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1329"/>
         <source>Export 1000 dpi SVG of this part in this view</source>
         <translation>以 1000 dpi SVG 匯出本元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1321"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1332"/>
         <source>Export Normalized Flattened SVG</source>
         <translation>匯出正規扁平化的 SVG</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1322"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1333"/>
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
         <translation>以 1000 dpi SVG 匯出正規扁平化的本元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1326"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1337"/>
         <source>&amp;Rotate 90° Clockwise</source>
         <translation>順時針旋轉 90°(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2861"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2872"/>
         <source>Update Ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2862"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2873"/>
         <source>Redraw this net</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2089"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2100"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2872"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2883"/>
         <source>Change Trace Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3824"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3835"/>
         <source>No overlapping parts found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3827"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3838"/>
         <source>%1 overlapping parts found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="743"/>
         <location filename="../src/mainwindow.cpp" line="749"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1327"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1338"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1328"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1339"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
         <translation>所選元件，順時針旋轉 90°</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1331"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1342"/>
         <source>&amp;Rotate 180°</source>
         <translation>旋轉 180°(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1332"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1343"/>
         <source>Rotate the selected parts by 180 degrees</source>
         <translation>所選元件，旋轉 180°</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1335"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1346"/>
         <source>&amp;Rotate 90° Counter Clockwise</source>
         <translation>逆時針旋轉 90°(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="742"/>
         <location filename="../src/mainwindow.cpp" line="748"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1336"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1347"/>
         <source>Alt+Ctrl+R</source>
         <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1337"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1348"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
         <translation>所選部分，逆時針旋轉 90°</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1348"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1359"/>
         <source>&amp;Flip Horizontal</source>
         <translation>水平翻轉 (&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1349"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1360"/>
         <source>Flip current selection horizontally</source>
         <translation>水平翻轉所選部分</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1352"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1363"/>
         <source>&amp;Flip Vertical</source>
         <translation>垂直翻轉(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1353"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1364"/>
         <source>Flip current selection vertically</source>
         <translation>垂直翻轉所選部分</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1356"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1367"/>
         <source>Bring to Front</source>
         <translation>置於最前排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1357"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1368"/>
         <source>Shift+Ctrl+]</source>
         <translation>Shift+Ctrl+]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1358"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1369"/>
         <source>Bring selected object(s) to front of their layer</source>
         <translation>所選部分，置於所在層的最前排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1363"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1374"/>
         <source>Bring Forward</source>
         <translation>向前一排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1364"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1375"/>
         <source>Ctrl+]</source>
         <translation>Ctrl+]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1365"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1376"/>
         <source>Bring selected object(s) forward in their layer</source>
         <translation>所選部分，於所在層的向前移動一排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1370"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1381"/>
         <source>Send Backward</source>
         <translation>向後一排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1371"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1382"/>
         <source>Ctrl+[</source>
         <translation>Ctrl+[</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1372"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1383"/>
         <source>Send selected object(s) back in their layer</source>
         <translation>所選部分，於所在層的向後移動一排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1377"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1388"/>
         <source>Send to Back</source>
         <translation>置於最後一排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1378"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1389"/>
         <source>Shift+Ctrl+[</source>
         <translation>Shift+Ctrl+[</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1379"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1390"/>
         <source>Send selected object(s) to the back of their layer</source>
         <translation>所選部分，於所在層的移到最後一排</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1452"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1463"/>
         <source>100% (pixel) size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1545"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1556"/>
         <source>Report a bug...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1384"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1395"/>
         <source>&amp;Show All Layers</source>
         <translation>顯示所有層 (&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1340"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1351"/>
         <source>&amp;Rotate 45° Counter Clockwise</source>
         <translation type="unfinished">逆時針旋轉 90°(&amp;R) {45°?}</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1341"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1352"/>
         <source>Rotate current selection 45 degrees counter clockwise</source>
         <translation type="unfinished">目前選取部分，逆時針旋轉 90° {45 ?}</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1344"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1355"/>
         <source>&amp;Rotate 45° Clockwise</source>
         <translation type="unfinished">順時針旋轉 90°(&amp;R) {45°?}</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1345"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1356"/>
         <source>Rotate current selection 45 degrees clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1385"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1396"/>
         <source>Show all the available layers for the current view</source>
         <translation>顯示本檢視所有可用層</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1388"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1399"/>
         <source>&amp;Hide All Layers</source>
         <translation>隱藏所有層 (&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1389"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1400"/>
         <source>Hide all the layers of the current view</source>
         <translation>隱藏本檢視所有層</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1392"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1403"/>
         <source>&amp;Show part label</source>
         <translation>顯示元件標頭</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1393"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1404"/>
         <source>Show or hide the label for the selected parts</source>
         <translation>顯示/隱藏所選元件的標頭</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1397"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1408"/>
         <source>&amp;Import...</source>
         <translation>匯入 (&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1398"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1409"/>
         <source>Import a part</source>
         <translation>匯入元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1401"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1412"/>
         <source>&amp;Export...</source>
         <translation>匯出 (&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1402"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1413"/>
         <source>Export selected part</source>
         <translation>匯出所選元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1405"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3075"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1416"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3086"/>
         <source>Add Bendpoint</source>
         <translation>新增彎曲點</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1406"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1417"/>
         <source>Add a bendpoint to the selected wire</source>
         <translation>在選取的線路上，新增彎曲點</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1409"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1410"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1420"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1421"/>
         <source>Select outdated parts</source>
         <translation>選取過時的元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1413"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1414"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1424"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1425"/>
         <source>Update selected parts</source>
         <translation>更新選取的元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1417"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1428"/>
         <source>Open programming window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1418"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1429"/>
         <source>Open microcontroller programming window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1424"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1435"/>
         <source>&amp;Zoom In</source>
         <translation>放大 (&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1425"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1436"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1426"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1437"/>
         <source>Zoom in</source>
         <translation>放大</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1432"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1443"/>
         <source>Ctrl+=</source>
         <translation>Ctrl+=</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1436"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1447"/>
         <source>&amp;Zoom Out</source>
         <translation>縮小 (&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1437"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1448"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1438"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1449"/>
         <source>Zoom out</source>
         <translation>縮小</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1441"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1452"/>
         <source>&amp;Fit in Window</source>
         <translation>與視窗同寬 (&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1442"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1453"/>
         <source>Ctrl+0</source>
         <translation>Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1443"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1454"/>
         <source>Fit in window</source>
         <translation>與視窗同寬</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1446"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1457"/>
         <source>&amp;Actual Size</source>
         <translation>實際大小(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1447"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1458"/>
         <source>Actual (real world physical) size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1450"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1461"/>
         <source>100% Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1451"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1462"/>
         <source>Shift+Ctrl+0</source>
         <translation>Shift+Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1455"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1466"/>
         <source>Align to Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1456"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1467"/>
         <source>Align items to grid when dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1460"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1471"/>
         <source>Set Grid Size...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1461"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1472"/>
         <source>Set the size of the grid to align to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1464"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1475"/>
         <source>Set Background Color ...</source>
         <translation>背景顏色設定...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1465"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1476"/>
         <source>Set the background color for the current view</source>
         <translation>設定目前檢視區背景顏色</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1468"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1479"/>
         <source>&amp;Show Breadboard</source>
         <translation>顯示麵包版 (&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1469"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1480"/>
         <source>Ctrl+1</source>
         <translation>Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1470"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1481"/>
         <source>Show the breadboard view</source>
         <translation>顯示麵包版檢視</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1473"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1484"/>
         <source>&amp;Show Schematic</source>
         <translation>顯示概要圖 (&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1474"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1485"/>
         <source>Ctrl+2</source>
         <translation>Ctrl+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1475"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1486"/>
         <source>Show the schematic view</source>
         <translation>顯示概要圖檢視</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1478"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1489"/>
         <source>&amp;Show PCB</source>
         <translation>顯示 PCB (&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1479"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1490"/>
         <source>Ctrl+3</source>
         <translation>Ctrl+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1480"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1491"/>
         <source>Show the PCB view</source>
         <translation>顯示 PCB 檢視</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1485"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1496"/>
         <source>&amp;Minimize</source>
         <translation>最小化 (&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1486"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1497"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1487"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1498"/>
         <source>Minimize current window</source>
         <translation>最小化目前視窗</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1499"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1510"/>
         <source>Debugger Output</source>
         <translation>Debugger 輸出</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1505"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1516"/>
         <source>Online Tutorials</source>
         <translation>線上教學</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1506"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1517"/>
         <source>Ctrl+?</source>
         <translation>Ctrl+?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1507"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1518"/>
         <source>Open Fritzing help</source>
         <translation>開啟 Fritzing 輔助說明</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1510"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1521"/>
         <source>Online Projects Gallery</source>
         <translation>線上專案展覽室</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1511"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1522"/>
         <source>Open Fritzing examples</source>
         <translation>開啟 Fritzing 範例</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1514"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1525"/>
         <source>Online Parts Reference</source>
         <translation>線上元件參考說明</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1515"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1526"/>
         <source>Open Parts Reference</source>
         <translation>開啟元件參考說明</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1518"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1529"/>
         <source>First Time Help</source>
         <translation>首次輔助說明</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1519"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1530"/>
         <source>Show or Hide First Time Help</source>
         <translation>顯示/隱藏首次輔助說明</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1528"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1539"/>
         <source>Check for updates...</source>
         <translation>版本更新檢查...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1529"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1540"/>
         <source>Check whether a newer version of Fritzing is available for download</source>
         <translation> Fritzing 新版本下載檢查</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1532"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1543"/>
         <source>&amp;About</source>
         <translation>關於(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1537"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1548"/>
         <source>Tips, Tricks and Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1538"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1549"/>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>顯示 Fritzing 好用的提示與技巧</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1541"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1552"/>
         <source>&amp;About Qt</source>
         <translation>關於 Qt(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1542"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1553"/>
         <source>Show Qt&apos;s about box</source>
         <translation>顯示關於 Qt 的對話視窗</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1546"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1550"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1557"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1561"/>
         <source>Report a but you&apos;ve found in Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1549"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1560"/>
         <source>Enable debugging log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1555"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1566"/>
         <source>&amp;Import parts and bins from old version...</source>
         <translation>由舊版本匯入元件與元件庫 (&amp;I)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1556"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1567"/>
         <source>Import parts and bins from previous installation</source>
         <translation>匯入前次安裝的元件與元件庫</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1562"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1573"/>
         <source>&amp;File</source>
         <translation>檔案 (&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1574"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1585"/>
         <source>&amp;Export</source>
         <translation>匯出 (&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1628"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1639"/>
         <source>&amp;Part</source>
         <translation>元件 (&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1640"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1651"/>
         <source>Raise and Lower</source>
         <translation>提高/降低</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1667"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1678"/>
         <source>&amp;View</source>
         <translation>檢視 (&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1688"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1699"/>
         <source>&amp;Window</source>
         <translation>視窗 (&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1695"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1706"/>
         <source>&amp;Trace</source>
         <translation>徑跡 (&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1717"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1728"/>
         <source>&amp;Diagram</source>
         <translation>架構圖 (&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1736"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1747"/>
         <source>&amp;Help</source>
         <translation>說明 (&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1916"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1927"/>
         <source>Delete Ratsnest Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1919"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1930"/>
         <source>Delete Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2415"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2426"/>
         <source>Page Setup</source>
         <translation>版面設定</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2420"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2431"/>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
         <translation>抱歉, &quot;%1&quot; 尚為完成喔！！ </translation>
     </message>
@@ -2359,17 +2359,17 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2537"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2548"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
         <translation>即要將您的 Fritzing 草圖匯出給 EAGLE 佈署軟體，如果您常用的 EDA 工具，需要我們提供更多不同格式的匯出，歡迎您告知我們，更歡迎您貢獻力量。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2601"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2612"/>
         <source>Export SVG...</source>
         <translation>匯出 SVG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2641"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2652"/>
         <source>Fritzing Bill of Materials
 
 </source>
@@ -2378,17 +2378,17 @@ We&apos;re working to avoid this message, and only let you choose between proper
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2643"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2654"/>
         <source>Sketch: 	</source>
         <translation>草圖：    </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2647"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2658"/>
         <source>Date: 	</source>
         <translation>日期：   </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2682"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2693"/>
         <source>
 
 Shopping List
@@ -2405,281 +2405,281 @@ Quantity	Part
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2697"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2708"/>
         <source>Export Bill of Materials (BoM)...</source>
         <translation>匯出 BOM ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2803"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2814"/>
         <source>Export Netlist...</source>
         <translation>匯出巢狀列表...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2839"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2850"/>
         <source>&amp;Autoroute</source>
         <translation>自動佈線 (&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2840"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2851"/>
         <source>Autoroute...</source>
         <translation>自動佈線...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2843"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2844"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2854"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2855"/>
         <source>Set both copper layers clickable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2847"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2848"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2858"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2859"/>
         <source>Set copper top layer clickable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2851"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2852"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2862"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2863"/>
         <source>Set copper bottom layer clickable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2855"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2866"/>
         <source>&amp;Create Trace from Selected Wire(s)</source>
         <translation>由所選線路建立徑跡 (&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2856"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2867"/>
         <source>Create a trace from the selected wire</source>
         <translation>由所選線路建立徑跡</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2865"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2876"/>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
         <translation>本線路不使用自動佈線 (&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2866"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2877"/>
         <source>When autorouting, do not rip up this wire</source>
         <translation>自動佈線時，不去除這條導線</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2873"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2884"/>
         <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2876"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2887"/>
         <source>Select All Traces</source>
         <translation>選取所有徑跡</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2877"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2888"/>
         <source>Select all trace wires</source>
         <translation>選取所有徑跡線路</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2880"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2891"/>
         <source>Force Update Routing Status and Ratsnests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2881"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2892"/>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2884"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2895"/>
         <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
         <translation>選取所有標記徑跡的線路，不自動佈線</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2885"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2896"/>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>選取所有徑跡的線路，不自動佈線</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2888"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2899"/>
         <source>Select All Jumpers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2889"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2900"/>
         <source>Select all jumper parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2892"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2903"/>
         <source>Tidy Wires</source>
         <translation>整理線路</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2893"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2904"/>
         <source>Tidy selected wires</source>
         <translation>整理選取的線路</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2896"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3228"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2907"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3239"/>
         <source>Copper Fill</source>
         <translation>銅線充填</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2897"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2908"/>
         <source>Fill empty regions of the copper layer</source>
         <translation>銅層空白區充填</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2900"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2911"/>
         <source>Remove Copper Fill</source>
         <translation>移除銅層充填</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2901"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2912"/>
         <source>Remove the copper fill</source>
         <translation>移除銅層充填</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2904"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2915"/>
         <source>Design Rules Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2905"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2916"/>
         <source>Select any parts that are too close together for safe board production (w/in 10 mil)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2915"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2926"/>
         <source>Copper Top and Copper Bottom layers are both active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2925"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2936"/>
         <source>Copper Top layer is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2935"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2946"/>
         <source>Copper Bottom layer is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2943"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2954"/>
         <source>Autorouting...</source>
         <translation>自動佈線...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2948"/>
+        <location filename="../src/mainwindow_menu.cpp" line="2959"/>
         <source>Autorouting Progress...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3069"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3080"/>
         <source>Remove Bendpoint</source>
         <translation>移除轉彎點</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3104"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3115"/>
         <source>Please choose the previous Fritzing folder...</source>
         <translation>請選前次安裝 Fritzing 的資料夾...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3111"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3122"/>
         <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
         <translation>資料夾 &quot;%1&quot; 不是 Fritzing 前次安裝資料夾</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3145"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3156"/>
         <source>You will have to restart Fritzing in order to use the imported parts</source>
         <translation>你必須重先開啟 Fritzing ，才能使用這些匯入的元件。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3166"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3177"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
         <translation>草圖還沒有版子，請先增加一個 PCB 版，才能使用銅層充填。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3177"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3188"/>
         <source>Fritzing error: unable to render board svg (1).</source>
         <translation>Fritzing 錯誤: 無法產製版子 svg (1).</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3189"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3201"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3200"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3212"/>
         <source>Fritzing error: unable to render copper svg (1).</source>
         <translation>Fritzing 錯誤: 無法產製銅 svg (1).</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3214"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3223"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3225"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3234"/>
         <source>Fritzing error: unable to write copper fill.</source>
         <translation>Fritzing 錯誤: 無法產製銅層充填。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3262"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3273"/>
         <source>Remove copper fill</source>
         <translation>移除銅層充填</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3305"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3316"/>
         <source>&amp;Wire Color</source>
         <translation>線路顏色 (&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3432"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3443"/>
         <source>%1 Background</source>
         <translation>%1 背景</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3447"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3458"/>
         <source>Change background color for %1 from %2 to %3</source>
         <translation> %1 的背景顏色由 %2 變更為 %3 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3555"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3566"/>
         <source>Launch %1...</source>
         <translation>啟動 %1...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3637"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3648"/>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
         <translation>沒有發現舊元件！
 您目前所使用的都是最新的元件。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3641"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3652"/>
         <source>Outdated parts</source>
         <translation>舊元件</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow_menu.cpp" line="3642"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3653"/>
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation>
             <numerusform>發現 %n 個舊元件，是否現在就更新？</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3676"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3687"/>
         <source>No new part found for %1.
 </source>
         <translation> %1 已是最新元件。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3686"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3697"/>
         <source>Unknown module id for %1.
 </source>
         <translation> %1 含有未知的模組 ID </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3711"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3722"/>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
         <translation> %1 個元件更新成功。
 請檢查所有檢視，是否產生副作用！</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3717"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3728"/>
         <source>Update %1 part(s)</source>
         <translation>更新第 %1 個元件</translation>
     </message>
@@ -2774,7 +2774,7 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="1187"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2343"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2345"/>
         <source>Resize board to %1 %2</source>
         <translation>將板子大小變為 %1 %2</translation>
     </message>
@@ -2784,17 +2784,17 @@ Reason: %2 (errcode %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2174"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2176"/>
         <source>Change trace layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2395"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2397"/>
         <source>Delete ratsnest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2424"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2426"/>
         <source>Create and connect trace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3921,13 +3921,13 @@ Vertical scroll</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="425"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="435"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="382"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="392"/>
         <location filename="../src/fapplication.cpp" line="662"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
         <location filename="../src/fritzingwindow.cpp" line="144"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3110"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3144"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3121"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3155"/>
         <location filename="../src/model/modelbase.cpp" line="63"/>
         <location filename="../src/model/modelbase.cpp" line="76"/>
         <location filename="../src/model/modelbase.cpp" line="87"/>
@@ -3948,8 +3948,8 @@ Vertical scroll</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="425"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="435"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="382"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="392"/>
         <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3980,16 +3980,16 @@ Vertical scroll</source>
         <translation>編輯連結</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3281"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3287"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3295"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3292"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3298"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3306"/>
         <source>Part</source>
         <translation>元件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3302"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3331"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3353"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3313"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3342"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3364"/>
         <source>Wire</source>
         <translation>線路</translation>
     </message>
