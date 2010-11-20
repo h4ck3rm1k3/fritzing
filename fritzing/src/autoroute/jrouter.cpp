@@ -1272,7 +1272,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		end2 = subedge->toConnectorItem->sceneAdjustedTerminalPoint(NULL);
 	}
 	else {
-		end2 = this->calcWireEndPoint(subedge->fromWire, end1, seedTreeList);
+		end2 = this->calcWireEndPoint(subedge->toWire, end1, seedTreeList);
 	}
 	
 	// figure out first points from both ends
@@ -1367,18 +1367,30 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 	root->parent = NULL;
 	root->direction = SeedTree::None;
 	root->directionChanges = 0;
+	root->restrictionMax = std::numeric_limits<int>::max();
+	root->restrictionMin = std::numeric_limits<int>::min();
+	root->restricted = false;
 	todoList.append(root);
 	SeedTree * candidate = NULL;
 
 	while (todoList.count() > 0) {
 		SeedTree * currentSeedTree = todoList.takeFirst();
-		//path.removeOne(currentSeedTree->seed);
+		QRectF r;
+		tileToRect(currentSeedTree->seed, r);
+		DebugDialog::debug(QString("from seed %1 %2 %3 %4")
+								.arg(TiGetWave(currentSeedTree->seed))
+								.arg(currentSeedTree->restricted)
+								.arg(currentSeedTree->restrictionMin)
+								.arg(currentSeedTree->restrictionMax), 
+							r);
 
+
+		if (!currentSeedTree->restricted) {
+			path.removeOne(currentSeedTree->seed);
+		}
+
+		QList<Tile *> toRemove;
 		foreach (Tile * seed, path) {
-			if (TiGetWave(seed) >= TiGetWave(currentSeedTree->seed)) {
-				continue;
-			}
-
 			SeedTree::Direction direction = SeedTree::None;
 
 			if (LEFT(seed) == RIGHT(currentSeedTree->seed)) {
@@ -1386,23 +1398,55 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 				if (!enoughOverlapVertical(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
 					continue;
 				}
+				if (currentSeedTree->restricted) {
+					if (currentSeedTree->direction != direction) continue;
+					qreal rmin = qMax(currentSeedTree->restrictionMin, YMIN(seed));
+					qreal rmax = qMin(currentSeedTree->restrictionMax, YMAX(seed));
+					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+						continue;
+					}
+				}
 			}
 			else if (RIGHT(seed) == LEFT(currentSeedTree->seed)) {
 				direction = SeedTree::Left;
 				if (!enoughOverlapVertical(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
 					continue;
 				}
+				if (currentSeedTree->restricted) {
+					if (currentSeedTree->direction != direction) continue;
+					qreal rmin = qMax(currentSeedTree->restrictionMin, YMIN(seed));
+					qreal rmax = qMin(currentSeedTree->restrictionMax, YMAX(seed));
+					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+						continue;
+					}
+				}
 			}
 			else if (YMAX(seed) == YMIN(currentSeedTree->seed)) {
+				direction = SeedTree::Up;
+				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
+					continue;
+				}
+				if (currentSeedTree->restricted) {
+					if (currentSeedTree->direction != direction) continue;
+					qreal rmin = qMax(currentSeedTree->restrictionMin, LEFT(seed));
+					qreal rmax = qMin(currentSeedTree->restrictionMax, RIGHT(seed));
+					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+						continue;
+					}
+				}
+			}
+			else if (YMIN(seed) == YMAX(currentSeedTree->seed)) {
 				direction = SeedTree::Down;
 				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
 					continue;
 				}
-			}
-			else if (YMIN(seed) == YMAX(currentSeedTree->seed)) {
-				direction = SeedTree::Up;
-				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
-					continue;
+				if (currentSeedTree->restricted) {
+					if (currentSeedTree->direction != direction) continue;
+					qreal rmin = qMax(currentSeedTree->restrictionMin, LEFT(seed));
+					qreal rmax = qMin(currentSeedTree->restrictionMax, RIGHT(seed));
+					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+						continue;
+					}
 				}
 			}
 			else {
@@ -1411,10 +1455,33 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 
 			SeedTree * newst = new SeedTree;
 			newst->seed = seed;
-			QRectF r;
+			newst->restrictionMin = std::numeric_limits<int>::min();
+			newst->restrictionMax = std::numeric_limits<int>::max();
+			newst->restricted = false;
 			tileToRect(seed, r);
-			DebugDialog::debug("next candidate", r);
+			DebugDialog::debug(QString("    next seed %1").arg(TiGetWave(seed)), r);
 			newst->direction = direction;
+			switch(direction) {
+				case SeedTree::Up:
+				case SeedTree::Down:
+					if (YMAX(seed) - YMIN(seed) < m_wireWidthNeeded - FloatingPointFudge) {
+						newst->restrictionMax = qMin(currentSeedTree->restrictionMax, RIGHT(currentSeedTree->seed));
+						newst->restrictionMin = qMax(currentSeedTree->restrictionMin, LEFT(currentSeedTree->seed));
+						newst->restricted = true;
+					}
+					break;
+				case SeedTree::Left:
+				case SeedTree::Right:
+					if (RIGHT(seed) - LEFT(seed) < m_wireWidthNeeded - FloatingPointFudge) {
+						newst->restrictionMax = qMin(currentSeedTree->restrictionMax, YMAX(currentSeedTree->seed));
+						newst->restrictionMin = qMax(currentSeedTree->restrictionMin, YMIN(currentSeedTree->seed));
+						newst->restricted = true;
+					}
+					break;
+				default:
+					break;
+			}
+
 			if (currentSeedTree->direction == SeedTree::None || currentSeedTree->direction == direction) {
 				newst->directionChanges = currentSeedTree->directionChanges;
 			}
@@ -1484,7 +1551,6 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, bool forEmpty)
 			
 		short fof = checkCandidate(subedge, seed, forEmpty);
 		QRectF r(x1, y1, x2 - x1, y2 - y1);
-		DebugDialog::debug("=================", r);
 
 		DebugDialog::debug(QString("wave:%1 fof:%2").arg(TiGetWave(seed)).arg(fof), r);
 		gridEntry = drawGridItem(x1, y1, x2, y2, fof, gridEntry);
@@ -1499,6 +1565,7 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, bool forEmpty)
 			continue;			// blocked
 		}
 
+		DebugDialog::debug("=================", r);
 		path.append(seed);
 		seedNext(seed, seeds);
 	}

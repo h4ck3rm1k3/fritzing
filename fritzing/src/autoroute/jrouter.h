@@ -81,6 +81,9 @@ struct SeedTree {
 		Down
 	};
 	
+	qreal restrictionMin;
+	qreal restrictionMax;
+	bool restricted;
 	struct Tile * seed;
 	SeedTree * parent;
 	Direction direction;
