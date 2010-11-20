@@ -3942,8 +3942,8 @@ Avanze Vertical</translation>
         <translation>Vista de Protoboard (placa de Prototipos)</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="382"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="392"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="380"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="390"/>
         <location filename="../src/fapplication.cpp" line="662"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
         <location filename="../src/fritzingwindow.cpp" line="144"/>
@@ -3969,8 +3969,8 @@ Avanze Vertical</translation>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="382"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="392"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="380"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="390"/>
         <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5231,6 +5231,11 @@ ya se encuentra ahí, no la vamos a agregar de nuevo ¿o si?</translation>
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="71"/>
         <source>Turkish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="73"/>
+        <source>Swedish - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

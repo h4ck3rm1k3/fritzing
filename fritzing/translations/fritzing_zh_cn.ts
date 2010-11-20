@@ -4173,6 +4173,10 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>Turkish - %1</source>
         <translation>土耳其语 - %1</translation>
     </message>
+    <message>
+        <source>Swedish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>

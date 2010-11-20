@@ -4109,6 +4109,10 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>Turkish - %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Swedish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UpdateDialog</name>

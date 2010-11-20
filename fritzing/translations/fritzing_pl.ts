@@ -3902,8 +3902,8 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="382"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="392"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="380"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="390"/>
         <location filename="../src/fapplication.cpp" line="662"/>
         <location filename="../src/fritzingwindow.cpp" line="53"/>
         <location filename="../src/fritzingwindow.cpp" line="144"/>
@@ -3929,8 +3929,8 @@ Vertical scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/autoroute/jrouter.cpp" line="382"/>
-        <location filename="../src/autoroute/jrouter.cpp" line="392"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="380"/>
+        <location filename="../src/autoroute/jrouter.cpp" line="390"/>
         <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5207,6 +5207,11 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/dialogs/translatorlistmodel.cpp" line="71"/>
         <source>Turkish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/translatorlistmodel.cpp" line="73"/>
+        <source>Swedish - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

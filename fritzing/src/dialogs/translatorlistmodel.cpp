@@ -70,6 +70,8 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 
 		m_languages.insert("turkish", tr("Turkish - %1").arg("Türkçe"));
 
+		m_languages.insert("swedish", tr("Swedish - %1").arg("Svenska"));
+
         // More languages written in their own language can be found
         // at http://www.mozilla.com/en-US/firefox/all.html
 
@@ -79,6 +81,10 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 		//		3. ignore the first two bytes (these are a signal that says "I'm unicode")
 		//		4. initialize an array of ushort using the rest of the byte pairs
 		//		5. don't forget to reverse the order of the bytes in each pair.
+
+		// to add a new language to fritzing, find its two-letter language code: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+		// then in the translations.pri file, add a new line translations/fritzing_XX.ts where you substitute the two letters for "XX".
+		// If the language has multiple dialects, then you will need to add _YY to distinguish
 	}
 
 	if (m_localeList.count() == 0) {

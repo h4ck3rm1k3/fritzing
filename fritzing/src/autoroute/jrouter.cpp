@@ -61,13 +61,11 @@ $Date$
 //		sometimes takes a longer route than expected; why?
 //		off-by-one weirdness with rasterizer
 //		dc motor example: routing into border area
-//		parking assistant: overlaps
-//		op-amp: weird dangling tiny trace
-//		dogleg sometimes draws tiny trace within destination (op-amp example).  This may be ok...
+//		parking assistant: overlaps, routing into border area
 //		midi drum kit: overlaps
 //		loop: funny attachment to connectors
 //		lcd example: runs outside of border; overlaps
-//		not routing a second time
+//		rip up not removing split traces from previous run
 //
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
