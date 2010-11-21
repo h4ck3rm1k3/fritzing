@@ -50,11 +50,6 @@ $Date$
 //				when such tile is found, do normal trace search on the other side from via to connector
 //
 //	option to turn off propagation feedback
-//
-//	deal with using traces as source and dest
-//		why does start wire look screwy
-//		figure out end wire point
-//
 //	remove debugging output and extra calls to processEvents
 //
 //	bugs: 
@@ -63,14 +58,11 @@ $Date$
 //		dc motor example: routing into border area
 //		parking assistant: overlaps, routing into border area
 //		midi drum kit: overlaps
-//		loop: funny attachment to connectors
-//		lcd example: runs outside of border; overlaps
+//		lcd example: runs outside of border; overlaps, goes boom
 //		rip up not removing split traces from previous run
 //
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
-//
-//	fix endpoint calculation for wire
 //
 //	redo non-manhattan wires
 //
@@ -916,6 +908,8 @@ bool JRouter::traceSubedge(JSubedge* subedge, ItemBase * board, QHash<Wire *, JE
 	if (tile) {
 
 		// TODO: handle wire stickyness
+		// TODO: get rid of clean type
+		// TODO: make sure that spliteTrace succeeds if trace was not autoroutable
 
 
 		/*
@@ -934,12 +928,21 @@ bool JRouter::traceSubedge(JSubedge* subedge, ItemBase * board, QHash<Wire *, JE
 		}
 		*/
 
-
 		if (subedge->fromConnectorItem == NULL) {
 			subedge->fromConnectorItem = splitTrace(subedge->fromWire, subedge->fromPoint, board);
+			Wire * split = qobject_cast<Wire *>(subedge->fromConnectorItem->attachedTo());
+			JEdge * edge = tracesToEdges.value(subedge->fromWire);
+			if (edge) {
+				tracesToEdges.insert(split, edge);
+			}
 		}
 		if (subedge->toConnectorItem == NULL) {
 			subedge->toConnectorItem = splitTrace(subedge->toWire, subedge->toPoint, board);
+			Wire * split = qobject_cast<Wire *>(subedge->toConnectorItem->attachedTo());
+			JEdge * edge = tracesToEdges.value(subedge->toWire);
+			if (edge) {
+				tracesToEdges.insert(split, edge);
+			}
 		}
 
 		// hook everyone up
@@ -1263,6 +1266,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		}
 		end1 = this->calcWireEndPoint(subedge->fromWire, end2, revSeedTreeList);
 	}
+	subedge->fromPoint = end1;
 	if (forEmpty) {
 		end2 = calcSpaceEndPoint(subedge, end1, seedTreeList);
 	}
@@ -1272,6 +1276,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 	else {
 		end2 = this->calcWireEndPoint(subedge->toWire, end1, seedTreeList);
 	}
+	subedge->toPoint = end2;
 	
 	// figure out first points from both ends
 	QList<QPointF> allPoints;
