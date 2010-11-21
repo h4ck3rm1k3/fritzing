@@ -52,10 +52,9 @@ public:
 	static bool loadTransform(const QDomElement & transformElement, QTransform & transform);
 	static bool is90(const QMatrix & matrix);
 	static void shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2);
-	static bool LiangBarsky (double edgeLeft, double edgeRight, double edgeBottom, double edgeTop,   // Define the x/y clipping values for the border.
-							double x0src, double y0src, double x1src, double y1src,                 // Define the start and end points of the line.
-							double &x0clip, double &y0clip, double &x1clip, double &y1clip);         // The output values, so declare these outside.
-
+	static bool liangBarskyLineClip(double x1, double y1, double x2, double y2, 
+									double wxmin, double wxmax, double wymin, double wymax, 
+									double & x11, double & y11, double & x22, double & y22);
 
 public:
 	static const int IllustratorDPI = 72;

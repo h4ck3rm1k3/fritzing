@@ -56,10 +56,8 @@ $Date$
 //		sometimes takes a longer route than expected; why?
 //		off-by-one weirdness with rasterizer
 //		dc motor example: routing into border area
-//		parking assistant: overlaps, routing into border area
-//		midi drum kit: overlaps
-//		lcd example: runs outside of border; overlaps, goes boom
-//		rip up not removing split traces from previous run
+//		parking assistant: routing into border area
+//		lcd example: runs outside of border; overlaps; really crazy; goes boom
 //
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
@@ -1050,21 +1048,20 @@ int JRouter::drawOneStep(int ix, QList<SeedTree *> & seedTreeList, QList<QPointF
 		// TODO: process events just for debugging
 		ProcessEventBlocker::processEvents();	
 
-		if ((toTileRect.height() < m_wireWidthNeeded) || (toTileRect.width() < m_wireWidthNeeded)) {
-			// don't draw into this tile; assume next tile is in same direction
-			continue;
-		}
-
 		if (toTileRect.right() == fromTileRect.left()) {
+			if (toTileRect.width() < m_wireWidthNeeded) continue;
 			drawDirectionHorizontal(allPoints, fromTileRect, toTileRect);
 		}
 		else if (toTileRect.left() == fromTileRect.right()) {
+			if (toTileRect.width() < m_wireWidthNeeded) continue;
 			drawDirectionHorizontal(allPoints, fromTileRect, toTileRect);
 		}
 		else if (toTileRect.bottom() == fromTileRect.top()) {
+			if (toTileRect.height() < m_wireWidthNeeded) continue;
 			drawDirectionVertical(allPoints, fromTileRect, toTileRect);
 		}
 		else if (toTileRect.top() == fromTileRect.bottom()) {
+			if (toTileRect.height() < m_wireWidthNeeded) continue;
 			drawDirectionVertical(allPoints, fromTileRect, toTileRect);
 		}
 		return i + 1;
@@ -1143,13 +1140,12 @@ QPointF JRouter::calcSpaceEndPoint(JSubedge * subedge, QPointF startPoint, QList
 	return subedge->spacePoint;
 }
 
-QPointF JRouter::calcWireEndPoint(Wire * wire, QPointF & startPoint, QList<SeedTree *> & seedTreeList) {
+QPointF JRouter::calcWireEndPoint(Wire * wire, QPointF startPoint, QList<SeedTree *> & seedTreeList) {
 	int currentDirection = SeedTree::None;
 	for (int i = seedTreeList.count() - 2; i >= 0; i--) {
 		SeedTree * to = seedTreeList.at(i + 1);
 		SeedTree * from = seedTreeList.at(i);
 		if (calcOneStep(from, to, currentDirection, startPoint)) break;
-
 	}
 
 	bool atEndpoint;
@@ -1159,8 +1155,17 @@ QPointF JRouter::calcWireEndPoint(Wire * wire, QPointF & startPoint, QList<SeedT
 	double cx1, cy1, cx2, cy2;
 	QRectF toTileRect;
 	tileToRect(seedTreeList.last()->seed, toTileRect);
-	GraphicsUtils::LiangBarsky(toTileRect.left() + m_halfWireWidthNeeded, toTileRect.right() - m_halfWireWidthNeeded, toTileRect.bottom() - m_halfWireWidthNeeded, toTileRect.top() + m_halfWireWidthNeeded, 
-								p.x(), p.y(), pp.x(), pp.y(), cx1, cy1, cx2, cy2);
+	// clip line in case it's in multiple tiles, and to move it in from the borders
+	qreal dw = 0;
+	if (toTileRect.width() > m_wireWidthNeeded) dw = m_halfWireWidthNeeded;
+	qreal dh = 0;
+	if (toTileRect.height() > m_wireWidthNeeded) dh = m_halfWireWidthNeeded;
+	bool result = GraphicsUtils::liangBarskyLineClip(p.x(), p.y(), pp.x(), pp.y(),
+													 toTileRect.left() + dw, toTileRect.right() - dw, toTileRect.top() + dh, toTileRect.bottom() - dh, 
+													 cx1, cy1, cx2, cy2);
+	if (result == false) {
+		DebugDialog::debug("clip line failure");
+	}
 	GraphicsUtils::distanceFromLine(startPoint.x(), startPoint.y(), cx1, cy1, cx2, cy2, dx, dy, distance, atEndpoint);
 	return QPointF(dx, dy);
 }

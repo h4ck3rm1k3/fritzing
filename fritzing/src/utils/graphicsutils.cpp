@@ -239,40 +239,79 @@ void GraphicsUtils::shortenLine(QPointF & p1, QPointF & p2, qreal d1, qreal d2) 
 	p2.setY(p2.y() + dy2);
 }
 
-// Liang-Barsky function by Daniel White @ http://www.skytopia.com/project/articles/compsci/clipping.html
-// This function inputs 8 numbers, and outputs 4 new numbers (plus a boolean value to say whether the clipped line is drawn at all).
-//
-bool GraphicsUtils::LiangBarsky (double edgeLeft, double edgeRight, double edgeBottom, double edgeTop,   // Define the x/y clipping values for the border.
-                  double x0src, double y0src, double x1src, double y1src,                 // Define the start and end points of the line.
-                  double &x0clip, double &y0clip, double &x1clip, double &y1clip)         // The output values, so declare these outside.
+
+// based on code from http://code-heaven.blogspot.com/2009/05/c-program-for-liang-barsky-line.html
+bool GraphicsUtils::liangBarskyLineClip(double x1, double y1, double x2, double y2, double wxmin, double wxmax, double wymin, double wymax, 
+							double & x11, double & y11, double & x22, double & y22)
 {
-    
-    double t0 = 0.0;    double t1 = 1.0;
-    double xdelta = x1src-x0src;
-    double ydelta = y1src-y0src;
-    double p,q,r;
+	qreal p1 = -(x2 - x1 ); 
+	qreal q1 = x1 - wxmin;
+	qreal p2 = ( x2 - x1 ); 
+	qreal q2 = wxmax - x1;
+	qreal p3 = - ( y2 - y1 ); 
+	qreal q3 = y1 - wymin;
+	qreal p4 = ( y2 - y1 ); 
+	qreal q4 = wymax - y1;
 
-    for(int edge=0; edge<4; edge++) {   // Traverse through left, right, bottom, top edges.
-        if (edge==0) {  p = -xdelta;    q = -(edgeLeft-x0src);  }
-        if (edge==1) {  p = xdelta;     q =  (edgeRight-x0src); }
-        if (edge==2) {  p = -ydelta;    q = -(edgeBottom-y0src);}
-        if (edge==3) {  p = ydelta;     q =  (edgeTop-y0src);   }   
-        r = q/p;
-        if(p==0 && q<0) return false;   // Don't draw line at all. (parallel line outside)
+	x11 = x1;
+	y11 = y1;
+	x22 = x2;
+	y22 = y2;
 
-        if(p<0) {
-            if(r>t1) return false;         // Don't draw line at all.
-            else if(r>t0) t0=r;            // Line is clipped!
-        } else if(p>0) {
-            if(r<t0) return false;      // Don't draw line at all.
-            else if(r<t1) t1=r;         // Line is clipped!
-        }
-    }
+	if( ( ( p1 == 0.0 ) && ( q1 < 0.0 ) ) ||
+		( ( p2 == 0.0 ) && ( q2 < 0.0 ) ) ||
+		( ( p3 == 0.0 ) && ( q3 < 0.0 ) ) ||
+		( ( p4 == 0.0 ) && ( q4 < 0.0 ) ) )
+	{
+		return false;
+	}
 
-    x0clip = x0src + t0*xdelta;
-    y0clip = y0src + t0*ydelta;
-    x1clip = x0src + t1*xdelta;
-    y1clip = y0src + t1*ydelta;
+	double u1 = 0.0, u2 = 1.0;
 
-    return true;        // (clipped) line is drawn
+	if( p1 != 0.0 )
+	{
+		double r1 = q1 /p1 ;
+		if( p1 < 0 )
+			u1 = qMax(r1, u1 );
+		else
+			u2 = qMin(r1, u2 );
+	}
+	if( p2 != 0.0 )
+	{
+		double r2 = q2 /p2 ;
+		if( p2 < 0 )
+			u1 = qMax(r2, u1 );
+		else
+			u2 = qMin(r2, u2 );
+
+	}
+	if( p3 != 0.0 )
+	{
+		double r3 = q3 /p3 ;
+		if( p3 < 0 )
+			u1 = qMax(r3, u1 );
+		else
+			u2 = qMin(r3, u2 );
+	}
+	if( p4 != 0.0 )
+	{
+		double r4 = q4 /p4 ;
+		if( p4 < 0 )
+			u1 = qMax(r4, u1 );
+		else
+			u2 = qMin(r4, u2 );
+	}
+
+	if( u1 > u2 ) {
+		return false;
+	}
+
+	x11 = x1 + u1 * ( x2 - x1 ) ;
+	y11 = y1 + u1 * ( y2 - y1 ) ;
+
+	x22 = x1 + u2 * ( x2 - x1 );
+	y22 = y1 + u2 * ( y2 - y1 );
+
+	return true;
 }
+

@@ -170,7 +170,7 @@ protected:
 	Tile * tileOneWire(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, Wire * w);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *, VirtualWire *);
 	void reorderEdges(QList<JEdge *> & edges, QHash<Wire *, JEdge *> & tracesToEdges);
-	QPointF calcWireEndPoint(Wire * wire, QPointF & startPoint, QList<SeedTree *> & seedTreeList);
+	QPointF calcWireEndPoint(Wire * wire, QPointF startPoint, QList<SeedTree *> & seedTreeList);
 	QPointF calcSpaceEndPoint(JSubedge * subedge, QPointF startPoint, QList<SeedTree *> & seedTreeList);
 	bool calcOneStep(SeedTree * from, SeedTree * to, int & currentDirection, QPointF & startPoint);
 	int drawOneStep(int i, QList<SeedTree *> & seedTreeList, QList<QPointF> & allPoints);
