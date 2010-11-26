@@ -37,7 +37,12 @@
         <pcbView>
             <layers image="pcb/LED-TRICOLOR-THROUGHHOLE_SparkFun.svg">
                 <layer layerId="copper0"/>
-            <layer layerId="copper1"/></layers>
+            	<layer layerId="copper1"/>
+                <layer layerId="silkscreen"/>
+                <layer layerId="keepout"/>
+                <layer layerId="soldermask"/>
+                <layer layerId="outline"/>
+			</layers>
         </pcbView>
     </views>
     <connectors>
