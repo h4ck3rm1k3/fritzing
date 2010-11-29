@@ -200,7 +200,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="e89358121bacffbe9b6372e42e4799f4" modelIndex="24" path="parts/core/led-rgb.fzp">
+        <instance moduleIdRef="f5sadfcefde5f807268983b38d37da5d" modelIndex="24" path="parts/core/led-rgb-4pin-anode.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

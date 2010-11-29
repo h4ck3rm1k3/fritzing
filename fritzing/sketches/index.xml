@@ -22,6 +22,7 @@
 		<sketch id="Photocell" name="Photocell" src="core/Photocell.fz"/>
 		<sketch id="Parking" name="Parking Assistant (Infrared)" src="core/Parking-Assistant.fz"/>
 		<sketch id="Relay" name="Relay" src="core/Relay.fz"/>
+		<sketch id="RGB_LED" name="Colored Light (RGB LED)" src="core/RGB-LED.fz"/>
 		<sketch id="Shift_Register" name="Shift Register" src="core/Shift_Register.fz"/>
 		<sketch id="Shift_Register2" name="Shift Register (double-sided)" src="core/Shift_Register_double_sided.fz"/>
 		<sketch id="Stepper_Motor" name="Stepper Motor" src="core/Stepper_Motor.fz"/>
@@ -65,6 +66,7 @@
 					<sketch id="AnalogInputOutput"/>
 					<sketch id="Melody"/>
 					<sketch id="Window_Alarm"/>
+					<sketch id="RGB_LED"/>
 				</category>
 			</category>
 			<category name="Sensors">
@@ -100,6 +102,7 @@
 					<sketch id="Loop"/>
 					<sketch id="Parking"/>
 					<sketch id="TrafficLight"/>
+					<sketch id="RGB_LED"/>
 					<sketch id="Shift_Register"/>
 					<sketch id="Shift_Register2"/>
 					<sketch id="AnalogInputOutput"/>
