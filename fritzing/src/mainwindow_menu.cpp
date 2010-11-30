@@ -463,7 +463,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	}
 	*/
 
-	QImage watermark(":resources/images/fritzing_watermark.png");
+	QImage watermark(":resources/images/watermark_fritzing.png");
 
 	QSize imgSize(width, height + watermark.height());
 	QImage image(imgSize,format);

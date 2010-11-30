@@ -34,7 +34,6 @@ $Date$
 //	make DRC available from trace menu
 //
 //	schematic view: blocks parts, not traces
-//	schematic view: come up with a max board size
 //
 //	fix up cancel/stop: 
 //		stop either stops you where you are, 
@@ -53,11 +52,11 @@ $Date$
 //	remove debugging output and extra calls to processEvents
 //
 //	bugs: 
-//		sometimes takes a longer route than expected; why?
 //		off-by-one weirdness with rasterizer
 //		dc motor example: routing into border area
 //		parking assistant: routing into border area
-//		lcd example: runs outside of border; overlaps; really crazy; goes boom
+//		stepper motor: longer routes than expected
+//		lcd example: routing into border area; overlaps; weirdness with connecting to traces
 //
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
@@ -506,7 +505,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 	}
 	else {
 		m_maxRect = m_sketchWidget->scene()->itemsBoundingRect();
-		m_maxRect.adjust(-m_maxRect.width() / 4, -m_maxRect.height() / 4, m_maxRect.width() / 4, m_maxRect.height() / 4);
+		m_maxRect.adjust(-m_maxRect.width() / 2, -m_maxRect.height() / 2, m_maxRect.width() / 2, m_maxRect.height() / 2);
 	}
 
 	QRectF bufferRect(m_maxRect);

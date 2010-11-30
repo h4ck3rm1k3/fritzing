@@ -46,8 +46,6 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	m_terminalPoint = NON_DEFINED_TERMINAL_POINT;
 	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
-
-	createTerminalPoint();
 }
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds)
