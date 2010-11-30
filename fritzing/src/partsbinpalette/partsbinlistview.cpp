@@ -68,6 +68,7 @@ PartsBinListView::~PartsBinListView() {
 }
 
 void PartsBinListView::doClear() {
+	m_hoverItem = NULL;
 	PartsBinView::doClear();
 	clear();
 }
@@ -116,7 +117,12 @@ void PartsBinListView::mouseMoveEvent(QMouseEvent *event) {
 
 	if(m_infoViewOnHover) {
 		QListWidgetItem * item = itemAt(event->pos());
-		showInfo(item);
+		if (item != NULL) {
+			showInfo(item);
+		}
+		else {
+			m_hoverItem = NULL;
+		}
 	}
 
 	QListWidget::mouseMoveEvent(event);
@@ -154,6 +160,7 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 
 	QListWidgetItem * current = currentItem();
 	if (current == NULL) {
+		m_hoverItem = NULL;
 		m_infoView->viewItemInfo(NULL, NULL, false);
 		return;
 	}
@@ -167,6 +174,7 @@ void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
 }
 
 void PartsBinListView::removePart(const QString &moduleID) {
+	m_hoverItem = NULL;
 	int idxToRemove = position(moduleID);
 	if(idxToRemove > -1) {
 		m_partHash.remove(moduleID);
@@ -175,6 +183,7 @@ void PartsBinListView::removePart(const QString &moduleID) {
 }
 
 void PartsBinListView::removeParts() {
+	m_hoverItem = NULL;
     m_partHash.clear();
     while (count() > 0) {
         delete takeItem(0);
