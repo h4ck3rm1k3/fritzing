@@ -106,9 +106,23 @@
                                 </div>
                                 <div class="documentActions">
                                     <ul>
-																				<li>
-																					<a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=fritzing"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=fritzing"></script>
-																				</li>
+				    <li>
+				    <div id="google_translate_element"></div>
+				    </li>
+				    <script>
+					function googleTranslateElementInit() {
+					  new google.translate.TranslateElement({
+					    pageLanguage: 'en',
+					    gaTrack: true,
+					    gaId: 'UA-316017-6',
+					    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+					  }, 'google_translate_element');
+					}
+				    </script>
+				     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+				<li>
+					<a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=fritzing"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=fritzing"></script>
+				</li>
                                         {% if request.user.is_authenticated and current_page %}
                                         <li id="document-action-sendto">
                                             <a href="/admin/pages/page/{{ current_page.pk }}/" title="">Edit</a>
