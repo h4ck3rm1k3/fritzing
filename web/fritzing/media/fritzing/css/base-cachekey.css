@@ -2792,5 +2792,14 @@ code {
 	overflow: auto;
 }
 
+/* for Google Translate */
 
-
+#region-content div.documentActions ul {
+	margin-left: 0;
+}
+div.documentActions div {
+	display: inline;
+}
+#google_translate_element {
+	float:left;
+}
