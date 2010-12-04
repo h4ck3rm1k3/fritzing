@@ -272,9 +272,5 @@
             <nodeMember connectorId="connector11"/>
             <nodeMember connectorId="connector12"/>
         </bus>
-        <bus id="plusV">
-            <nodeMember connectorId="connector7"/>
-            <nodeMember connectorId="connector15"/>
-        </bus>
     </buses>
 </module>
