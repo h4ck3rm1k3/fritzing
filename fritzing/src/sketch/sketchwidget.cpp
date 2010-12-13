@@ -732,7 +732,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	if (itemBase == this->m_lastPaletteItemSelected) {
 		setLastPaletteItemSelected(NULL);
 	}
-	m_lastSelected.removeOne(itemBase);
+	// m_lastSelected.removeOne(itemBase); hack for 4.5.something
 
 	if (deleteModelPart) {
 		ModelPart * modelPart = itemBase->modelPart();
@@ -2703,18 +2703,18 @@ void SketchWidget::scene_selectionChanged() {
 	// DebugDialog::debug("selection changed");
 	// TODO: this can be dangerous if an item is on m_lastSelected and the item is deleted without being deselected first.
 
-	// hack to make up for missing selection state updates
-	foreach (QGraphicsItem * item, m_lastSelected) {
-		item->update();
-	}
+	// hack in 4.5.something? to make up for missing selection state updates
+	//foreach (QGraphicsItem * item, m_lastSelected) {
+	//	item->update();
+	//}
 
-	m_lastSelected = scene()->selectedItems();
+	// m_lastSelected = scene()->selectedItems();
 	emit selectionChangedSignal();
 
 	// hack to make up for missing selection state updates
-	foreach (QGraphicsItem * item, m_lastSelected) {
-		item->update();
-	}
+	//foreach (QGraphicsItem * item, m_lastSelected) {
+	//	item->update();
+	//}
 
 	if (m_holdingSelectItemCommand != NULL) {
 		//DebugDialog::debug("update holding command");

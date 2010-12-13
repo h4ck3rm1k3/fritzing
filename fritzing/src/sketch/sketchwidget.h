@@ -493,7 +493,7 @@ protected:
 	QPointF m_droppingOffset;
 	QPointer<ItemBase> m_droppingItem;
 	int m_moveEventCount;
-	QList<QGraphicsItem *> m_lastSelected;
+	//QList<QGraphicsItem *> m_lastSelected;  hack for 4.5.something
 	ViewLayer::ViewLayerID m_wireViewLayerID;
 	ViewLayer::ViewLayerID m_partViewLayerID;
 	ViewLayer::ViewLayerID m_rulerViewLayerID;

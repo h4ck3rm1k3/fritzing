@@ -561,67 +561,101 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 		}
 	}
 
-	// deal with "rectangular" elements first
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		// TODO: need to leave expansion area around coords?
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem != NULL) {
-			if (!connectorItem->attachedTo()->isVisible()) continue;
-			if (connectorItem->attachedTo()->hidden()) continue;
-			if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
-			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+	if (m_sketchWidget->autorouteCheckConnectors()) {
+		// deal with "rectangular" elements first
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+			// TODO: need to leave expansion area around coords?
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (connectorItem != NULL) {
+				if (!connectorItem->attachedTo()->isVisible()) continue;
+				if (connectorItem->attachedTo()->hidden()) continue;
+				if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
+				if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 
-			DebugDialog::debug(QString("coords connectoritem %1 %2 %3 %4 %5")
-									.arg(connectorItem->connectorSharedID())
-									.arg(connectorItem->connectorSharedName())
-									.arg(connectorItem->attachedToTitle())
-									.arg(connectorItem->attachedToID())
-									.arg(connectorItem->attachedToInstanceTitle())
-							);
+				DebugDialog::debug(QString("coords connectoritem %1 %2 %3 %4 %5")
+										.arg(connectorItem->connectorSharedID())
+										.arg(connectorItem->connectorSharedName())
+										.arg(connectorItem->attachedToTitle())
+										.arg(connectorItem->attachedToID())
+										.arg(connectorItem->attachedToInstanceTitle())
+								);
 
-			addTile(connectorItem, CONNECTOR, thePlane, alreadyTiled);
-			if (alreadyTiled.count() > 0) {
-				return thePlane;
+				addTile(connectorItem, CONNECTOR, thePlane, alreadyTiled);
+				if (alreadyTiled.count() > 0) {
+					return thePlane;
+				}
+
+				continue;
 			}
+			NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
+			if (nonConnectorItem != NULL) {
+				if (!nonConnectorItem->attachedTo()->isVisible()) continue;
+				if (nonConnectorItem->attachedTo()->hidden()) continue;
+				if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 
-			continue;
-		}
-		NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-		if (nonConnectorItem != NULL) {
-			if (!nonConnectorItem->attachedTo()->isVisible()) continue;
-			if (nonConnectorItem->attachedTo()->hidden()) continue;
-			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+				DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
+										.arg(nonConnectorItem->attachedToTitle())
+										.arg(nonConnectorItem->attachedToID())
+										);
 
-			DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
-									.arg(nonConnectorItem->attachedToTitle())
-									.arg(nonConnectorItem->attachedToID())
-									);
+				addTile(nonConnectorItem, NONCONNECTOR, thePlane, alreadyTiled);
+				if (alreadyTiled.count() > 0) {
+					return thePlane;
+				}
 
-			addTile(nonConnectorItem, NONCONNECTOR, thePlane, alreadyTiled);
-			if (alreadyTiled.count() > 0) {
-				return thePlane;
+				continue;
 			}
-
-			continue;
 		}
 	}
 
-	// now insert the wires
-	QList<Wire *> beenThere;
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (!wire->isVisible()) continue;
-		if (wire->hidden()) continue;
-		if (!wire->getTrace()) continue;
-		if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
-		if (beenThere.contains(wire)) continue;
+	if (m_sketchWidget->autorouteCheckWires()) {
+		// now insert the wires
+		QList<Wire *> beenThere;
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+			Wire * wire = dynamic_cast<Wire *>(item);
+			if (wire == NULL) continue;
+			if (!wire->isVisible()) continue;
+			if (wire->hidden()) continue;
+			if (!wire->getTrace()) continue;
+			if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
+			if (beenThere.contains(wire)) continue;
 
-		tileWire(wire, thePlane, beenThere, alreadyTiled);
-		if (alreadyTiled.count() > 0) {
-			return thePlane;
-		}	
+			tileWire(wire, thePlane, beenThere, alreadyTiled);
+			if (alreadyTiled.count() > 0) {
+				return thePlane;
+			}	
+		}
 	}
+
+
+	if (m_sketchWidget->autorouteCheckParts()) {
+		QList<Wire *> beenThere;
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+			if (itemBase == NULL) continue;
+
+			if (itemBase->itemType() == ModelPart::Wire) {
+				Wire * wire = dynamic_cast<Wire *>(item);
+				if (wire == NULL) continue;
+				if (!wire->isVisible()) continue;
+				if (wire->hidden()) continue;
+				if (!wire->getTrace()) continue;
+				if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
+				if (beenThere.contains(wire)) continue;
+
+				//tileWire(wire, thePlane, beenThere, alreadyTiledWithWireCrossing);
+				if (alreadyTiled.count() > 0) {
+					return thePlane;
+				}
+
+				continue;
+			}
+
+			//tilePart(itemBase, thePlane);
+		}
+	}
+
+
 
 	return thePlane;
 }
