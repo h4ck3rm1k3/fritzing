@@ -62,6 +62,8 @@ struct ItemCount {
 	int selHFlipable;
 	int selVFlipable;
 	int obsoleteCount;
+	int moveLockCount;
+	int wireCount;
 };
 
 class SketchWidget : public InfoGraphicsView

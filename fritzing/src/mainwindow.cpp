@@ -280,6 +280,7 @@ void MainWindow::init() {
 
 	this->installEventFilter(this);
 
+
 	QSettings settings;
 	m_viewSwitcherDock->prestorePreference();
 	if(!settings.value("main/state").isNull()) {
@@ -287,6 +288,7 @@ void MainWindow::init() {
 		restoreGeometry(settings.value("main/geometry").toByteArray());
 	}
 	m_viewSwitcherDock->restorePreference();
+	m_viewSwitcherDock->setViewSwitcher(m_viewSwitcher);
 
 	setMinimumSize(0,0);
 	m_tabWidget->setMinimumWidth(500);

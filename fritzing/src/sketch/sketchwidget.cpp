@@ -1836,6 +1836,7 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
 		ItemBase *itemBase = dynamic_cast<ItemBase *>(gitem);
 		if (itemBase == NULL) continue;
+		if (itemBase->moveLock()) continue;
 
 		items.append(itemBase);
 	}
@@ -1850,6 +1851,8 @@ void SketchWidget::prepMove(ItemBase * originatingItem) {
 		}
 
 		ItemBase * chief = itemBase->layerKinChief();
+		if (chief->moveLock()) continue;
+
 		m_savedItems.insert(chief);
 		if (chief->sticky()) {
 			foreach(ItemBase * sitemBase, chief->stickyList()) {
@@ -3033,11 +3036,17 @@ ItemCount SketchWidget::calcItemCount() {
 	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable  = itemCount.sel45Rotatable = 0;
 	itemCount.itemsCount = 0;
 	itemCount.obsoleteCount = 0;
+	itemCount.moveLockCount = 0;
+	itemCount.wireCount = 0;
 
 	for (int i = 0; i < selItems.count(); i++) {
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(selItems[i]);
 		if (itemBase != NULL) {
 			itemCount.selCount++;
+
+			if (itemBase->moveLock()) {
+				itemCount.moveLockCount++;
+			}
 
 			if (itemBase->hasPartLabel()) {
 				itemCount.hasLabelCount++;
@@ -3056,6 +3065,10 @@ ItemCount SketchWidget::calcItemCount() {
 
 			if (itemBase->isObsolete()) {
 				itemCount.obsoleteCount++;
+			}
+
+			if (itemBase->itemType() == ModelPart::Wire) {
+				itemCount.wireCount++;
 			}
 
 			bool rotatable = rotationAllowed(itemBase);

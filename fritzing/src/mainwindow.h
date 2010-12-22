@@ -272,6 +272,8 @@ protected slots:
 	void routingStatusLabelMousePress(QMouseEvent*);
 	void routingStatusLabelMouseRelease(QMouseEvent*);
 	void updateNet();
+	void selectMoveLock();
+	void moveLock();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -523,6 +525,8 @@ protected:
 	QAction *m_rotate45ccwAct;
 	QAction *m_rotate45cwAct;
 
+	QAction *m_moveLockAct;
+	QAction *m_selectMoveLockAct;
 	QAction *m_flipHorizontalAct;
 	QAction *m_flipVerticalAct;
 	QAction *m_showPartLabelAct;

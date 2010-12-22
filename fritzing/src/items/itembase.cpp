@@ -174,7 +174,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 	: GraphicsSvgLineItem()
 {
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
-	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
+	m_moveLock = m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 
 	m_everVisible = true;
 
@@ -1823,4 +1823,13 @@ const QString & ItemBase::moduleID() {
 	if (m_modelPart) return m_modelPart->moduleID();
 
 	return ___emptyString___;
+}
+
+bool ItemBase::moveLock() {
+	return m_moveLock;
+}
+
+void ItemBase::setMoveLock(bool moveLock) 
+{
+	m_moveLock = moveLock;
 }

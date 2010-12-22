@@ -193,6 +193,8 @@ public:
 	virtual void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
     void updateConnectors();
 	const QString & moduleID();
+	bool moveLock();
+	void setMoveLock(bool);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
@@ -314,6 +316,7 @@ protected:
 	QMap<QString, QString> m_propsMap;
 	QString m_filename;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
+	bool m_moveLock;
 
 protected:
 	static long nextID;

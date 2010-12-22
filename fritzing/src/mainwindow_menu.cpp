@@ -1392,6 +1392,15 @@ void MainWindow::createPartMenuActions() {
 	m_sendToBackWireAct = new WireAction(m_sendToBackAct);
     connect(m_sendToBackWireAct, SIGNAL(triggered()), this, SLOT(sendToBack()));
 
+	m_moveLockAct = new QAction(tr("Lock Part"), this);
+    m_moveLockAct->setStatusTip(tr("Prevent a part from being moved"));
+	m_moveLockAct->setCheckable(true);
+    connect(m_moveLockAct, SIGNAL(triggered()), this, SLOT(moveLock()));
+
+	m_selectMoveLockAct = new QAction(tr("Select All Locked Parts"), this);
+    m_selectMoveLockAct->setStatusTip(tr("Select all parts that can't be moved"));
+    connect(m_selectMoveLockAct, SIGNAL(triggered()), this, SLOT(selectMoveLock()));
+
 	m_showAllLayersAct = new QAction(tr("&Show All Layers"), this);
 	m_showAllLayersAct->setStatusTip(tr("Show all the available layers for the current view"));
 	connect(m_showAllLayersAct, SIGNAL(triggered()), this, SLOT(showAllLayers()));
@@ -1651,6 +1660,9 @@ void MainWindow::createMenus()
 	m_zOrderMenu = m_partMenu->addMenu(tr("Raise and Lower"));
 	m_zOrderWireMenu = new QMenu(m_zOrderMenu);
 	m_zOrderWireMenu->setTitle(m_zOrderMenu->title());
+	m_partMenu->addAction(m_moveLockAct);
+	m_partMenu->addAction(m_selectMoveLockAct);
+	
 
 	m_partMenu->addSeparator();
 	m_partMenu->addMenu(m_addToBinMenu);
@@ -1957,6 +1969,10 @@ void MainWindow::updatePartMenu() {
 	m_bringForwardAct->setEnabled(zenable);
 	m_sendBackwardAct->setEnabled(zenable);
 	m_sendToBackAct->setEnabled(zenable);
+
+	m_moveLockAct->setEnabled(itemCount.selCount > 0 && itemCount.selCount > itemCount.wireCount);
+	m_moveLockAct->setChecked(itemCount.moveLockCount > 0);
+	m_selectMoveLockAct->setEnabled(itemCount.itemsCount > 0);
 
 	m_showPartLabelAct->setEnabled((itemCount.hasLabelCount > 0) && enable);
 	m_showPartLabelAct->setChecked(itemCount.visLabelCount == itemCount.hasLabelCount);
@@ -2962,8 +2978,8 @@ void MainWindow::autoroute() {
 
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
-	Autorouter1 * autorouter = new Autorouter1(pcbSketchWidget);
-	//JRouter * autorouter = new JRouter(pcbSketchWidget);
+	//Autorouter1 * autorouter = new Autorouter1(pcbSketchWidget);
+	JRouter * autorouter = new JRouter(pcbSketchWidget);
 
 	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
@@ -3383,6 +3399,7 @@ QMenu *MainWindow::schematicWireMenu() {
 
 QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addMenu(m_zOrderMenu);
+	menu->addAction(m_moveLockAct);
 	menu->addSeparator();
 	menu->addAction(m_copyAct);
 	menu->addAction(m_duplicateAct);
@@ -3855,4 +3872,32 @@ Wire * MainWindow::retrieveWire() {
 	if (wireAction == NULL) return NULL;
 
 	return wireAction->wire();
+}
+
+void MainWindow::moveLock()
+{
+	bool moveLock = true;
+	
+	foreach (QGraphicsItem  * item, m_currentGraphicsView->scene()->selectedItems()) {
+		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->itemType() == ModelPart::Wire) continue;
+
+		if (itemBase->moveLock()) {
+			moveLock = false;
+			break;
+		}
+	}
+
+	foreach (QGraphicsItem  * item, m_currentGraphicsView->scene()->selectedItems()) {
+		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->itemType() == ModelPart::Wire) continue;
+		
+		itemBase->setMoveLock(moveLock);
+	}
+}
+
+void MainWindow::selectMoveLock()
+{
 }
