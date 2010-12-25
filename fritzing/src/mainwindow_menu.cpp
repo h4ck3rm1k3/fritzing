@@ -1972,7 +1972,7 @@ void MainWindow::updatePartMenu() {
 
 	m_moveLockAct->setEnabled(itemCount.selCount > 0 && itemCount.selCount > itemCount.wireCount);
 	m_moveLockAct->setChecked(itemCount.moveLockCount > 0);
-	m_selectMoveLockAct->setEnabled(itemCount.itemsCount > 0);
+	m_selectMoveLockAct->setEnabled(true);
 
 	m_showPartLabelAct->setEnabled((itemCount.hasLabelCount > 0) && enable);
 	m_showPartLabelAct->setChecked(itemCount.visLabelCount == itemCount.hasLabelCount);
@@ -2978,8 +2978,8 @@ void MainWindow::autoroute() {
 
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
-	//Autorouter1 * autorouter = new Autorouter1(pcbSketchWidget);
-	JRouter * autorouter = new JRouter(pcbSketchWidget);
+	Autorouter1 * autorouter = new Autorouter1(pcbSketchWidget);
+	//JRouter * autorouter = new JRouter(pcbSketchWidget);
 
 	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
@@ -3351,8 +3351,6 @@ QMenu *MainWindow::breadboardWireMenu() {
 
 	return menu;
 }
-
-
 
 QMenu *MainWindow::pcbWireMenu() {
 	QMenu *menu = new WireMenu(QObject::tr("Wire"), this);
@@ -3900,4 +3898,5 @@ void MainWindow::moveLock()
 
 void MainWindow::selectMoveLock()
 {
+	m_currentGraphicsView->selectAllMoveLock();
 }

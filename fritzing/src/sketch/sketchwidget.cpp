@@ -6233,6 +6233,20 @@ int SketchWidget::selectAllObsolete()
 	return selectAllItems(itemBases, QObject::tr("Select outdated parts"));
 }
 
+int SketchWidget::selectAllMoveLock() 
+{
+	QSet<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (!itemBase->moveLock()) continue;
+
+		itemBases.insert(itemBase->layerKinChief());
+	}
+
+	return selectAllItems(itemBases, QObject::tr("Select locked parts"));
+}
+
 
 int SketchWidget::selectAllItems(QSet<ItemBase *> & itemBases, const QString & msg) 
 {

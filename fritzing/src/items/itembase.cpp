@@ -774,6 +774,20 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 	GraphicsSvgLineItem::paint(painter, option, widget);
 
+	if (m_moveLock) {
+		painter->save();
+		QPen pen;
+		pen.setColor(QColor(0,0,0));
+		pen.setWidth(2);
+		painter->setPen(pen);
+		painter->drawArc(2, 1, 6, 4, 180 * 16, -180 * 16);
+		painter->drawLine(2, 4, 2, 5);
+		painter->drawLine(8, 4, 8, 5);
+		painter->fillRect(0, 5, 10, 7, QColor(0,0,0));
+		
+		painter->restore();
+	}
+
 	if (m_inactive) {
 		painter->restore();
 	}
@@ -1832,4 +1846,5 @@ bool ItemBase::moveLock() {
 void ItemBase::setMoveLock(bool moveLock) 
 {
 	m_moveLock = moveLock;
+	update();
 }
