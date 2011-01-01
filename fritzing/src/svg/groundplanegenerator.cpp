@@ -31,7 +31,9 @@ $Date$
 #include "../version/version.h"
 #include "../utils/folderutils.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
 #include "../items/wire.h"
+
 
 #include <QPainter>
 #include <QSvgRenderer>
@@ -69,6 +71,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 
 	QSvgRenderer renderer(boardByteArray);
 	QPainter painter;
+	painter.setRenderHints(0);
 	painter.begin(&image);
 	renderer.render(&painter);
 	painter.end();
@@ -77,7 +80,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 
 	scanLines(image, bWidth, bHeight, rects, 1);
 
-	// combine same size rects
+	// combine parallel equal-sized rects
 	int ix = 0;
 	while (ix < rects.count()) {
 		QRect r = rects.at(ix++);
@@ -88,7 +91,7 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 				continue;
 			}
 
-			if (s.bottom() > r.bottom() + 1) {
+			if (s.top() > r.bottom() + 1) {
 				// skipped row, can't join
 				break;
 			}

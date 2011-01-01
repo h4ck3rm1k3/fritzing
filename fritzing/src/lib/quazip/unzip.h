@@ -49,9 +49,7 @@
 extern "C" {
 #endif
 
-#ifndef _ZLIB_H
-#include "zlib.h"
-#endif
+#include <zlib.h>
 
 #ifndef _ZLIBIOAPI_H
 #include "ioapi.h"

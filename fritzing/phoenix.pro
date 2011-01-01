@@ -48,7 +48,8 @@ unix {
             DEFINES += LINUX_64
         } else {
             DEFINES += LINUX_32
-		}
+	}
+	LIBS += -lz
     }
 }
 		

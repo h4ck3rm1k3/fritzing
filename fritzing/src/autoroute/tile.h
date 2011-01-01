@@ -87,8 +87,8 @@ struct Tile
 
 #define	YMIN(tileP)		((tileP)->ti_ll.y)
 #define	LEFT(tileP)		((tileP)->ti_ll.x)
-#define	YMAX(tileP)			(YMIN(RT(tileP)))
-#define	RIGHT(tileP)		(LEFT(TR(tileP)))
+#define	YMAX(tileP)		(YMIN(RT(tileP)))
+#define	RIGHT(tileP)	(LEFT(TR(tileP)))
 
 #define	LB(tileP)		((tileP)->ti_lb)
 #define	BL(tileP)		((tileP)->ti_bl)

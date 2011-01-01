@@ -167,6 +167,7 @@ protected:
 	ConnectorItem * splitTrace(Wire * wire, QPointF point, ItemBase * board);
 	Tile * clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type);
 	void handleChangedTiles(Plane * thePlane, TileRect &);
+	void handleChangedTilesAux(Plane * thePlane, QSet<Tile *> & tiles);
 	Tile * tileOneWire(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, Wire * w);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *, VirtualWire *);
 	void reorderEdges(QList<JEdge *> & edges, QHash<Wire *, JEdge *> & tracesToEdges);
@@ -174,6 +175,7 @@ protected:
 	QPointF calcSpaceEndPoint(JSubedge * subedge, QPointF startPoint, QList<SeedTree *> & seedTreeList);
 	bool calcOneStep(SeedTree * from, SeedTree * to, int & currentDirection, QPointF & startPoint);
 	int drawOneStep(int i, QList<SeedTree *> & seedTreeList, QList<QPointF> & allPoints);
+	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
