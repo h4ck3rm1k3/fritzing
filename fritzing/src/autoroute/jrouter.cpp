@@ -25,9 +25,6 @@ $Date$
 ********************************************************************/
 
 // TODO:
-//	backPropagate: 
-//		tighten path between connectors once trace has succeeded?
-//		turn corners into 45's?
 //
 //	wire bendpoint is not a blocker if wire is ownside
 //
@@ -52,11 +49,12 @@ $Date$
 //	remove debugging output and extra calls to processEvents
 //
 //	bugs: 
-//		parking assistant: routing into border area
-//		lcd example: routing into border area; overlaps; weirdness with connecting to traces
+//		loop: longer route
+//		arduino isp: arduino too close to the edge? fails an early easy route in the backtrace
+//		arduino no ftdi (barebones arduino): chips too close to the edge? fails an easy route in the backtrace
+//		blink: arduino overlaps?
 //
 //	need to put a border no-go area around the board
-//	need to rethink border outline?
 //
 //  longer route than expected: 
 //		This is because outward propagation stops when the goal is first reached.  
@@ -77,7 +75,7 @@ $Date$
 //      ------------------------------------------
 //		I think the way to fix this is to run a path shortening function afterwards
 //
-//	redo non-manhattan wires
+//	redo tiling non-manhattan wires
 //
 //	still seeing a few thin tiles going across the board: 
 //		this is because the thick tiles above and below are wider than the thin tile
@@ -1363,6 +1361,112 @@ bool enoughOverlapVertical(Tile* tile1, Tile* tile2, qreal widthNeeded) {
 	return (qMin(YMAX(tile1), YMAX(tile2)) - qMax(YMIN(tile1), YMIN(tile2)) > realToTile(widthNeeded));
 }
 
+int checkAlready(Tile * tile, UserData data) {
+	int type = TiGetType(tile);
+	switch (type) {
+		case NOTBOARD:
+		case NONCONNECTOR:
+		case TRACE:
+		case CONNECTOR:
+		case PART:
+			break;
+		default:
+			return 0;
+	}
+
+	QList<Tile *> * alreadyTiled = (QList<Tile *> *) data;
+	alreadyTiled->append(tile);
+	return 0;
+}
+
+struct Range 
+{
+	int rmin;
+	int rmax;
+
+	Range(int mi, int ma) {
+		rmin = mi;
+		rmax = ma;
+	}
+	Range() {}
+};
+
+qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, bool & success)
+{
+	QList<Tile *> alreadyTiled;
+	TiSrArea(NULL, subedge->edge->plane, &tileRect, checkAlready, &alreadyTiled);
+	QList<Range> spaces;
+	Range space;
+	if (useX) {
+		space.rmin = tileRect.xmini;
+		space.rmax = tileRect.xmaxi;
+	}
+	else {
+		space.rmin = tileRect.ymini;
+		space.rmax = tileRect.ymaxi;
+	}
+	spaces.append(space);
+	Range cacheSpace(space.rmin, space.rmax);
+	foreach (Tile * tile, alreadyTiled) {
+		short result = checkCandidate(subedge, tile, false);
+		if (result < GridEntry::BLOCK) continue;
+
+		Range range;
+		if (useX) {
+			range.rmin = LEFT(tile);
+			range.rmax = RIGHT(tile);
+		}
+		else {
+			range.rmin = YMIN(tile);
+			range.rmax = YMAX(tile);
+		}
+		for (int sp = 0; sp < spaces.count(); sp++) {
+			Range nextSpace = spaces.at(sp);
+			if (nextSpace.rmax < range.rmin) continue;
+			if (range.rmax < nextSpace.rmin) continue;
+
+			if (range.rmin <= nextSpace.rmin && range.rmax >= nextSpace.rmax) {
+				spaces.replace(sp, Range(0,0));
+			}
+			else if (range.rmin >= nextSpace.rmin && range.rmax <= nextSpace.rmax) {
+				spaces.replace(sp, Range(nextSpace.rmin, range.rmin));
+				spaces.append(Range(range.rmax, nextSpace.rmax));
+			}
+			else {
+				spaces.replace(sp, Range(qMax(nextSpace.rmin, range.rmin), qMin(nextSpace.rmax, range.rmax)));
+			}
+		}
+	}
+
+	success = false;
+	qreal result;
+	if (targetGreater) {
+		result = std::numeric_limits<int>::min();
+	}
+	else {
+		result = std::numeric_limits<int>::max();
+	}
+	foreach (Range range, spaces) {
+		qreal d = tileToReal(range.rmax - range.rmin);
+		if (d > m_wireWidthNeeded) {
+			if (targetGreater) {
+				if (tileToReal(range.rmax) - m_halfWireWidthNeeded > result) {
+					result = tileToReal(range.rmax) - m_halfWireWidthNeeded;
+					success = true;
+				}
+			}
+			else {
+				if (tileToReal(range.rmin) + m_halfWireWidthNeeded < result) {
+					result = tileToReal(range.rmin) + m_halfWireWidthNeeded;
+					success = true;
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
 bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire *> & wires, bool forEmpty) {
 	// path goes from start to end
 	// root is end
@@ -1457,14 +1561,16 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		DebugDialog::debug("allpoint:", p);
 	}
 
+	// remove redundant pairs
 	int ix = allPoints.count() - 1;
 	while (ix > 0) {
-		if (allPoints[ix] == allPoints[ix -1]) {
+		if (allPoints[ix] == allPoints[ix - 1]) {
 			allPoints.removeAt(ix);
 		}
 		ix--;
 	}
 
+	// make sure all pairs have 90 degree turns
 	ix = 0;
 	while (ix < allPoints.count() - 1) {
 		QPointF p1 = allPoints[ix];
@@ -1477,27 +1583,169 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		ix++;
 	}
 
-	QPointF p1 = allPoints.at(0);
-	QPointF p2 = allPoints.at(1);
-	for (int i = 2; i < allPoints.count(); i++) {
-		QPointF p3 = allPoints.at(i);
+	// eliminate redundant colinear points
+	ix = 0;
+	while (ix < allPoints.count() - 2) {
+		QPointF p1 = allPoints[ix];
+		QPointF p2 = allPoints[ix + 1];
+		QPointF p3 = allPoints[ix + 2];
 		if (p1.x() == p2.x() && p2.x() == p3.x()) {
-			p2 = p3;
+			allPoints.removeAt(ix + 1);
+			ix--;
 		}
 		else if (p1.y() == p2.y() && p2.y() == p3.y()) {
-			p2 = p3;
+			allPoints.removeAt(ix + 1);
+			ix--;
+		}
+		ix++;
+	}
+
+	// eliminate redundant corners
+	ix = 0;
+	while (ix < allPoints.count() - 3) {
+		QPointF p0 = allPoints.at(ix);
+		QPointF p1 = allPoints.at(ix + 1);
+		QPointF p2 = allPoints.at(ix + 2);
+		QPointF p3 = allPoints.at(ix + 3);
+		ix += 1;
+
+		bool removeCorner = false;
+		QPointF proposed;
+		if (p0.y() == p1.y()) {
+			if ((p0.x() < p1.x() && p1.x() < p3.x()) || (p0.x() > p1.x() && p1.x() > p3.x())) {
+				// x must be monotonically increasing or decreasing
+				// dogleg horizontal, vertical, horizontal
+			}
+			else {
+				continue;
+			}
+
+			proposed.setX(p3.x());
+			proposed.setY(p1.y());
+			removeCorner = checkProposed(proposed, p1, p3, subedge);
+			if (!removeCorner) {
+				proposed.setX(p0.x());
+				proposed.setY(p2.y());
+				removeCorner = checkProposed(proposed, p0, p2, subedge);
+			}
 		}
 		else {
-			Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
-			wires.append(trace);
-			p1 = p2;
-			p2 = p3;
+			if ((p0.y() < p1.y() && p1.y() < p3.y()) || (p0.y() > p1.y() && p1.y() > p3.y())) {
+				// y must be monotonically increasing or decreasing
+				// dogleg vertical, horizontal, vertical
+			}
+			else {
+				continue;
+			}
+
+			proposed.setY(p3.y());
+			proposed.setX(p1.x());
+			removeCorner = checkProposed(proposed, p1, p3, subedge);
+			if (!removeCorner) {
+				proposed.setY(p0.y());
+				proposed.setX(p2.x());
+				removeCorner = checkProposed(proposed, p0, p2, subedge);
+			}
+		}
+		if (!removeCorner) continue;
+
+		ix--;
+		allPoints.replace(ix + 1, proposed);
+		allPoints.removeAt(ix + 2);
+		if (allPoints.count() > ix + 3) {
+			allPoints.removeAt(ix + 2);
 		}
 	}
 
-	Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
-	wires.append(trace);
+	// shortcut U-shapes
+	// TODO: this could be implemented recursively as a child tile space 
+	//		with the goals being the sides of the U-shape and the obstacles copied in from the parent tile space
+	// for now just look for a straight line
+	ix = 0;
+	while (ix < allPoints.count() - 3) {
+		QPointF p0 = allPoints.at(ix);
+		QPointF p1 = allPoints.at(ix + 1);
+		QPointF p2 = allPoints.at(ix + 2);
+		QPointF p3 = allPoints.at(ix + 3);
+		ix += 1;
 
+		TileRect tileRect;
+		if (p0.y() == p1.y()) {
+			if ((p0.x() > p1.x() && p3.x() > p2.x()) || (p0.x() < p1.x() && p3.x() < p2.x())) {
+				// opening to left or right
+				bool targetGreater;
+				bool success = false;
+				if (p0.x() < p1.x()) {
+					// opening left
+					targetGreater = false;
+					realsToTile(tileRect, qMax(p0.x(), p3.x()), qMin(p0.y(), p3.y()), p2.x(), qMax(p0.y(), p3.y()));
+					qreal result = findShortcut(tileRect, true, targetGreater, subedge, success);
+					if (success) {}
+					}
+				else {
+					// opening right
+					targetGreater = true;
+					realsToTile(tileRect, p2.x(), qMin(p0.y(), p3.y()), qMin(p0.x(), p3.x()), qMax(p0.y(), p3.y()));
+					qreal result = findShortcut(tileRect, true, targetGreater, subedge, success);
+					if (success) {}
+					}
+				
+			}
+			else {
+				// not a U-shape
+				continue;
+			}
+		}
+		else {
+			if ((p0.y() > p1.y() && p3.y() > p2.y()) || (p0.y() < p1.y() && p3.y() < p2.y())) {
+				// opening to top or bottom
+				bool targetGreater;
+				if (p0.x() < p1.x()) {
+					// opening top
+					targetGreater = false;
+					realsToTile(tileRect, qMin(p0.x(), p3.x()), qMax(p0.y(), p3.y()), qMax(p0.x(), p3.x()), p2.y());
+				}
+				else {
+					// opening bottom
+					targetGreater = true;
+					realsToTile(tileRect, qMin(p0.x(), p3.x()), p2.y(), qMax(p0.x(), p3.x()), qMin(p0.y(), p3.y()));
+				}
+				bool success = false;
+				qreal result = findShortcut(tileRect, false, targetGreater, subedge, success);
+				if (success) {}
+			}
+			else {
+				// not a U-shape
+				continue;
+			}
+		}
+
+	}
+
+	for (int i = 0; i < allPoints.count() - 1; i++) {
+		QPointF p1 = allPoints.at(i);
+		QPointF p2 = allPoints.at(i + 1);
+		Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
+		wires.append(trace);
+	}
+
+	return true;
+}
+
+bool JRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JSubedge * subedge) 
+{
+	QList<Tile *> alreadyTiled;
+	TileRect tileRect;
+	qreal x = proposed.x() - m_halfWireWidthNeeded;
+	realsToTile(tileRect, x, qMin(p1.y(), p3.y()), x + m_wireWidthNeeded, qMax(p1.y(), p3.y()));
+	TiSrArea(NULL, subedge->edge->plane, &tileRect, checkAlready, &alreadyTiled);
+	qreal y = proposed.y() - m_halfWireWidthNeeded;
+	realsToTile(tileRect, qMin(p1.x(), p3.x()), y, qMax(p1.x(), p3.x()), y + m_wireWidthNeeded);
+	TiSrArea(NULL, subedge->edge->plane, &tileRect, checkAlready, &alreadyTiled);
+	foreach (Tile * tile, alreadyTiled) {
+		short result = checkCandidate(subedge, tile, false);
+		if (result >= GridEntry::BLOCK) return false;
+	}
 
 	return true;
 }
@@ -2640,40 +2888,12 @@ void JRouter::displayBadTiles(QList<Tile *> & alreadyTiled) {
 	}
 }
 
-struct CheckAlreadyStruct {
-	QGraphicsItem * item;
-	int type;
-	QList<Tile *> * alreadyTiled;
-};
-
-int checkAlready(Tile * tile, UserData data) {
-	int type = TiGetType(tile);
-	switch (type) {
-		case NOTBOARD:
-		case NONCONNECTOR:
-		case TRACE:
-		case CONNECTOR:
-		case PART:
-			break;
-		default:
-			return 0;
-	}
-
-	CheckAlreadyStruct * checkAlreadyStruct = (CheckAlreadyStruct *) data;
-	checkAlreadyStruct->alreadyTiled->append(tile);
-	return 0;
-}
-
 Tile * JRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type, bool clip) 
 {
 	DebugDialog::debug(QString("insert tile xmin:%1 xmax:%2 ymin:%3 ymax:%4").
 		arg(tileRect.xmini).arg(tileRect.xmaxi).arg(tileRect.ymini).arg(tileRect.ymaxi));
 
-	CheckAlreadyStruct checkAlreadyStruct;
-	checkAlreadyStruct.item = item;
-	checkAlreadyStruct.type = type;
-	checkAlreadyStruct.alreadyTiled = &alreadyTiled;
-	TiSrArea(NULL, thePlane, &tileRect, checkAlready, &checkAlreadyStruct);
+	TiSrArea(NULL, thePlane, &tileRect, checkAlready, &alreadyTiled);
 	if (alreadyTiled.count() > 0) {
 		if (clip) {
 			clipInsertTile(thePlane, tileRect, alreadyTiled, item, type);

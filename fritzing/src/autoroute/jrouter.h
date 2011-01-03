@@ -176,6 +176,8 @@ protected:
 	bool calcOneStep(SeedTree * from, SeedTree * to, int & currentDirection, QPointF & startPoint);
 	int drawOneStep(int i, QList<SeedTree *> & seedTreeList, QList<QPointF> & allPoints);
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled);
+	bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JSubedge * subedge); 
+	qreal findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, bool & success);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
