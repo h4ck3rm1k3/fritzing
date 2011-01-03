@@ -81,8 +81,8 @@ struct SeedTree {
 		Down
 	};
 	
-	qreal restrictionMin;
-	qreal restrictionMax;
+	int restrictionMin;
+	int restrictionMax;
 	bool restricted;
 	struct Tile * seed;
 	SeedTree * parent;

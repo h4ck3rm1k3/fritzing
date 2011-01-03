@@ -52,13 +52,30 @@ $Date$
 //	remove debugging output and extra calls to processEvents
 //
 //	bugs: 
-//		dc motor example: routing into border area
 //		parking assistant: routing into border area
-//		stepper motor: longer routes than expected
 //		lcd example: routing into border area; overlaps; weirdness with connecting to traces
 //
 //	need to put a border no-go area around the board
 //	need to rethink border outline?
+//
+//  longer route than expected: 
+//		This is because outward propagation stops when the goal is first reached.  
+//		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
+//		For example, in the fóllowing case, route ABC will reach goal before ABDEF:
+//                                   -------
+//                                   |  A  |  
+//      ------------------------------------
+//      |               B                  |
+//		------------------------------------
+//      |       |                 |    D   |
+//      |       |               --------------
+//      |   C   |               |      E     |
+//      |       |              -------------------
+//      |       |              |       F         |
+//      ------------------------------------------
+//      |              GOAL                      |
+//      ------------------------------------------
+//		I think the way to fix this is to run a path shortening function afterwards
 //
 //	redo non-manhattan wires
 //
@@ -108,11 +125,8 @@ $Date$
 #include <QMessageBox>
 
 static const int MaximumProgress = 1000;
-static const qreal FloatingPointFudge = .001;
 static qreal KeepoutSpace = 0;
 static const qreal TINYSPACEMAX = 10;
-
-static inline qreal TWODECIMALS(qreal d) { return qRound(d * 100) / 100.0; }
 
 enum TileType {
 	BUFFER = 1,
@@ -140,34 +154,49 @@ bool subedgeLessThan(JSubedge * se1, JSubedge * se2)
 	return se1->distance < se2->distance;
 }
 
-void tileToRect(Tile * tile, QRectF & rect) {
+inline int realToTile(qreal x) {
+	return qRound(x * 100);
+}
+
+void realsToTile(TileRect & tileRect, qreal l, qreal t, qreal r, qreal b) {
+	tileRect.xmini = realToTile(l);
+	tileRect.ymini = realToTile(t);
+	tileRect.xmaxi = realToTile(r);
+	tileRect.ymaxi = realToTile(b);
+}
+
+inline qreal tileToReal(int x) {
+	return x / 100.0;
+}
+
+void tileToQRect(Tile * tile, QRectF & rect) {
 	TileRect tileRect;
 	TiToRect(tile, &tileRect);
-	rect.setCoords(tileRect.xmin, tileRect.ymin, tileRect.xmax, tileRect.ymax);
+	rect.setCoords(tileToReal(tileRect.xmini), tileToReal(tileRect.ymini), tileToReal(tileRect.xmaxi), tileToReal(tileRect.ymaxi));
 }
 
 bool tileRectIntersects(TileRect * tile1, TileRect * tile2)
 {
-    qreal l1 = tile1->xmin;
-    qreal r1 = tile1->xmax;
+    int l1 = tile1->xmini;
+    int r1 = tile1->xmaxi;
     if (l1 == r1) // null rect
         return false;
 
-    qreal l2 = tile2->xmin;
-    qreal r2 = tile2->xmax;
+    int l2 = tile2->xmini;
+    int r2 = tile2->xmaxi;
     if (l2 == r2) // null rect
         return false;
 
     if (l1 >= r2 || l2 >= r1)
         return false;
 
-    qreal t1 = tile1->ymin;
-    qreal b1 = tile1->ymax;
+    int t1 = tile1->ymini;
+    int b1 = tile1->ymaxi;
     if (t1 == b1) // null rect
         return false;
 
-    qreal t2 = tile2->ymin;
-    qreal b2 = tile2->ymax;
+    int t2 = tile2->ymini;
+    int b2 = tile2->ymaxi;
     if (t2 == b2) // null rect
         return false;
 
@@ -522,19 +551,16 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 	QRectF bufferRect(m_maxRect);
 	bufferRect.adjust(-m_maxRect.width(), -m_maxRect.height(), m_maxRect.width(), m_maxRect.height());
 
-	LEFT(bufferTile) = bufferRect.left();
-	YMIN(bufferTile) = bufferRect.top();		// TILE is Math Y-axis not computer-graphic Y-axis
+	SETLEFT(bufferTile, realToTile(bufferRect.left()));
+	SETYMIN(bufferTile, realToTile(bufferRect.top()));		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	Plane * thePlane = TiNewPlane(bufferTile);
 
-	RIGHT(bufferTile) = bufferRect.right();
-	YMAX(bufferTile) = bufferRect.bottom();		// TILE is Math Y-axis not computer-graphic Y-axis
+	SETRIGHT(bufferTile, realToTile(bufferRect.right()));
+	SETYMAX(bufferTile, realToTile(bufferRect.bottom()));		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	TileRect boardRect;
-	boardRect.xmin = m_maxRect.left();
-	boardRect.xmax = m_maxRect.right();
-	boardRect.ymin = m_maxRect.top();
-	boardRect.ymax = m_maxRect.bottom();
+	realsToTile(boardRect, m_maxRect.left(), m_maxRect.top(), m_maxRect.right(), m_maxRect.bottom());
 	QList<Tile *> already;
 	insertTile(thePlane, boardRect, already, NULL, SPACE, false);
 	// if board is not rectangular, add tiles for the outside edges;
@@ -640,10 +666,7 @@ Plane * JRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID,
 
 	QSet<Tile *> tiles;
 	TileRect tileRect;
-	tileRect.xmax = m_maxRect.right();
-	tileRect.xmin = m_maxRect.left();
-	tileRect.ymax = m_maxRect.bottom();
-	tileRect.ymin = m_maxRect.top();
+	realsToTile(tileRect, m_maxRect.left(), m_maxRect.top(), m_maxRect.right(), m_maxRect.bottom());
 	TiSrArea(NULL, thePlane, &tileRect, checkThin, &tiles);
 	handleChangedTilesAux(thePlane, tiles);	
 
@@ -670,14 +693,11 @@ bool JRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alre
 	svg += "</svg>";
 	GroundPlaneGenerator gpg;
 	QList<QRect> rects;
-	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), rects);
+	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), KeepoutSpace, rects);
 	QPointF boardPos = board->pos();
 	foreach (QRect r, rects) {
 		TileRect tileRect;
-		tileRect.xmin = r.left() + boardPos.x();
-		tileRect.xmax = r.right() + boardPos.x();
-		tileRect.ymin = r.top() + boardPos.y();		// TILE is Math Y-axis not computer-graphic Y-axis
-		tileRect.ymax = r.bottom() + 1 + boardPos.y();  // note off-by-one weirdness
+		realsToTile(tileRect, r.left() + boardPos.x(), r.top() + boardPos.y(), r.right() + boardPos.x(), r.bottom() + 1 + boardPos.y());  // note off-by-one weirdness
 		insertTile(thePlane, tileRect, alreadyTiled, NULL, NOTBOARD, false);
 		if (alreadyTiled.count() > 0) {
 			return false;
@@ -732,18 +752,12 @@ bool JRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alre
 				QRect r = rects.at(kx);
 				if (r.left() > minLeft) {
 					TileRect tinyRect;
-					tinyRect.xmin = minLeft + boardPos.x();
-					tinyRect.xmax = r.left() + boardPos.x();
-					tinyRect.ymin = r.top() + boardPos.y();
-					tinyRect.ymax = r.bottom() + 1 + boardPos.y();
+					realsToTile(tinyRect, minLeft + boardPos.x(), r.top() + boardPos.y(), r.left() + boardPos.x(), r.bottom() + 1 + boardPos.y());
 					TiInsertTile(thePlane, &tinyRect, NULL, TINYSPACE);
 				}
 				if (r.right() < maxRight) {
 					TileRect tinyRect;
-					tinyRect.xmin = r.right() + boardPos.x();
-					tinyRect.xmax = maxRight + boardPos.x();
-					tinyRect.ymin = r.top() + boardPos.y();
-					tinyRect.ymax = r.bottom() + 1 + boardPos.y();
+					realsToTile(tinyRect, r.right() + boardPos.x(), r.top() + boardPos.y(), maxRight + boardPos.x(), r.bottom() + 1 + boardPos.y());
 					TiInsertTile(thePlane, &tinyRect, NULL, TINYSPACE);
 				}
 			}
@@ -756,45 +770,45 @@ bool JRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alre
 bool clipRect(TileRect * r, TileRect * clip, QList<TileRect> & rects) {
 	if (!tileRectIntersects(r, clip)) return false;
 
-	if (r->ymin < clip->ymin)
+	if (r->ymini < clip->ymini)
 	{
 		TileRect s;
-		s.xmin = r->xmin;
-		s.ymin = r->ymin; 
-		s.xmax = r->xmax;
-		s.ymax = clip->ymin;
+		s.xmini = r->xmini;
+		s.ymini = r->ymini; 
+		s.xmaxi = r->xmaxi;
+		s.ymaxi = clip->ymini;
 		rects.append(s);
-		r->ymin = clip->ymin;
+		r->ymini = clip->ymini;
 	}
-	if (r->ymax > clip->ymax)
+	if (r->ymaxi > clip->ymaxi)
 	{
 		TileRect s;
-		s.xmin = r->xmin;
-		s.ymin = clip->ymax;
-		s.xmax = r->xmax;
-		s.ymax = r->ymax;
+		s.xmini = r->xmini;
+		s.ymini = clip->ymaxi;
+		s.xmaxi = r->xmaxi;
+		s.ymaxi = r->ymaxi;
 		rects.append(s);
-		r->ymax = clip->ymax;
+		r->ymaxi = clip->ymaxi;
 	}
-	if (r->xmin < clip->xmin)
+	if (r->xmini < clip->xmini)
 	{
 		TileRect s;
-		s.xmin = r->xmin;
-		s.ymin = r->ymin;
-		s.xmax = clip->xmin;
-		s.ymax = r->ymax;
+		s.xmini = r->xmini;
+		s.ymini = r->ymini;
+		s.xmaxi = clip->xmini;
+		s.ymaxi = r->ymaxi;
 		rects.append(s);
-		r->xmin = clip->xmin;
+		r->xmini = clip->xmini;
 	}
-	if (r->xmax > clip->xmax)
+	if (r->xmaxi > clip->xmaxi)
 	{
 		TileRect s;
-		s.xmin = clip->xmax;
-		s.ymin = r->ymin;
-		s.xmax = r->xmax;
-		s.ymax = r->ymax;
+		s.xmini = clip->xmaxi;
+		s.ymini = r->ymini;
+		s.xmaxi = r->xmaxi;
+		s.ymaxi = r->ymaxi;
 		rects.append(s);
-		r->xmax = clip->xmax;
+		r->xmaxi = clip->xmaxi;
 	}
 
 	return true;
@@ -842,10 +856,9 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 		Wire * w = qobject_cast<Wire *>(connectorItem->attachedTo());
 
 		TileRect tileRect;
-		tileRect.xmin = c.x() - (w->width() / 2);
-		tileRect.xmax = tileRect.xmin + w->width();
-		tileRect.ymin = c.y() - (w->width() / 2);
-		tileRect.ymax = tileRect.ymin + w->width(); 
+		qreal x = c.x() - (w->width() / 2);
+		qreal y = c.y() - (w->width() / 2);
+		realsToTile(tileRect, x, y, x + w->width(), y + w->width()); 
 		insertTile(thePlane, tileRect, alreadyTiled, connectorItem, CONNECTOR, true);
 		if (alreadyTiled.count() > 0) {
 			return;
@@ -861,22 +874,17 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 		if (dx < 1.0) {
 			// vertical line
 			TileRect tileRect;
-			tileRect.xmin = qMin(p1.x(), p2.x()) - (w->width() / 2);
-			tileRect.xmax = tileRect.xmin + w->width() + dx;
-			tileRect.ymin = qMin(p1.y(), p2.y());
-			tileRect.ymax = tileRect.ymin + dy;
-
+			qreal x = qMin(p1.x(), p2.x()) - (w->width() / 2);
+			qreal y = qMin(p1.y(), p2.y());
+			realsToTile(tileRect, x, y, x + w->width() + dx, y + dy);
 			tileOneWire(thePlane, tileRect, alreadyTiled, w);
 			if (alreadyTiled.count() > 0) break;
 		}
 		else if (dy < 1.0) {
 			// horizontal line
 			TileRect tileRect;
-			tileRect.xmin = qMin(p1.x(), p2.x());
-			tileRect.xmax = qMax(p1.x(), p2.x());
-			tileRect.ymin = qMin(p1.y(), p2.y()) - (w->width() / 2);
-			tileRect.ymax = tileRect.ymin + w->width() + dy;
-
+			qreal y =  qMin(p1.y(), p2.y()) - (w->width() / 2);
+			realsToTile(tileRect, qMin(p1.x(), p2.x()), y, qMax(p1.x(), p2.x()), y + w->width() + dy);
 			tileOneWire(thePlane, tileRect, alreadyTiled, w);
 			if (alreadyTiled.count() > 0) break;
 		}
@@ -894,10 +902,7 @@ void JRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere,
 		while (ix < rects.count()) {
 			QRectF r = rects.at(ix++);
 			TileRect tileRect;
-			tileRect.xmin = r.left();
-			tileRect.xmax = r.right();
-			tileRect.ymin = r.top();
-			tileRect.ymax = r.bottom();
+			realsToTile(tileRect, r.left(), r.top(), r.right(), r.bottom());
 			DebugDialog::debug("tile wire", r);
 			insertTile(thePlane, tileRect, alreadyTiled, w, TRACE, true);
 			if (alreadyTiled.count() > 0) break;
@@ -1166,8 +1171,8 @@ int JRouter::drawOneStep(int ix, QList<SeedTree *> & seedTreeList, QList<QPointF
 		SeedTree * from = seedTreeList.at(i);
 		SeedTree * to = seedTreeList.at(i + 1);
 		QRectF fromTileRect, toTileRect;
-		tileToRect(from->seed, fromTileRect);
-		tileToRect(to->seed, toTileRect);
+		tileToQRect(from->seed, fromTileRect);
+		tileToQRect(to->seed, toTileRect);
 		DebugDialog::debug("one step", fromTileRect);
 		DebugDialog::debug("    to", toTileRect);
 
@@ -1282,7 +1287,7 @@ QPointF JRouter::calcWireEndPoint(Wire * wire, QPointF startPoint, QList<SeedTre
 	QPointF pp = wire->line().p2() + p;
 	double cx1, cy1, cx2, cy2;
 	QRectF toTileRect;
-	tileToRect(seedTreeList.last()->seed, toTileRect);
+	tileToQRect(seedTreeList.last()->seed, toTileRect);
 	// clip line in case it's in multiple tiles, and to move it in from the borders
 	qreal dw = 0;
 	if (toTileRect.width() > m_wireWidthNeeded) dw = m_halfWireWidthNeeded;
@@ -1300,8 +1305,8 @@ QPointF JRouter::calcWireEndPoint(Wire * wire, QPointF startPoint, QList<SeedTre
 
 bool JRouter::calcOneStep(SeedTree * from, SeedTree * to, int & currentDirection, QPointF & startPoint) {
 	QRectF fromTileRect, toTileRect;
-	tileToRect(from->seed, fromTileRect);
-	tileToRect(to->seed, toTileRect);
+	tileToQRect(from->seed, fromTileRect);
+	tileToQRect(to->seed, toTileRect);
 
 	int newDirection = SeedTree::None;
 	if (toTileRect.right() == fromTileRect.left()) {
@@ -1350,12 +1355,12 @@ bool JRouter::calcOneStep(SeedTree * from, SeedTree * to, int & currentDirection
 }
 
 bool enoughOverlapHorizontal(Tile* tile1, Tile* tile2, qreal widthNeeded) {
-	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > widthNeeded - FloatingPointFudge);
+	return (qMin(RIGHT(tile1), RIGHT(tile2)) - qMax(LEFT(tile1), LEFT(tile2)) > realToTile(widthNeeded));
 }
 
 bool enoughOverlapVertical(Tile* tile1, Tile* tile2, qreal widthNeeded) {
 	// remember that axes are switched
-	return (qMin(YMAX(tile1), YMAX(tile2)) - qMax(YMIN(tile1), YMIN(tile2)) > widthNeeded - FloatingPointFudge);
+	return (qMin(YMAX(tile1), YMAX(tile2)) - qMax(YMIN(tile1), YMIN(tile2)) > realToTile(widthNeeded));
 }
 
 bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire *> & wires, bool forEmpty) {
@@ -1377,7 +1382,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		seedTreeList.append(st);
 		revSeedTreeList.push_front(st);
 		QRectF r;
-		tileToRect(st->seed, r);
+		tileToQRect(st->seed, r);
 		DebugDialog::debug("seed", r);
 		st = st->parent;
 	}
@@ -1394,7 +1399,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		else {
 			// just have to guess
 			QRectF r;
-			tileToRect(seedTreeList.at(0)->seed, r);
+			tileToQRect(seedTreeList.at(0)->seed, r);
 			end2 = r.center();
 		}
 		end1 = this->calcWireEndPoint(subedge->fromWire, end2, revSeedTreeList);
@@ -1511,14 +1516,18 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 
 	while (todoList.count() > 0) {
 		SeedTree * currentSeedTree = todoList.takeFirst();
-		QRectF currentSeedRect;
-		tileToRect(currentSeedTree->seed, currentSeedRect);
-		DebugDialog::debug(QString("from seed %1 %2 %3 %4")
+		TileRect currentSeedRect;
+		TiToRect(currentSeedTree->seed, &currentSeedRect);
+		DebugDialog::debug(QString("from seed %1 %2 %3 %4 %5 %6 %7 %8")
 								.arg(TiGetWave(currentSeedTree->seed))
 								.arg(currentSeedTree->restricted)
 								.arg(currentSeedTree->restrictionMin)
-								.arg(currentSeedTree->restrictionMax), 
-							currentSeedRect);
+								.arg(currentSeedTree->restrictionMax)
+								.arg(currentSeedRect.xmini)
+								.arg(currentSeedRect.ymini)
+								.arg(currentSeedRect.xmaxi)
+								.arg(currentSeedRect.ymaxi)
+								);
 
 
 		if (!currentSeedTree->restricted) {
@@ -1534,61 +1543,61 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 			SeedTree::Direction direction = SeedTree::None;
 
 			QRectF nextRect;
-			tileToRect(seed, nextRect);
+			tileToQRect(seed, nextRect);
 			DebugDialog::debug(QString("    try seed %1").arg(TiGetWave(seed)), nextRect);
 
-			if (LEFT(seed) == currentSeedRect.right()) {
+			if (LEFT(seed) == currentSeedRect.xmaxi) {
 				direction = SeedTree::Right;
 				if (!enoughOverlapVertical(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
 					continue;
 				}
 				if (currentSeedTree->restricted) {
 					if (currentSeedTree->direction != direction) continue;
-					qreal rmin = qMax(currentSeedTree->restrictionMin, YMIN(seed));
-					qreal rmax = qMin(currentSeedTree->restrictionMax, YMAX(seed));
-					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+					int rmin = qMax(currentSeedTree->restrictionMin, YMIN(seed));
+					int rmax = qMin(currentSeedTree->restrictionMax, YMAX(seed));
+					if (rmax - rmin < realToTile(m_wireWidthNeeded)) {
 						continue;
 					}
 				}
 			}
-			else if (RIGHT(seed) == currentSeedRect.left()) {
+			else if (RIGHT(seed) == currentSeedRect.xmini) {
 				direction = SeedTree::Left;
 				if (!enoughOverlapVertical(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
 					continue;
 				}
 				if (currentSeedTree->restricted) {
 					if (currentSeedTree->direction != direction) continue;
-					qreal rmin = qMax(currentSeedTree->restrictionMin, YMIN(seed));
-					qreal rmax = qMin(currentSeedTree->restrictionMax, YMAX(seed));
-					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+					int rmin = qMax(currentSeedTree->restrictionMin, YMIN(seed));
+					int rmax = qMin(currentSeedTree->restrictionMax, YMAX(seed));
+					if (rmax - rmin < realToTile(m_wireWidthNeeded)) {
 						continue;
 					}
 				}
 			}
-			else if (YMAX(seed) == currentSeedRect.top()) {
+			else if (YMAX(seed) == currentSeedRect.ymini) {
 				direction = SeedTree::Up;
 				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
 					continue;
 				}
 				if (currentSeedTree->restricted) {
 					if (currentSeedTree->direction != direction) continue;
-					qreal rmin = qMax(currentSeedTree->restrictionMin, LEFT(seed));
-					qreal rmax = qMin(currentSeedTree->restrictionMax, RIGHT(seed));
-					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+					int rmin = qMax(currentSeedTree->restrictionMin, LEFT(seed));
+					int rmax = qMin(currentSeedTree->restrictionMax, RIGHT(seed));
+					if (rmax - rmin < realToTile(m_wireWidthNeeded)) {
 						continue;
 					}
 				}
 			}
-			else if (YMIN(seed) == currentSeedRect.bottom()) {
+			else if (YMIN(seed) == currentSeedRect.ymaxi) {
 				direction = SeedTree::Down;
 				if (!enoughOverlapHorizontal(seed, currentSeedTree->seed, m_wireWidthNeeded)) {
 					continue;
 				}
 				if (currentSeedTree->restricted) {
 					if (currentSeedTree->direction != direction) continue;
-					qreal rmin = qMax(currentSeedTree->restrictionMin, LEFT(seed));
-					qreal rmax = qMin(currentSeedTree->restrictionMax, RIGHT(seed));
-					if (rmax - rmin < m_wireWidthNeeded - FloatingPointFudge) {
+					int rmin = qMax(currentSeedTree->restrictionMin, LEFT(seed));
+					int rmax = qMin(currentSeedTree->restrictionMax, RIGHT(seed));
+					if (rmax - rmin < realToTile(m_wireWidthNeeded)) {
 						continue;
 					}
 				}
@@ -1607,7 +1616,7 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 			switch(direction) {
 				case SeedTree::Up:
 				case SeedTree::Down:
-					if (YMAX(seed) - YMIN(seed) < m_wireWidthNeeded - FloatingPointFudge) {
+					if (YMAX(seed) - YMIN(seed) < realToTile(m_wireWidthNeeded)) {
 						newst->restrictionMax = qMin(currentSeedTree->restrictionMax, RIGHT(currentSeedTree->seed));
 						newst->restrictionMin = qMax(currentSeedTree->restrictionMin, LEFT(currentSeedTree->seed));
 						newst->restricted = true;
@@ -1615,7 +1624,7 @@ SeedTree * JRouter::followPath(SeedTree * & root, QList<Tile *> & path) {
 					break;
 				case SeedTree::Left:
 				case SeedTree::Right:
-					if (RIGHT(seed) - LEFT(seed) < m_wireWidthNeeded - FloatingPointFudge) {
+					if (RIGHT(seed) - LEFT(seed) < realToTile(m_wireWidthNeeded)) {
 						newst->restrictionMax = qMin(currentSeedTree->restrictionMax, YMAX(currentSeedTree->seed));
 						newst->restrictionMin = qMax(currentSeedTree->restrictionMin, YMIN(currentSeedTree->seed));
 						newst->restricted = true;
@@ -1664,7 +1673,7 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, bool forEmpty)
 								);
 	}
 
-	Tile * firstTile = TiSrPoint(NULL, subedge->edge->plane, subedge->fromPoint.x(), subedge->fromPoint.y());
+	Tile * firstTile = TiSrPoint(NULL, subedge->edge->plane, realToTile(subedge->fromPoint.x()), realToTile(subedge->fromPoint.y()));
 	if (firstTile == NULL) {
 		// shouldn't happen
 		return false;
@@ -1687,10 +1696,10 @@ bool JRouter::propagate(JSubedge * subedge, QList<Tile *> & path, bool forEmpty)
 		}
 
 		// TILE math reverses y-axis!
-		qreal x1 = LEFT(seed);
-		qreal y1 = YMIN(seed);
-		qreal x2 = RIGHT(seed);
-		qreal y2 = YMAX(seed);
+		qreal x1 = tileToReal(LEFT(seed));
+		qreal y1 = tileToReal(YMIN(seed));
+		qreal x2 = tileToReal(RIGHT(seed));
+		qreal y2 = tileToReal(YMAX(seed));
 			
 		short fof = checkCandidate(subedge, seed, forEmpty);
 		QRectF r(x1, y1, x2 - x1, y2 - y1);
@@ -1728,10 +1737,10 @@ void JRouter::appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*e
 
 	if (TiGetType(next) == NOTBOARD) {
 		if (TiGetClient(next) == NULL) {
-			qreal x1 = LEFT(next);
-			qreal y1 = YMIN(next);
-			qreal x2 = RIGHT(next);
-			qreal y2 = YMAX(next);
+			qreal x1 = tileToReal(LEFT(next));
+			qreal y1 = tileToReal(YMIN(next));
+			qreal x2 = tileToReal(RIGHT(next));
+			qreal y2 = tileToReal(YMAX(next));
 			TiSetClient(next, drawGridItem(x1, y1, x2, y2, GridEntry::NOTBOARD, NULL));
 		}
 
@@ -1748,7 +1757,8 @@ void JRouter::appendIf(Tile * seed, Tile * next, QList<Tile *> & seeds, bool (*e
 
 
 void JRouter::seedNext(Tile * seed, QList<Tile *> & seeds) {
-	if ((RIGHT(seed) < m_maxRect.right()) && (YMAX(seed) - YMIN(seed) > m_wireWidthNeeded - FloatingPointFudge)) {
+	int tWidthNeeded = realToTile(m_wireWidthNeeded);
+	if ((RIGHT(seed) < realToTile(m_maxRect.right())) && (YMAX(seed) - YMIN(seed) > tWidthNeeded)) {
 		Tile * next = TR(seed);
 		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
@@ -1761,7 +1771,7 @@ void JRouter::seedNext(Tile * seed, QList<Tile *> & seeds) {
 		}
 	}
 
-	if ((LEFT(seed) > m_maxRect.left()) && (YMAX(seed) - YMIN(seed) > m_wireWidthNeeded - FloatingPointFudge)) {
+	if ((LEFT(seed) > realToTile(m_maxRect.left())) && (YMAX(seed) - YMIN(seed) > tWidthNeeded)) {
 		Tile * next = BL(seed);
 		appendIf(seed, next, seeds, enoughOverlapVertical);
 		while (true) {
@@ -1774,7 +1784,7 @@ void JRouter::seedNext(Tile * seed, QList<Tile *> & seeds) {
 		}
 	}
 
-	if ((YMAX(seed) < m_maxRect.bottom()) && (RIGHT(seed) - LEFT(seed) > m_wireWidthNeeded - FloatingPointFudge)) {	
+	if ((YMAX(seed) < realToTile(m_maxRect.bottom())) && (RIGHT(seed) - LEFT(seed) > tWidthNeeded)) {	
 		Tile * next = RT(seed);
 		appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		while (true) {
@@ -1787,7 +1797,7 @@ void JRouter::seedNext(Tile * seed, QList<Tile *> & seeds) {
 		}
 	}
 
-	if ((YMIN(seed) > m_maxRect.top()) && (RIGHT(seed) - LEFT(seed) > m_wireWidthNeeded - FloatingPointFudge)) {		
+	if ((YMIN(seed) > realToTile(m_maxRect.top())) && (RIGHT(seed) - LEFT(seed) > tWidthNeeded)) {		
 		Tile * next = LB(seed);
 		appendIf(seed, next, seeds, enoughOverlapHorizontal);
 		while (true) {
@@ -1840,10 +1850,10 @@ short JRouter::checkCandidate(JSubedge * subedge, Tile * tile, bool forEmpty)
 }
 
 struct EmptyThing {
-	QList<qreal> x_s;
-	QList<qreal> x2_s;
-	QList<qreal> y_s;
-	qreal maxY;
+	QList<int> x_s;
+	QList<int> x2_s;
+	QList<int> y_s;
+	int maxY;
 };
 
 int collectXandY(Tile * tile, UserData data) {
@@ -1886,34 +1896,34 @@ short JRouter::checkSpace(JSubedge * subedge, Tile * tile, bool forEmpty)
 	TiToRect(tile, &tileRect);
 
 	QSizeF sizeNeeded = m_sketchWidget->jumperItemSize();
-	qreal widthNeeded = sizeNeeded.width() + KeepoutSpace + KeepoutSpace;
-	qreal heightNeeded = sizeNeeded.height() + KeepoutSpace + KeepoutSpace;
-	if (tileRect.xmax - tileRect.xmin  < widthNeeded) {
+	int tWidthNeeded = realToTile(sizeNeeded.width() + KeepoutSpace + KeepoutSpace);
+	int tHeightNeeded = realToTile(sizeNeeded.height() + KeepoutSpace + KeepoutSpace);
+	if (tileRect.xmaxi - tileRect.xmini  < tWidthNeeded) {
 		return result;
 	}
 
 	// need to figure out how to minimize the distance between this space and the previous wire;
 	// need to save the set of open spaces found....
 
-	if (tileRect.ymax - tileRect.ymin  >= heightNeeded) {
+	if (tileRect.ymaxi - tileRect.ymini  >= tHeightNeeded) {
 		DebugDialog::debug("empty GOAL");
 		return GridEntry::GOAL;
 	}
 
 	TileRect searchRect = tileRect;
-	searchRect.ymin = qMax(m_maxRect.top(), tileRect.ymin - heightNeeded + (tileRect.ymax - tileRect.ymin));
-	searchRect.ymax = qMin(m_maxRect.bottom(), tileRect.ymin + heightNeeded);
+	searchRect.ymini = qMax(realToTile(m_maxRect.top()), tileRect.ymini - tHeightNeeded + (tileRect.ymaxi - tileRect.ymini));
+	searchRect.ymaxi = qMin(realToTile(m_maxRect.bottom()), tileRect.ymini + tHeightNeeded);
 
 	EmptyThing emptyThing;
-	emptyThing.maxY = tileRect.ymin;
+	emptyThing.maxY = tileRect.ymini;
 	TiSrArea(tile, subedge->edge->plane, &searchRect, collectXandY, &emptyThing);
 
-	foreach (qreal y, emptyThing.y_s) {
-		foreach (qreal x, emptyThing.x_s) {
-			searchRect.xmin = x;
-			searchRect.xmax = x + widthNeeded;
-			searchRect.ymin = y;
-			searchRect.ymax = y + heightNeeded;
+	foreach (int y, emptyThing.y_s) {
+		foreach (int x, emptyThing.x_s) {
+			searchRect.xmini = x;
+			searchRect.xmaxi = x + tWidthNeeded;
+			searchRect.ymini = y;
+			searchRect.ymaxi = y + tHeightNeeded;
 			if (TiSrArea(tile, subedge->edge->plane, &searchRect, allEmpty, NULL) == 0) {
 				return GridEntry::GOAL;
 			}
@@ -2567,14 +2577,10 @@ JSubedge * JRouter::makeSubedge(JEdge * edge, QPointF p1, ConnectorItem * from, 
 
 Tile * JRouter::addTile(NonConnectorItem * nci, int type, Plane * thePlane, QList<Tile *> & alreadyTiled) 
 {
-	QRectF r = nci->rect();
-	QRectF r2 = nci->attachedTo()->mapRectToScene(r);
+	QRectF r = nci->attachedTo()->mapRectToScene(nci->rect());
 	TileRect tileRect;
-	tileRect.xmin = r2.left();
-	tileRect.xmax = r2.right();
-	tileRect.ymin = r2.top();		// TILE is Math Y-axis not computer-graphic Y-axis
-	tileRect.ymax = r2.bottom(); 
-	DebugDialog::debug(QString("   add tile %1").arg((long) nci, 0, 16), r2);
+	realsToTile(tileRect, r.left(), r.top(), r.right(), r.bottom());
+	DebugDialog::debug(QString("   add tile %1").arg((long) nci, 0, 16), r);
 	return insertTile(thePlane, tileRect, alreadyTiled, nci, type, false);
 }
 
@@ -2614,10 +2620,7 @@ void JRouter::clearTiles(Plane * thePlane)
 
 	QSet<Tile *> tiles;
 	TileRect tileRect;
-	tileRect.xmax = m_maxRect.right();
-	tileRect.xmin = m_maxRect.left();
-	tileRect.ymax = m_maxRect.bottom();
-	tileRect.ymin = m_maxRect.top();
+	realsToTile(tileRect, m_maxRect.left(), m_maxRect.top(),  m_maxRect.right(), m_maxRect.bottom());
 	TiSrArea(NULL, thePlane, &tileRect, prepDeleteTile, &tiles);
 	foreach (Tile * tile, tiles) {
 		TiFree(tile);
@@ -2628,10 +2631,10 @@ void JRouter::clearTiles(Plane * thePlane)
 
 void JRouter::displayBadTiles(QList<Tile *> & alreadyTiled) {
 	foreach (Tile * tile, alreadyTiled) {
-		qreal x1 = LEFT(tile);
-		qreal y1 = YMIN(tile);
-		qreal x2 = RIGHT(tile);
-		qreal y2 = YMAX(tile);
+		qreal x1 = tileToReal(LEFT(tile));
+		qreal y1 = tileToReal(YMIN(tile));
+		qreal x2 = tileToReal(RIGHT(tile));
+		qreal y2 = tileToReal(YMAX(tile));
 			
 		drawGridItem(x1, y1, x2, y2, GridEntry::BLOCK, dynamic_cast<GridEntry *>(TiGetClient(tile)));
 	}
@@ -2661,14 +2664,10 @@ int checkAlready(Tile * tile, UserData data) {
 	return 0;
 }
 
-Tile * JRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type, bool clip) {
-	tileRect.xmin = TWODECIMALS(tileRect.xmin);
-	tileRect.xmax = TWODECIMALS(tileRect.xmax);
-	tileRect.ymin = TWODECIMALS(tileRect.ymin);
-	tileRect.ymax = TWODECIMALS(tileRect.ymax);
-
+Tile * JRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type, bool clip) 
+{
 	DebugDialog::debug(QString("insert tile xmin:%1 xmax:%2 ymin:%3 ymax:%4").
-		arg(tileRect.xmin).arg(tileRect.xmax).arg(tileRect.ymin).arg(tileRect.ymax));
+		arg(tileRect.xmini).arg(tileRect.xmaxi).arg(tileRect.ymini).arg(tileRect.ymaxi));
 
 	CheckAlreadyStruct checkAlreadyStruct;
 	checkAlreadyStruct.item = item;
@@ -2698,7 +2697,7 @@ void JRouter::handleChangedTiles(Plane * thePlane, TileRect & tileRect) {
 	QSet<Tile *> copyChangedTiles(ChangedTiles);
 	ChangedTiles.clear();
 
-	DebugDialog::debug(QString("tile %1 %2 %3 %4").arg(tileRect.xmin).arg(tileRect.ymin).arg(tileRect.xmax).arg(tileRect.ymax));
+	DebugDialog::debug(QString("tile %1 %2 %3 %4").arg(tileRect.xmini).arg(tileRect.ymini).arg(tileRect.xmaxi).arg(tileRect.ymaxi));
 
 	handleChangedTilesAux(thePlane, copyChangedTiles);
 	ChangedTiles.clear();
@@ -2708,7 +2707,7 @@ void JRouter::handleChangedTilesAux(Plane * thePlane, QSet<Tile *> & tiles)
 {
 	foreach (Tile * theTile, tiles) {
 		if (TiGetType(theTile) != SPACE) continue;
-		if (YMAX(theTile) - YMIN(theTile) > m_wireWidthNeeded - FloatingPointFudge) continue;
+		if (YMAX(theTile) - YMIN(theTile) > realToTile(m_wireWidthNeeded)) continue;
 
 		TileRect theTileRect;
 		TiToRect(theTile, &theTileRect);
@@ -2716,16 +2715,16 @@ void JRouter::handleChangedTilesAux(Plane * thePlane, QSet<Tile *> & tiles)
 		DebugDialog::debug(QString("   changed tile %1 %2 %3 %4").arg(LEFT(theTile)).arg(YMIN(theTile)).arg(RIGHT(theTile)).arg(YMAX(theTile)));
 		
 		bool didInsert = false;
-		qreal newRight = RIGHT(theTile); 
+		int newRight = RIGHT(theTile); 
 		for (Tile * tp = RT(theTile); RIGHT(tp) > LEFT(theTile); tp = BL(tp)) {
 			if (TiGetType(tp) == SPACE || TiGetType(tp) == TINYSPACE) {
 				DebugDialog::debug(QString("   using %1 %2 %3 %4").arg(LEFT(tp)).arg(YMIN(tp)).arg(RIGHT(tp)).arg(YMAX(tp)));
 				if (RIGHT(tp) < newRight) {
 					TileRect tinyRect;
-					tinyRect.xmin = RIGHT(tp);
-					tinyRect.xmax = newRight;
-					tinyRect.ymin = theTileRect.ymin;
-					tinyRect.ymax = theTileRect.ymax;
+					tinyRect.xmini = RIGHT(tp);
+					tinyRect.xmaxi = newRight;
+					tinyRect.ymini = theTileRect.ymini;
+					tinyRect.ymaxi = theTileRect.ymaxi;
 					TiInsertTile(thePlane, &tinyRect, NULL, TINYSPACE);
 					didInsert = true;
 					break;			// tiles will be restructured now; get out of the loop
@@ -2734,16 +2733,16 @@ void JRouter::handleChangedTilesAux(Plane * thePlane, QSet<Tile *> & tiles)
 			}
 		}
 		if (!didInsert) {
-			qreal newLeft = LEFT(theTile); 
+			int newLeft = LEFT(theTile); 
 			for (Tile * tp = LB(theTile); LEFT(tp) < RIGHT(theTile); tp = TR(tp)) {
 				if (TiGetType(tp) == SPACE || TiGetType(tp) == TINYSPACE) {
 					DebugDialog::debug(QString("   using %1 %2 %3 %4").arg(LEFT(tp)).arg(YMIN(tp)).arg(RIGHT(tp)).arg(YMAX(tp)));
 					if (LEFT(tp) > newLeft) {
 						TileRect tinyRect;
-						tinyRect.xmin = newLeft;
-						tinyRect.xmax = LEFT(tp);
-						tinyRect.ymin = theTileRect.ymin;
-						tinyRect.ymax = theTileRect.ymax;
+						tinyRect.xmini = newLeft;
+						tinyRect.xmaxi = LEFT(tp);
+						tinyRect.ymini = theTileRect.ymini;
+						tinyRect.ymaxi = theTileRect.ymaxi;
 						TiInsertTile(thePlane, &tinyRect, NULL, TINYSPACE);
 						didInsert = true;
 						break;			// tiles will be restructured now; get out of the loop
@@ -2757,57 +2756,12 @@ void JRouter::handleChangedTilesAux(Plane * thePlane, QSet<Tile *> & tiles)
 			DebugDialog::debug("have to fix this one later");
 		}
 	
-
-		/*
-
-		Tile* leftAbove = NULL;
-		Tile* leftBelow = NULL;
-		Tile* rightAbove = NULL;
-		Tile* rightBelow = NULL;
-		if (theTileRect.xmin < tileRect.xmin && theTileRect.xmax > tileRect.xmin) {
-			leftAbove = TiSrPoint(theTile, thePlane, theTileRect.xmin + FloatingPointFudge, theTileRect.ymin - FloatingPointFudge);
-			leftBelow = TiSrPoint(theTile, thePlane, theTileRect.xmin + FloatingPointFudge, theTileRect.ymax + FloatingPointFudge);
-		}
-		if (theTileRect.xmin < tileRect.xmax && theTileRect.xmax > tileRect.xmax) {
-			rightAbove = TiSrPoint(theTile, thePlane, theTileRect.xmax - FloatingPointFudge, theTileRect.ymin - FloatingPointFudge);
-			rightBelow = TiSrPoint(theTile, thePlane, theTileRect.xmax - FloatingPointFudge, theTileRect.ymax + FloatingPointFudge);
-		}
-
-		if (leftAbove) {
-			bool joinAbove = (TiGetType(leftAbove) == SPACE && LEFT(leftAbove) == theTileRect.xmin && RIGHT(leftAbove) == tileRect.xmin);
-			bool joinBelow = (TiGetType(leftBelow) == SPACE && LEFT(leftBelow) == theTileRect.xmin && RIGHT(leftBelow) == tileRect.xmin);
-			if (joinAbove || joinBelow) {
-				TileRect tinyRect;
-				tinyRect.xmin = tileRect.xmin;
-				tinyRect.xmax = qMin(tileRect.xmax, theTileRect.xmax);
-				tinyRect.ymin = theTileRect.ymin;
-				tinyRect.ymax = theTileRect.ymax;
-				TiInsertTile(thePlane, &tinyRect, NULL, TINYSPACE);
-			}
-		}
-
-		if (rightAbove) {
-			bool joinAbove = (TiGetType(rightAbove) == SPACE && RIGHT(rightAbove) == theTileRect.xmax && LEFT(rightAbove) == tileRect.xmax);
-			bool joinBelow = (TiGetType(rightBelow) == SPACE && RIGHT(rightBelow) == theTileRect.xmax && LEFT(rightBelow) == tileRect.xmax);
-			if (joinAbove || joinBelow) {
-				TileRect tinyRect;
-				tinyRect.xmin = qMax(tileRect.xmin, theTileRect.xmin);
-				tinyRect.xmax = tileRect.xmax;
-				tinyRect.ymin = theTileRect.ymin;
-				tinyRect.ymax = theTileRect.ymax;
-				TiInsertTile(thePlane, &tinyRect, NULL, TINYSPACE);
-			}
-		}
-
-		*/
 	}
-
-
 }
 
 Tile * JRouter::clipInsertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, int type) 
 {
-	DebugDialog::debug(QString("clip insert %1 %2 %3 %4").arg(tileRect.xmin).arg(tileRect.ymin).arg(tileRect.xmax).arg(tileRect.ymax));
+	DebugDialog::debug(QString("clip insert %1 %2 %3 %4").arg(tileRect.xmini).arg(tileRect.ymini).arg(tileRect.xmaxi).arg(tileRect.ymaxi));
 	foreach (Tile * intersectingTile, alreadyTiled) {
 		int type = TiGetType(intersectingTile);
 		switch (type) {
@@ -2838,7 +2792,7 @@ Tile * JRouter::clipInsertTile(Plane * thePlane, TileRect & tileRect, QList<Tile
 				// overlap not allowed
 				TileRect tr;
 				TiToRect(intersectingTile, &tr);
-				DebugDialog::debug(QString("intersecting %1 %2 %3 %4").arg(tr.xmin).arg(tr.ymin).arg(tr.xmax).arg(tr.ymax));
+				DebugDialog::debug(QString("intersecting %1 %2 %3 %4").arg(tr.xmini).arg(tr.ymini).arg(tr.xmaxi).arg(tr.ymaxi));
 				return NULL;
 			}
 		}
@@ -2848,7 +2802,7 @@ Tile * JRouter::clipInsertTile(Plane * thePlane, TileRect & tileRect, QList<Tile
 				// overlap not allowed
 				TileRect tr;
 				TiToRect(intersectingTile, &tr);
-				DebugDialog::debug(QString("intersecting %1 %2 %3 %4").arg(tr.xmin).arg(tr.ymin).arg(tr.xmax).arg(tr.ymax));
+				DebugDialog::debug(QString("intersecting %1 %2 %3 %4").arg(tr.xmini).arg(tr.ymini).arg(tr.xmaxi).arg(tr.ymaxi));
 				return NULL;
 			}
 		}
@@ -2891,22 +2845,24 @@ void JRouter::clearGridEntries() {
 
 QPointF JRouter::findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNeeded, Plane * thePlane, const QPointF & nearPoint) 
 {
-	TileRect tileRect;
-	TiToRect(tile, &tileRect);
+	qreal l = tileToReal(LEFT(tile));
+	qreal t = tileToReal(YMIN(tile));
+	qreal r = tileToReal(RIGHT(tile));
+	qreal b = tileToReal(YMAX(tile));
 
-	if (tileRect.ymax - tileRect.ymin  >= heightNeeded && tileRect.xmax - tileRect.xmin  >= widthNeeded ) {
+	if (b - t >= heightNeeded && r - l >= widthNeeded ) {
 		qreal cy, cx;
-		if (nearPoint.y() <= (tileRect.ymax + tileRect.ymin) / 2) {
-			cy = qMax(nearPoint.y() - (heightNeeded / 2), tileRect.ymin) + (heightNeeded / 2);
+		if (nearPoint.y() <= (b + t) / 2) {
+			cy = qMax(nearPoint.y() - (heightNeeded / 2), t) + (heightNeeded / 2);
 		}
 		else {
-			cy = qMin(nearPoint.y() + (heightNeeded / 2), tileRect.ymax) - (heightNeeded / 2);
+			cy = qMin(nearPoint.y() + (heightNeeded / 2), b) - (heightNeeded / 2);
 		}
-		if (nearPoint.x() <= (tileRect.xmax + tileRect.xmin) / 2) {
-			cx = qMax(nearPoint.x() - (widthNeeded / 2), tileRect.xmin) + (widthNeeded / 2);
+		if (nearPoint.x() <= (r + l) / 2) {
+			cx = qMax(nearPoint.x() - (widthNeeded / 2), l) + (widthNeeded / 2);
 		}
 		else {
-			cy = qMin(nearPoint.x() + (widthNeeded / 2), tileRect.xmax) - (widthNeeded / 2);
+			cy = qMin(nearPoint.x() + (widthNeeded / 2), r) - (widthNeeded / 2);
 		}
 		return QPointF(cx, cy);
 	}
@@ -2917,34 +2873,37 @@ QPointF JRouter::findNearestSpace(Tile * tile, qreal widthNeeded, qreal heightNe
 		// then we generate candidate rects by using the collected set of y coordinates, paired with the left and (right - needed width) x coordinates
 		// then we make sure those candidates are actually all space tiles, and if so, compare the distance with the nearPoint
 
-		TileRect searchRect = tileRect;
-		searchRect.ymin = qMax(m_maxRect.top(), tileRect.ymin - heightNeeded + (tileRect.ymax - tileRect.ymin));
-		searchRect.ymax = qMin(m_maxRect.bottom(), tileRect.ymin + heightNeeded);
+		int tWidthNeeded = realToTile(widthNeeded);
+		int tHeightNeeded = realToTile(heightNeeded);
+		TileRect searchRect;
+		TiToRect(tile, &searchRect);
+		searchRect.ymini = qMax(realToTile(m_maxRect.top()), YMIN(tile) - tHeightNeeded + (YMAX(tile) - YMIN(tile)));
+		searchRect.ymaxi = qMin(realToTile(m_maxRect.bottom()), YMIN(tile) + tHeightNeeded);
 
 		EmptyThing emptyThing;
-		emptyThing.maxY = tileRect.ymin;
+		emptyThing.maxY = YMIN(tile);
 		TiSrArea(tile, thePlane, &searchRect, collectXandY, &emptyThing);
 
 		qreal bestD = std::numeric_limits<double>::max();
 		qreal bestX, bestY;
 
-		QList<QPointF> points;
-		foreach (qreal y, emptyThing.y_s) {
-			foreach (qreal x, emptyThing.x_s) {
-				points.append(QPointF(x, y));
+		QList<QPoint> points;
+		foreach (int y, emptyThing.y_s) {
+			foreach (int x, emptyThing.x_s) {
+				points.append(QPoint(x, y));
 			}
-			foreach (qreal x, emptyThing.x2_s) {
-				points.append(QPointF(x - widthNeeded, y));
+			foreach (int x, emptyThing.x2_s) {
+				points.append(QPoint(x - tWidthNeeded, y));
 			}
 		}
-		foreach (QPointF p, points) {
-			searchRect.xmin = p.x();
-			searchRect.xmax = p.x() + widthNeeded;
-			searchRect.ymin = p.y();
-			searchRect.ymax = p.y() + heightNeeded;
+		foreach (QPoint p, points) {
+			searchRect.xmini = p.x();
+			searchRect.xmaxi = p.x() + tWidthNeeded;
+			searchRect.ymini = p.y();
+			searchRect.ymaxi = p.y() + tHeightNeeded;
 			if (TiSrArea(tile, thePlane, &searchRect, allEmpty, NULL) == 0) {
-				qreal cx = p.x() + (widthNeeded / 2);
-				qreal cy = p.y() + (heightNeeded / 2);
+				qreal cx = tileToReal(p.x()) + (widthNeeded / 2);
+				qreal cy = tileToReal(p.y()) + (heightNeeded / 2);
 				qreal d = (cx - nearPoint.x()) * (cx - nearPoint.x()) + (cy - nearPoint.y()) * (cy - nearPoint.y());
 				if (d < bestD) {
 					bestD = d;

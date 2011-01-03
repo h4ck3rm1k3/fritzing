@@ -27,15 +27,15 @@
 
 // note: Tile uses math axes as opposed to computer graphic axes.  In other words y increases up.
 struct TileRect {
-	qreal xmin;
-	qreal ymin;
-	qreal xmax;
-	qreal ymax;
+	int xmini;
+	int ymini;
+	int xmaxi;
+	int ymaxi;
 };
 
 struct TilePoint {
-	qreal x;
-	qreal y;
+	int xi;
+	int yi;
 };
 
 
@@ -85,15 +85,43 @@ struct Tile
      * are stored inside it.
      */
 
-#define	YMIN(tileP)		((tileP)->ti_ll.y)
-#define	LEFT(tileP)		((tileP)->ti_ll.x)
-#define	YMAX(tileP)		(YMIN(RT(tileP)))
-#define	RIGHT(tileP)	(LEFT(TR(tileP)))
+inline	Tile* LB(Tile* tileP) { return tileP->ti_lb; }
+inline	Tile* BL(Tile* tileP) { return tileP->ti_bl; }
+inline	Tile* TR(Tile* tileP) { return tileP->ti_tr; }
+inline	Tile* RT(Tile* tileP) { return tileP->ti_rt; }
+inline void SETLB(Tile* tileP, Tile * val) { tileP->ti_lb = val; 
+	if (val == tileP) {
+		int a = 0;
+		a = a + 1;
+	return;
+}}
+inline void SETBL(Tile* tileP, Tile * val) { tileP->ti_bl = val; 
+	if (val == tileP) {
+		int a = 0;
+		a = a + 1;
+	return;
+}}
+inline void SETTR(Tile* tileP, Tile * val) { tileP->ti_tr = val; 
+	if (val == tileP) {
+		int a = 0;
+		a = a + 1;
+	return;
+}}
+inline void SETRT(Tile* tileP, Tile * val) { tileP->ti_rt = val; 
+	if (val == tileP) {
+		int a = 0;
+		a = a + 1;
+	return;
+}}
 
-#define	LB(tileP)		((tileP)->ti_lb)
-#define	BL(tileP)		((tileP)->ti_bl)
-#define	TR(tileP)		((tileP)->ti_tr)
-#define	RT(tileP)		((tileP)->ti_rt)
+inline int YMIN(Tile* tileP) { return tileP->ti_ll.yi; }
+inline int LEFT(Tile* tileP) { return	tileP->ti_ll.xi; }
+inline int YMAX(Tile* tileP) { return	YMIN(RT(tileP)); }
+inline int RIGHT(Tile* tileP)	{ return LEFT(TR(tileP)); }
+inline void SETYMIN(Tile* tileP, int val) { tileP->ti_ll.yi = val; }
+inline void SETLEFT(Tile* tileP, int val) { tileP->ti_ll.xi = val; }
+inline void SETYMAX(Tile* tileP, int val) { SETYMIN(RT(tileP), val); }
+inline void SETRIGHT(Tile* tileP, int val) { SETLEFT(TR(tileP), val); }
 
 typedef void (*TileFunc)(Tile *);
 
@@ -153,9 +181,9 @@ struct Plane
  * representable in wordsize - 2 bits.
  */
 
-extern qreal INFINITY;
-extern qreal MINFINITY;
-extern qreal MINDIFF;
+extern int INFINITY;
+extern int MINFINITY;
+extern int MINDIFF;
 
 typedef int (*TileCallback)(Tile *, UserData);
 
@@ -173,14 +201,14 @@ typedef int (*TileCallback)(Tile *, UserData);
 Plane *TiNewPlane(Tile *tile);
 void TiFreePlane(Plane *plane);
 void TiToRect(Tile *tile, TileRect *rect);
-Tile *TiSplitX(Tile *tile, qreal x);
-Tile *TiSplitY(Tile *tile, qreal y);
-Tile *TiSplitX_Left(Tile *tile, qreal x);
-Tile *TiSplitY_Bottom(Tile *tile, qreal y);
+Tile *TiSplitX(Tile *tile, int x);
+Tile *TiSplitY(Tile *tile, int y);
+Tile *TiSplitX_Left(Tile *tile, int x);
+Tile *TiSplitY_Bottom(Tile *tile, int y);
 void  TiJoinX(Tile *tile1, Tile *tile2, Plane *plane);
 void  TiJoinY(Tile *tile1, Tile *tile2, Plane *plane);
 int   TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback, UserData arg);
-Tile *TiSrPoint( Tile * hintTile, Plane * plane, qreal x, qreal y);
+Tile *TiSrPoint( Tile * hintTile, Plane * plane, int x, int y);
 Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, int type);
 
 #define	TiBottom(tileP)	(YMIN(tileP))

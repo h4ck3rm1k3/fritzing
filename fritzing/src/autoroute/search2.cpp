@@ -21,7 +21,7 @@
 
 #include "tile.h"
 
-qreal MINDIFF = .00001;
+int MINDIFF = 1;
 
 
 /* -------------------- Local function headers ------------------------ */
@@ -96,7 +96,7 @@ TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback
 {
     TilePoint here;
     Tile *tp, *enumTR, *enumTile;
-    qreal enumRight, enumBottom;
+    int enumRight, enumBottom;
 
     /*
      * We will scan from top to bottom along the left hand edge
@@ -104,12 +104,12 @@ TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback
      * find in this search will be enumerated.
      */
 
-    here.x = rect->xmin;
-    here.y = rect->ymax - MINDIFF;
+    here.xi = rect->xmini;
+    here.yi = rect->ymaxi - MINDIFF;
     enumTile = hintTile ? hintTile : plane->pl_hint;
     plane->pl_hint = enumTile = gotoPoint(enumTile, here);
 
-    while (here.y >= rect->ymin)
+    while (here.yi >= rect->ymini)
     {
 	/*
 	 * Find the tile (tp) immediately below the one to be
@@ -118,7 +118,7 @@ TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback
 	 * it can result in its deallocation or modification in
 	 * some other way.
 	 */
-	here.y = YMIN(enumTile) - MINDIFF;
+	here.yi = YMIN(enumTile) - MINDIFF;
 	tp = enumTile;
 	plane->pl_hint = tp = gotoPoint(tp, here);
 
@@ -133,7 +133,7 @@ TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback tileCallback
 	 * tiles to its right.
 	 */
 
-	if (enumRight < rect->xmax)
+	if (enumRight < rect->xmaxi)
 	    if (tiSrAreaEnum(enumTR, enumBottom, rect, tileCallback, arg))
 		return 1;
 	enumTile = tp;
@@ -172,8 +172,8 @@ tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCal
    /* Additional argument to pass to (*func)() */
 {
     Tile *tp, *tpLB, *tpTR;
-    qreal tpRight, tpNextTop, tpBottom, srchBottom;
-    qreal atBottom = (enumBottom <= rect->ymin);
+    int tpRight, tpNextTop, tpBottom, srchBottom;
+    int atBottom = (enumBottom <= rect->ymini);
 
 
     /*
@@ -184,8 +184,8 @@ tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCal
      *	  bottom of the search rectangle.
      */
 
-    if ((srchBottom = enumBottom) < rect->ymin)
-	srchBottom = rect->ymin;
+    if ((srchBottom = enumBottom) < rect->ymini)
+	srchBottom = rect->ymini;
 
     for (tp = enumRT, tpNextTop = YMAX(tp); tpNextTop > srchBottom; tp = tpLB)
     {
@@ -200,7 +200,7 @@ tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCal
 	tpLB = LB(tp);
 	tpNextTop = YMAX(tpLB);	/* Since YMAX(tpLB) comes from tp */
 
-	if (YMIN(tp) < rect->ymax && (atBottom || YMIN(tp) >= enumBottom))
+	if (YMIN(tp) < rect->ymaxi && (atBottom || YMIN(tp) >= enumBottom))
 	{
 	    /*
 	     * We extract more information from the tile, which we will use
@@ -218,7 +218,7 @@ tiSrAreaEnum( Tile *enumRT, int enumBottom, TileRect *rect, TileCallback tileCal
 	     * tiles to its right.
 	     */
 
-	    if (tpRight < rect->xmax)
+	    if (tpRight < rect->xmaxi)
 		if (tiSrAreaEnum(tpTR, tpBottom, rect, tileCallback, arg))
 		    return 1;
 	}

@@ -52,7 +52,7 @@ GroundPlaneGenerator::GroundPlaneGenerator()
 GroundPlaneGenerator::~GroundPlaneGenerator() {
 }
 
-bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem * board, qreal res, QList<QRect> & rects)
+bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem * board, qreal res, qreal keepoutSpace, QList<QRect> & rects)
 {
 	QByteArray boardByteArray;
     QString tempColor("#000000");
@@ -78,7 +78,35 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 
 	image.save("getBoardRects.png");
 
-	scanLines(image, bWidth, bHeight, rects, 1);
+	QColor keepaway(255,255,255);
+	int threshhold = 1;
+
+	// now add keepout area to the border
+	QImage image2 = image.copy();
+	painter.setRenderHints(0);
+	painter.begin(&image2);
+	painter.fillRect(0, 0, image2.width(), keepoutSpace, keepaway);
+	painter.fillRect(0, image2.height() - keepoutSpace, image2.width(), keepoutSpace, keepaway);
+	painter.fillRect(0, 0, keepoutSpace, image2.height(), keepaway);
+	painter.fillRect(image2.width() - keepoutSpace, 0, keepoutSpace, image2.height(), keepaway);
+
+	for (int y = 0; y < image.height(); y++) {
+		QRgb* scanLine = (QRgb *) image.scanLine(y);
+		for (int x = 0; x < image.width(); x++) {
+			QRgb current = *(scanLine + x);
+			int gray = qGray(current);
+			if (gray <= threshhold) {			
+				continue;
+			}
+
+			painter.fillRect(x - keepoutSpace, y - keepoutSpace, keepoutSpace + keepoutSpace, keepoutSpace + keepoutSpace, keepaway);
+		}
+	}
+	painter.end();
+
+	image2.save("getBoardRects2.png");
+
+	scanLines(image2, bWidth, bHeight, rects, threshhold);
 
 	// combine parallel equal-sized rects
 	int ix = 0;

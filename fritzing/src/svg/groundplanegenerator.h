@@ -46,7 +46,7 @@ public:
 					QGraphicsItem * board, qreal res, const QString & color, const QString & layerName); 
 	const QStringList & newSVGs();
 	void scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector);  
-	bool getBoardRects(const QString & boardSvg, QGraphicsItem * board, qreal res, QList<QRect> & rects);
+	bool getBoardRects(const QString & boardSvg, QGraphicsItem * board, qreal res, qreal keepoutSpace, QList<QRect> & rects);
 
 public:
 	static QString ConnectorName;

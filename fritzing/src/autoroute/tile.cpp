@@ -57,8 +57,8 @@ void TiSetFreeFunc(TileFunc tf) {
  * this area.
  */
 
-qreal INFINITY = (std::numeric_limits<int>::max() >> 2) - 4;
-qreal MINFINITY	= -INFINITY;
+int INFINITY = (std::numeric_limits<int>::max() >> 2) - 4;
+int MINFINITY	= -INFINITY;
 
 
 /*
@@ -106,51 +106,51 @@ TiNewPlane(Tile *tile)
     if (infinityTile == (Tile *) NULL)
     {
 	infinityTile = TiAlloc();
-	LEFT(infinityTile) = INFINITY+1;
-	YMIN(infinityTile) = INFINITY+1;
+	SETLEFT(infinityTile, INFINITY+1);
+	SETYMIN(infinityTile, INFINITY+1);
     }
 
     if (tile)
     {
-	RT(tile) = newplane->pl_top;
-	TR(tile) = newplane->pl_right;
-	LB(tile) = newplane->pl_bottom;
-	BL(tile) = newplane->pl_left;
+	SETRT(tile, newplane->pl_top);
+	SETTR(tile, newplane->pl_right);
+	SETLB(tile, newplane->pl_bottom);
+	SETBL(tile, newplane->pl_left);
     }
 
-    LEFT(newplane->pl_bottom) = MINFINITY;
-    YMIN(newplane->pl_bottom) = MINFINITY;
-    RT(newplane->pl_bottom) = tile;
-    TR(newplane->pl_bottom) = newplane->pl_right;
-    LB(newplane->pl_bottom) = BADTILE;
-    BL(newplane->pl_bottom) = newplane->pl_left;
+    SETLEFT(newplane->pl_bottom, MINFINITY);
+    SETYMIN(newplane->pl_bottom, MINFINITY);
+    SETRT(newplane->pl_bottom, tile);
+    SETTR(newplane->pl_bottom, newplane->pl_right);
+    SETLB(newplane->pl_bottom, BADTILE);
+    SETBL(newplane->pl_bottom, newplane->pl_left);
     TiSetBody(newplane->pl_bottom, 0);
     TiSetType(newplane->pl_bottom, DUMMYBOTTOM);
 
-    LEFT(newplane->pl_top) = MINFINITY;
-    YMIN(newplane->pl_top) = INFINITY;
-    RT(newplane->pl_top) = infinityTile;
-    TR(newplane->pl_top) = newplane->pl_right;
-    LB(newplane->pl_top) = tile;
-    BL(newplane->pl_top) = newplane->pl_left;
+    SETLEFT(newplane->pl_top, MINFINITY);
+    SETYMIN(newplane->pl_top, INFINITY);
+    SETRT(newplane->pl_top, infinityTile);
+    SETTR(newplane->pl_top, newplane->pl_right);
+    SETLB(newplane->pl_top, tile);
+    SETBL(newplane->pl_top, newplane->pl_left);
     TiSetBody(newplane->pl_top, 0);
     TiSetType(newplane->pl_bottom, DUMMYTOP);
 
-    LEFT(newplane->pl_left) = MINFINITY;
-    YMIN(newplane->pl_left) = MINFINITY;
-    RT(newplane->pl_left) = newplane->pl_top;
-    TR(newplane->pl_left) = tile;
-    LB(newplane->pl_left) = newplane->pl_bottom;
-    BL(newplane->pl_left) = BADTILE;
+    SETLEFT(newplane->pl_left, MINFINITY);
+    SETYMIN(newplane->pl_left, MINFINITY);
+    SETRT(newplane->pl_left, newplane->pl_top);
+    SETTR(newplane->pl_left, tile);
+    SETLB(newplane->pl_left, newplane->pl_bottom);
+    SETBL(newplane->pl_left, BADTILE);
     TiSetBody(newplane->pl_left, 0);
     TiSetType(newplane->pl_bottom, DUMMYLEFT);
 
-    LEFT(newplane->pl_right) = INFINITY;
-    YMIN(newplane->pl_right) = MINFINITY;
-    RT(newplane->pl_right) = newplane->pl_top;
-    TR(newplane->pl_right) = infinityTile;
-    LB(newplane->pl_right) = newplane->pl_bottom;
-    BL(newplane->pl_right) = tile;
+    SETLEFT(newplane->pl_right, INFINITY);
+    SETYMIN(newplane->pl_right, MINFINITY);
+    SETRT(newplane->pl_right, newplane->pl_top);
+    SETTR(newplane->pl_right, infinityTile);
+    SETLB(newplane->pl_right, newplane->pl_bottom);
+    SETBL(newplane->pl_right, tile);
     TiSetBody(newplane->pl_right, 0);
     TiSetType(newplane->pl_bottom, DUMMYRIGHT);
 
@@ -207,10 +207,10 @@ TiToRect(Tile *tile, TileRect *rect)
     /* Tile whose bounding box is to be stored in *rect */
     /* Pointer to rect to be set to bounding box */
 {
-    rect->xmin = LEFT(tile);
-    rect->xmax = RIGHT(tile);
-    rect->ymin = YMIN(tile);
-    rect->ymax = YMAX(tile);
+    rect->xmini = LEFT(tile);
+    rect->xmaxi = RIGHT(tile);
+    rect->ymini = YMIN(tile);
+    rect->ymaxi = YMAX(tile);
 }
 
 /*
@@ -234,7 +234,7 @@ TiToRect(Tile *tile, TileRect *rect)
  */
 
 Tile *
-TiSplitX(Tile *tile, qreal x)
+TiSplitX(Tile *tile, int x)
     /* Tile to be split */
     /* X coordinate of split */
 {
@@ -247,27 +247,27 @@ TiSplitX(Tile *tile, qreal x)
     TiSetClient(newtile, 0);
     TiSetBody(newtile, 0);
 
-    LEFT(newtile) = x;
-    YMIN(newtile) = YMIN(tile);
-    BL(newtile) = tile;
-    TR(newtile) = TR(tile);
-    RT(newtile) = RT(tile);
+    SETLEFT(newtile, x);
+    SETYMIN(newtile, YMIN(tile));
+    SETBL(newtile, tile);
+    SETTR(newtile, TR(tile));
+    SETRT(newtile, RT(tile));
 
     /*
      * Adjust corner stitches along the right edge
      */
 
     for (tp = TR(tile); BL(tp) == tile; tp = LB(tp))
-	BL(tp) = newtile;
-    TR(tile) = newtile;
+	SETBL(tp, newtile);
+    SETTR(tile, newtile);
 
     /*
      * Adjust corner stitches along the top edge
      */
 
     for (tp = RT(tile); LEFT(tp) >= x; tp = BL(tp))
-	LB(tp) = newtile;
-    RT(tile) = tp;
+	SETLB(tp, newtile);
+    SETRT(tile, tp);
 
     /*
      * Adjust corner stitches along the bottom edge
@@ -275,10 +275,10 @@ TiSplitX(Tile *tile, qreal x)
 
     for (tp = LB(tile); RIGHT(tp) <= x; tp = TR(tp))
 	/* nothing */;
-    LB(newtile) = tp;
+    SETLB(newtile, tp);
     while (RT(tp) == tile)
     {
-	RT(tp) = newtile;
+	SETRT(tp, newtile);
 	tp = TR(tp);
     }
 
@@ -311,7 +311,7 @@ TiSplitX(Tile *tile, qreal x)
  */
 
 Tile *
-TiSplitY(Tile *tile, qreal y)
+TiSplitY(Tile *tile, int y)
     /* Tile to be split */
     /* Y coordinate of split */
 {
@@ -324,27 +324,27 @@ TiSplitY(Tile *tile, qreal y)
     TiSetClient(newtile, 0);
     TiSetBody(newtile, 0);
 
-    LEFT(newtile) = LEFT(tile);
-    YMIN(newtile) = y;
-    LB(newtile) = tile;
-    RT(newtile) = RT(tile);
-    TR(newtile) = TR(tile);
+    SETLEFT(newtile, LEFT(tile));
+    SETYMIN(newtile, y);
+    SETLB(newtile, tile);
+    SETRT(newtile, RT(tile));
+    SETTR(newtile, TR(tile));
 
     /*
      * Adjust corner stitches along top edge
      */
 
     for (tp = RT(tile); LB(tp) == tile; tp = BL(tp))
-	LB(tp) = newtile;
-    RT(tile) = newtile;
+	SETLB(tp, newtile);
+    SETRT(tile, newtile);
 
     /*
      * Adjust corner stitches along right edge
      */
 
     for (tp = TR(tile); YMIN(tp) >= y; tp = LB(tp))
-	BL(tp) = newtile;
-    TR(tile) = tp;
+	SETBL(tp, newtile);
+    SETTR(tile, tp);
 
     /*
      * Adjust corner stitches along left edge
@@ -352,10 +352,10 @@ TiSplitY(Tile *tile, qreal y)
 
     for (tp = BL(tile); YMAX(tp) <= y; tp = RT(tp))
 	/* nothing */;
-    BL(newtile) = tp;
+    SETBL(newtile, tp);
     while (TR(tp) == tile)
     {
-	TR(tp) = newtile;
+	SETTR(tp, newtile);
 	tp = RT(tp);
     }
 
@@ -389,7 +389,7 @@ TiSplitY(Tile *tile, qreal y)
  */
 
 Tile *
-TiSplitX_Left(Tile *tile, qreal x)
+TiSplitX_Left(Tile *tile, int x)
     /* Tile to be split */
     /* X coordinate of split */
 {
@@ -402,30 +402,30 @@ TiSplitX_Left(Tile *tile, qreal x)
     TiSetClient(newtile, 0);
     TiSetBody(newtile, 0);
 
-    LEFT(newtile) = LEFT(tile);
-    LEFT(tile) = x;
-    YMIN(newtile) = YMIN(tile);
+    SETLEFT(newtile, LEFT(tile));
+    SETLEFT(tile, x);
+    SETYMIN(newtile, YMIN(tile));
 
-    BL(newtile) = BL(tile);
-    LB(newtile) = LB(tile);
-    TR(newtile) = tile;
-    BL(tile) = newtile;
+    SETBL(newtile, BL(tile));
+    SETLB(newtile, LB(tile));
+    SETTR(newtile, tile);
+    SETBL(tile, newtile);
 
     /* Adjust corner stitches along the left edge */
     for (tp = BL(newtile); TR(tp) == tile; tp = RT(tp))
-	TR(tp) = newtile;
+	SETTR(tp, newtile);
 
     /* Adjust corner stitches along the top edge */
     for (tp = RT(tile); LEFT(tp) >= x; tp = BL(tp))
 	/* nothing */;
-    RT(newtile) = tp;
+    SETRT(newtile, tp);
     for ( ; LB(tp) == tile; tp = BL(tp))
-	LB(tp) = newtile;
+	SETLB(tp, newtile);
 
     /* Adjust corner stitches along the bottom edge */
     for (tp = LB(tile); RIGHT(tp) <= x; tp = TR(tp))
-	RT(tp) = newtile;
-    LB(tile) = tp;
+	SETRT(tp, newtile);
+    SETLB(tile, tp);
 
 	if (ChangedFunc) {
 		ChangedFunc(newtile);
@@ -457,7 +457,7 @@ TiSplitX_Left(Tile *tile, qreal x)
  */
 
 Tile *
-TiSplitY_Bottom(Tile *tile, qreal y)
+TiSplitY_Bottom(Tile *tile, int y)
     /* Tile to be split */
     /* Y coordinate of split */
 {
@@ -470,30 +470,30 @@ TiSplitY_Bottom(Tile *tile, qreal y)
     TiSetClient(newtile, 0);
     TiSetBody(newtile, 0);
 
-    LEFT(newtile) = LEFT(tile);
-    YMIN(newtile) = YMIN(tile);
-    YMIN(tile) = y;
+    SETLEFT(newtile, LEFT(tile));
+    SETYMIN(newtile, YMIN(tile));
+    SETYMIN(tile, y);
 
-    RT(newtile) = tile;
-    LB(newtile) = LB(tile);
-    BL(newtile) = BL(tile);
-    LB(tile) = newtile;
+    SETRT(newtile, tile);
+    SETLB(newtile, LB(tile));
+    SETBL(newtile, BL(tile));
+    SETLB(tile, newtile);
 
     /* Adjust corner stitches along bottom edge */
     for (tp = LB(newtile); RT(tp) == tile; tp = TR(tp))
-	RT(tp) = newtile;
+	SETRT(tp, newtile);
 
     /* Adjust corner stitches along right edge */
     for (tp = TR(tile); YMIN(tp) >= y; tp = LB(tp))
 	/* nothing */;
-    TR(newtile) = tp;
+    SETTR(newtile, tp);
     for ( ; BL(tp) == tile; tp = LB(tp))
-	BL(tp) = newtile;
+	SETBL(tp, newtile);
 
     /* Adjust corner stitches along left edge */
     for (tp = BL(tile); YMAX(tp) <= y; tp = RT(tp))
-	TR(tp) = newtile;
-    BL(tile) = tp;
+	SETTR(tp, newtile);
+    SETBL(tile, tp);
 
 	if (ChangedFunc) {
 		ChangedFunc(newtile);
@@ -531,7 +531,7 @@ TiJoinX(Tile *tile1, Tile *tile2, Plane *plane)
     /* Second tile, deallocated by call */
     /* Plane in which hint tile is updated */
 {
-    Tile *tp;
+	Tile *tp;
 
     /*
      * Basic algorithm:
@@ -552,14 +552,14 @@ TiJoinX(Tile *tile1, Tile *tile2, Plane *plane)
      */
 
     for (tp = RT(tile2); LB(tp) == tile2; tp = BL(tp))
-	LB(tp) = tile1;
+	SETLB(tp, tile1);
 
     /*
      * Update stitches along bottom of tile
      */
 
     for (tp = LB(tile2); RT(tp) == tile2; tp = TR(tp))
-	RT(tp) = tile1;
+	SETRT(tp, tile1);
 
     /*
      * Update stitches along either left or right, depending
@@ -570,17 +570,17 @@ TiJoinX(Tile *tile1, Tile *tile2, Plane *plane)
     if (LEFT(tile1) < LEFT(tile2))
     {
 	for (tp = TR(tile2); BL(tp) == tile2; tp = LB(tp))
-	    BL(tp) = tile1;
-	TR(tile1) = TR(tile2);
-	RT(tile1) = RT(tile2);
+	    SETBL(tp, tile1);
+	SETTR(tile1, TR(tile2));
+	SETRT(tile1, RT(tile2));
     }
     else
     {
 	for (tp = BL(tile2); TR(tp) == tile2; tp = RT(tp))
-	    TR(tp) = tile1;
-	BL(tile1) = BL(tile2);
-	LB(tile1) = LB(tile2);
-	LEFT(tile1) = LEFT(tile2);
+	    SETTR(tp, tile1);
+	SETBL(tile1, BL(tile2));
+	SETLB(tile1, LB(tile2));
+	SETLEFT(tile1, LEFT(tile2));
     }
 
     if (plane->pl_hint == tile2)
@@ -616,6 +616,10 @@ TiJoinY(Tile *tile1, Tile *tile2, Plane *plane)
     /* Second tile, deallocated by call */
     /* Plane in which hint tile is updated */
 {
+	if (tile1 == tile2) {
+		return;
+	}
+
     Tile *tp;
 
     /*
@@ -637,14 +641,14 @@ TiJoinY(Tile *tile1, Tile *tile2, Plane *plane)
      */
 
     for (tp = TR(tile2); BL(tp) == tile2; tp = LB(tp))
-	BL(tp) = tile1;
+	SETBL(tp, tile1);
 
     /*
      * Update stitches along left of tile.
      */
 
     for (tp = BL(tile2); TR(tp) == tile2; tp = RT(tp))
-	TR(tp) = tile1;
+	SETTR(tp, tile1);
 
     /*
      * Update stitches along either top or bottom, depending
@@ -655,18 +659,18 @@ TiJoinY(Tile *tile1, Tile *tile2, Plane *plane)
     if (YMIN(tile1) < YMIN(tile2))
     {
 		for (tp = RT(tile2); LB(tp) == tile2; tp = BL(tp)) 
-			LB(tp) = tile1;
+			SETLB(tp, tile1);
 
-	RT(tile1) = RT(tile2);
-	TR(tile1) = TR(tile2);
+	SETRT(tile1, RT(tile2));
+	SETTR(tile1, TR(tile2));
     }
     else
     {
 		for (tp = LB(tile2); RT(tp) == tile2; tp = TR(tp)) 
-			RT(tp) = tile1;
-	LB(tile1) = LB(tile2);
-	BL(tile1) = BL(tile2);
-	YMIN(tile1) = YMIN(tile2);
+			SETRT(tp, tile1);
+	SETLB(tile1, LB(tile2));
+	SETBL(tile1, BL(tile2));
+	SETYMIN(tile1, YMIN(tile2));
     }
 
     if (plane->pl_hint == tile2)
@@ -697,7 +701,10 @@ TiAlloc()
     TiSetClient(newtile, 0);
     TiSetBody(newtile, 0);
 	TiSetType(newtile, 0);
-	LB(newtile) = BL(newtile) = RT(newtile) = TR(newtile) = 0;
+	SETLB(newtile, 0); 
+	SETBL(newtile, 0);
+	SETRT(newtile, 0); 
+	SETTR(newtile, 0);
 
 	if (ChangedFunc) {
 		ChangedFunc(newtile);
@@ -730,24 +737,24 @@ TiFree(Tile *tp)
 
 Tile* gotoPoint(Tile * tp, TilePoint p) 
 { 
-	if (p.y < YMIN(tp)) 
-	    do tp = LB(tp); while (p.y < YMIN(tp)); 
+	if (p.yi < YMIN(tp)) 
+	    do tp = LB(tp); while (p.yi < YMIN(tp)); 
 	else 
-	    while (p.y >= YMAX(tp)) tp = RT(tp); 
-	if (p.x < LEFT(tp)) 
+	    while (p.yi >= YMAX(tp)) tp = RT(tp); 
+	if (p.xi < LEFT(tp)) 
 	    do  
 	    { 
-		do tp = BL(tp); while (p.x < LEFT(tp)); 
-		if (p.y < YMAX(tp)) break; 
-		do tp = RT(tp); while (p.y >= YMAX(tp)); 
+		do tp = BL(tp); while (p.xi < LEFT(tp)); 
+		if (p.yi < YMAX(tp)) break; 
+		do tp = RT(tp); while (p.yi >= YMAX(tp)); 
 	    } 
-	    while (p.x < LEFT(tp)); 
+	    while (p.xi < LEFT(tp)); 
 	else 
-	    while (p.x >= RIGHT(tp)) 
+	    while (p.xi >= RIGHT(tp)) 
 	    { 
-		do tp = TR(tp); while (p.x >= RIGHT(tp)); 
-		if (p.y >= YMIN(tp)) break; 
-		do tp = LB(tp); while (p.y < YMIN(tp)); 
+		do tp = TR(tp); while (p.xi >= RIGHT(tp)); 
+		if (p.yi >= YMIN(tp)) break; 
+		do tp = LB(tp); while (p.yi < YMIN(tp)); 
 	    } 
 
 	return tp;
