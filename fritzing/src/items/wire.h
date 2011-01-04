@@ -215,8 +215,8 @@ protected:
 public:
 	static QStringList colorNames;
 	static QHash<QString, QString> colorTrans;
-	static QHash<long, QString> widthTrans;
-	static QList<long> widths;
+	static QHash<int, QString> widthTrans;
+	static QList<int> widths;
 
 protected:
 	static QHash<QString, QString> shadowColors;

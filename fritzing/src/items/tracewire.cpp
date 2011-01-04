@@ -30,6 +30,9 @@ $Date$
 
 #include <QComboBox>
 
+static const int MinTraceWidthMils = 8;
+static const int MaxTraceWidthMils = 128;
+
 /////////////////////////////////////////////////////////
 
 TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
@@ -48,15 +51,22 @@ bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const
 	if (prop.compare("width", Qt::CaseInsensitive) == 0) {
 		returnProp = tr("width");
 		QComboBox * comboBox = new QComboBox(parent);
-		comboBox->setEditable(false);
+		comboBox->setEditable(true);
 		comboBox->setEnabled(swappingEnabled);
-		
+		QIntValidator * intValidator = new QIntValidator(comboBox);
+		intValidator->setRange(MinTraceWidthMils, MaxTraceWidthMils);
+		comboBox->setValidator(intValidator);
+
 		int ix = 0;
 		qreal m = mils();
+		if (!Wire::widths.contains(m)) {
+			Wire::widths.append(m);
+			qSort(Wire::widths.begin(), Wire::widths.end());
+		}
 		foreach(long widthValue, Wire::widths) {
-			QString widthName = Wire::widthTrans.value(widthValue);
-			QVariant val((int)widthValue);
-			comboBox->addItem(widthName, val);
+			QString widthName = Wire::widthTrans.value(widthValue, "");
+			QVariant val((int) widthValue);
+			comboBox->addItem(widthName.isEmpty() ? QString::number(widthValue) : widthName, val);
 			if (qAbs(m - widthValue) < .01) {
 				comboBox->setCurrentIndex(ix);
 			}
@@ -75,12 +85,19 @@ bool TraceWire::collectExtraInfo(QWidget * parent, const QString & family, const
 }
 
 void TraceWire::widthEntry(const QString & text) {
-	Q_UNUSED(text);
 
 	QComboBox * comboBox = dynamic_cast<QComboBox *>(sender());
 	if (comboBox == NULL) return;
 
-	long w = comboBox->itemData(comboBox->currentIndex()).toInt();
+	int w = comboBox->itemData(comboBox->currentIndex()).toInt();
+	if (w == 0) {
+		// user typed in a number
+		w = text.toInt();
+	}
+	if (!Wire::widths.contains(w)) {
+		Wire::widths.append(w);
+		qSort(Wire::widths.begin(), Wire::widths.end());
+	}
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {

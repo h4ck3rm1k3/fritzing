@@ -1393,8 +1393,7 @@ struct Range
 
 qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, bool & success)
 {
-	QList<Tile *> alreadyTiled;
-	TiSrArea(NULL, subedge->edge->plane, &tileRect, checkAlready, &alreadyTiled);
+	success = false;
 	QList<Range> spaces;
 	Range space;
 	if (useX) {
@@ -1405,8 +1404,15 @@ qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 		space.rmin = tileRect.ymini;
 		space.rmax = tileRect.ymaxi;
 	}
+	if (tileToReal(space.rmax - space.rmin) < m_wireWidthNeeded) {
+		return 0;
+	}
+
 	spaces.append(space);
 	Range cacheSpace(space.rmin, space.rmax);
+
+	QList<Tile *> alreadyTiled;
+	TiSrArea(NULL, subedge->edge->plane, &tileRect, checkAlready, &alreadyTiled);
 	foreach (Tile * tile, alreadyTiled) {
 		short result = checkCandidate(subedge, tile, false);
 		if (result < GridEntry::BLOCK) continue;
@@ -1438,7 +1444,6 @@ qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 		}
 	}
 
-	success = false;
 	qreal result;
 	if (targetGreater) {
 		result = std::numeric_limits<int>::min();
@@ -1447,8 +1452,7 @@ qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 		result = std::numeric_limits<int>::max();
 	}
 	foreach (Range range, spaces) {
-		qreal d = tileToReal(range.rmax - range.rmin);
-		if (d > m_wireWidthNeeded) {
+		if (tileToReal(range.rmax - range.rmin) >= m_wireWidthNeeded) {
 			if (targetGreater) {
 				if (tileToReal(range.rmax) - m_halfWireWidthNeeded > result) {
 					result = tileToReal(range.rmax) - m_halfWireWidthNeeded;
@@ -1670,25 +1674,35 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		ix += 1;
 
 		TileRect tileRect;
-		if (p0.y() == p1.y()) {
+		if (p1.x() == p2.x()) {
 			if ((p0.x() > p1.x() && p3.x() > p2.x()) || (p0.x() < p1.x() && p3.x() < p2.x())) {
 				// opening to left or right
 				bool targetGreater;
-				bool success = false;
 				if (p0.x() < p1.x()) {
 					// opening left
 					targetGreater = false;
 					realsToTile(tileRect, qMax(p0.x(), p3.x()), qMin(p0.y(), p3.y()), p2.x(), qMax(p0.y(), p3.y()));
-					qreal result = findShortcut(tileRect, true, targetGreater, subedge, success);
-					if (success) {}
-					}
+				}
 				else {
 					// opening right
 					targetGreater = true;
 					realsToTile(tileRect, p2.x(), qMin(p0.y(), p3.y()), qMin(p0.x(), p3.x()), qMax(p0.y(), p3.y()));
-					qreal result = findShortcut(tileRect, true, targetGreater, subedge, success);
-					if (success) {}
+				}
+				bool success = false;
+				qreal result = findShortcut(tileRect, true, targetGreater, subedge, success);
+				if (success) {
+					ix--;
+					QPointF newP1(result, p1.y());
+					QPointF newP2(result, p2.y());
+					allPoints.replace(ix + 1, newP1);
+					allPoints.replace(ix + 2, newP2);
+					if (p0 == newP1) {
+						allPoints.removeAt(ix + 1);
 					}
+					if (p3 == newP2) {
+						allPoints.removeAt(ix + 2);
+					}
+				}
 				
 			}
 			else {
@@ -1696,11 +1710,11 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 				continue;
 			}
 		}
-		else {
+		else if (p1.y() == p2.y()) {
 			if ((p0.y() > p1.y() && p3.y() > p2.y()) || (p0.y() < p1.y() && p3.y() < p2.y())) {
 				// opening to top or bottom
 				bool targetGreater;
-				if (p0.x() < p1.x()) {
+				if (p0.y() < p1.y()) {
 					// opening top
 					targetGreater = false;
 					realsToTile(tileRect, qMin(p0.x(), p3.x()), qMax(p0.y(), p3.y()), qMax(p0.x(), p3.x()), p2.y());
@@ -1712,7 +1726,19 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 				}
 				bool success = false;
 				qreal result = findShortcut(tileRect, false, targetGreater, subedge, success);
-				if (success) {}
+				if (success) {
+					ix--;
+					QPointF newP1(p1.x(), result);
+					QPointF newP2(p2.x(), result);
+					allPoints.replace(ix + 1, newP1);
+					allPoints.replace(ix + 2, newP2);
+					if (p0 == newP1) {
+						allPoints.removeAt(ix + 1);
+					}
+					if (p3 == newP2) {
+						allPoints.removeAt(ix + 2);
+					}
+				}
 			}
 			else {
 				// not a U-shape

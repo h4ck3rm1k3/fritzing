@@ -53,8 +53,8 @@ QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QStringList Wire::colorNames;
-QHash<long, QString> Wire::widthTrans;
-QList<long> Wire::widths;
+QHash<int, QString> Wire::widthTrans;
+QList<int> Wire::widths;
 qreal Wire::STANDARD_TRACE_WIDTH;
 qreal Wire::HALF_STANDARD_TRACE_WIDTH;
 
