@@ -51,10 +51,12 @@ $Date$
 //	bugs: 
 //		loop: longer route
 //		arduino isp: arduino too close to the edge? fails an early easy route in the backtrace
-//		arduino no ftdi (barebones arduino): chips too close to the edge? fails an easy route in the backtrace
+//		arduino no ftdi (barebones arduino): chips too close to the edge? fails easy routes in the backtrace; weird short traces; one off-center trace
 //		blink: arduino overlaps?
 //
 //	need to put a border no-go area around the board
+//
+//	better approach for starting/ending on trace rather than connector
 //
 //  longer route than expected: 
 //		This is because outward propagation stops when the goal is first reached.  
@@ -73,7 +75,7 @@ $Date$
 //      ------------------------------------------
 //      |              GOAL                      |
 //      ------------------------------------------
-//		I think the way to fix this is to run a path shortening function afterwards
+//		There is a way to deal with this in the following paper: http://eie507.eie.polyu.edu.hk/projects/sp-tiles-00980255.pdf
 //
 //	redo tiling non-manhattan wires
 //
@@ -1391,9 +1393,8 @@ struct Range
 	Range() {}
 };
 
-qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, bool & success)
+bool JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix)
 {
-	success = false;
 	QList<Range> spaces;
 	Range space;
 	if (useX) {
@@ -1405,7 +1406,7 @@ qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 		space.rmax = tileRect.ymaxi;
 	}
 	if (tileToReal(space.rmax - space.rmin) < m_wireWidthNeeded) {
-		return 0;
+		return false;
 	}
 
 	spaces.append(space);
@@ -1428,8 +1429,8 @@ qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 		}
 		for (int sp = 0; sp < spaces.count(); sp++) {
 			Range nextSpace = spaces.at(sp);
-			if (nextSpace.rmax < range.rmin) continue;
-			if (range.rmax < nextSpace.rmin) continue;
+			if (nextSpace.rmax <= range.rmin) continue;
+			if (range.rmax <= nextSpace.rmin) continue;
 
 			if (range.rmin <= nextSpace.rmin && range.rmax >= nextSpace.rmax) {
 				spaces.replace(sp, Range(0,0));
@@ -1438,12 +1439,16 @@ qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 				spaces.replace(sp, Range(nextSpace.rmin, range.rmin));
 				spaces.append(Range(range.rmax, nextSpace.rmax));
 			}
+			else if (range.rmax > nextSpace.rmin) {
+				spaces.replace(sp, Range(range.rmax, nextSpace.rmax));
+			}
 			else {
-				spaces.replace(sp, Range(qMax(nextSpace.rmin, range.rmin), qMin(nextSpace.rmax, range.rmax)));
+				spaces.replace(sp, Range(nextSpace.rmin, range.rmin));
 			}
 		}
 	}
 
+	bool success = false;
 	qreal result;
 	if (targetGreater) {
 		result = std::numeric_limits<int>::min();
@@ -1468,7 +1473,30 @@ qreal JRouter::findShortcut(TileRect & tileRect, bool useX, bool targetGreater, 
 		}
 	}
 
-	return result;
+	if (!success) return false;
+
+	QPointF newP1 = allPoints.at(ix + 1);
+	QPointF newP2 = allPoints.at(ix + 2);
+	if (useX) {
+		newP1.setX(result);
+		newP2.setX(result);
+	}
+	else {
+		newP1.setY(result);
+		newP2.setY(result);
+	}
+	allPoints.replace(ix + 1, newP1);
+	allPoints.replace(ix + 2, newP2);
+	QPointF p0 = allPoints.at(ix + 0);
+	QPointF p3 = allPoints.at(ix + 3);
+	if (p0 == newP1) {
+		allPoints.removeAt(ix + 1);
+	}
+	if (p3 == newP2) {
+		allPoints.removeAt(ix + 2);
+	}
+
+	return true;
 }
 
 bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire *> & wires, bool forEmpty) {
@@ -1562,7 +1590,7 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 	}
 
 	foreach (QPointF p, allPoints) {
-		DebugDialog::debug("allpoint:", p);
+		DebugDialog::debug("allpoint before:", p);
 	}
 
 	// remove redundant pairs
@@ -1604,68 +1632,30 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		ix++;
 	}
 
-	// eliminate redundant corners
-	ix = 0;
-	while (ix < allPoints.count() - 3) {
-		QPointF p0 = allPoints.at(ix);
-		QPointF p1 = allPoints.at(ix + 1);
-		QPointF p2 = allPoints.at(ix + 2);
-		QPointF p3 = allPoints.at(ix + 3);
-		ix += 1;
+	removeCorners(allPoints, subedge);
+	shortenUs(allPoints, subedge);
 
-		bool removeCorner = false;
-		QPointF proposed;
-		if (p0.y() == p1.y()) {
-			if ((p0.x() < p1.x() && p1.x() < p3.x()) || (p0.x() > p1.x() && p1.x() > p3.x())) {
-				// x must be monotonically increasing or decreasing
-				// dogleg horizontal, vertical, horizontal
-			}
-			else {
-				continue;
-			}
-
-			proposed.setX(p3.x());
-			proposed.setY(p1.y());
-			removeCorner = checkProposed(proposed, p1, p3, subedge);
-			if (!removeCorner) {
-				proposed.setX(p0.x());
-				proposed.setY(p2.y());
-				removeCorner = checkProposed(proposed, p0, p2, subedge);
-			}
-		}
-		else {
-			if ((p0.y() < p1.y() && p1.y() < p3.y()) || (p0.y() > p1.y() && p1.y() > p3.y())) {
-				// y must be monotonically increasing or decreasing
-				// dogleg vertical, horizontal, vertical
-			}
-			else {
-				continue;
-			}
-
-			proposed.setY(p3.y());
-			proposed.setX(p1.x());
-			removeCorner = checkProposed(proposed, p1, p3, subedge);
-			if (!removeCorner) {
-				proposed.setY(p0.y());
-				proposed.setX(p2.x());
-				removeCorner = checkProposed(proposed, p0, p2, subedge);
-			}
-		}
-		if (!removeCorner) continue;
-
-		ix--;
-		allPoints.replace(ix + 1, proposed);
-		allPoints.removeAt(ix + 2);
-		if (allPoints.count() > ix + 3) {
-			allPoints.removeAt(ix + 2);
-		}
+	foreach (QPointF p, allPoints) {
+		DebugDialog::debug("allpoint after:", p);
 	}
 
-	// shortcut U-shapes
+
+	for (int i = 0; i < allPoints.count() - 1; i++) {
+		QPointF p1 = allPoints.at(i);
+		QPointF p2 = allPoints.at(i + 1);
+		Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
+		wires.append(trace);
+	}
+
+	return true;
+}
+
+void JRouter::shortenUs(QList<QPointF> & allPoints, JSubedge * subedge)
+{
 	// TODO: this could be implemented recursively as a child tile space 
 	//		with the goals being the sides of the U-shape and the obstacles copied in from the parent tile space
 	// for now just look for a straight line
-	ix = 0;
+	int ix = 0;
 	while (ix < allPoints.count() - 3) {
 		QPointF p0 = allPoints.at(ix);
 		QPointF p1 = allPoints.at(ix + 1);
@@ -1688,22 +1678,10 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 					targetGreater = true;
 					realsToTile(tileRect, p2.x(), qMin(p0.y(), p3.y()), qMin(p0.x(), p3.x()), qMax(p0.y(), p3.y()));
 				}
-				bool success = false;
-				qreal result = findShortcut(tileRect, true, targetGreater, subedge, success);
-				if (success) {
+
+				if (findShortcut(tileRect, true, targetGreater, subedge, allPoints, ix - 1)) {
 					ix--;
-					QPointF newP1(result, p1.y());
-					QPointF newP2(result, p2.y());
-					allPoints.replace(ix + 1, newP1);
-					allPoints.replace(ix + 2, newP2);
-					if (p0 == newP1) {
-						allPoints.removeAt(ix + 1);
-					}
-					if (p3 == newP2) {
-						allPoints.removeAt(ix + 2);
-					}
 				}
-				
 			}
 			else {
 				// not a U-shape
@@ -1724,20 +1702,9 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 					targetGreater = true;
 					realsToTile(tileRect, qMin(p0.x(), p3.x()), p2.y(), qMax(p0.x(), p3.x()), qMin(p0.y(), p3.y()));
 				}
-				bool success = false;
-				qreal result = findShortcut(tileRect, false, targetGreater, subedge, success);
-				if (success) {
+
+				if (findShortcut(tileRect, false, targetGreater, subedge, allPoints, ix - 1)) {
 					ix--;
-					QPointF newP1(p1.x(), result);
-					QPointF newP2(p2.x(), result);
-					allPoints.replace(ix + 1, newP1);
-					allPoints.replace(ix + 2, newP2);
-					if (p0 == newP1) {
-						allPoints.removeAt(ix + 1);
-					}
-					if (p3 == newP2) {
-						allPoints.removeAt(ix + 2);
-					}
 				}
 			}
 			else {
@@ -1747,19 +1714,78 @@ bool JRouter::backPropagate(JSubedge * subedge, QList<Tile *> & path, QList<Wire
 		}
 
 	}
-
-	for (int i = 0; i < allPoints.count() - 1; i++) {
-		QPointF p1 = allPoints.at(i);
-		QPointF p2 = allPoints.at(i + 1);
-		Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, subedge->edge->viewLayerSpec);
-		wires.append(trace);
-	}
-
-	return true;
 }
 
-bool JRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JSubedge * subedge) 
+void JRouter::removeCorners(QList<QPointF> & allPoints, JSubedge * subedge)
 {
+	int ix = 0;
+	while (ix < allPoints.count() - 3) {
+		QPointF p0 = allPoints.at(ix);
+		QPointF p1 = allPoints.at(ix + 1);
+		QPointF p2 = allPoints.at(ix + 2);
+		QPointF p3 = allPoints.at(ix + 3);
+		ix += 1;
+
+		bool removeCorner = false;
+		QPointF proposed;
+		if (p0.y() == p1.y()) {
+			if ((p0.x() < p1.x() && p1.x() < p3.x()) || (p0.x() > p1.x() && p1.x() > p3.x())) {
+				// x must be monotonically increasing or decreasing
+				// dogleg horizontal, vertical, horizontal
+			}
+			else {
+				continue;
+			}
+
+			proposed.setX(p3.x());
+			proposed.setY(p1.y());
+			removeCorner = checkProposed(proposed, p1, p3, subedge, ix == 1 || ix + 3 == allPoints.count());
+			if (!removeCorner) {
+				proposed.setX(p0.x());
+				proposed.setY(p2.y());
+				removeCorner = checkProposed(proposed, p0, p2, subedge, ix == 1 || ix + 3 == allPoints.count());
+			}
+		}
+		else if (p0.x() == p1.x()) {
+			if ((p0.y() < p1.y() && p1.y() < p3.y()) || (p0.y() > p1.y() && p1.y() > p3.y())) {
+				// y must be monotonically increasing or decreasing
+				// dogleg vertical, horizontal, vertical
+			}
+			else {
+				continue;
+			}
+
+			proposed.setY(p3.y());
+			proposed.setX(p1.x());
+			removeCorner = checkProposed(proposed, p1, p3, subedge, ix == 1 || ix + 3 == allPoints.count());
+			if (!removeCorner) {
+				proposed.setY(p0.y());
+				proposed.setX(p2.x());
+				removeCorner = checkProposed(proposed, p0, p2, subedge, ix == 1 || ix + 3 == allPoints.count());
+			}
+		}
+		if (!removeCorner) continue;
+
+		ix--;
+		allPoints.replace(ix + 1, proposed);
+		allPoints.removeAt(ix + 2);
+		if (allPoints.count() > ix + 3) {
+			allPoints.removeAt(ix + 2);
+		}
+	}
+}
+
+bool JRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JSubedge * subedge, bool atStartOrEnd) 
+{
+	if (atStartOrEnd) {
+		Tile * tile = TiSrPoint(NULL, subedge->edge->plane, realToTile(proposed.x()), realToTile(proposed.y()));
+		short result = checkCandidate(subedge, tile, false);
+		if (result >= GridEntry::GOAL || result == GridEntry::SELF) {
+			// don't want to draw traces within the target connector itself
+			return false;
+		}
+	}
+
 	QList<Tile *> alreadyTiled;
 	TileRect tileRect;
 	qreal x = proposed.x() - m_halfWireWidthNeeded;
