@@ -198,18 +198,18 @@ void ClipableWire::setClipEnds(bool clipEnds ) {
 
 void ClipableWire::calcClip(QPointF & p1, QPointF & p2, ConnectorItem * c1, ConnectorItem * c2) {
 
-	if (c1 != NULL && c2 != NULL && c1->isCircular() && c2->isCircular()) {
+	if (c1 != NULL && c2 != NULL && c1->isEffectivelyCircular() && c2->isEffectivelyCircular()) {
 		GraphicsUtils::shortenLine(p1, p2, c1->calcClipRadius() + (m_pen.width() / 2.0), c2->calcClipRadius() + (m_pen.width() / 2.0));
 		return;
 	}
 
-	if (c1 != NULL && c1->isCircular()) {
+	if (c1 != NULL && c1->isEffectivelyCircular()) {
 		GraphicsUtils::shortenLine(p1, p2, c1->calcClipRadius() + (m_pen.width() / 2.0), 0);
 		p2 = findIntersection(c2, p2);
 		return;
 	}
 
-	if (c2 != NULL && c2->isCircular()) {
+	if (c2 != NULL && c2->isEffectivelyCircular()) {
 		GraphicsUtils::shortenLine(p1, p2, 0, c2->calcClipRadius() + (m_pen.width() / 2.0));
 		p1 = findIntersection(c1, p1);
 		return;

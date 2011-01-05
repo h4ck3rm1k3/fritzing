@@ -97,7 +97,7 @@ public:
 	bool marked();
 	void setMarked(bool);
 	qreal calcClipRadius();
-	bool isCircular();
+	bool isEffectivelyCircular();
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

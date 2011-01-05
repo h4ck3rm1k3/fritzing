@@ -1267,6 +1267,6 @@ qreal ConnectorItem::calcClipRadius() {
 	return 0;
 }
 
-bool ConnectorItem::isCircular() {
-	return m_circular;
+bool ConnectorItem::isEffectivelyCircular() {
+	return m_circular || m_effectivelyCircular;
 }

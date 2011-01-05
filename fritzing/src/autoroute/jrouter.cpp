@@ -51,8 +51,14 @@ $Date$
 //	bugs: 
 //		loop: longer route
 //		arduino isp: arduino too close to the edge? fails an early easy route in the backtrace
-//		arduino no ftdi (barebones arduino): chips too close to the edge? fails easy routes in the backtrace; weird short traces; one off-center trace
+//		arduino no ftdi (barebones arduino): chips too close to the edge? 
+//				fails easy routes in the backtrace; 
+//				weird short traces; 
+//				one off-center trace
 //		blink: arduino overlaps?
+//		tinyspace next to border is weird
+//		border seems asymmetric
+//		thin lines need to be better joined
 //
 //	need to put a border no-go area around the board
 //
