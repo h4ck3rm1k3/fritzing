@@ -147,6 +147,7 @@ public:
 	bool isMarkedDeleted();
 	void markDeleted(bool);
 	virtual bool canSwitchLayers();
+	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 
 protected slots:
 	void colorEntry(const QString & text);
@@ -166,7 +167,6 @@ protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEventAux(QPointF eventPos, bool shiftModifier);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
 	void connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);

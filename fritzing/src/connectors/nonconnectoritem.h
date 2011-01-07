@@ -58,8 +58,6 @@ public:
 	qreal strokeWidth();
 	void setShape(QPainterPath &);
 	void setWhite(bool);
-
-protected:
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	QPainterPath shape() const;
 

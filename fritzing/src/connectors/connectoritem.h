@@ -98,6 +98,7 @@ public:
 	void setMarked(bool);
 	qreal calcClipRadius();
 	bool isEffectivelyCircular();
+	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -118,7 +119,6 @@ protected:
     static class Wire * directlyWiredToAux(ConnectorItem * source, ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
 	bool isEverVisible();
 	void setHiddenOrInactive();
-	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	bool isConnectedToPart();
 
 protected:

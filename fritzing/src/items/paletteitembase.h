@@ -65,6 +65,8 @@ public:
 	void setSharedRendererEx(class FSvgRenderer *);
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 	virtual bool canEditPart();
+	QPainterPath shape() const;
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 	/*
 	// for debugging
@@ -73,8 +75,6 @@ public:
 	*/
 
 protected:
-	QPainterPath shape() const;
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void findConnectorsUnder();

@@ -41,6 +41,7 @@ public:
 	QPointF resizeOffset();
 	void setResizeOffset(QPointF);
 	qreal currentScale();
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 public slots:
 	void zoomChangedSlot(qreal scale);
@@ -48,7 +49,6 @@ public slots:
 protected:
 	void mousePressEvent ( QGraphicsSceneMouseEvent * event );
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 signals:
 	void mousePressSignal(QGraphicsSceneMouseEvent * event, ResizeHandle *);

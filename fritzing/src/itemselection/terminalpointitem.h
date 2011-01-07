@@ -41,9 +41,9 @@ public:
 	bool hasBeenMoved();
 	void setHasBeenMoved(bool moved);
 	bool isPressed();
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 
 protected:
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);

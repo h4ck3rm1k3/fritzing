@@ -59,11 +59,11 @@ public:
 	void setInactive(bool inactivate);
 	bool hasPartLabel();
 	bool stickyEnabled();
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	QPainterPath shape() const;
 
 protected:
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QRectF boundingRect() const;
-	QPainterPath shape() const;
 	void positionGrip();
 	void mousePressEvent ( QGraphicsSceneMouseEvent * event );
 	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );

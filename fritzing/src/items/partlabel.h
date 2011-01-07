@@ -67,6 +67,7 @@ public:
 	void ownerSelected(bool selected);
     void displayTexts();
 	QString makeSvg(bool blackOnly, qreal dpi, qreal printerScale);
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -78,7 +79,6 @@ protected:
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	void initMenu();
 	void partLabelEdit();
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void setFontSize(int action);
 	void rotateFlip(int action);
 	void setLabelDisplay(const QString & key);
