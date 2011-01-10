@@ -295,7 +295,7 @@ void SvgFlattener::flipSMDElement(QDomDocument & domDocument, QSvgRenderer & ren
 	QRectF bounds = renderer.boundsOnElement(att);
 	m.translate(bounds.center().x(), bounds.center().y());
 	QMatrix mMinus = m.inverted();
-	QMatrix cm = mMinus * QMatrix().scale(-1, 1) * m;
+        QMatrix cm = mMinus * QMatrix().scale(1, -1) * m;
 	QDomElement newElement = element.cloneNode(true).toElement();
 	newElement.removeAttribute("id");
 	QDomElement pElement = domDocument.createElement("g");
