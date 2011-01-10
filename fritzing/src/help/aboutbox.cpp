@@ -117,44 +117,56 @@ AboutBox::AboutBox(QWidget *parent)
 
 	// moved data out of credits.txt so we could apply translation
 	QString data = 
-tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />"
-   "<p>Fritzing is made by: "
-   "Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic, "
-   "Zach Eveland, Dirk van Oosterbosch, "
-   "Jonathan Cohen, Marcus Paeschke, Omer Yosha, "
-   "Travis Robertson, Stefan Hermann, Brendan Howell, "
-   "Mariano Crowe, Johannes Landstorfer, "
-   "Jenny Chowdhury, Lionel Michel and Jannis Leidel.</p>") +
+QString("<br /><br /><br /><br /><br /><br /><br /><br /><br />") +
+	
+"<p>" +
+	tr("Fritzing is made by: ") +
+	tr("Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic, ") +
+	tr("Zach Eveland, Dirk van Oosterbosch, ") +
+	tr("Jonathan Cohen, Marcus Paeschke, Omer Yosha, ") +
+	tr("Travis Robertson, Stefan Hermann, Brendan Howell, ") +
+	tr("Mariano Crowe, Johannes Landstorfer, ") +
+	tr("Jenny Chowdhury, Lionel Michel, Jannis Leidel, ") +
+	tr("Uleshka Asher and Daniel Tzschentke.") +
+"</p>" +
 
-tr("<p>Special thanks goes out to: "
-   "Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir, "
-   "Durrell Bishop, David Cuartielles, Fabian Hemmert, "
-   "Gero Herkenrath, Jeff Hoefs, Tom Hulbert, "
-   "Tom Igoe, Hans-Peter Kadel, Till Savelkoul, "
-   "Jan Sieber, Yaniv Steiner, Olaf Val, "
-   "Michaela Vieser and Julia Werner.</p>") +
+"<p>" +
+	tr("Special thanks goes out to: ") +
+	tr("Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir, ") +
+	tr("Durrell Bishop, David Cuartielles, Fabian Hemmert, ") +
+	tr("Gero Herkenrath, Jeff Hoefs, Tom Hulbert, ") +
+	tr("Tom Igoe, Hans-Peter Kadel, Till Savelkoul, ") +
+	tr("Jan Sieber, Yaniv Steiner, Olaf Val, ") +
+	tr("Michaela Vieser and Julia Werner.") +
+"</p>" +
 
-tr("<p>Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, "
-	"to Gianluca Urgese for the Italian translation, "
-	"to Nuno Pessanha Santos for the Portuguese translation, "
-	"to Yuelin and Ninjia  for the Chinese (Simplified) translation, "
-	"to Hiroshi Suzuki for the Japanese translation, "
-	"to Robert Lee for the Chinese (Traditional) translation, "
-	"to Vladimir Savinov for the Russian translation," 
-	"and to Steven Noppe for the Dutch translation." 
-	"</p>") +
+"<p>" +
+	tr("Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, ") +
+	tr("to Gianluca Urgese for the Italian translation, ") +
+	tr("to Nuno Pessanha Santos for the Portuguese (European) translation, ") +
+	tr("to Yuelin and Ninjia  for the Chinese (Simplified) translation, ") +
+	tr("to Hiroshi Suzuki for the Japanese translation, ") +
+	tr("to Robert Lee for the Chinese (Traditional) translation, ") +
+	tr("to Vladimir Savinov for the Russian translation, " ) +
+	tr("to Steven Noppe for the Dutch translation, " ) +
+	tr("and to Arthur Zanona for the Portuguese (Brazilian) translation. " ) +
+"</p>" +
 
-tr("<p>Fritzing is made possible with funding from the "
-   "MWFK Brandenburg, the sponsorship of the Design "
-   "Department of Bauhaus-University Weimar, "
-   "IxDS, an anonymous donor, Parallax, Picaxe, "
-   "and from each purchase of a Fritzing Starter Kit.</p>") +
+"<p>" +
+	tr("Fritzing is made possible with funding from the ") +
+	tr("MWFK Brandenburg, the sponsorship of the Design ") +
+	tr("Department of Bauhaus-University Weimar, ") +
+	tr("IxDS, an anonymous donor, Parallax, Picaxe, ") +
+	tr("and from each purchase of a Fritzing Starter Kit.") +
+"</p>" +
 
-tr("<p>Special thanks goes out as well to all the students "
-   "and alpha testers who were brave enough to give "
-   "Fritzing a test spin. "
-   "<br /><br /><br /><br /><br /><br /><br /><br /><br />"
-   );
+"<p>" +
+	tr("Special thanks goes out as well to all the students ") +
+	tr("and alpha testers who were brave enough to give ") +
+	tr("Fritzing a test spin. ") +
+"</p>" +
+
+tr("<br /><br /><br /><br /><br /><br /><br /><br />");
 
 	QPixmap fadepixmap(":/resources/images/aboutbox_scrollfade.png");
 
