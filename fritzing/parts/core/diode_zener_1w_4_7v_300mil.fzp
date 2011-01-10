@@ -16,7 +16,7 @@
         <property name="power dissipation">1W</property>
         <property name="breakdown voltage">4.7V</property>
         <property name="part">1N747A</property>
-    <property name="package">THT</property></properties>
+    <property name="package">300 mil [THT]</property></properties>
     <description>A standard zener diode</description>
     <views>
         <iconView>
