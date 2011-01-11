@@ -117,11 +117,11 @@ RecoveryDialog::RecoveryDialog(QFileInfoList fileInfoList, QWidget *parent, Qt::
     m_recover = new QPushButton(tr("&Recover"));
     m_recover->setDefault(true);
     m_recover->setEnabled(false);
-    m_recover->setMaximumWidth(100);
+    m_recover->setMaximumWidth(130);
     connect(m_recover, SIGNAL(clicked()), this, SLOT(accept()));
 
     m_ignore = new QPushButton(tr("&Ignore"));
-    m_ignore->setMaximumWidth(100);
+    m_ignore->setMaximumWidth(130);
     connect(m_ignore, SIGNAL(clicked()), this, SLOT(reject()));
 
 	buttonLayout->addSpacerItem(new QSpacerItem(0,0, QSizePolicy::Expanding));

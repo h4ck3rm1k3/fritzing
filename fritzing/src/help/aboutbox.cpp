@@ -127,7 +127,7 @@ QString("<br /><br /><br /><br /><br /><br /><br /><br /><br />") +
 	tr("Travis Robertson, Stefan Hermann, Brendan Howell, ") +
 	tr("Mariano Crowe, Johannes Landstorfer, ") +
 	tr("Jenny Chowdhury, Lionel Michel, Jannis Leidel, ") +
-	tr("Uleshka Asher and Daniel Tzschentke.") +
+	tr("Bryant Mairs, Uleshka Asher, and Daniel Tzschentke. ") +
 "</p>" +
 
 "<p>" +
