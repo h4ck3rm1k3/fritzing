@@ -1,20 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="1001AAAB555Timer">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="1001AAfdgfgcAB555Timer">
 <version>4</version>
- <author>Dirk van Oosterbosch</author>
+ <author>Mr.T</author>
  <title>555 Timer</title>
- <date>2008-11-11</date>
+ <date>2011-12-01</date>
  <label>U</label>
  <tags>
   <tag>555</tag>
   <tag>Timer</tag>
   <tag>555 Timer</tag>
   <tag>IC</tag>
-  <tag>DIL package</tag>
   <tag>oscillator</tag>
  </tags>
  <properties>
   <property name="family">Timer IC</property>
- <property name="package">DIP8 [THT]</property></properties>
+ <property name="package">SO8 [SMD]</property></properties>
  <description>The classic 555 general purpose timer/oscillator.</description>
  <views>
   <iconView>
@@ -23,8 +22,7 @@
    </layers>
   </iconView>
   <pcbView>
-   <layers image="pcb/dip_8_300mil_pcb.svg">
-    <layer layerId="copper0"/>
+   <layers image="pcb/SMD_SO8_DT.svg">
     <layer layerId="keepout"/>
     <layer layerId="soldermask"/>
     <layer layerId="silkscreen"/>
@@ -53,7 +51,6 @@
      <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector3pin"/>
     <p layer="copper1" svgId="connector3pin"/></pcbView>
    </views>
   </connector>
@@ -67,7 +64,6 @@
      <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector4pin"/>
     <p layer="copper1" svgId="connector4pin"/></pcbView>
    </views>
   </connector>
@@ -81,7 +77,6 @@
      <p layer="schematic" svgId="connector6pin" terminalId="connector6terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector5pin"/>
     <p layer="copper1" svgId="connector5pin"/></pcbView>
    </views>
   </connector>
@@ -95,7 +90,6 @@
      <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector6pin"/>
     <p layer="copper1" svgId="connector6pin"/></pcbView>
    </views>
   </connector>
@@ -109,7 +103,6 @@
      <p layer="schematic" svgId="connector7pin" terminalId="connector7terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector7pin"/>
     <p layer="copper1" svgId="connector7pin"/></pcbView>
    </views>
   </connector>
@@ -123,7 +116,6 @@
      <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector0pin"/>
     <p layer="copper1" svgId="connector0pin"/></pcbView>
    </views>
   </connector>
@@ -137,7 +129,6 @@
      <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector1pin"/>
     <p layer="copper1" svgId="connector1pin"/></pcbView>
    </views>
   </connector>
@@ -151,7 +142,6 @@
      <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"/>
     </schematicView>
     <pcbView>
-     <p layer="copper0" svgId="connector2pin"/>
     <p layer="copper1" svgId="connector2pin"/></pcbView>
    </views>
   </connector>
