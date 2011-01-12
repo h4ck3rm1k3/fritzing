@@ -10,11 +10,8 @@
         <tag>indicator</tag>
     </tags>
     <properties>
-        <property name="package">T1.75 (5mm) [THT]</property>
+        <property name="package">5 mm [THT]</property>
         <property name="family">LED</property>
-        <property name="Red forward voltage">2.1V</property>
-        <property name="Green forward voltage">3.3V</property>
-        <property name="Blue forward voltage">3.3V</property>
         <property name="color">RGB</property>
     </properties>
     <description>A 5mm tri-color LED with red, green and blue inside.</description>
