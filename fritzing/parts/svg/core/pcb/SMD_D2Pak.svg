@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!--
+	This footprint bases on www.irf.com
+	document: PD - 95046
+	Version: 2/25/04
+	page 9
+	2010-09-30 Mr.T
+	The silkscreen outlines have a thickness of 0.1 mm.
+	The space between silkscreen and pads is also 0.1 mm thick.
+	From this follows that there is a keepout array of 0.2 mm around the boarders.
+-->
+
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="12.4mm"
+   height="18.4mm"
+   viewBox="0 0 1240 1840"
+   id="svg2">
+    <g
+       id="copper1">
+    <!-- unten links -->
+      <rect
+         width="200"
+         height="400"
+         x="20"
+         y="1420"
+         id="connector0pad"
+         style="fill:#f7bf13;fill-opacity:1;stroke:none" />
+      <rect
+           width="0"
+           height="0"
+           x="120"
+           y="1620"
+           id="connector0terminal"
+           style="fill:none;stroke-width:0" />
+
+	<!-- unten rechts -->
+      <rect
+         width="200"
+         height="400"
+         x="1020"
+         y="1420"
+         id="connector1pad"
+         style="fill:#f7bf13;fill-opacity:1;stroke:none" />
+      <rect
+           width="0"
+           height="0"
+           x="1120"
+           y="1620"
+           id="connector1terminal"
+           style="fill:none;stroke-width:0" />
+
+    <!-- oben mitte -->
+       <rect
+         width="1200"
+         height="900"
+         x="20"
+         y="20"
+         id="connector2pad"
+         style="fill:#f7bf13;fill-opacity:1;stroke:none" />
+      <rect
+           width="0"
+           height="0"
+           x="620"
+           y="470"
+           id="connector2terminal"
+           style="fill:none;stroke-width:0" />
+    </g>
+    <g id="silkscreen">
+    <rect
+       width="1230"
+       height="1130"
+       x="5"
+       y="5"
+       style="fill:none;stroke:#ffffff;stroke-width:10;stroke-opacity:1" />
+  </g>
+</svg>
