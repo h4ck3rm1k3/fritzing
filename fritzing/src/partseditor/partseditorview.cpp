@@ -192,7 +192,8 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLay
 					}
 				}
 
-				if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+				QString error;
+				if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors, error)) {
 					addToScene(paletteItemAux, paletteItemAux->viewLayerID());
 					// layers are not needed on the parts editor (so far)
 					return paletteItemAux;

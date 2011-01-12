@@ -644,7 +644,8 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 	// if the view is not defined in the part file, without this condition
 	// fritzing crashes
 	if(viewLayerID != ViewLayer::UnknownLayer) {
-		if (paletteItem->renderImage(modelPart, viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+		QString error;
+		if (paletteItem->renderImage(modelPart, viewIdentifier, m_viewLayers, viewLayerID, doConnectors, error)) {
 			addToScene(paletteItem, paletteItem->viewLayerID());
 			paletteItem->loadLayerKin(m_viewLayers, viewLayerSpec);
 			foreach (ItemBase * lkpi, paletteItem->layerKin()) {
@@ -660,7 +661,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, ViewLayer::ViewLay
 			// nobody falls through to here now?
 
 			QMessageBox::information(dynamic_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
-									 QObject::tr("The file %1 is not a Fritzing file (1).").arg(modelPart->path()) );
+				QObject::tr("Error reading file %1: %2.").arg(modelPart->path()).arg(error) );
 
 
 			DebugDialog::debug(QString("addPartItem renderImage failed %1").arg(modelPart->moduleID()) );

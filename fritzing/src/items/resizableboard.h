@@ -59,7 +59,7 @@ public:
 	ResizableBoard(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~ResizableBoard();
 
-	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors);
+	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, QString & error);
 	virtual void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
 	void resizePixels(qreal w, qreal h, const LayerHash & viewLayers);
  	void loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLayerSpec);

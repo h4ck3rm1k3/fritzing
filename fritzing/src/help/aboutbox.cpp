@@ -156,7 +156,7 @@ QString("<br /><br /><br /><br /><br /><br /><br /><br /><br />") +
 	tr("Fritzing is made possible with funding from the ") +
 	tr("MWFK Brandenburg, the sponsorship of the Design ") +
 	tr("Department of Bauhaus-University Weimar, ") +
-	tr("IxDS, an anonymous donor, Parallax, Picaxe, ") +
+	tr("IxDS, an anonymous donor, Parallax, Picaxe, Sparkfun, ") +
 	tr("and from each purchase of a Fritzing Starter Kit.") +
 "</p>" +
 

@@ -1285,13 +1285,13 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 	GraphicsUtils::saveTransform(streamWriter, m_viewGeometry.transform());
 }
 
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec)
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QString & error)
 {
 	LayerAttributes layerAttributes;
-	return setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes);
+	return setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
 }
 
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes)
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
 {
 #ifndef QT_NO_DEBUG
 	QTime t;
@@ -1300,11 +1300,20 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 
     ModelPartShared * modelPartShared = modelPart->modelPartShared();
 
-    if (modelPartShared == NULL) return NULL;
-    if (modelPartShared->domDocument() == NULL) return NULL;
+	if (modelPartShared == NULL) {
+		error = tr("model part problem");
+		return NULL;
+	}
+	if (modelPartShared->domDocument() == NULL) {
+		error = tr("part xml missing");
+		return NULL;
+	}
 
 	bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
-	if (!result) return NULL;
+	if (!result) {
+		error = tr("missing xml for view %1 layer %2").arg(viewIdentifier).arg(viewLayerID);
+		return NULL;
+	}
 
 	//DebugDialog::debug(QString("setting z %1 %2")
 		//.arg(this->z())
@@ -1320,7 +1329,10 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
 //#endif
 
-		if (!filename.isEmpty()) {
+		if (filename.isEmpty()) {
+			error = tr("file %1 not found").arg(layerAttributes.filename());
+		}
+		else {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
 			if (renderer == NULL) {
 				QStringList connectorIDs, terminalIDs;
@@ -1392,6 +1404,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 				}
 				if (!gotOne) {
 					delete renderer;
+					error = tr("unable to create renderer for svg").arg(filename);
 					renderer = NULL;
 				}
 			}

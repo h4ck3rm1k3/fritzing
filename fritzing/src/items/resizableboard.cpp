@@ -360,9 +360,9 @@ void ResizableBoard::positionGrips() {
 	m_resizeGripTL->setPos(-dx, -dy);
 }
 
-bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors)
+bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, QString & error)
 {
-	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors);
+	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, error);
 	if ((viewIdentifier == ViewIdentifierClass::PCBView) && result) {
 		positionGrips();
 	}
@@ -376,7 +376,8 @@ void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers
 
 void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	if (mmW == 0 || mmH == 0) {
-		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, m_viewLayerSpec, true);
+		QString error;
+		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, m_viewLayerSpec, true, error);
 		modelPart()->setProp("height", QVariant());
 		modelPart()->setProp("width", QVariant());
 		// do the layerkin

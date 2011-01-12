@@ -86,7 +86,8 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIde
 
 	this->setMaximumSize(PluralImage->size());
 
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer);
+	QString error;
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, error);
 	if (renderer && m_itemBase) {
 		m_itemBase->setFilename(renderer->filename());
 	}

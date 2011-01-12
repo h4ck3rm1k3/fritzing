@@ -39,7 +39,8 @@ LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * mo
 
 void LayerKinPaletteItem::init(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, const LayerHash & viewLayers) {
 	m_viewLayerSpec = viewLayerSpec;
-	m_ok = setUpImage(m_modelPart, m_viewIdentifier, viewLayers, viewLayerID, m_viewLayerSpec, true);
+	QString error;
+	m_ok = setUpImage(m_modelPart, m_viewIdentifier, viewLayers, viewLayerID, m_viewLayerSpec, true, error);
 	//DebugDialog::debug(QString("lk accepts hover %1 %2 %3 %4 %5").arg(title()).arg(m_viewIdentifier).arg(m_id).arg(viewLayerID).arg(this->acceptHoverEvents()));
 }
 

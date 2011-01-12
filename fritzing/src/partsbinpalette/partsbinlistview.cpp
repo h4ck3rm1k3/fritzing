@@ -85,7 +85,8 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 		QListWidgetItem * lwi = new QListWidgetItem(modelPart->title());
 		ItemBase * itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		lwi->setData(Qt::UserRole, qVariantFromValue( itemBase ) );
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, itemBase->viewLayerSpec());
+		QString error;
+		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, itemBase->viewLayerSpec(), error);
 		if (renderer != NULL) {
 			if (itemBase) {
 				itemBase->setFilename(renderer->filename());

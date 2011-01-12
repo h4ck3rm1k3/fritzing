@@ -544,7 +544,8 @@ void HtmlInfoView::setUpIcons(ModelPart * modelPart) {
 		pixmap2 = getPixmap(modelPart, ViewIdentifierClass::SchematicView);
 		pixmap3 = getPixmap(modelPart, ViewIdentifierClass::PCBView);
 		if (pixmap0 == NULL) {
-			ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer);
+			QString error;
+			ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, ViewLayer::ThroughHoleThroughTop_OneLayer, error);
 			pixmap0 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
 		}
 	}

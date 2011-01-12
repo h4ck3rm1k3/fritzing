@@ -739,7 +739,8 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 
 FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, m_viewLayerSpec);
+	QString error;
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, m_viewLayerSpec, error);
 	if (renderer == NULL) {
 		return NULL;
 	}

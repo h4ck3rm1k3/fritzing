@@ -55,7 +55,7 @@ public:
 	void transformItem2(const QMatrix &);
 	void setItemPos(QPointF & pos);
 
-	bool renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+	bool renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors, QString & error);
 
 	void setTransforms();
 	void syncKinMoved(QPointF offset, QPointF loc);
