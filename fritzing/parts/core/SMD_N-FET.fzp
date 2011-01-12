@@ -32,7 +32,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/_D2Pak_smd_PRE.svg">
+   <layers image="pcb/SMD_D2Pak.svg">
     <layer layerId="silkscreen"/>
    <layer layerId="copper1"/></layers>
   </pcbView>
