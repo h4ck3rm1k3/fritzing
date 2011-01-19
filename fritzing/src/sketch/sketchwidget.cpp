@@ -6822,3 +6822,12 @@ void SketchWidget::vScrollToZero() {
 float SketchWidget::getTopZ() {
 	return m_z;
 }
+
+QGraphicsItem * SketchWidget::addWatermark(const QString &filename)
+{
+	QGraphicsSvgItem * item = new QGraphicsSvgItem(filename);
+	if (item == NULL) return NULL;
+
+	this->scene()->addItem(item);
+	return item;
+}

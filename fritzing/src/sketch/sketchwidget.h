@@ -246,6 +246,7 @@ public:
 	void ratsnestConnect(ItemBase *, bool connect);
 	virtual void addDefaultParts();
 	float getTopZ();
+	QGraphicsItem * addWatermark(const QString & filename);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

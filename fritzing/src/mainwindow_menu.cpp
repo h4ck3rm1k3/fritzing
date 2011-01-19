@@ -449,6 +449,12 @@ void MainWindow::doExport() {
 void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeBackground) 
 {
 	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
+	QGraphicsItem * watermark = m_currentGraphicsView->addWatermark(":resources/images/watermark_fritzing_outline.svg");
+	if (watermark) {
+		watermark->setPos(source.right() - watermark->boundingRect().width(), source.bottom());
+		source.adjust(0, 0, 0, watermark->boundingRect().height());
+	}
+
 	int width = source.width();
 	int height = source.height();
 
@@ -463,9 +469,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	}
 	*/
 
-	QImage watermark(":resources/images/watermark_fritzing.png");
-
-	QSize imgSize(width, height + watermark.height());
+	QSize imgSize(width, height);
 	QImage image(imgSize,format);
 	image.setDotsPerMeterX(1200*254);
 	image.setDotsPerMeterY(1200*254);
@@ -480,12 +484,14 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 	//m_currentGraphicsView->render(&painter);
 	QRectF target(0, 0, width, height);
 	m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
-	painter.fillRect(0, height, width, watermark.height(), m_currentGraphicsView->background());
-	painter.drawImage(width - watermark.width(), height, watermark);
 	painter.end();
 
 	if (removeBackground) {
 		m_currentGraphicsView->setBackground(color);
+	}
+
+	if (watermark) {
+		delete watermark;
 	}
 
 	QImageWriter imageWriter(fileName);
@@ -518,100 +524,107 @@ void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginat
 	//QRectF source(oSceneStart, oSceneEnd);
 	
 	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
-	QRectF target(0, 0, source.width() * scale2, source.height() * scale2);
+	QGraphicsItem * watermark = m_currentGraphicsView->addWatermark(":resources/images/watermark_fritzing_outline.svg");
+	if (watermark) {
+		watermark->setPos(source.right() - watermark->boundingRect().width(), source.bottom());
+		source.adjust(0, 0, 0, watermark->boundingRect().height());
+	}
 
-	QImage watermark(":resources/images/fritzing_watermark.png");
-	qreal watermarkTargetHeight = watermark.height() * scale2;
-	qreal watermarkTargetWidth = watermark.width() * scale2;
+	QRectF target(0, 0, source.width() * scale2, source.height() * scale2);
 
 	if (!paginate) {
 		QSizeF psize((target.width() + printer.paperRect().width() - printer.width()) / res, 
-					 (target.height() + printer.paperRect().height() - printer.height() + watermarkTargetHeight) / res);
+					 (target.height() + printer.paperRect().height() - printer.height()) / res);
 		printer.setPaperSize(psize, QPrinter::Inch);
 	}
 
 	QPainter painter;
-	if (painter.begin(&printer)) {
-		QColor color;
-		if(removeBackground) {
-			color = m_currentGraphicsView->background();
-			m_currentGraphicsView->setBackground(QColor::fromRgb(255,255,255,255));
+	if (!painter.begin(&printer)) {
+		if (watermark) {
+			delete watermark;
 		}
+		QMessageBox::warning(this, tr("Fritzing"), tr("Cannot print to %1").arg(printer.docName()));
+		return;
+	}
 
-		QList<QGraphicsItem*> selItems = m_currentGraphicsView->scene()->selectedItems();
-		foreach(QGraphicsItem *item, selItems) {
-			item->setSelected(false);
-		}
+	QColor color;
+	if(removeBackground) {
+		color = m_currentGraphicsView->background();
+		m_currentGraphicsView->setBackground(QColor::fromRgb(255,255,255,255));
+	}
 
-		if (paginate) {
-			int xPages = qCeil(target.width() / printer.width());
-			int yPages = qCeil(target.height() / printer.height());
-			int lastPage = xPages * yPages;
+	QList<QGraphicsItem*> selItems = m_currentGraphicsView->scene()->selectedItems();
+	foreach(QGraphicsItem *item, selItems) {
+		item->setSelected(false);
+	}
 
-			int xSourcePage = qFloor(printer.width() / scale2);
-			int ySourcePage = qFloor(printer.height() / scale2);
+	if (paginate) {
+		int xPages = qCeil(target.width() / printer.width());
+		int yPages = qCeil(target.height() / printer.height());
+		int lastPage = xPages * yPages;
 
-			int page = 0;
-			for (int iy = 0; iy < yPages; iy++) {
-				for (int ix = 0; ix < xPages; ix++) {
-					// render to printer:
-					QRectF pSource((ix * xSourcePage) + source.left(), 
-								   (iy * ySourcePage) + source.top(), 
-								   qMin(xSourcePage, (int) source.width() - (ix * xSourcePage)), 
-								   qMin(ySourcePage, (int) source.height() - (iy * ySourcePage)));
-					QRectF pTarget(0, 0, pSource.width() * scale2, pSource.height() * scale2);
-					m_currentGraphicsView->scene()->render(&painter, pTarget, pSource, Qt::KeepAspectRatio);
-					if (++page < lastPage) {
-						printer.newPage();
-					}
+		int xSourcePage = qFloor(printer.width() / scale2);
+		int ySourcePage = qFloor(printer.height() / scale2);
+
+		int page = 0;
+		for (int iy = 0; iy < yPages; iy++) {
+			for (int ix = 0; ix < xPages; ix++) {
+				// render to printer:
+				QRectF pSource((ix * xSourcePage) + source.left(), 
+							   (iy * ySourcePage) + source.top(), 
+							   qMin(xSourcePage, (int) source.width() - (ix * xSourcePage)), 
+							   qMin(ySourcePage, (int) source.height() - (iy * ySourcePage)));
+				QRectF pTarget(0, 0, pSource.width() * scale2, pSource.height() * scale2);
+				m_currentGraphicsView->scene()->render(&painter, pTarget, pSource, Qt::KeepAspectRatio);
+				if (++page < lastPage) {
+					printer.newPage();
 				}
 			}
 		}
-		else {
-			m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
-			painter.fillRect(0, target.height(), target.width(), watermarkTargetHeight, m_currentGraphicsView->background());
-			QRectF wt(target.width() - watermarkTargetWidth, target.height(), watermarkTargetWidth, watermarkTargetHeight);
-			painter.drawImage(wt, watermark, watermark.rect());
-		}
-
-		foreach(QGraphicsItem *item, selItems) {
-			item->setSelected(true);
-		}
-
-		if(removeBackground) {
-			m_currentGraphicsView->setBackground(color);
-		}
-
-		DebugDialog::debug(QString("source w:%1 h:%2 target w:%5 h:%6 pres:%3 screenres:%4")
-			.arg(source.width())
-			.arg(source.height()).arg(res).arg(this->physicalDpiX())
-			.arg(target.width()).arg(target.height()) );
-
-		//#ifndef QT_NO_CONCURRENT
-			//QProgressDialog dialog;
-			//dialog.setLabelText(message);
-	 	//
-			// Create a QFutureWatcher and conncect signals and slots.
-			//QFutureWatcher<void> futureWatcher;
-			//QObject::connect(&futureWatcher, SIGNAL(finished()), &dialog, SLOT(reset()));
-			//QObject::connect(&dialog, SIGNAL(canceled()), &futureWatcher, SLOT(cancel()));
-			//QObject::connect(&futureWatcher, SIGNAL(progressRangeChanged(int, int)), &dialog, SLOT(setRange(int, int)));
-			//QObject::connect(&futureWatcher, SIGNAL(progressValueChanged(int)), &dialog, SLOT(setValue(int)));
-		//
-			// Start the computation.
-			//futureWatcher.setFuture(QtConcurrent::run(painter,&QPainter::end));
-			//dialog.exec();
-		//
-			//futureWatcher.waitForFinished();
-		//#endif
-
-		//#ifdef QT_NO_CONCURRENT
-			painter.end();
-		//#endif
-	} else {
-		QMessageBox::warning(this, tr("Fritzing"),
-			tr("Cannot print to %1").arg("print.pdf"));
 	}
+	else {
+		m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+	}
+
+	foreach(QGraphicsItem *item, selItems) {
+		item->setSelected(true);
+	}
+
+	if(removeBackground) {
+		m_currentGraphicsView->setBackground(color);
+	}
+
+	if (watermark) {
+		delete watermark;
+	}
+
+	DebugDialog::debug(QString("source w:%1 h:%2 target w:%5 h:%6 pres:%3 screenres:%4")
+		.arg(source.width())
+		.arg(source.height()).arg(res).arg(this->physicalDpiX())
+		.arg(target.width()).arg(target.height()) );
+
+	//#ifndef QT_NO_CONCURRENT
+		//QProgressDialog dialog;
+		//dialog.setLabelText(message);
+ 	//
+		// Create a QFutureWatcher and conncect signals and slots.
+		//QFutureWatcher<void> futureWatcher;
+		//QObject::connect(&futureWatcher, SIGNAL(finished()), &dialog, SLOT(reset()));
+		//QObject::connect(&dialog, SIGNAL(canceled()), &futureWatcher, SLOT(cancel()));
+		//QObject::connect(&futureWatcher, SIGNAL(progressRangeChanged(int, int)), &dialog, SLOT(setRange(int, int)));
+		//QObject::connect(&futureWatcher, SIGNAL(progressValueChanged(int)), &dialog, SLOT(setValue(int)));
+	//
+		// Start the computation.
+		//futureWatcher.setFuture(QtConcurrent::run(painter,&QPainter::end));
+		//dialog.exec();
+	//
+		//futureWatcher.waitForFinished();
+	//#endif
+
+	//#ifdef QT_NO_CONCURRENT
+		painter.end();
+	//#endif
+
 }
 
 bool MainWindow::saveAsAux(const QString & fileName) {
