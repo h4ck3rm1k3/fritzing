@@ -2649,6 +2649,10 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 		return;
 	}
 
+	if (selectedItems == false && flatten == false) {
+		exportSvgWatermark(svg, res);
+	}
+
 	QFile file(fileName);
 	file.open(QIODevice::WriteOnly);
 	QTextStream out(&file);
@@ -2657,6 +2661,34 @@ void MainWindow::exportSvg(qreal res, bool selectedItems, bool flatten) {
 	file.close();
 	delete fileProgressDialog;
 
+}
+
+void MainWindow::exportSvgWatermark(QString & svg, qreal res)
+{
+	QFile file(":/resources/images/watermark_fritzing_outline.svg");
+	if (!file.open(QFile::ReadOnly)) return;
+
+	QString watermarkSvg = file.readAll();
+	file.close();
+
+	if (!watermarkSvg.contains("<svg")) return;
+
+	QXmlStreamReader wStreamReader(watermarkSvg);
+	QSizeF watermarkSize = FSvgRenderer::parseForWidthAndHeight(wStreamReader);
+
+	QXmlStreamReader streamReader(svg);
+	QSizeF svgSize = FSvgRenderer::parseForWidthAndHeight(streamReader);
+
+	SvgFileSplitter splitter;
+	bool result = splitter.splitString(watermarkSvg, "watermark");
+	if (!result) return;
+
+	result = splitter.normalize(res, "watermark", false);
+	if (!result) return;
+
+	QString transWatermark = splitter.shift((svgSize.width() - watermarkSize.width()) * res, svgSize.height() * res, "watermark", true);
+	QString newSvg = TextUtils::makeSVGHeader(1, res, svgSize.width(), svgSize.height() + watermarkSize.height()) + transWatermark + "</svg>";
+	svg = TextUtils::mergeSvg(newSvg, svg, "");
 }
 
 void MainWindow::exportBOM() {

@@ -314,6 +314,7 @@ protected:
     void exportBOM();
     void exportNetlist();
     void exportSvg(qreal res, bool selectedItems, bool flatten);
+	void exportSvgWatermark(QString & svg, qreal res);
 	void exportEtchable(bool wantPDF, bool wantSVG);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);

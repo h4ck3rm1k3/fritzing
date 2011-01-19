@@ -193,7 +193,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	// get the viewbox and the width and height
 	// then normalize them
 	// then normalize all the internal stuff
-	// if there are translations, we're fucked
+	// if there are translations, we're probably ok
 
 	QDomElement root = m_domDocument.documentElement();
 	if (root.isNull()) return false;
