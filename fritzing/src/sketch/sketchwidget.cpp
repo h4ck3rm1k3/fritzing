@@ -61,7 +61,6 @@ $Date$
 #include "../itemdrag.h"
 #include "../layerattributes.h"
 #include "../waitpushundostack.h"
-#include "../autoroute/autorouter1.h"
 #include "../fgraphicsscene.h"
 #include "../version/version.h"
 #include "../items/partlabel.h"

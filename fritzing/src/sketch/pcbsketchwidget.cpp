@@ -33,7 +33,6 @@ $Date$
 #include "../items/virtualwire.h"
 #include "../items/resizableboard.h"
 #include "../waitpushundostack.h"
-#include "../autoroute/autorouter1.h"
 #include "../connectors/connectoritem.h"
 #include "../items/moduleidnames.h"
 #include "../help/sketchmainhelp.h"

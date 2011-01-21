@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 #include "schematicsketchwidget.h"
-#include "../autoroute/autorouter1.h"
 #include "../debugdialog.h"
 #include "../items/virtualwire.h"
 #include "../items/symbolpaletteitem.h"
