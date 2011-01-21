@@ -281,12 +281,10 @@ GridEntry::GridEntry(qreal x, qreal y, qreal w, qreal h, GridEntry::GridEntryTyp
 
 ////////////////////////////////////////////////////////////////////
 
-CMRouter::CMRouter(PCBSketchWidget * sketchWidget)
+CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 {
 	KeepoutSpace = 0.015 * FSvgRenderer::printerScale();			// 15 mils space
 	TileKeepoutSpace = realToTile(KeepoutSpace);
-	m_sketchWidget = sketchWidget;
-	m_stopTrace = m_cancelTrace = m_cancelled = false;
 	TileStandardWireWidth = realToTile(Wire::STANDARD_TRACE_WIDTH);
 	HalfStandardWireWidth = Wire::STANDARD_TRACE_WIDTH / 2;
 	TileHalfStandardWireWidth = realToTile(HalfStandardWireWidth);
@@ -294,18 +292,6 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget)
 
 CMRouter::~CMRouter()
 {
-}
-
-void CMRouter::cancel() {
-	m_cancelled = true;
-}
-
-void CMRouter::cancelTrace() {
-	m_cancelTrace = true;
-}
-
-void CMRouter::stopTrace() {
-	m_stopTrace = true;
 }
 
 void CMRouter::start()
@@ -1844,57 +1830,6 @@ JEdge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to,
 	return edge;
 }
 
-void CMRouter::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited) 
-{
-	Bus * bus = originalConnectorItem->bus();
-	if (bus == NULL) {
-		connectorItems.append(originalConnectorItem);
-	}
-	else {
-		// TODO: make sure both sides get bus relatives correctly
-
-		QList<ConnectorItem *> tempConnectorItems;
-		originalConnectorItem->attachedTo()->busConnectorItems(bus, tempConnectorItems);
-		ViewLayer::ViewLayerID originalViewLayerID = originalConnectorItem->attachedToViewLayerID();
-		foreach (ConnectorItem * connectorItem, tempConnectorItems) {
-			if (m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), originalViewLayerID)) {
-				connectorItems.append(connectorItem);
-			}
-		}
-	}
-
-	for (int i = 0; i < connectorItems.count(); i++) { 
-		ConnectorItem * fromConnectorItem = connectorItems[i];
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			TraceWire * traceWire = dynamic_cast<TraceWire *>(toConnectorItem->attachedTo());
-			if (traceWire == NULL) continue;
-			if (visited.contains(traceWire)) continue;
-
-			QList<Wire *> wires;
-			QList<ConnectorItem *> ends;
-			traceWire->collectChained(wires, ends);
-			foreach (Wire * wire, wires) {
-				ConnectorItem * c0 = wire->connector0();
-				if ((c0 != NULL) && c0->chained()) {
-					connectorItems.append(c0);
-				}
-				visited.insert(wire);
-			}
-			foreach (ConnectorItem * end, ends) {
-				if (!connectorItems.contains(end)) {
-					connectorItems.append(end);
-				}
-			}
-		}
-	}
-}
-
-void CMRouter::cleanUp() {
-	foreach (QList<ConnectorItem *> * connectorItems, m_allPartConnectorItems) {
-		delete connectorItems;
-	}
-	m_allPartConnectorItems.clear();
-}
 
 void CMRouter::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand) {
 	QList<Wire *> oldTraces;
@@ -1967,12 +1902,6 @@ void CMRouter::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndo
 	foreach (JumperItem * jumperItem, oldJumperItems) {
 		sketchWidget->deleteItem(jumperItem, true, true, false);
 	}
-}
-
-void CMRouter::updateRoutingStatus() {
-	RoutingStatus routingStatus;
-	routingStatus.zero();
-	m_sketchWidget->updateRoutingStatus(routingStatus, false);
 }
 
 /*
@@ -2194,36 +2123,6 @@ void CMRouter::addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, 
 	}
 }
 
-TraceWire * CMRouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec)
-{
-	long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(fromPos);
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-	viewGeometry.setLine(line);
-	viewGeometry.setTrace(true);
-	viewGeometry.setAutoroutable(true);
-
-	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												viewLayerSpec, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-	if (trace == NULL) {
-		// we're in trouble
-		return NULL;
-	}
-
-	// addItemAux calls trace->setSelected(true) so unselect it
-	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
-	trace->setSelected(false);
-	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
-	m_sketchWidget->setClipEnds(traceWire, false);
-	traceWire->setColorString(m_sketchWidget->traceColor(viewLayerSpec), 1.0);
-	traceWire->setWireWidth(width, m_sketchWidget);
-
-	// TODO: for debugging
-	ProcessEventBlocker::processEvents();
-
-	return traceWire;
-}
 
 void CMRouter::clearEdges(QList<JEdge *> & edges) {
 	foreach (JEdge * edge, edges) {

@@ -40,6 +40,7 @@ $Date$
 
 #include "../../viewgeometry.h"
 #include "../../viewlayer.h"
+#include "../autorouter.h"
 #include "priorityqueue.h"
 #include "tile.h"
 
@@ -127,7 +128,7 @@ public:
 	int m_type;
 };
 
-class CMRouter : public QObject
+class CMRouter : public Autorouter
 {
 	Q_OBJECT
 
@@ -138,13 +139,9 @@ public:
 	void start();
 	
 protected:
-	void cleanUp();
-	void updateRoutingStatus();
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand, QList<JEdge *> &);
-	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
-	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & visited);
 	void collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane1, ViewLayer::ViewLayerID copper0, ViewLayer::ViewLayerID copper1);
 	//void fixupJumperItems(QList<JEdge *> &, ItemBase * board);
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
@@ -200,27 +197,7 @@ protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
 	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
 
-public slots:
-	void cancel();
-	void cancelTrace();
-	void stopTrace();
-
-signals:
-	void setMaximumProgress(int);
-	void setProgressValue(int);
-	void wantTopVisible();
-	void wantBottomVisible();
-
 protected:
-	class PCBSketchWidget * m_sketchWidget;
-	QList< QList<class ConnectorItem *>* > m_allPartConnectorItems;
-	bool m_cancelled;
-	bool m_cancelTrace;
-	bool m_stopTrace;
-	bool m_bothSidesNow;
-	QList<Wire *> m_cleanWires;
-	int m_maximumProgressPart;
-	int m_currentProgressPart;
 	QRectF m_maxRect;
 	TileRect m_tileMaxRect;
 	QList<PathUnit *> m_pathUnits;

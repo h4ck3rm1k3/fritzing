@@ -37,16 +37,16 @@ $Date$
 #include <QProgressDialog>
 #include <QUndoCommand>
 
+#include "autorouter.h"
 #include "../viewgeometry.h"
 #include "../viewlayer.h"
 
-class Autorouter1 : public QObject
+class Autorouter1 : public Autorouter
 {
 	Q_OBJECT
 
 public:
 	Autorouter1(class PCBSketchWidget *);
-	~Autorouter1(void);
 
 	void start();
 	
@@ -59,7 +59,6 @@ protected:
 	bool tryWithWire(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, QPointF midpoint, QList<class Wire *> & chainedWires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut);
 	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint, bool adjust);
 	void cleanUp();
-	void updateRoutingStatus();
 	class JumperItem * drawJumperItem(struct JumperItemStruct *);
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
@@ -70,7 +69,6 @@ protected:
 	bool clean90(QPointF fromPos, QPointF toPos, QList<Wire *> & newWires, int level);
 	QPointF calcPrimePoint(ConnectorItem *);
 	void findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance); 
-	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec);
 	bool hitsObstacle(class ItemBase * traceWire, ItemBase * ignore); 
 	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> & newWires, int level, bool recurse);
 	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> & newWires, int level, bool recurse);
@@ -78,7 +76,6 @@ protected:
 	void reduceColinearWires(QList<Wire *> &);
 	bool sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
 	bool sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1);
-	void expand(ConnectorItem * connectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited);
 	bool findSpaceFor(ConnectorItem * & from, class JumperItem *, struct JumperItemStruct *, QPointF & candidate); 
 	void dijkstraNets(QHash<ConnectorItem *, int> & indexer, QVector<int> & netCounters, QList<struct Edge *> & edges);
 	void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> > & adjacency, ViewGeometry::WireFlags skipFlags);
@@ -102,32 +99,13 @@ protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
 	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
 
-public slots:
-	void cancel();
-	void cancelTrace();
-	void stopTrace();
-
-signals:
-	void setMaximumProgress(int);
-	void setProgressValue(int);
-	void wantTopVisible();
-	void wantBottomVisible();
-
 protected:
-	class PCBSketchWidget * m_sketchWidget;
 	QList< QLine * > m_lastDrawTraces;
-	QList< QList<class ConnectorItem *>* > m_allPartConnectorItems;
 	QList<class ConnectorItem *> * m_drawingNet;
-	bool m_cancelled;
-	bool m_cancelTrace;
-	bool m_stopTrace;
 	int m_autobail;
-	bool m_bothSidesNow;
 	QGraphicsItem * m_nearestObstacle;
 	QList<Wire *> m_cleanWires;
 	ViewLayer::ViewLayerSpec m_viewLayerSpec;
-	int m_maximumProgressPart;
-	int m_currentProgressPart;
 };
 
 #endif

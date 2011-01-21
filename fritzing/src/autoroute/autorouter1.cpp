@@ -160,26 +160,8 @@ void tangent_PointPoly( QPointF P, QPolygonF & poly, int & rightTangent, int & l
 
 ////////////////////////////////////////////////////////////////////////
 
-Autorouter1::Autorouter1(PCBSketchWidget * sketchWidget)
+Autorouter1::Autorouter1(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 {
-	m_sketchWidget = sketchWidget;
-	m_stopTrace = m_cancelTrace = m_cancelled = false;
-}
-
-Autorouter1::~Autorouter1()
-{
-}
-
-void Autorouter1::cancel() {
-	m_cancelled = true;
-}
-
-void Autorouter1::cancelTrace() {
-	m_cancelTrace = true;
-}
-
-void Autorouter1::stopTrace() {
-	m_stopTrace = true;
 }
 
 void Autorouter1::start()
@@ -313,10 +295,10 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 	foreach (Edge * edge, edges) {
 		QList<ConnectorItem *> fromConnectorItems;
 		QSet<Wire *> fromTraces;
-		expand(edge->from, fromConnectorItems, false, fromTraces);
+		expand(edge->from, fromConnectorItems, fromTraces);
 		QList<ConnectorItem *> toConnectorItems;
 		QSet<Wire *> toTraces;
-		expand(edge->to, toConnectorItems, true, toTraces);
+		expand(edge->to, toConnectorItems, toTraces);
 
 		QPointF fp = edge->from->sceneAdjustedTerminalPoint(NULL);
 		QPointF tp = edge->to->sceneAdjustedTerminalPoint(NULL);
@@ -801,44 +783,10 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	vertices.append(otherSide);
 }
 
-void Autorouter1::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, bool onlyBus, QSet<Wire *> & visited) 
-{
-	Bus * bus = originalConnectorItem->bus();
-	if (bus == NULL) {
-		connectorItems.append(originalConnectorItem);
-	}
-	else {
-		originalConnectorItem->attachedTo()->busConnectorItems(bus, connectorItems);
-	}
-	if (onlyBus) return;
 
-	for (int i = 0; i < connectorItems.count(); i++) { 
-		ConnectorItem * fromConnectorItem = connectorItems[i];
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			TraceWire * traceWire = dynamic_cast<TraceWire *>(toConnectorItem->attachedTo());
-			if (traceWire == NULL) continue;
-			if (visited.contains(traceWire)) continue;
-
-			QList<Wire *> wires;
-			QList<ConnectorItem *> ends;
-			traceWire->collectChained(wires, ends);
-			foreach (Wire * wire, wires) {
-				visited.insert(wire);
-			}
-			foreach (ConnectorItem * end, ends) {
-				if (!connectorItems.contains(end)) {
-					connectorItems.append(end);
-				}
-			}
-		}
-	}
-}
 
 void Autorouter1::cleanUp() {
-	foreach (QList<ConnectorItem *> * connectorItems, m_allPartConnectorItems) {
-		delete connectorItems;
-	}
-	m_allPartConnectorItems.clear();
+	Autorouter::cleanUp();
 	clearLastDrawTraces();
 }
 
@@ -921,12 +869,6 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 	foreach (JumperItem * jumperItem, oldJumperItems) {
 		sketchWidget->deleteItem(jumperItem, true, true, false);
 	}
-}
-
-void Autorouter1::updateRoutingStatus() {
-	RoutingStatus routingStatus;
-	routingStatus.zero();
-	m_sketchWidget->updateRoutingStatus(routingStatus, false);
 }
 
  bool Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {
@@ -1921,33 +1863,6 @@ void Autorouter1::findNearestIntersection(QLineF & l1, QPointF & fromPos, const 
 	}
 }
 
-TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec)
-{
-	long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(fromPos);
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-	viewGeometry.setLine(line);
-	viewGeometry.setTrace(true);
-	viewGeometry.setAutoroutable(true);
-
-	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
-												viewLayerSpec, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-	if (trace == NULL) {
-		// we're in trouble
-		return NULL;
-	}
-
-	// addItemAux calls trace->setSelected(true) so unselect it
-	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
-	trace->setSelected(false);
-	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
-	m_sketchWidget->setClipEnds(traceWire, false);
-	traceWire->setColorString(m_sketchWidget->traceColor(viewLayerSpec), 1.0);
-	traceWire->setWireWidth(width, m_sketchWidget);
-
-	return traceWire;
-}
 
 bool Autorouter1::hitsObstacle(ItemBase * traceWire, ItemBase * ignore) 
 {
