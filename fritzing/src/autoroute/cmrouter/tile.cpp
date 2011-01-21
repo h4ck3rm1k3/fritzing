@@ -22,6 +22,8 @@
 #include <limits>
 #include "tile.h"
 
+void dupTileBody(Tile * oldtp, Tile * newtp);
+
 /*
  * Debugging version of TiSetBody() macro in tile.h
  * Includes sanity check that a tile at "infinity"
@@ -125,7 +127,7 @@ TiNewPlane(Tile *tile)
     SETLB(newplane->pl_bottom, BADTILE);
     SETBL(newplane->pl_bottom, newplane->pl_left);
     TiSetBody(newplane->pl_bottom, 0);
-    TiSetType(newplane->pl_bottom, DUMMYBOTTOM);
+	TiSetType(newplane->pl_bottom, Tile::DUMMYBOTTOM);
 
     SETLEFT(newplane->pl_top, MINFINITY);
     SETYMIN(newplane->pl_top, INFINITY);
@@ -134,7 +136,7 @@ TiNewPlane(Tile *tile)
     SETLB(newplane->pl_top, tile);
     SETBL(newplane->pl_top, newplane->pl_left);
     TiSetBody(newplane->pl_top, 0);
-    TiSetType(newplane->pl_bottom, DUMMYTOP);
+    TiSetType(newplane->pl_bottom, Tile::DUMMYTOP);
 
     SETLEFT(newplane->pl_left, MINFINITY);
     SETYMIN(newplane->pl_left, MINFINITY);
@@ -143,7 +145,7 @@ TiNewPlane(Tile *tile)
     SETLB(newplane->pl_left, newplane->pl_bottom);
     SETBL(newplane->pl_left, BADTILE);
     TiSetBody(newplane->pl_left, 0);
-    TiSetType(newplane->pl_bottom, DUMMYLEFT);
+    TiSetType(newplane->pl_bottom, Tile::DUMMYLEFT);
 
     SETLEFT(newplane->pl_right, INFINITY);
     SETYMIN(newplane->pl_right, MINFINITY);
@@ -152,7 +154,7 @@ TiNewPlane(Tile *tile)
     SETLB(newplane->pl_right, newplane->pl_bottom);
     SETBL(newplane->pl_right, tile);
     TiSetBody(newplane->pl_right, 0);
-    TiSetType(newplane->pl_bottom, DUMMYRIGHT);
+    TiSetType(newplane->pl_bottom, Tile::DUMMYRIGHT);
 
     newplane->pl_hint = tile;
     return (newplane);
@@ -244,8 +246,7 @@ TiSplitX(Tile *tile, int x)
     //ASSERT(x > LEFT(tile) && x < RIGHT(tile), "TiSplitX");
 
     newtile = TiAlloc();
-    TiSetClient(newtile, 0);
-    TiSetBody(newtile, 0);
+	dupTileBody(tile, newtile);
 
     SETLEFT(newtile, x);
     SETYMIN(newtile, YMIN(tile));
@@ -321,8 +322,7 @@ TiSplitY(Tile *tile, int y)
     //ASSERT(y > YMIN(tile) && y < YMAX(tile), "TiSplitY");
 
     newtile = TiAlloc();
-    TiSetClient(newtile, 0);
-    TiSetBody(newtile, 0);
+	dupTileBody(tile, newtile);
 
     SETLEFT(newtile, LEFT(tile));
     SETYMIN(newtile, y);
@@ -399,8 +399,7 @@ TiSplitX_Left(Tile *tile, int x)
     //ASSERT(x > LEFT(tile) && x < RIGHT(tile), "TiSplitX");
 
     newtile = TiAlloc();
-    TiSetClient(newtile, 0);
-    TiSetBody(newtile, 0);
+	dupTileBody(tile, newtile);
 
     SETLEFT(newtile, LEFT(tile));
     SETLEFT(tile, x);
@@ -467,8 +466,7 @@ TiSplitY_Bottom(Tile *tile, int y)
     //ASSERT(y > YMIN(tile) && y < YMAX(tile), "TiSplitY");
 
     newtile = TiAlloc();
-    TiSetClient(newtile, 0);
-    TiSetBody(newtile, 0);
+	dupTileBody(tile, newtile);
 
     SETLEFT(newtile, LEFT(tile));
     SETYMIN(newtile, YMIN(tile));
@@ -700,7 +698,10 @@ TiAlloc()
     newtile = new Tile;
     TiSetClient(newtile, 0);
     TiSetBody(newtile, 0);
-	TiSetType(newtile, 0);
+	TiSetType(newtile, Tile::NOTYPE);
+
+	//qDebug() << "alloc" << (long) newtile;
+
 	SETLB(newtile, 0); 
 	SETBL(newtile, 0);
 	SETRT(newtile, 0); 
@@ -760,3 +761,23 @@ Tile* gotoPoint(Tile * tp, TilePoint p)
 	return tp;
 }
 
+/*
+ * ----------------------------------------------------------------------------
+ * dupTileBody -- 
+ *
+ * Duplicate the body of an old tile as the body for a new tile.
+ *
+ * Results:
+ *      None.
+ *
+ * Side effects:
+ *      Allocates new CellTileBodies unless the old tile was a space tile.
+ * ----------------------------------------------------------------------------
+ */
+
+void
+dupTileBody (Tile * oldtp, Tile * newtp)
+{
+	TiSetBody(newtp, TiGetBody(oldtp));
+	TiSetType(newtp, TiGetType(oldtp));
+}

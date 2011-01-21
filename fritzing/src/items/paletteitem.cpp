@@ -130,7 +130,7 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 
 		LayerKinPaletteItem * lkpi = newLayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, viewLayerSpec, m_itemMenu, viewLayers);
 		if (lkpi->ok()) {
-			DebugDialog::debug(QString("adding layer kin %1 %2 %3").arg(id).arg(m_viewIdentifier).arg(viewLayerID) );
+			//DebugDialog::debug(QString("adding layer kin %1 %2 %3").arg(id).arg(m_viewIdentifier).arg(viewLayerID) );
 			lkpi->setViewLayerSpec(viewLayerSpec);
 			addLayerKin(lkpi);
 			id++;
@@ -148,7 +148,7 @@ void PaletteItem::addLayerKin(LayerKinPaletteItem * lkpi) {
 void PaletteItem::removeLayerKin() {
 	// assumes paletteitem is still in scene
 	for (int i = 0; i < m_layerKin.size(); i++) {
-		DebugDialog::debug(QString("removing kin %1 %2").arg(m_layerKin[i]->id()).arg(m_layerKin[i]->z()));
+		//DebugDialog::debug(QString("removing kin %1 %2").arg(m_layerKin[i]->id()).arg(m_layerKin[i]->z()));
 		this->scene()->removeItem(m_layerKin[i]);
 		delete m_layerKin[i];
 	}

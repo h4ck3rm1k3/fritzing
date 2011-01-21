@@ -35,7 +35,7 @@ $Date$
 #include "partseditor/partseditormainwindow.h"
 #include "help/aboutbox.h"
 #include "autoroute/autorouter1.h"
-#include "autoroute/jrouter.h"
+#include "autoroute/cmrouter/jrouter.h"
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
 #include "fsvgrenderer.h"
@@ -3024,7 +3024,7 @@ void MainWindow::autoroute() {
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
 	Autorouter1 * autorouter = new Autorouter1(pcbSketchWidget);
-	//JRouter * autorouter = new JRouter(pcbSketchWidget);
+	//CMRouter * autorouter = new CMRouter(pcbSketchWidget);
 
 	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);

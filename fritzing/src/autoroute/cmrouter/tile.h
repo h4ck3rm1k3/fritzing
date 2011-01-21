@@ -24,6 +24,7 @@
 #define	_TILES_H
 
 #include <QGraphicsItem>
+#include <QDebug>
 
 // note: Tile uses math axes as opposed to computer graphic axes.  In other words y increases up.
 struct TileRect {
@@ -68,7 +69,24 @@ typedef void * UserData;
 
 struct Tile
 {
-	int		 ti_type;		/* another free field */
+	enum TileType{
+		NOTYPE = 0,
+		BUFFER = 1,
+		NOTBOARD,
+		NONCONNECTOR,
+		TRACE,
+		CONNECTOR,
+		PART,
+		SPACE,
+		TINYSPACE,
+		CONTOUR,
+		DUMMYLEFT = 999999,
+		DUMMYTOP,
+		DUMMYRIGHT,
+		DUMMYBOTTOM
+	};
+	
+	TileType		 ti_type;		/* another free field */
     QGraphicsItem *	 ti_body;	/* Body of tile */
     struct Tile	*ti_lb;		/* Left bottom corner stitch */
     struct Tile	*ti_bl;		/* Bottom left corner stitch */
@@ -76,7 +94,6 @@ struct Tile
     struct Tile	*ti_rt;		/* Right top corner stitch */
     TilePoint	 ti_ll;		/* Lower left coordinate */
     QGraphicsItem *	 ti_client;	/* This space for hire.  */
-	int ti_wave;
 };
 
     /*
@@ -118,6 +135,8 @@ inline int YMIN(Tile* tileP) { return tileP->ti_ll.yi; }
 inline int LEFT(Tile* tileP) { return	tileP->ti_ll.xi; }
 inline int YMAX(Tile* tileP) { return	YMIN(RT(tileP)); }
 inline int RIGHT(Tile* tileP)	{ return LEFT(TR(tileP)); }
+inline int WIDTH(Tile* tileP) { return RIGHT(tileP) - LEFT(tileP); }
+inline int HEIGHT(Tile* tileP) { return YMAX(tileP) - YMIN(tileP); }
 inline void SETYMIN(Tile* tileP, int val) { tileP->ti_ll.yi = val; }
 inline void SETLEFT(Tile* tileP, int val) { tileP->ti_ll.xi = val; }
 inline void SETYMAX(Tile* tileP, int val) { SETYMIN(RT(tileP), val); }
@@ -209,36 +228,29 @@ void  TiJoinX(Tile *tile1, Tile *tile2, Plane *plane);
 void  TiJoinY(Tile *tile1, Tile *tile2, Plane *plane);
 int   TiSrArea(Tile *hintTile, Plane *plane, TileRect *rect, TileCallback, UserData arg);
 Tile *TiSrPoint( Tile * hintTile, Plane * plane, int x, int y);
-Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, int type);
+Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, Tile::TileType type);
 
-#define	TiBottom(tileP)	(YMIN(tileP))
+#define	TiBottom(tileP)		(YMIN(tileP))
 #define	TiLeft(tileP)		(LEFT(tileP))
 #define	TiTop(tileP)		(YMAX(tileP))
 #define	TiRight(tileP)		(RIGHT(tileP))
 
-#define	TiGetType(tileP)		((tileP)->ti_type)
-#define TiSetType(tileP, t)	((tileP)->ti_type = (int) (t))
+inline Tile::TileType TiGetType(Tile * tileP) { return tileP->ti_type; }
+inline void TiSetType(Tile *tileP, Tile::TileType t) { 
+	//qDebug() << "type" << (long) tileP  << t;
+	tileP->ti_type = t; 
+}
 
-#define	TiGetBody(tileP)		((tileP)->ti_body)
+inline QGraphicsItem * TiGetBody(Tile * tileP) { return tileP->ti_body; }
 /* See diagnostic subroutine version in tile.c */
-#define	TiSetBody(tileP, b)	((tileP)->ti_body = (b))
-#define	TiGetClient(tileP)		((tileP)->ti_client)
-#define	TiSetClient(tileP,b)	((tileP)->ti_client = (b))
-#define	TiGetWave(tileP)		((tileP)->ti_wave)
-#define	TiSetWave(tileP,b)		((tileP)->ti_wave = (b))
-
-
-// make sure nobody else uses these values for tile type
-enum {
-	DUMMYLEFT = 999999,
-	DUMMYTOP,
-	DUMMYRIGHT,
-	DUMMYBOTTOM
-};
+inline void TiSetBody(Tile *tileP, QGraphicsItem *b) { tileP->ti_body = b; }
+inline QGraphicsItem *	TiGetClient(Tile * tileP) { return tileP->ti_client ; }
+inline void	TiSetClient(Tile *tileP, QGraphicsItem * b)	{ tileP->ti_client = b; }
 
 Tile *TiAlloc();
 void TiFree(Tile *);
 
+/*
 #define EnclosePoint(tile,point)	((LEFT(tile)   <= (point)->p_x ) && \
 					 ((point)->p_x   <  RIGHT(tile)) && \
 					 (YMIN(tile) <= (point)->p_y ) && \
@@ -248,6 +260,7 @@ void TiFree(Tile *);
 					 ((point)->p_x  <=  RIGHT(tile)) && \
 					 (YMIN(tile) <= (point)->p_y ) && \
 					 ((point)->p_y  <=  YMAX(tile)  ))
+*/
 
 /* The four macros below are for finding next tile RIGHT, UP, LEFT or DOWN 
  * from current tile at a given coordinate value.
@@ -256,23 +269,25 @@ void TiFree(Tile *);
  * at y-coordinate y.
  */
 
-#define NEXT_TILE_RIGHT(tResult, t, y) \
-    for ((tResult) = TR(t); YMIN(tResult) > (y); (tResult) = LB(tResult)) \
-        /* Nothing */;
 
-#define NEXT_TILE_UP(tResult, t, x) \
-    for ((tResult) = RT(t); LEFT(tResult) > (x); (tResult) = BL(tResult)) \
-        /* Nothing */;
+//#define NEXT_TILE_RIGHT(tResult, t, y) \
+//    for ((tResult) = TR(t); YMIN(tResult) > (y); (tResult) = LB(tResult)) \
+//        /* Nothing */;
 
-#define NEXT_TILE_LEFT(tResult, t, y) \
-    for ((tResult) = BL(t); YMAX(tResult) <= (y); (tResult) = RT(tResult)) \
-        /* Nothing */;
+//#define NEXT_TILE_UP(tResult, t, x) \
+//    for ((tResult) = RT(t); LEFT(tResult) > (x); (tResult) = BL(tResult)) \
+//        /* Nothing */;
+
+//#define NEXT_TILE_LEFT(tResult, t, y) \
+//    for ((tResult) = BL(t); YMAX(tResult) <= (y); (tResult) = RT(tResult)) \
+//        /* Nothing */;
  
-#define NEXT_TILE_DOWN(tResult, t, x) \
-    for ((tResult) = LB(t); RIGHT(tResult) <= (x); (tResult) = TR(tResult)) \
-        /* Nothing */;
+//#define NEXT_TILE_DOWN(tResult, t, x) \
+//    for ((tResult) = LB(t); RIGHT(tResult) <= (x); (tResult) = TR(tResult)) \
+//        /* Nothing */;
 
-#define	TiSrPointNoHint(plane, point)	(TiSrPoint((Tile *) NULL, plane, point))
+//#define	TiSrPointNoHint(plane, point)	(TiSrPoint((Tile *) NULL, plane, point))
+
 
 Tile * gotoPoint(Tile * tile, TilePoint p);
 

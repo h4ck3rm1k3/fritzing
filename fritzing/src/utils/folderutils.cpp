@@ -279,12 +279,12 @@ void FolderUtils::rmdir(const QString &dirPath) {
 }
 
 void FolderUtils::rmdir(QDir & dir) {
-	DebugDialog::debug(QString("removing folder: %1").arg(dir.path()));
+	//DebugDialog::debug(QString("removing folder: %1").arg(dir.path()));
 
 	QStringList files = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
 	for(int i=0; i < files.size(); i++) {
 		QFile tempFile(dir.path() + "/" +files.at(i));
-		DebugDialog::debug(QString("removing from original folder: %1").arg(tempFile.fileName()));
+		//DebugDialog::debug(QString("removing from original folder: %1").arg(tempFile.fileName()));
 		if(QFileInfo(tempFile.fileName()).isDir()) {
 			QDir dir = QDir(tempFile.fileName());
 			rmdir(dir);

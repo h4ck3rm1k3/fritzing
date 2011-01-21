@@ -562,13 +562,13 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 		}
 
 		addToScene(wire, wire->viewLayerID());
-		DebugDialog::debug(QString("adding wire %1 %2 %3 %4 %5")
-			.arg(wire->id())
-			.arg(viewIdentifier)
-			.arg(viewGeometry.flagsAsInt())
-			.arg((long) wire, 0, 16)
-			.arg((long) static_cast<QGraphicsItem *>(wire), 0, 16)
-			);
+		//DebugDialog::debug(QString("adding wire %1 %2 %3 %4 %5")
+		//	.arg(wire->id())
+		//	.arg(viewIdentifier)
+		//	.arg(viewGeometry.flagsAsInt())
+		//	.arg((long) wire, 0, 16)
+		//	.arg((long) static_cast<QGraphicsItem *>(wire), 0, 16)
+		//	);
 
 		return wire;
 	}
@@ -583,13 +583,13 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 
 	bool ok;
 	addPartItem(modelPart, viewLayerSpec, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
-	DebugDialog::debug(QString("adding part id:%1 '%2' hex:%3 vid:%4 vlid:%5")
-		.arg(id)
-		.arg(newItem->title())
-		.arg((long) newItem, 0, 16)
-		.arg(viewIdentifier)
-		.arg(newItem->viewLayerID())
-		);
+	//DebugDialog::debug(QString("adding part id:%1 '%2' hex:%3 vid:%4 vlid:%5")
+	//	.arg(id)
+	//	.arg(newItem->title())
+	//	.arg((long) newItem, 0, 16)
+	//	.arg(viewIdentifier)
+	//	.arg(newItem->viewLayerID())
+	//	);
 	setNewPartVisible(newItem);
 	newItem->updateConnectors();
 	return newItem;
@@ -6479,10 +6479,10 @@ void SketchWidget::collectAllNets(QHash<ConnectorItem *, int> & indexer, QList< 
 			//}
 			if (!connectorItems.contains(ci)) {
 				// crossed layer: toss it
-				DebugDialog::debug(QString("not in equal potential '%1' '%2' %3")
-					.arg(ci->connectorSharedName())
-					.arg(ci->attachedToInstanceTitle())
-					.arg(ci->attachedToViewLayerID()));
+				//DebugDialog::debug(QString("not in equal potential '%1' '%2' %3")
+				//	.arg(ci->connectorSharedName())
+				//	.arg(ci->attachedToInstanceTitle())
+				//	.arg(ci->attachedToViewLayerID()));
 				continue;
 			}
 			//if (indexer.keys().contains(ci)) {

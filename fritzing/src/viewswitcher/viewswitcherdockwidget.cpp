@@ -60,8 +60,7 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 			OSVERSIONINFO OSversion;	
 			OSversion.dwOSVersionInfoSize=sizeof(OSVERSIONINFO);
 			::GetVersionEx(&OSversion);
-			DebugDialog::debug(QString("windows os version %1 %2")
-				.arg(OSversion.dwMajorVersion).arg(OSversion.dwMinorVersion));
+			//DebugDialog::debug(QString("windows os version %1 %2").arg(OSversion.dwMajorVersion).arg(OSversion.dwMinorVersion));
 			if (OSversion.dwMajorVersion > 5) {
 				// vista and win 7 major version is 6
                                 initial.setX(12);

@@ -27,14 +27,13 @@ int deleteCellFunc(Tile *, UserData);
 Tile * clipCellTile(Tile * tile, Plane * plane, TileRect * rect);
 void cellTileMerge(Tile  * tile, Plane * plane, int direction); 
 bool ctbListMatch (Tile *tp1, Tile *tp2);
-void dupTileBody(Tile * oldtp, Tile * newtp);
 
 struct searchArg
 {
     TileRect * rect;
     Plane * plane;
 	QGraphicsItem * body;
-	int type;
+	Tile::TileType type;
 };
 
 #define		TOPLEFT			10
@@ -65,7 +64,7 @@ struct searchArg
  */
 
 void
-DBPlaceCell (Plane * plane, TileRect * rect, QGraphicsItem * body, int type)
+DBPlaceCell (Plane * plane, TileRect * rect, QGraphicsItem * body, Tile::TileType type)
 /* argument to TiSrArea(), placeCellFunc() */
 /* argument to TiSrArea(), placeCellFunc() */
 {
@@ -212,26 +211,22 @@ clipCellTile (Tile * tile, Plane * plane, TileRect * rect)
     if (YMAX(tile) > rect->ymaxi)
     {
         newtile = TiSplitY (tile, rect->ymaxi);	/* no merge */
-		dupTileBody (tile, newtile);
     }
     if (YMIN(tile) < rect->ymini)
     {
 
 	newtile = tile;
         tile = TiSplitY (tile, rect->ymini);		/* no merge */
-		dupTileBody (newtile, tile);
     }
     if (RIGHT(tile) > rect->xmaxi)
     {
         newtile = TiSplitX (tile, rect->xmaxi);
-		dupTileBody (tile, newtile);
         cellTileMerge (newtile, plane, TOPBOTTOM);
     }
     if (LEFT(tile) < rect->xmini)
     {
 		newtile = tile;
         tile = TiSplitX (tile, rect->xmini);
-		dupTileBody (newtile, tile);
         cellTileMerge (newtile, plane, TOPBOTTOM);
     }
     return (tile);
@@ -415,28 +410,6 @@ ctbListMatch (Tile *tp1, Tile *tp2)
 {
 	return (tp1->ti_body == tp2->ti_body) && (tp1->ti_type == tp2->ti_type);
 }
-
-/*
- * ----------------------------------------------------------------------------
- * dupTileBody -- 
- *
- * Duplicate the body of an old tile as the body for a new tile.
- *
- * Results:
- *      None.
- *
- * Side effects:
- *      Allocates new CellTileBodies unless the old tile was a space tile.
- * ----------------------------------------------------------------------------
- */
-
-void
-dupTileBody (Tile * oldtp, Tile * newtp)
-{
-	TiSetBody(newtp, TiGetBody(oldtp));
-	TiSetType(newtp, TiGetType(oldtp));
-}
-	
 	
 /*
  * ----------------------------------------------------------------------------
@@ -452,7 +425,7 @@ dupTileBody (Tile * oldtp, Tile * newtp)
  * ----------------------------------------------------------------------------
  */	
 
-Tile* TiInsertTile(Plane * plane, TileRect * rect, QGraphicsItem * body, int type) {
+Tile* TiInsertTile(Plane * plane, TileRect * rect, QGraphicsItem * body, Tile::TileType type) {
 
 	DBPlaceCell(plane, rect, body, type);
 	return TiSrPoint(NULL, plane, rect->xmini, rect->ymini);

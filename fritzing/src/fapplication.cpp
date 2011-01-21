@@ -689,7 +689,7 @@ void FApplication::registerFont(const QString &fontFile, bool reallyRegister) {
 		foreach (QString family, familyNames) {
 			InstalledFonts::InstalledFontsNameMapper.insert(family, finfo.baseName());
 			InstalledFonts::InstalledFontsList << family;
-			DebugDialog::debug("registering font family: "+family);
+			//DebugDialog::debug("registering font family: "+family);
 		}
 	}
 }
@@ -1058,7 +1058,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
 	initBackups();
 
-	DebugDialog::debug("checking for backups");
+	//DebugDialog::debug("checking for backups");
     QList<MainWindow*> sketchesToLoad = recoverBackups();
 
 	bool loadPrevious = false;
@@ -1066,7 +1066,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 		loadPrevious = !prevVersion.isEmpty() && Version::greaterThan(prevVersion, Version::FirstVersionWithDetachedUserData);
 	}
 
-	DebugDialog::debug(QString("load previous %1").arg(loadPrevious));
+	//DebugDialog::debug(QString("load previous %1").arg(loadPrevious));
 
 	if (!loadPrevious && sketchesToLoad.isEmpty()) {
 		if (!firstRun) {
@@ -1077,7 +1077,7 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
 	if (!loadPrevious && sketchesToLoad.isEmpty()) {
 		// Check for double-clicked files to load
-		DebugDialog::debug(QString("check files to load %1").arg(m_filesToLoad.count()));
+		//DebugDialog::debug(QString("check files to load %1").arg(m_filesToLoad.count()));
 
         foreach (QString filename, m_filesToLoad) {
             DebugDialog::debug(QString("Loading non-service file %1").arg(filename));
@@ -1090,13 +1090,13 @@ void FApplication::loadSomething(bool firstRun, const QString & prevVersion) {
 
     // Find any previously open sketches to reload
     if (!loadPrevious && sketchesToLoad.isEmpty()) {
-		DebugDialog::debug(QString("load last open"));
+		//DebugDialog::debug(QString("load last open"));
 		sketchesToLoad = loadLastOpenSketch();
 	}
 
 	MainWindow * newBlankSketch = NULL;
 	if (sketchesToLoad.isEmpty()) {
-		DebugDialog::debug(QString("empty sketch"));
+		//DebugDialog::debug(QString("empty sketch"));
 		newBlankSketch = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
 		if (newBlankSketch) {
 			// make sure to start an empty sketch with a board
