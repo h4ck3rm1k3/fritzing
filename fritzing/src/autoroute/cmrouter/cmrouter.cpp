@@ -118,7 +118,7 @@ $Date$
 //
 
 
-#include "jrouter.h"
+#include "cmrouter.h"
 #include "../../sketch/pcbsketchwidget.h"
 #include "../../debugdialog.h"
 #include "../../items/virtualwire.h"

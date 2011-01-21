@@ -35,7 +35,7 @@ $Date$
 #include "partseditor/partseditormainwindow.h"
 #include "help/aboutbox.h"
 #include "autoroute/autorouter1.h"
-#include "autoroute/cmrouter/jrouter.h"
+#include "autoroute/cmrouter/cmrouter.h"
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
 #include "fsvgrenderer.h"
