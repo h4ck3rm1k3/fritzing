@@ -38,6 +38,8 @@ $Date$
 #include <QProgressDialog>
 #include <QUndoCommand>
 
+#include <limits>
+
 #include "../../viewgeometry.h"
 #include "../../viewlayer.h"
 #include "../autorouter.h"
@@ -98,34 +100,38 @@ struct CompletePath {
 	PathUnit * dest;
 };
 
+struct TilePair
+{
+	Tile * tile1;
+	Tile * tile2;
+};
 
 struct Segment {
+	static const int NotSet;
+
 	int sMin;
 	int sMax;
 	int sEntry;
 	int sExit;
+	
+	void setEntry(int entry) {
+		if (sEntry != NotSet) return;
+
+		sEntry = entry;
+	}
+
+	void setExit(int exit) {
+		if (sExit != NotSet) return;
+
+		sExit = exit;
+	}
 };
 
 class GridEntry : public QGraphicsRectItem {
 public:
-	enum GridEntryType {
-		EMPTY = 1,
-		TINY,
-		IGNORE,
-		SAFE,
-		SELF,
-		GOAL,   // goal followed by blockers must be highest values
-		OWNSIDE,
-		CONTOUR,
-		BLOCK,
-		NOTBOARD
-	};
 
 public:
-	GridEntry(qreal x, qreal y, qreal width, qreal height, GridEntry::GridEntryType type, QGraphicsItem * parent); 
-
-public:
-	int m_type;
+	GridEntry(QRectF &, QGraphicsItem * parent); 
 };
 
 class CMRouter : public Autorouter
@@ -139,6 +145,13 @@ public:
 	void start();
 	
 protected:
+	enum OverlapType {
+		IgnoreAllOverlaps = 0,
+		ClipAllOverlaps,
+		ReportAllOverlaps
+	};
+
+protected:
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand, QList<JEdge *> &);
@@ -147,39 +160,34 @@ protected:
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
 	//class JumperItem * drawJumperItem(JEdge *, class ItemBase * board);
-	void removeCorners(QList<QPointF> & allPoints, JEdge *);
-	bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JEdge *, bool atStartOrEnd); 
-	GridEntry::GridEntryType checkCandidate(JEdge * edge, Tile * tile);
+	//void removeCorners(QList<QPointF> & allPoints, JEdge *);
+	//bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JEdge *, bool atStartOrEnd); 
+	//Tile::TileType checkCandidate(JEdge * edge, Tile * tile);
 	bool runEdges(QList<JEdge *> &, QList<Plane *> &, class ItemBase * board, QVector<int> & netCounters, struct RoutingStatus &, bool firstTime, QHash<Wire *, JEdge *> & tracesToEdges);
 	void clearEdges(QList<JEdge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
 	void updateProgress(int num, int denom);
-	GridEntry * drawGridItem(qreal x1, qreal y1, qreal x2, qreal y2, GridEntry::GridEntryType flag, GridEntry *);
-	GridEntry * drawGridItem(Tile * tile, GridEntry::GridEntryType type);
-	GridEntry * drawGridItem(Tile * tile, Tile::TileType type);
-	void addTile(class NonConnectorItem * nci, Tile::TileType type, Plane *, QList<Tile *> & alreadyTiled);
+	GridEntry * drawGridItem(Tile * tile);
 	void seedNext(PathUnit *, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
 	Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID, QList<Tile *> & alreadyTiled);
-	void tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> & alreadyTiled);
-	void tileWire(Wire *, Plane *, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled);
+	void tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> & alreadyTiled, Tile::TileType, CMRouter::OverlapType overlapType);
+	void tileWire(Wire *, Plane *, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType, CMRouter::OverlapType overlapType);
 	void clearTiles(Plane * thePlane);
 	void hideTiles();
 	void displayBadTiles(QList<Tile *> & alreadyTiled);
-	Tile * insertTile(Plane* thePlane, TileRect &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, bool clipWire);
+	Tile * addTile(class NonConnectorItem * nci, Tile::TileType type, Plane *, QList<Tile *> & alreadyTiled, CMRouter::OverlapType);
+	Tile * insertTile(Plane* thePlane, TileRect &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
+	void clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType type);
 	void clearGridEntries();
 	void appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits, PathUnit::Direction, int tWidthNeeded);
 	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects);
 	void hookUpWires(JEdge *, QList<PathUnit *> & fullPath, QList<Wire *> & wires);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point, ItemBase * board);
-	Tile * clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType type);
-	void handleChangedTiles(Plane * thePlane, TileRect &);
-	void handleChangedTilesAux(Plane * thePlane, QSet<Tile *> & tiles);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *, VirtualWire *);
 	void reorderEdges(QList<JEdge *> & edges, QHash<Wire *, JEdge *> & tracesToEdges);
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled);
-	void initPathUnit(JEdge * edge, ConnectorItem * connectorItem, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
-	void initPathUnit(JEdge * edge, Wire * wire, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
+	void initPathUnit(JEdge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
 	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge *, QHash<Wire *, JEdge *> & tracesToEdges, QMultiHash<Tile *, PathUnit *> &, ItemBase * board);
 	bool propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destPathUnits, QMultiHash<Tile *, PathUnit *> &, CompletePath &);
 	TileRect calcMinCostRect(PathUnit * pathUnit, Tile * next);
@@ -189,9 +197,10 @@ protected:
 	Tile * insertTiny(Plane * thePlane, TileRect & tinyRect);
 	void cleanPoints(QList<QPointF> & allPoints, JEdge *); 
 	void traceSegments(QList<Segment *> & segments);
-	void initConnectorSegments(int ix0, int ix1, QList<PathUnit *> & fullPath, QList<Segment *> & hSegments, QList<Segment *> & vSegments);
-	void clipSegments(QList<Segment *> & segments, int first, int last, int inc);
+	void initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QList<Segment *> & hSegments, QList<Segment *> & vSegments);
 	bool insideV(const QPointF & check, const QPointF & vertex);
+	void makeAlignTiles(QMultiHash<Tile *, TileRect *> &, Plane * thePlane);
+	bool overlapsOnly(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);

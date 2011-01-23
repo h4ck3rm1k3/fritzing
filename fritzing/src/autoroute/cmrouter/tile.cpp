@@ -45,6 +45,7 @@ TiSetBody(tp, b)
 
 TileFunc ChangedFunc = NULL;
 TileFunc FreeFunc = NULL;
+
 void TiSetChangedFunc(TileFunc tf) {
 	ChangedFunc = tf;
 }
