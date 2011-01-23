@@ -39,5 +39,5 @@ To launch Fritzing:
 
 GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest
 
-(c) 2007-2009 Fachhochschule Potsdam
+(c) 2007-2011 Fachhochschule Potsdam
 design.fh-potsdam.de
