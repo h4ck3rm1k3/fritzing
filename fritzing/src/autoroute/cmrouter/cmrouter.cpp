@@ -1781,7 +1781,7 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 			c = QColor(0, 0, 255, alpha);
 			break;
 		case Tile::OBSTACLE:
-			c = QColor(80, 80, 80, alpha);
+			c = QColor(60, 60, 60, alpha);
 			break;
 		default:
 			c = QColor(255, 0, 0, alpha);
@@ -2796,7 +2796,31 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 		delete segment;
 	}
 
+	PathUnit * first = fullPath.first();
+	PathUnit * last = fullPath.last();
+
+	if (first->connectorItem == NULL) {
+		bool atEndpoint;
+		double distance, dx, dy;
+		QPointF p = first->wire->pos();
+		QPointF pp = first->wire->line().p2() + p;
+		QPointF ppp = allPoints.first();
+		GraphicsUtils::distanceFromLine(ppp.x(), ppp.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
+		allPoints.push_front(QPointF(dx, dy));
+	}
+	if (last->connectorItem == NULL) {
+		bool atEndpoint;
+		double distance, dx, dy;
+		QPointF p = last->wire->pos();
+		QPointF pp = last->wire->line().p2() + p;
+		QPointF ppp = allPoints.last();
+		GraphicsUtils::distanceFromLine(ppp.x(), ppp.y(), p.x(), p.y(), pp.x(), pp.y(), dx, dy, distance, atEndpoint);
+		allPoints.append(QPointF(dx, dy));
+	}
+
 	cleanPoints(allPoints, edge);
+
+
 	
 	QList<Wire *> wires;
 	for (int i = 0; i < allPoints.count() - 1; i++) {
@@ -2806,17 +2830,17 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 		wires.append(trace);
 	}
 
+	ProcessEventBlocker::processEvents();
+
 	// TODO: handle wire stickyness
 	// TODO: make sure that splitTrace succeeds if trace was not autoroutable
 
 
-	PathUnit * first = fullPath.first();
 	if (first->connectorItem == NULL) {
 		first->connectorItem = splitTrace(first->wire, allPoints.first(), board);
 		Wire * split = qobject_cast<Wire *>(first->connectorItem->attachedTo());
 		tracesToEdges.insert(split, edge);
 	}
-	PathUnit * last = fullPath.last();
 	if (last->connectorItem == NULL) {
 		last->connectorItem = splitTrace(last->wire, allPoints.last(), board);
 		Wire * split = qobject_cast<Wire *>(last->connectorItem->attachedTo());
