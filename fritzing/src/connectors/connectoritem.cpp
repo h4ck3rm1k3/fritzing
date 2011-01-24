@@ -359,7 +359,7 @@ void ConnectorItem::setColorAux(const QColor &color, bool paint) {
 void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 	// not clear when this code actually gets invoked
-	DebugDialog::debug("in connectorItem mouseReleaseEvent");
+	//DebugDialog::debug("in connectorItem mouseReleaseEvent");
 	clearEqualPotentialDisplay();
 
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMouseReleaseConnectorEvent(this, event)) {
@@ -658,7 +658,7 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 
 void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & elementName)
 {
-	DebugDialog::debug(QString("write connector %1").arg(this->attachedToID()));
+	//DebugDialog::debug(QString("write connector %1").arg(this->attachedToID()));
 	writer.writeStartElement(elementName);
 	writer.writeAttribute("connectorId", connectorSharedID());
 	writer.writeAttribute("modelIndex", QString::number(connector()->modelIndex()));

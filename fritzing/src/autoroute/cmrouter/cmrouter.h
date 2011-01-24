@@ -98,6 +98,7 @@ struct CompletePath {
 	int sourceCost;
 	PathUnit * source;
 	PathUnit * dest;
+	bool goodEnough;
 };
 
 struct TilePair

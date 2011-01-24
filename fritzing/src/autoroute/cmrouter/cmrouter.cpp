@@ -453,6 +453,18 @@ int findSourceAndDestination(Tile * tile, UserData data) {
 	Wire * wire = dynamic_cast<Wire *>(TiGetBody(tile));
 	if (wire == NULL) return 0;
 
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+	int minDim = qMin(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
+	if (minDim < TileStandardWireWidth) {
+		return 0;
+	}
+
+	int maxDim = qMax(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
+	if (maxDim < TileStandardWireWidth * 3) {
+		return 0;
+	}
+
 	if (sourceAndDestinationStruct->edge->fromTraces.contains(wire)) {
 		TiSetType(tile, Tile::SOURCE);
 		sourceAndDestinationStruct->tiles.append(tile);
@@ -2485,15 +2497,21 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 	bool success = false;
 	while (p1.count() > 0 && p2.count() > 0) {
 		PathUnit * pathUnit1 = p1.dequeue();
-		if (propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath)) {
-			success = true;
-			if (goodEnough(completePath)) break;
+		PathUnit * pathUnit2 = p2.dequeue();
+
+		if (success && completePath.sourceCost < pathUnit1->sourceCost + pathUnit2->sourceCost) {
+			// we won't find anything better than the current solution, so bail
+			break;
 		}
 
-		PathUnit * pathUnit2 = p2.dequeue();
+		if (propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath)) {
+			success = true;
+			if (completePath.goodEnough) break;
+		}
+
 		if (propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath)) {
 			success = true;
-			if (goodEnough(completePath)) break;
+			if (completePath.goodEnough) break;
 		}
 
 		ProcessEventBlocker::processEvents();
@@ -2589,10 +2607,12 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 				}
 			}
 			if (completePath.source == NULL || completePath.sourceCost > bestCost) {
+				result = true;
 				completePath.source = nextPathUnit;
 				completePath.dest = bestGoal;
 				completePath.sourceCost = bestCost;
-				result = true;
+				completePath.goodEnough = goodEnough(completePath);
+				if (completePath.goodEnough) break;
 			}
 		}
 	}
@@ -2889,18 +2909,7 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 	// use non-overlaps to set entry and exit
 	for (int ix = 0; ix < segments.count(); ix++) {
 		Segment * from = segments.at(ix);
-		if (from->sEntry != Segment::NotSet) {
-			if (ix < segments.count() - 1) {
-				Segment * to = segments.at(ix + 1);
-				if (to->sMin <= from->sEntry - TileHalfStandardWireWidth && to->sMax >= from->sEntry + TileHalfStandardWireWidth) {
-					// can enter and exit at the same place in the current segment and put the problem off to the next segment
-					to->setEntry(from->sEntry);
-					from->setExit(from->sEntry);
-					continue;
-				}
-			}
-		}
-		else if (ix > 0) {
+		if (ix > 0 && from->sEntry == Segment::NotSet) {
 			// from->sEntry not set
 			Segment * prev = segments.at(ix - 1);
 			if (prev->sExit > from->sMax - TileHalfStandardWireWidth) {
@@ -2911,6 +2920,18 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 			}
 			else {
 				from->setEntry(prev->sExit);
+			}
+		}
+
+		if (from->sEntry != Segment::NotSet) {
+			if (ix < segments.count() - 1) {
+				Segment * to = segments.at(ix + 1);
+				if (to->sMin <= from->sEntry - TileHalfStandardWireWidth && to->sMax >= from->sEntry + TileHalfStandardWireWidth) {
+					// can enter and exit at the same place in the current segment and put the problem off to the next segment
+					to->setEntry(from->sEntry);
+					from->setExit(from->sEntry);
+					continue;
+				}
 			}
 		}
 
