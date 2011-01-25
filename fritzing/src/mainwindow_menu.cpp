@@ -3897,6 +3897,27 @@ void MainWindow::designRulesCheck()
 	else if (result > 0) {
 		AutoCloseMessageBox::showMessage(this, tr("%1 overlapping parts found").arg(result));
 	}
+
+/*
+	if (m_currentGraphicsView == NULL) return;
+
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+	CMRouter cmRouter(pcbSketchWidget);
+	QList<Plane *> planes;
+	bool result = cmRouter.drc(planes);
+
+	//int result = m_currentGraphicsView->designRulesCheck();
+	if (result) {
+		AutoCloseMessageBox::showMessage(this, tr("No overlapping parts found"));
+	}
+	else {
+		AutoCloseMessageBox::showMessage(this, tr("Overlapping parts found"));
+	}
+
+	cmRouter.drcClean(planes);
+*/
 }
 
 void MainWindow::changeTraceLayer() {

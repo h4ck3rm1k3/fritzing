@@ -191,13 +191,11 @@ static inline qreal dot(const QPointF & p1, const QPointF & p2)
 static inline GridEntry * TiGetGridEntry(Tile * tile) { return dynamic_cast<GridEntry *>(TiGetClient(tile)); }
 
 static const int MaximumProgress = 1000;
-static qreal KeepoutSpace = 0;
 static const qreal TINYSPACEMAX = 10;
 static const int TILEFACTOR = 1000;
 static int TileStandardWireWidth = 0;
 static int TileHalfStandardWireWidth = 0;
 static qreal HalfStandardWireWidth = 0;
-static int TileKeepoutSpace = 0;
 static const qreal CloseEnough = 0.5;
 
 
@@ -429,8 +427,6 @@ GridEntry::GridEntry(QRectF & r, QGraphicsItem * parent) : QGraphicsRectItem(r, 
 
 CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 {
-	KeepoutSpace = KeepoutSpace = 0.015 * FSvgRenderer::printerScale();;			// 15 mils space
-	TileKeepoutSpace = realToTile(KeepoutSpace);
 	TileStandardWireWidth = realToTile(Wire::STANDARD_TRACE_WIDTH);
 	HalfStandardWireWidth = Wire::STANDARD_TRACE_WIDTH / 2;
 	TileHalfStandardWireWidth = realToTile(HalfStandardWireWidth);
@@ -444,6 +440,7 @@ void CMRouter::start()
 {	
 	m_maximumProgressPart = 2;
 	m_currentProgressPart = 0;
+	qreal keepout = 0.015 * FSvgRenderer::printerScale();;			// 15 mils space
 
 	emit setMaximumProgress(MaximumProgress);
 
@@ -501,7 +498,7 @@ void CMRouter::start()
 	QList< QList<int> > orderings;
 	QHash<Wire *, JEdge *> tracesToEdges;
 	for (int run = 0; run < 10; run++) {
-		allDone = runEdges(edges, planes, board, netCounters, routingStatus, run == 0, tracesToEdges);
+		allDone = runEdges(edges, planes, board, netCounters, routingStatus, run == 0, tracesToEdges, keepout);
 		if (m_cancelled) break;
 		if (allDone) break;
 
@@ -536,13 +533,13 @@ void CMRouter::start()
 			delete trace;
 		}
 		tracesToEdges.clear();
-		foreach (Plane * plane, planes) clearTiles(plane);
+		foreach (Plane * plane, planes) clearPlane(plane);
 		planes.clear();
 	}
 
 	if (m_cancelled) {
 		clearEdges(edges);
-		foreach (Plane * plane, planes) clearTiles(plane);
+		foreach (Plane * plane, planes) clearPlane(plane);
 		doCancel(parentCommand);
 		return;
 	}
@@ -555,7 +552,7 @@ void CMRouter::start()
 	addToUndo(parentCommand, edges);
 
 	clearEdges(edges);
-	foreach (Plane * plane, planes) clearTiles(plane);
+	foreach (Plane * plane, planes) clearPlane(plane);
 	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::RedoOnly, parentCommand);
 
 	m_sketchWidget->pushCommand(parentCommand);
@@ -563,10 +560,57 @@ void CMRouter::start()
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
+bool CMRouter::drc(QList<Plane *> & planes) 
+{
+	qreal keepout = 0.05 * FSvgRenderer::printerScale();;			// 10 mils space
+	ViewGeometry vg;
+	vg.setTrace(true);
+	ViewLayer::ViewLayerID copper0 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Bottom);
+	ViewLayer::ViewLayerID copper1 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Top);
+	LayerList viewLayers;
+	viewLayers << copper0 << copper1;
+	ItemBase * board = NULL;
+	if (m_sketchWidget->autorouteNeedsBounds()) {
+		board = m_sketchWidget->findBoard();
+	}
+
+	return drc(board, keepout, planes, viewLayers);
+}
+
+void CMRouter::drcClean(QList<Plane *> & planes) 
+{
+	foreach (Plane * plane, planes) {
+		clearPlane(plane);
+	}
+	planes.clear();
+}
+
+bool CMRouter::drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, LayerList & viewLayers) 
+{
+	QList<Tile *> alreadyTiled;
+	Plane * plane0 = tilePlane(board, viewLayers.at(0), alreadyTiled, keepout);
+	if (plane0) planes.append(plane0);
+	Plane * plane1 = NULL;
+	if (alreadyTiled.count() > 0) {
+		displayBadTiles(alreadyTiled);
+		return false;
+	}
+
+	if (m_bothSidesNow) {
+		plane1 = tilePlane(board, viewLayers.at(1), alreadyTiled, keepout);
+		if (plane1) planes.append(plane1);
+		if (alreadyTiled.count() > 0) {
+			displayBadTiles(alreadyTiled);
+			return false;
+		}
+	}
+
+	return true;
+}
 
 bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBase * board,
 					   QVector<int> & netCounters, RoutingStatus & routingStatus, bool firstTime,
-					   QHash<Wire *, JEdge *> & tracesToEdges)
+					   QHash<Wire *, JEdge *> & tracesToEdges, qreal keepout)
 {	
 	bool allRouted = true;
 
@@ -574,28 +618,18 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 	vg.setTrace(true);
 	ViewLayer::ViewLayerID copper0 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Bottom);
 	ViewLayer::ViewLayerID copper1 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Top);
+	LayerList viewLayers;
+	viewLayers << copper0 << copper1;
 
-	QList<Tile *> alreadyTiled;
-	Plane * plane0 = tilePlane(board, copper0, alreadyTiled);
-	if (plane0) planes.append(plane0);
-	Plane * plane1 = NULL;
-	if (alreadyTiled.count() > 0) {
+	bool result = drc(board, keepout, planes, viewLayers);
+	if (!result) {
 		m_cancelled = true;
-		displayBadTiles(alreadyTiled);
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
 		return false;
 	}
 
-	if (m_bothSidesNow) {
-		plane1 = tilePlane(board, copper1, alreadyTiled);
-		if (plane1) planes.append(plane1);
-		if (alreadyTiled.count() > 0) {
-			m_cancelled = true;
-			displayBadTiles(alreadyTiled);
-			QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
-			return false;
-		}
-	}
+	Plane * plane0 = planes.at(0);
+	Plane * plane1 = (planes.count() > 1 ? planes.at(1) : NULL);
 
 	if (firstTime) {
 		collectEdges(edges, plane0, plane1, copper0, copper1);
@@ -635,7 +669,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 			initPathUnit(edge, tile, (TiGetType(tile) == Tile::SOURCE ? queue1 : queue2), tilePathUnits);
 		}
 
-		edge->routed = propagate(queue1, queue2, edge, tracesToEdges, tilePathUnits, board);
+		edge->routed = propagate(queue1, queue2, edge, tracesToEdges, tilePathUnits, board, keepout);
 
 		if (!edge->routed) {
 			allRouted = false;
@@ -678,7 +712,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 	return allRouted;
 }
 
-Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled) {
+Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled, qreal keepout) {
 	Tile * bufferTile = TiAlloc();
 	TiSetType(bufferTile, Tile::BUFFER);
 	TiSetBody(bufferTile, NULL);
@@ -709,7 +743,7 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 	insertTile(thePlane, m_tileMaxRect, already, NULL, Tile::SPACE, CMRouter::IgnoreAllOverlaps);
 	// if board is not rectangular, add tiles for the outside edges;
 
-	if (!initBoard(board, thePlane, alreadyTiled)) return thePlane;
+	if (!initBoard(board, thePlane, alreadyTiled, keepout)) return thePlane;
 
 	if (m_sketchWidget->autorouteCheckConnectors()) {
 		// deal with "rectangular" elements first
@@ -730,7 +764,7 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 				//						.arg(connectorItem->attachedToInstanceTitle())
 				//				);
 
-				addTile(connectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, CMRouter::ClipAllOverlaps);
+				addTile(connectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, CMRouter::ClipAllOverlaps, keepout);
 				if (alreadyTiled.count() > 0) {
 					return thePlane;
 				}
@@ -752,7 +786,7 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 			if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
 			if (beenThere.contains(wire)) continue;
 
-			tileWire(wire, thePlane, beenThere, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps);
+			tileWire(wire, thePlane, beenThere, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps, keepout);
 			if (alreadyTiled.count() > 0) {
 				return thePlane;
 			}	
@@ -779,7 +813,7 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 										.arg(nonConnectorItem->attachedToID())
 										);
 
-				addTile(nonConnectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, CMRouter::ClipAllOverlaps);
+				addTile(nonConnectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, CMRouter::ClipAllOverlaps, keepout);
 				if (alreadyTiled.count() > 0) {
 					return thePlane;
 				}
@@ -1057,7 +1091,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 }
 
 
-bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alreadyTiled)
+bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alreadyTiled, qreal keepout)
 {
 	if (board == NULL) return true;
 
@@ -1077,7 +1111,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	svg += "</svg>";
 	GroundPlaneGenerator gpg;
 	QList<QRect> rects;
-	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), KeepoutSpace, rects);
+	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), keepout, rects);
 	QPointF boardPos = board->pos();
 	foreach (QRect r, rects) {
 		TileRect tileRect;
@@ -1137,7 +1171,7 @@ bool clipRect(TileRect * r, TileRect * clip, QList<TileRect> & rects) {
 }
 
 
-void CMRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType tileType, CMRouter::OverlapType overlapType) 
+void CMRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType tileType, CMRouter::OverlapType overlapType, qreal keepout) 
 {
 	DebugDialog::debug(QString("coords wire %1, x1:%2 y1:%3, x2:%4 y2:%5")
 		.arg(wire->id())
@@ -1156,10 +1190,10 @@ void CMRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere
 		return;
 	}
 
-	tileWires(wires, thePlane, alreadyTiled, tileType, overlapType);
+	tileWires(wires, thePlane, alreadyTiled, tileType, overlapType, keepout);
 }
 
-void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> & alreadyTiled, Tile::TileType tileType, CMRouter::OverlapType overlapType) 
+void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> & alreadyTiled, Tile::TileType tileType, CMRouter::OverlapType overlapType, qreal keepout) 
 {
 	QMultiHash<Wire *, QRectF> wireRects;
 	foreach (Wire * wire, wires) {
@@ -1196,7 +1230,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> 
 	foreach (Wire * w, wireRects.uniqueKeys()) {
 		foreach (QRectF r, wireRects.values(w)) {
 			TileRect tileRect;
-			realsToTile(tileRect, r.left() - KeepoutSpace, r.top() - KeepoutSpace, r.right() + KeepoutSpace, r.bottom() + KeepoutSpace);
+			realsToTile(tileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
 			Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, w, tileType, overlapType);
 			if (alreadyTiled.count() > 0) {
 				return;
@@ -1206,10 +1240,10 @@ void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> 
 
 }
 
-void CMRouter::sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects) {
+void CMRouter::sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects, qreal keepout) {
 	// tiler gets confused when horizontally contiguous tiles are the same type, so join rects horizontally
 	qreal x, y, xend, yend;
-	qreal slantWidth = qAbs((w->width() + KeepoutSpace + KeepoutSpace) / cos(angle));
+	qreal slantWidth = qAbs((w->width() + keepout + keepout) / cos(angle));
 	if (p1.x() < p2.x()) {
 		x = p1.x();
 		y = p1.y();
@@ -1267,9 +1301,9 @@ void CMRouter::sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2
 	}
 }
 
-void CMRouter::sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects) {
+void CMRouter::sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects, qreal keepout) {
 	qreal x, y, xend, yend;
-	qreal slantWidth = qAbs((w->width() + KeepoutSpace + KeepoutSpace) / sin(angle));
+	qreal slantWidth = qAbs((w->width() + keepout + keepout) / sin(angle));
 	if (p1.y() < p2.y()) {
 		x = p1.x();
 		y = p1.y();
@@ -1353,7 +1387,7 @@ ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, ItemBase * boar
 }
 
 
-void CMRouter::hookUpWires(JEdge * edge, QList<PathUnit *> & fullPath, QList<Wire *> & wires) {
+void CMRouter::hookUpWires(JEdge * edge, QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout) {
 	if (wires.count() <= 0) return;
 		
 	PathUnit * fromPathUnit = fullPath.first();
@@ -1379,7 +1413,7 @@ void CMRouter::hookUpWires(JEdge * edge, QList<PathUnit *> & fullPath, QList<Wir
 	}
 
 	QList<Tile *> alreadyTiled;
-	tileWires(wires, edge->plane, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps);
+	tileWires(wires, edge->plane, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps, keepout);
 	qreal l = std::numeric_limits<int>::max();
 	qreal t = std::numeric_limits<int>::max();
 	qreal r = std::numeric_limits<int>::min();
@@ -2340,17 +2374,12 @@ void CMRouter::updateProgress(int num, int denom)
 	emit setProgressValue((int) MaximumProgress * (m_currentProgressPart + (num / (qreal) denom)) / (qreal) m_maximumProgressPart);
 }
 
-Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * thePlane, QList<Tile *> & alreadyTiled, CMRouter::OverlapType overlapType) 
+Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * thePlane, QList<Tile *> & alreadyTiled, CMRouter::OverlapType overlapType, qreal keepout) 
 {
 	QRectF r = nci->attachedTo()->mapRectToScene(nci->rect());
 	TileRect tileRect;
-	realsToTile(tileRect, r.left(), r.top(), r.right(), r.bottom());
-	TileRect cl;
-	cl.xmini = tileRect.xmini - TileKeepoutSpace;
-	cl.xmaxi = tileRect.xmaxi + TileKeepoutSpace;
-	cl.ymini = tileRect.ymini - TileKeepoutSpace;
-	cl.ymaxi = tileRect.ymaxi + TileKeepoutSpace;
-	Tile * tile = insertTile(thePlane, cl, alreadyTiled, nci, type, overlapType);
+	realsToTile(tileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
+	Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, nci, type, overlapType);
 	//drawGridItem(tile);
 	return tile;
 }
@@ -2363,7 +2392,7 @@ void CMRouter::hideTiles()
 	}
 }
 
-void CMRouter::clearTiles(Plane * thePlane) 
+void CMRouter::clearPlane(Plane * thePlane) 
 {
 	if (thePlane == NULL) return;
 
@@ -2612,7 +2641,8 @@ void CMRouter::initPathUnit(JEdge * edge, Tile * tile, PriorityQueue<PathUnit *>
 	tilePathUnits.insert(tile, pathUnit);
 }
 
-bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board)
+bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, 
+						 QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout)
 {
 	QList<Wire *> wires;
 
@@ -2674,7 +2704,7 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 	TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
 
 	if (success) {
-		tracePath(edge, completePath, tracesToEdges, board);
+		tracePath(edge, completePath, tracesToEdges, board, keepout);
 	}
 	else {
 		// find a jumper
@@ -2896,7 +2926,7 @@ bool CMRouter::goodEnough(CompletePath & completePath) {
 	return completePath.sourceCost < ((qreal) bestCost) * 1.05;
 }
 
-void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *, JEdge *> & tracesToEdges, ItemBase * board)
+void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *, JEdge *> & tracesToEdges, ItemBase * board, qreal keepout)
 {
 	QList<PathUnit *> fullPath;
 	for (PathUnit * spu = completePath.source; spu; spu = spu->parent) {
@@ -2986,7 +3016,6 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 	// TODO: handle wire stickyness
 	// TODO: make sure that splitTrace succeeds if trace was not autoroutable
 
-
 	if (first->connectorItem == NULL) {
 		first->connectorItem = splitTrace(first->wire, allPoints.first(), board);
 		Wire * split = qobject_cast<Wire *>(first->connectorItem->attachedTo());
@@ -2999,7 +3028,7 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 	}
 
 	// hook everyone up
-	hookUpWires(edge, fullPath, wires);
+	hookUpWires(edge, fullPath, wires, keepout);
 	foreach (Wire * wire, wires) {
 		tracesToEdges.insert(wire, edge);
 	}
