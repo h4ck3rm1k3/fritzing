@@ -39,11 +39,26 @@ public:
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	bool canSwitchLayers();
 
+public:
+	enum WireDirection {
+		NoDirection,
+		Vertical,
+		Horizontal,
+		Diagonal
+	};
+
+	void setWireDirection(TraceWire::WireDirection);
+	TraceWire::WireDirection wireDirection();
+
 protected:
 	void setColorFromElement(QDomElement & element);
 
 protected slots:
 	void widthEntry(const QString & text);
+
+protected:
+	WireDirection m_wireDirection;
+
 
 };
 

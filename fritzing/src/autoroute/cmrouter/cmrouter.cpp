@@ -266,22 +266,157 @@ bool tileRectIntersects(TileRect * tile1, TileRect * tile2)
     return true;
 }
 
-QSet<Tile *> ChangedTiles;
+////////////////////////////////////////////////////////////////////
 
-static void CollectChangedTiles(Tile * tile) {
-	ChangedTiles.insert(tile);
-}
+// tile crawling functions
 
-static void RemoveChangedTiles(Tile * tile) {
-	ChangedTiles.remove(tile);
-}
-
-int simpleList(Tile * tile, UserData data) {
-	QList<Tile *> * tiled = (QList<Tile *> *) data;
+int simpleList(Tile * tile, UserData userData) {
+	QList<Tile *> * tiled = (QList<Tile *> *) userData;
 	tiled->append(tile);
 	return 0;
 }
 
+struct SourceAndDestinationStruct {
+	QList<Tile *> tiles;
+	JEdge * edge;
+};
+
+int findSourceAndDestination(Tile * tile, UserData userData) {
+	SourceAndDestinationStruct * sourceAndDestinationStruct = (SourceAndDestinationStruct *) userData;
+
+	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(TiGetBody(tile));
+	if (connectorItem) {
+		if (sourceAndDestinationStruct->edge->fromConnectorItems.contains(connectorItem)) {
+			TiSetType(tile, Tile::SOURCE);
+			sourceAndDestinationStruct->tiles.append(tile);
+		}
+		else if (sourceAndDestinationStruct->edge->toConnectorItems.contains(connectorItem)) {
+			TiSetType(tile, Tile::DESTINATION);
+			sourceAndDestinationStruct->tiles.append(tile);
+		}
+
+		return 0;
+	}
+
+	Wire * wire = dynamic_cast<Wire *>(TiGetBody(tile));
+	if (wire == NULL) return 0;
+
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+	int minDim = qMin(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
+	if (minDim < TileStandardWireWidth) {
+		return 0;
+	}
+
+	int maxDim = qMax(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
+	if (maxDim < TileStandardWireWidth * 3) {
+		return 0;
+	}
+
+	if (sourceAndDestinationStruct->edge->fromTraces.contains(wire)) {
+		TiSetType(tile, Tile::SOURCE);
+		sourceAndDestinationStruct->tiles.append(tile);
+	}
+	else if (sourceAndDestinationStruct->edge->toTraces.contains(wire)) {
+		TiSetType(tile, Tile::DESTINATION);
+		sourceAndDestinationStruct->tiles.append(tile);
+	}
+	
+	return 0;
+}
+
+int clearSourceAndDestination(Tile * tile, UserData) {
+	if (TiGetType(tile) == Tile::SOURCE || TiGetType(tile) == Tile::DESTINATION) {
+		TiSetType(tile, Tile::OBSTACLE);
+	}
+	return 0;
+}
+
+struct CheckAlreadyStruct
+{
+	QList<Tile *> * alreadyTiled;
+	QGraphicsItem * item;
+	Tile::TileType type;
+};
+
+int checkAlready(Tile * tile, UserData userData) {
+	if (TiGetType(tile) == Tile::SPACE) return 0;
+	if (TiGetType(tile) == Tile::BUFFER) return 0;
+
+	CheckAlreadyStruct * checkAlreadyStruct = (CheckAlreadyStruct *) userData;
+	checkAlreadyStruct->alreadyTiled->append(tile);
+	return 0;
+}
+
+struct EmptyThing {
+	QList<int> x_s;
+	QList<int> x2_s;
+	QList<int> y_s;
+	int maxY;
+};
+
+int collectXandY(Tile * tile, UserData userData) {
+	EmptyThing * emptyThing = (EmptyThing *) userData;
+	Tile::TileType type = TiGetType(tile);
+	if (type == Tile::SPACE) {
+		if (!emptyThing->x_s.contains(LEFT(tile))) {
+			emptyThing->x_s.append(LEFT(tile));
+		}
+		if (!emptyThing->x2_s.contains(RIGHT(tile))) {
+			emptyThing->x2_s.append(RIGHT(tile));
+		}
+		if (YMIN(tile) <= emptyThing->maxY && !emptyThing->y_s.contains(YMIN(tile))) {
+			emptyThing->y_s.append(YMIN(tile));
+		}
+	}
+
+	return 0;
+}
+
+int collectOneNotEmpty(Tile * tile, UserData) {
+	Tile::TileType type = TiGetType(tile);
+	if (type == Tile::SPACE) {
+		return 0;
+	}
+
+	return 1;		// not empty; will stop the search
+}
+
+int prepDeleteTile(Tile * tile, UserData userData) {
+	switch(TiGetType(tile)) {
+		case Tile::DUMMYLEFT:
+		case Tile::DUMMYRIGHT:
+		case Tile::DUMMYTOP:
+		case Tile::DUMMYBOTTOM:
+			return 0;
+	}
+
+	//infoTile("prep delete", tile);
+	QSet<Tile *> * tiles = (QSet<Tile *> *) userData;
+	tiles->insert(tile);
+
+	return 0;
+}
+
+int collectThinTiles(Tile * tile, UserData userData) {
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+	if (YMAX(tile) - YMIN(tile) >= TileStandardWireWidth) return 0;
+
+	QList<TileRect> * tiles = (QList<TileRect> *) userData;
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+	tiles->append(tileRect);
+	return 0;
+}
+
+int collectOneThinTile(Tile * tile, UserData userData) {
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+	if (YMAX(tile) - YMIN(tile) >= TileStandardWireWidth) return 0;
+
+	*((Tile **) userData) = tile;
+
+	return 1;		// stop the search
+}
 ////////////////////////////////////////////////////////////////////
 
 GridEntry::GridEntry(QRectF & r, QGraphicsItem * parent) : QGraphicsRectItem(r, parent)
@@ -428,61 +563,6 @@ void CMRouter::start()
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
-struct SourceAndDestinationStruct {
-	QList<Tile *> tiles;
-	JEdge * edge;
-};
-
-int findSourceAndDestination(Tile * tile, UserData data) {
-	SourceAndDestinationStruct * sourceAndDestinationStruct = (SourceAndDestinationStruct *) data;
-
-	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(TiGetBody(tile));
-	if (connectorItem) {
-		if (sourceAndDestinationStruct->edge->fromConnectorItems.contains(connectorItem)) {
-			TiSetType(tile, Tile::SOURCE);
-			sourceAndDestinationStruct->tiles.append(tile);
-		}
-		else if (sourceAndDestinationStruct->edge->toConnectorItems.contains(connectorItem)) {
-			TiSetType(tile, Tile::DESTINATION);
-			sourceAndDestinationStruct->tiles.append(tile);
-		}
-
-		return 0;
-	}
-
-	Wire * wire = dynamic_cast<Wire *>(TiGetBody(tile));
-	if (wire == NULL) return 0;
-
-	TileRect tileRect;
-	TiToRect(tile, &tileRect);
-	int minDim = qMin(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
-	if (minDim < TileStandardWireWidth) {
-		return 0;
-	}
-
-	int maxDim = qMax(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
-	if (maxDim < TileStandardWireWidth * 3) {
-		return 0;
-	}
-
-	if (sourceAndDestinationStruct->edge->fromTraces.contains(wire)) {
-		TiSetType(tile, Tile::SOURCE);
-		sourceAndDestinationStruct->tiles.append(tile);
-	}
-	else if (sourceAndDestinationStruct->edge->toTraces.contains(wire)) {
-		TiSetType(tile, Tile::DESTINATION);
-		sourceAndDestinationStruct->tiles.append(tile);
-	}
-	
-	return 0;
-}
-
-int clearSourceAndDestination(Tile * tile, UserData) {
-	if (TiGetType(tile) == Tile::SOURCE || TiGetType(tile) == Tile::DESTINATION) {
-		TiSetType(tile, Tile::OBSTACLE);
-	}
-	return 0;
-}
 
 bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBase * board,
 					   QVector<int> & netCounters, RoutingStatus & routingStatus, bool firstTime,
@@ -566,9 +646,6 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 		}
 		m_pathUnits.clear();
 
-		TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
-
-
 		updateProgress(++edgesDone, edges.count());
 
 		for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
@@ -601,121 +678,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 	return allRouted;
 }
 
-int alignTile(Tile * tile, UserData data) {
-	if (TiGetType(tile) != Tile::SPACE) return 0;
-
-	QMultiHash<Tile *, TileRect *> * tileRects  = (QMultiHash<Tile *, TileRect *> *) data;
-
-	// handle four cases from ECO router http://www.cis.nctu.edu.tw/~ylli/paper/f69-li.pdf
-
-	// case 1
-	Tile * rt = RT(tile);
-	if (TiGetType(rt) == Tile::SPACE && RIGHT(rt) > RIGHT(tile)) {
-		bool shrink = true;
-		// go along top edge
-		for (Tile * tp = RT(rt); LEFT(tp) > RIGHT(tile); tp = BL(tp)) {
-			if (TiGetType(tp) == Tile::SPACE && LEFT(tp) >= RIGHT(tile) && LEFT(tp) < RIGHT(rt)) {
-				shrink = false;
-				break;
-			}
-		}
-		if (shrink) {
-			// go along bottom edge
-			for (Tile * tp = TR(tile); LEFT(tp) < RIGHT(rt); tp = TR(tp)) {
-				if (TiGetType(tp) == Tile::SPACE && LEFT(tp) >= RIGHT(tile) && LEFT(tp) < RIGHT(rt)) {
-					shrink = false;
-					break;
-				}
-			}
-		}
-
-		if (shrink) {
-			TileRect * tileRect = new TileRect;
-			tileRect->xmini = RIGHT(tile);
-			tileRect->xmaxi = RIGHT(rt);
-			tileRect->ymaxi = YMAX(rt);
-			tileRect->ymini = YMIN(rt);
-			tileRects->insert(rt, tileRect);
-		}
-	}
-
-	// case 2
-	if (TiGetType(rt) != Tile::SPACE && RIGHT(rt) > RIGHT(tile)) {
-		bool shrink = true;
-		for (Tile * tp = LB(tile); LEFT(tp) < RIGHT(tile); tp = TR(tp)) {
-			if (TiGetType(tp) == Tile::SPACE && LEFT(tp) >= LEFT(rt) && LEFT(tp) < RIGHT(tile)) {
-				shrink = false;
-				break;
-			}
-		}
-		if (shrink) {
-			TileRect * tileRect = new TileRect;
-			tileRect->xmini = LEFT(tile);
-			tileRect->xmaxi = LEFT(rt);
-			tileRect->ymaxi = YMAX(tile);
-			tileRect->ymini = YMIN(tile);
-			tileRects->insert(rt, tileRect);
-		}
-	}
-
-	// case 3
-	Tile * lb = LB(tile);
-	if (TiGetType(lb) == Tile::SPACE && LEFT(lb) < LEFT(tile)) {
-		bool shrink = true;
-		// go along top edge
-		for (Tile * tp = TR(tile); RIGHT(tp) > LEFT(lb); tp = BL(tp)) {
-			if (TiGetType(tp) == Tile::SPACE && RIGHT(tp) > LEFT(lb) && RIGHT(tp) < LEFT(tile)) {
-				shrink = false;
-				break;
-			}
-		}
-		if (shrink) {
-			// go along bottom edge
-			for (Tile * tp = LB(lb); RIGHT(tp) < LEFT(tile); tp = TR(tp)) {
-				if (TiGetType(tp) == Tile::SPACE && RIGHT(tp) > LEFT(lb) && RIGHT(tp) < LEFT(tile)) {
-					shrink = false;
-					break;
-				}
-			}
-		}
-
-		if (shrink) {
-			TileRect * tileRect = new TileRect;
-			tileRect->xmini = LEFT(tile);
-			tileRect->xmaxi = RIGHT(lb);
-			tileRect->ymaxi = YMAX(lb);
-			tileRect->ymini = YMIN(lb);
-			tileRects->insert(lb, tileRect);
-		}
-	}
-
-	// case 4
-	if (TiGetType(lb) != Tile::SPACE && LEFT(lb) < LEFT(tile)) {
-		bool shrink = true;
-		for (Tile * tp = RT(tile); RIGHT(tp) > LEFT(tile); tp = BL(tp)) {
-			if (TiGetType(tp) == Tile::SPACE && RIGHT(tp) >= LEFT(tile) && RIGHT(tp) < RIGHT(lb)) {
-				shrink = false;
-				break;
-			}
-		}
-		if (shrink) {
-			TileRect * tileRect = new TileRect;
-			tileRect->xmini = RIGHT(lb);
-			tileRect->xmaxi = RIGHT(tile);
-			tileRect->ymaxi = YMAX(tile);
-			tileRect->ymini = YMIN(tile);
-			tileRects->insert(lb, tileRect);
-		}
-	}
-
-
-	return 0;
-}
-
 Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled) {
-	TiSetChangedFunc(NULL);
-	TiSetFreeFunc(NULL);
-
 	Tile * bufferTile = TiAlloc();
 	TiSetType(bufferTile, Tile::BUFFER);
 	TiSetBody(bufferTile, NULL);
@@ -853,15 +816,246 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 		}
 	}
 
-	//QMultiHash<Tile *, TileRect *> tileRects;
-	//TiSrArea(NULL, thePlane, &m_tileMaxRect, alignTile, &tileRects);
-	//makeAlignTiles(tileRects, thePlane);
-
-	TiSetChangedFunc(CollectChangedTiles);
-	TiSetFreeFunc(RemoveChangedTiles);
+	QList<TileRect> tileRects;
+	TiSrArea(NULL, thePlane, &m_tileMaxRect, collectThinTiles, &tileRects);
+	eliminateThinTiles(tileRects, thePlane);
 
 	return thePlane;
 }
+
+void CMRouter::eliminateThinTiles2(QList<TileRect> & originalTileRects, Plane * thePlane) {
+
+	QList<TileRect> remainingTileRects;
+	foreach (TileRect originalTileRect, originalTileRects) {
+		QList<TileRect> tileRects;
+		tileRects.append(originalTileRect);
+
+		while (tileRects.count() > 0) {
+			TileRect originalTileRect = tileRects.takeFirst();
+			if (originalTileRect.xmaxi - originalTileRect.xmini <= 0) {
+				continue;
+			}
+			
+			Tile * tile = NULL;
+			TiSrArea(NULL, thePlane, &originalTileRect, collectOneThinTile, &tile);
+			if (tile == NULL) continue;
+
+			TileRect tileRect;
+			TiToRect(tile, &tileRect);
+			if (tileRect.xmaxi - tileRect.xmini < TileStandardWireWidth) continue;
+
+			TileRect newRect;
+			Tile * extendTile = NULL;
+			// look along the top
+			for (Tile * tp = RT(tile); LEFT(tp) >= tileRect.xmini; tp = BL(tp)) {
+				if (TiGetType(tp) == Tile::OBSTACLE && RIGHT(tp) <= tileRect.xmaxi) {
+					// obstacle island above (remember y axis is flipped)
+					TiToRect(tp, &newRect);
+					newRect.ymini = tileRect.ymini;
+					extendTile = tp;
+					break;
+				}
+			}
+
+			if (extendTile == NULL) {
+				// look along the bottom
+				for (Tile * tp = LB(tile); RIGHT(tp) <= tileRect.xmaxi; tp = TR(tp)) {
+					if (TiGetType(tp) == Tile::OBSTACLE && LEFT(tp) >= tileRect.xmini) {
+						// obstacle island below (remember y axis is flipped)
+						TiToRect(tp, &newRect);
+						newRect.ymaxi = tileRect.ymaxi;
+						extendTile = tp;
+						break;
+					}
+				}
+			}
+
+			if (extendTile) {
+				QList<Tile *> alreadyTiled;
+				Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, TiGetBody(extendTile), Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+				drawGridItem(newTile);
+				TileRect leftRect = originalTileRect;
+				leftRect.xmaxi = newRect.xmini;
+				if (leftRect.xmaxi -leftRect.xmini > 0) tileRects.append(leftRect);
+				TileRect rightRect = originalTileRect;
+				rightRect.xmini = newRect.xmaxi;
+				if (rightRect.xmaxi - rightRect.xmini > 0) tileRects.append(rightRect);
+			}
+			else {
+				remainingTileRects.append(originalTileRect);
+			}
+		}
+	}
+
+	foreach (TileRect tileRect, remainingTileRects) {
+		Tile * tile = NULL;
+		TiSrArea(NULL, thePlane, &tileRect, collectOneThinTile, &tile);
+		if (tile == NULL) continue;
+
+		infoTile("remaining", tile);
+		drawGridItem(tile);
+	}
+}
+
+void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane) 
+{
+	QList<TileRect> remainingTileRects;
+	while (tileRects.count() > 0) {
+		TileRect originalTileRect = tileRects.takeFirst();
+		if (originalTileRect.xmaxi - originalTileRect.xmini <= 0) {
+			continue;
+		}
+			
+		Tile * tile = NULL;
+		TiSrArea(NULL, thePlane, &originalTileRect, collectOneThinTile, &tile);
+		if (tile == NULL) continue;
+
+		// handle four cases from ECO router http://www.cis.nctu.edu.tw/~ylli/paper/f69-li.pdf
+
+		TileRect tileRect;
+		TiToRect(tile, &tileRect);
+		if (tileRect.xmaxi - tileRect.xmini < TileStandardWireWidth) continue;
+
+		TileRect newRect;
+		bool doInsert = false;
+
+		Tile * rt = RT(tile);
+		TileRect rtRect;
+		TiToRect(rt, &rtRect);
+
+		// case 1
+		if (TiGetType(rt) == Tile::SPACE && 
+			rtRect.xmaxi > tileRect.xmaxi && 
+			rtRect.ymaxi - rtRect.ymini < TileStandardWireWidth &&
+			rtRect.xmaxi - tileRect.xmaxi <= TileStandardWireWidth * 5) 
+		{
+			bool shrink = true;
+			// go along top edge
+			for (Tile * tp = RT(rt); LEFT(tp) > tileRect.xmaxi; tp = BL(tp)) {
+				if (TiGetType(tp) == Tile::SPACE && LEFT(tp) >= tileRect.xmaxi && LEFT(tp) < rtRect.xmaxi) {
+					shrink = false;
+					break;
+				}
+			}
+			if (shrink) {
+				// go along bottom edge
+				for (Tile * tp = TR(tile); LEFT(tp) < rtRect.xmaxi; tp = TR(tp)) {
+					if (TiGetType(tp) == Tile::SPACE && LEFT(tp) >= tileRect.xmaxi && LEFT(tp) < rtRect.xmaxi) {
+						shrink = false;
+						break;
+					}
+				}
+			}
+
+			if (shrink) {
+				doInsert = true;
+				newRect = rtRect;
+				newRect.xmini = tileRect.xmaxi;
+			}
+		}
+
+		if (!doInsert) {
+			// case 2
+			if (TiGetType(rt) == Tile::OBSTACLE && 
+				rtRect.xmaxi > tileRect.xmaxi && 
+				rtRect.xmini > tileRect.xmini &&
+				tileRect.ymaxi - tileRect.ymini < TileStandardWireWidth &&
+				rtRect.xmini - tileRect.xmini <= TileStandardWireWidth * 5) 
+			{
+				bool shrink = true;
+				for (Tile * tp = LB(tile); LEFT(tp) < tileRect.xmaxi; tp = TR(tp)) {
+					if (TiGetType(tp) == Tile::SPACE && LEFT(tp) >= rtRect.xmini && LEFT(tp) < tileRect.xmaxi) {
+						shrink = false;
+						break;
+					}
+				}
+				if (shrink) {
+					doInsert = true;
+					newRect = tileRect;
+					newRect.xmaxi = rtRect.xmini;
+				}
+			}
+		}
+
+		if (!doInsert) {
+			Tile * lb = LB(tile);
+			TileRect lbRect;
+			TiToRect(lb, &lbRect);
+
+			// case 3
+			if (TiGetType(lb) == Tile::SPACE && 
+				lbRect.xmini < tileRect.xmini && 
+				lbRect.ymaxi - lbRect.ymini < TileStandardWireWidth &&
+				lbRect.xmaxi - tileRect.xmini <= TileStandardWireWidth * 5) 
+			{
+				bool shrink = true;
+				// go along top edge
+				for (Tile * tp = TR(tile); RIGHT(tp) > lbRect.xmini; tp = BL(tp)) {
+					if (TiGetType(tp) == Tile::SPACE && RIGHT(tp) > lbRect.xmini && RIGHT(tp) < tileRect.xmini) {
+						shrink = false;
+						break;
+					}
+				}
+				if (shrink) {
+					// go along bottom edge
+					for (Tile * tp = LB(lb); RIGHT(tp) < tileRect.xmini; tp = TR(tp)) {
+						if (TiGetType(tp) == Tile::SPACE && RIGHT(tp) > lbRect.xmini && RIGHT(tp) < tileRect.xmini) {
+							shrink = false;
+							break;
+						}
+					}
+				}
+
+				if (shrink) {
+					doInsert = true;
+					newRect = lbRect;
+					newRect.xmini = tileRect.xmini;
+				}
+			}
+
+			if (!doInsert) {
+				// case 4
+				if (TiGetType(lb) == Tile::OBSTACLE && 
+					lbRect.xmini < tileRect.xmini && 
+					lbRect.xmaxi < tileRect.xmaxi &&
+					tileRect.ymaxi - tileRect.ymini < TileStandardWireWidth &&
+					tileRect.xmaxi - lbRect.xmaxi <= TileStandardWireWidth * 5) 
+				{
+					bool shrink = true;
+					for (Tile * tp = RT(tile); RIGHT(tp) > tileRect.xmini; tp = BL(tp)) {
+						if (TiGetType(tp) == Tile::SPACE && RIGHT(tp) >= tileRect.xmini && RIGHT(tp) < lbRect.xmaxi) {
+							shrink = false;
+							break;
+						}
+					}
+					if (shrink) {
+						doInsert = true;
+						newRect = tileRect;
+						newRect.xmini = lbRect.xmaxi;
+					}
+				}
+			}
+		}
+
+		if (doInsert) {
+			QList<Tile *> alreadyTiled;
+			Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+			drawGridItem(newTile);
+			TileRect leftRect = originalTileRect;
+			leftRect.xmaxi = newRect.xmini;
+			if (leftRect.xmaxi - leftRect.xmini > 0) tileRects.append(leftRect);
+			TileRect rightRect = originalTileRect;
+			rightRect.xmini = newRect.xmaxi;
+			if (rightRect.xmaxi - rightRect.xmini > 0) tileRects.append(leftRect);
+		}
+		else {
+			remainingTileRects.append(originalTileRect);
+		}
+	}
+
+	eliminateThinTiles2(remainingTileRects, thePlane);
+}
+
 
 bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alreadyTiled)
 {
@@ -978,12 +1172,14 @@ void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> 
 			qreal x = qMin(p1.x(), p2.x()) - (wire->width() / 2);
 			qreal y = qMin(p1.y(), p2.y());			
 			wireRects.insert(wire, QRectF(x, y, wire->width() + dx, dy));
+			qobject_cast<TraceWire *>(wire)->setWireDirection(TraceWire::Vertical);
 		}
 		else if (dy < CloseEnough) {
 			// horizontal line
 			qreal y =  qMin(p1.y(), p2.y()) - (wire->width() / 2);
 			qreal x = qMin(p1.x(), p2.x());
 			wireRects.insert(wire, QRectF(x, y, qMax(p1.x(), p2.x()) - x, wire->width() + dy));
+			qobject_cast<TraceWire *>(wire)->setWireDirection(TraceWire::Horizontal);
 		}
 		else {
 			qreal angle = atan2(p2.y() - p1.y(), p2.x() - p1.x());
@@ -993,6 +1189,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> 
 			else {
 				//sliceWireVertically(w, angle, p1, p2, rects);
 			}
+			qobject_cast<TraceWire *>(wire)->setWireDirection(TraceWire::Diagonal);
 		}
 	}
 
@@ -1000,7 +1197,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> 
 		foreach (QRectF r, wireRects.values(w)) {
 			TileRect tileRect;
 			realsToTile(tileRect, r.left() - KeepoutSpace, r.top() - KeepoutSpace, r.right() + KeepoutSpace, r.bottom() + KeepoutSpace);
-			insertTile(thePlane, tileRect, alreadyTiled, w, tileType, overlapType);
+			Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, w, tileType, overlapType);
 			if (alreadyTiled.count() > 0) {
 				return;
 			}
@@ -1183,28 +1380,28 @@ void CMRouter::hookUpWires(JEdge * edge, QList<PathUnit *> & fullPath, QList<Wir
 
 	QList<Tile *> alreadyTiled;
 	tileWires(wires, edge->plane, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps);
+	qreal l = std::numeric_limits<int>::max();
+	qreal t = std::numeric_limits<int>::max();
+	qreal r = std::numeric_limits<int>::min();
+	qreal b = std::numeric_limits<int>::min();
+	foreach (Wire * w, wires) {
+		QPointF p1 = w->pos();
+		QPointF p2 = w->line().p2() + p1;
+		l = qMin(p1.x(), l);
+		r = qMax(p1.x(), r);
+		l = qMin(p2.x(), l);
+		r = qMax(p2.x(), r);
+		t = qMin(p1.y(), t);
+		b = qMax(p1.y(), b);
+		t = qMin(p2.y(), t);
+		b = qMax(p2.y(), b);
+	}
 
-	//QMultiHash<Tile *, TileRect *> tileRects;
-	//foreach (Tile * tile, ChangedTiles) {
-		//alignTile(tile, &tileRects);
-	//}
-	//makeAlignTiles(tileRects, edge->plane);
-}
-
-struct CheckAlreadyStruct
-{
-	QList<Tile *> * alreadyTiled;
-	QGraphicsItem * item;
-	Tile::TileType type;
-};
-
-int checkAlready(Tile * tile, UserData data) {
-	if (TiGetType(tile) == Tile::SPACE) return 0;
-	if (TiGetType(tile) == Tile::BUFFER) return 0;
-
-	CheckAlreadyStruct * checkAlreadyStruct = (CheckAlreadyStruct *) data;
-	checkAlreadyStruct->alreadyTiled->append(tile);
-	return 0;
+	TileRect searchRect;
+	realsToTile(searchRect, l - Wire::STANDARD_TRACE_WIDTH, t - Wire::STANDARD_TRACE_WIDTH, r + Wire::STANDARD_TRACE_WIDTH, b + Wire::STANDARD_TRACE_WIDTH); 
+	QList<TileRect> tileRects;
+	TiSrArea(NULL, edge->plane, &searchRect, collectThinTiles, &tileRects);
+	eliminateThinTiles(tileRects, edge->plane);
 }
 
 struct Range 
@@ -1664,39 +1861,6 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles, QMultiHash<T
 	}
 }
 
-struct EmptyThing {
-	QList<int> x_s;
-	QList<int> x2_s;
-	QList<int> y_s;
-	int maxY;
-};
-
-int collectXandY(Tile * tile, UserData data) {
-	EmptyThing * emptyThing = (EmptyThing *) data;
-	Tile::TileType type = TiGetType(tile);
-	if (type == Tile::SPACE) {
-		if (!emptyThing->x_s.contains(LEFT(tile))) {
-			emptyThing->x_s.append(LEFT(tile));
-		}
-		if (!emptyThing->x2_s.contains(RIGHT(tile))) {
-			emptyThing->x2_s.append(RIGHT(tile));
-		}
-		if (YMIN(tile) <= emptyThing->maxY && !emptyThing->y_s.contains(YMIN(tile))) {
-			emptyThing->y_s.append(YMIN(tile));
-		}
-	}
-
-	return 0;
-}
-
-int allEmpty(Tile * tile, UserData) {
-	Tile::TileType type = TiGetType(tile);
-	if (type == Tile::SPACE) {
-		return 0;
-	}
-
-	return 1;		// not empty; will stop the search
-}
 
 /*
 short CMRouter::checkSpace(JSubedge * subedge, Tile * tile, bool forEmpty) 
@@ -1736,7 +1900,7 @@ short CMRouter::checkSpace(JSubedge * subedge, Tile * tile, bool forEmpty)
 			searchRect.xmaxi = x + tWidthNeeded;
 			searchRect.ymini = y;
 			searchRect.ymaxi = y + tHeightNeeded;
-			if (TiSrArea(tile, subedge->edge->plane, &searchRect, allEmpty, NULL) == 0) {
+			if (TiSrArea(tile, subedge->edge->plane, &searchRect, collectOneNotEmpty, NULL) == 0) {
 				return GridEntry::GOAL;
 			}
 		}
@@ -2191,23 +2355,6 @@ Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * th
 	return tile;
 }
 
-int prepDeleteTile(Tile * tile, UserData data) {
-	switch(TiGetType(tile)) {
-		case Tile::DUMMYLEFT:
-		case Tile::DUMMYRIGHT:
-		case Tile::DUMMYTOP:
-		case Tile::DUMMYBOTTOM:
-			return 0;
-	}
-
-	//infoTile("prep delete", tile);
-	QSet<Tile *> * tiles = (QSet<Tile *> *) data;
-	tiles->insert(tile);
-
-	return 0;
-}
-
-
 void CMRouter::hideTiles() 
 {
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
@@ -2250,6 +2397,10 @@ Tile * CMRouter::insertTiny(Plane * thePlane, TileRect & tinyRect)
 Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType tileType, CMRouter::OverlapType overlapType) 
 {
 	infoTileRect("insert tile", tileRect);
+	if (tileRect.xmaxi - tileRect.xmini <= 0) {
+		DebugDialog::debug("zero width tile");
+		return NULL;
+	}
 
 	bool gotOverlap = false;
 	bool doClip = false;
@@ -2519,6 +2670,8 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 			return false;
 		}
 	}
+
+	TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
 
 	if (success) {
 		tracePath(edge, completePath, tracesToEdges, board);
@@ -2819,8 +2972,6 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 	}
 
 	cleanPoints(allPoints, edge);
-
-
 	
 	QList<Wire *> wires;
 	for (int i = 0; i < allPoints.count() - 1; i++) {
@@ -3031,13 +3182,3 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 	}
 }
 
-void CMRouter::makeAlignTiles(QMultiHash<Tile *, TileRect *> & tileRects, Plane * thePlane)
-{
-	foreach (Tile * tile, tileRects.uniqueKeys()) {
-		foreach (TileRect * tileRect, tileRects.values(tile)) {
-			insertTiny(thePlane, *tileRect);
-			delete tileRect;
-		}
-	}
-	ChangedTiles.clear();
-}

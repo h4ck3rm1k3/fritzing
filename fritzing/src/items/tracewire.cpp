@@ -39,6 +39,7 @@ TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, true)
 {
 	m_canChainMultiple = true;
+	m_wireDirection = TraceWire::NoDirection;
 }
 
 
@@ -133,4 +134,12 @@ bool TraceWire::canSwitchLayers() {
 	}
 
 	return true;
+}
+
+void TraceWire::setWireDirection(TraceWire::WireDirection wireDirection) {
+	m_wireDirection = wireDirection;
+}
+
+TraceWire::WireDirection TraceWire::wireDirection() {
+	return m_wireDirection;
 }

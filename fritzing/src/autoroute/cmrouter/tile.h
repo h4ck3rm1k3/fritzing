@@ -69,7 +69,7 @@ typedef void * UserData;
 
 struct Tile
 {
-	enum TileType{
+	enum TileType {
 		NOTYPE = 0,
 		BUFFER = 1,
 		SPACE,
@@ -82,13 +82,13 @@ struct Tile
 		DUMMYBOTTOM
 	};
 	
-	TileType		 ti_type;		/* another free field */
-    QGraphicsItem *	 ti_body;	/* Body of tile */
     struct Tile	*ti_lb;		/* Left bottom corner stitch */
     struct Tile	*ti_bl;		/* Bottom left corner stitch */
     struct Tile	*ti_tr;		/* Top right corner stitch */
     struct Tile	*ti_rt;		/* Right top corner stitch */
     TilePoint	 ti_ll;		/* Lower left coordinate */
+	TileType		 ti_type;		/* another free field */
+    QGraphicsItem *	 ti_body;	/* Body of tile */
     QGraphicsItem *	 ti_client;	/* This space for hire.  */
 };
 
@@ -139,9 +139,6 @@ inline void SETYMAX(Tile* tileP, int val) { SETYMIN(RT(tileP), val); }
 inline void SETRIGHT(Tile* tileP, int val) { SETLEFT(TR(tileP), val); }
 
 typedef void (*TileFunc)(Tile *);
-
-void TiSetChangedFunc(TileFunc);
-void TiSetFreeFunc(TileFunc);
 
 /* ----------------------- Tile planes -------------------------------- */
 
@@ -232,10 +229,7 @@ Tile* TiInsertTile(Plane *, TileRect * rect, QGraphicsItem * body, Tile::TileTyp
 #define	TiRight(tileP)		(RIGHT(tileP))
 
 inline Tile::TileType TiGetType(Tile * tileP) { return tileP->ti_type; }
-inline void TiSetType(Tile *tileP, Tile::TileType t) { 
-	//qDebug() << "type" << (long) tileP  << t;
-	tileP->ti_type = t; 
-}
+inline void TiSetType(Tile *tileP, Tile::TileType t) { tileP->ti_type = t; }
 
 inline QGraphicsItem * TiGetBody(Tile * tileP) { return tileP->ti_body; }
 /* See diagnostic subroutine version in tile.c */

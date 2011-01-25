@@ -43,16 +43,6 @@ TiSetBody(tp, b)
 }
 */
 
-TileFunc ChangedFunc = NULL;
-TileFunc FreeFunc = NULL;
-
-void TiSetChangedFunc(TileFunc tf) {
-	ChangedFunc = tf;
-}
-void TiSetFreeFunc(TileFunc tf) {
-	FreeFunc = tf;
-}
-
 
 /*
  * Rectangle that defines the maximum extent of any plane.
@@ -284,11 +274,6 @@ TiSplitX(Tile *tile, int x)
 	tp = TR(tp);
     }
 
-	if (ChangedFunc) {
-		ChangedFunc(tile);
-		ChangedFunc(newtile);
-	}
-
     return (newtile);
 }
 
@@ -360,11 +345,6 @@ TiSplitY(Tile *tile, int y)
 	tp = RT(tp);
     }
 
-	if (ChangedFunc) {
-		ChangedFunc(newtile);
-		ChangedFunc(tile);
-	}
-
     return (newtile);
 }
 
@@ -427,11 +407,6 @@ TiSplitX_Left(Tile *tile, int x)
 	SETRT(tp, newtile);
     SETLB(tile, tp);
 
-	if (ChangedFunc) {
-		ChangedFunc(newtile);
-		ChangedFunc(tile);
-	}
-
     return (newtile);
 }
 
@@ -493,11 +468,6 @@ TiSplitY_Bottom(Tile *tile, int y)
     for (tp = BL(tile); YMAX(tp) <= y; tp = RT(tp))
 	SETTR(tp, newtile);
     SETBL(tile, tp);
-
-	if (ChangedFunc) {
-		ChangedFunc(newtile);
-		ChangedFunc(tile);
-	}
 
     return (newtile);
 }
@@ -708,10 +678,6 @@ TiAlloc()
 	SETRT(newtile, 0); 
 	SETTR(newtile, 0);
 
-	if (ChangedFunc) {
-		ChangedFunc(newtile);
-	}
-
     return (newtile);
 }
 
@@ -731,9 +697,6 @@ TiAlloc()
 void
 TiFree(Tile *tp)
 {
-	if (FreeFunc) {
-		FreeFunc(tp);
-	}
     delete tp;
 }
 

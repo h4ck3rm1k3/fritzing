@@ -202,6 +202,8 @@ protected:
 	bool insideV(const QPointF & check, const QPointF & vertex);
 	void makeAlignTiles(QMultiHash<Tile *, TileRect *> &, Plane * thePlane);
 	bool overlapsOnly(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
+	void eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane);
+	void eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
