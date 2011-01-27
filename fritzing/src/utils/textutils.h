@@ -50,6 +50,8 @@ public:
 	static QString replaceTextElement(const QString & svg, const QString & label);
     static bool squashElement(QDomDocument &, const QString & elementName, const QString & attName, const QRegExp & matchContent);
     static QString mergeSvg(const QString & svg1, const QString & svg2, const QString & id);
+	static QString mergeSvgFinish(QDomDocument & doc);
+	static bool mergeSvg(QDomDocument & doc1, const QString & svg, const QString & id);
 	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
 	static bool isIllustratorFile(const QString &fileContent);

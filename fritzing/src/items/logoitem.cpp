@@ -447,10 +447,11 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 			return;
 		}
 
-		svg = newSvgs[0];
-		for (int i = 1; i < newSvgs.length(); i++) {
-			svg = TextUtils::mergeSvg(svg, newSvgs[i], "silkscreen");
+		QDomDocument doc;
+		foreach (QString newSvg, newSvgs) {
+			TextUtils::mergeSvg(doc, newSvg, "silkscreen");
 		}
+		svg = TextUtils::mergeSvgFinish(doc);
 	}
 
 	if (m_renderer == NULL) {

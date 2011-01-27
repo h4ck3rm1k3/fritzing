@@ -176,18 +176,23 @@ QString TextUtils::replaceTextElement(const QString & svg, const QString & label
 	return svg;
 }
 
-QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QString & id) {
+bool TextUtils::mergeSvg(QDomDocument & doc1, const QString & svg, const QString & id) 
+{
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
-	QDomDocument doc1;
-	if (!doc1.setContent(svg1, &errorStr, &errorLine, &errorColumn)) return ___emptyString___;
+	if (doc1.isNull()) {
+		return doc1.setContent(svg, &errorStr, &errorLine, &errorColumn);
+	}
 
 	QDomDocument doc2;
-	if (!doc2.setContent(svg2, &errorStr, &errorLine, &errorColumn)) return ___emptyString___;
+	if (!doc2.setContent(svg, &errorStr, &errorLine, &errorColumn)) return false;
 
 	QDomElement root1 = doc1.documentElement();
-	if (root1.tagName() != "svg") return ___emptyString___;
+	if (root1.tagName() != "svg") return false;
+
+	QDomElement root2 = doc2.documentElement();
+	if (root2.tagName() != "svg") return false;
 
 	QDomElement id1;
 	if (!id.isEmpty()) {
@@ -195,15 +200,11 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QS
 	}
 	if (id1.isNull()) id1 = root1;
 
-	QDomElement root2 = doc2.documentElement();
-	if (root2.tagName() != "svg") return ___emptyString___;
-
 	QDomElement id2;
 	if (!id.isEmpty()) {
 		id2 = findElementWithAttribute(root2, "id", id);
 	}
 	if (id2.isNull()) id2 = root2;
-
 
 	QDomNode node = id2.firstChild();
 	while (!node.isNull()) {
@@ -212,7 +213,21 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QS
 		node = nextNode;
 	}
 
-	return removeXMLEntities(doc1.toString());
+	return true;
+}
+
+QString TextUtils::mergeSvgFinish(QDomDocument & doc) {
+	return removeXMLEntities(doc.toString());
+}
+
+QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QString & id) {
+
+	QDomDocument doc1;
+	if (!TextUtils::mergeSvg(doc1, svg1, id)) return ___emptyString___;
+
+	if (!TextUtils::mergeSvg(doc1, svg2, id)) return ___emptyString___;
+
+	return mergeSvgFinish(doc1);
 }
 
 QString TextUtils::toHtmlImage(QPixmap *pixmap, const char* format) {
