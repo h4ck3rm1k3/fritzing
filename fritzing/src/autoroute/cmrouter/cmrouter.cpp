@@ -140,6 +140,7 @@ $Date$
 #include <qmath.h>
 #include <QApplication>
 #include <QMessageBox> 
+#include <QElapsedTimer>
 
 static const int MaximumProgress = 1000;
 static const qreal TINYSPACEMAX = 10;
@@ -149,6 +150,9 @@ static int TileHalfStandardWireWidth = 0;
 static qreal HalfStandardWireWidth = 0;
 static const qreal CloseEnough = 0.5;
 static const int GridEntryAlpha = 128;
+
+static qint64 seedNextTime = 0;
+static qint64 propagateUnitTime = 0;
 
 const int Segment::NotSet = std::numeric_limits<int>::min();
 
@@ -419,12 +423,22 @@ int collectOneThinTile(Tile * tile, UserData userData) {
 
 	return 1;		// stop the search
 }
+
 ////////////////////////////////////////////////////////////////////
 
 GridEntry::GridEntry(QRectF & r, QGraphicsItem * parent) : QGraphicsRectItem(r, parent)
 {
+	m_drawn = false;
 	setAcceptedMouseButtons(Qt::NoButton);
 	setAcceptsHoverEvents(false);
+}
+
+bool GridEntry::drawn() {
+	return m_drawn;
+}
+
+void GridEntry::setDrawn(bool d) {
+	m_drawn = d;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -679,6 +693,12 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 
 		foreach (Tile * tile, sourceAndDestinationStruct.tiles) {
 			initPathUnit(edge, tile, (TiGetType(tile) == Tile::SOURCE ? queue1 : queue2), tilePathUnits);
+		}
+
+
+		foreach (QGraphicsItem * item, m_sketchWidget->items()) {
+			GridEntry * gridEntry = dynamic_cast<GridEntry *>(item);
+			if (gridEntry) gridEntry->setDrawn(false);
 		}
 
 		edge->routed = propagate(queue1, queue2, edge, tracesToEdges, tilePathUnits, board, keepout);
@@ -1894,8 +1914,14 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 		TiSetClient(tile, gridEntry);
 	}
 	else {
-		gridEntry->setRect(r);
+		QRectF br = gridEntry->boundingRect();
+		if (br != r) {
+			gridEntry->setRect(r);
+			gridEntry->setDrawn(false);
+		}
 	}
+
+	if (gridEntry->drawn()) return gridEntry;
 
 	QColor c;
 	switch (TiGetType(tile)) {
@@ -1922,6 +1948,7 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 		m_sketchWidget->scene()->addItem(gridEntry);
 	}
 	gridEntry->show();
+	gridEntry->setDrawn(true);
 	ProcessEventBlocker::processEvents();
 	return gridEntry;
 }
@@ -2631,6 +2658,9 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 	p1.sort();
 	p2.sort();
 
+
+	QElapsedTimer propagateUnitTimer;
+
 	CompletePath completePath;
 	completePath.source = completePath.dest = NULL;
 	bool success = false;
@@ -2643,12 +2673,18 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 			break;
 		}
 
-		if (propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath)) {
+		propagateUnitTimer.start();
+		bool ok = propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath);
+		propagateUnitTime += propagateUnitTimer.elapsed();
+		if (ok) {
 			success = true;
 			if (completePath.goodEnough) break;
 		}
 
-		if (propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath)) {
+		propagateUnitTimer.start();
+		ok = propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath);
+		propagateUnitTime += propagateUnitTimer.elapsed();
+		if (ok) {
 			success = true;
 			if (completePath.goodEnough) break;
 		}
@@ -2679,7 +2715,10 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 {
 	bool result = false;
 	QList<Tile *> tiles;
+	QElapsedTimer seedNextTimer;
+	seedNextTimer.start();
 	seedNext(pathUnit, tiles, tilePathUnits);
+	seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
 		int destCost = std::numeric_limits<int>::max();
 		TileRect minCostRect = calcMinCostRect(pathUnit, tile);

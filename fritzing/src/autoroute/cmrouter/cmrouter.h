@@ -133,6 +133,11 @@ public:
 
 public:
 	GridEntry(QRectF &, QGraphicsItem * parent); 
+	bool drawn();
+	void setDrawn(bool);
+
+protected:
+	bool m_drawn;
 };
 
 class CMRouter : public Autorouter
