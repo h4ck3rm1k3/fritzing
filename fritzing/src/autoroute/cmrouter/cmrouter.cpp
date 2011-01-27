@@ -37,7 +37,6 @@ $Date$
 
 // TODO:
 //
-//	add silkscreen overlap to DRC check (check for overlaps, but don't insert tiles)
 //  run separate beginning overlap check with half keepout width
 //
 //	schematic view: blocks parts, not traces
@@ -100,25 +99,6 @@ $Date$
 //	still seeing a few thin tiles going across the board: 
 //		this is because the thick tiles above and below are wider than the thin tile
 //
-//	rip up and reroute:
-//		keep a hash table from traces to edges
-//		when edges are generated give each an integer ID
-//		when first pass at routing is over and there are unrouted edges
-//		save the traces (how) along with some score (number of open edges)
-//		save the list of IDs in order
-//		foreach ratsnest wire remaining (i.e. edge remaining) 
-//			find all intersections with traces and map to edges
-//			move this edge above that edge in the list of edges
-//			just do one edge or all open edges?  
-//		keep the traces from edges above those that got moved, clear the rest
-//		save the new ordering (list of IDs)
-//		now route again with the new edge order from the point of change
-//		if no open edges we are done
-//			compare edge score with previous and keep the best set of traces
-//		how to stop--keep going until user stops or some repeat condition occurs.
-//			check the reordering of edges and if they match a previous set quit 
-//
-
 
 #include "cmrouter.h"
 #include "../../sketch/pcbsketchwidget.h"
@@ -510,33 +490,60 @@ void CMRouter::start()
 		board = m_sketchWidget->findBoard();
 	}
 
+	//	rip up and reroute:
+	//		keep a hash table from traces to edges
+	//		when edges are generated give each an integer ID
+	//		when first pass at routing is over and there are unrouted edges
+	//		save the traces (how) along with some score (number of open edges)
+	//		save the list of IDs in order
+	//		foreach ratsnest wire remaining (i.e. edge remaining) 
+	//			find all intersections with traces and map to edges
+	//			move this edge above that edge in the list of edges
+	//			just do one edge or all open edges?  
+	//		keep the traces from edges above those that got moved, clear the rest
+	//		save the new ordering (list of IDs)
+	//		now route again with the new edge order from the point of change
+	//		if no open edges we are done
+	//			compare edge score with previous and keep the best set of traces
+	//		how to stop--keep going until user stops or some repeat condition occurs.
+	//			check the reordering of edges and if they match a previous set quit 
+	//
+
 	QList<JEdge *> edges;
 	QList<Plane *> planes;
 	bool allDone = false;
-	QList< QList<int> > orderings;
+	QList< Ordering > orderings;
+	int bestOrdering = 0;
 	QHash<Wire *, JEdge *> tracesToEdges;
 	for (int run = 0; run < 10; run++) {
 		allDone = runEdges(edges, planes, board, netCounters, routingStatus, run == 0, tracesToEdges, keepout);
 		if (m_cancelled) break;
 		if (allDone) break;
 
-		QList<int> ordering;
+		Ordering ordering;
+		ordering.unroutedCount = 0;
 		foreach (JEdge * edge, edges) {
-			ordering.append(edge->id);
+			ordering.edgeIDs.append(edge->id);
+			if (!edge->routed) ordering.unroutedCount++;
 		}
 		orderings.append(ordering);	
+		if (orderings.count() > 1) {
+			if (ordering.unroutedCount < orderings.at(bestOrdering).unroutedCount) {
+				bestOrdering = orderings.count() - 1;
+			}
+		}
 
 		reorderEdges(edges, tracesToEdges);
 		bool gotOne = false;
-		foreach (QList<int> ordering, orderings) {
-			bool allGood = true;
+		foreach (Ordering ordering, orderings) {
+			bool allSame = true;
 			for (int i = 0; i < edges.count(); i++) {
-				if (ordering.at(i) != edges.at(i)->id) {
-					allGood = false;
+				if (ordering.edgeIDs.at(i) != edges.at(i)->id) {
+					allSame = false;
 					break;
 				}
 			}
-			if (allGood) {
+			if (allSame) {
 				gotOne = true;
 				break;
 			}
@@ -560,6 +567,19 @@ void CMRouter::start()
 		foreach (Plane * plane, planes) clearPlane(plane);
 		doCancel(parentCommand);
 		return;
+	}
+
+	if (!allDone) {
+		// TODO: tell user we're going back to the previous
+		QHash<int, JEdge *> edgeSorter;
+		foreach (JEdge * edge, edges) {
+			edgeSorter.insert(edge->id, edge);
+		}
+		QList <JEdge *> edgesAgain;
+		foreach (int id, orderings.at(bestOrdering).edgeIDs) {
+			edgesAgain.append(edgeSorter.value(id));
+		}
+		runEdges(edgesAgain, planes, board, netCounters, routingStatus, false, tracesToEdges, keepout);
 	}
 
 	m_currentProgressPart++;

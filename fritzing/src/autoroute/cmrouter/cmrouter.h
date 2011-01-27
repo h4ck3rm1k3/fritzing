@@ -107,6 +107,12 @@ struct TilePair
 	Tile * tile2;
 };
 
+struct Ordering {
+	QList<int> edgeIDs;
+	int unroutedCount;
+};
+
+
 struct Segment {
 	static const int NotSet;
 
