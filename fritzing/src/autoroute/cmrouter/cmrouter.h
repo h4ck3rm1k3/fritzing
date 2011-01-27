@@ -151,7 +151,8 @@ protected:
 	enum OverlapType {
 		IgnoreAllOverlaps = 0,
 		ClipAllOverlaps,
-		ReportAllOverlaps
+		ReportAllOverlaps,
+		AllowEquipotentialOverlaps
 	};
 
 protected:
@@ -173,18 +174,20 @@ protected:
 	void updateProgress(int num, int denom);
 	GridEntry * drawGridItem(Tile * tile);
 	void seedNext(PathUnit *, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
-	Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID, QList<Tile *> & alreadyTiled, qreal keepout);
-	void tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> & alreadyTiled, Tile::TileType, CMRouter::OverlapType overlapType, qreal keepout);
-	void tileWire(Wire *, Plane *, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType, CMRouter::OverlapType overlapType, qreal keepout);
+	Plane * tilePlane(ItemBase * board, ViewLayer::ViewLayerID, QList<Tile *> & alreadyTiled, qreal keepout, 
+						CMRouter::OverlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin);
+	void tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> & alreadyTiled, Tile::TileType, 
+					CMRouter::OverlapType overlapType, qreal keepout, bool eliminateThin);
+	void tileWire(Wire *, Plane *, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType, 
+					CMRouter::OverlapType overlapType, qreal keepout, bool eliminateThin);
 	void hideTiles();
 	void displayBadTiles(QList<Tile *> & alreadyTiled);
+	void displayBadTileRect(TileRect & tileRect);
 	Tile * addTile(class NonConnectorItem * nci, Tile::TileType type, Plane *, QList<Tile *> & alreadyTiled, CMRouter::OverlapType, qreal keepout);
 	Tile * insertTile(Plane* thePlane, TileRect &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
 	void clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType type);
 	void clearGridEntries();
 	void appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits, PathUnit::Direction, int tWidthNeeded);
-	void sliceWireHorizontally(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects, qreal keepout);
-	void sliceWireVertically(Wire * w, qreal angle, QPointF p1, QPointF p2, QList<QRectF> & rects, qreal keepout);
 	void hookUpWires(JEdge *, QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point, ItemBase * board);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *, VirtualWire *);
@@ -198,7 +201,6 @@ protected:
 	bool isRedundantPath(PathUnit * pathUnit, TileRect & minCostRect, int sourceCost);
 	bool goodEnough(CompletePath & completePath);
 	void tracePath(JEdge *, CompletePath & completePath, QHash<Wire *, JEdge *> & tracesToEdges, ItemBase * board, qreal keepout);
-	Tile * insertTiny(Plane * thePlane, TileRect & tinyRect);
 	void cleanPoints(QList<QPointF> & allPoints, JEdge *); 
 	void traceSegments(QList<Segment *> & segments);
 	void initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QList<Segment *> & hSegments, QList<Segment *> & vSegments);
@@ -207,8 +209,10 @@ protected:
 	bool overlapsOnly(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	void eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane);
 	void eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane);
-	bool drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, LayerList &); 
+	bool drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, LayerList &, 
+			CMRouter::OverlapType, CMRouter::OverlapType wiresOverlap, bool eliminateThin); 
 	void clearPlane(Plane * thePlane);
+	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
@@ -217,6 +221,7 @@ protected:
 protected:
 	QRectF m_maxRect;
 	TileRect m_tileMaxRect;
+	TileRect m_overlappingTileRect;
 	QList<PathUnit *> m_pathUnits;
 };
 

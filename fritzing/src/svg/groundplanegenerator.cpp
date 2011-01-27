@@ -40,10 +40,15 @@ $Date$
 #include <QDate>
 #include <QTextStream>
 
-#define MINYSECTION 4
 #define MILS 10			// operate on a 10 mil scale
 
 QString GroundPlaneGenerator::ConnectorName = "connector0pad";
+
+//  !!!!!!!!!!!!!!!!!!!
+//  !!!!!!!!!!!!!!!!!!!  IMPORTANT NOTE:  QRect::right() and QRect::rottom() are off by one--this is a known Qt problem 
+//  !!!!!!!!!!!!!!!!!!!
+//  !!!!!!!!!!!!!!!!!!!					  one workaround might be to switch to QRectF
+//  !!!!!!!!!!!!!!!!!!!
 
 GroundPlaneGenerator::GroundPlaneGenerator()
 {
@@ -71,19 +76,20 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 
 	QSvgRenderer renderer(boardByteArray);
 	QPainter painter;
-	painter.setRenderHints(0);
 	painter.begin(&image);
+	painter.setRenderHint(QPainter::Antialiasing);
 	renderer.render(&painter);
 	painter.end();
 
+#ifndef QT_NO_DEBUG
 	image.save("getBoardRects.png");
+#endif
 
 	QColor keepaway(255,255,255);
 	int threshhold = 1;
 
 	// now add keepout area to the border
 	QImage image2 = image.copy();
-	painter.setRenderHints(0);
 	painter.begin(&image2);
 	painter.fillRect(0, 0, image2.width(), keepoutSpace, keepaway);
 	painter.fillRect(0, image2.height() - keepoutSpace, image2.width(), keepoutSpace, keepaway);
@@ -104,9 +110,11 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	}
 	painter.end();
 
+#ifndef QT_NO_DEBUG
 	image2.save("getBoardRects2.png");
+#endif
 
-	scanLines(image2, bWidth, bHeight, rects, threshhold);
+	scanLines(image2, bWidth, bHeight, rects, threshhold, 1);
 
 	// combine parallel equal-sized rects
 	int ix = 0;
@@ -138,8 +146,8 @@ bool GroundPlaneGenerator::getBoardRects(const QString & boardSvg, QGraphicsItem
 	return true;
 }
 
-bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
-								 QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName) 
+bool GroundPlaneGenerator::generateGroundPlane(const QString & boardSvg, QSizeF boardImageSize, const QString & svg, QSizeF copperImageSize, 
+												QStringList & exceptions, QGraphicsItem * board, qreal res, const QString & color, const QString & layerName) 
 {
 	QByteArray boardByteArray;
     QString tempColor("#ffffff");
@@ -183,6 +191,7 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	QSvgRenderer renderer(boardByteArray);
 	QPainter painter;
 	painter.begin(&image);
+	painter.setRenderHint(QPainter::Antialiasing);
 	renderer.render(&painter, QRectF(0, 0, res * boardImageSize.width() / FSvgRenderer::printerScale(), res * boardImageSize.height() / FSvgRenderer::printerScale()));
 	painter.end();
 
@@ -197,14 +206,14 @@ bool GroundPlaneGenerator::start(const QString & boardSvg, QSizeF boardImageSize
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
-	scanImage(image, bWidth, bHeight, MILS, res, color, layerName, true);
+	scanImage(image, bWidth, bHeight, MILS, res, color, layerName, true, 4);
 	return true;
 }
 
-void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector)  
+void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight, qreal pixelFactor, qreal res, const QString & colorString, const QString & layerName, bool makeConnector, int minRunSize)  
 {
 	QList<QRect> rects;
-	scanLines(image, bWidth, bHeight, rects, 192);
+	scanLines(image, bWidth, bHeight, rects, 192, minRunSize);
 	QList< QList<int> * > pieces;
 	splitScanLines(rects, pieces);
 	foreach (QList<int> * piece, pieces) {
@@ -255,7 +264,7 @@ void GroundPlaneGenerator::scanImage(QImage & image, qreal bWidth, qreal bHeight
 
 }
 
-void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshhold)
+void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects, int threshhold, int minRunSize)
 {
 	// threshhold should be between 0 and 255 exclusive; smaller will include more of the svg
 	for (int y = 0; y < bHeight; y++) {
@@ -276,12 +285,12 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 
 				// got black: close up this segment;
 				inWhite = false;
-				if (x - whiteStart < MINYSECTION) {
+				if (x - whiteStart < minRunSize) {
 					// not a big enough section
 					continue;
 				}
 
-				rects.append(QRect(whiteStart, y, x - whiteStart + 1, 1));
+				rects.append(QRect(whiteStart, y, x - whiteStart, 1));
 			}
 			else {
 				if (gray <= threshhold) {		// qBlue(current) != 0xff				
@@ -295,8 +304,8 @@ void GroundPlaneGenerator::scanLines(QImage & image, int bWidth, int bHeight, QL
 		}
 		if (inWhite) {
 			// close up the last segment
-			if (bWidth - whiteStart + 1 >= MINYSECTION) {
-				rects.append(QRect(whiteStart, y, bWidth - whiteStart + 1, 1));
+			if (bWidth - whiteStart >= minRunSize) {
+				rects.append(QRect(whiteStart, y, bWidth - whiteStart, 1));
 			}
 		}
 	}

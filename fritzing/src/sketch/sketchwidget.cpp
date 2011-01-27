@@ -6406,11 +6406,6 @@ ViewLayer::ViewLayerSpec SketchWidget::defaultViewLayerSpec() {
 	return (m_boardLayers == 1) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers;
 }
 
-int SketchWidget::designRulesCheck() 
-{
-	return 0;
-}
-
 ViewLayer::ViewLayerSpec SketchWidget::wireViewLayerSpec(ConnectorItem *) {
 	return (m_boardLayers == 1) ? ViewLayer::WireOnBottom_OneLayer : ViewLayer::WireOnBottom_TwoLayers;
 }

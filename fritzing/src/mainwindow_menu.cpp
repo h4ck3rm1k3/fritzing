@@ -3280,7 +3280,7 @@ void MainWindow::groundFill()
 	exceptions << m_pcbGraphicsView->background().name();    // the color of holes in the board
 
 	GroundPlaneGenerator gpg;
-	bool result = gpg.start(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
+	bool result = gpg.generateGroundPlane(boardSvg, boardImageSize, svg, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
 		ViewLayer::Copper0Color, "groundplane");
 	if (result == false) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
@@ -3289,7 +3289,7 @@ void MainWindow::groundFill()
 
 	GroundPlaneGenerator gpg2;
 	if (m_pcbGraphicsView->boardLayers() > 1) {
-		bool result = gpg2.start(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
+		bool result = gpg2.generateGroundPlane(boardSvg, boardImageSize, svg2, copperImageSize, exceptions, board, 1000 / 10.0  /* 1 MIL */,
 			ViewLayer::Copper1Color, "groundplane1");
 		if (result == false) {
 			QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to write copper fill."));
@@ -3890,17 +3890,6 @@ void MainWindow::designRulesCheck()
 {
 	if (m_currentGraphicsView == NULL) return;
 
-	int result = m_currentGraphicsView->designRulesCheck();
-	if (result == 0) {
-		AutoCloseMessageBox::showMessage(this, tr("No overlapping parts found"));
-	}
-	else if (result > 0) {
-		AutoCloseMessageBox::showMessage(this, tr("%1 overlapping parts found").arg(result));
-	}
-
-/*
-	if (m_currentGraphicsView == NULL) return;
-
 	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
 	if (pcbSketchWidget == NULL) return;
 
@@ -3908,16 +3897,14 @@ void MainWindow::designRulesCheck()
 	QList<Plane *> planes;
 	bool result = cmRouter.drc(planes);
 
-	//int result = m_currentGraphicsView->designRulesCheck();
 	if (result) {
-		AutoCloseMessageBox::showMessage(this, tr("No overlapping parts found"));
+		QMessageBox::information(this, tr("Fritzing"), tr("No overlaps found"));
 	}
 	else {
-		AutoCloseMessageBox::showMessage(this, tr("Overlapping parts found"));
+		QMessageBox::warning(this, tr("Fritzing"), tr("Overlaps found"));
 	}
 
 	cmRouter.drcClean(planes);
-*/
 }
 
 void MainWindow::changeTraceLayer() {

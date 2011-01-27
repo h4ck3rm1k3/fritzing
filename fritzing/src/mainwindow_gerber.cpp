@@ -393,7 +393,7 @@ QString MainWindow::clipToBoard(QString svgString, ItemBase * board) {
 		//image.save("output.png");
 
 		GroundPlaneGenerator gpg;
-		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen", false);
+		gpg.scanImage(image, image.width(), image.height(), GraphicsUtils::StandardFritzingDPI / res, GraphicsUtils::StandardFritzingDPI, "#ffffff", "silkscreen", false, 1);
 		foreach (QString gsvg, gpg.newSVGs()) {
 			svgString = TextUtils::mergeSvg(svgString, gsvg, "");
 		}

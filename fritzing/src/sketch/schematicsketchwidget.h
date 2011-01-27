@@ -64,7 +64,6 @@ public:
 						  bool connect, bool doEmit, 
 						  bool updateConnections);
 	double defaultGridSizeInches();
-	int designRulesCheck();
 	const QString & traceColor(ConnectorItem * forColor);
 	const QString & traceColor(ViewLayer::ViewLayerSpec);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID,  ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);

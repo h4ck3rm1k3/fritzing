@@ -72,7 +72,6 @@ public:
 	qreal getRatsnestOpacity(Wire *);
 	virtual qreal getRatsnestOpacity(bool);
 	void updateRoutingStatus(RoutingStatus &, bool manual);
-	int designRulesCheck();
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect);
@@ -137,13 +136,9 @@ protected:
 	double defaultGridSizeInches();
 	bool canAlignToTopLeft(ItemBase *);
 	ViewLayer::ViewLayerID getLabelViewLayerID(ViewLayer::ViewLayerSpec);
-	void setDRCVisibility(QGraphicsItem * item, QList<ConnectorItem *> & equipotentialConnectorItems, QHash<QGraphicsItem *, bool> & visibility);
 	ViewLayer::ViewLayerSpec wireViewLayerSpec(ConnectorItem *);
 	int isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, bool master);
 	void removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<Wire *> & done, QUndoCommand * parentCommand);
-	bool drcLayer(QSet<ItemBase *> & collidingItems, int progressOffest, qreal progressRange, int progressGoal);
-	bool drcLayerItem(QGraphicsItem * checkItem, QSet<ItemBase *> & collidingItems, int progressOffest, qreal progressRange, int progressGoal,
-						int & imageCount, qreal expandBy, qreal & progressSoFar, int maxProgress);
 	bool resizingJumperItemPress(QGraphicsItem * item);
 	bool resizingJumperItemRelease();
 	bool resizingBoardPress(QGraphicsItem * item);
@@ -155,8 +150,6 @@ protected:
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 
 signals:
-	void setMaximumDRCProgress(int);
-	void setDRCProgressValue(int);
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);
 	void updateLayerMenuSignal();
 
@@ -167,8 +160,6 @@ protected:
 	static int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 
 protected slots:
-	void cancelDRC();
-	void stopDRC();
 	void alignJumperItem(class JumperItem *, QPointF &);
 	void wire_wireSplit(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
 
@@ -177,7 +168,6 @@ protected:
 	QString m_jumperColor;
 	qreal m_jumperWidth;
 	CleanType m_cleanType;
-	bool m_cancelDRC;
 	QPointF m_jumperDragOffset;
 	QPointer<class JumperItem> m_resizingJumperItem;
 	QPointer<class ResizableBoard> m_resizingBoard;

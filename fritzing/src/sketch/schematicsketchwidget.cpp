@@ -336,11 +336,6 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getLabelViewLayerID(ViewLayer::Vie
 	return ViewLayer::SchematicLabel;
 }
 
-int SchematicSketchWidget::designRulesCheck() 
-{
-	return 0;
-}
-
 const QString & SchematicSketchWidget::traceColor(ConnectorItem *) {
 	return SchematicTraceColor;
 }
