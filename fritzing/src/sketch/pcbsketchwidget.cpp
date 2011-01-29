@@ -1626,7 +1626,7 @@ void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<
 	w->collectChained(chained, ends);
 	makeWiresChangeConnectionCommands(chained, parentCommand);
 	foreach (Wire * c, chained) {
-		makeDeleteItemCommand(c, BaseCommand::SingleView, parentCommand);
+		makeDeleteItemCommand(c,  /* BaseCommand::SingleView  */ BaseCommand::CrossView, parentCommand);
 		done.append(c);
 	}
 }

@@ -6053,7 +6053,7 @@ void SketchWidget::disconnectAll() {
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 	foreach (ItemBase * item, itemsToDelete.keys()) {
-		itemsToDelete.value(item)->makeDeleteItemCommand(item, BaseCommand::SingleView, parentCommand);
+		itemsToDelete.value(item)->makeDeleteItemCommand(item, BaseCommand::CrossView, parentCommand);
 	}
 	m_undoStack->push(parentCommand);
 }
