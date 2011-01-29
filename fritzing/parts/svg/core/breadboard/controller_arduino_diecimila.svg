@@ -456,7 +456,7 @@
 		<text transform="matrix(1 0 0 1 128.1477 129.771)" fill="#FFFFFF" font-family="OCRA" font-size="5">POWER</text>
 		<text transform="matrix(1 0 0 1 130.9153 119.7271)" fill="#FFFFFF" font-family="OCRA" font-size="5">www.arduino.cc</text>
 		<text transform="matrix(1 0 0 1 165.1477 129.5718)" fill="#FFFFFF" font-family="OCRA" font-size="5">ANALOG IN</text>
-		<text transform="matrix(1 0 0 1 145.6272 136.3491)" fill="#FFFFFF" font-family="OCRA" font-size="5">9V</text>
+		<text transform="matrix(1 0 0 1 145.6272 136.3491)" fill="#FFFFFF" font-family="OCRA" font-size="5">Vin</text>
 		<text transform="matrix(1 0 0 1 161.4807 136.3491)" fill="#FFFFFF" font-family="OCRA" font-size="5">0</text>
 		<text transform="matrix(1 0 0 1 168.678 136.3491)" fill="#FFFFFF" font-family="OCRA" font-size="5">1</text>
 		<text transform="matrix(1 0 0 1 175.8762 136.3491)" fill="#FFFFFF" font-family="OCRA" font-size="5">2</text>
