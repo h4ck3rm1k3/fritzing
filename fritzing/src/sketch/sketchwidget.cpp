@@ -826,7 +826,7 @@ void SketchWidget::deleteAux(QSet<ItemBase *> & deletedItems, QUndoCommand * par
 		SketchWidget * sketchWidget = otherDeletedItems.value(itemBase);
 		Wire * w = qobject_cast<Wire *>(itemBase);
 		BaseCommand::CrossViewType crossView = (w != NULL && w->getTrace()) 
-			? BaseCommand::SingleView
+			? BaseCommand::CrossView  /* BaseCommand::SingleView */
 			: BaseCommand::CrossView;
 		sketchWidget->makeDeleteItemCommand(itemBase, crossView, parentCommand);
 	}
