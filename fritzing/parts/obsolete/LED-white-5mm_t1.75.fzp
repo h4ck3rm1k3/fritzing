@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="3912whiteBBEC34">
- <version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.beta.1407" moduleId="2912whiteBBEC34">
+ <version replacedby="3912whiteBBEC34">4</version>
  <author>Stefan Hermann</author>
  <title>white LED - 5mm</title>
  <label>LED</label>
@@ -11,8 +11,9 @@
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="package">5 mm [THT]</property>
+  <property name="package">T1.75 (5mm) [THT]</property>
   <property name="family">LED</property>
+  <property name="forward voltage">1.8V</property>
   <property name="color">white</property>
  </properties>
  <description>A generic white LED (~1.8V)</description>
@@ -33,7 +34,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/5mm_LED.svg">
+   <layers image="pcb/T1.75_LED.svg">
     <layer layerId="copper0"/>
     <layer layerId="keepout"/>
     <layer layerId="soldermask"/>
