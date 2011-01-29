@@ -41,7 +41,7 @@ $Date$
 Autorouter::Autorouter(PCBSketchWidget * sketchWidget)
 {
 	m_sketchWidget = sketchWidget;
-	m_stopTrace = m_cancelTrace = m_cancelled = false;
+	m_stopTracing = m_cancelTrace = m_cancelled = false;
 }
 
 Autorouter::~Autorouter(void)
@@ -143,6 +143,6 @@ void Autorouter::cancelTrace() {
 	m_cancelTrace = true;
 }
 
-void Autorouter::stopTrace() {
-	m_stopTrace = true;
+void Autorouter::stopTracing() {
+	m_stopTracing = true;
 }

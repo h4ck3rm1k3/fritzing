@@ -207,7 +207,7 @@ void Autorouter1::start()
 	m_viewLayerSpec = ViewLayer::Bottom;
 	dijkstraNets(indexer, netCounters, edges);
 
-	if (m_cancelled || m_stopTrace) {
+	if (m_cancelled || m_stopTracing) {
 		restoreOriginalState(parentCommand);
 		cleanUp();
 		return;
@@ -350,7 +350,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 		bool routedFlag = false;
 		QList<Wire *> wires;
 		foreach (Subedge * subedge, subedges) {
-			if (m_cancelled || m_stopTrace) break;
+			if (m_cancelled || m_stopTracing) break;
 			if (routedFlag) break;
 
 			routedFlag = traceSubedge(subedge, wires, partForBounds, boundingPoly, lineItem);
@@ -363,7 +363,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 		}
 		subedges.clear();
 
-		if (!routedFlag && !m_stopTrace) {
+		if (!routedFlag && !m_stopTracing) {
 			if (!alreadyJumper(jumperItemStructs, edge->from, edge->to)) {
 				if (m_sketchWidget->usesJumperItem()) {
 					JumperItemStruct * jumperItemStruct = new JumperItemStruct();
@@ -402,7 +402,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 			return;
 		}
 
-		if (m_stopTrace) {
+		if (m_stopTracing) {
 			break;
 		}
 	}
@@ -884,7 +884,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 		return false;
 	}
 
-	if (m_cancelTrace || m_stopTrace) {
+	if (m_cancelTrace || m_stopTracing) {
 	}
 	else if (!result) {
 		//DebugDialog::debug("backwards?");
@@ -998,7 +998,7 @@ bool Autorouter1::findSpaceFor(ConnectorItem * & from, JumperItem * jumperItem, 
 
 	for (qreal radius = minRadius; radius <= maxRadius; radius += (minRadius / 2)) {
 		for (int angle = 0; angle < 360; angle += 10) {
-			if (m_cancelled || m_cancelTrace || m_stopTrace) {
+			if (m_cancelled || m_cancelTrace || m_stopTracing) {
 				if (ellipse) delete ellipse;
 				if (lineItem) delete lineItem;
 				return false;
@@ -1087,7 +1087,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	ProcessEventBlocker::processEvents();
 	//DebugDialog::debug(QString("%5 drawtrace from:%1 %2, to:%3 %4")
 		//.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );
-	if (m_cancelled || m_cancelTrace || m_stopTrace) {
+	if (m_cancelled || m_cancelTrace || m_stopTracing) {
 		return false;
 	}
 

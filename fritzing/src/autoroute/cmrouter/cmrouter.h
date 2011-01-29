@@ -82,6 +82,7 @@ struct PathUnit {
 	int destCost;
 	TileRect minCostRect;
 	PriorityQueue<PathUnit *> * priorityQueue;
+	bool isJumperItem;
 
 	PathUnit(PriorityQueue<PathUnit *> * pq) {
 		priorityQueue = pq;
@@ -170,16 +171,14 @@ protected:
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand, QList<JEdge *> &);
-	void collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane1, ViewLayer::ViewLayerID copper0, ViewLayer::ViewLayerID copper1);
-	//void fixupJumperItems(QList<JEdge *> &, ItemBase * board);
+	void collectEdges(QList<JEdge *> & edges);
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
-	//class JumperItem * drawJumperItem(JEdge *, class ItemBase * board);
 	//void removeCorners(QList<QPointF> & allPoints, JEdge *);
 	//bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JEdge *, bool atStartOrEnd); 
 	//Tile::TileType checkCandidate(JEdge * edge, Tile * tile);
 	bool runEdges(QList<JEdge *> &, QList<Plane *> &, class ItemBase * board, QVector<int> & netCounters, 
-					struct RoutingStatus &, bool firstTime, QHash<Wire *, JEdge *> & tracesToEdges, qreal keepout);
+					struct RoutingStatus &, QHash<Wire *, JEdge *> & tracesToEdges, qreal keepout, bool makeJumper);
 	void clearEdges(QList<JEdge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
 	void updateProgress(int num, int denom);
@@ -207,6 +206,8 @@ protected:
 	void initPathUnit(JEdge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
 	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge *, 
 					QHash<Wire *, JEdge *> & tracesToEdges, QMultiHash<Tile *, PathUnit *> &, ItemBase * board, qreal keepout);
+	bool addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge *, 
+						QHash<Wire *, JEdge *> & tracesToEdges, QMultiHash<Tile *, PathUnit *> &, ItemBase * board, qreal keepout);
 	bool propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destPathUnits, QMultiHash<Tile *, PathUnit *> &, CompletePath &);
 	TileRect calcMinCostRect(PathUnit * pathUnit, Tile * next);
 	bool isRedundantPath(PathUnit * pathUnit, TileRect & minCostRect, int sourceCost);
@@ -220,10 +221,13 @@ protected:
 	bool overlapsOnly(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	void eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane);
 	void eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane);
-	bool drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, LayerList &, 
-			CMRouter::OverlapType, CMRouter::OverlapType wiresOverlap, bool eliminateThin); 
+	bool drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, CMRouter::OverlapType, CMRouter::OverlapType wiresOverlap, bool eliminateThin); 
 	void clearPlane(Plane * thePlane);
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
+	PathUnit * findNearestSpace(JEdge *, PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
+	void genPoints(JEdge * edge, QList<PathUnit *> & fullPath, QHash<Wire *, JEdge *> & tracesToEdges, ItemBase * board, qreal keepout);
+	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
+
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
@@ -234,6 +238,7 @@ protected:
 	TileRect m_tileMaxRect;
 	TileRect m_overlappingTileRect;
 	QList<PathUnit *> m_pathUnits;
+	LayerList m_viewLayers;
 };
 
 #endif

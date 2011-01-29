@@ -62,21 +62,21 @@ $Date$
 //	option to turn off propagation feedback
 //	remove debugging output and extra calls to processEvents
 //
+//  wire stickiness
+//
+//	still seeing a few thin tiles going across the board: 
+//		this is because the thick tiles above and below are wider than the thin tile
+//
+//	slide corner: if 
+//
 //
 //	bugs: 
-//		loop: longer route
-//		arduino isp: arduino too close to the edge? fails an early easy route in the backtrace
-//		arduino no ftdi (barebones arduino): chips too close to the edge? 
-//				fails easy routes in the backtrace; 
-//				weird short traces; 
-//				one off-center trace
-//		blink: arduino overlaps?
-//		tinyspace next to border is weird
+//		slowdown (still?)
+//		why does the same routing task give different results
 //		border seems asymmetric
-//		thin lines need to be better joined
+//		still some funny shaped routes (thin tile problem?)
 //
-//  longer route than expected: 
-//		This is because outward propagation stops when the goal is first reached.  
+//  longer route than expected:  
 //		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
 //		For example, in the fóllowing case, route ABC will reach goal before ABDEF:
 //                                   -------
@@ -94,10 +94,6 @@ $Date$
 //      ------------------------------------------
 //		There is a way to deal with this in the following paper: http://eie507.eie.polyu.edu.hk/projects/sp-tiles-00980255.pdf
 //
-//  wire stickiness
-//
-//	still seeing a few thin tiles going across the board: 
-//		this is because the thick tiles above and below are wider than the thin tile
 //
 
 #include "cmrouter.h"
@@ -221,7 +217,7 @@ void tileToQRect(Tile * tile, QRectF & rect) {
 	tileRectToQRect(tileRect, rect);
 }
 
-bool tileRectIntersects(TileRect * tile1, TileRect * tile2)
+bool tileRectsIntersect(TileRect * tile1, TileRect * tile2)
 {
     int l1 = tile1->xmini;
     int r1 = tile1->xmaxi;
@@ -318,44 +314,12 @@ int clearSourceAndDestination(Tile * tile, UserData) {
 	return 0;
 }
 
-struct CheckAlreadyStruct
-{
-	QList<Tile *> * alreadyTiled;
-	QGraphicsItem * item;
-	Tile::TileType type;
-};
-
 int checkAlready(Tile * tile, UserData userData) {
 	if (TiGetType(tile) == Tile::SPACE) return 0;
 	if (TiGetType(tile) == Tile::BUFFER) return 0;
 
-	CheckAlreadyStruct * checkAlreadyStruct = (CheckAlreadyStruct *) userData;
-	checkAlreadyStruct->alreadyTiled->append(tile);
-	return 0;
-}
-
-struct EmptyThing {
-	QList<int> x_s;
-	QList<int> x2_s;
-	QList<int> y_s;
-	int maxY;
-};
-
-int collectXandY(Tile * tile, UserData userData) {
-	EmptyThing * emptyThing = (EmptyThing *) userData;
-	Tile::TileType type = TiGetType(tile);
-	if (type == Tile::SPACE) {
-		if (!emptyThing->x_s.contains(LEFT(tile))) {
-			emptyThing->x_s.append(LEFT(tile));
-		}
-		if (!emptyThing->x2_s.contains(RIGHT(tile))) {
-			emptyThing->x2_s.append(RIGHT(tile));
-		}
-		if (YMIN(tile) <= emptyThing->maxY && !emptyThing->y_s.contains(YMIN(tile))) {
-			emptyThing->y_s.append(YMIN(tile));
-		}
-	}
-
+	QList<Tile *> * tiles = (QList<Tile *> *) userData;
+	tiles->append(tile);
 	return 0;
 }
 
@@ -428,6 +392,13 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	TileStandardWireWidth = realToTile(Wire::STANDARD_TRACE_WIDTH);
 	HalfStandardWireWidth = Wire::STANDARD_TRACE_WIDTH / 2;
 	TileHalfStandardWireWidth = realToTile(HalfStandardWireWidth);
+
+	ViewGeometry vg;
+	vg.setTrace(true);
+	ViewLayer::ViewLayerID copper0 = sketchWidget->getWireViewLayerID(vg, ViewLayer::Bottom);
+	ViewLayer::ViewLayerID copper1 = sketchWidget->getWireViewLayerID(vg, ViewLayer::Top);
+	m_viewLayers << copper0 << copper1;
+
 }
 
 CMRouter::~CMRouter()
@@ -477,7 +448,7 @@ void CMRouter::start()
 		netCounters[i] = (m_allPartConnectorItems[i]->count() - 1) * 2;			// since we use two connectors at a time on a net
 	}
 
-	if (m_cancelled || m_stopTrace) {
+	if (m_cancelled || m_stopTracing) {
 		restoreOriginalState(parentCommand);
 		cleanUp();
 		return;
@@ -515,10 +486,12 @@ void CMRouter::start()
 	QList< Ordering > orderings;
 	int bestOrdering = 0;
 	QHash<Wire *, JEdge *> tracesToEdges;
+	collectEdges(edges);
+	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
+
 	for (int run = 0; run < 10; run++) {
-		allDone = runEdges(edges, planes, board, netCounters, routingStatus, run == 0, tracesToEdges, keepout);
-		if (m_cancelled) break;
-		if (allDone) break;
+		allDone = runEdges(edges, planes, board, netCounters, routingStatus, tracesToEdges, keepout, false);
+		if (m_cancelled || allDone || m_stopTracing) break;
 
 		Ordering ordering;
 		ordering.unroutedCount = 0;
@@ -565,21 +538,32 @@ void CMRouter::start()
 	if (m_cancelled) {
 		clearEdges(edges);
 		foreach (Plane * plane, planes) clearPlane(plane);
+		foreach (Wire * trace, tracesToEdges.keys()) {
+			delete trace;
+		}
 		doCancel(parentCommand);
 		return;
 	}
 
 	if (!allDone) {
-		// TODO: tell user we're going back to the previous
-		QHash<int, JEdge *> edgeSorter;
-		foreach (JEdge * edge, edges) {
-			edgeSorter.insert(edge->id, edge);
+		if (orderings.count() == 0) {
+			// stop where we are
 		}
-		QList <JEdge *> edgesAgain;
-		foreach (int id, orderings.at(bestOrdering).edgeIDs) {
-			edgesAgain.append(edgeSorter.value(id));
+		else {
+			// TODO: tell user we're going back to a previous run and don't allow cancellation
+			QHash<int, JEdge *> edgeSorter;
+			foreach (JEdge * edge, edges) {
+				edgeSorter.insert(edge->id, edge);
+				edge->routed = false;
+			}
+			edges.clear();
+			QList<JEdge *> unrouted;
+			foreach (int id, orderings.at(bestOrdering).edgeIDs) {
+				JEdge * edge = edgeSorter.value(id);
+					edges.append(edge);
+			}
+			runEdges(edges, planes, board, netCounters, routingStatus, tracesToEdges, keepout, true);
 		}
-		runEdges(edgesAgain, planes, board, netCounters, routingStatus, false, tracesToEdges, keepout);
 	}
 
 	m_currentProgressPart++;
@@ -604,18 +588,12 @@ bool CMRouter::drc(QList<Plane *> & planes)
 	//	what about ground plane?
 
 	qreal keepout = 0.015 * FSvgRenderer::printerScale() / 2;			// 15 mils space
-	ViewGeometry vg;
-	vg.setTrace(true);
-	ViewLayer::ViewLayerID copper0 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Bottom);
-	ViewLayer::ViewLayerID copper1 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Top);
-	LayerList viewLayers;
-	viewLayers << copper0 << copper1;
 	ItemBase * board = NULL;
 	if (m_sketchWidget->autorouteNeedsBounds()) {
 		board = m_sketchWidget->findBoard();
 	}
 
-	return drc(board, keepout, planes, viewLayers, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false);
+	return drc(board, keepout, planes, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false);
 }
 
 void CMRouter::drcClean(QList<Plane *> & planes) 
@@ -626,13 +604,11 @@ void CMRouter::drcClean(QList<Plane *> & planes)
 	planes.clear();
 }
 
-bool CMRouter::drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, LayerList & viewLayers, 
-				   CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin) 
+bool CMRouter::drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin) 
 {
 	QList<Tile *> alreadyTiled;
-	Plane * plane0 = tilePlane(board, viewLayers.at(0), alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
+	Plane * plane0 = tilePlane(board, m_viewLayers.at(0), alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
 	if (plane0) planes.append(plane0);
-	Plane * plane1 = NULL;
 	if (alreadyTiled.count() > 0) {
 		displayBadTiles(alreadyTiled);
 		return false;
@@ -642,7 +618,7 @@ bool CMRouter::drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, Lay
 	}
 
 	if (m_bothSidesNow) {
-		plane1 = tilePlane(board, viewLayers.at(1), alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
+		Plane * plane1 = tilePlane(board, m_viewLayers.at(1), alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
 		if (plane1) planes.append(plane1);
 		if (alreadyTiled.count() > 0) {
 			displayBadTiles(alreadyTiled);
@@ -655,46 +631,37 @@ bool CMRouter::drc(ItemBase * board, qreal keepout, QList<Plane *> & planes, Lay
 }
 
 bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBase * board,
-					   QVector<int> & netCounters, RoutingStatus & routingStatus, bool firstTime,
-					   QHash<Wire *, JEdge *> & tracesToEdges, qreal keepout)
+					   QVector<int> & netCounters, RoutingStatus & routingStatus,
+					   QHash<Wire *, JEdge *> & tracesToEdges, qreal keepout, bool makeJumper)
 {	
 	bool allRouted = true;
 
-	ViewGeometry vg;
-	vg.setTrace(true);
-	ViewLayer::ViewLayerID copper0 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Bottom);
-	ViewLayer::ViewLayerID copper1 = m_sketchWidget->getWireViewLayerID(vg, ViewLayer::Top);
-	LayerList viewLayers;
-	viewLayers << copper0 << copper1;
-
-	bool result = drc(board, keepout, planes, viewLayers, CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true);
+	bool result = drc(board, keepout, planes, CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true);
 	if (!result) {
 		m_cancelled = true;
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
 		return false;
 	}
 
-	Plane * plane0 = planes.at(0);
-	Plane * plane1 = (planes.count() > 1 ? planes.at(1) : NULL);
+	foreach (JEdge * edge, edges) {
+		edge->routed = false;
+		edge->fromConnectorItems.clear();
+		edge->toConnectorItems.clear();
+		edge->fromTraces.clear();
+		edge->toTraces.clear();
 
-	if (firstTime) {
-		collectEdges(edges, plane0, plane1, copper0, copper1);
-		qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
-	}
-	else {
-		foreach (JEdge * edge, edges) {
-			edge->plane = (edge->viewLayerID == copper0) ? plane0 : plane1;
-			edge->routed = false;
-			edge->fromConnectorItems.clear();
-			edge->toConnectorItems.clear();
-			edge->fromTraces.clear();
-			edge->toTraces.clear();
+		for (int i = 0; i < m_viewLayers.count(); i++) {
+			if (edge->viewLayerID == m_viewLayers.at(i)) {
+				edge->plane = planes.at(i);
+				break;
+			}
 		}
 	}
 
 	int edgesDone = 0;
 	foreach (JEdge * edge, edges) {	
-		if (edge->linkedEdge && edge->linkedEdge->routed) {
+
+		if (edge->routed || (edge->linkedEdge && edge->linkedEdge->routed)) {
 			// got it one one side; no need to route it on the other
 			continue;
 		}
@@ -715,7 +682,6 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 			initPathUnit(edge, tile, (TiGetType(tile) == Tile::SOURCE ? queue1 : queue2), tilePathUnits);
 		}
 
-
 		foreach (QGraphicsItem * item, m_sketchWidget->items()) {
 			GridEntry * gridEntry = dynamic_cast<GridEntry *>(item);
 			if (gridEntry) gridEntry->setDrawn(false);
@@ -725,6 +691,11 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 
 		if (!edge->routed) {
 			allRouted = false;
+			if (makeJumper) {
+				if (addJumperItem(queue1, queue2, edge, tracesToEdges, tilePathUnits, board, keepout)) {
+					edge->routed = true;
+				}
+			}
 		}
 
 		foreach (PathUnit * pathUnit, m_pathUnits) {
@@ -756,7 +727,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 			break;
 		}
 
-		if (m_stopTrace) {
+		if (m_stopTracing) {
 			break;
 		}
 	}
@@ -1123,7 +1094,6 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 	eliminateThinTiles2(remainingTileRects, thePlane);
 }
 
-
 bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alreadyTiled, qreal keepout)
 {
 	if (board == NULL) return true;
@@ -1157,7 +1127,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 }
 
 bool clipRect(TileRect * r, TileRect * clip, QList<TileRect> & rects) {
-	if (!tileRectIntersects(r, clip)) return false;
+	if (!tileRectsIntersect(r, clip)) return false;
 
 	if (r->ymini < clip->ymini)
 	{
@@ -1202,7 +1172,6 @@ bool clipRect(TileRect * r, TileRect * clip, QList<TileRect> & rects) {
 
 	return true;
 }
-
 
 void CMRouter::tileWire(Wire * wire, Plane * thePlane, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType tileType, 
 						CMRouter::OverlapType overlapType, qreal keepout, bool eliminateThin) 
@@ -1299,33 +1268,6 @@ void CMRouter::tileWires(QList<Wire *> & wires, Plane * thePlane, QList<Tile *> 
 
 }
 
-/*
-void CMRouter::fixupJumperItems(QList<JEdge *> & edges, ItemBase * board) {
-	if (edges.count() <= 0) return;
-
-	int todo = 0;
-	foreach (JEdge * edge, edges) {
-		if (!edge->routed && (edge->linkedEdge && !edge->linkedEdge->routed)) {
-			todo++;
-		}
-	}
-
-	int jumpersDone = 0;
-	foreach (JEdge * edge, edges) {
-		if (edge->routed) continue;
-		if (edge->linkedEdge) {
-			if (edge->linkedEdge->routed) continue;
-			if (edge->linkedEdge->jumperItem) continue;
-		}
-
-		drawJumperItem(edge, board);
-		jumpersDone += ((edge->linkedEdge) ? 2 : 1);
-		updateProgress(jumpersDone, todo);
-	}
-}
-*/
-
-
 ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, ItemBase * board) 
 {
 	// split the trace at point
@@ -1356,7 +1298,6 @@ ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, ItemBase * boar
 
 	return splitWire->connector0();
 }
-
 
 void CMRouter::hookUpWires(JEdge * edge, QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout) {
 	if (wires.count() <= 0) return;
@@ -1866,60 +1807,6 @@ void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles, QMultiHash<T
 	}
 }
 
-
-/*
-short CMRouter::checkSpace(JSubedge * subedge, Tile * tile, bool forEmpty) 
-{
-	short result = TiGetType(tile) == SPACE ? GridEntry::EMPTY : GridEntry::TINY;
-	return result;
-
-	TileRect tileRect;
-	TiToRect(tile, &tileRect);
-
-	QSizeF sizeNeeded = m_sketchWidget->jumperItemSize();
-	int tWidthNeeded = realToTile(sizeNeeded.width() + KeepoutSpace + KeepoutSpace);
-	int tHeightNeeded = realToTile(sizeNeeded.height() + KeepoutSpace + KeepoutSpace);
-	if (tileRect.xmaxi - tileRect.xmini  < tWidthNeeded) {
-		return result;
-	}
-
-	// need to figure out how to minimize the distance between this space and the previous wire;
-	// need to save the set of open spaces found....
-
-	if (tileRect.ymaxi - tileRect.ymini  >= tHeightNeeded) {
-		DebugDialog::debug("empty GOAL");
-		return GridEntry::GOAL;
-	}
-
-	TileRect searchRect = tileRect;
-	searchRect.ymini = qMax(realToTile(m_maxRect.top()), tileRect.ymini - tHeightNeeded + (tileRect.ymaxi - tileRect.ymini));
-	searchRect.ymaxi = qMin(realToTile(m_maxRect.bottom()), tileRect.ymini + tHeightNeeded);
-
-	EmptyThing emptyThing;
-	emptyThing.maxY = tileRect.ymini;
-	TiSrArea(tile, subedge->edge->plane, &searchRect, collectXandY, &emptyThing);
-
-	foreach (int y, emptyThing.y_s) {
-		foreach (int x, emptyThing.x_s) {
-			searchRect.xmini = x;
-			searchRect.xmaxi = x + tWidthNeeded;
-			searchRect.ymini = y;
-			searchRect.ymaxi = y + tHeightNeeded;
-			if (TiSrArea(tile, subedge->edge->plane, &searchRect, collectOneNotEmpty, NULL) == 0) {
-				return GridEntry::GOAL;
-			}
-		}
-	}
-
-
-
-	return result;
-
-
-}
-*/
-
-
 GridEntry * CMRouter::drawGridItem(Tile * tile)
 {
 	if (tile == NULL) return NULL;
@@ -1974,7 +1861,7 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 }
 
 
-void CMRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plane1, ViewLayer::ViewLayerID copper0, ViewLayer::ViewLayerID copper1)
+void CMRouter::collectEdges(QList<JEdge *> & edges)
 {
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
@@ -1982,7 +1869,7 @@ void CMRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plan
 
 		ConnectorItem * from = vw->connector0()->firstConnectedToIsh();
 		ConnectorItem * otherFrom = from->getCrossLayerConnectorItem();
-		if (!m_sketchWidget->sameElectricalLayer2(copper0, from->attachedToViewLayerID())) {
+		if (!m_sketchWidget->sameElectricalLayer2(m_viewLayers.at(0), from->attachedToViewLayerID())) {
 			ConnectorItem * temp = from;
 			from = otherFrom;
 			otherFrom = temp;
@@ -1993,7 +1880,7 @@ void CMRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plan
 
 		ConnectorItem * to = vw->connector1()->firstConnectedToIsh();
 		ConnectorItem * otherTo = to->getCrossLayerConnectorItem();
-		if (!m_sketchWidget->sameElectricalLayer2(copper0, to->attachedToViewLayerID())) {
+		if (!m_sketchWidget->sameElectricalLayer2(m_viewLayers.at(0), to->attachedToViewLayerID())) {
 			ConnectorItem * temp = to;
 			to = otherTo;
 			otherTo = temp;
@@ -2002,11 +1889,11 @@ void CMRouter::collectEdges(QList<JEdge *> & edges, Plane * plane0, Plane * plan
 			continue;
 		}
 
-		JEdge * edge0 = makeEdge(from, to, ViewLayer::Bottom, copper0, plane0, vw);
+		JEdge * edge0 = makeEdge(from, to, ViewLayer::Bottom, m_viewLayers.at(0), NULL, vw);
 		edge0->id = edges.count();
 		edges.append(edge0);
 		if (m_bothSidesNow && otherFrom != NULL && otherTo != NULL) {
-			JEdge * edge1 = makeEdge(otherFrom, otherTo, ViewLayer::Top, copper1, plane1, vw);
+			JEdge * edge1 = makeEdge(otherFrom, otherTo, ViewLayer::Top, m_viewLayers.at(1), NULL, vw);
 			edge1->id = edges.count();
 			edges.append(edge1);
 			edge0->linkedEdge = edge1;
@@ -2110,139 +1997,6 @@ void CMRouter::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndo
 	}
 }
 
-/*
-JumperItem * CMRouter::drawJumperItem(JEdge * edge, ItemBase * board) 
-{
-	// TODO: check across planes...
-
-	QPointF fp = edge->from->sceneAdjustedTerminalPoint(NULL);
-	QPointF tp = edge->to->sceneAdjustedTerminalPoint(NULL);
-
-	QList<JSubedge *> fromSubedges, toSubedges;
-	foreach (ConnectorItem * from, edge->fromConnectorItems) {
-		QPointF p1 = from->sceneAdjustedTerminalPoint(NULL);
-		fromSubedges.append(makeSubedge(edge, p1, from, NULL, tp, true));
-	}
-	foreach (Wire * from, edge->fromTraces) {
-		QPointF p1 = from->connector0()->sceneAdjustedTerminalPoint(NULL);
-		QPointF p2 = from->connector1()->sceneAdjustedTerminalPoint(NULL);
-		fromSubedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, from, tp, true));
-	}
-	// reverse direction
-	foreach (ConnectorItem * to, edge->toConnectorItems) {
-		QPointF p1 = to->sceneAdjustedTerminalPoint(NULL);
-		toSubedges.append(makeSubedge(edge, p1, to, NULL, fp, false));
-	}
-	foreach (Wire * to, edge->toTraces) {
-		QPointF p1 = to->connector0()->sceneAdjustedTerminalPoint(NULL);
-		QPointF p2 = to->connector1()->sceneAdjustedTerminalPoint(NULL);
-		toSubedges.append(makeSubedge(edge, (p1 + p2) / 2, NULL, to, fp, false));
-	}
-
-	DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
-		.arg(edge->from->attachedToTitle())
-		.arg(edge->from->attachedToID())
-		.arg(edge->from->connectorSharedID())
-		.arg(edge->to->attachedToTitle())
-		.arg(edge->to->attachedToID())
-		.arg(edge->to->connectorSharedID())
-		.arg(edge->distance) );
-
-	QList<Wire *> fromWires;
-	QList<Wire *> toWires;
-	JSubedge * fromSubedge = NULL;
-	JSubedge * toSubedge = NULL;
-	Tile * fromTile = NULL;
-	Tile * toTile = NULL;
-
-	foreach (JSubedge * subedge, fromSubedges) {
-		fromTile = drawTrace(subedge, fromWires, true); 
-		if (fromTile) {
-			fromSubedge = subedge;
-			break;
-		}
-	}
-
-	hideTiles();
-
-	// TODO: two jumper items may try to share the same tiles
-	// so should insert the tiles from the first jumper now
-
-	if (fromSubedge != NULL) {
-		foreach (JSubedge * subedge, toSubedges) {
-			toTile = drawTrace(subedge, toWires, true);
-			if (toTile) {
-				toSubedge = subedge;
-				break;
-			}
-		}
-	}
-
-	hideTiles();
-
-	if (fromSubedge != NULL && toSubedge != NULL) {
-		long newID = ItemBase::getNextID();
-		ViewGeometry viewGeometry;
-		ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
-												  edge->from->attachedTo()->viewLayerSpec(), 
-												  BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-		if (itemBase == NULL) {
-			// we're in trouble
-			return NULL;
-		}
-
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(itemBase);
-
-		QPointF fromDestPoint = fromWires.last()->connector1()->sceneAdjustedTerminalPoint(NULL);
-		QPointF toDestPoint = toWires.last()->connector1()->sceneAdjustedTerminalPoint(NULL);
-
-		QSizeF sizeNeeded = m_sketchWidget->jumperItemSize();
-		qreal widthNeeded = sizeNeeded.width() + KeepoutSpace + KeepoutSpace;
-		qreal heightNeeded = sizeNeeded.height() + KeepoutSpace + KeepoutSpace;
-
-		fromDestPoint = findNearestSpace(fromTile, widthNeeded, heightNeeded, edge->plane, fromDestPoint);
-		toDestPoint = findNearestSpace(toTile, widthNeeded, heightNeeded, edge->plane, toDestPoint); 
-		jumperItem->resize(fromDestPoint, toDestPoint);
-
-		if (board) {
-			jumperItem->addSticky(board, true);
-			board->addSticky(jumperItem, true);
-		}
-
-		m_sketchWidget->scene()->addItem(jumperItem);
-		fromSubedge->toConnectorItem = jumperItem->connector0();
-		QList<Tile *> already;
-		addTile(jumperItem->connector0(), CONNECTOR, edge->plane, already);
-		hookUpWires(fromSubedge, fromWires);
-
-		toSubedge->toConnectorItem = jumperItem->connector1();
-		addTile(jumperItem->connector1(), CONNECTOR, edge->plane, already);
-		hookUpWires(toSubedge, toWires);
-		edge->jumperItem = jumperItem;
-	}
-	else {
-		foreach (Wire * wire, fromWires) {
-			delete wire;
-		}
-		foreach (Wire * wire, toWires) {
-			delete wire;
-		}
-	}
-
-	foreach (JSubedge * subedge, fromSubedges) {
-		delete subedge;
-	}
-	fromSubedges.clear();
-
-	foreach (JSubedge * subedge, toSubedges) {
-		delete subedge;
-	}
-	toSubedges.clear();
-
-	return edge->jumperItem;
-}
-*/
-
 void CMRouter::restoreOriginalState(QUndoCommand * parentCommand) {
 	QUndoStack undoStack;
 	QList<JEdge *> edges;
@@ -2329,7 +2083,6 @@ void CMRouter::addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, 
 	}
 }
 
-
 void CMRouter::clearEdges(QList<JEdge *> & edges) {
 	foreach (JEdge * edge, edges) {
 		if (edge->jumperItem) {
@@ -2341,7 +2094,6 @@ void CMRouter::clearEdges(QList<JEdge *> & edges) {
 }
 
 void CMRouter::doCancel(QUndoCommand * parentCommand) {
-	clearTraces(m_sketchWidget, false, NULL);
 	restoreOriginalState(parentCommand);
 	cleanUp();
 }
@@ -2421,11 +2173,7 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 	bool gotOverlap = false;
 	bool doClip = false;
 	if (overlapType != CMRouter::IgnoreAllOverlaps) {
-		CheckAlreadyStruct checkAlreadyStruct;
-		checkAlreadyStruct.alreadyTiled = &alreadyTiled;
-		checkAlreadyStruct.type = tileType;
-		checkAlreadyStruct.item = item;
-		TiSrArea(NULL, thePlane, &tileRect, checkAlready, &checkAlreadyStruct);
+		TiSrArea(NULL, thePlane, &tileRect, checkAlready, &alreadyTiled);
 		if (alreadyTiled.count() > 0) {	
 			switch(overlapType) {
 				case CMRouter::ReportAllOverlaps:
@@ -2646,6 +2394,233 @@ void CMRouter::initPathUnit(JEdge * edge, Tile * tile, PriorityQueue<PathUnit *>
 	tilePathUnits.insert(tile, pathUnit);
 }
 
+PathUnit * CMRouter::findNearestSpace(JEdge * edge, PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace) 
+{
+	PathUnit * nearest = NULL;
+	foreach (PathUnit * pathUnit, tilePathUnits.values()) {
+		if (TiGetType(pathUnit->tile) != Tile::SPACE) continue;
+		if (pathUnit->priorityQueue != &priorityQueue) continue;
+
+		TileRect tileRect;
+		TiToRect(pathUnit->tile, &tileRect);
+		if (tileRect.xmaxi - tileRect.xmini < tWidthNeeded) {
+			// tile not wide enough; bail
+			continue;
+		}
+
+		if (nearest != NULL && pathUnit->sourceCost >= nearest->sourceCost) {
+			// the current solution is closer to the connector; bail
+			continue;
+		}
+
+		if (tileRect.ymaxi - tileRect.ymini >= tHeightNeeded) {
+			// the tile is big enough to hold a via or one end of a jumperItem
+			nearest = pathUnit;
+			TiToRect(pathUnit->tile, &nearestSpace);
+			continue;
+		}
+
+		// look at adjacent space tiles above and below to see if the via or jumperItem connector can fit in the combined space
+		TileRect searchRect = tileRect;
+		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + (tileRect.ymaxi - tileRect.ymini));
+		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymini + tHeightNeeded);
+
+		QList<Tile *> alreadyTiled;
+		TiSrArea(pathUnit->tile, edge->plane, &searchRect, checkAlready, &alreadyTiled);
+		if (alreadyTiled.count() == 0) {
+			// got very lucky, the adjacent area is all space tiles
+			nearestSpace = searchRect;
+			nearest = pathUnit;
+			continue;
+		}
+		
+		// look through each potential empty rectangle for a nearest fit
+		// this search is O(n^^5) but assumes the worst case will be only a few rectangles
+
+		TileRect bestCandidate;
+		int bestDistance = std::numeric_limits<int>::max();
+
+		QList<TileRect *> blockRects;
+		QSet<int> xSet;
+		QSet<int> ySet;
+		xSet.insert(searchRect.xmini);
+		xSet.insert(searchRect.xmaxi);
+		ySet.insert(searchRect.ymini);
+		ySet.insert(searchRect.ymaxi);
+		foreach (Tile * tile, alreadyTiled) {
+			TileRect * t = new TileRect;
+			TiToRect(tile, t);
+			blockRects.append(t);
+			xSet.insert(qMax(t->xmini, searchRect.xmini));
+			xSet.insert(qMin(t->xmaxi, searchRect.xmaxi));
+			ySet.insert(qMax(t->ymini, searchRect.ymini));
+			ySet.insert(qMin(t->ymaxi, searchRect.ymaxi));
+		}
+
+		QList<int> xCoords = xSet.toList();
+		QList<int> yCoords = ySet.toList();
+		qSort(xCoords);		
+		qSort(yCoords);
+
+		int xCount = xCoords.count();
+		int yCount = yCoords.count();
+		for (int ix1 = 0; ix1 < xCount - 1; ix1++) {
+			int xCoord1 = xCoords.at(ix1);
+			if (xCoords.last() - xCoord1 < tWidthNeeded) {
+				// don't bother
+				break;
+			}
+
+			for (int iy1 = 0; iy1 < yCount - 1; iy1++) {
+				int yCoord1 = yCoords.at(iy1);
+				if (yCoords.last() - yCoord1 < tHeightNeeded) {
+					// don't bother
+					break;
+				}
+
+				bool canGoRight = true;
+				for (int ix2 = ix1 + 1; ix2 < xCount && canGoRight; ix2++) {
+					int xCoord2 = xCoords.at(ix2);
+					if (xCoord2 - xCoord1 < tWidthNeeded) continue;
+
+					foreach (TileRect * blockRect, blockRects) {
+						if (yCoord1 < blockRect->ymini) continue;
+						if (yCoord1 >= blockRect->ymaxi) continue;
+						if (blockRect->xmaxi <= xCoord1) continue;
+						if (blockRect->xmini >= xCoord2) continue;
+							
+						canGoRight = false;
+						break;
+					}
+					if (!canGoRight) break;
+
+					bool canGoLower = true;
+					for (int iy2 = iy1 + 1; iy2 < yCount && canGoLower; iy2++) {
+						int yCoord2 = yCoords.at(iy2);
+						if (yCoord2 - yCoord1 < tHeightNeeded) continue;
+
+						TileRect candidate;
+						candidate.xmini = xCoord1;
+						candidate.xmaxi = xCoord2;
+						candidate.ymini = yCoord1;
+						candidate.ymaxi = yCoord2;
+						foreach (TileRect * blockRect, blockRects) {
+							if (!tileRectsIntersect(blockRect, &candidate)) continue;
+							canGoRight = canGoLower = false;
+							break;
+						}
+
+						if (!canGoLower) break;
+
+						int d = manhattan(candidate, pathUnit->minCostRect);
+						if (d < bestDistance) {
+							bestCandidate = candidate;
+							bestDistance = d;
+						}
+					}
+				}
+			}
+		}
+
+		foreach(TileRect * blockRect, blockRects) {
+			delete blockRect;
+		}
+
+		if (bestDistance < std::numeric_limits<int>::max()) {
+			nearest = pathUnit;
+			nearestSpace = bestCandidate;
+		}
+	}
+
+	return nearest;
+}
+
+bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, 
+							QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout)
+{
+	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width() + keepout + keepout, m_sketchWidget->jumperItemSize().height() + keepout + keepout);
+	int tWidthNeeded = realToTile(sizeNeeded.width());
+	int tHeightNeeded = realToTile(sizeNeeded.height());
+
+	TileRect nearestSpace1;
+	PathUnit * nearest1 = findNearestSpace(edge, p1, tilePathUnits, tWidthNeeded, tHeightNeeded, nearestSpace1);
+	if (nearest1 == NULL) return false;
+
+	TileRect nearestSpace2;
+	PathUnit * nearest2 = findNearestSpace(edge, p2, tilePathUnits, tWidthNeeded, tHeightNeeded, nearestSpace2);
+	if (nearest2 == NULL) return false;
+
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
+												  edge->viewLayerSpec, 
+												  BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	if (itemBase == NULL) {
+		return NULL;
+	}
+
+	JumperItem * jumperItem = dynamic_cast<JumperItem *>(itemBase);
+	if (board) {
+		jumperItem->addSticky(board, true);
+		board->addSticky(jumperItem, true);
+	}
+
+	m_sketchWidget->scene()->addItem(jumperItem);
+	QPointF destPoint1 = calcJumperLocation(nearest1, nearestSpace1, tWidthNeeded, tHeightNeeded);
+	QPointF destPoint2 = calcJumperLocation(nearest2, nearestSpace2, tWidthNeeded, tHeightNeeded);
+	jumperItem->resize(destPoint1, destPoint2);
+
+	nearest1->connectorItem = jumperItem->connector0();
+	nearest2->connectorItem = jumperItem->connector1();
+	QList<PathUnit *> fullPath1;
+	for (PathUnit * spu = nearest1; spu; spu = spu->parent) {
+		fullPath1.push_front(spu);
+	}
+	QList<PathUnit *> fullPath2;
+	for (PathUnit * spu = nearest2; spu; spu = spu->parent) {
+		fullPath2.push_front(spu);
+	}
+
+	genPoints(edge, fullPath1, tracesToEdges, board, keepout);
+	genPoints(edge, fullPath2, tracesToEdges, board, keepout);
+
+
+
+	//jumpersDone += ((edge->linkedEdge) ? 2 : 1);
+	//updateProgress(jumpersDone, todo);
+
+	return true;
+}
+
+QPointF CMRouter::calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded) 
+{
+	int cx = (pathUnit->minCostRect.xmaxi + pathUnit->minCostRect.xmini) / 2;
+	int cy = (pathUnit->minCostRect.ymaxi + pathUnit->minCostRect.ymini) / 2;
+	TileRect wantRect;
+	wantRect.xmini = cx - (tWidthNeeded / 2);
+	wantRect.xmaxi = wantRect.xmini + tWidthNeeded;
+	wantRect.ymini = cy - (tHeightNeeded / 2);
+	wantRect.ymaxi = wantRect.ymini + tHeightNeeded;
+	if (wantRect.xmini < nearestSpace.xmini) {
+		wantRect.xmini = nearestSpace.xmini;
+		wantRect.xmaxi = nearestSpace.xmini + tWidthNeeded;
+	}
+	else if (wantRect.xmaxi > nearestSpace.xmaxi) {
+		wantRect.xmaxi = nearestSpace.xmaxi;
+		wantRect.xmini = nearestSpace.xmaxi - tWidthNeeded;
+	}
+	if (wantRect.ymini < nearestSpace.ymini) {
+		wantRect.ymini = nearestSpace.ymini;
+		wantRect.ymaxi = nearestSpace.ymini + tHeightNeeded;
+	}
+	else if (wantRect.ymaxi > nearestSpace.ymaxi) {
+		wantRect.ymaxi = nearestSpace.ymaxi;
+		wantRect.ymini = nearestSpace.ymaxi - tHeightNeeded;
+	}
+
+	return QPointF(tileToReal(wantRect.xmini + wantRect.xmaxi) / 2, tileToReal(wantRect.ymini + wantRect.ymaxi) / 2);
+}
+
 bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, 
 						 QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout)
 {
@@ -2679,7 +2654,7 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 	p2.sort();
 
 
-	QElapsedTimer propagateUnitTimer;
+	//QElapsedTimer propagateUnitTimer;
 
 	CompletePath completePath;
 	completePath.source = completePath.dest = NULL;
@@ -2693,24 +2668,24 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 			break;
 		}
 
-		propagateUnitTimer.start();
+		//propagateUnitTimer.start();
 		bool ok = propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath);
-		propagateUnitTime += propagateUnitTimer.elapsed();
+		//propagateUnitTime += propagateUnitTimer.elapsed();
 		if (ok) {
 			success = true;
 			if (completePath.goodEnough) break;
 		}
 
-		propagateUnitTimer.start();
+		//propagateUnitTimer.start();
 		ok = propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath);
-		propagateUnitTime += propagateUnitTimer.elapsed();
+		//propagateUnitTime += propagateUnitTimer.elapsed();
 		if (ok) {
 			success = true;
 			if (completePath.goodEnough) break;
 		}
 
 		ProcessEventBlocker::processEvents();
-		if (m_cancelTrace || m_stopTrace || m_cancelled) {
+		if (m_cancelTrace || m_stopTracing || m_cancelled) {
 			return false;
 		}
 	}
@@ -2719,9 +2694,6 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 
 	if (success) {
 		tracePath(edge, completePath, tracesToEdges, board, keepout);
-	}
-	else {
-		// find a jumper
 	}
 
 	hideTiles();
@@ -2735,10 +2707,10 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 {
 	bool result = false;
 	QList<Tile *> tiles;
-	QElapsedTimer seedNextTimer;
-	seedNextTimer.start();
+	//QElapsedTimer seedNextTimer;
+	//seedNextTimer.start();
 	seedNext(pathUnit, tiles, tilePathUnits);
-	seedNextTime += seedNextTimer.elapsed();
+	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
 		int destCost = std::numeric_limits<int>::max();
 		TileRect minCostRect = calcMinCostRect(pathUnit, tile);
@@ -2954,6 +2926,11 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 		fullPath.append(dpu);
 	}
 
+	genPoints(edge, fullPath, tracesToEdges, board, keepout);
+}
+
+void CMRouter::genPoints(JEdge * edge, QList<PathUnit *> & fullPath, QHash<Wire *, JEdge *> & tracesToEdges, ItemBase * board, qreal keepout)
+{
 	foreach (PathUnit * pathUnit, fullPath) {
 		infoTile("tracepath", pathUnit->tile);
 	}
@@ -3019,18 +2996,16 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 	}
 
 	cleanPoints(allPoints, edge);
-	
+
 	QList<Wire *> wires;
 	for (int i = 0; i < allPoints.count() - 1; i++) {
 		QPointF p1 = allPoints.at(i);
 		QPointF p2 = allPoints.at(i + 1);
 		Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, edge->viewLayerSpec);
+		ProcessEventBlocker::processEvents();
 		wires.append(trace);
 	}
 
-	ProcessEventBlocker::processEvents();
-
-	// TODO: handle wire stickyness
 	// TODO: make sure that splitTrace succeeds if trace was not autoroutable
 
 	if (first->connectorItem == NULL) {
@@ -3043,11 +3018,21 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 		Wire * split = qobject_cast<Wire *>(last->connectorItem->attachedTo());
 		tracesToEdges.insert(split, edge);
 	}
+	else if (last->connectorItem->attachedToItemType() == ModelPart::Jumper) {
+		QList<Tile *> alreadyTiled;
+		addTile(last->connectorItem, Tile::OBSTACLE, edge->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
+	}
+
+	ProcessEventBlocker::processEvents();
+
+
 
 	// hook everyone up
 	hookUpWires(edge, fullPath, wires, keepout);
 	foreach (Wire * wire, wires) {
 		tracesToEdges.insert(wire, edge);
+		wire->addSticky(board, true);
+		board->addSticky(wire, true);
 	}
 }
 

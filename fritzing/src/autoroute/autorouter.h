@@ -60,7 +60,7 @@ protected:
 public slots:
 	virtual void cancel();
 	virtual void cancelTrace();
-	virtual void stopTrace();
+	virtual void stopTracing();
 
 signals:
 	void setMaximumProgress(int);
@@ -73,7 +73,7 @@ protected:
 	QList< QList<class ConnectorItem *>* > m_allPartConnectorItems;
 	bool m_cancelled;
 	bool m_cancelTrace;
-	bool m_stopTrace;
+	bool m_stopTracing;
 	bool m_bothSidesNow;
 	int m_maximumProgressPart;
 	int m_currentProgressPart;
