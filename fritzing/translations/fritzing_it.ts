@@ -20,23 +20,135 @@
         <translation>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;Fritzing is made by: Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Marcus Paeschke, Omer Yosha, Travis Robertson, Stefan Hermann, Brendan Howell, Mariano Crowe, Johannes Landstorfer, Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
-        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;Fritzing &amp;egrave; stato creato da: Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Marcus Paeschke, Omer Yosha, Travis Robertson, Stefan Hermann, Brendan Howell, Mariano Crowe, Johannes Landstorfer, Jenny Chowdhury, Lionel Michel e Jannis Leidel.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;Special thanks goes out to: Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrell Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Uno speciale ringraziamento va a: Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, Durrell Bishop, David Cuartielles, Fabian Hemmert, Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, Hans-Peter Kadel, Till Savelkoul, Jan Sieber, Yaniv Steiner, Olaf Val, Michaela Vieser e Julia Werner.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;Special thanks goes out as well to all the students and alpha testers who were brave enough to give Fritzing a test spin. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <source>Fritzing is made by: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, to Gianluca Urgese for the Italian translation, to Nuno Pessanha Santos for the Portuguese translation, to Yuelin and Ninjia  for the Chinese (Simplified) translation, to Hiroshi Suzuki for the Japanese translation, to Robert Lee for the Chinese (Traditional) translation, to Vladimir Savinov for the Russian translation,and to Steven Noppe for the Dutch translation.&lt;/p&gt;</source>
+        <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic, </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;Fritzing is made possible with funding from the MWFK Brandenburg, the sponsorship of the Design Department of Bauhaus-University Weimar, IxDS, an anonymous donor, Parallax, Picaxe, and from each purchase of a Fritzing Starter Kit.&lt;/p&gt;</source>
+        <source>Zach Eveland, Dirk van Oosterbosch, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jonathan Cohen, Marcus Paeschke, Omer Yosha, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Travis Robertson, Stefan Hermann, Brendan Howell, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mariano Crowe, Johannes Landstorfer, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jenny Chowdhury, Lionel Michel, Jannis Leidel, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bryant Mairs, Uleshka Asher, and Daniel Tzschentke. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks goes out to: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Durrell Bishop, David Cuartielles, Fabian Hemmert, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gero Herkenrath, Jeff Hoefs, Tom Hulbert, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tom Igoe, Hans-Peter Kadel, Till Savelkoul, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jan Sieber, Yaniv Steiner, Olaf Val, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Michaela Vieser and Julia Werner.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks to Kurt Badelt and Miguel Solis for the Spanish translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Gianluca Urgese for the Italian translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Nuno Pessanha Santos for the Portuguese (European) translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Yuelin and Ninjia  for the Chinese (Simplified) translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Hiroshi Suzuki for the Japanese translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Robert Lee for the Chinese (Traditional) translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Vladimir Savinov for the Russian translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to Steven Noppe for the Dutch translation, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and to Arthur Zanona for the Portuguese (Brazilian) translation. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing is made possible with funding from the </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MWFK Brandenburg, the sponsorship of the Design </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Department of Bauhaus-University Weimar, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IxDS, an anonymous donor, Parallax, Picaxe, Sparkfun, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and from each purchase of a Fritzing Starter Kit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks goes out as well to all the students </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and alpha testers who were brave enough to give </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fritzing a test spin. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -545,6 +657,26 @@ y:%2</source>
     </message>
     <message>
         <source>form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>model part problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>part xml missing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missing xml for view %1 layer %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file %1 not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unable to create renderer for svg</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2027,14 +2159,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No overlapping parts found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 overlapping parts found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please specify a location for the archived sketch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2121,6 +2245,30 @@ Please check all views for potential side-effects.</source>
         <source>silk export failure</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lock Part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prevent a part from being moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select All Locked Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all parts that can&apos;t be moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No overlaps found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overlaps found</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2198,10 +2346,6 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Fritzing only allows one board part per sketch. Either delete the current board, or select it and swap it for a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Design Rules Check Progress...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3251,10 +3395,6 @@ Fritzing continuerà a funzionare, ma non sarà possibile cambiare le proprietà
         <translation>Vista schema</translation>
     </message>
     <message>
-        <source>The file %1 is not a Fritzing file (1).</source>
-        <translation>Il file %1 non è un file di Fritzing (1).</translation>
-    </message>
-    <message>
         <source>%1 %2 %3</source>
         <translation></translation>
     </message>
@@ -3549,10 +3689,6 @@ is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished">Il file %1 non è un file di Fritzing (4). {1 ?} {7)?}</translation>
     </message>
     <message>
-        <source>Design Rule Check (select items that are too close together)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sorry, Fritzing can&apos;t yet handle both pins and pads together (in %1 in %2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3618,6 +3754,14 @@ is already there, we won&apos;t add it again, right?</source>
     </message>
     <message>
         <source>Cannot autoroute: parts or traces are overlapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error reading file %1: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select locked parts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

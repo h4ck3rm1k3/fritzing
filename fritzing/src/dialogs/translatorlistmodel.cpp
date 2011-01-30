@@ -72,6 +72,12 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 
 		m_languages.insert("swedish", tr("Swedish - %1").arg("Svenska"));
 
+		ushort t9[] = { 0x52,  0x6F, 0x6D, 0xE2, 0x6E, 0x0103, 0 };
+		m_languages.insert("romanian", tr("Romanian - %1").arg(QString::fromUtf16(t9)));
+
+		ushort t10[] = { 0x0E44, 0x0E17, 0x0E22, 0 };
+		m_languages.insert("thai", tr("Thai - %1").arg(QString::fromUtf16(t10)));
+
         // More languages written in their own language can be found
         // at http://www.mozilla.com/en-US/firefox/all.html
 

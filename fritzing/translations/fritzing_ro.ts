@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ar_SA">
+<TS version="2.0" language="ro_MD">
 <context>
     <name>AboutBox</name>
     <message>
@@ -695,9 +695,6 @@ Please select one of the Fritzing fonts to replace them:</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -1166,23 +1163,12 @@ Do you want to restart now?</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1860"/>
-        <source>Sorry, Fritzing is unable to save the svg file.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1466"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -1252,6 +1238,11 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="1860"/>
+        <source>Sorry, Fritzing is unable to save the svg file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="1874"/>
         <source>Sorry, Fritzing is unable to load the part template file.</source>
         <translation type="unfinished"></translation>
@@ -1293,14 +1284,14 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_gerber.cpp" line="159"/>
-        <source>%1 file export failure (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow_gerber.cpp" line="149"/>
         <location filename="../src/mainwindow_gerber.cpp" line="173"/>
         <source>%1 file export failure (3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_gerber.cpp" line="159"/>
+        <source>%1 file export failure (2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2513,31 +2504,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2933"/>
-        <source>Update Ratsnest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2934"/>
-        <source>Redraw this net</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2945"/>
-        <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3901"/>
-        <source>No overlaps found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3904"/>
-        <source>Overlaps found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow_menu.cpp" line="2129"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
@@ -2639,6 +2605,16 @@ Quantity	Part
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2933"/>
+        <source>Update Ratsnest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2934"/>
+        <source>Redraw this net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow_menu.cpp" line="2937"/>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
         <translation type="unfinished"></translation>
@@ -2651,6 +2627,11 @@ Quantity	Part
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2944"/>
         <source>Change Trace Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="2945"/>
+        <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2844,9 +2825,6 @@ All your parts are up-to-date.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2870,6 +2848,16 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="3788"/>
         <source>Update %1 part(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3901"/>
+        <source>No overlaps found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="3904"/>
+        <source>Overlaps found</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2902,9 +2890,6 @@ Please check all views for potential side-effects.</source>
         <location filename="../src/model/modelbase.cpp" line="265"/>
         <source>Unable to find the following %n part(s):</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4059,6 +4044,37 @@ Vertical scroll</source>
 <context>
     <name>QObject</name>
     <message>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="638"/>
+        <location filename="../src/fapplication.cpp" line="662"/>
+        <location filename="../src/fritzingwindow.cpp" line="53"/>
+        <location filename="../src/fritzingwindow.cpp" line="144"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3182"/>
+        <location filename="../src/mainwindow_menu.cpp" line="3216"/>
+        <location filename="../src/model/modelbase.cpp" line="63"/>
+        <location filename="../src/model/modelbase.cpp" line="76"/>
+        <location filename="../src/model/modelbase.cpp" line="87"/>
+        <location filename="../src/model/modelbase.cpp" line="94"/>
+        <location filename="../src/model/modelbase.cpp" line="122"/>
+        <location filename="../src/model/modelbase.cpp" line="271"/>
+        <location filename="../src/model/modelbase.cpp" line="309"/>
+        <location filename="../src/model/palettemodel.cpp" line="84"/>
+        <location filename="../src/model/palettemodel.cpp" line="94"/>
+        <location filename="../src/model/palettemodel.cpp" line="318"/>
+        <location filename="../src/model/palettemodel.cpp" line="422"/>
+        <location filename="../src/model/palettemodel.cpp" line="511"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="566"/>
+        <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="254"/>
+        <location filename="../src/program/programtab.cpp" line="578"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="662"/>
+        <source>Fritzing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="638"/>
+        <source>Cannot autoroute: parts or traces are overlapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/dialogs/alignsettingsdialog.cpp" line="41"/>
         <source>Grid Size</source>
         <translation type="unfinished"></translation>
@@ -4096,37 +4112,6 @@ Vertical scroll</source>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="221"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="638"/>
-        <location filename="../src/fapplication.cpp" line="662"/>
-        <location filename="../src/fritzingwindow.cpp" line="53"/>
-        <location filename="../src/fritzingwindow.cpp" line="144"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3182"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3216"/>
-        <location filename="../src/model/modelbase.cpp" line="63"/>
-        <location filename="../src/model/modelbase.cpp" line="76"/>
-        <location filename="../src/model/modelbase.cpp" line="87"/>
-        <location filename="../src/model/modelbase.cpp" line="94"/>
-        <location filename="../src/model/modelbase.cpp" line="122"/>
-        <location filename="../src/model/modelbase.cpp" line="271"/>
-        <location filename="../src/model/modelbase.cpp" line="309"/>
-        <location filename="../src/model/palettemodel.cpp" line="84"/>
-        <location filename="../src/model/palettemodel.cpp" line="94"/>
-        <location filename="../src/model/palettemodel.cpp" line="318"/>
-        <location filename="../src/model/palettemodel.cpp" line="422"/>
-        <location filename="../src/model/palettemodel.cpp" line="511"/>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="566"/>
-        <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="254"/>
-        <location filename="../src/program/programtab.cpp" line="578"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="662"/>
-        <source>Fritzing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="638"/>
-        <source>Cannot autoroute: parts or traces are overlapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5126,18 +5111,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/sketch/sketchwidget.cpp" line="5372"/>
         <source>hide part label(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
