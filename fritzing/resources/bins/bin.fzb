@@ -193,7 +193,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="2244BBEC34" modelIndex="24" path="parts/core/LED-red-5mm.fzp">
+        <instance moduleIdRef="3244BBEC34" modelIndex="24" path="parts/core/LED-red-5mm.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
