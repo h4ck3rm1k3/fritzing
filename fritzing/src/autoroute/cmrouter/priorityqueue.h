@@ -58,6 +58,10 @@ public:
         _queue.append(item);
     }
 
+	void clear() {
+		_queue.clear();
+	}
+
 	void append(T value) {
 		Item<T> item(0.0, value);
 		_queue.append(item);

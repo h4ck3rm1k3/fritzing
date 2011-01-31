@@ -201,6 +201,7 @@ protected:
 	void hookUpWires(JEdge *, QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point, ItemBase * board);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, ViewLayer::ViewLayerSpec, ViewLayer::ViewLayerID, Plane *, VirtualWire *);
+	void clearEdge(JEdge * edge);
 	void reorderEdges(QList<JEdge *> & edges, QHash<Wire *, JEdge *> & tracesToEdges);
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);
 	void initPathUnit(JEdge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
@@ -225,8 +226,9 @@ protected:
 	void clearPlane(Plane * thePlane);
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	PathUnit * findNearestSpace(JEdge *, PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
-	void genPoints(JEdge * edge, QList<PathUnit *> & fullPath, QHash<Wire *, JEdge *> & tracesToEdges, ItemBase * board, qreal keepout);
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
+	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, 
+								 QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout);
 
 
 protected:

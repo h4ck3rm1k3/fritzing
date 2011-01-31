@@ -62,16 +62,12 @@ $Date$
 //	option to turn off propagation feedback
 //	remove debugging output and extra calls to processEvents
 //
-//  wire stickiness
-//
 //	still seeing a few thin tiles going across the board: 
 //		this is because the thick tiles above and below are wider than the thin tile
 //
-//	slide corner: if 
-//
+//	slide corner: if dogleg is too close to other connectors, slide it more towards the middle
 //
 //	bugs: 
-//		slowdown (still?)
 //		why does the same routing task give different results
 //		border seems asymmetric
 //		still some funny shaped routes (thin tile problem?)
@@ -489,7 +485,7 @@ void CMRouter::start()
 	collectEdges(edges);
 	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
 
-	for (int run = 0; run < 10; run++) {
+	for (int run = 0; run < 1; run++) {
 		allDone = runEdges(edges, planes, board, netCounters, routingStatus, tracesToEdges, keepout, false);
 		if (m_cancelled || allDone || m_stopTracing) break;
 
@@ -644,12 +640,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 	}
 
 	foreach (JEdge * edge, edges) {
-		edge->routed = false;
-		edge->fromConnectorItems.clear();
-		edge->toConnectorItems.clear();
-		edge->fromTraces.clear();
-		edge->toTraces.clear();
-
+		clearEdge(edge);
 		for (int i = 0; i < m_viewLayers.count(); i++) {
 			if (edge->viewLayerID == m_viewLayers.at(i)) {
 				edge->plane = planes.at(i);
@@ -1902,6 +1893,14 @@ void CMRouter::collectEdges(QList<JEdge *> & edges)
 	}
 }
 
+void CMRouter::clearEdge(JEdge * edge) {
+	edge->routed = false;
+	edge->fromConnectorItems.clear();
+	edge->toConnectorItems.clear();
+	edge->fromTraces.clear();
+	edge->toTraces.clear();
+}
+
 JEdge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to, 
 						  ViewLayer::ViewLayerSpec viewLayerSpec, ViewLayer::ViewLayerID viewLayerID, 
 						  Plane * plane, VirtualWire * vw) {
@@ -2424,6 +2423,9 @@ PathUnit * CMRouter::findNearestSpace(JEdge * edge, PriorityQueue<PathUnit *> & 
 		TileRect searchRect = tileRect;
 		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + (tileRect.ymaxi - tileRect.ymini));
 		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymini + tHeightNeeded);
+		if (searchRect.ymaxi - searchRect.ymini < tHeightNeeded) continue;
+
+		infoTileRect("search rect", searchRect);
 
 		QList<Tile *> alreadyTiled;
 		TiSrArea(pathUnit->tile, edge->plane, &searchRect, checkAlready, &alreadyTiled);
@@ -2450,6 +2452,7 @@ PathUnit * CMRouter::findNearestSpace(JEdge * edge, PriorityQueue<PathUnit *> & 
 		foreach (Tile * tile, alreadyTiled) {
 			TileRect * t = new TileRect;
 			TiToRect(tile, t);
+			infoTile("   block tile", tile);
 			blockRects.append(t);
 			xSet.insert(qMax(t->xmini, searchRect.xmini));
 			xSet.insert(qMin(t->xmaxi, searchRect.xmaxi));
@@ -2528,6 +2531,7 @@ PathUnit * CMRouter::findNearestSpace(JEdge * edge, PriorityQueue<PathUnit *> & 
 
 		if (bestDistance < std::numeric_limits<int>::max()) {
 			nearest = pathUnit;
+			infoTileRect("   best candidate", bestCandidate);
 			nearestSpace = bestCandidate;
 		}
 	}
@@ -2570,26 +2574,43 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 	QPointF destPoint2 = calcJumperLocation(nearest2, nearestSpace2, tWidthNeeded, tHeightNeeded);
 	jumperItem->resize(destPoint1, destPoint2);
 
-	nearest1->connectorItem = jumperItem->connector0();
-	nearest2->connectorItem = jumperItem->connector1();
-	QList<PathUnit *> fullPath1;
-	for (PathUnit * spu = nearest1; spu; spu = spu->parent) {
-		fullPath1.push_front(spu);
-	}
-	QList<PathUnit *> fullPath2;
-	for (PathUnit * spu = nearest2; spu; spu = spu->parent) {
-		fullPath2.push_front(spu);
-	}
+	ProcessEventBlocker::processEvents();
 
-	genPoints(edge, fullPath1, tracesToEdges, board, keepout);
-	genPoints(edge, fullPath2, tracesToEdges, board, keepout);
-
+	bool result = addJumperItemHalf(jumperItem->connector0(), nearest1, edge, tracesToEdges, tilePathUnits, board, keepout);
+	result = addJumperItemHalf(jumperItem->connector1(), nearest2, edge, tracesToEdges, tilePathUnits, board, keepout);
 
 
 	//jumpersDone += ((edge->linkedEdge) ? 2 : 1);
 	//updateProgress(jumpersDone, todo);
 
-	return true;
+	return result;
+}
+
+bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, 
+								 QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout)
+{
+	QList<Tile *> alreadyTiled;
+	Tile * dest = addTile(jumperConnectorItem, Tile::OBSTACLE, edge->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
+	TiSetType(dest, Tile::DESTINATION);
+
+	PathUnit * parent = nearest;
+	while (parent->parent) {
+		parent = parent->parent;
+	}
+	TiSetType(parent->tile, Tile::SOURCE);
+	clearEdge(edge);
+	if (parent->connectorItem) {
+		edge->fromConnectorItems.append(parent->connectorItem);
+	}
+	else {
+		edge->fromTraces.insert(parent->wire);
+	}
+	edge->toConnectorItems.append(jumperConnectorItem);
+	PriorityQueue<PathUnit *> q1, q2;
+	initPathUnit(edge, parent->tile, q1, tilePathUnits);
+	initPathUnit(edge, dest, q2, tilePathUnits);
+
+	return propagate(q1, q2, edge, tracesToEdges, tilePathUnits, board, keepout);
 }
 
 QPointF CMRouter::calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded) 
@@ -2926,11 +2947,6 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 		fullPath.append(dpu);
 	}
 
-	genPoints(edge, fullPath, tracesToEdges, board, keepout);
-}
-
-void CMRouter::genPoints(JEdge * edge, QList<PathUnit *> & fullPath, QHash<Wire *, JEdge *> & tracesToEdges, ItemBase * board, qreal keepout)
-{
 	foreach (PathUnit * pathUnit, fullPath) {
 		infoTile("tracepath", pathUnit->tile);
 	}
@@ -3017,10 +3033,6 @@ void CMRouter::genPoints(JEdge * edge, QList<PathUnit *> & fullPath, QHash<Wire 
 		last->connectorItem = splitTrace(last->wire, allPoints.last(), board);
 		Wire * split = qobject_cast<Wire *>(last->connectorItem->attachedTo());
 		tracesToEdges.insert(split, edge);
-	}
-	else if (last->connectorItem->attachedToItemType() == ModelPart::Jumper) {
-		QList<Tile *> alreadyTiled;
-		addTile(last->connectorItem, Tile::OBSTACLE, edge->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
 	}
 
 	ProcessEventBlocker::processEvents();
