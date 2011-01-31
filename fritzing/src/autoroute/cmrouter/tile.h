@@ -73,6 +73,7 @@ struct Tile
 		NOTYPE = 0,
 		BUFFER = 1,
 		SPACE,
+		SPACE2,
 		SOURCE,
 		DESTINATION,
 		OBSTACLE,

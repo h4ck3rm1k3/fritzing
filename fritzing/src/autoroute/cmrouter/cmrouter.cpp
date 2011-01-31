@@ -71,6 +71,7 @@ $Date$
 //		why does the same routing task give different results
 //		border seems asymmetric
 //		still some funny shaped routes (thin tile problem?)
+//		jumper item: when placing, doesn't need keepout, only when tiling
 //
 //  longer route than expected:  
 //		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
@@ -115,7 +116,6 @@ $Date$
 #include <QElapsedTimer>
 
 static const int MaximumProgress = 1000;
-static const qreal TINYSPACEMAX = 10;
 static const int TILEFACTOR = 1000;
 static int TileStandardWireWidth = 0;
 static int TileHalfStandardWireWidth = 0;
@@ -311,8 +311,14 @@ int clearSourceAndDestination(Tile * tile, UserData) {
 }
 
 int checkAlready(Tile * tile, UserData userData) {
-	if (TiGetType(tile) == Tile::SPACE) return 0;
-	if (TiGetType(tile) == Tile::BUFFER) return 0;
+	switch (TiGetType(tile)) {
+		case Tile::SPACE:		
+		case Tile::SPACE2:		
+		case Tile::BUFFER:
+			return 0;
+		default:
+			break;
+	}
 
 	QList<Tile *> * tiles = (QList<Tile *> *) userData;
 	tiles->append(tile);
@@ -321,7 +327,7 @@ int checkAlready(Tile * tile, UserData userData) {
 
 int collectOneNotEmpty(Tile * tile, UserData) {
 	Tile::TileType type = TiGetType(tile);
-	if (type == Tile::SPACE) {
+	if (type == Tile::SPACE || type == Tile::SPACE2) {
 		return 0;
 	}
 
@@ -335,6 +341,8 @@ int prepDeleteTile(Tile * tile, UserData userData) {
 		case Tile::DUMMYTOP:
 		case Tile::DUMMYBOTTOM:
 			return 0;
+		default:
+			break;
 	}
 
 	//infoTile("prep delete", tile);
@@ -852,7 +860,7 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 	return thePlane;
 }
 
-void CMRouter::eliminateThinTiles2(QList<TileRect> & originalTileRects, Plane * thePlane) {
+void CMRouter::eliminateThinTiles(QList<TileRect> & originalTileRects, Plane * thePlane) {
 
 	QList<TileRect> remainingTileRects;
 	foreach (TileRect originalTileRect, originalTileRects) {
@@ -877,10 +885,12 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & originalTileRects, Plane * 
 			Tile * extendTile = NULL;
 			// look along the top
 			for (Tile * tp = RT(tile); LEFT(tp) >= tileRect.xmini; tp = BL(tp)) {
-				if (TiGetType(tp) == Tile::OBSTACLE && RIGHT(tp) <= tileRect.xmaxi) {
+				Tile::TileType tileType = TiGetType(tp);
+				if ((tileType == Tile::OBSTACLE || tileType == Tile::SPACE2) && RIGHT(tp) <= tileRect.xmaxi) {
 					// obstacle island above (remember y axis is flipped)
 					TiToRect(tp, &newRect);
 					newRect.ymini = tileRect.ymini;
+					newRect.ymaxi = tileRect.ymaxi;
 					extendTile = tp;
 					break;
 				}
@@ -889,10 +899,12 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & originalTileRects, Plane * 
 			if (extendTile == NULL) {
 				// look along the bottom
 				for (Tile * tp = LB(tile); RIGHT(tp) <= tileRect.xmaxi; tp = TR(tp)) {
-					if (TiGetType(tp) == Tile::OBSTACLE && LEFT(tp) >= tileRect.xmini) {
+					Tile::TileType tileType = TiGetType(tp);
+					if ((tileType == Tile::OBSTACLE || tileType == Tile::SPACE2) && LEFT(tp) >= tileRect.xmini) {
 						// obstacle island below (remember y axis is flipped)
 						TiToRect(tp, &newRect);
 						newRect.ymaxi = tileRect.ymaxi;
+						newRect.ymini = tileRect.ymini;
 						extendTile = tp;
 						break;
 					}
@@ -901,7 +913,7 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & originalTileRects, Plane * 
 
 			if (extendTile) {
 				QList<Tile *> alreadyTiled;
-				Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, TiGetBody(extendTile), Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+				Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
 				drawGridItem(newTile);
 				TileRect leftRect = originalTileRect;
 				leftRect.xmaxi = newRect.xmini;
@@ -915,18 +927,10 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & originalTileRects, Plane * 
 			}
 		}
 	}
-
-	foreach (TileRect tileRect, remainingTileRects) {
-		Tile * tile = NULL;
-		TiSrArea(NULL, thePlane, &tileRect, collectOneThinTile, &tile);
-		if (tile == NULL) continue;
-
-		infoTile("remaining", tile);
-		drawGridItem(tile);
-	}
+	eliminateThinTiles2(remainingTileRects, thePlane);
 }
 
-void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane) 
+void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane) 
 {
 	QList<TileRect> remainingTileRects;
 	while (tileRects.count() > 0) {
@@ -955,7 +959,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 		// case 1
 		if (TiGetType(rt) == Tile::SPACE && 
 			rtRect.xmaxi > tileRect.xmaxi && 
-			rtRect.ymaxi - rtRect.ymini < TileStandardWireWidth &&
+			rtRect.ymaxi - rtRect.ymini < TileStandardWireWidth * 5 &&
 			rtRect.xmaxi - tileRect.xmaxi <= TileStandardWireWidth * 5) 
 		{
 			bool shrink = true;
@@ -988,7 +992,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 			if (TiGetType(rt) == Tile::OBSTACLE && 
 				rtRect.xmaxi > tileRect.xmaxi && 
 				rtRect.xmini > tileRect.xmini &&
-				tileRect.ymaxi - tileRect.ymini < TileStandardWireWidth &&
+				tileRect.ymaxi - tileRect.ymini < TileStandardWireWidth * 5 &&
 				rtRect.xmini - tileRect.xmini <= TileStandardWireWidth * 5) 
 			{
 				bool shrink = true;
@@ -1014,7 +1018,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 			// case 3
 			if (TiGetType(lb) == Tile::SPACE && 
 				lbRect.xmini < tileRect.xmini && 
-				lbRect.ymaxi - lbRect.ymini < TileStandardWireWidth &&
+				lbRect.ymaxi - lbRect.ymini < TileStandardWireWidth * 5 &&
 				lbRect.xmaxi - tileRect.xmini <= TileStandardWireWidth * 5) 
 			{
 				bool shrink = true;
@@ -1047,7 +1051,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 				if (TiGetType(lb) == Tile::OBSTACLE && 
 					lbRect.xmini < tileRect.xmini && 
 					lbRect.xmaxi < tileRect.xmaxi &&
-					tileRect.ymaxi - tileRect.ymini < TileStandardWireWidth &&
+					tileRect.ymaxi - tileRect.ymini < TileStandardWireWidth * 5 &&
 					tileRect.xmaxi - lbRect.xmaxi <= TileStandardWireWidth * 5) 
 				{
 					bool shrink = true;
@@ -1068,7 +1072,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 
 		if (doInsert) {
 			QList<Tile *> alreadyTiled;
-			Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+			Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
 			drawGridItem(newTile);
 			TileRect leftRect = originalTileRect;
 			leftRect.xmaxi = newRect.xmini;
@@ -1082,7 +1086,15 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane)
 		}
 	}
 
-	eliminateThinTiles2(remainingTileRects, thePlane);
+	foreach (TileRect tileRect, remainingTileRects) {
+		Tile * tile = NULL;
+		TiSrArea(NULL, thePlane, &tileRect, collectOneThinTile, &tile);
+		if (tile == NULL) continue;
+
+		infoTile("remaining", tile);
+		drawGridItem(tile);
+	}
+
 }
 
 bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alreadyTiled, qreal keepout)
@@ -1618,6 +1630,7 @@ Tile::TileType CMRouter::checkCandidate(JEdge * edge, Tile * tile)
 {	
 	switch (TiGetType(tile)) {
 		case Tile::SPACE:
+		case Tile::SPACE2:
 			return GridEntry::EMPTY;
 
 		case Tile::TINYSPACE:
@@ -1712,6 +1725,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 			bail = (TiGetType(pathUnit->tile) != Tile::SOURCE); 
 			break;
 		case Tile::SPACE:
+		case Tile::SPACE2:
 			bail = false;
 			break;
 		default:	
@@ -1825,6 +1839,9 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 	switch (TiGetType(tile)) {
 		case Tile::SPACE:
 			c = QColor(255, 255, 0, GridEntryAlpha);
+			break;
+		case Tile::SPACE2:
+			c = QColor(200, 200, 0, GridEntryAlpha);
 			break;
 		case Tile::SOURCE:
 			c = QColor(0, 255, 0, GridEntryAlpha);
@@ -2397,7 +2414,8 @@ PathUnit * CMRouter::findNearestSpace(JEdge * edge, PriorityQueue<PathUnit *> & 
 {
 	PathUnit * nearest = NULL;
 	foreach (PathUnit * pathUnit, tilePathUnits.values()) {
-		if (TiGetType(pathUnit->tile) != Tile::SPACE) continue;
+		Tile::TileType tileType = TiGetType(pathUnit->tile);
+		if (tileType != Tile::SPACE && tileType != Tile::SPACE2) continue;
 		if (pathUnit->priorityQueue != &priorityQueue) continue;
 
 		TileRect tileRect;
@@ -2542,7 +2560,7 @@ PathUnit * CMRouter::findNearestSpace(JEdge * edge, PriorityQueue<PathUnit *> & 
 bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, 
 							QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout)
 {
-	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width() + keepout + keepout, m_sketchWidget->jumperItemSize().height() + keepout + keepout);
+	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
 	int tWidthNeeded = realToTile(sizeNeeded.width());
 	int tHeightNeeded = realToTile(sizeNeeded.height());
 
@@ -2590,8 +2608,7 @@ bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit *
 								 QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout)
 {
 	QList<Tile *> alreadyTiled;
-	Tile * dest = addTile(jumperConnectorItem, Tile::OBSTACLE, edge->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
-	TiSetType(dest, Tile::DESTINATION);
+	addTile(jumperConnectorItem, Tile::OBSTACLE, edge->plane, alreadyTiled, CMRouter::ClipAllOverlaps, keepout);
 
 	PathUnit * parent = nearest;
 	while (parent->parent) {
@@ -2608,7 +2625,17 @@ bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit *
 	edge->toConnectorItems.append(jumperConnectorItem);
 	PriorityQueue<PathUnit *> q1, q2;
 	initPathUnit(edge, parent->tile, q1, tilePathUnits);
-	initPathUnit(edge, dest, q2, tilePathUnits);
+
+	QRectF r = jumperConnectorItem->attachedTo()->mapRectToScene(jumperConnectorItem->rect());
+	TileRect newTileRect;
+	realsToTile(newTileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
+	TiSrArea(NULL, edge->plane, &newTileRect, checkAlready, &alreadyTiled);
+	foreach (Tile * dest, alreadyTiled) {
+		if (TiGetBody(dest) == jumperConnectorItem) {
+			TiSetType(dest, Tile::DESTINATION);
+			initPathUnit(edge, dest, q2, tilePathUnits);
+		}
+	}
 
 	return propagate(q1, q2, edge, tracesToEdges, tilePathUnits, board, keepout);
 }
