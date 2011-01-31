@@ -50,6 +50,7 @@ public:
 	void showEvent(QShowEvent * event);
 	void initWire(Wire *, int penWidth);
 	virtual bool autorouteTypePCB();
+	virtual qreal getKeepout();
 	virtual const QString & traceColor(ConnectorItem *);
 	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
 	const QString & jumperColor();

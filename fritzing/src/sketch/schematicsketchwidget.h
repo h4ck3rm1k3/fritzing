@@ -42,6 +42,7 @@ public:
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	void initWire(Wire *, int penWidth);
 	bool autorouteTypePCB();
+	qreal getKeepout();
 	void tidyWires();
 	void ensureTraceLayersVisible();
 	void ensureTraceLayerVisible();

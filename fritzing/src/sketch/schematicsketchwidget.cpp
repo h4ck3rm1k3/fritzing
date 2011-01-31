@@ -32,6 +32,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../waitpushundostack.h"
 #include "../items/moduleidnames.h"
+#include "../fsvgrenderer.h"
 
 #include <limits>
 
@@ -359,4 +360,8 @@ void SchematicSketchWidget::addDefaultParts() {
 bool SchematicSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID) {
 	// schematic is always one layer
 	return true;
+}
+
+qreal SchematicSketchWidget::getKeepout() {
+	return 0.1 * FSvgRenderer::printerScale();
 }

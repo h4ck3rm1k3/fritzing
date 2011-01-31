@@ -456,7 +456,7 @@ void CMRouter::start()
 {	
 	m_maximumProgressPart = 2;
 	m_currentProgressPart = 0;
-	qreal keepout = 0.015 * FSvgRenderer::printerScale();			// 15 mils space
+	qreal keepout = m_sketchWidget->getKeepout();			// 15 mils space
 
 	emit setMaximumProgress(MaximumProgress);
 
@@ -634,7 +634,7 @@ bool CMRouter::drc(QList<Plane *> & planes)
 	// TODO: 
 	//	what about ground plane?
 
-	qreal keepout = 0.015 * FSvgRenderer::printerScale() / 2;			// 15 mils space
+	qreal keepout = m_sketchWidget->getKeepout() / 2;			// 15 mils space
 	ItemBase * board = NULL;
 	if (m_sketchWidget->autorouteTypePCB()) {
 		board = m_sketchWidget->findBoard();

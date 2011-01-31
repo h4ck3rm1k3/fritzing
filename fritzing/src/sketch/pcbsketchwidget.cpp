@@ -2104,3 +2104,7 @@ bool PCBSketchWidget::hasAnyNets() {
 QSizeF PCBSketchWidget::jumperItemSize() {
 	return m_jumperItemSize;
 }
+
+qreal PCBSketchWidget::getKeepout() {
+	return 0.015 * FSvgRenderer::printerScale();
+}
