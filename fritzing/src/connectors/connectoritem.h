@@ -100,6 +100,10 @@ public:
 	bool isEffectivelyCircular();
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 
+#ifndef QT_NO_DEBUG
+	void ConnectorItem::debugInfo(const QString & msg);
+#endif
+
 protected:
 	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
 	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );

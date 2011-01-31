@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 
-
 #ifndef SCHEMATICSKETCHWIDGET_H
 #define SCHEMATICSKETCHWIDGET_H
 
@@ -42,10 +41,7 @@ public:
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ViewLayer::ViewLayerID getDragWireViewLayerID(ConnectorItem *);
 	void initWire(Wire *, int penWidth);
-	bool autorouteNeedsBounds();
-	bool autorouteCheckWires();
-	bool autorouteCheckConnectors();
-	bool autorouteCheckParts();
+	bool autorouteTypePCB();
 	void tidyWires();
 	void ensureTraceLayersVisible();
 	void ensureTraceLayerVisible();
@@ -70,6 +66,7 @@ public:
 	bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 	void addDefaultParts();
+	bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);

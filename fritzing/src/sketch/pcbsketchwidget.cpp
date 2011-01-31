@@ -568,20 +568,8 @@ void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setPenWidth(1, this);
 }
 
-bool PCBSketchWidget::autorouteNeedsBounds() {
+bool PCBSketchWidget::autorouteTypePCB() {
 	return true;
-}
-
-bool PCBSketchWidget::autorouteCheckWires() {
-	return true;
-}
-
-bool PCBSketchWidget::autorouteCheckConnectors() {
-	return true;
-}
-
-bool PCBSketchWidget::autorouteCheckParts() {
-	return false;
 }
 
 const QString & PCBSketchWidget::traceColor(ConnectorItem * forColor) {

@@ -1270,3 +1270,15 @@ qreal ConnectorItem::calcClipRadius() {
 bool ConnectorItem::isEffectivelyCircular() {
 	return m_circular || m_effectivelyCircular;
 }
+
+void ConnectorItem::debugInfo(const QString & msg) 
+{
+	DebugDialog::debug(QString("%1 id:%2 %3 %4 %5 %6")
+		.arg(msg)
+		.arg(this->connectorSharedID())
+		.arg(this->connectorSharedName())
+		.arg(this->attachedToTitle())
+		.arg(this->attachedToID())
+		.arg(this->attachedToInstanceTitle())
+	);
+}

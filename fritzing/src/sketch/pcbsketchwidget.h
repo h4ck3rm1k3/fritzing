@@ -49,10 +49,7 @@ public:
 	void addDefaultParts();
 	void showEvent(QShowEvent * event);
 	void initWire(Wire *, int penWidth);
-	virtual bool autorouteNeedsBounds();
-	virtual bool autorouteCheckWires();
-	virtual bool autorouteCheckConnectors();
-	virtual bool autorouteCheckParts();
+	virtual bool autorouteTypePCB();
 	virtual const QString & traceColor(ConnectorItem *);
 	virtual const QString & traceColor(ViewLayer::ViewLayerSpec);
 	const QString & jumperColor();

@@ -341,7 +341,7 @@ void Autorouter1::runEdges(QList<Edge *> & edges, QGraphicsLineItem * lineItem,
 		// if both connections are stuck to or attached to the same part
 		// then use that part's boundary to constrain the path
 		ItemBase * partForBounds = getPartForBounds(edge);
-		if (m_sketchWidget->autorouteNeedsBounds() && (partForBounds != NULL)) {
+		if (m_sketchWidget->autorouteTypePCB() && (partForBounds != NULL)) {
 			QRectF boundingRect = partForBounds->boundingRect();
 			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
 			boundingPoly = partForBounds->mapToScene(boundingRect);
@@ -453,7 +453,7 @@ void Autorouter1::fixupJumperItems(QList<JumperItemStruct *> & jumperItemStructs
 }
 
 ItemBase * Autorouter1::getPartForBounds(Edge * edge) {
-	if (m_sketchWidget->autorouteNeedsBounds()) {
+	if (m_sketchWidget->autorouteTypePCB()) {
 		if (edge->from->attachedTo()->stickingTo() != NULL && edge->from->attachedTo()->stickingTo() == edge->to->attachedTo()->stickingTo()) {
 			return edge->from->attachedTo()->stickingTo();
 		}
@@ -499,7 +499,7 @@ bool Autorouter1::traceSubedge(Subedge* subedge, QList<Wire *> & wires, ItemBase
 	}
 
 	wires.clear();
-	if (!m_sketchWidget->autorouteNeedsBounds() || (partForBounds == NULL)) {
+	if (!m_sketchWidget->autorouteTypePCB() || (partForBounds == NULL)) {
 		routedFlag = drawTrace(from, to, boundingPoly, wires);
 	}
 	else {
@@ -1125,7 +1125,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		if (item == to) continue;
 
 		bool gotOne = false;
-		Wire * candidateWire = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<Wire *>(item) : NULL;
+		Wire * candidateWire = m_sketchWidget->autorouteTypePCB() ? dynamic_cast<Wire *>(item) : NULL;
 		if (candidateWire != NULL) {
 			if (candidateWire->getTrace() &&
 				candidateWire->connector0()->connectionsCount() == 0 &&
@@ -1166,7 +1166,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 				*/
 		}
 		if (!gotOne) {
-			ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteCheckConnectors() ? dynamic_cast<ConnectorItem *>(item) : NULL;
+			ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteTypePCB() ? dynamic_cast<ConnectorItem *>(item) : NULL;
 			if (candidateConnectorItem != NULL) {
 				candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
 				if (candidateWire != NULL) {
@@ -1210,7 +1210,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 			}
 		}
 		if (!gotOne) {
-			ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
+			ItemBase * candidateItemBase = m_sketchWidget->autorouteTypePCB() ? NULL : dynamic_cast<ItemBase *>(item);
 			if (candidateItemBase != NULL) {
 				if (candidateItemBase->itemType() == ModelPart::Wire) {
 					Wire * candidateWire = qobject_cast<Wire *>(candidateItemBase);
@@ -1764,7 +1764,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 		if (item == from) continue;
 		if (item == to) continue;
 
-		Wire * candidateWire = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<Wire *>(item) : NULL;
+		Wire * candidateWire = m_sketchWidget->autorouteTypePCB() ? dynamic_cast<Wire *>(item) : NULL;
 		if (candidateWire) {
 			if (!candidateWire->getTrace()) {
 				continue;
@@ -1783,7 +1783,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 			break;
 		}
 
-		ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<ConnectorItem *>(item) : NULL;
+		ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteTypePCB() ? dynamic_cast<ConnectorItem *>(item) : NULL;
 		if (candidateConnectorItem) {
 			candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
 			if (candidateWire != NULL) {
@@ -1868,7 +1868,7 @@ bool Autorouter1::hitsObstacle(ItemBase * traceWire, ItemBase * ignore)
 {
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(traceWire)) {
 
-		ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
+		ItemBase * candidateItemBase = m_sketchWidget->autorouteTypePCB() ? NULL : dynamic_cast<ItemBase *>(item);
 		if (candidateItemBase) {
 			if (ignore == candidateItemBase) continue;
 			if (candidateItemBase->itemType() == ModelPart::Wire) continue;

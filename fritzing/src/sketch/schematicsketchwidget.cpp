@@ -86,20 +86,8 @@ void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	}
 }
 
-bool SchematicSketchWidget::autorouteNeedsBounds() {
+bool SchematicSketchWidget::autorouteTypePCB() {
 	return false;
-}
-
-bool SchematicSketchWidget::autorouteCheckWires() {
-	return false;
-}
-
-bool SchematicSketchWidget::autorouteCheckConnectors() {
-	return false;
-}
-
-bool SchematicSketchWidget::autorouteCheckParts() {
-	return true;
 }
 
 void SchematicSketchWidget::tidyWires() {
@@ -366,4 +354,9 @@ QPoint SchematicSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPort
 
 void SchematicSketchWidget::addDefaultParts() {
 	SketchWidget::addDefaultParts();
+}
+
+bool SchematicSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID) {
+	// schematic is always one layer
+	return true;
 }

@@ -215,6 +215,45 @@ void tileToQRect(Tile * tile, QRectF & rect) {
 	tileRectToQRect(tileRect, rect);
 }
 
+void extendToBounds(TileRect & from, TileRect & to) {
+	// bail if it already extends to or past the bounds
+	if (from.xmini <= to.xmini) return;
+	if (from.xmaxi >= to.xmaxi) return;
+	if (from.ymini <= to.ymini) return;
+	if (from.ymaxi >= to.ymaxi) return;
+
+	int which = 0;
+	int dmin = from.xmini - to.xmini;
+	if (to.xmaxi - from.xmaxi < dmin) {
+		which = 1;
+		dmin = to.xmaxi - from.xmaxi;
+	}
+	if (from.ymini - to.ymini < dmin) {
+		which = 2;
+		dmin = from.ymini - to.ymini;
+	}
+	if (to.ymaxi - from.ymaxi < dmin) {
+		which = 3;
+		dmin = to.ymaxi - from.ymaxi;
+	}
+	switch(which) {
+		case 0:
+			from.xmini = to.xmini;
+			return;
+		case 1:
+			from.xmaxi = to.xmaxi;
+			return;
+		case 2:
+			from.ymini = to.ymini;
+			return;
+		case 3:
+			from.ymaxi = to.ymaxi;
+			return;
+		default:
+			break;
+	}
+}
+
 bool tileRectsIntersect(TileRect * tile1, TileRect * tile2)
 {
     int l1 = tile1->xmini;
@@ -279,29 +318,31 @@ int findSourceAndDestination(Tile * tile, UserData userData) {
 	}
 
 	Wire * wire = dynamic_cast<Wire *>(TiGetBody(tile));
-	if (wire == NULL) return 0;
+	if (wire) {
+		TileRect tileRect;
+		TiToRect(tile, &tileRect);
+		int minDim = qMin(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
+		if (minDim < TileStandardWireWidth) {
+			return 0;
+		}
 
-	TileRect tileRect;
-	TiToRect(tile, &tileRect);
-	int minDim = qMin(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
-	if (minDim < TileStandardWireWidth) {
-		return 0;
-	}
+		int maxDim = qMax(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
+		if (maxDim < TileStandardWireWidth * 3) {
+			return 0;
+		}
 
-	int maxDim = qMax(tileRect.xmaxi - tileRect.xmini, tileRect.ymaxi - tileRect.ymini);
-	if (maxDim < TileStandardWireWidth * 3) {
-		return 0;
-	}
-
-	if (sourceAndDestinationStruct->edge->fromTraces.contains(wire)) {
-		TiSetType(tile, Tile::SOURCE);
-		sourceAndDestinationStruct->tiles.append(tile);
-	}
-	else if (sourceAndDestinationStruct->edge->toTraces.contains(wire)) {
-		TiSetType(tile, Tile::DESTINATION);
-		sourceAndDestinationStruct->tiles.append(tile);
-	}
+		if (sourceAndDestinationStruct->edge->fromTraces.contains(wire)) {
+			TiSetType(tile, Tile::SOURCE);
+			sourceAndDestinationStruct->tiles.append(tile);
+		}
+		else if (sourceAndDestinationStruct->edge->toTraces.contains(wire)) {
+			TiSetType(tile, Tile::DESTINATION);
+			sourceAndDestinationStruct->tiles.append(tile);
+		}
 	
+		return 0;
+	}
+
 	return 0;
 }
 
@@ -463,7 +504,7 @@ void CMRouter::start()
 	ProcessEventBlocker::processEvents(); // to keep the app  from freezing
 
 	ItemBase * board = NULL;
-	if (m_sketchWidget->autorouteNeedsBounds()) {
+	if (m_sketchWidget->autorouteTypePCB()) {
 		board = m_sketchWidget->findBoard();
 	}
 
@@ -568,7 +609,7 @@ void CMRouter::start()
 				JEdge * edge = edgeSorter.value(id);
 					edges.append(edge);
 			}
-			runEdges(edges, planes, board, netCounters, routingStatus, tracesToEdges, keepout, true);
+			runEdges(edges, planes, board, netCounters, routingStatus, tracesToEdges, keepout, m_sketchWidget->usesJumperItem());
 		}
 	}
 
@@ -595,7 +636,7 @@ bool CMRouter::drc(QList<Plane *> & planes)
 
 	qreal keepout = 0.015 * FSvgRenderer::printerScale() / 2;			// 15 mils space
 	ItemBase * board = NULL;
-	if (m_sketchWidget->autorouteNeedsBounds()) {
+	if (m_sketchWidget->autorouteTypePCB()) {
 		board = m_sketchWidget->findBoard();
 	}
 
@@ -679,9 +720,11 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QList<Plane *> & planes, ItemBas
 		sourceAndDestinationStruct.edge = edge;
 		TiSrArea(NULL, edge->plane, &m_tileMaxRect, findSourceAndDestination, &sourceAndDestinationStruct);
 
+		DebugDialog::debug("begin ipu");
 		foreach (Tile * tile, sourceAndDestinationStruct.tiles) {
 			initPathUnit(edge, tile, (TiGetType(tile) == Tile::SOURCE ? queue1 : queue2), tilePathUnits);
 		}
+		DebugDialog::debug("end ipu");
 
 		foreach (QGraphicsItem * item, m_sketchWidget->items()) {
 			GridEntry * gridEntry = dynamic_cast<GridEntry *>(item);
@@ -772,36 +815,24 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 
 	if (!initBoard(board, thePlane, alreadyTiled, keepout)) return thePlane;
 
-	if (m_sketchWidget->autorouteCheckConnectors()) {
+	if (m_sketchWidget->autorouteTypePCB()) {
 		// deal with "rectangular" elements first
 		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-			// TODO: need to leave expansion area around coords?
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (connectorItem != NULL) {
-				if (!connectorItem->attachedTo()->isVisible()) continue;
-				if (connectorItem->attachedTo()->hidden()) continue;
-				if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
-				if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+			if (connectorItem == NULL) continue;
 
-				//DebugDialog::debug(QString("coords connectoritem %1 %2 %3 %4 %5")
-				//						.arg(connectorItem->connectorSharedID())
-				//						.arg(connectorItem->connectorSharedName())
-				//						.arg(connectorItem->attachedToTitle())
-				//						.arg(connectorItem->attachedToID())
-				//						.arg(connectorItem->attachedToInstanceTitle())
-				//				);
+			if (!connectorItem->attachedTo()->isVisible()) continue;
+			if (connectorItem->attachedTo()->hidden()) continue;
+			if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
+			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 
-				addTile(connectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
-				if (alreadyTiled.count() > 0) {
-					return thePlane;
-				}
 
-				continue;
+			addTile(connectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
+			if (alreadyTiled.count() > 0) {
+				return thePlane;
 			}
 		}
-	}
 
-	if (m_sketchWidget->autorouteCheckWires()) {
 		// now insert the wires
 		QList<Wire *> beenThere;
 		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
@@ -818,39 +849,65 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 				return thePlane;
 			}	
 		}
-	}
 
-	if (m_sketchWidget->autorouteCheckConnectors()) {
-		// deal with "rectangular" elements first
+		// now nonconnectors
 		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-			// TODO: need to leave expansion area around coords?
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 			if (connectorItem != NULL) {
 				continue;
 			}
 
 			NonConnectorItem * nonConnectorItem = dynamic_cast<NonConnectorItem *>(item);
-			if (nonConnectorItem != NULL) {
-				if (!nonConnectorItem->attachedTo()->isVisible()) continue;
-				if (nonConnectorItem->attachedTo()->hidden()) continue;
-				if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+			if (nonConnectorItem == NULL) continue;
 
-				DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
-										.arg(nonConnectorItem->attachedToTitle())
-										.arg(nonConnectorItem->attachedToID())
-										);
+			if (!nonConnectorItem->attachedTo()->isVisible()) continue;
+			if (nonConnectorItem->attachedTo()->hidden()) continue;
+			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 
-				addTile(nonConnectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
-				if (alreadyTiled.count() > 0) {
-					return thePlane;
-				}
+			DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
+									.arg(nonConnectorItem->attachedToTitle())
+									.arg(nonConnectorItem->attachedToID())
+									);
 
-				continue;
+			addTile(nonConnectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
+			if (alreadyTiled.count() > 0) {
+				return thePlane;
 			}
 		}
 	}
+	else {
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+			ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+			if (itemBase == NULL) continue;
 
-	if (m_sketchWidget->autorouteCheckParts()) {
+			if (!itemBase->isVisible()) continue;
+			if (itemBase->hidden()) continue;
+			if (itemBase->itemType() == ModelPart::Wire) continue;
+
+			Tile * partTile = addPartTile(itemBase, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
+			if (alreadyTiled.count() > 0) {
+				return thePlane;
+			}
+
+			TileRect partTileRect;
+			TiToRect(partTile, &partTileRect);
+			
+			// TODO: only bother with connectors that might be electrically relevant, since parts are all we need for obstacles
+
+			foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+				if (connectorItem == NULL) continue;
+
+				QRectF r = itemBase->mapRectToScene(connectorItem->rect());
+				TileRect tileRect;
+				realsToTile(tileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
+				extendToBounds(tileRect, partTileRect);
+				Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, connectorItem, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+				drawGridItem(newTile);
+			}
+
+		}
+
 	}
 
 	if (eliminateThin) {
@@ -1329,30 +1386,33 @@ void CMRouter::hookUpWires(JEdge * edge, QList<PathUnit *> & fullPath, QList<Wir
 		c0->tempConnectTo(c1, true);
 	}
 
-	QList<Tile *> alreadyTiled;
-	tileWires(wires, edge->plane, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps, keepout, true);
-	qreal l = std::numeric_limits<int>::max();
-	qreal t = std::numeric_limits<int>::max();
-	qreal r = std::numeric_limits<int>::min();
-	qreal b = std::numeric_limits<int>::min();
-	foreach (Wire * w, wires) {
-		QPointF p1 = w->pos();
-		QPointF p2 = w->line().p2() + p1;
-		l = qMin(p1.x(), l);
-		r = qMax(p1.x(), r);
-		l = qMin(p2.x(), l);
-		r = qMax(p2.x(), r);
-		t = qMin(p1.y(), t);
-		b = qMax(p1.y(), b);
-		t = qMin(p2.y(), t);
-		b = qMax(p2.y(), b);
-	}
 
-	TileRect searchRect;
-	realsToTile(searchRect, l - Wire::STANDARD_TRACE_WIDTH, t - Wire::STANDARD_TRACE_WIDTH, r + Wire::STANDARD_TRACE_WIDTH, b + Wire::STANDARD_TRACE_WIDTH); 
-	QList<TileRect> tileRects;
-	TiSrArea(NULL, edge->plane, &searchRect, collectThinTiles, &tileRects);
-	eliminateThinTiles(tileRects, edge->plane);
+	if (m_sketchWidget->autorouteTypePCB()) {
+		QList<Tile *> alreadyTiled;
+		tileWires(wires, edge->plane, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps, keepout, true);
+		qreal l = std::numeric_limits<int>::max();
+		qreal t = std::numeric_limits<int>::max();
+		qreal r = std::numeric_limits<int>::min();
+		qreal b = std::numeric_limits<int>::min();
+		foreach (Wire * w, wires) {
+			QPointF p1 = w->pos();
+			QPointF p2 = w->line().p2() + p1;
+			l = qMin(p1.x(), l);
+			r = qMax(p1.x(), r);
+			l = qMin(p2.x(), l);
+			r = qMax(p2.x(), r);
+			t = qMin(p1.y(), t);
+			b = qMax(p1.y(), b);
+			t = qMin(p2.y(), t);
+			b = qMax(p2.y(), b);
+		}
+
+		TileRect searchRect;
+		realsToTile(searchRect, l - Wire::STANDARD_TRACE_WIDTH, t - Wire::STANDARD_TRACE_WIDTH, r + Wire::STANDARD_TRACE_WIDTH, b + Wire::STANDARD_TRACE_WIDTH); 
+		QList<TileRect> tileRects;
+		TiSrArea(NULL, edge->plane, &searchRect, collectThinTiles, &tileRects);
+		eliminateThinTiles(tileRects, edge->plane);
+	}
 }
 
 struct Range 
@@ -1676,7 +1736,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 		return;
 	}
 
-	//infoTile("    append if", next);
+	infoTile("    append if", next);
 
 	bool horizontal = (direction == PathUnit::Left || direction == PathUnit::Right);
 
@@ -2095,6 +2155,17 @@ Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * th
 	return tile;
 }
 
+
+Tile * CMRouter::addPartTile(ItemBase * itemBase, Tile::TileType type, Plane * thePlane, QList<Tile *> & alreadyTiled, CMRouter::OverlapType overlapType, qreal keepout) 
+{
+	QRectF r = itemBase->boundingRect();
+	r.moveTo(itemBase->pos());
+	TileRect tileRect;
+	realsToTile(tileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
+	Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, itemBase, type, overlapType);
+	return tile;
+}
+
 void CMRouter::hideTiles() 
 {
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
@@ -2324,6 +2395,7 @@ void CMRouter::initPathUnit(JEdge * edge, Tile * tile, PriorityQueue<PathUnit *>
 
 	ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(TiGetBody(tile));
 	if (connectorItem) {
+		connectorItem->debugInfo("init path unit");
 		pathUnit->connectorItem = connectorItem;
 		QPointF p = connectorItem->sceneAdjustedTerminalPoint(NULL);
 		realsToTile(pathUnit->minCostRect, p.x() - HalfStandardWireWidth, p.y() - HalfStandardWireWidth, p.x() + HalfStandardWireWidth, p.y() + HalfStandardWireWidth);
@@ -2638,6 +2710,10 @@ QPointF CMRouter::calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpac
 bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, QHash<Wire *, JEdge *> & tracesToEdges, 
 						 QMultiHash<Tile *, PathUnit *> & tilePathUnits, ItemBase * board, qreal keepout)
 {
+
+	if (p1.count() == 0) return false;
+	if (p2.count() == 0) return false;
+
 	QList<Wire *> wires;
 
 	QList<PathUnit *> p1Terminals;
@@ -3037,8 +3113,10 @@ void CMRouter::tracePath(JEdge * edge, CompletePath & completePath, QHash<Wire *
 	hookUpWires(edge, fullPath, wires, keepout);
 	foreach (Wire * wire, wires) {
 		tracesToEdges.insert(wire, edge);
-		wire->addSticky(board, true);
-		board->addSticky(wire, true);
+		if (board) {
+			wire->addSticky(board, true);
+			board->addSticky(wire, true);
+		}
 	}
 }
 
