@@ -485,7 +485,7 @@ void CMRouter::start()
 	collectEdges(edges);
 	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
 
-	for (int run = 0; run < 1; run++) {
+	for (int run = 0; run < 6; run++) {
 		allDone = runEdges(edges, planes, board, netCounters, routingStatus, tracesToEdges, keepout, false);
 		if (m_cancelled || allDone || m_stopTracing) break;
 

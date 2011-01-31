@@ -56,6 +56,7 @@ static QString PCBTraceColor1 = "trace1";
 static QString PCBTraceColor = "trace";
 
 static bool AlreadyDidJumperHack = false;
+QSizeF PCBSketchWidget::m_jumperItemSize;
 
 struct DistanceThing {
 	int distance;
