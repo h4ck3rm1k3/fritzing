@@ -40,10 +40,12 @@ $Date$
 //  run separate beginning overlap check with half keepout width
 //
 //	schematic view: blocks parts, not traces
+//		tile source and dest traces, then untile after routing edge
 //
 //	fix up cancel/stop: 
 //		stop either stops you where you are, 
 //		or goes back to the best outcome , if you're in ripup-and-reroute phase
+//		put up information about which cycle this is, and the best result so far
 //
 //	placing jumpers 
 //		if double-sided, tile both sides
@@ -71,7 +73,7 @@ $Date$
 //		why does the same routing task give different results
 //		border seems asymmetric
 //		still some funny shaped routes (thin tile problem?)
-//		jumper item: when placing, doesn't need keepout, only when tiling
+//		jumper item: sometimes one end doesn't route
 //
 //  longer route than expected:  
 //		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
@@ -1539,7 +1541,7 @@ void CMRouter::shortenUs(QList<QPointF> & allPoints, JSubedge * subedge)
 	}
 }
 */
-/*
+
 void CMRouter::removeCorners(QList<QPointF> & allPoints, JEdge * edge)
 {
 	int ix = 0;
@@ -1553,9 +1555,12 @@ void CMRouter::removeCorners(QList<QPointF> & allPoints, JEdge * edge)
 		bool removeCorner = false;
 		QPointF proposed;
 		if (p0.y() == p1.y()) {
-			if ((p0.x() < p1.x() && p1.x() < p3.x()) || (p0.x() > p1.x() && p1.x() > p3.x())) {
-				// x must be monotonically increasing or decreasing
-				// dogleg horizontal, vertical, horizontal
+			if (p2.y() == p3.y() && p1.x() == p2.x()) {
+				if ((p0.x() < p1.x() && p2.x() < p3.x()) || (p0.x() > p1.x() && p2.x() > p3.x())) {
+					// x must be monotonically increasing or decreasing				
+					// dogleg horizontal, vertical, horizontal
+				}
+				else continue;
 			}
 			else {
 				continue;
@@ -1571,9 +1576,12 @@ void CMRouter::removeCorners(QList<QPointF> & allPoints, JEdge * edge)
 			}
 		}
 		else if (p0.x() == p1.x()) {
-			if ((p0.y() < p1.y() && p1.y() < p3.y()) || (p0.y() > p1.y() && p1.y() > p3.y())) {
-				// y must be monotonically increasing or decreasing
-				// dogleg vertical, horizontal, vertical
+			if (p2.x() == p3.x() && p1.y() == p2.y()) {
+				if ((p0.y() < p1.y() && p2.y() < p3.y()) || (p0.y() > p1.y() && p2.y() > p3.y())) {
+					// y must be monotonically increasing or decreasing
+					// dogleg vertical, horizontal, vertical
+				}
+				else continue;
 			}
 			else {
 				continue;
@@ -1593,8 +1601,32 @@ void CMRouter::removeCorners(QList<QPointF> & allPoints, JEdge * edge)
 		ix--;
 		allPoints.replace(ix + 1, proposed);
 		allPoints.removeAt(ix + 2);
-		if (allPoints.count() > ix + 3) {
-			allPoints.removeAt(ix + 2);
+		if (ix + 3 < allPoints.count()) {
+			if (proposed.x() == p3.x()) {
+				if (p3.x() == allPoints.at(ix + 3).x()) {
+					allPoints.removeAt(ix + 2);
+				}
+			}
+			else if (proposed.y() == p3.y()) {
+				if (p3.y() == allPoints.at(ix + 3).y()) {
+					allPoints.removeAt(ix + 2);
+				}
+			}
+		}
+		if (ix > 0) {
+			if (proposed.x() == p0.x()) {
+				if (p0.x() == allPoints.at(ix - 1).x()) {
+					allPoints.removeAt(ix);
+				}
+			}
+			else if (proposed.y() == p0.y()) {
+				if (p0.y() == allPoints.at(ix - 1).y()) {
+					allPoints.removeAt(ix);
+				}
+			}
+		}
+		foreach (QPointF p, allPoints) {
+			DebugDialog::debug("allpoint during:", p);
 		}
 	}
 }
@@ -1603,8 +1635,8 @@ bool CMRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const
 {
 	if (atStartOrEnd) {
 		Tile * tile = TiSrPoint(NULL, edge->plane, realToTile(proposed.x()), realToTile(proposed.y()));
-		Tile::TileType type = checkCandidate(edge, tile);
-		if (type > GridEntry::IGNORE) {
+		Tile::TileType tileType = TiGetType(tile);
+		if (tileType != Tile::SPACE && tileType != Tile::SPACE2) {
 			// don't want to draw traces within the target connector itself
 			return false;
 		}
@@ -1619,79 +1651,13 @@ bool CMRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const
 	realsToTile(tileRect, qMin(p1.x(), p3.x()), y, qMax(p1.x(), p3.x()), y + Wire::STANDARD_TRACE_WIDTH);
 	TiSrArea(NULL, edge->plane, &tileRect, simpleList, &alreadyTiled);
 	foreach (Tile * tile, alreadyTiled) {
-		Tile::TileType type = checkCandidate(edge, tile);
-		if (type >= GridEntry::BLOCK) return false;
+		Tile::TileType tileType = TiGetType(tile);
+		if (tileType != Tile::SPACE && tileType != Tile::SPACE2) return false;
 	}
 
 	return true;
 }
 
-Tile::TileType CMRouter::checkCandidate(JEdge * edge, Tile * tile) 
-{	
-	switch (TiGetType(tile)) {
-		case Tile::SPACE:
-		case Tile::SPACE2:
-			return GridEntry::EMPTY;
-
-		case Tile::TINYSPACE:
-			return GridEntry::BLOCK;
-
-		case Tile::CONNECTOR:
-			if (!m_sketchWidget->autorouteCheckConnectors()) {
-				return GridEntry::IGNORE;
-			}
-	
-			{
-				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(TiGetBody(tile));
-				if (edge->fromConnectorItems.contains(connectorItem)) {
-					return GridEntry::SAFE;			
-				}
-
-				if (edge->toConnectorItems.contains(connectorItem)) {
-					return GridEntry::SAFE;			
-				}
-			}
-
-			return GridEntry::BLOCK;
-
-		case Tile::TRACE:
-			if (!m_sketchWidget->autorouteCheckWires()) {
-				return GridEntry::IGNORE;
-			}
-
-			{
-				Wire * wire = dynamic_cast<Wire *>(TiGetBody(tile));
-				if (edge->fromTraces.contains(wire)) {
-					return GridEntry::SAFE;
-				}
-
-				if (edge->toTraces.contains(wire)) {
-					return GridEntry::SAFE;
-				}
-			}
-
-			return GridEntry::BLOCK;
-
-		case Tile::PART:
-			if (!m_sketchWidget->autorouteCheckParts()) {
-				return GridEntry::IGNORE;
-			}
-
-			return GridEntry::BLOCK;
-
-		case Tile::NONCONNECTOR:
-		case Tile::NOTBOARD:
-		case Tile::BUFFER:
-		case Tile::CONTOUR:
-			return GridEntry::BLOCK;
-
-		default:
-			// shouldn't happen:
-			return GridEntry::IGNORE;
-	}
-}
-
-*/
 void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles, QMultiHash<Tile *, PathUnit *> & tilePathUnits, PathUnit::Direction direction, int tWidthNeeded) 
 {
 	if (pathUnit->tile == next) {
@@ -2738,11 +2704,12 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 		}
 	}
 
-	TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
 
 	if (success) {
 		tracePath(edge, completePath, tracesToEdges, board, keepout);
 	}
+
+	TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
 
 	hideTiles();
 
@@ -3095,7 +3062,7 @@ void CMRouter::cleanPoints(QList<QPointF> & allPoints, JEdge * edge)
 	while (ix < allPoints.count() - 1) {
 		QPointF p1 = allPoints[ix];
 		QPointF p2 = allPoints[ix + 1];
-		if (qAbs(p1.x() - p2.x()) > 1 && qAbs(p1.y() - p2.y()) >= CloseEnough) {
+		if (qAbs(p1.x() - p2.x()) >= CloseEnough && qAbs(p1.y() - p2.y()) >= CloseEnough) {
 			// insert another point
 			QPointF p3(p2.x(), p1.y());   // the other corner may be better
 			allPoints.insert(ix + 1, p3);
@@ -3120,7 +3087,12 @@ void CMRouter::cleanPoints(QList<QPointF> & allPoints, JEdge * edge)
 		ix++;
 	}
 
-	//removeCorners(allPoints, edge);
+
+	foreach (QPointF p, allPoints) {
+		DebugDialog::debug("allpoint before rc:", p);
+	}
+
+	removeCorners(allPoints, edge);
 	//shortenUs(allPoints, subedge);
 
 	foreach (QPointF p, allPoints) {

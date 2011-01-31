@@ -174,9 +174,8 @@ protected:
 	void collectEdges(QList<JEdge *> & edges);
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
-	//void removeCorners(QList<QPointF> & allPoints, JEdge *);
-	//bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JEdge *, bool atStartOrEnd); 
-	//Tile::TileType checkCandidate(JEdge * edge, Tile * tile);
+	void removeCorners(QList<QPointF> & allPoints, JEdge *);
+	bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, JEdge *, bool atStartOrEnd); 
 	bool runEdges(QList<JEdge *> &, QList<Plane *> &, class ItemBase * board, QVector<int> & netCounters, 
 					struct RoutingStatus &, QHash<Wire *, JEdge *> & tracesToEdges, qreal keepout, bool makeJumper);
 	void clearEdges(QList<JEdge *> & edges);
