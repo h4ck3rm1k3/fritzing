@@ -353,10 +353,20 @@ int clearSourceAndDestination(Tile * tile, UserData) {
 	return 0;
 }
 
+
+int clearSourceAndDestination2(Tile * tile, UserData) {
+	if (TiGetType(tile) == Tile::SOURCE || TiGetType(tile) == Tile::DESTINATION) {
+		TraceWire * traceWire = dynamic_cast<TraceWire *>(TiGetBody(tile));
+		TiSetType(tile, traceWire == NULL ? Tile::OBSTACLE : Tile::SCHEMATICWIRESPACE);
+	}
+	return 0;
+}
+
 int checkAlready(Tile * tile, UserData userData) {
 	switch (TiGetType(tile)) {
 		case Tile::SPACE:		
 		case Tile::SPACE2:		
+		case Tile::SCHEMATICWIRESPACE:		
 		case Tile::BUFFER:
 			return 0;
 		default:
@@ -369,12 +379,14 @@ int checkAlready(Tile * tile, UserData userData) {
 }
 
 int collectOneNotEmpty(Tile * tile, UserData) {
-	Tile::TileType type = TiGetType(tile);
-	if (type == Tile::SPACE || type == Tile::SPACE2) {
-		return 0;
+	switch (TiGetType(tile)) {
+		case Tile::SPACE:
+		case Tile::SPACE2:
+		case Tile::SCHEMATICWIRESPACE:
+			return 0;
+		default:
+			return 1;  // not empty; will stop the search
 	}
-
-	return 1;		// not empty; will stop the search
 }
 
 int prepDeleteTile(Tile * tile, UserData userData) {
@@ -568,10 +580,6 @@ void CMRouter::start()
 				break;
 			}
 		}
-		if (gotOne) {
-			// we cycled back to a previous order
-			break;
-		}
 
 		// TODO: only delete the ones that have been reordered
 		foreach (Wire * trace, tracesToEdges.keys()) {
@@ -580,6 +588,11 @@ void CMRouter::start()
 		tracesToEdges.clear();
 		foreach (Plane * plane, planes) clearPlane(plane);
 		planes.clear();
+
+		if (gotOne) {
+			// we cycled back to a previous order
+			break;
+		}
 	}
 
 	if (m_cancelled) {
@@ -844,7 +857,7 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 			if (!m_sketchWidget->sameElectricalLayer2(wire->viewLayerID(), viewLayerID)) continue;
 			if (beenThere.contains(wire)) continue;
 
-			tileWire(wire, thePlane, beenThere, alreadyTiled, Tile::OBSTACLE, wireOverlapType, keepout, eliminateThin);
+			tileWire(wire, thePlane, beenThere, alreadyTiled, m_sketchWidget->autorouteTypePCB() ? Tile::OBSTACLE : Tile::SCHEMATICWIRESPACE, wireOverlapType, keepout, eliminateThin);
 			if (alreadyTiled.count() > 0) {
 				return thePlane;
 			}	
@@ -884,13 +897,14 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 			if (itemBase->hidden()) continue;
 			if (itemBase->itemType() == ModelPart::Wire) continue;
 
-			Tile * partTile = addPartTile(itemBase, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
+			QRectF r = itemBase->boundingRect();
+			r.moveTo(itemBase->pos());
+			TileRect partTileRect;
+			realsToTile(partTileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
+			insertTile(thePlane, partTileRect, alreadyTiled, itemBase, Tile::OBSTACLE, overlapType);
 			if (alreadyTiled.count() > 0) {
 				return thePlane;
 			}
-
-			TileRect partTileRect;
-			TiToRect(partTile, &partTileRect);
 			
 			// TODO: only bother with connectors that might be electrically relevant, since parts are all we need for obstacles
 
@@ -902,12 +916,10 @@ Plane * CMRouter::tilePlane(ItemBase * board, ViewLayer::ViewLayerID viewLayerID
 				TileRect tileRect;
 				realsToTile(tileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
 				extendToBounds(tileRect, partTileRect);
-				Tile * newTile = insertTile(thePlane, tileRect, alreadyTiled, connectorItem, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
-				drawGridItem(newTile);
+				insertTile(thePlane, tileRect, alreadyTiled, connectorItem, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+				//drawGridItem(newTile);
 			}
-
 		}
-
 	}
 
 	if (eliminateThin) {
@@ -1386,33 +1398,30 @@ void CMRouter::hookUpWires(JEdge * edge, QList<PathUnit *> & fullPath, QList<Wir
 		c0->tempConnectTo(c1, true);
 	}
 
-
-	if (m_sketchWidget->autorouteTypePCB()) {
-		QList<Tile *> alreadyTiled;
-		tileWires(wires, edge->plane, alreadyTiled, Tile::OBSTACLE, CMRouter::ClipAllOverlaps, keepout, true);
-		qreal l = std::numeric_limits<int>::max();
-		qreal t = std::numeric_limits<int>::max();
-		qreal r = std::numeric_limits<int>::min();
-		qreal b = std::numeric_limits<int>::min();
-		foreach (Wire * w, wires) {
-			QPointF p1 = w->pos();
-			QPointF p2 = w->line().p2() + p1;
-			l = qMin(p1.x(), l);
-			r = qMax(p1.x(), r);
-			l = qMin(p2.x(), l);
-			r = qMax(p2.x(), r);
-			t = qMin(p1.y(), t);
-			b = qMax(p1.y(), b);
-			t = qMin(p2.y(), t);
-			b = qMax(p2.y(), b);
-		}
-
-		TileRect searchRect;
-		realsToTile(searchRect, l - Wire::STANDARD_TRACE_WIDTH, t - Wire::STANDARD_TRACE_WIDTH, r + Wire::STANDARD_TRACE_WIDTH, b + Wire::STANDARD_TRACE_WIDTH); 
-		QList<TileRect> tileRects;
-		TiSrArea(NULL, edge->plane, &searchRect, collectThinTiles, &tileRects);
-		eliminateThinTiles(tileRects, edge->plane);
+	QList<Tile *> alreadyTiled;
+	tileWires(wires, edge->plane, alreadyTiled, m_sketchWidget->autorouteTypePCB() ? Tile::OBSTACLE : Tile::SCHEMATICWIRESPACE, CMRouter::ClipAllOverlaps, keepout, true);
+	qreal l = std::numeric_limits<int>::max();
+	qreal t = std::numeric_limits<int>::max();
+	qreal r = std::numeric_limits<int>::min();
+	qreal b = std::numeric_limits<int>::min();
+	foreach (Wire * w, wires) {
+		QPointF p1 = w->pos();
+		QPointF p2 = w->line().p2() + p1;
+		l = qMin(p1.x(), l);
+		r = qMax(p1.x(), r);
+		l = qMin(p2.x(), l);
+		r = qMax(p2.x(), r);
+		t = qMin(p1.y(), t);
+		b = qMax(p1.y(), b);
+		t = qMin(p2.y(), t);
+		b = qMax(p2.y(), b);
 	}
+
+	TileRect searchRect;
+	realsToTile(searchRect, l - Wire::STANDARD_TRACE_WIDTH, t - Wire::STANDARD_TRACE_WIDTH, r + Wire::STANDARD_TRACE_WIDTH, b + Wire::STANDARD_TRACE_WIDTH); 
+	QList<TileRect> tileRects;
+	TiSrArea(NULL, edge->plane, &searchRect, collectThinTiles, &tileRects);
+	eliminateThinTiles(tileRects, edge->plane);
 }
 
 struct Range 
@@ -1740,15 +1749,24 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 
 	bool horizontal = (direction == PathUnit::Left || direction == PathUnit::Right);
 
+	Tile::TileType tileType = TiGetType(pathUnit->tile);
+
 	bool bail = true;
 	switch (TiGetType(next)) {
 		case Tile::OBSTACLE:
 			break;
+		case Tile::SCHEMATICWIRESPACE:
+			{
+			// can go through other traces, but not along them
+			TraceWire * traceWire = dynamic_cast<TraceWire *>(TiGetBody(next));
+			bail = (horizontal && traceWire->wireDirection()  == TraceWire::Horizontal) || (!horizontal && traceWire->wireDirection() == TraceWire::Vertical);
+			}
+			break;
 		case Tile::SOURCE:
-			bail = (TiGetType(pathUnit->tile) != Tile::DESTINATION); 
+			bail = (tileType != Tile::DESTINATION); 
 			break;
 		case Tile::DESTINATION:
-			bail = (TiGetType(pathUnit->tile) != Tile::SOURCE); 
+			bail = (tileType != Tile::SOURCE); 
 			break;
 		case Tile::SPACE:
 		case Tile::SPACE2:
@@ -1759,9 +1777,45 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 			return;
 	}
 
-	drawGridItem(next);
+	if (!bail && tileType == Tile::SCHEMATICWIRESPACE) {
+		// can go through other traces, but not along them
+		TraceWire * traceWire = dynamic_cast<TraceWire *>(TiGetBody(pathUnit->tile));
+		bail = (horizontal && traceWire->wireDirection()  == TraceWire::Horizontal) || (!horizontal && traceWire->wireDirection() == TraceWire::Vertical);
+		if (!bail) {
+			PathUnit * parent = pathUnit->parent;
+			if (parent) {
+				// can only move through this pathUnit-> in one direction 
+				if (LEFT(parent->tile) == RIGHT(pathUnit->tile)) {
+					if (direction == PathUnit::Left) {
+						bail = qMin(YMAX(next), YMAX(parent->tile)) - qMax(YMIN(next), YMIN(parent->tile)) < TileStandardWireWidth;
+					}
+					else bail = true;
+				}
+				else if (RIGHT(parent->tile) == LEFT(pathUnit->tile)) {
+					if (direction == PathUnit::Right) {
+						bail = qMin(YMAX(next), YMAX(parent->tile)) - qMax(YMIN(next), YMIN(parent->tile)) < TileStandardWireWidth;
+					}
+					else bail = true;
+				}
+				else if (YMIN(parent->tile) == YMAX(pathUnit->tile)) {
+					if (direction == PathUnit::Up) {
+						bail = qMin(RIGHT(next), RIGHT(parent->tile)) - qMax(LEFT(next), LEFT(parent->tile)) < TileStandardWireWidth;
+					}
+					else bail = true;
+				}
+				else if (YMAX(parent->tile) == YMIN(pathUnit->tile)) {
+					if (direction == PathUnit::Down) {
+						bail = qMin(RIGHT(next), RIGHT(parent->tile)) - qMax(LEFT(next), LEFT(parent->tile)) < TileStandardWireWidth;
+					}
+					else bail = true;
+				}
+			}
+		}
+	}
+
 	if (bail) return;
 
+	drawGridItem(next);
 	if (pathUnit->parent != NULL || pathUnit->connectorItem == NULL) {
 		if (horizontal) {
 			if (qMin(YMAX(pathUnit->tile), YMAX(next)) - qMax(YMIN(pathUnit->tile), YMIN(next)) < tWidthNeeded) return;
@@ -1874,6 +1928,9 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 			break;
 		case Tile::DESTINATION:
 			c = QColor(0, 0, 255, GridEntryAlpha);
+			break;
+		case Tile::SCHEMATICWIRESPACE:
+			c = QColor(255, 192, 203, GridEntryAlpha);
 			break;
 		case Tile::OBSTACLE:
 			c = QColor(60, 60, 60, GridEntryAlpha);
@@ -2152,17 +2209,6 @@ Tile * CMRouter::addTile(NonConnectorItem * nci, Tile::TileType type, Plane * th
 	realsToTile(tileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
 	Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, nci, type, overlapType);
 	//drawGridItem(tile);
-	return tile;
-}
-
-
-Tile * CMRouter::addPartTile(ItemBase * itemBase, Tile::TileType type, Plane * thePlane, QList<Tile *> & alreadyTiled, CMRouter::OverlapType overlapType, qreal keepout) 
-{
-	QRectF r = itemBase->boundingRect();
-	r.moveTo(itemBase->pos());
-	TileRect tileRect;
-	realsToTile(tileRect, r.left() - keepout, r.top() - keepout, r.right() + keepout, r.bottom() + keepout);
-	Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, itemBase, type, overlapType);
 	return tile;
 }
 
@@ -2785,7 +2831,12 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 		tracePath(edge, completePath, tracesToEdges, board, keepout);
 	}
 
-	TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
+	if (m_sketchWidget->autorouteTypePCB()) {
+		TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination, NULL);
+	}
+	else {
+		TiSrArea(NULL, edge->plane, &m_tileMaxRect, clearSourceAndDestination2, NULL);
+	}
 
 	hideTiles();
 

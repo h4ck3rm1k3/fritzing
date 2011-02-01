@@ -1273,6 +1273,8 @@ bool ConnectorItem::isEffectivelyCircular() {
 
 void ConnectorItem::debugInfo(const QString & msg) 
 {
+
+#ifndef QT_NO_DEBUG
 	DebugDialog::debug(QString("%1 id:%2 %3 %4 %5 %6")
 		.arg(msg)
 		.arg(this->connectorSharedID())
@@ -1281,4 +1283,8 @@ void ConnectorItem::debugInfo(const QString & msg)
 		.arg(this->attachedToID())
 		.arg(this->attachedToInstanceTitle())
 	);
+#else
+	Q_UNUSED(msg);
+#endif
 }
+
