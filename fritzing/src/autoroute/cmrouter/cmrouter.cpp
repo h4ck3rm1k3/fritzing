@@ -444,6 +444,7 @@ void GridEntry::setDrawn(bool d) {
 CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 {
 	m_bothSidesNow = m_sketchWidget->routeBothSides();
+	m_unionPlane = NULL;
 
 	TileStandardWireWidth = realToTile(Wire::STANDARD_TRACE_WIDTH);
 	HalfStandardWireWidth = Wire::STANDARD_TRACE_WIDTH / 2;
@@ -656,7 +657,7 @@ bool CMRouter::drc()
 		m_board = m_sketchWidget->findBoard();
 	}
 
-	return drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false);
+	return drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
 }
 
 void CMRouter::drcClean() 
@@ -665,17 +666,27 @@ void CMRouter::drcClean()
 	m_planeHash.clear();
 	m_specHash.clear();
 	m_planes.clear();
+	if (m_unionPlane) {
+		clearPlane(m_unionPlane);
+		m_unionPlane = NULL;
+	}
 }
 
-bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin) 
+bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin, bool combinePlanes) 
 {
 	drcClean();
 	m_tracesToEdges.clear();
 
+	if (combinePlanes) {
+		m_unionPlane = initPlane();
+		clipParts(m_unionPlane);
+	}
+	else {
+		m_unionPlane = NULL;
+	}
+
 	QList<Tile *> alreadyTiled;
-	Plane * plane = tilePlane(m_viewLayerIDs.at(0), alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
-	m_planeHash.insert(m_viewLayerIDs.at(0), plane);
-	m_specHash.insert(plane, ViewLayer::Bottom);
+	Plane * plane = tilePlane(m_viewLayerIDs.at(0), ViewLayer::Bottom, alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
 	if (alreadyTiled.count() > 0) {
 		displayBadTiles(alreadyTiled);
 		return false;
@@ -685,9 +696,7 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 	}
 
 	if (m_bothSidesNow) {
-		plane = tilePlane(m_viewLayerIDs.at(1), alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
-		m_planeHash.insert(m_viewLayerIDs.at(1), plane);
-		m_specHash.insert(plane, ViewLayer::Top);
+		plane = tilePlane(m_viewLayerIDs.at(1), ViewLayer::Top, alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
 		if (alreadyTiled.count() > 0) {
 			displayBadTiles(alreadyTiled);
 			return false;
@@ -702,7 +711,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 {	
 	bool allRouted = true;
 
-	bool result = drc(keepout, CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true);
+	bool result = drc(keepout, CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, m_sketchWidget->autorouteTypePCB());
 	if (!result) {
 		m_cancelled = true;
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: parts or traces are overlapping"));
@@ -794,8 +803,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 	return allRouted;
 }
 
-Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled, qreal keepout, CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin) 
-{
+Plane * CMRouter::initPlane() {
 	Tile * bufferTile = TiAlloc();
 	TiSetType(bufferTile, Tile::BUFFER);
 	TiSetBody(bufferTile, NULL);
@@ -818,15 +826,24 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & 
 	SETYMIN(bufferTile, realToTile(bufferRect.top()));		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	Plane * thePlane = TiNewPlane(bufferTile);
-	m_planes.append(thePlane);
 
 	SETRIGHT(bufferTile, realToTile(bufferRect.right()));
 	SETYMAX(bufferTile, realToTile(bufferRect.bottom()));		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	QList<Tile *> already;
 	insertTile(thePlane, m_tileMaxRect, already, NULL, Tile::SPACE, CMRouter::IgnoreAllOverlaps);
-	// if board is not rectangular, add tiles for the outside edges;
+	
+	return thePlane;
+}
 
+Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, QList<Tile *> & alreadyTiled, qreal keepout, CMRouter::OverlapType overlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin) 
+{
+	Plane * thePlane = initPlane();
+	m_planeHash.insert(viewLayerID, thePlane);
+	m_planes.append(thePlane);
+	m_specHash.insert(thePlane, viewLayerSpec);
+
+	// if board is not rectangular, add tiles for the outside edges;
 	if (!initBoard(m_board, thePlane, alreadyTiled, keepout)) return thePlane;
 
 	if (m_sketchWidget->autorouteTypePCB()) {
@@ -2309,6 +2326,7 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 	}
 	else {
 		newTile = TiInsertTile(thePlane, &tileRect, item, tileType);
+		insertUnion(m_unionPlane, tileRect, item, tileType);
 	}
 
 	//drawGridItem(newTile);
@@ -2400,10 +2418,9 @@ void CMRouter::clipInsertTile(Plane * thePlane, TileRect & tileRect, QList<Tile 
 		}
 		if (clipped) continue;
 
-		//Tile * newTile = 
-			TiInsertTile(thePlane, r, item, type);
-		//drawGridItem(newTile);
 
+		TiInsertTile(thePlane, r, item, type);
+		insertUnion(m_unionPlane, *r, item, type);
 	}
 
 	alreadyTiled.clear();
@@ -2546,131 +2563,167 @@ PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue,
 			continue;
 		}
 
-		if (tileRect.ymaxi - tileRect.ymini >= tHeightNeeded) {
-			// the tile is big enough to hold a via or one end of a jumperItem
-			nearest = pathUnit;
-			TiToRect(pathUnit->tile, &nearestSpace);
-			continue;
-		}
-
 		// look at adjacent space tiles above and below to see if the via or jumperItem connector can fit in the combined space
 		TileRect searchRect = tileRect;
-		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + (tileRect.ymaxi - tileRect.ymini));
-		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymini + tHeightNeeded);
+		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + 1);
+		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - 1);
 		if (searchRect.ymaxi - searchRect.ymini < tHeightNeeded) continue;
 
 		infoTileRect("search rect", searchRect);
 
-		QList<Tile *> alreadyTiled;
-		TiSrArea(pathUnit->tile, pathUnit->plane, &searchRect, checkAlready, &alreadyTiled);
-		if (alreadyTiled.count() == 0) {
-			// got very lucky, the adjacent area is all space tiles
-			nearestSpace = searchRect;
+		TileRect foundRect;
+		bool foundSpace = findSpace(m_unionPlane, tWidthNeeded, tHeightNeeded, searchRect, pathUnit->minCostRect, foundRect);
+		if (foundSpace) {
+			nearestSpace = foundRect;
 			nearest = pathUnit;
-			continue;
-		}
-		
-		// look through each potential empty rectangle for a nearest fit
-		// this search is O(n^^5) but assumes the worst case will be only a few rectangles
-
-		TileRect bestCandidate;
-		int bestDistance = std::numeric_limits<int>::max();
-
-		QList<TileRect *> blockRects;
-		QSet<int> xSet;
-		QSet<int> ySet;
-		xSet.insert(searchRect.xmini);
-		xSet.insert(searchRect.xmaxi);
-		ySet.insert(searchRect.ymini);
-		ySet.insert(searchRect.ymaxi);
-		foreach (Tile * tile, alreadyTiled) {
-			TileRect * t = new TileRect;
-			TiToRect(tile, t);
-			infoTile("   block tile", tile);
-			blockRects.append(t);
-			xSet.insert(qMax(t->xmini, searchRect.xmini));
-			xSet.insert(qMin(t->xmaxi, searchRect.xmaxi));
-			ySet.insert(qMax(t->ymini, searchRect.ymini));
-			ySet.insert(qMin(t->ymaxi, searchRect.ymaxi));
-		}
-
-		QList<int> xCoords = xSet.toList();
-		QList<int> yCoords = ySet.toList();
-		qSort(xCoords);		
-		qSort(yCoords);
-
-		int xCount = xCoords.count();
-		int yCount = yCoords.count();
-		for (int ix1 = 0; ix1 < xCount - 1; ix1++) {
-			int xCoord1 = xCoords.at(ix1);
-			if (xCoords.last() - xCoord1 < tWidthNeeded) {
-				// don't bother
-				break;
-			}
-
-			for (int iy1 = 0; iy1 < yCount - 1; iy1++) {
-				int yCoord1 = yCoords.at(iy1);
-				if (yCoords.last() - yCoord1 < tHeightNeeded) {
-					// don't bother
-					break;
-				}
-
-				bool canGoRight = true;
-				for (int ix2 = ix1 + 1; ix2 < xCount && canGoRight; ix2++) {
-					int xCoord2 = xCoords.at(ix2);
-					if (xCoord2 - xCoord1 < tWidthNeeded) continue;
-
-					foreach (TileRect * blockRect, blockRects) {
-						if (yCoord1 < blockRect->ymini) continue;
-						if (yCoord1 >= blockRect->ymaxi) continue;
-						if (blockRect->xmaxi <= xCoord1) continue;
-						if (blockRect->xmini >= xCoord2) continue;
-							
-						canGoRight = false;
-						break;
-					}
-					if (!canGoRight) break;
-
-					bool canGoLower = true;
-					for (int iy2 = iy1 + 1; iy2 < yCount && canGoLower; iy2++) {
-						int yCoord2 = yCoords.at(iy2);
-						if (yCoord2 - yCoord1 < tHeightNeeded) continue;
-
-						TileRect candidate;
-						candidate.xmini = xCoord1;
-						candidate.xmaxi = xCoord2;
-						candidate.ymini = yCoord1;
-						candidate.ymaxi = yCoord2;
-						foreach (TileRect * blockRect, blockRects) {
-							if (!tileRectsIntersect(blockRect, &candidate)) continue;
-							canGoRight = canGoLower = false;
-							break;
-						}
-
-						if (!canGoLower) break;
-
-						int d = manhattan(candidate, pathUnit->minCostRect);
-						if (d < bestDistance) {
-							bestCandidate = candidate;
-							bestDistance = d;
-						}
-					}
-				}
-			}
-		}
-
-		foreach(TileRect * blockRect, blockRects) {
-			delete blockRect;
-		}
-
-		if (bestDistance < std::numeric_limits<int>::max()) {
-			nearest = pathUnit;
-			infoTileRect("   best candidate", bestCandidate);
-			nearestSpace = bestCandidate;
 		}
 	}
 
 	return nearest;
+}
+
+bool CMRouter::findSpace(Plane * thePlane, int tWidthNeeded, int tHeightNeeded, TileRect & searchRect, TileRect & minCostRect, TileRect & foundRect) 
+{
+	QList<Tile *> alreadyTiled;
+	TiSrArea(NULL, thePlane, &searchRect, checkAlready, &alreadyTiled);
+	if (alreadyTiled.count() == 0) {
+		// got very lucky, the adjacent area is all space tiles
+		foundRect = searchRect;
+		return true;
+	}
+		
+	// look through each potential empty rectangle for a nearest fit
+	// this search is O(n^^5) but assumes the worst case will be only a few rectangles
+
+	TileRect bestCandidate;
+	int bestDistance = std::numeric_limits<int>::max();
+
+	QList<TileRect *> blockRects;
+	QSet<int> xSet;
+	QSet<int> ySet;
+	xSet.insert(searchRect.xmini);
+	xSet.insert(searchRect.xmaxi);
+	ySet.insert(searchRect.ymini);
+	ySet.insert(searchRect.ymaxi);
+	foreach (Tile * tile, alreadyTiled) {
+		TileRect * t = new TileRect;
+		TiToRect(tile, t);
+		infoTile("   block tile", tile);
+		blockRects.append(t);
+		xSet.insert(qMax(t->xmini, searchRect.xmini));
+		xSet.insert(qMin(t->xmaxi, searchRect.xmaxi));
+		ySet.insert(qMax(t->ymini, searchRect.ymini));
+		ySet.insert(qMin(t->ymaxi, searchRect.ymaxi));
+	}
+
+	QList<int> xCoords = xSet.toList();
+	QList<int> yCoords = ySet.toList();
+	qSort(xCoords);		
+	qSort(yCoords);
+
+	int xCount = xCoords.count();
+	int yCount = yCoords.count();
+	for (int ix1 = 0; ix1 < xCount - 1; ix1++) {
+		int xCoord1 = xCoords.at(ix1);
+		if (xCoords.last() - xCoord1 < tWidthNeeded) {
+			// don't bother
+			break;
+		}
+
+		for (int iy1 = 0; iy1 < yCount - 1; iy1++) {
+			int yCoord1 = yCoords.at(iy1);
+			if (yCoords.last() - yCoord1 < tHeightNeeded) {
+				// don't bother
+				break;
+			}
+
+			bool canGoRight = true;
+			for (int ix2 = ix1 + 1; ix2 < xCount && canGoRight; ix2++) {
+				int xCoord2 = xCoords.at(ix2);
+				if (xCoord2 - xCoord1 < tWidthNeeded) continue;
+
+				foreach (TileRect * blockRect, blockRects) {
+					if (yCoord1 < blockRect->ymini) continue;
+					if (yCoord1 >= blockRect->ymaxi) continue;
+					if (blockRect->xmaxi <= xCoord1) continue;
+					if (blockRect->xmini >= xCoord2) continue;
+							
+					canGoRight = false;
+					break;
+				}
+				if (!canGoRight) break;
+
+				bool canGoLower = true;
+				for (int iy2 = iy1 + 1; iy2 < yCount && canGoLower; iy2++) {
+					int yCoord2 = yCoords.at(iy2);
+					if (yCoord2 - yCoord1 < tHeightNeeded) continue;
+
+					TileRect candidate;
+					candidate.xmini = xCoord1;
+					candidate.xmaxi = xCoord2;
+					candidate.ymini = yCoord1;
+					candidate.ymaxi = yCoord2;
+					foreach (TileRect * blockRect, blockRects) {
+						if (!tileRectsIntersect(blockRect, &candidate)) continue;
+						canGoRight = canGoLower = false;
+						break;
+					}
+
+					if (!canGoLower) break;
+
+					int d = manhattan(candidate, minCostRect);
+					if (d < bestDistance) {
+						bestCandidate = candidate;
+						bestDistance = d;
+					}
+				}
+			}
+		}
+	}
+
+	foreach(TileRect * blockRect, blockRects) {
+		delete blockRect;
+	}
+
+	if (bestDistance < std::numeric_limits<int>::max()) {
+		infoTileRect("   best candidate", bestCandidate);
+		foundRect = bestCandidate;
+		return true;
+	}
+
+	return false;
+}
+
+void CMRouter::clipParts(Plane * thePlane) 
+{
+	foreach (QGraphicsItem * item,  m_sketchWidget->scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->itemType() == ModelPart::Wire) continue;
+		if (itemBase->hidden()) continue;
+		if (!itemBase->isVisible()) continue;
+		if (itemBase == m_board) continue;
+		if (itemBase->layerKinChief() == m_board) continue;
+		if (!itemBase->layerKinChief()->hasConnectors()) continue;
+
+		switch (itemBase->viewLayerID()) {
+			case ViewLayer::Silkscreen0:
+			case ViewLayer::Silkscreen1:
+				break;
+			default:
+				continue;
+		}
+
+		QRectF partRect = itemBase->boundingRect();
+		partRect.moveTo(itemBase->pos());
+		TileRect partTileRect;
+		realsToTile(partTileRect, partRect.left(), partRect.top(), partRect.right(), partRect.bottom());
+		if (partTileRect.xmini < m_tileMaxRect.xmini) partTileRect.xmini = m_tileMaxRect.xmini;
+		if (partTileRect.xmaxi > m_tileMaxRect.xmaxi) partTileRect.xmaxi = m_tileMaxRect.xmaxi;
+		if (partTileRect.ymini < m_tileMaxRect.ymini) partTileRect.ymini = m_tileMaxRect.ymini;
+		if (partTileRect.ymaxi > m_tileMaxRect.ymaxi) partTileRect.ymaxi = m_tileMaxRect.ymaxi;
+		insertUnion(thePlane, partTileRect, NULL, Tile::OBSTACLE);
+	}
 }
 
 bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, 
@@ -2724,7 +2777,7 @@ bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit *
 								 QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout)
 {
 	QList<Tile *> alreadyTiled;
-	addTile(jumperConnectorItem, Tile::OBSTACLE, nearest->plane, alreadyTiled, CMRouter::ClipAllOverlaps, keepout);
+	addTile(jumperConnectorItem, Tile::OBSTACLE, nearest->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
 
 	PathUnit * parent = nearest;
 	while (parent->parent) {
@@ -3392,9 +3445,18 @@ void CMRouter::expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem
 {
 	connectorItems.append(originalConnectorItem);
 	ConnectorItem::collectEqualPotential(connectorItems, m_bothSidesNow, ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag);
-	// TODO: discard hidden, ...?
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		TraceWire * traceWire = TraceWire::getTrace(connectorItem);
 		if (traceWire) visited.insert(traceWire);
 	}
+}
+
+
+void CMRouter::insertUnion(Plane * thePlane, TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType) {
+	if (thePlane == NULL) return;
+	if (tileType == Tile::SPACE) return;
+	if (tileType == Tile::SPACE2) return;
+			
+	TiInsertTile(thePlane, &tileRect, NULL, Tile::OBSTACLE);
+	infoTileRect("union", tileRect);
 }

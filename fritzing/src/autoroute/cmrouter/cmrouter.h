@@ -180,7 +180,7 @@ protected:
 	void updateProgress(int num, int denom);
 	GridEntry * drawGridItem(Tile * tile);
 	void seedNext(PathUnit *, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
-	Plane * tilePlane(ViewLayer::ViewLayerID viewLayerID, QList<Tile *> & alreadyTiled, qreal keepout, CMRouter::OverlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin);
+	Plane * tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QList<Tile *> & alreadyTiled, qreal keepout, CMRouter::OverlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin);
 	void tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Tile::TileType, 
 					CMRouter::OverlapType overlapType, qreal keepout, bool eliminateThin);
 	void tileWire(Wire *, QList<Wire *> & beenThere, QList<Tile *> & alreadyTiled, Tile::TileType, 
@@ -215,7 +215,7 @@ protected:
 	bool overlapsOnly(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	void eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane);
 	void eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane);
-	bool drc(qreal keepout, CMRouter::OverlapType, CMRouter::OverlapType wiresOverlap, bool eliminateThin); 
+	bool drc(qreal keepout, CMRouter::OverlapType, CMRouter::OverlapType wiresOverlap, bool eliminateThin, bool combinePlanes); 
 	void clearPlane(Plane * thePlane);
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	PathUnit * findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
@@ -224,7 +224,10 @@ protected:
 								 QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, VirtualWire *);
 	void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & traceWires);
-
+	void clipParts(Plane *);
+	Plane * initPlane();
+	bool findSpace(Plane *, int tWidthNeeded, int tHeightNeeded, TileRect & searchRect, TileRect & minCostRect, TileRect & foundRect);
+	void insertUnion(Plane *, TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
@@ -239,6 +242,7 @@ protected:
 	QHash<ViewLayer::ViewLayerID, Plane *> m_planeHash;
 	QHash<Plane*, ViewLayer::ViewLayerSpec> m_specHash;
 	QList<Plane *> m_planes;
+	Plane * m_unionPlane;
 	QHash<Wire *, JEdge *> m_tracesToEdges;
 	ItemBase * m_board;
 };
