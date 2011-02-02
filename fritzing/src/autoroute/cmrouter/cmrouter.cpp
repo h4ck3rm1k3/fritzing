@@ -2081,15 +2081,6 @@ void CMRouter::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndo
 					oldTraces.append(wire);
 				}
 			}
-			/*
-			else if (wire->getRatsnest()) {
-				if (parentCommand) {
-					sketchWidget->makeChangeRoutedCommand(wire, false, sketchWidget->getRatsnestOpacity(false), parentCommand);
-				}
-				wire->setRouted(false);
-				wire->setOpacity(sketchWidget->getRatsnestOpacity(false));	
-			}
-			*/
 			continue;
 		}
 

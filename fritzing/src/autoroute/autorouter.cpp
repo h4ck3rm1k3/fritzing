@@ -58,7 +58,7 @@ void Autorouter::cleanUp() {
 void Autorouter::updateRoutingStatus() {
 	RoutingStatus routingStatus;
 	routingStatus.zero();
-	m_sketchWidget->updateRoutingStatus(routingStatus, false);
+	m_sketchWidget->updateRoutingStatus(routingStatus, true);
 }
 
 TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, ViewLayer::ViewLayerSpec viewLayerSpec)
