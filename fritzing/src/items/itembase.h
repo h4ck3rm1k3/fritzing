@@ -118,7 +118,7 @@ public:
 	void updateConnections(ConnectorItem *);
 	virtual void updateConnections();
 	virtual const QString & title();
-	bool getVirtual();
+	bool getRatsnest();
 	const QHash<QString, QPointer<class Bus> > & buses();
 	void addBusConnectorItem(class Bus *, ConnectorItem *);
 	void clearBusConnectorItems();

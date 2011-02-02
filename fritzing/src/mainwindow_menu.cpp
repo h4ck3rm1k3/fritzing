@@ -34,7 +34,6 @@ $Date$
 #include "waitpushundostack.h"
 #include "partseditor/partseditormainwindow.h"
 #include "help/aboutbox.h"
-#include "autoroute/autorouter1.h"
 #include "autoroute/cmrouter/cmrouter.h"
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
@@ -3023,14 +3022,13 @@ void MainWindow::autoroute() {
 
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
-	Autorouter1 * autorouter = new Autorouter1(pcbSketchWidget);
-	//CMRouter * autorouter = new CMRouter(pcbSketchWidget);
+	CMRouter * autorouter = new CMRouter(pcbSketchWidget);
 
 	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(cancel()), autorouter, SLOT(cancel()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(skip()), autorouter, SLOT(cancelTrace()), Qt::DirectConnection);
-	connect(&progress, SIGNAL(stop()), autorouter, SLOT(stopTrace()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(stop()), autorouter, SLOT(stopTracing()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(setMaximumProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(setProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
 	ProcessEventBlocker::processEvents();
@@ -3894,17 +3892,16 @@ void MainWindow::designRulesCheck()
 	if (pcbSketchWidget == NULL) return;
 
 	CMRouter cmRouter(pcbSketchWidget);
-	QList<Plane *> planes;
-	bool result = cmRouter.drc(planes);
+	bool result = cmRouter.drc();
 
 	if (result) {
-		QMessageBox::information(this, tr("Fritzing"), tr("No overlaps found"));
+		QMessageBox::information(this, tr("Fritzing"), tr("The sketch is ok: connectors and traces are not too close together."));
 	}
 	else {
-		QMessageBox::warning(this, tr("Fritzing"), tr("Overlaps found"));
+		QMessageBox::warning(this, tr("Fritzing"), tr("Some connectors and/or traces are too close together."));
 	}
 
-	cmRouter.drcClean(planes);
+	cmRouter.drcClean();
 }
 
 void MainWindow::changeTraceLayer() {

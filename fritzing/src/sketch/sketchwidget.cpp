@@ -530,19 +530,15 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 	ItemBase * newItem = PartFactory::createPart(modelPart, viewLayerSpec, viewIdentifier, viewGeometry, id, m_itemMenu, m_wireMenu, true);
 	Wire * wire = dynamic_cast<Wire *>(newItem);
 	if (wire) {
-		bool virtualWire = viewGeometry.getVirtual();
-		if (virtualWire) {
+		bool ratsnest = viewGeometry.getRatsnest();
+		if (ratsnest) {
 			setClipEnds((ClipableWire *) wire, true);
 		}
-		else {
-			if (viewGeometry.getTrace()) {
+		else if (viewGeometry.getTrace()) {
 				setClipEnds((ClipableWire *) wire, true);
-			}
-			else {
-				if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
-					wire->setNormal(true);
-				}
-			}
+		}
+		else {
+			wire->setNormal(true);
 		}
 
 		wire->setUp(getWireViewLayerID(viewGeometry, wire->viewLayerSpec()), m_viewLayers, this);
@@ -3380,7 +3376,7 @@ void SketchWidget::sortSelectedByZ(QList<ItemBase *> & bases) {
 	for (int i = 0; i < items.count(); i++) {
 		ItemBase * itemBase =  ItemBase::extractTopLevelItemBase(items[i]);
 		if (itemBase == NULL) continue;
-		if (itemBase->getVirtual()) continue;
+		if (itemBase->getRatsnest()) continue;
 		if (tlBases.contains(itemBase)) continue;
 
 		if (itemBase != NULL) {
@@ -6529,7 +6525,7 @@ void SketchWidget::copyBoundingRectsSlot(QHash<QString, QRectF> & boundingRects)
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		ItemBase * itemBase =  ItemBase::extractTopLevelItemBase(item);
 		if (itemBase == NULL) continue;
-		if (itemBase->getVirtual()) continue;
+		if (itemBase->getRatsnest()) continue;
 
 		itemsBoundingRect |= itemBase->sceneBoundingRect();	
 	}

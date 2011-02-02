@@ -143,3 +143,8 @@ void TraceWire::setWireDirection(TraceWire::WireDirection wireDirection) {
 TraceWire::WireDirection TraceWire::wireDirection() {
 	return m_wireDirection;
 }
+
+TraceWire * TraceWire::getTrace(ConnectorItem * connectorItem)
+{
+	return dynamic_cast<TraceWire *>(connectorItem->attachedTo());
+}

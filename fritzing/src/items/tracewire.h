@@ -40,6 +40,9 @@ public:
 	bool canSwitchLayers();
 
 public:
+	static TraceWire * getTrace(ConnectorItem *);
+
+public:
 	enum WireDirection {
 		NoDirection,
 		Vertical,

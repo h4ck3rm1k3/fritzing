@@ -887,10 +887,6 @@ void Wire::setRouted(bool routed) {
 	m_viewGeometry.setRouted(routed);
 }
 
-bool Wire::getVirtual() {
-	return m_viewGeometry.getVirtual();
-}
-
 void Wire::setRatsnest(bool ratsnest) {
 	m_viewGeometry.setRatsnest(ratsnest);
 }
@@ -1250,7 +1246,7 @@ bool Wire::connectionIsAllowed(ConnectorItem * to) {
 	Wire * w = dynamic_cast<Wire *>(to->attachedTo());
 	if (w == NULL) return true;
 
-	if (w->getVirtual()) return false;
+	if (w->getRatsnest()) return false;
 
 	return m_viewIdentifier != ViewIdentifierClass::BreadboardView;
 }

@@ -45,7 +45,7 @@ BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifi
 
 void BreadboardSketchWidget::setWireVisible(Wire * wire)
 {
-	bool visible = !wire->getVirtual();
+	bool visible = !wire->getRatsnest();
 	wire->setVisible(visible);
 	wire->setEverVisible(visible);
 	//wire->setVisible(true);					// for debugging

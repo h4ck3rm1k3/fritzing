@@ -86,7 +86,8 @@ public:
 		GroundPlane_Bottom,
 		Top,
 		Bottom,
-		TopAndBottom
+		TopAndBottom,
+		UnknownSpec
 	};
 
 public:

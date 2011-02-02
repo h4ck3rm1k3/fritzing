@@ -19,7 +19,6 @@
 
 HEADERS += \
 src/autoroute/autorouter.h \
-src/autoroute/autorouter1.h \
 src/autoroute/cmrouter/cmrouter.h \
 src/autoroute/cmrouter/priorityqueue.h \
 src/autoroute/autorouteprogressdialog.h \
@@ -27,7 +26,6 @@ src/autoroute/cmrouter/tile.h
  
 SOURCES += \
 src/autoroute/autorouter.cpp \
-src/autoroute/autorouter1.cpp \
 src/autoroute/cmrouter/cmrouter.cpp \
 src/autoroute/autorouteprogressdialog.cpp \
 src/autoroute/cmrouter/tile.cpp \

@@ -736,8 +736,8 @@ const QString & ItemBase::title() {
 	return m_modelPart->title();
 }
 
-bool ItemBase::getVirtual() {
-	return m_viewGeometry.getVirtual();
+bool ItemBase::getRatsnest() {
+	return m_viewGeometry.getRatsnest();
 }
 
 const QHash<QString, QPointer<Bus> > & ItemBase::buses() {

@@ -446,7 +446,7 @@ ConnectorItem * ConnectorItem::firstConnectedToIsh() {
 	if (m_connectedTo.count() <= 0) return NULL;
 
 	foreach (ConnectorItem * connectorItem, m_connectedTo) {
-		if (!connectorItem->attachedTo()->getVirtual()) return connectorItem;
+		if (!connectorItem->attachedTo()->getRatsnest()) return connectorItem;
 	}
 
 	return NULL;
@@ -468,7 +468,7 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint(ConnectorItem * connectee) {
 
 	if ((connectee != NULL) && !m_circular && !m_shape.isEmpty() && (connectee->attachedToItemType() == ModelPart::Wire)) {
 		Wire * wire = dynamic_cast<Wire *>(connectee->attachedTo());
-		if ((wire != NULL) && !wire->getVirtual()) {
+		if ((wire != NULL) && !wire->getRatsnest()) {
 			QPointF anchor = wire->otherConnector(connectee)->sceneAdjustedTerminalPoint(NULL);
 			double newX = 0, newY = 0, newDistance = MAX_DOUBLE;
 			int count = m_shape.elementCount();
@@ -598,6 +598,12 @@ ViewLayer::ViewLayerID ConnectorItem::attachedToViewLayerID() {
 	if (m_attachedTo == NULL) return ViewLayer::UnknownLayer;
 
 	return m_attachedTo->viewLayerID();
+}
+
+ViewLayer::ViewLayerSpec ConnectorItem::attachedToViewLayerSpec() {
+	if (m_attachedTo == NULL) return ViewLayer::UnknownSpec;
+
+	return m_attachedTo->viewLayerSpec();
 }
 
 ViewIdentifierClass::ViewIdentifier ConnectorItem::attachedToViewIdentifier() {
@@ -1275,13 +1281,15 @@ void ConnectorItem::debugInfo(const QString & msg)
 {
 
 #ifndef QT_NO_DEBUG
-	DebugDialog::debug(QString("%1 id:%2 %3 %4 %5 %6")
+	DebugDialog::debug(QString("%1 cid:%2 %3 %4 id:%5 %6 vlid:%7 spec:%8")
 		.arg(msg)
 		.arg(this->connectorSharedID())
 		.arg(this->connectorSharedName())
 		.arg(this->attachedToTitle())
 		.arg(this->attachedToID())
 		.arg(this->attachedToInstanceTitle())
+		.arg(this->attachedToViewLayerID())
+		.arg(this->attachedToViewLayerSpec())
 	);
 #else
 	Q_UNUSED(msg);

@@ -136,10 +136,6 @@ void ViewGeometry::set(const ViewGeometry & that) {
 	m_rect = that.m_rect;
 }
 
-void ViewGeometry::setVirtual(bool virt) {
-	setWireFlag(virt, VirtualFlag);
-}
-
 void ViewGeometry::setRouted(bool routed) {
 	setWireFlag(routed, RoutedFlag);
 }
@@ -158,10 +154,6 @@ void ViewGeometry::setNormal(bool normal) {
 
 void ViewGeometry::setAutoroutable(bool autoroutable) {
 	setWireFlag(autoroutable, AutoroutableFlag);
-}
-
-bool ViewGeometry::getVirtual() const {
-	return m_wireFlags.testFlag(VirtualFlag);
 }
 
 bool ViewGeometry::getRouted() const {

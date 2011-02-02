@@ -46,7 +46,6 @@ public:
 public:
 	enum WireFlag {
 		NoFlag = 0,
-		VirtualFlag = 1,
 		RoutedFlag = 2,
 		TraceFlag = 4,
 		ObsoleteJumperFlag = 8,
@@ -78,8 +77,6 @@ public:
 	void setTransform(QTransform);
 	QTransform transform() const;
 	void set(const ViewGeometry &);
-	void setVirtual(bool);
-	bool getVirtual() const;
 	void setRouted(bool);
 	bool getRouted() const;
 	void setTrace(bool);

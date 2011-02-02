@@ -324,7 +324,7 @@ void ClipableWire::dispatchHover(QPointF scenePos) {
 
 			ClipableWire * w = dynamic_cast<ClipableWire *>(toConnectorItem->attachedTo());
 			if (w == NULL) continue;
-			if (w->getVirtual()) continue;									// is there a better way to check this?
+			if (w->getRatsnest()) continue;									// is there a better way to check this?
 
 			if (insideSpoke(w, scenePos)) {
 				//DebugDialog::debug("got inside spoke");

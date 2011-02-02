@@ -62,6 +62,7 @@ public:
 	void setOverConnectorItem(ConnectorItem *);
 	int attachedToItemType();
 	ViewLayer::ViewLayerID attachedToViewLayerID();
+	ViewLayer::ViewLayerSpec attachedToViewLayerSpec();
 	ViewIdentifierClass::ViewIdentifier attachedToViewIdentifier();
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();

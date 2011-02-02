@@ -106,8 +106,6 @@ public:
 	void setTrace(bool);
 	bool getRouted();
 	void setRouted(bool);
-	bool getVirtual();
-	void setVirtual(bool);
 	bool getRatsnest();
 	void setRatsnest(bool);
 	void setAutoroutable(bool);

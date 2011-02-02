@@ -62,18 +62,14 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 	switch (modelPart->itemType()) {
 		case ModelPart::Wire:
 		{
-			bool virtualWire = viewGeometry.getVirtual();
-			if (virtualWire) {
+			bool ratsnest = viewGeometry.getRatsnest();
+			if (ratsnest) {
 				return new VirtualWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);		
 			}
-			else {
-				if (viewGeometry.getTrace()) {
-					return new TraceWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
-				}
-				else {
-					return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu, true);
-				}
+			if (viewGeometry.getTrace()) {
+				return new TraceWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
 			}
+			return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu, true);
 
 		}
 		case ModelPart::Note:
