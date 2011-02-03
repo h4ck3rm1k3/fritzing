@@ -66,7 +66,9 @@ signals:
 	void setMaximumProgress(int);
 	void setProgressValue(int);
 	void wantTopVisible();
-	void wantBottomVisible();
+	void wantBottomVisible();	
+	void wantBothVisible();
+	void cycleUpdate(const QString &);
 
 protected:
 	class PCBSketchWidget * m_sketchWidget;

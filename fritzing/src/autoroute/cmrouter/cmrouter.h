@@ -99,10 +99,10 @@ struct CompletePath {
 	bool goodEnough;
 };
 
-struct TilePair
+struct TilePointRect
 {
-	Tile * tile1;
-	Tile * tile2;
+	TilePoint tilePoint;
+	TileRect tileRect;
 };
 
 struct Ordering {
@@ -155,7 +155,7 @@ public:
 	void start();
 	bool drc(); 
 	void drcClean(); 
-	
+
 protected:
 	enum OverlapType {
 		IgnoreAllOverlaps = 0,
@@ -204,6 +204,7 @@ protected:
 						QMultiHash<Tile *, PathUnit *> &, qreal keepout);
 	bool propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destPathUnits, QMultiHash<Tile *, PathUnit *> &, CompletePath &);
 	TileRect calcMinCostRect(PathUnit * pathUnit, Tile * next);
+	TileRect calcMinCostRect(PathUnit * pathUnit, TileRect & next);
 	bool isRedundantPath(PathUnit * pathUnit, TileRect & minCostRect, int sourceCost);
 	bool goodEnough(CompletePath & completePath);
 	void tracePath(CompletePath & completePath, qreal keepout);
@@ -216,18 +217,18 @@ protected:
 	void eliminateThinTiles(QList<TileRect> & tileRects, Plane * thePlane);
 	void eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane);
 	bool drc(qreal keepout, CMRouter::OverlapType, CMRouter::OverlapType wiresOverlap, bool eliminateThin, bool combinePlanes); 
-	void clearPlane(Plane * thePlane);
+	void clearPlane(Plane * thePlane, bool rotate90);
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	PathUnit * findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
-	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, JEdge * edge, 
-								 QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout);
+	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, 
+							JEdge * edge, QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, VirtualWire *);
 	void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & traceWires);
-	void clipParts(Plane *);
-	Plane * initPlane();
-	bool findSpace(Plane *, int tWidthNeeded, int tHeightNeeded, TileRect & searchRect, TileRect & minCostRect, TileRect & foundRect);
-	void insertUnion(Plane *, TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType);
+	void clipParts();
+	Plane * initPlane(bool rotate90);
+	void insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType);
+	bool blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, Tile * next, int tWidthNeeded);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
@@ -236,6 +237,9 @@ protected:
 protected:
 	QRectF m_maxRect;
 	TileRect m_tileMaxRect;
+	QRectF m_maxRect90;
+	TileRect m_tileMaxRect90;
+	QMatrix m_matrix90;
 	TileRect m_overlappingTileRect;
 	QList<PathUnit *> m_pathUnits;
 	LayerList m_viewLayerIDs;
@@ -243,6 +247,7 @@ protected:
 	QHash<Plane*, ViewLayer::ViewLayerSpec> m_specHash;
 	QList<Plane *> m_planes;
 	Plane * m_unionPlane;
+	Plane * m_union90Plane;
 	QHash<Wire *, JEdge *> m_tracesToEdges;
 	ItemBase * m_board;
 };

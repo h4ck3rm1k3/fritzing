@@ -73,12 +73,17 @@ AutorouteProgressDialog::AutorouteProgressDialog(const QString & title, bool zoo
 
 	m_progressBar = new QProgressBar(this);
 	vLayout->addWidget(m_progressBar);
+
+	m_cycleLabel = new QLabel(this);
+	vLayout->addWidget(m_cycleLabel);
 	
 	if (zoomAndPan) {
-		QGroupBox * groupBox = new QGroupBox(tr("zoom and pan"));
+		QGroupBox * groupBox = new QGroupBox(tr("zoom and pan controls"));
 		QHBoxLayout *lo2 = new QHBoxLayout(groupBox);
 		lo2->setSpacing(1);
 		lo2->setMargin(0);
+
+		//TODO: use the zoom slider instead
 		lo2->addWidget(new ZoomControls(view, groupBox));
 
 		lo2->addSpacerItem(new QSpacerItem ( 10, 0, QSizePolicy::Expanding));
@@ -87,26 +92,29 @@ AutorouteProgressDialog::AutorouteProgressDialog(const QString & title, bool zoo
 		QGridLayout *gridLayout = new QGridLayout(frame);
 
 		QString imgPath = ":/resources/images/icons/arrowButton%1.png";
-		ArrowButton * label = new ArrowButton(0, ScrollAmount, view, imgPath.arg("Up"));
+		ArrowButton * label = new ArrowButton(0, -ScrollAmount, view, imgPath.arg("Up"));
 		gridLayout->addWidget(label, 0, 1);
 
-		label = new ArrowButton(ScrollAmount, 0, view, imgPath.arg("Left"));
-		gridLayout->addWidget(label, 1, 0);
-
-		label = new ArrowButton(-ScrollAmount, 0, view, imgPath.arg("Right"));
-		gridLayout->addWidget(label, 1, 2);
-
-		label = new ArrowButton(0, -ScrollAmount, view, imgPath.arg("Down"));
+		label = new ArrowButton(0, ScrollAmount, view, imgPath.arg("Down"));
 		gridLayout->addWidget(label, 2, 1);
+
+		label = new ArrowButton(-ScrollAmount, 0, view, imgPath.arg("Left"));
+		gridLayout->addWidget(label, 0, 0, 3, 1);
+
+		label = new ArrowButton(ScrollAmount, 0, view, imgPath.arg("Right"));
+		gridLayout->addWidget(label, 0, 2, 3, 1);
+
 
 		lo2->addWidget(frame);
 
+		vLayout->addSpacing(7);
 		vLayout->addWidget(groupBox);
-
-		QPushButton * button = new QPushButton(tr("Skip current trace"), this);
-		connect(button, SIGNAL(clicked()), this, SLOT(sendSkip()));
-		vLayout->addWidget(button);
+		vLayout->addSpacing(7);
 	}
+
+	//QPushButton * button = new QPushButton(tr("Skip current trace"), this);
+	//connect(button, SIGNAL(clicked()), this, SLOT(sendSkip()));
+	//vLayout->addWidget(button);
 
 	QDialogButtonBox * buttonBox = new QDialogButtonBox(stopButton ? QDialogButtonBox::Ok | QDialogButtonBox::Cancel : QDialogButtonBox::Cancel);
 	if (stopButton) {
@@ -153,5 +161,10 @@ void AutorouteProgressDialog::closeEvent(QCloseEvent *event)
 {
 	sendCancel();
 	QDialog::closeEvent(event);
+}
+
+void AutorouteProgressDialog::cycleUpdate(const QString & text)
+{
+	m_cycleLabel->setText(text);
 }
 

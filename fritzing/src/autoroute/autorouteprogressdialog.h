@@ -24,7 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
 #ifndef AUTOROUTEPROGRESSDIALOG_H
 #define AUTOROUTEPROGRESSDIALOG_H
 
@@ -50,6 +49,7 @@ public slots:
 	void sendSkip();
 	void sendCancel();
 	void sendStop();
+	void cycleUpdate(const QString &);
 
 signals:
 	void skip();
@@ -58,6 +58,7 @@ signals:
 
 protected:
 	QProgressBar * m_progressBar;	
+	QLabel * m_cycleLabel;
 };
 
 class ArrowButton : public QLabel {
