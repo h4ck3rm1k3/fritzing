@@ -614,7 +614,7 @@ void CMRouter::start()
 	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
 
 	for (int run = 0; run < MAXCYCLES; run++) {
-		emit cycleUpdate(tr("round %1 (%2 possible)").arg(run + 1).arg(MAXCYCLES));
+		emit cycleUpdate(tr("round %1 (%2 rounds total)").arg(run + 1).arg(MAXCYCLES));
 		allDone = runEdges(edges, netCounters, routingStatus, keepout, false);
 		if (m_cancelled || allDone || m_stopTracing) break;
 
@@ -783,7 +783,7 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 		eliminateThinTiles(tileRects, m_unionPlane);
 		tileRects.clear();
 		TiSrArea(NULL, m_union90Plane, &m_tileMaxRect90, collectThinTiles, &tileRects);
-		eliminateThinTiles(tileRects, m_unionPlane);
+		eliminateThinTiles(tileRects, m_union90Plane);
 	}
 
 	hideTiles();
