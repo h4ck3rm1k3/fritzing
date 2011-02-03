@@ -131,7 +131,7 @@ static const int GridEntryAlpha = 128;
 static qint64 seedNextTime = 0;
 static qint64 propagateUnitTime = 0;
 
-static const int MAXCYCLES = 1;
+static const int MAXCYCLES = 10;
 
 const int Segment::NotSet = std::numeric_limits<int>::min();
 
