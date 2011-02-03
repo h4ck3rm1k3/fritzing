@@ -898,7 +898,7 @@ ItemBase * ItemBase::stickingTo() {
 	return m_stickyList[0];
 }
 
-QList<ItemBase *> & ItemBase::stickyList() {
+QList< QPointer<ItemBase> > & ItemBase::stickyList() {
 	return m_stickyList;
 }
 

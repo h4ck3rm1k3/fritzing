@@ -246,6 +246,8 @@ public:
 	virtual void addDefaultParts();
 	float getTopZ();
 	QGraphicsItem * addWatermark(const QString & filename);
+	void copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, QByteArray & itemData, QList<long> & modelIndexes);
+	void pasteHeart(QByteArray & itemData);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

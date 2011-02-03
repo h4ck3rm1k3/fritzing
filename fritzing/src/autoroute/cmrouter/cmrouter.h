@@ -55,9 +55,9 @@ struct JEdge {
 	QList<class ConnectorItem *> toConnectorItems;
 	QSet<class Wire *> toTraces;
 	bool routed;
+	bool withJumper;
 	class VirtualWire * vw;
 	int id;
-	class JumperItem * jumperItem;
 };
 
 struct PathUnit {
@@ -108,6 +108,8 @@ struct TilePointRect
 struct Ordering {
 	QList<int> edgeIDs;
 	int unroutedCount;
+	int jumperCount;
+	int viaCount;
 };
 
 
@@ -167,7 +169,7 @@ protected:
 protected:
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
-	void addToUndo(QUndoCommand * parentCommand, QList<JEdge *> &);
+	void addToUndo(QUndoCommand * parentCommand);
 	void collectEdges(QList<JEdge *> & edges);
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
@@ -229,6 +231,8 @@ protected:
 	Plane * initPlane(bool rotate90);
 	void insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType);
 	bool blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, Tile * next, int tWidthNeeded);
+	void clearTracesAndJumpers();
+	void saveTracesAndJumpers(QByteArray & byteArray);
 
 protected:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
@@ -249,6 +253,7 @@ protected:
 	Plane * m_unionPlane;
 	Plane * m_union90Plane;
 	QHash<Wire *, JEdge *> m_tracesToEdges;
+	QList<class JumperItem *> m_jumperItems;
 	ItemBase * m_board;
 };
 

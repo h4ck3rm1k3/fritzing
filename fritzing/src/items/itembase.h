@@ -127,7 +127,7 @@ public:
 	virtual void setSticky(bool);
 	virtual void addSticky(ItemBase *, bool stickem);
 	virtual ItemBase * stickingTo();
-	virtual QList<ItemBase *> & stickyList();
+	virtual QList< QPointer<ItemBase> > & stickyList();
 	virtual bool alreadySticking(ItemBase * itemBase);
 	virtual bool stickyEnabled();
 	ConnectorItem * anyConnectorItem();
@@ -303,7 +303,7 @@ protected:
 	bool m_inactive;
 	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
 	bool m_sticky;
-	QList<ItemBase *> m_stickyList;
+	QList< QPointer<ItemBase> > m_stickyList;
 	QMenu *m_itemMenu;
 	bool m_canFlipHorizontal;
 	bool m_canFlipVertical;

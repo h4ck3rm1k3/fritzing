@@ -970,6 +970,10 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to,
 							  ViewGeometry::WireFlags wireFlags, bool addItNow,
 							  BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
 {
+	if (from == NULL || to == NULL) {
+		return NULL;
+	}
+
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	QPointF fromPos = from->sceneAdjustedTerminalPoint(NULL);
@@ -1164,9 +1168,39 @@ void SketchWidget::copy() {
 void SketchWidget::copyAux(QList<ItemBase *> & bases, bool saveBoundingRects)
 {
     QByteArray itemData;
+	QList<long> modelIndexes;
+	copyHeart(bases, saveBoundingRects, itemData, modelIndexes);
+
+	// only preserve connections for copied items that connect to each other
+	QByteArray newItemData = removeOutsideConnections(itemData, modelIndexes);
+
+    QMimeData *mimeData = new QMimeData;
+    mimeData->setData("application/x-dnditemsdata", newItemData);
+	mimeData->setData("text/plain", newItemData);
+
+	QClipboard *clipboard = QApplication::clipboard();
+	if (clipboard == NULL) {
+		// shouldn't happen
+		delete mimeData;
+		return;
+	}
+
+	clipboard->setMimeData(mimeData, QClipboard::Clipboard);
+}
+
+void SketchWidget::pasteHeart(QByteArray & itemData) {
+	QList<ModelPart *> modelParts;
+	QHash<QString, QRectF> boundingRects;
+	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts, boundingRects)) {
+		QRectF r;
+		QRectF boundingRect = boundingRects.value(this->viewName(), r);
+		this->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, true, &r);
+	}
+}
+
+void SketchWidget::copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, QByteArray & itemData, QList<long> & modelIndexes) {
 	QXmlStreamWriter streamWriter(&itemData);
 
-	QList<long> modelIndexes;
 	streamWriter.writeStartElement("module");
 	streamWriter.writeAttribute("fritzingVersion", Version::versionString());
 
@@ -1202,22 +1236,6 @@ void SketchWidget::copyAux(QList<ItemBase *> & bases, bool saveBoundingRects)
 	}
 	streamWriter.writeEndElement();
 	streamWriter.writeEndElement();
-
-	// only preserve connections for copied items that connect to each other
-	QByteArray newItemData = removeOutsideConnections(itemData, modelIndexes);
-
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setData("application/x-dnditemsdata", newItemData);
-	mimeData->setData("text/plain", newItemData);
-
-	QClipboard *clipboard = QApplication::clipboard();
-	if (clipboard == NULL) {
-		// shouldn't happen
-		delete mimeData;
-		return;
-	}
-
-	clipboard->setMimeData(mimeData, QClipboard::Clipboard);
 }
 
 QByteArray SketchWidget::removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes) {
@@ -4091,7 +4109,7 @@ void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
 
-	QList<ItemBase *> stickyList = itemBase->stickyList();
+	QList< QPointer<ItemBase> > stickyList = itemBase->stickyList();
 	if (stickyList.count() <= 0) return;
 
 	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), false, CheckStickyCommand::UndoOnly, parentCommand);

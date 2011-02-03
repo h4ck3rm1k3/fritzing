@@ -419,14 +419,12 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 								bool ok;
 								oldModelIndex = connect.attribute("modelIndex").toLong(&ok);
 								if (ok) {
-									connect.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
-								}
-								else {
-									// we're connected to something inside a module; fixup the first modelIndex
-									QDomElement p = connect.firstChildElement("mp");
-									if (!p.isNull()) {
-										oldModelIndex = p.attribute("i").toLong();
-										p.setAttribute("i", QString::number(oldToNew.value(oldModelIndex)));
+									long newModelIndex = oldToNew.value(oldModelIndex, -1);
+									if (newModelIndex != -1) {
+										connect.setAttribute("modelIndex", QString::number(newModelIndex));
+									}
+									else {
+										//DebugDialog::debug(QString("keep old model index %1").arg(oldModelIndex));
 									}
 								}
 								connect = connect.nextSiblingElement("connect");
