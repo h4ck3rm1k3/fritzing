@@ -127,7 +127,7 @@ public:
 	virtual void setSticky(bool);
 	virtual void addSticky(ItemBase *, bool stickem);
 	virtual ItemBase * stickingTo();
-	virtual QList< QPointer<ItemBase> > & stickyList();
+	virtual QList< QPointer<ItemBase> > stickyList();
 	virtual bool alreadySticking(ItemBase * itemBase);
 	virtual bool stickyEnabled();
 	ConnectorItem * anyConnectorItem();
@@ -196,6 +196,8 @@ public:
 	const QString & moduleID();
 	bool moveLock();
 	void setMoveLock(bool);
+	void debugInfo(const QString & msg);
+
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, qreal & negativePenWidth);
@@ -303,7 +305,7 @@ protected:
 	bool m_inactive;
 	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
 	bool m_sticky;
-	QList< QPointer<ItemBase> > m_stickyList;
+	QHash< long, QPointer<ItemBase> > m_stickyList;
 	QMenu *m_itemMenu;
 	bool m_canFlipHorizontal;
 	bool m_canFlipVertical;

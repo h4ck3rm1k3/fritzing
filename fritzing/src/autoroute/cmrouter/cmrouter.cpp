@@ -695,23 +695,8 @@ void CMRouter::start()
 	drcClean();
 	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::RedoOnly, parentCommand);
 
-
-	// the traces are added to the undo stack, but are not recreated when the undo command is invoked
-	// in other words, the traces stay put
-	// the jumper items are recreated by the undo command, so the current set have to be deleted
-	// TODO: make it so the jumperitems don't have to be deleted
-	QList<JumperItem *> toDelete;
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-		if (jumperItem == NULL) continue;
-
-		if (jumperItem->autoroutable()) {
-			toDelete << jumperItem;
-		}
-	}
-	foreach (JumperItem * jumperItem, toDelete) {
-		m_sketchWidget->deleteItem(jumperItem, true, true, false);
-	}
+	// note that the undo command which creates traces and jumpers is set to turnOffFirstRedo()
+	// in other words, the traces and jumpers created in the autorouting process are not recreated the first time the undo stack is invoked
 
 	m_sketchWidget->pushCommand(parentCommand);
 	m_sketchWidget->repaint();
@@ -1077,7 +1062,7 @@ void CMRouter::eliminateThinTiles(QList<TileRect> & originalTileRects, Plane * t
 
 			if (extendTile) {
 				QList<Tile *> alreadyTiled;
-				Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
+				insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
 				//drawGridItem(newTile);
 				TileRect leftRect = originalTileRect;
 				leftRect.xmaxi = newRect.xmini;
@@ -1236,7 +1221,7 @@ void CMRouter::eliminateThinTiles2(QList<TileRect> & tileRects, Plane * thePlane
 
 		if (doInsert) {
 			QList<Tile *> alreadyTiled;
-			Tile * newTile = insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
+			insertTile(thePlane, newRect, alreadyTiled, NULL, Tile::SPACE2, CMRouter::IgnoreAllOverlaps);
 			//drawGridItem(newTile);
 			TileRect leftRect = originalTileRect;
 			leftRect.xmaxi = newRect.xmini;
@@ -1286,7 +1271,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	foreach (QRect r, rects) {
 		TileRect tileRect;
 		realsToTile(tileRect, r.left() + boardPos.x(), r.top() + boardPos.y(), r.right() + boardPos.x(), r.bottom() + 1 + boardPos.y());  // note off-by-one weirdness
-		Tile * tile = insertTile(thePlane, tileRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+		insertTile(thePlane, tileRect, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
 		//drawGridItem(tile);
 	}
 
@@ -1425,7 +1410,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 		foreach (QRectF r, wireRects.values(w)) {
 			TileRect tileRect;
 			realsToTile(tileRect, r.left(), r.top(), r.right(), r.bottom());
-			Tile * tile = insertTile(m_planeHash.value(w->viewLayerID()), tileRect, alreadyTiled, w, tileType, overlapType);
+			insertTile(m_planeHash.value(w->viewLayerID()), tileRect, alreadyTiled, w, tileType, overlapType);
 			//drawGridItem(tile);
 			if (alreadyTiled.count() > 0) {
 				return;
@@ -1435,7 +1420,7 @@ void CMRouter::tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Ti
 
 }
 
-ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, ItemBase * board) 
+ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point) 
 {
 	// split the trace at point
 	QLineF originalLine = wire->line();
@@ -1453,11 +1438,6 @@ ConnectorItem * CMRouter::splitTrace(Wire * wire, QPointF point, ItemBase * boar
 
 	connector1->tempConnectTo(splitWire->connector0(), false);
 	splitWire->connector0()->tempConnectTo(connector1, false);
-
-	if (board) {
-		splitWire->addSticky(board, true);
-		board->addSticky(splitWire, true);
-	}
 
 	if (!wire->getAutoroutable()) {
 		// TODO: deal with undo
@@ -2280,12 +2260,11 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 				QPointF pos, c0, c1;
 				jumperItem->getParams(pos, c0, c1);
 
-				new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::jumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
+				AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::jumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
 				new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
 				new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 
-				//m_sketchWidget->createWire(jumperItem->connector0(), jumperItem->connector0()->firstConnectedToIsh(), ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
-				//m_sketchWidget->createWire(jumperItem->connector1(), jumperItem->connector1()->firstConnectedToIsh(), ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+				addItemCommand->turnOffFirstRedo();
 			}
 		}
 	}
@@ -2544,7 +2523,7 @@ bool CMRouter::reorderEdges(QList<JEdge *> & edges) {
 	int ix = 0;
 	while (ix < edges.count()) {
 		JEdge * edge = edges.at(ix++);
-		if (edge->routed) continue;
+		if (edge->routed && !edge->withJumper) continue;
 
 		int minIndex = edges.count();
 		foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(edge->vw)) {
@@ -2787,11 +2766,6 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 	}
 
 	JumperItem * jumperItem = dynamic_cast<JumperItem *>(itemBase);
-	if (m_board) {
-		jumperItem->addSticky(m_board, true);
-		m_board->addSticky(jumperItem, true);
-	}
-
 	m_sketchWidget->scene()->addItem(jumperItem);
 	QPointF destPoint1 = calcJumperLocation(nearest1, nearestSpace1, tWidthNeeded, tHeightNeeded);
 	QPointF destPoint2 = calcJumperLocation(nearest2, nearestSpace2, tWidthNeeded, tHeightNeeded);
@@ -3284,12 +3258,12 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 	// TODO: make sure that splitTrace succeeds if trace was not autoroutable
 
 	if (first->connectorItem == NULL) {
-		first->connectorItem = splitTrace(first->wire, allPoints.first(), m_board);
+		first->connectorItem = splitTrace(first->wire, allPoints.first());
 		Wire * split = qobject_cast<Wire *>(first->connectorItem->attachedTo());
 		m_tracesToEdges.insert(split, first->edge);
 	}
 	if (last->connectorItem == NULL) {
-		last->connectorItem = splitTrace(last->wire, allPoints.last(), m_board);
+		last->connectorItem = splitTrace(last->wire, allPoints.last());
 		Wire * split = qobject_cast<Wire *>(last->connectorItem->attachedTo());
 		m_tracesToEdges.insert(split, first->edge);
 	}
@@ -3300,10 +3274,6 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 	hookUpWires(fullPath, wires, keepout);
 	foreach (Wire * wire, wires) {
 		m_tracesToEdges.insert(wire, first->edge);
-		if (m_board) {
-			wire->addSticky(m_board, true);
-			m_board->addSticky(wire, true);
-		}
 	}
 }
 

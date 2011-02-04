@@ -866,22 +866,22 @@ void ItemBase::setSticky(bool s)
 }
 
 void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
+	sticky = sticky->layerKinChief();
+	this->debugInfo(QString("add sticky %1:").arg(stickem));
+	sticky->debugInfo(QString("  to"));
 	if (stickem) {
 		if (!m_sticky) {
-			foreach (ItemBase * oldstickingTo, m_stickyList) {
-				if (oldstickingTo == sticky->layerKinChief()) continue;
+			foreach (ItemBase * oldstickingTo, m_stickyList.values()) {
+				if (oldstickingTo == sticky) continue;
 
 				oldstickingTo->addSticky(this, false);
 			}
 			m_stickyList.clear();
 		}
-		m_stickyList.append(sticky->layerKinChief());
+		m_stickyList.insert(sticky->id(), sticky);
 	}
 	else {
-		int result = m_stickyList.removeOne(sticky);
-		if (result <= 0) {
-			m_stickyList.removeOne(sticky->layerKinChief());
-		}
+		m_stickyList.remove(sticky->id());
 	}
 }
 
@@ -895,15 +895,15 @@ ItemBase * ItemBase::stickingTo() {
 		DebugDialog::debug(QString("error: sticky list > 1 %1").arg(title()));
 	}
 
-	return m_stickyList[0];
+	return *m_stickyList.begin();
 }
 
-QList< QPointer<ItemBase> > & ItemBase::stickyList() {
-	return m_stickyList;
+QList< QPointer<ItemBase> > ItemBase::stickyList() {
+	return m_stickyList.values();
 }
 
 bool ItemBase::alreadySticking(ItemBase * itemBase) {
-	return m_stickyList.contains(itemBase->layerKinChief());
+	return m_stickyList.value(itemBase->layerKinChief()->id(), NULL) != NULL;
 }
 
 ConnectorItem* ItemBase::newConnectorItem(Connector *connector) 
@@ -1860,4 +1860,22 @@ void ItemBase::setMoveLock(bool moveLock)
 {
 	m_moveLock = moveLock;
 	update();
+}
+
+
+void ItemBase::debugInfo(const QString & msg) 
+{
+
+#ifndef QT_NO_DEBUG
+	DebugDialog::debug(QString("%1 '%2' id:%3 '%4' vlid:%5 spec:%6")
+		.arg(msg)
+		.arg(this->title())
+		.arg(this->id())
+		.arg(this->instanceTitle())
+		.arg(this->viewLayerID())
+		.arg(this->viewLayerSpec())
+	);
+#else
+	Q_UNUSED(msg);
+#endif
 }

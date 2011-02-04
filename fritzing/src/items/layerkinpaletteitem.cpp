@@ -146,7 +146,7 @@ ItemBase * LayerKinPaletteItem::stickingTo() {
 	return m_layerKinChief->stickingTo();
 }
 
-QList< QPointer<ItemBase> > & LayerKinPaletteItem::stickyList() {
+QList< QPointer<ItemBase> > LayerKinPaletteItem::stickyList() {
 	return m_layerKinChief->stickyList();
 }
 

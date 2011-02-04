@@ -196,7 +196,7 @@ protected:
 	void clearGridEntries();
 	void appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits, PathUnit::Direction, int tWidthNeeded);
 	void hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
-	ConnectorItem * splitTrace(Wire * wire, QPointF point, ItemBase * board);
+	ConnectorItem * splitTrace(Wire * wire, QPointF point);
 	void clearEdge(JEdge * edge);
 	bool reorderEdges(QList<JEdge *> & edges);
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);

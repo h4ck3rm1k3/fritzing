@@ -49,7 +49,7 @@ public:
 	void setSticky(bool);
 	void addSticky(ItemBase *, bool stickem);
 	ItemBase * stickingTo();
-	QList<QPointer <ItemBase> > & stickyList();
+	QList<QPointer <ItemBase> > stickyList();
 	bool alreadySticking(ItemBase * itemBase);
 	bool stickyEnabled();
 	void resetID();
