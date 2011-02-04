@@ -97,7 +97,8 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-	virtual void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect);
+	virtual void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
+									bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
 	void sendBackward();
@@ -247,7 +248,7 @@ public:
 	float getTopZ();
 	QGraphicsItem * addWatermark(const QString & filename);
 	void copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, QByteArray & itemData, QList<long> & modelIndexes);
-	void pasteHeart(QByteArray & itemData);
+	void pasteHeart(QByteArray & itemData, bool seekOutsideConnections);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -341,7 +342,8 @@ protected:
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText);
 	void drawBackground( QPainter * painter, const QRectF & rect );
-	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, ViewLayer::ViewLayerID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand);
+	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, ViewLayer::ViewLayerID, QStringList & alreadyConnected, 
+						QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand, bool seekOutsideConnections);
 	void setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand);
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);

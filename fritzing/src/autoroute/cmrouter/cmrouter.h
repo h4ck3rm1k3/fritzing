@@ -158,6 +158,14 @@ public:
 	bool drc(); 
 	void drcClean(); 
 
+	
+public slots:
+	void setMaxCycles(int);
+
+signals:
+	void setCycleMessage(const QString &);
+	void setCycleCount(int);
+
 protected:
 	enum OverlapType {
 		IgnoreAllOverlaps = 0,
@@ -255,6 +263,7 @@ protected:
 	QHash<Wire *, JEdge *> m_tracesToEdges;
 	QList<class JumperItem *> m_jumperItems;
 	ItemBase * m_board;
+	int m_maxCycles;
 };
 
 #endif

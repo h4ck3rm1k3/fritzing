@@ -30,13 +30,14 @@ $Date$
 #include <QDialog>
 #include <QProgressBar>
 #include <QLabel>
+#include <QSpinBox>
 
 class AutorouteProgressDialog : public QDialog
 {
 Q_OBJECT
 
 public:
-	AutorouteProgressDialog(const QString & title, bool zoomAndPan, bool stopButton, class ZoomableGraphicsView * view, QWidget *parent = 0);
+	AutorouteProgressDialog(const QString & title, bool zoomAndPan, bool stopButton, bool spin, class ZoomableGraphicsView * view, QWidget *parent = 0);
 	~AutorouteProgressDialog();
 
 protected:
@@ -49,16 +50,24 @@ public slots:
 	void sendSkip();
 	void sendCancel();
 	void sendStop();
-	void cycleUpdate(const QString &);
+	void setSpinLabel(const QString &);
+	void setMessage(const QString &);
+	void setSpinValue(int);
 
 signals:
 	void skip();
 	void cancel();
 	void stop();
+	void spinChange(int);
+
+protected slots:
+	void internalSpinChange(int);
 
 protected:
 	QProgressBar * m_progressBar;	
-	QLabel * m_cycleLabel;
+	QLabel * m_spinLabel;
+	QLabel * m_message;
+	QSpinBox * m_spinBox;
 };
 
 class ArrowButton : public QLabel {

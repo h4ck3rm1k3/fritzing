@@ -72,7 +72,8 @@ public:
 	void updateRoutingStatus(RoutingStatus &, bool manual);
 	void setBoardLayers(int, bool redraw);
 	long setUpSwap(ItemBase *, long newModelIndex, const QString & newModuleID, ViewLayer::ViewLayerSpec, bool doEmit, QUndoCommand * parentCommand);
-	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect);
+	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
+							bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 	virtual bool sameElectricalLayer(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);

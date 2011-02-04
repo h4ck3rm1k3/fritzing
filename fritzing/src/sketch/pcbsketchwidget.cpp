@@ -1620,7 +1620,8 @@ void PCBSketchWidget::removeWire(Wire * w, QList<ConnectorItem *> & ends, QList<
 	}
 }
 
-void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect) {
+void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, 
+						bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections) {
 	if (parentCommand == NULL) {
 		bool done = false;
 		foreach (ModelPart * modelPart, modelParts) {
@@ -1655,7 +1656,7 @@ void PCBSketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCo
 		}
 	}
 
-	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, offsetPaste, boundingRect);
+	SketchWidget::loadFromModelParts(modelParts, crossViewType, parentCommand, offsetPaste, boundingRect, seekOutsideConnections);
 }
 
 bool PCBSketchWidget::isInLayers(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec viewLayerSpec) {

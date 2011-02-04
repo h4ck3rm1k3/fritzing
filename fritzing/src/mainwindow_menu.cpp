@@ -818,7 +818,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (breadboard)").arg(displayName2));
 	}
 
-	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
+	m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false);
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
@@ -826,7 +826,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (pcb)").arg(displayName2));
 	}
 
-	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
+	m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false);
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
@@ -834,7 +834,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 		m_fileProgressDialog->setMessage(tr("loading %1 (schematic)").arg(displayName2));
 	}
 
-	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL);
+	m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, false, NULL, false);
 
 	ProcessEventBlocker::processEvents();
 	if (m_fileProgressDialog) {
@@ -890,13 +890,13 @@ void MainWindow::pasteAux(bool pasteInPlace)
 
 		QRectF r;
 		QRectF boundingRect = boundingRects.value(m_breadboardGraphicsView->viewName(), r);
-		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect);
+		m_breadboardGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false);
 
 		boundingRect = boundingRects.value(m_pcbGraphicsView->viewName(), r);
-		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect);
+		m_pcbGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false);
 
 		boundingRect = boundingRects.value(m_schematicGraphicsView->viewName(), r);
-		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect);
+		m_schematicGraphicsView->loadFromModelParts(modelParts, BaseCommand::SingleView, parentCommand, true, pasteInPlace ? &r : &boundingRect, false);
 
 		m_undoStack->push(parentCommand);
 	}
@@ -3016,7 +3016,7 @@ void MainWindow::autoroute() {
 	bool copper0Active = pcbSketchWidget->layerIsActive(ViewLayer::Copper0);
 	bool copper1Active = pcbSketchWidget->layerIsActive(ViewLayer::Copper1);
 
-	AutorouteProgressDialog progress(tr("Autorouting Progress..."), true, true, pcbSketchWidget, this);
+	AutorouteProgressDialog progress(tr("Autorouting Progress..."), true, true, true, pcbSketchWidget, this);
 	progress.setModal(true);
 	progress.show();
 
@@ -3027,12 +3027,18 @@ void MainWindow::autoroute() {
 	connect(autorouter, SIGNAL(wantTopVisible()), this, SLOT(activeLayerTop()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBottomVisible()), this, SLOT(activeLayerBottom()), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(wantBothVisible()), this, SLOT(activeLayerBoth()), Qt::DirectConnection);
+
 	connect(&progress, SIGNAL(cancel()), autorouter, SLOT(cancel()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(skip()), autorouter, SLOT(cancelTrace()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(stop()), autorouter, SLOT(stopTracing()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(spinChange(int)), autorouter, SLOT(setMaxCycles(int)), Qt::DirectConnection);
+
 	connect(autorouter, SIGNAL(setMaximumProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
 	connect(autorouter, SIGNAL(setProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
-	connect(autorouter, SIGNAL(cycleUpdate(const QString &)), &progress, SLOT(cycleUpdate(const QString &)));
+	connect(autorouter, SIGNAL(setProgressMessage(const QString &)), &progress, SLOT(setMessage(const QString &)));
+	connect(autorouter, SIGNAL(setCycleMessage(const QString &)), &progress, SLOT(setSpinLabel(const QString &)));
+	connect(autorouter, SIGNAL(setCycleCount(int)), &progress, SLOT(setSpinValue(int)));
+
 	ProcessEventBlocker::processEvents();
 	ProcessEventBlocker::block();
 

@@ -41,10 +41,11 @@ $Date$
 //
 //	if wire is split during run, what happens to wire on next run
 //
-//	fix up cancel/stop: 
+//	if current cycle unrouted count >= best so far, bail out
+//
+//	test cancel/stop: 
 //		stop either stops you where you are, 
 //		or goes back to the best outcome , if you're in ripup-and-reroute phase
-//		put up information about which cycle this is, and the best result so far
 //
 //	placing vias
 //		if double-sided, tile both sides
@@ -112,6 +113,7 @@ $Date$
 #include <QApplication>
 #include <QMessageBox> 
 #include <QElapsedTimer>
+#include <QSettings>
 
 static const int MaximumProgress = 1000;
 static const int TILEFACTOR = 1000;
@@ -124,7 +126,7 @@ static const int GridEntryAlpha = 128;
 static qint64 seedNextTime = 0;
 static qint64 propagateUnitTime = 0;
 
-static const int MAXCYCLES = 10;
+static const int DefaultMaxCycles = 10;
 
 const int Segment::NotSet = std::numeric_limits<int>::min();
 
@@ -488,6 +490,9 @@ void GridEntry::setDrawn(bool d) {
 
 CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 {
+	QSettings settings;
+	m_maxCycles = settings.value("cmrouter/maxcycles", DefaultMaxCycles).toInt();
+		
 	m_bothSidesNow = sketchWidget->routeBothSides();
 	m_unionPlane = m_union90Plane = NULL;
 	m_board = NULL;
@@ -537,7 +542,9 @@ void CMRouter::start()
 	qreal keepout = m_sketchWidget->getKeepout();			// 15 mils space
 
 	emit setMaximumProgress(MaximumProgress);
-	emit cycleUpdate(" \n ");
+	emit setProgressMessage("");
+	emit setCycleMessage("round 1 of:");
+	emit setCycleCount(m_maxCycles);
 
 	RoutingStatus routingStatus;
 	routingStatus.zero();
@@ -608,13 +615,14 @@ void CMRouter::start()
 	collectEdges(edges);
 	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
 
-	for (int run = 0; run < MAXCYCLES; run++) {
+	for (int run = 0; run < m_maxCycles; run++) {
 		QString score;
 		if (run > 0) {
 			score = tr("best so far: %1 unrouted/%n jumpers", "", orderings.at(bestOrdering).jumperCount)
 				.arg(orderings.at(bestOrdering).unroutedCount);
+			emit setProgressMessage(score);
 		}
-		emit cycleUpdate(tr("round %1 (of %2)\n%3").arg(run + 1).arg(MAXCYCLES).arg(score));
+		emit setCycleMessage(tr("round %1 of:").arg(run + 1));
 		allDone = runEdges(edges, netCounters, routingStatus, keepout, m_sketchWidget->usesJumperItem());
 		if (m_cancelled || allDone || m_stopTracing) break;
 
@@ -682,7 +690,7 @@ void CMRouter::start()
 			// stop where we are
 		}
 		else {
-			m_sketchWidget->pasteHeart(bestResult);
+			m_sketchWidget->pasteHeart(bestResult, true);
 			ProcessEventBlocker::processEvents();
 		}
 	}
@@ -1846,7 +1854,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 		return;
 	}
 
-	infoTile("    append if", next);
+	//infoTile("    append if", next);
 
 	bool horizontal = (direction == PathUnit::Left || direction == PathUnit::Right);
 
@@ -2372,7 +2380,7 @@ void CMRouter::displayBadTileRect(TileRect & tileRect) {
 
 Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType tileType, CMRouter::OverlapType overlapType) 
 {
-	infoTileRect("insert tile", tileRect);
+	//infoTileRect("insert tile", tileRect);
 	if (tileRect.xmaxi - tileRect.xmini <= 0) {
 		DebugDialog::debug("zero width tile");
 		return NULL;
@@ -3007,7 +3015,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 		nextPathUnit->plane = pathUnit->plane;
 		nextPathUnit->tile = tile;
 		tilePathUnits.insert(tile, nextPathUnit);
-		infoTile("tilepathunits insert", tile);
+		//infoTile("tilepathunits insert", tile);
 		sourceQueue.enqueue(sourceCost + destCost, nextPathUnit);
 		if (goals.count() > 0) {
 			PathUnit * bestGoal = NULL;
@@ -3475,7 +3483,7 @@ void CMRouter::insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType 
 	if (tileType == Tile::SPACE2) return;
 			
 	TiInsertTile(m_unionPlane, &tileRect, NULL, Tile::OBSTACLE);
-	infoTileRect("union", tileRect);
+	//infoTileRect("union", tileRect);
 
 	TileRect tileRect90;
 	tileRotate90(tileRect, tileRect90);
@@ -3506,3 +3514,9 @@ void CMRouter::saveTracesAndJumpers(QByteArray & byteArray) {
 	m_sketchWidget->copyHeart(itemBases, true, byteArray, modelIndexes);
 }
 
+void CMRouter::setMaxCycles(int maxCycles) 
+{
+	m_maxCycles = maxCycles;
+	QSettings settings;
+	settings.setValue("cmrouter/maxcycles", maxCycles);
+}

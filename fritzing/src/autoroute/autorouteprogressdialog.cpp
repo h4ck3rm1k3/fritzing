@@ -60,7 +60,7 @@ void ArrowButton::mousePressEvent(QMouseEvent *event) {
 
 /////////////////////////////////////
 
-AutorouteProgressDialog::AutorouteProgressDialog(const QString & title, bool zoomAndPan, bool stopButton, ZoomableGraphicsView * view, QWidget *parent) : QDialog(parent) 
+AutorouteProgressDialog::AutorouteProgressDialog(const QString & title, bool zoomAndPan, bool stopButton, bool spin, ZoomableGraphicsView * view, QWidget *parent) : QDialog(parent) 
 {
 	Qt::WindowFlags flags = windowFlags();
 	flags ^= Qt::WindowCloseButtonHint;
@@ -74,8 +74,24 @@ AutorouteProgressDialog::AutorouteProgressDialog(const QString & title, bool zoo
 	m_progressBar = new QProgressBar(this);
 	vLayout->addWidget(m_progressBar);
 
-	m_cycleLabel = new QLabel(this);
-	vLayout->addWidget(m_cycleLabel);
+	m_spinLabel = NULL;
+	m_spinBox = NULL;
+
+	if (spin) {
+		QFrame * frame = new QFrame(this);
+		m_spinLabel = new QLabel(this);
+		m_spinBox = new QSpinBox(this);
+		m_spinBox->setMinimum(1);
+		connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(internalSpinChange(int)));
+		QHBoxLayout * hBoxLayout = new QHBoxLayout(frame);
+		hBoxLayout->addStretch();
+		hBoxLayout->addWidget(m_spinLabel);
+		hBoxLayout->addWidget(m_spinBox);
+		vLayout->addWidget(frame);
+	}
+
+	m_message = new QLabel(this);
+	vLayout->addWidget(m_message);
 	
 	if (zoomAndPan) {
 		QGroupBox * groupBox = new QGroupBox(tr("zoom and pan controls"));
@@ -163,8 +179,21 @@ void AutorouteProgressDialog::closeEvent(QCloseEvent *event)
 	QDialog::closeEvent(event);
 }
 
-void AutorouteProgressDialog::cycleUpdate(const QString & text)
+void AutorouteProgressDialog::setMessage(const QString & text)
 {
-	m_cycleLabel->setText(text);
+	m_message->setText(text);
 }
 
+void AutorouteProgressDialog::setSpinLabel(const QString & text)
+{
+	m_spinLabel->setText(text);
+}
+
+void AutorouteProgressDialog::setSpinValue(int value)
+{
+	m_spinBox->setValue(value);
+}
+
+void AutorouteProgressDialog::internalSpinChange(int value) {
+	emit spinChange(value);
+}

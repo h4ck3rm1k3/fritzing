@@ -185,7 +185,7 @@ void SketchWidget::setUndoStack(WaitPushUndoStack * undoStack) {
 	m_undoStack = undoStack;
 }
 
-void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect) {
+void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
@@ -375,7 +375,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			if (!connects.isNull()) {
 				QDomElement connect = connects.firstChildElement("connect");
 				while (!connect.isNull()) {
-					handleConnect(connect, mp, fromConnectorID, connectorViewLayerID, alreadyConnected, newItems, parentCommand);
+					handleConnect(connect, mp, fromConnectorID, connectorViewLayerID, alreadyConnected, newItems, parentCommand, seekOutsideConnections);
 					connect = connect.nextSiblingElement("connect");
 				}
 			}
@@ -409,7 +409,8 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 	m_pasteOffset = QPointF(0,0);
 }
 
-void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, ViewLayer::ViewLayerID fromViewLayerID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand)
+void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, ViewLayer::ViewLayerID fromViewLayerID, 
+									QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, QUndoCommand * parentCommand, bool seekOutsideConnections)
 {
 	bool ok;
 	QHash<long, ItemBase *> otherNewItems;
@@ -429,11 +430,25 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 		if (toBase == NULL) {
 			toBase = otherNewItems.value(modelIndex, NULL);
 		}
-		if (fromBase == NULL || toBase == NULL) return;
+		if (fromBase == NULL || toBase == NULL) {
+			if (!seekOutsideConnections) return;
+
+			if (fromBase == NULL) {
+				fromBase = findItem(mp->modelIndex() * ModelPart::indexMultiplier);
+				if (fromBase == NULL) return;
+			}
+
+			if (toBase == NULL) {
+				toBase = findItem(modelIndex * ModelPart::indexMultiplier);
+				if (toBase == NULL) return;
+			}
+		}
 
 		ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID, ViewLayer::specFromID(fromViewLayerID));
 		ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID, ViewLayer::specFromID(toViewLayerID));
-		if (fromConnectorItem == NULL || toConnectorItem == NULL) return;
+		if (fromConnectorItem == NULL || toConnectorItem == NULL) {
+			return;
+		}
 
 		fromConnectorItem->connectTo(toConnectorItem);
 		toConnectorItem->connectTo(fromConnectorItem);
@@ -1188,13 +1203,13 @@ void SketchWidget::copyAux(QList<ItemBase *> & bases, bool saveBoundingRects)
 	clipboard->setMimeData(mimeData, QClipboard::Clipboard);
 }
 
-void SketchWidget::pasteHeart(QByteArray & itemData) {
+void SketchWidget::pasteHeart(QByteArray & itemData, bool seekOutsideConnections) {
 	QList<ModelPart *> modelParts;
 	QHash<QString, QRectF> boundingRects;
 	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts, boundingRects)) {
 		QRectF r;
 		QRectF boundingRect = boundingRects.value(this->viewName(), r);
-		this->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, true, &r);
+		this->loadFromModelParts(modelParts, BaseCommand::SingleView, NULL, true, &r, seekOutsideConnections);
 	}
 }
 
@@ -3857,6 +3872,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 									ViewLayer::ViewLayerSpec viewLayerSpec,
 									bool connect, bool updateConnections)
 {
+
 	DebugDialog::debug(QString("changeConnection: from %1 %2; to %3 %4 con:%5 v:%6")
 				.arg(fromID).arg(fromConnectorID)
 				.arg(toID).arg(toConnectorID)
@@ -3887,6 +3903,9 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		DebugDialog::debug(QString("change connection exit 4 %1 %2").arg(toID).arg(toConnectorID));
 		return;
 	}
+
+	fromConnectorItem->debugInfo("   from");
+	toConnectorItem->debugInfo("   to");
 
 	if (connect) {
 		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());

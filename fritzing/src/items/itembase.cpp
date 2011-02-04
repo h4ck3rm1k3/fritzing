@@ -867,8 +867,8 @@ void ItemBase::setSticky(bool s)
 
 void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
 	sticky = sticky->layerKinChief();
-	this->debugInfo(QString("add sticky %1:").arg(stickem));
-	sticky->debugInfo(QString("  to"));
+	//this->debugInfo(QString("add sticky %1:").arg(stickem));
+	//sticky->debugInfo(QString("  to"));
 	if (stickem) {
 		if (!m_sticky) {
 			foreach (ItemBase * oldstickingTo, m_stickyList.values()) {
