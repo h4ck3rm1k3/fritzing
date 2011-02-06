@@ -1848,18 +1848,12 @@ bool CMRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const
 	return true;
 }
 
-void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles, QMultiHash<Tile *, PathUnit *> & tilePathUnits, PathUnit::Direction direction, int tWidthNeeded) 
+void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles, PathUnit::Direction direction, int tWidthNeeded) 
 {
-	if (pathUnit->tile == next) {
-		// just came from here
-		return;
-	}
 
-	foreach (PathUnit * pu, tilePathUnits.values(next)) {
-		if (pu->parent == pathUnit) {
-			// we've already explored this path
-			return;
-		}
+	if (pathUnit->parent && (pathUnit->parent->tile == next)) {
+		// just came from there
+		return;
 	}
 
 	if (TiGetType(next) == Tile::BUFFER) {
@@ -1986,57 +1980,57 @@ bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction
 }
 
 void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles, QMultiHash<Tile *, PathUnit *> & tilePathUnits) {
-	//infoTile("seed next", pathUnit->tile);
+	infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
 	if ((RIGHT(pathUnit->tile) < m_tileMaxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = TR(pathUnit->tile);
-		appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Right, tWidthNeeded);
+		appendIf(pathUnit, next, tiles, PathUnit::Right, tWidthNeeded);
 		while (true) {
 			next = LB(next);
 			if (YMAX(next) <= YMIN(pathUnit->tile)) {
 				break;
 			}
 
-			appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Right, tWidthNeeded);
+			appendIf(pathUnit, next, tiles, PathUnit::Right, tWidthNeeded);
 		}
 	}
 
 	if ((LEFT(pathUnit->tile) > m_tileMaxRect.xmini) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = BL(pathUnit->tile);
-		appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Left, tWidthNeeded);
+		appendIf(pathUnit, next, tiles, PathUnit::Left, tWidthNeeded);
 		while (true) {
 			next = RT(next);
 			if (YMIN(next) >= YMAX(pathUnit->tile)) {
 				break;
 			}
 
-			appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Left, tWidthNeeded);
+			appendIf(pathUnit, next, tiles, PathUnit::Left, tWidthNeeded);
 		}
 	}
 
 	if ((YMAX(pathUnit->tile) < m_tileMaxRect.ymaxi) && (WIDTH(pathUnit->tile) >= tWidthNeeded)) {	
 		Tile * next = RT(pathUnit->tile);
-		appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Down, tWidthNeeded);
+		appendIf(pathUnit, next, tiles, PathUnit::Down, tWidthNeeded);
 		while (true) {
 			next = BL(next);
 			if (RIGHT(next) <= LEFT(pathUnit->tile)) {
 				break;
 			}
 
-			appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Down, tWidthNeeded);
+			appendIf(pathUnit, next, tiles, PathUnit::Down, tWidthNeeded);
 		}
 	}
 
 	if ((YMIN(pathUnit->tile) > m_tileMaxRect.ymini) && (WIDTH(pathUnit->tile) >= tWidthNeeded)) {		
 		Tile * next = LB(pathUnit->tile);
-		appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Up, tWidthNeeded);
+		appendIf(pathUnit, next, tiles, PathUnit::Up, tWidthNeeded);
 		while (true) {
 			next = TR(next);
 			if (LEFT(next) >= RIGHT(pathUnit->tile)) {
 				break;
 			}
 
-			appendIf(pathUnit, next, tiles, tilePathUnits, PathUnit::Up, tWidthNeeded);
+			appendIf(pathUnit, next, tiles, PathUnit::Up, tWidthNeeded);
 		}
 	}
 }
@@ -3022,6 +3016,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 	seedNext(pathUnit, tiles, tilePathUnits);
 	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
+		infoTile("   eval", tile);
 		int destCost = std::numeric_limits<int>::max();
 		TileRect minCostRect = calcMinCostRect(pathUnit, tile);
 		int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
@@ -3243,9 +3238,9 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 		fullPath.append(dpu);
 	}
 
-	//foreach (PathUnit * pathUnit, fullPath) {
-		//infoTile("tracepath", pathUnit->tile);
-	//}
+	foreach (PathUnit * pathUnit, fullPath) {
+		infoTile("tracepath", pathUnit->tile);
+	}
 
 	QList<Segment *> hSegments;
 	QList<Segment *> vSegments;
@@ -3342,9 +3337,9 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 
 void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane) 
 {
-	foreach (QPointF p, allPoints) {
-		DebugDialog::debug("allpoint before:", p);
-	}
+	//foreach (QPointF p, allPoints) {
+		//DebugDialog::debug("allpoint before:", p);
+	//}
 
 	// remove redundant pairs
 	int ix = allPoints.count() - 1;
@@ -3386,16 +3381,16 @@ void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane)
 	}
 
 
-	foreach (QPointF p, allPoints) {
-		DebugDialog::debug("allpoint before rc:", p);
-	}
+	//foreach (QPointF p, allPoints) {
+		//DebugDialog::debug("allpoint before rc:", p);
+	//}
 
 	removeCorners(allPoints, thePlane);
 	//shortenUs(allPoints, subedge);
 
-	foreach (QPointF p, allPoints) {
-		DebugDialog::debug("allpoint after:", p);
-	}
+	//foreach (QPointF p, allPoints) {
+		//DebugDialog::debug("allpoint after:", p);
+	//}
 }
 
 void CMRouter::initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QList<Segment *> & hSegments, QList<Segment *> & vSegments) 

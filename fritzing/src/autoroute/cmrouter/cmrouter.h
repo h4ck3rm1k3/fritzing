@@ -204,7 +204,7 @@ protected:
 	Tile * insertTile(Plane* thePlane, TileRect &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
 	void clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType type);
 	void clearGridEntries();
-	void appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits, PathUnit::Direction, int tWidthNeeded);
+	void appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> &, PathUnit::Direction, int tWidthNeeded);
 	void hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
 	void clearEdge(JEdge * edge);
