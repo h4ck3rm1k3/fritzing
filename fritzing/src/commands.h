@@ -252,7 +252,7 @@ class ChangeWireCommand : public BaseCommand
 public:
     ChangeWireCommand(class SketchWidget *sketchWidget, long fromID,
     					QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos,
-    					bool useLine, bool updateRatsnest,
+    					bool updateConnections, bool updateRatsnest,
     					QUndoCommand *parent);
     void undo();
     void redo();
@@ -267,7 +267,7 @@ protected:
     QLineF m_oldLine;
     QPointF m_newPos;
     QPointF m_oldPos;
-    bool m_useLine;
+    bool m_updateConnections;
 };
 
 class ChangeLayerCommand : public BaseCommand

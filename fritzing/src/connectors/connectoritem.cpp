@@ -651,6 +651,8 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	if (m_connectedTo.count() > 0) {
 		writer.writeStartElement("connects");
 		foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
+			if (connectorItem->attachedTo()->getRatsnest()) continue;
+
 			connectorItem->writeConnector(writer, "connect");
 		}
 		writer.writeEndElement();

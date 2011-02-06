@@ -55,7 +55,6 @@ JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifi
 		Colors.insert(ViewLayer::Silkscreen1, ViewLayer::Silkscreen1Color);
 	}
 
-	m_autoroutable = true;
 	m_renderer = NULL;
 	m_otherItem = m_connector0 = m_connector1 = m_dragItem = NULL;
 	if (Copper0LayerTemplate.isEmpty()) {
@@ -418,12 +417,12 @@ QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QStrin
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
-bool JumperItem::autoroutable() {
-	return m_autoroutable;
+void JumperItem::setAutoroutable(bool ar) {
+	m_viewGeometry.setAutoroutable(ar);
 }
 
-void JumperItem::setAutoroutable(bool autoroutable) {
-	m_autoroutable = autoroutable;
+bool JumperItem::getAutoroutable() {
+	return m_viewGeometry.getAutoroutable();
 }
 
 ConnectorItem * JumperItem::connector0() {

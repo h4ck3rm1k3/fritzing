@@ -82,6 +82,7 @@ AutorouteProgressDialog::AutorouteProgressDialog(const QString & title, bool zoo
 		m_spinLabel = new QLabel(this);
 		m_spinBox = new QSpinBox(this);
 		m_spinBox->setMinimum(1);
+		m_spinBox->setMaximum(99999);
 		connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(internalSpinChange(int)));
 		QHBoxLayout * hBoxLayout = new QHBoxLayout(frame);
 		hBoxLayout->addStretch();

@@ -89,7 +89,7 @@ public:
     void flipItem(long id, Qt::Orientations orientation);
     void selectItem(long id, bool state, bool updateInfoView, bool doEmit);
     void selectDeselectAllCommand(bool state);
-    void changeWire(long fromID, QLineF line, QPointF pos, bool useLine, bool updateRatsnest);   
+    void changeWire(long fromID, QLineF line, QPointF pos, bool updateConnections, bool updateRatsnest);   
     void cut();
     void copy();
     void setPaletteModel(PaletteModel *);
@@ -219,7 +219,7 @@ public:
 	virtual bool ignoreFemale();
 	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);
 	ItemBase * findItem(long id);
-	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
+	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool dontUpdate, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	int selectAllObsolete();
 	int selectAllMoveLock();
 	int selectAllItemType(ModelPart::ItemType);

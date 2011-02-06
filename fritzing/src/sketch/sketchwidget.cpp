@@ -572,13 +572,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 		}
 
 		addToScene(wire, wire->viewLayerID());
-		//DebugDialog::debug(QString("adding wire %1 %2 %3 %4 %5")
-		//	.arg(wire->id())
-		//	.arg(viewIdentifier)
-		//	.arg(viewGeometry.flagsAsInt())
-		//	.arg((long) wire, 0, 16)
-		//	.arg((long) static_cast<QGraphicsItem *>(wire), 0, 16)
-		//	);
+		wire->debugInfo("add wire");
 
 		return wire;
 	}
@@ -593,13 +587,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 
 	bool ok;
 	addPartItem(modelPart, viewLayerSpec, (PaletteItem *) newItem, doConnectors, ok, viewIdentifier);
-	//DebugDialog::debug(QString("adding part id:%1 '%2' hex:%3 vid:%4 vlid:%5")
-	//	.arg(id)
-	//	.arg(newItem->title())
-	//	.arg((long) newItem, 0, 16)
-	//	.arg(viewIdentifier)
-	//	.arg(newItem->viewLayerID())
-	//	);
+	newItem->debugInfo("add part");
 	setNewPartVisible(newItem);
 	newItem->updateConnectors();
 	return newItem;
@@ -982,7 +970,7 @@ void SketchWidget::extendChangeConnectionCommand(BaseCommand::CrossViewType cros
 
 
 long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, 
-							  ViewGeometry::WireFlags wireFlags, bool addItNow,
+							  ViewGeometry::WireFlags wireFlags, bool addItNow, bool dontUpdate,
 							  BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
 {
 	if (from == NULL || to == NULL) {
@@ -998,7 +986,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to,
 	viewGeometry.setLine(line);
 	viewGeometry.setWireFlags(wireFlags);
 
-	DebugDialog::debug(QString("creating virtual wire %11: %1, flags: %6, from %7 %8, to %9 %10, frompos: %2 %3, topos: %4 %5")
+	DebugDialog::debug(QString("creating wire %11: %1, flags: %6, from %7 %8, to %9 %10, frompos: %2 %3, topos: %4 %5")
 		.arg(newID)
 		.arg(fromPos.x()).arg(fromPos.y())
 		.arg(toPos.x()).arg(toPos.y())
@@ -1010,14 +998,16 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to,
 
 	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, from->attachedTo()->viewLayerSpec(), viewGeometry, newID, false, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
-	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
+	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 						newID, "connector0", 
 						ViewLayer::specFromID(from->attachedToViewLayerID()),
 						true, parentCommand);
-	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
+	ccc->setUpdateConnections(!dontUpdate);
+	ccc = new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
 						newID, "connector1", 
 						ViewLayer::specFromID(to->attachedToViewLayerID()),
 						true, parentCommand);
+	ccc->setUpdateConnections(!dontUpdate);
 
 	if (addItNow) {
 		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), from->attachedTo()->viewLayerSpec(), viewGeometry, newID, NULL, true, m_viewIdentifier);
@@ -1099,7 +1089,7 @@ void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
 	}
 }
 
-void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLine, bool updateRatsnest)
+void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool updateConnections, bool updateRatsnest)
 {
 	DebugDialog::debug(QString("change wire %1; %2,%3,%4,%5; %6,%7; %8")
 			.arg(fromID)
@@ -1109,16 +1099,18 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLin
 			.arg(line.y2())
 			.arg(pos.x())
 			.arg(pos.y())
-			.arg(useLine) );
+			.arg(updateConnections) );
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
 
 	Wire* wire = dynamic_cast<Wire *>(fromItem);
 	if (wire == NULL) return;
 
-	wire->setLineAnd(line, pos, useLine);
-	wire->updateConnections(wire->connector0());
-	wire->updateConnections(wire->connector1());
+	wire->setLineAnd(line, pos, true);
+	if (updateConnections) {
+		wire->updateConnections(wire->connector0());
+		wire->updateConnections(wire->connector1());
+	}
 
 	if (updateRatsnest) {
 		ratsnestConnect(wire->connector0(), true);
@@ -1222,6 +1214,8 @@ void SketchWidget::copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, 
 	if (saveBoundingRects) {
 		QRectF itemsBoundingRect;
 		foreach (ItemBase * itemBase, bases) {
+			if (itemBase->getRatsnest()) continue;
+
 			itemsBoundingRect |= itemBase->sceneBoundingRect();
 		}
 
@@ -1246,6 +1240,7 @@ void SketchWidget::copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, 
 
 	streamWriter.writeStartElement("instances");
 	foreach (ItemBase * base, bases) {
+		if (base->getRatsnest()) continue;
 		base->modelPart()->saveInstances("", streamWriter, false);
 		modelIndexes.append(base->modelPart()->modelIndex());
 	}
@@ -6149,7 +6144,7 @@ void SketchWidget::disconnectAllSlot(QList<ConnectorItem *> connectorItems, QHas
 						}
 
 						foreach (ConnectorItem * tConnectorItem, connectorHash.values(fConnectorItem)) {
-							createWire(fConnectorItem, tConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+							createWire(fConnectorItem, tConnectorItem, ViewGeometry::NoFlag, false, false, BaseCommand::CrossView, parentCommand);
 						}
 					}
 				}
@@ -6777,7 +6772,7 @@ void SketchWidget::disconnectWireSlot(QSet<ItemBase *> & foreignDeletedItems, QL
 				}
 
 				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-					createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+					createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, false, BaseCommand::CrossView, parentCommand);
 				}
 			}
 		}

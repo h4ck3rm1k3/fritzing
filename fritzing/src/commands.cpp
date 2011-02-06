@@ -409,7 +409,7 @@ QString ChangeConnectionCommand::getParamString() const {
 
 ChangeWireCommand::ChangeWireCommand(SketchWidget* sketchWidget, long fromID,
 									 QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, 
-									 bool useLine, bool updateRatsnest,
+									 bool updateConnections, bool updateRatsnest,
 									 QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
@@ -419,17 +419,17 @@ ChangeWireCommand::ChangeWireCommand(SketchWidget* sketchWidget, long fromID,
     m_newLine = newLine;
     m_oldPos = oldPos;
     m_newPos = newPos;
-    m_useLine = useLine;
+    m_updateConnections = updateConnections;
 }
 
 void ChangeWireCommand::undo()
 {
-    m_sketchWidget->changeWire(m_fromID, m_oldLine, m_oldPos, m_useLine, m_updateRatsnest);
+    m_sketchWidget->changeWire(m_fromID, m_oldLine, m_oldPos, m_updateConnections, m_updateRatsnest);
 }
 
 void ChangeWireCommand::redo()
 {
-    m_sketchWidget->changeWire(m_fromID, m_newLine, m_newPos, m_useLine, m_updateRatsnest);
+    m_sketchWidget->changeWire(m_fromID, m_newLine, m_newPos, m_updateConnections, m_updateRatsnest);
 }
 
 QString ChangeWireCommand::getParamString() const {

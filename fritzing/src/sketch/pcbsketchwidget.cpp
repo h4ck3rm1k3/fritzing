@@ -256,7 +256,7 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 	QString colorString;
 	ConnectorItem * toConnectorItem = ends[0]->connectedToItems()[0];
 	colorString = traceColor(toConnectorItem);
-	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
+	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, getRatsnestOpacity(false), getRatsnestOpacity(false), parentCommand);
 	new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
 	return true;
@@ -1245,9 +1245,13 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingS
 			visitedWires.append(wires);
 			if (ends.count() <= 0) continue;
 
+			//foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
+
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(ends[0]);
 			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
+			//foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
+
 			bool doDelete = false;
 			foreach (ConnectorItem * end, ends) {
 				if (!connectorItems.contains(end)) {

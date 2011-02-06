@@ -46,7 +46,7 @@ public:
 	void resize(QPointF p0, QPointF p1);   
 	QSizeF footprintSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
-	bool autoroutable();
+	bool getAutoroutable();
 	void setAutoroutable(bool);
 	class ConnectorItem * connector0();
 	class ConnectorItem * connector1();
@@ -91,8 +91,6 @@ protected:
 	QPointF m_itemC1;
 	QPointer<FSvgRenderer> m_renderer;
 	QHash <ViewLayer::ViewLayerID, QPointer<FSvgRenderer> > m_renderers;
-	bool m_autoroutable;
-
 };
 
 #endif

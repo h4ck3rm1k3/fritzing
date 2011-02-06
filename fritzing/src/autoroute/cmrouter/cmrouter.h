@@ -37,11 +37,14 @@ $Date$
 #include <QLine>
 #include <QProgressDialog>
 #include <QUndoCommand>
+#include <QPointer>
+#include <QGraphicsLineItem>
 
 #include <limits>
 
 #include "../../viewgeometry.h"
 #include "../../viewlayer.h"
+#include "../../commands.h"
 #include "../autorouter.h"
 #include "priorityqueue.h"
 #include "tile.h"
@@ -56,7 +59,7 @@ struct JEdge {
 	QSet<class Wire *> toTraces;
 	bool routed;
 	bool withJumper;
-	class VirtualWire * vw;
+	QLineF line;
 	int id;
 };
 
@@ -111,7 +114,6 @@ struct Ordering {
 	int jumperCount;
 	int viaCount;
 };
-
 
 struct Segment {
 	static const int NotSet;
@@ -206,7 +208,7 @@ protected:
 	void hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
 	void clearEdge(JEdge * edge);
-	bool reorderEdges(QList<JEdge *> & edges);
+	bool reorderEdges(QList<JEdge *> & edges, QGraphicsLineItem *);
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);
 	void initPathUnit(JEdge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
 	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> &, qreal keepout);
@@ -233,7 +235,7 @@ protected:
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
 	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, 
 							JEdge * edge, QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout);
-	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, VirtualWire *);
+	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, class VirtualWire *);
 	void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & traceWires);
 	void clipParts();
 	Plane * initPlane(bool rotate90);
@@ -241,10 +243,12 @@ protected:
 	bool blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, Tile * next, int tWidthNeeded);
 	void clearTracesAndJumpers();
 	void saveTracesAndJumpers(QByteArray & byteArray);
-
-protected:
-	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
-	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
+	void initUndo(QUndoCommand * parentCommand);
+	void addUndoConnection(bool connect, class JumperItem *, QUndoCommand * parentCommand);
+	void addUndoConnection(bool connect, TraceWire *, QUndoCommand * parentCommand);
+	void addUndoConnection(bool connect, ConnectorItem *, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
+	bool reorder(QList<Ordering> & orderings, QList<JEdge *> & edges, int & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem);
+	ConnectorItem * findPartForJumper(ConnectorItem * jumperConnectorItem);
 
 protected:
 	QRectF m_maxRect;
@@ -261,9 +265,9 @@ protected:
 	Plane * m_unionPlane;
 	Plane * m_union90Plane;
 	QHash<Wire *, JEdge *> m_tracesToEdges;
-	QList<class JumperItem *> m_jumperItems;
 	ItemBase * m_board;
 	int m_maxCycles;
+	QByteArray m_startState;
 };
 
 #endif
