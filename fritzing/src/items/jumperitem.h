@@ -58,6 +58,7 @@ public:
 	void rotateItem(qreal degrees);
 	void calcRotation(QTransform & rotation, QPointF center, ViewGeometry &);
 	QPointF dragOffset();
+	void saveInstanceLocation(QXmlStreamWriter & streamWriter);
 
 protected:
 	void resize();

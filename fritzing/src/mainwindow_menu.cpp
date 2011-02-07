@@ -37,6 +37,7 @@ $Date$
 #include "autoroute/cmrouter/cmrouter.h"
 #include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
+#include "items/jumperitem.h"
 #include "fsvgrenderer.h"
 #include "items/note.h"
 #include "svg/svg2gerber.h"
@@ -2160,6 +2161,12 @@ void MainWindow::updateTraceMenu() {
 				}
 				else if (itemBase->itemType() == ModelPart::Jumper) {
 					jiEnabled = true;
+					if (itemBase->isSelected()) {
+						exEnabled = true;
+						if (qobject_cast<JumperItem *>(itemBase->layerKinChief())->getAutoroutable()) {
+							exChecked = false;
+						}
+					}
 				}
 				else if (isGroundFill(itemBase)) {
 					gfrEnabled = true;
@@ -3019,6 +3026,7 @@ void MainWindow::autoroute() {
 	AutorouteProgressDialog progress(tr("Autorouting Progress..."), true, true, true, pcbSketchWidget, this);
 	progress.setModal(true);
 	progress.show();
+	//progress.move(0,0);
 
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);

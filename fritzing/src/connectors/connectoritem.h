@@ -66,6 +66,7 @@ public:
 	ViewIdentifierClass::ViewIdentifier attachedToViewIdentifier();
 	const QString & connectorSharedID();
 	const QString & connectorSharedName();
+	const QString & connectorSharedDescription();
 	class ErcData * connectorSharedErcData();
 	const QString & busID();
 	ModelPartShared * modelPartShared();

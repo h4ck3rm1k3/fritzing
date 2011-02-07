@@ -266,15 +266,19 @@ bool PCBSketchWidget::createOneTrace(Wire * wire, ViewGeometry::WireFlag flag, b
 void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 {
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-
-		if (wire->getTrace()) {
+		TraceWire * wire = dynamic_cast<TraceWire *>(item);
+		if (wire != NULL) {
 			QList<Wire *> wires;
 			QList<ConnectorItem *> ends;
 			wire->collectChained(wires, ends);
 			foreach (Wire * w, wires) {
 				w->setAutoroutable(!exclude);
+			}
+		}
+		else {
+			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
+			if (jumperItem) {
+				jumperItem->setAutoroutable(!exclude);
 			}
 		}
 	}

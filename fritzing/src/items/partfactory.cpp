@@ -50,6 +50,7 @@ $Date$
 
 ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
 {
+	modelPart->setModelIndexFromMultiplied(id);			// making damn sure this is synched
 	ItemBase * itemBase = createPartAux(modelPart, viewIdentifier, viewGeometry, id, itemMenu, wireMenu, doLabel);
 	if (itemBase) {
 		itemBase->setViewLayerSpec(viewLayerSpec);

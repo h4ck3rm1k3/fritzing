@@ -563,6 +563,12 @@ const QString & ConnectorItem::connectorSharedName() {
 	return m_connector->connectorSharedName();
 }
 
+const QString & ConnectorItem::connectorSharedDescription() {
+	if (m_connector == NULL) return ___emptyString___;
+
+	return m_connector->connectorSharedDescription();
+}
+
 const QString & ConnectorItem::busID() {
 	if (m_connector == NULL) return ___emptyString___;
 

@@ -208,6 +208,12 @@ const QString & Connector::connectorSharedName() {
 	return m_connectorShared->name();
 }
 
+const QString & Connector::connectorSharedDescription() {
+	if (m_connectorShared == NULL) return ___emptyString___;
+
+	return m_connectorShared->description();
+}
+
 ErcData * Connector::connectorSharedErcData() {
 	if (m_connectorShared == NULL) return NULL;
 

@@ -2191,12 +2191,13 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
 			if (jumperItem == NULL) continue;
 
-			jumperItems.append(jumperItem);
-			addUndoConnection(false, jumperItem, parentCommand);
-			if (jumperItem->getAutoroutable()) continue;
+			if (jumperItem->getAutoroutable()) {
+				addUndoConnection(false, jumperItem, parentCommand);
+				jumperItems.append(jumperItem);
+				continue;
+			}
 
-			doNotAutoroute.append(jumperItem);
-			// now deal with the traces connecting the jumperitem to the part
+			// deal with the traces connecting the jumperitem to the part
 			QList<ConnectorItem *> both;
 			foreach (ConnectorItem * ci, jumperItem->connector0()->connectedToItems()) both.append(ci);
 			foreach (ConnectorItem * ci, jumperItem->connector1()->connectedToItems()) both.append(ci);
@@ -2244,9 +2245,7 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 		}
 	}
 	foreach (JumperItem * jumperItem, jumperItems) {
-		if (jumperItem->getAutoroutable()) {
-			m_sketchWidget->deleteItem(jumperItem, true, true, false);
-		}
+		m_sketchWidget->deleteItem(jumperItem, true, true, false);
 	}
 }
 
@@ -2256,7 +2255,7 @@ void CMRouter::restoreOriginalState(QUndoCommand * parentCommand) {
 	undoStack.undo();
 }
 
-void CMRouter::addToUndo(Wire * wire, QUndoCommand * parentCommand) 
+void CMRouter::addWireToUndo(Wire * wire, QUndoCommand * parentCommand) 
 {
 	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
 	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
@@ -2278,13 +2277,18 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			if (wire->getAutoroutable()) {
 				wire->setWireWidth(Wire::STANDARD_TRACE_WIDTH, m_sketchWidget);
 			}
-			addToUndo(wire, parentCommand);
+			addWireToUndo(wire, parentCommand);
 			wires.append(wire);
 			continue;
 		}
 		else {
 			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
 			if (jumperItem == NULL) continue;
+
+			jumperItems.append(jumperItem);
+			if (!jumperItem->getAutoroutable()) {
+				continue;
+			}
 
 			ConnectorItem * connector0 = NULL;
 			ConnectorItem * connector1 = NULL;
@@ -2304,7 +2308,6 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 				}
 			}
 
-			jumperItems.append(jumperItem);
 			jumperItem->saveParams();
 			QPointF pos, c0, c1;
 			jumperItem->getParams(pos, c0, c1);
@@ -2843,6 +2846,7 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 	}
 
 	JumperItem * jumperItem = dynamic_cast<JumperItem *>(itemBase);
+	jumperItem->setAutoroutable(true);
 	m_sketchWidget->scene()->addItem(jumperItem);
 	QPointF destPoint1 = calcJumperLocation(nearest1, nearestSpace1, tWidthNeeded, tHeightNeeded);
 	QPointF destPoint2 = calcJumperLocation(nearest2, nearestSpace2, tWidthNeeded, tHeightNeeded);
@@ -3546,7 +3550,9 @@ void CMRouter::clearTracesAndJumpers() {
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
 		if (jumperItem != NULL) {
-			jumperItems.append(jumperItem);
+			if (jumperItem->getAutoroutable()) {
+				jumperItems.append(jumperItem);
+			}
 			continue;
 		}
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
@@ -3569,7 +3575,9 @@ void CMRouter::saveTracesAndJumpers(QByteArray & byteArray) {
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
 		if (jumperItem != NULL) {
-			itemBases.append(jumperItem);
+			if (jumperItem->getAutoroutable()) {
+				itemBases.append(jumperItem);
+			}
 			continue;
 		}
 		TraceWire * traceWire = dynamic_cast<TraceWire *>(item);

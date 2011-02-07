@@ -65,7 +65,8 @@ public:
 	ConnectorItem * connectorItemByViewLayerID(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID);
 	bool connectionIsAllowed(Connector* that);
 	const QString & connectorSharedID();
-	const QString & connectorSharedName();
+	const QString & connectorSharedName();	
+	const QString & connectorSharedDescription();
 	class ErcData * connectorSharedErcData();
 	const QString & busID();
 	class Bus * bus();

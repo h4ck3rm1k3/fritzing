@@ -684,27 +684,32 @@ void SketchWidget::addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerI
 }
 
 ItemBase * SketchWidget::findItem(long id) {
-	// TODO:  this needs to be optimized
+	// TODO:  this needs to be optimized: could make a hash table
 
-	int id2 = id - (id % ModelPart::indexMultiplier);  // id2 != id if id comes from a layerkin item
-	ItemBase * item2 = NULL;
+	long baseid = id / ModelPart::indexMultiplier;  
 
-	QList<QGraphicsItem *> items = this->scene()->items();
-	for (int i = 0; i < items.size(); i++) {
-		ItemBase* base = dynamic_cast<ItemBase *>(items[i]);
+	foreach (QGraphicsItem * item, this->scene()->items()) {
+		ItemBase* base = dynamic_cast<ItemBase *>(item);
 		if (base == NULL) continue;
 
 		if (base->id() == id) {
 			return base;
 		}
 
-		if (base->id() == id2) {
-			// if we don't find a match for the layerKin, match the chief
-			item2 = base;
+		if (base->id() / ModelPart::indexMultiplier == baseid) {
+			// found chief or layerkin
+			ItemBase * chief = base->layerKinChief();
+			if (chief->id() == id) return chief;
+
+			foreach (ItemBase * lk, chief->layerKin()) {
+				if (lk->id() == id) return lk;
+			}
+
+			return NULL;
 		}
 	}
 
-	return item2;
+	return NULL;
 }
 
 void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool later) {
@@ -4663,8 +4668,20 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 		QList<Connector *> candidates;
 		Connector * newConnector = NULL;
 		QString fromName = fromConnectorItem->connectorSharedName();
+		QString fromDescription = fromConnectorItem->connectorSharedDescription();
 		foreach (Connector * connector, newConnectors.values()) {
-			if (fromName.compare(connector->connectorSharedName(), Qt::CaseInsensitive) == 0) {
+			QString toName = connector->connectorSharedName();
+			QString toDescription = connector->connectorSharedDescription();
+			if (fromName.compare(toName, Qt::CaseInsensitive) == 0) {
+				candidates.append(connector);
+			}
+			else if (fromDescription.compare(toDescription, Qt::CaseInsensitive) == 0) {
+				candidates.append(connector);
+			}
+			else if (fromDescription.compare(toName, Qt::CaseInsensitive) == 0) {
+				candidates.append(connector);
+			}
+			else if (fromName.compare(toDescription, Qt::CaseInsensitive) == 0) {
 				candidates.append(connector);
 			}
 		}

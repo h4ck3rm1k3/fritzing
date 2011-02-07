@@ -178,7 +178,7 @@ protected:
 
 protected:
 	void restoreOriginalState(QUndoCommand * parentCommand);
-	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
+	void addWireToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand);
 	void collectEdges(QList<JEdge *> & edges);
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
