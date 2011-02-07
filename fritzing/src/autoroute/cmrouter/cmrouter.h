@@ -185,13 +185,13 @@ protected:
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
 	void removeCorners(QList<QPointF> & allPoints, Plane *);
 	bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, Plane *, bool atStartOrEnd); 
-	bool runEdges(QList<JEdge *> &, QVector<int> & netCounters, 
-					struct RoutingStatus &, qreal keepout, bool makeJumper);
+	bool runEdges(QList<JEdge *> &, QVector<int> & netCounters, struct RoutingStatus &, qreal keepout, 
+					bool makeJumper, int bestUnroutedCount, int bestJumperCount);
 	void clearEdges(QList<JEdge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
 	void updateProgress(int num, int denom);
 	GridEntry * drawGridItem(Tile * tile);
-	void seedNext(PathUnit *, QList<Tile *> &, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
+	void seedNext(PathUnit *, QList<Tile *> &);
 	Plane * tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QList<Tile *> & alreadyTiled, qreal keepout, CMRouter::OverlapType, CMRouter::OverlapType wireOverlapType, bool eliminateThin);
 	void tileWires(QList<Wire *> & wires, QList<Tile *> & alreadyTiled, Tile::TileType, 
 					CMRouter::OverlapType overlapType, qreal keepout, bool eliminateThin);

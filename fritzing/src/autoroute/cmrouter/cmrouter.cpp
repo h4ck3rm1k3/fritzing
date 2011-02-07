@@ -620,6 +620,8 @@ void CMRouter::start()
 	QGraphicsLineItem * lineItem = new QGraphicsLineItem();
 	lineItem->setPen(pen);
 	m_sketchWidget->scene()->addItem(lineItem);
+	int bestUnroutedCount = edges.count() + 1;
+	int bestJumperCount = edges.count() + 1;
 
 	for (int run = 0; run < m_maxCycles; run++) {
 		QString score;
@@ -629,10 +631,12 @@ void CMRouter::start()
 			emit setProgressMessage(score);
 		}
 		emit setCycleMessage(tr("round %1 of:").arg(run + 1));
-		allDone = runEdges(edges, netCounters, routingStatus, keepout, m_sketchWidget->usesJumperItem());
+		allDone = runEdges(edges, netCounters, routingStatus, keepout, m_sketchWidget->usesJumperItem(), bestUnroutedCount, bestJumperCount);
 		if (m_cancelled || allDone || m_stopTracing) break;
 
 		bool reordered = reorder(orderings, edges, bestOrdering, bestResult, lineItem);
+		bestUnroutedCount = orderings.at(bestOrdering).unroutedCount;
+		bestJumperCount = orderings.at(bestOrdering).jumperCount;
 
 		// TODO: only delete the edges that have been reordered
 		clearTracesAndJumpers();
@@ -802,7 +806,7 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 	return true;
 }
 
-bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, RoutingStatus & routingStatus, qreal keepout, bool makeJumper)
+bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, RoutingStatus & routingStatus, qreal keepout, bool makeJumper, int bestUnroutedCount, int bestJumperCount)
 {	
 	bool allRouted = true;
 
@@ -818,6 +822,8 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 	}
 
 	int edgesDone = 0;
+	int unrouted = 0;
+	int jumpers = 0;
 	foreach (JEdge * edge, edges) {	
 
 		if (edge->routed) {
@@ -854,10 +860,19 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 
 		if (!edge->routed) {
 			allRouted = false;
+			if (++unrouted > bestUnroutedCount + bestJumperCount) {
+				break;
+			}
+
 			if (makeJumper) {
 				if (addJumperItem(queue1, queue2, edge, tilePathUnits, keepout)) {
 					edge->withJumper = edge->routed = true;
+					jumpers++;
 				}
+			}
+
+			if ((unrouted == bestUnroutedCount + bestJumperCount) && jumpers >= bestJumperCount) {
+				break;
 			}
 		}
 
@@ -1806,9 +1821,9 @@ void CMRouter::removeCorners(QList<QPointF> & allPoints, Plane * thePlane)
 				}
 			}
 		}
-		foreach (QPointF p, allPoints) {
-			DebugDialog::debug("allpoint during:", p);
-		}
+		//foreach (QPointF p, allPoints) {
+			//DebugDialog::debug("allpoint during:", p);
+		//}
 	}
 }
 
@@ -1979,7 +1994,7 @@ bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction
 	return bail;
 }
 
-void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles, QMultiHash<Tile *, PathUnit *> & tilePathUnits) {
+void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
 	infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
 	if ((RIGHT(pathUnit->tile) < m_tileMaxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
@@ -3013,7 +3028,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 	QList<Tile *> tiles;
 	//QElapsedTimer seedNextTimer;
 	//seedNextTimer.start();
-	seedNext(pathUnit, tiles, tilePathUnits);
+	seedNext(pathUnit, tiles);
 	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
 		infoTile("   eval", tile);
@@ -3337,9 +3352,9 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 
 void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane) 
 {
-	//foreach (QPointF p, allPoints) {
-		//DebugDialog::debug("allpoint before:", p);
-	//}
+	foreach (QPointF p, allPoints) {
+		DebugDialog::debug("allpoint before:", p);
+	}
 
 	// remove redundant pairs
 	int ix = allPoints.count() - 1;
@@ -3381,16 +3396,16 @@ void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane)
 	}
 
 
-	//foreach (QPointF p, allPoints) {
-		//DebugDialog::debug("allpoint before rc:", p);
-	//}
+	foreach (QPointF p, allPoints) {
+		DebugDialog::debug("allpoint before rc:", p);
+	}
 
 	removeCorners(allPoints, thePlane);
 	//shortenUs(allPoints, subedge);
 
-	//foreach (QPointF p, allPoints) {
-		//DebugDialog::debug("allpoint after:", p);
-	//}
+	foreach (QPointF p, allPoints) {
+		DebugDialog::debug("allpoint after:", p);
+	}
 }
 
 void CMRouter::initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QList<Segment *> & hSegments, QList<Segment *> & vSegments) 
@@ -3412,9 +3427,9 @@ void CMRouter::initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QLis
 }
 
 void CMRouter::traceSegments(QList<Segment *> & segments) {
-	//foreach(Segment * segment, segments) {
-		//DebugDialog::debug(QString("segment %1 %2 %3 %4").arg(segment->sMin).arg(segment->sMax).arg(segment->sEntry).arg(segment->sExit));
-	//}
+	foreach(Segment * segment, segments) {
+		DebugDialog::debug(QString("segment %1 %2 %3 %4").arg(segment->sMin).arg(segment->sMax).arg(segment->sEntry).arg(segment->sExit));
+	}
 
 	// use non-overlaps to set entry and exit
 	for (int ix = 0; ix < segments.count(); ix++) {
@@ -3451,8 +3466,8 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 		int limitMax = from->sMax;
 		for (int jx = ix + 1; jx < segments.count(); jx++) {
 			Segment * to = segments.at(jx);
-			int entryMin = qMax(from->sMin, to->sMin);
-			int entryMax = qMin(from->sMax, to->sMax);
+			int entryMin = qMax(limitMin, to->sMin);
+			int entryMax = qMin(limitMax, to->sMax);
 			if (entryMax - entryMin >= TileStandardWireWidth) {
 				limitMin = qMin(qMax(limitMin, to->sMin), limitMax - TileStandardWireWidth);
 				limitMax = qMax(qMin(limitMax, to->sMax), limitMin + TileStandardWireWidth);
@@ -3460,34 +3475,14 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 			}
 
 			gotNonOverlap = true;
-			//int clipMin;
-			//int clipMax;
-			if (from->sMax < to->sMax) {
-				from->setExit(from->sMax - TileHalfStandardWireWidth);
+			if (limitMax < to->sMax) {
+				from->setExit(limitMax - TileHalfStandardWireWidth);
 				to->setEntry(to->sMin + TileHalfStandardWireWidth);
-				//clipMin = from->sMax - TileStandardWireWidth;
-				//clipMax = to->sMin + TileStandardWireWidth;
 			}
 			else {
-				from->setExit(from->sMin + TileHalfStandardWireWidth);
+				from->setExit(limitMin + TileHalfStandardWireWidth);
 				to->setEntry(to->sMax - TileHalfStandardWireWidth);
-				//clipMax = from->sMin + TileStandardWireWidth;
-				//clipMin = to->sMax - TileStandardWireWidth;
 			}
-			/*
-			for (int kx = ix + 1; kx < jx; kx++) {
-				Segment * btween = segments.at(kx);
-				if (clipMax < btween->sMax) {
-					btween->sMax = clipMax;
-				}
-				if (clipMin > btween->sMin) {
-					btween->sMin = clipMin;
-				}
-				if (btween->sMin >= btween->sMax) {
-					DebugDialog::debug("clipping failure");
-				}
-			}
-			*/
 
 			break;
 		}
@@ -3509,7 +3504,7 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 #ifndef QT_NO_DEBUG
 	for (int ix = 0; ix < segments.count(); ix++) {
 		Segment * segment = segments.at(ix);
-		//DebugDialog::debug(QString("final segment %1 %2 %3 %4").arg(segment->sMin).arg(segment->sMax).arg(segment->sEntry).arg(segment->sExit));
+		DebugDialog::debug(QString("final segment %1 %2 %3 %4").arg(segment->sMin).arg(segment->sMax).arg(segment->sEntry).arg(segment->sExit));
 		if (ix > 0 && segment->sEntry == Segment::NotSet) {
 			DebugDialog::debug("segment failure");
 		}
