@@ -233,8 +233,7 @@ protected:
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	PathUnit * findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
-	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, 
-							JEdge * edge, QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout);
+	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, JEdge * edge, qreal keepout);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, class VirtualWire *);
 	void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & traceWires);
 	void clipParts();
@@ -249,6 +248,7 @@ protected:
 	void addUndoConnection(bool connect, ConnectorItem *, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	bool reorder(QList<Ordering> & orderings, QList<JEdge *> & edges, int & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem);
 	ConnectorItem * findPartForJumper(ConnectorItem * jumperConnectorItem);
+	void drawTileRect(TileRect & tileRect, QColor & color);
 
 protected:
 	QRectF m_maxRect;

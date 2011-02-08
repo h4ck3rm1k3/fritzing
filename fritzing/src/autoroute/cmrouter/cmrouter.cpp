@@ -37,13 +37,9 @@ $Date$
 
 // TODO:
 //
-//  run separate beginning overlap check with half keepout width
-//
-//	if wire is split during run, what happens to wire on next run
+//  run separate beginning overlap check with half keepout width?
 //
 //	would be nice to eliminate ratsnests as we go
-//
-//	if current cycle unrouted count >= best so far, bail out
 //
 //	think of orderings like simulated annealing or genetic algorithms
 //
@@ -62,16 +58,14 @@ $Date$
 //
 //	slide corner: if dogleg is too close to other connectors, slide it more towards the middle
 //
-//	new jumper item isn't properly undoable or deleteable
-//
 //	bugs: 
 //		why does the same routing task give different results (qSort?)
 //			especially annoying in schematic view when sometimes wires flow along wires and sometimes don't, for the same routing task
 //		border seems asymmetric
 //		still some funny shaped routes (thin tile problem?)
 //		jumper item: sometimes one end doesn't route
-//		parking assistant second cycle has weird line
-//		split original wire shouldn't have two jumpers
+//		schematic view: some lines still overlap
+//		split_original_wire.fz shouldn't have two jumpers
 //
 //  longer route than expected:  
 //		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
@@ -1995,7 +1989,7 @@ bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction
 }
 
 void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
-	infoTile("seed next", pathUnit->tile);
+	//infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
 	if ((RIGHT(pathUnit->tile) < m_tileMaxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = TR(pathUnit->tile);
@@ -2730,6 +2724,8 @@ PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue,
 		// look at adjacent space tiles to see if the via or jumperItem connector can fit
 		// this also checks that the space isn't beneath a part
 
+		//drawTileRect(tileRect, QColor(255,255,0,128));
+
 		TileRect searchRect = tileRect;
 		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
 		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
@@ -2747,6 +2743,7 @@ PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue,
 			if (sourceCost < bestCost) {
 				bestCost = sourceCost;
 				TiToRect(space, &nearestSpace);
+				//drawTileRect(nearestSpace, QColor(255, 128, 0, 128));
 				nearest = pathUnit;
 			}
 		}
@@ -2764,6 +2761,7 @@ PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue,
 			TileRect minCostRect = calcMinCostRect(pathUnit, spaceTileRect);
 			int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
 			if (sourceCost < bestCost) {
+				//drawTileRect(spaceTileRect, QColor(255,25,255,128));
 				bestCost = sourceCost;
 				nearestSpace = spaceTileRect;
 				nearest = pathUnit;
@@ -2829,6 +2827,8 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 	int tWidthNeeded = realToTile(sizeNeeded.width());
 	int tHeightNeeded = realToTile(sizeNeeded.height());
 
+	//hideTiles();
+
 	TileRect nearestSpace1;
 	PathUnit * nearest1 = findNearestSpace(p1, tilePathUnits, tWidthNeeded, tHeightNeeded, nearestSpace1);
 	if (nearest1 == NULL) return false;
@@ -2869,16 +2869,15 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 
 	bool result = addJumperItemHalf(jumperItem->connector0(), nearest1, parent1, 
 									(tileRect1.xmaxi + tileRect1.xmini) / 2, (tileRect1.ymaxi + tileRect1.ymini) / 2, 
-									edge, tilePathUnits, keepout);
+									edge, keepout);
 	result = addJumperItemHalf(jumperItem->connector1(), nearest2, parent2, 
 							   (tileRect2.xmaxi + tileRect2.xmini) / 2, (tileRect2.ymaxi + tileRect2.ymini) / 2, 
-							   edge, tilePathUnits, keepout);
+							   edge, keepout);
 
 	return result;
 }
 
-bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, JEdge * edge,
-								 QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout)
+bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, JEdge * edge, qreal keepout)
 {
 	QList<Tile *> alreadyTiled;
 	Tile * destTile = addTile(jumperConnectorItem, Tile::DESTINATION, nearest->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
@@ -2896,6 +2895,7 @@ bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit *
 	Tile * sourceTile = TiSrPoint(NULL, nearest->plane, searchx, searchy);
 	TiSetType(sourceTile, Tile::SOURCE);
 
+	QMultiHash<Tile *, PathUnit *> tilePathUnits;
 	PriorityQueue<PathUnit *> q1, q2;
 	initPathUnit(edge, sourceTile, q1, tilePathUnits);
 	initPathUnit(edge, destTile, q2, tilePathUnits);
@@ -3035,7 +3035,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 	seedNext(pathUnit, tiles);
 	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
-		infoTile("   eval", tile);
+		//infoTile("   eval", tile);
 		int destCost = std::numeric_limits<int>::max();
 		TileRect minCostRect = calcMinCostRect(pathUnit, tile);
 		int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
@@ -3356,9 +3356,9 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 
 void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane) 
 {
-	foreach (QPointF p, allPoints) {
-		DebugDialog::debug("allpoint before:", p);
-	}
+	//foreach (QPointF p, allPoints) {
+		//DebugDialog::debug("allpoint before:", p);
+	//}
 
 	// remove redundant pairs
 	int ix = allPoints.count() - 1;
@@ -3400,16 +3400,16 @@ void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane)
 	}
 
 
-	foreach (QPointF p, allPoints) {
-		DebugDialog::debug("allpoint before rc:", p);
-	}
+	//foreach (QPointF p, allPoints) {
+		//DebugDialog::debug("allpoint before rc:", p);
+	//}
 
 	removeCorners(allPoints, thePlane);
 	//shortenUs(allPoints, subedge);
 
-	foreach (QPointF p, allPoints) {
-		DebugDialog::debug("allpoint after:", p);
-	}
+	//foreach (QPointF p, allPoints) {
+	//	DebugDialog::debug("allpoint after:", p);
+	//}
 }
 
 void CMRouter::initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QList<Segment *> & hSegments, QList<Segment *> & vSegments) 
@@ -3431,9 +3431,9 @@ void CMRouter::initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QLis
 }
 
 void CMRouter::traceSegments(QList<Segment *> & segments) {
-	foreach(Segment * segment, segments) {
-		DebugDialog::debug(QString("segment %1 %2 %3 %4").arg(segment->sMin).arg(segment->sMax).arg(segment->sEntry).arg(segment->sExit));
-	}
+	//foreach(Segment * segment, segments) {
+		//DebugDialog::debug(QString("segment %1 %2 %3 %4").arg(segment->sMin).arg(segment->sMax).arg(segment->sEntry).arg(segment->sExit));
+	//}
 
 	// use non-overlaps to set entry and exit
 	for (int ix = 0; ix < segments.count(); ix++) {
@@ -3506,6 +3506,7 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 
 
 #ifndef QT_NO_DEBUG
+	/*
 	for (int ix = 0; ix < segments.count(); ix++) {
 		Segment * segment = segments.at(ix);
 		DebugDialog::debug(QString("final segment %1 %2 %3 %4").arg(segment->sMin).arg(segment->sMax).arg(segment->sEntry).arg(segment->sExit));
@@ -3516,6 +3517,7 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 			DebugDialog::debug("segment failure");
 		}
 	}
+	*/
 #endif QT_NO_DEBUG
 
 }
@@ -3596,4 +3598,17 @@ void CMRouter::setMaxCycles(int maxCycles)
 	m_maxCycles = maxCycles;
 	QSettings settings;
 	settings.setValue("cmrouter/maxcycles", maxCycles);
+}
+
+void CMRouter::drawTileRect(TileRect & tileRect, QColor & color)
+{
+	QRectF r;
+	tileRectToQRect(tileRect, r);
+	GridEntry * gridEntry = new GridEntry(r, NULL);
+	gridEntry->setZValue(m_sketchWidget->getTopZ());
+	gridEntry->setPen(color);
+	gridEntry->setBrush(QBrush(color));
+	m_sketchWidget->scene()->addItem(gridEntry);
+	gridEntry->show();
+	ProcessEventBlocker::processEvents();
 }

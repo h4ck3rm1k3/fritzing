@@ -280,6 +280,7 @@ void PartsBinPaletteWidget::setupButtons() {
 	m_showListViewButton->setToolTip(tr("Show as list"));
 	connect(m_showListViewButton,SIGNAL(clicked()),this,SLOT(toListView()));
 
+	// TODO: these could probably be static or moved up to the binManager...
 	createBinMenu();
 	createPartMenu();
 	createContextMenus();
@@ -326,17 +327,17 @@ void PartsBinPaletteWidget::createBinMenu() {
 	connect(m_saveAsBundledAction, SIGNAL(triggered()),this, SLOT(saveBundledBin()));
 	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
 
-	QMenu *menu = new QMenu(this);
-	menu->addAction(newTitleAction(tr("Bin")));
-	menu->addAction(m_newBinAction);
-	menu->addMenu(m_openBinMenu);
-	menu->addSeparator();
-	menu->addAction(m_closeBinAction);
-	menu->addAction(m_saveAction);
-	menu->addAction(m_saveAsAction);
-	menu->addAction(m_saveAsBundledAction);
-	menu->addAction(m_renameAction);
-	m_binMenuButton->setMenu(menu);
+	m_binMenu = new QMenu(tr("Parts Bin"), this);
+	m_binMenu->addAction(newTitleAction(tr("Bin")));
+	m_binMenu->addAction(m_newBinAction);
+	m_binMenu->addMenu(m_openBinMenu);
+	m_binMenu->addSeparator();
+	m_binMenu->addAction(m_closeBinAction);
+	m_binMenu->addAction(m_saveAction);
+	m_binMenu->addAction(m_saveAsAction);
+	m_binMenu->addAction(m_saveAsBundledAction);
+	m_binMenu->addAction(m_renameAction);
+	m_binMenuButton->setMenu(m_binMenu);
 }
 
 void PartsBinPaletteWidget::createOpenBinMenu() {
@@ -937,3 +938,12 @@ void PartsBinPaletteWidget::setSaveQuietly(bool saveQuietly) {
 	m_saveQuietly = saveQuietly;
 }
 
+bool PartsBinPaletteWidget::currentViewIsIconView() {
+	if (m_currentView == NULL) return true;
+
+	return (m_currentView == m_iconView);
+}
+
+QMenu * PartsBinPaletteWidget::getBinMenu() {
+	return m_binMenu;
+}

@@ -83,12 +83,12 @@ void DockManager::dockChangeActivation(bool activate, QWidget * originator) {
 void DockManager::createBinAndInfoViewDocks() {
 	m_mainWindow->m_infoView = new HtmlInfoView();
 
-	m_mainWindow->m_paletteWidget = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
+	m_mainWindow->m_binManager = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
 
 	if (m_mainWindow->m_paletteModel->loadedFromFile()) {
-		m_mainWindow->m_paletteWidget->loadFromModel(m_mainWindow->m_paletteModel);
+		m_mainWindow->m_binManager->loadFromModel(m_mainWindow->m_paletteModel);
 	} else {
-		m_mainWindow->m_paletteWidget->setPaletteModel(m_mainWindow->m_paletteModel);
+		m_mainWindow->m_binManager->setPaletteModel(m_mainWindow->m_paletteModel);
 	}
 }
 
@@ -107,8 +107,8 @@ void DockManager::createDockWindows()
 	//m_mainWindow->m_viewSwitcher->setStyleSheet("background-color: blue;");
 #endif
 
-	FDockWidget* partsDock = makeDock(BinManager::Title, m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight/*, Qt::LeftDockWidgetArea*/);
-	m_mainWindow->m_paletteWidget->dockedInto(partsDock);
+	FDockWidget* partsDock = makeDock(BinManager::Title, m_mainWindow->m_binManager, PartsBinMinHeight, PartsBinDefaultHeight/*, Qt::LeftDockWidgetArea*/);
+	m_mainWindow->m_binManager->dockedInto(partsDock);
     makeDock(tr("Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerBreadboard = new MiniViewContainer(m_mainWindow));

@@ -815,13 +815,13 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	}
 
 	bool whatWithAliens = whatToDoWithAlienFiles();
-	if(!beforeClosing() || !whatWithAliens ||!m_paletteWidget->beforeClosing()) {
+	if(!beforeClosing() || !whatWithAliens ||!m_binManager->beforeClosing()) {
 		event->ignore();
 		return;
 	}
 
-	if(whatWithAliens && m_paletteWidget->hasAlienParts()) {
-		m_paletteWidget->createIfMyPartsNotExists();
+	if(whatWithAliens && m_binManager->hasAlienParts()) {
+		m_binManager->createIfMyPartsNotExists();
 	}
 
 
@@ -954,9 +954,9 @@ void MainWindow::loadPart(const QString &newPartPath, long partsEditorId, bool c
 	if(modelPart && modelPart->hasViewIdentifier(ViewIdentifierClass::IconView)) {
 		if(m_binsWithPartsEditorRequests.contains(partsEditorId)
 		   && !m_binsWithPartsEditorRequests[partsEditorId]->currentBinIsCore()	) {
-			m_paletteWidget->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart);
+			m_binManager->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart);
 		} else {
-			m_paletteWidget->addNewPart(modelPart);
+			m_binManager->addNewPart(modelPart);
 		}
 		m_infoView->reloadContent(m_currentGraphicsView);
 	}
@@ -1011,7 +1011,7 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 	m_schematicGraphicsView->setInfoViewOnHover(infoViewOnHover);
 	m_pcbGraphicsView->setInfoViewOnHover(infoViewOnHover);
 
-	m_paletteWidget->setInfoViewOnHover(infoViewOnHover);
+	m_binManager->setInfoViewOnHover(infoViewOnHover);
 }
 
 #define ZIP_PART QString("part.")
@@ -1392,8 +1392,8 @@ ModelPart* MainWindow::copyToPartsFolder(const QFileInfo& file, bool addToBin, c
 	mp->setAlien(true);
 
 	if(addToBin) {
-		//m_paletteWidget->addPart(mp);
-		m_paletteWidget->addToMyPart(mp);
+		//m_binManager->addPart(mp);
+		m_binManager->addToMyPart(mp);
 	}
 
 	return mp;

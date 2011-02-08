@@ -610,3 +610,49 @@ PartsBinPaletteWidget * BinManager::clickedSearch(PartsBinPaletteWidget * bin) {
 	searchBin->focusSearch();
     return searchBin;
 }
+
+bool BinManager::currentViewIsIconView() {
+	if (m_currentBin == NULL) determineCurrentBin();
+	if (m_currentBin == NULL) return true;
+	
+	return m_currentBin->currentViewIsIconView();
+}
+
+void BinManager::toIconView() {
+	if (m_currentBin == NULL) determineCurrentBin();
+	if (m_currentBin == NULL) return;
+
+	m_currentBin->toIconView();
+}
+
+void BinManager::toListView() {
+	if (m_currentBin == NULL) determineCurrentBin();
+	if (m_currentBin == NULL) return;
+
+	m_currentBin->toListView();
+}
+
+QMenu * BinManager::getBinMenu() {
+	if (m_currentBin == NULL) determineCurrentBin();
+	if (m_currentBin == NULL) return NULL;
+
+	return m_currentBin->getBinMenu();
+}
+
+void BinManager::determineCurrentBin() {
+	if (m_stackWidget == NULL) return;
+
+	QWidget * widget = m_stackWidget->currentWidget();
+	if (widget == NULL) return;
+
+	foreach (PartsBinPaletteWidget * bin, m_tabWidgets.keys()) 
+	{
+		if (m_tabWidgets.value(bin, NULL) == widget) {
+			m_currentBin = bin;
+			return;
+		}
+	}
+
+}
+
+

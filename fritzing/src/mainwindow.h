@@ -147,6 +147,8 @@ protected slots:
     void showBreadboardView();
     void showSchematicView();
     void showPCBView();
+	void showPartsBinIconView();
+	void showPartsBinListView();
     void updateEditMenu();
     void updateLayerMenu(bool resetLayout = false);
     void updatePartMenu();
@@ -417,7 +419,7 @@ protected:
 	QPointer<SketchAreaWidget> m_pcbWidget;
 	QPointer<class PCBSketchWidget> m_pcbGraphicsView;
 
-    QPointer<class BinManager> m_paletteWidget;
+    QPointer<class BinManager> m_binManager;
     QPointer<class MiniViewContainer> m_miniViewContainerBreadboard;
     QPointer<class MiniViewContainer> m_miniViewContainerSchematic;
     QPointer<class MiniViewContainer> m_miniViewContainerPCB;
@@ -461,12 +463,14 @@ protected:
 	QMenu *m_openRecentFileMenu;
     QAction *m_openRecentFileActs[MaxRecentFiles];
 	QMenu *m_openExampleMenu;
+	QMenu * m_partsBinMenu;
 	QAction *m_saveAct;
 	QAction *m_saveAsAct;
 	QAction *m_pageSetupAct;
 	QAction *m_printAct;
 	QAction *m_saveAsBundledAct;
 	QAction *m_shareOnlineAct;
+	int m_partsBinMenuIndex;
 
 	QAction * m_launchExternalProcessAct;
 
@@ -556,6 +560,8 @@ protected:
     QAction *m_showBreadboardAct;
     QAction *m_showSchematicAct;
     QAction *m_showPCBAct;
+	QAction *m_showPartsBinIconViewAct;
+	QAction *m_showPartsBinListViewAct;
     //QAction *m_toggleToolbarAct;
     int m_numFixedActionsInViewMenu;
 

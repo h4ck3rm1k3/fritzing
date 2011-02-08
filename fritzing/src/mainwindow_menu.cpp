@@ -760,7 +760,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
     		fileName.endsWith(FritzingBinExtension)
     		|| fileName.endsWith(FritzingBundledBinExtension)
     	) {
-		m_paletteWidget->load(fileName);
+		m_binManager->load(fileName);
 		result = true;
 	} else if (fileName.endsWith(FritzingPartExtension)) {
 		notYetImplemented(tr("directly loading parts"));
@@ -1212,16 +1212,29 @@ void MainWindow::createOpenRecentMenu() {
 
 void MainWindow::updateFileMenu() {
 	updateRecentFileActions();
-	bool enabled = false;
-	if (m_currentGraphicsView && m_currentGraphicsView->scene()) {
-		foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
-			if (dynamic_cast<ItemBase *>(item) != NULL) {
-				enabled = true;
-				break;
-			}
-		}
+	QMenu * binMenu = NULL;
+	if (m_binManager) {
+		binMenu = m_binManager->getBinMenu();
 	}
+	m_partsBinMenu->clear();
+	//m_fileMenu->removeAction(m_fileMenu->actions().at(m_partsBinMenuIndex));
+	if (binMenu) {
+		m_partsBinMenu->setEnabled(true);
+		bool discardFirst = true;
+		foreach (QAction * action, binMenu->actions()) {
+			if (discardFirst) {
+				discardFirst = false;
+				continue;
+			}
 
+			m_partsBinMenu->addAction(action);
+		}
+		//m_fileMenu->insertMenu(m_fileMenu->actions().at(m_partsBinMenuIndex), binMenu);
+	}
+	else {
+		m_partsBinMenu->setEnabled(false);
+		//m_fileMenu->insertMenu(m_fileMenu->actions().at(m_partsBinMenuIndex), m_partsBinMenu);
+	}
 }
 
 void MainWindow::updateRecentFileActions() {
@@ -1512,6 +1525,15 @@ void MainWindow::createViewMenuActions() {
 	m_showPCBAct->setShortcut(tr("Ctrl+3"));
 	m_showPCBAct->setStatusTip(tr("Show the PCB view"));
 	connect(m_showPCBAct, SIGNAL(triggered()), this, SLOT(showPCBView()));
+
+	m_showPartsBinIconViewAct = new QAction(tr("Show Parts Bin Icon View"), this);
+	m_showPartsBinIconViewAct->setStatusTip(tr("Display the parts bin in an icon view"));
+	connect(m_showPartsBinIconViewAct, SIGNAL(triggered()), this, SLOT(showPartsBinIconView()));
+
+	m_showPartsBinListViewAct = new QAction(tr("Show Parts Bin List View"), this);
+	m_showPartsBinListViewAct->setStatusTip(tr("Display the parts bin in a list view"));
+	connect(m_showPartsBinListViewAct, SIGNAL(triggered()), this, SLOT(showPartsBinListView()));
+
 }
 
 void MainWindow::createWindowMenuActions() {
@@ -1592,11 +1614,17 @@ void MainWindow::createHelpMenuActions() {
 
 void MainWindow::createMenus()
 {
+	m_partsBinMenu = new QMenu(tr("Parts Bin"), this);
+	m_partsBinMenu->setEnabled(false);
+
     m_fileMenu = menuBar()->addMenu(tr("&File"));
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
+	m_fileMenu->addMenu(m_partsBinMenu);
+	m_partsBinMenuIndex = m_fileMenu->actions().size() - 1;
+
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_closeAct);
     m_fileMenu->addAction(m_saveAct);
@@ -1676,7 +1704,6 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_moveLockAct);
 	m_partMenu->addAction(m_selectMoveLockAct);
 	
-
 	m_partMenu->addSeparator();
 	m_partMenu->addMenu(m_addToBinMenu);
 	m_partMenu->addAction(m_showPartLabelAct);
@@ -1700,6 +1727,7 @@ void MainWindow::createMenus()
 	m_zOrderWireMenu->addAction(m_sendBackwardWireAct);
 	m_zOrderWireMenu->addAction(m_sendToBackWireAct);
 
+
     m_viewMenu = menuBar()->addMenu(tr("&View"));
     m_viewMenu->addAction(m_zoomInAct);
     m_viewMenu->addAction(m_zoomOutAct);
@@ -1717,6 +1745,9 @@ void MainWindow::createMenus()
     m_viewMenu->addAction(m_showBreadboardAct);
     m_viewMenu->addAction(m_showSchematicAct);
     m_viewMenu->addAction(m_showPCBAct);
+    m_viewMenu->addSeparator();
+    m_viewMenu->addAction(m_showPartsBinIconViewAct);
+    m_viewMenu->addAction(m_showPartsBinListViewAct);
     m_viewMenu->addSeparator();
     connect(m_viewMenu, SIGNAL(aboutToShow()), this, SLOT(updateLayerMenu()));
     m_numFixedActionsInViewMenu = m_viewMenu->actions().size();
@@ -1789,6 +1820,20 @@ void MainWindow::createMenus()
 }
 
 void MainWindow::updateLayerMenu(bool resetLayout) {
+
+	QList<QAction *> actions;
+
+	if (m_binManager) {
+		m_showPartsBinIconViewAct->setEnabled(true);
+		m_showPartsBinListViewAct->setEnabled(true);
+		actions << m_showPartsBinIconViewAct << m_showPartsBinListViewAct;
+		setActionsIcons(m_binManager->currentViewIsIconView() ? 0 : 1, actions);
+	}
+	else {
+		m_showPartsBinIconViewAct->setEnabled(false);
+		m_showPartsBinListViewAct->setEnabled(false);
+	}
+
 	removeActionsStartingAt(m_viewMenu, m_numFixedActionsInViewMenu);
     m_viewMenu->addAction(m_showAllLayersAct);
     m_viewMenu->addAction(m_hideAllLayersAct);
@@ -2016,6 +2061,7 @@ void MainWindow::updatePartMenu() {
 	m_openProgramWindowAct->setEnabled(true);
 }
 
+
 void MainWindow::updateTransformationActions() {
 	if (m_currentGraphicsView == NULL) return;
 
@@ -2083,7 +2129,7 @@ void MainWindow::updateItemMenu() {
 	m_addToBinMenu->setEnabled(enabled);
 	m_addToBinMenu->clear();
 	if(enabled) {
-		QList<QAction*> acts = m_paletteWidget->openedBinsActions(selectedModuleID());
+		QList<QAction*> acts = m_binManager->openedBinsActions(selectedModuleID());
 		m_addToBinMenu->addActions(acts);
 	}
 	m_saveBundledPart->setEnabled(enabled && !selected->modelPart()->isCore());
@@ -2266,6 +2312,14 @@ void MainWindow::showPCBView() {
 	this->m_tabWidget->setCurrentIndex(2);
 }
 
+void MainWindow::showPartsBinIconView() {
+	if (m_binManager) m_binManager->toIconView();
+}
+
+void MainWindow::showPartsBinListView() {
+	if (m_binManager) m_binManager->toListView();
+}
+
 void MainWindow::openHelp() {
 	QDesktopServices::openUrl(QString("http://new.fritzing.org/learning"));
 }
@@ -2398,9 +2452,9 @@ void MainWindow::toggleToolbar(bool toggle) {
 
 void MainWindow::togglePartLibrary(bool toggle) {
 	if(toggle) {
-		m_paletteWidget->show();
+		m_binManager->show();
 	} else {
-		m_paletteWidget->hide();
+		m_binManager->hide();
 	}
 }
 

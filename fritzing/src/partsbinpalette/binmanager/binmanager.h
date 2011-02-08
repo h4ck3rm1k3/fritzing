@@ -30,6 +30,7 @@ $Date$
 
 #include <QStackedWidget>
 #include <QTabWidget>
+#include <QMenu>
 
 #include "stackwidget.h"
 
@@ -85,6 +86,10 @@ class BinManager : public QFrame {
 		MainWindow* mainWindow();
         void search(const QString & searchText);
         PartsBinPaletteWidget * clickedSearch(PartsBinPaletteWidget *);
+		bool currentViewIsIconView();
+		void toIconView();
+		void toListView();
+		QMenu * getBinMenu();
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
@@ -106,7 +111,9 @@ class BinManager : public QFrame {
         PartsBinPaletteWidget* getOrOpenBin(const QString & dest, const QString & source);
         void connectTabWidget(StackTabWidget *tw);
 		void addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
+		void determineCurrentBin();
 
+protected:
 		ReferenceModel *m_refModel;
 		PaletteModel *m_paletteModel;
 
