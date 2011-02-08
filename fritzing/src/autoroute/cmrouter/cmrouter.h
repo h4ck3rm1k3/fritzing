@@ -253,6 +253,7 @@ protected:
 	bool reorder(QList<Ordering> & orderings, QList<JEdge *> & edges, int & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem);
 	ConnectorItem * findPartForJumper(ConnectorItem * jumperConnectorItem);
 	void drawTileRect(TileRect & tileRect, QColor & color);
+	void deletePathUnits();
 
 protected:
 	QRectF m_maxRect;

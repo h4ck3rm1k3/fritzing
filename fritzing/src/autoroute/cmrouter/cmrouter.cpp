@@ -68,6 +68,9 @@ $Date$
 //		split_original_wire.fz shouldn't have two jumpers
 //		stepper motor example: not putting jumper item in space to the left of a connector where there is clearly open space
 //				is this due to a blocking thin tile?
+//		some traces violate drc
+//
+//		catching 1st repeat to end rip-up-and-reroute is not valid
 //
 //  longer route than expected:  
 //		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
@@ -103,6 +106,7 @@ $Date$
 #include "../../processeventblocker.h"
 #include "../../svg/groundplanegenerator.h"
 #include "../../fsvgrenderer.h"
+#include "../../svg/svgfilesplitter.h"
 
 #include "tile.h"
 
@@ -862,6 +866,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 		if (!edge->routed) {
 			allRouted = false;
 			if (++unrouted > bestUnroutedCount + bestJumperCount) {
+				deletePathUnits();
 				break;
 			}
 
@@ -873,14 +878,12 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 			}
 
 			if ((unrouted == bestUnroutedCount + bestJumperCount) && jumpers >= bestJumperCount) {
+				deletePathUnits();
 				break;
 			}
 		}
 
-		foreach (PathUnit * pathUnit, m_pathUnits) {
-			delete pathUnit;
-		}
-		m_pathUnits.clear();
+		deletePathUnits();
 
 		updateProgress(++edgesDone, edges.count());
 
@@ -912,6 +915,13 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 	}
 
 	return allRouted;
+}
+
+void CMRouter::deletePathUnits() {
+	foreach (PathUnit * pathUnit, m_pathUnits) {
+		delete pathUnit;
+	}
+	m_pathUnits.clear();
 }
 
 Plane * CMRouter::initPlane(bool rotate90) {
@@ -1303,6 +1313,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	svg += board->retrieveSvg(ViewLayer::Silkscreen1, svgHash, true, FSvgRenderer::printerScale());
 	svg += board->retrieveSvg(ViewLayer::Silkscreen0, svgHash, true, FSvgRenderer::printerScale());
 	svg += "</svg>";
+	foreach (SvgFileSplitter * splitter, svgHash.values()) delete splitter;
 	GroundPlaneGenerator gpg;
 	QList<QRect> rects;
 	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), keepout, rects);

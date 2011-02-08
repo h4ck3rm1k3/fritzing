@@ -190,6 +190,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLay
 						svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
 						paletteItem->setItemSVG(svg);
 					}
+					foreach (SvgFileSplitter * splitter, svgHash.values()) delete splitter;
 				}
 
 				QString error;
