@@ -197,10 +197,6 @@
 <context>
     <name>AutorouteProgressDialog</name>
     <message>
-        <source>Skip current trace</source>
-        <translation>Saltar o traço actual</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -209,8 +205,8 @@
         <translation>Parar agora</translation>
     </message>
     <message>
-        <source>zoom and pan</source>
-        <translation>Zoom e Pan</translation>
+        <source>zoom and pan controls</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -256,6 +252,20 @@
     </message>
     <message>
         <source>two layers (double-sided)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CMRouter</name>
+    <message numerus="yes">
+        <source>best so far: %1 unrouted/%n jumpers</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>round %1 of:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2260,11 +2270,39 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No overlaps found</source>
+        <source>Search parts bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Overlaps found</source>
+        <source>Search for a part in the parts bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Parts Bin Icon View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display the parts bin in an icon view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Parts Bin List View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display the parts bin in a list view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The sketch is ok: connectors and traces are not too close together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some connectors and/or traces are too close together.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2618,6 +2656,10 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Parts Bin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4302,6 +4344,14 @@ já se encontrava lá, não vais adicionar outravez, Ok?!?</translation>
     </message>
     <message>
         <source>Swedish - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Romanian - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thai - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
