@@ -612,46 +612,58 @@ PartsBinPaletteWidget * BinManager::clickedSearch(PartsBinPaletteWidget * bin) {
 }
 
 bool BinManager::currentViewIsIconView() {
-	if (m_currentBin == NULL) determineCurrentBin();
-	if (m_currentBin == NULL) return true;
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return true;
 	
-	return m_currentBin->currentViewIsIconView();
+	return bin->currentViewIsIconView();
 }
 
 void BinManager::toIconView() {
-	if (m_currentBin == NULL) determineCurrentBin();
-	if (m_currentBin == NULL) return;
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return;
 
-	m_currentBin->toIconView();
+	bin->toIconView();
 }
 
 void BinManager::toListView() {
-	if (m_currentBin == NULL) determineCurrentBin();
-	if (m_currentBin == NULL) return;
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return;
 
-	m_currentBin->toListView();
+	bin->toListView();
 }
 
-QMenu * BinManager::getBinMenu() {
-	if (m_currentBin == NULL) determineCurrentBin();
-	if (m_currentBin == NULL) return NULL;
+QMenu * BinManager::getFileMenu() {
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return NULL;
 
-	return m_currentBin->getBinMenu();
+	return bin->getFileMenu();
 }
 
-void BinManager::determineCurrentBin() {
-	if (m_stackWidget == NULL) return;
+QMenu * BinManager::getPartMenu() {
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return NULL;
 
-	QWidget * widget = m_stackWidget->currentWidget();
-	if (widget == NULL) return;
+	return bin->getPartMenu();
+}
 
-	foreach (PartsBinPaletteWidget * bin, m_tabWidgets.keys()) 
-	{
-		if (m_tabWidgets.value(bin, NULL) == widget) {
-			m_currentBin = bin;
-			return;
-		}
+void BinManager::updateMenus() {
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return;
+
+	return bin->updateMenus();
+}
+
+PartsBinPaletteWidget * BinManager::determineTopmostBin() {
+	if (m_stackWidget == NULL) return NULL;
+
+	// why would there ever be more than one StackTabWidget?
+	for (int i = 0; i < m_stackWidget->count(); i++) {
+		StackTabWidget *stb = qobject_cast<StackTabWidget*>(m_stackWidget->widget(i));
+		QWidget * widget = stb->currentWidget();
+		return qobject_cast<PartsBinPaletteWidget *>(stb->currentWidget());
 	}
+
+	return NULL;
 
 }
 

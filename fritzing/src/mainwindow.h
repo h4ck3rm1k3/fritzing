@@ -400,6 +400,7 @@ protected:
 
 	void routingStatusLabelMouse(QMouseEvent*, bool show);
 	class Wire * retrieveWire();
+	void updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -463,14 +464,14 @@ protected:
 	QMenu *m_openRecentFileMenu;
     QAction *m_openRecentFileActs[MaxRecentFiles];
 	QMenu *m_openExampleMenu;
-	QMenu * m_partsBinMenu;
+	QMenu * m_partsBinFileMenu;
+	QMenu * m_partsBinPartMenu;
 	QAction *m_saveAct;
 	QAction *m_saveAsAct;
 	QAction *m_pageSetupAct;
 	QAction *m_printAct;
 	QAction *m_saveAsBundledAct;
 	QAction *m_shareOnlineAct;
-	int m_partsBinMenuIndex;
 
 	QAction * m_launchExternalProcessAct;
 

@@ -89,7 +89,9 @@ class BinManager : public QFrame {
 		bool currentViewIsIconView();
 		void toIconView();
 		void toListView();
-		QMenu * getBinMenu();
+		QMenu * getFileMenu();
+		QMenu * getPartMenu();
+		void updateMenus();
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
@@ -111,7 +113,7 @@ class BinManager : public QFrame {
         PartsBinPaletteWidget* getOrOpenBin(const QString & dest, const QString & source);
         void connectTabWidget(StackTabWidget *tw);
 		void addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
-		void determineCurrentBin();
+		PartsBinPaletteWidget * determineTopmostBin();
 
 protected:
 		ReferenceModel *m_refModel;

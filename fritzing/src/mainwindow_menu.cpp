@@ -1212,29 +1212,7 @@ void MainWindow::createOpenRecentMenu() {
 
 void MainWindow::updateFileMenu() {
 	updateRecentFileActions();
-	QMenu * binMenu = NULL;
-	if (m_binManager) {
-		binMenu = m_binManager->getBinMenu();
-	}
-	m_partsBinMenu->clear();
-	//m_fileMenu->removeAction(m_fileMenu->actions().at(m_partsBinMenuIndex));
-	if (binMenu) {
-		m_partsBinMenu->setEnabled(true);
-		bool discardFirst = true;
-		foreach (QAction * action, binMenu->actions()) {
-			if (discardFirst) {
-				discardFirst = false;
-				continue;
-			}
-
-			m_partsBinMenu->addAction(action);
-		}
-		//m_fileMenu->insertMenu(m_fileMenu->actions().at(m_partsBinMenuIndex), binMenu);
-	}
-	else {
-		m_partsBinMenu->setEnabled(false);
-		//m_fileMenu->insertMenu(m_fileMenu->actions().at(m_partsBinMenuIndex), m_partsBinMenu);
-	}
+	updatePartsBinMenu(m_partsBinFileMenu, m_binManager ? m_binManager->getFileMenu() : NULL, 1);
 }
 
 void MainWindow::updateRecentFileActions() {
@@ -1614,16 +1592,17 @@ void MainWindow::createHelpMenuActions() {
 
 void MainWindow::createMenus()
 {
-	m_partsBinMenu = new QMenu(tr("Parts Bin"), this);
-	m_partsBinMenu->setEnabled(false);
+	m_partsBinFileMenu = new QMenu(tr("Parts Bin"), this);
+	m_partsBinFileMenu->setEnabled(false);
+	m_partsBinPartMenu = new QMenu(tr("Parts Bin"), this);
+	m_partsBinPartMenu->setEnabled(false);
 
     m_fileMenu = menuBar()->addMenu(tr("&File"));
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
-	m_fileMenu->addMenu(m_partsBinMenu);
-	m_partsBinMenuIndex = m_fileMenu->actions().size() - 1;
+	m_fileMenu->addMenu(m_partsBinFileMenu);
 
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_closeAct);
@@ -1694,6 +1673,10 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_openInPartsEditorAct);
 	m_partMenu->addAction(m_saveBundledPart);
+
+	m_partMenu->addSeparator();
+	m_partMenu->addMenu(m_partsBinPartMenu);
+
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_flipHorizontalAct);
 	m_partMenu->addAction(m_flipVerticalAct);
@@ -2048,6 +2031,8 @@ void MainWindow::updatePartMenu() {
 	m_flipHorizontalAct->setEnabled(enable && (itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 	m_flipVerticalAct->setEnabled(enable && (itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 
+	updatePartsBinMenu(m_partsBinPartMenu, m_binManager ? m_binManager->getPartMenu() : NULL, 4);
+
 	updateItemMenu();
 	updateEditMenu();
 
@@ -2061,6 +2046,24 @@ void MainWindow::updatePartMenu() {
 	m_openProgramWindowAct->setEnabled(true);
 }
 
+void MainWindow::updatePartsBinMenu(QMenu * partsBinMenu, QMenu * binMenu, int skip) 
+{
+	partsBinMenu->clear();
+	if (binMenu) {
+		partsBinMenu->setEnabled(true);
+		m_binManager->updateMenus();
+		foreach (QAction * action, binMenu->actions()) {
+			if (--skip >= 0) {
+				continue;
+			}
+
+			partsBinMenu->addAction(action);
+		}
+	}
+	else {
+		partsBinMenu->setEnabled(false);
+	}
+}
 
 void MainWindow::updateTransformationActions() {
 	if (m_currentGraphicsView == NULL) return;

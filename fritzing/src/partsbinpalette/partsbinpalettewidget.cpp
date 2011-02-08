@@ -327,17 +327,17 @@ void PartsBinPaletteWidget::createBinMenu() {
 	connect(m_saveAsBundledAction, SIGNAL(triggered()),this, SLOT(saveBundledBin()));
 	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
 
-	m_binMenu = new QMenu(tr("Parts Bin"), this);
-	m_binMenu->addAction(newTitleAction(tr("Bin")));
-	m_binMenu->addAction(m_newBinAction);
-	m_binMenu->addMenu(m_openBinMenu);
-	m_binMenu->addSeparator();
-	m_binMenu->addAction(m_closeBinAction);
-	m_binMenu->addAction(m_saveAction);
-	m_binMenu->addAction(m_saveAsAction);
-	m_binMenu->addAction(m_saveAsBundledAction);
-	m_binMenu->addAction(m_renameAction);
-	m_binMenuButton->setMenu(m_binMenu);
+	m_fileMenu = new QMenu(tr("Parts Bin"), this);
+	m_fileMenu->addAction(newTitleAction(tr("Bin")));
+	m_fileMenu->addAction(m_newBinAction);
+	m_fileMenu->addMenu(m_openBinMenu);
+	m_fileMenu->addSeparator();
+	m_fileMenu->addAction(m_closeBinAction);
+	m_fileMenu->addAction(m_saveAction);
+	m_fileMenu->addAction(m_saveAsAction);
+	m_fileMenu->addAction(m_saveAsBundledAction);
+	m_fileMenu->addAction(m_renameAction);
+	m_binMenuButton->setMenu(m_fileMenu);
 }
 
 void PartsBinPaletteWidget::createOpenBinMenu() {
@@ -431,16 +431,16 @@ void PartsBinPaletteWidget::createPartMenu() {
 	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
 	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
 
-	QMenu *menu = new QMenu(this);
-	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));
-	menu->addAction(newTitleAction(tr("Part")));
-	menu->addAction(m_newPartAction);
-	menu->addAction(m_importPartAction);
-	menu->addSeparator();
-	menu->addAction(m_editPartAction);
-	menu->addAction(m_exportPartAction);
-	menu->addAction(m_removePartAction);
-	m_partMenuButton->setMenu(menu);
+	m_partMenu = new QMenu(this);
+	connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));
+	m_partMenu->addAction(newTitleAction(tr("Part")));
+	m_partMenu->addAction(m_newPartAction);
+	m_partMenu->addAction(m_importPartAction);
+	m_partMenu->addSeparator();
+	m_partMenu->addAction(m_editPartAction);
+	m_partMenu->addAction(m_exportPartAction);
+	m_partMenu->addAction(m_removePartAction);
+	m_partMenuButton->setMenu(m_partMenu);
 }
 
 void PartsBinPaletteWidget::createContextMenus() {
@@ -944,6 +944,10 @@ bool PartsBinPaletteWidget::currentViewIsIconView() {
 	return (m_currentView == m_iconView);
 }
 
-QMenu * PartsBinPaletteWidget::getBinMenu() {
-	return m_binMenu;
+QMenu * PartsBinPaletteWidget::getFileMenu() {
+	return m_fileMenu;
+}
+
+QMenu * PartsBinPaletteWidget::getPartMenu() {
+	return m_partMenu;
 }

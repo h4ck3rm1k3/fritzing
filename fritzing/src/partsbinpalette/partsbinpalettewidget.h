@@ -96,7 +96,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool open(QString fileName="");
 
 		bool currentViewIsIconView();
-		QMenu * getBinMenu();
+		QMenu * getFileMenu();		
+		QMenu * getPartMenu();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -109,6 +110,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void openNewBin(const QString &filename = ___emptyString___);
 		void toIconView();
 		void toListView();
+		void updateMenus();
 
 	protected slots:
 		bool save();
@@ -127,7 +129,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		void importPart();
 		void editSelected();
 		void exportSelected();
-		void updateMenus();
 		void addSketchPartToMe();
 		void search();
         void clickedSearch();
@@ -200,7 +201,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QMenu *m_binContextMenu;
 		QToolButton *m_binMenuButton;
 		QAction *m_newBinAction;
-		QMenu *m_binMenu;		
+		QMenu *m_fileMenu;		
 		QMenu *m_openBinMenu;
 		QAction *m_openBinAction;
 		QAction *m_openCoreBinAction;
@@ -217,6 +218,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 
 		QMenu *m_partContextMenu;
 		QToolButton *m_partMenuButton;
+		QMenu *m_partMenu;	
 		QAction *m_newPartAction;
 		QAction *m_importPartAction;
 		QAction *m_editPartAction;
