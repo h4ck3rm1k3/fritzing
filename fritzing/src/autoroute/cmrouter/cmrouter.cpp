@@ -2695,7 +2695,7 @@ void CMRouter::initPathUnit(JEdge * edge, Tile * tile, PriorityQueue<PathUnit *>
 	m_pathUnits.append(pathUnit);
 	pathUnit->edge = edge;
 	pathUnit->tile = tile;
-	drawGridItem(tile);
+	//drawGridItem(tile);
 	pq.append(pathUnit);
 	tilePathUnits.insert(tile, pathUnit);
 }
