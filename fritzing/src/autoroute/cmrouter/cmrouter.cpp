@@ -66,6 +66,8 @@ $Date$
 //		jumper item: sometimes one end doesn't route
 //		schematic view: some lines still overlap
 //		split_original_wire.fz shouldn't have two jumpers
+//		stepper motor example: not putting jumper item in space to the left of a connector where there is clearly open space
+//				is this due to a blocking thin tile?
 //
 //  longer route than expected:  
 //		It is possible that the shortest tile route is actually longer than the shortest crow-fly route.  
@@ -656,11 +658,16 @@ void CMRouter::start()
 		return;
 	}
 
+
 	if (!allDone) {
 		if (orderings.count() == 0) {
 			// stop where we are
 		}
 		else {
+			if (m_stopTracing) {
+				clearTracesAndJumpers();
+				drcClean();
+			}
 			m_sketchWidget->pasteHeart(bestResult, true);
 			ProcessEventBlocker::processEvents();
 		}
@@ -1902,8 +1909,13 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 			return;
 	}
 
-	if (bail) return;
+	if (bail) {
+		//drawGridItem(next);
+		return;
+	}
 
+	TileRect nextRect;
+	TiToRect(next, &nextRect);
 	switch(tileType) {	
 		// this tile check
 		case Tile::SCHEMATICWIRESPACE:
@@ -1911,7 +1923,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 				TraceWire * traceWire = dynamic_cast<TraceWire *>(TiGetBody(pathUnit->tile));
 				bail = (horizontal && traceWire->wireDirection()  == TraceWire::Horizontal) || (!horizontal && traceWire->wireDirection() == TraceWire::Vertical);
 				if (!bail) {
-					bail = blockDirection(pathUnit, direction, next, tWidthNeeded);
+					bail = blockDirection(pathUnit, direction, nextRect, tWidthNeeded);
 				}
 
 			}
@@ -1919,40 +1931,73 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 		case Tile::SPACE:
 		case Tile::SPACE2:
 			if (WIDTH(pathUnit->tile) < tWidthNeeded || HEIGHT(pathUnit->tile) < tWidthNeeded) {
-				bail = blockDirection(pathUnit, direction, next, tWidthNeeded);
+				bail = blockDirection(pathUnit, direction, nextRect, tWidthNeeded);
 			}
 			break;
 
 	}
 
-	if (bail) return;
-
-	if (pathUnit->parent != NULL || pathUnit->connectorItem == NULL) {
-		// wires and space tiles: make sure there is room to draw a wire from pathUnit to next
-		if (horizontal) {
-			if (qMin(YMAX(pathUnit->tile), YMAX(next)) - qMax(YMIN(pathUnit->tile), YMIN(next)) < tWidthNeeded) bail = true;
-		}
-		else {
-			if (qMin(RIGHT(pathUnit->tile), RIGHT(next)) - qMax(LEFT(pathUnit->tile), LEFT(next)) < tWidthNeeded) bail = true;
-		}
-	}
-	else {
-		if (horizontal) {
-			if (qMin(pathUnit->minCostRect.ymaxi, YMAX(next)) - qMax(pathUnit->minCostRect.ymini, YMIN(next)) < tWidthNeeded) bail = true;
-		}
-		else {
-			if (qMin(pathUnit->minCostRect.xmaxi, RIGHT(next)) - qMax(pathUnit->minCostRect.xmini, LEFT(next)) < tWidthNeeded) bail = true;
-		}
+	if (bail) {
+		//drawGridItem(next);
+		return;
 	}
 
-	if (bail) return;
+	if (!roomToNext(pathUnit, horizontal, tWidthNeeded, nextRect)) {
+		//drawGridItem(next);
+		return;
+	}
 
 	//drawGridItem(next);
 
 	tiles.append(next);
 }
 
-bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, Tile * next, int tWidthNeeded) 
+bool CMRouter::appendIfRect(PathUnit * pathUnit, TileRect & nextRect, PathUnit::Direction direction, int tWidthNeeded) 
+{
+	bool horizontal = (direction == PathUnit::Left || direction == PathUnit::Right);
+
+	bool bail = false;
+	switch(TiGetType(pathUnit->tile)) {	
+		// this tile check
+		case Tile::SPACE:
+		case Tile::SPACE2:
+			if (WIDTH(pathUnit->tile) < tWidthNeeded || HEIGHT(pathUnit->tile) < tWidthNeeded) {
+				bail = blockDirection(pathUnit, direction, nextRect, tWidthNeeded);
+			}
+			break;
+
+	}
+
+	if (bail) return false;
+
+	return roomToNext(pathUnit, horizontal, tWidthNeeded, nextRect);
+
+}
+
+bool CMRouter::roomToNext(PathUnit * pathUnit, bool horizontal, int tWidthNeeded, TileRect & nextRect) 
+{
+	if (pathUnit->parent != NULL || pathUnit->connectorItem == NULL) {
+		// wires and space tiles: make sure there is room to draw a wire from pathUnit to next
+		if (horizontal) {
+			if (qMin(YMAX(pathUnit->tile), nextRect.ymaxi) - qMax(YMIN(pathUnit->tile), nextRect.ymini) < tWidthNeeded) return false;
+		}
+		else {
+			if (qMin(RIGHT(pathUnit->tile), nextRect.xmaxi) - qMax(LEFT(pathUnit->tile), nextRect.xmini) < tWidthNeeded) return false;
+		}
+	}
+	else {
+		if (horizontal) {
+			if (qMin(pathUnit->minCostRect.ymaxi, nextRect.ymaxi) - qMax(pathUnit->minCostRect.ymini, nextRect.ymini) < tWidthNeeded) return false;
+		}
+		else {
+			if (qMin(pathUnit->minCostRect.xmaxi, nextRect.xmaxi) - qMax(pathUnit->minCostRect.xmini, nextRect.xmini) < tWidthNeeded) return false;
+		}
+	}
+
+	return true;
+}
+
+bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, TileRect & nextRect, int tWidthNeeded) 
 {
 	// if pathUnit is restricted, make sure you can draw a wire from pathUnit->parent to next
 	bool bail = false;
@@ -1961,25 +2006,25 @@ bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction
 		// can only move through this pathUnit in one direction 
 		if (LEFT(parent->tile) == RIGHT(pathUnit->tile)) {
 			if (direction == PathUnit::Left) {
-				bail = qMin(YMAX(next), YMAX(parent->tile)) - qMax(YMIN(next), YMIN(parent->tile)) < tWidthNeeded;
+				bail = qMin(nextRect.ymaxi, YMAX(parent->tile)) - qMax(nextRect.ymini, YMIN(parent->tile)) < tWidthNeeded;
 			}
 			else bail = true;
 		}
 		else if (RIGHT(parent->tile) == LEFT(pathUnit->tile)) {
 			if (direction == PathUnit::Right) {
-				bail = qMin(YMAX(next), YMAX(parent->tile)) - qMax(YMIN(next), YMIN(parent->tile)) < tWidthNeeded;
+				bail = qMin(nextRect.ymaxi, YMAX(parent->tile)) - qMax(nextRect.ymini, YMIN(parent->tile)) < tWidthNeeded;
 			}
 			else bail = true;
 		}
 		else if (YMIN(parent->tile) == YMAX(pathUnit->tile)) {
 			if (direction == PathUnit::Up) {
-				bail = qMin(RIGHT(next), RIGHT(parent->tile)) - qMax(LEFT(next), LEFT(parent->tile)) < tWidthNeeded;
+				bail = qMin(nextRect.xmaxi, RIGHT(parent->tile)) - qMax(nextRect.xmini, LEFT(parent->tile)) < tWidthNeeded;
 			}
 			else bail = true;
 		}
 		else if (YMAX(parent->tile) == YMIN(pathUnit->tile)) {
 			if (direction == PathUnit::Down) {
-				bail = qMin(RIGHT(next), RIGHT(parent->tile)) - qMax(LEFT(next), LEFT(parent->tile)) < tWidthNeeded;
+				bail = qMin(nextRect.xmaxi, RIGHT(parent->tile)) - qMax(nextRect.xmini, LEFT(parent->tile)) < tWidthNeeded;
 			}
 			else bail = true;
 		}
@@ -2705,66 +2750,29 @@ PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue,
 	PathUnit * nearest = NULL;
 	int bestCost = std::numeric_limits<int>::max();
 	foreach (PathUnit * pathUnit, tilePathUnits.values()) {
-		Tile::TileType tileType = TiGetType(pathUnit->tile);
-		if (tileType != Tile::SPACE && tileType != Tile::SPACE2) continue;
 		if (pathUnit->priorityQueue != &priorityQueue) continue;
+		if (pathUnit->sourceCost >= bestCost) {
+			// the current nearest PathUnit is closer to the connector than this PathUnit
+			continue;
+		}
 
 		TileRect tileRect;
 		TiToRect(pathUnit->tile, &tileRect);
-		if (tileRect.xmaxi - tileRect.xmini < tWidthNeeded) {
-			// tile not wide enough; bail
-			continue;
-		}
-
-		if (pathUnit->sourceCost >= bestCost) {
-			// the current solution is closer to the connector; bail
-			continue;
-		}
-
-		// look at adjacent space tiles to see if the via or jumperItem connector can fit
-		// this also checks that the space isn't beneath a part
-
 		//drawTileRect(tileRect, QColor(255,255,0,128));
-
-		TileRect searchRect = tileRect;
-		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
-		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
-		if (searchRect.ymaxi - searchRect.ymini < tHeightNeeded) continue;
-
-		//infoTileRect("search rect", searchRect);
-
-		QList<Tile *> spaces;
-		TiSrArea(NULL, m_unionPlane, &searchRect, findSpaces, &spaces);
-		foreach (Tile * space, spaces) {
-			if (WIDTH(space) < tWidthNeeded || HEIGHT(space) < tHeightNeeded) continue;
-
-			TileRect minCostRect = calcMinCostRect(pathUnit, space);
-			int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
-			if (sourceCost < bestCost) {
-				bestCost = sourceCost;
-				TiToRect(space, &nearestSpace);
-				//drawTileRect(nearestSpace, QColor(255, 128, 0, 128));
-				nearest = pathUnit;
+		if (tileRect.xmaxi - tileRect.xmini >= tWidthNeeded) {
+			TileRect searchRect = tileRect;
+			searchRect.xmini = qMax(m_tileMaxRect.xmini, tileRect.xmini - tWidthNeeded + TileStandardWireWidth);
+			searchRect.xmaxi = qMin(m_tileMaxRect.xmaxi, tileRect.xmaxi + tWidthNeeded - TileStandardWireWidth);
+			if (searchRect.xmaxi - searchRect.xmini >= tWidthNeeded) {
+				findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, true);
 			}
 		}
-
-		TileRect searchRect90;
-		tileRotate90(searchRect, searchRect90);
-		spaces.clear();
-		TiSrArea(NULL, m_union90Plane, &searchRect90, findSpaces, &spaces);
-		foreach (Tile * space, spaces) {
-			if (WIDTH(space) < tWidthNeeded || HEIGHT(space) < tHeightNeeded) continue;
-
-			TileRect spaceTileRect, spaceTileRect90;
-			TiToRect(space, &spaceTileRect90);
-			tileUnrotate90(spaceTileRect90, spaceTileRect);
-			TileRect minCostRect = calcMinCostRect(pathUnit, spaceTileRect);
-			int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
-			if (sourceCost < bestCost) {
-				//drawTileRect(spaceTileRect, QColor(255,25,255,128));
-				bestCost = sourceCost;
-				nearestSpace = spaceTileRect;
-				nearest = pathUnit;
+		if (tileRect.ymaxi - tileRect.ymini >= tHeightNeeded) {
+			TileRect searchRect = tileRect;
+			searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
+			searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
+			if (searchRect.ymaxi - searchRect.ymini >= tHeightNeeded) {
+				findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, false);
 			}
 		}
 	}
@@ -2772,7 +2780,59 @@ PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue,
 	return nearest;
 }
 
+void CMRouter::findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, int tWidthNeeded, int tHeightNeeded, 
+									PathUnit * & nearest, int & bestCost, TileRect & nearestSpace, bool horizontal)
+{
+	// look at adjacent space tiles to see if the via or jumperItem connector can fit
+	// this also checks that the space isn't beneath a part
 
+	//infoTileRect("search rect", searchRect);
+
+	QList<Tile *> spaces;
+	TiSrArea(NULL, m_unionPlane, &searchRect, findSpaces, &spaces);
+	foreach (Tile * space, spaces) {
+		if (WIDTH(space) < tWidthNeeded || HEIGHT(space) < tHeightNeeded) continue;
+
+		TileRect minCostRect = calcMinCostRect(pathUnit, space);
+		int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
+		if (sourceCost < bestCost) {
+			TileRect candidate;
+			TiToRect(space, &candidate);
+			PathUnit::Direction direction = (horizontal) ? (candidate.xmaxi <= LEFT(pathUnit->tile) ? PathUnit::Left : PathUnit::Right)
+														 : (candidate.ymaxi <= YMIN(pathUnit->tile) ? PathUnit::Up : PathUnit::Down);
+			if (appendIfRect(pathUnit, candidate, direction, tWidthNeeded)) {
+				bestCost = sourceCost;
+				nearestSpace = candidate;
+				//drawTileRect(nearestSpace, QColor(255, 128, 0, 128));
+				nearest = pathUnit;
+			}
+		}
+	}
+
+	TileRect searchRect90;
+	tileRotate90(searchRect, searchRect90);
+	spaces.clear();
+	TiSrArea(NULL, m_union90Plane, &searchRect90, findSpaces, &spaces);
+	foreach (Tile * space, spaces) {
+		if (WIDTH(space) < tWidthNeeded || HEIGHT(space) < tHeightNeeded) continue;
+
+		TileRect spaceTileRect, spaceTileRect90;
+		TiToRect(space, &spaceTileRect90);
+		tileUnrotate90(spaceTileRect90, spaceTileRect);
+		TileRect minCostRect = calcMinCostRect(pathUnit, spaceTileRect);
+		int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
+		if (sourceCost < bestCost) {
+			PathUnit::Direction direction = (horizontal) ? (spaceTileRect.xmaxi <= LEFT(pathUnit->tile) ? PathUnit::Left : PathUnit::Right)
+														 : (spaceTileRect.ymaxi <= YMIN(pathUnit->tile) ? PathUnit::Up : PathUnit::Down);
+			if (appendIfRect(pathUnit, spaceTileRect, direction, tWidthNeeded)) {
+				//drawTileRect(spaceTileRect, QColor(255,25,255,128));
+				bestCost = sourceCost;
+				nearestSpace = spaceTileRect;
+				nearest = pathUnit;
+			}
+		}
+	}
+}
 
 
 void CMRouter::clipParts() 

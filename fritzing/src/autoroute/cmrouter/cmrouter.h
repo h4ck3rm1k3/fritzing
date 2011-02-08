@@ -205,6 +205,8 @@ protected:
 	void clipInsertTile(Plane * thePlane, TileRect &, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType type);
 	void clearGridEntries();
 	void appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> &, PathUnit::Direction, int tWidthNeeded);
+	bool appendIfRect(PathUnit * pathUnit, TileRect & nextRect, PathUnit::Direction direction, int tWidthNeeded);
+	bool roomToNext(PathUnit * pathUnit, bool horizontal, int tWidthNeeded, TileRect & nextRect);
 	void hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
 	void clearEdge(JEdge * edge);
@@ -232,6 +234,8 @@ protected:
 	void clearPlane(Plane * thePlane, bool rotate90);
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	PathUnit * findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
+	void findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, int tWidthNeeded, int tHeightNeeded, 
+							PathUnit * & nearest, int & bestCost, TileRect & nearestSpace, bool horizontal);
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
 	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, JEdge * edge, qreal keepout);
 	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, class VirtualWire *);
@@ -239,7 +243,7 @@ protected:
 	void clipParts();
 	Plane * initPlane(bool rotate90);
 	void insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType);
-	bool blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, Tile * next, int tWidthNeeded);
+	bool blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, TileRect & nextRect, int tWidthNeeded);
 	void clearTracesAndJumpers();
 	void saveTracesAndJumpers(QByteArray & byteArray);
 	void initUndo(QUndoCommand * parentCommand);
