@@ -1947,7 +1947,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 
 	if (bail) return;
 
-	drawGridItem(next);
+	//drawGridItem(next);
 
 	tiles.append(next);
 }

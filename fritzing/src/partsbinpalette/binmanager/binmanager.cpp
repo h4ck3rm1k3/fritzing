@@ -653,18 +653,26 @@ void BinManager::updateMenus() {
 	return bin->updateMenus();
 }
 
+void BinManager::showSearch() {
+	// TODO: maybe blink the text field to draw the eye
+	PartsBinPaletteWidget * bin = determineTopmostBin();
+	if (bin == NULL) return;
+
+	clickedSearch(bin);
+}
+
 PartsBinPaletteWidget * BinManager::determineTopmostBin() {
 	if (m_stackWidget == NULL) return NULL;
 
 	// why would there ever be more than one StackTabWidget?
 	for (int i = 0; i < m_stackWidget->count(); i++) {
 		StackTabWidget *stb = qobject_cast<StackTabWidget*>(m_stackWidget->widget(i));
-		QWidget * widget = stb->currentWidget();
 		return qobject_cast<PartsBinPaletteWidget *>(stb->currentWidget());
 	}
 
 	return NULL;
-
 }
+
+
 
 

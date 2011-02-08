@@ -1442,6 +1442,10 @@ void MainWindow::createPartMenuActions() {
     m_openProgramWindowAct->setStatusTip(tr("Open microcontroller programming window"));
 	connect(m_openProgramWindowAct, SIGNAL(triggered()), this, SLOT(openProgramWindow()));
 
+	m_partsBinSearchAct = new QAction(tr("Search parts bin"), this);
+    m_partsBinSearchAct->setStatusTip(tr("Search for a part in the parts bin"));
+	connect(m_partsBinSearchAct, SIGNAL(triggered()), this, SLOT(searchPartsBin()));
+
 }
 
 void MainWindow::createViewMenuActions() {
@@ -1602,6 +1606,8 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_openAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
+
+    m_fileMenu->addSeparator();
 	m_fileMenu->addMenu(m_partsBinFileMenu);
 
     m_fileMenu->addSeparator();
@@ -2032,6 +2038,10 @@ void MainWindow::updatePartMenu() {
 	m_flipVerticalAct->setEnabled(enable && (itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 
 	updatePartsBinMenu(m_partsBinPartMenu, m_binManager ? m_binManager->getPartMenu() : NULL, 4);
+	if (m_binManager) {
+		m_partsBinPartMenu->addAction(m_partsBinSearchAct);
+	}
+
 
 	updateItemMenu();
 	updateEditMenu();
@@ -4023,3 +4033,8 @@ void MainWindow::selectMoveLock()
 {
 	m_currentGraphicsView->selectAllMoveLock();
 }
+
+void  MainWindow::searchPartsBin() {
+	if (m_binManager) m_binManager->showSearch();
+}
+

@@ -91,6 +91,7 @@ class BinManager : public QFrame {
 		void toListView();
 		QMenu * getFileMenu();
 		QMenu * getPartMenu();
+		void showSearch();
 		void updateMenus();
 
 	protected slots:

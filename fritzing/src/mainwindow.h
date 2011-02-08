@@ -276,6 +276,7 @@ protected slots:
 	void updateNet();
 	void selectMoveLock();
 	void moveLock();
+	void searchPartsBin();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -465,7 +466,6 @@ protected:
     QAction *m_openRecentFileActs[MaxRecentFiles];
 	QMenu *m_openExampleMenu;
 	QMenu * m_partsBinFileMenu;
-	QMenu * m_partsBinPartMenu;
 	QAction *m_saveAct;
 	QAction *m_saveAsAct;
 	QAction *m_pageSetupAct;
@@ -523,6 +523,9 @@ protected:
 	QAction *m_exportNormalizedFlattenedSvgAction;
     QAction *m_openInPartsEditorAct;
     QMenu *m_addToBinMenu;
+	QMenu * m_partsBinPartMenu;
+	QAction *m_partsBinSearchAct;
+
 
 	QMenu *m_rotateMenu;
 	QAction *m_rotate90cwAct;
