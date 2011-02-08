@@ -3633,6 +3633,7 @@ void CMRouter::clearTracesAndJumpers() {
 }
 
 void CMRouter::saveTracesAndJumpers(QByteArray & byteArray) {
+	byteArray.clear();
 	QList<ItemBase *> itemBases;
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
