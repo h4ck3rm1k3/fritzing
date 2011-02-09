@@ -113,7 +113,10 @@ void Capacitor::loadPropertyDefs() {
 
 void Capacitor::initPropertyDefs() {
 	InstanceDef * instanceDef = InstanceDefs.value(moduleID(), NULL);
-	if (instanceDef == NULL) return;
+	if (instanceDef == NULL) {
+		DebugDialog::debug("capacitor instancedef missing; check properties.xml file");
+		return;
+	}
 
 	foreach (PropertyDef * propertyDef, instanceDef->propertyDefs) {
 		QString defaultValue = TextUtils::convertToPowerPrefix(propertyDef->defaultValue) + propertyDef->symbol;

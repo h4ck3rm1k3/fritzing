@@ -1,13 +1,17 @@
 <properties>
-    <instance moduleID="TantalumCapacitorModuleID">
+    <instance moduleID="100milTantalumCapacitorModuleID">
       <property id="cap1" />
       <property id="voltage1" />
     </instance>
-  <instance moduleID="BlueCeramicCapacitorModuleID">
+    <instance moduleID="200milTantalumCapacitorModuleID">
+      <property id="cap1" />
+      <property id="voltage1" />
+    </instance>
+  <instance moduleID="100milCeramicCapacitorModuleID">
     <property id="cap1" />
     <property id="voltage1" />
   </instance>
-  <instance moduleID="CeramicDiskCapacitorModuleID">
+  <instance moduleID="200milCeramicCapacitorModuleID">
     <property id="cap1" />
     <property id="voltage1" />
   </instance>
@@ -21,8 +25,9 @@
   </instance>
   <instance moduleID="LargeElectrolyticCapacitorModuleID">
     <property id="cap1" />
-    <property id="just testing" />
+    <property id="voltage1" />
   </instance>
+
   <property id="cap1" name="capacitance" symbol="F" minValue=".000000047" maxValue=".00033" defaultValue=".0000001">	
 			<menuItem value="0.00000039" />
 			<menuItem value="0.00000047" />
@@ -70,13 +75,5 @@
     <menuItem value="25" />
     <menuItem value="35" />
     <menuItem value="50" />
-  </property>
-  <property id="just testing" name="rated voltage" symbol="V" minValue="50" maxValue="1000" defaultValue="35">
-    <menuItem value="50" />
-    <menuItem value="60" />
-    <menuItem value="70" />
-    <menuItem value="80" />
-    <menuItem value="90" />
-    <menuItem value="1000" />
   </property>
 </properties>
