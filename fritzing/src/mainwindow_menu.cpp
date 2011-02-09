@@ -1544,6 +1544,10 @@ void MainWindow::createHelpMenuActions() {
 	m_openHelpAct->setStatusTip(tr("Open Fritzing help"));
 	connect(m_openHelpAct, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
 
+	m_openDonateAct = new QAction(tr("Donate to Fritzing"), this);
+	m_openDonateAct->setStatusTip(tr("Open Fritzing donation web page"));
+	connect(m_openDonateAct, SIGNAL(triggered(bool)), this, SLOT(openDonate()));
+
 	m_examplesAct = new QAction(tr("Online Projects Gallery"), this);
 	m_examplesAct->setStatusTip(tr("Open Fritzing examples"));
 	connect(m_examplesAct, SIGNAL(triggered(bool)), this, SLOT(openExamples()));
@@ -1802,6 +1806,7 @@ void MainWindow::createMenus()
 	m_helpMenu->addAction(m_enableDebugAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
+    m_helpMenu->addAction(m_openDonateAct);
 	m_helpMenu->addAction(m_tipsAndTricksAct);
 #ifndef QT_NO_DEBUG
 	m_helpMenu->addAction(m_aboutQtAct);
@@ -2334,15 +2339,19 @@ void MainWindow::showPartsBinListView() {
 }
 
 void MainWindow::openHelp() {
-	QDesktopServices::openUrl(QString("http://new.fritzing.org/learning"));
+	QDesktopServices::openUrl(QString("http://fritzing.org/learning"));
+}
+
+void MainWindow::openDonate() {
+	QDesktopServices::openUrl(QString("http://fritzing.org/shop/donations/"));
 }
 
 void MainWindow::openExamples() {
-	QDesktopServices::openUrl(QString("http://new.fritzing.org/projects"));
+	QDesktopServices::openUrl(QString("http://fritzing.org/projects"));
 }
 
 void MainWindow::openPartsReference() {
-	QDesktopServices::openUrl(QString("http://new.fritzing.org/parts"));
+	QDesktopServices::openUrl(QString("http://fritzing.org/parts"));
 }
 
 void MainWindow::visitFritzingDotOrg() {

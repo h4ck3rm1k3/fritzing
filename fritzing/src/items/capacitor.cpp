@@ -143,7 +143,7 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 			focusOutComboBox->setEnabled(swappingEnabled);
 			focusOutComboBox->setEditable(true);
 			QString current = m_propertyDefs.value(propertyDef);
-			qreal val = TextUtils::convertFromPowerPrefix(current, propertyDef->symbol);
+			qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
 			if (!propertyDef->menuItems.contains(val)) {
 				propertyDef->menuItems.append(val);
 			}
@@ -187,7 +187,8 @@ void Capacitor::propertyEntry(const QString & text) {
 
 	foreach (PropertyDef * propertyDef, m_comboBoxes.keys()) {
 		if (m_comboBoxes.value(propertyDef) == focusOutComboBox) {
-			qreal val = TextUtils::convertFromPowerPrefix(text, propertyDef->symbol);
+			QString utext = text;
+			qreal val = TextUtils::convertFromPowerPrefixU(utext, propertyDef->symbol);
 			if (!propertyDef->menuItems.contains(val)) {
 				// info view is redrawn, so combobox is recreated, so the new item is added to the combo box menu
 				propertyDef->menuItems.append(val);
@@ -195,7 +196,7 @@ void Capacitor::propertyEntry(const QString & text) {
 
 			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 			if (infoGraphicsView != NULL) {
-				infoGraphicsView->setProp(this, propertyDef->name, "", m_propertyDefs.value(propertyDef, ""), text, true);
+				infoGraphicsView->setProp(this, propertyDef->name, "", m_propertyDefs.value(propertyDef, ""), utext, true);
 			}
 			break;
 		}

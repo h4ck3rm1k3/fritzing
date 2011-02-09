@@ -46,6 +46,7 @@ public:
 	static qreal convertToInches(const QString & string);
 	static QString convertToPowerPrefix(qreal);
 	static qreal convertFromPowerPrefix(const QString & val, const QString & symbol);
+	static qreal convertFromPowerPrefixU(QString & val, const QString & symbol);
 
 	static QString replaceTextElement(const QString & svg, const QString & label);
     static bool squashElement(QDomDocument &, const QString & elementName, const QString & attName, const QRegExp & matchContent);

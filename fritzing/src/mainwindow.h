@@ -168,6 +168,7 @@ protected slots:
     void toggleUndoHistory(bool toggle);
 	void toggleDebuggerOutput(bool toggle);
 	void openHelp();
+	void openDonate();
 	void openExamples();
 	void openPartsReference();
 	void visitFritzingDotOrg();
@@ -605,6 +606,7 @@ protected:
 	// Help Menu
     QMenu *m_helpMenu;
     QAction *m_openHelpAct;
+    QAction *m_openDonateAct;
     QAction *m_examplesAct;
     QAction *m_partsRefAct;
     QAction *m_showInViewHelpAct;;
