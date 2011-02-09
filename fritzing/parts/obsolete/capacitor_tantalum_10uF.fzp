@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="f124bae12ce2b49029499a70593456637">
-    <version replacedby="TantalumCapacitorModuleID">4</version>
+    <version replacedby="100milTantalumCapacitorModuleID">4</version>
     <author>Don Roberts (blog.gogozer.net)</author>
     <title>Tantalum Capacitor</title>
     <label>C</label>

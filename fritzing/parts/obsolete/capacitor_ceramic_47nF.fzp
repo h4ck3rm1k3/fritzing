@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="2011BasfdBEC12">
- <version replacedby="BlueCeramicCapacitorModuleID">4</version>
+ <version replacedby="100milCeramicCapacitorModuleID">4</version>
  <author>André Knörig</author>
  <title>Ceramic Capacitor</title>
  <label>C</label>

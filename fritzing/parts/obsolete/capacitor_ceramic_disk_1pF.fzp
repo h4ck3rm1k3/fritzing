@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.1.1201" moduleId="204579BBEC12B">
- <version replacedby="CeramicDiskCapacitorModuleID">4</version>
+ <version replacedby="200milCeramicCapacitorModuleID">4</version>
  <author>Brendan Howell</author>
  <title>Ceramic Disk Capacitor</title>
  <label>C</label>

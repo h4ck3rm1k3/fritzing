@@ -389,7 +389,7 @@
           </iconView>
         </views>
       </instance>
-        <instance moduleIdRef="3746667c843a2127a0e499f8a0b3ef6a" modelIndex="38" path="parts/core/crystal.fzp">
+        <instance moduleIdRef="3746667c843a2127a0e499f8a0b3ef6a1" modelIndex="38" path="parts/core/crystal.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
