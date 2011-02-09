@@ -2,7 +2,28 @@
 <module fritzingVersion="0.4.3b.0.0">
     <title>All Parts</title>
     <instances>
-      <instance moduleIdRef="75f728f5-a5d6-435d-8790-d57fd4f5cafe">
+      <instance moduleIdRef="0b6deb11c8005423ea8d84452203654d">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="cb9c6041c0b15c9c1a63560527d7693a">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="33b94ebdb1ef4e7cf0f8425956cfca60">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="f75fce820d6290130b78084babcfe946">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -478,21 +499,49 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="BlueCeramicCapacitorModuleID">
+      <instance moduleIdRef="100milCeramicCapacitorModuleID">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="CeramicDiskCapacitorModuleID">
+      <instance moduleIdRef="200milCeramicCapacitorModuleID">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="TantalumCapacitorModuleID">
+      <instance moduleIdRef="LargeElectrolyticCapacitorModuleID">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="MediumElectrolyticCapacitorModuleID">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="SmallElectrolyticCapacitorModuleID">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="100milTantalumCapacitorModuleID">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="200milTantalumCapacitorModuleID">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -534,7 +583,7 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="3746667c843a2127a0e499f8a0b3ef6a">
+      <instance moduleIdRef="3746667c843a2127a0e499f8a0b3ef6a1">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -591,27 +640,6 @@
         </views>
       </instance>
       <instance moduleIdRef="RevEd_DS1307">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="LargeElectrolyticCapacitorModuleID">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="MediumElectrolyticCapacitorModuleID">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"></geometry>
-          </iconView>
-        </views>
-      </instance>
-      <instance moduleIdRef="SmallElectrolyticCapacitorModuleID">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -1801,21 +1829,21 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="2910BBEC34">
+      <instance moduleIdRef="3910BBEC34">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="2915BBEC34">
+      <instance moduleIdRef="3915BBEC34">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="2244BBEC34">
+      <instance moduleIdRef="3244BBEC34">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -1836,14 +1864,14 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="2912whiteBBEC34">
+      <instance moduleIdRef="3912whiteBBEC34">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="2911BBEC34">
+      <instance moduleIdRef="3911BBEC34">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>
@@ -2543,6 +2571,13 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="37E5C8D507334A9E94A6DE1EBB3D272F">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="710CCDDF9B0340C2977584EE6F1F98F7">
         <views>
           <iconView layer="icon">
@@ -3118,6 +3153,20 @@
         </views>
       </instance>
       <instance moduleIdRef="40a05d9dc2asdf9c6e50e467c97a50e">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="288ea56ea458fbe4774256402d9b0e34">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="a0bc75e3536cc51ac28b344cead00745">
         <views>
           <iconView layer="icon">
             <geometry z="-1" x="-1" y="-1"></geometry>

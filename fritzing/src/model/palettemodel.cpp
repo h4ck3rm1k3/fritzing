@@ -391,6 +391,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 					else if (name.compare("pcbView") == 0) {
 						viewIdentifier = ViewIdentifierClass::PCBView;
 					}
+					else if (name.compare("iconView") == 0) {
+						viewIdentifier = ViewIdentifierClass::IconView;
+					}
 					else if (name.compare("layers") == 0) {
 						hasBaseNameFor.insert(viewIdentifier, xml.attributes().value("image").toString());
 					}
