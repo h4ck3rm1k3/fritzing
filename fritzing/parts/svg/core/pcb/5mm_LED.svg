@@ -1,43 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   width="21.968504"
-   height="21.968504"
-   id="svg2">
-  <defs
-     id="defs4">
-    <inkscape:path-effect
-       effect="skeletal"
-       id="path-effect3650" />
-  </defs>
-  
-     <g id="copper0">
-     <g id="copper1">
-      <path
-         d="m 13.110236,6.5551181 a 2.1259842,2.1259842 0 1 1 -4.2519682,0 2.1259842,2.1259842 0 1 1 4.2519682,0 z"
-         id="connector1pad"
-         style="fill:none;stroke:#f7bd13;stroke-width:1.41732287;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         d="m 13.110236,15.413385 a 2.1259842,2.1259842 0 1 1 -4.2519682,0 2.1259842,2.1259842 0 1 1 4.2519682,0 z"
-         id="connector0pad"
-         style="fill:none;stroke:#f7bd13;stroke-width:1.41732287;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-     </g>
-     </g>
-     
-    <g id="silkscreen">
-      <path
-         d="m 4.5780849,19.466955 a 10.629921,10.629921 0 1 1 12.7774081,0.02626"
-         id="path2820"
-         style="fill:none;stroke:#ffffff;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-       d="m 4.6062992,19.488189 12.7559058,0"
-       id="path3707"
-       style="fill:none;stroke:#ffffff;stroke-width:0.70866144;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    </g>
-    
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="svg2" xmlns:svg="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="21.969px"
+	 height="21.969px" viewBox="0 0 21.969 21.969" enable-background="new 0 0 21.969 21.969" xml:space="preserve">
+<g id="copper0">
+	<g id="copper1">
+		<path id="connector1pad" fill="none" stroke="#F7BD13" stroke-width="1.4173" stroke-linecap="round" stroke-linejoin="round" d="
+			M8.858,13.292c0-1.174,0.952-2.126,2.126-2.126s2.126,0.952,2.126,2.126c0,1.175-0.952,2.126-2.126,2.126
+			S8.858,14.467,8.858,13.292z"/>
+		<path id="connector0pad" fill="none" stroke="#F7BD13" stroke-width="1.4173" stroke-linecap="round" stroke-linejoin="round" d="
+			M8.858,4.433c0-1.174,0.952-2.126,2.126-2.126S13.11,3.26,13.11,4.433c0,1.175-0.952,2.126-2.126,2.126S8.858,5.608,8.858,4.433
+			L8.858,4.433z"/>
+	</g>
+</g>
+<g id="silkscreen">
+	<path id="path2820" fill="none" stroke="#FFFFFF" stroke-width="0.7087" stroke-linecap="round" stroke-linejoin="round" d="
+		M17.39,0.381c4.685,3.537,5.614,10.203,2.076,14.889c-3.538,4.685-10.204,5.614-14.889,2.076S-1.036,7.141,2.502,2.457
+		C3.103,1.66,3.813,0.952,4.613,0.354"/>
+	<path id="path3707" fill="none" stroke="#FFFFFF" stroke-width="0.7087" stroke-linecap="round" d="M17.362,0.359H4.606"/>
+</g>
 </svg>
