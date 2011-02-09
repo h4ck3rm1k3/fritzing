@@ -124,8 +124,8 @@ static qreal HalfStandardWireWidth = 0;
 static const qreal CloseEnough = 0.5;
 static const int GridEntryAlpha = 128;
 
-static qint64 seedNextTime = 0;
-static qint64 propagateUnitTime = 0;
+//static qint64 seedNextTime = 0;
+//static qint64 propagateUnitTime = 0;
 
 static const int DefaultMaxCycles = 10;
 
@@ -1945,6 +1945,8 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 				bail = blockDirection(pathUnit, direction, nextRect, tWidthNeeded);
 			}
 			break;
+                default:
+                        break;
 
 	}
 
@@ -1976,6 +1978,8 @@ bool CMRouter::appendIfRect(PathUnit * pathUnit, TileRect & nextRect, PathUnit::
 				bail = blockDirection(pathUnit, direction, nextRect, tWidthNeeded);
 			}
 			break;
+                default:
+                        break;
 
 	}
 
@@ -2523,6 +2527,9 @@ Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *>
 					gotOverlap = !allowEquipotentialOverlaps(item, alreadyTiled);
 					doClip = alreadyTiled.count() > 0;
 					break;
+                                default:
+                                        // shouldn't be here
+                                        break;
 			}
 		}
 	}
@@ -3311,8 +3318,8 @@ bool CMRouter::insideV(const QPointF & check, const QPointF & vertex)
 bool CMRouter::goodEnough(CompletePath & completePath) {
 	PathUnit * sourcePathUnit = completePath.source;
 	PathUnit * destPathUnit = completePath.dest;
-	for ( ; sourcePathUnit->parent; sourcePathUnit = sourcePathUnit->parent);
-	for ( ; destPathUnit->parent; destPathUnit = destPathUnit->parent);
+        for ( ; sourcePathUnit->parent; sourcePathUnit = sourcePathUnit->parent) ;
+        for ( ; destPathUnit->parent; destPathUnit = destPathUnit->parent) ;
 	int bestCost = manhattan(sourcePathUnit->minCostRect, destPathUnit->minCostRect);
 	return completePath.sourceCost < ((qreal) bestCost) * 1.05;
 }

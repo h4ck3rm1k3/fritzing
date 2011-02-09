@@ -1087,6 +1087,7 @@ void PCBSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer::View
                 case ViewLayer::Top:
                 case ViewLayer::Bottom:
                 case ViewLayer::TopAndBottom:
+                case ViewLayer::UnknownSpec:
 			DebugDialog::debug("bad viewLayerSpec in getLabelFont");
 			break;
 

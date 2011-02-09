@@ -50,8 +50,8 @@ TiSetBody(tp, b)
  * this area.
  */
 
-int INFINITY = (std::numeric_limits<int>::max() >> 2) - 4;
-int MINFINITY	= -INFINITY;
+int TINFINITY = (std::numeric_limits<int>::max() >> 2) - 4;
+int MINFINITY	= -TINFINITY;
 
 
 /*
@@ -93,14 +93,14 @@ TiNewPlane(Tile *tile)
      * stitches of a tile are used to determine its upper right,
      * we must give the boundary tiles a meaningful TR and RT.
      * To make certain that these tiles don't have zero width
-     * or height, we use a dummy tile at (INFINITY+1,INFINITY+1).
+     * or height, we use a dummy tile at (TINFINITY+1,TINFINITY+1).
      */
 
     if (infinityTile == (Tile *) NULL)
     {
 	infinityTile = TiAlloc();
-	SETLEFT(infinityTile, INFINITY+1);
-	SETYMIN(infinityTile, INFINITY+1);
+        SETLEFT(infinityTile, TINFINITY+1);
+        SETYMIN(infinityTile, TINFINITY+1);
     }
 
     if (tile)
@@ -121,7 +121,7 @@ TiNewPlane(Tile *tile)
 	TiSetType(newplane->pl_bottom, Tile::DUMMYBOTTOM);
 
     SETLEFT(newplane->pl_top, MINFINITY);
-    SETYMIN(newplane->pl_top, INFINITY);
+    SETYMIN(newplane->pl_top, TINFINITY);
     SETRT(newplane->pl_top, infinityTile);
     SETTR(newplane->pl_top, newplane->pl_right);
     SETLB(newplane->pl_top, tile);
@@ -138,7 +138,7 @@ TiNewPlane(Tile *tile)
     TiSetBody(newplane->pl_left, 0);
     TiSetType(newplane->pl_bottom, Tile::DUMMYLEFT);
 
-    SETLEFT(newplane->pl_right, INFINITY);
+    SETLEFT(newplane->pl_right, TINFINITY);
     SETYMIN(newplane->pl_right, MINFINITY);
     SETRT(newplane->pl_right, newplane->pl_top);
     SETTR(newplane->pl_right, infinityTile);

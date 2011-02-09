@@ -118,7 +118,8 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
                 case ViewLayer::TopAndBottom:
 		case ViewLayer::WireOnTop_TwoLayers:
 		case ViewLayer::WireOnBottom_OneLayer:
-		case ViewLayer::WireOnBottom_TwoLayers:
+                case ViewLayer::WireOnBottom_TwoLayers:
+                case ViewLayer::UnknownSpec:
 			DebugDialog::debug("bad view spec in LoadLayerKin");
 			break;
 	}

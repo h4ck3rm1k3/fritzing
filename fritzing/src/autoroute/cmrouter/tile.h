@@ -181,21 +181,21 @@ struct Plane
 };
 
 /*
- * The following coordinate, INFINITY, is used to represent a
+ * The following coordinate, TINFINITY, is used to represent a
  * tile location outside of the tile plane.
  *
- * It must be possible to represent INFINITY+1 as well as
+ * It must be possible to represent TINFINITY+1 as well as
  * INFINITY.
  *
- * Also, because locations involving INFINITY may be transformed,
+ * Also, because locations involving TINFINITY may be transformed,
  * it is desirable that additions and subtractions of small integers
- * from either INFINITY or MINFINITY not cause overflow.
+ * from either TINFINITY or MINFINITY not cause overflow.
  *
- * Consequently, we define INFINITY to be the largest integer
+ * Consequently, we define TINFINITY to be the largest integer
  * representable in wordsize - 2 bits.
  */
 
-extern int INFINITY;
+extern int TINFINITY;
 extern int MINFINITY;
 extern int MINDIFF;
 
@@ -262,21 +262,21 @@ void TiFree(Tile *);
  */
 
 
-//#define NEXT_TILE_RIGHT(tResult, t, y) \
-//    for ((tResult) = TR(t); YMIN(tResult) > (y); (tResult) = LB(tResult)) \
-//        /* Nothing */;
+#define NEXT_TILE_RIGHT(tResult, t, y) \
+    for ((tResult) = TR(t); YMIN(tResult) > (y); (tResult) = LB(tResult)) \
+        /* Nothing */;
 
-//#define NEXT_TILE_UP(tResult, t, x) \
-//    for ((tResult) = RT(t); LEFT(tResult) > (x); (tResult) = BL(tResult)) \
-//        /* Nothing */;
+#define NEXT_TILE_UP(tResult, t, x) \
+    for ((tResult) = RT(t); LEFT(tResult) > (x); (tResult) = BL(tResult)) \
+        /* Nothing */;
 
-//#define NEXT_TILE_LEFT(tResult, t, y) \
-//    for ((tResult) = BL(t); YMAX(tResult) <= (y); (tResult) = RT(tResult)) \
-//        /* Nothing */;
+#define NEXT_TILE_LEFT(tResult, t, y) \
+    for ((tResult) = BL(t); YMAX(tResult) <= (y); (tResult) = RT(tResult)) \
+        /* Nothing */;
  
-//#define NEXT_TILE_DOWN(tResult, t, x) \
-//    for ((tResult) = LB(t); RIGHT(tResult) <= (x); (tResult) = TR(tResult)) \
-//        /* Nothing */;
+#define NEXT_TILE_DOWN(tResult, t, x) \
+    for ((tResult) = LB(t); RIGHT(tResult) <= (x); (tResult) = TR(tResult)) \
+        /* Nothing */;
 
 //#define	TiSrPointNoHint(plane, point)	(TiSrPoint((Tile *) NULL, plane, point))
 
