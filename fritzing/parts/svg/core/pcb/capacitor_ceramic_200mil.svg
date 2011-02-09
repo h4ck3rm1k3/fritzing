@@ -8,22 +8,12 @@
    width="25.200001"
    height="7.1999998"
    id="svg2">
-  <defs
-     id="defs4" />
-  <g
-     transform="translate(0,-2.0190735e-5)"
-     id="copper0">
-    <g
-       id="copper1">
-      <path
-         d="m 5.8499999,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
-         id="connector0pin"
-         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         d="m 23.85,3.5999999 a 2.25,2.25 0 1 1 -4.5,0 2.25,2.25 0 1 1 4.5,0 z"
-         id="connector1pin"
-         style="fill:none;stroke:#f7bd13;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    </g>
+
+  <g  id="copper0">
+    <g id="copper1">
+	<circle id="connector0pin" cx="3.60" cy="3.6" fill="none"  r="2.25" stroke="#f7bd13" stroke-width="1.79999995"/>
+	<circle id="connector1pin" cx="21.6" cy="3.6" fill="none"  r="2.25" stroke="#f7bd13" stroke-width="1.79999995"/>
+      </g>
   </g>
   <g
      id="silkscreen">

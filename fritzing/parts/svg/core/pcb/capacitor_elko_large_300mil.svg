@@ -11,8 +11,6 @@
    id="svg2">
   <desc
      id="desc4">Fritzing footprint SVG</desc>
-  <defs
-     id="defs20" />
   <g
      transform="translate(0,0.00152588)"
      id="copper1">
@@ -39,15 +37,9 @@
          style="fill:none;stroke:#ffbf00;stroke-width:20" />
     </g>
   </g>
-  <g
-     transform="translate(0,0.00152588)"
-     id="keepout" />
-  <g
-     transform="translate(0,0.00152588)"
-     id="soldermask" />
-  <g
-     transform="translate(0,0.00152588)"
-     id="outline" />
+  <g id="keepout" />
+  <g id="soldermask" />
+  <g id="outline" />
   <g
      id="silkscreen">
     <g
