@@ -151,6 +151,7 @@ void NonConnectorItem::setCircular(bool circular) {
 void NonConnectorItem::setRadius(qreal radius, qreal strokeWidth) {
 	m_radius = radius;
 	m_strokeWidth = strokeWidth;
+	m_circular = (m_radius > 0);
 }
 
 qreal NonConnectorItem::radius() {

@@ -1705,7 +1705,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 		m_movingByArrow = true;
 	}
 	else {
-		DebugDialog::debug("hello");
+		//DebugDialog::debug("autorepeat");
 	}
 
 	if (event->modifiers() & Qt::ShiftModifier) {

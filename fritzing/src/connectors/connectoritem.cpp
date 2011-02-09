@@ -1278,6 +1278,11 @@ qreal ConnectorItem::calcClipRadius() {
 		return radius() - (strokeWidth() / 2.0);
 	}
 
+	if (m_effectivelyCircular) {
+		qreal rad = rect().width() / 2;
+		return rad - (rad / 5);
+	}
+
 	return 0;
 }
 

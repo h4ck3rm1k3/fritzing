@@ -134,6 +134,7 @@ void ConnectorShared::addPin(ViewIdentifierClass::ViewIdentifier layer, QString 
 	svgIdLayer->m_svgId = connectorId;
 	svgIdLayer->m_terminalId = terminalId;
 	svgIdLayer->m_processed = false;
+	svgIdLayer->m_radius = svgIdLayer->m_strokeWidth = 0;
 	m_pins.insert(layer, svgIdLayer);
 }
 
@@ -202,7 +203,8 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		QString svgId = pinElem.attribute("svgId");
 		//svgId = svgId.left(svgId.lastIndexOf(QRegExp("\\d"))+1);
 		QString layer = pinElem.attribute("layer");
-		SvgIdLayer * svgIdLayer = new SvgIdLayer();
+		SvgIdLayer * svgIdLayer = new SvgIdLayer;
+		svgIdLayer->m_radius = svgIdLayer->m_strokeWidth = 0;
 		svgIdLayer->m_processed = false;
 		svgIdLayer->m_svgId = svgId;
 		svgIdLayer->m_viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
