@@ -1691,33 +1691,6 @@ QStringList ItemBase::collectValues(const QString & family, const QString & prop
 		}
 
 		qreal n = TextUtils::convertFromPowerPrefix(NumberMatcher.cap(1) + NumberMatcher.cap(5), "");
-		/*
-		qreal n = NumberMatcher.cap(1).toDouble(&ok);
-		if (!ok) break;
-
-		QString unit = NumberMatcher.cap(5);
-		if (unit.contains('k')) {
-			n *= 1000;
-		}
-		else if (unit.contains('M')) {
-			n *= 1000000;
-		}
-		else if (unit.contains('G')) {
-			n *= 1000000000;
-		}
-		else if (unit.contains('p')) {
-			n *= 0.000000000001;
-		}
-		else if (unit.contains('n')) {
-			n *= 0.000000001;
-		}
-		else if (unit.contains(TextUtils::MicroSymbol)) {
-			n *= 0.000001;
-		}
-		else if (unit.contains('m')) {
-			n *= 0.001;
-		}
-		*/
 		NumberMatcherValues.insert(opt, n);
 	}
 	if (ok) {

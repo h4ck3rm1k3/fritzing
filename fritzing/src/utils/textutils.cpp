@@ -48,7 +48,7 @@ const QString TextUtils::MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
 
 QList<QString> PowerPrefixes;
 QList<qreal> PowerPrefixValues;
-const QString TextUtils::PowerPrefixesString = QString("pnmkMGT\\x%1").arg(MicroSymbolCode, 4, 16, QChar('0'));
+const QString TextUtils::PowerPrefixesString = QString("pnmkMGTuU\\x%1").arg(MicroSymbolCode, 4, 16, QChar('0'));
 
 void TextUtils::findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements) {
 	if (!element.attribute(att).isEmpty()) {
@@ -614,8 +614,8 @@ qreal TextUtils::convertFromPowerPrefix(const QString & val, const QString & sym
 
 void TextUtils::initPowerPrefixes() {
 	if (PowerPrefixes.count() == 0) {
-		PowerPrefixes << "p" << "n" << MicroSymbol << "m" << "" << "k" << "M" << "G" << "T";
-                PowerPrefixValues << 0.000000000001 << 0.000000001 << 0.000001 << 0.001 << 1 << 1000 << 1000000 << 1000000000. << 1000000000000.;
+		PowerPrefixes << "p" << "n" << MicroSymbol  << "u" << "U" << "m" << "" << "k" << "M" << "G" << "T";
+                PowerPrefixValues << 0.000000000001 << 0.000000001 << 0.000001 << 0.000001 << 0.000001 << 0.001 << 1 << 1000 << 1000000 << 1000000000. << 1000000000000.;
 	}
 }
 
