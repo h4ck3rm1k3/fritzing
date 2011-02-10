@@ -107,7 +107,6 @@ Wire * WireAction::wire() {
 Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
-	m_markedDeleted = false;
 	m_connector0 = m_connector1 = NULL;
 	m_partLabel = initLabel ? new PartLabel(this, NULL) : NULL;
 	m_canChainMultiple = false;
@@ -1354,15 +1353,6 @@ void Wire::checkVisibility(ConnectorItem * onMe, ConnectorItem * onIt, bool conn
 			}
 		}
 	}
-}
-
-
-void Wire::markDeleted(bool mark) {
-	m_markedDeleted = mark;
-}
-
-bool Wire::isMarkedDeleted() {
-	return m_markedDeleted;
 }
 
 bool Wire::canSwitchLayers() {

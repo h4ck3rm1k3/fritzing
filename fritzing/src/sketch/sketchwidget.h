@@ -411,7 +411,6 @@ signals:
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void selectAllItemsSignal(bool state, bool doEmit);
 	void checkStickySignal(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
-	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 	void disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> & itemsToDelete, QUndoCommand * parentCommand);
 	void setResistanceSignal(long itemID, QString resistance, QString pinSpacing, bool doEmit);
 	void setPropSignal(long itemID, const QString & prop, const QString & value, bool doRedraw, bool doEmit);
@@ -423,6 +422,7 @@ signals:
 	void firstTimeHelpHidden();
 	void disconnectWireSignal(QSet<ItemBase *> &, QList<long> &, QUndoCommand * parentCommand);
 	void deleteTracesSignal(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
+	void makeDeleteItemCommandSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -448,11 +448,13 @@ protected slots:
 	void dragAutoScrollTimeout();
 	void moveAutoScrollTimeout();
 	void rememberSticky(long id, QUndoCommand * parentCommand);
+	void rememberSticky(ItemBase *, QUndoCommand * parentCommand);
 	void copyBoundingRectsSlot(QHash<QString, QRectF> &);
 	void disconnectWireSlot(QSet<ItemBase *> &, QList<long> & deletedIDs, QUndoCommand * parentCommand);
 	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 	void vScrollToZero();
 	void arrowTimerTimeout();
+	void makeDeleteItemCommandSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 
 public slots:
 	void changeWireColor(const QString newColor);

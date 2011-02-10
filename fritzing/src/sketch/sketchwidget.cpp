@@ -892,23 +892,17 @@ void SketchWidget::deleteMiddle(QHash<ItemBase *, SketchWidget *> & deletedItems
 }
 
 void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand) {
+	Q_UNUSED(parentCommand);
 	foreach (ItemBase * itemBase, deletedItems) {
 		if (itemBase->itemType() == ModelPart::Wire) continue;
 
 		if (isForeign) {
 			itemBase = findItem(itemBase->id());
 			if (itemBase == NULL) continue;
-		}
 
-		itemBase->saveGeometry();
-		ViewGeometry vg = itemBase->getViewGeometry();
-		QTransform transform = vg.transform();
-		if (!transform.isIdentity()) {
-			QMatrix m;
-			m.setMatrix(transform.m11(), transform.m12(), transform.m21(), transform.m22(), transform.dx(), transform.dy());
-			new TransformItemCommand(this, itemBase->id(), m, m, parentCommand);
+			// only foreign items need move/transform; the current view carries its own viewgeometry
+			itemBase->saveGeometry();
 		}
-		new MoveItemCommand(this, itemBase->id(), vg, vg, false, parentCommand);
 
 		bool isJumper = (itemBase->itemType() == ModelPart::Jumper);
 
@@ -2616,7 +2610,7 @@ bool SketchWidget::checkMoved()
 	bool hasBoard = false;
 
 	foreach (ItemBase * item, m_savedItems) {
-		rememberSticky(item->id(), parentCommand);
+		rememberSticky(item, parentCommand);
 	}
 
 	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
@@ -2649,7 +2643,7 @@ bool SketchWidget::checkMoved()
 	}
 
 	foreach (ItemBase * item, m_savedWires.keys()) {
-		rememberSticky(item->id(), parentCommand);
+		rememberSticky(item, parentCommand);
 	}
 
 	foreach (Wire * wire, m_savedWires.keys()) {
@@ -2869,7 +2863,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	new CleanUpWiresCommand(this, CleanUpWiresCommand::UndoOnly, parentCommand);
 
-	rememberSticky(fromID, parentCommand);
+	rememberSticky(wire, parentCommand);
 
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, true, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, fromID, false, CheckStickyCommand::RedoOnly, parentCommand);
@@ -2879,7 +2873,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 		if (toWire == NULL) continue;
 
-		rememberSticky(toWire->id(), parentCommand);
+		rememberSticky(toWire, parentCommand);
 
 		ViewGeometry vg = toWire->getViewGeometry();
 		QLineF nl = toWire->line();
@@ -4041,7 +4035,18 @@ void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
 }
 
 void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) {
-	// TODO: handle this with virtual functions in the itemBase
+	if (crossView == BaseCommand::CrossView) {
+		emit makeDeleteItemCommandSignal(itemBase, true, parentCommand);
+	}
+	makeDeleteItemCommandSlot(itemBase, false, parentCommand);
+}
+
+void SketchWidget::makeDeleteItemCommandSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand) 
+{
+	if (foreign) {
+		itemBase = findItem(itemBase->id());
+		if (itemBase == NULL) return;
+	}
 
 	if (itemBase->isPartLabelVisible()) {
 		ShowLabelCommand * slc = new ShowLabelCommand(this, parentCommand);
@@ -4056,20 +4061,14 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
 	}
 
-	prepDeleteProps(itemBase, parentCommand);
-
-	rememberSticky(itemBase->id(), parentCommand);
-	if (crossView == BaseCommand::CrossView) {
-		emit rememberStickySignal(itemBase->id(), parentCommand);
+	if (!foreign) {
+		prepDeleteProps(itemBase, parentCommand);
 	}
+
+	rememberSticky(itemBase, parentCommand);
 
 	ModelPart * mp = itemBase->modelPart();
-	if (mp->itemType() == ModelPart::Wire) {
-		Wire * w = qobject_cast<Wire *>(itemBase);
-		w->markDeleted(true);
-	}
-
-	new DeleteItemCommand(this, crossView, mp->moduleID(), itemBase->viewLayerSpec(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
+	new DeleteItemCommand(this, BaseCommand::SingleView, mp->moduleID(), itemBase->viewLayerSpec(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
 }
 
 void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCommand) 
@@ -4158,6 +4157,11 @@ void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
 
+	rememberSticky(itemBase, parentCommand);
+}
+
+void SketchWidget::rememberSticky(ItemBase * itemBase, QUndoCommand * parentCommand) {
+
 	QList< QPointer<ItemBase> > stickyList = itemBase->stickyList();
 	if (stickyList.count() <= 0) return;
 
@@ -4175,7 +4179,6 @@ void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 ViewIdentifierClass::ViewIdentifier SketchWidget::viewIdentifier() {
 	return m_viewIdentifier;
 }
-
 
 void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID note) {
 	m_partViewLayerID = part;

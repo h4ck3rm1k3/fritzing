@@ -409,15 +409,14 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(checkStickySignal(long, bool, bool, CheckStickyCommand *)),
 									 slotter, SLOT(checkSticky(long, bool, bool, CheckStickyCommand *)) );
-	succeeded = succeeded && connect(signaller, SIGNAL(rememberStickySignal(long, QUndoCommand *)),
-									 slotter, SLOT(rememberSticky(long, QUndoCommand *)),
-									 Qt::DirectConnection);
 
 	succeeded = succeeded && connect(signaller, SIGNAL(disconnectAllSignal(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> &, QUndoCommand *)),
 									 slotter, SLOT(disconnectAllSlot(QList<ConnectorItem *>, QHash<ItemBase *, SketchWidget *> &, QUndoCommand *)),
 									 Qt::DirectConnection);
 	succeeded = succeeded && connect(signaller, SIGNAL(setResistanceSignal(long, QString, QString, bool)),
 									 slotter, SLOT(setResistance(long, QString, QString, bool)));
+	succeeded = succeeded && connect(signaller, SIGNAL(makeDeleteItemCommandSignal(ItemBase *, bool , QUndoCommand * )),
+									 slotter, SLOT(makeDeleteItemCommandSlot(ItemBase * , bool , QUndoCommand * )));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(setPropSignal(long,  const QString &,  const QString &, bool, bool)),
 									 slotter, SLOT(setProp(long,  const QString &,  const QString &, bool, bool)));

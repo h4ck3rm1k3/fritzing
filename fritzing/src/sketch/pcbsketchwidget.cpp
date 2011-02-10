@@ -1180,7 +1180,7 @@ void PCBSketchWidget::resizeBoard(qreal mmW, qreal mmH, bool doEmit)
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(mmW).arg(mmH));
-	rememberSticky(item->id(), parentCommand);
+	rememberSticky(item, parentCommand);
 	new ResizeBoardCommand(this, item->id(), origw, origh, mmW, mmH, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), true, CheckStickyCommand::RedoOnly, parentCommand);
 	m_undoStack->push(parentCommand);
@@ -1912,7 +1912,7 @@ void PCBSketchWidget::resizeBoard() {
 	m_resizingBoard->saveParams();
 	m_resizingBoard->getParams(newPos, newSize);
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(newSize.width()).arg(newSize.height()));
-	rememberSticky(m_resizingBoard->id(), parentCommand);
+	rememberSticky(m_resizingBoard, parentCommand);
 	new ResizeBoardCommand(this, m_resizingBoard->id(), oldSize.width(), oldSize.height(), newSize.width(), newSize.height(), parentCommand);
 	if (oldPos != newPos) {
 		m_resizingBoard->saveGeometry();
