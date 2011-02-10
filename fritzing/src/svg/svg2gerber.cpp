@@ -291,13 +291,13 @@ void SVG2gerber::allPaths2gerber() {
         qreal mask_diam = diam + 0.006;
 
         if(fill=="none"){
-            aperture = QString("C,%1X%2").arg(diam).arg(hole);
-            drill_aperture = QString("C%1").arg(hole);
+			aperture = QString("C,%1X%2").arg(diam, 0, 'f').arg(hole);
+            drill_aperture = QString("C%1").arg(hole, 0, 'f');
         }
         else
-            aperture = QString("C,%1").arg(diam);
+            aperture = QString("C,%1").arg(diam, 0, 'f');
 
-        mask_aperture = QString("C,%1").arg(mask_diam);
+        mask_aperture = QString("C,%1").arg(mask_diam, 0, 'f');
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
@@ -356,11 +356,11 @@ void SVG2gerber::allPaths2gerber() {
         qreal mask_totaly = totaly + 0.006;
 
         if(fill=="none")
-            aperture = QString("R,%1X%2X%3X%4").arg(totalx).arg(totaly).arg(holex).arg(holey);
+            aperture = QString("R,%1X%2X%3X%4").arg(totalx, 0, 'f').arg(totaly, 0, 'f').arg(holex, 0, 'f').arg(holey, 0, 'f');
         else
-            aperture = QString("R,%1X%2").arg(totalx).arg(totaly);
+            aperture = QString("R,%1X%2").arg(totalx, 0, 'f').arg(totaly, 0, 'f');
 
-        mask_aperture = QString("R,%1X%2").arg(mask_totalx).arg(mask_totaly);
+        mask_aperture = QString("R,%1X%2").arg(mask_totalx, 0, 'f').arg(mask_totaly, 0, 'f');
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
@@ -416,14 +416,14 @@ void SVG2gerber::allPaths2gerber() {
         if(polygon.hasAttribute("fill") && !(polygon.hasAttribute("stroke"))){
             // start poly fill
             m_gerber_paths += "G36*\n";
-			aperture = QString("C,%1").arg(1/1000);
-			mask_aperture = QString("C,%1").arg((1/1000) + 0.006);
+			aperture = QString("C,%1").arg(1/1000.0, 0, 'f');
+			mask_aperture = QString("C,%1").arg((1/1000.0) + 0.006, 0, 'f');
         }
 		else {
 			qreal stroke_width = polygon.attribute("stroke-width").toDouble();
 
-			aperture = QString("C,%1").arg(stroke_width/1000);
-			mask_aperture = QString("C,%1").arg((stroke_width/1000) + 0.006);
+			aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
+			mask_aperture = QString("C,%1").arg((stroke_width/1000) + 0.006, 0, 'f');
 
 		}
 
@@ -486,7 +486,7 @@ void SVG2gerber::allPaths2gerber() {
         qreal stroke_width = line.attribute("stroke-width").toDouble();
 		if (stroke_width == 0) continue;
 
-        aperture = QString("C,%1").arg(stroke_width/1000);
+        aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
@@ -552,7 +552,7 @@ void SVG2gerber::allPaths2gerber() {
 
 		qreal stroke_width = path.attribute("stroke-width").toDouble();
 
-        aperture = QString("C,%1").arg(stroke_width/1000);
+        aperture = QString("C,%1").arg(stroke_width/1000, 0, 'f');
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
@@ -603,18 +603,18 @@ void SVG2gerber::handleOblongPath(QDomElement & path, int & dcode_index) {
 	qreal cx2 = nextLine.attribute("x2").toDouble();
 	qreal cy2 = nextLine.attribute("y2").toDouble();
 
-	QString drill_aperture = QString("C%1").arg(diameter / 1000) + "\n";
+	QString drill_aperture = QString("C%1").arg(diameter / 1000, 0, 'f') + "\n";
 	if (!m_drill_header.contains(drill_aperture)) {
 		m_drill_header += "T" + QString::number(dcode_index++) + drill_aperture;
 	}
 	int ix = m_drill_header.indexOf(drill_aperture);
 	int it = m_drill_header.lastIndexOf("T", ix);
 	m_drill_slots += QString("%1\nX%2Y%3G85X%4Y%5\nG05\n")
-		.arg(m_drill_header.mid(it, ix - it))
-		.arg(cx1 / 1000)
-		.arg(cy1 / 1000)
-		.arg(cx2 / 1000)
-		.arg(cy2 / 1000);
+		.arg(m_drill_header.mid(it, ix - it), 0, 'f')
+		.arg(cx1 / 1000, 0, 'f')
+		.arg(cy1 / 1000, 0, 'f')
+		.arg(cx2 / 1000, 0, 'f')
+		.arg(cy2 / 1000, 0, 'f');
 }
 
 QDomElement SVG2gerber::ellipse2path(QDomElement ellipseElement){
