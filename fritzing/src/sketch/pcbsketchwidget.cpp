@@ -389,7 +389,9 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 	dragWire->connector1()->tempRemove(toConnectorItem, false);
 
 	if (Trace == NULL) {
-		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, ViewGeometry::TraceFlag, parentCommand);
+		ViewGeometry::WireFlags flags =  ViewGeometry::TraceFlag;
+		if (m_viewIdentifier == ViewIdentifierClass::SchematicView) flags |= ViewGeometry::SchematicTraceFlag;
+		long newID = makeModifiedWire(fromConnectorItem, toConnectorItem, BaseCommand::SingleView, flags, parentCommand);
 		QString tc = traceColor(fromConnectorItem);
 		new WireColorChangeCommand(this, newID, tc, tc, 1.0, 1.0, parentCommand);
 		new WireWidthChangeCommand(this, newID, Wire::STANDARD_TRACE_WIDTH, Wire::STANDARD_TRACE_WIDTH, parentCommand);
@@ -2116,3 +2118,9 @@ QSizeF PCBSketchWidget::jumperItemSize() {
 qreal PCBSketchWidget::getKeepout() {
 	return 0.015 * FSvgRenderer::printerScale();
 }
+
+bool PCBSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
+	return !viewGeometry.getSchematicTrace();
+}
+
+

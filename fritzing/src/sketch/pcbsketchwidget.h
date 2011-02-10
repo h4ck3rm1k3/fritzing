@@ -85,6 +85,7 @@ public:
 	VirtualWire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, bool routed, QColor color);
 	void getRatsnestColor(QColor &);
 	void updateNet(Wire*);
+	bool acceptsTrace(const ViewGeometry & viewGeometry);
 
 public:
 	static QSizeF jumperItemSize();

@@ -3869,8 +3869,7 @@ void MainWindow::swapObsolete() {
 		}
 	}
 
-	QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
-                                                          "Please check all views for potential side-effects.").arg(count) );
+
 	if (count == 0) {
 		delete parentCommand;
 	}
@@ -3879,6 +3878,8 @@ void MainWindow::swapObsolete() {
 		m_undoStack->push(parentCommand);
 	}
 
+	QMessageBox::information(this, tr("Fritzing"), tr("Successfully updated %1 part(s).\n"
+                                                          "Please check all views for potential side-effects.").arg(count) );
 }
 
 void MainWindow::throwFakeException() {

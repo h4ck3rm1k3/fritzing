@@ -365,3 +365,8 @@ bool SchematicSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLay
 qreal SchematicSketchWidget::getKeepout() {
 	return 0.1 * FSvgRenderer::printerScale();
 }
+
+bool SchematicSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
+	return viewGeometry.getSchematicTrace();
+}
+

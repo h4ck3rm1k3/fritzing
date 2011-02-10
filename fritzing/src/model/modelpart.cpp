@@ -61,6 +61,7 @@ void ModelPart::commonInit(ItemType type) {
 	m_type = type;
 	m_core = false;
 	m_alien = false;
+	m_indexSynched = false;
 }
 
 ModelPart::~ModelPart() {
@@ -385,6 +386,18 @@ void ModelPart::setModelIndex(long index) {
 }
 
 void ModelPart::setModelIndexFromMultiplied(long multiplied) {
+	if (m_indexSynched) {
+		// this is gross.  m_index should always be itemBase->id() / ModelPart::indexMultiplier
+		// but sometimes multiple parts reuse the same model part, so this makes sure we don't overwrite
+		// when temporarily reusing a modelpart.  Eventually always create a new model part and get rid of modelIndex
+		if (m_index != multiplied / ModelPart::indexMultiplier) {
+			DebugDialog::debug("temporary model part?");
+		}
+
+		return;
+	}
+
+	m_indexSynched = true;
 	setModelIndex(multiplied / ModelPart::indexMultiplier);
 }
 

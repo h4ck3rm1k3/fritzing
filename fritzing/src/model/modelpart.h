@@ -181,6 +181,7 @@ protected:
 	bool m_contrib;
 	bool m_alien;
 	bool m_originalModelPartShared;
+	bool m_indexSynched;
 
 	QString m_instanceTitle;
 	QString m_instanceText;

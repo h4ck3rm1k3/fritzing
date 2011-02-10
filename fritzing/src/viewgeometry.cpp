@@ -144,6 +144,10 @@ void ViewGeometry::setTrace(bool trace) {
 	setWireFlag(trace, TraceFlag);
 }
 
+void ViewGeometry::setSchematicTrace(bool trace) {
+	setWireFlag(trace, SchematicTraceFlag);
+}
+
 void ViewGeometry::setRatsnest(bool ratsnest) {
 	setWireFlag(ratsnest, RatsnestFlag);
 }
@@ -168,6 +172,10 @@ bool ViewGeometry::getNormal() const {
 
 bool ViewGeometry::getTrace() const {
 	return m_wireFlags.testFlag(TraceFlag);
+}
+
+bool ViewGeometry::getSchematicTrace() const {
+	return m_wireFlags.testFlag(SchematicTraceFlag);
 }
 
 bool ViewGeometry::getRatsnest() const {

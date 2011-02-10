@@ -68,6 +68,7 @@ public:
 	bool routeBothSides();
 	void addDefaultParts();
 	bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
+	bool acceptsTrace(const ViewGeometry &);
 
 public slots:
 	void setVoltage(qreal voltage, bool doEmit);

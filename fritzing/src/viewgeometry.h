@@ -51,7 +51,8 @@ public:
 		ObsoleteJumperFlag = 8,
 		RatsnestFlag = 16,
 		AutoroutableFlag = 32,
-		NormalFlag = 64
+		NormalFlag = 64,
+		SchematicTraceFlag = 128		
 	};
 	Q_DECLARE_FLAGS(WireFlags, WireFlag)
 
@@ -81,6 +82,8 @@ public:
 	bool getRouted() const;
 	void setTrace(bool);
 	bool getTrace() const;
+	void setSchematicTrace(bool);
+	bool getSchematicTrace() const;
 	void setRatsnest(bool);
 	bool getRatsnest() const;
 	void setAutoroutable(bool);

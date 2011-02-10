@@ -50,7 +50,7 @@ $Date$
 
 ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
 {
-	modelPart->setModelIndexFromMultiplied(id);			// making damn sure this is synched
+	modelPart->setModelIndexFromMultiplied(id);			// make sure the model index is synched with the id; this is not always the case when parts are first created.
 	ItemBase * itemBase = createPartAux(modelPart, viewIdentifier, viewGeometry, id, itemMenu, wireMenu, doLabel);
 	if (itemBase) {
 		itemBase->setViewLayerSpec(viewLayerSpec);
@@ -68,7 +68,9 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 				return new VirtualWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);		
 			}
 			if (viewGeometry.getTrace()) {
-				return new TraceWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
+				TraceWire * traceWire = new TraceWire(modelPart, viewIdentifier, viewGeometry, id, wireMenu);
+				traceWire->setSchematic(viewIdentifier == ViewIdentifierClass::SchematicView);
+				return traceWire;
 			}
 			return new Wire(modelPart, viewIdentifier, viewGeometry, id, wireMenu, true);
 

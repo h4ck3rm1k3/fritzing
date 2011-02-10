@@ -384,7 +384,7 @@ protected:
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus);
 	bool connectedDirectlyTo(ConnectorItem * from, ConnectorItem * to, QList<ConnectorItem *> & byBus, QList<ConnectorItem *> & visited);
 	virtual QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
-
+	virtual bool acceptsTrace(const ViewGeometry &);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -452,6 +452,7 @@ protected slots:
 	void disconnectWireSlot(QSet<ItemBase *> &, QList<long> & deletedIDs, QUndoCommand * parentCommand);
 	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 	void vScrollToZero();
+	void arrowTimerTimeout();
 
 public slots:
 	void changeWireColor(const QString newColor);
@@ -574,6 +575,7 @@ protected:
 	bool m_addDefaultParts;
 	QPointer<ItemBase> m_addedDefaultPart;
 	float m_z;
+	QTimer m_arrowTimer;
 
 public:
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);

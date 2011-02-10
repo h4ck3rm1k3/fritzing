@@ -145,10 +145,11 @@ AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseComma
 
 QString AddDeleteItemCommand::getParamString() const {
 	return BaseCommand::getParamString() + 
-		QString(" moduleid:%1 id:%2 modelindex:%3")
+		QString(" moduleid:%1 id:%2 modelindex:%3 flags:%4")
 		.arg(m_moduleID)
 		.arg(m_itemID)
-		.arg(m_modelIndex);
+		.arg(m_modelIndex)
+		.arg(m_viewGeometry.flagsAsInt());
 }
 
 long AddDeleteItemCommand::itemID() const {

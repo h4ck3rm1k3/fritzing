@@ -148,3 +148,7 @@ TraceWire * TraceWire::getTrace(ConnectorItem * connectorItem)
 {
 	return dynamic_cast<TraceWire *>(connectorItem->attachedTo());
 }
+
+void TraceWire::setSchematic(bool schematic) {
+	m_viewGeometry.setSchematicTrace(schematic);
+}

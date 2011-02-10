@@ -87,10 +87,15 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
 const int SketchWidget::MoveAutoScrollThreshold = 5;
 const int SketchWidget::DragAutoScrollThreshold = 10;
+const int AutoRepeatDelay = 750;
 
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_arrowTimer.setParent(this);
+	m_arrowTimer.setInterval(AutoRepeatDelay);
+	m_arrowTimer.setSingleShot(true);
+	connect(&m_arrowTimer, SIGNAL(timeout()), this, SLOT(arrowTimerTimeout()));
 	m_addDefaultParts = false;
 	m_addedDefaultPart = NULL;
 	m_movingItem = NULL;
@@ -510,21 +515,36 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, ViewLayer::ViewLayerS
 
 ItemBase * SketchWidget::addItem(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem) {
 
-	ModelPart * mp = NULL;
-	if (modelIndex >= 0) {
-		// used only with Paste, so far--this assures that parts created across views will share the same ModelPart
-		mp = m_sketchModel->findModelPart(modelPart->moduleID(), id);
+	bool emitOnly = false;
+	bool doEmit = true;
+	if (originatingCommand != NULL && viewGeometry.getTrace()) {
+		if (acceptsTrace(viewGeometry)) {
+			doEmit = false;
+		}
+		else {
+			emitOnly = true;
+		}	
 	}
-	if (mp == NULL) {
-		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
-	}
-	else {
-		modelPart = mp;
-	}
-	if (modelPart == NULL) return NULL;
 
-	ItemBase * newItem = addItemAux(modelPart, viewLayerSpec, viewGeometry, id, partsEditorPaletteItem, true, m_viewIdentifier);
-	if (crossViewType == BaseCommand::CrossView) {
+	ItemBase * newItem = NULL;
+	if (!emitOnly) {
+		ModelPart * mp = NULL;
+		if (modelIndex >= 0) {
+			// used only with Paste, so far--this assures that parts created across views will share the same ModelPart
+			mp = m_sketchModel->findModelPart(modelPart->moduleID(), id);
+		}
+		if (mp == NULL) {
+			modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
+		}
+		else {
+			modelPart = mp;
+		}
+		if (modelPart == NULL) return NULL;
+	
+		newItem = addItemAux(modelPart, viewLayerSpec, viewGeometry, id, partsEditorPaletteItem, true, m_viewIdentifier);
+	}
+
+	if (doEmit && crossViewType == BaseCommand::CrossView) {
 		emit itemAddedSignal(modelPart, viewLayerSpec, viewGeometry, id, originatingCommand ? originatingCommand->dropOrigin() : NULL);
 	}
 
@@ -550,7 +570,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerS
 			setClipEnds((ClipableWire *) wire, true);
 		}
 		else if (viewGeometry.getTrace()) {
-				setClipEnds((ClipableWire *) wire, true);
+			setClipEnds((ClipableWire *) wire, true);
 		}
 		else {
 			wire->setNormal(true);
@@ -878,11 +898,17 @@ void SketchWidget::deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemB
 		if (isForeign) {
 			itemBase = findItem(itemBase->id());
 			if (itemBase == NULL) continue;
-
-			itemBase->saveGeometry();
-			ViewGeometry vg = itemBase->getViewGeometry();
-			new MoveItemCommand(this, itemBase->id(), vg, vg, false, parentCommand);
 		}
+
+		itemBase->saveGeometry();
+		ViewGeometry vg = itemBase->getViewGeometry();
+		QTransform transform = vg.transform();
+		if (!transform.isIdentity()) {
+			QMatrix m;
+			m.setMatrix(transform.m11(), transform.m12(), transform.m21(), transform.m22(), transform.dx(), transform.dy());
+			new TransformItemCommand(this, itemBase->id(), m, m, parentCommand);
+		}
+		new MoveItemCommand(this, itemBase->id(), vg, vg, false, parentCommand);
 
 		bool isJumper = (itemBase->itemType() == ModelPart::Jumper);
 
@@ -1246,6 +1272,7 @@ void SketchWidget::copyHeart(QList<ItemBase *> & bases, bool saveBoundingRects, 
 	streamWriter.writeStartElement("instances");
 	foreach (ItemBase * base, bases) {
 		if (base->getRatsnest()) continue;
+
 		base->modelPart()->saveInstances("", streamWriter, false);
 		modelIndexes.append(base->modelPart()->modelIndex());
 	}
@@ -3963,25 +3990,25 @@ void SketchWidget::navigatorScrollChange(double x, double y) {
 void SketchWidget::keyReleaseEvent(QKeyEvent * event) {
 	//DebugDialog::debug(QString("key release event %1").arg(event->isAutoRepeat()));
 	if (m_movingByArrow) {
-		ConnectorItem::clearEqualPotentialDisplay();
-		// strange logic when doing autorepeat
-		// each autorepeat sends both a keyPressEvent and a keyReleaseEvent
-		// in keyPressEvents, the first event has autorepeat = false
-		// but in keyReleaseEvents, the last event has autorepeat = false
-		if (!event->isAutoRepeat()) {
-			m_movingByArrow = false;
-			if (checkMoved()) {
-				m_savedItems.clear();
-				m_savedWires.clear();
-			}
-		}
+		m_autoScrollTimer.stop();
+		m_arrowTimer.start();
+		DebugDialog::debug("key release event");
 	}
 	else {
 		QGraphicsView::keyReleaseEvent(event);
 	}
 }
 
+void SketchWidget::arrowTimerTimeout() {
+	m_movingByArrow = false;
+	if (checkMoved()) {
+		m_savedItems.clear();
+		m_savedWires.clear();
+	}
+}
+
 void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
+	DebugDialog::debug("key press event");
 	if ((m_inFocus.length() == 0) && !m_movingByMouse) {
 		int dx = 0, dy = 0;
 		switch (event->key()) {
@@ -4001,10 +4028,12 @@ void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
 				break;
 		}
 		if (dx != 0 || dy != 0) {
-			DebugDialog::debug("arrow key event");
-			if (moveByArrow(dx, dy, event)) {
-				return;
-			}
+			m_arrowTimer.stop();
+			DebugDialog::debug("arrow press event");
+			ConnectorItem::clearEqualPotentialDisplay();
+			moveByArrow(dx, dy, event);
+			m_arrowTimer.start();
+			return;
 		}
 	}
 
@@ -4036,7 +4065,8 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 
 	ModelPart * mp = itemBase->modelPart();
 	if (mp->itemType() == ModelPart::Wire) {
-		qobject_cast<Wire *>(itemBase)->markDeleted(true);
+		Wire * w = qobject_cast<Wire *>(itemBase);
+		w->markDeleted(true);
 	}
 
 	new DeleteItemCommand(this, crossView, mp->moduleID(), itemBase->viewLayerSpec(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
@@ -6869,4 +6899,8 @@ QGraphicsItem * SketchWidget::addWatermark(const QString &filename)
 
 	this->scene()->addItem(item);
 	return item;
+}
+
+bool SketchWidget::acceptsTrace(const ViewGeometry &) {
+	return false;
 }
