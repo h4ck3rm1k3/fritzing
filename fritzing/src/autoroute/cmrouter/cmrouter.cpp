@@ -799,7 +799,7 @@ bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrd
 			bool innerMatched = true;
 			int * o1 = (int *) ordering->md5sum.constData();
 			int * o2 = (int *) newOrdering->md5sum.constData();
-			for (int i = 0; i < 16 / sizeof(int); ix++) {
+                        for (unsigned int i = 0; i < 16 / sizeof(int); ix++) {
 				if (*o1++ != *o2++) {
 					innerMatched = false;
 					break;
