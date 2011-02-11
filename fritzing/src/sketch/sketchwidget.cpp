@@ -1719,7 +1719,24 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 		m_savedWires.clear();
 		m_moveEventCount = 0;
 		m_arrowTotalX = m_arrowTotalY = 0;
-		prepMove(NULL);
+
+		QPoint cp = QCursor::pos();
+		QPoint wp = this->mapFromGlobal(cp);
+		QPointF sp = this->mapToScene(wp);
+		Wire * wire = dynamic_cast<Wire *>(scene()->itemAt(sp));
+		bool draggingWire = false;
+		if (wire != NULL) {
+			if (canChainWire(wire) && wire->hasConnections()) {
+				if (canDragWire(wire) && ((event->modifiers() & altOrMetaModifier()) != 0)) {
+					prepDragWire(wire);
+					draggingWire = true;
+				}
+			}
+		}
+		
+		if (!draggingWire) {
+			prepMove(NULL);
+		}
 		if (m_savedItems.count() == 0) return false;
 
 		m_mousePressScenePos = this->mapToScene(this->rect().center());
