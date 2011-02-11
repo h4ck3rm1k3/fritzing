@@ -49,7 +49,7 @@ $Date$
 #include "priorityqueue.h"
 #include "tile.h"
 
-struct JEdge {
+struct Edge {
 	class ConnectorItem * from;
 	class ConnectorItem * to;
 	double distance;
@@ -75,7 +75,7 @@ struct PathUnit {
 	class ConnectorItem * connectorItem;
 	class Wire * wire;
 	Tile * tile;
-	JEdge * edge;
+	Edge * edge;
 	PathUnit * parent;
 	int sourceCost;
 	int destCost;
@@ -109,10 +109,15 @@ struct TilePointRect
 };
 
 struct Ordering {
-	QList<int> edgeIDs;
+	QList<Edge *> edges;
 	int unroutedCount;
 	int jumperCount;
 	int viaCount;
+	QByteArray md5sum;
+
+	Ordering() {
+		unroutedCount = jumperCount = viaCount = 0;
+	}
 };
 
 struct Segment {
@@ -180,14 +185,14 @@ protected:
 	void restoreOriginalState(QUndoCommand * parentCommand);
 	void addWireToUndo(Wire * wire, QUndoCommand * parentCommand);
 	void addToUndo(QUndoCommand * parentCommand);
-	void collectEdges(QList<JEdge *> & edges);
+	void collectEdges(QList<Edge *> & edges);
 	//bool findShortcut(TileRect & tileRect, bool useX, bool targetGreater, JSubedge * subedge, QList<QPointF> & allPoints, int ix);
 	//void shortenUs(QList<QPointF> & allPoints, JSubedge *);
 	void removeCorners(QList<QPointF> & allPoints, Plane *);
 	bool checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, Plane *, bool atStartOrEnd); 
-	bool runEdges(QList<JEdge *> &, QVector<int> & netCounters, struct RoutingStatus &, qreal keepout, 
-					bool makeJumper, int bestUnroutedCount, int bestJumperCount);
-	void clearEdges(QList<JEdge *> & edges);
+	bool runEdges(QList<Edge *> &, QVector<int> & netCounters, struct RoutingStatus &, qreal keepout, 
+					bool makeJumper, Ordering * bestOrdering);
+	void clearEdges(QList<Edge *> & edges);
 	void doCancel(QUndoCommand * parentCommand);
 	void updateProgress(int num, int denom);
 	GridEntry * drawGridItem(Tile * tile);
@@ -209,12 +214,11 @@ protected:
 	bool roomToNext(PathUnit * pathUnit, bool horizontal, int tWidthNeeded, TileRect & nextRect);
 	void hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
-	void clearEdge(JEdge * edge);
-	bool reorderEdges(QList<JEdge *> & edges, QGraphicsLineItem *);
+	void clearEdge(Edge * edge);
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);
-	void initPathUnit(JEdge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
+	void initPathUnit(Edge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
 	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> &, qreal keepout);
-	bool addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge *, 
+	bool addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, Edge *, 
 						QMultiHash<Tile *, PathUnit *> &, qreal keepout);
 	bool propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destPathUnits, QMultiHash<Tile *, PathUnit *> &, CompletePath &);
 	TileRect calcMinCostRect(PathUnit * pathUnit, Tile * next);
@@ -237,8 +241,8 @@ protected:
 	void findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, int tWidthNeeded, int tHeightNeeded, 
 							PathUnit * & nearest, int & bestCost, TileRect & nearestSpace, bool horizontal);
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
-	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, JEdge * edge, qreal keepout);
-	JEdge * makeEdge(ConnectorItem * from, ConnectorItem * to, class VirtualWire *);
+	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, Edge * edge, qreal keepout);
+	Edge * makeEdge(ConnectorItem * from, ConnectorItem * to, class VirtualWire *);
 	void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & traceWires);
 	void clipParts();
 	Plane * initPlane(bool rotate90);
@@ -250,10 +254,12 @@ protected:
 	void addUndoConnection(bool connect, class JumperItem *, QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, TraceWire *, QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, ConnectorItem *, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
-	bool reorder(QList<Ordering> & orderings, QList<JEdge *> & edges, int & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem);
+	bool reorder(QList<Ordering *> & orderings, Ordering *  currentOrdering, Ordering * & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem);
+	bool reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrdering, QGraphicsLineItem *);
 	ConnectorItem * findPartForJumper(ConnectorItem * jumperConnectorItem);
 	void drawTileRect(TileRect & tileRect, QColor & color);
 	void deletePathUnits();
+	void computeMD5(Ordering * ordering);
 
 protected:
 	QRectF m_maxRect;
@@ -269,7 +275,7 @@ protected:
 	QList<Plane *> m_planes;
 	Plane * m_unionPlane;
 	Plane * m_union90Plane;
-	QHash<Wire *, JEdge *> m_tracesToEdges;
+	QHash<Wire *, Edge *> m_tracesToEdges;
 	ItemBase * m_board;
 	int m_maxCycles;
 	QByteArray m_startState;

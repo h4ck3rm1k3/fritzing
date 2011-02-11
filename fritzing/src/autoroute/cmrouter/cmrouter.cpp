@@ -115,6 +115,7 @@ $Date$
 #include <QMessageBox> 
 #include <QElapsedTimer>
 #include <QSettings>
+#include <QCryptographicHash>
 
 static const int MaximumProgress = 1000;
 static const int TILEFACTOR = 1000;
@@ -136,7 +137,7 @@ static inline qreal dot(const QPointF & p1, const QPointF & p2)
 	return (p1.x() * p2.x()) + (p1.y() * p2.y());
 }
 
-bool edgeLessThan(JEdge * e1, JEdge * e2)
+bool edgeLessThan(Edge * e1, Edge * e2)
 {
 	return e1->distance <= e2->distance;
 }
@@ -326,7 +327,7 @@ int simpleList(Tile * tile, UserData userData) {
 
 struct SourceAndDestinationStruct {
 	QList<Tile *> tiles;
-	JEdge * edge;
+	Edge * edge;
 };
 
 int findSpaces(Tile * tile, UserData userData) {
@@ -607,48 +608,50 @@ void CMRouter::start()
 	//			check the reordering of edges and if they match a previous set quit 
 	//
 
-	QList<JEdge *> edges;
+	QList<Edge *> edges;
 	bool allDone = false;
-	QList< Ordering > orderings;
-	int bestOrdering = 0;
+	QList< Ordering * > orderings;
 	QByteArray bestResult;
 	collectEdges(edges);
 	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
+
+	Ordering * bestOrdering = new Ordering();
+	bestOrdering->edges.append(edges);
+	computeMD5(bestOrdering);
+	orderings.append(bestOrdering);
+	bestOrdering->unroutedCount = edges.count() * 1;	// so runEdges doesn't bail out the first time through
 
 	QPen pen(QColor(0,0,0,0));
 	pen.setWidthF(Wire::STANDARD_TRACE_WIDTH);
 	QGraphicsLineItem * lineItem = new QGraphicsLineItem();
 	lineItem->setPen(pen);
 	m_sketchWidget->scene()->addItem(lineItem);
-	int bestUnroutedCount = edges.count() + 1;
-	int bestJumperCount = edges.count() + 1;
 
-	for (int run = 0; run < m_maxCycles; run++) {
+	int orderingIndex = 0;
+	for (int run = 0; run < m_maxCycles && orderingIndex < orderings.count(); run++) {
+		Ordering * currentOrdering = orderings.at(orderingIndex++);
 		QString score;
 		if (run > 0) {
-			score = tr("best so far: %1 unrouted/%n jumpers", "", orderings.at(bestOrdering).jumperCount)
-				.arg(orderings.at(bestOrdering).unroutedCount);
+			score = tr("best so far: %1 unrouted/%n jumpers", "", bestOrdering->jumperCount)
+				.arg(bestOrdering->unroutedCount);
 			emit setProgressMessage(score);
 		}
 		emit setCycleMessage(tr("round %1 of:").arg(run + 1));
-		allDone = runEdges(edges, netCounters, routingStatus, keepout, m_sketchWidget->usesJumperItem(), bestUnroutedCount, bestJumperCount);
+		ProcessEventBlocker::processEvents();
+
+		allDone = runEdges(currentOrdering->edges, netCounters, routingStatus, keepout, m_sketchWidget->usesJumperItem(), bestOrdering);
 		if (m_cancelled || allDone || m_stopTracing) break;
 
-		bool reordered = reorder(orderings, edges, bestOrdering, bestResult, lineItem);
-		bestUnroutedCount = orderings.at(bestOrdering).unroutedCount;
-		bestJumperCount = orderings.at(bestOrdering).jumperCount;
+		ProcessEventBlocker::processEvents();
+		reorder(orderings, currentOrdering, bestOrdering, bestResult, lineItem);
 
 		// TODO: only delete the edges that have been reordered
 		clearTracesAndJumpers();
 		drcClean();
-		ProcessEventBlocker::processEvents();
-
-		if (!reordered) break;
-
 		if (!m_startState.isEmpty()) {
 			m_sketchWidget->pasteHeart(m_startState, true);
-			ProcessEventBlocker::processEvents();
 		}
+		ProcessEventBlocker::processEvents();
 
 	}
 
@@ -659,12 +662,14 @@ void CMRouter::start()
 		drcClean();
 		clearTracesAndJumpers();
 		doCancel(parentCommand);
+		foreach (Ordering * ordering, orderings) delete ordering;
+		orderings.clear();
 		return;
 	}
 
 
 	if (!allDone) {
-		if (orderings.count() == 0) {
+		if (orderingIndex == 0) {
 			// stop where we are
 		}
 		else {
@@ -676,6 +681,9 @@ void CMRouter::start()
 			ProcessEventBlocker::processEvents();
 		}
 	}
+
+	foreach (Ordering * ordering, orderings) delete ordering;
+	orderings.clear();
 
 	cleanUp();
 
@@ -694,24 +702,22 @@ void CMRouter::start()
 }
 
 
-bool CMRouter::reorder(QList<Ordering> & orderings, QList<JEdge *> & edges, int & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem) {
-	Ordering ordering;
-	ordering.jumperCount = ordering.viaCount = ordering.unroutedCount = 0;
-	foreach (JEdge * edge, edges) {
-		ordering.edgeIDs.append(edge->id);
-		if (!edge->routed) ordering.unroutedCount++;
-		if (edge->withJumper) ordering.jumperCount++;
+bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering, Ordering * & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem) {
+	currentOrdering->jumperCount = currentOrdering->unroutedCount = currentOrdering->viaCount = 0;
+	foreach (Edge * edge, currentOrdering->edges) {
+		if (!edge->routed) currentOrdering->unroutedCount++;
+		if (edge->withJumper) currentOrdering->jumperCount++;
 	}
-	orderings.append(ordering);	
+
 	if (orderings.count() > 1) {
-		if (ordering.unroutedCount + ordering.jumperCount < orderings.at(bestOrdering).unroutedCount + orderings.at(bestOrdering).jumperCount) {
-			bestOrdering = orderings.count() - 1;
+		if (currentOrdering->unroutedCount + currentOrdering->jumperCount < bestOrdering->unroutedCount + bestOrdering->jumperCount) {
+			bestOrdering = currentOrdering;
 			saveTracesAndJumpers(bestResult);
 		}
-		else if ((ordering.unroutedCount + ordering.jumperCount == orderings.at(bestOrdering).unroutedCount + orderings.at(bestOrdering).jumperCount)
-				&& (ordering.jumperCount > orderings.at(bestOrdering).jumperCount))
+		else if ((currentOrdering->unroutedCount + currentOrdering->jumperCount == bestOrdering->unroutedCount + bestOrdering->jumperCount)
+				&& (currentOrdering->unroutedCount < bestOrdering->unroutedCount))
 		{
-			bestOrdering = orderings.count() - 1;
+			bestOrdering = currentOrdering;
 			saveTracesAndJumpers(bestResult);
 		}
 	}
@@ -719,24 +725,101 @@ bool CMRouter::reorder(QList<Ordering> & orderings, QList<JEdge *> & edges, int 
 		saveTracesAndJumpers(bestResult);
 	}
 
-	bool reordered = reorderEdges(edges, lineItem);
+	return reorderEdges(orderings, currentOrdering, lineItem);
+}
+
+bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrdering, QGraphicsLineItem * lineItem) {
+	//Ordering * first = new Ordering();
+	//Ordering * last = new Ordering();
+	Ordering * middle = new Ordering();
+	middle->edges.append(currentOrdering->edges);
+	QList<Edge *> unroutedEdges;
+	bool reordered = false;
+	int ix = 0;
+	while (ix < middle->edges.count()) {
+		Edge * edge = middle->edges.at(ix++);
+		if (edge->routed && !edge->withJumper) {
+			//first->edges.append(edge);		
+			//last->edges.append(edge);		
+			continue;
+		}
+
+		unroutedEdges.append(edge);
+
+		lineItem->setLine(edge->line);
+		int minIndex = middle->edges.count();
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(lineItem)) {
+			TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
+			if (traceWire == NULL) {
+				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+				if (connectorItem) {
+					traceWire = TraceWire::getTrace(connectorItem);
+					if (traceWire == NULL) {
+						foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+							traceWire = TraceWire::getTrace(toConnectorItem);
+							if (traceWire) break;
+						}
+					}
+				}
+			}
+
+			if (traceWire == NULL) continue;
+
+			Edge * tedge = m_tracesToEdges.value(traceWire, NULL);
+			if (tedge != NULL) {
+				int tix = middle->edges.indexOf(tedge);
+				minIndex = qMin(tix, minIndex);
+			}
+		}
+
+		if (minIndex < ix) {
+			reordered = true;
+			middle->edges.removeOne(edge);
+			middle->edges.insert(minIndex, edge);
+		}
+	}
+
+	//last->edges.append(unroutedEdges);
+	//unroutedEdges.append(first->edges);
+	//first->edges.clear();
+	//first->edges.append(unroutedEdges);
+
+	QList<Ordering *> newOrderings;
+	// newOrderings  << first  << last;
+	//computeMD5(first);
+	//computeMD5(last);
 	if (reordered) {
-		foreach (Ordering ordering, orderings) {
-			bool allSame = true;
-			for (int i = 0; i < edges.count(); i++) {
-				if (ordering.edgeIDs.at(i) != edges.at(i)->id) {
-					allSame = false;
+		newOrderings << middle;
+		computeMD5(middle);
+	}
+	bool gotNew = false;
+	foreach (Ordering * newOrdering, newOrderings) {
+		bool outerMatched = false;
+		foreach (Ordering * ordering, orderings) {
+			bool innerMatched = true;
+			int * o1 = (int *) ordering->md5sum.constData();
+			int * o2 = (int *) newOrdering->md5sum.constData();
+			for (int i = 0; i < 16 / sizeof(int); ix++) {
+				if (*o1++ != *o2++) {
+					innerMatched = false;
 					break;
 				}
 			}
-			if (allSame) {
-				reordered = false;
+			if (innerMatched) {
+				outerMatched = true;
 				break;
 			}
 		}
+		if (!outerMatched) {
+			orderings.append(newOrdering);
+			gotNew = true;
+		}
 	}
-	return reordered;
+
+	return gotNew;
 }
+
+
 
 bool CMRouter::drc() 
 {
@@ -811,10 +894,8 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 	return true;
 }
 
-bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, RoutingStatus & routingStatus, qreal keepout, bool makeJumper, int bestUnroutedCount, int bestJumperCount)
+bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, RoutingStatus & routingStatus, qreal keepout, bool makeJumper, Ordering * bestOrdering)
 {	
-	bool allRouted = true;
-
 	bool result = drc(keepout, CMRouter::ClipAllOverlaps, CMRouter::ClipAllOverlaps, true, m_sketchWidget->autorouteTypePCB());
 	if (!result) {
 		m_cancelled = true;
@@ -822,20 +903,15 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 		return false;
 	}
 
-	foreach (JEdge * edge, edges) {
+	foreach (Edge * edge, edges) {
 		clearEdge(edge);
 	}
 
 	int edgesDone = 0;
 	int unrouted = 0;
+	int routed = 0;
 	int jumpers = 0;
-	foreach (JEdge * edge, edges) {	
-
-		if (edge->routed) {
-			// got it one one side; no need to route it on the other
-			continue;
-		}
-
+	foreach (Edge * edge, edges) {	
 		expand(edge->from, edge->fromConnectorItems, edge->fromTraces);
 		expand(edge->to, edge->toConnectorItems, edge->toTraces);
 
@@ -863,9 +939,11 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 
 		edge->routed = propagate(queue1, queue2, tilePathUnits, keepout);
 
-		if (!edge->routed) {
-			allRouted = false;
-			if (++unrouted > bestUnroutedCount + bestJumperCount) {
+		if (edge->routed) {
+			routed++;
+		}
+		else {
+			if (++unrouted > bestOrdering->unroutedCount + bestOrdering->jumperCount) {
 				deletePathUnits();
 				break;
 			}
@@ -877,7 +955,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 				}
 			}
 
-			if ((unrouted == bestUnroutedCount + bestJumperCount) && jumpers >= bestJumperCount) {
+			if ((unrouted == bestOrdering->unroutedCount + bestOrdering->jumperCount) && jumpers >= bestOrdering->jumperCount) {
 				deletePathUnits();
 				break;
 			}
@@ -914,7 +992,7 @@ bool CMRouter::runEdges(QList<JEdge *> & edges, QVector<int> & netCounters, Rout
 		}
 	}
 
-	return allRouted;
+	return routed == edges.count();
 }
 
 void CMRouter::deletePathUnits() {
@@ -2159,12 +2237,12 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 	}
 	gridEntry->show();
 	gridEntry->setDrawn(true);
-	ProcessEventBlocker::processEvents();
+	//ProcessEventBlocker::processEvents();
 	return gridEntry;
 }
 
 
-void CMRouter::collectEdges(QList<JEdge *> & edges)
+void CMRouter::collectEdges(QList<Edge *> & edges)
 {
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
@@ -2207,13 +2285,13 @@ void CMRouter::collectEdges(QList<JEdge *> & edges)
 		from->debugInfo("from");
 		to->debugInfo("to");
 
-		JEdge * edge0 = makeEdge(from, to, vw);
-		edge0->id = edges.count();
+		Edge * edge0 = makeEdge(from, to, vw);
 		edges.append(edge0);
+		edge0->id = edges.count() - 1;
 	}
 }
 
-void CMRouter::clearEdge(JEdge * edge) {
+void CMRouter::clearEdge(Edge * edge) {
 	edge->withJumper = edge->routed = false;
 	edge->fromConnectorItems.clear();
 	edge->toConnectorItems.clear();
@@ -2221,8 +2299,8 @@ void CMRouter::clearEdge(JEdge * edge) {
 	edge->toTraces.clear();
 }
 
-JEdge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to,  VirtualWire * vw) {
-	JEdge * edge = new JEdge;
+Edge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to,  VirtualWire * vw) {
+	Edge * edge = new Edge;
 	edge->from = from;
 	edge->to = to;
 	edge->routed = false;
@@ -2432,8 +2510,8 @@ void CMRouter::addUndoConnection(bool connect, ConnectorItem * connectorItem, Ba
 	}
 }
 
-void CMRouter::clearEdges(QList<JEdge *> & edges) {
-	foreach (JEdge * edge, edges) {
+void CMRouter::clearEdges(QList<Edge *> & edges) {
+	foreach (Edge * edge, edges) {
 		delete edge;
 	}
 	edges.clear();
@@ -2654,50 +2732,7 @@ void CMRouter::clearGridEntries() {
 	}
 }
 
-bool CMRouter::reorderEdges(QList<JEdge *> & edges, QGraphicsLineItem * lineItem) {
-	bool result = false;
-	int ix = 0;
-	while (ix < edges.count()) {
-		JEdge * edge = edges.at(ix++);
-		if (edge->routed && !edge->withJumper) continue;
-
-		lineItem->setLine(edge->line);
-		int minIndex = edges.count();
-		foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(lineItem)) {
-			TraceWire * traceWire = dynamic_cast<TraceWire *>(item);
-			if (traceWire == NULL) {
-				ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-				if (connectorItem) {
-					traceWire = TraceWire::getTrace(connectorItem);
-					if (traceWire == NULL) {
-						foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
-							traceWire = TraceWire::getTrace(toConnectorItem);
-							if (traceWire) break;
-						}
-					}
-				}
-			}
-
-			if (traceWire == NULL) continue;
-
-			JEdge * tedge = m_tracesToEdges.value(traceWire, NULL);
-			if (tedge != NULL) {
-				int tix = edges.indexOf(tedge);
-				minIndex = qMin(tix, minIndex);
-			}
-		}
-
-		if (minIndex < ix) {
-			result = true;
-			edges.removeOne(edge);
-			edges.insert(minIndex, edge);
-		}
-	}
-
-	return result;
-}
-
-void CMRouter::initPathUnit(JEdge * edge, Tile * tile, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> & tilePathUnits)
+void CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> & tilePathUnits)
 {	
 	PathUnit * pathUnit = new PathUnit(&pq);
 
@@ -2898,7 +2933,7 @@ void CMRouter::clipParts()
 	}
 }
 
-bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, JEdge * edge, 
+bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, Edge * edge, 
 							QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout)
 {
 	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
@@ -2930,7 +2965,7 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 	QPointF destPoint2 = calcJumperLocation(nearest2, nearestSpace2, tWidthNeeded, tHeightNeeded);
 	jumperItem->resize(destPoint1, destPoint2);
 
-	ProcessEventBlocker::processEvents();
+	//ProcessEventBlocker::processEvents();
 
 	PathUnit * parent1 = nearest1;
 	while (parent1->parent) {
@@ -2955,7 +2990,7 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 	return result;
 }
 
-bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, JEdge * edge, qreal keepout)
+bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, Edge * edge, qreal keepout)
 {
 	QList<Tile *> alreadyTiled;
 	Tile * destTile = addTile(jumperConnectorItem, Tile::DESTINATION, nearest->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
@@ -3406,7 +3441,7 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 		QPointF p1 = allPoints.at(i);
 		QPointF p2 = allPoints.at(i + 1);
 		Wire * trace = drawOneTrace(p1, p2, Wire::STANDARD_TRACE_WIDTH, m_specHash.value(first->plane));
-		ProcessEventBlocker::processEvents();
+		//ProcessEventBlocker::processEvents();
 		wires.append(trace);
 	}
 
@@ -3423,7 +3458,7 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 		m_tracesToEdges.insert(split, first->edge);
 	}
 
-	ProcessEventBlocker::processEvents();
+	//ProcessEventBlocker::processEvents();
 
 	// hook everyone up
 	hookUpWires(fullPath, wires, keepout);
@@ -3689,5 +3724,17 @@ void CMRouter::drawTileRect(TileRect & tileRect, QColor & color)
 	gridEntry->setBrush(QBrush(color));
 	m_sketchWidget->scene()->addItem(gridEntry);
 	gridEntry->show();
-	ProcessEventBlocker::processEvents();
+	//ProcessEventBlocker::processEvents();
 }
+
+void CMRouter::computeMD5(Ordering * ordering) {
+	QByteArray buffer;
+	foreach (Edge * edge, ordering->edges) {
+		QByteArray b((const char *) &edge->id, sizeof(int));
+		buffer.append(b);
+	}
+
+	ordering->md5sum = QCryptographicHash::hash(buffer, QCryptographicHash::Md5);
+}
+
+

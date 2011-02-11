@@ -3102,7 +3102,9 @@ void MainWindow::autoroute() {
 	AutorouteProgressDialog progress(tr("Autorouting Progress..."), true, true, true, pcbSketchWidget, this);
 	progress.setModal(true);
 	progress.show();
-	//progress.move(0,0);
+	QRect pr = progress.frameGeometry();
+	QRect wr = this->frameGeometry();
+	progress.move(wr.right() - pr.width(), pr.top());
 
 	pcbSketchWidget->scene()->clearSelection();
 	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
