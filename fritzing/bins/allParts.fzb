@@ -3131,6 +3131,34 @@
           </iconView>
         </views>
       </instance>
+      <instance moduleIdRef="6c827eae3a7dcd0ffcc417254b4159b0">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="961807c738804558a7a2-403120c513dc">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="f5a254ffda17133e1a1e658278e5abce">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="37cd03ff9ef946e7aa6617af82fc08fa">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
       <instance moduleIdRef="9f2b90fcf9c65c9bc09d570e3442069e">
         <views>
           <iconView layer="icon">
