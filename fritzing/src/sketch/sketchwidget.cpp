@@ -1733,7 +1733,7 @@ bool SketchWidget::moveByArrow(int dx, int dy, QKeyEvent * event) {
 				}
 			}
 		}
-		
+
 		if (!draggingWire) {
 			prepMove(NULL);
 		}
