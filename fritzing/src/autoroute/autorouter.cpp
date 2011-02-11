@@ -48,7 +48,7 @@ Autorouter::~Autorouter(void)
 {
 }
 
-void Autorouter::cleanUp() {
+void Autorouter::cleanUpNets() {
 	foreach (QList<ConnectorItem *> * connectorItems, m_allPartConnectorItems) {
 		delete connectorItems;
 	}

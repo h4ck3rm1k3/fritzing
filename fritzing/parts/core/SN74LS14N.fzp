@@ -12,7 +12,7 @@
     <properties>
         <property name="package">DIP (Dual Inline)</property>
         <property name="family">Logic Gates</property>
-        <property name="chip label">7414</property>
+        <property name="chip label">SN74LS14N</property>
         <property name="pins">14</property>
         <property name="spacing">300mil</property>
     </properties>

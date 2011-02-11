@@ -3145,7 +3145,8 @@ void MainWindow::createTrace() {
 }
 
 void MainWindow::excludeFromAutoroute() {
-	m_pcbGraphicsView->excludeFromAutoroute(m_excludeFromAutorouteAct->isChecked());
+	Wire * wire = retrieveWire();
+	m_pcbGraphicsView->excludeFromAutoroute(wire == NULL ? m_excludeFromAutorouteAct->isChecked() : m_excludeFromAutorouteWireAct->isChecked());
 }
 
 void MainWindow::selectAllTraces() {

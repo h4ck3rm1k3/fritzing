@@ -583,7 +583,7 @@ void CMRouter::start()
 
 	if (m_cancelled || m_stopTracing) {
 		restoreOriginalState(parentCommand);
-		cleanUp();
+		cleanUpNets();
 		return;
 	}
 
@@ -614,6 +614,13 @@ void CMRouter::start()
 	QByteArray bestResult;
 	collectEdges(edges);
 	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
+
+	if (edges.count() == 0) {
+		QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: maybe all traces are marked 'do not autoroute'."));
+		restoreOriginalState(parentCommand);
+		cleanUpNets();
+		return;
+	}
 
 	Ordering * bestOrdering = new Ordering();
 	bestOrdering->edges.append(edges);
@@ -685,7 +692,7 @@ void CMRouter::start()
 	foreach (Ordering * ordering, orderings) delete ordering;
 	orderings.clear();
 
-	cleanUp();
+	cleanUpNets();
 
 	addToUndo(parentCommand);
 
@@ -2317,7 +2324,7 @@ Edge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to,  VirtualWire
 void CMRouter::initUndo(QUndoCommand * parentCommand) {
 	QList<JumperItem *> jumperItems;
 	QList<TraceWire *> traceWires;
-	QList<ItemBase *> doNotAutoroute;
+	QList<ItemBase *> doNotAutorouteList;
 	if (m_sketchWidget->usesJumperItem()) {
 		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
@@ -2354,14 +2361,14 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 		traceWires.append(traceWire);
 		addUndoConnection(false, traceWire, parentCommand);
 		if (!traceWire->getAutoroutable()) {
-			doNotAutoroute.append(traceWire);
+			doNotAutorouteList.append(traceWire);
 		}
 	}
 
 	m_startState.clear();
-	if (doNotAutoroute.count() > 0) {
+	if (doNotAutorouteList.count() > 0) {
 		QList<long> modelIndexes;
-		m_sketchWidget->copyHeart(doNotAutoroute, true, m_startState, modelIndexes);
+		m_sketchWidget->copyHeart(doNotAutorouteList, true, m_startState, modelIndexes);
 	}
 
 	foreach (TraceWire * traceWire, traceWires) {
@@ -2394,7 +2401,10 @@ void CMRouter::addWireToUndo(Wire * wire, QUndoCommand * parentCommand)
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
 	new WireColorChangeCommand(m_sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
-	addItemCommand->turnOffFirstRedo();
+	if (wire->getAutoroutable()) {
+		// only turn off first redo if it was marked autoroutable--doNotAutoroute will be deleted and have to be replaced
+		addItemCommand->turnOffFirstRedo();
+	}
 }
 
 void CMRouter::addToUndo(QUndoCommand * parentCommand) 
@@ -2519,7 +2529,7 @@ void CMRouter::clearEdges(QList<Edge *> & edges) {
 
 void CMRouter::doCancel(QUndoCommand * parentCommand) {
 	restoreOriginalState(parentCommand);
-	cleanUp();
+	cleanUpNets();
 }
 
 void CMRouter::updateProgress(int num, int denom) 
