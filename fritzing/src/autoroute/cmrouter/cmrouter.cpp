@@ -3641,7 +3641,7 @@ void CMRouter::traceSegments(QList<Segment *> & segments) {
 		}
 	}
 	*/
-#endif QT_NO_DEBUG
+#endif // QT_NO_DEBUG
 
 }
 
