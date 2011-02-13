@@ -181,7 +181,7 @@ public:
 	Tile * insertTile(Plane* thePlane, QRectF &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
 	TileRect boardRect();
 	static inline int realToTile(qreal);
-	static inline void tileToQRect(Tile * tile, QRectF & rect);
+	static void tileToQRect(Tile * tile, QRectF & rect);
 
 public slots:
 	void setMaxCycles(int);

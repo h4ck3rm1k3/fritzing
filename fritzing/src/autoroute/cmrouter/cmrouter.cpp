@@ -3785,7 +3785,7 @@ TileRect CMRouter::boardRect() {
 	return m_tileMaxRect;
 }
 
-int CMRouter::realToTile(qreal x) {
+inline int CMRouter::realToTile(qreal x) {
 	return qRound(x * TILEFACTOR);
 }
 
