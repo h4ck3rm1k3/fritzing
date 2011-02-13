@@ -220,15 +220,11 @@ static inline int manhattan(TileRect & tr1, TileRect & tr2) {
 
 static inline GridEntry * TiGetGridEntry(Tile * tile) { return dynamic_cast<GridEntry *>(TiGetClient(tile)); }
 
-inline int realToTile(qreal x) {
-	return qRound(x * TILEFACTOR);
-}
-
 void realsToTile(TileRect & tileRect, qreal l, qreal t, qreal r, qreal b) {
-	tileRect.xmini = realToTile(l);
-	tileRect.ymini = realToTile(t);
-	tileRect.xmaxi = realToTile(r);
-	tileRect.ymaxi = realToTile(b);
+	tileRect.xmini = CMRouter::realToTile(l);
+	tileRect.ymini = CMRouter::realToTile(t);
+	tileRect.xmaxi = CMRouter::realToTile(r);
+	tileRect.ymaxi = CMRouter::realToTile(b);
 }
 
 inline qreal tileToReal(int x) {
@@ -237,12 +233,6 @@ inline qreal tileToReal(int x) {
 
 void tileRectToQRect(TileRect & tileRect, QRectF & rect) {
 	rect.setCoords(tileToReal(tileRect.xmini), tileToReal(tileRect.ymini), tileToReal(tileRect.xmaxi), tileToReal(tileRect.ymaxi));
-}
-
-void tileToQRect(Tile * tile, QRectF & rect) {
-	TileRect tileRect;
-	TiToRect(tile, &tileRect);
-	tileRectToQRect(tileRect, rect);
 }
 
 void extendToBounds(TileRect & from, TileRect & to) {
@@ -1060,8 +1050,6 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 
 	// if board is not rectangular, add tiles for the outside edges;
 	if (!initBoard(m_board, thePlane, alreadyTiled, keepout)) return thePlane;
-
-
 
 	if (m_sketchWidget->autorouteTypePCB()) {
 		// deal with "rectangular" elements first
@@ -2629,6 +2617,14 @@ void CMRouter::displayBadTileRect(TileRect & tileRect) {
 	ProcessEventBlocker::processEvents();
 }
 
+
+Tile * CMRouter::insertTile(Plane * thePlane, QRectF & rect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType tileType, CMRouter::OverlapType overlapType) 
+{
+	TileRect tileRect;
+	realsToTile(tileRect, rect.left(), rect.top(), rect.right(), rect.bottom());
+	return insertTile(thePlane, tileRect, alreadyTiled, item, tileType, overlapType);
+}
+
 Tile * CMRouter::insertTile(Plane * thePlane, TileRect & tileRect, QList<Tile *> & alreadyTiled, QGraphicsItem * item, Tile::TileType tileType, CMRouter::OverlapType overlapType) 
 {
 	//infoTileRect("insert tile", tileRect);
@@ -3785,4 +3781,16 @@ void CMRouter::computeMD5(Ordering * ordering) {
 	ordering->md5sum = QCryptographicHash::hash(buffer, QCryptographicHash::Md5);
 }
 
+TileRect CMRouter::boardRect() {
+	return m_tileMaxRect;
+}
 
+int CMRouter::realToTile(qreal x) {
+	return qRound(x * TILEFACTOR);
+}
+
+void CMRouter::tileToQRect(Tile * tile, QRectF & rect) {
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+	tileRectToQRect(tileRect, rect);
+}

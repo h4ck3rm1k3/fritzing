@@ -45,6 +45,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../utils/graphutils.h"
 #include "../processeventblocker.h"
+#include "../autoroute/cmrouter/cmrouter.h"
 
 #include <limits>
 #include <QApplication>
@@ -1214,7 +1215,7 @@ ItemBase * PCBSketchWidget::findBoard() {
 
         //for now take the first board you find
         if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
-            return board;
+            return board->layerKinChief();
         }
     }
 
@@ -2123,4 +2124,88 @@ bool PCBSketchWidget::acceptsTrace(const ViewGeometry & viewGeometry) {
 	return !viewGeometry.getSchematicTrace();
 }
 
+struct BestPlace
+{
+	Tile * bestTile;
+	TileRect bestTileRect;
+	int width;
+	int height;
+};
 
+int placeBestFit(Tile * tile, UserData userData) {
+	if (TiGetType(tile) != Tile::SPACE) return 0;
+
+	BestPlace * bestPlace = (BestPlace *) userData;
+	TileRect tileRect;
+	TiToRect(tile, &tileRect);
+	if (tileRect.xmaxi - tileRect.xmini < bestPlace->width) return 0;
+	if (tileRect.ymaxi - tileRect.ymini < bestPlace->height) return 0;
+
+	if (bestPlace->bestTile == NULL) {
+		bestPlace->bestTile = tile;
+		bestPlace->bestTileRect = tileRect;
+		return 0;
+	}
+
+	qreal bestArea = ((qreal) (bestPlace->bestTileRect.xmaxi - bestPlace->bestTileRect.xmini)) * (bestPlace->bestTileRect.ymaxi - bestPlace->bestTileRect.ymini);
+	qreal area =  ((qreal) (tileRect.xmaxi - tileRect.xmini)) * (tileRect.ymaxi - tileRect.ymini);
+	if (area < bestArea) {
+		bestPlace->bestTile = tile;
+		bestPlace->bestTileRect = tileRect;
+	}
+
+	return 0;
+}
+
+ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) 
+{
+	ItemBase * newItem = SketchWidget::placePartDroppedInOtherView(modelPart, viewLayerSpec, viewGeometry, id, dropOrigin);
+	if (newItem == NULL) return newItem;
+	if (!autorouteTypePCB()) return newItem;
+
+	ItemBase * board = findBoard();
+	if (board == NULL) {
+		return newItem;
+	}
+
+	// This is a 2d bin-packing problem. We can use our tile datastructure for this.  
+	// Use a simple best-fit approach for now.  No idea how optimal a solution it is.
+
+	CMRouter router(this);
+	Plane * plane = router.initPlane(false);
+	QList<Tile *> alreadyTiled;
+	qreal keepout = 10;
+	router.initBoard(board, plane, alreadyTiled, keepout);
+
+	QRectF boardRect = board->sceneBoundingRect();
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+		if (itemBase->layerKinChief() == board) continue;
+		if (itemBase->layerKinChief() == newItem) continue;
+
+		QRectF r = itemBase->sceneBoundingRect();
+		r.adjust(-keepout, -keepout, keepout, keepout);
+		QRectF s = r.intersected(boardRect);
+		if (s.width() <= 0) continue;
+		if (s.height() <= 0) continue;	
+
+		router.insertTile(plane, s, alreadyTiled, NULL, Tile::OBSTACLE, CMRouter::IgnoreAllOverlaps);
+	}
+
+	TileRect tileBoardRect = router.boardRect();
+	BestPlace bestPlace;
+	bestPlace.bestTile = NULL;
+	bestPlace.width = CMRouter::realToTile(newItem->boundingRect().width());
+	bestPlace.height = CMRouter::realToTile(newItem->boundingRect().height());
+	TiSrArea(NULL, plane, &tileBoardRect, placeBestFit, &bestPlace);
+	if (bestPlace.bestTile != NULL) {
+		QRectF r;
+		CMRouter::tileToQRect(bestPlace.bestTile, r);
+		newItem->setPos(r.topLeft());
+		alignOneToGrid(newItem);
+		router.drcClean();
+	}
+
+	return newItem;
+}

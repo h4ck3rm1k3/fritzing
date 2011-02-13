@@ -2734,28 +2734,27 @@ void SketchWidget::setSketchModel(SketchModel * sketchModel) {
 
 void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) {
 	if (dropOrigin != NULL && dropOrigin != this) {
-		// offset the part 
-		QPointF from = dropOrigin->mapToScene(QPoint(0, 0));
-		QPointF to = this->mapToScene(QPoint(0, 0));
-		QPointF dp = viewGeometry.loc() - from;
-		ViewGeometry vg(viewGeometry);
-		vg.setLoc(to + dp);
-		ItemBase * itemBase = addItemAux(modelPart, viewLayerSpec, vg, id, NULL, true, m_viewIdentifier);
-		if (m_alignToGrid && (itemBase != NULL)) {
-			QPointF loc = to + dp;
-			QSet<ItemBase *> savedItems;
-			QHash<Wire *, ConnectorItem *> savedWires;
-			findAlignmentAnchor(itemBase, savedItems, savedWires);
-			if (m_alignmentItem) {
-				m_alignmentItem = NULL;
-				alignLoc(loc, m_alignmentStartPoint, QPointF(0,0), QPointF(0, 0));
-				itemBase->setPos(loc);
-			}
-		}
+		placePartDroppedInOtherView(modelPart, viewLayerSpec, viewGeometry, id, dropOrigin);
 	}
 	else {
 		addItemAux(modelPart, viewLayerSpec, viewGeometry, id, NULL, true, m_viewIdentifier);
 	}
+}
+
+ItemBase * SketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) 
+{
+	// offset the part 
+	QPointF from = dropOrigin->mapToScene(QPoint(0, 0));
+	QPointF to = this->mapToScene(QPoint(0, 0));
+	QPointF dp = viewGeometry.loc() - from;
+	ViewGeometry vg(viewGeometry);
+	vg.setLoc(to + dp);
+	ItemBase * itemBase = addItemAux(modelPart, viewLayerSpec, vg, id, NULL, true, m_viewIdentifier);
+	if (m_alignToGrid && (itemBase != NULL)) {
+		alignOneToGrid(itemBase);
+	}
+
+	return itemBase;
 }
 
 void SketchWidget::sketchWidget_itemDeleted(long id) {
@@ -6923,4 +6922,18 @@ QGraphicsItem * SketchWidget::addWatermark(const QString &filename)
 
 bool SketchWidget::acceptsTrace(const ViewGeometry &) {
 	return false;
+}
+
+void SketchWidget::alignOneToGrid(ItemBase * itemBase) {
+	if (m_alignToGrid) {
+		QSet<ItemBase *> savedItems;
+		QHash<Wire *, ConnectorItem *> savedWires;
+		findAlignmentAnchor(itemBase, savedItems, savedWires);
+		if (m_alignmentItem) {
+			m_alignmentItem = NULL;
+			QPointF loc = itemBase->pos();
+			alignLoc(loc, m_alignmentStartPoint, QPointF(0,0), QPointF(0, 0));
+			itemBase->setPos(loc);
+		}
+	}
 }

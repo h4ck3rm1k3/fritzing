@@ -153,6 +153,8 @@ protected:
 	bool m_drawn;
 };
 
+////////////////////////////////////
+
 class CMRouter : public Autorouter
 {
 	Q_OBJECT
@@ -165,21 +167,28 @@ public:
 	bool drc(QString & message); 
 	void drcClean(); 
 
-	
-public slots:
-	void setMaxCycles(int);
-
-signals:
-	void setCycleMessage(const QString &);
-	void setCycleCount(int);
-
-protected:
+public:
 	enum OverlapType {
 		IgnoreAllOverlaps = 0,
 		ClipAllOverlaps,
 		ReportAllOverlaps,
 		AllowEquipotentialOverlaps
 	};
+
+public:
+	Plane * initPlane(bool rotate90);
+	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);
+	Tile * insertTile(Plane* thePlane, QRectF &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
+	TileRect boardRect();
+	static inline int realToTile(qreal);
+	static inline void tileToQRect(Tile * tile, QRectF & rect);
+
+public slots:
+	void setMaxCycles(int);
+
+signals:
+	void setCycleMessage(const QString &);
+	void setCycleCount(int);
 
 protected:
 	void restoreOriginalState(QUndoCommand * parentCommand);
@@ -215,7 +224,6 @@ protected:
 	void hookUpWires(QList<PathUnit *> & fullPath, QList<Wire *> & wires, qreal keepout);
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
 	void clearEdge(Edge * edge);
-	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);
 	void initPathUnit(Edge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
 	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> &, qreal keepout);
 	bool addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, Edge *, 
@@ -245,7 +253,6 @@ protected:
 	Edge * makeEdge(ConnectorItem * from, ConnectorItem * to, class VirtualWire *);
 	void expand(ConnectorItem * originalConnectorItem, QList<ConnectorItem *> & connectorItems, QSet<Wire *> & traceWires);
 	void clipParts();
-	Plane * initPlane(bool rotate90);
 	void insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType tileType);
 	bool blockDirection(PathUnit * pathUnit, PathUnit::Direction direction, TileRect & nextRect, int tWidthNeeded);
 	void clearTracesAndJumpers();
