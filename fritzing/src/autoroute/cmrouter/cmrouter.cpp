@@ -575,6 +575,9 @@ void CMRouter::start()
 	m_sketchWidget->collectAllNets(indexer, m_allPartConnectorItems, false, m_bothSidesNow);
 
 	if (m_allPartConnectorItems.count() == 0) {
+		QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("No connections to route'."));
+		restoreOriginalState(parentCommand);
+		cleanUpNets();
 		return;
 	}
 
@@ -711,6 +714,14 @@ void CMRouter::start()
 	m_sketchWidget->pushCommand(parentCommand);
 	m_sketchWidget->repaint();
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
+
+	if (m_offBoardConnectors.count() > 0) {
+		QSet<ItemBase *> parts;
+		foreach (ConnectorItem * connectorItem, m_offBoardConnectors) {
+			parts.insert(connectorItem->attachedTo()->layerKinChief());
+		}
+		QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("Note: autorouter did not route %n parts that were off (or not entirely on) the board.", "", parts.count()));
+	}
 }
 
 

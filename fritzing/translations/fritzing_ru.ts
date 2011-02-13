@@ -269,6 +269,26 @@
         <source>round %1 of:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No board part found, DRC cancelled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The sketch is ok: connectors and traces are not too close together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some connectors and/or traces are too close together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Note: autorouter did not route %n parts that were off (or not entirely on) the board.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ConnectorsInfoWidget</name>
@@ -2305,11 +2325,11 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The sketch is ok: connectors and traces are not too close together.</source>
+        <source>Donate to Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Some connectors and/or traces are too close together.</source>
+        <source>Open Fritzing donation web page</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3822,6 +3842,18 @@ Fritzing по-прежнему работает, но вы не сможете �
     </message>
     <message>
         <source>Select locked parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot autoroute: no board part found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No connections to route&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot autoroute: maybe all traces are marked &apos;do not autoroute&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
