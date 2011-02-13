@@ -539,6 +539,11 @@ CMRouter::~CMRouter()
 
 void CMRouter::start()
 {	
+	if (m_sketchWidget->autorouteTypePCB() && m_board == NULL) {
+		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Cannot autoroute: no board part found"));
+		return;
+	}
+
 	m_maximumProgressPart = 1;
 	m_currentProgressPart = 0;
 	qreal keepout = m_sketchWidget->getKeepout();			// 15 mils space
@@ -826,20 +831,22 @@ bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrd
 	return gotNew;
 }
 
-
-
-bool CMRouter::drc() 
+bool CMRouter::drc(QString & message) 
 {
 	// TODO: 
 	//	what about ground plane?
 
-	qreal keepout = m_sketchWidget->getKeepout() / 2;			// 15 mils space
-	m_board = NULL;
-	if (m_sketchWidget->autorouteTypePCB()) {
-		m_board = m_sketchWidget->findBoard();
+	if (m_sketchWidget->autorouteTypePCB() && m_board == NULL) {
+		message = tr("No board part found, DRC cancelled.");
+		return false;
 	}
 
-	return drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
+	qreal keepout = m_sketchWidget->getKeepout() / 2;			// 15 mils space
+
+	bool result = drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
+	if (result) message = tr("The sketch is ok: connectors and traces are not too close together.");
+	else message = tr("Some connectors and/or traces are too close together.");
+	return result;
 }
 
 void CMRouter::drcClean() 
@@ -869,6 +876,8 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 	else {
 		m_union90Plane = m_unionPlane = NULL;
 	}
+
+	m_offBoardConnectors.clear();
 
 	QList<Tile *> alreadyTiled;
 	Plane * plane = tilePlane(m_viewLayerIDs.at(0), ViewLayer::Bottom, alreadyTiled, keepout, overlapType, wireOverlapType, eliminateThin);
@@ -1041,6 +1050,8 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 	// if board is not rectangular, add tiles for the outside edges;
 	if (!initBoard(m_board, thePlane, alreadyTiled, keepout)) return thePlane;
 
+
+
 	if (m_sketchWidget->autorouteTypePCB()) {
 		// deal with "rectangular" elements first
 		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
@@ -1051,6 +1062,15 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			if (connectorItem->attachedTo()->hidden()) continue;
 			if (connectorItem->attachedToItemType() == ModelPart::Wire) continue;
 			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+			if (m_offBoardConnectors.contains(connectorItem)) continue;
+
+			QRectF rect = connectorItem->boundingRect();
+			QPointF p = connectorItem->attachedTo()->mapToScene(connectorItem->pos());
+			rect.moveTo(p);
+			if (!m_maxRect.contains(rect)) {
+				m_offBoardConnectors.insert(connectorItem);
+				continue;
+			}
 
 			addTile(connectorItem, Tile::OBSTACLE, thePlane, alreadyTiled, overlapType, keepout);
 			if (alreadyTiled.count() > 0) {
@@ -1088,6 +1108,13 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			if (!nonConnectorItem->attachedTo()->isVisible()) continue;
 			if (nonConnectorItem->attachedTo()->hidden()) continue;
 			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
+
+			QRectF rect = nonConnectorItem->boundingRect();
+			QPointF p = nonConnectorItem->attachedTo()->mapToScene(connectorItem->pos());
+			rect.moveTo(p);
+			if (!m_maxRect.contains(rect)) {
+				continue;
+			}
 
 			DebugDialog::debug(QString("coords nonconnectoritem %1 %2")
 									.arg(nonConnectorItem->attachedToTitle())

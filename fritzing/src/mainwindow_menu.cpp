@@ -3986,15 +3986,16 @@ void MainWindow::designRulesCheck()
 
 	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
 	if (pcbSketchWidget == NULL) return;
-
+	
 	CMRouter cmRouter(pcbSketchWidget);
-	bool result = cmRouter.drc();
+	QString message;
+	bool result = cmRouter.drc(message);
 
 	if (result) {
-		QMessageBox::information(this, tr("Fritzing"), tr("The sketch is ok: connectors and traces are not too close together."));
+		QMessageBox::information(this, tr("Fritzing"), message);
 	}
 	else {
-		QMessageBox::warning(this, tr("Fritzing"), tr("Some connectors and/or traces are too close together."));
+		QMessageBox::warning(this, tr("Fritzing"), message);
 	}
 
 	cmRouter.drcClean();

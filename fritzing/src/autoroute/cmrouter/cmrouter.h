@@ -162,7 +162,7 @@ public:
 	~CMRouter(void);
 
 	void start();
-	bool drc(); 
+	bool drc(QString & message); 
 	void drcClean(); 
 
 	
@@ -279,6 +279,7 @@ protected:
 	ItemBase * m_board;
 	int m_maxCycles;
 	QByteArray m_startState;
+	QSet<ConnectorItem *> m_offBoardConnectors;
 };
 
 #endif
