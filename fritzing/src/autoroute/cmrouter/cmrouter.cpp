@@ -2967,12 +2967,12 @@ void CMRouter::clipParts()
 
 		QRectF partRect = itemBase->boundingRect();
 		partRect.moveTo(itemBase->pos());
+		partRect = partRect.intersected(m_maxRect);			// don't tile off-board parts
+		if (partRect.width() <= 0) continue;
+		if (partRect.height() <= 0) continue;
+
 		TileRect partTileRect;
 		realsToTile(partTileRect, partRect.left(), partRect.top(), partRect.right(), partRect.bottom());
-		if (partTileRect.xmini < m_tileMaxRect.xmini) partTileRect.xmini = m_tileMaxRect.xmini;
-		if (partTileRect.xmaxi > m_tileMaxRect.xmaxi) partTileRect.xmaxi = m_tileMaxRect.xmaxi;
-		if (partTileRect.ymini < m_tileMaxRect.ymini) partTileRect.ymini = m_tileMaxRect.ymini;
-		if (partTileRect.ymaxi > m_tileMaxRect.ymaxi) partTileRect.ymaxi = m_tileMaxRect.ymaxi;
 		insertUnion(partTileRect, NULL, Tile::OBSTACLE);
 	}
 }
