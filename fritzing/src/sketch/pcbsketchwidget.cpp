@@ -2204,8 +2204,8 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 		CMRouter::tileToQRect(bestPlace.bestTile, r);
 		newItem->setPos(r.topLeft());
 		alignOneToGrid(newItem);
-		router.drcClean();
 	}
+	router.drcClean();
 
 	return newItem;
 }
