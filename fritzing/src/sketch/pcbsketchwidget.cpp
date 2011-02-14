@@ -500,34 +500,41 @@ QPoint PCBSketchWidget::calcFixedToCenterItemOffset(const QRect & viewPortRect, 
 
 void PCBSketchWidget::showEvent(QShowEvent * event) {
 	SketchWidget::showEvent(event);
-	if (m_addDefaultParts && (m_addedDefaultPart != NULL)) {
-		m_addDefaultParts = false;
-
-		if (m_fixedToCenterItem != NULL) {
-			QSizeF helpSize = m_fixedToCenterItem->size();
-			QSizeF vpSize = this->viewport()->size();
-			QSizeF partSize(600, 200);
-
-			//if (vpSize.height() < helpSize.height() + 50 + partSize.height()) {
-				//vpSize.setWidth(vpSize.width() - verticalScrollBar()->width());
-			//}
-
-			QPointF p;
-			p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));
-			p.setY((int) helpSize.height());
-
-			// TODO: make these constants less arbitrary (get the size and location of the icon which the board is replacing)
-			p += QPointF(0, 50);
-
-			// add a board to the empty sketch, and place it in the help area.
-		
-			QPointF q = mapToScene(p.toPoint());
-			m_addedDefaultPart->setPos(q);
-			qobject_cast<ResizableBoard *>(m_addedDefaultPart)->resizePixels(partSize.width(), partSize.height(), m_viewLayers);
-			QTimer::singleShot(10, this, SLOT(vScrollToZero()));
-		}
-	}
+	dealWithDefaultParts();
 }
+
+void PCBSketchWidget::dealWithDefaultParts() {
+	if (!m_addDefaultParts) return;
+	if  (m_addedDefaultPart == NULL) return;
+
+	m_addDefaultParts = false;
+
+	if (m_fixedToCenterItem == NULL) return;
+
+	// place the default rectangular board in relation to the first time help area
+
+	QSizeF helpSize = m_fixedToCenterItem->size();
+	QSizeF vpSize = this->viewport()->size();
+	QSizeF partSize(600, 200);
+
+	//if (vpSize.height() < helpSize.height() + 50 + partSize.height()) {
+		//vpSize.setWidth(vpSize.width() - verticalScrollBar()->width());
+	//}
+
+	QPointF p;
+	p.setX((int) ((vpSize.width() - partSize.width()) / 2.0));
+	p.setY((int) helpSize.height());
+
+	// TODO: make these constants less arbitrary (get the size and location of the icon which the board is replacing)
+	p += QPointF(0, 50);
+
+	// place it
+	QPointF q = mapToScene(p.toPoint());
+	m_addedDefaultPart->setPos(q);
+	qobject_cast<ResizableBoard *>(m_addedDefaultPart)->resizePixels(partSize.width(), partSize.height(), m_viewLayers);
+	QTimer::singleShot(10, this, SLOT(vScrollToZero()));
+}
+
 
 void PCBSketchWidget::setClipEnds(ClipableWire * vw, bool clipEnds) {
 	vw->setClipEnds(clipEnds);
@@ -2167,6 +2174,8 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 	if (board == NULL) {
 		return newItem;
 	}
+
+	dealWithDefaultParts();
 
 	// This is a 2d bin-packing problem. We can use our tile datastructure for this.  
 	// Use a simple best-fit approach for now.  No idea how optimal a solution it is.
