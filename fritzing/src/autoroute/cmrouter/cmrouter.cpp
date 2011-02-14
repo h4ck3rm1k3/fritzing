@@ -714,7 +714,7 @@ void CMRouter::start()
 		foreach (ConnectorItem * connectorItem, m_offBoardConnectors) {
 			parts.insert(connectorItem->attachedTo()->layerKinChief());
 		}
-		QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("Note: autorouter did not route %n parts that were off (or not entirely on) the board.", "", parts.count()));
+		QMessageBox::information(NULL, QObject::tr("Fritzing"), tr("Note: the autorouter did not route %n parts which are not located entirely on the board.", "", parts.count()));
 	}
 }
 
@@ -851,6 +851,14 @@ bool CMRouter::drc(QString & message)
 	bool result = drc(keepout, CMRouter::ReportAllOverlaps, CMRouter::AllowEquipotentialOverlaps, false, false);
 	if (result) message = tr("The sketch is ok: connectors and traces are not too close together.");
 	else message = tr("Some connectors and/or traces are too close together.");
+
+	if (m_offBoardConnectors.count() > 0) {
+		QSet<ItemBase *> parts;
+		foreach (ConnectorItem * connectorItem, m_offBoardConnectors) {
+			parts.insert(connectorItem->attachedTo()->layerKinChief());
+		}
+		message += tr("\nNote: %n parts are not located entirely on the board.", "", parts.count());
+	}
 	return result;
 }
 

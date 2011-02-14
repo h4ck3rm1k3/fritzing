@@ -283,7 +283,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <source>Note: autorouter did not route %n parts that were off (or not entirely on) the board.</source>
+        <source>Note: the autorouter did not route %n parts which are not located entirely on the board.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>
+Note: %n parts are not located entirely on the board.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
