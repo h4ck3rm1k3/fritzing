@@ -181,6 +181,10 @@ static inline void infoTileRect(const QString & message, const TileRect & tileRe
 	);
 }
 
+inline int fasterRealToTile(qreal x) {
+        return qRound(x * TILEFACTOR);
+}
+
 void tileRotate90(TileRect & tileRect, TileRect & tileRect90)
 {
 	// x' = x*cos - y*sin
@@ -221,10 +225,10 @@ static inline int manhattan(TileRect & tr1, TileRect & tr2) {
 static inline GridEntry * TiGetGridEntry(Tile * tile) { return dynamic_cast<GridEntry *>(TiGetClient(tile)); }
 
 void realsToTile(TileRect & tileRect, qreal l, qreal t, qreal r, qreal b) {
-	tileRect.xmini = CMRouter::realToTile(l);
-	tileRect.ymini = CMRouter::realToTile(t);
-	tileRect.xmaxi = CMRouter::realToTile(r);
-	tileRect.ymaxi = CMRouter::realToTile(b);
+        tileRect.xmini = fasterRealToTile(l);
+        tileRect.ymini = fasterRealToTile(t);
+        tileRect.xmaxi = fasterRealToTile(r);
+        tileRect.ymaxi = fasterRealToTile(b);
 }
 
 inline qreal tileToReal(int x) {
@@ -509,9 +513,9 @@ CMRouter::CMRouter(PCBSketchWidget * sketchWidget) : Autorouter(sketchWidget)
 	realsToTile(m_tileMaxRect, m_maxRect.left(), m_maxRect.top(), m_maxRect.right(), m_maxRect.bottom()); 
 	realsToTile(m_tileMaxRect90, m_maxRect90.left(), m_maxRect90.top(), m_maxRect90.right(), m_maxRect90.bottom()); 
 
-	TileStandardWireWidth = realToTile(Wire::STANDARD_TRACE_WIDTH);
+        TileStandardWireWidth = fasterRealToTile(Wire::STANDARD_TRACE_WIDTH);
 	HalfStandardWireWidth = Wire::STANDARD_TRACE_WIDTH / 2;
-	TileHalfStandardWireWidth = realToTile(HalfStandardWireWidth);
+        TileHalfStandardWireWidth = fasterRealToTile(HalfStandardWireWidth);
 
 	ViewGeometry vg;
 	vg.setTrace(true);
@@ -1027,13 +1031,13 @@ Plane * CMRouter::initPlane(bool rotate90) {
 	QRectF bufferRect(rotate90 ? m_maxRect90 : m_maxRect);
 	bufferRect.adjust(-bufferRect.width(), -bufferRect.height(), bufferRect.width(), bufferRect.height());
 
-	SETLEFT(bufferTile, realToTile(bufferRect.left()));
-	SETYMIN(bufferTile, realToTile(bufferRect.top()));		// TILE is Math Y-axis not computer-graphic Y-axis
+        SETLEFT(bufferTile, fasterRealToTile(bufferRect.left()));
+        SETYMIN(bufferTile, fasterRealToTile(bufferRect.top()));		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	Plane * thePlane = TiNewPlane(bufferTile);
 
-	SETRIGHT(bufferTile, realToTile(bufferRect.right()));
-	SETYMAX(bufferTile, realToTile(bufferRect.bottom()));		// TILE is Math Y-axis not computer-graphic Y-axis
+        SETRIGHT(bufferTile, fasterRealToTile(bufferRect.right()));
+        SETYMAX(bufferTile, fasterRealToTile(bufferRect.bottom()));		// TILE is Math Y-axis not computer-graphic Y-axis
 
 	// do not use InsertTile here
 	TiInsertTile(thePlane, rotate90 ? &m_tileMaxRect90 : &m_tileMaxRect, NULL, Tile::SPACE); 
@@ -1953,7 +1957,7 @@ void CMRouter::removeCorners(QList<QPointF> & allPoints, Plane * thePlane)
 bool CMRouter::checkProposed(const QPointF & proposed, const QPointF & p1, const QPointF & p3, Plane * thePlane, bool atStartOrEnd) 
 {
 	if (atStartOrEnd) {
-		Tile * tile = TiSrPoint(NULL, thePlane, realToTile(proposed.x()), realToTile(proposed.y()));
+                Tile * tile = TiSrPoint(NULL, thePlane, fasterRealToTile(proposed.x()), fasterRealToTile(proposed.y()));
 		switch (TiGetType(tile)) {
 			case Tile::SPACE:
 			case Tile::SPACE2:
@@ -2812,15 +2816,15 @@ void CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUnit *> 
 			case TraceWire::Vertical:
 				pathUnit->minCostRect.ymini = tileRect.ymini;
 				pathUnit->minCostRect.ymaxi = tileRect.ymaxi;
-				pathUnit->minCostRect.xmini = realToTile(qMin(p1.x(), p2.x()) - HalfStandardWireWidth);
-				pathUnit->minCostRect.xmaxi = realToTile(qMax(p1.x(), p2.x()) + HalfStandardWireWidth);
+                                pathUnit->minCostRect.xmini = fasterRealToTile(qMin(p1.x(), p2.x()) - HalfStandardWireWidth);
+                                pathUnit->minCostRect.xmaxi = fasterRealToTile(qMax(p1.x(), p2.x()) + HalfStandardWireWidth);
 				break;
 
 			case TraceWire::Horizontal:
 				pathUnit->minCostRect.xmini = tileRect.xmini;
 				pathUnit->minCostRect.xmaxi = tileRect.xmaxi;
-				pathUnit->minCostRect.ymini = realToTile(qMin(p1.y(), p2.y()) - HalfStandardWireWidth);
-				pathUnit->minCostRect.ymaxi = realToTile(qMax(p1.y(), p2.y()) + HalfStandardWireWidth);
+                                pathUnit->minCostRect.ymini = fasterRealToTile(qMin(p1.y(), p2.y()) - HalfStandardWireWidth);
+                                pathUnit->minCostRect.ymaxi = fasterRealToTile(qMax(p1.y(), p2.y()) + HalfStandardWireWidth);
 				break;
 
 			case TraceWire::Diagonal:
@@ -2981,8 +2985,8 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 							QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout)
 {
 	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
-	int tWidthNeeded = realToTile(sizeNeeded.width());
-	int tHeightNeeded = realToTile(sizeNeeded.height());
+        int tWidthNeeded = fasterRealToTile(sizeNeeded.width());
+        int tHeightNeeded = fasterRealToTile(sizeNeeded.height());
 
 	//hideTiles();
 
@@ -3245,7 +3249,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 		sourceQueue.enqueue(sourceCost + destCost, nextPathUnit);
 		if (goals.count() > 0) {
 			PathUnit * bestGoal = NULL;
-			int bestCost;
+                        int bestCost = std::numeric_limits<int>::max();
 			foreach (PathUnit * goalUnit, goals) {
 				if (bestGoal == NULL) {
 					bestGoal = goalUnit;
@@ -3785,7 +3789,7 @@ TileRect CMRouter::boardRect() {
 	return m_tileMaxRect;
 }
 
-inline int CMRouter::realToTile(qreal x) {
+int CMRouter::realToTile(qreal x) {
 	return qRound(x * TILEFACTOR);
 }
 

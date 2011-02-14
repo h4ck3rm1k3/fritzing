@@ -180,7 +180,7 @@ public:
 	bool initBoard(ItemBase * board, Plane *, QList<Tile *> & alreadyTiled, qreal keepout);
 	Tile * insertTile(Plane* thePlane, QRectF &tileRect, QList<Tile *> &alreadyTiled, QGraphicsItem *, Tile::TileType type, CMRouter::OverlapType);
 	TileRect boardRect();
-	static inline int realToTile(qreal);
+        static int realToTile(qreal);
 	static void tileToQRect(Tile * tile, QRectF & rect);
 
 public slots:
