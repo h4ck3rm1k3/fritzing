@@ -1329,11 +1329,13 @@ bool PartsEditorView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &s
 			dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
 		if(citem) {
 			TerminalPointItem *tp = citem->terminalPointItem();
+			if (!tp) {
+				citem->setShowTerminalPoint(citem->isShowingTerminalPoint());
+				tp = citem->terminalPointItem();
+			}
+
 			QString connId = citem->connector()->connectorSharedID();
 			QString terminalId = connId+"terminal";
-			if (!tp) {
-				throw "PartsEditorView::updateTerminalPoints tp missing";
-			}
 
 			if(tp && !tp->isInTheCenter()) {
 				if(tp->hasBeenMoved() || citem->hasBeenMoved()) {
