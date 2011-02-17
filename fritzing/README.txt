@@ -37,7 +37,19 @@ To launch Fritzing:
 	on Linux, double-click fritzing.sh, or try ./fritzing.sh in your shell window
 	on Windows, double-click fritzing.exe
 
-GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest
+
+LICENSING
+The source code of Fritzing is licensed under GNU GPL v3, the documentation 
+and part designs under Creative Commons Attribution-ShareALike 3.0 Unported.
+The full text of these licenses are shipped with this download.
+
+This means that you can create your own variation of Fritzing, as long as you 
+credit us and also publish it under GPL. Similarly, you may re-publish our 
+documentation, as long as you attribute us, and publish it under the same 
+license. Also, of course you are free to do whatever you want with the 
+circuits you create.
+
+
 
 (c) 2007-2011 Fachhochschule Potsdam
 design.fh-potsdam.de
