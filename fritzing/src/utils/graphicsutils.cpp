@@ -25,10 +25,10 @@ $Date$
 ********************************************************************/
 
 #include "graphicsutils.h"
-#include "../fsvgrenderer.h"
 
 #include <QList>
 #include <QLineF>
+#include <QBuffer>
 #include <qmath.h>
 
 
@@ -130,12 +130,12 @@ QPointF GraphicsUtils::calcConstraint(QPointF initial, QPointF current) {
 	return result;
 }
 
-qreal GraphicsUtils::pixels2mils(qreal p) {
-	return p * 1000.0 / FSvgRenderer::printerScale();
+qreal GraphicsUtils::pixels2mils(qreal p, qreal dpi) {
+	return p * 1000.0 / dpi;
 }
 
-qreal GraphicsUtils::pixels2ins(qreal p) {
-	return p / FSvgRenderer::printerScale();
+qreal GraphicsUtils::pixels2ins(qreal p, qreal dpi) {
+	return p / dpi;
 }
 
 qreal GraphicsUtils::distance2(QPointF p1, QPointF p2) {
@@ -147,12 +147,12 @@ qreal GraphicsUtils::mm2mils(qreal mm) {
 	return (mm / 25.4 * 1000);
 }
 
-qreal GraphicsUtils::pixels2mm(qreal p) {
-	return (p / FSvgRenderer::printerScale() * 25.4);
+qreal GraphicsUtils::pixels2mm(qreal p, qreal dpi) {
+	return (p / dpi * 25.4);
 }
 
-qreal GraphicsUtils::mils2pixels(qreal m) {
-	return (FSvgRenderer::printerScale() * m / 1000);
+qreal GraphicsUtils::mils2pixels(qreal m, qreal dpi) {
+	return (dpi * m / 1000);
 }
 
 void GraphicsUtils::saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform) {
@@ -315,3 +315,10 @@ bool GraphicsUtils::liangBarskyLineClip(double x1, double y1, double x2, double 
 	return true;
 }
 
+QString GraphicsUtils::toHtmlImage(QPixmap *pixmap, const char* format) {
+	QByteArray bytes;
+	QBuffer buffer(&bytes);
+	buffer.open(QIODevice::WriteOnly);
+	pixmap->save(&buffer, format); // writes pixmap into bytes in PNG format
+	return QString("data:image/%1;base64,%2").arg(QString(format).toLower()).arg(QString(bytes.toBase64()));
+}

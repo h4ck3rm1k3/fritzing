@@ -30,10 +30,8 @@ $Date$
 #include <QPointF>
 #include <QDomElement>
 #include <QSet>
-#include <QPixmap>
 #include <QMatrix>
 #include <QTransform>
-#include <QSvgRenderer>
 
 class TextUtils
 {
@@ -53,7 +51,6 @@ public:
     static QString mergeSvg(const QString & svg1, const QString & svg2, const QString & id);
 	static QString mergeSvgFinish(QDomDocument & doc);
 	static bool mergeSvg(QDomDocument & doc1, const QString & svg, const QString & id);
-	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
 	static bool isIllustratorFile(const QString &fileContent);
 	static QString removeXMLEntities(QString svgContent);

@@ -424,7 +424,8 @@ signals:
 	void firstTimeHelpHidden();
 	void disconnectWireSignal(QSet<ItemBase *> &, QList<long> &, QUndoCommand * parentCommand);
 	void deleteTracesSignal(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
-	void makeDeleteItemCommandSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
+	void makeDeleteItemCommandPrepSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
+	void makeDeleteItemCommandFinalSignal(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry &, long id, SketchWidget * dropOrigin);
@@ -456,7 +457,8 @@ protected slots:
 	void deleteTracesSlot(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, SketchWidget *> & otherDeletedItems, QList<long> & deletedIDs, bool isForeign, QUndoCommand * parentCommand);
 	void vScrollToZero();
 	void arrowTimerTimeout();
-	void makeDeleteItemCommandSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
+	void makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
+	void makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand);
 
 public slots:
 	void changeWireColor(const QString newColor);

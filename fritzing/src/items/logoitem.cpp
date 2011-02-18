@@ -469,8 +469,8 @@ void LogoItem::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	}
 
 	QRectF r = this->boundingRect();
-	if (qAbs(GraphicsUtils::pixels2mm(r.width()) - mmW) < .001 &&
-		qAbs(GraphicsUtils::pixels2mm(r.height()) - mmH) < .001) 
+	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
+		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
 	{
 		positionGrips();
 		return;

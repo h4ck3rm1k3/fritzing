@@ -540,7 +540,7 @@ void Wire::setExtras(QDomElement & element, InfoGraphicsView * infoGraphicsView)
 	else {
 		w = element.attribute("mils").toDouble(&ok);
 		if (ok) {
-			setWireWidth(GraphicsUtils::mils2pixels(w), infoGraphicsView);
+			setWireWidth(GraphicsUtils::mils2pixels(w, FSvgRenderer::printerScale()), infoGraphicsView);
 		}
 	}
 
@@ -996,7 +996,7 @@ void Wire::initNames() {
 	widthTrans.insert(widths[2], tr("thick (32 mil)"));
 	widthTrans.insert(widths[3], tr("extra thick (48 mil)"));
 
-	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[1]);
+	STANDARD_TRACE_WIDTH = GraphicsUtils::mils2pixels(widths[1], FSvgRenderer::printerScale());
 	HALF_STANDARD_TRACE_WIDTH = STANDARD_TRACE_WIDTH / 2.0;
 
     // need a list because a hash table doesn't guarantee order

@@ -45,11 +45,11 @@ The full text of these licenses are shipped with this download.
 
 This means that you can create your own variation of Fritzing, as long as you 
 credit us and also publish it under GPL. Similarly, you may re-publish our 
-documentation, as long as you attribute us, and publish it under the same 
+documentation, as long as you credit us, and publish it under the same 
 license. 
 You may publish circuits and diagrams that you create with 
-Fritzing and that use our graphics, again as long as you attribute us, and 
-publish your works under the same license.  Attribution can be as simple as 
+Fritzing and that use our graphics, again as long as you credit us, and 
+publish your works under the same license.  A credit can be as simple as 
 "this image was created with Fritzing."
 
 

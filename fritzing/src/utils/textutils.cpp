@@ -230,14 +230,6 @@ QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QS
 	return mergeSvgFinish(doc1);
 }
 
-QString TextUtils::toHtmlImage(QPixmap *pixmap, const char* format) {
-	QByteArray bytes;
-	QBuffer buffer(&bytes);
-	buffer.open(QIODevice::WriteOnly);
-	pixmap->save(&buffer, format); // writes pixmap into bytes in PNG format
-	return QString("data:image/%1;base64,%2").arg(QString(format).toLower()).arg(QString(bytes.toBase64()));
-}
-
 QString TextUtils::makeSVGHeader(qreal printerScale, qreal dpi, qreal width, qreal height) {
 
 	qreal trueWidth = width / printerScale;

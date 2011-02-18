@@ -415,8 +415,10 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 Qt::DirectConnection);
 	succeeded = succeeded && connect(signaller, SIGNAL(setResistanceSignal(long, QString, QString, bool)),
 									 slotter, SLOT(setResistance(long, QString, QString, bool)));
-	succeeded = succeeded && connect(signaller, SIGNAL(makeDeleteItemCommandSignal(ItemBase *, bool , QUndoCommand * )),
-									 slotter, SLOT(makeDeleteItemCommandSlot(ItemBase * , bool , QUndoCommand * )));
+	succeeded = succeeded && connect(signaller, SIGNAL(makeDeleteItemCommandPrepSignal(ItemBase *, bool , QUndoCommand * )),
+									 slotter, SLOT(makeDeleteItemCommandPrepSlot(ItemBase * , bool , QUndoCommand * )));
+	succeeded = succeeded && connect(signaller, SIGNAL(makeDeleteItemCommandFinalSignal(ItemBase *, bool , QUndoCommand * )),
+									 slotter, SLOT(makeDeleteItemCommandFinalSlot(ItemBase * , bool , QUndoCommand * )));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(setPropSignal(long,  const QString &,  const QString &, bool, bool)),
 									 slotter, SLOT(setProp(long,  const QString &,  const QString &, bool, bool)));

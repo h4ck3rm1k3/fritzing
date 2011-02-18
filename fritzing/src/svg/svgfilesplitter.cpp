@@ -36,6 +36,7 @@ $Date$
 #include <QDomDocument>
 #include <QFile>
 #include <QtDebug>
+#include <QXmlStreamReader>
 
 static QString findStyle("%1[\\s]*:[\\s]*([^;]*)[;]?");
 

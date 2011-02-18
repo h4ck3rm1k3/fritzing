@@ -371,7 +371,7 @@ bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::View
 }
 
 void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers) {
-	resizeMM(GraphicsUtils::pixels2mm(w), GraphicsUtils::pixels2mm(h), viewLayers);
+	resizeMM(GraphicsUtils::pixels2mm(w, FSvgRenderer::printerScale()), GraphicsUtils::pixels2mm(h, FSvgRenderer::printerScale()), viewLayers);
 }
 
 void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
@@ -386,8 +386,8 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	}
 
 	QRectF r = this->boundingRect();
-	if (qAbs(GraphicsUtils::pixels2mm(r.width()) - mmW) < .001 &&
-		qAbs(GraphicsUtils::pixels2mm(r.height()) - mmH) < .001) 
+	if (qAbs(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) - mmW) < .001 &&
+		qAbs(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) - mmH) < .001) 
 	{
 		positionGrips();
 		return;
@@ -451,8 +451,8 @@ void ResizableBoard::setInitialSize() {
 	if (w == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		QSizeF sz = this->boundingRect().size();
-		modelPart()->setProp("width", GraphicsUtils::pixels2mm(sz.width())); 
-		modelPart()->setProp("height", GraphicsUtils::pixels2mm(sz.height())); 
+		modelPart()->setProp("width", GraphicsUtils::pixels2mm(sz.width(), FSvgRenderer::printerScale())); 
+		modelPart()->setProp("height", GraphicsUtils::pixels2mm(sz.height(), FSvgRenderer::printerScale())); 
 	}
 }
 
@@ -573,11 +573,11 @@ bool ResizableBoard::collectExtraInfo(QWidget * parent, const QString & family, 
 			vboxLayout->setContentsMargins(0, 3, 0, 0);
 
 			QRectF r = this->boundingRect();
-			qreal w = qRound(GraphicsUtils::pixels2mm(r.width()) * 100) / 100.0;
+			qreal w = qRound(GraphicsUtils::pixels2mm(r.width(), FSvgRenderer::printerScale()) * 100) / 100.0;
 			QLabel * l1 = new QLabel(tr("width: %1mm").arg(w));	
 			l1->setMargin(0);
 
-			qreal h = qRound(GraphicsUtils::pixels2mm(r.height()) * 100) / 100.0;
+			qreal h = qRound(GraphicsUtils::pixels2mm(r.height(), FSvgRenderer::printerScale()) * 100) / 100.0;
 			QLabel * l2 = new QLabel(tr("height: %1mm").arg(h));
 			l2->setMargin(0);
 

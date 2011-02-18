@@ -31,6 +31,7 @@ $Date$
 #include <QTransform>
 #include <QXmlStreamWriter>
 #include <QDomElement>
+#include <QPixmap>
 
 class GraphicsUtils
 {
@@ -40,14 +41,14 @@ public:
 								 double & dx, double & dy, double &distanceSegment, bool & atEndpoint);
 	static QPointF calcConstraint(QPointF initial, QPointF current);
 
-	static qreal pixels2mils(qreal p);
-	static qreal pixels2ins(qreal p);
+	static qreal pixels2mils(qreal p, qreal dpi);
+	static qreal pixels2ins(qreal p, qreal dpi);
 	static qreal distance2(QPointF p1, QPointF p2);
 	static qreal getNearestOrdinate(qreal ordinate, qreal units);
 
 	static qreal mm2mils(qreal mm);
-	static qreal pixels2mm(qreal p);
-	static qreal mils2pixels(qreal m);
+	static qreal pixels2mm(qreal p, qreal dpi);
+	static qreal mils2pixels(qreal m, qreal dpi);
 	static void saveTransform(QXmlStreamWriter & streamWriter, const QTransform & transform);
 	static bool loadTransform(const QDomElement & transformElement, QTransform & transform);
 	static bool is90(const QMatrix & matrix);
@@ -55,6 +56,7 @@ public:
 	static bool liangBarskyLineClip(double x1, double y1, double x2, double y2, 
 									double wxmin, double wxmax, double wymin, double wymax, 
 									double & x11, double & y11, double & x22, double & y22);
+	static QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 
 public:
 	static const int IllustratorDPI = 72;

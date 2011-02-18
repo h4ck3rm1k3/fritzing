@@ -4051,13 +4051,20 @@ void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
 }
 
 void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) {
+
 	if (crossView == BaseCommand::CrossView) {
-		emit makeDeleteItemCommandSignal(itemBase, true, parentCommand);
+		emit makeDeleteItemCommandPrepSignal(itemBase, true, parentCommand);
 	}
-	makeDeleteItemCommandSlot(itemBase, false, parentCommand);
+	makeDeleteItemCommandPrepSlot(itemBase, false, parentCommand);
+
+	if (crossView == BaseCommand::CrossView) {
+		emit makeDeleteItemCommandFinalSignal(itemBase, true, parentCommand);
+	}
+	makeDeleteItemCommandFinalSlot(itemBase, false, parentCommand);
+
 }
 
-void SketchWidget::makeDeleteItemCommandSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand) 
+void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand) 
 {
 	if (foreign) {
 		itemBase = findItem(itemBase->id());
@@ -4082,6 +4089,14 @@ void SketchWidget::makeDeleteItemCommandSlot(ItemBase * itemBase, bool foreign, 
 	}
 
 	rememberSticky(itemBase, parentCommand);
+}
+
+void SketchWidget::makeDeleteItemCommandFinalSlot(ItemBase * itemBase, bool foreign, QUndoCommand * parentCommand) 
+{
+	if (foreign) {
+		itemBase = findItem(itemBase->id());
+		if (itemBase == NULL) return;
+	}
 
 	ModelPart * mp = itemBase->modelPart();
 	new DeleteItemCommand(this, BaseCommand::SingleView, mp->moduleID(), itemBase->viewLayerSpec(), itemBase->getViewGeometry(), itemBase->id(), mp->modelIndex(), parentCommand);
