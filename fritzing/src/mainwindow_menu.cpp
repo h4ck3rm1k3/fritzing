@@ -3146,7 +3146,10 @@ void MainWindow::createTrace() {
 
 void MainWindow::excludeFromAutoroute() {
 	Wire * wire = retrieveWire();
-	m_pcbGraphicsView->excludeFromAutoroute(wire == NULL ? m_excludeFromAutorouteAct->isChecked() : m_excludeFromAutorouteWireAct->isChecked());
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+	pcbSketchWidget->excludeFromAutoroute(wire == NULL ? m_excludeFromAutorouteAct->isChecked() : m_excludeFromAutorouteWireAct->isChecked());
 }
 
 void MainWindow::selectAllTraces() {
