@@ -21,7 +21,7 @@
                 <layer layerId="icon"/>
             </layers>
         </iconView>
-        <breadboardView>
+        <breadboardView  fliphorizontal="true" flipvertical="true">
             <layers image="breadboard/capacitor_tantalum.svg">
                 <layer layerId="breadboard"/>
             </layers>
