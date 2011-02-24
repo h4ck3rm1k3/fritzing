@@ -28,7 +28,7 @@ $Date$
 
 #include "../utils/misc.h"
 #include "../utils/textutils.h"
-#include "../debugdialog.h"
+//#include "../debugdialog.h"
 #include "svgpathparser.h"
 #include "svgpathlexer.h"
 #include "svgpathrunner.h"
@@ -202,13 +202,16 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	qreal sWidth, sHeight, vbWidth, vbHeight;
 	if (!TextUtils::getSvgSizes(m_domDocument, sWidth, sHeight, vbWidth, vbHeight)) return false;
 
-	root.setAttribute("width", QString::number(sWidth));
-	root.setAttribute("height", QString::number(sHeight));
+	root.setAttribute("width", QString("%1in").arg(sWidth));
+	root.setAttribute("height", QString("%1in").arg(sHeight));
 
 	root.setAttribute("viewBox", QString("%1 %2 %3 %4").arg(0).arg(0).arg(vbWidth).arg(vbHeight) );
 
-	QDomElement mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
-	if (mainElement.isNull()) return false;
+	QDomElement mainElement = root;
+	if (!elementID.isEmpty()) {
+		mainElement = TextUtils::findElementWithAttribute(root, "id", elementID);
+		if (mainElement.isNull()) return false;
+	}
 
 	normalizeChild(mainElement, sWidth * dpi, sHeight * dpi, vbWidth, vbHeight, blackOnly);
 
@@ -593,7 +596,7 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 	switch(command.toAscii()) {
 		case 'v':
 		case 'V':
-			DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+			//DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
 			/*
 			for (int i = 0; i < args.count(); i++) {
 				d = args[i] * pathUserData->sNewHeight / pathUserData->vbHeight;
@@ -606,7 +609,7 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 			break;
 		case 'h':
 		case 'H':
-			DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+			//DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
 			/*
 			for (int i = 0; i < args.count(); i++) {
 				d = args[i] * pathUserData->sNewWidth / pathUserData->vbWidth;
@@ -692,7 +695,7 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 	switch(command.toAscii()) {
 		case 'v':
 		case 'V':
-			DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
+			//DebugDialog::debug("'v' and 'V' are now removed by preprocessing; shouldn't be here");
 			/*
 			d = args[0];
 			if (!relative) {
@@ -703,7 +706,7 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 			break;
 		case 'h':
 		case 'H':
-			DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
+			//DebugDialog::debug("'h' and 'H' are now removed by preprocessing; shouldn't be here");
 			/*
 			d = args[0];
 			if (!relative) {
@@ -776,7 +779,7 @@ QVector<QVariant> SvgFileSplitter::simpleParsePath(const QString & data) {
 	SVGPathParser parser;
 	bool result = parser.parse(&lexer);
 	if (!result) {
-		DebugDialog::debug(QString("svg path parse failed %1").arg(dataCopy));
+		//DebugDialog::debug(QString("svg path parse failed %1").arg(dataCopy));
 		return emptyStack;
 	}
 
@@ -972,7 +975,7 @@ void SvgFileSplitter::convertHVSlot(QChar command, bool relative, QList<double> 
 			data->path.chop(1);
 			break;
 		default:
-			DebugDialog::debug(QString("unknown path command %1").arg(command));
+			//DebugDialog::debug(QString("unknown path command %1").arg(command));
 			data->path.append(command);
 			for (int i = 0; i < args.count(); i++) {
 				data->path.append(QString::number(args[i]));
@@ -1203,10 +1206,39 @@ bool SvgFileSplitter::load(const QString * filename)
 {
 	QFile file(*filename);
 
+	return load(&file);
+}
+
+bool SvgFileSplitter::load(QFile * file)
+{
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
 
-	return m_domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn);
+	return m_domDocument.setContent(file, true, &errorStr, &errorLine, &errorColumn);
 }
 
+QString SvgFileSplitter::toString() {
+	return m_domDocument.toString();
+}
+
+void SvgFileSplitter::gWrap(const QHash<QString, QString> & attributes)
+{
+	QDomElement g = m_domDocument.createElement("g");
+	foreach (QString key, attributes.keys()) {
+		g.setAttribute(key, attributes.value(key, ""));
+	}
+
+	QDomNodeList nodeList = m_domDocument.documentElement().childNodes();
+	QList<QDomNode> nodes;
+	for (int i = 0; i < nodeList.count(); i++) {
+		nodes.append(nodeList.item(i));
+	}
+
+	m_domDocument.documentElement().appendChild(g);
+	foreach (QDomNode node, nodes) {
+		g.appendChild(node);
+	}
+
+	return;
+}

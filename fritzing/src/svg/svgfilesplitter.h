@@ -35,6 +35,7 @@ $Date$
 #include <QMatrix>
 #include <QPainterPath>
 #include <QRegExp>
+#include <QFile>
 
 struct PathUserData {
 	QString string;
@@ -65,6 +66,9 @@ public:
 	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
 	void shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms);
 	bool load(const QString * filename);
+	bool load(QFile *);
+	QString toString();
+	void gWrap(const QHash<QString, QString> & attributes);
 
 public:
 	static bool getSvgSizeAttributes(const QString & svg, QString & width, QString & height, QString & viewBox);
