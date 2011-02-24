@@ -45,10 +45,8 @@ public:
 	LogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~LogoItem();
 
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	void saveParams();
-	void getParams(QPointF &, QSizeF &);
 	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
 	QString getProperty(const QString & key);
 	void setLogo(QString logo, bool force);

@@ -28,7 +28,6 @@ $Date$
 #include "gedaelementparser.h"
 #include "gedaelementlexer.h"
 #include "../utils/textutils.h"
-#include "svgfilesplitter.h"
 #include "../version/version.h"
 #include "../items/wire.h"
 #include "../debugdialog.h"

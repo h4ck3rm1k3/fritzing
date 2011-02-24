@@ -173,7 +173,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
     if (m_partLabel) m_partLabel->displayTexts();
 }
 
-QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
 	switch (viewLayerID) {
 		case ViewLayer::Breadboard:

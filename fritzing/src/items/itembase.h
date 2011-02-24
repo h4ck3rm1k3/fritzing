@@ -172,7 +172,7 @@ public:
 	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual void figureHover();
-	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	virtual void slamZ(qreal newZ);
 	bool isEverVisible();
 	void setEverVisible(bool);

@@ -387,7 +387,7 @@ QSizeF JumperItem::footprintSize() {
 	return r0.size();
 }
 
-QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString JumperItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
 	QString xml = "";
 	switch (viewLayerID) {

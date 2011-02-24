@@ -24,12 +24,14 @@ $Date$
 
 ********************************************************************/
 
+#include <QTextDocument>
 #include "textutils.h"
 #include "misc.h"
-#include "../debugdialog.h"
+//#include "../debugdialog.h"
 
 #include <QRegExp>
 #include <QBuffer>
+#include <QFile>
 
 const QString TextUtils::CreatedWithFritzingString("Created with Fritzing (http://www.fritzing.org/)");
 const QString TextUtils::CreatedWithFritzingXmlComment("<!-- " + CreatedWithFritzingString + " -->\n");

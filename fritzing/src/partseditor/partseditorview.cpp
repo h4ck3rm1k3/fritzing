@@ -49,7 +49,6 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
-#include "../svg/svgfilesplitter.h"
 #include "../svg/gedaelement2svg.h"
 #include "../svg/kicadmodule2svg.h"
 #include "../svg/kicadschematic2svg.h"
@@ -180,7 +179,7 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLay
 				}
 				addDefaultLayers();
 				if (m_viewItem != NULL) {
-					QHash<QString, SvgFileSplitter *> svgHash;
+					QHash<QString, QString> svgHash;
 					QString svg = "";
 					foreach (ViewLayer * vl, m_viewLayers.values()) {
 						svg += m_viewItem->retrieveSvg(vl->viewLayerID(), svgHash, false, GraphicsUtils::StandardFritzingDPI);
@@ -190,7 +189,6 @@ ItemBase * PartsEditorView::addItemAux(ModelPart * modelPart, ViewLayer::ViewLay
 						svg = TextUtils::makeSVGHeader(FSvgRenderer::printerScale(), GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
 						paletteItem->setItemSVG(svg);
 					}
-					foreach (SvgFileSplitter * splitter, svgHash.values()) delete splitter;
 				}
 
 				QString error;

@@ -64,6 +64,7 @@ public:
 	QVector<QVariant> simpleParsePath(const QString & data);
 	QPainterPath painterPath(qreal dpi, const QString & elementID);			// note: only partially implemented
 	void shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms);
+	bool load(const QString * filename);
 
 public:
 	static bool getSvgSizeAttributes(const QString & svg, QString & width, QString & height, QString & viewBox);

@@ -106,7 +106,6 @@ $Date$
 #include "../../processeventblocker.h"
 #include "../../svg/groundplanegenerator.h"
 #include "../../fsvgrenderer.h"
-#include "../../svg/svgfilesplitter.h"
 
 #include "tile.h"
 
@@ -1422,7 +1421,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 {
 	if (board == NULL) return true;
 
-	QHash<QString, SvgFileSplitter *> svgHash;
+	QHash<QString, QString> svgHash;
 	QSizeF boardSize = board->size();
 	ResizableBoard * resizableBoard = qobject_cast<ResizableBoard *>(board->layerKinChief());
 	if (resizableBoard != NULL) {
@@ -1436,7 +1435,7 @@ bool CMRouter::initBoard(ItemBase * board, Plane * thePlane, QList<Tile *> & alr
 	svg += board->retrieveSvg(ViewLayer::Silkscreen1, svgHash, true, FSvgRenderer::printerScale());
 	svg += board->retrieveSvg(ViewLayer::Silkscreen0, svgHash, true, FSvgRenderer::printerScale());
 	svg += "</svg>";
-	foreach (SvgFileSplitter * splitter, svgHash.values()) delete splitter;
+
 	GroundPlaneGenerator gpg;
 	QList<QRect> rects;
 	gpg.getBoardRects(svg, board, FSvgRenderer::printerScale(), keepout, rects);

@@ -26,7 +26,6 @@ $Date$
 
 #include "kicadmodule2svg.h"
 #include "../utils/textutils.h"
-#include "svgfilesplitter.h"
 #include "../debugdialog.h"
 #include "../viewlayer.h"
 #include "../fsvgrenderer.h"

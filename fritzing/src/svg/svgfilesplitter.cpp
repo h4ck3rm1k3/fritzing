@@ -1198,3 +1198,15 @@ bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attribu
 	element.setAttribute(attributeName, QString::number(n));
 	return true;
 }
+
+bool SvgFileSplitter::load(const QString * filename)
+{
+	QFile file(*filename);
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	return m_domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn);
+}
+

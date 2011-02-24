@@ -456,7 +456,7 @@ void ResizableBoard::setInitialSize() {
 	}
 }
 
-QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi)
+QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi)
 {
 	qreal w = m_modelPart->prop("width").toDouble();
 	if (w != 0) {

@@ -91,7 +91,7 @@ void Ruler::resizeMM(qreal magnitude, qreal unitsFlag, const LayerHash & viewLay
 
 }
 
-QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString Ruler::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
 	qreal w = TextUtils::convertToInches(m_modelPart->prop("width").toString());
 	if (w != 0) {

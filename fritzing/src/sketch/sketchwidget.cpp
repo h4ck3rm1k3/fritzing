@@ -4127,6 +4127,25 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 			}
 			return;
 
+		case ModelPart::Logo:
+			{
+			LogoItem * logo = dynamic_cast<LogoItem *>(itemBase);
+			logo->saveParams();
+			QPointF p;
+			QSizeF sz;
+			logo->getParams(p, sz);
+			new ResizeBoardCommand(this, logo->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+			QString logoProp = logo->modelPart()->prop("logo").toString();
+			QString shapeProp = logo->modelPart()->prop("shape").toString();
+			if (!logoProp.isEmpty()) {
+				new SetPropCommand(this, logo->id(), "logo", logoProp, logoProp, true, parentCommand);
+			}
+			if (!shapeProp.isEmpty()) {
+				new SetPropCommand(this, logo->id(), "shape", shapeProp, shapeProp, true, parentCommand);
+			}
+			}
+			return;
+
 		case ModelPart::Jumper:
 			{
 			JumperItem * jumper = dynamic_cast<JumperItem *>(itemBase);
@@ -5582,7 +5601,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 
 	QString outputSVG = TextUtils::makeSVGHeader(printerScale, dpi, width, height);
 
-	QHash<QString, SvgFileSplitter *> svgHash;
+	QHash<QString, QString> svgHash;
 
 	// put them in z order
 	qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
@@ -5672,11 +5691,6 @@ QString SketchWidget::renderToSVG(qreal printerScale, const LayerList & partLaye
 	}
 
 	outputSVG += "</svg>";
-
-
-	foreach (SvgFileSplitter * splitter, svgHash.values()) {
-		delete splitter;
-	}
 
 	return outputSVG;
 

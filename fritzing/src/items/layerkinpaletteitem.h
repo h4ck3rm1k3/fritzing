@@ -53,7 +53,7 @@ public:
 	bool alreadySticking(ItemBase * itemBase);
 	bool stickyEnabled();
 	void resetID();
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

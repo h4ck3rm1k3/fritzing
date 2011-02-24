@@ -389,7 +389,7 @@ LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(PaletteItemBase * c
 	return lk;
 }
 
-QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 	QString path = filename();
@@ -401,32 +401,31 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 	
 	//DebugDialog::debug(QString("path: %1").arg(path));
 
-	SvgFileSplitter * splitter = svgHash.value(path + xmlName, NULL);
-	if (splitter == NULL) {
-		splitter = new SvgFileSplitter();
+	QString svg = svgHash.value(path + xmlName, "");
+	if (!svg.isEmpty()) return svg;
 
-		bool result;
-		if (flipDoc.isNull()) {
-			result = splitter->split(path, xmlName);
-		}
-		else {
-			QString f = flipDoc.toString(); 
-			result = splitter->splitString(f, xmlName);
-		}
+	SvgFileSplitter splitter;
 
-		if (!result) {
-			delete splitter;
-			return "";
-		}
-		result = splitter->normalize(dpi, xmlName, blackOnly);
-		if (!result) {
-			delete splitter;
-			return "";
-		}
-		svgHash.insert(path + xmlName, splitter);
+	bool result;
+	if (flipDoc.isNull()) {
+		result = splitter.split(path, xmlName);
+	}
+	else {
+		QString f = flipDoc.toString(); 
+		result = splitter.splitString(f, xmlName);
 	}
 
-	return splitter->elementString(xmlName);
+	if (!result) {
+		return "";
+	}
+		
+	result = splitter.normalize(dpi, xmlName, blackOnly);
+	if (!result) {
+		return "";
+	}
+	svg = splitter.elementString(xmlName);
+	svgHash.insert(path + xmlName, svg);
+	return svg;
 }
 
 bool PaletteItemBase::canEditPart() {

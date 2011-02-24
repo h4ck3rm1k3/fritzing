@@ -247,7 +247,7 @@ QVariant SymbolPaletteItem::itemChange(GraphicsItemChange change, const QVariant
     return PaletteItem::itemChange(change, value);
 }
 
-QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
 	QString svg = PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	if (m_voltageReference) {

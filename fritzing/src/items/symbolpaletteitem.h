@@ -47,7 +47,7 @@ public:
 	QString getProperty(const QString & key);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();
-	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi);
 	PluralType isPlural();
 
 public:

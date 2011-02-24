@@ -28,7 +28,6 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../fsvgrenderer.h"
 #include "../sketch/infographicsview.h"
-#include "../svg/svgfilesplitter.h"
 #include "../commands.h"
 #include "../utils/textutils.h"
 #include "../layerattributes.h"
@@ -166,7 +165,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
 }
 
-QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString MysteryPart::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
 	QString svg = PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	switch (viewLayerID) {

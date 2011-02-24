@@ -28,7 +28,6 @@ $Date$
 
 #include "pcbsketchwidget.h"
 #include "../debugdialog.h"
-#include "../svg/svgfilesplitter.h"
 #include "../items/tracewire.h"
 #include "../items/virtualwire.h"
 #include "../items/resizableboard.h"

@@ -302,7 +302,7 @@ ItemBase::PluralType Hole::isPlural() {
 	return Plural;
 }
 
-QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 
 {
 	if (m_viewIdentifier != ViewIdentifierClass::PCBView || 
 		(viewLayerID != ViewLayer::Copper0 && viewLayerID != ViewLayer::Copper1)) 
