@@ -158,6 +158,11 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 		m_sketchModel = new SketchModel(true);
 	} else {
 		ModelPart * mp = m_paletteModel->loadPart(m_fileName, false, false);
+	    // this seems hacky but maybe it's ok
+	    QTimer::singleShot(60, this, SLOT(close()));
+		return;
+
+
 		QHash<QString,QString> properties = mp->modelPartShared()->properties();
 		foreach (QString key, properties.keys()) {
 			QVariant prop = modelPart->prop(key);

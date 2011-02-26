@@ -205,7 +205,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	root.setAttribute("width", QString("%1in").arg(sWidth));
 	root.setAttribute("height", QString("%1in").arg(sHeight));
 
-	root.setAttribute("viewBox", QString("%1 %2 %3 %4").arg(0).arg(0).arg(vbWidth).arg(vbHeight) );
+	root.setAttribute("viewBox", QString("%1 %2 %3 %4").arg(0).arg(0).arg(sWidth * dpi).arg(sHeight * dpi) );
 
 	QDomElement mainElement = root;
 	if (!elementID.isEmpty()) {
@@ -1202,6 +1202,15 @@ bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attribu
 	return true;
 }
 
+bool SvgFileSplitter::load(const QString string)
+{
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	return m_domDocument.setContent(string, true, &errorStr, &errorLine, &errorColumn);
+}
+
 bool SvgFileSplitter::load(const QString * filename)
 {
 	QFile file(*filename);
@@ -1219,7 +1228,7 @@ bool SvgFileSplitter::load(QFile * file)
 }
 
 QString SvgFileSplitter::toString() {
-	return m_domDocument.toString();
+	return TextUtils::removeXMLEntities(m_domDocument.toString());
 }
 
 void SvgFileSplitter::gWrap(const QHash<QString, QString> & attributes)

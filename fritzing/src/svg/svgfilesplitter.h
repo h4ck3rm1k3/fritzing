@@ -67,6 +67,7 @@ public:
 	void shiftChild(QDomElement & element, qreal x, qreal y, bool shiftTransforms);
 	bool load(const QString * filename);
 	bool load(QFile *);
+	bool load(const QString string);
 	QString toString();
 	void gWrap(const QHash<QString, QString> & attributes);
 

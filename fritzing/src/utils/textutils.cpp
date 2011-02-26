@@ -257,7 +257,18 @@ bool TextUtils::isIllustratorFile(const QString &fileContent) {
 
 
 QString TextUtils::removeXMLEntities(QString svgContent) {
-	return svgContent.remove(HexExpr);
+	return removeXMLNS(svgContent.remove(HexExpr));
+}
+
+QString TextUtils::removeXMLNS(QString svgContent) {
+	// TODO: this is a bug in Qt, it would be nice to fix it there
+	// but as a stopgap, it would be nice if this function removed all repetitious xmlns attributes, not just the svg one
+	QString svgNS = "xmlns=\"http://www.w3.org/2000/svg\"";
+	QStringList strings = svgContent.split(svgNS);
+	if (strings.count() < 3) return svgContent;
+
+	QString first = strings.takeFirst();
+	return first + svgNS + strings.join("");
 }
 
 bool TextUtils::cleanSodipodi(QString &content)

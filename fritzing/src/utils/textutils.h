@@ -69,6 +69,7 @@ public:
 	static QMatrix transformStringToMatrix(const QString & transform);
     static QList<qreal> getTransformFloats(QDomElement & element);
 	static QList<qreal> getTransformFloats(const QString & transform);
+	static QString removeXMLNS(QString svgContent);
 
 public:
 	static const QRegExp FindWhitespace;
