@@ -48,9 +48,6 @@ $Date$
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 
-bool PartsBinPaletteWidget::m_openUserBinMenuCreated = false;
-QHash<QString,QString> PartsBinPaletteWidget::m_userBinsInfo = QHash<QString,QString>();
-
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
 {
@@ -359,13 +356,14 @@ void PartsBinPaletteWidget::createOpenBinMenu() {
 	m_openBinMenu->addAction(m_openAllBinAction);
 	m_openBinMenu->addSeparator();
 
-	QHash<QString /*binFile*/, QString /*binName*/> userBins = getUserBinsInfo();
-	foreach(QString binFile, userBins.keys()) {
-		QAction *action = new QAction(userBins[binFile],this);
-		action->setData(binFile);
-		connect(action, SIGNAL(triggered()),this, SLOT(openUserBin()));
-		m_openBinMenu->addAction(action);
-	}
+
+	QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
+	collectBins(userBinsDir);
+
+	QFileInfo fileInfo(BinManager::AllPartsBinLocation);
+	QDir dir = fileInfo.absoluteDir();
+	dir.cd("more");
+	collectBins(dir);
 
 	m_openBinMenu->addAction(m_openNonCoreBinAction);
 	m_openBinMenu->addAction(m_openContribBinAction);
@@ -374,23 +372,30 @@ void PartsBinPaletteWidget::createOpenBinMenu() {
 
 }
 
-QHash<QString,QString> PartsBinPaletteWidget::getUserBinsInfo() {
-	if(!m_openUserBinMenuCreated) {
-		 QDir userBinsDir(FolderUtils::getUserDataStorePath("bins"));
-		 QStringList filters;
-		 filters << "*"+FritzingBinExtension;
-		 QFileInfoList files = userBinsDir.entryInfoList(filters);
-		 foreach(QFileInfo info, files) {
-			 QString binName = getBinName(info);
-			 m_userBinsInfo[info.filePath()] = binName;
-		 }
-		 m_openUserBinMenuCreated = true;
+void PartsBinPaletteWidget::collectBins(QDir & dir) {
+	QHash<QString,QString> binsInfo;
+
+	QStringList filters;
+	filters << "*"+FritzingBinExtension;
+	QFileInfoList files = dir.entryInfoList(filters);
+	foreach(QFileInfo info, files) {
+		QString binName = getBinName(info);
+		binsInfo[info.filePath()] = binName;
 	}
-	return m_userBinsInfo;
+
+	foreach(QString binFile, binsInfo.keys()) {
+		QAction *action = new QAction(binsInfo[binFile],this);
+		action->setData(binFile);
+		connect(action, SIGNAL(triggered()),this, SLOT(openUserBin()));
+		m_openBinMenu->addAction(action);
+	}
+
 }
 
 QString PartsBinPaletteWidget::getBinName(const QFileInfo &info) {
 	QString binTitle = "";
+
+	// TODO: use xmlStreamReader instead of reading the whole file
 
 	QFile binFile(info.filePath());
 	if (binFile.open(QFile::ReadOnly | QFile::Text)) {

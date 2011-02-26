@@ -170,7 +170,7 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool loadBundledAux(QDir &unzipDir, QList<ModelPart*> mps);
 
 		void setFilename(const QString &filename);
-		QHash<QString,QString> getUserBinsInfo();
+		void collectBins(QDir & dir);
 		QString getBinName(const QFileInfo &info);
 
 	protected:
@@ -232,10 +232,6 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		QStringList m_alienParts;
 		bool m_allowsChanges;
 		bool m_saveQuietly;
-
-	protected:
-		static bool m_openUserBinMenuCreated;
-		static QHash<QString /*binFile*/, QString /*binName*/> m_userBinsInfo;
 
 	public:
 		static QString Title;

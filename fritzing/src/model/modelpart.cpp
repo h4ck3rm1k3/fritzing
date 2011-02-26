@@ -391,7 +391,7 @@ void ModelPart::setModelIndexFromMultiplied(long multiplied) {
 		// but sometimes multiple parts reuse the same model part, so this makes sure we don't overwrite
 		// when temporarily reusing a modelpart.  Eventually always create a new model part and get rid of modelIndex
 		if (m_index != multiplied / ModelPart::indexMultiplier) {
-			DebugDialog::debug("temporary model part?");
+			//DebugDialog::debug("temporary model part?");
 		}
 
 		return;
