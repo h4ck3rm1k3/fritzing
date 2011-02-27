@@ -122,6 +122,9 @@ void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
 	else if (bin->fileName().compare(NonCorePartsBinLocation) == 0) {
 		bin->setAllowsChanges(false);
 	}
+	else if (bin->fileName().contains(FolderUtils::getApplicationSubFolderPath("bins"))) {
+		bin->setAllowsChanges(false);
+	}
 }
 
 void BinManager::connectTabWidget(StackTabWidget *tw) {
