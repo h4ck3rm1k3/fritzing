@@ -80,8 +80,8 @@ protected:
 	void writeCommonBinsHeaderAux(bool doIt, const QString &filename, const QString &binName);
 	void writeCommonBinsFooter();
 	void writeCommonBinsFooterAux(bool doIt, const QString &filename);
-	void writeInstanceInCommonBin(const QString &moduleID, const QString &path, bool doIt, const QString &filename);
-	void writeToCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool doIt, const QString &filename);
+	void writeCommonBinInstance(const QString &moduleID, const QString &path, bool doIt, const QString &filename);
+	void writeCommonBinAux(const QString &textToWrite, QIODevice::OpenMode openMode, bool doIt, const QString &filename);
 
 protected:
 	static bool CreateAllPartsBinFile;

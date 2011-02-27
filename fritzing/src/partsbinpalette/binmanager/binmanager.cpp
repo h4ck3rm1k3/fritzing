@@ -119,6 +119,9 @@ void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
 	else if (bin->fileName().compare(ContribPartsBinLocation) == 0) {
 		bin->setAllowsChanges(false);
 	}
+	else if (bin->fileName().compare(NonCorePartsBinLocation) == 0) {
+		bin->setAllowsChanges(false);
+	}
 }
 
 void BinManager::connectTabWidget(StackTabWidget *tw) {
@@ -578,8 +581,8 @@ void BinManager::initNames() {
     BinManager::SearchBinLocation = FolderUtils::getUserDataStorePath("bins")+"/search.fzb";
     BinManager::SearchBinTemplateLocation =":/resources/bins/search.fzb";
     BinManager::AllPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/allParts.fzb";
-	BinManager::NonCorePartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/nonCoreParts.fzb";
-	BinManager::ContribPartsBinLocation = FolderUtils::getApplicationSubFolderPath("bins")+"/contribParts.fzb";
+	BinManager::NonCorePartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/nonCoreParts.fzb";
+	BinManager::ContribPartsBinLocation = FolderUtils::getUserDataStorePath("bins")+"/contribParts.fzb";
     BinManager::CorePartsBinLocation = ":/resources/bins/bin.fzb";
 }
 

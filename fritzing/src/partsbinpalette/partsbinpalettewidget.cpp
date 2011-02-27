@@ -833,10 +833,10 @@ const QString &PartsBinPaletteWidget::fileName() {
 
 void PartsBinPaletteWidget::updateMenus() {
 	ModelPart *mp = selected();
-	bool enabled = mp != NULL;
+	bool enabled = (mp != NULL);
 	m_editPartAction->setEnabled(enabled);
 	m_exportPartAction->setEnabled(enabled && !mp->isCore());
-	m_removePartAction->setEnabled(enabled && !mp->isCore() && allowsChanges());
+	m_removePartAction->setEnabled(enabled && allowsChanges());
 	m_importPartAction->setEnabled(true);
 }
 
