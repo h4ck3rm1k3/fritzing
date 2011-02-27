@@ -3,7 +3,12 @@
     <title>Microphone</title>
     <label>MIC</label>
     <date>2009-11-12</date>
-    <tags>microphone, input, audio, sensor</tags>
+    <tags>
+     <tag>microphone</tag>
+    <tag>input</tag>
+     <tag>audio</tag>
+      <tag>sensor</tag>
+      </tags>
     <properties>
         <property name="family">Microphone</property>
     </properties>
