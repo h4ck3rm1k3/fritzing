@@ -688,6 +688,9 @@ void PaletteModel::search(ModelPart * modelPart, const QStringList & searchStrin
     if (!candidate && modelPart->description().contains(searchStrings[0], Qt::CaseInsensitive)) {
         candidate = modelPart;
 	}
+    if (!candidate && modelPart->author().contains(searchStrings[0], Qt::CaseInsensitive)) {
+        candidate = modelPart;
+	}
     if (!candidate) {
 		foreach (QString string, modelPart->tags()) {
 			if (string.contains(searchStrings[0], Qt::CaseInsensitive)) {
