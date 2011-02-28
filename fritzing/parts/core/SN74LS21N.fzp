@@ -3,20 +3,21 @@
     <version>4</version>
     <author>Fritzing Part-o-matic</author>
     <title>SN74LS21N</title>
-    <label>IC</label>
-    <date>2009-10-23</date>
+    <label>U</label>
+    <date>2011-02-22</date>
     <tags>
         <tag>DIP</tag>
-        <tag>user part</tag>
+        <tag>TTL</tag>
+        <tag>Logic IC</tag>
+        <tag>74xx</tag>
+        <tag>Logic Gates</tag>
     </tags>
     <properties>
-        <property name="package">DIP (Dual Inline)</property>
-        <property name="family">Logic Gates</property>
-        <property name="chip label">7421</property>
-        <property name="pins">14</property>
-        <property name="spacing">300mil</property>
+        <property name="family">7400 series IC</property>
+        <property name="type">SN74LS21N</property>
+    <property name="package">DIP14 [THT]</property>
     </properties>
-    <description>A DIP stand-in part for whatever IC you want.  With 8 pins on a 300 mil dual inline package (DIP) footprint.</description>
+    <description>Dual 4-input positive-AND gates</description>
     <views>
         <iconView>
             <layers image="icon/SN74LS21N_icon.svg">

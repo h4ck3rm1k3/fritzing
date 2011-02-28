@@ -340,13 +340,6 @@
           </iconView>
         </views>
       </instance>
-      <instance moduleIdRef="6c827eae3a7dcd0ffcc417254b4159b0" modelIndex="36" path="parts/core/SN74LS14N.fzp">
-        <views>
-          <iconView layer="icon">
-            <geometry z="-1" x="-1" y="-1"/>
-          </iconView>
-        </views>
-      </instance>
       <instance moduleIdRef="RevEd_24LC01">
         <views>
           <iconView layer="icon">

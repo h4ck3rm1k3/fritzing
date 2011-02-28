@@ -5,13 +5,17 @@
     <label>U</label>
     <date>2009-05-03</date>
     <tags>
-        <tag>IC</tag>
+        <tag>DIP</tag>
+        <tag>TTL</tag>
+        <tag>Logic IC</tag>
+        <tag>74xx</tag>
         <tag>Shift Register</tag>
     </tags>
     <properties>
-        <property name="family">Logic IC</property>
-        <property name="logic family">74xx</property>
-    <property name="package">DIP16 [THT]</property></properties>
+        <property name="family">7400 series IC</property>
+        <property name="type">74HC595</property>
+        <property name="package">DIP16 [THT]</property>
+    </properties>
     <description>8-bit parallel-load shift registers</description>
     <views>
         <iconView>
