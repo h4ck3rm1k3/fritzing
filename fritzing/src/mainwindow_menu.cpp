@@ -184,7 +184,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
 	if (m_pcbGraphicsView->boardLayers() == 1) {
 		QString fileName = FolderUtils::getSaveFileName(this,
-			tr("Export Etchable for DIY..."),
+			tr("Export PDF or SVG for etchable PCB production..."),
 			path+"/"+constructFileName("etch", suffix),
 			extFmt,
 			&fileExt
@@ -992,27 +992,27 @@ void MainWindow::createFileMenuActions() {
 	m_shareOnlineAct->setStatusTip(tr("Post a project to the Fritzing website"));
 	connect(m_shareOnlineAct, SIGNAL(triggered()), this, SLOT(shareOnline()));
 
-	m_exportJpgAct = new QAction(tr("to &JPG..."), this);
+	m_exportJpgAct = new QAction(tr("as JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
 	m_exportJpgAct->setStatusTip(tr("Export the visible area of the current sketch as a JPG image"));
 	connect(m_exportJpgAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPngAct = new QAction(tr("to P&NG..."), this);
+	m_exportPngAct = new QAction(tr("as PNG..."), this);
 	m_exportPngAct->setData(pngActionType);
 	m_exportPngAct->setStatusTip(tr("Export the visible area of the current sketch as a PNG image"));
 	connect(m_exportPngAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPsAct = new QAction(tr("to Post&Script..."), this);
+	m_exportPsAct = new QAction(tr("as PostScript..."), this);
 	m_exportPsAct->setData(psActionType);
 	m_exportPsAct->setStatusTip(tr("Export the visible area of the current sketch as a PostScript image"));
 	connect(m_exportPsAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPdfAct = new QAction(tr("to &PDF..."), this);
+	m_exportPdfAct = new QAction(tr("as PDF..."), this);
 	m_exportPdfAct->setData(pdfActionType);
 	m_exportPdfAct->setStatusTip(tr("Export the visible area of the current sketch as a PDF image"));
 	connect(m_exportPdfAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportSvgAct = new QAction(tr("to &SVG..."), this);
+	m_exportSvgAct = new QAction(tr("as SVG..."), this);
 	m_exportSvgAct->setData(svgActionType);
 	m_exportSvgAct->setStatusTip(tr("Export the current sketch as an SVG image"));
 	connect(m_exportSvgAct, SIGNAL(triggered()), this, SLOT(doExport()));
@@ -1027,21 +1027,21 @@ void MainWindow::createFileMenuActions() {
     m_exportNetlistAct->setStatusTip(tr("Save a netlist in XML format"));
     connect(m_exportNetlistAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportEagleAct = new QAction(tr("to &Eagle..."), this);
+	m_exportEagleAct = new QAction(tr("as Eagle..."), this);
 	m_exportEagleAct->setData(eagleActionType);
 	m_exportEagleAct->setStatusTip(tr("Export the current sketch to Eagle CAD"));
 	connect(m_exportEagleAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportGerberAct = new QAction(tr("to &Gerber..."), this);
+	m_exportGerberAct = new QAction(tr("as Gerber (RS-274X Format)..."), this);
 	m_exportGerberAct->setData(gerberActionType);
 	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber"));
 	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportEtchableAct = new QAction(tr("Etchable PDF..."), this);
+	m_exportEtchableAct = new QAction(tr("as Etchable PDF..."), this);
 	m_exportEtchableAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
 	connect(m_exportEtchableAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
-	m_exportEtchableSvgAct = new QAction(tr("Etchable SVG..."), this);
+	m_exportEtchableSvgAct = new QAction(tr("as Etchable SVG..."), this);
 	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY production"));
 	connect(m_exportEtchableSvgAct, SIGNAL(triggered()), this, SLOT(exportEtchableSvg()));
 
