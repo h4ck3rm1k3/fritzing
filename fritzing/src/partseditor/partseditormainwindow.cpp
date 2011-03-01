@@ -159,9 +159,13 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 	} else {
 		ModelPart * mp = m_paletteModel->loadPart(m_fileName, false, false);
 	    // this seems hacky but maybe it's ok
-	    QTimer::singleShot(60, this, SLOT(close()));
-		return;
-
+		if (mp == NULL || mp->modelPartShared() == NULL) {
+			QMessageBox::critical(this, tr("Parts Editor"),
+	                           tr("Error! Cannot load part.\n"),
+	                           QMessageBox::Close);
+			QTimer::singleShot(60, this, SLOT(close()));
+			return;
+		}
 
 		QHash<QString,QString> properties = mp->modelPartShared()->properties();
 		foreach (QString key, properties.keys()) {
@@ -517,7 +521,6 @@ bool PartsEditorMainWindow::saveAs() {
 
 		m_moduleId = ___emptyString___;
 		QString title = m_title->text();
-
 		m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
 
 		// TODO Mariano: This folder should be defined in the preferences... some day
@@ -527,8 +530,8 @@ bool PartsEditorMainWindow::saveAs() {
 		bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
 		while(m_fileName.isEmpty()
 			  || QFileInfo(userPartsFolderPath+m_fileName).exists()
-			  || (FolderUtils::isEmptyFileName(m_fileName,untitledFileName()) && firstTime)
-			) {
+			  || (FolderUtils::isEmptyFileName(m_fileName,untitledFileName()) && firstTime) ) 
+		{
 			bool ok;
 			m_fileName = QInputDialog::getText(
 				this,
@@ -545,6 +548,8 @@ bool PartsEditorMainWindow::saveAs() {
 				return false;
 			}
 		}
+
+		m_fileName.replace(QRegExp("[^A-Za-z0-9\\.]"), "_");
 
 		Qt::CaseSensitivity cs = Qt::CaseSensitive;
 	#ifdef Q_WS_WIN
@@ -565,8 +570,7 @@ bool PartsEditorMainWindow::saveAs() {
 		}
 
 		makeNonCore();
-		saveAsAux(filename);
-
+		if (!saveAsAux(filename)) return false;
 
 		if(wannaSaveAfterWarning(true)) {
 			m_savedAsNewPart = true;

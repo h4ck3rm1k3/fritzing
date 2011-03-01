@@ -1034,15 +1034,15 @@ void MainWindow::createFileMenuActions() {
 
 	m_exportGerberAct = new QAction(tr("as Gerber (RS-274X Format)..."), this);
 	m_exportGerberAct->setData(gerberActionType);
-	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber"));
+	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber for professional PCB production"));
 	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportEtchableAct = new QAction(tr("as Etchable PDF..."), this);
-	m_exportEtchableAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
+	m_exportEtchableAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production"));
 	connect(m_exportEtchableAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
 	m_exportEtchableSvgAct = new QAction(tr("as Etchable SVG..."), this);
-	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY production"));
+	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production"));
 	connect(m_exportEtchableSvgAct, SIGNAL(triggered()), this, SLOT(exportEtchableSvg()));
 
 	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
