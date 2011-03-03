@@ -229,7 +229,7 @@ Part *Part::from(ModelPart *modelPart) {
 
 	QHash<QString,QString> props = modelPart->properties();
 	if (!props.contains("family")) {
-		throw "Part from props missing family";
+		throw QString("Part props missing family: %1").arg(modelPart->path());
 	}
 
 	QString family = props["family"];
