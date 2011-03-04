@@ -75,6 +75,23 @@ $Date$
 
 static int kBottomOfAlpha = 204;
 
+#ifdef LINUX_32
+#define PLATFORM_NAME "linux-32bit"
+#endif
+#ifdef LINUX_64
+#define PLATFORM_NAME "linux-64bit"
+#endif
+#ifdef Q_WS_WIN
+#define PLATFORM_NAME "windows"
+#endif
+#ifdef Q_WS_MAC
+#ifdef QT_MAC_USE_COCOA
+#define PLATFORM_NAME "mac-os-x-105"
+#else
+#define PLATFORM_NAME "mac-os-x-104"
+#endif
+#endif
+
 #ifdef Q_WS_WIN
 #ifndef QT_NO_DEBUG
 #define WIN_DEBUG
@@ -831,7 +848,9 @@ void FApplication::checkForUpdates(bool atUserRequest)
 		}
 	}
 
-	versionChecker->setUrl(QString("http://fritzing.org/download/feed/atom/%1/").arg(PLATFORM_NAME));
+        QString atom = QString("http://fritzing.org/download/feed/atom/%1/").arg(PLATFORM_NAME);
+        DebugDialog::debug(atom);
+        versionChecker->setUrl(atom);
 	m_updateDialog->setAtUserRequest(atUserRequest);
 	m_updateDialog->setVersionChecker(versionChecker);
 
