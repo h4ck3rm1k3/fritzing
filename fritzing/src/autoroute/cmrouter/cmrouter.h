@@ -72,6 +72,11 @@ struct PathUnit {
 		Down
 	};
 
+	enum LayerDirection {
+		WithinLayer = 0,
+		CrossLayer,
+	};
+
 	class ConnectorItem * connectorItem;
 	class Wire * wire;
 	Tile * tile;
@@ -82,6 +87,7 @@ struct PathUnit {
 	TileRect minCostRect;
 	PriorityQueue<PathUnit *> * priorityQueue;
 	Plane * plane;
+	LayerDirection layerDirection;
 
 	PathUnit(PriorityQueue<PathUnit *> * pq) {
 		priorityQueue = pq;
@@ -92,6 +98,7 @@ struct PathUnit {
 		edge = NULL;
 		parent = NULL;
 		plane = NULL;
+		layerDirection = WithinLayer;
 	}
 };
 
@@ -246,7 +253,8 @@ protected:
 	void clearPlane(Plane * thePlane, bool rotate90);
 	bool allowEquipotentialOverlaps(QGraphicsItem * item, QList<Tile *> & alreadyTiled);
 	PathUnit * findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace);
-	void findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, int tWidthNeeded, int tHeightNeeded, 
+	bool findNearestSpaceOne(PathUnit * pathUnit, int tWidthNeeded, int tHeightNeeded, PathUnit * & nearest, int & bestCost, TileRect & nearestSpace);
+	bool findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, int tWidthNeeded, int tHeightNeeded, 
 							PathUnit * & nearest, int & bestCost, TileRect & nearestSpace, bool horizontal);
 	QPointF calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded);
 	bool addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit * nearest, PathUnit * parent, int searchx, int searchy, Edge * edge, qreal keepout);
@@ -267,6 +275,8 @@ protected:
 	void drawTileRect(TileRect & tileRect, QColor & color);
 	void deletePathUnits();
 	void computeMD5(Ordering * ordering);
+	void crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue);
+	void crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
 
 protected:
 	QRectF m_maxRect;

@@ -613,6 +613,12 @@ void CMRouter::start()
 	bool allDone = false;
 	QList< Ordering * > orderings;
 	QByteArray bestResult;
+
+	// TODO: collect edges uses ratsnests as a shortcut for a net
+	// but actually there are many many ways a given net can be routed
+	// a true rip-up-and-reroute strategy would include other choices for routing each net
+	// is there some way of generating a good set of candidates to route?
+
 	collectEdges(edges);
 	qSort(edges.begin(), edges.end(), edgeLessThan);	// sort the edges by distance and layer
 
@@ -1074,10 +1080,9 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 			if (m_offBoardConnectors.contains(connectorItem)) continue;
 
-			QRectF rect = connectorItem->boundingRect();
-			QPointF p = connectorItem->attachedTo()->mapToScene(connectorItem->pos());
-			rect.moveTo(p);
-			if (!m_maxRect.contains(rect)) {
+
+			QPolygonF poly = connectorItem->mapToScene(connectorItem->boundingRect());
+			if (!m_maxRect.contains(poly.boundingRect())) {
 				m_offBoardConnectors.insert(connectorItem);
 				continue;
 			}
@@ -1119,10 +1124,8 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 			if (nonConnectorItem->attachedTo()->hidden()) continue;
 			if (!m_sketchWidget->sameElectricalLayer2(connectorItem->attachedToViewLayerID(), viewLayerID)) continue;
 
-			QRectF rect = nonConnectorItem->boundingRect();
-			QPointF p = nonConnectorItem->attachedTo()->mapToScene(connectorItem->pos());
-			rect.moveTo(p);
-			if (!m_maxRect.contains(rect)) {
+			QPolygonF poly = nonConnectorItem->mapToScene(nonConnectorItem->boundingRect());
+			if (!m_maxRect.contains(poly.boundingRect())) {
 				continue;
 			}
 
@@ -2864,37 +2867,46 @@ PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue,
 			continue;
 		}
 
-		TileRect tileRect;
-		TiToRect(pathUnit->tile, &tileRect);
-		//drawTileRect(tileRect, QColor(255,255,0,128));
-		if (tileRect.xmaxi - tileRect.xmini >= tWidthNeeded) {
-			TileRect searchRect = tileRect;
-			searchRect.xmini = qMax(m_tileMaxRect.xmini, tileRect.xmini - tWidthNeeded + TileStandardWireWidth);
-			searchRect.xmaxi = qMin(m_tileMaxRect.xmaxi, tileRect.xmaxi + tWidthNeeded - TileStandardWireWidth);
-			if (searchRect.xmaxi - searchRect.xmini >= tWidthNeeded) {
-				findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, true);
-			}
-		}
-		if (tileRect.ymaxi - tileRect.ymini >= tHeightNeeded) {
-			TileRect searchRect = tileRect;
-			searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
-			searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
-			if (searchRect.ymaxi - searchRect.ymini >= tHeightNeeded) {
-				findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, false);
-			}
-		}
+		findNearestSpaceOne(pathUnit, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace);
 	}
 
 	return nearest;
 }
 
-void CMRouter::findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, int tWidthNeeded, int tHeightNeeded, 
+bool CMRouter::findNearestSpaceOne(PathUnit * pathUnit, int tWidthNeeded, int tHeightNeeded, PathUnit * & nearest, int & bestCost, TileRect & nearestSpace) 
+{
+	bool result = false;
+	TileRect tileRect;
+	TiToRect(pathUnit->tile, &tileRect);
+	//drawTileRect(tileRect, QColor(255,255,0,128));
+	if (tileRect.xmaxi - tileRect.xmini >= tWidthNeeded) {
+		TileRect searchRect = tileRect;
+		searchRect.xmini = qMax(m_tileMaxRect.xmini, tileRect.xmini - tWidthNeeded + TileStandardWireWidth);
+		searchRect.xmaxi = qMin(m_tileMaxRect.xmaxi, tileRect.xmaxi + tWidthNeeded - TileStandardWireWidth);
+		if (searchRect.xmaxi - searchRect.xmini >= tWidthNeeded) {
+			result = findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, true);
+		}
+	}
+	if (tileRect.ymaxi - tileRect.ymini >= tHeightNeeded) {
+		TileRect searchRect = tileRect;
+		searchRect.ymini = qMax(m_tileMaxRect.ymini, tileRect.ymini - tHeightNeeded + TileStandardWireWidth);
+		searchRect.ymaxi = qMin(m_tileMaxRect.ymaxi, tileRect.ymaxi + tHeightNeeded - TileStandardWireWidth);
+		if (searchRect.ymaxi - searchRect.ymini >= tHeightNeeded) {
+			result = result || findNearestSpaceAux(pathUnit, searchRect, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace, false);
+		}
+	}
+
+	return result;
+}
+
+bool CMRouter::findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, int tWidthNeeded, int tHeightNeeded, 
 									PathUnit * & nearest, int & bestCost, TileRect & nearestSpace, bool horizontal)
 {
 	// look at adjacent space tiles to see if the via or jumperItem connector can fit
 	// this also checks that the space isn't beneath a part
 
-	//infoTileRect("search rect", searchRect);
+	infoTileRect("search rect", searchRect);
+	bool result = false;
 
 	QList<Tile *> spaces;
 	TiSrArea(NULL, m_unionPlane, &searchRect, findSpaces, &spaces);
@@ -2913,6 +2925,7 @@ void CMRouter::findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, i
 				nearestSpace = candidate;
 				//drawTileRect(nearestSpace, QColor(255, 128, 0, 128));
 				nearest = pathUnit;
+				result = true;
 			}
 		}
 	}
@@ -2937,11 +2950,13 @@ void CMRouter::findNearestSpaceAux(PathUnit * pathUnit, TileRect & searchRect, i
 				bestCost = sourceCost;
 				nearestSpace = spaceTileRect;
 				nearest = pathUnit;
+				result = true;
 			}
 		}
 	}
-}
 
+	return result;
+}
 
 void CMRouter::clipParts() 
 {
@@ -2992,8 +3007,8 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 							QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout)
 {
 	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
-        int tWidthNeeded = fasterRealToTile(sizeNeeded.width());
-        int tHeightNeeded = fasterRealToTile(sizeNeeded.height());
+    int tWidthNeeded = fasterRealToTile(sizeNeeded.width());
+    int tHeightNeeded = fasterRealToTile(sizeNeeded.height());
 
 	//hideTiles();
 
@@ -3200,7 +3215,13 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 	QList<Tile *> tiles;
 	//QElapsedTimer seedNextTimer;
 	//seedNextTimer.start();
+	if (pathUnit->layerDirection == PathUnit::CrossLayer) {
+		//crossLayerDest(pathUnit, sourceQueue, tilePathUnits);
+		//return false;
+	}
+
 	seedNext(pathUnit, tiles);
+
 	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
 		//infoTile("   eval", tile);
@@ -3281,9 +3302,69 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 		}
 	}
 
+
+	if (m_bothSidesNow) {
+		//crossLayerSource(pathUnit, sourceQueue);
+	}
+
 	return result;
 }
 
+void CMRouter::crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue) 
+{
+	Tile::TileType tileType = TiGetType(pathUnit->tile);
+	if (tileType != Tile::SPACE && tileType != Tile::SPACE2) return;
+
+	if (pathUnit->layerDirection != PathUnit::WithinLayer) return;
+	if (pathUnit->parent->layerDirection != PathUnit::WithinLayer) return;
+
+	PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
+	m_pathUnits.append(nextPathUnit);
+	int crossLayerCost = ((m_tileMaxRect.xmaxi - m_tileMaxRect.xmini) + (m_tileMaxRect.ymaxi - m_tileMaxRect.ymini)) / 2;
+	nextPathUnit->sourceCost = pathUnit->sourceCost + crossLayerCost;
+	nextPathUnit->destCost = pathUnit->destCost;
+	nextPathUnit->minCostRect = pathUnit->minCostRect;
+	nextPathUnit->parent = pathUnit;
+	nextPathUnit->edge = pathUnit->edge;
+	nextPathUnit->plane = pathUnit->plane;
+	nextPathUnit->tile = pathUnit->tile;
+	nextPathUnit->layerDirection = PathUnit::CrossLayer;
+	//tilePathUnits.insert(nextPathUnit->tile, nextPathUnit);
+	sourceQueue.enqueue(nextPathUnit->sourceCost + nextPathUnit->destCost, nextPathUnit);
+}
+
+void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits) 
+{
+	PathUnit * nearest = NULL;
+	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
+	int tWidthNeeded = fasterRealToTile(sizeNeeded.width());
+	int tHeightNeeded = fasterRealToTile(sizeNeeded.height());
+	int bestCost = std::numeric_limits<int>::max();
+	TileRect nearestSpace;
+	drawGridItem(pathUnit->tile);
+	ProcessEventBlocker::processEvents();
+	if (findNearestSpaceOne(pathUnit, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace)) {
+		PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
+		m_pathUnits.append(nextPathUnit);
+		nextPathUnit->sourceCost = pathUnit->sourceCost;
+		nextPathUnit->destCost = pathUnit->destCost;				// TODO: destCost probably isn't right
+		nextPathUnit->minCostRect = pathUnit->minCostRect;
+		nextPathUnit->parent = pathUnit;
+		nextPathUnit->edge = pathUnit->edge;
+		foreach (Plane * plane, m_planes) {
+			if (pathUnit->plane == plane) continue;
+
+			nextPathUnit->plane = plane;
+			break;
+		}
+		QList<Tile *> tiles;
+		TiSrArea(NULL, nextPathUnit->plane, &nearestSpace, findSpaces, &tiles);
+		nextPathUnit->tile = tiles.at(0);
+		nextPathUnit->layerDirection = PathUnit::WithinLayer;
+		tilePathUnits.insert(nextPathUnit->tile, nextPathUnit);
+		sourceQueue.enqueue(nextPathUnit->sourceCost + nextPathUnit->destCost, nextPathUnit);
+	}
+}
 
 TileRect CMRouter::calcMinCostRect(PathUnit * pathUnit, Tile * next)
 {
@@ -3425,8 +3506,12 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 		fullPath.append(dpu);
 	}
 
-	foreach (PathUnit * pathUnit, fullPath) {
-		infoTile("tracepath", pathUnit->tile);
+	if (m_bothSidesNow) {
+		foreach (PathUnit * pathUnit, fullPath) {
+			infoTile(QString("tracepath %1").arg((long) pathUnit->plane, 0,  16), pathUnit->tile);
+			if (pathUnit->layerDirection == PathUnit::CrossLayer) {
+			}
+		}
 	}
 
 	QList<Segment *> hSegments;
