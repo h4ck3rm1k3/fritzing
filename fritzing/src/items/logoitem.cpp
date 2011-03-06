@@ -313,6 +313,9 @@ void LogoItem::prepLoadImageAux(const QString & fileName, bool addName)
 
 void LogoItem::reloadImage(const QString & svg, const QSizeF & aspectRatio, const QString & fileName, bool addName) 
 {
+	if (m_renderer == NULL) {
+		m_renderer = new FSvgRenderer(this);
+	}
 	bool result = m_renderer->fastLoad(svg.toUtf8());
 	if (result) {
 		setSharedRendererEx(m_renderer);

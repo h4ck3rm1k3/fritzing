@@ -111,3 +111,10 @@ QPointF Via::holeDiameterRange() {
 	return p;
 }
 
+void Via::setAutoroutable(bool ar) {
+	m_viewGeometry.setAutoroutable(ar);
+}
+
+bool Via::getAutoroutable() {
+	return m_viewGeometry.getAutoroutable();
+}

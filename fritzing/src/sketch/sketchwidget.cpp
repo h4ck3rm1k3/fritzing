@@ -4129,20 +4129,20 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 
 		case ModelPart::Logo:
 			{
-			LogoItem * logo = dynamic_cast<LogoItem *>(itemBase);
-			logo->saveParams();
-			QPointF p;
-			QSizeF sz;
-			logo->getParams(p, sz);
-			new ResizeBoardCommand(this, logo->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
-			QString logoProp = logo->modelPart()->prop("logo").toString();
-			QString shapeProp = logo->modelPart()->prop("shape").toString();
-			if (!logoProp.isEmpty()) {
-				new SetPropCommand(this, logo->id(), "logo", logoProp, logoProp, true, parentCommand);
-			}
-			if (!shapeProp.isEmpty()) {
-				new SetPropCommand(this, logo->id(), "shape", shapeProp, shapeProp, true, parentCommand);
-			}
+				LogoItem * logo = dynamic_cast<LogoItem *>(itemBase);
+				logo->saveParams();
+				QPointF p;
+				QSizeF sz;
+				logo->getParams(p, sz);
+				new ResizeBoardCommand(this, logo->id(), sz.width(), sz.height(), sz.width(), sz.height(), parentCommand);
+				QString logoProp = logo->modelPart()->prop("logo").toString();
+				QString shapeProp = logo->modelPart()->prop("shape").toString();
+				if (!logoProp.isEmpty()) {
+					new SetPropCommand(this, logo->id(), "logo", logoProp, logoProp, true, parentCommand);
+				}
+				else if (!shapeProp.isEmpty()) {
+					new LoadLogoImageCommand(this, logo->id(), shapeProp, logo->modelPart()->prop("aspectratio").toSizeF(), logo->modelPart()->prop("lastfilename").toString(), "", false, parentCommand);
+				}
 			}
 			return;
 

@@ -821,10 +821,6 @@ y:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export Etchable PDF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -994,10 +990,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export Etchable for DIY...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sketch exported</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1124,15 +1116,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to &amp;JPG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a JPG image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>to P&amp;NG...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1140,23 +1124,11 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to Post&amp;Script...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a PostScript image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to &amp;PDF...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a PDF image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>to &amp;SVG...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1180,35 +1152,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to &amp;Eagle...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the current sketch to Eagle CAD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>to &amp;Gerber...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch to Gerber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Etchable PDF...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch to PDF for DIY production</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Etchable SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch to SVG for DIY production</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2311,6 +2255,62 @@ Please check all views for potential side-effects.</source>
         <source>Open Fritzing donation web page</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export for PCB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export PDF or SVG for etchable PCB production...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as JPG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PNG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PostScript...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Eagle...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Gerber (RS-274X Format)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to Gerber for professional PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to PDF for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to SVG for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2796,6 +2796,11 @@ Please, specify a new filename</source>
     </message>
     <message>
         <source>Fritzing Parts (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error! Cannot load part.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

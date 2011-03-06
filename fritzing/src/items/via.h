@@ -37,6 +37,9 @@ public:
 	Via(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~Via();
 
+	void setAutoroutable(bool);
+	bool getAutoroutable();
+
 protected:
 	void setBoth(const QString & holeDiameter, const QString &  thickness);
 	QString makeID();

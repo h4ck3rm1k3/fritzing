@@ -824,10 +824,6 @@ y:%2</source>
         <translation>Aggiungi nota</translation>
     </message>
     <message>
-        <source>Export Etchable PDF</source>
-        <translation>Esporta PDF per l&apos;incisione</translation>
-    </message>
-    <message>
         <source>Ready</source>
         <translation>Pronto</translation>
     </message>
@@ -1063,10 +1059,6 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>&amp;Apri Esempio</translation>
     </message>
     <message>
-        <source>Export Etchable for DIY...</source>
-        <translation>Esporta schema di incisione per il fai da te...</translation>
-    </message>
-    <message>
         <source>&amp;Save</source>
         <translation>&amp;Salva</translation>
     </message>
@@ -1099,52 +1091,8 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>Esporta lo sketch corrente ed i suoi componenti esterni</translation>
     </message>
     <message>
-        <source>to &amp;JPG...</source>
-        <translation>come &amp;JPG...</translation>
-    </message>
-    <message>
-        <source>to P&amp;NG...</source>
-        <translation>come &amp;PNG...</translation>
-    </message>
-    <message>
-        <source>to Post&amp;Script...</source>
-        <translation>come Post&amp;Script...</translation>
-    </message>
-    <message>
-        <source>to &amp;PDF...</source>
-        <translation>come &amp;PDF...</translation>
-    </message>
-    <message>
-        <source>to &amp;Eagle...</source>
-        <translation>come &amp;Eagle...</translation>
-    </message>
-    <message>
         <source>Export the current sketch to Eagle CAD</source>
         <translation>Esporta lo sketch corrente come file CAD di Eagle</translation>
-    </message>
-    <message>
-        <source>to &amp;Gerber...</source>
-        <translation>come &amp;Gerber...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to Gerber</source>
-        <translation>Esporta lo sketch corrente come file Gerber</translation>
-    </message>
-    <message>
-        <source>Etchable PDF...</source>
-        <translation>PDF per l&apos;incisione...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to PDF for DIY production</source>
-        <translation>Esporta lo sketch corrente come PDF per la produzione fai-da-te</translation>
-    </message>
-    <message>
-        <source>Etchable SVG...</source>
-        <translation>SVG per l&apos;incisione...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to SVG for DIY production</source>
-        <translation>Esporta lo sketch corrente come SVG per la produzione fai-da-te</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -1755,10 +1703,6 @@ Quantità	Componente
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>to &amp;SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export the current sketch as an SVG image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2334,6 +2278,62 @@ Please check all views for potential side-effects.</source>
         <source>Open Fritzing donation web page</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export for PCB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export PDF or SVG for etchable PCB production...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as JPG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PNG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PostScript...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Eagle...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Gerber (RS-274X Format)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to Gerber for professional PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to PDF for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to SVG for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2824,6 +2824,11 @@ Specifica un nuovo nome</translation>
     </message>
     <message>
         <source>Fritzing Parts (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error! Cannot load part.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

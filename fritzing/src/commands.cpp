@@ -1351,7 +1351,11 @@ void LoadLogoImageCommand::undo() {
 }
 
 void LoadLogoImageCommand::redo() {
-	m_sketchWidget->loadLogoImage(m_itemID, m_newFilename, m_addName);
+	if (m_newFilename.isEmpty()) {
+	}
+	else {
+		m_sketchWidget->loadLogoImage(m_itemID, m_newFilename, m_addName);
+	}
 }
 
 QString LoadLogoImageCommand::getParamString() const {

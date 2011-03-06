@@ -277,6 +277,7 @@ protected:
 	void computeMD5(Ordering * ordering);
 	void crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue);
 	void crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
+	void getViaSize(int & tWidthNeeded, int & tHeightNeeded);
 
 protected:
 	QRectF m_maxRect;
@@ -297,6 +298,7 @@ protected:
 	int m_maxCycles;
 	QByteArray m_startState;
 	QSet<ConnectorItem *> m_offBoardConnectors;
+	QHash<PathUnit *, TileRect> m_nearestSpaces;
 };
 
 #endif

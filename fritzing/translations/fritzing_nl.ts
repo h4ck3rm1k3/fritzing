@@ -828,10 +828,6 @@ y:%2</source>
         <translation>Notitie toevoegen</translation>
     </message>
     <message>
-        <source>Export Etchable PDF</source>
-        <translation>Exporteer etchable PDF</translation>
-    </message>
-    <message>
         <source>Ready</source>
         <translation>Klaar</translation>
     </message>
@@ -1005,10 +1001,6 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
         <translation>Annnuleren</translation>
     </message>
     <message>
-        <source>Export Etchable for DIY...</source>
-        <translation>Exporteer etchebel naar DIY...</translation>
-    </message>
-    <message>
         <source>Sketch exported</source>
         <translation>Sketch geëxporteerd</translation>
     </message>
@@ -1141,40 +1133,20 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
         <translation>Post a project naar de Fritzing website</translation>
     </message>
     <message>
-        <source>to &amp;JPG...</source>
-        <translation>naar &amp;JPG...</translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a JPG image</source>
         <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een JPG afbeelding</translation>
-    </message>
-    <message>
-        <source>to P&amp;NG...</source>
-        <translation>naar P&amp;NG...</translation>
     </message>
     <message>
         <source>Export the visible area of the current sketch as a PNG image</source>
         <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een PNG afbeelding</translation>
     </message>
     <message>
-        <source>to Post&amp;Script...</source>
-        <translation>naar Post&amp;Script...</translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a PostScript image</source>
         <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een PostScript afbeelding</translation>
     </message>
     <message>
-        <source>to &amp;PDF...</source>
-        <translation>naar &amp;PDF...</translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a PDF image</source>
         <translation>Exporteer het zichtbare gedeelte van de huidige sketch als een PDF afbeelding</translation>
-    </message>
-    <message>
-        <source>to &amp;SVG...</source>
-        <translation>naar &amp;SVG...</translation>
     </message>
     <message>
         <source>Export the current sketch as an SVG image</source>
@@ -1197,36 +1169,8 @@ Wij werken er momenteel aan om dit bericht te vermijden en je te laten kiezen tu
         <translation>Sla een netlist op in XML formaat</translation>
     </message>
     <message>
-        <source>to &amp;Eagle...</source>
-        <translation>naar &amp;Eagle...</translation>
-    </message>
-    <message>
         <source>Export the current sketch to Eagle CAD</source>
         <translation>Exporteer de huidige sketch naar Eagle CAD</translation>
-    </message>
-    <message>
-        <source>to &amp;Gerber...</source>
-        <translation>naar &amp;Gerber...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to Gerber</source>
-        <translation>Exporteer de huidige sketch naar Gerber</translation>
-    </message>
-    <message>
-        <source>Etchable PDF...</source>
-        <translation>Etchabel PDF...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to PDF for DIY production</source>
-        <translation>Exporteer de huidige sketch naar PDF voor DIY productie</translation>
-    </message>
-    <message>
-        <source>Etchable SVG...</source>
-        <translation>Etchabel SVG...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to SVG for DIY production</source>
-        <translation>Exporteer de huidige sketch naar SVG voor DIY productie</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -2336,6 +2280,62 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <source>Open Fritzing donation web page</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export for PCB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export PDF or SVG for etchable PCB production...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as JPG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PNG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PostScript...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Eagle...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Gerber (RS-274X Format)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to Gerber for professional PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to PDF for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to SVG for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2826,6 +2826,11 @@ Specifiëer a.u.b. een nieuwe naam</translation>
     </message>
     <message>
         <source>Fritzing Parts (*%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error! Cannot load part.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

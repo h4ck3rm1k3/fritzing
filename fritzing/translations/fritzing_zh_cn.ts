@@ -828,10 +828,6 @@ y:%2</translation>
         <translation>添加注释</translation>
     </message>
     <message>
-        <source>Export Etchable PDF</source>
-        <translation>导出为可蚀刻的PDF</translation>
-    </message>
-    <message>
         <source>Ready</source>
         <translation>准备好</translation>
     </message>
@@ -1000,10 +996,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>取消</translation>
     </message>
     <message>
-        <source>Export Etchable for DIY...</source>
-        <translation>为DIY导出可蚀刻的...</translation>
-    </message>
-    <message>
         <source>Sketch exported</source>
         <translation>设计已导出</translation>
     </message>
@@ -1132,40 +1124,20 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>向Fritzing网址发布工程</translation>
     </message>
     <message>
-        <source>to &amp;JPG...</source>
-        <translation>为 JPG(&amp;J)...</translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a JPG image</source>
         <translation>导出当前程序的可见区域为JPG图像</translation>
-    </message>
-    <message>
-        <source>to P&amp;NG...</source>
-        <translation>为 PNG(&amp;N)...</translation>
     </message>
     <message>
         <source>Export the visible area of the current sketch as a PNG image</source>
         <translation>导出当前程序的可见区域为PNG图像</translation>
     </message>
     <message>
-        <source>to Post&amp;Script...</source>
-        <translation>为 轮廓线 (&amp;S)...</translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a PostScript image</source>
         <translation>导出当前设计的可见区域为轮廓线图像</translation>
     </message>
     <message>
-        <source>to &amp;PDF...</source>
-        <translation>为 PDF(&amp;P)...</translation>
-    </message>
-    <message>
         <source>Export the visible area of the current sketch as a PDF image</source>
         <translation>导出当前程序的可见区域为PDF图像</translation>
-    </message>
-    <message>
-        <source>to &amp;SVG...</source>
-        <translation>为 SVG(&amp;S)...</translation>
     </message>
     <message>
         <source>Export the current sketch as an SVG image</source>
@@ -1188,36 +1160,8 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>保存网络表为XML格式</translation>
     </message>
     <message>
-        <source>to &amp;Eagle...</source>
-        <translation>至 Eagle(&amp;E)...</translation>
-    </message>
-    <message>
         <source>Export the current sketch to Eagle CAD</source>
         <translation>导出当前设计至Eagle CAD</translation>
-    </message>
-    <message>
-        <source>to &amp;Gerber...</source>
-        <translation>至 Gerber(&amp;G)...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to Gerber</source>
-        <translation>导出当前设计至Gerber</translation>
-    </message>
-    <message>
-        <source>Etchable PDF...</source>
-        <translation>可蚀刻的PDF...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to PDF for DIY production</source>
-        <translation>导出当前设计至可供DIY制作的PDF</translation>
-    </message>
-    <message>
-        <source>Etchable SVG...</source>
-        <translation>可蚀刻的SVG...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch to SVG for DIY production</source>
-        <translation>导出当前设计至可供DIY制作的SVG</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -2334,6 +2278,62 @@ Please check all views for potential side-effects.</source>
         <source>Open Fritzing donation web page</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export for PCB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export PDF or SVG for etchable PCB production...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as JPG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PNG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PostScript...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Eagle...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Gerber (RS-274X Format)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to Gerber for professional PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to PDF for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>as Etchable SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch to SVG for DIY PCB production</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2825,6 +2825,11 @@ Please, specify a new filename</source>
     <message>
         <source>Fritzing Parts (*%1)</source>
         <translation>Fritzing元件(*%1)</translation>
+    </message>
+    <message>
+        <source>Error! Cannot load part.
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

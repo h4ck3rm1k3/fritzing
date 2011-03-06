@@ -98,6 +98,7 @@ $Date$
 #include "../../items/virtualwire.h"
 #include "../../items/tracewire.h"
 #include "../../items/jumperitem.h"
+#include "../../items/via.h"
 #include "../../items/resizableboard.h"
 #include "../../utils/graphicsutils.h"
 #include "../../utils/textutils.h"
@@ -960,6 +961,8 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 			TiSrArea(NULL, plane, &m_tileMaxRect, findSourceAndDestination, &sourceAndDestinationStruct);
 		}
 
+		m_nearestSpaces.clear();
+
 		//DebugDialog::debug("begin ipu");
 		foreach (Tile * tile, sourceAndDestinationStruct.tiles) {
 			initPathUnit(edge, tile, (TiGetType(tile) == Tile::SOURCE ? queue1 : queue2), tilePathUnits);
@@ -1030,6 +1033,7 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 }
 
 void CMRouter::deletePathUnits() {
+	m_nearestSpaces.clear();
 	foreach (PathUnit * pathUnit, m_pathUnits) {
 		delete pathUnit;
 	}
@@ -3336,9 +3340,8 @@ void CMRouter::crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> &
 void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits) 
 {
 	PathUnit * nearest = NULL;
-	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
-	int tWidthNeeded = fasterRealToTile(sizeNeeded.width());
-	int tHeightNeeded = fasterRealToTile(sizeNeeded.height());
+	int tWidthNeeded, tHeightNeeded;
+	getViaSize(tWidthNeeded, tHeightNeeded);
 	int bestCost = std::numeric_limits<int>::max();
 	TileRect nearestSpace;
 	drawGridItem(pathUnit->tile);
@@ -3346,6 +3349,7 @@ void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & s
 	if (findNearestSpaceOne(pathUnit, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace)) {
 		PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
 		m_pathUnits.append(nextPathUnit);
+		m_nearestSpaces.insert(pathUnit, nearestSpace);				// index this from the CrossLayer pathUnit
 		nextPathUnit->sourceCost = pathUnit->sourceCost;
 		nextPathUnit->destCost = pathUnit->destCost;				// TODO: destCost probably isn't right
 		nextPathUnit->minCostRect = pathUnit->minCostRect;
@@ -3510,6 +3514,33 @@ void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 		foreach (PathUnit * pathUnit, fullPath) {
 			infoTile(QString("tracepath %1").arg((long) pathUnit->plane, 0,  16), pathUnit->tile);
 			if (pathUnit->layerDirection == PathUnit::CrossLayer) {
+				// call tracepath on the subpath
+				TileRect nearestSpace = m_nearestSpaces.value(pathUnit);
+				int tWidthNeeded, tHeightNeeded;
+				getViaSize(tWidthNeeded, tHeightNeeded);
+				qreal halfWidth = tWidthNeeded / 2.0;
+				qreal halfHeight = tHeightNeeded / 2.0;
+				qreal cx = (pathUnit->minCostRect.xmaxi + pathUnit->minCostRect.xmini) / 2.0; 
+				qreal cy = (pathUnit->minCostRect.ymaxi + pathUnit->minCostRect.ymini) / 2.0; 
+				if (cx < nearestSpace.xmini + halfWidth) cx = nearestSpace.xmini + halfWidth;
+				if (cx > nearestSpace.xmaxi - halfWidth) cx = nearestSpace.xmaxi - halfWidth;
+				if (cy < nearestSpace.ymini + halfHeight) cy = nearestSpace.ymini + halfHeight;
+				if (cy > nearestSpace.ymaxi - halfHeight) cy = nearestSpace.ymaxi - halfHeight;
+
+				// add this to undo
+				// set the hole diameter and ring thickness
+				// delete during autorouting
+
+				long newID = ItemBase::getNextID();
+				ViewGeometry viewGeometry;
+				viewGeometry.setLoc(QPointF(tileToReal(cx - halfWidth), tileToReal(cy - halfHeight)));
+
+				ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::viaModuleIDName), 
+												  m_specHash.value(pathUnit->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
+
+				Via * via = dynamic_cast<Via *>(itemBase);
+				via->setAutoroutable(true);
+				m_sketchWidget->scene()->addItem(via);
 			}
 		}
 	}
@@ -3889,4 +3920,10 @@ void CMRouter::tileToQRect(Tile * tile, QRectF & rect) {
 	TileRect tileRect;
 	TiToRect(tile, &tileRect);
 	tileRectToQRect(tileRect, rect);
+}
+
+void CMRouter::getViaSize(int & tWidthNeeded, int & tHeightNeeded) {
+	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
+	tWidthNeeded = fasterRealToTile(sizeNeeded.width());
+	tHeightNeeded = fasterRealToTile(sizeNeeded.height());
 }
