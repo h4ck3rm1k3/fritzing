@@ -34,6 +34,7 @@ $Date$
 #include <QStackedWidget>
 #include <QSizeGrip>
 #include <QProcess>
+#include <QDockWidget>
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
@@ -278,6 +279,8 @@ protected slots:
 	void selectMoveLock();
 	void moveLock();
 	void searchPartsBin();
+	void showNavigator();
+	void macNavigatorHack();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -638,6 +641,7 @@ protected:
     QStringList m_openExampleActions;
 
 	QPointer<class TripleNavigator> m_tripleNavigator;
+	QDockWidget * m_navigatorDock;
 	QPointer<class FSizeGrip> m_sizeGrip;
 
 	friend class Helper;

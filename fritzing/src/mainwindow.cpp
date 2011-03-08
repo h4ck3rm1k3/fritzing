@@ -305,6 +305,12 @@ void MainWindow::init() {
 	m_setUpDockManagerTimer.start(1000);
 
 	m_pcbGraphicsView->jumperItemHack();
+	
+#ifdef Q_WS_MAC
+	if (m_navigatorDock) {
+		QTimer::singleShot(500, this, SLOT(macNavigatorHack()));
+	}
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -322,6 +328,29 @@ MainWindow::~MainWindow()
 	m_linkedProgramFiles.clear();
 }
 
+void MainWindow::macNavigatorHack() {
+	//////////////////////////////////////////////
+	//
+	// This hack deals with a problem that came up (I think) when we began to use Qt 4.7.
+	// The problem also occurs with Qt 4.7.1 and 4.7.2.
+	//
+	// If the navigator widget is visible, and docked, and the main window is at 100% zoom,
+	// selection rects on parts are not updated as the user clicks around or drags out a selection.
+	// Forcing the navigator to float for a brief interval seems to "fix" the problem.
+	//
+	// I haven't been able to chase down the real problem: hiding and showing the dock doesn't work,
+	// nor does commenting out SketchWidget::scene_selectionChanged.‚
+	
+	if (m_navigatorDock && m_navigatorDock->isVisible() && !m_navigatorDock->isFloating()) {
+		m_navigatorDock->setFloating(true);
+		QTimer::singleShot(15, this, SLOT(showNavigator()));
+	}		
+}
+					   
+
+void MainWindow::showNavigator() {
+	m_navigatorDock->setFloating(false);
+}
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->setPaletteModel(m_paletteModel);

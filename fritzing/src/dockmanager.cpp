@@ -98,7 +98,7 @@ void DockManager::createDockWindows()
 	widget->setMinimumHeight(0);
 	widget->setMaximumHeight(0);
 	FDockWidget * dock = makeDock(tr("View Switcher"), widget, 0,  0, Qt::RightDockWidgetArea, makeViewSwitcherDock);
-	ViewSwitcherDockWidget * vsd = static_cast<ViewSwitcherDockWidget *>(dock);
+	ViewSwitcherDockWidget * vsd = qobject_cast<ViewSwitcherDockWidget *>(dock);
 	m_mainWindow->m_viewSwitcherDock = vsd;
 	connect(m_mainWindow, SIGNAL(mainWindowMoved(QWidget *)), vsd, SLOT(windowMoved(QWidget *)));
 
@@ -111,29 +111,31 @@ void DockManager::createDockWindows()
 	m_mainWindow->m_binManager->dockedInto(partsDock);
     makeDock(tr("Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
-    m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerBreadboard = new MiniViewContainer(m_mainWindow));
+	makeDock(tr("Undo History"), m_mainWindow->m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
+    m_mainWindow->m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
+
+	m_mainWindow->m_tripleNavigator = new TripleNavigator(m_mainWindow);
+	
+    m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerBreadboard = new MiniViewContainer(m_mainWindow->m_tripleNavigator));
 	m_mainWindow->m_miniViewContainerBreadboard->filterMousePress();
 	connect(m_mainWindow->m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								m_mainWindow, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerSchematic = new MiniViewContainer(m_mainWindow));
+    m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerSchematic = new MiniViewContainer(m_mainWindow->m_tripleNavigator));
 	m_mainWindow->m_miniViewContainerSchematic->filterMousePress();
 	connect(m_mainWindow->m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								m_mainWindow, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerPCB = new MiniViewContainer(m_mainWindow));
+    m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerPCB = new MiniViewContainer(m_mainWindow->m_tripleNavigator));
 	m_mainWindow->m_miniViewContainerPCB->filterMousePress();
 	connect(m_mainWindow->m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								m_mainWindow, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    makeDock(tr("Undo History"), m_mainWindow->m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
-    m_mainWindow->m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
 
-	m_mainWindow->m_tripleNavigator = new TripleNavigator(m_mainWindow);
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerBreadboard, tr("Breadboard"));
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerSchematic, tr("Schematic"));
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerPCB, tr("PCB"));
-	makeDock(tr("Navigator"), m_mainWindow->m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
+	m_mainWindow->m_navigatorDock = makeDock(tr("Navigator"), m_mainWindow->m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
 
     makeDock(tr("Layers"), m_mainWindow->m_layerPalette, DockMinWidth, DockMinHeight)->hide();
     m_mainWindow->m_undoView->setMinimumSize(DockMinWidth, DockMinHeight);
