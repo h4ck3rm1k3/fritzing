@@ -39,6 +39,7 @@ public:
 
 	void setAutoroutable(bool);
 	bool getAutoroutable();
+	ConnectorItem * connectorItem();
 
 protected:
 	void setBoth(const QString & holeDiameter, const QString &  thickness);

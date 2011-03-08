@@ -232,7 +232,7 @@ protected:
 	ConnectorItem * splitTrace(Wire * wire, QPointF point);
 	void clearEdge(Edge * edge);
 	void initPathUnit(Edge * edge, Tile *, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> &);
-	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> &, qreal keepout);
+	bool propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> &, qreal keepout, bool doTracePath, CompletePath  &);
 	bool addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, Edge *, 
 						QMultiHash<Tile *, PathUnit *> &, qreal keepout);
 	bool propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destPathUnits, QMultiHash<Tile *, PathUnit *> &, CompletePath &);
@@ -241,6 +241,7 @@ protected:
 	bool isRedundantPath(PathUnit * pathUnit, TileRect & minCostRect, int sourceCost);
 	bool goodEnough(CompletePath & completePath);
 	void tracePath(CompletePath & completePath, qreal keepout);
+	void tracePath(QList<PathUnit *> & fullPath, qreal keepout, bool lookForCrossLayer);
 	void cleanPoints(QList<QPointF> & allPoints, Plane *); 
 	void traceSegments(QList<Segment *> & segments);
 	void initConnectorSegments(int ix0, QList<PathUnit *> & fullPath, QList<Segment *> & hSegments, QList<Segment *> & vSegments);
@@ -278,6 +279,8 @@ protected:
 	void crossLayerSource(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue);
 	void crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits);
 	void getViaSize(int & tWidthNeeded, int & tHeightNeeded);
+	void traceViaPath(PathUnit * pathUnit, int pathIndex, QList<PathUnit *> & fullPath, qreal keepout);
+	void listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath);
 
 protected:
 	QRectF m_maxRect;

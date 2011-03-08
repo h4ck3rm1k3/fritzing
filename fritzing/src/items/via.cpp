@@ -118,3 +118,12 @@ void Via::setAutoroutable(bool ar) {
 bool Via::getAutoroutable() {
 	return m_viewGeometry.getAutoroutable();
 }
+
+ConnectorItem * Via::connectorItem() {
+	foreach (QGraphicsItem * item, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem) return connectorItem;
+	}
+
+	return NULL;
+}
