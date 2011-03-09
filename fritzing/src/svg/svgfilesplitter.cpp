@@ -1233,21 +1233,5 @@ QString SvgFileSplitter::toString() {
 
 void SvgFileSplitter::gWrap(const QHash<QString, QString> & attributes)
 {
-	QDomElement g = m_domDocument.createElement("g");
-	foreach (QString key, attributes.keys()) {
-		g.setAttribute(key, attributes.value(key, ""));
-	}
-
-	QDomNodeList nodeList = m_domDocument.documentElement().childNodes();
-	QList<QDomNode> nodes;
-	for (int i = 0; i < nodeList.count(); i++) {
-		nodes.append(nodeList.item(i));
-	}
-
-	m_domDocument.documentElement().appendChild(g);
-	foreach (QDomNode node, nodes) {
-		g.appendChild(node);
-	}
-
-	return;
+	TextUtils::gWrap(m_domDocument, attributes);
 }

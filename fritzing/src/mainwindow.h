@@ -126,7 +126,6 @@ protected slots:
     void print();
     void doExport();
 	void exportEtchable();
-	void exportEtchableSvg();
     void about();
 	void tipsAndTricks();
     void copy();
@@ -322,7 +321,7 @@ protected:
     void exportNetlist();
     void exportSvg(qreal res, bool selectedItems, bool flatten);
 	void exportSvgWatermark(QString & svg, qreal res);
-	void exportEtchable(bool wantPDF, bool wantSVG);
+	void exportEtchable(bool wantPDF, bool wantSVG, bool flip);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
 	const QString untitledFileName();
@@ -391,7 +390,7 @@ protected:
 	bool isGroundFill(ItemBase * itemBase);
 
 	QString getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & imageSize);
-	QString mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize);
+	QString mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize, bool flip);
 
 	bool wannaRestart();
 
@@ -492,14 +491,17 @@ protected:
 
 	// Export Menu
 	QMenu *m_exportMenu;
+	QMenu *m_exportEtchableMenu;
 	QAction *m_exportJpgAct;
 	QAction *m_exportPsAct;
 	QAction *m_exportPngAct;
 	QAction *m_exportPdfAct;
 	QAction *m_exportEagleAct;
 	QAction *m_exportGerberAct;
-	QAction *m_exportEtchableAct;
+	QAction *m_exportEtchablePdfAct;
 	QAction *m_exportEtchableSvgAct;
+	QAction *m_exportEtchablePdfFlipAct;
+	QAction *m_exportEtchableSvgFlipAct;
 	QAction *m_exportBomAct;
 	QAction *m_exportNetlistAct;
 	QAction *m_exportSvgAct;

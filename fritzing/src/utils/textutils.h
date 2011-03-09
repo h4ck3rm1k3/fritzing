@@ -48,7 +48,7 @@ public:
 
 	static QString replaceTextElement(const QString & svg, const QString & label);
     static bool squashElement(QDomDocument &, const QString & elementName, const QString & attName, const QRegExp & matchContent);
-    static QString mergeSvg(const QString & svg1, const QString & svg2, const QString & id);
+    static QString mergeSvg(const QString & svg1, const QString & svg2, const QString & id, bool flip);
 	static QString mergeSvgFinish(QDomDocument & doc);
 	static bool mergeSvg(QDomDocument & doc1, const QString & svg, const QString & id);
 	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
@@ -70,6 +70,7 @@ public:
     static QList<qreal> getTransformFloats(QDomElement & element);
 	static QList<qreal> getTransformFloats(const QString & transform);
 	static QString removeXMLNS(QString svgContent);
+	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 
 public:
 	static const QRegExp FindWhitespace;

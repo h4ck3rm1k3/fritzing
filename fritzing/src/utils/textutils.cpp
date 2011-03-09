@@ -222,12 +222,26 @@ QString TextUtils::mergeSvgFinish(QDomDocument & doc) {
 	return removeXMLEntities(doc.toString());
 }
 
-QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QString & id) {
+QString TextUtils::mergeSvg(const QString & svg1, const QString & svg2, const QString & id, bool flip) {
 
 	QDomDocument doc1;
 	if (!TextUtils::mergeSvg(doc1, svg1, id)) return ___emptyString___;
 
 	if (!TextUtils::mergeSvg(doc1, svg2, id)) return ___emptyString___;
+
+	if (flip) {
+		QDomElement svg = doc1.documentElement();
+		QString viewBox = svg.attribute("viewBox");
+		QStringList coords = viewBox.split(" ", QString::SkipEmptyParts);
+		qreal width = coords[2].toDouble();
+		QMatrix matrix;
+		matrix.translate(width / 2, 0);
+		matrix.scale(-1, 1);
+		matrix.translate(-width / 2, 0);
+		QHash<QString, QString> attributes;
+		attributes.insert("transform", svgMatrix(matrix));
+		gWrap(doc1, attributes);
+	}
 
 	return mergeSvgFinish(doc1);
 }
@@ -706,5 +720,24 @@ QList<qreal> TextUtils::getTransformFloats(const QString & transform){
 #endif
 
     return list;
+}
+
+void TextUtils::gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes)
+{
+	QDomElement g = domDocument.createElement("g");
+	foreach (QString key, attributes.keys()) {
+		g.setAttribute(key, attributes.value(key, ""));
+	}
+
+	QDomNodeList nodeList = domDocument.documentElement().childNodes();
+	QList<QDomNode> nodes;
+	for (int i = 0; i < nodeList.count(); i++) {
+		nodes.append(nodeList.item(i));
+	}
+
+	domDocument.documentElement().appendChild(g);
+	foreach (QDomNode node, nodes) {
+		g.appendChild(node);
+	}
 }
 

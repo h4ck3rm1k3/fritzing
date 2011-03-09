@@ -152,14 +152,14 @@ void MainWindow::print() {
 }
 
 void MainWindow::exportEtchable() {
-	exportEtchable(true, false);
+	if (sender() == NULL) return;
+
+	bool wantSvg = sender()->property("svg").toBool();
+	exportEtchable(!wantSvg, wantSvg, sender()->property("flip").toBool());
 }
 
-void MainWindow::exportEtchableSvg() {
-	exportEtchable(false, true);
-}
 
-void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
+void MainWindow::exportEtchable(bool wantPDF, bool wantSVG, bool flip)
 {
 	RoutingStatus routingStatus;
 	m_pcbGraphicsView->updateRoutingStatus(NULL, routingStatus, true);
@@ -231,7 +231,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		if (wantSVG) {
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, GraphicsUtils::IllustratorDPI, false, false, false, empty);
-			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize);
+			svg = mergeBoardSvg(svg, board, GraphicsUtils::IllustratorDPI, imageSize, flip);
 			
 			QFile file(fileName);
 			file.open(QIODevice::WriteOnly);
@@ -247,7 +247,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 			int res = printer.resolution();
 			bool empty;
 			QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board, res, false, false, false, empty);
-			svg = mergeBoardSvg(svg, board, res, imageSize);
+			svg = mergeBoardSvg(svg, board, res, imageSize, flip);
 			
 			// now convert to pdf
 			QSvgRenderer svgRenderer;
@@ -341,7 +341,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 
 }
 
-QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize) {
+QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSizeF & imageSize, bool flip) {
 	QSizeF boardImageSize;
 	QString boardSvg = getBoardSilkscreenSvg(board, res, boardImageSize);
 	if (boardSvg.isEmpty()) return svg;
@@ -349,7 +349,8 @@ QString MainWindow::mergeBoardSvg(QString & svg, ItemBase * board, int res, QSiz
 	//QByteArray byteArray;
 	//SvgFileSplitter::changeStrokeWidth(boardSvg, res / 360.0, true, byteArray);
 	imageSize = boardImageSize;
-	return TextUtils::mergeSvg(boardSvg /* QString(byteArray) */, svg, "");
+
+	return TextUtils::mergeSvg(boardSvg /* QString(byteArray) */, svg, "", flip);
 }
 
 QString MainWindow::getBoardSilkscreenSvg(ItemBase * board, int res, QSizeF & imageSize) {
@@ -1037,13 +1038,29 @@ void MainWindow::createFileMenuActions() {
 	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber for professional PCB production"));
 	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportEtchableAct = new QAction(tr("as Etchable PDF..."), this);
-	m_exportEtchableAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production"));
-	connect(m_exportEtchableAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
+	m_exportEtchablePdfAct = new QAction(tr("as Etchable PDF..."), this);
+	m_exportEtchablePdfAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production (photoresist)"));
+	m_exportEtchablePdfAct->setProperty("svg", false);
+	m_exportEtchablePdfAct->setProperty("flip", false);
+	connect(m_exportEtchablePdfAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
+
+	m_exportEtchablePdfFlipAct = new QAction(tr("as Etchable PDF (mirrored)..."), this);
+	m_exportEtchablePdfFlipAct->setStatusTip(tr("Export the current sketch to PDF for DIY PCB production (tone transfer)"));
+	m_exportEtchablePdfFlipAct->setProperty("svg", false);
+	m_exportEtchablePdfFlipAct->setProperty("flip", true);
+	connect(m_exportEtchablePdfFlipAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
 	m_exportEtchableSvgAct = new QAction(tr("as Etchable SVG..."), this);
-	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production"));
-	connect(m_exportEtchableSvgAct, SIGNAL(triggered()), this, SLOT(exportEtchableSvg()));
+	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production (photoresist)"));
+	m_exportEtchableSvgAct->setProperty("svg", true);
+	m_exportEtchableSvgAct->setProperty("flip", false);
+	connect(m_exportEtchableSvgAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
+
+	m_exportEtchableSvgFlipAct = new QAction(tr("as Etchable SVG (mirrored)..."), this);
+	m_exportEtchableSvgFlipAct->setStatusTip(tr("Export the current sketch to SVG for DIY PCB production (tone transfer)"));
+	m_exportEtchableSvgFlipAct->setProperty("svg", true);
+	m_exportEtchableSvgFlipAct->setProperty("flip", true);
+	connect(m_exportEtchableSvgFlipAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
 	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
 	m_pageSetupAct->setShortcut(tr("Shift+Ctrl+P"));
@@ -1649,8 +1666,13 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportJpgAct);
 	m_exportMenu->addSeparator();
 	m_exportMenu->addAction(m_exportBomAct);
-	m_exportMenu->addAction(m_exportEtchableAct);
-	m_exportMenu->addAction(m_exportEtchableSvgAct);
+	m_exportEtchableMenu = m_exportMenu->addMenu(tr("Etchable"));
+
+	m_exportEtchableMenu->addAction(m_exportEtchablePdfAct);
+	m_exportEtchableMenu->addAction(m_exportEtchablePdfFlipAct);
+	m_exportEtchableMenu->addAction(m_exportEtchableSvgAct);
+	m_exportEtchableMenu->addAction(m_exportEtchableSvgFlipAct);
+
 	//m_exportMenu->addAction(m_exportEagleAct);
 	m_exportMenu->addAction(m_exportGerberAct);
 	m_exportMenu->addAction(m_exportNetlistAct);
@@ -2277,8 +2299,10 @@ void MainWindow::updateTraceMenu() {
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
 	m_autorouteAct->setEnabled(arEnabled);
-	m_exportEtchableAct->setEnabled(true);
+	m_exportEtchablePdfAct->setEnabled(true);
+	m_exportEtchablePdfFlipAct->setEnabled(true);
 	m_exportEtchableSvgAct->setEnabled(true);
+	m_exportEtchableSvgFlipAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumperItemsAct->setEnabled(jiEnabled);
@@ -2783,7 +2807,7 @@ void MainWindow::exportSvgWatermark(QString & svg, qreal res)
 
 	QString transWatermark = splitter.shift((svgSize.width() - watermarkSize.width()) * res, svgSize.height() * res, "watermark", true);
 	QString newSvg = TextUtils::makeSVGHeader(1, res, svgSize.width(), svgSize.height() + watermarkSize.height()) + transWatermark + "</svg>";
-	svg = TextUtils::mergeSvg(newSvg, svg, "");
+	svg = TextUtils::mergeSvg(newSvg, svg, "", false);
 }
 
 void MainWindow::exportBOM() {
