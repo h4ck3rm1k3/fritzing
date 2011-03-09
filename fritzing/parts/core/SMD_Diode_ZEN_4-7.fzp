@@ -36,7 +36,6 @@
         </schematicView>
         <pcbView>
             <layers image="pcb/SMD_Diode_MelfDO213AB.svg">
-                <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
             <layer layerId="copper1"/></layers>
         </pcbView>
