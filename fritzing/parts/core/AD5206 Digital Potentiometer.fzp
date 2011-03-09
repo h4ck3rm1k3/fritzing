@@ -8,8 +8,8 @@
         <tag>SPI</tag>
     </tags>
     <properties>
-        <property name="family">IC</property>
-    <property name="package">THT</property></properties>
+        <property name="family">IC-Poti</property>
+    <property name="package">DIP28 [THT]</property></properties>
     <description>Digital potentiometer. 6 channels with SPI-compatible interface.</description>
     <views>
         <breadboardView>
