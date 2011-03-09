@@ -13,7 +13,7 @@
     </tags>
     <properties>
         <property name="version">atmega168-20PU</property>
-        <property name="package">TQFP32 [SMD]</property></properties>
+        <property name="package">TQFP32 [SMD]</property>
         <property name="family">Microcontroller (AVR)</property>
     </properties>
     <description>Atmel ATmega168 microcontroller.  The hardware hacker favorite.</description>

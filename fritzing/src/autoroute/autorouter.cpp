@@ -80,7 +80,6 @@ TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, 
 	}
 
 	// addItemAux calls trace->setSelected(true) so unselect it
-	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	m_sketchWidget->setClipEnds(traceWire, false);

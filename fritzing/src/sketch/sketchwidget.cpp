@@ -2769,21 +2769,7 @@ void SketchWidget::scene_selectionChanged() {
 		return;
 	}
 
-	// DebugDialog::debug("selection changed");
-	// TODO: this can be dangerous if an item is on m_lastSelected and the item is deleted without being deselected first.
-
-	// hack in 4.5.something? to make up for missing selection state updates
-	//foreach (QGraphicsItem * item, m_lastSelected) {
-	//	item->update();
-	//}
-
-	// m_lastSelected = scene()->selectedItems();
 	emit selectionChangedSignal();
-
-	// hack to make up for missing selection state updates
-	//foreach (QGraphicsItem * item, m_lastSelected) {
-	//	item->update();
-	//}
 
 	if (m_holdingSelectItemCommand != NULL) {
 		//DebugDialog::debug("update holding command");

@@ -30,6 +30,7 @@ $Date$
 #include "../connectors/busshared.h"
 
 #include <QHash>
+#include <QMessageBox>
 
 ModelPartShared::ModelPartShared() {
 	commonInit();
@@ -441,8 +442,9 @@ void ModelPartShared::loadDocument() {
 	int errorLine;
 	int errorColumn;
 	QDomDocument * doc = new QDomDocument();
-
 	if (!doc->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("ModelPartShared load document failed: %1 line:%2 col:%3 on file '%4'").arg(errorStr).arg(errorLine).arg(errorColumn).arg(m_path));
+		QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to parse '%1': %2: line %3 column %4.").arg(m_path).arg(errorStr).arg(errorLine).arg(errorColumn));
 		delete doc;
 	}
 	else {

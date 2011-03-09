@@ -339,7 +339,7 @@ void MainWindow::macNavigatorHack() {
 	// Forcing the navigator to float for a brief interval seems to "fix" the problem.
 	//
 	// I haven't been able to chase down the real problem: hiding and showing the dock doesn't work,
-	// nor does commenting out SketchWidget::scene_selectionChanged.‚
+	// nor does commenting out SketchWidget::scene_selectionChanged.
 	
 	if (m_navigatorDock && m_navigatorDock->isVisible() && !m_navigatorDock->isFloating()) {
 		m_navigatorDock->setFloating(true);
