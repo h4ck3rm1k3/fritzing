@@ -24,12 +24,12 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/atmega168.svg">
+            <layers image="breadboard/smd_atmega168.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/atmega168_32pol_schematic.svg">
+            <layers image="schematic/atmega168_32pol.svg">
                 <layer layerId="schematic"/>
             </layers>
         </schematicView>
