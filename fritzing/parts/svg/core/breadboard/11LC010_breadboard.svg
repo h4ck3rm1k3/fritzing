@@ -1,124 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.2"
+   width="0.40000001in"
+   height="0.33000001in"
+   viewBox="0 0 40 33"
    id="svg2"
-   width="0.4in"
-   height="0.33in"
-   viewBox="0 0 40.0 33.0"
-   xml:space="preserve"
-   inkscape:version="0.47 r22583"
-   sodipodi:docname="BRD-11LC010.svg"><metadata
-   id="metadata3462"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+   xml:space="preserve"><defs
    id="defs3460"><inkscape:perspective
-     sodipodi:type="inkscape:persp3d"
-     inkscape:vp_x="0 : 14.85 : 1"
-     inkscape:vp_y="0 : 1000 : 0"
-     inkscape:vp_z="36 : 14.85 : 1"
-     inkscape:persp3d-origin="18 : 9.9000003 : 1"
-     id="perspective2904" /><inkscape:perspective
      id="perspective2900" /><inkscape:perspective
-     id="perspective3464" /><inkscape:perspective
-     id="perspective2914"
-     inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-     inkscape:vp_z="1 : 0.5 : 1"
-     inkscape:vp_y="0 : 1000 : 0"
-     inkscape:vp_x="0 : 0.5 : 1"
-     sodipodi:type="inkscape:persp3d" /></defs><sodipodi:namedview
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1"
-   objecttolerance="10"
-   gridtolerance="10"
-   guidetolerance="10"
-   id="namedview3458"
-   showgrid="false"
-   inkscape:zoom="10.13468"
-   inkscape:cx="18"
-   inkscape:cy="14.85"
-   inkscape:window-width="800"
-   inkscape:window-height="553"
-   inkscape:window-x="-4"
-   inkscape:window-y="-4"
-   inkscape:window-maximized="1"
-   inkscape:current-layer="breadboard" />
+     id="perspective3464" /></defs>
 
 <g
    id="breadboard">
   <rect
-   id="middle"
+   width="40"
+   height="27"
    x="0"
    y="3"
-   fill="#303030"
-   width="40.0"
-   height="27.0" />
+   id="middle"
+   style="fill:#303030" />
   <rect
+   width="40"
+   height="2.46"
+   x="0"
+   y="3"
    id="top"
-   x="0"
-   y="3.0"
-   fill="#3D3D3D"
-   width="40.0"
-   height="2.46" />
+   style="fill:#3d3d3d" />
   <rect
-   id="bottom"
+   width="40"
+   height="2.46"
    x="0"
-   y="27.54"
-   fill="#000000"
-   width="40.0"
-   height="2.46" />
+   y="27.540001"
+   id="bottom"
+   style="fill:#000000" />
 	<polygon
+   points="39.25,5.46 39.25,27.54 40,30 40,3 "
    id="right"
-   fill="#141414"
-   points="40.0,3 39.25,5.46 39.25,27.54 40.0,30.0" /> 
+   style="fill:#141414" /> 
 	<polygon
+   points="0.75,5.46 0.75,27.54 0,30 0,3 "
    id="left"
-   fill="#1F1F1F"
-   points="0,3 0.75,5.46 0.75,27.54 0,30.0" />
+   style="fill:#1f1f1f" />
   
 	<polygon
+   points="0.75,11.46 0.56,13.58 0.56,16.5 5,16.5 5,11.5 "
    id="left-upper-rect"
-   fill="#1C1C1C"
-   points="5,11.5 0.75,11.46 0.56,13.58 0.56,16.5 5,16.5" />
+   style="fill:#1c1c1c" />
 	<polygon
+   points="5,21.55 5,16.5 0.56,16.5 0.56,19.42 0.75,21.55 "
    id="left-lower-rect"
-   fill="#383838"
-   points="0.75,21.55 5,21.55 5,16.5 0.56,16.5 0.56,19.42" />
+   style="fill:#383838" />
 
   <path
+   d="m 0.56,13.58 v 5.83 c 1.47,-0.17 2.62,-1.4 2.62,-2.92 0,-1.52 -1.14,-2.74 -2.62,-2.91 z"
    id="slot"
-   fill="#262626"
-   d="M0.56,13.58v5.83c1.47-0.17,2.62-1.4,2.62-2.92C3.18,14.97,2.04,13.75,0.56,13.58z" />
+   style="fill:#262626" />
   <path
+   d="m 0.75,5.46 v 5.99 c 2.38,0.45 4.19,2.53 4.19,5.04 0,2.51 -1.8,4.6 -4.19,5.05 v 0.01 h 5 V 5.46 h -5 z"
    id="cover"
-   fill="#303030"
-   d="M0.75,5.46V11.45c2.38,0.45,4.19,2.53,4.19,5.04c0,2.51-1.8,4.6-4.19,5.05V21.55h5.0V5.46H0.75z" />
+   style="fill:#303030" />
   
 	<circle
-   fill="#212121"
    cx="6.5"
-   cy="23.47"
-   r="2.06"
-   id="circle3423" />
+   cy="23.469999"
+   r="2.0599999"
+   id="circle3423"
+   style="fill:#212121" />
  
   <text
-   id="label"
    x="5.3135319"
    y="23.34194"
-   font-size="8"
-   style="font-size:8px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#e6e6e6;stroke:none;font-family:OCRA"
-   sodipodi:linespacing="125%"><tspan
-     sodipodi:role="line"
-     id="tspan2933"
+   id="label"
+   style="font-size:8px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#e6e6e6;stroke:none;font-family:OCRA"><tspan
      x="5.3135319"
-     y="23.34194">010</tspan></text>
+     y="23.34194"
+     id="tspan2933">010</tspan></text>
+
 
 
 
@@ -128,159 +90,161 @@
 
 
 	<rect
+   width="3"
+   height="4.3400002"
+   x="3.5"
+   y="28.66"
    id="connector0pin"
-   x="3.5"
-   y="28.66"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   style="fill:#8c8c8c" />
   <rect
+   width="3"
+   height="3"
+   x="3.5"
+   y="30"
    id="connector0terminal"
-   x="3.5"
-   y="30.0"
-   fill="#8C8C8C"
-   width="3"
-   height="3" />
+   style="fill:#8c8c8c" />
 	<polygon
-   fill="#8C8C8C"
-   points="3.5,28.66 3.5,30.66 6.5,30.66 8.5,29.74 8.5,28.66  "
-   id="polygon3428" />
+   points="3.5,30.66 6.5,30.66 8.5,29.74 8.5,28.66 3.5,28.66 "
+   id="polygon3428"
+   style="fill:#8c8c8c" />
   <rect
+   width="3"
+   height="4.3400002"
+   x="3.5"
+   y="0"
    id="connector7pin"
-   x="3.5"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   style="fill:#8c8c8c" />
   <rect
+   width="3"
+   height="3"
+   x="3.5"
+   y="0"
    id="connector7terminal"
-   x="3.5"
-   fill="#8C8C8C"
-   width="3"
-   height="3" />
+   style="fill:#8c8c8c" />
 	<polygon
-   fill="#8C8C8C"
-   points="8.5,4.34 8.5,3.26 6.5,2.34 3.5,2.34 3.5,4.34"
-   id="polygon3432" />
+   points="8.5,3.26 6.5,2.34 3.5,2.34 3.5,4.34 8.5,4.34 "
+   id="polygon3432"
+   style="fill:#8c8c8c" />
   <rect
-   id="connector3pin"
+   width="3"
+   height="4.3400002"
    x="33.5"
    y="28.66"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   id="connector3pin"
+   style="fill:#8c8c8c" />
   <rect
+   width="3"
+   height="3"
+   x="33.5"
+   y="30"
    id="connector3terminal"
-   x="33.5"
-   y="30.0"
-   fill="#8C8C8C"
-   width="3"
-   height="3" />
+   style="fill:#8c8c8c" />
 	<polygon
-   fill="#8C8C8C"
-   points="31.5,28.66 31.5,29.74 33.5,30.66 36.5,30.66 36.5,28.66"
-   id="polygon3436" />
+   points="31.5,29.74 33.5,30.66 36.5,30.66 36.5,28.66 31.5,28.66 "
+   id="polygon3436"
+   style="fill:#8c8c8c" />
   <rect
+   width="3"
+   height="4.3400002"
+   x="33.5"
+   y="0"
    id="connector4pin"
-   x="33.5"
-   y="0"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   style="fill:#8c8c8c" />
   <rect
-   id="connector4terminal"
+   width="3"
+   height="3"
    x="33.5"
    y="0"
-   fill="#8C8C8C"
-   width="3"
-   height="3" />
+   id="connector4terminal"
+   style="fill:#8c8c8c" />
 	<polygon
-   fill="#8C8C8C"
-   points="36.5,4.34 36.5,2.34 33.5,2.34 31.5,3.26 31.5,4.34  "
-   id="polygon3440" />
+   points="36.5,2.34 33.5,2.34 31.5,3.26 31.5,4.34 36.5,4.34 "
+   id="polygon3440"
+   style="fill:#8c8c8c" />
 
         <rect
+   width="3"
+   height="4.3400002"
+   x="13.5"
+   y="28.66"
    id="connector1pin"
-   x="13.5"
-   y="28.66"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   style="fill:#8c8c8c" />
         <rect
+   width="3"
+   height="3"
+   x="13.5"
+   y="30"
    id="connector1terminal"
-   x="13.5"
-   y="30.0"
-   fill="#8C8C8C"
-   width="3"
-   height="3" />
+   style="fill:#8c8c8c" />
         <polygon
-   fill="#8C8C8C"
-   points="11.5,28.66 11.5,29.74 13.5,30.66 16.5,30.66 18.5,29.74 18.5,28.66"
-   id="polygon3444" />            
+   points="11.5,29.74 13.5,30.66 16.5,30.66 18.5,29.74 18.5,28.66 11.5,28.66 "
+   id="polygon3444"
+   style="fill:#8c8c8c" />            
         <rect
-   id="connector6pin"
+   width="3"
+   height="4.3400002"
    x="13.5"
    y="0"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   id="connector6pin"
+   style="fill:#8c8c8c" />
         <rect
-   id="connector6terminal"
+   width="3"
+   height="3"
    x="13.5"
-   fill="#8C8C8C"
-   width="3"
-   height="3" />
+   y="0"
+   id="connector6terminal"
+   style="fill:#8c8c8c" />
         <polygon
-   fill="#8C8C8C"
-   points="18.5,4.34 18.5,3.26 16.5,2.34 13.5,2.34 11.5,3.26 11.5,4.34"
-   id="polygon3448" />
+   points="18.5,3.26 16.5,2.34 13.5,2.34 11.5,3.26 11.5,4.34 18.5,4.34 "
+   id="polygon3448"
+   style="fill:#8c8c8c" />
         <rect
-   id="connector2pin"
+   width="3"
+   height="4.3400002"
    x="23.5"
    y="28.66"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   id="connector2pin"
+   style="fill:#8c8c8c" />
         <rect
-   id="connector2terminal"
+   width="3"
+   height="3"
    x="23.5"
-   y="30.0"
-   fill="#8C8C8C"
-   width="3"
-   height="3" />
+   y="30"
+   id="connector2terminal"
+   style="fill:#8c8c8c" />
         <polygon
-   fill="#8C8C8C"
-   points="21.5,28.66 21.5,29.74 23.5,30.66 26.5,30.66 28.5,29.74 28.5,28.66"
-   id="polygon3452" />            
+   points="21.5,29.74 23.5,30.66 26.5,30.66 28.5,29.74 28.5,28.66 21.5,28.66 "
+   id="polygon3452"
+   style="fill:#8c8c8c" />            
         <rect
-   id="connector5pin"
+   width="3"
+   height="4.3400002"
    x="23.5"
    y="0"
-   fill="#8C8C8C"
-   width="3"
-   height="4.34" />
+   id="connector5pin"
+   style="fill:#8c8c8c" />
         <rect
-   id="connector5terminal"
-   x="23.5"
-   fill="#8C8C8C"
    width="3"
-   height="3" />
+   height="3"
+   x="23.5"
+   y="0"
+   id="connector5terminal"
+   style="fill:#8c8c8c" />
         <polygon
-   fill="#8C8C8C"
-   points="28.5,4.34 28.5,3.26 26.5,2.34 23.5,2.34 21.5,3.26 21.5,4.34"
-   id="polygon3456" />
+   points="28.5,3.26 26.5,2.34 23.5,2.34 21.5,3.26 21.5,4.34 28.5,4.34 "
+   id="polygon3456"
+   style="fill:#8c8c8c" />
         
 
 <text
-   sodipodi:linespacing="125%"
-   id="label-1"
    x="5.2038975"
    y="14.680809"
-   font-size="8"
+   id="label-1"
    style="font-size:8px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#e6e6e6;stroke:none;font-family:OCRA"><tspan
-     sodipodi:role="line"
-     id="tspan2931"
      x="5.2038975"
-     y="14.680809">11LC</tspan></text>
+     y="14.680809"
+     id="tspan2931">11LC</tspan></text>
+
 
 </g>
 </svg>
