@@ -57,10 +57,10 @@
     </g>
    </g>
    <rect xmlns="http://www.w3.org/2000/svg" width="18.504" x="44.667" y="16.26" fill="#02809E" height="18.506" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -2.2485 45.5969)"/>
-   <text xmlns="http://www.w3.org/2000/svg" transform="matrix(8.979319e-11 -1 1 8.979319e-11 15.2998 30.3066)">
-    <tspan xmlns="http://www.w3.org/2000/svg" x="0" y="0" fill="#FFFFFF" font-family="OCRA" font-size="3.5">Mini</tspan>
-    <tspan xmlns="http://www.w3.org/2000/svg" x="-8.391" y="4.2" fill="#FFFFFF" font-family="OCRA" font-size="3.5">Arduino Pro</tspan>
-   </text>
+   <g xmlns="http://www.w3.org/2000/svg" transform="matrix(8.979319e-11 -1 1 8.979319e-11 15.2998 30.3066)">
+    <text xmlns="http://www.w3.org/2000/svg" x="0" y="0" fill="#FFFFFF" font-family="OCRA" font-size="3.5">Mini</text>
+    <text xmlns="http://www.w3.org/2000/svg" x="-8.391" y="4.2" fill="#FFFFFF" font-family="OCRA" font-size="3.5">Arduino Pro</text>
+   </g>
    <text xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" font-family="OCRA" transform="matrix(8.979319e-11 -1 1 8.979319e-11 73.3164 31.5059)" font-size="3.5">Reset</text>
    <g xmlns="http://www.w3.org/2000/svg">
     <polygon xmlns="http://www.w3.org/2000/svg" fill="#6D6D6D" points="76.272,29.769 78.297,31.794 86.813,31.794 88.837,29.769 88.837,21.253 86.813,19.229 78.297,19.229 76.272,21.253 "/>

@@ -45,7 +45,7 @@
 	<text transform="matrix(1 0 0 1 164.105 67.3198)" font-family="DroidSans" font-size="9.9889">CTS</text>
 	<text transform="matrix(1 0 0 1 160.8081 88.5015)" font-family="DroidSans" font-size="9.9889">DCD</text>
 	<text transform="matrix(1 0 0 1 93.228 53.9204)" font-family="DroidSans" font-size="9.9889">Power</text>
-	<text transform="matrix(1 0 0 1 74.9878 91.3257)"><tspan x="0" y="0" font-family="DroidSans" font-size="17.98">Arduino</tspan><tspan x="14.653" y="21.576" font-family="DroidSans" font-size="17.98">Mini</tspan><tspan x="15.895" y="43.152" font-family="DroidSans" font-size="17.98">USB</tspan><tspan x="-0.171" y="64.728" font-family="DroidSans" font-size="17.98">Adaptor</tspan></text>
+	<g transform="matrix(1 0 0 1 74.9878 91.3257)"><text x="0" y="0" font-family="DroidSans" font-size="17.98">Arduino</text><text x="14.653" y="21.576" font-family="DroidSans" font-size="17.98">Mini</text><text x="15.895" y="43.152" font-family="DroidSans" font-size="17.98">USB</text><text x="-0.171" y="64.728" font-family="DroidSans" font-size="17.98">Adaptor</text></g>
 	
 		<line fill="none" stroke="#000000" stroke-width="1.9517" stroke-linecap="round" stroke-linejoin="round" x1="107.406" y1="235.312" x2="107.406" y2="214.074"/>
 	<text transform="matrix(1 0 0 1 96.876 203.8872)" font-family="DroidSans" font-size="9.9889">GND</text>
