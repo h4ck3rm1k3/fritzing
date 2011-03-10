@@ -24,20 +24,20 @@ $Date$
 
 ********************************************************************/
 
-#ifndef CAPACITOR_H
-#define CAPACITOR_H
+#ifndef CRYSTAL_H
+#define CRYSTAL_H
 
 #include "paletteitem.h"
 #include "propertydef.h"
 
-class Capacitor : public PaletteItem 
+class Crystal : public PaletteItem 
 {
 	Q_OBJECT
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	Capacitor(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
-	~Capacitor();
+	Crystal(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~Crystal();
 
 	PluralType isPlural();
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
@@ -51,4 +51,4 @@ protected:
 	QHash<PropertyDef *, class FocusOutComboBox *> m_comboBoxes;
 };
 
-#endif // CAPACITOR_H
+#endif // CRYSTAL_H

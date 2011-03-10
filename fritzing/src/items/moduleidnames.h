@@ -49,6 +49,7 @@ public:
 	static const QString holeModuleIDName;
 	static const QString viaModuleIDName;
 	static const QString capacitorModuleIDName;
+	static const QString crystalModuleIDName;
 
 };
 

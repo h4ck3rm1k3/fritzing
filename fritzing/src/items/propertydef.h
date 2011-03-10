@@ -24,31 +24,38 @@ $Date$
 
 ********************************************************************/
 
-#ifndef CAPACITOR_H
-#define CAPACITOR_H
+#ifndef PROPERTYDEF_H
+#define PROPERTYDEF_H
 
-#include "paletteitem.h"
-#include "propertydef.h"
+#include <QHash>
+#include <QList>
 
-class Capacitor : public PaletteItem 
-{
-	Q_OBJECT
-
-public:
-	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	Capacitor(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
-	~Capacitor();
-
-	PluralType isPlural();
-	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
-	void setProp(const QString & prop, const QString & value);
-
-public slots:
-	void propertyEntry(const QString & text);
-
-protected:
-	QHash<PropertyDef *, QString> m_propertyDefs;
-	QHash<PropertyDef *, class FocusOutComboBox *> m_comboBoxes;
+struct PropertyDef {
+	QString name;
+	QString id;
+	QString symbol;
+	qreal minValue;
+	qreal maxValue;
+	qreal defaultValue;
+	QList<qreal> menuItems;
 };
 
-#endif // CAPACITOR_H
+struct InstanceDef {
+	QString moduleID;
+	QList<PropertyDef *> propertyDefs;
+};
+
+class PropertyDefMaster
+{
+public:
+	static void initPropertyDefs(class ModelPart *, QHash<PropertyDef *, QString> & propertyDefs);
+
+protected:
+	static void loadPropertyDefs();
+
+protected:
+	static QHash <QString, PropertyDef *> PropertyDefs;
+	static QHash <QString, InstanceDef *> InstanceDefs;
+};
+
+#endif // PROPERTYDEF_H

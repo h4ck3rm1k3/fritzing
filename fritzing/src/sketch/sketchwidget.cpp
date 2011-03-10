@@ -81,6 +81,7 @@ $Date$
 #include "../items/moduleidnames.h"
 #include "../items/hole.h"
 #include "../items/capacitor.h"
+#include "../items/crystal.h"
 #include "../lib/ff/flow.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -4185,6 +4186,13 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 		QString voltage = capacitor->modelPart()->prop("rated voltage").toString();
 		new SetPropCommand(this, itemBase->id(), "capacitance", capacitance, capacitance, true, parentCommand);
 		new SetPropCommand(this, itemBase->id(), "rated voltage", voltage, voltage, true, parentCommand);
+		return;
+	}
+
+	Crystal * crystal = dynamic_cast<Crystal *>(itemBase);
+	if (crystal != NULL) {
+		QString frequency = crystal->modelPart()->prop("frequency").toString();
+		new SetPropCommand(this, itemBase->id(), "frequency", frequency, frequency, true, parentCommand);
 		return;
 	}
 }

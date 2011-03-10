@@ -27,7 +27,13 @@
     <property id="cap1" />
     <property id="voltage1" />
   </instance>
-
+  <instance moduleID="CrystalModuleID">
+    <property id="frequency1" />
+  </instance>
+  <instance moduleID="SMDCrystalModuleID">
+    <property id="frequency1" />
+  </instance>
+  
   <property id="cap1" name="capacitance" symbol="F" minValue=".000000047" maxValue=".00033" defaultValue=".0000001">	
 			<menuItem value="0.00000039" />
 			<menuItem value="0.00000047" />
@@ -66,6 +72,7 @@
 			<menuItem value="0.000270" />
 			<menuItem value="0.000330" />
 		</property>
+		
   <property id="voltage1" name="rated voltage" symbol="V" minValue="4" maxValue="50" defaultValue="35">
     <menuItem value="4" />
     <menuItem value="6.3" />
@@ -76,4 +83,15 @@
     <menuItem value="35" />
     <menuItem value="50" />
   </property>
+  
+<property id="frequency1" name="frequency" symbol="mHz" minValue="" maxValue="" defaultValue="16">
+    <menuItem value="3.579545" />
+    <menuItem value="4.433619" />
+    <menuItem value="14.318182" />
+    <menuItem value="17.734475" />
+    <menuItem value="20" />
+    <menuItem value="33.33" />
+    <menuItem value="40" />
+  </property>
+
 </properties>

@@ -24,31 +24,31 @@ $Date$
 
 ********************************************************************/
 
-#include "capacitor.h"
+#include "crystal.h"
 
 
-#include "../utils/textutils.h"
 #include "../utils/focusoutcombobox.h"
 #include "../utils/boundedregexpvalidator.h"
 #include "../sketch/infographicsview.h"
+#include "../utils/textutils.h"
 
 // TODO
 //	save into parts bin
 
-Capacitor::Capacitor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Crystal::Crystal( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	PropertyDefMaster::initPropertyDefs(modelPart, m_propertyDefs);
 }
 
-Capacitor::~Capacitor() {
+Crystal::~Crystal() {
 }
 
-ItemBase::PluralType Capacitor::isPlural() {
+ItemBase::PluralType Crystal::isPlural() {
 	return Plural;
 }
 
-bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
+bool Crystal::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	foreach (PropertyDef * propertyDef, m_propertyDefs.keys()) {
 		if (prop.compare(propertyDef->name, Qt::CaseInsensitive) == 0) {
@@ -59,7 +59,7 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 
 			FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
 			focusOutComboBox->setEnabled(swappingEnabled);
-			focusOutComboBox->setEditable(true);
+			focusOutComboBox->setEditable(false);
 			QString current = m_propertyDefs.value(propertyDef);
 			qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
 			if (!propertyDef->menuItems.contains(val)) {
@@ -75,15 +75,6 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 				ix = focusOutComboBox->findText(current);
 			}
 			focusOutComboBox->setCurrentIndex(ix);
-			BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
-			validator->setSymbol(propertyDef->symbol);
-			validator->setConverter(TextUtils::convertFromPowerPrefix);
-			validator->setBounds(propertyDef->minValue, propertyDef->maxValue);
-			QString pattern = QString("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d{1,2}))[%1]{0,1}[%2]{0,1}")
-											.arg(TextUtils::PowerPrefixesString)
-											.arg(propertyDef->symbol);
-			validator->setRegExp(QRegExp(pattern));
-			focusOutComboBox->setValidator(validator);
 			connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(propertyEntry(const QString &)));
 
 			focusOutComboBox->setMaximumWidth(100);
@@ -99,29 +90,22 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
-void Capacitor::propertyEntry(const QString & text) {
+void Crystal::propertyEntry(const QString & text) {
 	FocusOutComboBox * focusOutComboBox = qobject_cast<FocusOutComboBox *>(sender());
 	if (focusOutComboBox == NULL) return;
 
 	foreach (PropertyDef * propertyDef, m_comboBoxes.keys()) {
 		if (m_comboBoxes.value(propertyDef) == focusOutComboBox) {
-			QString utext = text;
-			qreal val = TextUtils::convertFromPowerPrefixU(utext, propertyDef->symbol);
-			if (!propertyDef->menuItems.contains(val)) {
-				// info view is redrawn, so combobox is recreated, so the new item is added to the combo box menu
-				propertyDef->menuItems.append(val);
-			}
-
 			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 			if (infoGraphicsView != NULL) {
-				infoGraphicsView->setProp(this, propertyDef->name, "", m_propertyDefs.value(propertyDef, ""), utext, true);
+				infoGraphicsView->setProp(this, propertyDef->name, "", m_propertyDefs.value(propertyDef, ""), text, true);
 			}
 			break;
 		}
 	}
 }
 
-void Capacitor::setProp(const QString & prop, const QString & value) {
+void Crystal::setProp(const QString & prop, const QString & value) {
 	foreach (PropertyDef * propertyDef, m_propertyDefs.keys()) {
 		if (prop.compare(propertyDef->name, Qt::CaseInsensitive) == 0) {
 			m_propertyDefs.insert(propertyDef, value);

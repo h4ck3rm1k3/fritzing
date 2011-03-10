@@ -18,7 +18,8 @@
 # ********************************************************************/
 
 HEADERS += \
-    src/items/capacitor.h \
+    src/items/capacitor.h \    
+    src/items/crystal.h \
     src/items/clipablewire.h \
     src/items/dip.h \
     src/items/graphicssvglineitem.h \
@@ -30,12 +31,13 @@ HEADERS += \
     src/items/logoitem.h \
     src/items/moduleidnames.h \
     src/items/mysterypart.h \
-	src/items/note.h \
+    src/items/note.h \
     src/items/paletteitem.h \
     src/items/paletteitembase.h \
     src/items/partfactory.h \
     src/items/partlabel.h \
     src/items/pinheader.h \
+    src/items/propertydef.h \
     src/items/resistor.h \
     src/items/resizableboard.h \
     src/items/ruler.h \
@@ -47,6 +49,7 @@ HEADERS += \
 
 SOURCES += \
     src/items/capacitor.cpp \
+    src/items/crystal.cpp \
     src/items/clipablewire.cpp \
     src/items/dip.cpp \
     src/items/graphicssvglineitem.cpp \
@@ -58,12 +61,13 @@ SOURCES += \
     src/items/logoitem.cpp \
     src/items/moduleidnames.cpp \
     src/items/mysterypart.cpp \
-	src/items/note.cpp \
+    src/items/note.cpp \
     src/items/paletteitem.cpp \
     src/items/paletteitembase.cpp \
     src/items/partfactory.cpp \
     src/items/partlabel.cpp \
     src/items/pinheader.cpp \
+    src/items/propertydef.cpp \
     src/items/resistor.cpp \
     src/items/resizableboard.cpp \
     src/items/ruler.cpp \

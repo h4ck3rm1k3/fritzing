@@ -47,4 +47,5 @@ const QString ModuleIDNames::logoImageModuleIDName = "LogoImageModuleID";
 const QString ModuleIDNames::holeModuleIDName = "HoleModuleID";
 const QString ModuleIDNames::viaModuleIDName = "ViaModuleID";
 const QString ModuleIDNames::capacitorModuleIDName = "CapacitorModuleID";
+const QString ModuleIDNames::crystalModuleIDName = "CrystalModuleID";
 
