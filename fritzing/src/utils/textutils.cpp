@@ -742,7 +742,10 @@ void TextUtils::gWrap(QDomDocument & domDocument, const QHash<QString, QString> 
 }
 
 bool TextUtils::tspanRemove(QString &svg) {
-	if (!svg.contains("tspan")) return false;
+	if (!svg.contains("<tspan")) return false;
+
+	// TODO: if the <text> element has its own text node, this will be ordered first, even if the text node occurs after one or more <tspan> elements
+	// this is a very unlikely occurrence, so fixing it is very low priority.
 
 	QDomDocument svgDom;
 	QString errorMsg;
@@ -765,7 +768,6 @@ bool TextUtils::tspanRemove(QString &svg) {
 	foreach (QDomElement text, texts) {
 		QDomElement g = svgDom.createElement("g");
 		text.parentNode().replaceChild(g, text);
-		text.normalize();
 		QDomNamedNodeMap attributes = text.attributes();
 		for (int i = 0; i < attributes.count(); i++) {
 			QDomNode attribute = attributes.item(i);
@@ -776,16 +778,11 @@ bool TextUtils::tspanRemove(QString &svg) {
 		g.removeAttribute("x");
 		g.removeAttribute("y");
 
-		copyText(svgDom, g, text, defaultX, defaultY);
+		copyText(svgDom, g, text, defaultX, defaultY, false);
 
 		QDomElement tspan = text.firstChildElement("tspan");
 		while (!tspan.isNull()) {
-			QDomElement newText = copyText(svgDom, g, tspan, defaultX, defaultY);
-			QString x = tspan.attribute("x");
-			QString y = tspan.attribute("y");
-			if (!x.isEmpty()) newText.setAttribute("x", x);
-			if (!y.isEmpty()) newText.setAttribute("y", y);
-
+			copyText(svgDom, g, tspan, defaultX, defaultY, true);
 			tspan = tspan.nextSiblingElement("tspan");
 		}
 	}
@@ -794,10 +791,8 @@ bool TextUtils::tspanRemove(QString &svg) {
 	return true;
 }
 
-QDomElement TextUtils::copyText(QDomDocument & svgDom, QDomElement & parent, QDomElement & text, const QString & defaultX, const QString & defaultY)
+QDomElement TextUtils::copyText(QDomDocument & svgDom, QDomElement & parent, QDomElement & text, const QString & defaultX, const QString & defaultY, bool copyAttributes)
 {
-	// assume text element has been normalized
-
 	QDomNode cnode = text.firstChild();
 	while (!cnode.isNull()) {
 		if (cnode.isText()) {
@@ -807,7 +802,16 @@ QDomElement TextUtils::copyText(QDomDocument & svgDom, QDomElement & parent, QDo
 			newText.setAttribute("y", defaultY);
 			QDomNode textValue = svgDom.createTextNode(cnode.nodeValue());
 			newText.appendChild(textValue);
-			// normalize means there's only one text 
+
+			if (copyAttributes) {
+				QDomNamedNodeMap attributes = text.attributes();
+				for (int i = 0; i < attributes.count(); i++) {
+					QDomNode attribute = attributes.item(i);
+					newText.setAttribute(attribute.nodeName(), attribute.nodeValue());
+				}
+			}
+
+			// normalize means there's only one text child node, so we can return now
 			return newText;
 		}
 
