@@ -161,6 +161,13 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 		//DebugDialog::debug("inkscape " + filename);
 	}
 
+	if (contents.contains("tspan")) {
+		QString string(contents);
+		TextUtils::tspanRemove(string);
+		cleanContents = string.toUtf8();
+		cleaned = true;
+	}
+
 	if (!cleaned) {
 		cleanContents = contents; 
 	}

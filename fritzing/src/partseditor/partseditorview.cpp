@@ -656,6 +656,7 @@ void PartsEditorView::beforeSVGLoading(const QString &filename, bool &canceled) 
 	bool fileHasChanged = (m_viewIdentifier == ViewIdentifierClass::IconView) ? false : TextUtils::fixPixelDimensionsIn(fileContent);
 	fileHasChanged |= TextUtils::cleanSodipodi(fileContent);
 	fileHasChanged |= TextUtils::fixViewboxOrigin(fileContent);
+	fileHasChanged |= TextUtils::tspanRemove(fileContent);
 	fileHasChanged |= fixFonts(fileContent,filename,canceled);
 
 	if(fileHasChanged) {

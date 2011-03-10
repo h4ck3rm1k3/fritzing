@@ -1832,6 +1832,7 @@ bool MainWindow::loadCustomBoardShape()
 	TextUtils::cleanSodipodi(svg);
 	TextUtils::fixPixelDimensionsIn(svg);
 	TextUtils::fixViewboxOrigin(svg);
+	TextUtils::tspanRemove(svg);
 
 	SvgFileSplitter splitter;
 	if (!splitter.splitString(svg, "board")) {

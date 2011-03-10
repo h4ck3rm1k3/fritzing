@@ -71,6 +71,7 @@ public:
 	static QList<qreal> getTransformFloats(const QString & transform);
 	static QString removeXMLNS(QString svgContent);
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
+	static bool tspanRemove(QString &svg);
 
 public:
 	static const QRegExp FindWhitespace;
@@ -89,7 +90,7 @@ protected:
 	static bool pxToInches(QDomElement &elem, const QString &attrName, bool isIllustrator);
     static void squashNotElement(QDomElement & element, const QString & elementName, const QString & attName, const QRegExp & matchContent, bool & result);
 	static void initPowerPrefixes();
-
+	static QDomElement copyText(QDomDocument & svgDom, QDomElement & parent, QDomElement & text, const QString & defaultX, const QString & defaultY);
 };
 
 #endif
