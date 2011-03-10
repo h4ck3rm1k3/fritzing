@@ -84,10 +84,11 @@
     <menuItem value="50" />
   </property>
   
-<property id="frequency1" name="frequency" symbol="mHz" minValue="" maxValue="" defaultValue="16">
+<property id="frequency1" name="frequency" symbol="MHz" minValue="" maxValue="" defaultValue="16">
     <menuItem value="3.579545" />
     <menuItem value="4.433619" />
-    <menuItem value="14.318182" />
+    <menuItem value="14.318182" />    
+    <menuItem value="16" />
     <menuItem value="17.734475" />
     <menuItem value="20" />
     <menuItem value="33.33" />
