@@ -1,0 +1,8 @@
+setuptools
+plone.app.z3cform
+plone.directives.form
+plone.namedfile
+plone.namedfile[blobs]
+
+[tests]
+collective.testcaselayer

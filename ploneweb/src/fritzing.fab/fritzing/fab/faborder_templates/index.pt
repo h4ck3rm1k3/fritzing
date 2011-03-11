@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" xml:lang="en" lang="en" metal:use-macro="context/main_template/macros/master" i18n:domain="fritzing.fab">
+  <head>
+      <metal:block fill-slot="style_slot">
+          <link rel="stylesheet" type="text/css" 
+              tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+              tal:attributes="href string:${navroot}/++resource++fritzing.fab/styles.css"
+              />
+      </metal:block>
+      <metal:block fill-slot="javascript_head_slot">
+          <script type="text/javascript" 
+              tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+              tal:attributes="src string:${navroot}/++resource++fritzing.fab/fab.js"
+              >
+          </script>
+      </metal:block>
+  </head>
+  <body>
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+        <h1 tal:content="view/label" class="documentFirstHeading">xOrder your PCB</h1>
+        <p tal:content="view/description" class="documentDescription">xWe will contact you to confirm your order and delivery.</p>
+        <div id="content-core">
+          <div tal:condition="not:container/listFolderContents">
+            no sketches, bla bla
+          </div>
+          <table tal:condition="container/listFolderContents">
+            <tr tal:repeat="item container/listFolderContents">
+              <td tal:content="repeat/item/number">#</td>
+              <td tal:content="item/orderItem/filename | string:error">filename</td>
+              <td>
+                copies: <span tal:content="item/copies">-?-</span><br />
+                check: <span tal:content="item/check">-?-</span><br />
+              </td>
+              <td>
+                price per board: <span>-?-</span>
+              </td>
+              <td>
+                <a class="editSketchLink" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br />
+                <a class="deleteSketchLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
+              </td>
+            </tr>
+          </table>
+          <a class="addSketchLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++sketch">add sketch</a>
+          <!--
+          <div tal:condition="python: len(container.objectValues()) > 0 and not context.name">
+            please add your address to complete your order:<br />
+            <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">add address</a>
+          </div>
+          <div tal:condition="context/name">
+            <div tal:content="context/name">name</div>
+            <div tal:condition="context/company" tal:content="context/company">company</div>
+            <div>
+              <span tal:content="context/streetNumber">streetNumber</span> 
+              <span tal:content="context/street">street</span>
+            </div>
+            <div>
+              <span tal:content="context/postcode">postcode</span> 
+              <span tal:content="context/city">city</span>, 
+              <span tal:content="context/country">country</span> 
+            </div>
+            <div tal:content="context/email">email</div>
+            <div tal:content="context/telephone">telephone</div>
+            <div>
+              <span>Shipping Area:</span> 
+              <span tal:content="context/shipTo">shipTo</span>
+            </div>
+            <div tal:condition="context/instructionsRead">instructions read</div>
+            <div tal:condition="not:context/instructionsRead">instructions NOT read</div>
+            <div tal:condition="context/termsAccepted">terms accepted</div>
+            <div tal:condition="not:context/termsAccepted">terms NOT accepted</div>
+            <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">edit address</a>
+          </div>
+          -->
+          <div tal:condition="python: context.sketchesOk">
+            everything alright blabla... you can now: <br />
+            <a class="checkoutLink" href="#">checkout</a>
+          </div>
+        </div>
+      </tal:main-macro>
+    </metal:main>
+  </body>
+</html>

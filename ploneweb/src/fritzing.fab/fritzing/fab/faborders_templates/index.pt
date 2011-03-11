@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" xml:lang="en" lang="en" metal:use-macro="context/main_template/macros/master" i18n:domain="fritzing.fab">
+  <head>
+    <metal:block fill-slot="style_slot">
+      <link rel="stylesheet" type="text/css" tal:define="navroot context/@@plone_portal_state/navigation_root_url" tal:attributes="href string:${navroot}/++resource++fritzing.fab/styles.css"/>
+    </metal:block>
+    <metal:block fill-slot="javascript_head_slot">
+      <script type="text/javascript" tal:define="navroot context/@@plone_portal_state/navigation_root_url" tal:attributes="src string:${navroot}/++resource++fritzing.fab/fab.js">
+          </script>
+    </metal:block>
+  </head>
+  <body>
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+        <h1 tal:content="view/label" class="documentFirstHeading">xOrder your PCB</h1>
+        <p tal:content="view/description" class="documentDescription">xWe will contact you to confirm your order and delivery.</p>
+        <div id="content-core">
+          <p>how to fab bla bla</p>
+          <div tal:condition="not:container/listFolderContents">
+            no sketches, bla bla
+            <a class="addOrderLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++faborder">add order</a>
+          </div>
+          <div tal:condition="container/listFolderContents">
+            <table>
+              <tr>
+                <th>Order</th>
+                <th>Sketches</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+              <tr tal:repeat="item container/listFolderContents">
+                <td tal:content="item/title | string:error">title</td>
+                <td>sketches</td>
+                <td>status</td>
+                <td>
+                  <a class="viewOrderLink" href="#" tal:attributes="href string:${item/absolute_url}">view</a><br/>
+                  <a class="editOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br/>
+                  <a class="deleteOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
+                </td>
+              </tr>
+            </table>
+            <a class="addOrderLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++faborder">add order</a>
+          </div>
+        </div>
+      </tal:main-macro>
+    </metal:main>
+  </body>
+</html>
