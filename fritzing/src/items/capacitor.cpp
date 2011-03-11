@@ -38,6 +38,7 @@ $Date$
 Capacitor::Capacitor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	m_editable = true;
 	PropertyDefMaster::initPropertyDefs(modelPart, m_propertyDefs);
 }
 
@@ -59,7 +60,7 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 
 			FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
 			focusOutComboBox->setEnabled(swappingEnabled);
-			focusOutComboBox->setEditable(true);
+			focusOutComboBox->setEditable(m_editable);
 			QString current = m_propertyDefs.value(propertyDef);
 			qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
 			if (!propertyDef->menuItems.contains(val)) {
@@ -75,15 +76,17 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 				ix = focusOutComboBox->findText(current);
 			}
 			focusOutComboBox->setCurrentIndex(ix);
-			BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
-			validator->setSymbol(propertyDef->symbol);
-			validator->setConverter(TextUtils::convertFromPowerPrefix);
-			validator->setBounds(propertyDef->minValue, propertyDef->maxValue);
-			QString pattern = QString("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d{1,2}))[%1]{0,1}[%2]{0,1}")
-											.arg(TextUtils::PowerPrefixesString)
-											.arg(propertyDef->symbol);
-			validator->setRegExp(QRegExp(pattern));
-			focusOutComboBox->setValidator(validator);
+			if (m_editable) {
+				BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
+				validator->setSymbol(propertyDef->symbol);
+				validator->setConverter(TextUtils::convertFromPowerPrefix);
+				validator->setBounds(propertyDef->minValue, propertyDef->maxValue);
+				QString pattern = QString("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d{1,2}))[%1]{0,1}[%2]{0,1}")
+												.arg(TextUtils::PowerPrefixesString)
+												.arg(propertyDef->symbol);
+				validator->setRegExp(QRegExp(pattern));
+				focusOutComboBox->setValidator(validator);
+			}
 			connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(propertyEntry(const QString &)));
 
 			focusOutComboBox->setMaximumWidth(100);

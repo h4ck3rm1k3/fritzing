@@ -24,22 +24,22 @@ $Date$
 
 ********************************************************************/
 
-#ifndef CRYSTAL_H
-#define CRYSTAL_H
+#ifndef ZENERDIODE_H
+#define ZENERDIODE_H
 
 #include "capacitor.h"
 #include "propertydef.h"
 
-class Crystal : public Capacitor 
+class ZenerDiode : public Capacitor 
 {
 	Q_OBJECT
 
 public:
-	Crystal(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
-	~Crystal();
+	ZenerDiode(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~ZenerDiode();
 
 public slots:
 	void propertyEntry(const QString & text);
 };
 
-#endif // CRYSTAL_H
+#endif // ZENERDIODE_H

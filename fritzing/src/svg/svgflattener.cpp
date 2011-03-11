@@ -80,7 +80,7 @@ void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
 		// I'm a leaf node.
 		QString tag = element.nodeName().toLower();
 		if(tag == "path"){
-            QString data = element.attribute("d");
+            QString data = element.attribute("d").trimmed();
             if (!data.isEmpty()) {
                 const char * slot = SLOT(rotateCommandSlot(QChar, bool, QList<double> &, void *));
                 PathUserData pathUserData;

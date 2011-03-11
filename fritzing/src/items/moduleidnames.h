@@ -50,6 +50,7 @@ public:
 	static const QString viaModuleIDName;
 	static const QString capacitorModuleIDName;
 	static const QString crystalModuleIDName;
+	static const QString zenerDiodeModuleIDName;
 
 };
 

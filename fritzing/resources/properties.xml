@@ -33,7 +33,19 @@
   <instance moduleID="SMDCrystalModuleID">
     <property id="frequency1" />
   </instance>
-  
+  <instance moduleID="30c27e88-7b6f-489e-bea9-a20f5bbad007ZenerDiodeModuleID">
+    <property id="breakdown1" />
+  </instance>
+  <instance moduleID="439632e4-b865-415e-9bda-daf63cb97dbcZenerDiodeModuleID">
+    <property id="breakdown1" />
+  </instance>
+  <instance moduleID="x25270912c951b6bdd0d67c0d2ad67eabZenerDiodeModuleID">
+    <property id="breakdown1" />
+  </instance>
+  <instance moduleID="xc307sadf951b6bdd0d67c0d2ad67eabZenerDiodeModuleID">
+    <property id="breakdown1" />
+  </instance>
+
   <property id="cap1" name="capacitance" symbol="F" minValue=".000000047" maxValue=".00033" defaultValue=".0000001">	
 			<menuItem value="0.00000039" />
 			<menuItem value="0.00000047" />
@@ -85,14 +97,24 @@
   </property>
   
 <property id="frequency1" name="frequency" symbol="MHz" minValue="" maxValue="" defaultValue="16">
-    <menuItem value="3.579545" />
-    <menuItem value="4.433619" />
-    <menuItem value="14.318182" />    
+    <menuItem value="1" />
+    <menuItem value="2" />
+    <menuItem value="4" />    
+    <menuItem value="8" />
     <menuItem value="16" />
-    <menuItem value="17.734475" />
     <menuItem value="20" />
-    <menuItem value="33.33" />
-    <menuItem value="40" />
+  </property>
+
+
+  <property id="breakdown1" name="breakdown voltage" symbol="V" minValue="1" maxValue="100" defaultValue="3.6">
+    <menuItem value="1" />
+    <menuItem value="2" />
+    <menuItem value="3.6" />
+    <menuItem value="4.7" />
+    <menuItem value="10" />
+    <menuItem value="20" />
+    <menuItem value="50" />
+    <menuItem value="100" />
   </property>
 
 </properties>

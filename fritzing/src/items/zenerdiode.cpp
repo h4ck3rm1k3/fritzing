@@ -24,22 +24,24 @@ $Date$
 
 ********************************************************************/
 
-#ifndef CRYSTAL_H
-#define CRYSTAL_H
+#include "zenerdiode.h"
 
-#include "capacitor.h"
-#include "propertydef.h"
+#include "../utils/focusoutcombobox.h"
+#include "../utils/boundedregexpvalidator.h"
+#include "../sketch/infographicsview.h"
+#include "../utils/textutils.h"
 
-class Crystal : public Capacitor 
+// TODO
+//	save into parts bin
+
+ZenerDiode::ZenerDiode( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	Q_OBJECT
+}
 
-public:
-	Crystal(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
-	~Crystal();
+ZenerDiode::~ZenerDiode() {
+}
 
-public slots:
-	void propertyEntry(const QString & text);
-};
-
-#endif // CRYSTAL_H
+void ZenerDiode::propertyEntry(const QString & text) {
+	Capacitor::propertyEntry(text);
+}

@@ -82,6 +82,7 @@ $Date$
 #include "../items/hole.h"
 #include "../items/capacitor.h"
 #include "../items/crystal.h"
+#include "../items/zenerdiode.h"
 #include "../lib/ff/flow.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -4180,19 +4181,26 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 		return;
 	}
 
+	Crystal * crystal = dynamic_cast<Crystal *>(itemBase);
+	if (crystal != NULL) {
+		QString frequency = crystal->modelPart()->prop("frequency").toString();
+		new SetPropCommand(this, itemBase->id(), "frequency", frequency, frequency, true, parentCommand);
+		return;
+	}
+
+	ZenerDiode * zenerDiode = dynamic_cast<ZenerDiode *>(itemBase);
+	if (zenerDiode != NULL) {
+		QString breakdownVoltage = zenerDiode->modelPart()->prop("breakdown voltage").toString();
+		new SetPropCommand(this, itemBase->id(), "breakdown voltage", breakdownVoltage, breakdownVoltage, true, parentCommand);
+		return;
+	}
+
 	Capacitor * capacitor = dynamic_cast<Capacitor *>(itemBase);
 	if (capacitor != NULL) {
 		QString capacitance = capacitor->modelPart()->prop("capacitance").toString();
 		QString voltage = capacitor->modelPart()->prop("rated voltage").toString();
 		new SetPropCommand(this, itemBase->id(), "capacitance", capacitance, capacitance, true, parentCommand);
 		new SetPropCommand(this, itemBase->id(), "rated voltage", voltage, voltage, true, parentCommand);
-		return;
-	}
-
-	Crystal * crystal = dynamic_cast<Crystal *>(itemBase);
-	if (crystal != NULL) {
-		QString frequency = crystal->modelPart()->prop("frequency").toString();
-		new SetPropCommand(this, itemBase->id(), "frequency", frequency, frequency, true, parentCommand);
 		return;
 	}
 }

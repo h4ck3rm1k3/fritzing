@@ -45,7 +45,8 @@ HEADERS += \
     src/items/tracewire.h \
     src/items/via.h \
     src/items/virtualwire.h \
-    src/items/wire.h 
+    src/items/wire.h \
+    src/items/zenerdiode.h 
 
 SOURCES += \
     src/items/capacitor.cpp \
@@ -75,4 +76,5 @@ SOURCES += \
     src/items/tracewire.cpp \    
     src/items/via.cpp \
     src/items/virtualwire.cpp \
-    src/items/wire.cpp 
+    src/items/wire.cpp \
+    src/items/zenerdiode.cpp 

@@ -49,6 +49,7 @@ public slots:
 protected:
 	QHash<PropertyDef *, QString> m_propertyDefs;
 	QHash<PropertyDef *, class FocusOutComboBox *> m_comboBoxes;
+	bool m_editable;
 };
 
 #endif // CAPACITOR_H

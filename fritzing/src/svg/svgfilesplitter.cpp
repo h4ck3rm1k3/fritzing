@@ -300,7 +300,7 @@ void SvgFileSplitter::painterPathChild(QDomElement & element, QPainterPath & ppa
 	}
 	else if (element.nodeName().compare("path") == 0) {
 		/*
-		QString data = element.attribute("d");
+		QString data = element.attribute("d").trimmed();
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
@@ -422,7 +422,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		setStrokeOrFill(element, blackOnly, "black");
-		QString data = element.attribute("d");
+		QString data = element.attribute("d").trimmed();
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
@@ -565,7 +565,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y, bool s
 		}
 	}
 	else if (nodeName.compare("path") == 0) {
-		QString data = element.attribute("d");
+		QString data = element.attribute("d").trimmed();
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;

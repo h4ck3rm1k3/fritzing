@@ -36,58 +36,12 @@ $Date$
 //	save into parts bin
 
 Crystal::Crystal( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
-	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
+	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	PropertyDefMaster::initPropertyDefs(modelPart, m_propertyDefs);
+	m_editable = false;
 }
 
 Crystal::~Crystal() {
-}
-
-ItemBase::PluralType Crystal::isPlural() {
-	return Plural;
-}
-
-bool Crystal::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
-{
-	foreach (PropertyDef * propertyDef, m_propertyDefs.keys()) {
-		if (prop.compare(propertyDef->name, Qt::CaseInsensitive) == 0) {
-			returnProp = TranslatedPropertyNames.value(prop);
-			if (returnProp.isEmpty()) {
-				returnProp = propertyDef->name;
-			}
-
-			FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
-			focusOutComboBox->setEnabled(swappingEnabled);
-			focusOutComboBox->setEditable(false);
-			QString current = m_propertyDefs.value(propertyDef);
-			qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
-			if (!propertyDef->menuItems.contains(val)) {
-				propertyDef->menuItems.append(val);
-			}
-			foreach(qreal q, propertyDef->menuItems) {
-				QString s = TextUtils::convertToPowerPrefix(q) + propertyDef->symbol;
-				focusOutComboBox->addItem(s);
-			}
-			int ix = focusOutComboBox->findText(current);
-			if (ix < 0) {
-				focusOutComboBox->addItem(current);
-				ix = focusOutComboBox->findText(current);
-			}
-			focusOutComboBox->setCurrentIndex(ix);
-			connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(propertyEntry(const QString &)));
-
-			focusOutComboBox->setMaximumWidth(100);
-
-			this->m_comboBoxes.insert(propertyDef, focusOutComboBox);
-						
-			returnWidget = focusOutComboBox;	
-
-			return true;
-		}
-	}
-
-	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 void Crystal::propertyEntry(const QString & text) {
@@ -104,16 +58,3 @@ void Crystal::propertyEntry(const QString & text) {
 		}
 	}
 }
-
-void Crystal::setProp(const QString & prop, const QString & value) {
-	foreach (PropertyDef * propertyDef, m_propertyDefs.keys()) {
-		if (prop.compare(propertyDef->name, Qt::CaseInsensitive) == 0) {
-			m_propertyDefs.insert(propertyDef, value);
-			modelPart()->setProp(propertyDef->name, value);
-			return;
-		}
-	}
-
-	PaletteItem::setProp(prop, value);
-}
-

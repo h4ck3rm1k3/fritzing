@@ -524,7 +524,7 @@ void SVG2gerber::allPaths2gerber() {
     DebugDialog::debug("paths to gerber: " + QString::number(pathList.length()));
     for(uint n = 0; n < pathList.length(); n++){
         QDomElement path = pathList.item(n).toElement();
-        QString data = path.attribute("d");
+        QString data = path.attribute("d").trimmed();
         QString aperture;
 
         const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
