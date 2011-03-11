@@ -407,7 +407,7 @@
                     <p layer="breadboard" svgId="connector3pin"/>
                 </breadboardView>
                 <schematicView>
-                    <p layer="schematic" svgId="connector3pin" terminalId="connector32terminal"/>
+                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"/>
                 </schematicView>
                 <pcbView>
                     <p layer="copper1" svgId="connector3pin"/>
