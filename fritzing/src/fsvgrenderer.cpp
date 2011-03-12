@@ -140,7 +140,7 @@ bool FSvgRenderer::loadAux(const QByteArray & contents, const QString & filename
 
 	QByteArray cleanContents;
 	bool cleaned = false;
-	if (contents.contains("Illustrator")) {
+	if (TextUtils::isIllustratorFile(contents)) {
 		QString string(contents);
 
 		if (contents.contains("sodipodi") || contents.contains("inkscape")) {
@@ -308,17 +308,22 @@ QSizeF FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 
 	QSizeF size(0,0);
 
+	bool isIllustrator = false;
+
 	while (!xml.atEnd()) {
         switch (xml.readNext()) {
+		case QXmlStreamReader::Comment:
+			isIllustrator = TextUtils::isIllustratorFile(xml.text().toString());
+			break;
         case QXmlStreamReader::StartElement:
 			if (xml.name().toString().compare("svg") == 0) {
 				QString ws = xml.attributes().value("width").toString();
 				QString hs = xml.attributes().value("height").toString();
 				bool ok;
-				qreal w = TextUtils::convertToInches(ws, &ok);
+				qreal w = TextUtils::convertToInches(ws, &ok, isIllustrator);
 				if (!ok) return size;
 
-				qreal h = TextUtils::convertToInches(hs, &ok);
+				qreal h = TextUtils::convertToInches(hs, &ok, isIllustrator);
 				if (!ok) return size;
 
 				size.setWidth(w);

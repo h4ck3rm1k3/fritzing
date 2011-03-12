@@ -1830,7 +1830,7 @@ bool MainWindow::loadCustomBoardShape()
 	}
 
 	TextUtils::cleanSodipodi(svg);
-	TextUtils::fixPixelDimensionsIn(svg);
+	bool isIllustrator = TextUtils::fixPixelDimensionsIn(svg);
 	TextUtils::fixViewboxOrigin(svg);
 	TextUtils::tspanRemove(svg);
 
@@ -1856,7 +1856,7 @@ bool MainWindow::loadCustomBoardShape()
 	}
 
 	bool ok;
-	qreal w = TextUtils::convertToInches(wStr, &ok);
+	qreal w = TextUtils::convertToInches(wStr, &ok, isIllustrator);
 	if (!ok) {
 		QMessageBox::warning(
 			this,
@@ -1866,7 +1866,7 @@ bool MainWindow::loadCustomBoardShape()
 		return false;
 	}
 
-	qreal h = TextUtils::convertToInches(hStr, &ok);
+	qreal h = TextUtils::convertToInches(hStr, &ok, isIllustrator);
 	if (!ok) {
 		QMessageBox::warning(
 			this,

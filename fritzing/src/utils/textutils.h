@@ -40,7 +40,7 @@ public:
 	static QSet<QString> getRegexpCaptures(const QString &pattern, const QString &textToSearchIn);
 	static QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	static void findElementsWithAttribute(QDomElement & element, const QString & att, QList<QDomElement> & elements);
-	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator=false);
+	static qreal convertToInches(const QString & string, bool * ok, bool isIllustrator);
 	static qreal convertToInches(const QString & string);
 	static QString convertToPowerPrefix(qreal);
 	static qreal convertFromPowerPrefix(const QString & val, const QString & symbol);
@@ -53,6 +53,8 @@ public:
 	static bool mergeSvg(QDomDocument & doc1, const QString & svg, const QString & id);
 	static QString makeSVGHeader(qreal printerscale, qreal dpi, qreal width, qreal height);
 	static bool isIllustratorFile(const QString &fileContent);
+	static bool isIllustratorFile(const QByteArray &fileContent);
+	static bool isIllustratorDoc(const QDomDocument & doc);
 	static QString removeXMLEntities(QString svgContent);
 	static bool cleanSodipodi(QString &bytes);
 	static bool fixViewboxOrigin(QString &fileContent);
@@ -84,6 +86,7 @@ public:
 	static void collectLeaves(QDomElement & element, int & index, QVector<QDomElement> & leaves);
 	static const QRegExp floatingPointMatcher;
 	static const QString RegexFloatDetector;
+	static const QString AdobeIllustratorIdentifier;
 
 protected:
 	static bool moveViewboxToTopLeftCorner(QDomElement &elem);

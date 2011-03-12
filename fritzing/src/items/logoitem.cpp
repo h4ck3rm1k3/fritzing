@@ -398,11 +398,13 @@ void LogoItem::loadImage(const QString & fileName, bool addName)
 		QString toColor("#ffffff");
 		SvgFileSplitter::changeColors(root, toColor, exceptions);
 
+		bool isIllustrator = TextUtils::isIllustratorDoc(domDocument);
+
 		QString viewBox = root.attribute("viewBox");
 		if (viewBox.isEmpty()) {
 			bool ok1, ok2;
-			qreal w = TextUtils::convertToInches(root.attribute("width"), &ok1) * FSvgRenderer::printerScale();
-			qreal h = TextUtils::convertToInches(root.attribute("height"), &ok2) * FSvgRenderer::printerScale();
+			qreal w = TextUtils::convertToInches(root.attribute("width"), &ok1, isIllustrator) * FSvgRenderer::printerScale();
+			qreal h = TextUtils::convertToInches(root.attribute("height"), &ok2, isIllustrator) * FSvgRenderer::printerScale();
 			if (!ok1 || !ok2) {
 				unableToLoad(fileName);
 				return;

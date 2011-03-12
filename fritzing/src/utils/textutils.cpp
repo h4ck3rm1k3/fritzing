@@ -48,6 +48,8 @@ const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
 static const ushort MicroSymbolCode = 181;
 const QString TextUtils::MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
 
+const QString TextUtils::AdobeIllustratorIdentifier = "Generator: Adobe Illustrator";
+
 QList<QString> PowerPrefixes;
 QList<qreal> PowerPrefixValues;
 const QString TextUtils::PowerPrefixesString = QString("pnmkMGTu\\x%1").arg(MicroSymbolCode, 4, 16, QChar('0'));
@@ -266,9 +268,26 @@ QString TextUtils::makeSVGHeader(qreal printerScale, qreal dpi, qreal width, qre
 }
 
 bool TextUtils::isIllustratorFile(const QString &fileContent) {
-	return fileContent.contains("<!-- Generator: Adobe Illustrator", Qt::CaseInsensitive);
+	return fileContent.contains(AdobeIllustratorIdentifier, Qt::CaseInsensitive);
 }
 
+bool TextUtils::isIllustratorFile(const QByteArray & fileContent) {
+	return fileContent.contains(AdobeIllustratorIdentifier.toUtf8());
+}
+
+bool TextUtils::isIllustratorDoc(const QDomDocument & doc) {
+	QDomNodeList children = doc.childNodes();
+	for ( int i=0; i < children.count(); ++i ) {
+		QDomNode child = children.at(i);
+		if (child.nodeType() == QDomNode::CommentNode) {
+			if (isIllustratorFile(child.nodeValue())) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
 
 QString TextUtils::removeXMLEntities(QString svgContent) {
 	return removeXMLNS(svgContent.remove(HexExpr));
@@ -382,7 +401,7 @@ bool TextUtils::fixPixelDimensionsIn(QString &fileContent) {
 
 	if(isIllustrator) {
 		QDomElement elem = svgDom.firstChildElement("svg");
-		fileHasChanged =  pxToInches(elem,"width",isIllustrator);
+		fileHasChanged = pxToInches(elem,"width",isIllustrator);
 		fileHasChanged |= pxToInches(elem,"height",isIllustrator);
 	}
 
@@ -435,6 +454,8 @@ QString TextUtils::svgTransform(const QString & svg, QTransform & transform, boo
 
 bool TextUtils::getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight, qreal & vbWidth, qreal & vbHeight) 
 {
+	bool isIllustrator = isIllustratorDoc(doc);
+
 	QDomElement root = doc.documentElement();
 	QString swidthStr = root.attribute("width");
 	if (swidthStr.isEmpty()) return false;
@@ -443,10 +464,10 @@ bool TextUtils::getSvgSizes(QDomDocument & doc, qreal & sWidth, qreal & sHeight,
 	if (sheightStr.isEmpty()) return false;
 
 	bool ok;
-	sWidth = TextUtils::convertToInches(swidthStr, &ok);
+	sWidth = TextUtils::convertToInches(swidthStr, &ok, isIllustrator);
 	if (!ok) return false;
 
-	sHeight = TextUtils::convertToInches(sheightStr, &ok);
+	sHeight = TextUtils::convertToInches(sheightStr, &ok, isIllustrator);
 	if (!ok) return false;
 
 	bool vbWidthOK = false;
