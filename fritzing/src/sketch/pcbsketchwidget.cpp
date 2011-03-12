@@ -1259,12 +1259,12 @@ void PCBSketchWidget::updateRoutingStatus(CleanUpWiresCommand* command, RoutingS
 			visitedWires.append(wires);
 			if (ends.count() <= 0) continue;
 
-			//foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
+			foreach (ConnectorItem * ci, ends) ci->debugInfo("end");
 
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(ends[0]);
 			ConnectorItem::collectEqualPotential(connectorItems, true, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag);
-			//foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
+			foreach (ConnectorItem * ci, connectorItems) ci->debugInfo("   eq");
 
 			bool doDelete = false;
 			foreach (ConnectorItem * end, ends) {

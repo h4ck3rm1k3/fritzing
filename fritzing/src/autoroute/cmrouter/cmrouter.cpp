@@ -909,7 +909,7 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 		return false;
 	}
 	else {
-		hideTiles();
+		//hideTiles();
 	}
 
 	if (m_bothSidesNow) {
@@ -929,7 +929,7 @@ bool CMRouter::drc(qreal keepout, CMRouter::OverlapType overlapType, CMRouter::O
 		eliminateThinTiles(tileRects, m_union90Plane);
 	}
 
-	hideTiles();
+	//hideTiles();
 	return true;
 }
 
@@ -979,7 +979,7 @@ bool CMRouter::runEdges(QList<Edge *> & edges, QVector<int> & netCounters, Routi
 		}
 
 		CompletePath  completePath;
-		edge->routed = propagate(queue1, queue2, tilePathUnits, keepout, true, completePath);
+		edge->routed = propagate(queue1, queue2, tilePathUnits, keepout, completePath, m_bothSidesNow && m_sketchWidget->autorouteTypePCB());
 
 		if (edge->routed) {
 			routed++;
@@ -1073,6 +1073,7 @@ Plane * CMRouter::tilePlane(ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewL
 	m_planeHash.insert(viewLayerID, thePlane);
 	m_planes.append(thePlane);
 	m_specHash.insert(thePlane, viewLayerSpec);
+	DebugDialog::debug(QString("spec hash %1 %2").arg((long) thePlane, 0, 16).arg(viewLayerSpec));
 
 	// if board is not rectangular, add tiles for the outside edges;
 	if (!initBoard(m_board, thePlane, alreadyTiled, keepout)) return thePlane;
@@ -2094,7 +2095,7 @@ void CMRouter::appendIf(PathUnit * pathUnit, Tile * next, QList<Tile *> & tiles,
 		return;
 	}
 
-	drawGridItem(next);
+	//drawGridItem(next);
 
 	tiles.append(next);
 }
@@ -2183,7 +2184,7 @@ bool CMRouter::blockDirection(PathUnit * pathUnit, PathUnit::Direction direction
 }
 
 void CMRouter::seedNext(PathUnit * pathUnit, QList<Tile *> & tiles) {
-	//infoTile("seed next", pathUnit->tile);
+	infoTile("seed next", pathUnit->tile);
 	int tWidthNeeded = TileStandardWireWidth;
 	if ((RIGHT(pathUnit->tile) < m_tileMaxRect.xmaxi) && (HEIGHT(pathUnit->tile) >= tWidthNeeded)) {
 		Tile * next = TR(pathUnit->tile);
@@ -2293,7 +2294,7 @@ GridEntry * CMRouter::drawGridItem(Tile * tile)
 	}
 	gridEntry->show();
 	gridEntry->setDrawn(true);
-	ProcessEventBlocker::processEvents();
+	//ProcessEventBlocker::processEvents();
 	return gridEntry;
 }
 
@@ -2618,7 +2619,7 @@ void CMRouter::clearPlane(Plane * thePlane, bool rotate90)
 }
 
 void CMRouter::displayBadTiles(QList<Tile *> & alreadyTiled) {
-	hideTiles();
+	//hideTiles();
 	foreach (Tile * tile, alreadyTiled) {
 		TileRect tileRect;
 		TiToRect(tile, &tileRect);
@@ -2799,7 +2800,7 @@ void CMRouter::clearGridEntries() {
 	}
 }
 
-void CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> & tilePathUnits)
+PathUnit * CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUnit *> & pq, QMultiHash<Tile *, PathUnit *> & tilePathUnits)
 {	
 	PathUnit * pathUnit = new PathUnit(&pq);
 
@@ -2821,7 +2822,7 @@ void CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUnit *> 
 		if (traceWire == NULL) {
 			// shouldn't be here
 			delete pathUnit;
-			return;
+			return NULL;
 		}
 
 		pathUnit->plane = m_planeHash.value(traceWire->viewLayerID());
@@ -2853,7 +2854,7 @@ void CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUnit *> 
 			case TraceWire::NoDirection:
 				DebugDialog::debug("Wire direction not set; shouldn't be here");
 				delete pathUnit;
-				return;
+				return NULL;
 		}
 	}
 
@@ -2863,6 +2864,7 @@ void CMRouter::initPathUnit(Edge * edge, Tile * tile, PriorityQueue<PathUnit *> 
 	//drawGridItem(tile);
 	pq.append(pathUnit);
 	tilePathUnits.insert(tile, pathUnit);
+	return pathUnit;
 }
 
 PathUnit * CMRouter::findNearestSpace(PriorityQueue<PathUnit *> & priorityQueue, QMultiHash<Tile *, PathUnit *> & tilePathUnits, int tWidthNeeded, int tHeightNeeded, TileRect & nearestSpace) 
@@ -3093,7 +3095,7 @@ bool CMRouter::addJumperItemHalf(ConnectorItem * jumperConnectorItem, PathUnit *
 	initPathUnit(edge, destTile, q2, tilePathUnits);
 
 	CompletePath  completePath;
-	return propagate(q1, q2, tilePathUnits, keepout, true, completePath);
+	return propagate(q1, q2, tilePathUnits, keepout, completePath, false);
 }
 
 QPointF CMRouter::calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpace, int tWidthNeeded, int tHeightNeeded) 
@@ -3125,8 +3127,8 @@ QPointF CMRouter::calcJumperLocation(PathUnit * pathUnit, TileRect & nearestSpac
 	return QPointF(tileToReal(wantRect.xmini + wantRect.xmaxi) / 2, tileToReal(wantRect.ymini + wantRect.ymaxi) / 2);
 }
 
-bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, 
-						 QMultiHash<Tile *, PathUnit *> & tilePathUnits, qreal keepout, bool doTracePath, CompletePath  & completePath)
+bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit *> & p2, QMultiHash<Tile *, PathUnit *> & tilePathUnits, 
+							qreal keepout, CompletePath  & completePath, bool canCrossLayers)
 {
 
 	if (p1.count() == 0) return false;
@@ -3176,7 +3178,7 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 		}
 
 		//propagateUnitTimer.start();
-		bool ok = propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath);
+		bool ok = propagateUnit(pathUnit1, p1, p2, p2Terminals, tilePathUnits, completePath, canCrossLayers);
 		//propagateUnitTime += propagateUnitTimer.elapsed();
 		if (ok) {
 			success = true;
@@ -3184,7 +3186,7 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 		}
 
 		//propagateUnitTimer.start();
-		ok = propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath);
+		ok = propagateUnit(pathUnit2, p2, p1, p1Terminals, tilePathUnits, completePath, canCrossLayers);
 		//propagateUnitTime += propagateUnitTimer.elapsed();
 		if (ok) {
 			success = true;
@@ -3198,7 +3200,7 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 	}
 
 
-	if (doTracePath && success) {
+	if (success) {
 		tracePath(completePath, keepout);
 	}
 
@@ -3211,29 +3213,30 @@ bool CMRouter::propagate(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathUnit 
 		}
 	}
 
-	hideTiles();
+	//hideTiles();
 
 	return success;
 }
 
 bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & sourceQueue, 
 							PriorityQueue<PathUnit *> & destQueue, QList<PathUnit *> & destTerminals, 
-							QMultiHash<Tile *, PathUnit *> & tilePathUnits, CompletePath & completePath)
+							QMultiHash<Tile *, PathUnit *> & tilePathUnits, CompletePath & completePath,
+							bool canCrossLayers)
 {
 	bool result = false;
 	QList<Tile *> tiles;
 	//QElapsedTimer seedNextTimer;
 	//seedNextTimer.start();
 	if (pathUnit->layerDirection == PathUnit::CrossLayer) {
-		//crossLayerDest(pathUnit, sourceQueue, tilePathUnits);
-		//return false;
+		crossLayerDest(pathUnit, sourceQueue, tilePathUnits);
+		return false;
 	}
 
 	seedNext(pathUnit, tiles);
 
 	//seedNextTime += seedNextTimer.elapsed();
 	foreach (Tile * tile, tiles) {
-		//infoTile("   eval", tile);
+		infoTile("   eval", tile);
 		int destCost = std::numeric_limits<int>::max();
 		TileRect minCostRect = calcMinCostRect(pathUnit, tile);
 		int sourceCost = pathUnit->sourceCost + manhattan(pathUnit->minCostRect, minCostRect);	
@@ -3312,7 +3315,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 	}
 
 
-	if (m_bothSidesNow) {
+	if (canCrossLayers) {
 		//crossLayerSource(pathUnit, sourceQueue);
 	}
 
@@ -3349,8 +3352,8 @@ void CMRouter::crossLayerDest(PathUnit * pathUnit, PriorityQueue<PathUnit *> & s
 	getViaSize(tWidthNeeded, tHeightNeeded);
 	int bestCost = std::numeric_limits<int>::max();
 	TileRect nearestSpace;
-	drawGridItem(pathUnit->tile);
-	ProcessEventBlocker::processEvents();
+	//drawGridItem(pathUnit->tile);
+	//ProcessEventBlocker::processEvents();
 	if (findNearestSpaceOne(pathUnit, tWidthNeeded, tHeightNeeded, nearest, bestCost, nearestSpace)) {
 		PathUnit * nextPathUnit = new PathUnit(&sourceQueue);
 		m_pathUnits.append(nextPathUnit);
@@ -3504,14 +3507,8 @@ bool CMRouter::goodEnough(CompletePath & completePath) {
 	return completePath.sourceCost < ((qreal) bestCost) * 1.05;
 }
 
-void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
-{
-	QList<PathUnit *> fullPath;
-	listCompletePath(completePath, fullPath);
-	tracePath(fullPath, keepout, true);
-}
-
 void CMRouter::listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath) {
+	DebugDialog::debug("list full path");
 	for (PathUnit * spu = completePath.source; spu; spu = spu->parent) {
 		fullPath.push_front(spu);
 	}
@@ -3519,18 +3516,26 @@ void CMRouter::listCompletePath(CompletePath & completePath, QList<PathUnit *> &
 	for (PathUnit * dpu = completePath.dest; dpu; dpu = dpu->parent) {
 		fullPath.append(dpu);
 	}
+	foreach (PathUnit * pu, fullPath) {
+		infoTile(QString("lcp1 %1").arg((long) pu->plane, 0, 16), pu->tile);
+	}
 }
 
-void CMRouter::tracePath(QList<PathUnit *> & fullPath, qreal keepout, bool lookForCrossLayer)
+void CMRouter::tracePath(CompletePath & completePath, qreal keepout)
 {
-	if (m_bothSidesNow && lookForCrossLayer) {
-		for (int pix = 0; pix < fullPath.count(); pix++) {
-			PathUnit * pathUnit = fullPath.at(pix);
-			infoTile(QString("tracepath %1").arg((long) pathUnit->plane, 0,  16), pathUnit->tile);
+	QList<PathUnit *> fullPath;
+	listCompletePath(completePath, fullPath);
+	if (m_bothSidesNow) {
+		QList<Via *> vias;
+		foreach (PathUnit * pathUnit, fullPath) {
 			if (pathUnit->layerDirection == PathUnit::CrossLayer) {
-				traceViaPath(pathUnit, pix, fullPath, keepout);
-				return;
+				vias.append(makeVia(pathUnit));
+				//ProcessEventBlocker::processEvents();
 			}
+		}
+		if (vias.count() > 0) {
+			traceViaPath(fullPath.first(), fullPath.last(), vias, keepout);
+			return;
 		}
 	}
 
@@ -3627,105 +3632,63 @@ void CMRouter::tracePath(QList<PathUnit *> & fullPath, qreal keepout, bool lookF
 	}
 }
 
-void CMRouter::traceViaPath(PathUnit * pathUnit, int pathIndex, QList<PathUnit *> & fullPath, qreal keepout) 
+void CMRouter::traceViaPath(PathUnit * from, PathUnit * to, QList<Via *> & vias, qreal keepout) 
 {
-	hideTiles();
-	TileRect nearestSpace = m_nearestSpaces.value(pathUnit);
-	int tWidthNeeded, tHeightNeeded;
-	getViaSize(tWidthNeeded, tHeightNeeded);
-	qreal tHalfWidth = tWidthNeeded / 2.0;
-	qreal tHalfHeight = tHeightNeeded / 2.0;
-	qreal cx = (pathUnit->minCostRect.xmaxi + pathUnit->minCostRect.xmini) / 2.0; 
-	qreal cy = (pathUnit->minCostRect.ymaxi + pathUnit->minCostRect.ymini) / 2.0; 
-	if (cx < nearestSpace.xmini + tHalfWidth) cx = nearestSpace.xmini + tHalfWidth;
-	if (cx > nearestSpace.xmaxi - tHalfWidth) cx = nearestSpace.xmaxi - tHalfWidth;
-	if (cy < nearestSpace.ymini + tHalfHeight) cy = nearestSpace.ymini + tHalfHeight;
-	if (cy > nearestSpace.ymaxi - tHalfHeight) cy = nearestSpace.ymaxi - tHalfHeight;
+	//hideTiles();
 
-	// add via to undo
-	// set the hole diameter and ring thickness
-	// delete during autorouting
+	PriorityQueue<PathUnit *> tempq;
+	QMultiHash<Tile *, PathUnit *> tempPathUnits;
+	QList<PathUnit *> pathUnits;
 
-	long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(QPointF(tileToReal(cx - tHalfWidth), tileToReal(cy - tHalfHeight)));
-
-	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::viaModuleIDName), 
-										m_specHash.value(pathUnit->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
-
-	ProcessEventBlocker::processEvents();
-	Via * via = dynamic_cast<Via *>(itemBase);
-	via->setAutoroutable(true);
-	ConnectorItem * viaConnectorItem = via->connectorItem();
-	QRectF newRect = viaConnectorItem->boundingRect();
-	newRect.setWidth(newRect.width() + keepout + keepout);
-	newRect.setHeight(newRect.height() + keepout + keepout);
-	newRect.moveTo(viewGeometry.loc().x() - keepout, viewGeometry.loc().y() - keepout); 
-	TileRect newTileRect;
-	qrectToTile(newRect, newTileRect);
-
-	// intersecting tiles will be wiped out by the new via tile, so remove them from the path
-	// assume the damage doesn't leave gaps in the path
-	for (int ix = pathIndex - 1; ix >= 0; ix--) {
-		TileRect tileRect;
-		TiToRect(fullPath.at(ix)->tile, &tileRect);
-		if (tileRectsIntersect(&tileRect, &newTileRect)) {
-			fullPath.removeAt(ix);
-			pathIndex--;
+	pathUnits.append(from);
+	PathUnit * currentPathUnit = from;
+	foreach (Via * via, vias) {
+		ConnectorItem * viaConnectorItem = via->connectorItem();
+		ConnectorItem * otherViaConnectorItem = viaConnectorItem->getCrossLayerConnectorItem();
+		QList<Tile *> alreadyTiled;
+		PathUnit * pu1 = NULL;
+		PathUnit * pu2 = NULL;
+		foreach (ViewLayer::ViewLayerID viewLayerID, m_planeHash.keys()) {
+			if (m_sketchWidget->sameElectricalLayer2(viewLayerID, viaConnectorItem->attachedToViewLayerID())) {
+				Tile * tile = addTile(viaConnectorItem, Tile::DESTINATION, m_planeHash.value(viewLayerID), alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
+				pu1 = initPathUnit(NULL, tile, tempq, tempPathUnits);
+			}
+			else if (m_sketchWidget->sameElectricalLayer2(viewLayerID, otherViaConnectorItem->attachedToViewLayerID())) {
+				Tile * tile = addTile(otherViaConnectorItem, Tile::DESTINATION, m_planeHash.value(viewLayerID), alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
+				pu2 = initPathUnit(NULL, tile, tempq, tempPathUnits);
+			}
 		}
-		else break;
-	}
 
-	for (int ix = pathIndex + 1; ix < fullPath.count(); ix++) {
-		TileRect tileRect;
-		TiToRect(fullPath.at(ix)->tile, &tileRect);
-		if (tileRectsIntersect(&tileRect, &newTileRect)) {
-			fullPath.removeAt(ix--);
+		if (pu1->plane == currentPathUnit->plane) {
+			pathUnits.append(pu1);
+			pathUnits.append(pu2);
+			currentPathUnit = pu2;
 		}
-		else break;
+		else {
+			pathUnits.append(pu2);
+			pathUnits.append(pu1);
+			currentPathUnit = pu1;
+		}
 	}
+	pathUnits.append(to);
 
-	PathUnit * preDestination = fullPath.at(pathIndex - 1);
-	PathUnit * postDestination = fullPath.at(pathIndex + 1);
-	fullPath.removeAt(pathIndex);
-
-	// now safe to add the tiles
-	QList<Tile *> alreadyTiled;
-	Tile * preTile = addTile(viaConnectorItem, Tile::DESTINATION, preDestination->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
-	Tile * postTile = addTile(viaConnectorItem, Tile::DESTINATION, postDestination->plane, alreadyTiled, CMRouter::IgnoreAllOverlaps, keepout);
-
-	CompletePath  completePath;
-	QMultiHash<Tile *, PathUnit *> tilePathUnits;
-	PriorityQueue<PathUnit *> q1, q2;
-	initPathUnit(NULL, preTile, q1, tilePathUnits);
-	TiSetType(preDestination->tile, Tile::SOURCE);
-	q2.enqueue(0, preDestination);
-	preDestination->priorityQueue = &q2;
-	bool result = propagate(q2, q1, tilePathUnits, keepout, false, completePath);
-	QList<PathUnit *> newFullPath;
-	while (fullPath.count()) {
-		PathUnit * first = fullPath.takeFirst();
-		if (first == preDestination) break;
-
-		newFullPath.append(first);
+	for (int i = 0; i < pathUnits.count(); i += 2) {
+		PathUnit * source = pathUnits.at(i);
+		PathUnit * dest = pathUnits.at(i + 1);
+		QMultiHash<Tile *, PathUnit *> tilePathUnits;
+		PriorityQueue<PathUnit *> q1, q2;
+		source->priorityQueue = &q1;
+		q1.enqueue(0, source);
+		dest->priorityQueue = &q2;
+		q2.enqueue(0, dest);
+		tilePathUnits.insert(source->tile, source);
+		tilePathUnits.insert(dest->tile, dest);
+		TiSetType(source->tile, Tile::SOURCE);
+		TiSetType(dest->tile, Tile::DESTINATION);
+		CompletePath  completePath;
+		//hideTiles();
+		propagate(q1, q2, tilePathUnits, keepout, completePath, false);
 	}
-
-	listCompletePath(completePath, newFullPath);
-	tracePath(newFullPath, keepout, false);
-
-	tilePathUnits.clear();
-	q1.clear();
-	q2.clear();
-	newFullPath.clear();
-	initPathUnit(NULL, postTile, q1, tilePathUnits);
-	TiSetType(postDestination->tile, Tile::SOURCE);
-	q2.enqueue(0, postDestination);
-	postDestination->priorityQueue = &q2;
-	result = propagate(q1, q2, tilePathUnits, keepout, false, completePath);
-	listCompletePath(completePath, newFullPath);
-	fullPath.takeFirst();			// should be postDestination
-	newFullPath.append(fullPath);
-	tracePath(newFullPath, keepout, true);
 }
 
 void CMRouter::cleanPoints(QList<QPointF> & allPoints, Plane * thePlane) 
@@ -4016,4 +3979,33 @@ void CMRouter::getViaSize(int & tWidthNeeded, int & tHeightNeeded) {
 	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
 	tWidthNeeded = fasterRealToTile(sizeNeeded.width());
 	tHeightNeeded = fasterRealToTile(sizeNeeded.height());
+}
+
+Via * CMRouter::makeVia(PathUnit * pathUnit) {
+	TileRect nearestSpace = m_nearestSpaces.value(pathUnit);
+	int tWidthNeeded, tHeightNeeded;
+	getViaSize(tWidthNeeded, tHeightNeeded);
+	qreal tHalfWidth = tWidthNeeded / 2.0;
+	qreal tHalfHeight = tHeightNeeded / 2.0;
+	qreal cx = (pathUnit->minCostRect.xmaxi + pathUnit->minCostRect.xmini) / 2.0; 
+	qreal cy = (pathUnit->minCostRect.ymaxi + pathUnit->minCostRect.ymini) / 2.0; 
+	if (cx < nearestSpace.xmini + tHalfWidth) cx = nearestSpace.xmini + tHalfWidth;
+	if (cx > nearestSpace.xmaxi - tHalfWidth) cx = nearestSpace.xmaxi - tHalfWidth;
+	if (cy < nearestSpace.ymini + tHalfHeight) cy = nearestSpace.ymini + tHalfHeight;
+	if (cy > nearestSpace.ymaxi - tHalfHeight) cy = nearestSpace.ymaxi - tHalfHeight;
+
+	// add via to undo
+	// set the hole diameter and ring thickness
+	// delete during autorouting
+
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(QPointF(tileToReal(cx - tHalfWidth), tileToReal(cy - tHalfHeight)));
+
+	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::viaModuleIDName), 
+										m_specHash.value(pathUnit->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
+
+	Via * via = dynamic_cast<Via *>(itemBase);
+	via->setAutoroutable(true);
+	return via;
 }
