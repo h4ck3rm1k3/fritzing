@@ -651,8 +651,10 @@ void CMRouter::start()
 		Ordering * currentOrdering = orderings.at(orderingIndex++);
 		QString score;
 		if (run > 0) {
-			score = tr("best so far: %1 unrouted/%n jumpers", "", bestOrdering->jumperCount)
-				.arg(bestOrdering->unroutedCount);
+			score = tr("best so far: %1 unrouted").arg(bestOrdering->unroutedCount);
+			if (m_sketchWidget->usesJumperItem()) {
+				score += tr("/%n jumpers", "", bestOrdering->jumperCount) + tr("/%n vias", "", bestOrdering->viaCount);
+			}
 			emit setProgressMessage(score);
 		}
 		emit setCycleMessage(tr("round %1 of:").arg(run + 1));
@@ -712,8 +714,8 @@ void CMRouter::start()
 	drcClean();
 	new CleanUpWiresCommand(m_sketchWidget, CleanUpWiresCommand::RedoOnly, parentCommand);
 
-	// note that the undo command which creates traces and jumpers is set to turnOffFirstRedo()
-	// in other words, the traces and jumpers created in the autorouting process are not recreated the first time the undo stack is invoked
+	// note that the undo command which creates traces, jumpers and vias is set to turnOffFirstRedo()
+	// in other words, the traces, jumpers and vias created in the autorouting process are not recreated the first time the undo stack is invoked
 
 	m_sketchWidget->pushCommand(parentCommand);
 	m_sketchWidget->repaint();
@@ -734,16 +736,11 @@ bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering
 	foreach (Edge * edge, currentOrdering->edges) {
 		if (!edge->routed) currentOrdering->unroutedCount++;
 		if (edge->withJumper) currentOrdering->jumperCount++;
+		if (edge->withVia) currentOrdering->viaCount += edge->withVia;
 	}
 
 	if (orderings.count() > 1) {
-		if (currentOrdering->unroutedCount + currentOrdering->jumperCount < bestOrdering->unroutedCount + bestOrdering->jumperCount) {
-			bestOrdering = currentOrdering;
-			saveTracesAndJumpers(bestResult);
-		}
-		else if ((currentOrdering->unroutedCount + currentOrdering->jumperCount == bestOrdering->unroutedCount + bestOrdering->jumperCount)
-				&& (currentOrdering->unroutedCount < bestOrdering->unroutedCount))
-		{
+		if (orderingImproved(currentOrdering, bestOrdering)) {
 			bestOrdering = currentOrdering;
 			saveTracesAndJumpers(bestResult);
 		}
@@ -755,9 +752,27 @@ bool CMRouter::reorder(QList<Ordering *> & orderings, Ordering * currentOrdering
 	return reorderEdges(orderings, currentOrdering, lineItem);
 }
 
+bool CMRouter::orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering) {
+	if (currentOrdering->unroutedCount + currentOrdering->jumperCount < bestOrdering->unroutedCount + bestOrdering->jumperCount) {
+		return true;
+	}
+
+	if (currentOrdering->unroutedCount + currentOrdering->jumperCount > bestOrdering->unroutedCount + bestOrdering->jumperCount) {
+		return false;
+	}
+
+	if (currentOrdering->unroutedCount < bestOrdering->unroutedCount) {
+		return true;
+	}
+
+	if (currentOrdering->unroutedCount > bestOrdering->unroutedCount) {
+		return false;
+	}
+
+	return (currentOrdering->viaCount < bestOrdering->viaCount);
+}
+
 bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrdering, QGraphicsLineItem * lineItem) {
-	//Ordering * first = new Ordering();
-	//Ordering * last = new Ordering();
 	Ordering * middle = new Ordering();
 	middle->edges.append(currentOrdering->edges);
 	QList<Edge *> unroutedEdges;
@@ -766,8 +781,7 @@ bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrd
 	while (ix < middle->edges.count()) {
 		Edge * edge = middle->edges.at(ix++);
 		if (edge->routed && !edge->withJumper) {
-			//first->edges.append(edge);		
-			//last->edges.append(edge);		
+			// TODO: should edges with vias get reordered?
 			continue;
 		}
 
@@ -806,15 +820,7 @@ bool CMRouter::reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrd
 		}
 	}
 
-	//last->edges.append(unroutedEdges);
-	//unroutedEdges.append(first->edges);
-	//first->edges.clear();
-	//first->edges.append(unroutedEdges);
-
 	QList<Ordering *> newOrderings;
-	// newOrderings  << first  << last;
-	//computeMD5(first);
-	//computeMD5(last);
 	if (reordered) {
 		newOrderings << middle;
 		computeMD5(middle);
@@ -2350,6 +2356,7 @@ void CMRouter::collectEdges(QList<Edge *> & edges)
 
 void CMRouter::clearEdge(Edge * edge) {
 	edge->withJumper = edge->routed = false;
+	edge->withVia = 0;
 	edge->fromConnectorItems.clear();
 	edge->toConnectorItems.clear();
 	edge->fromTraces.clear();
@@ -2373,6 +2380,7 @@ Edge * CMRouter::makeEdge(ConnectorItem * from, ConnectorItem * to,  VirtualWire
 
 void CMRouter::initUndo(QUndoCommand * parentCommand) {
 	QList<JumperItem *> jumperItems;
+	QList<Via *> vias;
 	QList<TraceWire *> traceWires;
 	QList<ItemBase *> doNotAutorouteList;
 	if (m_sketchWidget->usesJumperItem()) {
@@ -2390,6 +2398,32 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 			QList<ConnectorItem *> both;
 			foreach (ConnectorItem * ci, jumperItem->connector0()->connectedToItems()) both.append(ci);
 			foreach (ConnectorItem * ci, jumperItem->connector1()->connectedToItems()) both.append(ci);
+			foreach (ConnectorItem * connectorItem, both) {
+				TraceWire * w = dynamic_cast<TraceWire *>(connectorItem->attachedTo());
+				if (w == NULL) continue;
+
+				QList<Wire *> wires;
+				QList<ConnectorItem *> ends;
+				w->collectChained(wires, ends);
+				foreach (Wire * wire, wires) {
+					wire->setAutoroutable(false);
+				}
+			}
+		}
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+			Via * via = dynamic_cast<Via *>(item);
+			if (via == NULL) continue;
+
+			if (via->getAutoroutable()) {
+				addUndoConnection(false, via, parentCommand);
+				vias.append(via);
+				continue;
+			}
+
+			// deal with the traces connecting the via to the part
+			QList<ConnectorItem *> both;
+			foreach (ConnectorItem * ci, via->connectorItem()->connectedToItems()) both.append(ci);
+			foreach (ConnectorItem * ci, via->connectorItem()->getCrossLayerConnectorItem()->connectedToItems()) both.append(ci);
 			foreach (ConnectorItem * connectorItem, both) {
 				TraceWire * w = dynamic_cast<TraceWire *>(connectorItem->attachedTo());
 				if (w == NULL) continue;
@@ -2428,6 +2462,10 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 		m_sketchWidget->makeDeleteItemCommand(jumperItem, BaseCommand::CrossView, parentCommand);
 	}
 	
+	foreach (Via * via, vias) {
+		m_sketchWidget->makeDeleteItemCommand(via, BaseCommand::CrossView, parentCommand);
+	}
+	
 	foreach (TraceWire * traceWire, traceWires) {
 		if (traceWire->getAutoroutable()) {
 			m_sketchWidget->deleteItem(traceWire, true, false, false);
@@ -2435,6 +2473,9 @@ void CMRouter::initUndo(QUndoCommand * parentCommand) {
 	}
 	foreach (JumperItem * jumperItem, jumperItems) {
 		m_sketchWidget->deleteItem(jumperItem, true, true, false);
+	}
+	foreach (Via * via, vias) {
+		m_sketchWidget->deleteItem(via, true, true, false);
 	}
 }
 
@@ -2460,7 +2501,8 @@ void CMRouter::addWireToUndo(Wire * wire, QUndoCommand * parentCommand)
 void CMRouter::addToUndo(QUndoCommand * parentCommand) 
 {
 	QList<TraceWire *> wires;
-	QList<JumperItem *> jumperItems;
+	QList<JumperItem *> jumperItems;	
+	QList<Via *> vias;
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire != NULL) {
@@ -2473,10 +2515,8 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			wires.append(wire);
 			continue;
 		}
-		else {
-			JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);
-			if (jumperItem == NULL) continue;
-
+		JumperItem * jumperItem = dynamic_cast<JumperItem *>(item);	
+		if (jumperItem != NULL) {
 			jumperItems.append(jumperItem);
 			if (!jumperItem->getAutoroutable()) {
 				continue;
@@ -2492,8 +2532,8 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			if (partsConnectors.count() <= 4) {
 				// a jumperItem has 4 connectors (2 per 2 layers), so this jumper is not connected to anything else except by a trace
 				// so add a "normal" connection
-				connector0 = findPartForJumper(jumperItem->connector0());
-				connector1 = findPartForJumper(jumperItem->connector1());
+				connector0 = findPartForJumperOrVia(jumperItem->connector0());
+				connector1 = findPartForJumperOrVia(jumperItem->connector1());
 				if (connector0 == NULL || connector1 == NULL) {
 					DebugDialog::debug("unable to find part for jumper");   // something is really fucked up...
 					continue;
@@ -2514,6 +2554,29 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 				m_sketchWidget->createWire(jumperItem->connector1(), connector1, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
 			}
 
+			continue;
+		}
+		Via * via = dynamic_cast<Via *>(item);	
+		if (via != NULL) {
+			vias.append(via);
+			if (!via->getAutoroutable()) {
+				continue;
+			}
+
+			ConnectorItem * connector0 = findViaConnector(via->connectorItem());
+			ConnectorItem * connector1 = findViaConnector(via->connectorItem()->getCrossLayerConnectorItem());
+
+			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::viaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
+			addItemCommand->turnOffFirstRedo();
+			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, via->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
+			// hole size and ring thickness
+
+			if (connector0 != NULL && connector1 != NULL) {
+				m_sketchWidget->createWire(via->connectorItem(), connector0, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+				m_sketchWidget->createWire(via->connectorItem()->getCrossLayerConnectorItem(), connector1, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
+			}
+
+			continue;
 		}
 	}
 
@@ -2523,11 +2586,29 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 	foreach (JumperItem * jumperItem, jumperItems) {
 		addUndoConnection(true, jumperItem, parentCommand);
 	}
+	foreach (Via * via, vias) {
+		addUndoConnection(true, via, parentCommand);
+	}
 }
 
-ConnectorItem * CMRouter::findPartForJumper(ConnectorItem * jumperConnectorItem) {
+ConnectorItem * CMRouter::findViaConnector(ConnectorItem * connectorItem) {
+	QList<ConnectorItem *> connectorItems;
+	connectorItems.append(connectorItem);
+	ConnectorItem::collectEqualPotential(connectorItems, false, ViewGeometry::TraceFlag | ViewGeometry::RatsnestFlag);
+	QList<ConnectorItem *> partsConnectors;
+	ConnectorItem::collectParts(connectorItems, partsConnectors, false, ViewLayer::TopAndBottom);
+	if (partsConnectors.count() <= 2) {
+		// a via has 2 connectors (1 per 2 layers), so this via is not connected to anything else except by a trace
+		// so add a "normal" connection
+		return findPartForJumperOrVia(connectorItem);
+	}
+
+	return NULL;
+}
+
+ConnectorItem * CMRouter::findPartForJumperOrVia(ConnectorItem * jvConnectorItem) {
 	TraceWire * traceWire = NULL;
-	foreach (ConnectorItem * connectorItem, jumperConnectorItem->connectedToItems()) {
+	foreach (ConnectorItem * connectorItem, jvConnectorItem->connectedToItems()) {
 		traceWire = qobject_cast<TraceWire *>(connectorItem->attachedTo());
 		if (traceWire) break;
 	}
@@ -2537,12 +2618,17 @@ ConnectorItem * CMRouter::findPartForJumper(ConnectorItem * jumperConnectorItem)
 	QList<ConnectorItem *> ends;
 	traceWire->collectChained(wires, ends);
 	foreach (ConnectorItem * end, ends) {
-		if (end->attachedTo()->layerKinChief() != jumperConnectorItem->attachedTo()->layerKinChief()) {
+		if (end->attachedTo()->layerKinChief() != jvConnectorItem->attachedTo()->layerKinChief()) {
 			return end;
 		}
 	}
 
 	return NULL;
+}
+
+void CMRouter::addUndoConnection(bool connect, Via * via, QUndoCommand * parentCommand) {
+	addUndoConnection(connect, via->connectorItem(), BaseCommand::CrossView, parentCommand);
+	addUndoConnection(connect, via->connectorItem()->getCrossLayerConnectorItem(), BaseCommand::CrossView, parentCommand);
 }
 
 void CMRouter::addUndoConnection(bool connect, JumperItem * jumperItem, QUndoCommand * parentCommand) {
@@ -3316,7 +3402,7 @@ bool CMRouter::propagateUnit(PathUnit * pathUnit, PriorityQueue<PathUnit *> & so
 
 
 	if (canCrossLayers) {
-		//crossLayerSource(pathUnit, sourceQueue);
+		crossLayerSource(pathUnit, sourceQueue);
 	}
 
 	return result;
@@ -3883,6 +3969,7 @@ void CMRouter::insertUnion(TileRect & tileRect, QGraphicsItem *, Tile::TileType 
 }
 
 void CMRouter::clearTracesAndJumpers() {
+	QList<Via *> vias;
 	QList<JumperItem *> jumperItems;
 	QList<TraceWire *> traceWires;
 
@@ -3891,6 +3978,13 @@ void CMRouter::clearTracesAndJumpers() {
 		if (jumperItem != NULL) {
 			if (jumperItem->getAutoroutable()) {
 				jumperItems.append(jumperItem);
+			}
+			continue;
+		}
+		Via * via = dynamic_cast<Via *>(item);
+		if (via != NULL) {
+			if (via->getAutoroutable()) {
+				vias.append(via);
 			}
 			continue;
 		}
@@ -3907,6 +4001,9 @@ void CMRouter::clearTracesAndJumpers() {
 	foreach (JumperItem * jumperItem, jumperItems) {
 		m_sketchWidget->deleteItem(jumperItem, true, true, false);
 	}
+	foreach (Via * via, vias) {
+		m_sketchWidget->deleteItem(via, true, true, false);
+	}
 }
 
 void CMRouter::saveTracesAndJumpers(QByteArray & byteArray) {
@@ -3917,6 +4014,13 @@ void CMRouter::saveTracesAndJumpers(QByteArray & byteArray) {
 		if (jumperItem != NULL) {
 			if (jumperItem->getAutoroutable()) {
 				itemBases.append(jumperItem);
+			}
+			continue;
+		}
+		Via * via = dynamic_cast<Via *>(item);
+		if (via != NULL) {
+			if (via->getAutoroutable()) {
+				itemBases.append(via);
 			}
 			continue;
 		}

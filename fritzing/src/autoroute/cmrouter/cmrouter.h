@@ -59,6 +59,7 @@ struct Edge {
 	QSet<class Wire *> toTraces;
 	bool routed;
 	bool withJumper;
+	int withVia;
 	QLineF line;
 	int id;
 };
@@ -267,11 +268,12 @@ protected:
 	void saveTracesAndJumpers(QByteArray & byteArray);
 	void initUndo(QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, class JumperItem *, QUndoCommand * parentCommand);
+	void addUndoConnection(bool connect, class Via *, QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, TraceWire *, QUndoCommand * parentCommand);
 	void addUndoConnection(bool connect, ConnectorItem *, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	bool reorder(QList<Ordering *> & orderings, Ordering *  currentOrdering, Ordering * & bestOrdering, QByteArray & bestResult, QGraphicsLineItem * lineItem);
 	bool reorderEdges(QList<Ordering *> & orderings, Ordering * currentOrdering, QGraphicsLineItem *);
-	ConnectorItem * findPartForJumper(ConnectorItem * jumperConnectorItem);
+	ConnectorItem * findPartForJumperOrVia(ConnectorItem * jumperConnectorItem);
 	void drawTileRect(TileRect & tileRect, QColor & color);
 	void deletePathUnits();
 	void computeMD5(Ordering * ordering);
@@ -281,6 +283,8 @@ protected:
 	void traceViaPath(PathUnit * from, PathUnit * to, QList<class Via *> & vias, qreal keepout);
 	void listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath);
 	class Via * CMRouter::makeVia(PathUnit * pathUnit);
+	bool orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering);
+	ConnectorItem * findViaConnector(ConnectorItem * viaConnectorItem);
 
 protected:
 	QRectF m_maxRect;
