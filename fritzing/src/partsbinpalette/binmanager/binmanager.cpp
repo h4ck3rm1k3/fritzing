@@ -215,14 +215,7 @@ PartsBinPaletteWidget* BinManager::getOrOpenSearchBin() {
 
 PartsBinPaletteWidget* BinManager::getOrOpenBin(const QString & binLocation, const QString & binTemplateLocation) {
 
-    PartsBinPaletteWidget* partsBin = NULL;
-
-	foreach(PartsBinPaletteWidget* bin, m_tabWidgets.keys()) {
-        if(bin->fileName() == binLocation) {
-            partsBin = bin;
-			break;
-		}
-	}
+    PartsBinPaletteWidget* partsBin = findBin(binLocation);
 
     if(!partsBin) {
         QString fileToOpen = QFileInfo(binLocation).exists()?
@@ -233,6 +226,16 @@ PartsBinPaletteWidget* BinManager::getOrOpenBin(const QString & binLocation, con
 	}
 
     return partsBin;
+}
+
+PartsBinPaletteWidget* BinManager::findBin(const QString & binLocation) {
+	foreach(PartsBinPaletteWidget* bin, m_tabWidgets.keys()) {
+        if(bin->fileName() == binLocation) {
+            return bin;
+		}
+	}
+
+	return NULL;
 }
 
 QString BinManager::createIfMyPartsNotExists() {
@@ -348,10 +351,16 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 }
 
 PartsBinPaletteWidget* BinManager::openCoreBinIn(StackTabWidget* tb) {
-	PartsBinPaletteWidget* bin = newBin();
-	bin->setAllowsChanges(false);
-	bin->openCore();
-	insertBin(bin, tb->currentIndex()+1, tb);
+	PartsBinPaletteWidget* bin = findBin(CorePartsBinLocation);
+	if (bin != NULL) {
+		setAsCurrentTab(bin);
+	}
+	else {
+		bin = newBin();
+		bin->setAllowsChanges(false);
+		bin->openCore();
+		insertBin(bin, tb->currentIndex()+1, tb);
+	}
 	setAsCurrentBin(bin);
 	return bin;
 }

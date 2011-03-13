@@ -115,6 +115,7 @@ class BinManager : public QFrame {
         void connectTabWidget(StackTabWidget *tw);
 		void addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
 		PartsBinPaletteWidget * determineTopmostBin();
+		PartsBinPaletteWidget* findBin(const QString & binLocation);
 
 protected:
 		ReferenceModel *m_refModel;

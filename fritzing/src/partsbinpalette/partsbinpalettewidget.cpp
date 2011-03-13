@@ -384,6 +384,9 @@ void PartsBinPaletteWidget::collectBins(QDir & dir) {
 	}
 
 	foreach(QString binFile, binsInfo.keys()) {
+		if (binFile.compare(BinManager::NonCorePartsBinLocation) == 0) continue;
+		if (binFile.compare(BinManager::ContribPartsBinLocation) == 0) continue;
+
 		QAction *action = new QAction(binsInfo[binFile],this);
 		action->setData(binFile);
 		connect(action, SIGNAL(triggered()),this, SLOT(openUserBin()));
