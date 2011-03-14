@@ -282,7 +282,7 @@ protected:
 	void getViaSize(int & tWidthNeeded, int & tHeightNeeded);
 	void traceViaPath(PathUnit * from, PathUnit * to, QList<class Via *> & vias, qreal keepout);
 	void listCompletePath(CompletePath & completePath, QList<PathUnit *> & fullPath);
-	class Via * CMRouter::makeVia(PathUnit * pathUnit);
+        class Via * makeVia(PathUnit * pathUnit);
 	bool orderingImproved(Ordering * currentOrdering, Ordering * bestOrdering);
 	ConnectorItem * findViaConnector(ConnectorItem * viaConnectorItem);
 
