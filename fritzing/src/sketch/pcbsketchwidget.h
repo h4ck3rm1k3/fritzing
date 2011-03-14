@@ -87,6 +87,8 @@ public:
 	void updateNet(Wire*);
 	bool acceptsTrace(const ViewGeometry & viewGeometry);
 	ItemBase * placePartDroppedInOtherView(ModelPart *, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin);
+	void setViaSize();
+	void getViaSize(qreal & ringThickness, qreal & holeSize);
 
 public:
 	static QSizeF jumperItemSize();
@@ -152,6 +154,7 @@ protected:
 	bool checkUpdateRatsnest(QList<ConnectorItem *> & connectorItems);
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void dealWithDefaultParts();
+	void getDefaultViaSize(QString & ringThickness, QString & holeSize);
 
 signals:
 	void subSwapSignal(SketchWidget *, ItemBase *, ViewLayer::ViewLayerSpec, QUndoCommand * parentCommand);

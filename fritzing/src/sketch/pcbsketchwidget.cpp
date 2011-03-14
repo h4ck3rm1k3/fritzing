@@ -42,6 +42,7 @@ $Date$
 #include "../items/jumperitem.h"
 #include "../utils/autoclosemessagebox.h"
 #include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
 #include "../utils/graphutils.h"
 #include "../processeventblocker.h"
 #include "../autoroute/cmrouter/cmrouter.h"
@@ -49,6 +50,17 @@ $Date$
 #include <limits>
 #include <QApplication>
 #include <QScrollBar>
+#include <QDialog>
+#include <QRadioButton>
+#include <QVBoxLayout>
+#include <QGroupBox>
+#include <QDialogButtonBox>
+#include <QSettings>
+#include <QPushButton>
+
+
+const QString SettingsAutorouteViaHoleSize = "autorouteViaHoleSize";
+const QString SettingsAutorouteViaRingThickness = "autorouteViaRingThickness";
 
 static const int MAX_INT = std::numeric_limits<int>::max();
 
@@ -2216,4 +2228,134 @@ ItemBase * PCBSketchWidget::placePartDroppedInOtherView(ModelPart * modelPart, V
 	router.drcClean();
 
 	return newItem;
+}
+
+
+void PCBSketchWidget::setViaSize() {	
+	QFile file(":/resources/vias.xml");
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) return;
+	if (root.tagName() != "vias") return;
+
+	QDomElement viaElement = root.firstChildElement("via");
+	if (viaElement.isNull()) return;
+
+	QString defaultRingThickness, defaultHoleSize;
+	getDefaultViaSize(defaultRingThickness, defaultHoleSize);
+
+	QDialog dialog;
+	dialog.setWindowTitle(tr("Select Via Size"));
+
+	QVBoxLayout * vLayout = new QVBoxLayout();
+
+	QLabel * explain = new QLabel(tr("Set the via size to use when autorouting."));
+	vLayout->addWidget(explain);
+
+	QGroupBox * groupBox = new QGroupBox(&dialog);
+
+	QVBoxLayout * gvLayout = new QVBoxLayout();
+
+	QList<QRadioButton *> buttons;
+
+	while (!viaElement.isNull()) {
+		QString name = viaElement.attribute("name");
+		QString ringThickness = viaElement.attribute("ringthickness");
+		QString holeSize = viaElement.attribute("holesize");
+		if (!name.isEmpty() && !ringThickness.isEmpty() && !holeSize.isEmpty()) {
+			QRadioButton * button = new QRadioButton(QString("%1 (hole diameter), %2 (ring thickness)").arg(holeSize).arg(ringThickness), &dialog);
+			button->setProperty("ringthickness", ringThickness);
+			button->setProperty("holesize", holeSize);
+			if (ringThickness.compare(defaultRingThickness, Qt::CaseInsensitive) == 0 && holeSize.compare(defaultHoleSize, Qt::CaseInsensitive) == 0) {
+				button->setChecked(true);
+			}
+			gvLayout->addWidget(button);
+			buttons.append(button);
+		}
+
+		viaElement = viaElement.nextSiblingElement("via");
+	}	
+
+	groupBox->setLayout(gvLayout);
+
+	vLayout->addWidget(groupBox);
+
+	vLayout->addSpacing(10);
+
+    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
+
+	vLayout->addWidget(buttonBox);
+
+	connect(buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+	dialog.setLayout(vLayout);
+	if (dialog.exec() == QDialog::Accepted) {
+		foreach (QRadioButton * button, buttons) {
+			if (button->isChecked()) {
+				QSettings settings;
+				settings.setValue(SettingsAutorouteViaHoleSize, button->property("holesize").toString());
+				settings.setValue(SettingsAutorouteViaRingThickness, button->property("ringthickness").toString());
+				break;
+			}
+		}
+	}
+}
+
+void PCBSketchWidget::getViaSize(qreal & ringThickness, qreal & holeSize) {
+	QString ringThicknessStr, holeSizeStr;
+	getDefaultViaSize(ringThicknessStr, holeSizeStr);
+	qreal rt = TextUtils::convertToInches(ringThicknessStr);
+	qreal hs = TextUtils::convertToInches(holeSizeStr);
+	ringThickness = rt / FSvgRenderer::printerScale();
+	holeSize = hs / FSvgRenderer::printerScale();
+}
+
+void PCBSketchWidget::getDefaultViaSize(QString & ringThickness, QString & holeSize) {
+	QSettings settings;
+	ringThickness = settings.value(SettingsAutorouteViaRingThickness, "").toString();
+	holeSize = settings.value(SettingsAutorouteViaHoleSize, "").toString();
+
+	if (!ringThickness.isEmpty() && !holeSize.isEmpty()) return;
+
+	QFile file(":/resources/vias.xml");
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("failed loading properties %1 line:%2 col:%3").arg(errorStr).arg(errorLine).arg(errorColumn));
+		return;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) return;
+	if (root.tagName() != "vias") return;
+
+	QDomElement ve = root.firstChildElement("via");
+	while (!ve.isNull()) {
+		if (ve.attribute("default").compare("yes") == 0) {
+			if (ringThickness.isEmpty()) ringThickness = ve.attribute("ringthickness");
+			if (holeSize.isEmpty()) holeSize = ve.attribute("holesize");
+			settings.setValue(SettingsAutorouteViaHoleSize, holeSize);
+			settings.setValue(SettingsAutorouteViaRingThickness, ringThickness);
+			break;
+		}
+		ve = ve.nextSiblingElement("via");
+	}
+
 }

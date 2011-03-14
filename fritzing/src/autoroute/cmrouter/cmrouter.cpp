@@ -2333,6 +2333,8 @@ void CMRouter::collectEdges(QList<Edge *> & edges)
 			from = from->getCrossLayerConnectorItem();
 		}
 
+		if (from == NULL) continue;
+
 		bool toOK = false;
 		foreach (ViewLayer::ViewLayerID viewLayerID, m_viewLayerIDs) {
 			if (m_sketchWidget->sameElectricalLayer2(viewLayerID, to->attachedToViewLayerID())) {
@@ -2345,8 +2347,10 @@ void CMRouter::collectEdges(QList<Edge *> & edges)
 			to = to->getCrossLayerConnectorItem();
 		}
 
-		from->debugInfo("from");
-		to->debugInfo("to");
+		if (to == NULL) continue;
+
+		//from->debugInfo("from");
+		//to->debugInfo("to");
 
 		Edge * edge0 = makeEdge(from, to, vw);
 		edges.append(edge0);
@@ -2569,7 +2573,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::viaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
 			addItemCommand->turnOffFirstRedo();
 			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, via->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
-			// hole size and ring thickness
+			new SetPropCommand(m_sketchWidget, via->id(), "hole size", via->holeSize(), via->holeSize(), true, parentCommand);
 
 			if (connector0 != NULL && connector1 != NULL) {
 				m_sketchWidget->createWire(via->connectorItem(), connector0, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
@@ -4080,9 +4084,9 @@ void CMRouter::tileToQRect(Tile * tile, QRectF & rect) {
 }
 
 void CMRouter::getViaSize(int & tWidthNeeded, int & tHeightNeeded) {
-	QSizeF sizeNeeded(m_sketchWidget->jumperItemSize().width(), m_sketchWidget->jumperItemSize().height());
-	tWidthNeeded = fasterRealToTile(sizeNeeded.width());
-	tHeightNeeded = fasterRealToTile(sizeNeeded.height());
+	qreal ringThickness, holeSize;
+	m_sketchWidget->getViaSize(ringThickness, holeSize);
+	tHeightNeeded = tWidthNeeded = fasterRealToTile(ringThickness + ringThickness + holeSize);
 }
 
 Via * CMRouter::makeVia(PathUnit * pathUnit) {
@@ -4111,5 +4115,10 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 
 	Via * via = dynamic_cast<Via *>(itemBase);
 	via->setAutoroutable(true);
+	qreal ringThickness, holeSize;
+	m_sketchWidget->getViaSize(ringThickness, holeSize);
+	via->setBoth(QString("%1in").arg(holeSize * FSvgRenderer::printerScale()), 
+					QString("%1in").arg(ringThickness * FSvgRenderer::printerScale()));
+
 	return via;
 }

@@ -1776,10 +1776,13 @@ void MainWindow::createMenus()
 
 	m_pcbTraceMenu = menuBar()->addMenu(tr("&Trace"));
 	m_pcbTraceMenu->addAction(m_autorouteAct);
+	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
+	m_pcbTraceMenu->addAction(m_setViaSizeAct);
+	m_pcbTraceMenu->addSeparator();
+
 	m_pcbTraceMenu->addAction(m_groundFillAct);
 	m_pcbTraceMenu->addAction(m_removeGroundFillAct);
-	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
-	m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
+	//m_pcbTraceMenu->addAction(m_updateRoutingStatusAct);
 	m_pcbTraceMenu->addSeparator();
 
 	m_pcbTraceMenu->addAction(m_activeLayerBothAct);
@@ -1802,7 +1805,7 @@ void MainWindow::createMenus()
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
-	m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
+	//m_schematicTraceMenu->addAction(m_updateRoutingStatusAct);
 
 #ifndef QT_NO_DEBUG
 	m_schematicTraceMenu->addAction(m_tidyWiresAct);
@@ -2310,6 +2313,7 @@ void MainWindow::updateTraceMenu() {
 	m_groundFillAct->setEnabled(gfEnabled);
 	m_removeGroundFillAct->setEnabled(gfrEnabled);
 	m_designRulesCheckAct->setEnabled(true);
+	m_setViaSizeAct->setEnabled(m_currentGraphicsView != NULL && m_currentGraphicsView->routeBothSides());
 	m_updateRoutingStatusAct->setEnabled(true);
 }
 
@@ -3082,6 +3086,10 @@ void MainWindow::createTraceMenuActions() {
 	m_designRulesCheckAct = new QAction(tr("Design Rules Check"), this);
 	m_designRulesCheckAct->setStatusTip(tr("Select any parts that are too close together for safe board production (w/in 10 mil)"));
 	connect(m_designRulesCheckAct, SIGNAL(triggered()), this, SLOT(designRulesCheck()));
+
+	m_setViaSizeAct = new QAction(tr("Set Via Size..."), this);
+	m_setViaSizeAct->setStatusTip(tr("Set via size when autorouting double-sided boards"));
+	connect(m_setViaSizeAct, SIGNAL(triggered()), this, SLOT(setViaSize()));
 }
 
 void MainWindow::activeLayerBoth() {
@@ -4077,5 +4085,11 @@ void MainWindow::selectMoveLock()
 
 void  MainWindow::searchPartsBin() {
 	if (m_binManager) m_binManager->showSearch();
+}
+
+void MainWindow::setViaSize() {
+	if (m_currentGraphicsView != m_pcbGraphicsView) return;
+
+	m_pcbGraphicsView->setViaSize();
 }
 

@@ -40,9 +40,9 @@ public:
 	void setAutoroutable(bool);
 	bool getAutoroutable();
 	ConnectorItem * connectorItem();
+	void setBoth(const QString & holeDiameter, const QString &  thickness);
 
 protected:
-	void setBoth(const QString & holeDiameter, const QString &  thickness);
 	QString makeID();
 	QPointF ringThicknessRange();
 	QPointF holeDiameterRange();

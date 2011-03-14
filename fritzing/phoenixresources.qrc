@@ -30,6 +30,7 @@
         <file>resources/zoomfactors.txt</file>
         <file>resources/ratsnestcolors.xml</file>
         <file>resources/properties.xml</file>
+        <file>resources/vias.xml</file>
         <file>resources/parts/core/wire.fzp</file>
         <file>resources/parts/core/cmRuler.fzp</file>
         <file>resources/parts/core/note.fzp</file>
