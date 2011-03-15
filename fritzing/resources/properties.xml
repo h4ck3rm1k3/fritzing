@@ -27,12 +27,20 @@
     <property id="cap1" />
     <property id="voltage1" />
   </instance>
+  
   <instance moduleID="CrystalModuleID">
     <property id="frequency1" />
   </instance>
   <instance moduleID="SMDCrystalModuleID">
     <property id="frequency1" />
+  </instance>  
+  <instance moduleID="37asdf3c843a2127a0e499f8a0b3ef6aCrystalModuleID">
+    <property id="frequency1" />
   </instance>
+    <instance moduleID="37asdf3c843a342134a0e499f8a0b3ef6aCrystalModuleID">
+    <property id="frequency1" />
+  </instance>
+  
   <instance moduleID="30c27e88-7b6f-489e-bea9-a20f5bbad007ZenerDiodeModuleID">
     <property id="breakdown1" />
   </instance>

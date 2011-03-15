@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="37asdf3c843a2127a0e499f8a0b3ef6a">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.18" moduleId="37asdf3c843a2127a0e499f8a0b3ef6aCrystalModuleID">
 <version>4</version>
     <author>André Knörig</author>
     <title>Resonator</title>
@@ -12,9 +12,8 @@
     </tags>
     <properties>
         <property name="family">oscillator</property>
-        <property name="type">ceramic resonator</property>
-        <property name="frequency">16 Mhz</property>
-	<property name="features">built-in capacitors</property>
+        <property name="type">ceramic resonator with capacitor</property>
+        <property name="frequency" showInLabel="yes">16 Mhz</property>
     <property name="package">THT</property></properties>
     <description>Ceramic resonator with built-in capacitors</description>
     <views>

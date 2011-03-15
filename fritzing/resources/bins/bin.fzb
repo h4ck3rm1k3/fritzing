@@ -396,7 +396,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="37asdf3c843a2127a0e499f8a0b3ef6a" modelIndex="38" path="parts/core/resonator-3pin.fzp">
+        <instance moduleIdRef="37asdf3c843a2127a0e499f8a0b3ef6aCrystalModuleID" modelIndex="38" path="parts/core/resonator-3pin.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
