@@ -59,7 +59,6 @@
         <file>resources/parts/core/jumper.fzp</file>
         <file>resources/parts/svg/core/pcb/jumper.svg</file>
         <file>resources/parts/svg/core/icon/jumpericon.svg</file>
-        <file>resources/parts/core/resistor.fzp</file>
         <file>resources/parts/core/groundplane.fzp</file>
         <file>resources/parts/core/hole.fzp</file>
         <file>resources/parts/svg/core/pcb/hole.svg</file>

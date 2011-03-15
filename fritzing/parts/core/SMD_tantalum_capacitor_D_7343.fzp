@@ -11,7 +11,7 @@
  </tags>
  <properties>
   <property name="family">Capacitor [unidirectional]</property>
-  <property name="capacitance">1 &#x3BC;F</property>
+  <property name="capacitance" showInLabel="yes">1 &#x3BC;F</property>
   <property name="package">D 7343 [SMD, tantalum]</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>

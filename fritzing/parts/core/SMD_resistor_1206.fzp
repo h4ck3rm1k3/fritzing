@@ -11,7 +11,7 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="Resistance">220</property>
+        <property name="Resistance" showInLabel="yes">220</property>
         <property name="family">Resistor</property>
       <property name="package">1206 [SMD]</property>
     </properties>
@@ -36,10 +36,7 @@
         <pcbView>
             <layers image="pcb/SMD_1206.svg">
                 <layer layerId="copper1" />
-                <layer layerId="keepout" />
-                <layer layerId="soldermask" />
                 <layer layerId="silkscreen" />
-                <layer layerId="outline" />
             </layers>
         </pcbView>
     </views>
@@ -54,7 +51,7 @@
                     <p svgId="connector0pin" layer="schematic"  terminalId="connector0terminal" />
                 </schematicView>
                 <pcbView>
-                    <p svgId="connector0pin" layer="copper1" />
+                    <p svgId="connector0pad" layer="copper1" />
                 </pcbView>
             </views>
         </connector>
@@ -68,7 +65,7 @@
                     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
                 </schematicView>
                 <pcbView>
-                    <p svgId="connector1pin" layer="copper1" />
+                    <p svgId="connector1pad" layer="copper1" />
                 </pcbView>
             </views>
         </connector>
