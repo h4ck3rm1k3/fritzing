@@ -13,7 +13,7 @@
  <properties>
   <property name="package">0805 [SMD]</property>
   <property name="family">LED</property>
-  <property name="color">blue</property>
+  <property name="color" showInLabel="yes">blue</property>
  </properties>
  <description>A generic blue LED (~1.8V)</description>
  <views>

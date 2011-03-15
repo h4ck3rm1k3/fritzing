@@ -13,7 +13,7 @@
  <properties>
   <property name="package">1206 [SMD]</property>
   <property name="family">LED</property>
-  <property name="color">white</property>
+  <property name="color" showInLabel="yes">white</property>
  </properties>
  <description>A generic white LED (~1.8V)</description>
  <views>

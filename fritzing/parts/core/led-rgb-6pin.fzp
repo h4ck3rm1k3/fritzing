@@ -13,7 +13,7 @@
     <properties>
 	<property name="package">5 mm [THT]</property>
 	<property name="family">LED</property>
-	<property name="color">RGBB</property>
+	<property name="color" showInLabel="yes">RGBB</property>
     </properties>
     <description>A full-color LED, combined from four colors RGBB.</description>
     <views>

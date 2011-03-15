@@ -13,7 +13,7 @@
  <properties>
   <property name="package">0603 [SMD]</property>
   <property name="family">LED</property>
-  <property name="color">green</property>
+  <property name="color" showInLabel="yes">green</property>
  </properties>
  <description>A generic green LED (~1.8V)</description>
  <views>

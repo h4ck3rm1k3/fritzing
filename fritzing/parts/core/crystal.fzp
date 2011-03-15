@@ -14,7 +14,7 @@
     <properties>
         <property name="family">oscillator</property>
         <property name="type">crystal</property>
-        <property name="frequency">16 Mhz</property>
+        <property name="frequency" showInLabel="yes">16 Mhz</property>
     <property name="package">THT</property></properties>
     <description>Crystal</description>
     <views>

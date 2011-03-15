@@ -13,7 +13,7 @@
  <properties>
   <property name="package">0805 [SMD]</property>
   <property name="family">LED</property>
-  <property name="color">yellow</property>
+  <property name="color" showInLabel="yes">yellow</property>
  </properties>
  <description>A generic yellow LED (~1.8V)</description>
  <views>

@@ -12,7 +12,7 @@
     <properties>
         <property name="package">5 mm [THT]</property>
         <property name="family">LED</property>
-        <property name="color">RGB</property>
+        <property name="color" showInLabel="yes">RGB</property>
     </properties>
     <description>A 5mm tri-color LED with red, green and blue inside.</description>
     <views>

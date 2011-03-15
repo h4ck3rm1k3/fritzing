@@ -13,7 +13,7 @@
  <properties>
   <property name="package">0603 [SMD]</property>
   <property name="family">LED</property>
-  <property name="color">red</property>
+  <property name="color" showInLabel="yes">red</property>
  </properties>
  <description>A generic red LED (~1.8V)</description>
  <views>
