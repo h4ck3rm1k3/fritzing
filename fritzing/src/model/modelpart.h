@@ -96,6 +96,7 @@ public:
 	const QString & title();
 	const QString & description();
 	const QStringList & tags();
+	const QStringList & displayKeys();
 	const QHash<QString,QString> & properties() const;
 	const QHash<QString, QPointer<Bus> > & buses();
 	QDomDocument * domDocument();

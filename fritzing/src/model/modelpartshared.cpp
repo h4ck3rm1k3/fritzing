@@ -635,3 +635,11 @@ bool ModelPartShared::checkNeedsCopper1(QDomElement & copper0, QDomElement & cop
 	//QString test = m_domDocument->toString();
 	//DebugDialog::debug("test " + test);
 }
+
+const QStringList & ModelPartShared::displayKeys() {
+	return m_displayKeys;
+}
+
+void ModelPartShared::setDisplayKeys(const QStringList & displayKeys) {
+	m_displayKeys = displayKeys;
+}

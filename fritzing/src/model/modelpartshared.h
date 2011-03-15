@@ -90,6 +90,9 @@ public:
 
 	QHash<QString,QString> & properties();
 	void setProperties(const QHash<QString,QString> &properties);
+	void setDisplayKeys(const QStringList &displayKeys);
+	const QStringList & displayKeys();
+
 
 	void initConnectors();
 	void resetConnectorsInitialization();
@@ -139,6 +142,7 @@ protected:
 	QString m_taxonomy;
 
 	QStringList m_tags;
+	QStringList m_displayKeys;
 	QHash<QString,QString> m_properties;
 
 	QHash<QString, QPointer<class ConnectorShared> > m_connectorSharedHash;

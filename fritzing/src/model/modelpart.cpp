@@ -684,3 +684,9 @@ QString ModelPart::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdenti
 
 	return m_modelPartShared->hasBaseNameFor(viewIdentifier);
 }
+
+const QStringList & ModelPart::displayKeys() {
+	if (m_modelPartShared == NULL) return ___emptyStringList___;
+
+	return m_modelPartShared->displayKeys();
+}

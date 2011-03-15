@@ -5851,7 +5851,7 @@ void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 
 	ModelPart * modelPart = item->modelPart();
 
-	if (modelPart->moduleID().compare(ModuleIDNames::resistorModuleIDName) != 0) return;
+	if (!modelPart->moduleID().endsWith(ModuleIDNames::resistorModuleIDName)) return;
 
 	Resistor * resistor = dynamic_cast<Resistor *>(item);
 	if (resistor == NULL) return;

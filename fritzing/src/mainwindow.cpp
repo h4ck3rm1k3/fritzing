@@ -1635,7 +1635,7 @@ void MainWindow::enableCheckUpdates(bool enabled)
 
 void MainWindow::swapSelectedMap(const QString & family, const QString & prop, QMap<QString, QString> & currPropsMap) 
 {
-	if (swapSpecial(currPropsMap)) {
+	if ((prop.compare("package", Qt::CaseSensitive) != 0) && swapSpecial(currPropsMap)) {
 		return;
 	}
 

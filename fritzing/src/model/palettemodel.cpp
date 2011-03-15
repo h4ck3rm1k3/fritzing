@@ -330,6 +330,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	QDomDocument* domDocument = NULL;
 	QString title, label, date, author, description, taxonomy, replacedby, version;
 	QStringList tags;
+	QStringList displayKeys;
 	QHash<QString, QString> properties;
 	QMultiHash<ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID> hasViewFor;
 	QHash<ViewIdentifierClass::ViewIdentifier, QString> hasBaseNameFor;
@@ -356,10 +357,12 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 					}
 					else if (name.compare("property") == 0) {
 						QString name = xml.attributes().value("name").toString().toLower().trimmed();
+						QString showInLabel = xml.attributes().value("showInLabel").toString();
 						QString value = xml.readElementText();
 						if (value.isNull()) {
 							value = "";
 						}
+						if (!showInLabel.isEmpty()) displayKeys.append(name);
 						properties.insert(name, value);
 						propertiesText += (name + value);
 					}
@@ -548,6 +551,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 		modelPartShared->setReplacedby(replacedby);
 		modelPartShared->setTags(tags);
 		modelPartShared->setProperties(properties);
+		modelPartShared->setDisplayKeys(displayKeys);
 		foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, hasViewFor.keys()) {
 			foreach (ViewLayer::ViewLayerID viewLayerID, hasViewFor.values(viewIdentifier)) {
 				modelPartShared->setHasViewFor(viewIdentifier, viewLayerID);
