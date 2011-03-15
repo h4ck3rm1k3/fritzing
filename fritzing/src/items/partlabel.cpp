@@ -113,6 +113,7 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 
 	m_inactive = m_hidden = m_initialized = false;
 	m_displayKeys.append(LabelTextKey);
+
 	setFlag(QGraphicsItem::ItemIsSelectable, false);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
 	setVisible(false);
@@ -137,6 +138,10 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 		if (m_owner->scene() == NULL) return;
 
 		bool flipped = (viewLayer->viewLayerID() == ViewLayer::Silkscreen0Label);
+
+		if (m_owner->viewIdentifier() != ViewIdentifierClass::PCBView) {
+			m_displayKeys.append(m_owner->modelPart()->displayKeys());
+		}
 
 		m_owner->scene()->addItem(this);
 		this->setZValue(viewLayer->nextZ());

@@ -118,8 +118,8 @@ public:
 protected:
 	void loadTagText(QDomElement parent, QString tagName, QString &field);
 	// used to populate de StringList that contains both the <tags> and the <properties> values
-	void populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName);
-	void populateTagCollection(QDomElement parent, QHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
+	void populateTags(QDomElement parent, QStringList &list);
+	void populateProperties(QDomElement parent, QHash<QString,QString> &hash, QStringList & displayKeys);
 	void commonInit();
 	void loadDocument();
 	bool checkNeedsCopper1(QDomElement & copper0, QDomElement & copper1);

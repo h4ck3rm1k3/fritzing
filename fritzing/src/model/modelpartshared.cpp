@@ -67,8 +67,8 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 			m_replacedby = version.attribute("replacedby");
 		}
 
-		populateTagCollection(root, m_tags, "tags");
-		populateTagCollection(root, m_properties, "properties", "name");
+		populateTags(root, m_tags);
+		populateProperties(root, m_properties, m_displayKeys);
 
 		m_moduleID = root.attribute("moduleId", "");
 
@@ -135,31 +135,26 @@ void ModelPartShared::loadTagText(QDomElement parent, QString tagName, QString &
 	}
 }
 
-void ModelPartShared::populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName) {
-	QDomElement bag = parent.firstChildElement(tagName);
-	if (!bag.isNull()) {
-		QDomNodeList childs = bag.childNodes();
-		for(int i = 0; i < childs.size(); i++) {
-			QDomNode child = childs.item(i);
-			if(!child.isComment()) {
-				list << child.toElement().text();
-			}
-		}
+void ModelPartShared::populateTags(QDomElement parent, QStringList &list) {
+	QDomElement tags = parent.firstChildElement("tags");
+	QDomElement tag = tags.firstChildElement("tag");
+	while (!tag.isNull()) {
+		list << tag.text();
+		tag = tag.nextSiblingElement("tag");
 	}
 }
 
-void ModelPartShared::populateTagCollection(QDomElement parent, QHash<QString,QString> &hash, const QString &tagName, const QString &attrName) {
-	QDomElement bag = parent.firstChildElement(tagName);
-	if (!bag.isNull()) {
-		QDomNodeList childs = bag.childNodes();
-		for(int i = 0; i < childs.size(); i++) {
-			QDomNode child = childs.item(i);
-			if(!child.isComment()) {
-				QString name = child.toElement().attribute(attrName);
-				QString value = child.toElement().text();
-				hash.insert(name.toLower().trimmed(),value);
-			}
+void ModelPartShared::populateProperties(QDomElement parent, QHash<QString,QString> &hash, QStringList & displayKeys) {
+	QDomElement properties = parent.firstChildElement("properties");
+	QDomElement prop = properties.firstChildElement("property");
+	while (!prop.isNull()) {
+		QString name = prop.attribute("name");
+		QString value = prop.text();
+		hash.insert(name.toLower().trimmed(),value);
+		if (prop.attribute("showInLabel", "").compare("yes", Qt::CaseInsensitive) == 0) {
+			displayKeys.append(name);
 		}
+		prop = prop.nextSiblingElement("property");
 	}
 }
 
