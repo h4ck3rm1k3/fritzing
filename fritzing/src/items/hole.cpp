@@ -144,7 +144,7 @@ void Hole::setHoleSize(QString holeSize, bool force) {
 	modelPart()->setProp("hole size", holeSize);
 
 	updateTooltip();
-    if (m_partLabel) m_partLabel->displayTexts();
+    if (m_partLabel) m_partLabel->displayTextsIf();
 }
 
 void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) {

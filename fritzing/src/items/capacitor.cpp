@@ -31,6 +31,7 @@ $Date$
 #include "../utils/focusoutcombobox.h"
 #include "../utils/boundedregexpvalidator.h"
 #include "../sketch/infographicsview.h"
+#include "partlabel.h"
 
 // TODO
 //	save into parts bin
@@ -129,6 +130,7 @@ void Capacitor::setProp(const QString & prop, const QString & value) {
 		if (prop.compare(propertyDef->name, Qt::CaseInsensitive) == 0) {
 			m_propertyDefs.insert(propertyDef, value);
 			modelPart()->setProp(propertyDef->name, value);
+			if (m_partLabel) m_partLabel->displayTextsIf();
 			return;
 		}
 	}

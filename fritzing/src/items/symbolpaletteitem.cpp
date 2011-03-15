@@ -189,7 +189,7 @@ void SymbolPaletteItem::setVoltage(qreal v) {
 	}
 
     updateTooltip();
-    if (m_partLabel) m_partLabel->displayTexts();
+    if (m_partLabel) m_partLabel->displayTextsIf();
 }
 
 QString SymbolPaletteItem::makeSvg() {

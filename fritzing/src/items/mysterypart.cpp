@@ -127,7 +127,7 @@ void MysteryPart::setSpacing(QString spacing, bool force) {
 	modelPart()->setProp("spacing", spacing);
 
 	updateTooltip();
-    if (m_partLabel) m_partLabel->displayTexts();
+    if (m_partLabel) m_partLabel->displayTextsIf();
 
 }
 
@@ -161,7 +161,7 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 	modelPart()->setProp("chip label", chipLabel);
 
 	updateTooltip();
-    if (m_partLabel) m_partLabel->displayTexts();
+    if (m_partLabel) m_partLabel->displayTextsIf();
 
 }
 

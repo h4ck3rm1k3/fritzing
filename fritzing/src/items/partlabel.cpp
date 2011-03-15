@@ -245,6 +245,14 @@ void PartLabel::setPlainText(const QString & text)
 	displayTexts();
 }
 
+void PartLabel::displayTextsIf() {
+	if (!m_initialized) return;
+	if (m_hidden) return;
+	if (!isVisible()) return;
+
+	displayTexts();
+}
+
 void PartLabel::displayTexts() {
 	QString text = "";
 

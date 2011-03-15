@@ -66,6 +66,7 @@ public:
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 	void ownerSelected(bool selected);
     void displayTexts();
+    void displayTextsIf();
 	QString makeSvg(bool blackOnly, qreal dpi, qreal printerScale);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 

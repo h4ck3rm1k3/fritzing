@@ -170,7 +170,7 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 
 	updateResistances(m_ohms);
 	updateTooltip();
-    if (m_partLabel) m_partLabel->displayTexts();
+    if (m_partLabel) m_partLabel->displayTextsIf();
 }
 
 QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, qreal dpi) 

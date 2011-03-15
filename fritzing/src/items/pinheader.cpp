@@ -142,7 +142,7 @@ void PinHeader::setForm(QString form, bool force) {
 	modelPart()->setProp("form", form);
 
 	updateTooltip();
-    if (m_partLabel) m_partLabel->displayTexts();
+    if (m_partLabel) m_partLabel->displayTextsIf();
 
 }
 

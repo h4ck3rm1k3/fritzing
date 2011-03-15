@@ -1566,6 +1566,9 @@ bool ItemBase::connectionIsAllowed(ConnectorItem * other) {
 QString ItemBase::getProperty(const QString & key) {
 	if (m_modelPart == NULL) return "";
 
+	QString result = m_modelPart->prop(key).toString();
+	if (!result.isEmpty()) return result;
+
 	return m_modelPart->properties().value(key, "");
 }
 
