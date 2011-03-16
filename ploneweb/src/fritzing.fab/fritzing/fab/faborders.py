@@ -30,11 +30,15 @@ class AddForm(dexterity.AddForm):
 
     def create(self, data):
         from zope.component import createObject
-        type = createObject('faborder')
-        type.id = data['id']
-        type.title = data['name']
-        type.sketchesOk = False
-        return type
+        object = createObject('faborder')
+        object.id = data['id']
+        object.title = data['name']
+        object.userId = u"%s" % self.context.portal_membership.getAuthenticatedMember()
+        object.sketchesOk = False
+        object.addressOk = False
+        object.isOrdered = False;
+        object.reindexObject()
+        return object
 
     def add(self, object):
         self.context._setObject(object.id, object)

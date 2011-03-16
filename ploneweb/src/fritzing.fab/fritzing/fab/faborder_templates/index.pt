@@ -41,11 +41,11 @@
             </tr>
           </table>
           <a class="addSketchLink" href="#" tal:attributes="href string:${context/absolute_url}/++add++sketch">add sketch</a>
-          <!--
-          <div tal:condition="python: len(container.objectValues()) > 0 and not context.name">
-            please add your address to complete your order:<br />
-            <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">add address</a>
+          <div>
+            please add your phone number and shipping destination to complete your order:<br />
+            <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">add phone number and shipping destination</a>
           </div>
+          <!--
           <div tal:condition="context/name">
             <div tal:content="context/name">name</div>
             <div tal:condition="context/company" tal:content="context/company">company</div>
@@ -71,9 +71,9 @@
             <a class="editAddressLink" href="#" tal:attributes="href string:${context/absolute_url}/edit">edit address</a>
           </div>
           -->
-          <div tal:condition="python: context.sketchesOk">
+          <div tal:condition="python: (context.sketchesOk and context.addressOk)">
             everything alright blabla... you can now: <br />
-            <a class="checkoutLink" href="#">checkout</a>
+            <a class="checkoutLink" href="#" tal:attributes="href string:${context/absolute_url}/checkout">checkout</a>
           </div>
         </div>
       </tal:main-macro>

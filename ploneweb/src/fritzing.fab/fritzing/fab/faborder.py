@@ -13,11 +13,72 @@ from fritzing.fab import _
 
 
 class Index(grok.View):
+    grok.require('zope2.View')
     grok.context(IFabOrder)
     message = None
     
     label = _(u"Order your PCBs")
     description = _(u"Bla bla description")
+
+
+class Checkout(grok.View):
+    """order checkout
+    """
+    grok.name('checkout')
+    grok.require('cmf.ModifyPortalContent')
+    grok.context(IFabOrder)
+    
+    def update(self):
+        if not self.context.addressOk:
+            IStatusMessage(self.request).addStatusMessage(
+                _(u"Address missing/invalid, checkout aborted."), 
+                "info")
+            return
+        if not self.context.sketchesOk:
+            IStatusMessage(self.request).addStatusMessage(
+                _(u"Sketches missing/invalid, checkout aborted."), 
+                "info")
+            return
+        
+        originalOwner = self.context.getOwner()
+        fabManager = self.context.aq_parent.getOwner()
+        self.changeOwnership(self.context, fabManager)
+        self.context.isOrdered = True
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Thank you for your order. We will contact you shortly."), 
+            "info")
+    
+    def render(self):
+        faborderURL = self.context.absolute_url()
+        self.request.response.redirect(faborderURL)
+
+
+    def changeOwnership(self, obj, userid):
+        """ Change ownership of obj to userid """
+        # http://keeshink.blogspot.com/2010/04/change-creator-programmatically.html
+        # http://plone.org/documentation/manual/plone-community-developer-documentation/content/ownership
+        userid = u"%s" % userid
+        membership = getToolByName(self.context, 'portal_membership')
+        user = membership.getMemberById(userid)
+        # change ownership
+        obj.changeOwnership(user)
+        obj.setCreators(userid,)
+        # remove owner role from others
+        owners = [o for o in obj.users_with_local_role('Owner')]
+        for owner in owners:
+            roles = list(obj.get_local_roles_for_userid(owner))
+            roles.remove('Owner')
+            if roles:
+                obj.manage_setLocalRoles(owner, roles)
+            else:
+                obj.manage_delLocalRoles([owner])
+        # add owner role to new owner
+        roles = list(obj.get_local_roles_for_userid(userid))
+        if 'Owner' not in roles:
+            roles.append('Owner')
+            obj.manage_setLocalRoles(userid, roles)
+        # reindex
+        obj.reindexObject()
 
 
 class Edit(dexterity.EditForm):
@@ -43,6 +104,7 @@ def modifiedHandler(faborder, event):
     # for sketch in faborder:
     #     print "### sketch '%s'" % sketch.title()
     faborder.sketchesOk = (len(faborder) > 0)
+    faborder.addressOk = True
 
     # TODO: for testing we rely on the constraints to validatate the other fields
 
@@ -127,5 +189,3 @@ class AddForm(dexterity.AddForm):
 #         """
 #         contextURL = self.context.absolute_url()
 #         self.request.response.redirect(contextURL)
-
-

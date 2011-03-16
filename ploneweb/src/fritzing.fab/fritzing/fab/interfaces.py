@@ -33,8 +33,11 @@ class IFabOrder(form.Schema):
     """The Fritzing Fab order Form
     """
     
-    addressOk = interface.Attribute("addressOk")
     sketchesOk = interface.Attribute("sketchesOk")
+    addressOk = interface.Attribute("addressOk")
+    isOrdered = interface.Attribute("isOrdered")
+    
+    userId = interface.Attribute("userId")
     
     # name = TextLine(
     #     title=_(u"Full name"))
@@ -63,9 +66,9 @@ class IFabOrder(form.Schema):
         title=_(u"Shipping Area"),
         values=[_(u'Germany'), _(u'Europe (EU)'), _(u'somewhere else')])
     
-    email = TextLine(
-        title=_(u"E-Mail"),
-        constraint=checkEMail)
+    # email = TextLine(
+    #     title=_(u"E-Mail"),
+    #     constraint=checkEMail)
     
     telephone = ASCIILine(
         title=_(u"Telephone number"),

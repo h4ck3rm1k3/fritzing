@@ -21,20 +21,34 @@
           </div>
           <div tal:condition="container/listFolderContents">
             <table>
-              <tr>
+              <tr tal:condition="container/listFolderContents">
+                <th>User</th>
                 <th>Order</th>
                 <th>Sketches</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
               <tr tal:repeat="item container/listFolderContents">
+                <td tal:content="item/userId | string:error"></td>
                 <td tal:content="item/title | string:error">title</td>
-                <td>sketches</td>
-                <td>status</td>
+                <td>
+                  <span tal:condition="not:item/listFolderContents">no sketches</span>
+                  <ul tal:condition="item/listFolderContents">
+                    <li tal:repeat="sketch item/listFolderContents" tal:content="sketch/orderItem/filename | string:error">
+                      filename
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <span tal:condition="python: not (item.sketchesOk and item.addressOk)">incomplete</span>
+                  <span tal:condition="item/isOrdered">ordered</span>
+                </td>
                 <td>
                   <a class="viewOrderLink" href="#" tal:attributes="href string:${item/absolute_url}">view</a><br/>
                   <a class="editOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/edit">edit</a><br/>
-                  <a class="deleteOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a>
+                  <a class="deleteOrderLink" href="#" tal:attributes="href string:${item/absolute_url}/delete_confirmation">delete</a><br/>
+                  <a class="checkoutLink" href="#" tal:attributes="href string:${item/absolute_url}/checkout">checkout</a>
+                  <p tal:content="item/Creator | string:error"></p>
                 </td>
               </tr>
             </table>
