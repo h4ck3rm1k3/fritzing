@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.15b.02.03.3943" moduleId="cee49c7a6b94e1759bb995959b72f50cPotentiometerModuleID">
-    <version>4</version>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.15b.02.03.3943" moduleId="3b1a8578c21940dfe27253a7b57c81f5">
+    <version replacedby="3b1a8578c21940dfe27253a7b57c81f5PotentiometerModuleID">4</version>
     <author>Lionel Michel</author>
-    <title>Rotary Potentiometer (Small)</title>
+    <title>Slide Potentiometer</title>
     <label>R</label>
     <date>2010-02-10</date>
     <tags>
@@ -9,29 +9,34 @@
         <tag>poti</tag>
         <tag>adjustable</tag>
         <tag>resistor</tag>
+				<tag>slider</tag>
 				<tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="family">Potentiometer</property>
+        <property name="family">obsolete Potentiometer</property>
         <property name="track">Linear</property>
-        <property name="type">Rotary Shaft Potentiometer</property>
-        <property name="size">Rotary - 9mm</property>
-        <property name="Maximum Resistance" showInLabel="yes">100k&#937;</property>
+        <property name="type">Slide Potentiometer</property>
+        <property name="maximum resistance" showInLabel="yes">100k&#937;</property>
     </properties>
-    <description>A rotary adjustable resistor (potentiometer).</description>
+    <description>A sliding adjustable resistor (potentiometer).</description>
     <views>
         <iconView>
-            <layers image="icon/pot-small.svg">
+            <layers image="icon/pot-slider.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
+        <breadboardView>
+            <layers image="breadboard/pot-slider.svg">
+                <layer layerId="breadboard"/>
+            </layers>
+        </breadboardView>
         <schematicView>
             <layers image="schematic/basic_poti.svg">
                 <layer layerId="schematic"/>
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/jumper_3_100mil_pcb.svg">
+            <layers image="pcb/pot-slider.svg">
                 <layer layerId="copper0"/>
                 <layer layerId="silkscreen"/>
                 <layer layerId="keepout"/>
@@ -39,11 +44,6 @@
                 <layer layerId="outline"/>
             <layer layerId="copper1"/></layers>
         </pcbView>
-        <breadboardView>
-            <layers image="breadboard/pot-small.svg">
-                <layer layerId="breadboard"/>
-            </layers>
-        </breadboardView>
     </views>
     <connectors>
         <connector id="connector0" name="leg1" type="male">

@@ -53,8 +53,53 @@
   <instance moduleID="xc307sadf951b6bdd0d67c0d2ad67eabZenerDiodeModuleID">
     <property id="breakdown1" />
   </instance>
+  
+  <instance moduleID="2012BCEC1FBThermistorModuleID">
+    <property id="thermistor1" />
+  </instance>
+  
+<instance moduleID="cee49c7a6b94e1759bb995959b72f50cPotentiometerModuleID">
+    <property id="maxresistance1" />
+  </instance>
+<instance moduleID="c7acdd26ccb2e7e05c0ayxcva975c0afdsaPotentiometerModuleID">
+    <property id="maxresistance1" />
+  </instance>  
+<instance moduleID="c7acdd26c5e6355cb2e7e05c0aa975c0PotentiometerModuleID">
+    <property id="maxresistance1" />
+  </instance>
+<instance moduleID="4244TPM6MMPotentiometerModuleID">
+    <property id="maxresistance1" />
+  </instance>
+<instance moduleID="3b1a8578c21940dfe27253a7b57c81f5PotentiometerModuleID">
+    <property id="maxresistance1" />
+  </instance>
+<instance moduleID="3234DBDC00PotentiometerModuleID">
+    <property id="maxresistance1" />
+  </instance>
+<instance moduleID="3234DFDC00PotentiometerModuleID">
+    <property id="maxresistance1" />
+  </instance>
+  
+  
+<instance moduleID="1206InductorModuleID">
+    <property id="inductance1" />
+  </instance>
+<instance moduleID="603InductorModuleID">
+    <property id="inductance1" />
+  </instance>
+ <instance moduleID="805InductorModuleID">
+    <property id="inductance1" />
+  </instance>
+  <instance moduleID="56bed03878064b8286b71d5240035138InductorModuleID">
+    <property id="inductance1" />
+  </instance>
+  
+<property id="thermistor1" name="thermistor type" symbol="" minValue="" maxValue="" numeric="no" defaultValue="Negative Temperature Coefficient (NTC)" editable="no">	
+			<menuItem value="NTC" />
+			<menuItem value="PTC" />
+	</property>
 
-  <property id="cap1" name="capacitance" symbol="F" minValue="0.000000000001" maxValue=".0047" defaultValue=".0000001">	
+  <property id="cap1" name="capacitance" symbol="F" minValue="0.000000000001" maxValue=".0047" defaultValue=".0000001" numeric="yes" editable="yes">	
 			<menuItem value="0.000000000001" />
 			<menuItem value="0.000000000010" />
 			<menuItem value="0.000000000100" />
@@ -74,7 +119,7 @@
 			<menuItem value="0.004700000000" />
 		</property>
 		
-  <property id="voltage1" name="rated voltage" symbol="V" minValue="5" maxValue="500" defaultValue="35">
+  <property id="voltage1" name="rated voltage" symbol="V" minValue="5" maxValue="500" defaultValue="35" numeric="yes" editable="yes">
     <menuItem value="6.3" />
     <menuItem value="10" />
     <menuItem value="16" />
@@ -84,7 +129,7 @@
     <menuItem value="100" />
   </property>
   
-<property id="frequency1" name="frequency" symbol="MHz" minValue="" maxValue="" defaultValue="16">
+<property id="frequency1" name="frequency" symbol="MHz" minValue="" maxValue="" defaultValue="16" numeric="yes" editable="no">
     <menuItem value="1" />
     <menuItem value="2" />
     <menuItem value="4" />    
@@ -93,7 +138,7 @@
     <menuItem value="20" />
   </property>
 
-  <property id="breakdown1" name="breakdown voltage" symbol="V" minValue="2" maxValue="30" defaultValue="3.6">
+  <property id="breakdown1" name="breakdown voltage" symbol="V" minValue="2" maxValue="30" defaultValue="3.6" numeric="yes" editable="yes">
     <menuItem value="2" />
     <menuItem value="3.6" />
     <menuItem value="4.7" />
@@ -101,5 +146,11 @@
     <menuItem value="9.1" />
     <menuItem value="12.1" />
   </property>
-
+  
+  <property id="maxresistance1" name="maximum resistance" symbol="&#937;" minValue="" maxValue="" defaultValue="" numeric="yes" editable="yes">
+  </property>
+  
+  <property id="inductance1" name="inductance" symbol="H" minValue="" maxValue="" defaultValue="" numeric="yes" editable="yes">
+  </property>
+  
 </properties>

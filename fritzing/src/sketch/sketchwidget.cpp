@@ -81,8 +81,6 @@ $Date$
 #include "../items/moduleidnames.h"
 #include "../items/hole.h"
 #include "../items/capacitor.h"
-#include "../items/crystal.h"
-#include "../items/zenerdiode.h"
 #include "../lib/ff/flow.h"
 
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -337,7 +335,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			}
 
 			newIDs << newID;
-			if (mp->moduleID() == ModuleIDNames::wireModuleIDName) {
+			if (mp->moduleID() == ModuleIDNames::WireModuleIDName) {
 				addWireExtras(newID, view, parentCommand);
 			}
 		}
@@ -1023,7 +1021,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to,
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, ModuleIDNames::wireModuleIDName, from->attachedTo()->viewLayerSpec(), viewGeometry, newID, false, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, ModuleIDNames::WireModuleIDName, from->attachedTo()->viewLayerSpec(), viewGeometry, newID, false, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 						newID, "connector0", 
@@ -1037,7 +1035,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to,
 	ccc->setUpdateConnections(!dontUpdate);
 
 	if (addItNow) {
-		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), from->attachedTo()->viewLayerSpec(), viewGeometry, newID, NULL, true, m_viewIdentifier);
+		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ModuleIDNames::WireModuleIDName), from->attachedTo()->viewLayerSpec(), viewGeometry, newID, NULL, true, m_viewIdentifier);
 		if (newItemBase) {
 			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
@@ -3518,7 +3516,7 @@ ViewLayer::ViewLayerID SketchWidget::getNoteViewLayerID() {
 
 void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
 
-	ModelPart * wireModel = m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName);
+	ModelPart * wireModel = m_paletteModel->retrieveModelPart(ModuleIDNames::WireModuleIDName);
 	if (wireModel == NULL) return;
 
 	m_tempDragWireCommand = m_holdingSelectItemCommand;
@@ -4181,26 +4179,13 @@ void SketchWidget::prepDeleteProps(ItemBase * itemBase, QUndoCommand * parentCom
 		return;
 	}
 
-	Crystal * crystal = dynamic_cast<Crystal *>(itemBase);
-	if (crystal != NULL) {
-		QString frequency = crystal->modelPart()->prop("frequency").toString();
-		new SetPropCommand(this, itemBase->id(), "frequency", frequency, frequency, true, parentCommand);
-		return;
-	}
-
-	ZenerDiode * zenerDiode = dynamic_cast<ZenerDiode *>(itemBase);
-	if (zenerDiode != NULL) {
-		QString breakdownVoltage = zenerDiode->modelPart()->prop("breakdown voltage").toString();
-		new SetPropCommand(this, itemBase->id(), "breakdown voltage", breakdownVoltage, breakdownVoltage, true, parentCommand);
-		return;
-	}
-
 	Capacitor * capacitor = dynamic_cast<Capacitor *>(itemBase);
 	if (capacitor != NULL) {
-		QString capacitance = capacitor->modelPart()->prop("capacitance").toString();
-		QString voltage = capacitor->modelPart()->prop("rated voltage").toString();
-		new SetPropCommand(this, itemBase->id(), "capacitance", capacitance, capacitance, true, parentCommand);
-		new SetPropCommand(this, itemBase->id(), "rated voltage", voltage, voltage, true, parentCommand);
+		QHash<QString, QString> properties;
+		capacitor->getProperties(properties);
+		foreach(QString prop, properties.keys()) {
+			new SetPropCommand(this, itemBase->id(), prop, properties.value(prop), properties.value(prop), true, parentCommand);
+		}
 		return;
 	}
 }
@@ -4394,7 +4379,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
-	new AddItemCommand(this, crossView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), vg, newID, true, -1, parentCommand);
+	new AddItemCommand(this, crossView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), vg, newID, true, -1, parentCommand);
 	new CheckStickyCommand(this, crossView, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
@@ -4818,7 +4803,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			if (cleanup && master) {
 				long wireID = ItemBase::getNextID();
 				ViewGeometry vg;
-				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::wireModuleIDName, itemBase->viewLayerSpec(), vg, wireID, false, -1, parentCommand);
+				new AddItemCommand(this, BaseCommand::CrossView, ModuleIDNames::WireModuleIDName, itemBase->viewLayerSpec(), vg, wireID, false, -1, parentCommand);
 				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 											wireID, "connector0", 
@@ -5851,7 +5836,7 @@ void SketchWidget::setResistance(QString resistance, QString pinSpacing)
 
 	ModelPart * modelPart = item->modelPart();
 
-	if (!modelPart->moduleID().endsWith(ModuleIDNames::resistorModuleIDName)) return;
+	if (!modelPart->moduleID().endsWith(ModuleIDNames::ResistorModuleIDName)) return;
 
 	Resistor * resistor = dynamic_cast<Resistor *>(item);
 	if (resistor == NULL) return;
@@ -6968,3 +6953,4 @@ void SketchWidget::alignOneToGrid(ItemBase * itemBase) {
 		}
 	}
 }
+

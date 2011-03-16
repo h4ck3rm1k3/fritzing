@@ -39,7 +39,6 @@ $Date$
 Capacitor::Capacitor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	m_editable = true;
 	PropertyDefMaster::initPropertyDefs(modelPart, m_propertyDefs);
 }
 
@@ -61,34 +60,51 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 
 			FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
 			focusOutComboBox->setEnabled(swappingEnabled);
-			focusOutComboBox->setEditable(m_editable);
+			focusOutComboBox->setEditable(propertyDef->editable);
 			QString current = m_propertyDefs.value(propertyDef);
-			qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
-			if (!propertyDef->menuItems.contains(val)) {
-				propertyDef->menuItems.append(val);
+
+			if (propertyDef->numeric) {
+				qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
+				if (!propertyDef->menuItems.contains(val)) {
+					propertyDef->menuItems.append(val);
+				}
+				foreach(qreal q, propertyDef->menuItems) {
+					QString s = TextUtils::convertToPowerPrefix(q) + propertyDef->symbol;
+					focusOutComboBox->addItem(s);
+				}
 			}
-			foreach(qreal q, propertyDef->menuItems) {
-				QString s = TextUtils::convertToPowerPrefix(q) + propertyDef->symbol;
-				focusOutComboBox->addItem(s);
+			else {
+				if (!propertyDef->sMenuItems.contains(current)) {
+					propertyDef->sMenuItems.append(current);
+				}
+				foreach(QString s, propertyDef->sMenuItems) {
+					focusOutComboBox->addItem(s);
+				}
 			}
+
 			int ix = focusOutComboBox->findText(current);
 			if (ix < 0) {
 				focusOutComboBox->addItem(current);
 				ix = focusOutComboBox->findText(current);
 			}
 			focusOutComboBox->setCurrentIndex(ix);
-			if (m_editable) {
+			if (propertyDef->editable) {
 				BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
 				validator->setSymbol(propertyDef->symbol);
 				validator->setConverter(TextUtils::convertFromPowerPrefix);
-				validator->setBounds(propertyDef->minValue, propertyDef->maxValue);
+				if (propertyDef->maxValue > propertyDef->minValue) {
+					validator->setBounds(propertyDef->minValue, propertyDef->maxValue);
+				}
 				QString pattern = QString("((\\d{1,3})|(\\d{1,3}\\.)|(\\d{1,3}\\.\\d{1,2}))[%1]{0,1}[%2]{0,1}")
 												.arg(TextUtils::PowerPrefixesString)
 												.arg(propertyDef->symbol);
 				validator->setRegExp(QRegExp(pattern));
 				focusOutComboBox->setValidator(validator);
+				connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(propertyEntry(const QString &)));
 			}
-			connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(propertyEntry(const QString &)));
+			else {
+				connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(simplePropertyEntry(const QString &)));
+			}
 
 			focusOutComboBox->setMaximumWidth(100);
 
@@ -110,10 +126,18 @@ void Capacitor::propertyEntry(const QString & text) {
 	foreach (PropertyDef * propertyDef, m_comboBoxes.keys()) {
 		if (m_comboBoxes.value(propertyDef) == focusOutComboBox) {
 			QString utext = text;
-			qreal val = TextUtils::convertFromPowerPrefixU(utext, propertyDef->symbol);
-			if (!propertyDef->menuItems.contains(val)) {
-				// info view is redrawn, so combobox is recreated, so the new item is added to the combo box menu
-				propertyDef->menuItems.append(val);
+			if (propertyDef->numeric) {
+				qreal val = TextUtils::convertFromPowerPrefixU(utext, propertyDef->symbol);
+				if (!propertyDef->menuItems.contains(val)) {
+					// info view is redrawn, so combobox is recreated, so the new item is added to the combo box menu
+					propertyDef->menuItems.append(val);
+				}
+			}
+			else {
+				if (!propertyDef->sMenuItems.contains(text)) {
+					// info view is redrawn, so combobox is recreated, so the new item is added to the combo box menu
+					propertyDef->sMenuItems.append(text);
+				}
 			}
 
 			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
@@ -138,3 +162,24 @@ void Capacitor::setProp(const QString & prop, const QString & value) {
 	PaletteItem::setProp(prop, value);
 }
 
+void Capacitor::simplePropertyEntry(const QString & text) {
+	
+	FocusOutComboBox * focusOutComboBox = qobject_cast<FocusOutComboBox *>(sender());
+	if (focusOutComboBox == NULL) return;
+
+	foreach (PropertyDef * propertyDef, m_comboBoxes.keys()) {
+		if (m_comboBoxes.value(propertyDef) == focusOutComboBox) {
+			InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+			if (infoGraphicsView != NULL) {
+				infoGraphicsView->setProp(this, propertyDef->name, "", m_propertyDefs.value(propertyDef, ""), text, true);
+			}
+			break;
+		}
+	}
+}
+
+void Capacitor::getProperties(QHash<QString, QString> & hash) {
+	foreach (PropertyDef * propertyDef, m_propertyDefs.keys()) {
+		hash.insert(propertyDef->name, m_propertyDefs.value(propertyDef));
+	}
+}

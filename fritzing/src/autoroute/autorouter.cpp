@@ -72,7 +72,7 @@ TraceWire * Autorouter::drawOneTrace(QPointF fromPos, QPointF toPos, int width, 
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * trace = m_sketchWidget->
-	  addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::wireModuleIDName), 
+	  addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::WireModuleIDName), 
 		  viewLayerSpec, BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble

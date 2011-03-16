@@ -773,7 +773,7 @@ void CleanUpWiresCommand::addTrace(SketchWidget * sketchWidget, Wire * wire)
 							false, NULL));
 	}
 
-	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
+	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
 }
 
 bool CleanUpWiresCommand::hasTraces(SketchWidget * sketchWidget) {

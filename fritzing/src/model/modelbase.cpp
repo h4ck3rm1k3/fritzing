@@ -444,7 +444,7 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 
 bool ModelBase::isRatsnest(QDomElement & instance) {
 	QString moduleIDRef = instance.attribute("moduleIdRef");
-	if (moduleIDRef.compare(ModuleIDNames::wireModuleIDName) != 0) return false;
+	if (moduleIDRef.compare(ModuleIDNames::WireModuleIDName) != 0) return false;
 
 	QDomElement views = instance.firstChildElement("views");
 	if (views.isNull()) return false;

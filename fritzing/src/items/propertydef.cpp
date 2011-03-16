@@ -64,9 +64,17 @@ void PropertyDefMaster::loadPropertyDefs() {
 		propertyDef->minValue = propertyElement.attribute("minValue").toDouble();
 		propertyDef->maxValue = propertyElement.attribute("maxValue").toDouble();
 		propertyDef->defaultValue = propertyElement.attribute("defaultValue").toDouble();
+		propertyDef->editable = propertyElement.attribute("editable", "").compare("yes") == 0;
+		propertyDef->numeric = propertyElement.attribute("numeric", "").compare("yes") == 0;
 		QDomElement menuItem = propertyElement.firstChildElement("menuItem");
 		while (!menuItem.isNull()) {
-			propertyDef->menuItems.append(menuItem.attribute("value").toDouble());
+			QString val = menuItem.attribute("value");
+			if (propertyDef->numeric) {
+				propertyDef->menuItems.append(val.toDouble());
+			}
+			else {
+				propertyDef->sMenuItems.append(val);
+			}
 			menuItem = menuItem.nextSiblingElement("menuItem");
 		}
 		PropertyDefs.insert(propertyDef->id, propertyDef);
@@ -110,9 +118,10 @@ void PropertyDefMaster::initPropertyDefs(ModelPart * modelPart, QHash<PropertyDe
 		QString defaultValue = TextUtils::convertToPowerPrefix(propertyDef->defaultValue) + propertyDef->symbol;
 		QString savedValue = modelPart->prop(propertyDef->name).toString();
 		if (savedValue.isEmpty()) {
-			savedValue = modelPart->properties().value(savedValue, defaultValue);
+			savedValue = modelPart->properties().value(propertyDef->name.toLower(), defaultValue);
 			modelPart->setProp(propertyDef->name, savedValue);
 		}
+		// caches the current value
 		propertyDefs.insert(propertyDef, savedValue);
 	}
 }

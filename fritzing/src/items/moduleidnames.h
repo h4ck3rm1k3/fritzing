@@ -32,25 +32,29 @@ $Date$
 class ModuleIDNames
 {
 public:
-	static const QString rulerModuleIDName;
-	static const QString breadboardModuleIDName;
-	static const QString tinyBreadboardModuleIDName;
-	static const QString rectangleModuleIDName;
-	static const QString noteModuleIDName;
-	static const QString wireModuleIDName;
-	static const QString jumperModuleIDName;
-	static const QString groundPlaneModuleIDName;
-	static const QString groundModuleIDName;
-	static const QString powerModuleIDName;
-	static const QString justPowerModuleIDName;
-	static const QString resistorModuleIDName;
-	static const QString logoTextModuleIDName;
-	static const QString logoImageModuleIDName;
-	static const QString holeModuleIDName;
-	static const QString viaModuleIDName;
-	static const QString capacitorModuleIDName;
-	static const QString crystalModuleIDName;
-	static const QString zenerDiodeModuleIDName;
+	static const QString ModuleIDNameSuffix;
+	static const QString RulerModuleIDName;
+	static const QString BreadboardModuleIDName;
+	static const QString TinyBreadboardModuleIDName;
+	static const QString RectangleModuleIDName;
+	static const QString NoteModuleIDName;
+	static const QString WireModuleIDName;
+	static const QString JumperModuleIDName;
+	static const QString GroundPlaneModuleIDName;
+	static const QString GroundModuleIDName;
+	static const QString PowerModuleIDName;
+	static const QString JustPowerModuleIDName;
+	static const QString ResistorModuleIDName;
+	static const QString LogoTextModuleIDName;
+	static const QString LogoImageModuleIDName;
+	static const QString HoleModuleIDName;
+	static const QString ViaModuleIDName;
+	static const QString CapacitorModuleIDName;
+	static const QString CrystalModuleIDName;
+	static const QString ZenerDiodeModuleIDName;
+	static const QString ThermistorModuleIDName;
+	static const QString PotentiometerModuleIDName;
+	static const QString InductorModuleIDName;
 
 };
 

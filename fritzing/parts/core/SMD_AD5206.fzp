@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.2b.08.04.4392" moduleId="c7acdd26ccb2e7e05c0ayxcva975c0afdsa">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.2b.08.04.4392" moduleId="c7acdd26ccb2e7e05c0ayxcva975c0afdsaPotentiometerModuleID">
     <author>Mr.T</author>
     <title>AD5206 Digital Potentiometer</title>
     <label>U</label>
@@ -9,7 +9,9 @@
     </tags>
     <properties>
         <property name="family">IC-Poti</property>
-    <property name="package">SO28 [SMD]</property></properties>
+    <property name="package">SO28 [SMD]</property>
+    <property name="Maximum Resistance" showInLabel="yes">10k&#937;</property>
+    </properties>
     <description>Digital potentiometer. 6 channels with SPI-compatible interface.</description>
     <views>
         <breadboardView>

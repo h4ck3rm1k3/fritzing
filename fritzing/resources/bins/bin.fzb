@@ -30,7 +30,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="56bed03878064b8286b71d5240035138" modelIndex="8" path="parts/core/inductor.fzp">
+        <instance moduleIdRef="56bed03878064b8286b71d5240035138InductorModuleID" modelIndex="8" path="parts/core/inductor.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -72,14 +72,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="3234DBDC00" modelIndex="13" path="parts/core/basic_poti.fzp">
+        <instance moduleIdRef="3234DBDC00PotentiometerModuleID" modelIndex="13" path="parts/core/basic_poti.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="3234DFDC00" modelIndex="14" path="parts/core/big_pot.fzp">
+        <instance moduleIdRef="3234DFDC00PotentiometerModuleID" modelIndex="14" path="parts/core/big_pot.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -87,21 +87,21 @@
             </views>
         </instance>
 
-        <instance moduleIdRef="cee49c7a6b94e1759bb995959b72f50c" modelIndex="14" path="parts/core/pot-small.fzp">
+        <instance moduleIdRef="cee49c7a6b94e1759bb995959b72f50cPotentiometerModuleID" modelIndex="14" path="parts/core/pot-small.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="3b1a8578c21940dfe27253a7b57c81f5" modelIndex="14" path="parts/core/pot-slider.fzp">
+        <instance moduleIdRef="3b1a8578c21940dfe27253a7b57c81f5PotentiometerModuleID" modelIndex="14" path="parts/core/pot-slider.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
                 </iconView>
             </views>
         </instance>
-       <instance moduleIdRef="c7acdd26c5e6355cb2e7e05c0aa975c0" modelIndex="14" path="parts/core/AD5206 Digital Potentiometer.fzp">
+       <instance moduleIdRef="c7acdd26c5e6355cb2e7e05c0aa975c0PotentiometerModuleID" modelIndex="14" path="parts/core/AD5206 Digital Potentiometer.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>
@@ -165,7 +165,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="2012BCEC1FB" modelIndex="21" path="parts/core/thermistor_300mil.fzp">
+        <instance moduleIdRef="2012BCEC1FBThermistorModuleID" modelIndex="21" path="parts/core/thermistor_300mil.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"/>

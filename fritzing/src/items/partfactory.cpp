@@ -46,8 +46,6 @@ $Date$
 #include "hole.h"
 #include "via.h"
 #include "capacitor.h"
-#include "crystal.h"
-#include "zenerdiode.h"
 
 
 ItemBase * PartFactory::createPart( ModelPart * modelPart, ViewLayer::ViewLayerSpec viewLayerSpec, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel)
@@ -101,17 +99,29 @@ ItemBase * PartFactory::createPartAux( ModelPart * modelPart, ViewIdentifierClas
 			return new Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
 		default:
 			{
-				if (modelPart->moduleID().endsWith(ModuleIDNames::resistorModuleIDName)) {
-					return new Resistor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
-				}
-				if (modelPart->moduleID().endsWith(ModuleIDNames::capacitorModuleIDName)) {
-					return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
-				}
-				if (modelPart->moduleID().endsWith(ModuleIDNames::crystalModuleIDName)) {
-					return new Crystal(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
-				}
-				if (modelPart->moduleID().endsWith(ModuleIDNames::zenerDiodeModuleIDName)) {
-					return new ZenerDiode(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+				QString moduleID = modelPart->moduleID();
+				if (moduleID.endsWith(ModuleIDNames::ModuleIDNameSuffix)) {
+					if (moduleID.endsWith(ModuleIDNames::ResistorModuleIDName)) {
+						return new Resistor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::CapacitorModuleIDName)) {
+						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::CrystalModuleIDName)) {
+						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::ThermistorModuleIDName)) {
+						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::ZenerDiodeModuleIDName)) {
+						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::PotentiometerModuleIDName)) {
+						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
+					if (moduleID.endsWith(ModuleIDNames::InductorModuleIDName)) {
+						return new Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel);
+					}
 				}
 				QString family = modelPart->properties().value("family", "");
 				if (family.compare("mystery part", Qt::CaseInsensitive) == 0) {

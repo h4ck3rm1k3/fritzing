@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.15b.02.03.3943" moduleId="3b1a8578c21940dfe27253a7b57c81f5">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.3.15b.02.03.3943" moduleId="3b1a8578c21940dfe27253a7b57c81f5PotentiometerModuleID">
     <version>4</version>
     <author>Lionel Michel</author>
     <title>Slide Potentiometer</title>
@@ -16,7 +16,7 @@
         <property name="family">Potentiometer</property>
         <property name="track">Linear</property>
         <property name="type">Slide Potentiometer</property>
-        <property name="maximum resistance">100k&#937;</property>
+        <property name="maximum resistance" showInLabel="yes">100k&#937;</property>
     </properties>
     <description>A sliding adjustable resistor (potentiometer).</description>
     <views>

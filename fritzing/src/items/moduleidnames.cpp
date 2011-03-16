@@ -30,23 +30,27 @@ $Date$
 
 /////////////////////////////////
 
-const QString ModuleIDNames::rulerModuleIDName = "RulerModuleID";
-const QString ModuleIDNames::breadboardModuleIDName = "BreadboardModuleID";
-const QString ModuleIDNames::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
-const QString ModuleIDNames::rectangleModuleIDName = "RectanglePCBModuleID";
-const QString ModuleIDNames::noteModuleIDName = "NoteModuleID";
-const QString ModuleIDNames::wireModuleIDName = "WireModuleID";
-const QString ModuleIDNames::jumperModuleIDName = "JumperModuleID";
-const QString ModuleIDNames::groundPlaneModuleIDName = "GroundPlaneModuleID";
-const QString ModuleIDNames::groundModuleIDName = "GroundModuleID";
-const QString ModuleIDNames::powerModuleIDName = "PowerModuleID";
-const QString ModuleIDNames::justPowerModuleIDName = "JustPowerModuleID";
-const QString ModuleIDNames::resistorModuleIDName = "ResistorModuleID";
-const QString ModuleIDNames::logoTextModuleIDName = "LogoTextModuleID";
-const QString ModuleIDNames::logoImageModuleIDName = "LogoImageModuleID";
-const QString ModuleIDNames::holeModuleIDName = "HoleModuleID";
-const QString ModuleIDNames::viaModuleIDName = "ViaModuleID";
-const QString ModuleIDNames::capacitorModuleIDName = "CapacitorModuleID";
-const QString ModuleIDNames::crystalModuleIDName = "CrystalModuleID";
-const QString ModuleIDNames::zenerDiodeModuleIDName = "ZenerDiodeModuleID";
+const QString ModuleIDNames::ModuleIDNameSuffix = "ModuleID";
+const QString ModuleIDNames::RulerModuleIDName = "RulerModuleID";
+const QString ModuleIDNames::BreadboardModuleIDName = "BreadboardModuleID";
+const QString ModuleIDNames::TinyBreadboardModuleIDName = "TinyBreadboardModuleID";
+const QString ModuleIDNames::RectangleModuleIDName = "RectanglePCBModuleID";
+const QString ModuleIDNames::NoteModuleIDName = "NoteModuleID";
+const QString ModuleIDNames::WireModuleIDName = "WireModuleID";
+const QString ModuleIDNames::JumperModuleIDName = "JumperModuleID";
+const QString ModuleIDNames::GroundPlaneModuleIDName = "GroundPlaneModuleID";
+const QString ModuleIDNames::GroundModuleIDName = "GroundModuleID";
+const QString ModuleIDNames::PowerModuleIDName = "PowerModuleID";
+const QString ModuleIDNames::JustPowerModuleIDName = "JustPowerModuleID";
+const QString ModuleIDNames::ResistorModuleIDName = "ResistorModuleID";
+const QString ModuleIDNames::LogoTextModuleIDName = "LogoTextModuleID";
+const QString ModuleIDNames::LogoImageModuleIDName = "LogoImageModuleID";
+const QString ModuleIDNames::HoleModuleIDName = "HoleModuleID";
+const QString ModuleIDNames::ViaModuleIDName = "ViaModuleID";
+const QString ModuleIDNames::CapacitorModuleIDName = "CapacitorModuleID";
+const QString ModuleIDNames::CrystalModuleIDName = "CrystalModuleID";
+const QString ModuleIDNames::ZenerDiodeModuleIDName = "ZenerDiodeModuleID";
+const QString ModuleIDNames::ThermistorModuleIDName = "ThermistorModuleID";
+const QString ModuleIDNames::PotentiometerModuleIDName = "PotentiometerModuleID";
+const QString ModuleIDNames::InductorModuleIDName = "InductorModuleID";
 

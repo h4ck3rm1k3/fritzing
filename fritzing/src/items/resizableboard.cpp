@@ -153,7 +153,7 @@ QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &v
 }
 
 bool ResizableBoard::hasGrips() {
-	return moduleID().contains(ModuleIDNames::rectangleModuleIDName);
+	return moduleID().contains(ModuleIDNames::RectangleModuleIDName);
 }
 
 void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
@@ -516,7 +516,7 @@ void ResizableBoard::rotateItem(qreal degrees) {
 	// eventually need to make this work for other angles
 	// what gets screwed up is the drag handles
 
-	if (moduleID().contains(ModuleIDNames::rectangleModuleIDName)) {
+	if (moduleID().contains(ModuleIDNames::RectangleModuleIDName)) {
 		if (degrees == 90 || degrees == -90) {
 			QRectF r = this->boundingRect();
 			r.moveTopLeft(pos());
@@ -718,7 +718,7 @@ ItemBase::PluralType ResizableBoard::isPlural() {
 
 void ResizableBoard::calcRotation(QTransform & rotation, QPointF center, ViewGeometry & vg2) 
 {
-	if (moduleID().contains(ModuleIDNames::rectangleModuleIDName)) {
+	if (moduleID().contains(ModuleIDNames::RectangleModuleIDName)) {
 		// because these boards don't actually rotate yet
 		QRectF r = boundingRect();
 		//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));

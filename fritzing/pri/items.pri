@@ -19,7 +19,6 @@
 
 HEADERS += \
     src/items/capacitor.h \    
-    src/items/crystal.h \
     src/items/clipablewire.h \
     src/items/dip.h \
     src/items/graphicssvglineitem.h \
@@ -46,11 +45,10 @@ HEADERS += \
     src/items/via.h \
     src/items/virtualwire.h \
     src/items/wire.h \
-    src/items/zenerdiode.h 
+
 
 SOURCES += \
     src/items/capacitor.cpp \
-    src/items/crystal.cpp \
     src/items/clipablewire.cpp \
     src/items/dip.cpp \
     src/items/graphicssvglineitem.cpp \
@@ -77,4 +75,3 @@ SOURCES += \
     src/items/via.cpp \
     src/items/virtualwire.cpp \
     src/items/wire.cpp \
-    src/items/zenerdiode.cpp 

@@ -3232,7 +3232,7 @@ void MainWindow::addNote() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
 	m_currentGraphicsView->stackSelectionState(false, parentCommand);
 	m_currentGraphicsView->scene()->clearSelection();
-	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::noteModuleIDName, m_currentGraphicsView->defaultViewLayerSpec(), vg, ItemBase::getNextID(), false, -1, parentCommand);
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ModuleIDNames::NoteModuleIDName, m_currentGraphicsView->defaultViewLayerSpec(), vg, ItemBase::getNextID(), false, -1, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -3431,7 +3431,7 @@ void MainWindow::groundFill()
 		ViewGeometry vg;
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
-		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Bottom, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, true, parentCommand);
 	}
 
@@ -3439,7 +3439,7 @@ void MainWindow::groundFill()
 		ViewGeometry vg;
 		vg.setLoc(board->pos());
 		long newID = ItemBase::getNextID();
-		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::groundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
+		new AddItemCommand(m_pcbGraphicsView, BaseCommand::CrossView, ModuleIDNames::GroundPlaneModuleIDName, ViewLayer::GroundPlane_Top, vg, newID, false, -1, parentCommand);
 		new SetPropCommand(m_pcbGraphicsView, newID, "svg", svg, svg, true, parentCommand);
 	}
 

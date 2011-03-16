@@ -265,7 +265,7 @@ QString SymbolPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash
 bool SymbolPaletteItem::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
 {
 	if ((prop.compare("voltage", Qt::CaseInsensitive) == 0) && 
-		(moduleID().compare(ModuleIDNames::groundModuleIDName) != 0)) 
+		(moduleID().compare(ModuleIDNames::GroundModuleIDName) != 0)) 
 	{
 
 		FocusOutComboBox * edit = new FocusOutComboBox(parent);

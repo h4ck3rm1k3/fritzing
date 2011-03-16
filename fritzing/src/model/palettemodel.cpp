@@ -458,40 +458,40 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update, bool fastL
 	}
 
 	// FIXME: properties is nested right now
-	if (moduleID.compare(ModuleIDNames::wireModuleIDName) == 0) {
+	if (moduleID.compare(ModuleIDNames::WireModuleIDName) == 0) {
 		type = ModelPart::Wire;
 	}
-	else if (moduleID.compare(ModuleIDNames::jumperModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::JumperModuleIDName) == 0) {
 		type = ModelPart::Jumper;
 	}
-	else if (moduleID.compare(ModuleIDNames::logoImageModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::LogoImageModuleIDName) == 0) {
 		type = ModelPart::Logo;
 	}
-	else if (moduleID.compare(ModuleIDNames::logoTextModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::LogoTextModuleIDName) == 0) {
 		type = ModelPart::Logo;
 	}
-	else if (moduleID.compare(ModuleIDNames::groundPlaneModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::GroundPlaneModuleIDName) == 0) {
 		type = ModelPart::CopperFill;
 	}
-	else if (moduleID.compare(ModuleIDNames::noteModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::NoteModuleIDName) == 0) {
 		type = ModelPart::Note;
 	}
-	else if (moduleID.compare(ModuleIDNames::justPowerModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::JustPowerModuleIDName) == 0) {
 		type = ModelPart::Symbol;
 	}
-	else if (moduleID.compare(ModuleIDNames::powerModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::PowerModuleIDName) == 0) {
 		type = ModelPart::Symbol;
 	}
-	else if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::GroundModuleIDName) == 0) {
 		type = ModelPart::Symbol;
 	}
-	else if (moduleID.compare(ModuleIDNames::rulerModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::RulerModuleIDName) == 0) {
 		type = ModelPart::Ruler;
 	}
-	else if (moduleID.compare(ModuleIDNames::viaModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::ViaModuleIDName) == 0) {
 		type = ModelPart::Via;
 	}
-	else if (moduleID.compare(ModuleIDNames::holeModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::HoleModuleIDName) == 0) {
 		type = ModelPart::Hole;
 	}
 	else if (propertiesText.contains("breadboard", Qt::CaseInsensitive)) {

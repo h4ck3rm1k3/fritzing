@@ -58,7 +58,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	m_fileNameComboBox = NULL;
 	m_aspectRatioCheck = NULL;
 	m_keepAspectRatio = true;
-	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::logoTextModuleIDName);
+	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::LogoTextModuleIDName);
 	m_logo = modelPart->prop("logo").toString();
 	if (m_hasLogo && m_logo.isEmpty()) {
 		m_logo = modelPart->properties().value("logo", "logo");

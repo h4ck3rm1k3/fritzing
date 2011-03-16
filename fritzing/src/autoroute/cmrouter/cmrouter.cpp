@@ -2491,7 +2491,7 @@ void CMRouter::restoreOriginalState(QUndoCommand * parentCommand) {
 
 void CMRouter::addWireToUndo(Wire * wire, QUndoCommand * parentCommand) 
 {
-	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::wireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
+	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ModuleIDNames::WireModuleIDName, wire->viewLayerSpec(), wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
 	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
@@ -2548,7 +2548,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			QPointF pos, c0, c1;
 			jumperItem->getParams(pos, c0, c1);
 
-			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::jumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
+			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::JumperModuleIDName, jumperItem->viewLayerSpec(), jumperItem->getViewGeometry(), jumperItem->id(), false, -1, parentCommand);
 			addItemCommand->turnOffFirstRedo();
 			new ResizeJumperItemCommand(m_sketchWidget, jumperItem->id(), pos, c0, c1, pos, c0, c1, parentCommand);
 			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, jumperItem->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
@@ -2570,7 +2570,7 @@ void CMRouter::addToUndo(QUndoCommand * parentCommand)
 			ConnectorItem * connector0 = findViaConnector(via->connectorItem());
 			ConnectorItem * connector1 = findViaConnector(via->connectorItem()->getCrossLayerConnectorItem());
 
-			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::viaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
+			AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::CrossView, ModuleIDNames::ViaModuleIDName, via->viewLayerSpec(), via->getViewGeometry(), via->id(), false, -1, parentCommand);
 			addItemCommand->turnOffFirstRedo();
 			new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, via->id(), false, CheckStickyCommand::RemoveOnly, parentCommand);
 			new SetPropCommand(m_sketchWidget, via->id(), "hole size", via->holeSize(), via->holeSize(), true, parentCommand);
@@ -3123,7 +3123,7 @@ bool CMRouter::addJumperItem(PriorityQueue<PathUnit *> & p1, PriorityQueue<PathU
 
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
-	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), 
+	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::JumperModuleIDName), 
 												  m_specHash.value(nearest1->plane), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase == NULL) {
 		return NULL;
@@ -4110,7 +4110,7 @@ Via * CMRouter::makeVia(PathUnit * pathUnit) {
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(tileToReal(cx - tHalfWidth), tileToReal(cy - tHalfHeight)));
 
-	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::viaModuleIDName), 
+	ItemBase * itemBase = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ModuleIDNames::ViaModuleIDName), 
 										m_specHash.value(pathUnit->plane), BaseCommand::CrossView, viewGeometry, newID, -1, NULL, NULL);
 
 	Via * via = dynamic_cast<Via *>(itemBase);

@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.0.b.02.26.2493" moduleId="805InductorModuleID">
-<version>4</version>
-    <author>Mr.T</author>
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.2.0.b.02.26.2493" moduleId="56bed03878064b8286b71d5240035138">
+<version replacedby="56bed03878064b8286b71d5240035138InductorModuleID">4</version>
+    <author>lionel</author>
     <title>Inductor</title>
     <label>L</label>
-    <date>2011-01-17</date>
+    <date>2009-02-26</date>
     <tags>
         <tag>inductor</tag>
         <tag>coil</tag>
     </tags>
     <properties>
-        <property name="family">air-core inductor</property>
-    <property name="package">0805 [SMD]</property>
-    <property name="inductance" showInLabel="yes"></property>
-    </properties>
+        <property name="family">obsolete air-core inductor</property>
+    <property name="package">400 mil [THT]</property>
+     <property name="inductance" showInLabel="yes">10nH</property>
+     </properties>
     <description>Inductor</description>
     <views>
         <iconView>
@@ -31,7 +31,8 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/SMD_0805.svg">
+            <layers image="pcb/inductor_400mil.svg">
+              <layer layerId="copper0"/>
               <layer layerId="copper1"/>
               <layer layerId="silkscreen"/>
             </layers>
@@ -48,7 +49,8 @@
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper1" svgId="connector0pad"/>
+                    <p layer="copper0" svgId="connector0pin"/>
+                    <p layer="copper1" svgId="connector0pin"/>
                 </pcbView>
             </views>
         </connector>
@@ -62,7 +64,8 @@
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"/>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper1" svgId="connector1pad"/>
+                    <p layer="copper0" svgId="connector1pin"/>
+                    <p layer="copper1" svgId="connector1pin"/>
                 </pcbView>
             </views>
         </connector>

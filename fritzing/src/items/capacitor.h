@@ -42,14 +42,15 @@ public:
 	PluralType isPlural();
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	void setProp(const QString & prop, const QString & value);
+	void getProperties(QHash<QString, QString> &);
 
 public slots:
 	void propertyEntry(const QString & text);
+	void simplePropertyEntry(const QString & text);
 
 protected:
 	QHash<PropertyDef *, QString> m_propertyDefs;
 	QHash<PropertyDef *, class FocusOutComboBox *> m_comboBoxes;
-	bool m_editable;
 };
 
 #endif // CAPACITOR_H

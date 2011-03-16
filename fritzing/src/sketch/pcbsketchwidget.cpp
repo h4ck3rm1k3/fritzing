@@ -499,7 +499,7 @@ void PCBSketchWidget::addDefaultParts() {
 	viewGeometry.setLoc(QPointF(0, 0));
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
-	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::rectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	m_addedDefaultPart = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::RectangleModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	m_addDefaultParts = true;
 }
 
@@ -776,7 +776,7 @@ VirtualWire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Conne
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::wireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ModuleIDNames::WireModuleIDName), source->attachedTo()->viewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);		
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 
@@ -855,7 +855,7 @@ long PCBSketchWidget::makeModifiedWire(ConnectorItem * fromConnectorItem, Connec
 	makeRatsnestViewGeometry(viewGeometry, fromConnectorItem, toConnectorItem);
 	viewGeometry.setWireFlags(wireFlags);
 	ViewLayer::ViewLayerSpec viewLayerSpec = wireViewLayerSpec(fromConnectorItem);
-	new AddItemCommand(this, cvt, ModuleIDNames::wireModuleIDName, viewLayerSpec, viewGeometry, newID, true, -1, parentCommand);
+	new AddItemCommand(this, cvt, ModuleIDNames::WireModuleIDName, viewLayerSpec, viewGeometry, newID, true, -1, parentCommand);
 	new CheckStickyCommand(this, cvt, newID, false, CheckStickyCommand::RemoveOnly, parentCommand);
 
 	new ChangeConnectionCommand(this, cvt,
@@ -966,7 +966,7 @@ ConnectorItem * PCBSketchWidget::lookForNewBreadboardConnection(ConnectorItem * 
 	vg.setLoc(QPointF(0, maxY + 50));
 
 	long id = ItemBase::getNextID();
-	newBreadboard = this->addItem(ModuleIDNames::tinyBreadboardModuleIDName, defaultViewLayerSpec(), BaseCommand::SingleView, vg, id, -1, NULL);
+	newBreadboard = this->addItem(ModuleIDNames::TinyBreadboardModuleIDName, defaultViewLayerSpec(), BaseCommand::SingleView, vg, id, -1, NULL);
 	busConnectorItem = findEmptyBus(newBreadboard);
 	return busConnectorItem;
 }
@@ -2102,7 +2102,7 @@ void PCBSketchWidget::jumperItemHack() {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
-	ItemBase * itemBase = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::jumperModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+	ItemBase * itemBase = addItem(paletteModel()->retrieveModelPart(ModuleIDNames::JumperModuleIDName), defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
 	if (itemBase) {
 		JumperItem * jumperItem = qobject_cast<JumperItem *>(itemBase);
                 if (jumperItem) {

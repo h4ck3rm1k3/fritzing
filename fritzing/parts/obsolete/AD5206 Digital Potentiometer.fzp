@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.2b.08.04.4392" moduleId="c7acdd26c5e6355cb2e7e05c0aa975c0PotentiometerModuleID">
+<?xml version="1.0" encoding="UTF-8"?><module fritzingVersion="0.4.2b.08.04.4392" moduleId="c7acdd26c5e6355cb2e7e05c0aa975c0">
+    <version replacedby="c7acdd26c5e6355cb2e7e05c0aa975c0PotentiometerModuleID">4</version>
     <author>tigoe</author>
     <title>AD5206 Digital Potentiometer</title>
     <label>U</label>

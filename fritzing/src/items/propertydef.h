@@ -29,6 +29,7 @@ $Date$
 
 #include <QHash>
 #include <QList>
+#include <QStringList>
 
 struct PropertyDef {
 	QString name;
@@ -37,7 +38,10 @@ struct PropertyDef {
 	qreal minValue;
 	qreal maxValue;
 	qreal defaultValue;
+	bool numeric;
+	bool editable;
 	QList<qreal> menuItems;
+	QStringList sMenuItems;
 };
 
 struct InstanceDef {

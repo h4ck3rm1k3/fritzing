@@ -222,14 +222,14 @@ AddItemCommand * SchematicSketchWidget::newAddItemCommand(BaseCommand::CrossView
 	AddItemCommand* addItemCommand = SketchWidget::newAddItemCommand(crossViewType, moduleID, viewLayerSpec, viewGeometry, id, updateInfoView, modelIndex, parent);
 	qreal v = 0;
 	bool gotV = false;
-	if (moduleID.compare(ModuleIDNames::groundModuleIDName) == 0) {
+	if (moduleID.compare(ModuleIDNames::GroundModuleIDName) == 0) {
 		gotV = true;
 	}
-	else if (moduleID.compare(ModuleIDNames::powerModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::PowerModuleIDName) == 0) {
 		gotV = true;
 		v = SymbolPaletteItem::DefaultVoltage;
 	}
-	else if (moduleID.compare(ModuleIDNames::justPowerModuleIDName) == 0) {
+	else if (moduleID.compare(ModuleIDNames::JustPowerModuleIDName) == 0) {
 		gotV = true;
 		v = SymbolPaletteItem::DefaultVoltage;
 	}
