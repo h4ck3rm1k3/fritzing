@@ -323,7 +323,11 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("size", tr("size"));
 		TranslatedPropertyNames.insert("color", tr("color"));
 		TranslatedPropertyNames.insert("resistance", tr("resistance"));
+		TranslatedPropertyNames.insert("capacitance", tr("capacitance"));
+		TranslatedPropertyNames.insert("inductance", tr("inductance"));
 		TranslatedPropertyNames.insert("voltage", tr("voltage"));
+		TranslatedPropertyNames.insert("current", tr("current"));
+		TranslatedPropertyNames.insert("power", tr("power"));
 		TranslatedPropertyNames.insert("pin spacing", tr("pin spacing"));
 		TranslatedPropertyNames.insert("rated power", tr("rated power"));
 		TranslatedPropertyNames.insert("rated voltage", tr("rated voltage"));
@@ -332,6 +336,7 @@ void ItemBase::initNames() {
 		TranslatedPropertyNames.insert("package", tr("package"));
 		TranslatedPropertyNames.insert("shape", tr("shape"));
 		TranslatedPropertyNames.insert("form", tr("form"));
+		TranslatedPropertyNames.insert("part", tr("part"));
 		TranslatedPropertyNames.insert("maximum resistance", tr("maximum resistance"));
 		// TODO: translate more known property names from fzp files
 	}

@@ -69,6 +69,9 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 
 		populateTags(root, m_tags);
 		populateProperties(root, m_properties, m_displayKeys);
+		if (!m_properties.keys().contains("part")) {
+			m_properties.insert("part", "");
+		}
 
 		m_moduleID = root.attribute("moduleId", "");
 
@@ -250,6 +253,7 @@ void ModelPartShared::setTags(const QStringList &tags) {
 QString ModelPartShared::family() {
 	return m_properties.value("family");
 }
+
 void ModelPartShared::setFamily(const QString &family) {
 	m_properties.insert("family",family);
 }
@@ -259,6 +263,9 @@ QHash<QString,QString> & ModelPartShared::properties() {
 }
 void ModelPartShared::setProperties(const QHash<QString,QString> &properties) {
 	m_properties = properties;
+	if (!m_properties.keys().contains("part")) {
+		m_properties.insert("part", "");
+	}
 }
 
 const QString & ModelPartShared::path() {

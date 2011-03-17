@@ -34,6 +34,7 @@ $Date$
 #include "../connectors/connectoritem.h"
 #include "../connectors/svgidlayer.h"
 #include "wire.h"
+#include "../utils/focusoutcombobox.h"
 
 #include <QBrush>
 #include <QPen>
@@ -52,9 +53,17 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
 	this->setPos(viewGeometry.loc());
     setFlag(QGraphicsItem::ItemIsSelectable, true);
 #if QT_VERSION >= 0x040600
-		setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 #endif
-		setAcceptHoverEvents(true);
+	setAcceptHoverEvents(true);
+
+	QString savedValue = modelPart->prop("part").toString();
+	if (savedValue.isEmpty()) {
+		savedValue = modelPart->properties().value("part", "");
+		if (!savedValue.isEmpty()) {
+			modelPart->setProp("part", savedValue);
+		}
+	}
 }
 
 QRectF PaletteItemBase::boundingRect() const
@@ -433,6 +442,41 @@ bool PaletteItemBase::canEditPart() {
 
 	return ItemBase::canEditPart();
 }
+
+bool PaletteItemBase::collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget)
+{
+	if (prop.compare("part", Qt::CaseInsensitive) == 0) {
+		returnProp = TranslatedPropertyNames.value(prop);
+
+		FocusOutComboBox * focusOutComboBox = new FocusOutComboBox();
+		focusOutComboBox->setEnabled(swappingEnabled);
+		focusOutComboBox->setEditable(true);
+		QString current = m_modelPart->prop("part").toString();
+		if (!current.isEmpty()) {
+			int ix = focusOutComboBox->findText(current);
+			if (ix < 0) {
+				focusOutComboBox->addItem(current);
+				ix = focusOutComboBox->findText(current);
+			}
+			focusOutComboBox->setCurrentIndex(ix);
+		}
+		connect(focusOutComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(partPropertyEntry(const QString &)));
+		focusOutComboBox->setMaximumWidth(100);						
+		returnWidget = focusOutComboBox;	
+		return true;
+	}
+
+	return ItemBase::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+}
+
+void PaletteItemBase::partPropertyEntry(const QString & text) {
+
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->setProp(this, "part", "", m_modelPart->prop("part").toString(), text, true);
+	}
+}
+
 
 /*
 

@@ -13,7 +13,7 @@
  </tags>
  <properties>
   <property name="package">TO220 [THT]</property>
-  <property name="Rated Voltage">5V</property>
+  <property name="voltage">5V</property>
   <property name="family">Voltage Regulator</property>
  </properties>
  <description>5V DC Voltage Regulator</description>

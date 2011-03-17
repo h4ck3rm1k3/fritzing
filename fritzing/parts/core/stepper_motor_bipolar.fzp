@@ -9,8 +9,8 @@
         <tag>Stepper Motor</tag>
     </tags>
     <properties>
-        <property name="Rated Voltage">15.4</property>
-        <property name="Rated Current">0.28 A</property>
+        <property name="voltage">15.4</property>
+        <property name="current">0.28 A</property>
         <property name="shaft">5 mm diameter / 33 mm length</property>
         <property name="size">42.3 x 42.3 x 37.0 mm</property>
         <property name="family">Stepper Motor</property>

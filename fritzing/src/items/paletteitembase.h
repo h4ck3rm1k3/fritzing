@@ -67,6 +67,8 @@ public:
 	virtual bool canEditPart();
 	QPainterPath shape() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
+
 
 	/*
 	// for debugging
@@ -85,6 +87,9 @@ protected:
 		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
 		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, QMenu* itemMenu, const LayerHash & viewLayers
 	);
+
+protected slots:
+	void partPropertyEntry(const QString & text);
 
 protected:
  	bool m_blockItemSelectedChange;
