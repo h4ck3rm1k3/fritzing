@@ -254,22 +254,20 @@ void PartLabel::displayTextsIf() {
 }
 
 void PartLabel::displayTexts() {
-	QString text = "";
+	QStringList texts;
 
 	foreach (QString key, m_displayKeys) {
+		QString t;
 		if (key.compare(LabelTextKey) == 0) {
-			text += m_text;
+			t = m_text;
 		}
 		else {
-			text += m_owner->getProperty(key);
+			t = m_owner->getProperty(key);
 		}
-		text += "\n";
+		if (!t.isEmpty()) texts.append(t);
 	}
 
-	if (text.length() > 0) {
-		// remove /n
-		text.chop(1);
-	}
+	QString text = texts.join("\n");
 
 	if (text.length() == 0) {
 		text = "?";					// make sure there's something visible
