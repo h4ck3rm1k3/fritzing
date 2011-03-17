@@ -32,9 +32,9 @@ $Date$
 #include <QPixmap>
 #include <QVariant>
 
-#include "paletteitem.h"
+#include "capacitor.h"
 
-class Resistor : public PaletteItem 
+class Resistor : public Capacitor 
 {
 	Q_OBJECT
 

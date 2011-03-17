@@ -63,10 +63,13 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 			focusOutComboBox->setEditable(propertyDef->editable);
 			QString current = m_propertyDefs.value(propertyDef);
 
+		
 			if (propertyDef->numeric) {
-				qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
-				if (!propertyDef->menuItems.contains(val)) {
-					propertyDef->menuItems.append(val);
+				if (!current.isEmpty()) {
+					qreal val = TextUtils::convertFromPowerPrefixU(current, propertyDef->symbol);
+					if (!propertyDef->menuItems.contains(val)) {
+						propertyDef->menuItems.append(val);
+					}
 				}
 				foreach(qreal q, propertyDef->menuItems) {
 					QString s = TextUtils::convertToPowerPrefix(q) + propertyDef->symbol;
@@ -74,20 +77,24 @@ bool Capacitor::collectExtraInfo(QWidget * parent, const QString & family, const
 				}
 			}
 			else {
-				if (!propertyDef->sMenuItems.contains(current)) {
-					propertyDef->sMenuItems.append(current);
+				if (!current.isEmpty()) {
+					if (!propertyDef->sMenuItems.contains(current)) {
+						propertyDef->sMenuItems.append(current);
+					}
 				}
 				foreach(QString s, propertyDef->sMenuItems) {
 					focusOutComboBox->addItem(s);
 				}
 			}
-
-			int ix = focusOutComboBox->findText(current);
-			if (ix < 0) {
-				focusOutComboBox->addItem(current);
-				ix = focusOutComboBox->findText(current);
+			if (!current.isEmpty()) {
+				int ix = focusOutComboBox->findText(current);
+				if (ix < 0) {
+					focusOutComboBox->addItem(current);
+					ix = focusOutComboBox->findText(current);
+				}
+				focusOutComboBox->setCurrentIndex(ix);
 			}
-			focusOutComboBox->setCurrentIndex(ix);
+
 			if (propertyDef->editable) {
 				BoundedRegExpValidator * validator = new BoundedRegExpValidator(focusOutComboBox);
 				validator->setSymbol(propertyDef->symbol);

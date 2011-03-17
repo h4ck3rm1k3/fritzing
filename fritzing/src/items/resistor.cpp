@@ -52,7 +52,7 @@ static QRegExp DigitsMil("(\\d)+mil");
 //	other manifestations of "220"?
 
 Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
-	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
+	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_changingPinSpacing = false;
 	if (Resistances.count() == 0) {
@@ -180,7 +180,7 @@ QString Resistor::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 		case ViewLayer::Icon:
 			break;
 		default:
-			return PaletteItem::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+			return Capacitor::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 	}
 
 	QString svg = makeBreadboardSvg(m_ohms);
@@ -237,7 +237,7 @@ bool Resistor::collectExtraInfo(QWidget * parent, const QString & family, const 
 		return true;
 	}
 
-	return PaletteItem::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
+	return Capacitor::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
 QString Resistor::getProperty(const QString & key) {
@@ -249,7 +249,7 @@ QString Resistor::getProperty(const QString & key) {
 		return m_pinSpacing;
 	}
 
-	return PaletteItem::getProperty(key);
+	return Capacitor::getProperty(key);
 }
 
 QString Resistor::resistance() {
@@ -259,8 +259,6 @@ QString Resistor::resistance() {
 QString Resistor::pinSpacing() {
 	return m_pinSpacing;
 }
-
-
 
 QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
 {
@@ -274,7 +272,7 @@ QVariant Resistor::itemChange(GraphicsItemChange change, const QVariant &value)
 			break;
    	}
 
-    return PaletteItem::itemChange(change, value);
+    return Capacitor::itemChange(change, value);
 }
 
 const QString & Resistor::title() {
@@ -293,7 +291,7 @@ ConnectorItem* Resistor::newConnectorItem(Connector *connector) {
 		return connector->connectorItemByViewLayerID(viewIdentifier(), viewLayerID());
 	}
 
-	return PaletteItem::newConnectorItem(connector);
+	return Capacitor::newConnectorItem(connector);
 }
 
 ConnectorItem* Resistor::newConnectorItem(ItemBase * layerKin, Connector *connector) {
@@ -301,7 +299,7 @@ ConnectorItem* Resistor::newConnectorItem(ItemBase * layerKin, Connector *connec
 		return connector->connectorItemByViewLayerID(viewIdentifier(), layerKin->viewLayerID());
 	}
 
-	return PaletteItem::newConnectorItem(layerKin, connector);
+	return Capacitor::newConnectorItem(layerKin, connector);
 }
 
 bool Resistor::hasCustomSVG() {
@@ -328,7 +326,7 @@ QStringList Resistor::collectValues(const QString & family, const QString & prop
 		return values;
 	}
 
-	return PaletteItem::collectValues(family, prop, value);
+	return Capacitor::collectValues(family, prop, value);
 }
 
 void Resistor::resistanceEntry(const QString & text) {

@@ -34,9 +34,7 @@ $Date$
 #include <QDomElement>
 #include <QFile>
 
-QHash <QString, PropertyDef *> PropertyDefMaster::PropertyDefs;
-QHash <QString, InstanceDef *> PropertyDefMaster::InstanceDefs;
-
+QList <PropertyDef *> PropertyDefMaster::PropertyDefs;
 
 void PropertyDefMaster::loadPropertyDefs() {
 	QFile file(":/resources/properties.xml");
@@ -59,11 +57,12 @@ void PropertyDefMaster::loadPropertyDefs() {
 	while (!propertyElement.isNull()) {
 		PropertyDef * propertyDef = new PropertyDef;
 		propertyDef->name = propertyElement.attribute("name");
-		propertyDef->id = propertyElement.attribute("id");
+
+		PropertyDefs.append(propertyDef);
 		propertyDef->symbol = propertyElement.attribute("symbol");
 		propertyDef->minValue = propertyElement.attribute("minValue").toDouble();
 		propertyDef->maxValue = propertyElement.attribute("maxValue").toDouble();
-		propertyDef->defaultValue = propertyElement.attribute("defaultValue").toDouble();
+		propertyDef->defaultValue = propertyElement.attribute("defaultValue");
 		propertyDef->editable = propertyElement.attribute("editable", "").compare("yes") == 0;
 		propertyDef->numeric = propertyElement.attribute("numeric", "").compare("yes") == 0;
 		QDomElement menuItem = propertyElement.firstChildElement("menuItem");
@@ -77,52 +76,48 @@ void PropertyDefMaster::loadPropertyDefs() {
 			}
 			menuItem = menuItem.nextSiblingElement("menuItem");
 		}
-		PropertyDefs.insert(propertyDef->id, propertyDef);
-
-		propertyElement = propertyElement.nextSiblingElement("property");
-	}
-
-	QDomElement instanceElement = root.firstChildElement("instance");
-	while (!instanceElement.isNull()) {
-		InstanceDef * instanceDef = new InstanceDef;
-		instanceDef->moduleID = instanceElement.attribute("moduleID");
-		InstanceDefs.insert(instanceDef->moduleID, instanceDef);
-		QDomElement propertyElement = instanceElement.firstChildElement("property");
-		while (!propertyElement.isNull()) {
-			PropertyDef * propertyDef = PropertyDefs.value(propertyElement.attribute("id"), NULL);
-			if (propertyDef) {
-				instanceDef->propertyDefs.append(propertyDef);
-			}
-			propertyElement = propertyElement.nextSiblingElement("property");
+		QDomElement suffixElement = propertyElement.firstChildElement("suffix");
+		while (!suffixElement.isNull()) {
+			QString suffix = suffixElement.attribute("suffix");
+			propertyDef->suffixes.append(suffix);
+			suffixElement = suffixElement.nextSiblingElement("suffix");
 		}
 
-		instanceElement = instanceElement.nextSiblingElement("instance");
+		propertyElement = propertyElement.nextSiblingElement("property");
 	}
 
 }
 
 void PropertyDefMaster::initPropertyDefs(ModelPart * modelPart, QHash<PropertyDef *, QString> & propertyDefs) 
 {
-
 	if (PropertyDefs.count() == 0) {
 		loadPropertyDefs();
 	}
 
-	InstanceDef * instanceDef = InstanceDefs.value(modelPart->moduleID(), NULL);
-	if (instanceDef == NULL) {
-		DebugDialog::debug("instancedef missing; check properties.xml file");
-		return;
-	}
+	foreach (PropertyDef * propertyDef, PropertyDefs) {
+		foreach (QString suffix, propertyDef->suffixes) {
+			if (!modelPart->moduleID().endsWith(suffix, Qt::CaseInsensitive)) continue;
 
-	foreach (PropertyDef * propertyDef, instanceDef->propertyDefs) {
-		QString defaultValue = TextUtils::convertToPowerPrefix(propertyDef->defaultValue) + propertyDef->symbol;
-		QString savedValue = modelPart->prop(propertyDef->name).toString();
-		if (savedValue.isEmpty()) {
-			savedValue = modelPart->properties().value(propertyDef->name.toLower(), defaultValue);
-			modelPart->setProp(propertyDef->name, savedValue);
+			//DebugDialog::debug(QString("%1 %2").arg(suffix).arg(modelPart->moduleID()));
+			QString defaultValue;
+			if (propertyDef->numeric) {
+				if (!propertyDef->defaultValue.isEmpty()) {
+					defaultValue = TextUtils::convertToPowerPrefix(propertyDef->defaultValue.toDouble()) + propertyDef->symbol;
+				}
+			}
+			else {
+				defaultValue = propertyDef->defaultValue;
+			}
+			QString savedValue = modelPart->prop(propertyDef->name).toString();
+			if (savedValue.isEmpty()) {
+				savedValue = modelPart->properties().value(propertyDef->name.toLower(), defaultValue);
+				if (!savedValue.isEmpty()) {
+					modelPart->setProp(propertyDef->name, savedValue);
+				}
+			}
+			// caches the current value
+			propertyDefs.insert(propertyDef, savedValue);
 		}
-		// caches the current value
-		propertyDefs.insert(propertyDef, savedValue);
 	}
 }
 

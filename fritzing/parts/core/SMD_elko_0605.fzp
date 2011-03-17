@@ -11,8 +11,9 @@
  </tags>
  <properties>
   <property name="family">Capacitor [unidirectional]</property>
-  <property name="capacitance">10&#x3BC;F</property>
+  <property name="capacitance" showInLabel="yes">10&#x3BC;F</property>
   <property name="package">0605 [SMD, electrolytic]</property>
+    <property name="voltage" showInLabel="yes"></property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
  <description>A smd electrolytic capacitor.</description>

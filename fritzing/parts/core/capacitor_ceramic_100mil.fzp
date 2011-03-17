@@ -12,6 +12,7 @@
  <properties>
   <property name="family">Capacitor [bidirectional]</property>
   <property name="capacitance" showInLabel="yes">100nF</property>
+  <property name="voltage" showInLabel="yes"></property>
   <property name="package">100 mil [THT, multilayer]</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>

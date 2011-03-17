@@ -13,7 +13,8 @@
   	<property name="family">Capacitor [unidirectional]</property>
   	<property name="Capacitance" showInLabel="yes">1 &#x3BC;F</property>
     <property name="package">100 mil [THT, tantalum]</property>
-  </properties>
+   <property name="voltage" showInLabel="yes"></property>
+ </properties>
     <description>Tantalum capacitor.  Plus lead is usually marked and is usually the longer lead.</description>
     <views>
         <iconView>

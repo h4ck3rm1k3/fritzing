@@ -16,6 +16,7 @@
         <property name="family">Potentiometer</property>
         <property name="track">Linear</property>
         <property name="type">Slide Potentiometer</property>
+	   <property name="power" showInLabel="yes"></property>
         <property name="maximum resistance" showInLabel="yes">100k&#937;</property>
     </properties>
     <description>A sliding adjustable resistor (potentiometer).</description>

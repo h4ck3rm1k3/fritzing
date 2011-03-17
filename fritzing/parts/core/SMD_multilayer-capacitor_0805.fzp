@@ -13,6 +13,7 @@
   <property name="family">Capacitor [bidirectional]</property>
   <property name="capacitance" showInLabel="yes">100 nF</property>
   <property name="package">0805 [SMD, multilayer]</property>
+  <property name="voltage" showInLabel="yes"></property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>0.01 nF multilayered Ceramic Capacitor</description>

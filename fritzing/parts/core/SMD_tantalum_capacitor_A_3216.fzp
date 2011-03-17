@@ -13,7 +13,8 @@
   <property name="family">Capacitor [unidirectional]</property>
   <property name="capacitance" showInLabel="yes">1 &#x3BC;F</property>
   <property name="package">A 3216 [SMD, tantalum]</property>
- </properties>
+   <property name="voltage" showInLabel="yes"></property>
+</properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
  <description>1 uF multilayered Ceramic Capacitor</description>
  <views>

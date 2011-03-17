@@ -11,7 +11,8 @@
     <properties>
         <property name="family">air-core inductor</property>
     <property name="package">400 mil [THT]</property>
-     <property name="inductance" showInLabel="yes"></property>
+     <property name="inductance" showInLabel="yes"></property>     
+     <property name="current" showInLabel="yes"></property>
      </properties>
     <description>Inductor</description>
     <views>

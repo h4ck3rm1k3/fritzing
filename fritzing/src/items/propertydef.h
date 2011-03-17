@@ -33,20 +33,15 @@ $Date$
 
 struct PropertyDef {
 	QString name;
-	QString id;
 	QString symbol;
 	qreal minValue;
 	qreal maxValue;
-	qreal defaultValue;
+	QString defaultValue;
 	bool numeric;
 	bool editable;
 	QList<qreal> menuItems;
 	QStringList sMenuItems;
-};
-
-struct InstanceDef {
-	QString moduleID;
-	QList<PropertyDef *> propertyDefs;
+	QStringList suffixes;
 };
 
 class PropertyDefMaster
@@ -58,8 +53,7 @@ protected:
 	static void loadPropertyDefs();
 
 protected:
-	static QHash <QString, PropertyDef *> PropertyDefs;
-	static QHash <QString, InstanceDef *> InstanceDefs;
+	static QList <PropertyDef *> PropertyDefs;
 };
 
 #endif // PROPERTYDEF_H
